@@ -40,5 +40,6 @@
   <message key="Inherited credentials">Inherited credentials</message>
   <message key="Subtree credentials">Subtree credentials</message>
   <message key="New subtree credential">New subtree credential</message>
+  <message key="no-jobs-scheduled">No jobs scheduled.</message>
   
 </catalogue>

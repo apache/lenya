@@ -40,6 +40,7 @@
   <message key="Inherited credentials">Vererbte Berechtigungen</message>
   <message key="Subtree credentials">Berechtigungen für diesen Teilbaum</message>
   <message key="New subtree credential">Neue Berechtigung für diesen Teilbaum</message>
+  <message key="no-jobs-scheduled">Es wurden keine zeitgesteuerten Aktionen gestartet.</message>
   
 </catalogue>
 

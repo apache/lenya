@@ -30,22 +30,29 @@
       
       <h1><i18n:text>Scheduler</i18n:text></h1>
       
-      <table class="lenya-table-list">
-        <tr>
-          <th><i18n:text>Job</i18n:text></th>
-          <th><i18n:text>Time</i18n:text></th>
-        </tr>
-        <jx:forEach var="job" items="${usecase.getParameter('jobs')}">
-          <tr>
-            <td>
-              <jx:out value="${job.getJobName()}"/>
-            </td>
-            <td>
-              <jx:out value="${job.getNextTime()}"/>
-            </td>
-          </tr>
-        </jx:forEach>
-      </table>
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('jobs').size() == 0}">
+          <i18n:text>no-jobs-scheduled</i18n:text>
+        </jx:when>
+        <jx:otherwise>
+          <table class="lenya-table-list-noborder">
+            <tr>
+              <th><i18n:text>Job</i18n:text></th>
+              <th><i18n:text>Time</i18n:text></th>
+            </tr>
+            <jx:forEach var="job" items="${usecase.getParameter('jobs')}">
+              <tr>
+                <td>
+                  <jx:out value="${job.getJobName()}"/>
+                </td>
+                <td>
+                  <jx:out value="${job.getNextTime()}"/>
+                </td>
+              </tr>
+            </jx:forEach>
+          </table>
+        </jx:otherwise>
+      </jx:choose>
       
     </div>
   </page:body>
