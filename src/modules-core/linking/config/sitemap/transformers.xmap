@@ -17,7 +17,7 @@
 -->
 
 <xmap xpath="/sitemap/components/transformers" 
-  unless="/sitemap/components/transformers/transformer[@name = 'link-rewrite']"
+  unless="/sitemap/components/transformers/transformer[@name = 'uuid2url']"
   xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:transformer name="uuid2url" logger="lenya.sitemap.transformer.uuid2url"
