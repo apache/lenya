@@ -20,18 +20,10 @@
 
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="sitemanagement.delete">Delete</message>
-  <message key="sitemanagement.archive">Archive</message>
-  <message key="sitemanagement.restore">Restore</message>
-  <message key="cut-error-islive">The node cannot be cut when a language version is published.</message>
-  <message key="Parent Path">Parent Path</message>
-  <message key="Node Name">Node Name</message>
-  <message key="Document visible in Navigation">Visible in Navigation</message>
-  <message key="Relation">Relation</message>
-  <message key="Page Layout">Page Layout</message>
-  <message key="Document Path">Path</message>
-  <message key="Meta Data">Meta Data</message>
-  <message key="no-assets">No assets uploaded yet.</message>
-  <message key="Editor">Editor</message>
+  <message key="Documents in trash">Documents in trash</message>
+  <message key="The trash is empty.">The trash is empty.</message>
+  <message key="Sessions">Sessions</message>
+  <message key="Path">Path</message>
+  <message key="Inbox">Inbox</message>
   
 </catalogue>

@@ -36,16 +36,27 @@
           <i18n:text>The trash is empty.</i18n:text>
         </jx:when>
         <jx:otherwise>
-          <strong><i18n:text>Documents in trash</i18n:text>:</strong>
-          <ul style="list-style-type: none">
+          <table class="lenya-table-list-noborder">
+            <tr>
+              <th colspan="2"><i18n:text>Documents in trash</i18n:text></th>
+            </tr>
             <jx:forEach var="document" items="${usecase.getParameter('documents')}">
-              <li><jx:out value="${document.getId()}"/></li>
+              <tr>
+                <td>
+                  <jx:if test="${document.hasLink()}">
+                    <jx:out value="${document.getPath()}"/>
+                  </jx:if>
+                </td>
+                <td>
+                  <jx:out value="${document.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/>
+                </td>
+              </tr>
             </jx:forEach>
-          </ul>
+          </table>
         </jx:otherwise>
       </jx:choose>
     </p>
-    <form id="form-delete_trash">
+    <form id="form-delete_trash" style="margin-top: 20px">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
       <jx:choose>

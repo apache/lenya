@@ -48,7 +48,7 @@
           </p>
         </jx:if>
         <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
-        <table class="lenya-table">
+        <table class="lenya-table-list-noborder">
           <jx:set var="i" value="0"/>
           <jx:forEach var="usecaseName" items="${usecase.getParameter('usecases')}">
             <jx:if test="${i % 10 == 0}">

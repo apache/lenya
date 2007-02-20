@@ -27,6 +27,7 @@
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
+      <h1><i18n:text>Meta Data</i18n:text></h1>
       <form id="form-meta">
         <table class="lenya-table-noborder">
           <tr>

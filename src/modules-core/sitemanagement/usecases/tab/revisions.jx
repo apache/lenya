@@ -28,29 +28,37 @@
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
-    <table class="lenya-table-noborder">
+      <h1><i18n:text>Revisions</i18n:text></h1>
+    <table class="lenya-table-list-noborder">
+      <tr>
+        <th><i18n:text>No.</i18n:text></th>
+        <th><i18n:text>Time</i18n:text></th>
+        <th><i18n:text>Editor</i18n:text></th>
+        <th><i18n:text>Actions</i18n:text></th>
+      </tr>
+      <jx:set var="count" value="${usecase.getParameter('entries').size()}"/>
       <jx:forEach var="item" items="${usecase.getParameter('entries')}" end="0">
         <tr>
-          <td><i18n:text>Current Version</i18n:text></td>
-          <td>&#160;</td>
+          <td><jx:out value="${count}"/></td>
           <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
           <td><jx:out value="${item.identity}"/></td>
+          <td><i18n:text>Current Version</i18n:text></td>
         </tr>
       </jx:forEach>
       <jx:forEach var="item" items="${usecase.getParameter('entries')}" begin="1">
-          <tr>
-            <td>
-              <a href="?lenya.usecase=sitemanagement.rollback&amp;rollbackTime=${item.time}">
-                <i18n:text>Rollback to this version</i18n:text>
-              </a>
-            </td>
-            <td>
-              <a href="?lenya.revision=${item.version}" target="_blank">              
-               <i18n:text>View</i18n:text></a>
-            </td>
-            <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-            <td><jx:out value="${item.identity}"/></td>
-          </tr>
+        <tr>
+          <jx:set var="count" value="${count - 1}"/>
+          <td align="right">
+            <a href="?lenya.revision=${item.version}" target="_blank"><jx:out value="${count}"/></a>
+          </td>
+          <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+          <td><jx:out value="${item.identity}"/></td>
+          <td>
+            <a href="?lenya.usecase=sitemanagement.rollback&amp;rollbackTime=${item.time}">
+              <i18n:text>Rollback to this version</i18n:text>
+            </a>
+          </td>
+        </tr>
       </jx:forEach>
     </table>
     </div>

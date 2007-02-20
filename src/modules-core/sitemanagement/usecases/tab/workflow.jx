@@ -27,11 +27,11 @@
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
-      <h2><i18n:text>Variables</i18n:text></h2>
-      <table class="lenya-table">
+      <h1><i18n:text>Workflow</i18n:text></h1>
+      <!--
+      <table class="lenya-table-list-noborder">
         <tr><th><i18n:text>Name</i18n:text></th><th><i18n:text>Value</i18n:text></th></tr>
         <jx:forEach var="item" items="${usecase.getParameter('variables')}">
-          <!--wf:variable -->
           <tr>
             <td>
               <jx:out value="${item.name}"/>
@@ -42,8 +42,8 @@
           </tr>
         </jx:forEach>
       </table>
-      <h2><i18n:text>History</i18n:text></h2>
-      <table class="lenya-table">
+      -->
+      <table class="lenya-table-list-noborder">
       <tr>
           <th><i18n:text>Date</i18n:text></th>
           <th><i18n:text>Event</i18n:text></th>

@@ -20,19 +20,11 @@
 
 <catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="sitemanagement.delete">Löschen</message>
-  <message key="sitemanagement.archive">Archivieren</message>
-  <message key="sitemanagement.restore">Wiederherstellen</message>
-  <message key="cut-error-islive">Der Knoten kann nicht ausgeschnitten werden wenn eine Sprachversion publiziert ist.</message>
-  <message key="Parent Path">Übergeordneter Pfad</message>
-  <message key="Node Name">Knoten-Name</message>
-  <message key="Document visible in Navigation">Sichtbar in Navigation</message>
-  <message key="Relation">Relation</message>
-  <message key="Page Layout">Seitenlayout</message>
-  <message key="Document Path">Pfad</message>
-  <message key="Meta Data">Meta-Daten</message>
-  <message key="no-assets">Es wurden noch keine Anlagen hochgeladen.</message>
-  <message key="Editor">Bearbeiter</message>
+  <message key="Documents in trash">Dokumente im Papierkorb</message>
+  <message key="The trash is empty.">Der Papierkorb ist leer.</message>
+  <message key="Sessions">Sitzungen</message>
+  <message key="Path">Pfad</message>
+  <message key="Inbox">Posteingang</message>
   
 </catalogue>
 

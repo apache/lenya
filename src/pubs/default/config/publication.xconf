@@ -60,6 +60,7 @@
   <module name="lucene"/>
   <module name="development"/>
   <module name="languageselector"/>
+  <module name="administration"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>

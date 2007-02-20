@@ -38,25 +38,19 @@
         </tr>
       </table>
       
-      <div style="margin: 10px 0px">
-        <table class="lenya-table-noborder">
-      	  <tr>
-      	    <td>
-              <form method="GET" id="form-add_iprange">
-                <input type="hidden" name="lenya.usecase" value="admin.addIPRange"/>
-                <input i18n:attr="value" type="submit" value="Add IP Range" name="input-add_iprange"/>
-              </form>
-            </td>
-          </tr>
-        </table>
+      <div style="margin-bottom: 10px">
+        <form method="GET" id="form-add_iprange">
+          <input type="hidden" name="lenya.usecase" value="admin.addIPRange"/>
+          <input i18n:attr="value" type="submit" value="Add IP Range" name="input-add_iprange"/>
+        </form>
       </div>
       
-      <table cellspacing="0" class="lenya-table">
+      <table cellspacing="0" class="lenya-table-list-noborder">
         <tr>
           <th><i18n:text>IP Range ID</i18n:text></th>
           <th><i18n:text>Name</i18n:text></th>
           <th><i18n:text>Groups</i18n:text></th>
-          <th></th>
+          <th><i18n:text>Actions</i18n:text></th>
         </tr>
         <jx:forEach var="ipRange" items="${usecase.getParameter('ipRanges')}">
           <tr>
@@ -67,6 +61,7 @@
               <jx:out value="${ipRange.getName()}"/>
             </td>
             <td>
+              <jx:if test="${ipRange.getGroups().size() == 0}"><span style="color: #999999">--</span></jx:if>
               <jx:forEach var="group" items="${ipRange.getGroups()}">
                 <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
               </jx:forEach>

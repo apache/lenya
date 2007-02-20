@@ -28,42 +28,51 @@
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
+      
+      <h1><i18n:text>Assets</i18n:text></h1>
 
-      <table class="lenya-table">
-        <tr>
-          <th><i18n:text>Title</i18n:text></th>
-          <th><i18n:text>Preview</i18n:text></th>
-          <th><i18n:text>File Size</i18n:text></th>
-          <th><i18n:text>Dimension (w x h)</i18n:text></th>
-          <th><i18n:text>Creation Date</i18n:text></th>
-        </tr>
-        <jx:forEach var="doc" items="${usecase.getParameter('resourceDocuments')}">
-          <tr>
-            <jx:set var="title" value="${doc.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/>
-            <td>
-              <a href="${request.getContextPath()}${doc.getCanonicalWebappURL()}"><jx:out value="${title}"/></a>
-            </td>
-            <td>        
-              <jx:set var="mimeType" value="${doc.getMimeType()}"/>
-              <jx:if test="${mimeType.startsWith('image/')}">
-                <jx:set var="extension" value="${doc.getSourceExtension()}"/>
-                <jx:set var="url" value="${doc.getCanonicalWebappURL()}"/>
-                <jx:set var="imageUrl" value="${url.replaceFirst('\.html', '\.' + extension)}"/>
-                <img src="${request.getContextPath()}${imageUrl}"
-                  style="height: 32px; vertical-align: middle;"/>&#160;
-              </jx:if>
-            </td>
-            <td align="right"><jx:out value="${doc.getContentLength() / 1000}"/> kB</td>
-            <td align="right">
-              <jx:if test="${mimeType.startsWith('image/')}">
-                <jx:set var="mediaMeta" value="${doc.getMetaData('http://apache.org/lenya/metadata/media/1.0')}"/>
-                <jx:out value="${mediaMeta.getFirstValue('width')}"/> x <jx:out value="${mediaMeta.getFirstValue('height')}"/>
-              </jx:if>
-            </td>
-            <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(doc.getLastModified())}"/></td>
-          </tr> 
-        </jx:forEach>
-      </table>
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('resourceDocuments').size() == 0}">
+          <i18n:text>no-assets</i18n:text>
+        </jx:when>
+        <jx:otherwise>
+          <table class="lenya-table-list-noborder">
+            <tr>
+              <th><i18n:text>Title</i18n:text></th>
+              <th><i18n:text>Preview</i18n:text></th>
+              <th><i18n:text>File Size</i18n:text></th>
+              <th><i18n:text>Dimension (w x h)</i18n:text></th>
+              <th><i18n:text>Creation Date</i18n:text></th>
+            </tr>
+            <jx:forEach var="doc" items="${usecase.getParameter('resourceDocuments')}">
+              <tr>
+                <jx:set var="title" value="${doc.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/>
+                <td>
+                  <a href="${request.getContextPath()}${doc.getCanonicalWebappURL()}"><jx:out value="${title}"/></a>
+                </td>
+                <td>        
+                  <jx:set var="mimeType" value="${doc.getMimeType()}"/>
+                  <jx:if test="${mimeType.startsWith('image/')}">
+                    <jx:set var="extension" value="${doc.getSourceExtension()}"/>
+                    <jx:set var="url" value="${doc.getCanonicalWebappURL()}"/>
+                    <jx:set var="imageUrl" value="${url.replaceFirst('\.html', '\.' + extension)}"/>
+                    <img src="${request.getContextPath()}${imageUrl}"
+                      style="height: 32px; vertical-align: middle;"/>&#160;
+                  </jx:if>
+                </td>
+                <td align="right"><jx:out value="${doc.getContentLength() / 1000}"/> kB</td>
+                <td align="right">
+                  <jx:if test="${mimeType.startsWith('image/')}">
+                    <jx:set var="mediaMeta" value="${doc.getMetaData('http://apache.org/lenya/metadata/media/1.0')}"/>
+                    <jx:out value="${mediaMeta.getFirstValue('width')}"/> x <jx:out value="${mediaMeta.getFirstValue('height')}"/>
+                  </jx:if>
+                </td>
+                <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(doc.getLastModified())}"/></td>
+              </tr> 
+            </jx:forEach>
+          </table>
+        </jx:otherwise>
+      </jx:choose>
       
      <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
       <form method="GET" id="form-add_asset" style="margin-top: 20px">

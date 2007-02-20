@@ -23,12 +23,24 @@
   color: black;
   border: solid 1px #CCCCCC;
   float: left;
-  padding: 10px;
+  padding: 0 20px 20px 20px;
   min-height: 400px;
+}
+
+.lenya-tab h1, .lenya-tab-sitetree h1 {
+  font-size: medium;
+  margin-bottom: 10px;
+  border-bottom: solid 1px #CCCCCC;
+  padding: 10px 0px 5px 0px;
+}
+
+.lenya-tab h2, .lenya-tab-sitetree h2 {
+  font-size: medium;
 }
 
 .lenya-tabs {
   float: left;
+  /* margin-top: 40px; */
 }
 
 #lenya-info-treecanvas .lenya-tablink,

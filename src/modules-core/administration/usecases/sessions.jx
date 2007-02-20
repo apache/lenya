@@ -27,6 +27,8 @@
   <page:body>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
+      
+      <h1><i18n:text>Sessions</i18n:text></h1>
     
       <table class="lenya-table-noborder">
         <tr>
@@ -36,7 +38,7 @@
         </tr>
       </table>
       
-      <table cellspacing="0" class="lenya-table">
+      <table cellspacing="0" class="lenya-table-list-noborder">
         <tr>
           <th><i18n:text>User ID</i18n:text></th>
           <th><i18n:text>Full Name</i18n:text></th>

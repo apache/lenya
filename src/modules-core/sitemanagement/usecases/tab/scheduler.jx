@@ -28,7 +28,9 @@
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
       
-      <table class="lenya-table">
+      <h1><i18n:text>Scheduler</i18n:text></h1>
+      
+      <table class="lenya-table-list">
         <tr>
           <th><i18n:text>Job</i18n:text></th>
           <th><i18n:text>Time</i18n:text></th>

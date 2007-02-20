@@ -68,7 +68,9 @@ table.lenya-table-list {
 }
 
 table.lenya-table-list th,
-table.lenya-table-list td {
+table.lenya-table-list td,
+table.lenya-table-list-noborder th,
+table.lenya-table-list-noborder td {
   text-align: left;
   padding: 2px 2em 2px 5px;
   border-bottom: solid 1px #CCCCCC;
@@ -85,6 +87,26 @@ table.lenya-table-list tr.highlight {
   color: Black;
 }
 
-table.lenya-table-list a {
+table.lenya-table-list a,
+table.lenya-table-list-noborder a {
   text-decoration: none;
+}
+
+table.lenya-table-list-noborder {
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+table.lenya-table-list-noborder th {
+  font-weight: normal;
+  color: #999999;
+}
+
+table.lenya-table-list-noborder td {
+  border-bottom: none;
+}
+
+table.lenya-table-list-noborder th,
+table.lenya-table-list-noborder td {
+  padding-left: 0px;
 }

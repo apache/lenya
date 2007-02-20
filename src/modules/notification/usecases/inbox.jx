@@ -42,19 +42,19 @@
         </tr>
       </table>
       
-      <p>
+      <div style="margin-bottom: 10px;">
         <a href="?lenya.usecase=notification.sendMessage"><i18n:text>new-message</i18n:text></a>
-      </p>
+      </div>
       
       <jx:set var="inbox" value="${usecase.getParameter('inbox')}"/>
       <jx:set var="messageId" value="${request.getParameter('messageId')}"/>
       
       <table>
         <tr>
-          <td valign="top" style="padding-right: 20px;">
+          <td valign="top" style="padding: 0px; padding-right: 20px;">
             <jx:import uri="fallback://lenya/modules/notification/usecases/messageList.jx"/>
           </td>
-          <td valign="top" style="padding-left: 20px;">
+          <td valign="top" style="padding: 0px; padding-left: 20px;">
             <jx:import uri="fallback://lenya/modules/notification/usecases/currentMessage.jx"/>
           </td>
         </tr>

@@ -38,7 +38,7 @@
         </tr>
       </table>
       
-      <div style="margin: 10px 0px">
+      <div style="margin-bottom: 10px">
         <table class="lenya-table-noborder">
       	  <tr>
             <td style="padding: 0px">
@@ -51,11 +51,11 @@
         </table>
       </div>
       
-      <table cellspacing="0" class="lenya-table-list">
+      <table cellspacing="0" class="lenya-table-list-noborder">
         <tr>
           <th><i18n:text>Group ID</i18n:text></th>
           <th><i18n:text>Name</i18n:text></th>
-          <th></th>
+          <th><i18n:text>Actions</i18n:text></th>
         </tr>
         <jx:forEach var="group" items="${usecase.getParameter('groups')}">
           <tr>
@@ -63,6 +63,7 @@
               <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.group&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
             </td>
             <td style="vertical-align: middle">
+              <jx:if test="${group.getName().equals('')}"><span style="color: #999999">--</span></jx:if>
               <jx:out value="${group.getName()}"/>
             </td>
             <td style="vertical-align: middle">

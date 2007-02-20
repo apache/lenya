@@ -66,7 +66,7 @@
         </div>
       </div>
       
-      <table class="lenya-table">
+      <table class="lenya-table-list-noborder">
 
         <tr>
           <jx:forEach var="key" items="${usecase.getParameter('keys')}">

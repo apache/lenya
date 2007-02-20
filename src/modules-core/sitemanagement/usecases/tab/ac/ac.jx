@@ -31,6 +31,8 @@ limitations under the License.
     <jx:set var="area" value="${usecase.getParameter('acArea')}"/>
     
     <div id="contentblock1" class="lenya-tab-sitetree">
+      
+      <h1><i18n:text><jx:out value="${usecase.getView().getTab().getLabel()}"/></i18n:text></h1>
 
       <!--
       <div class="lenya-box-toggled">

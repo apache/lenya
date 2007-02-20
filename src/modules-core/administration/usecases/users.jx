@@ -36,7 +36,7 @@
         </tr>
       </table>
       
-      <div style="margin: 10px 0;">
+      <div style="margin-bottom: 10px;">
         <table class="lenya-table-noborder">
       	  <tr>
       	    <td style="padding: 0; margin: 0 10px 0 0;">
@@ -56,12 +56,12 @@
         </table>
       </div>
       
-      <table cellspacing="0" class="lenya-table-list">
+      <table cellspacing="0" class="lenya-table-list-noborder">
         <tr>
           <th><i18n:text>User ID</i18n:text></th>
           <th><i18n:text>Full Name</i18n:text></th>
           <th><i18n:text>Groups</i18n:text></th>
-          <th></th>
+          <th><i18n:text>Actions</i18n:text></th>
         </tr>
         <jx:forEach var="user" items="${usecase.getParameter('users')}">
           <tr>
