@@ -44,7 +44,7 @@
                 if (doc instanceof Document &amp;&amp; ((Document) doc).exists()) {
                     String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
                     if ("homepage".equals(doctype)) {
-                        <block info="false">
+                        <block areas="authoring">
                           <item wf:event="edit">
                              <xsp:attribute name="href">
                                <xsp:expr>"?lenya.module=kupu&amp;lenya.step=open"</xsp:expr>

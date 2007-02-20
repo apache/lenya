@@ -23,20 +23,18 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
     xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
     xmlns="http://www.w3.org/1999/xhtml">
 
-  <xsl:param name="usecase"/>
+  <xsl:param name="tabGroup"/>
 
   <xsl:variable name="currentTab">
     <xsl:choose>
-      <xsl:when test="starts-with($usecase, 'admin.')">admin</xsl:when>
-      <xsl:when test="starts-with($usecase, 'tab.')">site</xsl:when>
+      <xsl:when test="$tabGroup != ''"><xsl:value-of select="$tabGroup"/></xsl:when>
       <xsl:otherwise>authoring</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-
+  
   <xsl:template match="menu:block">
     <xsl:if test="not(@areas) or contains(@areas, $currentTab)">
       <xsl:copy>
