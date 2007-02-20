@@ -39,6 +39,10 @@
               </td>
             </tr>
             <tr>
+              <td class="lenya-entry-caption"><i18n:text>User ID</i18n:text>:</td>
+              <td><jx:out value="${usecase.getParameter('userId')}"/></td>
+            </tr>
+            <tr>
               <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>:</td>
               <td><jx:out value="${user.getName()}"/></td>
             </tr>
@@ -97,9 +101,8 @@
               <td>
                 <jx:set var="groups" value="${user.getGroups()}"/>
                 <jx:if test="${groups.size() == 0}"><i18n:text>No groups assigned</i18n:text></jx:if>
-                <jx:forEach var="group" items="${groups}">
-                  <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
-                </jx:forEach>
+                <jx:forEach var="group" items="${groups}"><jx:if test="${group != groups[0]}">, </jx:if>
+                  <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a></jx:forEach>
               </td>
             </tr>
             

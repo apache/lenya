@@ -38,6 +38,10 @@
           </td>
         </tr>
         <tr>
+          <td class="lenya-entry-caption"><i18n:text>Group ID</i18n:text>:</td>
+          <td><jx:out value="${group.getId()}"/></td>
+        </tr>
+        <tr>
           <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>:</td>
           <td><jx:out value="${group.getName()}"/></td>
         </tr>
@@ -63,9 +67,9 @@
         <tr>
           <td valign="top" class="lenya-entry-caption"><i18n:text>Members</i18n:text>:</td>
           <td>
-            <jx:forEach var="member" items="${group.getMembers()}">
-              <jx:out value="${member.getId() + ' '}"/>
-            </jx:forEach>
+            <jx:set var="members" value="${group.getMembers()}"/>
+            <jx:forEach var="member" items="${members}"><jx:if test="${member != members[0]}">, </jx:if>
+              <a href="?lenya.usecase=admin.user&amp;userId=${member.getId()}"><jx:out value="${member.getId()}"/></a></jx:forEach>
           </td>
         </tr>
         <tr>

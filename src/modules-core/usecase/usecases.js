@@ -330,8 +330,8 @@ function executeUsecase() {
     if (view != null && view.getViewURI()) {
         do {
             // show the view:
-            try {
                 loopFlow(view, proxy, generic); //usecase must be released here!
+            try {
             } catch (exception) {
                 // if something went wrong, try and rollback the usecase:
                 log("error", "Exception during loopFlow(): " + exception, usecaseName);
