@@ -26,6 +26,8 @@
   <message key="Path">Pfad</message>
   <message key="Inbox">Posteingang</message>
   <message key="usecase-policies-message">Hier können Sie festlegen, welche Usecases durch welche Rollen ausgeführt werden dürfen.</message>
+  <message key="Server Status">Server-Status</message>
+  <message key="e-mail">E-Mail</message>
   
 </catalogue>
 

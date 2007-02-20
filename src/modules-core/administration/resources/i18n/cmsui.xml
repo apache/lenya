@@ -26,5 +26,7 @@
   <message key="Path">Path</message>
   <message key="Inbox">Inbox</message>
   <message key="usecase-policies-message">Here you can choose which usecases should be executable by which roles.</message>
+  <message key="Server Status">Server Status</message>
+  <message key="e-mail">E-Mail</message>
   
 </catalogue>
