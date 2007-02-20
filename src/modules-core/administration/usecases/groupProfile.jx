@@ -44,7 +44,7 @@
           <td><jx:out value="${usecase.getParameter('groupId')}"/></td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><label for="name"><i18n:text>Name</i18n:text> *</label></td>
+          <td class="lenya-entry-caption"><label for="name"><i18n:text>Name</i18n:text></label></td>
           <td><input type="text" name="name" class="lenya-form-element" value="${usecase.getParameter('name')}"/></td>
         </tr>
         <tr>
