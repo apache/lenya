@@ -187,7 +187,7 @@ td.tab-post-separator {
 
 #search {
     font-family: Verdana, Arial, Sans-serif;
-    font-size: 80%;
+    font-size: 100%;
     margin-right: 10px;
     float: right;
     position:relative;

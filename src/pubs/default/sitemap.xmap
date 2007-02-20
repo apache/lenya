@@ -124,13 +124,13 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- navigation/{nav-element}/{pub-id}/{area}/{url} -->
+      <!-- navigation/{1:nav-element}/{2:pub-id}/{3:default-language}/{4:language}/{5:area}/{6:url} -->
       <map:match pattern="navigation-element/*/*/*/*/*/**">
         <map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{default-language}/{language}/{url} -->
+      <!-- /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:default-language}/{6:language}/{7:url} -->
       <map:match pattern="lenyabody-raw-*/*/*/*/*/*/**">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/navigation-element/breadcrumb/{2}/{3}/{5}/{6}/{7}"/>
@@ -148,9 +148,9 @@
       the navigational elements (breadcrumb, tabs, menu) with the actual
       content of the document. -->
     <map:pipeline type="noncaching">
-      <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
+      <!-- /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:url} -->
       <map:match pattern="lenyabody-*/*/*/*/**">
-        <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{page-envelope:default-language}/{page-envelope:document-language}/{4}/{5}"/>
+        <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{4}/{page-envelope:default-language}/{page-envelope:document-language}/{5}"/>
         <map:transform type="uuid2url"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:select type="resource-exists">
