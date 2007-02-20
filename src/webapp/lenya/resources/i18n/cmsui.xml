@@ -148,14 +148,14 @@
   <message key="User Documentation">User Documentation</message>
   <message key="About Apache Lenya">About Apache Lenya</message>
   <message key="Apache Lenya Homepage">Apache Lenya Homepage</message>
-  <message key="Edit with Kupu">
+  <message key="With Kupu">
     <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
   </message>
-  <message key="Edit with BXE">
+  <message key="With BXE">
     <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
   </message>
-  <message key="Edit with one Form">Edit with one Form</message>
-  <message key="Edit with Forms">Edit with Forms</message>
+  <message key="With one Form">With one Form</message>
+  <message key="With Forms">With Forms</message>
   <message key="Edit Metadata">Edit&#160;Metadata</message>
   <message key="Edit Navigation Title">Edit&#160;Navigation&#160;Title</message>
   <message key="Visible in Navigation">Visible in Navigation</message>
