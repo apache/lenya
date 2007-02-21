@@ -61,10 +61,12 @@ import org.apache.lenya.util.ServletHelper;
  * {@link org.apache.lenya.cms.linking.LinkResolver}.
  * </p>
  * <p>
- * Additional parameters:
+ * Additional optional parameters, separated using <code>...?f=foo&amp;b=bar</code>:
  * </p>
  * <ul>
  * <li><strong>format</strong> - the resource type format</li>
+ * <li><strong>session</strong> - the session.
+ *   To use the session of the current usecase, specify <code>session=usecase</code></li>
  * </ul>
  */
 public class DocumentSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
