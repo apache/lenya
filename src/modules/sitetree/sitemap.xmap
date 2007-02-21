@@ -72,7 +72,7 @@ This sitemap creates default navigation components.
         <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/{1}.xsl">
           <map:parameter name="url" value="/{6}"/>
           <map:parameter name="area" value="{2}"/>
-          <map:parameter name="root" value="{request:contextPath}/{1}/{2}/"/>
+          <map:parameter name="root" value="{request:contextPath}/{2}/{3}/"/>
           <map:parameter name="chosenlanguage" value="{5}"/>
           <map:parameter name="defaultlanguage" value="{4}"/>
         </map:transform>       
