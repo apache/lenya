@@ -22,7 +22,7 @@
   
   <target name="main">
     
-    <property name="number" value="100"/>
+    <property name="number" value="3"/>
     
     <webtest name="Stress test">
       <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
