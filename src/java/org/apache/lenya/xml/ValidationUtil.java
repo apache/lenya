@@ -56,7 +56,8 @@ public class ValidationUtil {
         Validator validator = null;
         try {
             validator = (Validator) manager.lookup(Validator.ROLE);
-            ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI());
+            ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI(),
+                    handler);
 
             DOMStreamer streamer = new DOMStreamer(validatorHandler);
             streamer.stream(xmlDoc);
