@@ -93,7 +93,7 @@
           </map:transform>
         </map:act>
         <map:act type="resource-exists-enhanced">
-          <map:parameter name="url" value="lenyadoc://resources/shared/{3}.{4}"/>
+          <map:parameter name="url" value="fallback://resources/shared/{3}.{4}"/>
           <map:parameter name="type" value="file"/>
           <map:transform src="xslt/scale.xsl">
             <map:parameter name="url" value="{fallback:resources/shared/{../3}.{../4}}"/>
