@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseView;
 
@@ -173,6 +174,13 @@ public class UsecaseProxy {
      */
     public UsecaseView getView() {
         return this.view;
+    }
+    
+    /**
+     * @return The session of the usecase.
+     */
+    public Session getSession() {
+        return (Session) getParameter("private.session");
     }
 
 }
