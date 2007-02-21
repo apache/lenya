@@ -240,7 +240,6 @@ function defaultLoopFlow(view, proxy) {
  * @see submitFlow
  */
 function defaultSubmitFlow(usecase) {
-    usecase.advance();
     if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")=="ok") {
         usecase.checkExecutionConditions();
         if (! usecase.hasErrors()) {
@@ -249,6 +248,9 @@ function defaultSubmitFlow(usecase) {
     } else if (cocoon.request.getParameter("cancel")) {
         usecase.cancel();
         return "cancel";
+    }
+    else {
+        usecase.advance();
     }
     return "continue"
 }
