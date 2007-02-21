@@ -94,41 +94,28 @@ public class OneFormEditor extends DocumentUsecase {
      * @throws Exception if an error occurs.
      */
     protected void saveDocument(String encoding, String content) throws Exception {
-        SourceResolver resolver = null;
-        Source indexSource = null;
+        saveXMLFile(encoding, content, getSourceDocument());
+
+        Document xmlDoc = null;
+
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            saveXMLFile(encoding, content, getSourceDocument());
+            xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
+        } catch (SAXException e) {
+            addErrorMessage("error-document-form", new String[] { e.getMessage() });
+        }
 
-            Document xmlDoc = null;
+        if (xmlDoc != null) {
+            ResourceType resourceType = getSourceDocument().getResourceType();
+            Schema schema = resourceType.getSchema();
 
-            try {
-                xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
-            } catch (SAXException e) {
-                addErrorMessage("error-document-form", new String[] { e.getMessage() });
-            }
+            ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
 
-            if (xmlDoc != null) {
-                ResourceType resourceType = getSourceDocument().getResourceType();
-                Schema schema = resourceType.getSchema();
-
-                ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
-
-                if (!hasErrors()) {
-                    WorkflowUtil.invoke(this.manager,
-                            getSession(),
-                            getLogger(),
-                            getSourceDocument(),
-                            getEvent());
-                }
-            }
-
-        } finally {
-            if (resolver != null) {
-                if (indexSource != null) {
-                    resolver.release(indexSource);
-                }
-                this.manager.release(resolver);
+            if (!hasErrors()) {
+                WorkflowUtil.invoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        getSourceDocument(),
+                        getEvent());
             }
         }
     }
@@ -145,7 +132,6 @@ public class OneFormEditor extends DocumentUsecase {
     private void saveXMLFile(String encoding, String content,
             org.apache.lenya.cms.publication.Document document)
             throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FileOutputStream fileoutstream = null;
         Writer writer = null;
 
         try {
@@ -161,8 +147,6 @@ public class OneFormEditor extends DocumentUsecase {
             // close all streams
             if (writer != null)
                 writer.close();
-            if (fileoutstream != null)
-                fileoutstream.close();
         }
     }
 
