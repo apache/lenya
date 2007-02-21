@@ -17,7 +17,10 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Restore usecase handler.
@@ -45,6 +48,19 @@ public class Restore extends MoveSubsite {
      */
     protected String getEvent() {
         return "restore";
+    }
+
+    protected void doCheckPostconditions() throws Exception {
+        super.doCheckPostconditions();
+
+        Document doc = getTargetDocument(true);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
+                getLogger(), doc);
+        String state = workflowable.getLatestVersion().getState();
+        if (!state.equals("authoring")) {
+            addErrorMessage("The state is [" + state + "] instead of [authoring]!");
+        }
+
     }
 
 }

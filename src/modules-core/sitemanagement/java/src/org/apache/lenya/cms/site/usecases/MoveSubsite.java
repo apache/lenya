@@ -40,6 +40,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.util.Assert;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Usecase to move a subsite to another area.
@@ -137,6 +138,16 @@ public abstract class MoveSubsite extends DocumentUsecase {
         for (int i = 0; i < sources.length; i++) {
             WorkflowUtil.invoke(this.manager, getSession(), getLogger(), sources[i], getEvent(),
                     true);
+            
+            if (this.getClass().getName().equals(Restore.class.getName())) {
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
+                        getLogger(), sources[i]);
+                String state = workflowable.getLatestVersion().getState();
+                if (!state.equals("authoring")) {
+                    addErrorMessage("The state is [" + state + "] instead of [authoring]!");
+                }
+            }
+            
         }
 
         DocumentManager docManager = null;
