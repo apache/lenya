@@ -20,16 +20,10 @@ package org.apache.lenya.cms.editors.forms;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
@@ -52,8 +46,6 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class OneFormEditor extends DocumentUsecase {
-
-    private static final String REFORMAT_XSLT_URI = "fallback://lenya/modules/editors/usecases/forms/prettyprint.xsl";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -103,7 +95,6 @@ public class OneFormEditor extends DocumentUsecase {
     }
 
     public void advance() throws UsecaseException {
-        
         clearErrorMessages();
         try {
             Document xml = getXml();
@@ -117,36 +108,6 @@ public class OneFormEditor extends DocumentUsecase {
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
-
-        /*
-        if (getParameter("reformat") != null) {
-            clearErrorMessages();
-            try {
-                Document xml = getXml();
-                if (xml != null) {
-                    validate(xml);
-                }
-                if (!hasErrors()) {
-                    Document xslt = SourceUtil.readDOM(REFORMAT_XSLT_URI, this.manager);
-                    DOMSource xsltSource = new DOMSource(xslt);
-
-                    TransformerFactory factory = TransformerFactory.newInstance();
-                    Transformer transformer = factory.newTransformer(xsltSource);
-                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-
-                    DOMSource source = new DOMSource(xml);
-                    StringWriter writer = new StringWriter();
-                    StreamResult result = new StreamResult(writer);
-                    transformer.transform(source, result);
-
-                    setParameter("content", writer.toString());
-                }
-            } catch (Exception e) {
-                throw new UsecaseException(e);
-            }
-        }
-        */
     }
 
     protected void doCheckExecutionConditions() throws Exception {
