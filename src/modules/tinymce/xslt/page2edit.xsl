@@ -57,7 +57,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="{$contextPath}/{$publicationid}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce_src.js"
+          src="{$contextPath}/{$publicationid}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>

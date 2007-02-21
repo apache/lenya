@@ -113,7 +113,7 @@ public class TinyMce extends DocumentUsecase {
         saveDocument(encoding, content);
     }
 
-    /**
+   /**
      * Save the content to the document source. After saving, the XML is
      * validated. If validation errors occur, the usecase transaction is rolled
      * back, so the changes are not persistent. If the validation succeeded, the

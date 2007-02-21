@@ -56,7 +56,7 @@
               <jx:set var="mimeType" value="${asset.getMimeType()}"/>
               <jx:if test="${mimeType.startsWith('image/')}">
                 <jx:set var="doc" value="${usecase.getParameter('document')}"/>
-                <img src="'${cocoon.request.getContextPath()}/${asset.getPublication().getId()}/${asset.getArea()}${asset.getPath()}.${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}'"
+                <img src="${cocoon.request.getContextPath()}/${asset.getPublication().getId()}/${asset.getArea()}${asset.getPath()}.${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}"
                   style="height: 32px; vertical-align: middle;"/>&#160;
               </jx:if>
             </td>
