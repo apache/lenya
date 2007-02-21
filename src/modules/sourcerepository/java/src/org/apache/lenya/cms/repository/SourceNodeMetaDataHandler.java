@@ -41,10 +41,10 @@ import org.w3c.dom.Element;
  * Handles the meta data of source nodes.
  */
 public class SourceNodeMetaDataHandler implements MetaDataOwner {
-    
+
     private ServiceManager manager;
     private String sourceUri;
-    
+
     /**
      * @param manager The service manager.
      * @param sourceUri The soure URI.
@@ -53,7 +53,7 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
         this.manager = manager;
         this.sourceUri = sourceUri;
     }
-    
+
     private Map namespace2metadata = new HashMap();
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
@@ -75,8 +75,10 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
         MetaData meta = (MetaData) this.namespace2metadata.get(namespaceUri);
         if (meta == null) {
-            meta = new SourceNodeMetaData(namespaceUri, this, this.manager);
-            this.namespace2metadata.put(namespaceUri, meta);
+            synchronized (this) {
+                meta = new SourceNodeMetaData(namespaceUri, this, this.manager);
+                this.namespace2metadata.put(namespaceUri, meta);
+            }
         }
         return meta;
     }
@@ -89,8 +91,10 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
         }
         Map map = (Map) this.namespace2metamap.get(namespaceUri);
         if (map == null) {
-            map = new HashMap();
-            this.namespace2metamap.put(namespaceUri, map);
+            synchronized (this) {
+                map = new HashMap();
+                this.namespace2metamap.put(namespaceUri, map);
+            }
         }
         return map;
     }
@@ -102,8 +106,8 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
     protected static final String ELEMENT_VALUE = "value";
     protected static final String ATTRIBUTE_NAMESPACE = "namespace";
     protected static final String ATTRIBUTE_KEY = "key";
-    
-    protected void loadMetaData() throws MetaDataException {
+
+    protected synchronized void loadMetaData() throws MetaDataException {
 
         if (this.namespace2metamap != null) {
             throw new IllegalStateException("The meta data have already been loaded!");
@@ -123,17 +127,20 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
                         String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
                         Element[] elementElements = helper.getChildren(setElements[setIndex],
                                 ELEMENT_ELEMENT);
+                        Map element2values = new HashMap();
                         for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
                             String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
                             Element[] valueElements = helper.getChildren(
                                     elementElements[elemIndex], ELEMENT_VALUE);
+                            List values = new ArrayList();
                             for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
                                 String value = DocumentHelper
                                         .getSimpleElementText(valueElements[valueIndex]);
-                                List values = getValueList(namespace, key);
                                 values.add(value);
                             }
+                            element2values.put(key, values);
                         }
+                        this.namespace2metamap.put(namespace, element2values);
                     }
                 }
             }
@@ -218,8 +225,10 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
         Map map = getMetaDataMap(namespaceUri);
         List values = (List) map.get(key);
         if (values == null) {
-            values = new ArrayList();
-            map.put(key, values);
+            synchronized (this) {
+                values = new ArrayList();
+                map.put(key, values);
+            }
         }
         return values;
     }

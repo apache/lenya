@@ -31,8 +31,6 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.ModifiableSource;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -187,9 +185,7 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @see org.apache.lenya.cms.repository.Node#exists()
      */
     public boolean exists() throws RepositoryException {
-        if (this.data == null) {
-            loadData();
-        }
+        loadData();
         return this.data != null;
     }
 
@@ -212,8 +208,7 @@ public class SourceWrapper extends AbstractLogEnabled {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = (TraversableSource) resolver.resolveURI(getRealSourceUri());
 
-            if (source.exists() && !source.isCollection()
-                    && source.getLastModified() > this.lastModified) {
+            if (source.exists() && !source.isCollection()) {
                 byte[] buf = new byte[4096];
                 out = new ByteArrayOutputStream();
                 in = source.getInputStream();
@@ -225,6 +220,7 @@ public class SourceWrapper extends AbstractLogEnabled {
                 }
 
                 this.data = out.toByteArray();
+                this.mimeType = source.getMimeType();
                 this.lastModified = source.getLastModified();
             }
         } catch (Exception e) {
@@ -344,37 +340,11 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @see org.apache.lenya.cms.repository.Node#getLastModified()
      */
     public long getLastModified() throws RepositoryException {
-        SourceResolver resolver = null;
-        Source source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getRealSourceUri());
-
-            long sourceLastModified;
-
-            if (source.exists()) {
-                sourceLastModified = source.getLastModified();
-                if (sourceLastModified > this.lastModified) {
-                    this.lastModified = sourceLastModified;
-                }
-            } else if (this.lastModified == -1) {
-                throw new RepositoryException("The source [" + getRealSourceUri()
-                        + "] does not exist!");
-            }
-
-            return this.lastModified;
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
+        loadData();
+        return this.lastModified;
     }
+    
+    private String mimeType;
 
     /**
      * @return A string.
@@ -382,27 +352,8 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @see org.apache.lenya.cms.repository.Node#getMimeType()
      */
     public String getMimeType() throws RepositoryException {
-        SourceResolver resolver = null;
-        Source source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getRealSourceUri());
-            if (source.exists()) {
-                return source.getMimeType();
-            } else {
-                throw new SourceNotFoundException("The source [" + getRealSourceUri()
-                        + "] does not exist!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
+        loadData();
+        return this.mimeType;
     }
 
     /**
@@ -420,6 +371,7 @@ public class SourceWrapper extends AbstractLogEnabled {
     public synchronized OutputStream getOutputStream() throws RepositoryException {
         if (getLogger().isDebugEnabled())
             getLogger().debug("Get OutputStream for " + getSourceUri());
+        loadData();
         return new NodeOutputStream();
     }
 
