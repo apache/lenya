@@ -23,8 +23,13 @@ Installation:
       <role id="edit" method="grant"/>
     </usecase>
 
-  This will allow the "admin" and "edit" roles to access the 
-  usecase.
+    <usecase id="tinymce.insertImage">
+      <role id="admin" method="grant"/>
+      <role id="edit" method="grant"/>
+    </usecase>
+
+   This will allow the "admin" and "edit" roles to access the 
+   usecases to edit and upload images.
  
 - To add a menu entry, in $YOURPUB/config/publication.xconf
   add  <module name="tinymce"/> next to the other module 
