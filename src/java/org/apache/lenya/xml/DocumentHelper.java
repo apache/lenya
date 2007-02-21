@@ -18,6 +18,7 @@
 
 package org.apache.lenya.xml;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -151,14 +152,17 @@ public class DocumentHelper {
      * Reads a document from a string.
      * @return A document.
      * @param string The string to load the document from.
+     * @param encoding The encoding which is used by the string.
      * @throws ParserConfigurationException if an error occurs
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
      */
-    public static Document readDocument(String string) throws ParserConfigurationException,
+    public static Document readDocument(String string, String encoding) throws ParserConfigurationException,
             SAXException, IOException {
         DocumentBuilder builder = createBuilder();
-        return builder.parse(string);
+        byte bytes[] = string.getBytes(encoding);
+        ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+        return builder.parse(stream);
     }
 
     /**
