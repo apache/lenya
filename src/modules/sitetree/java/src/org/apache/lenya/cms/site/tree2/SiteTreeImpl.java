@@ -87,11 +87,20 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     protected static final String NAMESPACE = "http://apache.org/cocoon/lenya/sitetree/1.0";
 
     private static final boolean DEFAULT_VISIBILITY = true;
+    
+    private boolean loaded = false;
 
     protected synchronized void load() {
+        
+        if (this.loaded) {
+            return;
+        }
+        
         try {
             Node repoNode = getRepositoryNode();
-            if (repoNode.exists() && repoNode.getLastModified() > this.lastModified) {
+            // lastModified check is necessary for clustering, but can cause 404s
+            // because of the 1s file system last modification granularity
+            if (repoNode.exists() /* && repoNode.getLastModified() > this.lastModified */) {
                 long lastModified = repoNode.getLastModified();
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(repoNode.getInputStream());
                 NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", xml);
@@ -108,6 +117,9 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
                 reset();
                 this.lastModified = -1;
             }
+            
+            this.loaded = true;
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
