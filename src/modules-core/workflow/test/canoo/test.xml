@@ -24,7 +24,6 @@
   
     
   <target name="sequence">
-    <echo>Using WebTest home: ${webtest.home}</echo>
     <webtest name="myTest">
       <config host="localhost" port="8888" protocol="http" basepath="default/authoring" />
       <steps>
