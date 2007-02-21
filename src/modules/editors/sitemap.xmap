@@ -56,7 +56,7 @@
       </map:match>
       
       <map:match pattern="oneform">
-        <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
+        <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}?session=usecase"/>
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test" value="{request-param:reformat}"/>
           <map:when test=""/>

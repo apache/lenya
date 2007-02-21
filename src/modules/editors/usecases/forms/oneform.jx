@@ -33,7 +33,7 @@
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <jx:choose>
-        <jx:when test="${! usecase.hasErrors()}">
+        <jx:when test="${usecase.getParameter('executable').booleanValue()}">
           
           <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
             <div class="lenya-box-title">Information</div>
@@ -81,9 +81,16 @@
           </div>
 
           <div style="clear: both;">
-            <cinclude:includexml>
-              <cinclude:src>cocoon://modules/editors/oneform</cinclude:src>
-            </cinclude:includexml>
+            <jx:choose>
+              <jx:when test="${usecase.getParameter('content')}">
+                <textarea name="content" cols="120" rows="80"><jx:out value="${usecase.getParameter('content')}"/></textarea>
+              </jx:when>
+              <jx:otherwise>
+                <cinclude:includexml>
+                  <cinclude:src>cocoon://modules/editors/oneform</cinclude:src>
+                </cinclude:includexml>
+              </jx:otherwise>
+            </jx:choose>
           </div>
 
           <div>
