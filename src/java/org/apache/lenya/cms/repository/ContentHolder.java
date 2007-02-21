@@ -10,11 +10,13 @@ import org.apache.lenya.cms.metadata.MetaDataOwner;
 public interface ContentHolder extends MetaDataOwner {
 
     /**
-     * @return The last modification date.
+     * @return The last modification date. The date is measured in milliseconds
+     *         since the epoch (00:00:00 GMT, January 1, 1970), and is 0 if it's
+     *         unknown.
      * @throws RepositoryException if the node does not exist.
      */
     long getLastModified() throws RepositoryException;
-    
+
     /**
      * @return The content length.
      * @throws RepositoryException if the node does not exist.
@@ -26,7 +28,7 @@ public interface ContentHolder extends MetaDataOwner {
      * @return the source URI
      */
     String getSourceURI();
-    
+
     /**
      * @return if the item exists.
      * @throws RepositoryException if an error occurs.
