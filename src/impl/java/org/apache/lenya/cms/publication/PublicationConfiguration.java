@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -478,21 +477,15 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private String[] areas;
 
     public String[] getAreaNames() {
+        // TODO: make this more generic.
         if (this.areas == null) {
-            File content = new File(getContentDir());
-            File[] directories = content.listFiles(new FileFilter() {
-                public boolean accept(File file) {
-                    String name = file.getName();
-                    return file.isDirectory() && !name.equals("rcml") && !name.equals("rcbak");
-                }
-            });
-            if (directories == null) {
-                directories = new File[0];
-            }
-            this.areas = new String[directories.length];
-            for (int i = 0; i < directories.length; i++) {
-                this.areas[i] = directories[i].getName();
-            }
+            List list = new ArrayList();
+            list.add(Publication.AUTHORING_AREA);
+            list.add(Publication.LIVE_AREA);
+            list.add(Publication.STAGING_AREA);
+            list.add(Publication.TRASH_AREA);
+            list.add(Publication.ARCHIVE_AREA);
+            this.areas = (String[]) list.toArray(new String[list.size()]);
         }
         return this.areas;
     }
