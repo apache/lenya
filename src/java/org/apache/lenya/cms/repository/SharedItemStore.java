@@ -26,5 +26,10 @@ public interface SharedItemStore extends Session {
      * The service role.
      */
     String ROLE = SharedItemStore.class.getName();
+    
+    /**
+     * Clears the store when a session has been committed.
+     */
+    void clear();
 
 }

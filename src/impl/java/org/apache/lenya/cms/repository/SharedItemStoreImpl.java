@@ -35,14 +35,14 @@ import org.apache.lenya.transaction.Transactionable;
 public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedItemStore, ThreadSafe {
 
     private IdentityMap map;
-    
-    protected IdentityMap getIdentityMap() {
+
+    protected synchronized IdentityMap getIdentityMap() {
         if (this.map == null) {
             this.map = new IdentityMapImpl(getLogger());
         }
         return this.map;
     }
-    
+
     public void addListener(RepositoryListener listener) throws RepositoryException {
         throw new IllegalStateException("Operation not permitted.");
     }
@@ -59,7 +59,8 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         throw new IllegalStateException("Operation not permitted.");
     }
 
-    public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key) throws RepositoryException {
+    public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
+            throws RepositoryException {
         RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
         return (RepositoryItem) getIdentityMap().get(wrapper, key);
     }
@@ -104,4 +105,8 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         throw new IllegalStateException("Operation not permitted.");
     }
 
+    public synchronized void clear() {
+        this.map = null;
+    }
+    
 }

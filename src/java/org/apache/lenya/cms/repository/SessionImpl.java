@@ -110,6 +110,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
         try {
             getUnitOfWork().commit();
+            getSharedItemStore().clear();
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
