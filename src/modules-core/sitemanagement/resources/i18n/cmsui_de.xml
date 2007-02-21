@@ -41,6 +41,7 @@
   <message key="Subtree credentials">Berechtigungen für diesen Teilbaum</message>
   <message key="New subtree credential">Neue Berechtigung für diesen Teilbaum</message>
   <message key="no-jobs-scheduled">Es wurden keine zeitgesteuerten Aktionen gestartet.</message>
+  <message key="No overview available.">Es ist keine Übersicht verfügbar.</message>
   
 </catalogue>
 
