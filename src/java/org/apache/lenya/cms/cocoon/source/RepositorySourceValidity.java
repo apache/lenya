@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.cocoon.source;
 
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
@@ -27,18 +26,17 @@ import org.apache.lenya.cms.repository.RepositoryException;
 public class RepositorySourceValidity implements SourceValidity {
 
     private static final long serialVersionUID = 1L;
-    
-    private Node node;
-    
-    private long lastModified = -1;
-    
+
+    private String sourceUri;
+    private long lastModified;
+
     /**
      * @param source The source this validity is for.
      */
     public RepositorySourceValidity(RepositorySource source) {
-        this.node = source.getNode();
+        this.sourceUri = source.getNode().getSourceURI();
         try {
-            this.lastModified = this.node.getLastModified();
+            this.lastModified = source.getNode().getLastModified();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
@@ -47,32 +45,30 @@ public class RepositorySourceValidity implements SourceValidity {
     public int isValid() {
         return SourceValidity.UNKNOWN;
     }
-    
-    protected Node getNode() {
-        return this.node;
-    }
 
     public int isValid(SourceValidity validity) {
         if (validity instanceof RepositorySourceValidity) {
             RepositorySourceValidity repoValidity = (RepositorySourceValidity) validity;
-            
-            if (!repoValidity.getNode().getSourceURI().equals(getNode().getSourceURI())) {
+
+            if (!repoValidity.getSourceURI().equals(this.sourceUri)) {
                 throw new RuntimeException("Wrong source URI!");
             }
-            
-            try {
-                if (getNode().getLastModified() >= repoValidity.getNode().getLastModified()) {
-                    return SourceValidity.VALID;
-                }
-                else {
-                    return SourceValidity.INVALID;
-                }
-            } catch (RepositoryException e) {
-                throw new RuntimeException(e);
+            if (this.lastModified >= repoValidity.getLastModified()) {
+                return SourceValidity.VALID;
+            } else {
+                return SourceValidity.INVALID;
             }
         } else {
             return SourceValidity.INVALID;
         }
+    }
+
+    protected long getLastModified() {
+        return this.lastModified;
+    }
+
+    protected String getSourceURI() {
+        return this.sourceUri;
     }
 
 }
