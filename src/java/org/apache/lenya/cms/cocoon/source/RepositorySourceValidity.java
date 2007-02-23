@@ -45,16 +45,7 @@ public class RepositorySourceValidity implements SourceValidity {
     }
 
     public int isValid() {
-        try {
-            if (getNode().getLastModified() == this.lastModified) {
-                return SourceValidity.VALID;
-            }
-            else {
-                return SourceValidity.INVALID;
-            }
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
+        return SourceValidity.UNKNOWN;
     }
     
     protected Node getNode() {
