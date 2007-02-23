@@ -204,10 +204,10 @@ which will be used to configure the chosen Forrest skin.
        Specified below are the default settings.
     -->
     <margins double-sided="true">
-      <top>1 cm</top>
-      <bottom>1 cm</bottom>
-      <inner>2.25 cm</inner>
-      <outer>2 cm</outer>
+      <top>.5in</top>
+      <bottom>.5in</bottom>
+      <inner>.75in</inner>
+      <outer>.75in</outer>
     </margins>
 
     <!--
