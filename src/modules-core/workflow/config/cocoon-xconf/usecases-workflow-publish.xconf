@@ -21,13 +21,13 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'default/workflow.deactivate']">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'workflow.publish']">
 
-    <component-instance name="default/workflow.deactivate"
+    <component-instance name="workflow.publish"
                         logger="lenya.usecases.workflow"
-                        class="org.apache.lenya.defaultpub.cms.usecases.Deactivate">
-      <view template="usecases/workflow/deactivate.jx"/>
-      <event id="deactivate"/>
+                        class="org.apache.lenya.cms.workflow.usecases.Publish">
+      <view template="modules/workflow/usecases/publish.jx"/>
+      <event id="publish"/>
     </component-instance>
 
   </xconf>

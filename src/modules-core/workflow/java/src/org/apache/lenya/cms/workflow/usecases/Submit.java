@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.defaultpub.cms.usecases;
+package org.apache.lenya.cms.workflow.usecases;
 
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;

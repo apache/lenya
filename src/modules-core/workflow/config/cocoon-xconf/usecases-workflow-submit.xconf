@@ -21,13 +21,13 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'default/workflow.reject']">
-                        
-    <component-instance name="default/workflow.reject"
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'workflow.submit']">
+
+    <component-instance name="workflow.submit"
                         logger="lenya.usecases.workflow"
-                        class="org.apache.lenya.defaultpub.cms.usecases.Reject">
-      <event id="reject"/>
-      <view template="usecases/workflow/reject.jx"/>
+                        class="org.apache.lenya.cms.workflow.usecases.Submit">
+      <event id="submit"/>
+      <view template="modules/workflow/usecases/submit.jx"/>
     </component-instance>
 
   </xconf>
