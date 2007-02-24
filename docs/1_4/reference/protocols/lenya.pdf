@@ -5,10 +5,10 @@
 /Producer (FOP 0.20.5) >>
 endobj
 5 0 obj
-<< /Length 668 /Filter [ /ASCII85Decode /FlateDecode ]
+<< /Length 670 /Filter [ /ASCII85Decode /FlateDecode ]
  >>
 stream
-Gatm86*lb/&AI`dEbl7l66LinS'UUbHI<R)ejCKQ$T"#T8?MjbL9re277Uu1Ag"_PIf&M]8Y5MrI#/G,!2FoXi;QXX)!uq]@IokqEMX7uQt7[1TWb\*1hZeE7gkJlk25NhP$/X,Stg3Ps(L==1>s"oa'd"%(eu\#Gq!XibD1$L!Ft/CU$-DfYS=CTSG#Eg6"j&&<[belka[94&`;]dpYZ++<prls;$tFNa3,S[GR$W7%*\=mVQ#NOk_.O'kMS?B20),`HZ\<2&3YaudE8W?;OuG1W!Y9,hn9^TB"#Fuhon]pgSZa4irS$-U(ea#53-RgPslKYOG"F^s)j/+MaJ9rAhpXu4'OYV-N^,.e=3ufe>]O,d[AX1L;Qn>hK6EWQ#-524g[#>:LYFKrQ]?X?@k.fR$`+S#:i'(;4u5)YO`jo]^klcmGCPJ@8#SZ8heBL5mM@%H\M_lM,)XB52#bmc;UU1;M-S>A4%_O<Ze1BIc[-QHEbX.m*n%%VSFT!=".[T`D?H1UE%YiaF2q*@4li3XbDAsrn6$f/>eM,,?0__%2_tEm=p$U:kXVi/gG's4ah#Q;:])>Ao$)2De48re\9Q$_V5V?3K%9=(?S&Vl`/1JG[k</p0-nVM(?pD,*1!7pY(1b<nGX$"?OjESPVPhf'E8NKnsSU~>
+Gatm8_2b!=&A@ZM4sl$n[_Y6&eucM`HYTnRWTh7b3!"kDC7M0sq\faF8[;>H<Cjoaa)BhYoCt$N_P[[e(bj+A!U`,q^h=MqK^D,<l^!\jJLJW:^.7'mQ)mdZ@?)*[c0X0NMcN:R<R&p8P^g,d$kYPY9gM;Q$'#7P]TAKTj\:-F+A&FL`iO+@+I#-7[Ag]5>>Wlc2\TA8,?s?hB?1U/n08d3d-;h_-sf6Qm-lFA(2o6XgSMj[<!Yk2;KP=Q_:RU"T2]i#dQ;OokR]n3/(pl01eOC3eNjRgVncLo0^]8>!:*cr9_/gMI=m&/>SIg8hM&Tk2bLG#JN+Y9DJ=n7`P)e8D2kR5[SIlL1P*F0X7b7jl<':F3:iX/@9EqZjASg#48p/Cl]qoWWg^\'dOhhTg".F0/:tt&-\)F.U);P%r`9+i1llK;V=jR$YVbc.r*Kp$d^]qkmY[+YAk](;%+hdbeY0m&5.1'ZnUk1LT:FkUq8upPnGqi)J2_,/>'e@KR1^462Y*41dl^-R!P@3444"/72jMlH4[H]QDb<VE[H@^;rtm.O>,(D/<[]/:]_4+L`luo!i"S^o<ONTrbjSPQdcIVcmc%GL7[un%V@391c?5F]0])KN48W/tc&lefo:ulhL3Gt8\#l[#d1^1V>IIH0PT-h&hiK%#2Z~>
 endstream
 endobj
 6 0 obj
@@ -29,7 +29,7 @@ endobj
 8 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 155.496 657.8 270.696 645.8 ]
+/Rect [ 209.496 621.8 324.696 609.8 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
 /A << /URI (http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/RepositorySource.html)
@@ -40,7 +40,7 @@ endobj
 9 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 34.32 631.4 185.52 619.4 ]
+/Rect [ 183.3 595.4 334.5 583.4 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
 /A << /URI (http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/TransactionableSource.html)
@@ -101,20 +101,20 @@ endobj
 xref
 0 15
 0000000000 65535 f 
-0000002018 00000 n 
-0000002076 00000 n 
-0000002126 00000 n 
+0000002019 00000 n 
+0000002077 00000 n 
+0000002127 00000 n 
 0000000015 00000 n 
 0000000071 00000 n 
-0000000830 00000 n 
-0000000950 00000 n 
-0000000981 00000 n 
-0000001222 00000 n 
-0000001465 00000 n 
-0000001578 00000 n 
-0000001688 00000 n 
-0000001796 00000 n 
-0000001902 00000 n 
+0000000832 00000 n 
+0000000952 00000 n 
+0000000983 00000 n 
+0000001224 00000 n 
+0000001466 00000 n 
+0000001579 00000 n 
+0000001689 00000 n 
+0000001797 00000 n 
+0000001903 00000 n 
 trailer
 <<
 /Size 15
@@ -122,5 +122,5 @@ trailer
 /Info 4 0 R
 >>
 startxref
-2249
+2250
 %%EOF

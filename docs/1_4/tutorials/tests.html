@@ -141,6 +141,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menupageitem">
 <a title="Testing Usecases" href="#Testing+Usecases">Testing Usecases...</a>
 </div>
+<div class="menupageitem">
+<a href="#Canoo+WebTests">Canoo WebTests</a>
+</div>
 </div>
 </div>
 <div class="menuitem">
@@ -211,9 +214,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/link-management.html">Link Management</a>
-</div>
-<div class="menuitem">
-<a href="../../../docs/1_4/reference/notification.html">Notification</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/repository/index.html">Repository</a>
@@ -335,7 +335,7 @@ document.write("Last Published: " + document.lastModified);
   |alternative credits
   +-->
 <div id="credit2">
-<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
 </div>
 </div>
 <!--+
@@ -533,6 +533,39 @@ public class LoginTest extends AbstractUsecaseTest {
     }
 
 }</pre>
+</div>
+    
+    
+<a name="N100A1"></a><a name="Canoo+WebTests"></a>
+<h2 class="h3">Canoo WebTests</h2>
+<div class="section">
+<p>
+        
+<a href="http://webtest.canoo.com/webtest/manual/WebTestHome.html">Canoo WebTest</a>
+        is an open source tool for automated testing of web applications.
+        You can add web test files to modules. To run the web tests, follow these steps: 
+      </p>
+<ol>
+        
+<li>Download the Canoo WebTest binary distribution from their
+          <a href="http://webtest.canoo.com/webtest/manual/Downloads.html">download page</a>.</li>
+        
+<li>Configure your Canoo WebTest home directory in <span class="codefrag">local.build.properties</span>:
+<pre class="code">
+#------------------------------------------------------------------------------------
+# Home directory of Canoo WebTest installation
+
+webtest.home=/usr/local/canoo-webtest
+</pre>
+          
+</li>
+          
+<li>Run the tests:
+            <pre class="code">&gt; ./build.sh modules.test.canoo</pre>
+          
+</li>
+      
+</ol>
 </div>
     
   
