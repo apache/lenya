@@ -39,7 +39,7 @@ public class URLInformation {
     public String getArea() {
         if (this.area == null) {
             String completeArea = getCompleteArea();
-            if (completeArea.equals(Publication.DAV_AREA)) {
+            if (Publication.DAV_AREA.equals(completeArea)) {
                 this.area = Publication.AUTHORING_AREA;
             } else {
                 this.area = completeArea;

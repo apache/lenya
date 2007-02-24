@@ -95,10 +95,14 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             // have to exist
 
             URLInformation info = new URLInformation(webappUrl);
+            // Danger, Will Robinson! If area or pubId is null, webappUrl.substring()
+            // will be out of bounds, because null becomes "null" in string concatenation
             String pubId = info.getPublicationId();
             String area = info.getArea();
-            String prefix = "/" + pubId + "/";
-            String prefixWithArea = prefix + area;
+            String prefix = "/" + ((pubId != null) ? pubId : "");
+            // String prefix = "/" + pubId + "/";
+            String prefixWithArea = prefix + ((area != null) ? area : "");
+            // String prefixWithArea = prefix + area;
             String authoringUrl = prefix + Publication.AUTHORING_AREA
                     + webappUrl.substring(prefixWithArea.length());
 
