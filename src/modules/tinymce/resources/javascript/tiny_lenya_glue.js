@@ -46,8 +46,6 @@ function insertCallback(content, editor_id) {
 
 function LenyaSaveContent(element_id, html, body) {
   // Do some custom HTML cleanup
-  alert("LenyaSaveContent callback invoked. I'll do some clean-up now (\"&nbsp;\" -> \"&#160;\").");
-
   // this is necessary since tinymce inserts &nbsp; entities into
   // empty <p>s and <td>s regardless of the "entity_encoding" setting,
   // and these will break Lenya as they are not defined by default.
