@@ -59,7 +59,7 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline type="profile-noncaching">
+    <map:pipeline>
     
       <map:match pattern="link-show" type="step">
         <map:generate src="context://lenya/content/util/empty.xml"/>
