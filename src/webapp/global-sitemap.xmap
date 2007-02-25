@@ -89,9 +89,9 @@
 <!-- =========================== Pipelines ================================= -->
 
     <map:pipeline>
-      <map:match pattern="publications.xml">
+      <map:match pattern="aggregate-publications">
         <map:generate type="directory" src="lenya/pubs"/>
-        <map:transform src="lenya/xslt/util/xinclude.xsl"/>
+        <map:transform src="lenya/xslt/util/aggregate-publications.xsl"/>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
@@ -302,9 +302,10 @@
 
     <map:pipeline>
       <map:match pattern="index.html">
-        <map:aggregate element="lenya" ns="http://apache.org/cocoon/lenya/publication/1.0" prefix="lenya" label="aggregate">
-          <map:part src="cocoon:/publications.xml"/>
-          <map:part src="lenya/content/introduction.xml"/>
+        <map:aggregate element="aggregation-wrapper" label="aggregate">
+          <map:part src="cocoon:/aggregate-publications"/>
+          <map:part src="lenya/content/welcome.xml"/>
+          <map:part src="readme.xml"/>
         </map:aggregate>
         <map:transform src="lenya/xslt/util/welcome.xsl"/>
         <map:call resource="style-cms-page"/>
@@ -362,15 +363,11 @@
 
       <!-- About Publication -->
       <map:match pattern="*/introduction.html">
-        <map:generate src="lenya/pubs/{1}/publication.xml" />
-        <map:transform src="lenya/xslt/util/publication.xsl"/>
-        <map:call resource="style-cms-page"/>
-        <map:serialize />
-      </map:match>
-      <!-- Publication Tests-->
-      <map:match pattern="*/tests.html">
-        <map:generate src="lenya/pubs/{1}/publication-tests.xml" />
-        <map:transform src="lenya/xslt/util/publication.xsl"/>
+        <map:aggregate element="aggregation-wrapper">
+          <map:part src="aggregate-fallback://readme.xml"/>
+          <map:part src="lenya/pubs/{1}/config/publication.xconf"/>
+        </map:aggregate>
+        <map:transform src="lenya/xslt/util/introduction.xsl"/>
         <map:call resource="style-cms-page"/>
         <map:serialize />
       </map:match>

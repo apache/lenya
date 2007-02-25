@@ -19,49 +19,69 @@
 <!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-    >
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns="http://www.w3.org/1999/xhtml"
+>
 
-<xsl:template match="lenya:lenya">
+<xsl:template match="/*">
   <page:page>
-    
-  <page:title>Apache Lenya - Content Management System</page:title>
-  <page:head>
-    <xhtml:meta http-equiv="cache-control" content="no-cache"/>
-    <xhtml:meta http-equiv="pragma" content="no-cache"/>
-  </page:head>  
-  <page:body>
-    <xsl:apply-templates select="xhtml:div[@class = 'lenya-frontpage']"/>
-    <xsl:apply-templates select="lenya:publications"/>
-  </page:body>
+    <page:title>Apache Lenya - Content Management System</page:title>
+    <page:head>
+      <xhtml:meta http-equiv="cache-control" content="no-cache"/>
+      <xhtml:meta http-equiv="pragma" content="no-cache"/>
+    </page:head>  
+    <page:body>
+      <xsl:apply-templates select="lenya:publications"/>
+      <xsl:apply-templates select="page:page"/>
+    </page:body>
   </page:page>
 </xsl:template>
 
 <xsl:template match="lenya:publications">
-<div class="lenya-sidebar">
-<div class="lenya-sidebar-heading">Publications</div>
+  <div class="lenya-sidebar">
+  <div class="lenya-sidebar-heading">Publications</div>
   <div class="lenya-publication-item">
     <strong><a href="index.html?lenya.usecase=templating.createPublicationFromTemplate">New publication</a></strong>
   </div>
-<xsl:for-each select="lenya:publication">
-  <xsl:choose>
-    <xsl:when test="lenya:publication/@lenya:show = 'false'">
-      <!-- do not list this publication. Might be a "template" publication -->
-    </xsl:when>
-    <xsl:otherwise>
-      <div class="lenya-publication-item">
-        <a href="{@pid}/introduction.html">
-        <xsl:value-of select="lenya:publication/lenya:name|lenya:publication/lenya:name/@name"/></a>
-      </div>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:for-each>
-</div>
+  <!-- do not list publications with @show="false" 
+     (can be used to hide template publications -->
+  <xsl:for-each select="lenya:publication[not(@show) or @show != 'false']">
+    <div class="lenya-publication-item">
+      <a>
+        <xsl:attribute name="href"><xsl:value-of select="@dirname"/><xsl:text>/introduction.html</xsl:text></xsl:attribute>
+        <xsl:attribute name="title"><xsl:value-of select="lenya:description"/></xsl:attribute>
+        <xsl:value-of select="lenya:name"/>
+      </a>
+    </div>
+  </xsl:for-each>
+  </div>
 </xsl:template>
+
+<xsl:template match="page:page">
+   <xsl:apply-templates select="page:body/*"/>
+</xsl:template>
+
+<!-- we are aggretating into a new context: 
+     (another good reason to move to xhtml2) -->
+<xsl:template match="xhtml:h1">
+  <h2><xsl:apply-templates select="@*|node()"/></h2>
+</xsl:template>
+<xsl:template match="xhtml:h2">
+  <h3><xsl:apply-templates select="@*|node()"/></h3>
+</xsl:template>
+<xsl:template match="xhtml:h3">
+  <h4><xsl:apply-templates select="@*|node()"/></h4>
+</xsl:template>
+<xsl:template match="xhtml:h4">
+  <h5><xsl:apply-templates select="@*|node()"/></h5>
+</xsl:template>
+<xsl:template match="xhtml:h5|xhtml:h6">
+  <h6><xsl:apply-templates select="@*|node()"/></h6>
+</xsl:template>
+
 
 <xsl:template match="@*|node()">
   <xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy>

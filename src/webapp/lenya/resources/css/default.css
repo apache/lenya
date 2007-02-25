@@ -28,11 +28,16 @@ body {
 }
 
 h1 {
-    font-family: Verdana, sans-serif;
     font-size: 150%;
     padding: 0px;
     margin: 0px;
 }
+
+h2 { font-size: 120%; }
+h3 { font-size: 110%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
 
 p {
     font-size: small;
@@ -41,6 +46,27 @@ p {
 li {
     font-size: small;
 }
+
+td.lenya-content table {
+  margin-top:1em;
+/*
+  border:1px solid #dddccf;
+  border-collapse:collapse;
+*/
+}
+
+td.lenya-content td,td.lenya-content th {
+/*
+  border:1px solid #dddccf;
+  padding: 0 0.25em;
+*/
+}
+
+td.lenya-content th {
+  text-align:left;
+  font-weight:bold;
+}
+
 
 .lenya-header {
     vertical-align: bottom;

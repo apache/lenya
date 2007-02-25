@@ -16,30 +16,34 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: xinclude.xsl 473861 2006-11-12 03:51:14Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0"
+    xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.1"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
     >
 
 <xsl:template match="/">
   <xsl:apply-templates select="dir:directory"/>
 </xsl:template>                                                                                                                             
-<xsl:template match="dir:directory" >
-<lenya:publications>
-  <xsl:for-each select="dir:directory">
-    <lenya:publication pid="{@name}">
-        <xi:include href="lenya/pubs/{@name}/publication.xml">
+
+<xsl:template match="dir:directory">
+  <lenya:publications>
+    <xsl:for-each select="dir:directory">
+      <lenya:publication dirname="{@name}">
+        <xi:include 
+          href="lenya/pubs/{@name}/config/publication.xconf"
+          xpointer="xpointer(/*/*)"
+        >
           <xi:fallback>
             <lenya:name name="{@name}"/>
           </xi:fallback>
         </xi:include>
-    </lenya:publication>
-  </xsl:for-each>
-</lenya:publications>
+      </lenya:publication>
+    </xsl:for-each>
+  </lenya:publications>
 </xsl:template>
 
 </xsl:stylesheet>

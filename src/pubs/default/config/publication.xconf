@@ -18,8 +18,15 @@
 
 <!-- $Id$ -->
 
-<publication>
+<publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" >
 
+  <name>Default Publication</name>
+  <description>This publication is a best practice, getting started publication.</description>
+  <!-- the @...@ macros are evaluated by ant at build time -->
+  <version>@lenya.version@</version>
+  <lenya-version>@lenya.version@</lenya-version>
+  <lenya-revision>@lenya.revision@</lenya-revision>
+  <cocoon-version>2.1.10-dev</cocoon-version>
   <!-- NOTE: The various languages need to be listed for verification and widget building -->
   <languages>
     <language default="true">en</language>
@@ -35,36 +42,41 @@
   <site-manager name="tree"/>
   
   <!-- NOTE: Resource types need to be listed because of the workflow resp. because the workflow depends on the publication and not on the resource type -->
-  <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-types>
+    <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/>
+  </resource-types>
   
   <!-- NOTE: Modules need to be listed because of the menu and i18n -->
-  <module name="editors"/>
-  <module name="xhtml"/>
-  <module name="links"/>
-  <module name="opendocument"/>
-  <module name="cforms"/>
-  <module name="homepage"/>
-  <module name="resource"/>
-  <module name="sitemanagement"/>
-  <module name="sitetree"/>
-  <module name="export"/>
-  <module name="workflow"/>
-  <module name="notification"/>
-  <module name="svg"/>
-  <module name="lucene"/>
-  <module name="development"/>
-  <module name="languageselector"/>
-  <module name="administration"/>
-  <!-- TODO: The goal is to have a blog module ;-) -->
-  <!--
-  <module name="blog"/>
-  -->
+  <modules>
+    <module name="editors"/>
+    <module name="xhtml"/>
+    <module name="links"/>
+    <module name="opendocument"/>
+    <module name="cforms"/>
+    <module name="homepage"/>
+    <module name="resource"/>
+    <module name="sitemanagement"/>
+    <module name="sitetree"/>
+    <module name="export"/>
+    <module name="workflow"/>
+    <module name="notification"/>
+    <module name="svg"/>
+    <module name="lucene"/>
+    <module name="development"/>
+    <module name="languageselector"/>
+    <module name="administration"/>
+    <module name="workflow"/>
+    <!-- TODO: The goal is to have a blog module ;-) -->
+    <!--
+    <module name="blog"/>
+    -->
+  </modules>
 
   <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
   <!-- Relative to webapp context: -->
@@ -80,12 +92,12 @@
   <!--
        For information about these settings, read 
        http://lenya.apache.org/1_2_x/components/deployment/proxying.html
-
-  <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
-  <proxy area="live" ssl="false" url="http://www.host.com/default"/>
-  <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
-  <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
+  <proxies>
+    <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
+    <proxy area="live" ssl="false" url="http://www.host.com/default"/>
+    <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
+    <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
+  </proxies>
   -->
   <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
-  
 </publication>

@@ -30,7 +30,9 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.repository.Node;
 
 /**
- * A publication configuration.
+ * A publication's configuration.
+ * Keep in sync with src/webapp/lenya/resources/schemas/publication.rng!
+ * FIXME: validate publication.xconf before attempting to parse
  */
 public class PublicationConfiguration extends AbstractLogEnabled implements Publication {
 
@@ -43,11 +45,6 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private String instantiatorHint = null;
     private String contentDir = null;
 
-    private static final String ELEMENT_PROXY = "proxy";
-    private static final String ATTRIBUTE_AREA = "area";
-    private static final String ATTRIBUTE_URL = "url";
-    private static final String ATTRIBUTE_SSL = "ssl";
-
     private boolean isConfigLoaded = false;
 
     /**
@@ -56,20 +53,42 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     public static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator
             + "publication.xconf";
 
+    private static final String CONFIGURATION_NAMESPACE = 
+            "http://apache.org/cocoon/lenya/publication/1.1" ;
+
+    // properties marked with "*" are currently not parsed by this class.
+    private static final String ELEMENT_NAME = "name";
+    private static final String ELEMENT_DESCRIPTION = "description"; //*
+    private static final String ELEMENT_LONGDESC = "longdesc"; //*
+    private static final String ELEMENT_VERSION = "version"; //*
+    private static final String ELEMENT_LENYA_VERSION = "lenya-version"; //*
+    private static final String ELEMENT_LENYA_REVISION = "lenya-revision"; //*
+    private static final String ELEMENT_COCOON_VERSION = "cocoon-version"; //*
+    private static final String ELEMENT_LANGUAGES = "languages";
+    private static final String ELEMENT_LANGUAGE = "language";
+    private static final String ATTRIBUTE_DEFAULT_LANGUAGE = "default";
     private static final String ELEMENT_TEMPLATES = "templates";
     private static final String ELEMENT_TEMPLATE = "template";
     private static final String ATTRIBUTE_ID = "id";
+    private static final String ELEMENT_TEMPLATE_INSTANTIATOR = "template-instantiator";
+    private static final String ATTRIBUTE_NAME = "name";
     private static final String ELEMENT_PATH_MAPPER = "path-mapper";
     private static final String ELEMENT_DOCUMENT_BUILDER = "document-builder";
     private static final String ELEMENT_SITE_MANAGER = "site-manager";
-    private static final String ATTRIBUTE_NAME = "name";
-    private static final String ELEMENT_TEMPLATE_INSTANTIATOR = "template-instantiator";
-    private static final String ELEMENT_CONTENT_DIR = "content-dir";
-    private static final String LANGUAGES = "languages";
-    private static final String DEFAULT_LANGUAGE_ATTR = "default";
-    private static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
-    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";
+    private static final String ELEMENT_RESOURCE_TYPES = "resource-types";//*
+    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";//*
     private static final String ATTRIBUTE_WORKFLOW = "workflow";
+    private static final String ELEMENT_MODULES = "modules";//*
+    private static final String ELEMENT_MODULE = "module";//*
+    private static final String ELEMENT_BREADCRUMB_PREFIX = "breadcrumb-prefix";
+    private static final String ELEMENT_CONTENT_DIR = "content-dir";
+    private static final String ELEMENT_LINK_ATTRIBUTE = "link-attribute";
+    private static final String ELEMENT_PROXIES = "proxies";
+    private static final String ELEMENT_PROXY = "proxy";
+    private static final String ATTRIBUTE_AREA = "area";
+    private static final String ATTRIBUTE_URL = "url";
+    private static final String ATTRIBUTE_SSL = "ssl";
+
 
     /**
      * Creates a new instance of Publication
@@ -108,8 +127,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         } else {
             getLogger().debug("Configuration file [" + configFile + "] exists.");
         }
-
-        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+        
+        final boolean ENABLE_XML_NAMESPACES = true;
+        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder(ENABLE_XML_NAMESPACES);
 
         Configuration config;
 
@@ -119,6 +139,13 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
             config = builder.buildFromFile(configFile);
 
             try {
+                // one sanity check for the proper namespace. we should really do that for every element,
+                // but since ELEMENT_PATH_MAPPER is mandatory, this should catch most cases of forgotten namespace.
+                if (config.getChild(ELEMENT_PATH_MAPPER).getNamespace() != CONFIGURATION_NAMESPACE) {
+                   getLogger().warn("Deprecated configuration: the publication configuration elements in "
+                       + configFile + " must be in the " + CONFIGURATION_NAMESPACE + " namespace."
+                       + " See webapp/lenya/resources/schemas/publication.xconf.");
+                }
                 pathMapperClassName = config.getChild(ELEMENT_PATH_MAPPER).getValue();
                 Class pathMapperClass = Class.forName(pathMapperClassName);
                 this.mapper = (DocumentIdToPathMapper) pathMapperClass.newInstance();
@@ -134,12 +161,12 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                         .getAttribute(ATTRIBUTE_NAME);
             }
 
-            Configuration[] _languages = config.getChild(LANGUAGES).getChildren();
+            Configuration[] _languages = config.getChild(ELEMENT_LANGUAGES).getChildren(ELEMENT_LANGUAGE);
             for (int i = 0; i < _languages.length; i++) {
                 Configuration languageConfig = _languages[i];
                 String language = languageConfig.getValue();
                 this.languages.add(language);
-                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null) != null) {
+                if (languageConfig.getAttribute(ATTRIBUTE_DEFAULT_LANGUAGE, null) != null) {
                     this.defaultLanguage = language;
                 }
             }
@@ -149,7 +176,15 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 this.siteManagerName = siteManagerConfiguration.getAttribute(ATTRIBUTE_NAME);
             }
 
-            Configuration[] proxyConfigs = config.getChildren(ELEMENT_PROXY);
+            Configuration[] proxyConfigs = config.getChild(ELEMENT_PROXIES).getChildren(ELEMENT_PROXY);
+            // backwards-compatibility. rip out for lenya releases post 1.4.x:
+            if (proxyConfigs.length == 0) {
+              proxyConfigs = config.getChildren(ELEMENT_PROXY);
+              if (proxyConfigs.length > 0)
+                   getLogger().warn("Deprecated configuration: <proxy> elements in " + configFile
+                       + " must be grouped in a <proxies>...</proxies> element."
+                       + " See webapp/lenya/resources/schemas/publication.xconf.");
+            }
             for (int i = 0; i < proxyConfigs.length; i++) {
                 String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
                 String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
@@ -209,7 +244,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                     e);
         }
 
-        this.breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
+        this.breadcrumbprefix = config.getChild(ELEMENT_BREADCRUMB_PREFIX).getValue("");
 
         isConfigLoaded = true;
     }
