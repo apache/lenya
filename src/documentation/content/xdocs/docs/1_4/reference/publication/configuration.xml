@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document> 
+  <header> 
+    <title>Publication Configuration</title> 
+  </header>
+  <body>
+    
+    <section>
+      <title>The publication.xconf file</title>
+      <p>
+        The main configuration file of a publication is <code>$PUB_HOME/config/publication.xconf</code>.
+        The namespace of this XML file is <code>http://apache.org/cocoon/lenya/publication/1.1</code>.
+      </p>
+      <source xml:space="preserve"><![CDATA[<publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" >]]></source>
+      <p>
+        The first section contains some meta data about the publication which is
+        displayed on overview pages etc.
+      </p>
+      <source xml:space="preserve"><![CDATA[  <name>Default Publication</name>
+  <description>This publication is a best practice, getting started publication.</description>
+  <!-- the @...@ macros are evaluated by ant at build time -->
+  <version>@lenya.version@</version>
+  <lenya-version>@lenya.version@</lenya-version>
+  <lenya-revision>@lenya.revision@</lenya-revision>
+  <cocoon-version>2.1.10-dev</cocoon-version>]]></source>
+      <p>
+        In the languages section you define which content languages should be
+        supported. Exactly one language has to be identified as the default
+        language.
+      </p>
+  <!-- NOTE: The various languages need to be listed for verification and widget building -->
+      <source xml:space="preserve"><![CDATA[  <languages>
+    <language default="true">en</language>
+    <language>de</language>
+    <language>he</language>
+    <language>es</language>
+    <language>fr</language>
+  </languages>]]></source>
+      <p>
+        The following section declares service implementations which are used
+        by the publication.
+      </p>
+      <ul>
+        <li>The <code>template-instantiator</code> element references an <code>Instantiator</code> declaration in
+          <code>cocoon.xconf</code>.</li>
+        <li>The <code>path-mapper</code> element declares the <code>DocumentIdToPathMapper</code> implementation
+          which is used by this publication.</li>
+        <li>The <code>document-builder</code> element references a <code>DocumentBuilder</code> declaration in
+          <code>cocoon.xconf</code>.</li>
+        <li>The <code>site-manager</code> element references a <code>SiteManager</code> declaration in
+          <code>cocoon.xconf</code>.</li>
+      </ul>
+      <source xml:space="preserve"><![CDATA[  <template-instantiator name="default"/>
+  <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
+  <document-builder name="default"/>
+  <site-manager name="tree"/>]]></source>
+  
+      <p>
+        The <code>resource-types</code> section declares all resource types which are
+        used by this publication and assigns them workflow schemas. When the "Create"
+        usecase is invoked without a parameter denoting the resoure type, you can
+        present a list of all these resource types to choose from (this is the default
+        behaviour).
+      </p>
+      <source xml:space="preserve"><![CDATA[  <resource-types>
+    <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/>
+  </resource-types>]]></source>
+  
+      <p>
+        The <code>modules</code> section declares all modules which are used by this
+        publication. This is necessary to generate the menus accordingly and to access
+        the i18n messages from these modules.
+      </p>
+      <source xml:space="preserve"><![CDATA[  <modules>
+    <module name="editors"/>
+    <module name="xhtml"/>
+    <module name="links"/>
+    <module name="opendocument"/>
+    <module name="cforms"/>
+    <module name="homepage"/>
+    <module name="resource"/>
+    <module name="sitemanagement"/>
+    <module name="sitetree"/>
+    <module name="export"/>
+    <module name="workflow"/>
+    <module name="notification"/>
+    <module name="svg"/>
+    <module name="lucene"/>
+    <module name="development"/>
+    <module name="languageselector"/>
+    <module name="administration"/>
+    <module name="workflow"/>
+  </modules>]]></source>
+
+      <p>
+        The optional <code>content-dir</code> element points to the parent directory
+        of the publications <code>content</code> directory. You can use either an
+        absolute file system path, or a path relative to the web application context
+        (e.g. <code>lenya/pubs/default</code>). 
+      </p>
+      <source xml:space="preserve"><![CDATA[  <content-dir src="/home/USERNAME/data/default"/>]]></source>
+      
+      <p>
+        The optional <code>proxies</code> section contains the proxy configuration
+        of this publication. For more information see <a href="site:proxying">Proxying</a>.
+      </p>
+      <source xml:space="preserve"><![CDATA[  <proxies>
+    <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
+    <proxy area="live" ssl="false" url="http://www.host.com/default"/>
+    <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
+    <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
+  </proxies>]]></source>
+      <source xml:space="preserve"><![CDATA[</publication>]]></source>
+    </section>
+    
+  </body>
+</document>
