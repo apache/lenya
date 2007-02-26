@@ -56,7 +56,7 @@ public class AggregatingSource implements Source {
                     String prefix = docElement.getPrefix();
                     String localName = docElement.getLocalName();
 
-                    if (namespaceUri == null || prefix == null) {
+                    if (namespaceUri == null) {
                         this.dom = DocumentHelper.createDocument(null, localName, null);
                     } else {
                         NamespaceHelper helper = new NamespaceHelper(namespaceUri, prefix,
