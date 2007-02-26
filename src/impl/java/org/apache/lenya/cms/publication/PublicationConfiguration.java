@@ -176,29 +176,24 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 this.siteManagerName = siteManagerConfiguration.getAttribute(ATTRIBUTE_NAME);
             }
 
-            Configuration[] proxyConfigs = config.getChild(ELEMENT_PROXIES).getChildren(ELEMENT_PROXY);
-            // backwards-compatibility. rip out for lenya releases post 1.4.x:
-            if (proxyConfigs.length == 0) {
-              proxyConfigs = config.getChildren(ELEMENT_PROXY);
-              if (proxyConfigs.length > 0)
-                   getLogger().warn("Deprecated configuration: <proxy> elements in " + configFile
-                       + " must be grouped in a <proxies>...</proxies> element."
-                       + " See webapp/lenya/resources/schemas/publication.xconf.");
-            }
-            for (int i = 0; i < proxyConfigs.length; i++) {
-                String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
-                String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
-                String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
-
-                Proxy proxy = new Proxy();
-                proxy.setUrl(url);
-
-                Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
-                this.areaSsl2proxy.put(key, proxy);
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(
-                            "Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
-                                    + "]");
+            Configuration proxyConfig = config.getChild(ELEMENT_PROXIES);
+            if (proxyConfig != null) {
+                Configuration[] proxyConfigs = proxyConfig.getChildren(ELEMENT_PROXY);
+                for (int i = 0; i < proxyConfigs.length; i++) {
+                    String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
+                    String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
+                    String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
+    
+                    Proxy proxy = new Proxy();
+                    proxy.setUrl(url);
+    
+                    Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
+                    this.areaSsl2proxy.put(key, proxy);
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug(
+                                "Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
+                                        + "]");
+                    }
                 }
             }
 
@@ -228,14 +223,17 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 getLogger().info("No content directory specified within pub configuration!");
             }
 
-            Configuration[] resourceTypeConfigs = config.getChildren(ELEMENT_RESOURCE_TYPE);
-            for (int i = 0; i < resourceTypeConfigs.length; i++) {
-                String name = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_NAME);
-                this.resourceTypes.add(name);
-
-                String workflow = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_WORKFLOW, null);
-                if (workflow != null) {
-                    this.resourceType2workflow.put(name, workflow);
+            Configuration resourceTypeConfig = config.getChild(ELEMENT_RESOURCE_TYPES);
+            if (resourceTypeConfig != null) {
+                Configuration[] resourceTypeConfigs = resourceTypeConfig.getChildren(ELEMENT_RESOURCE_TYPE);
+                for (int i = 0; i < resourceTypeConfigs.length; i++) {
+                    String name = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_NAME);
+                    this.resourceTypes.add(name);
+    
+                    String workflow = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_WORKFLOW, null);
+                    if (workflow != null) {
+                        this.resourceType2workflow.put(name, workflow);
+                    }
                 }
             }
 
