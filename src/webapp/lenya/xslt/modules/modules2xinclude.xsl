@@ -19,12 +19,12 @@
 <!-- $Id: xinclude.xsl 123414 2004-12-27 14:52:24Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns="http://apache.org/cocoon/lenya/publication/1.1"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
     xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
-    >
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns="http://apache.org/cocoon/lenya/publication/1.1"
+>
 
   <xsl:param name="area"/>
 

@@ -205,8 +205,9 @@
         <map:serialize type="xml"/>
       </map:match>
       
+    </map:pipeline>
       <!-- menus -->
-      
+    <map:pipeline type="profile-noncaching">  
       <!-- menu-xml/modules -->
       <!-- menu-xml/modules/{pub-id}/{area}.xml -->
       <map:match pattern="menu-xml/modules/*/*.xml">
@@ -217,8 +218,9 @@
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
+    </map:pipeline>
 
-
+    <map:pipeline>
       <!-- menu-xml/module/{area}/{module-id}.xml -->
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
