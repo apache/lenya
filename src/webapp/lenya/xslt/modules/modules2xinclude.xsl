@@ -19,23 +19,22 @@
 <!-- $Id: xinclude.xsl 123414 2004-12-27 14:52:24Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
-    xmlns:dir="http://apache.org/cocoon/directory/2.0"
     xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns="http://apache.org/cocoon/lenya/publication/1.1"
->
+    xmlns:pub="http://apache.org/cocoon/lenya/publication/1.1"
+    >
 
   <xsl:param name="area"/>
 
-  <xsl:template match="publication">
+  <xsl:template match="pub:publication">
     <menu:menu>
-      <xsl:apply-templates select="modules/module"/>
+      <xsl:apply-templates select="pub:modules/pub:module"/>
     </menu:menu>
   </xsl:template>
 
-  <xsl:template match="module">
-    <xsl:if test="not(preceding-sibling::module[@name = current()/@name])">
+  <xsl:template match="pub:module">
+    <xsl:if test="not(preceding-sibling::pub:module[@name = current()/@name])">
       <xi:include href="cocoon:/menu-xml/module/{$area}/{@name}.xml" xpointer="xpointer(/*/*)"/>
     </xsl:if>
   </xsl:template>
