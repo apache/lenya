@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>Lenya @VERSION@</name>
+  <name>Lenya @VERSION@ pubconf</name>
   <comment></comment>
   <projects>
     <project>@COCOON_PROJECT@</project>
