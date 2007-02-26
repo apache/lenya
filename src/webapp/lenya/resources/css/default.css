@@ -20,7 +20,7 @@
 @import url(menu.css);
 @import url(tabs.css);
 @import url(boxes.css);
-
+  
 body {
     margin: 0px;
     padding: 0px;
@@ -46,27 +46,6 @@ p {
 li {
     font-size: small;
 }
-
-td.lenya-content table {
-  margin-top:1em;
-/*
-  border:1px solid #dddccf;
-  border-collapse:collapse;
-*/
-}
-
-td.lenya-content td,td.lenya-content th {
-/*
-  border:1px solid #dddccf;
-  padding: 0 0.25em;
-*/
-}
-
-td.lenya-content th {
-  text-align:left;
-  font-weight:bold;
-}
-
 
 .lenya-header {
     vertical-align: bottom;
