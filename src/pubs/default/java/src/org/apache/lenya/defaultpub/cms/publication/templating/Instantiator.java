@@ -60,16 +60,26 @@ public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
     protected static final String[] sourcesToCopy = { 
-//            org.apache.lenya.cms.publication.PublicationConfiguration.CONFIGURATION_FILE, 
             "config/publication.xconf",
             "config/ac/ac.xconf", "config/ac/policies/", "config/ac/usecase-policies.xml", 
             "config/workflow/workflow.xml",
             "config/" + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE};
 
-    /*
-     * "config/cocoon-xconf/index_manager_index.xconf", "config/cocoon-xconf/index_manager.xconf",
-     */
-
+    // the following stuff should actually come from PublicationConfiguration, but there's currently no way to get at it.
+    // the correct solution suggested by andreas is not to meddle with config files here at all, but instead implement
+    // appropriate setter functions in the Publication class. postponed to after 1.4.
+    // thus, don't waste too much effort on this file, it's all an intermediate hack.
+    private static final String CONFIGURATION_FILE = "config/publication.xconf";
+    private static final String CONFIGURATION_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
+    private static final String ELEMENT_NAME = "name";
+    private static final String ELEMENT_TEMPLATES = "templates";
+    private static final String ELEMENT_TEMPLATE = "template";
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ELEMENT_RESOURCE_TYPES = "resource-types";//*
+    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";//*
+    private static final String ELEMENT_MODULES = "modules";//*
+    private static final String ELEMENT_MODULE = "module";//*
+ 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
      *      java.lang.String, java.lang.String)
@@ -120,12 +130,12 @@ public class Instantiator extends AbstractLogEnabled implements
         ModifiableSource metaSource = null;
         try {
             metaSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/publication.xconf");
+                    + newPublicationId + "/" + CONFIGURATION_FILE);
             Document metaDoc = DocumentHelper.readDocument(metaSource.getInputStream());
-            NamespaceHelper helper = new NamespaceHelper("http://apache.org/cocoon/lenya/publication/1.1",
-                    "lenya",
+            NamespaceHelper helper = new NamespaceHelper(CONFIGURATION_NAMESPACE,
+                    "",
                     metaDoc);
-            Element nameElement = helper.getFirstChild(metaDoc.getDocumentElement(), "name");
+            Element nameElement = helper.getFirstChild(metaDoc.getDocumentElement(), ELEMENT_NAME);
             DocumentHelper.setSimpleElementText(nameElement, name);
 
             save(metaDoc, metaSource);
@@ -145,15 +155,15 @@ public class Instantiator extends AbstractLogEnabled implements
         try {
 
             configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/publication.xconf");
+                    + newPublicationId + "/" + CONFIGURATION_FILE);
 
             final boolean ENABLE_XML_NAMESPACES = true;
             DefaultConfiguration config = 
                     (DefaultConfiguration) new DefaultConfigurationBuilder(ENABLE_XML_NAMESPACES).build(configSource.getInputStream());
             addTemplateConfiguration(template, config);
             
-            removeChildren(config.getMutableChild("modules"), "module");
-            removeChildren(config.getMutableChild("resource-types"), "resource-type");
+            removeChildren(config.getMutableChild(ELEMENT_MODULES), ELEMENT_MODULE);
+            removeChildren(config.getMutableChild(ELEMENT_RESOURCE_TYPES), ELEMENT_RESOURCE_TYPE);
             
             OutputStream oStream = configSource.getOutputStream();
             new DefaultConfigurationSerializer().serialize(oStream, config);
@@ -178,18 +188,18 @@ public class Instantiator extends AbstractLogEnabled implements
     }
 
     protected void addTemplateConfiguration(Publication template, DefaultConfiguration config) throws ConfigurationException {
-        MutableConfiguration templatesConfig = config.getMutableChild("templates", false);
+        MutableConfiguration templatesConfig = config.getMutableChild(ELEMENT_TEMPLATES, false);
         if (templatesConfig == null) {
-            templatesConfig = new DefaultConfiguration("templates");
+            templatesConfig = new DefaultConfiguration(ELEMENT_TEMPLATES, null, CONFIGURATION_NAMESPACE, "");
             config.addChild(templatesConfig);
         } else {
-            MutableConfiguration[] templateConfigs = templatesConfig.getMutableChildren("template");
+            MutableConfiguration[] templateConfigs = templatesConfig.getMutableChildren(ELEMENT_TEMPLATE);
             for (int i = 0; i < templateConfigs.length; i++) {
                 templatesConfig.removeChild(templateConfigs[i]);
             }
         }
-        DefaultConfiguration templateConfig = new DefaultConfiguration("template");
-        templateConfig.setAttribute("id", template.getId());
+        DefaultConfiguration templateConfig = new DefaultConfiguration(ELEMENT_TEMPLATE, null, CONFIGURATION_NAMESPACE, "");
+        templateConfig.setAttribute(ATTRIBUTE_ID, template.getId());
         templatesConfig.addChild(templateConfig);
     }
 
