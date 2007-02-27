@@ -148,8 +148,8 @@ public class Instantiator extends AbstractLogEnabled implements
                     + newPublicationId + "/config/publication.xconf");
 
             final boolean ENABLE_XML_NAMESPACES = true;
-            MutableConfiguration config = 
-                    (MutableConfiguration) new DefaultConfigurationBuilder(ENABLE_XML_NAMESPACES).build(configSource.getInputStream());
+            DefaultConfiguration config = 
+                    (DefaultConfiguration) new DefaultConfigurationBuilder(ENABLE_XML_NAMESPACES).build(configSource.getInputStream());
             addTemplateConfiguration(template, config);
             
             removeChildren(config.getMutableChild("modules"), "module");
@@ -177,7 +177,7 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
-    protected void addTemplateConfiguration(Publication template, MutableConfiguration config) throws ConfigurationException {
+    protected void addTemplateConfiguration(Publication template, DefaultConfiguration config) throws ConfigurationException {
         MutableConfiguration templatesConfig = config.getMutableChild("templates", false);
         if (templatesConfig == null) {
             templatesConfig = new DefaultConfiguration("templates");
