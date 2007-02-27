@@ -28,7 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.MutableConfiguration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
@@ -44,6 +44,7 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
+//import org.apache.lenya.cms.publication.PublicationConfiguration;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -58,9 +59,11 @@ import org.xml.sax.SAXException;
 public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
-    protected static final String[] sourcesToCopy = { "publication.xml",
-            "config/publication.xconf", "config/ac/ac.xconf",
-            "config/ac/policies/", "config/ac/usecase-policies.xml", "config/workflow/workflow.xml",
+    protected static final String[] sourcesToCopy = { 
+//            org.apache.lenya.cms.publication.PublicationConfiguration.CONFIGURATION_FILE, 
+            "config/publication.xconf",
+            "config/ac/ac.xconf", "config/ac/policies/", "config/ac/usecase-policies.xml", 
+            "config/workflow/workflow.xml",
             "config/" + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE};
 
     /*
@@ -117,9 +120,9 @@ public class Instantiator extends AbstractLogEnabled implements
         ModifiableSource metaSource = null;
         try {
             metaSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/publication.xml");
+                    + newPublicationId + "/config/publication.xconf");
             Document metaDoc = DocumentHelper.readDocument(metaSource.getInputStream());
-            NamespaceHelper helper = new NamespaceHelper("http://apache.org/cocoon/lenya/publication/1.0",
+            NamespaceHelper helper = new NamespaceHelper("http://apache.org/cocoon/lenya/publication/1.1",
                     "lenya",
                     metaDoc);
             Element nameElement = helper.getFirstChild(metaDoc.getDocumentElement(), "name");
@@ -143,11 +146,14 @@ public class Instantiator extends AbstractLogEnabled implements
 
             configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/publication.xconf");
-            DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder().build(configSource.getInputStream());
+
+            final boolean ENABLE_XML_NAMESPACES = true;
+            MutableConfiguration config = 
+                    (MutableConfiguration) new DefaultConfigurationBuilder(ENABLE_XML_NAMESPACES).build(configSource.getInputStream());
             addTemplateConfiguration(template, config);
             
-            removeChildren(config, "module");
-            removeChildren(config, "resource-type");
+            removeChildren(config.getMutableChild("modules"), "module");
+            removeChildren(config.getMutableChild("resource-types"), "resource-type");
             
             OutputStream oStream = configSource.getOutputStream();
             new DefaultConfigurationSerializer().serialize(oStream, config);
@@ -171,14 +177,13 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
-    protected void addTemplateConfiguration(Publication template, DefaultConfiguration config) {
-        DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates",
-                false);
+    protected void addTemplateConfiguration(Publication template, MutableConfiguration config) throws ConfigurationException {
+        MutableConfiguration templatesConfig = config.getMutableChild("templates", false);
         if (templatesConfig == null) {
             templatesConfig = new DefaultConfiguration("templates");
             config.addChild(templatesConfig);
         } else {
-            Configuration[] templateConfigs = templatesConfig.getChildren("template");
+            MutableConfiguration[] templateConfigs = templatesConfig.getMutableChildren("template");
             for (int i = 0; i < templateConfigs.length; i++) {
                 templatesConfig.removeChild(templateConfigs[i]);
             }
@@ -188,8 +193,8 @@ public class Instantiator extends AbstractLogEnabled implements
         templatesConfig.addChild(templateConfig);
     }
 
-    protected void removeChildren(DefaultConfiguration config, String name) {
-        Configuration[] moduleConfigs = config.getChildren(name);
+    protected void removeChildren(MutableConfiguration config, String name) throws ConfigurationException {
+        MutableConfiguration[] moduleConfigs = config.getMutableChildren(name);
         for (int i = 0; i < moduleConfigs.length; i++) {
             config.removeChild(moduleConfigs[i]);
         }
