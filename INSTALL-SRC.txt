@@ -18,7 +18,7 @@
 	  version 1.4.2 or newer, 1.5.x works with some limitations
 	  (see http://issues.apache.org/bugzilla/show_bug.cgi?id=32923)
 
-	* Apache Cocoon, version 2.1.7
+	* Apache Cocoon, version 2.1.7 or newer
 	  Available from http://cocoon.apache.org/mirror.cgi
 
 	* Apache Tomcat, version 5
