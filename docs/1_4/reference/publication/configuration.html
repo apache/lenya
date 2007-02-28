@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>site: Protocol</title>
+<title>Publication Configuration</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
@@ -171,10 +171,10 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.4', '../../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Publications</div>
-<div id="menu_1.1.6.4" class="menuitemgroup">
-<div class="menuitem">
-<a href="../../../../docs/1_4/reference/publication/configuration.html">Configuration</a>
+<div onclick="SwitchMenu('menu_selected_1.1.6.4', '../../../../skin/')" id="menu_selected_1.1.6.4Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Publications</div>
+<div id="menu_selected_1.1.6.4" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Configuration</div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/publication/publication-templating/index.html">Publication Templating</a>
@@ -189,8 +189,8 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/metadata.html">Meta data</a>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.6.8', '../../../../skin/')" id="menu_selected_1.1.6.8Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Protocols</div>
-<div id="menu_selected_1.1.6.8" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.1.6.8', '../../../../skin/')" id="menu_1.1.6.8Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.8" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/protocols/index.html">Overview</a>
 </div>
@@ -200,16 +200,8 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">error:site:</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#Relative+Syntax">Relative Syntax</a>
-</div>
-<div class="menupageitem">
-<a href="#Absolute+Syntax">Absolute Syntax</a>
-</div>
-</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/site.html">error:site:</a>
 </div>
 </div>
 <div class="menuitem">
@@ -346,66 +338,127 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="site.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="configuration.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>site: Protocol</h1>
+<h1>Publication Configuration</h1>
     
-<p>
-      The <span class="codefrag">site:</span> protocol allows to access the source of a Lenya document without knowing the
-      underlying storage structure. If the relative syntax is used, only the language and the path of
-      the document in the site structure are needed.
-      If the absolute syntax is used, the publication id and the area has to be specified additionally.
-    </p>
     
-<a name="N10013"></a><a name="Relative+Syntax"></a>
-<h2 class="h3">Relative Syntax</h2>
+<a name="N1000D"></a><a name="The+publication.xconf+file"></a>
+<h2 class="h3">The publication.xconf file</h2>
 <div class="section">
 <p>
-        The relative syntax is used to access Lenya documents in the current context, i.e. the
-        current publication and area is used to resolve the document's location.
+        The main configuration file of a publication is <span class="codefrag">$PUB_HOME/config/publication.xconf</span>.
+        The namespace of this XML file is <span class="codefrag">http://apache.org/cocoon/lenya/publication/1.1</span>.
       </p>
+<pre class="code">&lt;publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" &gt;</pre>
 <p>
-        
-<em>Syntax: </em><span class="codefrag">site:/&lt;language&gt;&lt;path&gt;</span>
-      
-</p>
+        The first section contains some meta data about the publication which is
+        displayed on overview pages etc.
+      </p>
+<pre class="code">  &lt;name&gt;Default Publication&lt;/name&gt;
+  &lt;description&gt;This publication is a best practice, getting started publication.&lt;/description&gt;
+  &lt;!-- the @...@ macros are evaluated by ant at build time --&gt;
+  &lt;version&gt;@lenya.version@&lt;/version&gt;
+  &lt;lenya-version&gt;@lenya.version@&lt;/lenya-version&gt;
+  &lt;lenya-revision&gt;@lenya.revision@&lt;/lenya-revision&gt;
+  &lt;cocoon-version&gt;2.1.10-dev&lt;/cocoon-version&gt;</pre>
 <p>
+        In the languages section you define which content languages should be
+        supported. Exactly one language has to be identified as the default
+        language.
+      </p>
+<pre class="code">  &lt;languages&gt;
+    &lt;language default="true"&gt;en&lt;/language&gt;
+    &lt;language&gt;de&lt;/language&gt;
+    &lt;language&gt;he&lt;/language&gt;
+    &lt;language&gt;es&lt;/language&gt;
+    &lt;language&gt;fr&lt;/language&gt;
+  &lt;/languages&gt;</pre>
+<p>
+        The following section declares service implementations which are used
+        by the publication.
+      </p>
+<ul>
         
-<strong>Example</strong>
+<li>The <span class="codefrag">template-instantiator</span> element references an <span class="codefrag">Instantiator</span> declaration in
+          <span class="codefrag">cocoon.xconf</span>.</li>
+        
+<li>The <span class="codefrag">path-mapper</span> element declares the <span class="codefrag">DocumentIdToPathMapper</span> implementation
+          which is used by this publication.</li>
+        
+<li>The <span class="codefrag">document-builder</span> element references a <span class="codefrag">DocumentBuilder</span> declaration in
+          <span class="codefrag">cocoon.xconf</span>.</li>
+        
+<li>The <span class="codefrag">site-manager</span> element references a <span class="codefrag">SiteManager</span> declaration in
+          <span class="codefrag">cocoon.xconf</span>.</li>
       
-</p>
-<pre class="code">
-&lt;!-- match authoring/{path}_{language}.html --&gt;
-&lt;map:match pattern="authoring/**_*.html"&gt;
-  &lt;map:generate src="site:/{2}/{1}"/&gt;
-  ...
-&lt;/map:match&gt;
-</pre>
+</ul>
+<pre class="code">  &lt;template-instantiator name="default"/&gt;
+  &lt;path-mapper&gt;org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper&lt;/path-mapper&gt;
+  &lt;document-builder name="default"/&gt;
+  &lt;site-manager name="tree"/&gt;</pre>
+<p>
+        The <span class="codefrag">resource-types</span> section declares all resource types which are
+        used by this publication and assigns them workflow schemas. When the "Create"
+        usecase is invoked without a parameter denoting the resoure type, you can
+        present a list of all these resource types to choose from (this is the default
+        behaviour).
+      </p>
+<pre class="code">  &lt;resource-types&gt;
+    &lt;resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/&gt;
+  &lt;/resource-types&gt;</pre>
+<p>
+        The <span class="codefrag">modules</span> section declares all modules which are used by this
+        publication. This is necessary to generate the menus accordingly and to access
+        the i18n messages from these modules.
+      </p>
+<pre class="code">  &lt;modules&gt;
+    &lt;module name="editors"/&gt;
+    &lt;module name="xhtml"/&gt;
+    &lt;module name="links"/&gt;
+    &lt;module name="opendocument"/&gt;
+    &lt;module name="cforms"/&gt;
+    &lt;module name="homepage"/&gt;
+    &lt;module name="resource"/&gt;
+    &lt;module name="sitemanagement"/&gt;
+    &lt;module name="sitetree"/&gt;
+    &lt;module name="export"/&gt;
+    &lt;module name="workflow"/&gt;
+    &lt;module name="notification"/&gt;
+    &lt;module name="svg"/&gt;
+    &lt;module name="lucene"/&gt;
+    &lt;module name="development"/&gt;
+    &lt;module name="languageselector"/&gt;
+    &lt;module name="administration"/&gt;
+    &lt;module name="workflow"/&gt;
+  &lt;/modules&gt;</pre>
+<p>
+        The optional <span class="codefrag">content-dir</span> element points to the parent directory
+        of the publications <span class="codefrag">content</span> directory. You can use either an
+        absolute file system path, or a path relative to the web application context
+        (e.g. <span class="codefrag">lenya/pubs/default</span>). 
+      </p>
+<pre class="code">  &lt;content-dir src="/home/USERNAME/data/default"/&gt;</pre>
+<p>
+        The optional <span class="codefrag">proxies</span> section contains the proxy configuration
+        of this publication. For more information see <a href="../../../../docs/1_2_x/components/deployment/proxying.html">Proxying</a>.
+      </p>
+<pre class="code">  &lt;proxies&gt;
+    &lt;proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/&gt;
+    &lt;proxy area="live" ssl="false" url="http://www.host.com/default"/&gt;
+    &lt;proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/&gt;
+    &lt;proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/&gt;
+  &lt;/proxies&gt;</pre>
+<pre class="code">&lt;/publication&gt;</pre>
 </div>
     
-<a name="N1002F"></a><a name="Absolute+Syntax"></a>
-<h2 class="h3">Absolute Syntax</h2>
-<div class="section">
-<p>
-        The absolute syntax allows to specify the document's publication and the area.
-      </p>
-<p>
-        
-<em>Syntax: </em><span class="codefrag">site://&lt;publication&gt;/&lt;area&gt;/&lt;language&gt;&lt;path&gt;</span>
-      
-</p>
-<p>
-<strong>Example</strong>
-</p>
-<pre class="code">
-&lt;!-- match {pubId}/{area}/{path}_{language}.html --&gt;
-&lt;map:match pattern="*/*/**_*.html"&gt;
-  &lt;map:generate src="site://{1}/{2}/{4}/{3}"/&gt;
-  ...
-&lt;/map:match&gt;
-</pre>
-</div>
   
 </div>
 <!--+
@@ -428,7 +481,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/reference/protocols/site.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/reference/publication/configuration.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip
