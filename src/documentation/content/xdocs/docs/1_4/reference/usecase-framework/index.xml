@@ -439,7 +439,7 @@ $PUB_HOME
         <title>Overriding JX Templates</title>
         <p>
           Overriding the JX template of a usecase follows the
-          <a href="../publication-templating/index.html">publication templating</a> principle.
+          <a href="site:publication-templating">publication templating</a> principle.
           You just have to put a JX template with the same name in <code>$PUB_HOME/lenya/usecases</code>,
           for instance <code>$PUB_HOME/lenya/usecases/admin/addUser.jx</code>.
         </p>
