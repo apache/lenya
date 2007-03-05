@@ -287,6 +287,13 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     }
 
     /**
+     *
+     */
+    public String getSourceURI() {
+        return getContent().getSourceURI();
+    }
+
+    /**
      * @see org.apache.excalibur.source.Source#getMimeType()
      */
     public String getMimeType() {
