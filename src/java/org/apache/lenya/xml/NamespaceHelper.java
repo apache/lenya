@@ -42,7 +42,7 @@ public class NamespaceHelper {
 
     /**
      * Creates a new instance of NamespaceHelper using an existing document. The
-     * document is not affected. If you omit the prefix, the default namespace
+     * document is not affected. If the prefix is <code>null</code>, the default namespace
      * is used.
      * @param _document The document.
      * @param _namespaceUri The namespace URI.
@@ -51,7 +51,6 @@ public class NamespaceHelper {
     public NamespaceHelper(String _namespaceUri, String _prefix, Document _document) {
 
         Assert.notNull("namespace URI", _namespaceUri);
-        Assert.notNull("prefix", _prefix);
         Assert.notNull("DOM", _document);
 
         this.namespaceUri = _namespaceUri;
@@ -63,7 +62,7 @@ public class NamespaceHelper {
      * <p>
      * Creates a new instance of NamespaceHelper. A new document is created
      * using a document element in the given namespace with the given prefix. If
-     * you omit the prefix, the default namespace is used.
+     * the prefix is null, the default namespace is used.
      * </p>
      * <p>
      * NamespaceHelper("http://www.w3.org/2000/svg", "svg", "svg"):<br/>
@@ -113,7 +112,7 @@ public class NamespaceHelper {
      * @return The qualified name, i.e. prefix:localName.
      */
     public static String getQualifiedName(String prefix, String localName) {
-        if (prefix.equals("")) {
+        if (prefix == null || prefix.equals("")) {
             return localName;
         }
         return prefix + ":" + localName;
