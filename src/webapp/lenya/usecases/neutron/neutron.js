@@ -39,7 +39,7 @@ function open() {
    var document = flowHelper.getPageEnvelope(cocoon).getDocument();
 
    var path = "/" + document.getId() + "/index_" + document.getLanguage() + ".xml";
-   cocoon.sendPage("xml/" + path);
+   cocoon.sendPage("xmlsource/" + path);
   
 }
 
@@ -96,10 +96,13 @@ function checkout () {
     
   } catch (e) {
     cocoon.response.setStatus(500);
-    cocoon.sendPage("exception-checkout.jx", {"message": e});
+
+    var user = e.getCheckOutUsername();
+    var date = e.getCheckOutDate(); 
+    cocoon.sendPage("exception-checkout.jx", {"user": user, "date": date });
     return;
   }
-  cocoon.sendPage("xml/" + path);
+  cocoon.sendPage("xmlsource/" + path);
 }
 
 
@@ -153,7 +156,7 @@ function lock() {
     cocoon.sendPage("exception-checkout.jx", {"message" : e});
     return;
   }
-  cocoon.sendPage("xml/" + path);
+  cocoon.sendPage("xmlsource/" + path);
  
 }
 
