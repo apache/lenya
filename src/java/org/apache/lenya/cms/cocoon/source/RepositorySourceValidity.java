@@ -34,12 +34,8 @@ public class RepositorySourceValidity implements SourceValidity {
      * @param source The source this validity is for.
      */
     public RepositorySourceValidity(RepositorySource source) {
-        this.sourceUri = source.getNode().getSourceURI();
-        try {
-            this.lastModified = source.getNode().getLastModified();
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
+        this.sourceUri = source.getSourceURI();
+        this.lastModified = source.getLastModified();
     }
 
     public int isValid() {

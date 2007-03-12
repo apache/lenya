@@ -28,7 +28,7 @@
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="0" />
 
-    <sample-name>homepage.xml</sample-name>
+    <sample-name>fallback://lenya/modules/homepage/samples/homepage.xml</sample-name>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@data"/>
     <format name="xhtml" uri="cocoon://modules/homepage/xhtml.xml"/>

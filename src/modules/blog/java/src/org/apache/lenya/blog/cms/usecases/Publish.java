@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.workflow.usecases;
+package org.apache.lenya.blog.cms.usecases;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,6 +34,7 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflowable;
 import org.apache.lenya.xml.DocumentHelper;
@@ -93,10 +94,7 @@ public class Publish extends DocumentUsecase {
                 return;
             }
 
-            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), document, event)) {
-                UsecaseWorkflowHelper.addWorkflowError(this, event, document);
-            }
-
+            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, event, document, getLogger());
         }
     }
 
