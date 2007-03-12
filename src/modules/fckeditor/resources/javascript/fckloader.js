@@ -27,7 +27,7 @@ function fckloader(host, requesturi, contextPath)
   oFCKeditor.Config[ "BaseHref" ] = host + requesturi ;
   oFCKeditor.Config["CustomConfigurationsPath"] = contextPath + "/modules/fckeditor/javascript/fckconfig.js"  ;
   oFCKeditor.ToolbarSet = 'Lenya' ;
-  oFCKeditor.Config[ "ImageBrowserURL" ] = host + requesturi +'?lenya.usecase=fckeditor.insertImage' ;
-  oFCKeditor.Config[ "LinkBrowserURL" ] = host + requesturi +'?lenya.module=fckeditor&lenya.step=link-show&language=en' ;
+  oFCKeditor.Config[ "ImageBrowserURL" ] = requesturi +'?lenya.usecase=fckeditor.insertImage' ;
+  oFCKeditor.Config[ "LinkBrowserURL" ] = requesturi +'?lenya.module=fckeditor&lenya.step=link-show&language=en' ;
   oFCKeditor.ReplaceTextarea() ;
 }
