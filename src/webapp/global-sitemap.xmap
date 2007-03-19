@@ -123,11 +123,18 @@
       <map:match pattern="lenya/**">
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-            
+      
 
       <!-- Lenya page transformation for adding a Lenya menu -->
       <!-- lenya-page/{publication-id}/{area}/... -->
       <map:match pattern="lenya-page/*/*/**">
+        
+        <!-- no menu for revisions -->
+        <map:match type="request-parameter" pattern="lenya.revision">
+          <map:generate src="lenya/xslt/util/identity.xsl"/>
+          <map:serialize type="xml"/>
+        </map:match>
+        
         <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
           <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
           <map:part src="cocoon:/menu-xml/modules/{1}/{2}.xml" strip-root="true"/>
