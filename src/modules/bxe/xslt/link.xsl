@@ -62,72 +62,62 @@
           ALL_AREAS = "authoring"
           PIPELINE_PATH = '/authoring/sitetree-fragment.xml'
         </script>
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td valign="top" width="20%">
-              <div id="lenya-info-treecanvas">
-                <!-- Build the tree. -->
-                <table border="0" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <xsl:call-template name="languagetabs">
-                      <xsl:with-param name="tablanguages">
-                        <xsl:value-of select="$languages"/>
-                      </xsl:with-param>
-                    </xsl:call-template>
-                  </tr>
-                </table>
-                
-                <div id="lenya-info-tree">
-                  <div id="tree">
-                    <script type="text/javascript">
-                      buildTree();
-                    </script>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <form action="" name="link" id="link" onsubmit="insertLink()">
-                <table class="lenya-table-noborder">
-                  <tr>
-                    <td colspan="2" class="lenya-form-caption">You can either click on a node in the tree for an internal link or enter a link in the URL field. </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">&#160;</td>
-                  </tr>
-                  <tr>
-                    <td class="lenya-form-caption"><i18n:text>URL</i18n:text>:</td>
-                    <td>
-                      <input class="lenya-form-element" type="text" name="url"/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
-                    <td>
-                      <input class="lenya-form-element" type="text" name="title"/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="lenya-form-caption">Link text:</td>
-                    <td>
-                      <input class="lenya-form-element" 
-                        type="text" 
-                        name="text"/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">&#160;</td>
-                  </tr>
-                  <tr>
-                    <td/>
-                    <td> <input type="submit" 
-                      value="Insert" name="input-insert"/>
-                    </td>
-                  </tr>
-                </table>
-              </form>   
-            </td>
-          </tr></table>
+        
+        <div id="lenya-info-treecanvas" style="width: 30%">
+          <div class="lenya-tabs">
+            <xsl:call-template name="languagetabs">
+              <xsl:with-param name="tablanguages" select="$languages"/>
+            </xsl:call-template>
+          </div>
+          <div id="lenya-info-tree">
+            <div id="tree">
+              <script type="text/javascript">
+                buildTree();
+              </script>
+            </div>
+          </div>
+        </div>
+        
+        <form action="" name="link" id="link" onsubmit="insertLink()">
+          <table class="lenya-table-noborder">
+            <tr>
+              <td colspan="2" class="lenya-form-caption">You can either click on a node in the tree for an internal link or enter a link in the URL field. </td>
+            </tr>
+            <tr>
+              <td colspan="2">&#160;</td>
+            </tr>
+            <tr>
+              <td class="lenya-form-caption"><i18n:text>URL</i18n:text>:</td>
+              <td>
+                <input class="lenya-form-element" type="text" name="url"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
+              <td>
+                <input class="lenya-form-element" type="text" name="title"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-form-caption">Link text:</td>
+              <td>
+                <input class="lenya-form-element" 
+                  type="text" 
+                  name="text"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">&#160;</td>
+            </tr>
+            <tr>
+              <td/>
+              <td> <input type="submit" 
+                value="Insert" name="input-insert"/>
+              </td>
+            </tr>
+          </table>
+        </form>
+              
       </page:body>
     </page:page>
   </xsl:template>
@@ -169,13 +159,11 @@
   
   <xsl:template name="languagetab">
     <xsl:param name="tablanguage"/>
-    <td>
       <a id="{$tablanguage}">
         <xsl:call-template name="activate">
           <xsl:with-param name="tablanguage" select="$tablanguage"/>
         </xsl:call-template>
       </a>
-    </td>
   </xsl:template>
   
   
