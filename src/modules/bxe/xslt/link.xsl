@@ -33,7 +33,7 @@
   <xsl:param name="publicationid"/>
   <xsl:param name="area"/>
   <xsl:param name="tab"/>
-  <xsl:param name="documentid"/>
+  <xsl:param name="path"/>
   <xsl:param name="documentextension"/>
   <xsl:param name="documenturl"/>
   <xsl:param name="languages"/>
@@ -52,7 +52,7 @@
         <script type="text/javascript" src="{$contextprefix}/modules/bxe/javascript/insertLink.js">&#160;</script>
         <script type="text/javascript" >
           AREA = "<xsl:value-of select="$area"/>";
-          DOCUMENT_ID = "<xsl:value-of select="$documentid"/>";
+          DOCUMENT_ID = "<xsl:value-of select="$path"/>";
           CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
           PUBLICATION_ID = "<xsl:value-of select="$publicationid"/>";
           CHOSEN_LANGUAGE = "<xsl:value-of select="$chosenlanguage"/>";
@@ -181,7 +181,7 @@
   
   <xsl:template name="activate">
     <xsl:param name="tablanguage"/>
-    <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.module=bxe&amp;lenya.step=link-show</xsl:attribute>
+    <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$path"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.module=bxe&amp;lenya.step=link-show</xsl:attribute>
     <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
   </xsl:template>
   
