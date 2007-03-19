@@ -69,6 +69,10 @@ public class Paste extends DocumentUsecase {
 
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         if (clipboard != null) {
+            if(getSourceDocument() == null) {
+                addErrorMessage("No source document");
+                return;
+            }
             String label;
             try {
                 Publication pub = getSourceDocument().getPublication();
