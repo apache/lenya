@@ -109,6 +109,9 @@
   </xsl:template>
   
   
+  <!-- add only first message as title attribute --> 
+  <xsl:template match="menu:message[preceding-sibling::menu:message]"/>
+  
   <xsl:template match="menu:message">
     <xsl:attribute name="title">
       <xsl:value-of select="."/>
