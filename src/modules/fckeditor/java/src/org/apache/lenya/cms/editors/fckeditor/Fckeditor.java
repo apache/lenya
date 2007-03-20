@@ -41,6 +41,7 @@ import org.apache.cocoon.xml.XMLUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -195,6 +196,8 @@ public class Fckeditor extends DocumentUsecase {
                 }
             }
 
+
+
             // Try to clean the xml using xslt
             ResourceType resType = getSourceDocument().getResourceType();
             String[] formats = resType.getFormats();
@@ -221,6 +224,9 @@ public class Fckeditor extends DocumentUsecase {
 
                 saveXMLFile(encoding, content, getSourceDocument().getOutputStream());
             }
+            // Convert URLs back to UUIDs. convert() does a save
+            LinkConverter converter = new LinkConverter(this.manager, getLogger());
+            converter.convertUrlsToUuids(getSourceDocument(),false);
 
             xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
 

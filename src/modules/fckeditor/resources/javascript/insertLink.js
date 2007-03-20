@@ -24,13 +24,16 @@ function insertLink() {
      url = prefix + url;
     }
     window.opener.SetUrl(url); 
-    window.opener.document.getElementById('txtAttTitle').value = title ; 
+    window.opener.document.getElementById('txtAttTitle').value = title ;
+    // set protocol to other so FCK won't append anything
+    window.opener.document.getElementById('cmbLinkProtocol').selectedIndex = 4;
     window.close();
 }
 
-function setLink(src) { 
-    url = src;
-    document.forms["link"].url.value = url;
+function setLink(uuid) { 
+    var language = CHOSEN_LANGUAGE;
+    url = uuid;
+    document.forms["link"].url.value = "lenya-document:" + url + ",lang=" + language;
 }
 
 function LinkTree(doc, treeElement) {
@@ -42,7 +45,7 @@ function LinkTree(doc, treeElement) {
 LinkTree.prototype = new NavTree;
 
 LinkTree.prototype.handleItemClick = function(item, event) {
-    setLink(item.href);
+    setLink(item.uuid);
 }
 
 function buildTree() {

@@ -76,6 +76,7 @@
 
       <map:match pattern="content">
         <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+        <map:transform type="uuid2url"/>
         <map:serialize type="xml-get"/>
       </map:match>
 
