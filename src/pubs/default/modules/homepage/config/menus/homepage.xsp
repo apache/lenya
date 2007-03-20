@@ -45,20 +45,17 @@
                     String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
                     if ("homepage".equals(doctype)) {
                         <block areas="authoring">
-                          <item wf:event="edit">
-                             <xsp:attribute name="href">
-                               <xsp:expr>"?lenya.module=kupu&amp;lenya.step=open"</xsp:expr>
-                             </xsp:attribute>
+                          <item uc:usecase="kupu.edit" href="?">
                              <i18n:text>With Kupu</i18n:text>
                           </item>
-                          <item wf:event="edit" uc:usecase="bxe.edit" href="?">
+                          <item uc:usecase="bxe.edit" href="?">
                             <i18n:text>With BXE</i18n:text>
                           </item>
-                          <item wf:event="edit" uc:usecase="editors.forms">
+                          <item uc:usecase="editors.forms">
                             <xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute>
                             <i18n:text>With Forms</i18n:text>
                           </item>
-                          <item wf:event="edit" uc:usecase="editors.oneform" href="?">
+                          <item uc:usecase="editors.oneform" href="?">
                             <i18n:text>With one Form</i18n:text>
                           </item>
                         </block>
