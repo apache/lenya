@@ -255,7 +255,7 @@
             </xsl:if>
           </xsl:attribute>
           <xsl:call-template name="checkItem"/>
-          <span><xsl:copy-of select="node()[not(self::menu:message)]"/></span>
+          <span><xsl:apply-templates select="i18n:*|text()"/></span>
         </a></li>
       </xsl:when>
       <xsl:otherwise>
@@ -272,11 +272,21 @@
               </xsl:copy>
             </xsl:for-each>
             <xsl:call-template name="checkItem"/>
-            <span><xsl:copy-of select="node()[not(self::menu:message)]"/></span>
+            <span><xsl:apply-templates select="i18n:*|text()"/></span>
           </a>
         </li>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  
+  
+  <xsl:template match="menu:item/text()">
+    <xsl:value-of select="normalize-space(.)"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="menu:item/i18n:*">
+    <xsl:copy-of select="."/>
   </xsl:template>
   
   
