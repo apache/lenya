@@ -124,12 +124,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         Element[] elements = getElementSet().getElements();
         for (int i = 0; i < elements.length; i++) {
             if (elements[i].getActionOnCopy() == Element.ONCOPY_COPY) {
-                String key = elements[i].getName();
-                removeAllValues(key);
-                String[] values = other.getValues(key);
-                for (int j = 0; j < values.length; j++) {
-                    addValue(key, values[j]);
-                }
+                replaceBy(other, elements[i]);
             } else if (elements[i].getActionOnCopy() == Element.ONCOPY_DELETE) {
                 String key = elements[i].getName();
                 removeAllValues(key);
@@ -137,15 +132,19 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         }
     }
 
+    protected void replaceBy(MetaData other, Element element) throws MetaDataException {
+        String key = element.getName();
+        removeAllValues(key);
+        String[] values = other.getValues(key);
+        for (int j = 0; j < values.length; j++) {
+            addValue(key, values[j]);
+        }
+    }
+
     public void forcedReplaceBy(MetaData other) throws MetaDataException {
         Element[] elements = getElementSet().getElements();
         for (int i = 0; i < elements.length; i++) {
-            String key = elements[i].getName();
-            removeAllValues(key);
-            String[] values = other.getValues(key);
-            for (int j = 0; j < values.length; j++) {
-                addValue(key, values[j]);
-            }
+            replaceBy(other, elements[i]);
         }
     }
 
