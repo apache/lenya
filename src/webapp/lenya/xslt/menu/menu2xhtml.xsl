@@ -185,7 +185,7 @@
   </xsl:template>
   
   <xsl:template match="menu:menu" mode="nav">
-    <li id="nav{position()}"><xsl:value-of select="@name"/>
+    <li id="nav{position()}"><i18n:text><xsl:value-of select="@name"/></i18n:text>
       <ul id="menu{position()}">
         <xsl:apply-templates select="menu:block"/>
       </ul>
