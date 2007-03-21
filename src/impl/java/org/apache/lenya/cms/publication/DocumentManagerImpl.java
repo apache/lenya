@@ -101,7 +101,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * Copies meta data from one document to another, whereas both documents
      * will have completely identical meta data afterwards (including workflow
      * etc.). This is only useful if the source document will be deleted
-     * afterwards.
+     * afterwards or for creating a new area version (e.g., during publishing).
      * @param source
      * @param destination
      * @throws PublicationException
@@ -408,7 +408,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             destinationDoc = sourceDoc.getAreaVersion(destinationArea);
             copyDocumentSource(sourceDoc, destinationDoc);
         } else {
-            destinationDoc = addVersion(sourceDoc, destinationArea, language);
+            if (language.equals(sourceDoc.getLanguage()) && !destinationArea.equals(sourceDoc.getArea())) {
+                destinationDoc = duplicateVersion(sourceDoc, destinationArea, language);
+            }
+            else {
+                destinationDoc = addVersion(sourceDoc, destinationArea, language);
+            }
         }
 
         SiteStructure destSite = sourceDoc.getPublication().getArea(destinationArea).getSite();
@@ -596,7 +601,23 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyDocumentSource(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
+        copyContent(sourceDocument, destinationDocument);
+        copyMetaData(sourceDocument, destinationDocument);
+    }
 
+    /**
+     * Duplicates a document source. Meta data are duplicated as they are.
+     * @param sourceDocument The source document.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException when something went wrong.
+     */
+    public void duplicateDocumentSource(Document sourceDocument, Document destinationDocument)
+            throws PublicationException {
+        copyContent(sourceDocument, destinationDocument);
+        copyMetaData(sourceDocument, destinationDocument);
+    }
+
+    protected void copyContent(Document sourceDocument, Document destinationDocument) throws PublicationException {
         boolean useBuffer = true;
 
         OutputStream destOutputStream = null;
@@ -625,9 +646,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } catch (Exception e) {
             throw new PublicationException(e);
         }
-
-        copyMetaData(sourceDocument, destinationDocument);
-
     }
 
     /**
