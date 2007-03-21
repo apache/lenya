@@ -55,15 +55,7 @@
       <map:match pattern="**/index.webdav.xml">
         <map:select type="request-method">
           <map:when test="PUT">
-            <map:generate type="stream"/>
-            <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
-              <map:parameter name="source" value="lenya-document:{page-envelope:document-uuid}"/>
-              <!--
-                <map:parameter name="source" value="content/authoring/entries/{1}.xml"/>
-              -->
-            </map:transform>
-            <map:transform type="write-source"/>
-            <map:serialize type="xml" status-code="204"/> <!-- HTTP status code: 204 No Content -->
+            <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
           </map:when>
           <map:otherwise> <!-- GET -->
             <map:generate src="lenya-document:{page-envelope:document-uuid}"/>
