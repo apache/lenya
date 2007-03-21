@@ -137,6 +137,7 @@
         <verifyProperty name="status" text="404"/>
         
         <!-- publish -->
+        <invoke url="authoring/tutorial.html"/>
         <verifyText text="This page has not been published yet."/>
         <invoke url="authoring/tutorial.html?lenya.usecase=workflow.publish"/>
         <clickButton name="submit"/>
