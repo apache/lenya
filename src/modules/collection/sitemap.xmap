@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: doctypes.xmap 179488 2005-06-02 02:29:39Z gregor $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+<!-- =========================== Components ================================ -->
+
+  <map:pipelines>
+
+    <map:pipeline>
+
+      <!-- collectionWithChildren/{uuid}.xml -->
+      <map:match pattern="collectionWithChildren/*.xml">
+        <map:generate type="sitetree-fragment">
+          <map:parameter name="areas" value="{page-envelope:area}"/>
+          <map:parameter name="area" value="{page-envelope:area}"/>
+          <map:parameter name="path" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{1}:{page-envelope:document-language}:path}"/>
+          <map:parameter name="initial" value="false"/>
+          <map:parameter name="mimetype" value=""/>
+        </map:generate>
+        <map:transform src="fallback://lenya/modules/collection/xslt/sitetree2children.xsl"/>
+        <map:transform src="fallback://lenya/modules/collection/xslt/collection2cinclude.xsl">
+          <map:parameter name="uuid" value="{1}"/>
+        </map:transform>
+        <map:transform type="cinclude"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- metadata-{uuid}.xml -->
+      <map:match pattern="metadata-*.xml">
+        <map:generate type="lenyaMetaData">
+          <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
+          <map:parameter name="area" value="{page-envelope:area}"/>
+          <map:parameter name="uuid" value="{1}"/>
+          <map:parameter name="lang" value="{page-envelope:document-language}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+    </map:pipeline>
+    
+  </map:pipelines>
+</map:sitemap>
