@@ -63,4 +63,13 @@
     <label xml:lang="en">Search</label>
   </node>
   
+  <node id="news" visibleinnav="true">
+    <label xml:lang="en">News</label>
+    <label xml:lang="de">News</label>
+    <node id="installed" visibleinnav="false">
+      <label xml:lang="en">Lenya installed</label>
+      <label xml:lang="de">Lenya installiert</label>
+    </node>
+  </node>
+  
 </site>

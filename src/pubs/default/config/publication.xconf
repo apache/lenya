@@ -42,6 +42,7 @@
   <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="news" workflow="fallback://config/workflow/workflow.xml"/>
   
   <!-- NOTE: Modules need to be listed because of the menu and i18n -->
   <module name="editors"/>
@@ -61,6 +62,7 @@
   <module name="development"/>
   <module name="languageselector"/>
   <module name="administration"/>
+  <module name="news"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>

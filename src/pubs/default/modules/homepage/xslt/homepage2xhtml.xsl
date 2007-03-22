@@ -20,13 +20,16 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
+  xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+  xmlns:ci="http://apache.org/cocoon/include/1.0" 
   >
   
   <xsl:import href="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl"/>
   
   <xsl:param name="pubId"/>
   <xsl:param name="contextPath"/>
+  <xsl:param name="language"/>
+  <xsl:param name="newsPath"/>
   
   <xsl:template match="/xhtml:html">
     <xsl:copy-of select="lenya:meta"/>
@@ -39,6 +42,7 @@
           <xsl:if test="$rendertype = 'edit'">
             <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
           </xsl:if>
+          <ci:include src="cocoon:/news_{$language}.xml"/>
           <xsl:apply-templates select="xhtml:body/node()"/>
         </div>
       </body>
