@@ -97,7 +97,7 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
             IOException, SourceException {
         Map objectModel = ContextHelper.getObjectModel(this.context);
         Request request = ObjectModelHelper.getRequest(objectModel);
-        return new SiteSource(this.manager, request, location);
+        return new SiteSource(this.manager, request, location, getLogger());
     }
 
     /**

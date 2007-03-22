@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -57,7 +59,9 @@ public class SiteSource extends AbstractLogEnabled implements Source {
      * @param request The cocoon request.
      * @param location The source URI.
      */
-    public SiteSource(ServiceManager manager, Request request, String location) {
+    public SiteSource(ServiceManager manager, Request request, String location, Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
+        
         this.manager = manager;
         this.uri = location;
         
