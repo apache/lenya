@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -309,7 +310,17 @@ public abstract class Create extends AbstractUsecase {
                         + "] doesn't provide any samples!");
             }
             setParameter(SAMPLES, samples);
-            setParameter(SAMPLE, samples[0]);
+            String presetSample = getParameterAsString(SAMPLE);
+            if (presetSample == null) {
+                setParameter(SAMPLE, samples[0]);
+            }
+            else {
+                List sampleList = Arrays.asList(samples);
+                if (!sampleList.contains(presetSample)) {
+                    getLogger().warn("Sample [" + presetSample + "] not defined, using default sample.");
+                    setParameter(SAMPLE, samples[0]);
+                }
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
