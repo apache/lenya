@@ -15,8 +15,7 @@
   You will need
 
 	* Java 2 Platform, Standard Edition
-	  version 1.4.2 or newer, 1.5.x works with some limitations
-	  (see http://issues.apache.org/bugzilla/show_bug.cgi?id=32923)
+	  version 1.4.2 or newer, 1.5.x works too.
 
 	* Apache Cocoon, version 2.1.7 or newer
 	  Available from http://cocoon.apache.org/mirror.cgi
@@ -39,7 +38,6 @@
   Build Cocoon
 
 	1.	Copy
-
 			src/lenya-1.2.x/src/cocoon/local.build.properties
 			src/lenya-1.2.x/src/cocoon/local.blocks.properties
 
