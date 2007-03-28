@@ -32,6 +32,7 @@ import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.DublinCore;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publication.task.PublicationTask;
@@ -182,9 +183,9 @@ public class Publish extends PublicationTask {
 
         Document liveDocument =
             getPublication().getAreaVersion(authoringDocument, Publication.LIVE_AREA);
-
+        ResourcesManager rm = new ResourcesManager(liveDocument);
+        rm.deleteResources();
         copyResources(authoringDocument, liveDocument);
-
         triggerWorkflow(authoringDocument);
     }
 
@@ -205,5 +206,4 @@ public class Publish extends PublicationTask {
         Document document = builder.buildDocument(getPublication(), url);
         return document;
     }
-
 }
