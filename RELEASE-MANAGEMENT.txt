@@ -4,7 +4,7 @@
 
    0)
     # Optional: Do a vote if a release shall be done
-    # Send email to dev@lenya.apache.org with Subject: [VOTE] Release 1.2.5
+    # Send email to dev@lenya.apache.org with Subject: [VOTE] Release 1.2.6
 
 
    1)
@@ -24,8 +24,8 @@
 
     svn co -r 373588 https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
     cd branches/BRANCH_1_2_X
-    svn copy branches/BRANCH_1_2_X tags/RELEASE_1_2_5
-    svn ci -m "Release 1_2_5 added" tags/RELEASE_1_2_5
+    svn copy branches/BRANCH_1_2_X tags/RELEASE_1_2_6
+    svn ci -m "Release 1_2_5 added" tags/RELEASE_1_2_6
 
 
    4)
@@ -38,7 +38,7 @@
    5)
     # Lock tagged version (Is this really necessary or just a project policy)
 
-    #??? svn lock tags/RELEASE_1_2_5
+    #??? svn lock tags/RELEASE_1_2_6
 
 
    6)
