@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.lenya.cms.publishing.ExportException;
+import org.apache.lenya.net.WGet;
 import org.apache.tools.ant.BuildException;
 
 
@@ -141,7 +142,7 @@ public class StaticHTMLExporter extends PublicationTask {
                 exportDirectory.mkdirs();
             }
 
-            org.apache.lenya.net.WGet wget = new org.apache.lenya.net.WGet();
+            WGet wget = new WGet();
             wget.setDirectoryPrefix(exportDirectory.getAbsolutePath());
 
             String fullServerURI = serverURI.toString();

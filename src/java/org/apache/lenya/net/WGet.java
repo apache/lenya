@@ -32,6 +32,9 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.lenya.util.HTML;
+import org.apache.lenya.util.SED;
+import org.apache.lenya.util.URLUtil;
 import org.apache.log4j.Logger;
 
 /**
@@ -146,7 +149,7 @@ public class WGet {
                 String link = (String) iterator.next();
 
                 try {
-                    URL child_url = new URL(org.apache.lenya.util.URLUtil.complete(url.toString(),
+                    URL child_url = new URL(URLUtil.complete(url.toString(),
                                 link));
 
                     byte[] child_sresponse = getResource(child_url);
@@ -192,7 +195,7 @@ public class WGet {
         List links = null;
 
         try {
-            org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
+            HTML html = new HTML(url.toString());
             links = html.getImageSrcs(false);
             links.addAll(html.getLinkHRefs(false));
         } catch (Exception e) {
@@ -218,7 +221,7 @@ public class WGet {
     public void substitutePrefix(String filename, String prefixSubstitute, String substituteReplacement) throws IOException {
         log.debug("Replace " + prefixSubstitute + " by " + substituteReplacement);
 
-	org.apache.lenya.util.SED.replaceAll(new File(filename), escapeSlashes(prefixSubstitute), escapeSlashes(substituteReplacement));
+	SED.replaceAll(new File(filename), escapeSlashes(prefixSubstitute), escapeSlashes(substituteReplacement));
     }
 
     /**
@@ -283,10 +286,10 @@ public class WGet {
     public byte[] runProcess(String command) throws Exception {
         Process process = Runtime.getRuntime().exec(command);
 
-        java.io.InputStream in = process.getInputStream();
+        InputStream in = process.getInputStream();
         byte[] buffer = new byte[1024];
         int bytes_read = 0;
-        java.io.ByteArrayOutputStream baout = new java.io.ByteArrayOutputStream();
+        ByteArrayOutputStream baout = new ByteArrayOutputStream();
 
         while ((bytes_read = in.read(buffer)) != -1) {
             baout.write(buffer, 0, bytes_read);
@@ -297,8 +300,8 @@ public class WGet {
                 "END:InputStream%%%");
         }
 
-        java.io.InputStream in_e = process.getErrorStream();
-        java.io.ByteArrayOutputStream baout_e = new java.io.ByteArrayOutputStream();
+        InputStream in_e = process.getErrorStream();
+        ByteArrayOutputStream baout_e = new ByteArrayOutputStream();
 
         while ((bytes_read = in_e.read(buffer)) != -1) {
             baout_e.write(buffer, 0, bytes_read);
