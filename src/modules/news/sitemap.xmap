@@ -56,7 +56,13 @@
           <map:parameter name="language" value="{5}"/>
           <map:parameter name="title" value=""/>
           <map:parameter name="area" value="{3}"/>
+          <map:parameter name="uuid" value="{4}"/>
+          <map:parameter name="baseUrl" value="{base-url:{2}:{3}:false}"/>
         </map:transform>
+        <map:match pattern="rss.xml/**">
+          <map:transform type="uuid2url"/>
+          <map:transform src="xslt/rss/xhtmllink2rsslink.xsl"/>
+        </map:match>
         <map:serialize type="xml"/>
       </map:match>
 

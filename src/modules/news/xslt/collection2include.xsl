@@ -35,11 +35,15 @@
   <xsl:param name="rendertype" select="''"/>
   <xsl:param name="nodeid"/>
   <xsl:param name="language"/>
+  <xsl:param name="uuid"/>
   
   
   <xsl:template match="/col:collection">
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
     <div id="news">
+      <div class="rsslink">
+        <a href="lenya-document:{$uuid}?uuid2url.extension=rss">RSS 2.0</a>
+      </div>
       <h1><xsl:value-of select="$title"/></h1>
       <xsl:apply-templates select="col:document">
         <xsl:sort order="descending" select="meta:metadata/dc:elements/dc:date"/>

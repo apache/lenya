@@ -104,6 +104,12 @@
     </map:pipeline>
     
     <map:pipeline type="caching">
+      
+      <map:match pattern="**.rss">
+        <map:generate src="{resource-type:format-rss}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
       <!-- pattern="meta?docid={docid}&lang={lang}" -->
       <map:match pattern="*/**.html.meta">
         <map:generate type="lenyaMetaData">
