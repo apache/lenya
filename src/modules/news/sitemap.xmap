@@ -62,6 +62,9 @@
         <map:match pattern="rss.xml/**">
           <map:transform type="uuid2url"/>
           <map:transform src="xslt/rss/xhtmllink2rsslink.xsl"/>
+          <map:transform type="i18n">
+            <map:parameter name="locale" value="{5}"/>
+          </map:transform>
         </map:match>
         <map:serialize type="xml"/>
       </map:match>

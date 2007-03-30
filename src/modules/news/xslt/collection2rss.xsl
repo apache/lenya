@@ -75,7 +75,6 @@
       <xsl:if test="position() = 1">
         <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
         <i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, d MMM yyyy HH:mm:ss Z" value="{$date}" />
-        <xsl:value-of select="meta:metadata/dc:elements/dc:date"/>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
