@@ -33,7 +33,7 @@ import org.apache.lenya.cms.publication.util.DocumentHelper;
  * </p>
  * <p>
  * Example:
- * <code>{document-url:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}}</code>
+ * <code>{document-url:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}}</code>
  * </p>
  * @version $Id$
  */
