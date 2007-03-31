@@ -20,6 +20,7 @@
 
 package org.apache.lenya.cms.cocoon.uriparameterizer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -178,7 +179,7 @@ public class URIParameterizerImpl
 
     protected static final int CACHE_CAPACITY = 1000;
 
-    private static Map cache = new LRUMap(CACHE_CAPACITY);
+    private static Map cache = Collections.synchronizedMap(new LRUMap(CACHE_CAPACITY));
 
     private ServiceManager manager;
 
