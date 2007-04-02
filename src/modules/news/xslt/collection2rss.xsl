@@ -86,6 +86,8 @@
       <description><xsl:value-of select="meta:metadata/dc:elements/dc:description"/></description>
       <link><xhtml:a href="lenya-document:{@uuid}"/></link>
       <author><xsl:value-of select="meta:metadata/dc:elements/dc:creator"/></author>
+      <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
+      <pubDate><i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, d MMM yyyy HH:mm:ss Z" value="{$date}" /></pubDate>
     </item>
   </xsl:template>
 

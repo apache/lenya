@@ -31,6 +31,7 @@
     <format name="xhtml" uri="cocoon://modules/news/xhtml.xml"/>
     <format name="include" uri="cocoon://modules/news/include.xml"/>
     <format name="rss" uri="cocoon://modules/news/rss.xml"/>
+    <format name="header" uri="cocoon://modules/news/header.xml"/>
     
   </component-instance>
 

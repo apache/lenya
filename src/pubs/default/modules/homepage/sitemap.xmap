@@ -38,10 +38,10 @@
         </map:match>
       </map:match>
       
-      <map:match pattern="news_*.xml">
+      <map:match pattern="news-*_*.xml">
         <map:select type="resource-exists">
-          <map:when test="site:/{1}/news?format=include">
-            <map:generate src="site:/{1}/news?format=include"/>
+          <map:when test="site:/{2}/news?format={1}">
+            <map:generate src="site:/{2}/news?format={1}"/>
           </map:when>
           <map:otherwise>
             <map:generate src="fallback://lenya/content/util/empty.xml"/>
