@@ -166,7 +166,7 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
 
     private String indent = "";
 
-    protected static final String[] elementNames = { "a", "object", "img" };
+    protected static final String[] elementNames = { "a", "object", "img", "link" };
     protected static final String[] attributeNames = { "href", "src", "data" };
 
     /**
