@@ -81,9 +81,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * Copies meta data from one document to another.
-     * If the destination document is a different area version, the meta data
-     * are duplicated (i.e., onCopy = delete is neglected).
+     * Copies meta data from one document to another. If the destination
+     * document is a different area version, the meta data are duplicated (i.e.,
+     * onCopy = delete is neglected).
      * @param source
      * @param destination
      * @throws PublicationException
@@ -99,8 +99,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             for (int i = 0; i < uris.length; i++) {
                 if (duplicate) {
                     destination.getMetaData(uris[i]).forcedReplaceBy(source.getMetaData(uris[i]));
-                }
-                else {
+                } else {
                     destination.getMetaData(uris[i]).replaceBy(source.getMetaData(uris[i]));
                 }
             }
@@ -315,6 +314,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copy(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
+        
+        if (!destination.getPublicationId().equals(sourceDocument.getPublication().getId())) {
+            throw new PublicationException("Can't copy to a different publication!");
+        }
+        
+        copyToVersion(sourceDocument, destination.getArea(), destination.getLanguage());
+        
+        /*
         SiteStructure destSite = sourceDocument.getPublication().getArea(destination.getArea())
                 .getSite();
         if (destSite.contains(destination.getPath(), destination.getLanguage())) {
@@ -326,6 +333,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     .getLanguage(), sourceDocument.getExtension(), sourceDocument.getLink()
                     .getLabel(), sourceDocument.getLink().getNode().isVisible());
         }
+        */
     }
 
     /**
@@ -349,37 +357,24 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void move(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
-
-        Publication publication = sourceDocument.getPublication();
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager.getSiteStructure(sourceDocument.getFactory(),
-                    sourceDocument.getPublication(), destination.getArea()).contains(
-                    destination.getPath())) {
-                throw new PublicationException("The path [" + destination
-                        + "] is already contained in this publication!");
-            }
-
-            String label = sourceDocument.getLink().getLabel();
-            boolean visible = sourceDocument.getLink().getNode().isVisible();
-            sourceDocument.getLink().delete();
-
-            siteManager.add(destination.getPath(), sourceDocument);
-            sourceDocument.getLink().setLabel(label);
-            siteManager.setVisibleInNav(sourceDocument, visible);
-        } catch (final ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
+        
+        if (!destination.getArea().equals(sourceDocument.getArea())) {
+            throw new PublicationException("Can't move to a different area!");
         }
+
+        SiteStructure site = sourceDocument.area().getSite();
+        if (site.contains(destination.getPath())) {
+            throw new PublicationException("The path [" + destination
+                    + "] is already contained in this publication!");
+        }
+
+        String label = sourceDocument.getLink().getLabel();
+        boolean visible = sourceDocument.getLink().getNode().isVisible();
+        sourceDocument.getLink().delete();
+
+        site.add(destination.getPath(), sourceDocument);
+        sourceDocument.getLink().setLabel(label);
+        sourceDocument.getLink().getNode().setVisible(visible);
 
     }
 
@@ -406,8 +401,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         if (sourceDoc.hasLink()) {
             if (destinationDoc.hasLink()) {
-                boolean visible = sourceDoc.getLink().getNode().isVisible();
-                destinationDoc.getLink().getNode().setVisible(visible);
+                Link srcLink = sourceDoc.getLink();
+                Link destLink = destinationDoc.getLink();
+                destLink.setLabel(srcLink.getLabel());
+                destLink.getNode().setVisible(srcLink.getNode().isVisible());
             } else {
                 String path = sourceDoc.getPath();
                 String label = sourceDoc.getLink().getLabel();
@@ -523,8 +520,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             if (sourceArea.getName().equals(targetArea.getName())) {
                 targetDoc = sourceDoc;
             } else {
-                targetDoc = addVersion(sourceDoc, targetArea.getName(), sourceDoc
-                        .getLanguage());
+                targetDoc = addVersion(sourceDoc, targetArea.getName(), sourceDoc.getLanguage());
                 sourceDoc.delete();
             }
 
