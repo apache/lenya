@@ -212,6 +212,7 @@
       <monitoring href="monitoring.html" label="Monitoring"/>
       <server href="webdav.html" label="WebDAV Servers"/>
     </webdav>
+    <news_module href="news.html" label="News"/>
     <notification href="notification.html" label="Notification"/>
   </modules>
   <!--+
