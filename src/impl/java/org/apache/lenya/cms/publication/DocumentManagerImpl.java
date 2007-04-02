@@ -82,36 +82,27 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * Copies meta data from one document to another.
+     * If the destination document is a different area version, the meta data
+     * are duplicated (i.e., onCopy = delete is neglected).
      * @param source
      * @param destination
      * @throws PublicationException
      */
     protected void copyMetaData(Document source, Document destination) throws PublicationException {
-        try {
-            String[] uris = source.getMetaDataNamespaceUris();
-            for (int i = 0; i < uris.length; i++) {
-                destination.getMetaData(uris[i]).replaceBy(source.getMetaData(uris[i]));
-            }
-        } catch (MetaDataException e) {
-            throw new PublicationException(e);
-        }
-    }
 
-    /**
-     * Copies meta data from one document to another, whereas both documents
-     * will have completely identical meta data afterwards (including workflow
-     * etc.). This is only useful if the source document will be deleted
-     * afterwards or for creating a new area version (e.g., during publishing).
-     * @param source
-     * @param destination
-     * @throws PublicationException
-     */
-    protected void duplicateMetaData(Document source, Document destination)
-            throws PublicationException {
+        boolean duplicate = source.getUUID().equals(destination.getUUID())
+                && source.getLanguage().equals(destination.getLanguage())
+                && !source.getArea().equals(destination.getArea());
+
         try {
             String[] uris = source.getMetaDataNamespaceUris();
             for (int i = 0; i < uris.length; i++) {
-                destination.getMetaData(uris[i]).forcedReplaceBy(source.getMetaData(uris[i]));
+                if (duplicate) {
+                    destination.getMetaData(uris[i]).forcedReplaceBy(source.getMetaData(uris[i]));
+                }
+                else {
+                    destination.getMetaData(uris[i]).replaceBy(source.getMetaData(uris[i]));
+                }
             }
         } catch (MetaDataException e) {
             throw new PublicationException(e);
@@ -408,12 +399,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             destinationDoc = sourceDoc.getAreaVersion(destinationArea);
             copyDocumentSource(sourceDoc, destinationDoc);
         } else {
-            if (language.equals(sourceDoc.getLanguage()) && !destinationArea.equals(sourceDoc.getArea())) {
-                destinationDoc = duplicateVersion(sourceDoc, destinationArea, language);
-            }
-            else {
-                destinationDoc = addVersion(sourceDoc, destinationArea, language);
-            }
+            destinationDoc = addVersion(sourceDoc, destinationArea, language);
         }
 
         SiteStructure destSite = sourceDoc.getPublication().getArea(destinationArea).getSite();
@@ -537,7 +523,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             if (sourceArea.getName().equals(targetArea.getName())) {
                 targetDoc = sourceDoc;
             } else {
-                targetDoc = duplicateVersion(sourceDoc, targetArea.getName(), sourceDoc
+                targetDoc = addVersion(sourceDoc, targetArea.getName(), sourceDoc
                         .getLanguage());
                 sourceDoc.delete();
             }
@@ -605,19 +591,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         copyMetaData(sourceDocument, destinationDocument);
     }
 
-    /**
-     * Duplicates a document source. Meta data are duplicated as they are.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws PublicationException when something went wrong.
-     */
-    public void duplicateDocumentSource(Document sourceDocument, Document destinationDocument)
+    protected void copyContent(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
-        copyContent(sourceDocument, destinationDocument);
-        copyMetaData(sourceDocument, destinationDocument);
-    }
-
-    protected void copyContent(Document sourceDocument, Document destinationDocument) throws PublicationException {
         boolean useBuffer = true;
 
         OutputStream destOutputStream = null;
@@ -943,15 +918,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                         .getPublication(), area, language, sourceDocument.getSourceExtension());
         copyMetaData(sourceDocument, document);
 
-        return document;
-    }
-
-    protected Document duplicateVersion(Document sourceDocument, String area, String language)
-            throws DocumentBuildException, DocumentException, PublicationException {
-        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
-                sourceDocument.getUUID(), sourceDocument.getInputStream(), sourceDocument
-                        .getPublication(), area, language, sourceDocument.getSourceExtension());
-        duplicateMetaData(sourceDocument, document);
         return document;
     }
 
