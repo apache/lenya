@@ -16,41 +16,121 @@
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
-	<header>
-		<title>Link Management</title>
-	</header>
-	<body>
-	  
-	  <section>
-	    <title>Introduction</title>
-	    
-	    <p>Link Managements deals with internal links, i.e. documents
-	      that refer to other documents within the same publication. In Lenya 1.2, links
-	      are rewritten each time the URL of the target document changes (see
-	      section <a href="site:a-management-1">Link Management</a> in the Lenya 1.2 documentation).
-	      This behaviour will probably not be ported to 1.4, since URL-based links will be replaced by
-	      UUID-based links.
-	      </p>
-	  </section>
-	  
-	  <section>
-	    <title>Syntax for Internal Links</title>
-	    
-	    <p>
-	      Until the UUID-based link syntax is introduced, internal links have the following syntax:
-	    </p>
-	    
-	    <source xml:space="preserve"><![CDATA[/<publication-id>/<area><document-url>]]></source>
-	    
-	    <p>
-	      Examples:
-	    </p>
-	    <ul>
-	      <li><code>/default/authoring/doctypes/xhtml_en.html</code></li>
-	      <li><code>/yourpub/live/news/2006-02-03.html</code></li>
-	    </ul>
-	    
-	  </section>
-	  
-	</body>
+  <header>
+    <title>Link Management</title>
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      
+      <p>Link Managements deals with internal links, i.e. documents
+        that refer to other documents within the same publication. In Lenya 1.2, links
+        are rewritten each time the URL of the target document changes (see
+        section <a href="site:a-management-1">Link Management</a> in the Lenya 1.2 documentation).
+      </p>
+      <p>
+        In Lenya 1.4, documents are identified and referenced using
+        <acronym title="Universally Unique Identifier">UUID</acronym>s.
+     </p>
+    </section>
+    
+    <section>
+      <title>Syntax for Internal Links</title>
+      
+      <p>
+        Internal links have the following syntax:
+      </p>
+      
+      <source xml:space="preserve">lenya-document:{uuid}[,lang={&#8230;}][,pub={&#8230;}][,area={&#8230;}][,rev={&#8230;}][{queryString}]</source>
+      <ul>
+        <li>The <code>{uuid}</code> value is mandatory.</li>
+        <li>
+          The parameters <code>lang</code>, <code>pub</code>, <code>area</code>,
+          and <code>rev</code> are optional. If omitted, the corresponding values
+          of the current context and the latest revision are used.
+        </li>
+        <li>
+          The optional query string is not evaluated when resolving the link.
+          It can be used to provide information for subsequent processing
+          steps (e.g., the <code>UuidToUrlTransformer</code>) and to add request
+          parameters to the resulting HTTP link URL. The query string is separated
+          from the link URL using a question mark.
+        </li>
+      </ul>
+      <p>Some link URI examples:</p>
+      <ul>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0</code> - document in same language</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0,lang=de</code> - document in different language</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0,area=trash</code> - document in different area</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0?uuid2url.extension=rss</code> - HTML link should use a particular extension</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0?lenya.usecase=bxe.edit</code> - HTML link with request parameter</li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>HTML Links</title>
+      <p>
+        The <code>UuidToUrlTransformer</code> is responsible for translating <code>lenya-document:</code>
+        links into the corresponding HTML links which can be understood by the browser.
+      </p>
+      <p>
+        If your source document contains a link like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="lenya-document:031&#8230;"&gt;News&lt;/a&gt;</source>
+      <p>
+        and your pipeline contains a call to the <code>UuidToUrlTransformer</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform type="uuid2url"/>]]></source>
+      <p>
+        the resulting HTML link will look like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+      
+      <section>
+        <title>Specifying an Extension</title>
+        <p>
+          The <code>UuidToUrlTransformer</code> recognizes the query string parameter
+          <code>uuid2url.extension</code>. You can use it to force a specific extension.
+          For instance
+        </p>
+        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="lenya-document:031&#8230;?uuid2url.extension=rss"&gt;RSS Feed&lt;/a&gt;</source>
+        <p>
+          will result in
+        </p>
+        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="/default/authoring/news.rss"&gt;RSS Feed&lt;/a&gt;</source>
+      </section>
+    </section>
+    
+    <section>
+      <title>Specifying the Resource Type Format</title>
+      <p>
+        Sometimes you want to specify the format of the link target. This can be done using the
+        <code>format</code> parameter. A typical use case is the inclusion via CInclude.
+      </p>
+      <p>
+        Imagine you're converting a collection of documents to a list of teasers.
+        The collection source might look like this:
+      </p>
+      <source xml:space="preserve">&lt;col:collection&gt;
+  &lt;col:document uuid="031&#8230;"/&gt;
+  &lt;col:document uuid="a5r&#8230;"/&gt;
+  &#8230;
+&lt;/col:collection&gt;</source>
+      <p>
+        You could use the following XSLT template to generate the CInclude statements for the
+        teaser list:
+      </p>
+      <source xml:space="preserve"><![CDATA[<xsl:template match="col:document">
+  <ci:include src="lenya-document:{@uuid}?format=teaser"/>
+</xsl:template>]]>
+      </source>
+      <p>
+        When the resulting XML is processed by
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform type="cinclude"/>]]></source>
+      <p>the teaser version of each document will be included.</p>
+    </section>
+    
+  </body>
 </document>
