@@ -126,8 +126,7 @@
       </p>
       <source xml:space="preserve"><![CDATA[<xsl:template match="col:document">
   <ci:include src="lenya-document:{@uuid}?format=teaser"/>
-</xsl:template>]]>
-      </source>
+</xsl:template>]]></source>
       <p>
         When the resulting XML is processed by
       </p>
