@@ -32,6 +32,9 @@
       <p>
         In Lenya 1.4, documents are identified and referenced using
         <acronym title="Universally Unique Identifier">UUID</acronym>s.
+        The UUID of a document never changes, that's why the internal
+        links don't have to be rewritten when a document is moved
+        in the site structure.
      </p>
     </section>
     
