@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>SVG Module: Rounded Corners</title>
+  </header>
+  <body>
+
+    <p> In this document we show an example how to use the SVG module to create rounded corners in a
+      convenient way. </p>
+    <p> The following screenshot shows a typical box with rounded corners: </p>
+    <figure src="site:modules-svg-roundedcorners-screenshot.img" alt="Rounded corners screenshot"/>
+    
+    <p>
+      We want to allow dynamic scaling of the box in all directions. That's why we have to use
+      four separate images for the rounded corners. The images shall be referenced from a CSS.
+    </p>
+    
+    <section>
+      <title>HTML</title>
+      <p>
+        The HTML of this box looks like this:
+      </p>
+<source xml:space="preserve"><![CDATA[<div id="news">
+  <div id="newsOuter">
+    <div id="newsInner">
+      <div class="rsslink">
+        <a href="/news.rss" type="application/rss+xml">RSS 2.0</a>
+      </div>
+      <h1>News</h1>
+      <h2>
+        <div class="newsDate">Mar 22, 2007 6:03:37 PM</div>
+        <a style="text-decoration: none" href="/news/lenyaRCvote.html"
+          >Lenya 1.4 RC1 in Voting Process</a>
+      </h2>
+      <p>Since Tuesday the vote for the Apache Lenya 1.4 release candidate 1 is open.</p>
+    </div>
+  </div>
+</div>]]></source>
+      <p>
+        We use four HTML containers to hold our corner images. Each left corner image is
+        quite wide (1500 pixels) to allow very large boxes. The right corner version is only
+        as wide as the radius of the corner. That's why the right corner image has to be
+        placed on top of the left corner image, i.e. the right corner container has to
+        be inside the left corner container. 
+      </p>
+      <ul>
+        <li>
+          The <code><![CDATA[<div id="news"/>]]></code> will hold the top left corner.
+        </li>
+        <li>
+          The <code><![CDATA[<h1/>]]></code> will hold the top right corner.
+        </li>
+        <li>
+          The <code><![CDATA[<div id="newsOuter"/>]]></code> will hold the bottom left corner.
+        </li>
+        <li>
+          The <code><![CDATA[<div id="newsInner"/>]]></code> will hold the bottom right corner.
+        </li>
+      </ul>
+      <p>
+        To fill the space between the upper and lower corners, we will add a background
+        color and a border to our <code><![CDATA[<h2/>]]></code> and <code><![CDATA[<p/>]]></code>
+        elements which are located inside the box.
+      </p>
+    </section>
+    
+    <section>
+      <title>Calling the SVG Module</title>
+      
+      <p>
+        This is the anatomy of a call to a rounded corner image:
+      </p>
+      <source xml:space="preserve">/modules/svg/tab-{location}-{radius}-{background}-{border}.png</source>
+      <p>
+        An example:
+      </p>
+      <source xml:space="preserve">/modules/svg/tab-bottomLeft-7-FFF6E5-FFD580.png</source>
+      <ul>
+        <li><code>/modules/svg/</code> calls the SVG module.</li>
+        <li><code>-tab-</code> denotes that we want to generate a rounded corner image (which is
+          typically used for tabs).</li>
+        <li><code>-bottomLeft-</code> means that we want to generate the bottom left corner.</li>
+        <li><code>-7-</code> means that we want a corner radius of 7 pixels.</li>
+        <li><code>-FFF6E5-</code> is the background color.</li>
+        <li><code>-FFD580</code> is the border color. You can of course use the same color values
+          for background and border.</li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>CSS</title>
+      <p>
+        This is the important part of the CSS used for the box layout (fonts, colors etc. 
+        have been omitted):
+      </p>
+      <source xml:space="preserve"><![CDATA[div.newsDate {
+  float: right;
+}
+
+
+div#news {
+  width: 180px;
+  margin: 0 0 0 20px;
+  background: url('/modules/svg/tab-topLeft-7-FFEECC-FFD580.png') left top no-repeat;
+}
+
+div#news h1 {
+  margin: 0;
+  padding: 7px 10px;
+  background: url('/modules/svg/tab-topRight-7-FFEECC-FFD580.png') right top no-repeat;
+}
+
+div#news div.newsDate {
+  padding-top: 10px;
+}
+
+div#newsOuter {
+  background: url('/modules/svg/tab-bottomLeft-7-FFF6E5-FFD580.png') left bottom no-repeat;
+}
+
+div#newsInner {
+  background: url('/modules/svg/tab-bottomRight-7-FFF6E5-FFD580.png') right bottom no-repeat;
+  padding-bottom: 10px;
+}
+
+div#news h2 {
+  padding: 0px 5px 0 5px;
+}
+
+div#news p {
+  padding-bottom: 10px;
+}
+
+div#news p, div#news h2 {
+  margin: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 1px solid #FFD580;
+  border-right: 1px solid #FFD580;
+  background-color: #FFF6E5;
+}
+
+div.rsslink {
+  float: right;
+  padding: 7px 10px;
+}]]></source>
+    </section>
+  </body>
+</document>

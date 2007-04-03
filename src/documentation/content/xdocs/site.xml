@@ -214,6 +214,9 @@
     </webdav>
     <news_module href="news.html" label="News"/>
     <notification href="notification.html" label="Notification"/>
+    <svg_module href="svg/" label="SVG">
+      <svg_roundedcorners href="roundedcorners.html" label="Rounded Corners"/>
+    </svg_module>
   </modules>
   <!--+
     | Version 1.2 tab
@@ -397,6 +400,7 @@
       <navigation.img href="navigation.png"/>
       <usecase-framework-architecture.img href="usecase-framework-architecture.png"/>
       <repositoryWorkspaces.img href="repositoryWorkspaces.png"/>
+      <modules-svg-roundedcorners-screenshot.img href="svgmodule/roundedcorners.png"/>
     </live>
   </images>
   
