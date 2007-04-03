@@ -42,7 +42,7 @@
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
     <div id="news">
       <div class="rsslink">
-        <a href="lenya-document:{$uuid}?uuid2url.extension=rss">RSS 2.0</a>
+        <a type="application/rss+xml" href="lenya-document:{$uuid}?uuid2url.extension=rss">RSS 2.0</a>
       </div>
       <h1><xsl:value-of select="$title"/></h1>
       <xsl:apply-templates select="col:document">

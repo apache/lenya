@@ -74,7 +74,7 @@
       <xsl:sort select="meta:metadata/dc:elements/dc:date"/>
       <xsl:if test="position() = 1">
         <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
-        <i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, d MMM yyyy HH:mm:ss Z" value="{$date}" />
+        <i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{$date}" />
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -87,7 +87,7 @@
       <link><xhtml:a href="lenya-document:{@uuid}"/></link>
       <author><xsl:value-of select="meta:metadata/dc:elements/dc:creator"/></author>
       <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
-      <pubDate><i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, d MMM yyyy HH:mm:ss Z" value="{$date}" /></pubDate>
+      <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{$date}" /></pubDate>
     </item>
   </xsl:template>
 
