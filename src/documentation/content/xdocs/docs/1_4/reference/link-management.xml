@@ -54,7 +54,7 @@
           of the current context and the latest revision are used.
         </li>
         <li>
-          The optional query string is not evaluated when resolving the link.
+          The optional query string is not evaluated when resolving the link target.
           It can be used to provide information for subsequent processing
           steps (e.g., the <code>UuidToUrlTransformer</code>) and to add request
           parameters to the resulting HTTP link URL. The query string is separated
