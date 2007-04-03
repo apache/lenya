@@ -91,19 +91,17 @@
     Adding a custom resource type to your publication includes the following steps:
   </p>
   
-  <section><title>Providing a Sample XML Document</title>
+  <section><title>Providing One or More Sample XML Documents</title>
     <p>
       If you want to enable users to create new resources belonging to
-      your resource type, it is useful to provide a sample XML document.
-      If you want to use the <code>DefaultBranchCreator</code> that ships
-      with Lenya, you have to add the sample document because it is used
-      as a template for creating new resources.
+      your resource type, it is useful to provide one more more sample XML documents.
     </p>
     <p>
-      The sample document is typically placed in
+      The sample document(s) are typically placed in
       <code><![CDATA[<publication>/lenya/resources/samples/]]></code>.
-      You can choose an arbitrary filename, but it is recommended to
-      use the resource type name (e.g., <code>profile.xml</code>).
+      You can choose arbitrary filenames, but for a single sample
+      it is recommended to use the resource type name
+      (e.g., <code>profile.xml</code>).
     </p>
   </section>
   
@@ -148,13 +146,17 @@
   <component-instance name="profile"
                       logger="lenya.resourcetypes.profile"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+                      
     <schema src="fallback://lenya/resources/schemas/profile.rng"
             language="http://relaxng.org/ns/structure/0.9"/>
-    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-      <sample-name>fallback://lenya/resources/samples/profile.xml</sample-name>
-    </creator>
+            
+    <sample-name name="Empty Profile">fallback://lenya/resources/samples/empty.xml</sample-name>
+    <sample-name name="Example Profile">fallback://lenya/resources/samples/example.xml</sample-name>
+    
     <link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/>
+    
     <format name="xhtml" uri="cocoon://modules/profile/profile.xml"/>
+    
   </component-instance>
 
 </xconf>]]></source>
@@ -248,12 +250,13 @@
 </source>
 
     <p>
-      The <code>site:/</code> protocol supports a format parameter.
+      The <code>site:/</code> and <code>lenya-document:</code> protocols supports a format parameter.
       This is particularly useful to include formatted documents in other documents:
     </p>
     <source xml:space="preserve">
-  <![CDATA[<ci:include src="site:/{$language}{$path}?format=xhtml-inline"/>]]>
-    </source>
+  <![CDATA[<ci:include src="site:/{$language}{$path}?format=xhtml-inline"/>]]></source>
+    <source xml:space="preserve">
+  <![CDATA[<ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/>]]></source>
   </section>
   
   <section><title>Presentation</title>
