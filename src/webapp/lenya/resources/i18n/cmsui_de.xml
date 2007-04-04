@@ -390,6 +390,7 @@
   <message key="Required Cocoon version">Benötigte Cocoon-Version</message>
   <message key="Modules used">Verwendete Module</message>
   <message key="Templates used">Verwendete Templates</message>
+  <message key="Inherited: see template publication">Vererbt: Siehe Template-Publikation</message>
   
   <!-- Error messages of a general nature -->
   <message key="error-document-form">Dokument ist nicht wohlgeformt: {0}</message>

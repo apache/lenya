@@ -91,6 +91,9 @@
     <tr>
       <th style="white-space: nowrap;"><i18n:text>Available resource types</i18n:text></th>
       <td class="border">
+        <xsl:if test="lenya:templates/lenya:template">
+          <i18n:text>Inherited: see template publication</i18n:text><br/>
+        </xsl:if>
         <xsl:for-each 
           select="lenya:resource-types/lenya:resource-type[generate-id(.)=generate-id(key('workflows', @workflow)[1])]"
         >
@@ -126,6 +129,9 @@
     <tr>
       <th style="white-space: nowrap;"><i18n:text>Modules used</i18n:text></th>
       <td class="border">
+        <xsl:if test="lenya:templates/lenya:template">
+          <i18n:text>Inherited: see template publication</i18n:text><br/>
+        </xsl:if>
         <xsl:for-each select="lenya:modules/lenya:module">
           <xsl:value-of select="@name"/>
           <xsl:if test="position() != last()">
