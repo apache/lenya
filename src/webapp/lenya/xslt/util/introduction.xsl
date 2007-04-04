@@ -23,6 +23,7 @@
     xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns="http://www.w3.org/1999/xhtml"
 >
 
@@ -46,7 +47,7 @@
     </div>
 
     <div class="lenya-frontpage">
-      <h1>Publication properties:</h1>
+      <h2><i18n:text>Publication properties</i18n:text>:</h2>
       <xsl:apply-templates select="lenya:publication"/>
       <xsl:apply-templates select="page:page"/>
       
@@ -56,22 +57,22 @@
 </xsl:template>
 
 <xsl:template match="lenya:publication">
-  <table>
+  <table class="lenya-table-list-noborder">
     <tr>
-      <th>Name</th>
-      <td><xsl:value-of select="lenya:name"/></td>
+      <th style="white-space: nowrap;"><i18n:text>Name</i18n:text></th>
+      <td class="border"><xsl:value-of select="lenya:name"/></td>
     </tr>
     <tr>
-      <th>Revision</th>
-      <td><xsl:value-of select="lenya:version"/></td>
+      <th style="white-space: nowrap;"><i18n:text>Revision</i18n:text></th>
+      <td class="border"><xsl:value-of select="lenya:version"/></td>
     </tr>
     <tr>
-      <th>Description</th>
-      <td><xsl:value-of select="lenya:description"/></td>
+      <th style="white-space: nowrap;"><i18n:text>Description</i18n:text></th>
+      <td class="border"><xsl:value-of select="lenya:description"/></td>
     </tr>
     <tr>
-      <th>Available languages</th>
-      <td>
+      <th style="white-space: nowrap;"><i18n:text>Available languages</i18n:text></th>
+      <td class="border">
         <xsl:for-each select="lenya:languages/lenya:language">
           <xsl:choose>
             <xsl:when test="@default">
@@ -81,13 +82,15 @@
               <xsl:value-of select="."/>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:text> </xsl:text>
+          <xsl:if test="position() != last()">
+            <xsl:text>, </xsl:text>
+          </xsl:if>
         </xsl:for-each>
       </td>
     </tr>
     <tr>
-      <th>Available resource types</th>
-      <td>
+      <th style="white-space: nowrap;"><i18n:text>Available resource types</i18n:text></th>
+      <td class="border">
         <xsl:for-each 
           select="lenya:resource-types/lenya:resource-type[generate-id(.)=generate-id(key('workflows', @workflow)[1])]"
         >
@@ -109,20 +112,20 @@
       </td>
     </tr>
     <tr>
-      <th>Required Lenya version</th>
-      <td><xsl:value-of select="lenya:lenya-version"/></td>
+      <th style="white-space: nowrap;"><i18n:text>Required Lenya version</i18n:text></th>
+      <td class="border"><xsl:value-of select="lenya:lenya-version"/></td>
     </tr>
     <tr>
-      <th>Required Lenya revision</th>
-      <td><xsl:value-of select="lenya:lenya-revision"/></td>
+      <th style="white-space: nowrap;"><i18n:text>Required Lenya revision</i18n:text></th>
+      <td class="border"><xsl:value-of select="lenya:lenya-revision"/></td>
     </tr>
     <tr>
-      <th>Required Cocoon version</th>
-      <td><xsl:value-of select="lenya:cocoon-version"/></td>
+      <th style="white-space: nowrap;"><i18n:text>Required Cocoon version</i18n:text></th>
+      <td class="border"><xsl:value-of select="lenya:cocoon-version"/></td>
     </tr>
     <tr>
-      <th>Modules used</th>
-      <td>
+      <th style="white-space: nowrap;"><i18n:text>Modules used</i18n:text></th>
+      <td class="border">
         <xsl:for-each select="lenya:modules/lenya:module">
           <xsl:value-of select="@name"/>
           <xsl:if test="position() != last()">
@@ -132,8 +135,8 @@
       </td>
     </tr>
     <tr>
-      <th>Templates used</th>
-      <td>
+      <th style="white-space: nowrap;"><i18n:text>Templates used</i18n:text></th>
+      <td class="border">
         <xsl:for-each select="lenya:templates/lenya:template">
           <a href="../{@id}/introduction.html">
             <xsl:value-of select="@id"/>
