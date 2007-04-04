@@ -49,6 +49,7 @@
         <map:generate src="lenya-document:{4},pub={2},area={3},lang={5}{link:rev}"/>
         <map:transform src="fallback://lenya/modules/collection/xslt/collection2cinclude.xsl">
           <map:parameter name="uuid" value="{4}"/>
+          <map:parameter name="language" value="{5}"/>
         </map:transform>
         <map:transform type="cinclude"/>
         <map:transform src="fallback://lenya/modules/news/xslt/collection2{1}.xsl">

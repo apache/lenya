@@ -5,6 +5,9 @@
   xmlns:ci="http://apache.org/cocoon/include/1.0">
   
   
+  <xsl:param name="language"/>
+  
+  
   <xsl:template match="site:fragment">
     <col:collection>
       <xsl:apply-templates select="site:node"/>
@@ -13,7 +16,12 @@
   
   
   <xsl:template match="site:node">
-    <col:document uuid="{@uuid}"/>
+    <xsl:apply-templates select="site:label[lang($language)]"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="site:label">
+    <col:document uuid="{../@uuid}"/>
   </xsl:template>
 
 </xsl:stylesheet>

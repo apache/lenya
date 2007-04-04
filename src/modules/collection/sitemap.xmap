@@ -24,8 +24,8 @@
 
     <map:pipeline>
 
-      <!-- collectionWithChildren/{uuid}.xml -->
-      <map:match pattern="collectionWithChildren/*.xml">
+      <!-- collectionWithChildren/{uuid}/{language}.xml -->
+      <map:match pattern="collectionWithChildren/*/*.xml">
         <map:generate type="sitetree-fragment">
           <map:parameter name="areas" value="{page-envelope:area}"/>
           <map:parameter name="area" value="{page-envelope:area}"/>
@@ -33,9 +33,12 @@
           <map:parameter name="initial" value="false"/>
           <map:parameter name="mimetype" value=""/>
         </map:generate>
-        <map:transform src="fallback://lenya/modules/collection/xslt/sitetree2children.xsl"/>
+        <map:transform src="fallback://lenya/modules/collection/xslt/sitetree2children.xsl">
+          <map:parameter name="language" value="{2}"/>
+        </map:transform>
         <map:transform src="fallback://lenya/modules/collection/xslt/collection2cinclude.xsl">
           <map:parameter name="uuid" value="{1}"/>
+          <map:parameter name="language" value="{2}"/>
         </map:transform>
         <map:transform type="cinclude"/>
         <map:serialize type="xml"/>

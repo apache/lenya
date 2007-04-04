@@ -5,12 +5,13 @@
   
   
   <xsl:param name="uuid"/>
+  <xsl:param name="language"/>
   
   
   <xsl:template match="col:collection">
     <xsl:choose>
       <xsl:when test="@type = 'children'">
-        <ci:include src="cocoon://modules/collection/collectionWithChildren/{$uuid}.xml"/>
+        <ci:include src="cocoon://modules/collection/collectionWithChildren/{$uuid}/{$language}.xml"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy>
