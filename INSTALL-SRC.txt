@@ -26,6 +26,13 @@ Prerequisites
       the Cocoon webapp to be installed. See the FAQ for details of configuration changes 
       required when running multiple Cocoon based applications.
 
+    * A SVN client
+      SVN (or subversion) is a software revision control system that is used by the Lenya community to 
+      manage the development tree. You will need to install a client in order to check out your local
+      copy of Lenya.
+      All Linux distributions come with svn (or subversion) packages. Under Windows, you can either use 
+      TortoiseSVN (see http://tortoisesvn.tigris.org) or the svn package included in Cygwin (http://cygwin.com).
+
     * (optional) Apache Tomcat for JDK 1.4
       version: 5.0.28 or newer, 5.5.x not tested.
       source: http://jakarta.apache.org/site/binindex.cgi
