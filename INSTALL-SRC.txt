@@ -4,149 +4,100 @@ Installation of the Source Version
     * Standalone Installation (using the built-in Jetty)
     * Installation with Apache Tomcat
 
+
 Prerequisites
 
-The following list describes the setup that is tested and recommended. 
-Please note that you can use other servlet containers as well, but Jetty and Tomcat are the tested ones.
+
+    The following list describes the setup that is tested and recommended. 
+    Please note that you can use other servlet containers as well, but Jetty and Tomcat are the tested ones.
 
 
-    *
+    * Java 2 Platform, Standard Edition
+      Recommended version: JDK 1.5 (used by most developers, 1.4.2 or later should also work).
+      JDK 6 has not been tested yet, feedback is welcome.
+      Get the JDK at http://java.sun.com/javase/downloads/index_jdk5.jsp
 
-      Java 2 Platform, Standard Edition
-      version: 1.4.2 or newer (1.5.x NOT properly tested).
-      source: http://java.sun.com/j2se/1.4.2/download.html
-    *
-
-      Apache Cocoon
-      version: BRANCH_2_1_X (https://svn.apache.org/repos/asf/cocoon/branches/BRANCH_2_1_X)
-      source: http://cocoon.apache.org/mirror.cgi
-
+    * Apache Cocoon
+      Recommended version: BRANCH_2_1_X (https://svn.apache.org/repos/asf/cocoon/branches/BRANCH_2_1_X)
+      When you check out Lenya 1.4 from svn, Cocoon will be included as an svn external 
+      and you don't need to download it separately.
       Note that Cocoon is needed when building the source version of Lenya, but the 
       resulting Lenya webapp is completely self contained and therefore it does not need 
       the Cocoon webapp to be installed. See the FAQ for details of configuration changes 
       required when running multiple Cocoon based applications.
-    *
 
-      (optional) Apache Tomcat for JDK 1.4
+    * (optional) Apache Tomcat for JDK 1.4
       version: 5.0.28 or newer, 5.5.x not tested.
       source: http://jakarta.apache.org/site/binindex.cgi
-
       Note that Lenya ships with Jetty and therefore does not need a servlet container to be installed.
+
 
 Standalone Installation (using the built-in Jetty)
 
-   1.
 
-      Get the Java SDK (see Prerequisites): e.g. J2SDK_1.4.2_10
+   This is the recommended mode of installation that is used by most
+   developers.
+
+   1. Get the Java SDK (see Prerequisites): e.g. J2SDK_1.5.0-11
       and set JAVA_HOME
-      (Windows: start -> Control Panel -> System -> Advanced -> Environment Variables -> User variables ...
-   2. 
+      (Windows: start -> Control Panel -> System -> Advanced -> Environment Variables -> User variables
+      ...)
 
-      Get Apache Cocoon (see Prerequisites)
-   3.
+   2. Check out Apache Lenya from SVN:
+      Change into the directory where you want your Lenya sources to be, and do
+  
+        svn checkout http://svn.apache.org/repos/asf/lenya/trunk lenya-1.4.x
 
-      Get Apache Lenya (see Download Lenya)
-   4.
+   3. Configure Lenya:
 
-      Extract the downloaded Lenya archive to the lenya-trunk directory as described below. 
-      If you use Subversion, create your Lenya checkout inside the src directory as described below. 
-      It is recommended to use the following directory structure for an easier build experience.
+      In the newly created lenya-1.4.x directory, copy build.properties to local.build.properties
+      and edit it to taste or use the configure script:
 
-            your_home/ (or c:\ on Windows, NOT My Documents)
-              `-- src/
-                   |-- lenya-trunk/            $LENYA_HOME
-                   `-- cocoon/                 $COCOON_HOME
-                        `-- build/
-                             `-- webapp/       $COCOON_WEBAPP
-          
-   5.
-
-      Configure Lenya
-
-      If your Cocoon source tree is set up as described above, you can skip this step. 
-      If your Cocoon source tree is not at ../cocoon relative to Lenya, you need to edit 
-      your build properties. To do this, copy $LENYA_HOME/build.properties to 
-      $LENYA_HOME/local.build.properties.
-
-      Edit local.build.properties. For the described configuration the following settings 
-      will work (MS Windows: Don't use backslashes "\" for directory separation.)
-          * cocoon.src.dir=$COCOON_HOME
-          * tomcat.home.dir=$TOMCAT_HOME
-
-      or use
-
-          * Linux: configure.sh
+          * Linux: configure.sh (works also on Windows with Cygwin)
           * Windows: configure.bat
 
 
-   6.  Build Lenya
-   ---------------
+   4. Build Lenya:
 
       Make sure that you have the environment variable JAVA_HOME defined to point 
       to the location of the Java SDK you installed (see Prerequisites).
 
       MS Windows: http://support.microsoft.com/default.aspx?scid=kb;en-us;310519&sd=tech
-      Linux/Unix: export JAVA_HOME=/usr/local/jdk-1.4.2
+      Linux/Unix: export JAVA_HOME=/usr/local/jdk-1.5.0 (or wherever your JDK is)
 
-      Execute build.bat or build.sh in your Lenya source directory, depending on your platform.
+      Start the build process:
 
-      MS Windows
-
-            $LENYA_HOME > build.bat
-
-      Unix
-
-            $LENYA_HOME > ./build.sh
+          * Linux: ./build.sh (works also on Windows with Cygwin)
+          * Windows:  build.bat
           
+   5. Start Lenya:
+
+          * Linux: ./lenya.sh
+          * Windows: lenya.bat
+
+   6. Test the installation by pointing your browser to
+          http://localhost:8888/
 
 
-   7.  Start Lenya
-   ---------------
-
-      Execute lenya.bat or lenya.sh servlet in your Lenya source directory, depending on your 
-      platform. Make sure that you have the environment variable JAVA_HOME defined to point 
-      to the location of the Java SDK you installed (see Prerequisites).
-
-      MS Windows
-
-            $LENYA_HOME > lenya.bat
-          
-
-      Unix
-
-            $LENYA_HOME > ./lenya.sh servlet
-          
-
-  8.
-
-      Test the installation
-
-      http://localhost:8888/
 
 Installation with Apache Tomcat
 
-Installing Lenya with Tomcat is mostly the same procedure. Follow Steps 1-4, then do the steps below.
 
-   1.
+   Watch out: Tomcat integration has not been tested much yet. You are welcome
+   to direct questions at or point out problems to the lenya developer mailing
+   list.
 
-      get Apache Tomcat (see Prerequisites)
-   2.
+   Installing Lenya with Tomcat is similar to stand-alone mode. Follow Steps 1-3
+   above, then do the steps below.
 
-      Install Apache Tomcat
+   1. Get Apache Tomcat (see Prerequisites)
 
-      See Tomcat 5.0 Setup
+   2. Install Apache Tomcat as per the Tomcat docs.
 
-      MS Windows:
-      Basically this is setting the JAVA_HOME environment variable and running the Tomcat installer. 
-      Decide to run Tomcat as a Windows NT/2000/XP-Service.
-      Warning
-      Make sure you do not install at a location with spaces in the path.
-   3.
+      Important: Make sure you do not install at a location with spaces in the path, such as
+      C:\Tomcat Webapps\Lenya - some components in Lenya/Cocoon don't play well with such paths.
 
-      Configure Lenya
-
-      To install Lenya with Tomcat, you need to edit your build properties. To do this, 
-      copy $LENYA_HOME/build.properties to $LENYA_HOME/local.build.properties.
+   3. Configure Lenya for Tomcat
 
       Edit local.build.properties. For the described configuration the following settings 
       will work (MS Windows: Don't use backslashes "\" for directory separation.) It is 
@@ -155,14 +106,10 @@ Installing Lenya with Tomcat is mostly the same procedure. Follow Steps 1-4, the
       relative to Lenya, then change the cocoon.webapp.dir and cocoon.src.dir properties.
           * cocoon.src.dir=$COCOON_HOME
           * tomcat.home.dir=$TOMCAT_HOME
-   4.
+  
+   4. Build Lenya (see "Standalone Installation" above)
 
-      Build Lenya
-
-      Execute build install in your Lenya source directory.
-   5.
-
-      Checked versions of endorsed libraries
+   5. Check versions of endorsed libraries
 
       Lenya and Tomcat will inter-operate correctly only if the proper versions of the Xalan 
       and Xerces libraries are used consistently throughout the deployment. Unfortunately 
@@ -190,13 +137,9 @@ Installing Lenya with Tomcat is mostly the same procedure. Follow Steps 1-4, the
       References:
           * Tomcat Class Loader HOWTO (http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html)
           * Java 2 Endorsed Standards Override Mechanism (http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html)
-   6.
+ 
+   6. Restart Tomcat
 
-      Restart Tomcat
+   7. Test the installation by pointing your browser to
+          http://localhost:8080/lenya/
 
-      Restart Tomcat to load the Lenya webapp.
-   7.
-
-      Test the installation
-
-      http://localhost:8080/lenya/
