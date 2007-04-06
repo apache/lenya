@@ -45,17 +45,6 @@
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="fckeditor.open" >
-        <map:act type="reserved-checkout">
-          <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
-            <map:parameter name="user" value="{user}"/>
-            <map:parameter name="filename" value="{filename}"/>
-            <map:parameter name="date" value="{date}"/>
-            <map:parameter name="message" value="{message}"/>
-          </map:generate>
-          <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
-          <map:call resource="style-cms-page"/>
-          <map:serialize />
-        </map:act>    
         <map:generate type="jx" src="fallback://lenya/modules/fckeditor/usecases/fckeditor.jx"/>
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
@@ -87,6 +76,7 @@
 
       <map:match pattern="content">
         <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+        <map:transform type="uuid2url"/>
         <map:serialize type="xml-get"/>
       </map:match>
 

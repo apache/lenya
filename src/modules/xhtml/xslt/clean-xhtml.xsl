@@ -31,6 +31,14 @@
     </xsl:copy>
   </xsl:template>
   
+  <!-- Remove tag that disables Firefox spell check in FCK -->
+  <xsl:template match="xhtml:body[@spellcheck]" >
+    <xsl:copy>
+       <xsl:apply-templates select="@*[name()!='spellcheck']" />
+       <xsl:apply-templates />
+    </xsl:copy>
+  </xsl:template>
+
   <!-- Unsupported by the schema -->
   <xsl:template match="@shape|@target|xhtml:u">
     <xsl:apply-templates />

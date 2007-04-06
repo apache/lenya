@@ -45,6 +45,7 @@ import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -74,12 +75,18 @@ import org.xml.sax.helpers.AttributesImpl;
  * <code>&lt;a/&gt;</code> element is removed to disable the link.</li>
  * </ul>
  * 
+ * <p>
+ * You can add the query parameter <code>uuid2url.extension</code> to <code>lenya-document:</code>
+ * URLs to set a specific link extension.
+ * </p>
+ * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
 public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disposable {
 
     protected static final String BROKEN_ATTRIB = "class";
     protected static final String BROKEN_VALUE = "brokenlink";
+    protected static final String EXTENSION_PARAM = "uuid2url.extension";
 
     private boolean ignoreLinkElement = false;
     private ServiceSelector serviceSelector;
@@ -159,7 +166,7 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
 
     private String indent = "";
 
-    protected static final String[] elementNames = { "a", "object", "img" };
+    protected static final String[] elementNames = { "a", "object", "img", "link" };
     protected static final String[] attributeNames = { "href", "src", "data" };
 
     /**
@@ -208,16 +215,20 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
                             String[] linkUriAndQuery = url.split("\\?");
                             String linkUri = linkUriAndQuery[0];
                             String queryString = null;
+                            String requiredExtension = null;
                             if (linkUriAndQuery.length > 1) {
                                 queryString = linkUriAndQuery[1];
+                                Query query = new Query(queryString);
+                                requiredExtension = query.getValue(EXTENSION_PARAM);
+                                query.removeValue(EXTENSION_PARAM);
+                                queryString = query.toString();
                             }
                             LinkTarget target = this.linkResolver.resolve(doc, linkUri);
                             if (target.exists() && target.getDocument().hasLink()) {
                                 Document targetDocument = target.getDocument();
-                                String extension = targetDocument.getExtension();
-                                if (extension.length() > 0) {
-                                    extension = "." + extension;
-                                }
+                                
+                                String extension = getExtension(targetDocument, requiredExtension);
+                                
                                 rewriteLink(newAttrs, attributeNames[i], targetDocument, anchor,
                                         queryString, extension);
                             } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
@@ -266,6 +277,15 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
                 getLogger().debug(this.indent + "<" + qname + "> sent");
             }
         }
+    }
+
+    protected String getExtension(Document targetDocument, String requiredExtension) {
+        String docExtension = targetDocument.getExtension();
+        String extension = requiredExtension != null ? requiredExtension : docExtension;
+        if (extension.length() > 0) {
+            extension = "." + extension;
+        }
+        return extension;
     }
 
     /**
@@ -327,7 +347,7 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
             rewrittenURL += "#" + anchor;
         }
 
-        if (queryString != null) {
+        if (queryString != null && queryString.length() > 0) {
             rewrittenURL += "?" + queryString;
         }
 

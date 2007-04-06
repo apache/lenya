@@ -148,16 +148,13 @@
       </oneOrMore>
     </element>
     <optional>
-      <element name="templates">
-        <oneOrMore>
-          <element name="template">
-            <attribute name="id">
-              <ref name="simpleNameToken"/>
-            </attribute>
-          </element>
-        </oneOrMore>
+      <element name="template">
+        <attribute name="id">
+          <ref name="simpleNameToken"/>
+        </attribute>
       </element>
     </optional>
+    <!-- FIXME: is template-instantiator optional?-->
     <element name="template-instantiator"><attribute name="name"><data type="string"/></attribute></element>
     <element name="path-mapper">
       <ref name="javaClassName"/>
@@ -187,9 +184,6 @@
         </attribute>
       </element>
     </optional>
-    <element name="link-attribute">
-      <attribute name="xpath"><ref name="XPathExpression"/></attribute>
-    </element>
     <optional>
       <element name="proxies">
         <oneOrMore>

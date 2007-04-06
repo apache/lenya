@@ -91,55 +91,55 @@
       </map:match>
     </map:pipeline>   
     
-    <map:pipeline>           
-        <map:match pattern="open" type="step">
-          <map:match pattern="*/authoring/**.html">
-            <!-- Check if Kupu is installed -->
-            <map:act type="resource-exists" 
-              src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/kupu/kupumacros.html">
-              <map:act type="reserved-checkout">
-                <map:generate type="serverpages" 
-                  src="fallback://lenya/content/rc/{exception}.xsp">
-                  <map:parameter name="user" value="{user}"/>
-                  <map:parameter name="filename" value="{filename}"/>
-                  <map:parameter name="date" value="{date}"/>
-                  <map:parameter name="message" value="{message}"/>
-                </map:generate>
-                <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
-                <map:call resource="style-cms-page"/>
-                <map:serialize />
-              </map:act>
-              <map:generate 
-                src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/kupu/kupumacros.html"/>
-              <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupumacros.xsl">
-                <map:parameter name="contentfile" 
-                  value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=content"/>
-                <map:parameter name="context-prefix" value="{request:contextPath}/{page-envelope:publication-id}/modules/kupu"/>
-                <!-- Only used to display the document path of the edited doc  -->
-                <map:parameter name="document-path" value="{page-envelope:document-path}"/>
-                <map:parameter name="save-destination" 
-                  value="{request:requestURI}"/>
-                <map:parameter name="exit-destination" 
-                  value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=exit"/>
-                <map:parameter name="reload-after-save" value="1"/>
-                <map:parameter name="use-css" value="1"/>
-                <map:parameter name="imagedrawer-xsl-uri" 
-                  value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=imagedrawerxsl"/>
-                <map:parameter name="linkdrawer-xsl-uri" 
-                  value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=linkdrawerxsl"/>
-                <map:parameter name="image-libraries-uri" 
-                  value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=image_libraries"/>
-                <map:parameter name="link-libraries-uri" 
-                  value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=link_libraries"/>
-              </map:transform>
-              <map:serialize type="xhtml"/>
-            </map:act>
-            <!-- If Kupu is not installed; Action failed -->
-            <map:generate src="fallback://lenya/resources/misc/kupu/download.xhtml"/>
+    <map:pipeline>
+      
+      <map:match pattern="kupu.open">
+        <!-- Check if Kupu is installed -->
+        <map:act type="resource-exists" 
+          src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/kupu/kupumacros.html">
+          <map:act type="reserved-checkout">
+            <map:generate type="serverpages" 
+              src="fallback://lenya/content/rc/{exception}.xsp">
+              <map:parameter name="user" value="{user}"/>
+              <map:parameter name="filename" value="{filename}"/>
+              <map:parameter name="date" value="{date}"/>
+              <map:parameter name="message" value="{message}"/>
+            </map:generate>
+            <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
             <map:call resource="style-cms-page"/>
             <map:serialize />
-          </map:match>
-        </map:match>
+          </map:act>
+          <map:generate 
+            src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/kupu/kupumacros.html"/>
+          <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupumacros.xsl">
+            <map:parameter name="contentfile" 
+              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=content"/>
+            <map:parameter name="context-prefix" value="{request:contextPath}/{page-envelope:publication-id}/modules/kupu"/>
+            <!-- Only used to display the document path of the edited doc  -->
+            <map:parameter name="document-path" value="{page-envelope:document-path}"/>
+            <map:parameter name="save-destination" 
+              value="{request:requestURI}?lenya.event=edit"/>
+            <map:parameter name="exit-destination" 
+              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=exit"/>
+            <map:parameter name="reload-after-save" value="1"/>
+            <map:parameter name="use-css" value="1"/>
+            <map:parameter name="imagedrawer-xsl-uri" 
+              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=imagedrawerxsl"/>
+            <map:parameter name="linkdrawer-xsl-uri" 
+              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=linkdrawerxsl"/>
+            <map:parameter name="image-libraries-uri" 
+              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=image_libraries"/>
+            <map:parameter name="link-libraries-uri" 
+              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=link_libraries"/>
+          </map:transform>
+          <map:serialize type="xhtml"/>
+        </map:act>
+        <!-- If Kupu is not installed; Action failed -->
+        <map:generate src="fallback://lenya/resources/misc/kupu/download.xhtml"/>
+        <map:call resource="style-cms-page"/>
+        <map:serialize />
+      </map:match>
+        
         <!-- Requested by Kupu to load the document into the editor -->    
         <map:match pattern="content" type="step">
           <map:match pattern="*/authoring/**">

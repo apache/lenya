@@ -18,12 +18,14 @@
 package org.apache.lenya.util;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
  * <p>
  * Utility class to analyze a query string of the form
  * <code>key1=value1&key2=value2&...</code>.
+ * Access is not thread-safe.
  * </p>
  * <p>
  * Invalid parts (not a valid key-value-pair) are omitted.
@@ -96,6 +98,25 @@ public class Query {
 
     public String getPairDelimiter() {
         return pairDelimiter;
+    }
+    
+    public void removeValue(String key) {
+        this.key2value.remove(key);
+    }
+    
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        for (Iterator i = this.key2value.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            String value = (String) this.key2value.get(key);
+            buf.append(key);
+            buf.append(this.keyValueDelimiter);
+            buf.append(value);
+            if (i.hasNext()) {
+                buf.append(this.pairDelimiter);
+            }
+        }
+        return buf.toString();
     }
 
 }

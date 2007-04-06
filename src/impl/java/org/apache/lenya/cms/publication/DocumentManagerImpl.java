@@ -81,37 +81,27 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * Copies meta data from one document to another.
+     * Copies meta data from one document to another. If the destination
+     * document is a different area version, the meta data are duplicated (i.e.,
+     * onCopy = delete is neglected).
      * @param source
      * @param destination
      * @throws PublicationException
      */
     protected void copyMetaData(Document source, Document destination) throws PublicationException {
-        try {
-            String[] uris = source.getMetaDataNamespaceUris();
-            for (int i = 0; i < uris.length; i++) {
-                destination.getMetaData(uris[i]).replaceBy(source.getMetaData(uris[i]));
-            }
-        } catch (MetaDataException e) {
-            throw new PublicationException(e);
-        }
-    }
 
-    /**
-     * Copies meta data from one document to another, whereas both documents
-     * will have completely identical meta data afterwards (including workflow
-     * etc.). This is only useful if the source document will be deleted
-     * afterwards.
-     * @param source
-     * @param destination
-     * @throws PublicationException
-     */
-    protected void duplicateMetaData(Document source, Document destination)
-            throws PublicationException {
+        boolean duplicate = source.getUUID().equals(destination.getUUID())
+                && source.getLanguage().equals(destination.getLanguage())
+                && !source.getArea().equals(destination.getArea());
+
         try {
             String[] uris = source.getMetaDataNamespaceUris();
             for (int i = 0; i < uris.length; i++) {
-                destination.getMetaData(uris[i]).forcedReplaceBy(source.getMetaData(uris[i]));
+                if (duplicate) {
+                    destination.getMetaData(uris[i]).forcedReplaceBy(source.getMetaData(uris[i]));
+                } else {
+                    destination.getMetaData(uris[i]).replaceBy(source.getMetaData(uris[i]));
+                }
             }
         } catch (MetaDataException e) {
             throw new PublicationException(e);
@@ -322,18 +312,83 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public void copy(Document sourceDocument, DocumentLocator destination)
-            throws PublicationException {
-        SiteStructure destSite = sourceDocument.getPublication().getArea(destination.getArea())
+    public void copy(Document sourceDoc, DocumentLocator destination) throws PublicationException {
+
+        if (!destination.getPublicationId().equals(sourceDoc.getPublication().getId())) {
+            throw new PublicationException("Can't copy to a different publication!");
+        }
+
+        SiteStructure destSite = sourceDoc.getPublication().getArea(destination.getArea())
                 .getSite();
+        String destPath = destination.getPath();
         if (destSite.contains(destination.getPath(), destination.getLanguage())) {
-            Document destDoc = destSite.getNode(destination.getPath()).getLink(
-                    destination.getLanguage()).getDocument();
-            copyDocumentSource(sourceDocument, destDoc);
+            Document destDoc = destSite.getNode(destPath).getLink(destination.getLanguage())
+                    .getDocument();
+            copyDocumentSource(sourceDoc, destDoc);
+            copyInSiteStructure(sourceDoc, destDoc, destPath);
         } else {
-            add(sourceDocument, destination.getArea(), destination.getPath(), destination
-                    .getLanguage(), sourceDocument.getExtension(), sourceDocument.getLink()
-                    .getLabel(), sourceDocument.getLink().getNode().isVisible());
+            add(sourceDoc, destination.getArea(), destPath, destination.getLanguage(), sourceDoc
+                    .getExtension(), sourceDoc.getLink().getLabel(), sourceDoc.getLink().getNode()
+                    .isVisible());
+        }
+
+    }
+
+    protected void copyInSiteStructure(Document sourceDoc, Document destDoc, String destPath)
+            throws PublicationException, DocumentException, SiteException {
+
+        String destArea = destDoc.getArea();
+
+        SiteStructure destSite = sourceDoc.getPublication().getArea(destArea).getSite();
+
+        if (sourceDoc.hasLink()) {
+            if (destDoc.hasLink()) {
+                Link srcLink = sourceDoc.getLink();
+                Link destLink = destDoc.getLink();
+                destLink.setLabel(srcLink.getLabel());
+                destLink.getNode().setVisible(srcLink.getNode().isVisible());
+            } else {
+                String label = sourceDoc.getLink().getLabel();
+                boolean visible = sourceDoc.getLink().getNode().isVisible();
+                if (destSite.contains(sourceDoc.getLink().getNode().getPath())) {
+                    addToSiteManager(destPath, destDoc, label, visible);
+                } else {
+
+                    String followingSiblingPath = null;
+
+                    if (sourceDoc.getPath().equals(destPath)) {
+                        SiteStructure sourceSite = sourceDoc.area().getSite();
+
+                        SiteNode[] sourceSiblings;
+                        SiteNode sourceNode = sourceDoc.getLink().getNode();
+                        if (sourceNode.isTopLevel()) {
+                            sourceSiblings = sourceSite.getTopLevelNodes();
+                        } else if (sourceNode.getParent() != null) {
+                            sourceSiblings = sourceNode.getParent().getChildren();
+                        } else {
+                            sourceSiblings = new SiteNode[1];
+                            sourceSiblings[0] = sourceNode;
+                        }
+
+                        final int sourcePos = Arrays.asList(sourceSiblings).indexOf(sourceNode);
+
+                        int pos = sourcePos;
+                        while (followingSiblingPath == null && pos < sourceSiblings.length) {
+                            String siblingPath = sourceSiblings[pos].getPath();
+                            if (destSite.contains(siblingPath)) {
+                                followingSiblingPath = siblingPath;
+                            }
+                            pos++;
+                        }
+                    }
+
+                    if (followingSiblingPath == null) {
+                        addToSiteManager(destPath, destDoc, label, visible);
+                    } else {
+                        addToSiteManager(destPath, destDoc, label, visible, followingSiblingPath);
+                    }
+                }
+            }
         }
     }
 
@@ -359,36 +414,23 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void move(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
 
-        Publication publication = sourceDocument.getPublication();
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager.getSiteStructure(sourceDocument.getFactory(),
-                    sourceDocument.getPublication(), destination.getArea()).contains(
-                    destination.getPath())) {
-                throw new PublicationException("The path [" + destination
-                        + "] is already contained in this publication!");
-            }
-
-            String label = sourceDocument.getLink().getLabel();
-            boolean visible = sourceDocument.getLink().getNode().isVisible();
-            sourceDocument.getLink().delete();
-
-            siteManager.add(destination.getPath(), sourceDocument);
-            sourceDocument.getLink().setLabel(label);
-            siteManager.setVisibleInNav(sourceDocument, visible);
-        } catch (final ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
+        if (!destination.getArea().equals(sourceDocument.getArea())) {
+            throw new PublicationException("Can't move to a different area!");
         }
+
+        SiteStructure site = sourceDocument.area().getSite();
+        if (site.contains(destination.getPath())) {
+            throw new PublicationException("The path [" + destination
+                    + "] is already contained in this publication!");
+        }
+
+        String label = sourceDocument.getLink().getLabel();
+        boolean visible = sourceDocument.getLink().getNode().isVisible();
+        sourceDocument.getLink().delete();
+
+        site.add(destination.getPath(), sourceDocument);
+        sourceDocument.getLink().setLabel(label);
+        sourceDocument.getLink().getNode().setVisible(visible);
 
     }
 
@@ -403,62 +445,18 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     protected void copyToVersion(Document sourceDoc, String destinationArea, String language)
             throws DocumentException, DocumentBuildException, PublicationException, SiteException {
-        Document destinationDoc;
-        if (sourceDoc.existsAreaVersion(destinationArea)) {
-            destinationDoc = sourceDoc.getAreaVersion(destinationArea);
-            copyDocumentSource(sourceDoc, destinationDoc);
-        } else {
-            destinationDoc = addVersion(sourceDoc, destinationArea, language);
-        }
 
-        SiteStructure destSite = sourceDoc.getPublication().getArea(destinationArea).getSite();
+        Document destDoc;
+        if (sourceDoc.existsAreaVersion(destinationArea)) {
+            destDoc = sourceDoc.getAreaVersion(destinationArea);
+            copyDocumentSource(sourceDoc, destDoc);
+        } else {
+            destDoc = addVersion(sourceDoc, destinationArea, language);
+        }
 
         if (sourceDoc.hasLink()) {
-            if (destinationDoc.hasLink()) {
-                boolean visible = sourceDoc.getLink().getNode().isVisible();
-                destinationDoc.getLink().getNode().setVisible(visible);
-            } else {
-                String path = sourceDoc.getPath();
-                String label = sourceDoc.getLink().getLabel();
-                boolean visible = sourceDoc.getLink().getNode().isVisible();
-                if (destSite.contains(sourceDoc.getLink().getNode().getPath())) {
-                    addToSiteManager(path, destinationDoc, label, visible);
-                } else {
-
-                    SiteStructure sourceSite = sourceDoc.area().getSite();
-
-                    SiteNode[] sourceSiblings;
-                    SiteNode sourceNode = sourceDoc.getLink().getNode();
-                    if (sourceNode.isTopLevel()) {
-                        sourceSiblings = sourceSite.getTopLevelNodes();
-                    } else if (sourceNode.getParent() != null) {
-                        sourceSiblings = sourceNode.getParent().getChildren();
-                    } else {
-                        sourceSiblings = new SiteNode[1];
-                        sourceSiblings[0] = sourceNode;
-                    }
-
-                    final int sourcePos = Arrays.asList(sourceSiblings).indexOf(sourceNode);
-
-                    String followingSiblingPath = null;
-                    int pos = sourcePos;
-                    while (followingSiblingPath == null && pos < sourceSiblings.length) {
-                        String siblingPath = sourceSiblings[pos].getPath();
-                        if (destSite.contains(siblingPath)) {
-                            followingSiblingPath = siblingPath;
-                        }
-                        pos++;
-                    }
-
-                    if (followingSiblingPath == null) {
-                        addToSiteManager(path, destinationDoc, label, visible);
-                    } else {
-                        addToSiteManager(path, destinationDoc, label, visible, followingSiblingPath);
-                    }
-                }
-            }
+            copyInSiteStructure(sourceDoc, destDoc, sourceDoc.getPath());
         }
-
     }
 
     /**
@@ -532,8 +530,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             if (sourceArea.getName().equals(targetArea.getName())) {
                 targetDoc = sourceDoc;
             } else {
-                targetDoc = duplicateVersion(sourceDoc, targetArea.getName(), sourceDoc
-                        .getLanguage());
+                targetDoc = addVersion(sourceDoc, targetArea.getName(), sourceDoc.getLanguage());
                 sourceDoc.delete();
             }
 
@@ -596,7 +593,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyDocumentSource(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
+        copyContent(sourceDocument, destinationDocument);
+        copyMetaData(sourceDocument, destinationDocument);
+    }
 
+    protected void copyContent(Document sourceDocument, Document destinationDocument)
+            throws PublicationException {
         boolean useBuffer = true;
 
         OutputStream destOutputStream = null;
@@ -625,9 +627,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } catch (Exception e) {
             throw new PublicationException(e);
         }
-
-        copyMetaData(sourceDocument, destinationDocument);
-
     }
 
     /**
@@ -925,15 +924,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                         .getPublication(), area, language, sourceDocument.getSourceExtension());
         copyMetaData(sourceDocument, document);
 
-        return document;
-    }
-
-    protected Document duplicateVersion(Document sourceDocument, String area, String language)
-            throws DocumentBuildException, DocumentException, PublicationException {
-        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
-                sourceDocument.getUUID(), sourceDocument.getInputStream(), sourceDocument
-                        .getPublication(), area, language, sourceDocument.getSourceExtension());
-        duplicateMetaData(sourceDocument, document);
         return document;
     }
 

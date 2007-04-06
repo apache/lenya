@@ -25,33 +25,47 @@
   <page:head/>
   <page:body>
     <h1>README: Apache Lenya</h1>
+    <h2>Note to developers</h2>
     <p>
-      <em>Note to developers:</em> Please use this file to inform users
+      Please use this new README to inform users
       about changes in the code or behaviour of Lenya. It is located under
       <code>src/webapp/readme.xml</code>. Its contents will be shown on the global 
       welcome page, and also on the introduction page of every publication.
     </p>
+    <h2>Important note for beta testers of Lenya 1.4</h2>
     <p><strong><em>You need to update your custom publication.xconf files!</em></strong></p>
     <p>
       As of revision FIXME, the file <code>$YOURPUB/publication.xml</code>
-      is deprecated and no longer used. Its contents should be moved to
-      <code>$YOURPUB/config/publication.xconf.</code>
+      is no longer used. Its contents should be moved to <code>$YOURPUB/config/publication.xconf.</code>
+      To accomodate this, the format of <code>publication.xconf</code> has changed a bit (see
+      below).<br />
+      Sorry for the breakage, but we were able to eliminate a lot of old ad-hoc code
+      and duplication with this change, and the new xconf file looks a lot nicer and more intuitive.
     </p>
     <p>
-      <em>Most important changes:</em> All elements in publication.xconf must now be
-      in the namespace <code>http://apache.org/cocoon/lenya/publication/1.1</code>,
+      <em>Most important changes:</em> All elements in <code>publication.xconf</code> 
+      must now be in the namespace <code>http://apache.org/cocoon/lenya/publication/1.1</code>,
       and <code>&lt;module/&gt;</code>, <code>&lt;proxy/&gt;</code>, and 
       <code>&lt;resource-type&gt;</code> elements must now be grouped 
       in <code>&lt;modules/&gt;</code>, <code>&lt;proxies/&gt;</code>, 
-      and <code>&lt;resource-types&gt;</code>. See the default publication
+      and <code>&lt;resource-types/&gt;</code>. See the default publication
       for an example.<br />
-      You can use <code>webapp/lenya/resources/schemas/publication.rng</code>
-      to verify that your file is correct.
+      You can use the RNG schema at <code>webapp/lenya/resources/schemas/publication.rng</code>
+      to verify that your file is correct:
+      <blockquote>
+        <code>
+          cd $LENYA_HOME<br />
+          java -jar lib/jing-20030619.jar src/webapp/lenya/resources/schemas/publication.rng $YOURPUB/config/publication.xconf
+        </code>
+      </blockquote>
     </p>
+    <h2>New per-publication <code>readme.xml</code></h2>
     <p>
-      If you want to provide a custom README for your publication, you can
-      put it in <code>$YOURPUP/readme.xsl</code>. 
-      Just copy this file over and modify to your needs.
+      If you want to provide a custom README for your publication (maybe you
+      have used the old &lt;lenya:readme/&gt; in the now gone
+      publication.xml), you can put it in <code>$YOURPUB/readme.xml</code>. 
+      It is now a standard Lenya CMS page in the
+      <code>http://apache.org/cocoon/lenya/cms-page/1.0</code> namespace.
     </p>  
   </page:body>
 </page:page>

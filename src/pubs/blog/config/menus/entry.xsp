@@ -51,7 +51,7 @@
       <block>
         <item uc:usecase="workflow.publish" href="?"><i18n:text>Publish</i18n:text></item>
         <item uc:usecase="workflow.deactivate" href="?"><i18n:text>Deactivate</i18n:text></item>
-        <item uc:usecase="workflow.delete" href="?"><i18n:text>Delete</i18n:text></item>
+        <item uc:usecase="sitemanagement.delete" href="?"><i18n:text>Delete</i18n:text></item>
       </block>
       <block>
         <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>

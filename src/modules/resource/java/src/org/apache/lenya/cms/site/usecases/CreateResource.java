@@ -125,7 +125,7 @@ public class CreateResource extends CreateDocument {
         } else {
             addErrorMessage(MESSAGE_UPLOAD_MISSING_EXTENSION);
         }
-        return extension;
+        return extension.toLowerCase();
     }
 
 }

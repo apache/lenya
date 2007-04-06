@@ -2,7 +2,7 @@ How to configure/install:
 1. download the latest release of fckeditor from http://www.fckeditor.net/
 
 2. unzip it into the src/modules/fckeditor/resources directory
-   (resources directory should now contain a directory named FCKeditor)
+   (resources directory should now contain a directory named fckeditor)
    
 3. register the module with your publication, so that the appropriate menu
    item can be displayed: in <yourpub>/config/publication.xconf, add the line
@@ -16,6 +16,8 @@ How to configure/install:
      <role id="admin"/>
      <role id="edit"/>
    </usecase>
+
+   or use the usecases option under the admin tab in lenya. 
     
 5. build lenya
 

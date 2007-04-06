@@ -27,7 +27,8 @@
   <lenya-version>@lenya.version@</lenya-version>
   <lenya-revision>@lenya.revision@</lenya-revision>
   <cocoon-version>2.1.10-dev</cocoon-version>
-  <!-- NOTE: The various languages need to be listed for verification and widget building -->
+
+  <!-- The various languages need to be listed for verification and widget building -->
   <languages>
     <language default="true">en</language>
     <language>de</language>
@@ -35,13 +36,19 @@
     <language>es</language>
     <language>fr</language>
   </languages>
+  <!-- A template instantiator is used to create new publications based on this one. -->
   <template-instantiator name="default"/>
+  <!-- A publication can inherit from another publication. "id" corresponds to the publication id 
+       of that template (and thus to the name of the directory it's stored in) -->
+  <!--
+     <template id="some-pub-id"/>
+  -->
   <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
   <document-builder name="default"/>
   <breadcrumb-prefix/>
   <site-manager name="tree"/>
   
-  <!-- NOTE: Resource types need to be listed because of the workflow resp. because the workflow depends on the publication and not on the resource type -->
+  <!-- Resource types need to be listed because of the workflow resp. because the workflow depends on the publication and not on the resource type -->
   <resource-types>
     <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
     <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
@@ -50,9 +57,10 @@
     <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
     <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
     <resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="news" workflow="fallback://config/workflow/workflow.xml"/>
   </resource-types>
   
-  <!-- NOTE: Modules need to be listed because of the menu and i18n -->
+  <!-- Modules need to be listed because of the menu and i18n -->
   <modules>
     <module name="editors"/>
     <module name="xhtml"/>
@@ -72,26 +80,24 @@
     <module name="languageselector"/>
     <module name="administration"/>
     <module name="workflow"/>
-    <!-- TODO: The goal is to have a blog module ;-) -->
-    <!--
-    <module name="blog"/>
-    -->
+    <module name="news"/>
   </modules>
 
-  <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
-  <!-- Relative to webapp context: -->
+  <!-- You can specify a custom location for your content, outside the Lenya build tree. Note that you will probably also want
+       to specify custom locations for access control (see ac/ac.xconf), so that all your dynamically generated data is in one place
+       for easy backup. -->
+
   <!--
-  <content-dir src="lenya/pubs/default"/>
-  -->
-  <!-- Absolute: -->
-  <!--
-  <content-dir src="/home/USERNAME/data/default"/>
-  <content-dir src="D:/tmp/default"/>
+       Relative to webapp context: 
+          <content-dir src="lenya/pubs/default"/>
+       Absolute:
+          <content-dir src="/home/USERNAME/data/default"/>
+          <content-dir src="D:/tmp/default"/>
   -->
   
-  <!--
-       For information about these settings, read 
-       http://lenya.apache.org/1_2_x/components/deployment/proxying.html
+  <!-- Lenya can rewrite the links to cater to special proxy setups.
+       For information about these settings, read http://lenya.apache.org/1_2_x/components/deployment/proxying.html
+       (yes, this needs some updating... sorry.)
   <proxies>
     <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
     <proxy area="live" ssl="false" url="http://www.host.com/default"/>

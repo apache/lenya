@@ -67,7 +67,6 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ELEMENT_LANGUAGES = "languages";
     private static final String ELEMENT_LANGUAGE = "language";
     private static final String ATTRIBUTE_DEFAULT_LANGUAGE = "default";
-    private static final String ELEMENT_TEMPLATES = "templates";
     private static final String ELEMENT_TEMPLATE = "template";
     private static final String ATTRIBUTE_ID = "id";
     private static final String ELEMENT_TEMPLATE_INSTANTIATOR = "template-instantiator";
@@ -82,7 +81,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ELEMENT_MODULE = "module";//*
     private static final String ELEMENT_BREADCRUMB_PREFIX = "breadcrumb-prefix";
     private static final String ELEMENT_CONTENT_DIR = "content-dir";
-    private static final String ELEMENT_LINK_ATTRIBUTE = "link-attribute";
+    private static final String ATTRIBUTE_SRC = "src";
     private static final String ELEMENT_PROXIES = "proxies";
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
@@ -197,15 +196,19 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 }
             }
 
-            Configuration templatesConfig = config.getChild(ELEMENT_TEMPLATES);
-            if (templatesConfig != null) {
-                Configuration[] templateConfigs = templatesConfig.getChildren(ELEMENT_TEMPLATE);
-                this.templates = new String[templateConfigs.length];
-                for (int i = 0; i < templateConfigs.length; i++) {
-                    String templateId = templateConfigs[i].getAttribute(ATTRIBUTE_ID);
-                    this.templates[i] = templateId;
-                }
+            Configuration templateConfig = config.getChild(ELEMENT_TEMPLATE, false);
+            //FIXME: this is a hack. For some reason, the old code seems to imply that a publication
+            // can have multiple templates. This is not the case. All this code should use a simple string
+            // rather than arrays at some point. For now, the old array is kept, to avoid having to deal
+            // with all kinds of NPEs that keep cropping up...
+            if (templateConfig == null) {
+                this.templates = new String[0]; // ugh. empty array to keep the legacy code from breaking.
             }
+            else {
+                 this.templates = new String[1];
+                 this.templates[0] = templateConfig.getAttribute(ATTRIBUTE_ID);
+            }
+
 
             Configuration templateInstantiatorConfig = config.getChild(
                     ELEMENT_TEMPLATE_INSTANTIATOR, false);
@@ -216,7 +219,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
             Configuration contentDirConfig = config.getChild(ELEMENT_CONTENT_DIR, false);
             if (contentDirConfig != null) {
-                this.contentDir = contentDirConfig.getAttribute("src");
+                this.contentDir = contentDirConfig.getAttribute(ATTRIBUTE_SRC);
                 getLogger().info(
                         "Content directory loaded from pub configuration: " + this.contentDir);
             } else {

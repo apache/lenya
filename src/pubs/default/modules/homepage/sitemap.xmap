@@ -37,6 +37,18 @@
           <map:serialize type="xml"/>
         </map:match>
       </map:match>
+      
+      <map:match pattern="news-*_*.xml">
+        <map:select type="resource-exists">
+          <map:when test="site:/{2}/news?format={1}">
+            <map:generate src="site:/{2}/news?format={1}"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="fallback://lenya/content/util/empty.xml"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="xml"/>
+      </map:match>
 
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}" -->
@@ -49,6 +61,7 @@
           <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
+        <map:transform type="cinclude"/>
         <map:serialize type="xml"/>
       </map:match>
 

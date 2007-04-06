@@ -20,11 +20,11 @@
   
   <import file="${webtest.home}/lib/taskdef.xml"/>
   
-  <target name="main" depends="sequence, overview"/>
+  <target name="main" depends="sequence, published-footer, overview"/>
   
     
   <target name="sequence">
-    <webtest name="myTest">
+    <webtest name="Workflow sequence">
       <config host="localhost" port="8888" protocol="http" basepath="default/authoring" />
       <steps>
         <!-- login as lenya -->
@@ -94,10 +94,11 @@
         <verifyElementText type="span" name="workflow-state" text="review"/>
         
         <!-- publish -->
+        
         <invoke url="index.html?lenya.usecase=workflow.publish"/>
         <clickButton name="submit"/>
         <verifyElementText type="span" name="workflow-state" text="live"/>
-
+        
         <!-- deactivate -->
         <invoke url="index.html?lenya.usecase=workflow.deactivate"/>
         <clickButton name="submit"/>
@@ -105,6 +106,50 @@
         
         <!-- logout -->
         <invoke url="index.html?lenya.usecase=ac.logout"/>
+        <clickButton name="submit"/>
+        
+      </steps>
+    </webtest>
+  </target>
+  
+  
+  <target name="published-footer">
+    <webtest name="Workflow sequence">
+      <config host="localhost" port="8888" protocol="http" basepath="default">
+        <option name="ThrowExceptionOnFailingStatusCode" value="false"/>
+      </config>
+      <steps>
+        <!-- login as alice -->
+        <invoke url="authoring/tutorial.html" />
+        <setInputField name="username" value="alice"/>
+        <setInputField name="password" value="levi"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="authoring"/>
+        
+        <!-- submit -->
+        <invoke url="authoring/tutorial.html?lenya.usecase=workflow.submit"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="review"/>
+        
+        <!-- live version should not exist -->
+        <invoke url="live/tutorial.html"/>
+        <storeResponseCode property="status" />
+        <verifyProperty name="status" text="404"/>
+        
+        <!-- publish -->
+        <invoke url="authoring/tutorial.html"/>
+        <verifyText text="This page has not been published yet."/>
+        <invoke url="authoring/tutorial.html?lenya.usecase=workflow.publish"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="live"/>
+        <verifyText text="This page was last published at"/>
+        <verifyText text="by Alice."/>
+        
+        <invoke url="live/tutorial.html"/>
+        <verifyText text="This page was last published at"/>
+        
+        <!-- logout -->
+        <invoke url="authoring/tutorial.html?lenya.usecase=ac.logout"/>
         <clickButton name="submit"/>
         
       </steps>
@@ -127,7 +172,6 @@
         
         <invoke url="index.html?lenya.usecase=workflow.multiWorkflow"/>
         <verifyElementText type="h1" text="Workflow Overview"/>
-        
       </steps>
     </webtest>
   </target>
