@@ -80,7 +80,7 @@
           <td>
             <textarea id="notification.message" name="notification.message" class="lenya-form-element">          
               <xsl:apply-templates select="not:message/not:body"/>  
-            </textarea>
+            &#160;</textarea>
           </td>
         </tr>
       </table>  
