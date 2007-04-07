@@ -141,16 +141,18 @@
       </td>
     </tr>
     <tr>
-      <th style="white-space: nowrap;"><i18n:text>Templates used</i18n:text></th>
+      <th style="white-space: nowrap;"><i18n:text>Template used</i18n:text></th>
       <td class="border">
-        <xsl:for-each select="lenya:templates/lenya:template">
-          <a href="../{@id}/introduction.html">
-            <xsl:value-of select="@id"/>
-          </a>
-          <xsl:if test="position() != last()">
-            <xsl:text>, </xsl:text>
-          </xsl:if>
-        </xsl:for-each>
+        <xsl:choose>
+          <xsl:when test="lenya:template">
+            <a href="../{lenya:template/@id}/introduction.html">
+              <xsl:value-of select="lenya:template/@id"/>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
+            <i18n:text>none</i18n:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </td>
     </tr>
   </table>
