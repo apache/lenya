@@ -9,13 +9,13 @@ How to configure/install:
    <module name="fckeditor"/>
 
 4. make sure you have the appropriate usecase policies in
-   <yourpub>/config/ac/usecase-policies.xconf. the following entry will allow
+   <yourpub>/config/ac/usecase-policies.xml. the following entry will allow
    the "admin" and "edit" roles access to the usecase:
 
-   <usecase id="edit.tinymce">
-     <role id="admin"/>
-     <role id="edit"/>
-   </usecase>
+    <usecase id="fckeditor.edit">
+      <role id="admin" method="grant"/>
+      <role id="edit" method="grant"/>
+    </usecase>
 
    or use the usecases option under the admin tab in lenya. 
     
@@ -23,3 +23,4 @@ How to configure/install:
 
 6. try to edit your document by clicking on "With FCKEditor" in the edit menu
     
+
