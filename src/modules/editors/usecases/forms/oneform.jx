@@ -24,7 +24,7 @@
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
   >
   
-  <page:title><i18n:text>Edit</i18n:text></page:title>
+  <page:title><i18n:text>edit-news-properties</i18n:text></page:title>
   <page:body>
     
     <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
@@ -94,13 +94,13 @@
           </div>
 
           <div>
-            <input type="submit" value="Save" name="submit" />
-            <input type="submit" value="Cancel" name="cancel" />
+            <input type="submit" value="Save" name="submit" i18n:attr="value"/>
+            <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
           </div>
           
         </jx:when>
         <jx:otherwise>
-          <input type="submit" name="cancel" value="Cancel"/>
+          <input type="submit" name="cancel" value="Cancel" i18n:attr="value"/>
         </jx:otherwise>
       </jx:choose>
     </form>
