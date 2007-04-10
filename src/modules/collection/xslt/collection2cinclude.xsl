@@ -9,18 +9,19 @@
   
   
   <xsl:template match="col:collection">
-    <xsl:choose>
-      <xsl:when test="@type = 'children'">
-        <ci:include src="cocoon://modules/collection/collectionWithChildren/{$uuid}/{$language}.xml"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy>
-          <xsl:copy-of select="@*"/>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:choose>
+        <xsl:when test="@type = 'children'">
+          <ci:include src="cocoon://modules/collection/collectionWithChildren/{$uuid}/{$language}.xml"
+            select="*/*"/>
+        </xsl:when>
+        <xsl:otherwise>
           <ci:include src="cocoon://modules/collection/metadata-{$uuid}.xml"/>
           <xsl:apply-templates select="col:document"/>
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
   </xsl:template>
   
   
