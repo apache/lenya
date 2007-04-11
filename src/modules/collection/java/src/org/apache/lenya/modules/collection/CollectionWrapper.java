@@ -31,7 +31,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.util.Collection;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -78,21 +77,21 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#getDocuments()
+     * @see org.apache.lenya.modules.collection.Collection#getDocuments()
      */
     public Document[] getDocuments() throws DocumentException {
         return (Document[]) documents().toArray(new Document[documents().size()]);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#add(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.modules.collection.Collection#add(org.apache.lenya.cms.publication.Document)
      */
     public void add(Document document) throws DocumentException {
         documents().add(document);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#add(int,
+     * @see org.apache.lenya.modules.collection.Collection#add(int,
      *      org.apache.lenya.cms.publication.Document)
      */
     public void add(int position, Document document) throws DocumentException {
@@ -100,7 +99,7 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#remove(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.modules.collection.Collection#remove(org.apache.lenya.cms.publication.Document)
      */
     public void remove(Document document) throws DocumentException {
         if (!documents().contains(document)) {
@@ -275,21 +274,21 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#contains(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.modules.collection.Collection#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document document) throws DocumentException {
         return documents().contains(document);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#clear()
+     * @see org.apache.lenya.modules.collection.Collection#clear()
      */
     public void clear() throws DocumentException {
         documents().clear();
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#getFirstPosition(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.modules.collection.Collection#getFirstPosition(org.apache.lenya.cms.publication.Document)
      */
     public int getFirstPosition(Document document) throws DocumentException {
         load();
@@ -301,7 +300,7 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.Collection#size()
+     * @see org.apache.lenya.modules.collection.Collection#size()
      */
     public int size() throws DocumentException {
         return documents().size();
