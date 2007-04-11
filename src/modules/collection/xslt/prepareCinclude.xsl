@@ -3,25 +3,17 @@
   xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
   xmlns:ci="http://apache.org/cocoon/include/1.0">
   
-  
   <xsl:param name="uuid"/>
   <xsl:param name="language"/>
-  
   
   <xsl:template match="col:collection">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <ci:include src="cocoon://modules/collection/metadata-{$uuid}.xml"/>
-      <xsl:apply-templates select="col:document"/>
-    </xsl:copy>
-  </xsl:template>
-  
-  
-  <xsl:template match="col:document">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <ci:include src="cocoon://modules/collection/metadata-{@uuid}.xml"/>
-      <ci:include src="lenya-document:{@uuid}"/>
+      <xsl:if test="@type = 'children'">
+        <ci:include src="cocoon://modules/collection/collectionWithChildren/{$uuid}/{$language}.xml"
+          select="*/*"/>
+      </xsl:if>
+      <xsl:copy-of select="col:document"/>
     </xsl:copy>
   </xsl:template>
   

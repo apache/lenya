@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:site="http://apache.org/cocoon/lenya/sitetree/1.0"
   xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
-  xmlns:ci="http://apache.org/cocoon/include/1.0">
+  exclude-result-prefixes="site">
   
   
   <xsl:param name="language"/>
