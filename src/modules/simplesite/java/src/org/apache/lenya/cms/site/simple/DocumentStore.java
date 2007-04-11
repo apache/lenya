@@ -27,19 +27,16 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.CollectionImpl;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.modules.collection.CollectionWrapper;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -50,7 +47,7 @@ import org.w3c.dom.Element;
  * 
  * @version $Id$
  */
-public class DocumentStore extends CollectionImpl implements SiteStructure {
+public class DocumentStore extends CollectionWrapper implements SiteStructure {
 
     /**
      * The identifiable type.
@@ -60,21 +57,13 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     protected static final Object SITE_PATH = "/sitestructure";
 
     /**
-     * @param manager The service manager.
-     * @param map The identity map.
-     * @param pub The publication.
-     * @param area The area.
-     * @param uuid The UUID.
-     * @param _logger The logger.
+     * @param doc The document where the collection is stored.
+     * @param logger The logger.
      * @throws DocumentException if an error occurs.
      */
-    public DocumentStore(ServiceManager manager, DocumentFactory map, Publication pub, String area,
-            String uuid, Logger _logger) throws DocumentException {
-        super(manager,
-                map,
-                new DocumentIdentifier(pub, area, uuid, pub.getDefaultLanguage()),
-                _logger);
-        this.doc2path.put(getKey(uuid, pub.getDefaultLanguage()), SITE_PATH);
+    public DocumentStore(Document doc, Logger logger) throws DocumentException {
+        super(doc, logger);
+        this.doc2path.put(getKey(doc.getUUID(), doc.getLanguage()), SITE_PATH);
     }
 
     protected static final String NAMESPACE = "http://apache.org/lenya/sitemanagement/simple/1.0";
@@ -97,7 +86,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document,
+     * @see org.apache.lenya.modules.collection.CollectionWrapper#createDocumentElement(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.xml.NamespaceHelper)
      */
     protected Element createDocumentElement(Document document, NamespaceHelper helper)
@@ -110,16 +99,14 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.util.CollectionImpl#loadDocument(org.w3c.dom.Element)
+     * @see org.apache.lenya.modules.collection.CollectionWrapper#loadDocument(org.w3c.dom.Element)
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String uuid = documentElement.getAttribute(ATTRIBUTE_UUID);
         String language = documentElement.getAttribute(ATTRIBUTE_LANGUAGE);
         String path = documentElement.getAttribute(ATTRIBUTE_PATH);
         Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
-                getDelegate().getArea(),
-                uuid,
-                language);
+                getDelegate().getArea(), uuid, language);
         String key = getKey(uuid, language);
         if (!this.doc2path.containsKey(key)) {
             this.doc2path.put(key, path);
@@ -228,6 +215,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
                 doc2path().put(key, path);
             }
             super.add(document);
+            save();
         } catch (DocumentException e) {
             throw new SiteException(e);
         }
@@ -250,11 +238,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     protected Map doc2path() {
-        try {
-            load();
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
+        load();
         return this.doc2path;
     }
 
@@ -284,6 +268,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     public void remove(Document document) throws DocumentException {
         super.remove(document);
         this.doc2path.remove(getKey(document.getUUID(), document.getLanguage()));
+        save();
     }
 
     public SiteNode add(String path, String followingSiblingPath) throws SiteException {

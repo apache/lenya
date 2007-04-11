@@ -20,10 +20,15 @@ package org.apache.lenya.cms.site.simple;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
@@ -62,21 +67,45 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
      */
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         String[] snippets = key.split(":");
-        
+
         Assert.isTrue("key [" + key + "] is invalid!", snippets.length == 3);
-        
+
         String publicationId = snippets[0];
-        String area = snippets[1];
+        String areaName = snippets[1];
         String uuid = snippets[2];
         DocumentStore store;
         try {
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication publication = factory.getPublication(publicationId);
-            store = new DocumentStore(this.manager, factory, publication, area, uuid, getLogger());
+            Area area = publication.getArea(areaName);
+            String lang = publication.getDefaultLanguage();
+
+            if (!area.contains(uuid, lang)) {
+                createAreaVersion(publication, areaName, uuid, lang);
+            }
+
+            Document doc = area.getDocument(uuid, lang);
+
+            store = new DocumentStore(doc, getLogger());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
         return store;
+    }
+
+    protected void createAreaVersion(Publication publication, String areaName, String uuid,
+            String lang) throws PublicationException, ServiceException {
+        DocumentManager docManager = null;
+        try {
+            Area authoring = publication.getArea(Publication.AUTHORING_AREA);
+            Document authoringDoc = authoring.getDocument(uuid, lang);
+            docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            docManager.copyToArea(authoringDoc, areaName);
+        } finally {
+            if (docManager != null) {
+                this.manager.release(docManager);
+            }
+        }
     }
 
     public boolean isSharable() {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -16,15 +16,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml 447395 2006-09-18 13:01:33Z andreas $ -->
+<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
+<!--
+    This file defines the publication specific use-cases
+-->
 
-<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <message key="new-news-message-hint">
-    Um eine neue News-Meldung zu erstellen,
-    wählen Sie 'Datei' -> 'Neues News-Dokument'.
-  </message>
-  <message key="news-settings">News-Einstellungen</message>
-  <message key="include-items">Anzahl der Meldungen, die auf der Übersicht dargestellt werden sollen</message>
-  
-</catalogue>
+  <xconf xpath="/cocoon/site-managers" unless="/cocoon/site-managers/component-instance[@name = 'simple']">
+    <component-instance name="simple" logger="lenya.site"
+      class="org.apache.lenya.cms.site.simple.SimpleSiteManager"/>
+  </xconf>

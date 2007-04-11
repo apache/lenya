@@ -45,6 +45,11 @@ public interface Collection {
     String ATTRIBUTE_UUID = "uuid";
 
     /**
+     * Name of the type attribute.
+     */
+    String ATTRIBUTE_TYPE = "type";
+
+    /**
      * Returns the documents in this collection.
      * @return An array of documents.
      * @throws DocumentException when something went wrong.
@@ -109,4 +114,23 @@ public interface Collection {
      */
     Document getDelegate();
     
+    /**
+     * Type for automatic inclusion of child documents.
+     */
+    String TYPE_CHILDREN = "children";
+    
+    /**
+     * Type for manual addition of documents.
+     */
+    String TYPE_MANUAL = "manual";
+
+    /**
+     * @param type One of {@link #TYPE_CHILDREN}, {@link #TYPE_MANUAL}.
+     */
+    void setType(String type);
+
+    /**
+     * @return One of {@link #TYPE_CHILDREN}, {@link #TYPE_MANUAL}.
+     */
+    public String getType();
 }

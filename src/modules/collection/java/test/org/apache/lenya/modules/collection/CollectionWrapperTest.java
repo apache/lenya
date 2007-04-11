@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication.util;
+package org.apache.lenya.modules.collection;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -35,9 +35,9 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.transaction.TransactionException;
 
 /**
- * XLink collection teest.
+ * Collection wrapper test.
  */
-public class XLinkCollectionTest extends AbstractAccessControlTest {
+public class CollectionWrapperTest extends AbstractAccessControlTest {
 
     /**
      * @throws PublicationException
@@ -55,8 +55,7 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
 
         Document collectionDoc = createCollectionDocument(pub);
 
-        XlinkCollection collection = new XlinkCollection(getManager(), map, collectionDoc
-                .getIdentifier(), getLogger());
+        CollectionWrapper collection = new CollectionWrapper(collectionDoc, getLogger());
 
         SiteStructure structure = pub.getArea("authoring").getSite();
         structure.getRepositoryNode().lock();
@@ -74,17 +73,13 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         }
 
         Document doc = map.get(pub, Publication.AUTHORING_AREA, "/index", "en");
-
-        collection.getDelegate().getRepositoryNode().lock();
         collection.add(doc);
-
         collection.save();
 
         collection.getDelegate().getRepositoryNode().unlock();
         structure.getRepositoryNode().unlock();
 
-        Collection coll2 = new XlinkCollection(getManager(), map, collectionDoc.getIdentifier(),
-                getLogger());
+        CollectionWrapper coll2 = new CollectionWrapper(collectionDoc, getLogger());
 
         assertSame(collection.getDelegate().getRepositoryNode(), coll2.getDelegate()
                 .getRepositoryNode());

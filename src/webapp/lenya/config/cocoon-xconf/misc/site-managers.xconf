@@ -22,8 +22,5 @@
 -->
 
   <xconf xpath="/cocoon" unless="/cocoon/site-managers">
-    <site-managers>
-      <component-instance name="simple" logger="lenya.site"
-        class="org.apache.lenya.cms.site.simple.SimpleSiteManager"/>
-    </site-managers>
+    <site-managers/>
   </xconf>

@@ -15,25 +15,23 @@
  *  limitations under the License.
  *
  */
-
-package org.apache.lenya.cms.publication.util;
+package org.apache.lenya.modules.collection;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
-import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.cms.publication.util.Collection;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -44,31 +42,22 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * Implementation of a Collection.
- * @version $Id$
+ * Document wrapper for collection functionality.
  */
-public class CollectionImpl extends AbstractLogEnabled implements Collection {
+public class CollectionWrapper extends AbstractLogEnabled implements Collection {
 
     private Document delegate;
-    protected ServiceManager manager;
+
+    protected static final String[] TYPES = { TYPE_CHILDREN, TYPE_MANUAL };
 
     /**
      * Ctor.
-     * @param manager The service manager.
-     * @param map A document identity map.
-     * @param identifier The identifier.
-     * @param _logger a logger
-     * @throws DocumentException when something went wrong.
+     * @param doc The document.
+     * @param logger The logger.
      */
-    public CollectionImpl(ServiceManager manager, DocumentFactory map,
-            DocumentIdentifier identifier, Logger _logger) throws DocumentException {
-        enableLogging(_logger);
-        this.manager = manager;
-        try {
-            this.delegate = map.get(identifier);
-        } catch (Exception e) {
-            throw new DocumentException(e);
-        }
+    public CollectionWrapper(Document doc, Logger logger) {
+        enableLogging(logger);
+        this.delegate = doc;
     }
 
     public Document getDelegate() {
@@ -78,7 +67,8 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
     private List documentsList;
 
     /**
-     * Returns the list that holds the documents. Use this method to invoke lazy loading.
+     * Returns the list that holds the documents. Use this method to invoke lazy
+     * loading.
      * @return A list.
      * @throws DocumentException when something went wrong.
      */
@@ -99,11 +89,6 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
      */
     public void add(Document document) throws DocumentException {
         documents().add(document);
-        try {
-            save();
-        } catch (TransactionException e) {
-            throw new DocumentException(e);
-        }
     }
 
     /**
@@ -112,11 +97,6 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
      */
     public void add(int position, Document document) throws DocumentException {
         documents().add(position, document);
-        try {
-            save();
-        } catch (TransactionException e) {
-            throw new DocumentException(e);
-        }
     }
 
     /**
@@ -128,43 +108,48 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
                     + document + "]");
         }
         documents().remove(document);
-        try {
-            save();
-        } catch (TransactionException e) {
-            throw new DocumentException(e);
-        }
     }
 
     private boolean isLoaded = false;
 
     /**
      * Loads the collection from its XML source.
-     * @throws DocumentException when something went wrong.
      */
-    protected void load() throws DocumentException {
+    protected final void load() {
         if (!this.isLoaded) {
             getLogger().debug("Loading: ");
-            this.documentsList = new ArrayList();
             NamespaceHelper helper;
             try {
                 helper = getNamespaceHelper();
-
-                Element collectionElement = helper.getDocument().getDocumentElement();
-                Element[] documentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
-
-                for (int i = 0; i < documentElements.length; i++) {
-                    Element documentElement = documentElements[i];
-                    Document document = loadDocument(documentElement);
-                    this.documentsList.add(document);
-                }
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (DocumentException e) {
-                throw e;
             } catch (Exception e) {
-                throw new DocumentException(e);
+                throw new RuntimeException(e);
             }
+            loadXml(helper);
             this.isLoaded = true;
+        }
+    }
+
+    protected void loadXml(NamespaceHelper helper) {
+        try {
+            this.documentsList = new ArrayList();
+
+            Element collectionElement = helper.getDocument().getDocumentElement();
+            Element[] documentElements = helper
+                    .getChildren(collectionElement, ELEMENT_DOCUMENT);
+
+            for (int i = 0; i < documentElements.length; i++) {
+                Element documentElement = documentElements[i];
+                Document document = loadDocument(documentElement);
+                this.documentsList.add(document);
+            }
+            
+            if (collectionElement.hasAttribute(ATTRIBUTE_TYPE)) {
+                this.type = collectionElement.getAttribute(ATTRIBUTE_TYPE);
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -177,49 +162,60 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_UUID);
         Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
-                getDelegate().getArea(),
-                documentId,
-                getDelegate().getLanguage());
+                getDelegate().getArea(), documentId, getDelegate().getLanguage());
         return document;
     }
 
     /**
      * Saves the collection.
-     * @throws TransactionException if an error occurs.
      */
-    public void save() throws TransactionException {
+    public final void save() {
         try {
-
             NamespaceHelper helper = getNamespaceHelper();
-            Element collectionElement = helper.getDocument().getDocumentElement();
-            if (collectionElement.getAttributeNS(null, ATTRIBUTE_UUID) == null
-                    | collectionElement.getAttribute(ATTRIBUTE_UUID).equals("")) {
-                collectionElement.setAttributeNS(null, ATTRIBUTE_UUID, getDelegate().getUUID());
-            }
-            Element[] existingDocumentElements = helper.getChildren(collectionElement,
-                    ELEMENT_DOCUMENT);
-            for (int i = 0; i < existingDocumentElements.length; i++) {
-                collectionElement.removeChild(existingDocumentElements[i]);
-            }
-
-            collectionElement.normalize();
-
-            NodeList emptyTextNodes = XPathAPI.selectNodeList(collectionElement, "text()");
-            for (int i = 0; i < emptyTextNodes.getLength(); i++) {
-                Node node = emptyTextNodes.item(i);
-                node = collectionElement.removeChild(node);
-            }
-
-            Document[] documents = getDocuments();
-            for (int i = 0; i < documents.length; i++) {
-                Element documentElement = createDocumentElement(documents[i], helper);
-                collectionElement.appendChild(documentElement);
-            }
+            saveXml(helper);
             DocumentHelper.writeDocument(helper.getDocument(), getDelegate().getOutputStream());
-
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * @param helper Save the XML to the provided namespace helper.
+     * @throws TransformerException if an error occurs.
+     * @throws DocumentException if an error occurs.
+     */
+    protected void saveXml(NamespaceHelper helper) throws TransformerException, DocumentException {
+        Element collectionElement = helper.getDocument().getDocumentElement();
+        if (collectionElement.getAttributeNS(null, ATTRIBUTE_UUID) == null
+                | collectionElement.getAttribute(ATTRIBUTE_UUID).equals("")) {
+            collectionElement.setAttributeNS(null, ATTRIBUTE_UUID, getDelegate().getUUID());
+        }
+        Element[] existingDocumentElements = helper.getChildren(collectionElement,
+                ELEMENT_DOCUMENT);
+        for (int i = 0; i < existingDocumentElements.length; i++) {
+            collectionElement.removeChild(existingDocumentElements[i]);
+        }
+
+        collectionElement.setAttribute(ATTRIBUTE_TYPE, getType());
+
+        collectionElement.normalize();
+
+        NodeList emptyTextNodes = XPathAPI.selectNodeList(collectionElement, "text()");
+        for (int i = 0; i < emptyTextNodes.getLength(); i++) {
+            Node node = emptyTextNodes.item(i);
+            node = collectionElement.removeChild(node);
+        }
+
+        Document[] documents = getDocuments();
+        for (int i = 0; i < documents.length; i++) {
+            Element documentElement = createDocumentElement(documents[i], helper);
+            collectionElement.appendChild(documentElement);
+        }
+    }
+
+    public String getType() {
+        load();
+        return this.type;
     }
 
     /**
@@ -255,12 +251,25 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
         NamespaceHelper helper;
 
         if (getDelegate().exists()) {
-            org.w3c.dom.Document document = DocumentHelper.readDocument(getDelegate().getInputStream());
+            org.w3c.dom.Document document = DocumentHelper.readDocument(getDelegate()
+                    .getInputStream());
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
         } else {
-            helper = new NamespaceHelper(Collection.NAMESPACE,
-                    Collection.DEFAULT_PREFIX,
+            helper = initializeNamespaceHelper();
+        }
+        return helper;
+    }
+
+    /**
+     * @return A new, empty namespace helper.
+     */
+    protected NamespaceHelper initializeNamespaceHelper() {
+        NamespaceHelper helper;
+        try {
+            helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX,
                     ELEMENT_COLLECTION);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
         }
         return helper;
     }
@@ -296,6 +305,16 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
      */
     public int size() throws DocumentException {
         return documents().size();
+    }
+
+    private String type = TYPE_MANUAL;
+
+    public void setType(String type) {
+        load();
+        if (!Arrays.asList(TYPES).contains(type)) {
+            throw new IllegalArgumentException("The type [" + type + "] is not supported!");
+        }
+        this.type = type;
     }
 
 }

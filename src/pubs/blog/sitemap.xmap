@@ -102,7 +102,7 @@
             <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="site:/en/entries/{2}/{3}/{4}/{5}/index"/>
+            <map:generate src="site://{page-envelope:publication-id}/{1}/en/entries/{2}/{3}/{4}/{5}/index"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="xml"/>
@@ -116,7 +116,7 @@
             <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="site:/en/entries/{2}/{3}/{4}/{5}/index"/>
+            <map:generate src="site://{page-envelope:publication-id}/{1}/en/entries/{2}/{3}/{4}/{5}/index"/>
             <map:transform src="xslt/feed/atom2other.xsl">
               <map:parameter name="type" value="rss"/>
               <map:parameter name="url" value="{global:blog-url}"/>
