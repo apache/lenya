@@ -113,7 +113,6 @@
         
         <map:transform type="cinclude"/>
         <map:transform type="uuid2url"/>
-        <map:transform type="i18n"/>
 
         <map:serialize type="xml"/>
       </map:match>
