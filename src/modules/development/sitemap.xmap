@@ -23,13 +23,8 @@
   <map:pipelines>
     
     <map:pipeline>
-      <map:match pattern="**">
-        <map:select type="request-parameter">
-          <map:parameter name="parameter-name" value="lenya.action"/>
-          <map:when test="showLog">
-            <map:read mime-type="text/plain" src="context://WEB-INF/logs/log4j.log"/>
-          </map:when>
-        </map:select>
+      <map:match pattern="log4j.log">
+        <map:read mime-type="text/plain" src="context://WEB-INF/logs/log4j.log"/>
       </map:match>
     </map:pipeline>
     
