@@ -23,6 +23,8 @@
 -->
 
 <catalogue xml:lang="en">
+  
+  <message key="publication-title">Welcome to the Default Publication from {0}!</message>
  
   <message key="default.createdoc.idtaken">The ID you've entered is already taken. Please choose another one.</message>
  

@@ -24,6 +24,8 @@
 
 <catalogue xml:lang="de">
 
+  <message key="publication-title">Willkommen zur Default-Publikation von {0}!</message>
+  
   <message key="default.doc.create.idtaken">Die eingebene ID ist schon vergeben. Bitte wä;hlen Sie eine andere ID.</message>
 
   <message key="Create new language version">Neue Sprachversion anlegen</message>
