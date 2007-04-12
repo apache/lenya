@@ -21,8 +21,7 @@
   </header> 
   <body> 
     <section>
-      <title>Docu moved</title>
-      <p>Redirect: <a href="site:modules/webdav/server">click here</a></p>
+      <p>Redirect: <a href="site:webdav_server">click here</a></p>
     </section>
   </body>
 </document>

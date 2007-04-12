@@ -225,7 +225,7 @@
     <webdav href="webdav/" label="webdav">
       <webdav_index href="index.html" label="Getting started"/>
       <monitoring href="monitoring.html" label="Monitoring"/>
-      <server href="webdav.html" label="WebDAV Servers"/>
+      <webdav_server href="webdav.html" label="WebDAV Servers"/>
     </webdav>
   </module_list>
   <!--+
