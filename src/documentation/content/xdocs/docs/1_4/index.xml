@@ -25,17 +25,59 @@
   </header>
   <body>
     <warning>
-      Apache Lenya 1.4 is still under heavy development and should not be used for production yet.
+      Apache Lenya 1.4 is still under development and should not be used for production yet.
     </warning>
     <p>
       This is the documentation for the 1.4.x releases. The documentation is not as fleshed out as 1.2 yet, so
       we suggest you also check there for more information while we build up this documentation. 
     </p>
-    <note label="Help wanted!"> Since 1.4 is new and provide many 
+    <note label="Help wanted!"> Since 1.4 is new and provides many 
       enhancements and new features, please help to document them with us. 
-      Send documentation patches and use the wiki. TIA :)</note>
+      Send documentation patches and use the Wiki. Thanks in advance :)</note>
     <p>
       More documentation (work in progress) can be found at the <a href="site:wiki/lenya/">Apache Lenya Wiki</a>.
     </p>
+    
+    <section>
+      <title>What's New in Lenya 1.4</title>
+      <dl>
+        <dt><a href="site:modules">Modularization</a></dt>
+        <dd>
+          The monolithic architecture has been replaced by a small generic core and
+          various modules for specific purposes.
+        </dd>
+        <dt><a href="site:repository">Improved Repository Access</a></dt>
+        <dd>
+          The refactored and extended repository API and new protocols make it easier
+          to access and manipulate documents.
+        </dd>
+        <dt><a href="site:link-management">UUIDs for Internal Links</a></dt>
+        <dd>
+          Documents are now identified and referenced using
+          <acronym title="Universally Unique Identifier">UUID</acronym>s.
+          Static link rewriting is not necessary anymore.
+        </dd>
+        <dt><a href="site:ac-restricted">Improved Access Control</a></dt>
+        <dd>It is now possible to explicitely deny permissions on specific pages.</dd>
+        <dt><a href="site:metadata">Configurable Meta Data</a></dt>
+        <dd>
+          It is now possible to declare custom sets of meta data.
+        </dd>
+        <dt><a href="site:publication-templating">Publication Templating</a></dt>
+        <dd>
+          Publication templating allows to re-use common functionality in multiple publications.
+        </dd>
+        <dt><a href="site:usecase-framework-overview">Usecase Framework</a></dt>
+        <dd>
+          The usecase framework simplifies the implementation of user interaction functionality.
+        </dd>
+        <dt><a href="site:notification">Simplified Notification, Inboxes</a></dt>
+        <dd>
+          It is now easier to trigger notification messages. Each user has a personal
+          inbox to read and send messages.
+        </dd>
+      </dl>
+    </section>
+    
   </body>
 </document>
