@@ -70,7 +70,7 @@
         <dt><strong>Meta Data</strong></dt>
         <dd>For more information, refer to the <a href="site:metadata">meta data</a> documentation.</dd>
         <dt><strong>SiteStructure</strong></dt>
-        <dd>This object provides access to the site structure.</dd>
+        <dd>This interface provides access to the site structure.</dd>
         <dt><strong>SiteNode</strong></dt>
         <dd>The site structure is a tree consisting of site nodes. Each site node has an ID which
           is unique among its siblings. Thus, a site node can be located using a unique path
