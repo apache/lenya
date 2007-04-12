@@ -29,26 +29,89 @@
       development. </warning>
        <section>
       <title>Introduction</title>
-      <p> Modules are packages providing a certain set of resources or 
-        functionality. The aim of this section in the documentation is to group 
-        the information needed to work with a certain module into one entry point. </p>
-      <p>Examples:</p>
-      <ul>
-        <li>a resource type (e.g., docbook module)</li>
-        <li>a repository implementation (e.g., jdbc module)</li>
-        <li>a collection of XSLTs (e.g., content2svg module)</li>
-      </ul>
       <p>
-        Some modules are included in the Lenya distribution:
+        Modules are packages providing a certain set of resources or 
+        functionality. The aim of this section in the documentation is to group 
+        the information needed to work with a certain module into one entry point.
       </p>
-      <ul>
-        <li><strong>lucene</strong> - search functionality</li>
-        <li><strong>sitetree</strong> - manage documents in a tree-like structure</li>
-        <li><strong>jcr</strong> - store content in a <a href="http://www.jcp.org/en/jsr/detail?id=170">JCR</a> repository</li>
-        <li><strong>xhtml</strong> - XHTML-based resource type</li>
-        <li><strong>links</strong> - resource type to manage link lists</li>
-        <li><strong>lenyadoc</strong> - adds the <code>lenyadoc://</code> protocol</li>
-      </ul>
+      <p>
+        To learn how modules are implemented, refer to the <a href="site:modules">general modules documentation</a>.
+      </p>
+    </section>
+    <section>
+      <title>Modules</title>
+      <dl>
+        <dt>blog</dt>
+        <dd>
+          Resource types and Java classes used by the blog publication. They are not yet ready
+          to be used separately.
+        </dd>
+        <dt>bxe</dt>
+        <dd>
+          Integration of the Bitflux WYSIWYG editor.
+        </dd>
+        <dt>cforms</dt>
+        <dd>
+          A resource type which can be edited using Cocoon Forms.
+        </dd>
+        <dt><a href="site:collection_module">collection</a></dt>
+        <dd>A resource type to store collections of documents.</dd>
+        <dt>contactform</dt>
+        <dd>A simple contact form. This is a usage example for the usecasedocument module.</dd>
+        <dt>development</dt>
+        <dd>Rresources to simplify development of Lenya applications.</dd>
+        <dt>editors</dt>
+        <dd>Form-based editors.</dd>
+        <dt>fckeditor</dt>
+        <dd>Integration of the FCK WYSIWYG editor.</dd>
+        <dt>kupu</dt>
+        <dd>Integration of the Kupu WYSIWYG editor.</dd>
+        <dt>languageselector</dt>
+        <dd>XHTML widget to switch languages on a website.</dd>
+        <dt>lenyadoc</dt>
+        <dd>Support for the <code>lenyadoc:/</code> protocol.</dd>
+        <dt>linkcheck</dt>
+        <dd>Link checking functionality.</dd>
+        <dt>links</dt>
+        <dd>A resource type to maintain lists of links.</dd>
+        <dt>lucene</dt>
+        <dd>Integration of the Lucene search engine.</dd>
+        <dt>migration</dt>
+        <dd>Resources to simplify the migration between different Lenya versions.</dd>
+        <dt>neutron</dt>
+        <dd>
+          Server-side implementation of the <a href="http://neutron.wyona.org/">Neutron</a>
+          protocol to support browser-based editors.
+        </dd>
+        <dt><a href="site:news_module">news</a></dt>
+        <dd>A resource type to display lists of news messages, can be used as a simple weblog.</dd>
+        <dt><a href="site:notification">notification</a></dt>
+        <dd>Support for user notification and inboxes.</dd>
+        <dt>opendocument</dt>
+        <dd>OpenDocument (ODF) resource type.</dd>
+        <dt>profiling</dt>
+        <dd>Resources to simplify profiling (performance optimization).</dd>
+        <dt>resource</dt>
+        <dd>The "resource" resource type, it allows to store arbitrary media documents.</dd>
+        <dt>simplesite</dt>
+        <dd>A simple site manager based on collections.</dd>
+        <dt>sitetree</dt>
+        <dd>Tree-based site manager.</dd>
+        <dt>sourcerepository</dt>
+        <dd>Repository implementation based on Avalon sources.</dd>
+        <dt>svg</dt>
+        <dd>Resources to support the rendering of SVG-based images, e.g. for boxes with rounded corners.</dd>
+        <dt>tinymce</dt>
+        <dd>Integration of the TinyMCE WYSIWYG editor.</dd>
+        <dt>usecasedocument</dt>
+        <dd>Resource type which allows to include a usecase as a document in the site structure.</dd>
+        <dt><a href="site:webdav_index">webdav</a></dt>
+        <dd>WebDAV support.</dd>
+        <dt>xhtml</dt>
+        <dd>Resource type which allows to store XHTML documents.</dd>
+        <dt>xopus</dt>
+        <dd>Integration of the Xopus WYSIWYG editor.</dd>
+      </dl>
     </section>
   </body>
 </document>

@@ -205,20 +205,26 @@
     </javadoc1.4overview>    
     
   </docu1.4>
-  <modules href="modules/" label="Modules" tab="modules">
-    <index href="index.html" label="Index"/>
+  <module_list href="modules/" label="Modules" tab="modules">
+    <index href="index.html" label="Overview"/>
     <webdav href="webdav/" label="WebDAV">
-      <index href="index.html" label="Getting started"/>
+      <webdav_index href="index.html" label="Getting started"/>
       <monitoring href="monitoring.html" label="Monitoring"/>
       <server href="webdav.html" label="WebDAV Servers"/>
     </webdav>
-    <collection_module href="collection.html" label="Collection"/>
-    <news_module href="news.html" label="News"/>
-    <notification href="notification.html" label="Notification"/>
+    <collection_module_section label="Collection">
+      <collection_module href="collection.html" label="Overview"/>
+    </collection_module_section>
+    <news_module_section label="News">
+      <news_module href="news.html" label="Overview"/>
+    </news_module_section>
+    <notification_module_section label="Notification">
+      <notification href="notification.html" label="Overview"/>
+    </notification_module_section>
     <svg_module href="svg/" label="SVG">
       <svg_roundedcorners href="roundedcorners.html" label="Rounded Corners"/>
     </svg_module>
-  </modules>
+  </module_list>
   <!--+
     | Version 1.2 tab
     +-->
