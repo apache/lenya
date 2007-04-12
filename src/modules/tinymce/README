@@ -16,7 +16,7 @@ Installation:
 
 
 - Add the appropriate permissions to 
-  $YOURPUB/config/ac/usecase-permissions.conf, for example:
+  $YOURPUB/config/ac/usecase-permissions.xml, for example:
 
     <usecase id="tinymce.edit">
       <role id="admin" method="grant"/>
