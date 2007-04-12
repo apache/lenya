@@ -159,9 +159,9 @@
       <metadata href="metadata.html" label="Meta data"/> 	 
       <protocols href="protocols/" label="Protocols">
         <protocols-overview href="index.html" label="Overview"/>
-        <lenya href="lenya.html" label="lenya:"/>
-        <lenyadoc href="lenyadoc.html" label="lenyadoc:"/>
-        <siteprotocol href="site.html" label="site:"/>
+        <lenya href="lenya.html" label="lenya Protocol"/>
+        <lenyadoc href="lenyadoc.html" label="lenyadoc Protocol"/>
+        <siteprotocol href="site.html" label="site Protocol"/>
       </protocols>
       <link-management href="link-management.html" label="Link Management"/>
     </reference>
