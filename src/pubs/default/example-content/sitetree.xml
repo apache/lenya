@@ -61,6 +61,7 @@
 
   <node id="search" visibleinnav="false">
     <label xml:lang="en">Search</label>
+    <label xml:lang="de">Suche</label>
   </node>
   
   <node id="news" visibleinnav="true">
