@@ -76,7 +76,7 @@
               <td id="publication-title">
                 <xsl:choose>
                   <xsl:when test="$language = 'de'">
-                    Willkommen zur Default Publikation von <xsl:value-of select="$author"/>!
+                    Willkommen zur Default-Publikation von <xsl:value-of select="$author"/>!
                   </xsl:when>
                   <xsl:otherwise>
                     Welcome to the Default Publication from <xsl:value-of select="$author"/>!
