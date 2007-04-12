@@ -22,4 +22,9 @@
   
   <message key="New Contact Form">Neues Kontaktformular</message>
   
+  <message key="Contact">Kontakt</message>
+  <message key="Your Name">Ihr Name</message>
+  <message key="Your E-Mail Address">Ihre E-Mail-Adresse</message>
+  <message key="Your Message">Ihre Nachricht</message>
+  
 </catalogue>
