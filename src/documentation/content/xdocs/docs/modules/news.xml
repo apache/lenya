@@ -43,8 +43,9 @@
       
       <dt>include</dt>
       <dd>An XHTML snippet. The view is equal to the <code>xhtml</code> format, but the content is
-      included in an <code><![CDATA[<xhtml:div id="news"/>]]></code> element. This format can be used
-      to include the news items in other pages, typically using CInclude.
+        included in an <code><![CDATA[<xhtml:div id="news"/>]]></code> element. This format can be used
+        to include the news items in other pages, typically using CInclude. The number of included items
+        is determined by the <code>includeItems</code> attribute of the <code><![CDATA[<col:collection/>]]></code> element.
       </dd>
       
       <dt>rss</dt>
