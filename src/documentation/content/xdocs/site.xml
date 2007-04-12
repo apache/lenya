@@ -144,6 +144,7 @@
     
     <reference href="reference/" label="Technical Reference"> 	 
       <sitemaps14 href="lenya-sitemaps.html" label="Overview of Lenya Sitemaps" />
+      <repository href="repository/index.html" label="Repository"/>
       <ac-restricted href="ac.html" label="Access Control Specification"/>
       <usecase-framework href="usecase-framework/" label="Usecase Framework">
         <usecase-framework-overview href="index.html" label="Overview"/>
@@ -163,7 +164,6 @@
         <siteprotocol href="site.html" label="site:"/>
       </protocols>
       <link-management href="link-management.html" label="Link Management"/>
-      <repository href="repository/index.html" label="Repository"/>
     </reference>
     
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="Core API"/>
