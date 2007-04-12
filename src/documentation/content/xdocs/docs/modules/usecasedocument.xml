@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>The UsecaseDocument Module</title>
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      <p>
+        The usecasedocument module provides a resource type which allows to include
+        usecases as documents. Typical usage scenarios are forms on web pages, for
+        instance search forms or contact forms. In contrast to usual usecases which refer
+        to the browser locale for i18n, the document's language is used.
+      </p>
+      <p>
+        For more information on usecases, please refer to the
+        <a href="site:usecase-framework">usecase framework</a> documentation.
+      </p>
+    </section>
+  
+    <section>
+      <title>XML Format</title>
+      <p>
+        The XML of a <code>usecasedocument</code> document looks like this:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<usecase xmlns="http://apache.org/lenya/usecase/1.0" name="contactform.sendMessage"/>]]></source>
+    </section>
+    
+    <section>
+      <title>Creating Usecase-Based Documents</title>
+      <p>
+        To create a usecase document, you can invoke the <code>site.create</code> usecase
+        with an additional <code>usecase</code> parameter:
+      </p>
+      <source xml:space="preserve"><![CDATA[<item uc:usecase="usecasedocument.create" href="?usecase=contactform.sendMessage">
+  <i18n:text>New Contact Form</i18n:text>
+</item>]]></source>
+      <p>
+        The creator class will take care that the usecase name is stored in the created
+        document.
+      </p>
+    </section>
+
+  </body>
+</document>
