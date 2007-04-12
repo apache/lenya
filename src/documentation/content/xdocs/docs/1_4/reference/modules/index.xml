@@ -61,8 +61,14 @@ mymodule/
       components.xconf     
   usecases/
     mymodule.jx              usecase view
+  resources/
+    images/                  image files
+    css/                     CSS files
+    schemas/                 XML schemas (RNG, XSD, ...)
+    samples/                 Samples (in case of resource type modules)
   java/
     src/                     Java source files
+    test/                    Java test classes
     lib/                     Java libraries
   xslt/                      XSLT stylesheets
   module.xml                 module descriptor
@@ -99,6 +105,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
   <id>org.myproject.lenya.modules.myeditor</id>
   <depends module="org.apache.lenya.modules.usecase"/>
   <depends module="org.apache.lenya.modules.webdav"/>
+  <export package="org.myproject.lenya.modules.myeditor.api"/>
   <package>org.myproject.lenya.modules</package>
   <version>0.1-dev</version>
   <name>My Own Editor</name>
@@ -114,6 +121,12 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
       </p>
       <p>If your module uses code from other modules, you have to add 
        a <code><![CDATA[<depends>]]></code> for each of these modules.</p>
+      <p>
+        The <code><![CDATA[<export package="..."/>]]></code> statement(s) declare
+        public packages, which means that these packages are accessible from other
+        modules. You should aim for long-term stability of all interfaces and classes
+        in exported packages, since they represent the Java API of your module.
+      </p>
     </section>
     
     <section>
