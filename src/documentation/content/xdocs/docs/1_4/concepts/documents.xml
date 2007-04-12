@@ -25,6 +25,11 @@
   </header>
   <body>
     
+    <p>
+      This document shows some simple scenarios to access the Lenya repository.
+      For more information, refer to the <a href="site:repository">repository documentation</a>.
+    </p>
+    
     <section>
       <title>The Session</title>
       <p>
