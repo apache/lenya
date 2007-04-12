@@ -364,5 +364,8 @@
   <usecase id="neutron.checkin">
     <role id="edit" method="grant"/>
   </usecase>
+  <usecase id="news.edit">
+    <role id="edit" method="grant"/>
+  </usecase>
 </usecases>
     

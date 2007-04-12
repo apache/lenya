@@ -29,6 +29,10 @@
     xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
 >
 
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+  </xsp:structure>
+  
   <menu>
     <menus>
       <menu i18n:attr="name" name="File">
@@ -41,6 +45,26 @@
           </item>
         </block>
       </menu>
+      
+      <menu i18n:attr="name" name="Edit">
+        <xsp:logic>
+          try {
+              Object doc = <input:get-attribute module="page-envelope" as="object" name="document"/>;
+              if (doc instanceof Document &amp;&amp; ((Document) doc).exists()) {
+                  String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
+                  if ("news".equals(doctype)) {
+                      <block areas="authoring">
+                        <item uc:usecase="news.edit" href="?"><i18n:text>news-settings</i18n:text></item>
+                      </block>
+                  }
+              }
+          }
+          catch (Exception e) {
+              throw new ProcessingException("Error during menu generation: ", e);
+          }
+        </xsp:logic>
+      </menu>
+      
     </menus>
   </menu>
   

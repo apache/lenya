@@ -79,14 +79,16 @@
     <module name="development"/>
     <module name="languageselector"/>
     <module name="administration"/>
-    <module name="workflow"/>
     <module name="news"/>
   </modules>
+  <!-- TODO: The goal is to have a blog module ;-) -->
+  <!--
+  <module name="blog"/>
+  -->
 
   <!-- You can specify a custom location for your content, outside the Lenya build tree. Note that you will probably also want
        to specify custom locations for access control (see ac/ac.xconf), so that all your dynamically generated data is in one place
        for easy backup. -->
-
   <!--
        Relative to webapp context: 
           <content-dir src="lenya/pubs/default"/>

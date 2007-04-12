@@ -24,5 +24,7 @@
     Um eine neue News-Meldung zu erstellen,
     wählen Sie 'Datei' -> 'Neues News-Dokument'.
   </message>
+  <message key="news-settings">News-Einstellungen</message>
+  <message key="include-items">Anzahl der Meldungen, die auf der Übersicht dargestellt werden sollen</message>
   
 </catalogue>

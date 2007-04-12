@@ -21,5 +21,7 @@
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <message key="new-news-message-hint">To add a new news message, choose 'File' -> 'New XHTML Document'.</message>
+  <message key="news-settings">News Settings</message>
+  <message key="include-items">Number of items to display on overview page</message>
   
 </catalogue>

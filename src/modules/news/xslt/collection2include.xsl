@@ -37,6 +37,7 @@
   <xsl:param name="language"/>
   <xsl:param name="uuid"/>
   
+  <xsl:variable name="includeItems" select="/col:collection/@includeItems"/>
   
   <xsl:template match="/col:collection">
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
@@ -45,11 +46,14 @@
         <a type="application/rss+xml" href="lenya-document:{$uuid}?uuid2url.extension=rss">RSS 2.0</a>
       </div>
       <h1><xsl:value-of select="$title"/></h1>
-      <xsl:apply-templates select="col:document">
+      <xsl:for-each select="col:document">
         <xsl:sort order="descending" select="meta:metadata/dc:elements/dc:date"/>
-      </xsl:apply-templates>
+        <xsl:if test="position() &lt;= number($includeItems)">
+          <xsl:apply-templates select="."/>
+        </xsl:if>
+      </xsl:for-each>
     </div>
   </xsl:template>
-
+  
 
 </xsl:stylesheet> 

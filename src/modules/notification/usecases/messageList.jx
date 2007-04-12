@@ -30,6 +30,7 @@
       <th style="text-align: left; padding-right: 20px;"><i18n:text>Sender</i18n:text></th>
       <th style="text-align: left; padding-right: 20px;"><i18n:text>Date</i18n:text></th>
       <th style="text-align: left; padding-right: 20px;"><i18n:text>Read</i18n:text></th>
+      <th>&#160;</th>
     </tr>
     <jx:forEach var="message" items="${inbox.getMessages()}">
       
@@ -57,6 +58,14 @@
         </td>
         <td style="text-align: center;">
           <jx:if test="${message.isMarkedAsRead()}">&#10004;</jx:if>
+        </td>
+        <td style="text-align: center;">
+          <form method="POST">
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="deleteMessageId" value="${message.getId()}"/>
+            <input type="submit" name="submit" value="Delete" i18n:attr="value"/>
+          </form>
         </td>
       </tr>
     </jx:forEach>

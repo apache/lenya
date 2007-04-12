@@ -62,7 +62,7 @@
         <map:transform type="cinclude"/>
         <map:transform type="forms" />
         <map:transform type="i18n">
-          <map:parameter name="locale" value="{request:locale}"/>
+          <map:parameter name="locale" value="{page-envelope:document-language}"/>
         </map:transform>
         
         <map:transform src="cocoon://lenya-screen.xsl"/>

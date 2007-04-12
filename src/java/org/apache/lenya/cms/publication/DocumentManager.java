@@ -120,7 +120,6 @@ public interface DocumentManager {
      * @param contentSourceUri The URI to read the content from.
      * @param pub The publication.
      * @param area The area.
-     * @param path The path.
      * @param language The language.
      * @param extension The extension to use for the document source, without the leading dot.
      * @return The added document.

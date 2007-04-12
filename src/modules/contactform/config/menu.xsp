@@ -21,21 +21,12 @@
 <xsp:page 
     language="java" 
     xmlns:xsp="http://apache.org/xsp"
-    xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-    xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
-    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
     xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
 >
 
-  <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-  </xsp:structure>
-  
   <menu>
-
     <menus>
       <menu i18n:attr="name" name="File">
         <block admin="false">
@@ -43,6 +34,6 @@
         </block>
       </menu>
     </menus>
-    
   </menu>
+  
 </xsp:page>
