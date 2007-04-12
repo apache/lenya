@@ -63,6 +63,7 @@
   <module name="languageselector"/>
   <module name="administration"/>
   <module name="news"/>
+  <module name="contactform"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>
