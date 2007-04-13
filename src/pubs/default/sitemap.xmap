@@ -143,7 +143,7 @@
           <map:part src="cocoon:/navigation-element/tabs/{2}/{3}/{5}/{6}/{7}"/>
           <map:part src="cocoon:/navigation-element/menu/{2}/{3}/{5}/{6}/{7}"/>
           <map:part src="cocoon:/navigation-element/search/{2}/{3}/{5}/{6}/{7}"/>
-          <map:part src="cocoon://modules/languageselector/text-none/flagsize-10"/>
+          <map:part src="cocoon://modules/languageselector/text-none/flagsize-13"/>
           <map:part src="{resource-type:format-xhtml}?rendertype={1}"/>
         </map:aggregate>
         <map:serialize type="xml"/>
