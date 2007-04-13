@@ -27,7 +27,10 @@
 
   <!-- prevent users from causing memory overflows: -->
   <xsl:variable name="maxHeight" select="1024"/>
-
+  
+  <!-- the width:height-ratio -->
+  <xsl:variable name="ratio" select="1.5"/>
+  
   <!-- 
      scales an svg to height $height.
      this is done by surrounding the image with a new <svg/> element with the desired height and 
@@ -36,11 +39,8 @@
   <xsl:template match="/svg:svg">
     <xsl:choose>
       <xsl:when test="number($height) &gt; 0 and number($height) &lt;= $maxHeight">
-        <svg:svg viewBox="0 0 {@width} {@height}">
-          <xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
-          <xsl:if test="number(@width) &gt; 0 and number(@height) &gt; 0">
-            <xsl:attribute name="width"><xsl:value-of select="ceiling(@width div @height * $height)"/></xsl:attribute>
-          </xsl:if>
+        <svg:svg viewBox="0 0 {@width} {@height}" width="{$height * $ratio}" height="{$height}"
+          preserveAspectRatio="none">
           <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
           </xsl:copy> 
