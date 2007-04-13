@@ -155,7 +155,6 @@
     <xsl:choose>
       <xsl:when test="$flagsize = 'none'"/>
       <xsl:when test="number($flagsize) &gt; 0">
-        <xsl:text>&#160;</xsl:text>
         <img src="{$context}/modules/languageselector/flag-{$lang}-{$flagsize}.png" alt="{$lang}"/>
       </xsl:when>
     </xsl:choose>

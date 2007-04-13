@@ -113,31 +113,48 @@ td.tab-post-separator {
 }
 
 #languageselector {
-    font-size:80%;
+    font-size: 80%;
+    padding-top: 8px;
 }
  
 #languageselector a img {
-    border:none;
-    margin:0;
-    padding:0;
+    border: none;
+    margin: 0;
+    padding: 0;
+  border: solid 5px #DDBBBB;
+  vertical-align: middle;
 }
+
 #menu a, #languageselector a {
     text-decoration: none;
     color: Maroon;
 }
 
+#languageselector a {
+    padding: 2px;
+}
+
+#languageselector a:hover {
+    text-decoration: none;
+}
+
 #languageselector a.lenya-language-isCurrent {
     font-weight:bold;
 }
+
 #languageselector a.lenya-language-isCurrent img {
-    border: solid 2px Maroon;
+  border: solid 5px #FFEEEE;
 }
+
 #languageselector a.lenya-language-isAvailable {
 }
+
 #languageselector a.lenya-language-isUnavailable {
     color:#aaaaaa;
+    opacity: 0.5;
 }
-#menu a:hover, #languageselector a:hover {
+
+#menu a:hover {
     text-decoration: underline;
 }
 
