@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- 
+  This RELAX NG grammar defines the configuration file of a. Lenya publication.
+  Configuration files must be located under "$YOURPUBROOT/$PUBNAME/config/publication.xconf".
+  
+  This schema is new as of 2007-02-23. It is NOT backwards-compatible. It combines the
+  contents of $YOURPUBROOT/$PUBNAME/publication.xml and $YOURPUBROOT/$PUBNAME/config/publication.xconf.
+  
+  The publication.xconf file is parsed by:
+  
+  * src/impl/java/org/apache/lenya/cms/publication/PublicationConfiguration.java
+  * src/java/org/apache/lenya/cms/publication/templating/ExistingUsecaseResolver.java
+  * src/modules/repository/java/src/org/apache/lenya/cms/migration/Migrate14.java (?)
+  * src/webapp/lenya/xslt/util/aggregate-publications.xsl
+  * webapp/lenya/resources/i18n/modules2xinclude.xsl
+  * webapp/global-sitemap.xmap
+  
+  Please keep the implementations and this grammar in sync!
+-->
+
+<grammar 
+  xmlns="http://relaxng.org/ns/structure/1.0"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+>
+
+  <!-- some convenience data types used in this grammar: -->
+  
+  <define name="booleanString">
+    <choice>
+      <value>true</value>
+      <value>false</value>
+    </choice>
+  </define>
+  
+  <define name="fileURL">
+    <!-- regex anyone? -->
+    <data type="string"/>
+  </define>
+  
+  <define name="isoLanguage">
+    <data type="string">
+      <param name="pattern">[a-zA-Z]{2}</param>
+    </data>
+  </define>
+  
+  <define name="lenyaAreaName">
+    <choice>
+      <value>live</value>
+      <value>authoring</value>
+    </choice>
+  </define>
+  
+  <define name="javaClassName">
+    <data type="string">
+      <!-- too lenient, needs tightening -->
+      <param name="pattern">([\-_a-zA-Z0-9]+\.)+[\-_a-zA-Z0-9]+</param>
+    </data>
+  </define>
+  
+  <define name="moduleName">
+    <ref name="simpleNameToken"/>
+  </define>
+
+  <define name="resourceTypeName">
+    <ref name="simpleNameToken"/>
+  </define>
+  
+  <define name="revisionString">
+    <data type="string">
+    </data>
+  </define>
+  
+  <define name="simpleNameToken">
+    <data type="string">
+      <param name="pattern">[a-z]+</param>
+    </data>
+  </define>
+  
+  <define name="versionString">
+    <data type="string">
+      <param name="pattern">(@lenya.version@)|(([0-9]+\.)+[0-9]+(-[\-_a-zA-Z0-9]+)?)</param>
+    </data>
+  </define>
+  
+  <define name="workflowUri">
+    <data type="anyURI"/>
+  </define>
+  
+  <define name="XPathExpression">
+    <!-- regex anyone? -->
+    <data type="string"/>
+  </define>
+  
+<!-- here comes the important part -->
+
+<start>
+
+<element name="publication"
+  ns="http://apache.org/cocoon/lenya/publication/1.1"
+>
+  <optional> 
+    <attribute name="show"><ref name="booleanString"/></attribute>
+  </optional>
+  <interleave>
+    <element name="name"><data type="string"/></element>
+    <optional>
+      <element name="description"><data type="string"/></element>
+    </optional>
+    <optional>
+      <element name="version"><ref name="versionString"/></element>
+    </optional>
+    <optional>
+      <element name="lenya-version"><ref name="versionString"/></element>
+    </optional>
+    <optional>
+      <element name="lenya-revision"><ref name="revisionString"/></element>
+    </optional>
+    <optional>
+      <element name="cocoon-version"><ref name="versionString"/></element>
+    </optional>
+    <element name="languages">
+      <oneOrMore>
+        <element name="language">
+          <optional>
+            <attribute name="default">
+              <ref name="booleanString"/>
+            </attribute>
+          </optional>
+          <ref name="isoLanguage"/>
+        </element>
+      </oneOrMore>
+    </element>
+    <optional>
+      <element name="template">
+        <attribute name="id">
+          <ref name="simpleNameToken"/>
+        </attribute>
+      </element>
+    </optional>
+    <!-- FIXME: is template-instantiator optional?-->
+    <element name="template-instantiator"><attribute name="name"><data type="string"/></attribute></element>
+    <element name="path-mapper">
+      <ref name="javaClassName"/>
+    </element>
+    <element name="document-builder"><attribute name="name"><data type="string"/></attribute></element>
+    <element name="site-manager"><attribute name="name"><data type="string"/></attribute></element>
+    <element name="resource-types">
+       <oneOrMore>
+        <element name="resource-type">
+          <attribute name="name"><ref name="resourceTypeName"/></attribute>
+          <attribute name="workflow"><ref name="workflowUri"/></attribute>
+        </element>
+      </oneOrMore>
+    </element>
+    <element name="modules">
+       <oneOrMore>
+        <element name="module">
+          <attribute name="name"><ref name="moduleName"/></attribute>
+        </element>
+      </oneOrMore>
+    </element>
+    <element name="breadcrumb-prefix"><data type="string"/></element>
+    <optional>
+      <element name="content-dir">
+        <attribute name="src">
+          <ref name="fileURL"/>
+        </attribute>
+      </element>
+    </optional>
+    <optional>
+      <element name="proxies">
+        <oneOrMore>
+          <element name="proxy">
+            <attribute name="area"><ref name="lenyaAreaName"/></attribute>
+            <attribute name="ssl"><ref name="booleanString"/></attribute>
+            <attribute name="url"><data type="anyURI"/></attribute>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+  </interleave>
+  
+</element>
+
+</start>
+
+</grammar>

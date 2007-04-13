@@ -21,9 +21,9 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0"
+  xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.1"
   >
-  
+
   <xsl:param name="pubId"/>
   <xsl:param name="catalogue"/>
 
@@ -31,17 +31,15 @@
   <xsl:template match="catalogue">
     <xsl:copy>
       <xsl:copy-of select="@*|node()"/>
-      <xsl:apply-templates select="document('aggregate-fallback://config/publication.xconf')/publication/module"/>
+      <xsl:apply-templates select="document('aggregate-fallback://config/publication.xconf')/*/lenya:modules/lenya:module"/>
     </xsl:copy>
-  </xsl:template>  
-  
-  
-  <xsl:template match="module">
+  </xsl:template>
+
+  <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::module[@name = current()/@name])">
       <xi:include href="cocoon:/i18n-catalogue/module/{@name}/{$catalogue}"
         xpointer="xpointer(/catalogue/message)"/>
     </xsl:if>
   </xsl:template>
-  
-  
+
 </xsl:stylesheet>

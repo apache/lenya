@@ -18,7 +18,13 @@
 
 <!-- $Id$ -->
 
-<publication>
+<publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" show="true">
+  <name>Lenya Blog</name>
+  <description>An experimental Lenya-based blog in proof-of-concept stage.</description>
+  <version>@lenya.version@</version>
+  <lenya-version>@lenya.version@</lenya-version>
+  <lenya-revision>@lenya.revision@</lenya-revision>
+  <cocoon-version>2.1.8+</cocoon-version>
   <languages>
     <language default="true">en</language>
     <language>de</language>
@@ -28,17 +34,9 @@
   <breadcrumb-prefix/>
   <ssl-prefix/>
   <site-manager name="simple"/>
-  <resource-type name="entry" workflow="workflow.xml"/>
-  <resource-type name="sidebar" workflow="workflow.xml"/>
-
-  <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
-  <!-- Relative to webapp context: -->
-  <!--
-  <content-dir src="lenya/pubs/blog"/>
-  -->
-  <!-- Absolute: -->
-  <!--
-  <content-dir src="/home/USERNAME/data/blog"/>
-  <content-dir src="D:/tmp/blog"/>
-  -->
+  <resource-types>
+    <resource-type name="entry" workflow="workflow.xml"/>
+    <resource-type name="sidebar" workflow="workflow.xml"/>
+  </resource-types>
 </publication>
+

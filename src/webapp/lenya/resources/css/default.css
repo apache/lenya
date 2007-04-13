@@ -20,7 +20,7 @@
 @import url(menu.css);
 @import url(tabs.css);
 @import url(boxes.css);
-
+  
 body {
     margin: 0px;
     padding: 0px;
@@ -28,11 +28,16 @@ body {
 }
 
 h1 {
-    font-family: Verdana, sans-serif;
     font-size: 150%;
     padding: 0px;
     margin: 0px;
 }
+
+h2 { font-size: 120%; }
+h3 { font-size: 110%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
 
 p {
     font-size: small;

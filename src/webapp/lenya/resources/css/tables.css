@@ -28,27 +28,33 @@ table.lenya-table-noborder {
 }
 
 table.lenya-table th {
-    background-color: #DDDCCF;
+  background-color: #DDDCCF;
 	border: solid 1px #CCCCCC;
 	color: Black;
 	font-weight: bold;
 	padding: 3px 10px;
 	text-align: left;
+	vertical-align: top;
 	font-size: small;
 }
 
 table.lenya-table td {
-    background-color: #F5F4E9;
+  background-color: #F5F4E9;
 	border: solid 1px #CCCCCC;
 	padding: 3px 10px;
 	font-size: small;
 	color: Black;
 }
 
-table.lenya-table-noborder td {
+table.lenya-table-noborder td, table.lenya-table-noborder th {
 	border: 0px;
 	padding: 3px 10px;
 	font-size: small;
+}
+
+table.lenya-table-noborder th {
+  vertical-align: top;
+  text-align: left;
 }
 
 table.lenya-table-noborder-nopadding td {
@@ -72,6 +78,7 @@ table.lenya-table-list td,
 table.lenya-table-list-noborder th,
 table.lenya-table-list-noborder td {
   text-align: left;
+  vertical-align: top;
   padding: 2px 2em 2px 5px;
   border-bottom: solid 1px #CCCCCC;
 	font-size: small;
@@ -104,6 +111,10 @@ table.lenya-table-list-noborder th {
 
 table.lenya-table-list-noborder td {
   border-bottom: none;
+}
+
+table.lenya-table-list-noborder td.border {
+  border-bottom: solid 1px #CCCCCC;
 }
 
 table.lenya-table-list-noborder th,
