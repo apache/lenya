@@ -36,15 +36,14 @@
   <xsl:template match="/svg:svg">
     <xsl:choose>
       <xsl:when test="number($height) &gt; 0 and number($height) &lt;= $maxHeight">
-        <svg:svg>
+        <svg:svg viewBox="0 0 {@width} {@height}">
           <xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
           <xsl:if test="number(@width) &gt; 0 and number(@height) &gt; 0">
             <xsl:attribute name="width"><xsl:value-of select="ceiling(@width div @height * $height)"/></xsl:attribute>
           </xsl:if>
-          <xsl:attribute name="viewBox"><xsl:value-of select="concat('0 0 ', @width, ' ', @height)"/></xsl:attribute> 
           <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
-          </xsl:copy>
+          </xsl:copy> 
         </svg:svg>
       </xsl:when>
       <xsl:otherwise>
