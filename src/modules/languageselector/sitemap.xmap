@@ -75,7 +75,8 @@
       </map:select>
       <map:transform src="xslt/resizesvg.xsl">
         <parameter name="height" value="{2}"/>
-      </map:transform>  
+      </map:transform>
+      <map:transform src="xslt/stylesvg.xsl"/>
       <map:serialize type="svg2png"/>
     </map:match>
 
