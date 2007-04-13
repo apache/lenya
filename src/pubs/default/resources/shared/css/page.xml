@@ -170,23 +170,33 @@ td.tab-post-separator {
 
 .menublock-1 .menublock-2 { display: none; }
 
-.menublock-selected-1 .menuitem-1 { background-color: #FFEEEE; }
 .menublock-1          .menuitem-1 { }
 
 .menuitem-1 { padding: 5px 5px 5px 5px; font-size: 80%; }
 .menuitem-2 { padding: 2px 5px 2px 25px; font-size: 80%; }
-.menuitem-selected-2 { padding: 2px 5px 2px 25px; font-size: 80%; color: black; }
+
 .menuitem-2 a { }
 
 .menuitem-selected-1 {
-    background-color: #FFEEEE;
-    padding: 5px 5px 5px 5px;
-    font-size: 80%;
+  background-color: #FFEEEE;
+  padding: 5px 5px 5px 5px;
+  font-size: 80%;
 }
 
+.menuitem-selected-2 {
+  padding: 2px 5px 2px 25px;
+  font-size: 80%;
+  background-color: #FFEEEE;
+}
+  
+.menuitem-3, .menuitem-selected-3 {
+  padding: 2px 5px 2px 45px;
+  font-size: 80%;
+}
 
-.menuitem-3 { padding: 2px 5px 2px 25px; font-size: 60%; }
-.menuitem-selected-3 { padding: 2px 5px 2px 25px; font-size: 60%; }
+.menuitem-selected-3 {
+  background-color: #FFEEEE;
+}
 
 /* breadcrumb */
 
