@@ -67,7 +67,7 @@ public class CopyPublicationsTask extends Task {
      */
     public void copy(String pubsRootDir, FilenameFilter filter, TwoTuple twoTuple) {
             // In the case the pubsRootDir is publication dir
-            if (new File(pubsRootDir, "publication.xml").isFile()) {
+            if (new File(pubsRootDir, "/config/publication.xconf").isFile()) {
                 File pubDir = new File(pubsRootDir);
                 log("Copy publication: " + pubDir);
                 CopyJavaSourcesTask.copyDir(pubDir, new File(this.toDir.toString()), twoTuple, filter, this);
