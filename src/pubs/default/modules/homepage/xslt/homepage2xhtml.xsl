@@ -39,11 +39,11 @@
         <ci:include src="cocoon:/news-header_{$language}.xml"/>
       </head>
       <body>
+        <ci:include src="cocoon:/news-include_{$language}.xml"/>
         <div id="body">
           <xsl:if test="$rendertype = 'edit'">
             <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
           </xsl:if>
-          <ci:include src="cocoon:/news-include_{$language}.xml"/>
           <xsl:apply-templates select="xhtml:body/node()"/>
         </div>
       </body>

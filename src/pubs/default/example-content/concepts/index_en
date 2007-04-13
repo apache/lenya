@@ -31,7 +31,7 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     <p>In Apache Lenya, a website is called a
     <strong>publication</strong>.</p>
     
-    <h2>Areas: Authoring and Live</h2>
+    <h2>Areas: Authoring, Live, ...</h2>
 
     <p>Apache Lenya separates between different areas:</p>
     <ul>
@@ -44,9 +44,13 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
       replicated from the live area to the actual web server. In any
       case the live area simply serves as a preview to the content
       that will be served by the web server.</li>
+      <li>
+        Other standard areas are and archive. If necessary, further
+        areas can be declared.
+      </li>
     </ul>
     
-    <h2>Document types</h2>
+    <h2>Resource Types</h2>
 
     <p>As Apache Lenya is based on Apache Cocoon, it has strong XML and
     XSLT foundations. It is possible to ensure that a document

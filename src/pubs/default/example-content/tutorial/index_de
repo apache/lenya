@@ -27,107 +27,115 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
   <body>
     <h1>Tutorial</h1>
 
-    <p>Das folgende Tutorial gibt eine kurze Einfuehrung in das Content Management
-    System Apache Lenya. Wir betrachten typische Anwendungsfaelle,
-    wie zum Beispiel ein neues Dokument kreieren, bearbeiten und publizieren</p>
+    <p>Das folgende Tutorial gibt eine kurze Einführung in das Content Management
+    System Apache Lenya. Wir betrachten typische Anwendungsfälle,
+    wie zum Beispiel ein neues Dokument erstellen, bearbeiten und publizieren.</p>
 
-    <h2>Ein neues Dokument kreieren</h2>
-
-    <p>To create a new document goto the <code>File->New
-    Document</code> menu entry. You'll get a new screen that asks you
-    for an id and a name for this new document. The id will be used
-    internally as an identifier for the document and the name will be
-    used in the navigation. Let's use "foo" as id and "Foo" as the
-    name of the new document. Now press <code>Create</code>. You will
-    be redirected back to the page where you originally invoked the
-    creation and you'll notice that the new document "Foo" now shows
-    up as a sub-document of the Tutorial document in the
-    navigation.</p>
-
-    <p>This illustrates the fact that a new document is always created
-    as a sub-document of the document you're currently looking at. You
-    also notice how the navigation is built automatically.</p>
+    <h2>Ein neues Dokument erstellen</h2>
+    
+    <p>
+      Um ein neues Dokument zu erstellen, klicken Sie auf den Menüpunkt
+      <em>Datei -> Neues XHTML-Dokument</em>. Sie erhalten ein Formular,
+      das Sie auffordert, einen Knoten-Namen und Navigationstitel für das
+      neue Dokument einzugeben. Der Knoten-Name wird zur Identifikation des
+      Dokumentes in der URL verwendet. Der Navigationstitel wird links im
+      Menü erscheinen.
+    </p>
+    <p>
+      Geben Sie "helloworld" als Knoten-Name und "Hello World" als Navigationstitel
+      ein und klicken Sie auf den "Erstellen"-Button. Sie werden zur neu erstellten
+      "Hello World"-Seite weitergeleitet. Links im Navigationsmenü können Sie
+      den neuen Eintrag sehen. Da Sie im "Erstellen"-Formular die Standard-Einstellung
+      "child" gewählt haben, wurde das neue Dokument als Kind-Dokument des
+      Ausgangs-Dokumentes eingefügt.
+    </p>
 
     <h2>Ein Dokument bearbeiten</h2>
-
-    <p>To look at the newly created document click on the "Foo" entry
-    in the navigation. You'll notice that the "Foo" document already
-    contains some content. It was created from a sample XML
-    document. To change this sample content you will have to edit the
-    document. You can pick on of the following web-based WYSIWYG
-    editors:</p>
+    
+    <p>
+      Wie Sie sehen enthält das "Hello World"-Dokument bereits ein wenig
+      Beispiel-Inhalt. Um diesen zu ändern, können Sie das Dokument mit einem
+      der eingebauten Editoren bearbeiten:
+    </p>
 
     <ul>
-      <li>HTML Forms: This is a good choice for users of Mosaic ;-)</li>
-      <li>Bitflux: This is a good choice for users of Mozilla.</li>
-      <li>One Form: For the power user who needs all the control</li>
+      <li>Kupu: Eine gute Wahl für Internet-Explorer-Nutzer.</li>
+      <li>BXE: Eine gute Wahl für Firefox-Nutzer.</li>
+      <li>Formwizard: Eine gute Wahl für Mosaic-Nutzer. ;-)</li>
+      <li>Formulareditor: Für Nutzer, die die volle Kontrolle benötigen.</li>
     </ul>
+    
+    <p>
+      Wählen Sie einen Editor aus dem "Bearbeiten"-Menü (abhängig von Ihrer Plattform)
+      und beginnen Sie, das neu erstellte Dokument zu bearbeiten.
+      In diesem Beispiel verwenden wir den BXE-Editor.
+      Das Lenya-Menü wird verschwinden und der BXE-Toolbar erscheint stattdessen.
+      Mit der rechten Maustaste erhalten Sie ein Kontext-Menü,
+      mit Hilfe dessen Sie Textbausteine kopieren, ausschneiden und einfügen können.
+      Sie können auch neue Elemente mittels des Kontext-Menüs in das Dokument
+      einfügen. Sobald Sie ihre Änderungen abgeschlossen haben, klicken Sie auf
+      "Save &amp; Exit" um zurück zur Lenya-Ansicht des Dokumentes zu gelangen.
+      Dort können Sie Ihre Änderungen betrachten.
+    </p>
 
-    <p>Pick your choice of editor (based on your platform) and start
-    editing the newly created document by selecting the
-    <code>Edit->Edit with BXE</code> menu button. The Lenya menu will
-    disappear and the Bitflux toolbar will appear instead. You can use
-    the left mouse button to get a context sensitive menu from where
-    you can copy, cut and paste. You're also able to insert new
-    elements into the document from the context sensitive menu. Once
-    you're done with all your changes, press
-    <code>Save&amp;Exit</code> to get back. You'll see your changes in
-    the document.</p>
-
-    <h2>Ein Dokument bearbeiten</h2>
-
-    <p>Once you are satisfied with the content of the document you
-    want to publish it to make it visible in the live area.</p> 
+    <h2>Ein Dokument veröffentlichen</h2>
+    
+    <p>
+      Sobald Sie mit dem Inhalt Ihres Dokumentes zufrieden sind, können Sie
+      es publizieren, um es in der Live-Umgebung sichtbar zu machen.
+    </p>
 
     <h3>Workflow</h3>
-
-    <p>The default publication has a simple workflow configured which
-    involves an author and a reviewer. The author creates and edits a
-    new document and submits it for approval. The reviewer (obviously
-    :-)) reviews the document and publishes it so that it will appear
-    on the live site.
-
-    The user lenya (which you are probably currently logged in as) has
-    the role edit, i.e. he can create new documents and submit them
-    for approval (with <code>Workflow->Submit for review</code>). The
-    user alice has the role review which allows her to approve,
-    i.e. publish documents.</p>
-
-    <p>In order to publish your newly created document simply press
-    <code>Workflow->Sumbit</code> (as user lenya) to submit the
-    current document for approval. Now log out
-    (<code>File->Logout</code>), log back in as alice (use the same
-    password as for user lenya) and publish the current document by
-    selecting <code>Workflow->Publish</code>. You will get a
-    confirmation screen where you confirm your intention to publish
-    the document "Foo" by pressing <code>Publish Now</code>. You might
-    have to publish the parent document ("Tutorial") first, as the
-    "Foo" document will not be published if the parent document is not
-    in the live area yet.</p> <p>To check how the "Foo" document looks
-    like in the live site click on the <code>live</code> tab in the
-    Lenya menu. This will open a new browser window showing you the
-    live site.</p>
     
-    <h2>Scheduling</h2>
+    <p>
+      Die Default-Publikation verwendet einen einfachen Workflow, der die Rollen
+      eines Editors und einen Prüfers involviert. Der Editor erstellt und
+      bearbeitet neue Dokumente und reicht sie zur Prüfung ein. Der Prüfer
+      überprüft das Dokument und publiziert es, so dass es auf der Live-Website
+      erscheint. 
+    </p>
     
-    <p>Apache Lenya allows you to publish a document at a specific
-    date. To do this select the <code>Workflow->Publish</code> menu
-    entry. Now instead of pressing <code>Publish</code>, specify the
-    date and the time at which you wish to publish the document and
-    press <code>Schedule</code>. Your document will be published at
-    the specified date. Use the <code>Scheduler</code> tab in the site
-    area to see the pending tasks and their status.</p>
+    <p>
+      Der Nutzer <em>lenya</em>, mit dem Sie sich wahrscheinlich eingeloggt
+      haben, besitzt die Editor-Rolle, d.h. er kann neue Dokumente erstellen und
+      zur Prüfung einreichen. Die Nutzerin <em>alice</em> besitzt die Prüfer-Rolle,
+      die es ihr erlaubt, Dokumente zu prüfen und zu publizieren.
+    </p>
+    
+    <p>
+      Um Ihr neu erstelltes Dokument zu veröffentlichen, loggen Sie sich (falls
+      nötig) als Nutzer <em>lenya</em> ein und klicken Sie auf den Menüpunkt
+      <em>Arbeitsfluss -> Einreichen</em>. Loggen Sie sich nun aus (<em>Datei
+      -> Abmelden</em>) und loggen Sie sich als Nutzer <em>alice</em> ein.
+      Nun können Sie das Dokument mittels des Menüpunkts <em>Arbeitsfluss ->
+      Publizieren</em> veröffentlichen. Gegebenenfalls werden Sie auf dem
+      Bestätigungs-Bildschirm darauf hingewiesen, dass die zuerst das übergeordnete
+      Dokument publizieren müssen, da es sich noch nicht in der Live-Area
+      befindet. Um zu sehen, wie das Dokument in der Live-Ansicht aussieht,
+      klicken Sie auf den "Live"-Reiter im Lenya-Menü. Dieser wird ein neues
+      Browser-Fenster bzw. -Tab öffnen, das Ihnen die Seite in der Live-Area
+      zeigt.
+    </p>
 
-    <h2>Revision Control</h2>
-
-    <p>Every time you edit a document and exit the editor a new
-    revision of the document is stored. Old versions of the document
-    are kept and you can go back to an older version if you want to
-    undo some of the changes you applied to it. To see all available
-    versions of the current document press
-    <code>Tools->Rollback</code>. This will give you a list of all
-    previous versions. You can view a specific old version or rollback
-    to a specific old version by clicking on the appropriate links.</p>
+    <h2>Zeitsteuerung</h2>
+    
+    <p>
+      Apache Lenya erlaubt es, ein Dokument zu einem spezifischen Zeitpunkt zu
+      veröffentlichen. Wählen Sie dazu den Menüpunkt <em>Arbeitsfluss ->
+      Publizieren</em>. Anstatt jedoch unmittelbar auf "Publizieren" zu klicken,
+      geben Sie zunächst eine Zeit ein, zu der das Dokument veröffentlicht werden
+      soll. Im Reiter "Zeitsteuerung" in der Site-Area erhalten Sie einen Überblick
+      über die anstehenden Aufträge und deren Status. 
+    </p>
+    
+    <h2>Versionierung</h2>
+    
+    <p>
+      Jedes Mal wenn Sie ein Dokument editieren und den Editor verlassen, wird
+      eine neue Revision des Dokumentes angelegt. Alte Revisionen werden
+      aufbewahrt, Sie können sie auf dem Reiter "Revisionen" in der Site-Area
+      betrachten und ggf. das Dokument durch eine ältere Revision ersetzen.
+    </p>
 
   </body>
 </html>

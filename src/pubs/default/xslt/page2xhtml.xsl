@@ -74,14 +74,10 @@
           <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td id="publication-title">
-                <xsl:choose>
-                  <xsl:when test="$language = 'de'">
-                    Willkommen zur Default Publikation von <xsl:value-of select="$author"/>!
-                  </xsl:when>
-                  <xsl:otherwise>
-                    Welcome to the Default Publication from <xsl:value-of select="$author"/>!
-                  </xsl:otherwise>
-                </xsl:choose>
+                <i18n:translate>
+                  <i18n:text>publication-title</i18n:text>
+                  <i18n:param><xsl:value-of select="$author"/></i18n:param>
+                </i18n:translate>
               </td>
               <td id="project-logo"><img src="{$root}/images/project-logo.png" alt="project logo"/></td>
             </tr>

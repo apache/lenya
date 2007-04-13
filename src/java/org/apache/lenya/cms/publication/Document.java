@@ -63,13 +63,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     Date getExpires() throws DocumentException;
 
     /**
-     * Returns the document ID of this document.
-     * @return the document-id of this document.
-     * @deprecated use {@link #getUUID()} or {@link #getPath()}, respectively, instead.
-     */
-    String getId();
-    
-    /**
      * Returns the document name of this document.
      * @return the document-name of this document.
      */

@@ -22,38 +22,39 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 
 <!-- $Id$ -->
   <head>
-    <title>Document Type Examples</title>
+    <title>Ressource Type Examples</title>
   </head>
   <body>
-    <h1>Document Type Examples</h1>
+    <h1>Ressource Type Examples</h1>
 
 <p>
-The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a>, the <a href="doctypes/links.html">Links Doctype</a>, the <a href="doctypes/opendocument.html">OpenDocument Doctype</a> and the <a href="doctypes/cforms.html">CForms Doctype</a>.
+The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML resource type</a>,
+the <a href="doctypes/links.html">Links resource type</a>,
+the <a href="doctypes/opendocument.html">OpenDocument resource type</a> and
+the <a href="doctypes/cforms.html">CForms resource type</a>.
 </p>
 
 <p>
-A tutorial on creating/adding new doctypes can be found <a href="tutorial/new_doctype.html">here</a>.
-</p>
-    
-<p>
-The <strong>XHTML Doctype</strong> is for situations where
+The <strong>XHTML resource type</strong> is suitable for situations where
 users ask for complete freedom on what information can be inserted
 into a document. While this approach doesn't restrict you, it also
 looses some of the major benefits of well defined document types.
 </p>
     
 <p>
-The <strong>Links Doctype</strong> is mainly to show that Lenya is able to handle
-arbitrary doctypes but can also be used for link-lists.
+The <strong>Links resource type</strong> is mainly to show that Lenya is able to handle
+arbitrary resource types but can also be used for link-lists.
 </p>
     
 <p>
-The <strong>OpenDocument Doctype</strong> is a standardized XML-based file format specification suitable for office applications and has been developed by <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OASIS</a>.
+The <strong>OpenDocument resource type</strong> is a standardized XML-based
+file format specification suitable for office applications and has been developed
+by <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OASIS</a>.
 </p>
 
 <p>
-The <strong>CForms Doctype</strong> is an example of how Lenya manages formular data based on Cocoon's CForms in conjunction
-with Ajax.
+The <strong>CForms resource type</strong> is an example of how Lenya manages formular data
+based on Cocoon's CForms in conjunction with Ajax.
 </p>
 
   </body>

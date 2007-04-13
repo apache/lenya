@@ -29,17 +29,17 @@
     xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
 >
 
-  <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-  </xsp:structure>
-  
   <menu>
+  
+    <xsp:logic>
+      String baseUrl = (String) <input:get-attribute module="request" name="contextPath"/>;
+    </xsp:logic>
 
     <menus>
       <menu i18n:attr="name" name="Help">
         <block areas="site authoring">
           <item href="?lenya.module=development&amp;lenya.action=showLog">
+            <xsp:attribute name="href"><xsp:expr>baseUrl</xsp:expr>/modules/development/log4j.log</xsp:attribute>
             <i18n:text>Show Log</i18n:text>
           </item>
         </block>

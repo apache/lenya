@@ -88,6 +88,8 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
     public void contextualize(Context context) throws ContextException {
         this.context = context;
     }
+    
+    private SourceResolver sourceResolver;
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
@@ -108,7 +110,7 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
      */
     public Source getSource(String location, Map parameters) throws MalformedURLException,
             IOException, SourceException {
-
+        
         Map objectModel = ContextHelper.getObjectModel(this.context);
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -122,6 +124,10 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
 
         LinkResolver resolver = null;
         try {
+            if (this.sourceResolver == null) {
+                this.sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            }
+
             resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
             String webappUrl = ServletHelper.getWebappURI(request);
@@ -131,21 +137,18 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             Document doc = target.getDocument();
 
             String format = null;
-            String sessionName = null;
             if (queryString != null) {
                 Query query = new Query(queryString);
                 format = query.getValue("format");
-                sessionName = query.getValue("session");
             }
             if (format != null) {
                 return getFormatSource(doc, format);
             } else {
                 String lenyaURL = doc.getSourceURI();
-                if (target.isRevisionSpecified()) {
-                    lenyaURL += "?rev=" + target.getRevisionNumber();
+                if (queryString != null) {
+                    lenyaURL += "?" + queryString;
                 }
-                Session session = getSession(objectModel, sessionName);
-                return new RepositorySource(manager, lenyaURL, session, getLogger());
+                return this.sourceResolver.resolveURI(lenyaURL);
             }
 
         } catch (Exception e) {
@@ -186,22 +189,14 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
         String formatUri = formatBaseUri + "/" + doc.getPublication().getId() + "/" + doc.getArea()
                 + "/" + doc.getUUID() + "/" + doc.getLanguage();
 
-        SourceResolver resolver = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            return resolver.resolveURI(formatUri);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
-        }
+        return this.sourceResolver.resolveURI(formatUri);
     }
 
     /**
      * @see org.apache.excalibur.source.SourceFactory#release(org.apache.excalibur.source.Source)
      */
     public void release(Source source) {
-        // Source will be released by delegated source factory.
+        this.sourceResolver.release(source);
     }
 
 }

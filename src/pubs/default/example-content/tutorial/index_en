@@ -33,14 +33,14 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 
     <h2>Creating a new document</h2>
 
-    <p>To create a new document goto the <code>File->New
-    Document</code> menu entry. You'll get a new screen that asks you
+    <p>To create a new document, go to the <code>File -> New
+    XHTML Document</code> menu entry. You'll get a new screen that asks you
     for an id and a name for this new document. The id will be used
     internally as an identifier for the document and the name will be
-    used in the navigation. Let's use "foo" as id and "Foo" as the
+    used in the navigation. Let's use "helloworld" as id and "Hello World" as the
     name of the new document. Now press <code>Create</code>. You will
     be redirected back to the page where you originally invoked the
-    creation and you'll notice that the new document "Foo" now shows
+    creation and you'll notice that the new document "Hello World" now shows
     up as a sub-document of the Tutorial document in the
     navigation.</p>
 
@@ -50,16 +50,17 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 
     <h2>Editing a document</h2>
 
-    <p>To look at the newly created document click on the "Foo" entry
-    in the navigation. You'll notice that the "Foo" document already
+    <p>To look at the newly created document click on the "Hello World" entry
+    in the navigation. You'll notice that the "Hello World" document already
     contains some content. It was created from a sample XML
     document. To change this sample content you will have to edit the
     document. You can pick on of the following web-based WYSIWYG
     editors:</p>
 
     <ul>
+      <li>Kupu: This is a good choice for users of Internet Explorer.</li>
+      <li>BXE: This is a good choice for users of Mozilla.</li>
       <li>HTML Forms: This is a good choice for users of Mosaic ;-)</li>
-      <li>Bitflux: This is a good choice for users of Mozilla.</li>
       <li>One Form: For the power user who needs all the control</li>
     </ul>
 
@@ -67,7 +68,7 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     editing the newly created document by selecting the
     <code>Edit->Edit with BXE</code> menu button. The Lenya menu will
     disappear and the Bitflux toolbar will appear instead. You can use
-    the left mouse button to get a context sensitive menu from where
+    the right mouse button to get a context sensitive menu from where
     you can copy, cut and paste. You're also able to insert new
     elements into the document from the context sensitive menu. Once
     you're done with all your changes, press
@@ -108,10 +109,10 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     password as for user lenya) and publish the current document by
     selecting <code>Workflow->Publish</code>. You will get a
     confirmation screen where you confirm your intention to publish
-    the document "Foo" by pressing <code>Publish Now</code>. You might
+    the document "Hello World" by pressing <code>Publish Now</code>. You might
     have to publish the parent document ("Tutorial") first, as the
-    "Foo" document will not be published if the parent document is not
-    in the live area yet.</p> <p>To check how the "Foo" document looks
+    "Hello World" document will not be published if the parent document is not
+    in the live area yet.</p> <p>To check how the "Hello World" document looks
     like in the live site click on the <code>live</code> tab in the
     Lenya menu. This will open a new browser window showing you the
     live site.</p>
@@ -120,9 +121,9 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     
     <p>Apache Lenya allows you to publish a document at a specific
     date. To do this select the <code>Workflow->Publish</code> menu
-    entry. Now instead of pressing <code>Publish</code>, specify the
-    date and the time at which you wish to publish the document and
-    press <code>Schedule</code>. Your document will be published at
+    entry. Now instead of pressing <code>Publish</code> immediately,
+    specify the date and the time at which you wish to publish the
+    document first. Your document will be published at
     the specified date. Use the <code>Scheduler</code> tab in the site
     area to see the pending tasks and their status.</p>
 

@@ -153,15 +153,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getId()
-     */
-    public String getId() {
-        // throw new IllegalStateException("Use getUUID() or getPath()
-        // instead");
-        return this.identifier.getUUID();
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.Document#getName()
      */
     public String getName() {
@@ -354,7 +345,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public int hashCode() {
 
         String key = getPublication().getId() + ":" + getPublication().getServletContext() + ":"
-                + getArea() + ":" + getId() + ":" + getLanguage();
+                + getArea() + ":" + getUUID() + ":" + getLanguage();
 
         return key.hashCode();
     }
