@@ -88,15 +88,16 @@ public class CopyJavaSourcesTask extends Task {
                     // FIXME: Look for publications defined by the file "publication.xml" or modules
                     // defined by the file "module.xml"
                     String[] pubs = path.list();
+                    if (pubs != null) {
+                        for (int i = 0; i < pubs.length; i++) {
+                            File pubJavaDir = new File(path, new File(pubs[i], this.javaDir).toString());
 
-                    for (int i = 0; i < pubs.length; i++) {
-                        File pubJavaDir = new File(path, new File(pubs[i], this.javaDir).toString());
-
-                        copyContentOfDir(pubJavaDir,
-                                absoluteBuildDir,
-                                twoTuple,
-                                new JavaFilenameFilter(),
-                                this);
+                            copyContentOfDir(pubJavaDir,
+                                    absoluteBuildDir,
+                                    twoTuple,
+                                    new JavaFilenameFilter(),
+                                    this);
+                        }
                     }
                 }
             } else {

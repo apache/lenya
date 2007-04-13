@@ -91,10 +91,12 @@ public class CopyPublicationsTask extends Task {
                 CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()), twoTuple, filter, this);
             } else {
                 File[] files = new File(pubsRootDir).listFiles(filter);
-                for (int i = 0; i < files.length; i++) {
-                    copy(files[i].getAbsolutePath(), filter, twoTuple);
+                if (files != null) {
+                    for (int i = 0; i < files.length; i++) {
+                        copy(files[i].getAbsolutePath(), filter, twoTuple);
+                    }
                 }
-                if (files.length < 1) log("ERROR: No children: " + pubsRootDir);
+                else log("ERROR: No children: " + pubsRootDir);
             }
     }
 
