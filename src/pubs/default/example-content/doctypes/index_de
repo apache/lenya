@@ -22,17 +22,40 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 
 <!-- $Id$ -->
   <head>
-    <title>Dokumenttyp Beispiele</title>
+    <title>Beispiele für Ressource-Typen</title>
   </head>
   <body>
-    <h1>Dokumenttyp Beispiele</h1>
+    <h1>Beispiele für Ressource-Typen</h1>
 
-    <p>The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype.</a></p>
+    <p>
+      Die Default-Publikation umfasst den <a href="doctypes/xhtml-document_de.html">XHTML-Ressource-Typ</a>,
+      den <a href="doctypes/links.html">Links-Ressource-Typ</a>,
+den <a href="doctypes/opendocument_de.html">OpenDocument-Ressource-Typ</a> und
+den <a href="doctypes/cforms.html">CForms-Ressource-Typ</a>.
+    </p>
     
-    <p>The XHTML Doctype is for situations where
-    users ask for complete freedom on what information can be inserted
-    into a document. While this approach doesn't restrict you, it also
-    looses some of the major benefits of well defined document types.</p>
-
+    <p>
+    Der <strong>XHTML-Ressource-Typ</strong> empfiehlt sich insbesondere dann, wenn dem Nutzer vollständige
+    Freiheit in Bezug auf die einzufügenden Informationen gewährt werden soll.
+    Dieser Ressource-Typ macht zwar wenige Einschränkungen, allerdings verliert
+    man dadurch einige der wichtigsten Vorteile restriktiverer Ressource-Typen.
+    </p>
+    
+    <p>
+      Der <strong>Links-Ressource-Typ</strong> erlaubt es, Listen von Links zu verwalten. Er dient
+      hauptsächlich dazu, zu zeigen, dass Lenya mit beliebigen Ressource-Typen umgehen kann.
+    </p>
+    
+    <p>
+      Der <strong>OpenDocument-Ressource-Typ</strong> ist ein standardisiertes XML-basiertes Dateiformat
+      für Office-Anwendungen. Er wurde von <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OASIS</a>
+      entwickelt.
+    </p>
+    
+    <p>
+      Der <strong>CForms-Ressource-Typ</strong> ist ein Beispiel, wie Lenya mit Formular-Daten auf der
+      Basis von Cocoon's CForms in Verbindung mit Ajax umgeht. 
+    </p>
+    
   </body>
 </html>

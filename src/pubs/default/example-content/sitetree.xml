@@ -16,10 +16,6 @@
   <node id="tutorial">
     <label xml:lang="en">Tutorial</label>
     <label xml:lang="de">Tutorial</label>
-
-    <node id="new_doctype">
-      <label xml:lang="en">Create new doctype</label>
-    </node>
   </node>
 
   <node id="concepts">
@@ -29,6 +25,7 @@
 
   <node id="links">
     <label xml:lang="en">Apache Lenya Links</label>
+    <label xml:lang="de">Links zu Apache Lenya</label>
   </node>
   
   <node id="features">
@@ -37,25 +34,27 @@
   </node>
 
   <node id="doctypes">
-    <label xml:lang="en">Document Type Examples</label>
-    <label xml:lang="de">Dokumenttyp Beispiele</label>
+    <label xml:lang="en">Resource Type Examples</label>
+    <label xml:lang="de">Beispiele für Ressource-Typen</label>
 
     <node id="xhtml-document">
-      <label xml:lang="en">XHTML Doctype</label>
-      <label xml:lang="de">XHTML Dokumenttyp</label>
+      <label xml:lang="en">XHTML Resource Type</label>
+      <label xml:lang="de">XHTML-Ressource-Typ</label>
     </node>
 
     <node id="links">
-      <label xml:lang="en">Links Doctype</label>
+      <label xml:lang="en">Links Resource Type</label>
+      <label xml:lang="de">Links-Ressource-Typ</label>
     </node>
 
     <node id="opendocument">
-      <label xml:lang="en">OpenDocument Doctype</label>
-      <label xml:lang="de">OpenDocument Dokumenttyp</label>
+      <label xml:lang="en">OpenDocument Resource Type</label>
+      <label xml:lang="de">OpenDocument-Ressource-Typ</label>
     </node>
 
     <node id="cforms" visibleinnav="true">
-      <label xml:lang="en">CForms Doctype</label>
+      <label xml:lang="en">CForms Resource Type</label>
+      <label xml:lang="de">CForms-Ressource-Typ</label>
     </node>
  </node>
 

@@ -22,13 +22,13 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 
 <!-- $Id$ -->
   <head>
-    <title>The XHTML Document Doctype</title>
+    <title>The XHTML Resource Type</title>
   </head>
   <body>
-    <h1>The XHTML Document Doctype</h1>
+    <h1>The XHTML Resource Type</h1>
 
-    <p>The XHTML Document Doctype is simply a XHTML document that
-    conforms to the <a href="http://www.w3.org/TR/xhtml1/">XHTML 1.0
+    <p>The XHTML resource type supports to maintain XHTML documents which
+    conform to the <a href="http://www.w3.org/TR/xhtml1/">XHTML 1.0
     definition</a> of the <a href="http://www.w3.org/">World Wide Web
     Consortium (W3C)</a>.</p>  
 
