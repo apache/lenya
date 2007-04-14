@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-version" content="0.8">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Apache Lenya 1.4 Documentation</title>
 <link type="text/css" href="../../skin/basic.css" rel="stylesheet">
@@ -94,7 +94,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-             
+
              &nbsp;
            </div>
 <!--+
@@ -160,10 +160,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
 <div class="menuitem">
+<a href="../../docs/1_4/reference/repository/index.html">Repository</a>
+</div>
+<div class="menuitem">
 <a href="../../docs/1_4/reference/ac.html">Access Control Specification</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.3', '../../skin/')" id="menu_1.1.6.3Title" class="menutitle">Usecase Framework</div>
-<div id="menu_1.1.6.3" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.4', '../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.6.4" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
 </div>
@@ -171,8 +174,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.4', '../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Publications</div>
-<div id="menu_1.1.6.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.5', '../../skin/')" id="menu_1.1.6.5Title" class="menutitle">Publications</div>
+<div id="menu_1.1.6.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../docs/1_4/reference/publication/configuration.html">Configuration</a>
 </div>
@@ -189,26 +192,23 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../docs/1_4/reference/metadata.html">Meta data</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.8', '../../skin/')" id="menu_1.1.6.8Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.6.8" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.9', '../../skin/')" id="menu_1.1.6.9Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.9" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../docs/1_4/reference/protocols/index.html">Overview</a>
 </div>
 <div class="menuitem">
-<a href="../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
+<a href="../../docs/1_4/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+<a href="../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../docs/1_4/reference/protocols/site.html">error:site:</a>
+<a href="../../docs/1_4/reference/protocols/site.html">site Protocol</a>
 </div>
 </div>
 <div class="menuitem">
 <a href="../../docs/1_4/reference/link-management.html">Link Management</a>
-</div>
-<div class="menuitem">
-<a href="../../docs/1_4/reference/repository/index.html">Repository</a>
 </div>
 </div>
 <div class="menuitem">
@@ -345,29 +345,106 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Apache Lenya 1.4 Documentation</h1>
-          
+    
 <div class="warning">
 <div class="label">Warning</div>
 <div class="content">
-            Apache Lenya 1.4 is still under heavy development and should not be used for production yet.
-          </div>
+      Apache Lenya 1.4 is still under development and should not be used for production yet.
+    </div>
 </div>
-        
+    
 <p>
-           This is the documentation for the 1.4.x releases. The documentation is not as fleshed out as 1.2 yet, so
-           we suggest you also check there for more information while we build up this documentation. 
-        </p>
-        
+      This is the documentation for the 1.4.x releases. The documentation is not as fleshed out as 1.2 yet, so
+      we suggest you also check there for more information while we build up this documentation. 
+    </p>
+    
 <div class="note">
 <div class="label">Help wanted!</div>
-<div class="content"> Since 1.4 is new and provide many 
-          enhancements and new features, please help to document them with us. 
-          Send documentation patches and use the wiki. TIA :)</div>
+<div class="content"> Since 1.4 is new and provides many 
+      enhancements and new features, please help to document them with us. 
+      Send documentation patches and use the Wiki. Thanks in advance :)</div>
 </div>
-
+    
 <p>
-More documentation (work in progress) can be found at the <a href="http://wiki.apache.org/lenya/">Apache Lenya Wiki</a>.
-</p>
+      More documentation (work in progress) can be found at the <a href="http://wiki.apache.org/lenya/">Apache Lenya Wiki</a>.
+    </p>
+    
+    
+<a name="N1001F"></a><a name="What%27s+New+in+Lenya+1.4"></a>
+<h2 class="h3">What's New in Lenya 1.4</h2>
+<div class="section">
+<dl>
+        
+<dt>
+<a href="../../docs/1_4/reference/modules/index.html">Modularization</a>
+</dt>
+        
+<dd>
+          The monolithic architecture has been replaced by a small generic core and
+          various modules for specific purposes.
+        </dd>
+        
+<dt>
+<a href="../../docs/1_4/reference/repository/index.html">Improved Repository Access</a>
+</dt>
+        
+<dd>
+          The refactored and extended repository API and new protocols make it easier
+          to access and manipulate documents.
+        </dd>
+        
+<dt>
+<a href="../../docs/1_4/reference/link-management.html">UUIDs for Internal Links</a>
+</dt>
+        
+<dd>
+          Documents are now identified and referenced using
+          <acronym title="Universally Unique Identifier">UUID</acronym>s.
+          Static link rewriting is not necessary anymore.
+        </dd>
+        
+<dt>
+<a href="../../docs/1_4/reference/ac.html">Improved Access Control</a>
+</dt>
+        
+<dd>It is now possible to explicitely deny permissions on specific pages.</dd>
+        
+<dt>
+<a href="../../docs/1_4/reference/metadata.html">Configurable Meta Data</a>
+</dt>
+        
+<dd>
+          It is now possible to declare custom sets of meta data.
+        </dd>
+        
+<dt>
+<a href="../../docs/1_4/reference/publication/publication-templating/index.html">Publication Templating</a>
+</dt>
+        
+<dd>
+          Publication templating allows to re-use common functionality in multiple publications.
+        </dd>
+        
+<dt>
+<a href="../../docs/1_4/reference/usecase-framework/index.html">Usecase Framework</a>
+</dt>
+        
+<dd>
+          The usecase framework simplifies the implementation of user interaction functionality.
+        </dd>
+        
+<dt>
+<a href="../../docs/modules/notification.html">Simplified Notification, Inboxes</a>
+</dt>
+        
+<dd>
+          It is now easier to trigger notification messages. Each user has a personal
+          inbox to read and send messages.
+        </dd>
+      
+</dl>
+</div>
+    
   
 </div>
 <!--+

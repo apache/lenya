@@ -112,9 +112,6 @@
     <referrer uri="incubator-2003-05.svn.html"/>
     <referrer uri="tlp-2005-07.svn.html"/>
   </link>
-  <link message="/home/thorsten/src/apache/lenya-docu/src/documentation/content/xdocs/docs/1_4/reference/publication/usecase-framework/index.xml (No such file or directory)" uri="docs/1_4/reference/publication/usecase-framework/index.html">
-    <referrer uri="docs/1_4/reference/publication/publication-templating/index.html"/>
-  </link>
   <link message="Premature end of file." uri="tlp-HEAD.svn-revision.xml">
     <referrer uri="linkmap.html"/>
     <referrer uri="tlp-2006-08.svn.html"/>
@@ -171,8 +168,5 @@
     <referrer uri="tlp-2005-08.svn.html"/>
     <referrer uri="incubator-2003-05.svn.html"/>
     <referrer uri="tlp-2005-07.svn.html"/>
-  </link>
-  <link message="/home/thorsten/src/apache/lenya-docu/src/documentation/content/xdocs/docs/1_4/reference/publication-templating/index.xml (No such file or directory)" uri="docs/1_4/reference/publication-templating/index.html">
-    <referrer uri="docs/1_4/reference/usecase-framework/index.html"/>
   </link>
 </broken-links>

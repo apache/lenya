@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-version" content="0.8">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Modules</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
@@ -94,7 +94,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-             
+
              &nbsp;
            </div>
 <!--+
@@ -160,10 +160,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
 <div class="menuitem">
+<a href="../../../../docs/1_4/reference/repository/index.html">Repository</a>
+</div>
+<div class="menuitem">
 <a href="../../../../docs/1_4/reference/ac.html">Access Control Specification</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.3', '../../../../skin/')" id="menu_1.1.6.3Title" class="menutitle">Usecase Framework</div>
-<div id="menu_1.1.6.3" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.4', '../../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.6.4" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
 </div>
@@ -171,8 +174,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.4', '../../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Publications</div>
-<div id="menu_1.1.6.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.5', '../../../../skin/')" id="menu_1.1.6.5Title" class="menutitle">Publications</div>
+<div id="menu_1.1.6.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/publication/configuration.html">Configuration</a>
 </div>
@@ -203,26 +206,23 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/metadata.html">Meta data</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.8', '../../../../skin/')" id="menu_1.1.6.8Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.6.8" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.9', '../../../../skin/')" id="menu_1.1.6.9Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.9" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/protocols/index.html">Overview</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
+<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+<a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/1_4/reference/protocols/site.html">error:site:</a>
+<a href="../../../../docs/1_4/reference/protocols/site.html">site Protocol</a>
 </div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/link-management.html">Link Management</a>
-</div>
-<div class="menuitem">
-<a href="../../../../docs/1_4/reference/repository/index.html">Repository</a>
 </div>
 </div>
 <div class="menuitem">
@@ -419,8 +419,14 @@ mymodule/
       components.xconf     
   usecases/
     mymodule.jx              usecase view
+  resources/
+    images/                  image files
+    css/                     CSS files
+    schemas/                 XML schemas (RNG, XSD, ...)
+    samples/                 Samples (in case of resource type modules)
   java/
     src/                     Java source files
+    test/                    Java test classes
     lib/                     Java libraries
   xslt/                      XSLT stylesheets
   module.xml                 module descriptor
@@ -462,6 +468,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
   &lt;id&gt;org.myproject.lenya.modules.myeditor&lt;/id&gt;
   &lt;depends module="org.apache.lenya.modules.usecase"/&gt;
   &lt;depends module="org.apache.lenya.modules.webdav"/&gt;
+  &lt;export package="org.myproject.lenya.modules.myeditor.api"/&gt;
   &lt;package&gt;org.myproject.lenya.modules&lt;/package&gt;
   &lt;version&gt;0.1-dev&lt;/version&gt;
   &lt;name&gt;My Own Editor&lt;/name&gt;
@@ -477,13 +484,19 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
       </p>
 <p>If your module uses code from other modules, you have to add 
        a <span class="codefrag">&lt;depends&gt;</span> for each of these modules.</p>
+<p>
+        The <span class="codefrag">&lt;export package="..."/&gt;</span> statement(s) declare
+        public packages, which means that these packages are accessible from other
+        modules. You should aim for long-term stability of all interfaces and classes
+        in exported packages, since they represent the Java API of your module.
+      </p>
 </div>
     
     
-<a name="N100A2"></a><a name="Implementing+Usecases+in+Modules"></a>
+<a name="N100A8"></a><a name="Implementing+Usecases+in+Modules"></a>
 <h2 class="h3">Implementing Usecases in Modules</h2>
 <div class="section">
-<a name="N100A8"></a><a name="Declaring+the+Usecase"></a>
+<a name="N100AE"></a><a name="Declaring+the+Usecase"></a>
 <h3 class="h4">Declaring the Usecase</h3>
 <p>
         For example, imagine you implement a <span class="codefrag">newsletter</span> module, containing a <span class="codefrag">send</span> usecase.
@@ -502,7 +515,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
         directory. The Java source files go into the <span class="codefrag">&lt;module&gt;/java/src</span> directory, they are compiled
         automatically by the Lenya build process.
       </p>
-<a name="N100CB"></a><a name="Calling+the+Module+Sitemap"></a>
+<a name="N100D1"></a><a name="Calling+the+Module+Sitemap"></a>
 <h3 class="h4">Calling the Module Sitemap</h3>
 <p>
         The following URL syntax is used to make a call to a module sitemap:
@@ -550,7 +563,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
     &lt;view uri="cocoon://modules/newsletter/downloadNewsletter.xml"/&gt;
   &lt;/component-instance&gt;
 &lt;/xconf&gt;</pre>
-<a name="N100F6"></a><a name="Adding+Menu+Items"></a>
+<a name="N100FC"></a><a name="Adding+Menu+Items"></a>
 <h3 class="h4">Adding Menu Items</h3>
 <p>
       A module can provide menu items which are added to the publication menu.

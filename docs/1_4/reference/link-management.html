@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-version" content="0.8">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Link Management</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
@@ -94,7 +94,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-             
+
              &nbsp;
            </div>
 <!--+
@@ -160,10 +160,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
 <div class="menuitem">
+<a href="../../../docs/1_4/reference/repository/index.html">Repository</a>
+</div>
+<div class="menuitem">
 <a href="../../../docs/1_4/reference/ac.html">Access Control Specification</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.3', '../../../skin/')" id="menu_1.1.6.3Title" class="menutitle">Usecase Framework</div>
-<div id="menu_1.1.6.3" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.4', '../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.6.4" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
 </div>
@@ -171,8 +174,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.4', '../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Publications</div>
-<div id="menu_1.1.6.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.5', '../../../skin/')" id="menu_1.1.6.5Title" class="menutitle">Publications</div>
+<div id="menu_1.1.6.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/publication/configuration.html">Configuration</a>
 </div>
@@ -189,19 +192,19 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/metadata.html">Meta data</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.8', '../../../skin/')" id="menu_1.1.6.8Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.6.8" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.9', '../../../skin/')" id="menu_1.1.6.9Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.9" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/protocols/index.html">Overview</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
+<a href="../../../docs/1_4/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+<a href="../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/1_4/reference/protocols/site.html">error:site:</a>
+<a href="../../../docs/1_4/reference/protocols/site.html">site Protocol</a>
 </div>
 </div>
 <div class="menupage">
@@ -213,10 +216,13 @@ document.write("Last Published: " + document.lastModified);
 <div class="menupageitem">
 <a title="Syntax for Internal Links" href="#Syntax+for+Internal+Links">Syntax for Internal...</a>
 </div>
+<div class="menupageitem">
+<a href="#HTML+Links">HTML Links</a>
+</div>
+<div class="menupageitem">
+<a title="Specifying the Resource Type Format" href="#Specifying+the+Resource+Type+Format">Specifying the Reso...</a>
 </div>
 </div>
-<div class="menuitem">
-<a href="../../../docs/1_4/reference/repository/index.html">Repository</a>
 </div>
 </div>
 <div class="menuitem">
@@ -350,45 +356,139 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Link Management</h1>
-	  
-	  
+    
+    
 <a name="N1000D"></a><a name="Introduction"></a>
 <h2 class="h3">Introduction</h2>
 <div class="section">
 <p>Link Managements deals with internal links, i.e. documents
-	      that refer to other documents within the same publication. In Lenya 1.2, links
-	      are rewritten each time the URL of the target document changes (see
-	      section <a href="../../../docs/1_2_x/components/link-management/link-management.html">Link Management</a> in the Lenya 1.2 documentation).
-	      This behaviour will probably not be ported to 1.4, since URL-based links will be replaced by
-	      UUID-based links.
-	      </p>
+        that refer to other documents within the same publication. In Lenya 1.2, links
+        are rewritten each time the URL of the target document changes (see
+        section <a href="../../../docs/1_2_x/components/link-management/link-management.html">Link Management</a> in the Lenya 1.2 documentation).
+      </p>
+<p>
+        In Lenya 1.4, documents are identified and referenced using
+        <acronym title="Universally Unique Identifier">UUID</acronym>s.
+        The UUID of a document never changes, that's why the internal
+        links don't have to be rewritten when a document is moved
+        in the site structure.
+     </p>
 </div>
-	  
-	  
-<a name="N1001B"></a><a name="Syntax+for+Internal+Links"></a>
+    
+    
+<a name="N10022"></a><a name="Syntax+for+Internal+Links"></a>
 <h2 class="h3">Syntax for Internal Links</h2>
 <div class="section">
 <p>
-	      Until the UUID-based link syntax is introduced, internal links have the following syntax:
-	    </p>
-<pre class="code">/&lt;publication-id&gt;/&lt;area&gt;&lt;document-url&gt;</pre>
-<p>
-	      Examples:
-	    </p>
+        Internal links have the following syntax:
+      </p>
+<pre class="code">lenya-document:{uuid}[,lang={&hellip;}][,pub={&hellip;}][,area={&hellip;}][,rev={&hellip;}][{queryString}]</pre>
 <ul>
-	      
+        
+<li>The <span class="codefrag">{uuid}</span> value is mandatory.</li>
+        
 <li>
-<span class="codefrag">/default/authoring/doctypes/xhtml_en.html</span>
-</li>
-	      
+          The parameters <span class="codefrag">lang</span>, <span class="codefrag">pub</span>, <span class="codefrag">area</span>,
+          and <span class="codefrag">rev</span> are optional. If omitted, the corresponding values
+          of the current context and the latest revision are used.
+        </li>
+        
 <li>
-<span class="codefrag">/yourpub/live/news/2006-02-03.html</span>
-</li>
-	    
+          The optional query string is not evaluated when resolving the link target.
+          It can be used to provide information for subsequent processing
+          steps (e.g., the <span class="codefrag">UuidToUrlTransformer</span>) and to add request
+          parameters to the resulting HTTP link URL. The query string is separated
+          from the link URL using a question mark.
+        </li>
+      
+</ul>
+<p>Some link URI examples:</p>
+<ul>
+        
+<li>
+<span class="codefrag">lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0</span> - document in same language</li>
+        
+<li>
+<span class="codefrag">lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0,lang=de</span> - document in different language</li>
+        
+<li>
+<span class="codefrag">lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0,area=trash</span> - document in different area</li>
+        
+<li>
+<span class="codefrag">lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0?uuid2url.extension=rss</span> - HTML link should use a particular extension</li>
+        
+<li>
+<span class="codefrag">lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0?lenya.usecase=bxe.edit</span> - HTML link with request parameter</li>
+      
 </ul>
 </div>
-	  
-	
+    
+    
+<a name="N1006D"></a><a name="HTML+Links"></a>
+<h2 class="h3">HTML Links</h2>
+<div class="section">
+<p>
+        The <span class="codefrag">UuidToUrlTransformer</span> is responsible for translating <span class="codefrag">lenya-document:</span>
+        links into the corresponding HTML links which can be understood by the browser.
+      </p>
+<p>
+        If your source document contains a link like this:
+      </p>
+<pre class="code">&lt;a href="lenya-document:031&hellip;"&gt;News&lt;/a&gt;</pre>
+<p>
+        and your pipeline contains a call to the <span class="codefrag">UuidToUrlTransformer</span>:
+      </p>
+<pre class="code">&lt;map:transform type="uuid2url"/&gt;</pre>
+<p>
+        the resulting HTML link will look like this:
+      </p>
+<pre class="code">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
+<a name="N10094"></a><a name="Specifying+an+Extension"></a>
+<h3 class="h4">Specifying an Extension</h3>
+<p>
+          The <span class="codefrag">UuidToUrlTransformer</span> recognizes the query string parameter
+          <span class="codefrag">uuid2url.extension</span>. You can use it to force a specific extension.
+          For instance
+        </p>
+<pre class="code">&lt;a type="application/rss+xhtml" href="lenya-document:031&hellip;?uuid2url.extension=rss"&gt;RSS Feed&lt;/a&gt;</pre>
+<p>
+          will result in
+        </p>
+<pre class="code">&lt;a type="application/rss+xhtml" href="/default/authoring/news.rss"&gt;RSS Feed&lt;/a&gt;</pre>
+</div>
+    
+    
+<a name="N100B0"></a><a name="Specifying+the+Resource+Type+Format"></a>
+<h2 class="h3">Specifying the Resource Type Format</h2>
+<div class="section">
+<p>
+        Sometimes you want to specify the format of the link target. This can be done using the
+        <span class="codefrag">format</span> parameter. A typical use case is the inclusion via CInclude.
+      </p>
+<p>
+        Imagine you're converting a collection of documents to a list of teasers.
+        The collection source might look like this:
+      </p>
+<pre class="code">&lt;col:collection&gt;
+  &lt;col:document uuid="031&hellip;"/&gt;
+  &lt;col:document uuid="a5r&hellip;"/&gt;
+  &hellip;
+&lt;/col:collection&gt;</pre>
+<p>
+        You could use the following XSLT template to generate the CInclude statements for the
+        teaser list:
+      </p>
+<pre class="code">&lt;xsl:template match="col:document"&gt;
+  &lt;ci:include src="lenya-document:{@uuid}?format=teaser"/&gt;
+&lt;/xsl:template&gt;</pre>
+<p>
+        When the resulting XML is processed by
+      </p>
+<pre class="code">&lt;map:transform type="cinclude"/&gt;</pre>
+<p>the teaser version of each document will be included.</p>
+</div>
+    
+  
 </div>
 <!--+
     |end content

@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-version" content="0.8">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Resource Types</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
@@ -94,7 +94,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-             
+
              &nbsp;
            </div>
 <!--+
@@ -160,10 +160,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
 <div class="menuitem">
+<a href="../../../docs/1_4/reference/repository/index.html">Repository</a>
+</div>
+<div class="menuitem">
 <a href="../../../docs/1_4/reference/ac.html">Access Control Specification</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.3', '../../../skin/')" id="menu_1.1.6.3Title" class="menutitle">Usecase Framework</div>
-<div id="menu_1.1.6.3" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.4', '../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.6.4" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
 </div>
@@ -171,8 +174,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.4', '../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Publications</div>
-<div id="menu_1.1.6.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.5', '../../../skin/')" id="menu_1.1.6.5Title" class="menutitle">Publications</div>
+<div id="menu_1.1.6.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/publication/configuration.html">Configuration</a>
 </div>
@@ -200,26 +203,23 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/metadata.html">Meta data</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.8', '../../../skin/')" id="menu_1.1.6.8Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.6.8" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.9', '../../../skin/')" id="menu_1.1.6.9Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.9" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/protocols/index.html">Overview</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
+<a href="../../../docs/1_4/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+<a href="../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/1_4/reference/protocols/site.html">error:site:</a>
+<a href="../../../docs/1_4/reference/protocols/site.html">site Protocol</a>
 </div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/link-management.html">Link Management</a>
-</div>
-<div class="menuitem">
-<a href="../../../docs/1_4/reference/repository/index.html">Repository</a>
 </div>
 </div>
 <div class="menuitem">
@@ -435,22 +435,20 @@ document.write("Last Published: " + document.lastModified);
 <p>
     Adding a custom resource type to your publication includes the following steps:
   </p>
-<a name="N1006D"></a><a name="Providing+a+Sample+XML+Document"></a>
-<h3 class="h4">Providing a Sample XML Document</h3>
+<a name="N1006D"></a><a name="Providing+One+or+More+Sample+XML+Documents"></a>
+<h3 class="h4">Providing One or More Sample XML Documents</h3>
 <p>
       If you want to enable users to create new resources belonging to
-      your resource type, it is useful to provide a sample XML document.
-      If you want to use the <span class="codefrag">DefaultBranchCreator</span> that ships
-      with Lenya, you have to add the sample document because it is used
-      as a template for creating new resources.
+      your resource type, it is useful to provide one more more sample XML documents.
     </p>
 <p>
-      The sample document is typically placed in
+      The sample document(s) are typically placed in
       <span class="codefrag">&lt;publication&gt;/lenya/resources/samples/</span>.
-      You can choose an arbitrary filename, but it is recommended to
-      use the resource type name (e.g., <span class="codefrag">profile.xml</span>).
+      You can choose arbitrary filenames, but for a single sample
+      it is recommended to use the resource type name
+      (e.g., <span class="codefrag">profile.xml</span>).
     </p>
-<a name="N10082"></a><a name="Providing+an+XML+Structure+Definition"></a>
+<a name="N1007F"></a><a name="Providing+an+XML+Structure+Definition"></a>
 <h3 class="h4">Providing an XML Structure Definition</h3>
 <p>
       This step is only needed if you want to edit resources with Lenya
@@ -467,7 +465,7 @@ document.write("Last Published: " + document.lastModified);
       of the file is arbitrary, but it is recommended to use the
       resource type name (e.g., <span class="codefrag">profile.rng</span>).
     </p>
-<a name="N100A0"></a><a name="Creating+a+Workflow+Schema"></a>
+<a name="N1009D"></a><a name="Creating+a+Workflow+Schema"></a>
 <h3 class="h4">Creating a Workflow Schema</h3>
 <p>
       If your resources should have a workflow, you have to add a workflow
@@ -477,7 +475,7 @@ document.write("Last Published: " + document.lastModified);
       The workflow schema is assigned to a resource type in <span class="codefrag">publication.xconf</span>
       (see section <em>Adding Resource Types to a Publication</em>).
     </p>
-<a name="N100B3"></a><a name="The+Resource+Type+Definition"></a>
+<a name="N100B0"></a><a name="The+Resource+Type+Definition"></a>
 <h3 class="h4">The Resource Type Definition</h3>
 <p>
     To declare a custom resource type and assign the creator, schema etc. to it,
@@ -490,13 +488,17 @@ document.write("Last Published: " + document.lastModified);
   &lt;component-instance name="profile"
                       logger="lenya.resourcetypes.profile"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl"&gt;
+                      
     &lt;schema src="fallback://lenya/resources/schemas/profile.rng"
             language="http://relaxng.org/ns/structure/0.9"/&gt;
-    &lt;creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator"&gt;
-      &lt;sample-name&gt;fallback://lenya/resources/samples/profile.xml&lt;/sample-name&gt;
-    &lt;/creator&gt;
+            
+    &lt;sample-name name="Empty Profile"&gt;fallback://lenya/resources/samples/empty.xml&lt;/sample-name&gt;
+    &lt;sample-name name="Example Profile"&gt;fallback://lenya/resources/samples/example.xml&lt;/sample-name&gt;
+    
     &lt;link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/&gt;
+    
     &lt;format name="xhtml" uri="cocoon://modules/profile/profile.xml"/&gt;
+    
   &lt;/component-instance&gt;
 
 &lt;/xconf&gt;</pre>
@@ -505,7 +507,7 @@ document.write("Last Published: " + document.lastModified);
       a <span class="codefrag">./build</span> command). Its contents will be patched into
       <span class="codefrag">&lt;lenya-webapp&gt;/WEB-INF/cocoon.xconf</span>.
     </p>
-<a name="N100CC"></a><a name="Define+a+Custom+Menubar"></a>
+<a name="N100C9"></a><a name="Define+a+Custom+Menubar"></a>
 <h3 class="h4">Define a Custom Menubar</h3>
 <p>
       If you want to use a custom menubar for your resource type,
@@ -521,7 +523,7 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">
   &lt;item uc:usecase="site.create" href="?doctype=profile"&gt;&lt;i18n:text&gt;New Profile Document&lt;/i18n:text&gt;&lt;/item&gt;
 </pre>
-<a name="N100E3"></a><a name="Formats"></a>
+<a name="N100E0"></a><a name="Formats"></a>
 <h3 class="h4">Formats</h3>
 <p>
       A resource type provides a set of <em>formats</em> to provide different ways of presenting content documents.
@@ -587,13 +589,14 @@ document.write("Last Published: " + document.lastModified);
 
 </pre>
 <p>
-      The <span class="codefrag">site:/</span> protocol supports a format parameter.
+      The <span class="codefrag">site:/</span> and <span class="codefrag">lenya-document:</span> protocols supports a format parameter.
       This is particularly useful to include formatted documents in other documents:
     </p>
 <pre class="code">
-  &lt;ci:include src="site:/{$language}{$path}?format=xhtml-inline"/&gt;
-    </pre>
-<a name="N1012C"></a><a name="Presentation"></a>
+  &lt;ci:include src="site:/{$language}{$path}?format=xhtml-inline"/&gt;</pre>
+<pre class="code">
+  &lt;ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/&gt;</pre>
+<a name="N10130"></a><a name="Presentation"></a>
 <h3 class="h4">Presentation</h3>
 <p>
       To make your resources available as HTTP pages, you have to add the

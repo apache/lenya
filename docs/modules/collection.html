@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-skin-name" content="pelt">
+<title>The Collection Module</title>
+<link type="text/css" href="../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../skin/profile.css" rel="stylesheet">
+<script src="../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="../../index.html">Project</a>
+</li>
+<li class="current">
+<a class="selected" href="../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs">
+<a class="unselected" href="../../docs/1_4/index.html">Version 1.4</a><a class="selected" href="../../docs/modules/index.html">Modules</a><a class="unselected" href="../../docs/1_2_x/index.html">Version 1.2</a>
+</div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Modules</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../docs/modules/index.html">Overview</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', '../../skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">collection</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Overview</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a title="Collection Types" href="#Collection+Types">Collection Types...</a>
+</div>
+<div class="menupageitem">
+<a title="Static Collections (Type &quot;manual&quot;)" href="#Static+Collections+%28Type+%22manual%22%29">Static Collections ...</a>
+</div>
+<div class="menupageitem">
+<a title="Dynamic Collections (Type &quot;children&quot;)" href="#Dynamic+Collections+%28Type+%22children%22%29">Dynamic Collections...</a>
+</div>
+<div class="menupageitem">
+<a title="Resource Type Formats" href="#Resource+Type+Formats">Resource Type Forma...</a>
+</div>
+<div class="menupageitem">
+<a title="Example: CInclude" href="#Example%3A+CInclude">Example: CInclude...</a>
+</div>
+<div class="menupageitem">
+<a title="The CollectionWrapper Class" href="#The">The CollectionWrapp...</a>
+</div>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">news</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../docs/modules/news.html">Overview</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../skin/')" id="menu_1.1.4Title" class="menutitle">notification</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../docs/modules/notification.html">Overview</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">svg</div>
+<div id="menu_1.1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../docs/modules/svg/roundedcorners.html">Rounded Corners</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6', '../../skin/')" id="menu_1.1.6Title" class="menutitle">usecasedocument</div>
+<div id="menu_1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../docs/modules/usecasedocument.html">Overview</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.7', '../../skin/')" id="menu_1.1.7Title" class="menutitle">webdav</div>
+<div id="menu_1.1.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../docs/modules/webdav/index.html">Getting started</a>
+</div>
+<div class="menuitem">
+<a href="../../docs/modules/webdav/monitoring.html">Monitoring</a>
+</div>
+<div class="menuitem">
+<a href="../../docs/modules/webdav/webdav.html">WebDAV Servers</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="collection.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>The Collection Module</h1>
+    
+    
+<a name="N1000D"></a><a name="Introduction"></a>
+<h2 class="h3">Introduction</h2>
+<div class="section">
+<p>
+        The collection module provides a resource type and a document wrapper class to
+        use a document as a list of references to other documents. Typical examples are
+        category pages, dossiers, etc.
+      </p>
+</div>
+  
+    
+<a name="N10017"></a><a name="Collection+Types"></a>
+<h2 class="h3">Collection Types</h2>
+<div class="section">
+<p>
+        Collections can either be static, which means that the reference list is stored
+        in the collection document, or dynamic, which means that the reference list is
+        generated when the collection is accessed. The type is determined by the <span class="codefrag">type</span>
+        attribute of the document element (see examples below). At the moment, the following types
+        are supported:
+      </p>
+<ul>
+        
+<li>manual</li>
+        
+<li>children</li>
+      
+</ul>
+</div>
+    
+    
+<a name="N1002D"></a><a name="Static+Collections+%28Type+%22manual%22%29"></a>
+<h2 class="h3">Static Collections (Type "manual")</h2>
+<div class="section">
+<p>
+        This is the default type which is used when no <span class="codefrag">type</span> attribute
+        is provided. The documents have to be explicitely specified.
+      </p>
+<p>
+        The XML format of a static collection document looks like this:
+      </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;collection xmlns="http://apache.org/cocoon/lenya/collection/1.0" type="manual"&gt;
+  &lt;document uuid="edf..."/&gt;
+  &lt;document uuid="a7r..."/&gt;
+  ...
+&lt;/collection&gt;</pre>
+</div>
+    
+    
+<a name="N10041"></a><a name="Dynamic+Collections+%28Type+%22children%22%29"></a>
+<h2 class="h3">Dynamic Collections (Type "children")</h2>
+<div class="section">
+<p>
+        Collections of the type <span class="codefrag">children</span> assemble the document list
+        from the collection document's children in the site structure. 
+      </p>
+<p>
+        The XML format of a collection document with the type <span class="codefrag">children</span> looks like this:
+      </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;collection xmlns="http://apache.org/cocoon/lenya/collection/1.0" type="children"/&gt;</pre>
+<p>
+        The collection is expanded dynamically (i.e., the child document list is inserted)
+        when the <span class="codefrag">collection</span> format is requested.
+      </p>
+</div>
+    
+    
+<a name="N1005E"></a><a name="Resource+Type+Formats"></a>
+<h2 class="h3">Resource Type Formats</h2>
+<div class="section">
+<p>
+        At the moment, only the <span class="codefrag">collection</span> format is supported.
+        In the case of static collections, the original XML document is returned.
+        For dynamic collections, the list of documents is inserted. Check out the
+        example below for a usage scenario.
+      </p>
+</div>
+    
+    
+<a name="N1006B"></a><a name="Example%3A+CInclude"></a>
+<h2 class="h3">Example: CInclude</h2>
+<div class="section">
+<p>
+        The collection module provides an XSLT stylesheet (<span class="codefrag">collection2cinclude.xsl</span>)
+        to simplify replacing the documents with their content to obtain an aggregation of all documents.
+        Additionally, the meta data of the collection document itself and of all contained
+        documents are included.
+      </p>
+<p>
+        In the following example, the <span class="codefrag">collection</span> resource type is
+        explicitely specified. This allows to call the collection format from
+        a different resource type (e.g., the <span class="codefrag">news</span> resource type extends
+        the <span class="codefrag">collection</span> resource type).
+      </p>
+<pre class="code">&lt;map:match pattern="*.xml/*/*/*/*"&gt;
+  &lt;map:generate src="{resource-type:collection:format-collection}/{2}/{3}/{4}/{5}"/&gt;
+  &lt;map:transform src="fallback://lenya/modules/collection/xslt/collection2cinclude.xsl"&gt;
+    &lt;map:parameter name="uuid" value="{4}"/&gt;
+    &lt;map:parameter name="language" value="{5}"/&gt;
+  &lt;/map:transform&gt;
+  &lt;map:transform type="cinclude"/&gt;
+  ...
+&lt;/map:match&gt;</pre>
+</div>
+  
+    
+<a name="N10088"></a><a name="The"></a>
+<h2 class="h3">The CollectionWrapper Class</h2>
+<div class="section">
+<p>
+        The <span class="codefrag">CollectionWrapper</span> class allows to manipulate collections
+        via the Java API. Here's a simple usage scenario:
+      </p>
+<pre class="code">CollectionWrapper collection = new CollectionWrapper(doc, getLogger());
+collection.add(anotherDoc);
+collection.save();</pre>
+<p>
+        You can extend the <span class="codefrag">CollectionWrapper</span> class to add custom
+        functionality or implement collections with specific behaviour. 
+      </p>
+<p>
+        For more information, please consult the API documentation.
+      </p>
+</div>
+
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/modules/collection.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

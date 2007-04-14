@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-skin-name" content="pelt">
+<title>SVG Module: Rounded Corners</title>
+<link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../skin/profile.css" rel="stylesheet">
+<script src="../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="../../../index.html">Project</a>
+</li>
+<li class="current">
+<a class="selected" href="../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs">
+<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a><a class="selected" href="../../../docs/modules/index.html">Modules</a><a class="unselected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
+</div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Modules</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../docs/modules/index.html">Overview</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', '../../../skin/')" id="menu_1.1.2Title" class="menutitle">collection</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/modules/collection.html">Overview</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../../skin/')" id="menu_1.1.3Title" class="menutitle">news</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/modules/news.html">Overview</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../../skin/')" id="menu_1.1.4Title" class="menutitle">notification</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/modules/notification.html">Overview</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.5', '../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">svg</div>
+<div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Rounded Corners</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#HTML">HTML</a>
+</div>
+<div class="menupageitem">
+<a title="Calling the SVG Module" href="#Calling+the+SVG+Module">Calling the SVG Mod...</a>
+</div>
+<div class="menupageitem">
+<a href="#CSS">CSS</a>
+</div>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6', '../../../skin/')" id="menu_1.1.6Title" class="menutitle">usecasedocument</div>
+<div id="menu_1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/modules/usecasedocument.html">Overview</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.7', '../../../skin/')" id="menu_1.1.7Title" class="menutitle">webdav</div>
+<div id="menu_1.1.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/modules/webdav/index.html">Getting started</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/modules/webdav/monitoring.html">Monitoring</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/modules/webdav/webdav.html">WebDAV Servers</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="roundedcorners.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>SVG Module: Rounded Corners</h1>
+
+    
+<p> In this document we show an example how to use the SVG module to create rounded corners in a
+      convenient way. </p>
+    
+<p> The following screenshot shows a typical box with rounded corners: </p>
+    
+<div id="" style="text-align: center;">
+<img id="" class="figure" alt="Rounded corners screenshot" src="../../../images/live/svgmodule/roundedcorners.png"></div>
+    
+    
+<p>
+      We want to allow dynamic scaling of the box in all directions. That's why we have to use
+      four separate images for the rounded corners. The images shall be referenced from a CSS.
+    </p>
+    
+    
+<a name="N1001B"></a><a name="HTML"></a>
+<h2 class="h3">HTML</h2>
+<div class="section">
+<p>
+        The HTML of this box looks like this:
+      </p>
+<pre class="code">&lt;div id="news"&gt;
+  &lt;div id="newsOuter"&gt;
+    &lt;div id="newsInner"&gt;
+      &lt;div class="rsslink"&gt;
+        &lt;a href="/news.rss" type="application/rss+xml"&gt;RSS 2.0&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;h1&gt;News&lt;/h1&gt;
+      &lt;h2&gt;
+        &lt;div class="newsDate"&gt;Mar 22, 2007 6:03:37 PM&lt;/div&gt;
+        &lt;a style="text-decoration: none" href="/news/lenyaRCvote.html"
+          &gt;Lenya 1.4 RC1 in Voting Process&lt;/a&gt;
+      &lt;/h2&gt;
+      &lt;p&gt;Since Tuesday the vote for the Apache Lenya 1.4 release candidate 1 is open.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+<p>
+        We use four HTML containers to hold our corner images. Each left corner image is
+        quite wide (1500 pixels) to allow very large boxes. The right corner version is only
+        as wide as the radius of the corner. That's why the right corner image has to be
+        placed on top of the left corner image, i.e. the right corner container has to
+        be inside the left corner container. 
+      </p>
+<ul>
+        
+<li>
+          The <span class="codefrag">&lt;div id="news"/&gt;</span> will hold the top left corner.
+        </li>
+        
+<li>
+          The <span class="codefrag">&lt;h1/&gt;</span> will hold the top right corner.
+        </li>
+        
+<li>
+          The <span class="codefrag">&lt;div id="newsOuter"/&gt;</span> will hold the bottom left corner.
+        </li>
+        
+<li>
+          The <span class="codefrag">&lt;div id="newsInner"/&gt;</span> will hold the bottom right corner.
+        </li>
+      
+</ul>
+<p>
+        To fill the space between the upper and lower corners, we will add a background
+        color and a border to our <span class="codefrag">&lt;h2/&gt;</span> and <span class="codefrag">&lt;p/&gt;</span>
+        elements which are located inside the box.
+      </p>
+</div>
+    
+    
+<a name="N10050"></a><a name="Calling+the+SVG+Module"></a>
+<h2 class="h3">Calling the SVG Module</h2>
+<div class="section">
+<p>
+        This is the anatomy of a call to a rounded corner image:
+      </p>
+<pre class="code">/modules/svg/tab-{location}-{radius}-{background}-{border}.png</pre>
+<p>
+        An example:
+      </p>
+<pre class="code">/modules/svg/tab-bottomLeft-7-FFF6E5-FFD580.png</pre>
+<ul>
+        
+<li>
+<span class="codefrag">/modules/svg/</span> calls the SVG module.</li>
+        
+<li>
+<span class="codefrag">-tab-</span> denotes that we want to generate a rounded corner image (which is
+          typically used for tabs).</li>
+        
+<li>
+<span class="codefrag">-bottomLeft-</span> means that we want to generate the bottom left corner.</li>
+        
+<li>
+<span class="codefrag">-7-</span> means that we want a corner radius of 7 pixels.</li>
+        
+<li>
+<span class="codefrag">-FFF6E5-</span> is the background color.</li>
+        
+<li>
+<span class="codefrag">-FFD580</span> is the border color. You can of course use the same color values
+          for background and border.</li>
+      
+</ul>
+</div>
+    
+    
+<a name="N10086"></a><a name="CSS"></a>
+<h2 class="h3">CSS</h2>
+<div class="section">
+<p>
+        This is the important part of the CSS used for the box layout (fonts, colors etc. 
+        have been omitted):
+      </p>
+<pre class="code">div.newsDate {
+  float: right;
+}
+
+
+div#news {
+  width: 180px;
+  margin: 0 0 0 20px;
+  background: url('/modules/svg/tab-topLeft-7-FFEECC-FFD580.png') left top no-repeat;
+}
+
+div#news h1 {
+  margin: 0;
+  padding: 7px 10px;
+  background: url('/modules/svg/tab-topRight-7-FFEECC-FFD580.png') right top no-repeat;
+}
+
+div#news div.newsDate {
+  padding-top: 10px;
+}
+
+div#newsOuter {
+  background: url('/modules/svg/tab-bottomLeft-7-FFF6E5-FFD580.png') left bottom no-repeat;
+}
+
+div#newsInner {
+  background: url('/modules/svg/tab-bottomRight-7-FFF6E5-FFD580.png') right bottom no-repeat;
+  padding-bottom: 10px;
+}
+
+div#news h2 {
+  padding: 0px 5px 0 5px;
+}
+
+div#news p {
+  padding-bottom: 10px;
+}
+
+div#news p, div#news h2 {
+  margin: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 1px solid #FFD580;
+  border-right: 1px solid #FFD580;
+  background-color: #FFF6E5;
+}
+
+div.rsslink {
+  float: right;
+  padding: 7px 10px;
+}</pre>
+</div>
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/modules/svg/roundedcorners.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

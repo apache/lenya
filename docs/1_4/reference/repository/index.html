@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-version" content="0.8">
 <meta name="Forrest-skin-name" content="pelt">
 <title>The Lenya Content Repository</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
@@ -94,7 +94,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-             
+
              &nbsp;
            </div>
 <!--+
@@ -159,11 +159,14 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
+<div class="menupage">
+<div class="menupagetitle">Repository</div>
+</div>
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/ac.html">Access Control Specification</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.3', '../../../../skin/')" id="menu_1.1.6.3Title" class="menutitle">Usecase Framework</div>
-<div id="menu_1.1.6.3" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.4', '../../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.6.4" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
 </div>
@@ -171,8 +174,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.4', '../../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Publications</div>
-<div id="menu_1.1.6.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.5', '../../../../skin/')" id="menu_1.1.6.5Title" class="menutitle">Publications</div>
+<div id="menu_1.1.6.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/publication/configuration.html">Configuration</a>
 </div>
@@ -189,34 +192,23 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/metadata.html">Meta data</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.6.8', '../../../../skin/')" id="menu_1.1.6.8Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.6.8" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.6.9', '../../../../skin/')" id="menu_1.1.6.9Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.9" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/protocols/index.html">Overview</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
+<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+<a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/1_4/reference/protocols/site.html">error:site:</a>
+<a href="../../../../docs/1_4/reference/protocols/site.html">site Protocol</a>
 </div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/link-management.html">Link Management</a>
-</div>
-<div class="menupage">
-<div class="menupagetitle">Repository</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a title="The Lenya Repository API" href="#The+Lenya+Repository+API">The Lenya Repositor...</a>
-</div>
-<div class="menupageitem">
-<a title="Repository Layout" href="#Repository+Layout">Repository Layout...</a>
-</div>
-</div>
 </div>
 </div>
 <div class="menuitem">
@@ -355,13 +347,7 @@ document.write("Last Published: " + document.lastModified);
 <h1>The Lenya Content Repository</h1>
     
     
-<div class="note">
-<div class="label">Note</div>
-<div class="content">This document is a draft. It does not reflect the current implementation, but will evolve alongside the code.</div>
-</div>
-    
-    
-<a name="N10010"></a><a name="The+Lenya+Repository+API"></a>
+<a name="N1000D"></a><a name="The+Lenya+Repository+API"></a>
 <h2 class="h3">The Lenya Repository API</h2>
 <div class="section">
 <p>
@@ -381,7 +367,7 @@ document.write("Last Published: " + document.lastModified);
 </dt>
         
 <dd>A session provides access to the publications and methods for transaction handling. Pending
-        changes are not written to the repository until the session is saved.</dd>
+        changes are not written to the repository until the session is committed.</dd>
         
 <dt>
 <strong>Publication</strong>
@@ -396,29 +382,32 @@ document.write("Last Published: " + document.lastModified);
 <dd>An area consists of a set of content nodes with a site structure associated to them.</dd>
         
 <dt>
-<strong>Content</strong>
-</dt>
-        
-<dd>The content object provides access to the content nodes.</dd>
-        
-<dt>
-<strong>ContentNode</strong>
-</dt>
-        
-<dd>A content node holds several language versions of a content item. Each content node
-          has an ID which is unique in its area. Each content node has a <em>document type</em>,
-          which applies to all language versions of the node. When a content node is added, the
-          document type must be specified. Only document types which are registered in the
-          repository's document type registry are supported.</dd>
-        
-<dt>
 <strong>Document</strong>
 </dt>
         
-<dd>A document is a language version of a content item. Each document has the following properties:
+<dd>
+          A document is a language version of a content item. A document is identified
+          within the area by
           <ul>
             
-<li>the language,</li>
+<li>
+              the <acronym title="Universally Unique Identifier">UUID</acronym> which is shared
+              by all translations of a document, and
+            </li>
+            
+<li>the language.</li>
+          
+</ul>
+          
+<p>
+            Furthermore, documents have the following properties:
+          </p>
+          
+<ul>
+            
+<li>the <em>resource type</em> which specifies the content model of the document,</li>
+            
+<li>the mime type,</li>
             
 <li>the content length, and</li>
             
@@ -430,25 +419,27 @@ document.write("Last Published: " + document.lastModified);
         </dd>
         
 <dt>
-<strong>DocumentType</strong>
+<strong>Resource Type</strong>
 </dt>
         
-<dd>The document type of a content node denotes the type of contents which may be stored
-          in its documents. A document type is identified by a unique name. It may provide a
-          schema, which can be used to validate XML contents upon saving. Furthermore, the mime type
-          of documents is defined by the document type.</dd>
+<dd>The resource type of a document denotes the type of contents which may be stored
+          in its documents. A resource type is identified by a unique name. It may provide a
+          schema, which can be used to validate XML contents upon saving.
+          For more information, refer to the <a href="../../../../docs/1_4/reference/resource-types.html">resource types</a>
+          documenation.
+        </dd>
         
 <dt>
-<strong>MetaData</strong>
+<strong>Meta Data</strong>
 </dt>
         
-<dd>...</dd>
+<dd>For more information, refer to the <a href="../../../../docs/1_4/reference/metadata.html">meta data</a> documentation.</dd>
         
 <dt>
-<strong>Site</strong>
+<strong>SiteStructure</strong>
 </dt>
         
-<dd>The site object provides access to the site structure.</dd>
+<dd>This interface provides access to the site structure.</dd>
         
 <dt>
 <strong>SiteNode</strong>
@@ -456,43 +447,14 @@ document.write("Last Published: " + document.lastModified);
         
 <dd>The site structure is a tree consisting of site nodes. Each site node has an ID which
           is unique among its siblings. Thus, a site node can be located using a unique path
-          of the form <span class="codefrag">/sections/news/message003</span>.</dd>
+          of the form <span class="codefrag">/sections/news/message003</span>. A site node can reference exactly
+          one UUID, but it is possible to have multiple site nodes point to the same UUID.
+          A site node contains a <span class="codefrag">Link</span> object for each translation.
+          This means that <span class="codefrag">/en/news</span> and <span class="codefrag">/de/nachrichten</span> can point to different
+          translations of the same document.
+        </dd>
       
 </dl>
-</div>
-    
-    
-<a name="N10082"></a><a name="Repository+Layout"></a>
-<h2 class="h3">Repository Layout</h2>
-<div class="section">
-<p>
-        Lenya ships with a content repository implementation which is based on the
-        <a href="http://www.jcp.org/aboutJava/communityprocess/final/jsr170/">Java Content Repository</a> API.
-        The JCR repository used by Lenya comprises a set of workspaces, each of which represent an area
-        of the document structure. For each area that is declared by a publication, a repository workspace
-        is created.
-      </p>
-<p>
-        Publications are orthogonal to workspaces. Each publication can declare its own set of areas.
-        Thus, the set of workspaces in the Lenya repository derives from the union of all areas declared by publications.
-      </p>
-<div id="" style="text-align: center;">
-<img id="" class="figure" alt="Repository Workspaces" src="../../../../images/live/repositoryWorkspaces.png"></div>
-<p>
-        The children of the root node of a workspace are called <em>publication JCR nodes</em>. Each publication JCR node
-        has two children:
-      </p>
-<ul>
-        
-<li>the <em>content</em> JCR node, and</li>
-        
-<li>the <em>site</em> JCR node.</li>
-      
-</ul>
-<p>
-        The content JCR node can have an arbitrary number of child nodes, which are called <em>content </em>
-      
-</p>
 </div>
     
   
