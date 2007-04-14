@@ -72,7 +72,6 @@ public class Instantiator extends AbstractLogEnabled implements
     private static final String CONFIGURATION_FILE = "config/publication.xconf";
     private static final String CONFIGURATION_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
     private static final String ELEMENT_NAME = "name";
-    private static final String ELEMENT_TEMPLATES = "templates";
     private static final String ELEMENT_TEMPLATE = "template";
     private static final String ATTRIBUTE_ID = "id";
     private static final String ELEMENT_RESOURCE_TYPES = "resource-types";//*
@@ -188,19 +187,9 @@ public class Instantiator extends AbstractLogEnabled implements
     }
 
     protected void addTemplateConfiguration(Publication template, DefaultConfiguration config) throws ConfigurationException {
-        MutableConfiguration templatesConfig = config.getMutableChild(ELEMENT_TEMPLATES, false);
-        if (templatesConfig == null) {
-            templatesConfig = new DefaultConfiguration(ELEMENT_TEMPLATES, null, CONFIGURATION_NAMESPACE, "");
-            config.addChild(templatesConfig);
-        } else {
-            MutableConfiguration[] templateConfigs = templatesConfig.getMutableChildren(ELEMENT_TEMPLATE);
-            for (int i = 0; i < templateConfigs.length; i++) {
-                templatesConfig.removeChild(templateConfigs[i]);
-            }
-        }
         DefaultConfiguration templateConfig = new DefaultConfiguration(ELEMENT_TEMPLATE, null, CONFIGURATION_NAMESPACE, "");
         templateConfig.setAttribute(ATTRIBUTE_ID, template.getId());
-        templatesConfig.addChild(templateConfig);
+        config.addChild(templateConfig);
     }
 
     protected void removeChildren(MutableConfiguration config, String name) throws ConfigurationException {
