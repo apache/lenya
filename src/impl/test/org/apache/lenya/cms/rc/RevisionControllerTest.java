@@ -48,7 +48,7 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         try {
             docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
             Document source = getPublication("test").getArea("authoring").getSite().getNode("/links").getLink("en").getDocument();
-            Document target = docMgr.addVersion(source, "authoring", "de");
+            Document target = docMgr.addVersion(source, "authoring", "es");
             target.delete();
         }
         finally {
