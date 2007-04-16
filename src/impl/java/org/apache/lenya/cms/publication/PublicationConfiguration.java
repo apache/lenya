@@ -37,6 +37,7 @@ import org.apache.lenya.cms.repository.Node;
 public class PublicationConfiguration extends AbstractLogEnabled implements Publication {
 
     private String id;
+    private String name;
     private File servletContext;
     private DocumentIdToPathMapper mapper = null;
     private ArrayList languages = new ArrayList();
@@ -136,6 +137,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
         try {
             config = builder.buildFromFile(configFile);
+            
+            this.name = config.getChild(ELEMENT_NAME).getValue();
 
             try {
                 // one sanity check for the proper namespace. we should really do that for every element,
@@ -532,6 +535,11 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
     public DocumentBuilder getDocumentBuilder() {
         return null;
+    }
+
+    public String getName() {
+        loadConfiguration();
+        return this.name;
     }
 
 }

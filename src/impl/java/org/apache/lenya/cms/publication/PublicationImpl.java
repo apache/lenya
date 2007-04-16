@@ -213,4 +213,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return getId();
     }
 
+    public String getName() {
+        return delegate.getName();
+    }
+
 }

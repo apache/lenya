@@ -23,7 +23,7 @@
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
 
-  <jx:set var="pubId" value="${usecase.getParameterAsString('publicationId')}"/>
+  <jx:set var="pub" value="${usecase.getParameter('publication')}"/>
 
   <page:title>
     <jx:choose>
@@ -33,7 +33,7 @@
       <jx:otherwise>
         <i18n:translate>
           <i18n:text i18n:key="login-to-pub"/>
-          <i18n:param><jx:out value="${pubId.toUpperCase()}"/></i18n:param>
+          <i18n:param><jx:out value="${pub.getName()}"/></i18n:param>
         </i18n:translate>
       </jx:otherwise>
     </jx:choose>
@@ -58,7 +58,7 @@
     </jx:if>
     
     <jx:choose>
-      <jx:when test="${pubId.equals('default')}">
+      <jx:when test="${pub.getId().equals('default')}">
         <p>
           <strong> <i18n:text>NOTE</i18n:text>: </strong>
           <i18n:translate>
@@ -70,7 +70,7 @@
           </i18n:translate>
         </p>
       </jx:when>
-      <jx:when test="${pubId.equals('blog')}">
+      <jx:when test="${pub.getId().equals('blog')}">
         <p>
           <strong> <i18n:text>NOTE</i18n:text>: </strong>
           <i18n:translate>

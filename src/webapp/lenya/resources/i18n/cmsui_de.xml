@@ -112,7 +112,7 @@
   <message key="publish complete subtree">den gesamten Teilbaum veröffentlichen</message>
    
   <!-- logn screen -->        
-  <message key="login-to-pub">Anmelden an {0} Publikation</message>    
+  <message key="login-to-pub">Anmelden an der {0}-Publikation</message>    
   <message key="Login">Anmelden</message>
   <message key="Password">Passwort</message>    
   <message key="Username">Benutzername</message>                

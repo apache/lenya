@@ -38,7 +38,7 @@ public class Login extends AccessControlUsecase {
     protected static final String PASSWORD = "password";
     protected static final String USERNAME = "username";
     protected static final String REFERRER_QUERY_STRING = "referrerQueryString";
-    protected static final String PUBLICATION_ID = "publicationId";
+    protected static final String PUBLICATION = "publication";
     protected static final String CURRENT_USER = "currentUser";
 
     /**
@@ -53,7 +53,7 @@ public class Login extends AccessControlUsecase {
             publication = PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
                     getSourceURL());
             if (publication.exists()) {
-                setParameter(PUBLICATION_ID, publication.getId());
+                setParameter(PUBLICATION, publication);
             }
             Identity identity = this.getSession().getIdentity();
             if (identity != null && identity.getUser() != null) {

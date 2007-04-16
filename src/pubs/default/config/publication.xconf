@@ -20,7 +20,7 @@
 
 <publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" >
 
-  <name>Default Publication</name>
+  <name>Default</name>
   <description>This publication is a best practice, getting started publication.</description>
   <!-- the @...@ macros are evaluated by ant at build time -->
   <version>@lenya.version@</version>

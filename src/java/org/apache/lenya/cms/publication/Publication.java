@@ -88,6 +88,11 @@ public interface Publication extends RepositoryItem {
      * @return A string value.
      */
     String getId();
+    
+    /**
+     * @return The name of the publication as specified in the configuration file.
+     */
+    String getName();
 
     /**
      * Returns the servlet context this publication belongs to (usually, the
