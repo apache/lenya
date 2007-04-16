@@ -42,5 +42,8 @@
   <message key="New subtree credential">New subtree credential</message>
   <message key="no-jobs-scheduled">No jobs scheduled.</message>
   <message key="No overview available.">No overview available.</message>
+  <message key="missing-navigation-title">Please enter a navigation title.</message>
+  <message key="missing-page-layout">Please select a page layout.</message>
+  <message key="path-already-exists">The path {0} already exists.</message>
   
 </catalogue>

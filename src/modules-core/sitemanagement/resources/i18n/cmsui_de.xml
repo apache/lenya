@@ -42,6 +42,9 @@
   <message key="New subtree credential">Neue Berechtigung für diesen Teilbaum</message>
   <message key="no-jobs-scheduled">Es wurden keine zeitgesteuerten Aktionen gestartet.</message>
   <message key="No overview available.">Es ist keine Übersicht verfügbar.</message>
+  <message key="missing-navigation-title">Bitte geben Sie einen Navigationstitel ein.</message>
+  <message key="missing-page-layout">Bitte wählen Sie ein Seiten-Layout.</message>
+  <message key="path-already-exists">Der Pfad {0} existiert bereits.</message>
   
 </catalogue>
 

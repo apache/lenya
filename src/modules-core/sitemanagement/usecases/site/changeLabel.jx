@@ -32,9 +32,9 @@
         <i18n:translate>
           <i18n:text key="rename-label-doc"/>
           <i18n:param>
-            <q>
-              <jx:out value="${usecase.getParameter('document').getId()}"/>
-            </q>
+            <q><jx:out value="${usecase.getParameter('document')
+                .getMetaData('http://purl.org/dc/elements/1.1/')
+                .getFirstValue('title')}"/></q>
           </i18n:param>
         </i18n:translate>
       </div>

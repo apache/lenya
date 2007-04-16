@@ -106,22 +106,23 @@ public abstract class Create extends AbstractUsecase {
      */
     protected void doCheckExecutionConditions() throws Exception {
         String navigationTitle = getDublinCoreParameter(DublinCore.ELEMENT_TITLE);
-        if (navigationTitle.equals("")) {
-            addErrorMessage("The navigation title is required.");
+        if (navigationTitle.trim().equals("")) {
+            addErrorMessage("missing-navigation-title");
         }
 
         if (getInitialDocument() == null) {
             String[] samples = (String[]) getParameter(SAMPLES);
             String sample = getParameterAsString(SAMPLE);
             if (samples != null && samples.length > 1 && (sample == null || sample.equals(""))) {
-                addErrorMessage("Please select a page layout.");
+                addErrorMessage("missing-page-layout");
             }
         }
 
         String path = getNewDocumentPath();
         SiteStructure site = getPublication().getArea(getArea()).getSite();
         if (!createVersion() && site.contains(path)) {
-            addErrorMessage("The path [" + path + "] already exists!");
+            String[] params = { path };
+            addErrorMessage("path-already-exists", params);
         }
 
         String doctypeName = getDocumentTypeName();
@@ -149,7 +150,7 @@ public abstract class Create extends AbstractUsecase {
 
             Document document;
 
-            String title = getDublinCoreParameter(DublinCore.ELEMENT_TITLE);
+            String title = getDublinCoreParameter(DublinCore.ELEMENT_TITLE).trim();
 
             if (createVersion()) {
                 document = documentManager.addVersion(initialDocument, getArea(), language, true);

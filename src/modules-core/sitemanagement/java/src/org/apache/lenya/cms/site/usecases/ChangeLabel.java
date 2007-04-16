@@ -85,13 +85,24 @@ public class ChangeLabel extends DocumentUsecase {
     }
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
+     */
+    protected void doCheckExecutionConditions() throws Exception {
+        String label = getParameterAsString(LABEL);
+        if (label.trim().equals("")) {
+            addErrorMessage("missing-navigation-title");
+        }
+    }
+
+
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
         super.doExecute();
 
         Document document = getSourceDocument();
-        String label = getParameterAsString(LABEL);
+        String label = getParameterAsString(LABEL).trim();
         document.getLink().setLabel(label);
 
         WorkflowUtil.invoke(this.manager, getSession(), getLogger(), document, getEvent());
