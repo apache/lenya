@@ -47,6 +47,8 @@
   <message key="missing-navigation-title">Bitte geben Sie einen Navigationstitel ein.</message>
   <message key="missing-page-layout">Bitte wählen Sie ein Seiten-Layout.</message>
   <message key="path-already-exists">Der Pfad {0} existiert bereits.</message>
+  <message key="yes">ja</message>
+  <message key="no">nein</message>
   
 </catalogue>
 
