@@ -26,6 +26,8 @@
   <message key="cut-error-islive">Der Knoten kann nicht ausgeschnitten werden wenn eine Sprachversion publiziert ist.</message>
   <message key="Parent Path">Übergeordneter Pfad</message>
   <message key="Node Name">Knoten-Name</message>
+  <message key="missing-node-name">Bitte geben Sie einen Knoten-Namen ein.</message>
+  <message key="node-name-special-characters">Der Knoten-Name darf keine Sonderzeichen enthalten.</message>
   <message key="Document visible in Navigation">Sichtbar in Navigation</message>
   <message key="Relation">Relation</message>
   <message key="Page Layout">Seitenlayout</message>

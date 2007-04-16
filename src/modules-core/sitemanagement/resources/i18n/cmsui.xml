@@ -26,6 +26,8 @@
   <message key="cut-error-islive">The node cannot be cut when a language version is published.</message>
   <message key="Parent Path">Parent Path</message>
   <message key="Node Name">Node Name</message>
+  <message key="missing-node-name">Please enter a node name.</message>
+  <message key="node-name-special-characters">The node name may not contain any special characters.</message>
   <message key="Document visible in Navigation">Visible in Navigation</message>
   <message key="Relation">Relation</message>
   <message key="Page Layout">Page Layout</message>

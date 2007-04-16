@@ -89,7 +89,7 @@ public class CreateDocument extends Create {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
 
-        String nodeName = getParameterAsString(NODE_NAME);
+        String nodeName = getParameterAsString(NODE_NAME).trim();
         String relation = getParameterAsString(RELATION);
 
         if (!Arrays.asList(getSupportedRelations()).contains(relation)) {
@@ -104,13 +104,20 @@ public class CreateDocument extends Create {
         if (provided) {
             String newPath = getNewDocumentPath();
             if (pub.getArea(getArea()).getSite().contains(newPath)) {
-                addErrorMessage("The document with path " + newPath + " already exists.");
+                String[] params = { newPath };
+                addErrorMessage("path-already-exists", params);
             }
-        } else if (nodeName == null) {
-            addErrorMessage("Please enter a node name.");
+        } else if (nodeName.equals("")) {
+            addErrorMessage("missing-node-name");
         } else if (!builder.isValidDocumentName(nodeName)) {
-            addErrorMessage("The node name may not contain any special characters.");
+            addErrorMessage("node-name-special-characters");
         }
+    }
+
+    protected boolean isPathValid() {
+        String nodeName = getParameterAsString(NODE_NAME);
+        DocumentBuilder builder = getPublication().getDocumentBuilder();
+        return !nodeName.trim().equals("") && builder.isValidDocumentName(nodeName);
     }
 
     /**

@@ -118,17 +118,30 @@ public abstract class Create extends AbstractUsecase {
             }
         }
 
-        String path = getNewDocumentPath();
-        SiteStructure site = getPublication().getArea(getArea()).getSite();
-        if (!createVersion() && site.contains(path)) {
-            String[] params = { path };
-            addErrorMessage("path-already-exists", params);
+        if (isPathValid()) {
+            String path = getNewDocumentPath();
+            SiteStructure site = getPublication().getArea(getArea()).getSite();
+            if (!createVersion() && site.contains(path)) {
+                String[] params = { path };
+                addErrorMessage("path-already-exists", params);
+            }
         }
 
         String doctypeName = getDocumentTypeName();
         if (getParameterAsString(SAMPLE) == null && doctypeName != null) {
             initSampleParameters();
         }
+    }
+
+    /**
+     * This method is used by {@link #doCheckExecutionConditions()}Êto check if
+     * the path entered by the user is valid. If not, checking the existence of
+     * the new document in the site structure is omitted because this operation
+     * could cause errors.
+     * @return A boolean value.
+     */
+    protected boolean isPathValid() {
+        return true;
     }
 
     /**
@@ -195,7 +208,7 @@ public abstract class Create extends AbstractUsecase {
         if (param != null && getParameter(DUBLIN_CORE_PREFIX + name).getClass().isArray()) {
             String[] values = (String[]) getParameter(DUBLIN_CORE_PREFIX + name);
             String paramValue = new String("");
-            for (int i = 0; i < values.length; i++ ) {
+            for (int i = 0; i < values.length; i++) {
                 String value = values[i];
                 if (i > 0)
                     paramValue = paramValue + ',' + value;
@@ -229,8 +242,8 @@ public abstract class Create extends AbstractUsecase {
     protected abstract String getNewDocumentPath();
 
     /**
-     * If the document created in the usecase shall have initial contents copied from an existing
-     * document, construct that document in this method.
+     * If the document created in the usecase shall have initial contents copied
+     * from an existing document, construct that document in this method.
      * 
      * @return A document.
      */
@@ -314,11 +327,11 @@ public abstract class Create extends AbstractUsecase {
             String presetSample = getParameterAsString(SAMPLE);
             if (presetSample == null) {
                 setParameter(SAMPLE, samples[0]);
-            }
-            else {
+            } else {
                 List sampleList = Arrays.asList(samples);
                 if (!sampleList.contains(presetSample)) {
-                    getLogger().warn("Sample [" + presetSample + "] not defined, using default sample.");
+                    getLogger().warn(
+                            "Sample [" + presetSample + "] not defined, using default sample.");
                     setParameter(SAMPLE, samples[0]);
                 }
             }
@@ -335,8 +348,8 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @return The source document or <code>null</code> if the usecase was not invoked on a
-     *         document.
+     * @return The source document or <code>null</code> if the usecase was not
+     *         invoked on a document.
      */
     protected Document getSourceDocument() {
         Document document = null;
@@ -376,9 +389,10 @@ public abstract class Create extends AbstractUsecase {
     private Publication publication;
 
     /**
-     * Access to the current publication. Use this when the publication is not yet known in the
-     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
-     * access the publication via that document's interface instead.
+     * Access to the current publication. Use this when the publication is not
+     * yet known in the usecase: e.g. when creating a global asset. When adding
+     * a resource or a child to a document, access the publication via that
+     * document's interface instead.
      * 
      * @return the publication in which the use-case is being executed
      */
@@ -395,7 +409,8 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @return the visibleInNav Attribute of the document being created in the usecase
+     * @return the visibleInNav Attribute of the document being created in the
+     *         usecase
      */
     protected boolean getVisibleInNav() {
         if (getParameterAsString(VISIBLEINNAV).equals("false")) {
