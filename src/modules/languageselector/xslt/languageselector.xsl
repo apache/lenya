@@ -33,9 +33,11 @@
 
   <xsl:template match="/">
     <div id="languageselector">
-      <xsl:call-template name="enumLangs">
-        <xsl:with-param name="list" select="$publication-languages-csv"/>
-      </xsl:call-template>
+      <ul>
+        <xsl:call-template name="enumLangs">
+          <xsl:with-param name="list" select="$publication-languages-csv"/>
+        </xsl:call-template>
+      </ul>
     </div>
   </xsl:template>
 
@@ -72,8 +74,6 @@
 
     <!-- if there are more items in the list, handle them recursively: -->
     <xsl:if test="$tail">
-      <!-- spacer: -->
-      <xsl:text>&#160;</xsl:text>
       <xsl:call-template name="enumLangs">
         <xsl:with-param name="list" select="$tail"/>
       </xsl:call-template>
@@ -82,59 +82,61 @@
 
   <xsl:template name="handleLanguage">
     <xsl:param name="lang"/>
-    <xsl:choose>
-
-      <xsl:when test="$lang = $currentLanguage">
-        <a class="lenya-language-isCurrent" 
-           i18n:attr="title"
-           title="{$lang}-isCurrent"
-        >
-          <xsl:call-template name="text">
-            <xsl:with-param name="lang" select="$lang"/>
-          </xsl:call-template>
-          <xsl:call-template name="flag">
-            <xsl:with-param name="lang" select="$lang"/>
-            <xsl:with-param name="flagsize" select="$flagsize"/>
-          </xsl:call-template>
-        </a>
-      </xsl:when>
-
-      <!-- this test is a little sloppy and can lead to spurious substring matches if 
-           both two and three letter language codes (ISO 639-2) are being used. -->
+    <li>
+      <xsl:choose>
   
-      <xsl:when test="contains($document-languages-csv, $lang)">
-        <!-- aren't these new lenya-document links lovely? relative links to languages! -->
-        <a class="lenya-language-isAvailable" 
-           i18n:attr="title"
-           title="{$lang}-isAvailable"
-           href="lenya-document:,lang={$lang}"
-        >
-          <xsl:call-template name="text">
-            <xsl:with-param name="lang" select="$lang"/>
-          </xsl:call-template>
-          <xsl:call-template name="flag">
-            <xsl:with-param name="lang" select="$lang"/>
-            <xsl:with-param name="flagsize" select="$flagsize"/>
-          </xsl:call-template>
-        </a>
-      </xsl:when>
-
-      <xsl:otherwise>
-        <a class="lenya-language-isUnavailable"
-           i18n:attr="title"
-           title="{$lang}-isUnavailable"
-        >
-          <xsl:call-template name="text">
-            <xsl:with-param name="lang" select="$lang"/>
-          </xsl:call-template>
-          <xsl:call-template name="flag">
-            <xsl:with-param name="lang" select="$lang"/>
-            <xsl:with-param name="flagsize" select="$flagsize"/>
-          </xsl:call-template>
-        </a>
-      </xsl:otherwise>
-
-    </xsl:choose>
+        <xsl:when test="$lang = $currentLanguage">
+          <a class="lenya-language-isCurrent" 
+             i18n:attr="title"
+             title="{$lang}-isCurrent"
+          >
+            <xsl:call-template name="text">
+              <xsl:with-param name="lang" select="$lang"/>
+            </xsl:call-template>
+            <xsl:call-template name="flag">
+              <xsl:with-param name="lang" select="$lang"/>
+              <xsl:with-param name="flagsize" select="$flagsize"/>
+            </xsl:call-template>
+          </a>
+        </xsl:when>
+  
+        <!-- this test is a little sloppy and can lead to spurious substring matches if 
+             both two and three letter language codes (ISO 639-2) are being used. -->
+    
+        <xsl:when test="contains($document-languages-csv, $lang)">
+          <!-- aren't these new lenya-document links lovely? relative links to languages! -->
+          <a class="lenya-language-isAvailable" 
+             i18n:attr="title"
+             title="{$lang}-isAvailable"
+             href="lenya-document:,lang={$lang}"
+          >
+            <xsl:call-template name="text">
+              <xsl:with-param name="lang" select="$lang"/>
+            </xsl:call-template>
+            <xsl:call-template name="flag">
+              <xsl:with-param name="lang" select="$lang"/>
+              <xsl:with-param name="flagsize" select="$flagsize"/>
+            </xsl:call-template>
+          </a>
+        </xsl:when>
+  
+        <xsl:otherwise>
+          <a class="lenya-language-isUnavailable"
+             i18n:attr="title"
+             title="{$lang}-isUnavailable"
+          >
+            <xsl:call-template name="text">
+              <xsl:with-param name="lang" select="$lang"/>
+            </xsl:call-template>
+            <xsl:call-template name="flag">
+              <xsl:with-param name="lang" select="$lang"/>
+              <xsl:with-param name="flagsize" select="$flagsize"/>
+            </xsl:call-template>
+          </a>
+        </xsl:otherwise>
+  
+      </xsl:choose>
+    </li>
   </xsl:template>
 
   <xsl:template name="text">
