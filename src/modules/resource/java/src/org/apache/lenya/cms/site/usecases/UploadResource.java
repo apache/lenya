@@ -25,8 +25,6 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
-import org.apache.lenya.cms.publication.Document;
 
 /**
  * Usecase to upload a resource.
