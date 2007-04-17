@@ -76,8 +76,8 @@ import org.xml.sax.helpers.AttributesImpl;
  * </ul>
  * 
  * <p>
- * You can add the query parameter <code>uuid2url.extension</code> to <code>lenya-document:</code>
- * URLs to set a specific link extension.
+ * You can add the query parameter <code>uuid2url.extension</code> to
+ * <code>lenya-document:</code> URLs to set a specific link extension.
  * </p>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
@@ -226,9 +226,9 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
                             LinkTarget target = this.linkResolver.resolve(doc, linkUri);
                             if (target.exists() && target.getDocument().hasLink()) {
                                 Document targetDocument = target.getDocument();
-                                
+
                                 String extension = getExtension(targetDocument, requiredExtension);
-                                
+
                                 rewriteLink(newAttrs, attributeNames[i], targetDocument, anchor,
                                         queryString, extension);
                             } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
@@ -249,10 +249,14 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
                             if (linkUrl.startsWith(prefix)) {
                                 String pubUrl = linkUrl.substring(prefix.length());
                                 String area = pubUrl.split("/")[0];
-                                String areaUrl = pubUrl.substring(area.length());
-                                String newUrl = this.contextPath + prefix
-                                        + this.currentDocument.getArea() + areaUrl;
-                                setAttribute(newAttrs, attributeNames[i], newUrl);
+                                
+                                // don't rewrite /{pub}/modules/...
+                                if (area.equals(Publication.AUTHORING_AREA)) {
+                                    String areaUrl = pubUrl.substring(area.length());
+                                    String newUrl = this.contextPath + prefix
+                                            + this.currentDocument.getArea() + areaUrl;
+                                    setAttribute(newAttrs, attributeNames[i], newUrl);
+                                }
                             }
                         }
 
