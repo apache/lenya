@@ -31,62 +31,9 @@ function customLoopFlow(view,proxy,generic) {
         throw exception;
     }
 }
+
 function customSubmitFlow(usecase, generic) {
     generic.form.save(generic.doc);
-    var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
-//    try {
-        flowHelper.triggerWorkflow(cocoon, 'edit');
-        //saveDocument(generic.doc, usecase.getSourceURL());
-//        try {
-            var resolver = cocoon.getComponent(Packages.org.apache.cocoon.environment.SourceResolver.ROLE);
-            var source = resolver.resolveURI(usecase.getSourceURL());
-            var tf = Packages.javax.xml.transform.TransformerFactory.newInstance();
-            log("debug", "source instanceof ModifiableSource ? " + (source instanceof Packages.org.apache.excalibur.source.ModifiableSource));
-            log("debug", "tf.getFeature(SAXTransformerFactory.FEATURE): " + tf.getFeature(Packages.javax.xml.transform.sax.SAXTransformerFactory.FEATURE));
-            if (source instanceof Packages.org.apache.excalibur.source.ModifiableSource
-                    && tf.getFeature(Packages.javax.xml.transform.sax.SAXTransformerFactory.FEATURE)) {
-                var outputStream = source.getOutputStream();
-                var transformerHandler = tf.newTransformerHandler();
-                var transformer = transformerHandler.getTransformer();
-                transformer.setOutputProperty(Packages.javax.xml.transform.OutputKeys.INDENT, "true");
-                transformer.setOutputProperty(Packages.javax.xml.transform.OutputKeys.METHOD, "xml");
-                transformerHandler.setResult(new Packages.javax.xml.transform.stream.StreamResult(outputStream));
-
-                var streamer = new Packages.org.apache.cocoon.xml.dom.DOMStreamer(transformerHandler);
-                streamer.stream(generic.doc);
-            } else {
-                throw new Packages.org.apache.cocoon.ProcessingException("Cannot write to source " + usecase.getSourceURL());
-            }
-/*        } catch (exception) {
-            log("error", "Something went wrong during saving: " + exception, usecase.getName());
-            log("debug", "usecase.getSourceURL(): " + usecase.getSourceURL(), usecase.getName());
-            log("debug", "source: " + source, usecase.getName());
-            log("debug", "tf: " + tf, usecase.getName());
-            log("debug", "generic.doc: " + generic.doc, usecase.getName());
-            log("debug", "outputStream: " + outputStream, usecase.getName());
-            //log("debug", "streamer.stream(generic.doc): " + streamer.stream(generic.doc), usecase.getName());
-            throw exception;
-        } finally {
-            if (source != null)
-            resolver.release(source);
-            cocoon.releaseComponent(resolver);
-            if (outputStream != null) {
-            try {
-                outputStream.flush();
-                outputStream.close();
-            } catch (exception) {
-                log("error", "Could not flush/close outputstream: " + exception, usecase.getName());
-                throw exception;
-            }
-            }
-        }
-
-    } catch (exception) {
-        log("error", "Exception during customSubmitFlow: " + exception, usecase.getName());
-        throw exception;
-    } finally {
-        cocoon.releaseComponent(flowHelper);
-    }
-*/
-    return "success";
+    usecase.setParameter("xml", generic.doc);
+    defaultSubmitFlow(usecase);
 }

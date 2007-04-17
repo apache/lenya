@@ -78,7 +78,7 @@
     </fd:repeater-action>
 
     <fd:submit id="ok">
-      <fd:label>Submit</fd:label>
+      <fd:label><i18n:text>Submit</i18n:text></fd:label>
     </fd:submit>
   </fd:widgets>
 

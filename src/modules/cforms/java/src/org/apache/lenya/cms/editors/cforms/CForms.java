@@ -16,16 +16,17 @@
 package org.apache.lenya.cms.editors.cforms;
 
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
+import org.apache.lenya.xml.DocumentHelper;
 
 /**
  * Dummy CForms usecase.
  */
-public class CForms extends DocumentUsecase {
+public class CForms extends InvokeWorkflow {
     
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -52,6 +53,8 @@ public class CForms extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
+        org.w3c.dom.Document xml = (org.w3c.dom.Document) getParameter("xml");
+        DocumentHelper.writeDocument(xml, getSourceDocument().getOutputStream());
     }
     
     protected Node[] getNodesToLock() {
