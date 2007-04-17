@@ -50,7 +50,7 @@
           String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
           if ("resource".equals(doctype)) {
             <block areas="authoring">
-              <item wf:event="edit" uc:usecase="resource.upload" href="?"><i18n:text>Upload Resource</i18n:text></item>
+              <item wf:event="edit" uc:usecase="resource.upload" href="?"><i18n:text>Upload File</i18n:text></item>
             </block>
           }
         </xsp:logic>

@@ -22,8 +22,8 @@
 
   <message key="Insert Image">Bild einfügen</message>
   <message key="Insert Asset">Anlage einfügen</message>
-  <message key="Asset Upload">Analge hochladen</message>
-  <message key="Insert a new Image">Neues bild einfügen</message>
+  <message key="Asset Upload">Anlage hochladen</message>
+  <message key="Insert a new Image">Neues Bild einfügen</message>
   <message key="Upload an Asset">Anlage hochladen</message>
   <message key="upload-size-exceeded">Die Datei ist zu groß ({0}).</message>
   <message key="upload-enter-title">Bitte geben Sie einen Titel ein.</message>
@@ -48,6 +48,9 @@
   <message key="Content">Inhalt</message>
   <message key="Size">Größe</message>
   <message key="MimeType">Mime-Type</message>
+  <message key="Upload File">Datei hochladen</message>
+  <message key="Warning">Warnung</message>
+  <message key="document-will-be-overwritten">Das existierende Dokument wird überschrieben!</message>
   
 </catalogue>
 
