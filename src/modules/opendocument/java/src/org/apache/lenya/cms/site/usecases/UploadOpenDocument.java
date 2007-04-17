@@ -17,13 +17,8 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.OpenDocumentWrapper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
@@ -33,76 +28,32 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
  */
 public class UploadOpenDocument extends DocumentUsecase {
 
-    protected static final String ODT_EXTENSION = ".odt";
-
-    protected static final String ODT_MIME_TYPE = "application/vnd.oasis.opendocument.text";
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
+    protected void doCheckExecutionConditions() throws Exception {
+        super.doCheckExecutionConditions();
+        Part file = getPart("file");
+        if (file == null) {
+            addErrorMessage("missing-file");
+        } else {
+            if (file.isRejected()) {
+                String[] params = { Integer.toString(file.getSize()) };
+                addErrorMessage("upload-size-exceeded", params);
+            } else {
+                String mimeType = file.getMimeType();
+                if (!OpenDocumentWrapper.ODT_MIME_TYPE.equals(mimeType)) {
+                    String[] params = { mimeType, OpenDocumentWrapper.ODT_MIME_TYPE };
+                    addErrorMessage("wrong-mime-type", params);
+                }
+            }
+        }
     }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("ODT::uploadODT() called");
-        Document source = getSourceDocument();
-
+        OpenDocumentWrapper odt = new OpenDocumentWrapper(getSourceDocument(), getLogger());
         Part file = getPart("file");
-        String mimeType = file.getMimeType();
-
-        if (file.isRejected()) {
-            String[] params = { Integer.toString(file.getSize()) };
-            addErrorMessage("upload-size-exceeded", params);
-        } else if (ODT_MIME_TYPE.equals(mimeType)) {
-            saveResource(source.getOutputStream(), file);
-        } else {
-            addErrorMessage("The mime type of the document you want to upload does not match the mime type: \""
-                    + ODT_MIME_TYPE + "\"");
-        }
-    }
-
-    /**
-     * Saves the resource to a file.
-     * 
-     * @param out The destination to write the file.
-     * @param part The part of the multipart request.
-     * @throws IOException if an error occurs.
-     */
-    protected void saveResource(OutputStream out, Part part) throws IOException {
-        InputStream in = null;
-
-        try {
-            byte[] buf = new byte[4096];
-            in = part.getInputStream();
-            int read = in.read(buf);
-
-            while (read > 0) {
-                out.write(buf, 0, read);
-                read = in.read(buf);
-            }
-        } catch (final FileNotFoundException e) {
-            getLogger().error("file not found" + e.toString());
-            throw new IOException(e.toString());
-        } catch (IOException e) {
-            getLogger().error("IO error " + e.toString());
-            throw new IOException(e.toString());
-        } catch (Exception e) {
-            getLogger().error("Exception" + e.toString());
-            throw new IOException(e.toString());
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-            if (out != null) {
-                out.flush();
-                out.close();
-            }
-        }
+        odt.write(file);
     }
 
 }

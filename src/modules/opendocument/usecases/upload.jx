@@ -28,6 +28,7 @@ limitations under the License.
   </page:title> 
  
   <page:body>
+    <div class="lenya-box">
     <div class="lenya-box-title">
       <i18n:text>Upload ODT File</i18n:text>
     </div>
@@ -42,14 +43,14 @@ limitations under the License.
             </td>
           </tr>
           <tr>
-            <td colspan="2">
-              <strong><i18n:text>HEADSUP:</i18n:text> <i18n:text>The existing document will be overwritten!</i18n:text></strong>
+            <td colspan="2" style="padding-bottom: 2em;">
+              <strong><i18n:text>Warning</i18n:text>:</strong> <i18n:text>document-will-be-overwritten</i18n:text>
             </td>
           </tr>
           <tr>
             <td class="lenya-entry-caption"><label for="file">
               <i18n:text>File</i18n:text> *</label></td>
-            <td><input type="file" name="file" class="lenya-form-element"/></td>
+            <td><input type="file" name="file" class="lenya-form-element" size="50"/></td>
           </tr>
           <tr>
             <td class="lenya-entry-caption">*
@@ -59,12 +60,13 @@ limitations under the License.
           <tr>
             <td/>
             <td>
-              <input i18n:attr="value" name="submit" type="submit"
-                value="Upload ODT"/>
+              <input i18n:attr="value" name="submit" type="submit" value="Upload ODT"/>
+              <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
             </td>
           </tr>
         </table>
       </form>
+    </div>
     </div>
   </page:body>
 </page:page>

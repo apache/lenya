@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.lenya.cms.publication.OpenDocumentWrapper;
+
 
 /**
  * Usecase to create a document.
@@ -25,10 +27,8 @@ package org.apache.lenya.cms.site.usecases;
  */
 public class CreateOpenDocument extends CreateDocument {
 
-    protected static final String ODT_EXTENSION = "odt";
-
-
     protected String getSourceExtension() {
-        return ODT_EXTENSION;
+        String extension = OpenDocumentWrapper.ODT_EXTENSION;
+        return extension;
     }
 }
