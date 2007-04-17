@@ -18,15 +18,29 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.OpenDocumentWrapper;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Usecase to create a document.
  * 
  * @version $Id: CreateDocument.java 379098 2006-02-20 11:35:10Z andreas $
  */
-public class UploadOpenDocument extends DocumentUsecase {
+public class UploadOpenDocument extends InvokeWorkflow {
+
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (!ServletHelper.isUploadEnabled(manager)) {
+            addErrorMessage("Upload is not enabled. Please check local.build.properties!");
+        }
+        Document doc = getSourceDocument();
+        if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+        }
+    }
 
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
@@ -51,6 +65,7 @@ public class UploadOpenDocument extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
+        super.doExecute();
         OpenDocumentWrapper odt = new OpenDocumentWrapper(getSourceDocument(), getLogger());
         Part file = getPart("file");
         odt.write(file);

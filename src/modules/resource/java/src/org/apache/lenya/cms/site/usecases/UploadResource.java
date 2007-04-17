@@ -21,55 +21,44 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceWrapper;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
+import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.util.ServletHelper;
 
 /**
  * Usecase to upload a resource.
  * 
  */
-public class UploadResource extends DocumentUsecase {
+public class UploadResource extends InvokeWorkflow {
 
-    protected String getEvent() {
-        return "edit";
-    }
-    
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         if (!ServletHelper.isUploadEnabled(manager)) {
             addErrorMessage("Upload is not enabled. Please check local.build.properties!");
         }
         Document doc = getSourceDocument();
-        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+        if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
-        } else if (!getSourceDocument().exists()) {
-            addErrorMessage("This usecase can only be invoked on existing documents.");
         }
+    }
 
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc,
-                getLogger());
+    protected void doCheckExecutionConditions() throws Exception {
+        super.doCheckExecutionConditions();
+        Part file = getPart("file");
+        if (file.isRejected()) {
+            String[] params = { Integer.toString(file.getSize()) };
+            addErrorMessage("upload-size-exceeded", params);
+        }
     }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Resource::uploadResource() called");
-
+        super.doExecute();
         Part file = getPart("file");
-
-        if (file.isRejected()) {
-            String[] params = { Integer.toString(file.getSize()) };
-            addErrorMessage("upload-size-exceeded", params);
-        } else {
-            Document document = getSourceDocument();
-            ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
-            wrapper.write(file);
-            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), document, getEvent());
-        }
+        Document document = getSourceDocument();
+        ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
+        wrapper.write(file);
     }
 
 }
