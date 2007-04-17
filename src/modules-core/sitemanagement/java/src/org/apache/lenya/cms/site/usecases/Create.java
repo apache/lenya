@@ -323,16 +323,18 @@ public abstract class Create extends AbstractUsecase {
                 addErrorMessage("The resource type [" + resourceType.getName()
                         + "] doesn't provide any samples!");
             }
-            setParameter(SAMPLES, samples);
-            String presetSample = getParameterAsString(SAMPLE);
-            if (presetSample == null) {
-                setParameter(SAMPLE, samples[0]);
-            } else {
-                List sampleList = Arrays.asList(samples);
-                if (!sampleList.contains(presetSample)) {
-                    getLogger().warn(
-                            "Sample [" + presetSample + "] not defined, using default sample.");
+            else {
+                setParameter(SAMPLES, samples);
+                String presetSample = getParameterAsString(SAMPLE);
+                if (presetSample == null) {
                     setParameter(SAMPLE, samples[0]);
+                } else {
+                    List sampleList = Arrays.asList(samples);
+                    if (!sampleList.contains(presetSample)) {
+                        getLogger().warn(
+                                "Sample [" + presetSample + "] not defined, using default sample.");
+                        setParameter(SAMPLE, samples[0]);
+                    }
                 }
             }
         } catch (Exception e) {
