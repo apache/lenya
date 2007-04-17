@@ -39,7 +39,7 @@
         <block areas="site authoring">
           <item uc:usecase="sitemanagement.create" href="?doctype=news&amp;sample=Children">
             <i18n:translate>
-              <i18n:text>New Document</i18n:text>
+              <i18n:text>New ... Document</i18n:text>
               <i18n:param>News</i18n:param>
             </i18n:translate>
           </item>

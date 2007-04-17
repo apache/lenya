@@ -126,7 +126,8 @@
   <message key="reject-doc?">Wilt u het document {0} afwijzen?</message>
 
   <!-- cms menu -->
-  <message key="New Document">Nieuw {0} Document</message>
+  <message key="New Document">Nieuw Document</message>
+  <message key="New ... Document">Nieuw {0} Document</message>
   <message key="New Language Version">Nieuwe taal versie</message>
 
   <message key="Remove Language Version">Verwijder taal versie</message>

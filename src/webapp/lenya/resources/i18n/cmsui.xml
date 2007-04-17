@@ -123,7 +123,8 @@
   <message key="reject-doc?">Do you want to reject the document <xhtml:em>"{0}"</xhtml:em>?</message>
   
   <!-- cms menu -->
-  <message key="New Document">New {0} Document</message>
+  <message key="New Document">New Document</message>
+  <message key="New ... Document">New {0} Document</message>
   <message key="New Language Version">New Language Version</message>
   <message key="Remove Language Version">Remove Language Version</message>
   <message key="File">File</message>  

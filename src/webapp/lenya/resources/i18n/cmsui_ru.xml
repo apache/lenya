@@ -120,7 +120,8 @@
 
 <message key="reject-doc?">Хотите отклонить документ {0}?</message>
 <!-- cms menu -->
-<message key="New Document">Новый {0} документ</message>
+<message key="New Document">Новый документ</message>
+<message key="New ... Document">Новый {0} документ</message>
 <message key="New Language Version">Версия на другом языке</message>
 <message key="Remove Language Version">Удалить версию на другом языке</message>
 <message key="File">Файл</message>
