@@ -23,10 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
@@ -61,26 +58,22 @@ public class UploadOpenDocument extends DocumentUsecase {
         if (file.isRejected()) {
             String[] params = { Integer.toString(file.getSize()) };
             addErrorMessage("upload-size-exceeded", params);
-        } else if (ODT_MIME_TYPE.equals(mimeType)){
+        } else if (ODT_MIME_TYPE.equals(mimeType)) {
             saveResource(source.getOutputStream(), file);
         } else {
-            addErrorMessage("The mime type of the document you want to upload does not match the mime type: \""+ODT_MIME_TYPE+"\"");
+            addErrorMessage("The mime type of the document you want to upload does not match the mime type: \""
+                    + ODT_MIME_TYPE + "\"");
         }
-
     }
 
     /**
      * Saves the resource to a file.
      * 
-     * @param out
-     *            The destination to write the file.
-     * @param part
-     *            The part of the multipart request.
-     * @throws IOException
-     *             if an error occurs.
+     * @param out The destination to write the file.
+     * @param part The part of the multipart request.
+     * @throws IOException if an error occurs.
      */
-    protected void saveResource(OutputStream out, Part part)
-                    throws IOException {
+    protected void saveResource(OutputStream out, Part part) throws IOException {
         InputStream in = null;
 
         try {
@@ -110,32 +103,6 @@ public class UploadOpenDocument extends DocumentUsecase {
                 out.close();
             }
         }
-    }
-    
-    /**
-     * @return The repository node that represents the document identified by the destination string.
-     */
-    public Node getRepositoryNode(String destination) {
-        Node node = null;
-        SourceResolver resolver = null;
-        RepositorySource documentSource = null;
-        try {
-            resolver = (SourceResolver) this.manager
-                            .lookup(SourceResolver.ROLE);
-            documentSource = (RepositorySource) resolver
-                            .resolveURI(destination);
-            node = documentSource.getNode();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (documentSource != null) {
-                    resolver.release(documentSource);
-                }
-                this.manager.release(resolver);
-            }
-        }
-        return node;
     }
 
 }
