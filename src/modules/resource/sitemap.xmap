@@ -96,17 +96,24 @@ limitations under the License.
         <map:read src="fallback://lenya/modules/resource/resources/icons/default.gif"/>
       </map:match>
       
-      <map:match pattern="**icons/**.*">
-        <map:act type="resource-exists-enhanced">
-          <map:parameter name="url"
-            value="fallback://lenya/modules/resource/resources/icons/{2}.{3}"/>
-          <map:parameter name="type" value="file"/>
-          <map:read
-            src="fallback://lenya/modules/resource/resources/icons/{2}.{3}"/>
-        </map:act>
-        <map:read
-          src="fallback://lenya/modules/resource/resources/icons/default_med.gif"/>
+      <map:match pattern="bitmap-icons/*">
+        <map:read src="resources/icons/{1}"/>
       </map:match>
+      
+      <map:match pattern="icons/*.*">
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url" value="fallback://lenya/modules/resource/resources/icons/{2}.{3}"/>
+          <map:parameter name="type" value="file"/>
+          <map:read src="fallback://lenya/modules/resource/resources/icons/{2}.{3}"/>
+        </map:act>
+        <map:generate src="context://lenya/content/util/empty.xml"/>
+        <map:transform src="fallback://lenya/modules/resource/xslt/svgIcon.xsl">
+          <map:parameter name="basePath" value="{realpath:.}"/>
+          <map:parameter name="extension" value="{1}"/>
+        </map:transform>
+        <map:serialize type="svg2png"/>
+      </map:match>
+      
       
     </map:pipeline>
     
