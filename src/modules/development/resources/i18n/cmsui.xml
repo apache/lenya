@@ -21,5 +21,6 @@
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <message key="Show Log">Show Log</message>
+  <message key="Development">Development</message>
   
 </catalogue>

@@ -13,8 +13,8 @@
           language="java">
    <menu>
       <menus>
-         <menu i18n:attr="name" name="File">
-            <block admin="true">
+         <menu i18n:attr="name" name="Development">
+            <block>
                <!-- 
                     this is a semi-nasty kind of hack. the goal is to open 
                     the profiler output in a separate window with javascript.

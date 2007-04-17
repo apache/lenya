@@ -77,6 +77,7 @@
     <module name="svg"/>
     <module name="lucene"/>
     <module name="development"/>
+    <module name="profiling"/>
     <module name="languageselector"/>
     <module name="administration"/>
     <module name="news"/>

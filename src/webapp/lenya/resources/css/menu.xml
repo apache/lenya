@@ -33,9 +33,7 @@ body { background-color: #fff; margin: 0; padding: 0; }
 
 #lenya-options ul { list-style: none; margin: 0; padding: 0; }
 
-#lenya-options ul li { float: left; width: 7em; }
-
-#lenya-options ul li#nav4 { width: 9em; }
+#lenya-options ul li { float: left; width: 85px; }
 
 #lenya-options ul li, #lenya-options ul li a { display: block; color: #333; font-size: 12px; text-decoration: none; font-weight: bold; cursor: pointer; }
 
@@ -45,7 +43,7 @@ body { background-color: #fff; margin: 0; padding: 0; }
 
 #lenya-options ul li ul#menu2 { left: 105px; }
 
-#lenya-options ul li ul#menu3 { left: 187px; }
+#lenya-options ul li ul#menu3 { left: 190px; }
 
 #lenya-options ul li ul#menu4 { left: 275px; }
 

@@ -36,7 +36,7 @@
     </xsp:logic>
 
     <menus>
-      <menu i18n:attr="name" name="Help">
+      <menu i18n:attr="name" name="Development">
         <block areas="site authoring">
           <item href="?lenya.module=development&amp;lenya.action=showLog">
             <xsp:attribute name="href"><xsp:expr>baseUrl</xsp:expr>/modules/development/log4j.log</xsp:attribute>

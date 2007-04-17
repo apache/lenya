@@ -132,6 +132,9 @@
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
         </block>
       </menu>
+      
+      <menu i18n:attr="name" name="Development">
+      </menu>
     </menus>
     
   </menu>
