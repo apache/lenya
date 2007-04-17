@@ -119,6 +119,9 @@ function passRequestParameters(usecase) {
  * @param view, a org.apache.lenya.cms.usecase.UsecaseView object
  */
 function loadCustomFlow(view) {
+    customLoopFlow = undefined;
+    customSubmitFlow = undefined;
+    
     var flowUri;
     if (view != null) {
         flowUri = view.getCustomFlow();
