@@ -252,8 +252,8 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         return authorize(request);
     }
 
-    protected static final String AC_CONFIGURATION_FILE = "config/access-control/ac.xconf".replace('/',
-            File.separatorChar);
+    protected static final String AC_CONFIGURATION_FILE
+        = "config/access-control/access-control.xml".replace('/', File.separatorChar);
 
     /**
      * Retrieves access control configuration of a specific publication.

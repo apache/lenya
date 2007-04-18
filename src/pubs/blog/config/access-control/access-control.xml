@@ -20,18 +20,18 @@
 
 <access-controller type="bypassable">
   <accreditable-manager type="file">
-    <parameter name="directory" value="context:///lenya/pubs/blog/config/ac/passwd"/>
+    <parameter name="directory" value="context:///lenya/pubs/blog/config/access-control/passwd"/>
   </accreditable-manager>
 
   <policy-manager type="document">
     <policy-manager type="file">
-      <parameter name="directory" value="context:///lenya/pubs/blog/config/ac/policies"/>
+      <parameter name="directory" value="context:///lenya/pubs/blog/config/access-control/policies"/>
     </policy-manager>
   </policy-manager>
 
   <authorizer type="policy"/>
 
   <authorizer type="usecase">
-        <parameter name="configuration" value="context:///lenya/pubs/blog/config/ac/usecase-policies.xml"/>
+    <parameter name="configuration" value="context:///lenya/pubs/blog/config/access-control/usecase-policies.xml"/>
   </authorizer>
 </access-controller>

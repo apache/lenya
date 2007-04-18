@@ -46,8 +46,8 @@ import org.apache.lenya.cms.publication.URLInformation;
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
         Initializable {
 
-    protected static final String AC_CONFIGURATION_FILE = "config/access-control/ac.xconf".replace('/',
-            File.separatorChar);
+    protected static final String AC_CONFIGURATION_FILE
+        = "config/access-control/access-control.xml".replace('/', File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
 
     /**
