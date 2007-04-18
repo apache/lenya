@@ -392,5 +392,10 @@
   <message key="error-document-existance">The requested document {0} does not exist.</message>
   <message key="error-generic">An error occured.</message>
   <message key="error-404">404: Page not found</message>
+  
+  <message key="configure-content-repository">
+    <xhtml:strong>Note:</xhtml:strong> Make sure that your content repository
+    is configured correctly within <xhtml:code>$PUB_HOME/config/(local.)publication.xml</xhtml:code>.
+  </message>
 
 </catalogue>

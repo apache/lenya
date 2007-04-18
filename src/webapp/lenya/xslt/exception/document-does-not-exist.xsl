@@ -86,8 +86,7 @@
                     <a href="?lenya.usecase=sitemanagement.create&amp;path={$path}"><i18n:text>create-document</i18n:text></a>
                   </p>
                   <p>
-                    <strong>NOTE:</strong> Please make sure that your content repository
-                    is configured correctly within (local.)publication.xconf.
+                    <i18n:text>configure-content-repository</i18n:text>
                   </p>
                 </xsl:if>
               </div>
