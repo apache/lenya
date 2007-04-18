@@ -134,7 +134,7 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * This method is used by {@link #doCheckExecutionConditions()}Êto check if
+     * This method is used by {@link #doCheckExecutionConditions()} to check if
      * the path entered by the user is valid. If not, checking the existence of
      * the new document in the site structure is omitted because this operation
      * could cause errors.
