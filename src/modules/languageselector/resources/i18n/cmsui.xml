@@ -20,9 +20,13 @@
 
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-<!-- it may look strange to have phrases different languages here, but since
-     these are the controls to switch languages, it makes sense to present
-     them in the "target" language regardless of the current locale. -->
+<!--
+  it may look strange to have phrases in different languages here, but since
+  these are the controls to switch languages, it makes sense to present
+  them in the "target" language regardless of the current locale. 
+  thus, we need only one catalogue - all other languages will fall back
+  to this one.
+-->
      
   <message key="en-isCurrent">English is your currently selected language.</message>
   <message key="en-isUnavailable">Sorry, no English translation is available for this document.</message>

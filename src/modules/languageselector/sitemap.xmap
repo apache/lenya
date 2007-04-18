@@ -39,7 +39,7 @@
            "abbr": show 2-letter ISO language codes [default]
            "long": show full language names (must be provided by i18n catalogue)
            "none": do not show anything (only makes sense with {2}, see below)
-         {2} controls the presentation of language flag symbols. (TO BE DONE) it can be either of
+         {2} controls the presentation of language flag symbols. it can be either of
            "none": do not show flag symbols [default]
            <n>: show flags with height of n pixels.
     -->

@@ -21,8 +21,8 @@
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.languageselector</id>
   <package>org.apache.lenya.modules</package>
-  <version>0.1-dev</version>
+  <version>1.0</version>
   <name>Language selector</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>A language selector for Lenya publications</description>
+  <description>A language selector for Lenya publications that uses Batik to render SVG flag images.</description>
 </module>
