@@ -43,7 +43,8 @@
       Additionally, the access control configuration file has been renamed
       from <code>ac.xconf</code> to <code>access-control.xml</code>.<br />
       
-      You will have to change your custom publications accordingly.
+      You will have to change your custom publications accordingly. Don't
+      forget to change the path settings in access-control.xml as well!
     </p>
     <p>
       <em>Note the new suffix! From now on, "xconf" will only be used for patchfiles
