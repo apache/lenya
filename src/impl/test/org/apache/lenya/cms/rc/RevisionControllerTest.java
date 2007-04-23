@@ -82,7 +82,7 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         String source = args[1];
         String identityD = args[2];
         String destination = args[3];
-        RevisionController rc = new RevisionController();
+        RevisionController rc = new RevisionController(getLogger());
         try {
             rc.reservedCheckOut(doc1.getRepositoryNode(), identityS);
         } catch (FileNotFoundException e) // No such source file

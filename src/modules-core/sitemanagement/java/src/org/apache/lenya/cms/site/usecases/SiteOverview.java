@@ -168,7 +168,7 @@ public class SiteOverview extends AbstractUsecase {
     }
 
     protected RevisionController getRevisionController() {
-        return new RevisionController();
+        return new RevisionController(getLogger());
     }
 
     /**

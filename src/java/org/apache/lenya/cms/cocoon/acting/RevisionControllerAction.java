@@ -100,14 +100,14 @@ public class RevisionControllerAction extends ServiceableAction {
         // get Parameters for RC
         String publicationPath = publication.getDirectory().getCanonicalPath();
         RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
-                .getCanonicalPath());
+                .getCanonicalPath(), getLogger());
         this.rcmlDirectory = rcEnvironment.getRCMLDirectory();
         this.rcmlDirectory = publicationPath + File.separator + this.rcmlDirectory;
         this.backupDirectory = rcEnvironment.getBackupDirectory();
         this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
 
         // Initialize Revision Controller
-        this.rc = new RevisionController();
+        this.rc = new RevisionController(getLogger());
 
         // /Initialize Revision Controller
         // Get session

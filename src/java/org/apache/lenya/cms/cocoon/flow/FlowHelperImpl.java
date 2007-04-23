@@ -161,7 +161,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      */
     public RevisionController getRevisionController(FOM_Cocoon cocoon)
             throws PageEnvelopeException, IOException {
-        return new RevisionController();
+        return new RevisionController(getLogger());
     }
 
     /**

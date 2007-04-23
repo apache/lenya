@@ -165,7 +165,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     protected RevisionController getRevisionController() throws RepositoryException {
         if (this.revisionController == null) {
-            this.revisionController = new RevisionController();
+            this.revisionController = new RevisionController(getLogger());
         }
         return this.revisionController;
     }

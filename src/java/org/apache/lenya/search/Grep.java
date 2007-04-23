@@ -35,14 +35,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.apache.avalon.framework.logger.ConsoleLogger;
+import org.apache.avalon.framework.logger.Logger;
 
 /**
  * Utility class to provide a subset of the grep functionality. 
  */
 public class Grep {
-    private static final Logger log = Logger.getLogger(Grep.class);
-
+    
     private static Charset charset = Charset.forName("UTF-8");
     private static CharsetDecoder decoder = charset.newDecoder();
 
@@ -54,6 +54,8 @@ public class Grep {
      * @throws IOException
      */
     public static boolean containsPattern(File file, Pattern pattern) throws IOException {
+        
+        Logger log = new ConsoleLogger();
 
         FileChannel fc = null;
 		// Open the file and then get a channel from the stream
@@ -101,6 +103,8 @@ public class Grep {
      * @throws IOException if the file could not be read.
      */
     public static String[] findPattern(File file, Pattern pattern, int group) throws IOException {
+
+        Logger log = new ConsoleLogger();
 
         ArrayList occurences = new ArrayList();
         FileInputStream fis = null;

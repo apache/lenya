@@ -25,30 +25,33 @@ import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
+import org.apache.avalon.framework.logger.LogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 
 /**
  * A map with a maximum capacity. When the map is full, the oldest entry is removed.
  */
-public class CacheMap extends HashMap {
+public class CacheMap extends HashMap implements LogEnabled {
     
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(CacheMap.class);
     
     /**
      * Ctor.
      * @param _capacity The maximum number of entries.
+     * @param logger The logger.
      */
-    public CacheMap(int _capacity) {
+    public CacheMap(int _capacity, Logger logger) {
+        enableLogging(logger);
         assert _capacity > -1;
         this.capacity = _capacity;
     }
     
     private int capacity;
     private SortedMap timeToKey = new TreeMap();
+    private Logger logger;
     
     /**
      * @see java.util.Map#put(Object, Object)
@@ -58,8 +61,8 @@ public class CacheMap extends HashMap {
         if (size() == this.capacity) {
             Object oldestKey = this.timeToKey.get(this.timeToKey.firstKey());
             remove(oldestKey);
-            if (log.isDebugEnabled()) {
-                log.debug("Clearing cache");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Clearing cache");
             }
         }
         this.timeToKey.put(new Date(), key);
@@ -71,15 +74,23 @@ public class CacheMap extends HashMap {
      */
     public Object get(Object key) {
         Object result = super.get(key);
-        if (log.isDebugEnabled()) {
+        if (getLogger().isDebugEnabled()) {
             if (result != null) {
-                log.debug("Using cached object for key [" + key + "]");
+                getLogger().debug("Using cached object for key [" + key + "]");
             }
             else {
-                log.debug("No cached object for key [" + key + "]");
+                getLogger().debug("No cached object for key [" + key + "]");
             }
         }
         return result;
+    }
+    
+    protected Logger getLogger() {
+        return this.logger;
+    }
+
+    public void enableLogging(Logger logger) {
+        this.logger = logger;
     }
 
 }

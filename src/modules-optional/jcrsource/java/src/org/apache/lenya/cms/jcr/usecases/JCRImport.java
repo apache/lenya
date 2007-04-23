@@ -33,7 +33,6 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
-import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -45,7 +44,6 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * Import JCR content.
  */
 public class JCRImport extends AbstractUsecase {
-    private static final Logger log = Logger.getLogger(JCRImport.class);
     
     private static final String IMPORT_TARGET_PARAM = "lenya.usecase.importExport.import";
     private static final String IMPORT_TARGET_PUBLICATION = "publication";
@@ -96,7 +94,7 @@ public class JCRImport extends AbstractUsecase {
             String importTarget = request.getParameter(IMPORT_TARGET_PARAM);
             if (IMPORT_TARGET_REPOSITORY.equals(importTarget)) {
                 // Import Lenya repository
-                log.debug("Importing Lenya repository into JCR");
+                getLogger().debug("Importing Lenya repository into JCR");
                 if (!JCR_LENYA_BASE_NAME.equals(firstNodeName)) {
                     throw new JCRImportException("Corrupt Lenya repository data file");
                 }
@@ -121,7 +119,7 @@ public class JCRImport extends AbstractUsecase {
                 }
             } else if (IMPORT_TARGET_PUBLICATION.equals(importTarget)) {
                 // Import Lenya publication 
-                log.debug("Importing Lenya publication into JCR");
+                getLogger().debug("Importing Lenya publication into JCR");
                 if (!session.itemExists(JCR_LENYA_PUBLICATON_ROOT)) {
                     throw new JCRImportException("Lenya JCR root not found [" + JCR_LENYA_ROOT + "]");
                     // TODO: Create JCR_LENYA_PUBLICATON_ROOT

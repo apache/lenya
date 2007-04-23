@@ -61,7 +61,6 @@ public class SourceCacheImpl
      * Ctor.
      */
     public SourceCacheImpl() {
-        this.cache = new CacheMap(CAPACITY);
     }
 
     protected static final int CAPACITY = 1000;
@@ -72,6 +71,9 @@ public class SourceCacheImpl
      * @return A cache object.
      */
     protected CacheMap getCache() {
+        if (this.cache == null) {
+            this.cache = new CacheMap(CAPACITY, getLogger());
+        }
         return this.cache;
     }
 

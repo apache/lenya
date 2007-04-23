@@ -22,6 +22,7 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -245,7 +246,8 @@ public class PageEnvelope {
      * @deprecated We should detach the RC environment from the page envelope.
      */
     public RCEnvironment getRCEnvironment() {
-        return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath());
+        return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath(),
+                new ConsoleLogger());
     }
 
     /**

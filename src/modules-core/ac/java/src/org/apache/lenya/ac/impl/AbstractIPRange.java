@@ -329,7 +329,8 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
          * about this. ;-)
          */
         getLogger().debug("Checking IP range: [" + getId() + "]");
-        return InetAddressUtil.contains(this.networkAddress, this.subnetMask, machine.getAddress());
+        InetAddressUtil util = new InetAddressUtil(getLogger());
+        return util.contains(this.networkAddress, this.subnetMask, machine.getAddress());
     }
 
     /**

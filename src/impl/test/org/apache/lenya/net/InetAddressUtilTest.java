@@ -19,12 +19,12 @@ package org.apache.lenya.net;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import junit.framework.TestCase;
+import org.apache.cocoon.core.container.ContainerTestCase;
 
 /**
  * Inet address util test
  */
-public class InetAddressUtilTest extends TestCase {
+public class InetAddressUtilTest extends ContainerTestCase {
 
     public void testInetAddressUtil() throws UnknownHostException {
 
@@ -38,6 +38,8 @@ public class InetAddressUtilTest extends TestCase {
         InetAddress network = InetAddress.getByName(args[0]); // "195.226.6.64");
         InetAddress subnet = InetAddress.getByName(args[1]); // "255.255.255.0");
         InetAddress ip = InetAddress.getByName(args[2]); // "195.226.6.70");
-        System.out.println(InetAddressUtil.contains(network, subnet, ip));
+        
+        InetAddressUtil util = new InetAddressUtil(getLogger());
+        System.out.println(util.contains(network, subnet, ip));
     }
 }

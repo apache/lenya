@@ -70,7 +70,7 @@ public class Rollback extends DocumentUsecase {
         Document document = getSourceDocument();
         
         // Initialize Revision Controller
-        RevisionController rc = new RevisionController();
+        RevisionController rc = new RevisionController(getLogger());
         
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);

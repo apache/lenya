@@ -23,20 +23,20 @@ package org.apache.lenya.net;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.log4j.Logger;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 
 /**
  * A utility class for InetAddress. Also see http://jodies.de/ipcalc
  */
-public class InetAddressUtil {
-
-    private static final Logger log = Logger.getLogger(InetAddressUtil.class);
+public class InetAddressUtil extends AbstractLogEnabled {
 
     /**
      * Ctor.
+     * @param logger The logger.
      */
-    private InetAddressUtil() {
-        // do nothing
+    public InetAddressUtil(Logger logger) {
+        enableLogging(logger);
     }
 
     /**
@@ -46,10 +46,10 @@ public class InetAddressUtil {
      * @param ip The IP address to check.
      * @return A boolean value.
      */
-    public static boolean contains(InetAddress network, InetAddress netmask, InetAddress ip) {
-        if(log.isDebugEnabled()) {
-            log.debug("=======================================");
-            log.debug("Checking IP address: " + ip + " in " + network + " / " + netmask);
+    public boolean contains(InetAddress network, InetAddress netmask, InetAddress ip) {
+        if(getLogger().isDebugEnabled()) {
+            getLogger().debug("=======================================");
+            getLogger().debug("Checking IP address: " + ip + " in " + network + " / " + netmask);
         }
         
         byte[] networkBytes = network.getAddress();
@@ -73,12 +73,12 @@ public class InetAddressUtil {
              * problem. This method and therefore this whole
              * class would probably be obsolete in that case.)
              */
-            if(log.isDebugEnabled()) {
-                log.debug
+            if(getLogger().isDebugEnabled()) {
+                getLogger().debug
                     ("Network address " + network + ", subnet mask "
                      + netmask + " and/or host address " + ip
                      + " have different sizes! (return false ...)");
-                log.debug("=======================================");
+                getLogger().debug("=======================================");
             }
             return false;
         }
@@ -87,18 +87,18 @@ public class InetAddressUtil {
         for(int i=0; i<netmaskBytes.length; i++) {
             int mask = netmaskBytes[i] & 0xff;
             if((networkBytes[i] & mask) != (ipBytes[i] & mask)) {
-                if(log.isDebugEnabled()) {
-                    log.debug
+                if(getLogger().isDebugEnabled()) {
+                    getLogger().debug
                         (ip + " is not in " + network + " / " + netmask);
-                    log.debug("=======================================");
+                    getLogger().debug("=======================================");
                 }
                 return false;
             }
         }
-        if(log.isDebugEnabled()) {
-            log.debug
+        if(getLogger().isDebugEnabled()) {
+            getLogger().debug
                 (ip + " is in " + network + " / " + netmask);
-            log.debug("=======================================");
+            getLogger().debug("=======================================");
         }
         return true;
     }
@@ -132,7 +132,7 @@ public class InetAddressUtil {
      *      need this functionality, you should rewrite it
      *      yourself.)
      */
-    public static int checkNetmask(InetAddress netmask) {
+    public int checkNetmask(InetAddress netmask) {
         String[] parts = netmask.getHostAddress().split("\\.");
         Integer[] numbers = new Integer[4];
         for (int i = 0; i < 4; i++) {
@@ -140,12 +140,12 @@ public class InetAddressUtil {
         }
 
         for (int i = 0; i < 4; i++) {
-            log.debug(".checkNetmask(): Check part: " + numbers[i]);
+            getLogger().debug(".checkNetmask(): Check part: " + numbers[i]);
             if (0 <= numbers[i].intValue() && numbers[i].intValue() <= 255) {
                 if (numbers[i].intValue() != 255) {
                     for (int k = i + 1; k < 4; k++) {
                         if (numbers[k].intValue() != 0) {
-                            log.error(".checkNetmask(): Illegal Netmask: " + netmask);
+                            getLogger().error(".checkNetmask(): Illegal Netmask: " + netmask);
                             return -1;
                         }
                     }
@@ -154,11 +154,11 @@ public class InetAddressUtil {
                 continue;
             }
             // FIXME: This check not really be necessary because java.net.UnknownHostException should be thrown long time before
-            log.error(".checkNetmask(): Illegal Netmask: " + netmask);
+            getLogger().error(".checkNetmask(): Illegal Netmask: " + netmask);
             return -1;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("All parts equal 255: " + netmask);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("All parts equal 255: " + netmask);
         }
         return 3;
     }

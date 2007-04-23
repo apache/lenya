@@ -23,14 +23,14 @@ package org.apache.lenya.cms.rc;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.log4j.Logger;
 
 /**
  * Controller for the reserved check-in, check-out, the backup versions and the rollback
  */
-public class RevisionController {
-    private static Logger log = Logger.getLogger(RevisionController.class);
+public class RevisionController extends AbstractLogEnabled {
 
     /**
      * <code>systemUsername</code> The system user name. This is used for - creating dummy checkin
@@ -42,8 +42,10 @@ public class RevisionController {
 
     /**
      * Creates a new RevisionController object.
+     * @param logger The logger.
      */
-    public RevisionController() {
+    public RevisionController(Logger logger) {
+        enableLogging(logger);
     }
 
     /**
@@ -79,9 +81,9 @@ public class RevisionController {
         // having to check back in first.
         //
         if (entry != null) {
-            log.debug("entry: " + entry);
-            log.debug("entry.type:" + entry.getType());
-            log.debug("entry.identity" + entry.getIdentity());
+            getLogger().debug("entry: " + entry);
+            getLogger().debug("entry.type:" + entry.getType());
+            getLogger().debug("entry.identity" + entry.getIdentity());
         }
 
         if ((entry != null) && (entry.getType() != RCML.ci)
@@ -108,9 +110,9 @@ public class RevisionController {
         // having to check back in first.
         //
         if (entry != null) {
-            log.debug("entry: " + entry);
-            log.debug("entry.type:" + entry.getType());
-            log.debug("entry.identity" + entry.getIdentity());
+            getLogger().debug("entry: " + entry);
+            getLogger().debug("entry.type:" + entry.getType());
+            getLogger().debug("entry.identity" + entry.getIdentity());
         }
 
         boolean checkedOutByOther = entry != null && entry.getType() != RCML.ci
@@ -133,9 +135,9 @@ public class RevisionController {
         // having to check back in first.
         //
         if (entry != null) {
-            log.debug("entry: " + entry);
-            log.debug("entry.type:" + entry.getType());
-            log.debug("entry.identity" + entry.getIdentity());
+            getLogger().debug("entry: " + entry);
+            getLogger().debug("entry.type:" + entry.getType());
+            getLogger().debug("entry.identity" + entry.getIdentity());
         }
         return entry != null && entry.getType() == RCML.co;
     }

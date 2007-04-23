@@ -39,7 +39,14 @@ public abstract class AbstractAccessControllerResolver
     implements AccessControllerResolver, Serviceable, ThreadSafe {
 
     protected static final int CAPACITY = 1000;
-    private CacheMap cache = new CacheMap(CAPACITY);
+    private CacheMap cache;
+    
+    protected CacheMap getCache() {
+        if (this.cache == null) {
+            this.cache = new CacheMap(CAPACITY, getLogger());
+        }
+        return this.cache;
+    }
 
     /**
      * @see org.apache.lenya.ac.AccessControllerResolver#resolveAccessController(java.lang.String)
@@ -63,13 +70,15 @@ public abstract class AbstractAccessControllerResolver
                 getManager().release(resolver);
             }
         }
+        
+        CacheMap cache = getCache();
 
-        synchronized (this.cache) {
-            controller = (AccessController) this.cache.get(key);
+        synchronized (cache) {
+            controller = (AccessController) cache.get(key);
             if (controller == null) {
                 getLogger().debug("No access controller in cache.");
                 controller = doResolveAccessController(webappUrl);
-                this.cache.put(key, controller);
+                cache.put(key, controller);
             } else {
                 getLogger().debug("Getting access controller from cache.");
             }

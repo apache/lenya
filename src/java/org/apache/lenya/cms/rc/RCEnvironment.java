@@ -29,14 +29,15 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Logger;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.xml.sax.SAXException;
 
 /**
  * Helper class that holds the revision controller configuration
  */
-public class RCEnvironment implements Configurable {
-    private static Logger log = Logger.getLogger(RCEnvironment.class);
+public class RCEnvironment extends AbstractLogEnabled implements Configurable {
+    
     /**
      * <code>CONFIGURATION_FILE</code> The configuration file
      */
@@ -58,12 +59,13 @@ public class RCEnvironment implements Configurable {
     /**
      * Returns the singleton RC environment for this context path.
      * @param contextPath The context path (the Lenya webapp directory).
+     * @param logger The logger.
      * @return An RC environment.
      */
-    public static RCEnvironment getInstance(String contextPath) {
+    public static RCEnvironment getInstance(String contextPath, Logger logger) {
         RCEnvironment instance = (RCEnvironment) instances.get(contextPath); 
         if (instance == null) {
-            instance = new RCEnvironment(contextPath);
+            instance = new RCEnvironment(contextPath, logger);
             instances.put(contextPath, instance);
         }
         return instance;
@@ -72,12 +74,14 @@ public class RCEnvironment implements Configurable {
     /**
      * Creates a new RCEnvironment object from the context path
      * @param contextPath The context path
+     * @param logger The logger.
      */
-    public RCEnvironment(String contextPath) {
-        log.debug("context path:" + contextPath);
+    public RCEnvironment(String contextPath, Logger logger) {
+        enableLogging(logger);
+        getLogger().debug("context path:" + contextPath);
 
         String configurationFilePath = contextPath + "/" + CONFIGURATION_FILE;
-        log.debug("configuration file path:" + configurationFilePath);
+        getLogger().debug("configuration file path:" + configurationFilePath);
 
         File configurationFile = new File(configurationFilePath);
 
@@ -86,11 +90,11 @@ public class RCEnvironment implements Configurable {
             Configuration configuration = builder.buildFromFile(configurationFile);
             configure(configuration);
         } catch (final ConfigurationException e) {
-            log.error("Cannot load revision controller configuration! ", e);
+            getLogger().error("Cannot load revision controller configuration! ", e);
         } catch (final SAXException e) {
-            log.error("Cannot load revision controller configuration! ", e);
+            getLogger().error("Cannot load revision controller configuration! ", e);
         } catch (final IOException e) {
-            log.error("Cannot load revision controller configuration! ", e);
+            getLogger().error("Cannot load revision controller configuration! ", e);
         }
     }
 
@@ -103,8 +107,8 @@ public class RCEnvironment implements Configurable {
         setRCMLDirectory(configuration.getChild("rcmlDirectory").getAttribute("href"));
         setBackupDirectory(configuration.getChild("backupDirectory").getAttribute("href"));
 
-        log.debug("CONFIGURATION:\nRCML Directory: href=" + getRCMLDirectory());
-        log.debug("CONFIGURATION:\nBackup Directory: href=" + getBackupDirectory());
+        getLogger().debug("CONFIGURATION:\nRCML Directory: href=" + getRCMLDirectory());
+        getLogger().debug("CONFIGURATION:\nBackup Directory: href=" + getBackupDirectory());
     }
 
     /**

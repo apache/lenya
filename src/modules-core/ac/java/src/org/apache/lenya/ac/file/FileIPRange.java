@@ -29,6 +29,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.ItemManager;
@@ -63,7 +64,8 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
             InetAddress subnetMask = InetAddress.getByName(args[1]);
             Machine machine = new Machine(args[2]);
 
-            if (InetAddressUtil.contains(networkAddress, subnetMask, machine.getAddress())) {
+            InetAddressUtil util = new InetAddressUtil(new ConsoleLogger());
+            if (util.contains(networkAddress, subnetMask, machine.getAddress())) {
                 System.out.println("true");
             } else {
                 System.out.println("false");
