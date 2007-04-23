@@ -35,6 +35,13 @@
     
     <h2>Important notes for beta testers of Lenya 1.4</h2>
     
+    <h3>2007-04-23: <code>$MODULE_HOME/module.xml</code> is now <code>$MODULE_HOME/config/module.xml</code></h3>
+    
+    <p>
+      Please move your <code>module.xml</code> file to the <code>config</code> directory of the module.
+      This change was done to preserve consistency with the <code>publication.xml</code> location.
+    </p>
+    
     <h3>2007-04-18: <code>ac/</code> is now <code>access-control/</code></h3>
     <p>
       In order to make the Lenya publication configuration more
