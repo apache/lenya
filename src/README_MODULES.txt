@@ -35,6 +35,7 @@ if appropriate, take a look at the core modules if in doubt):
 
 mymodule/
   config/                    configuration files
+    module.xml               module descriptor
     cocoon-xconf/            patches for cocoon.xconf:
       component-mycomponent.xconf
       usecase-myusecase.xconf     
@@ -44,14 +45,13 @@ mymodule/
     src/                     Java source files
     lib/                     Java libraries
   xslt/                      XSLT stylesheets
-  module.xml                 module descriptor
   sitemap.xmap               main module sitemap
 
 
 module.xml
 ==========
 
-Each module must contain a description file module.xml:
+Each module must contain a description file config/module.xml:
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <!-- the ID *must* start with the package name of 
