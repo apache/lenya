@@ -57,6 +57,7 @@
 <source xml:space="preserve">
 mymodule/
   config/                    configuration files
+    module.xml               module descriptor
     cocoon-xconf/            patches for cocoon.xconf
       components.xconf     
   usecases/
@@ -71,7 +72,6 @@ mymodule/
     test/                    Java test classes
     lib/                     Java libraries
   xslt/                      XSLT stylesheets
-  module.xml                 module descriptor
   sitemap.xmap               main module sitemap
 </source>
 
@@ -95,7 +95,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
       <title>The Module Descriptor File</title>
       <p>
         Each module must be described using a <em>module descriptor</em> XML file
-        <code>module.xml</code>, located in the root directory of the module.
+        <code>module.xml</code>, located in the <code>config</code> directory of the module.
         The descriptor is validated when the module is deployed, so be careful! :)
       </p>
       <p>
