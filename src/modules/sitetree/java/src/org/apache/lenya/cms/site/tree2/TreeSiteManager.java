@@ -172,14 +172,12 @@ public class TreeSiteManager extends AbstractSiteManager {
             int n = path.lastIndexOf("/");
             String lastToken = "";
             String substring = path;
-            if ((n < path.length()) && (n > 0)) {
-                lastToken = path.substring(n);
-                substring = path.substring(0, n);
-            }
+            lastToken = path.substring(n);
+            substring = path.substring(0, n);
 
             int l = lastToken.length();
             int index = lastToken.lastIndexOf("-");
-            if (0 < index && index < l) {
+            if (0 < index && index < l && lastToken.substring(index + 1).matches("[\\d]*")) {
                 suffix = lastToken.substring(index + 1);
                 idwithoutsuffix = substring + lastToken.substring(0, index);
                 version = Integer.parseInt(suffix);
