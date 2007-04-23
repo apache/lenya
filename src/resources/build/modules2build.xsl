@@ -30,6 +30,8 @@
   <xsl:param name="module-schema"/>
   <xsl:param name="copy-modules"/>
   
+  <xsl:variable name="configFile">/config/module.xml</xsl:variable>
+  
   
   <xsl:template name="separator">
     <xsl:if test="following-sibling::list:module">
@@ -62,7 +64,7 @@
       
       <xsl:variable name="compileDependencyList">
         <xsl:for-each select="list:module">
-          <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call"/>
+          <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call"/>
           <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
@@ -70,7 +72,7 @@
       
       <xsl:variable name="testDependencyList">
         <xsl:for-each select="list:module">
-          <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="patch-test"/>
+          <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="patch-test"/>
           <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
@@ -87,7 +89,7 @@
       
       <xsl:variable name="canooDependencyList">
         <xsl:for-each select="list:module">
-          <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="test-canoo"/>
+          <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="test-canoo"/>
           <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
@@ -111,7 +113,7 @@
   
   
   <xsl:template match="list:module" mode="call-test">
-    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-test"/>
+    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call-test"/>
   </xsl:template>
   
   <xsl:template match="mod:module" mode="call-test">
@@ -120,7 +122,7 @@
   
   
   <xsl:template match="list:module" mode="call-test-canoo">
-    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-test-canoo"/>
+    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call-test-canoo"/>
   </xsl:template>
   
   <xsl:template match="mod:module" mode="call-test-canoo">
@@ -134,7 +136,7 @@
   
   
   <xsl:template match="list:module" mode="call-javadocs">
-    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-javadocs"/>
+    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call-javadocs"/>
   </xsl:template>
   
   <xsl:template match="mod:module" mode="call-javadocs">
@@ -143,7 +145,7 @@
   
   
   <xsl:template match="list:module" mode="target">
-    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="target">
+    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="target">
       <xsl:with-param name="src" select="@src"/>
     </xsl:apply-templates>
   </xsl:template>
@@ -155,7 +157,7 @@
     <xsl:variable name="shortname" select="substring(mod:id, string-length(mod:package) + 2)"/>
 
     <target name="validate-module-{$id}">
-      <jing rngfile="{$module-schema}" file="{$src}/module.xml"/>
+      <jing rngfile="{$module-schema}" file="{$src}{$configFile}"/>
     </target>
     
     <xsl:text>
