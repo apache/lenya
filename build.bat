@@ -21,7 +21,7 @@ rem $Id: build.bat 54525 2004-10-11 09:39:04Z cziegeler $
 rem ----------------------------------------------------------------------------
 
 
-set COCOON_HOME=externals\cocoon_2_1_x
+set COCOON_HOME=externals\cocoon_2_1_10
 set COCOON_ENDORSED_DIR=%COCOON_HOME%\lib\endorsed
 
 rem ----- Ignore system CLASSPATH variable
