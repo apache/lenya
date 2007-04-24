@@ -45,7 +45,6 @@ public class TreeSiteManager extends AbstractSiteManager {
      * Returns the sitetree for a specific area of this publication. Sitetrees
      * are created on demand and are cached.
      * 
-     * @param publication The publication.
      * @param area The area.
      * @return A site tree.
      * @throws SiteException if an error occurs.
