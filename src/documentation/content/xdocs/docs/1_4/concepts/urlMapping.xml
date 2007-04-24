@@ -31,17 +31,45 @@
       <p> This is reflected in the following methods: </p>
       <source> DocumentBuilder.buildDocument(...) 
  DocumentBuilder.buildCanonicalUrl(...)</source>
-      <p> At the moment, the concept of multiple URLs per document is typically 
+      <p>The concept of multiple URLs per document is typically 
         used for language versions (foo_{defaultlanguage}.html = foo.html) and 
-        to support different URL suffixes (foo, foo.htm, foo.html). </p>
-      <p> The site structure is currently tightly connected to the URL space. 
-        Link URLs are derived directly from the site structure:</p>
-      <source> <![CDATA[<node id="foo">
-    <node id="bar"/>
- </node>]]> </source>
-      <p>is interpreted as <code>/foo/bar</code> </p>
-      <p>The language version is handled orthogonally to the site structure. 
-        The URL is determined by combining both document ID and language.</p>
+        to support different URL suffixes (foo, foo.htm, foo.html, foo.pdf). </p>
+      <p>The site structure is tightly connected to the URL space. 
+        Link URLs are derived directly from the site structure.
+        The <code>bar</code> node in the following example</p>
+      <source><![CDATA[<node id="foo">
+  <node id="bar"/>
+</node>]]></source>
+      <p>is accessed using an URL containing the snippet <code>/foo/bar</code>. </p>
+    </section>
+    <section>
+      <title>Language Versions</title>
+      <p>
+        The different language versions of a document can either be accessed
+        using suffixes (<code>foo_en</code>, <code>foo_de</code>), or by attaching them to
+        different nodes with the same UUID attribute in the site structure.
+        In the following example, the top-level nodes "en" and "de" are used
+        as entry points for the respective language.
+      </p>
+      <source xml:space="preserve"><![CDATA[<site>
+  <node id="en">
+    <node id="welcome" uuid="def456...">
+      <label xml:lang="en">Welcome</label>
+    </node>
+  </node>
+  <node id="de">
+    <node id="willkommen" uuid="def456...">
+      <label xml:lang="de">Willkommen</label>
+    </node>
+  </node>
+</site>]]></source>
+      <p>
+        This results in the following URLs:
+      </p>
+      <ul>
+        <li><code>/en/welcome</code> - "Welcome"</li>
+        <li><code>/de/willkommen</code> - "Willkommen"</li>
+      </ul>
     </section>
   </body>
 </document>
