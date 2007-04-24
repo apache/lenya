@@ -77,14 +77,6 @@
       
     <map:pipeline>
 
-      <map:match pattern="*">
-        <map:redirect-to uri="{1}/introduction.html"/>
-      </map:match>
-      
-      <map:match pattern="*/">
-        <map:redirect-to uri="introduction.html"/>
-      </map:match>
-      
     <map:match pattern="**">
       <map:match pattern="*/webdav**">
         <map:act type="authorizer">
