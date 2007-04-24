@@ -1,0 +1,38 @@
+
+Release Notes -- Apache Lenya -- Version 1.4 Release Candidate 1
+
+Introduction
+------------
+
+Apache Lenya is a Java-based Open-Source Content Management System.
+It is based on open standards such as XML and XSLT. One of its core
+components is Cocoon from the Apache Software Foundation.
+
+Apache Lenya supports inline WYSIWYG editors. Your site editors do not
+have to learn XML. This is possible thanks to the support of XML,
+XSLT and XML Schema on the client side. An administration interface
+allows advanced users to monitor the CMS, and perform configuration
+tasks.
+
+
+Release information
+-------------------
+
+SVN URL: http://svn.apache.org/repos/asf/lenya/tags/RELEASE_1_4_RC_1
+Trunk revision before release tagging: 531808
+Cocoon version: 2.1.10
+
+
+Changes in this release-----------------------
+
+ModularizationThe monolithic architecture has been replaced by a small generic core and various modules for specific purposes.
+Improved Repository AccessThe refactored and extended repository API and new protocols make it easier to access and manipulate documents.
+
+UUIDs for Internal LinksDocuments are now identified and referenced using UUIDs. Static link rewriting is not necessary anymore.
+Improved Access ControlIt is now possible to explicitly deny permissions on specific pages.
+Configurable Meta DataIt is now possible to declare custom sets of meta data.
+Publication TemplatingPublication templating allows to re-use common functionality in multiple publications.
+Usecase FrameworkThe usecase framework simplifies the implementation of user interaction functionality.
+
+Simplified Notification, InboxesIt is now easier to trigger notification messages. Each user has a personal inbox to read and send messages.
+
