@@ -38,8 +38,8 @@
     <h3>2007-04-23: Moved and Renamed $PUB_HOME/config/lucene_index.xconf</h3>
     
     <p>
-      Please move and rename your <code>config/lucene_index.xconf</code> file to
-      <code>config/search/lucene_index.xml</code>.
+      Please move and rename your <code>$PUB_HOME/config/lucene_index.xconf</code> file to
+      <code>$PUB_HOME/config/search/lucene_index.xml</code>.
       This change was done to preserve consistency with the other configuration file names and locations.
     </p>
     
