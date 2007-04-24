@@ -1,4 +1,17 @@
 /*
-  use this file to add styling for the editor area in case we don't quite
-  match the original look of the site. yes, that's a hack.
+  use this file to add additional styling for the editor area 
 */
+
+
+p:after {
+  /* add pilcrow sign to make paragraphs visible */
+  content:"\00B6";
+}
+
+br:before {
+  /* add hooked left arrow to make line breaks visible.
+     line breaks can be generated with CTRL-Enter.
+     Firefox does not render this, IE neither. */
+  content:"\21B5";
+}
+

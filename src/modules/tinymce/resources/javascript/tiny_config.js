@@ -59,7 +59,7 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
     },
 
     /* auto-resize the editing area. docs say this is "experimental"! */
-    auto_resize : true,
+    auto_resize : false,
 
     /* characters that should be replaced by named XHTML entities.
        cocoon does not define entities by default, so we use none. */

@@ -100,7 +100,7 @@
           </map:when>
           <!-- TinyMCE is not installed - generate info page for the user -->
           <map:otherwise>
-            <map:generate src="fallback://lenya/modules/tinymce/resources/misc/download.xhtml"/>
+            <map:generate src="fallback://lenya/modules/tinymce/resources/misc/download.xml"/>
           </map:otherwise>
         </map:select>
         <map:call resource="style-cms-page"/>
