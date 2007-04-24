@@ -78,7 +78,7 @@ public class CopyJavaSourcesTask extends Task {
                             new JavaFilenameFilter(),
                             this);
                     // In the case of a module
-                } else if (new File(path, "module.xml").isFile()) {
+                } else if (new File(path, "/config/module.xml").isFile()) {
                     copyContentOfDir(new File(path, this.javaDir),
                             absoluteBuildDir,
                             twoTuple,

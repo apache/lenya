@@ -86,7 +86,7 @@ public class CopyPublicationsTask extends Task {
                 }
 
             // In the case the pubsRootDir is module dir
-	    } else if (new File(pubsRootDir, "module.xml").isFile()) {
+	    } else if (new File(pubsRootDir, "/config/module.xml").isFile()) {
                 log("Copy module: " + pubsRootDir);
                 CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()), twoTuple, filter, this);
             } else {

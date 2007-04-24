@@ -115,7 +115,7 @@ public class GenerateModuleList extends Task {
     protected static final String NAMESPACE = "http://apache.org/lenya/module-list/1.0";
 
     protected boolean isModuleDirectory(File path) {
-        File moduleFile = new File(path, "module.xml");
+        File moduleFile = new File(path, "config" + File.separator + "module.xml");
         return moduleFile.isFile();
     }
 
