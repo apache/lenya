@@ -33,9 +33,10 @@
       welcome page, and also on the introduction page of every publication.
     </p>
     
-    <h2>Important notes for beta testers of Lenya 1.4</h2>
+    <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
-    <h3>2007-04-23: Moved and Renamed $PUB_HOME/config/lucene_index.xconf</h3>
+    <h3>2007-04-23: Moved and renamed
+    <code>$PUB_HOME/config/lucene_index.xconf</code></h3>
     
     <p>
       Please move and rename your <code>$PUB_HOME/config/lucene_index.xconf</code> file to
@@ -43,23 +44,23 @@
       This change was done to preserve consistency with the other configuration file names and locations.
     </p>
     
-    <h3>2007-04-23: Moved $MODULE_HOME/module.xml</h3>
+    <h3>2007-04-23: Moved <code>$MODULE_HOME/module.xml</code></h3>
     
     <p>
-      Please move your <code>module.xml</code> file to the <code>config</code> directory of the module.
+      If you are using custom modules, please move your <code>module.xml</code> file into the
+      <code>config/</code> directory of the module (create one if necessary).
       This change was done to preserve consistency with the <code>publication.xml</code> location.
     </p>
     
-    <h3>2007-04-18: ac/ is now access-control/</h3>
+    <h3>2007-04-18: <code>ac/</code> is now <code>access-control/</code></h3>
     <p>
       In order to make the Lenya publication configuration more
-      self-explanatory, the directory <code>$YOURPUB/config/ac</code> has
-      been renamed to <code>$YOURPUB/config/access-control</code>.
+      self-explanatory, the directory <code>$PUB_HOME/config/ac</code> has
+      been renamed to <code>$PUB_HOME/config/access-control</code>.
       Additionally, the access control configuration file has been renamed
       from <code>ac.xconf</code> to <code>access-control.xml</code>.<br />
-      
       You will have to change your custom publications accordingly. Don't
-      forget to change the path settings in access-control.xml as well!
+      forget to change the path settings in <code>access-control.xml</code> as well!
     </p>
     <p>
       <em>Note the new suffix! From now on, "xconf" will only be used for patchfiles
@@ -67,10 +68,10 @@
       configuration files that are parsed directly should end in .xml.</em>
     </p>
     
-    <h3>2007-04-13: You need to update your custom publication.xconf files!</h3>
+    <h3>2007-04-13: You need to update your custom <code>publication.xconf</code> files!</h3>
     <p>
-      As of revision 528490, the file <code>$YOURPUB/publication.xml</code>
-      is no longer used. Its contents should be moved to <code>$YOURPUB/config/publication.xconf.</code>
+      As of revision 528490, the file <code>$PUB_HOME/publication.xml</code>
+      is no longer used. Its contents should be merged into <code>$PUB_HOME/config/publication.xconf.</code>
       To accomodate this, the format of <code>publication.xconf</code> has changed a bit (see
       below).<br />
       Sorry for the breakage, but we were able to eliminate a lot of old ad-hoc code
@@ -86,12 +87,14 @@
       for an example.<br />
       You can use the RNG schema at <code>webapp/lenya/resources/schemas/publication.rng</code>
       to verify that your file is correct:
-      <blockquote>
-        <code>
-          cd $LENYA_HOME<br />
-          java -jar lib/jing-20030619.jar src/webapp/lenya/resources/schemas/publication.rng $YOURPUB/config/publication.xconf
-        </code>
-      </blockquote>
+    </p>
+    <p>
+      <code>
+        cd $LENYA_HOME<br />
+        java -jar lib/jing-20030619.jar \<br />
+        &#160;&#160;src/webapp/lenya/resources/schemas/publication.rng \<br />
+        &#160;&#160;$YOURPUB/config/publication.xconf
+      </code>
     </p>
     <h3>New per-publication <code>readme.xml</code></h3>
     <p>
