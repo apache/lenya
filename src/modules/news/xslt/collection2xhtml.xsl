@@ -64,9 +64,9 @@
     <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
     <h2>
-      <div class="newsDate">
+      <span class="newsDate">
         <i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss" locale="{$language}" value="{$date}" />
-      </div>
+      </span><br />
       <a href="lenya-document:{@uuid}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
     </h2>
     <xsl:apply-templates select="xhtml:html/xhtml:body/xhtml:p[1]"/>
