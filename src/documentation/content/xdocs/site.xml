@@ -29,12 +29,15 @@
       <tlp-HEAD-rev href="tlp-HEAD.svn-revision.xml" label="current revision number" />
       <tlp-HEAD-sh href="tlp-HEAD.svn-sh.xml" label="create svn log shell" />
       <tlp-HEAD href="tlp-HEAD.svn.html" label="log HEAD" />
-      <tlp-2006-07 href="tlp-2007-01.svn.html" label="log 2007-01" />
-      <tlp-2006-07 href="tlp-2006-12.svn.html" label="log 2006-12" />
-      <tlp-2006-07 href="tlp-2006-11.svn.html" label="log 2006-11" />
-      <tlp-2006-07 href="tlp-2006-10.svn.html" label="log 2006-10" />
-      <tlp-2006-07 href="tlp-2006-09.svn.html" label="log 2006-09" />
-      <tlp-2006-07 href="tlp-2006-08.svn.html" label="log 2006-08" />
+      <tlp-2007-03 href="tlp-2007-04.svn.html" label="log 2007-04" />
+      <tlp-2007-03 href="tlp-2007-03.svn.html" label="log 2007-03" />
+      <tlp-2007-02 href="tlp-2007-02.svn.html" label="log 2007-02" />
+      <tlp-2007-01 href="tlp-2007-01.svn.html" label="log 2007-01" />
+      <tlp-2006-12 href="tlp-2006-12.svn.html" label="log 2006-12" />
+      <tlp-2006-11 href="tlp-2006-11.svn.html" label="log 2006-11" />
+      <tlp-2006-10 href="tlp-2006-10.svn.html" label="log 2006-10" />
+      <tlp-2006-09 href="tlp-2006-09.svn.html" label="log 2006-09" />
+      <tlp-2006-08 href="tlp-2006-08.svn.html" label="log 2006-08" />
       <tlp-2006-07 href="tlp-2006-07.svn.html" label="log 2006-07" />
       <tlp-2006-06 href="tlp-2006-06.svn.html" label="log 2006-06" />
       <tlp-2006-05 href="tlp-2006-05.svn.html" label="log 2006-05" />
@@ -93,6 +96,7 @@
     </changes>
     <charter href="charter.html" label="Charter"/>
     <guidelines href="guidelines.html" label="Project guidelines"/>
+    <who label="Who we are" href="who.html" description="Explain who is involved"/>
     <history href="history.html" label="History"/>
     <screenshots href="screenshots.html" label="Screenshots"/>
     <node-d href="roadmap.html" label="Roadmap"/>
@@ -395,7 +399,6 @@
     <index_com href="index.html" label="Contributing"/>
     <wiki href="ext:wiki/lenya" label="Lenya Wiki" />
     <translating href="translations.html" label="Translations" />
-    <credits href="acknowledgements.html" label="Credits"/>
     <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
     <node-g
       href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=Importance"
@@ -477,6 +480,7 @@
     </webdav>
     <oscom href="http://oscom.org"/>
     <wyona href="http://wyona.com" />
+    <wyona.org href="http://wyona.org" />
     <java href="http://java.sun.com/j2se/1.4.2/download.html"/>
     <java.endorsedmechanism href="http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html"/>
     <jetty href="http://jetty.mortbay.org/jetty/"/>
