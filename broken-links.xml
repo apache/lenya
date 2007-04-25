@@ -59,9 +59,6 @@
     <referrer uri="incubator-2003-05.svn.html"/>
     <referrer uri="tlp-2005-07.svn.html"/>
   </link>
-  <link message="No pipeline matched request: error:site:credits" uri="error:site:credits">
-    <referrer uri="guidelines.html"/>
-  </link>
   <link message="Premature end of file." uri="tlp-HEAD.svn-sh.xml">
     <referrer uri="linkmap.html"/>
     <referrer uri="tlp-2006-08.svn.html"/>
