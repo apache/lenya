@@ -287,7 +287,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     }
 
     /**
-     *
+     * @return The source URI.
      */
     public String getSourceURI() {
         return getContent().getSourceURI();
