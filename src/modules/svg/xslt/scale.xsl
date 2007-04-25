@@ -26,7 +26,7 @@
   
   <xsl:template match="/">
     <svg width="{$width}" height="{$height}" version="1.1">
-      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$url}"/>        
+      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$url}" preserveAspectRatio="none"/>        
     </svg>
   </xsl:template>
 </xsl:stylesheet>
