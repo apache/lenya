@@ -3,7 +3,7 @@ Installation of the Source Version
     * Prerequisites
     * Standalone Installation (using the built-in Jetty)
     * Installation with Apache Tomcat
-
+    * Security considerations
 
 Prerequisites
 
@@ -149,4 +149,20 @@ Installation with Apache Tomcat
 
    7. Test the installation by pointing your browser to
           http://localhost:8080/lenya/
+
+
+Security Considerations
+
+   It is advisable to run Lenya's servlet container with limited privileges,
+   to reduce the impact of a possible exploit.
+   You might want to create a user "lenya" with default group "lenya" for
+   this, change the rights of the build/ tree accordingly, and start the
+   server as that user.
+   
+   Additionally, you might want to consider tightening the write privileges 
+   of the servlet container. At run-time, it only needs write access to
+   WEB-INF/* and the publication's content and access-control store.
+   While not strictly necessary, disallowing write access to other parts
+   makes it harder for an attacker to manipulate the system.
+   FIXME: this needs more detailed documentation.
 
