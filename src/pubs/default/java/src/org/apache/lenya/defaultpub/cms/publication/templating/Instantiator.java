@@ -215,7 +215,8 @@ public class Instantiator extends AbstractLogEnabled implements
             String indexDir = "lenya/pubs/" + newPublicationId + "/work/lucene/index";
 
             indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/search/lucene_index.xconf");
+                    + newPublicationId + "/config/" 
+                    + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE);
             Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
             Element[] indexElement = DocumentHelper.getChildren(indexDoc.getDocumentElement(), null, "index");
 

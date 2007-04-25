@@ -123,7 +123,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /**
      * The name of the index configuration file.
      */
-    public static final String INDEX_CONF_FILE = "search/lucene_index.xconf";
+    public static final String INDEX_CONF_FILE = "search/lucene_index.xml";
 
     /**
      * check the config file each time the getIndex is called to update if necessary the
