@@ -146,6 +146,14 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">URL Mapping</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="Current URLs axioms" href="#Current+URLs+axioms">Current URLs axioms...</a>
+</div>
+<div class="menupageitem">
+<a title="Language Versions" href="#Language+Versions">Language Versions...</a>
+</div>
+</div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/concepts/authoring_live.html">Authoring and Live mode</a>
@@ -359,18 +367,52 @@ document.write("Last Published: " + document.lastModified);
 <p> This is reflected in the following methods: </p>
 <pre class="code"> DocumentBuilder.buildDocument(...) 
  DocumentBuilder.buildCanonicalUrl(...)</pre>
-<p> At the moment, the concept of multiple URLs per document is typically 
+<p>The concept of multiple URLs per document is typically 
         used for language versions (foo_{defaultlanguage}.html = foo.html) and 
-        to support different URL suffixes (foo, foo.htm, foo.html). </p>
-<p> The site structure is currently tightly connected to the URL space. 
-        Link URLs are derived directly from the site structure:</p>
-<pre class="code"> &lt;node id="foo"&gt;
-    &lt;node id="bar"/&gt;
- &lt;/node&gt; </pre>
-<p>is interpreted as <span class="codefrag">/foo/bar</span> 
-</p>
-<p>The language version is handled orthogonally to the site structure. 
-        The URL is determined by combining both document ID and language.</p>
+        to support different URL suffixes (foo, foo.htm, foo.html, foo.pdf). </p>
+<p>The site structure is tightly connected to the URL space. 
+        Link URLs are derived directly from the site structure.
+        The <span class="codefrag">bar</span> node in the following example</p>
+<pre class="code">&lt;node id="foo"&gt;
+  &lt;node id="bar"/&gt;
+&lt;/node&gt;</pre>
+<p>is accessed using an URL containing the snippet <span class="codefrag">/foo/bar</span>. </p>
+</div>
+    
+<a name="N1003D"></a><a name="Language+Versions"></a>
+<h2 class="h3">Language Versions</h2>
+<div class="section">
+<p>
+        The different language versions of a document can either be accessed
+        using suffixes (<span class="codefrag">foo_en</span>, <span class="codefrag">foo_de</span>), or by attaching them to
+        different nodes with the same UUID attribute in the site structure.
+        In the following example, the top-level nodes "en" and "de" are used
+        as entry points for the respective language.
+      </p>
+<pre class="code">&lt;site&gt;
+  &lt;node id="en"&gt;
+    &lt;node id="welcome" uuid="def456..."&gt;
+      &lt;label xml:lang="en"&gt;Welcome&lt;/label&gt;
+    &lt;/node&gt;
+  &lt;/node&gt;
+  &lt;node id="de"&gt;
+    &lt;node id="willkommen" uuid="def456..."&gt;
+      &lt;label xml:lang="de"&gt;Willkommen&lt;/label&gt;
+    &lt;/node&gt;
+  &lt;/node&gt;
+&lt;/site&gt;</pre>
+<p>
+        This results in the following URLs:
+      </p>
+<ul>
+        
+<li>
+<span class="codefrag">/en/welcome</span> - "Welcome"</li>
+        
+<li>
+<span class="codefrag">/de/willkommen</span> - "Willkommen"</li>
+      
+</ul>
 </div>
   
 </div>

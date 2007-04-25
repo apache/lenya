@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<log>
+<logentry
+   revision="513491">
+<author>thorsten</author>
+<date>2007-03-01T21:12:56.077111Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/svn-log/tlp-HEAD.svn.xml</path>
+</paths>
+<msg>Updating svn log.</msg>
+</logentry>
+<logentry
+   revision="514230">
+<author>nettings</author>
+<date>2007-03-03T20:00:29.545273Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/profiling/xslt/test.xhtml</path>
+<path
+   action="D">/lenya/trunk/src/modules/profiling/xslt/test.xml</path>
+</paths>
+<msg>removed accidentally committed test files
+</msg>
+</logentry>
+<logentry
+   revision="514614">
+<author>andreas</author>
+<date>2007-03-05T09:14:29.546863Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/RepositorySource.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/RepositorySourceValidity.java</path>
+</paths>
+<msg>Use content source URI instead of node source URI for validity. This fixes bug 41715. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="514615">
+<author>andreas</author>
+<date>2007-03-05T09:15:10.003427Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/AggregatingSource.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/xml/NamespaceHelper.java</path>
+</paths>
+<msg>Don't require namespace prefix in NamespaceHelper. This is correct according to DOM level 2.</msg>
+</logentry>
+<logentry
+   revision="514628">
+<author>andreas</author>
+<date>2007-03-05T09:50:56.242763Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/homepage/config/cocoon-xconf/resource-type-homepage.xconf</path>
+</paths>
+<msg>Fixed homepage sample URL</msg>
+</logentry>
+<logentry
+   revision="515992">
+<author>jann</author>
+<date>2007-03-08T09:52:02.430956Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/usecases/neutron/usecase-neutron.xmap</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/usecases/neutron/neutron.js</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Fixing some neutron issues. Credit goes to thomas comiotto</msg>
+</logentry>
+<logentry
+   revision="517199">
+<author>nettings</author>
+<date>2007-03-12T13:10:24.144512Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/resources/javascript/fckloader.js</path>
+</paths>
+<msg>Remove host value from ImageBrowserURL and LinkBrowserURL. These
+features now
+work under HTTP and HTTPS.
+
+thanks to richard frovarp for the patch. please test.
+</msg>
+</logentry>
+<logentry
+   revision="517253">
+<author>nettings</author>
+<date>2007-03-12T15:30:01.606093Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk/src/modules/blog/java/src/org/apache/lenya/blog/cms/usecases/Publish.java"
+   copyfrom-rev="517243"
+   action="A">/lenya/branches/trunk-rework-pubconf/src/modules/blog/java/src/org/apache/lenya/blog/cms/usecases/Publish.java</path>
+<path
+   action="D">/lenya/branches/trunk-rework-pubconf/src/modules/profiling/xslt/test.xml</path>
+<path
+   action="M">/lenya/branches/trunk-rework-pubconf/src/java/org/apache/lenya/cms/cocoon/source/RepositorySourceValidity.java</path>
+<path
+   action="M">/lenya/branches/trunk-rework-pubconf/src/modules-core/sitemanagement/test/canoo/test.xml</path>
+<path
+   action="D">/lenya/branches/trunk-rework-pubconf/src/webapp/lenya/content/xopus</path>
+<path
+   action="D">/lenya/branches/trunk-rework-pubconf/src/webapp/lenya/xslt/xopus</path>
+<path
+   action="M">/lenya/branches/trunk-rework-pubconf/src/modules/blog/config/cocoon-xconf/usecases-workflow-publish.xconf</path>
+<path
+   action="M">/lenya/branches/trunk-rework-pubconf/src/pubs/default/modules/homepage/config/cocoon-xconf/resource-type-homepage.xconf</path>
+<path
+   action="D">/lenya/branches/trunk-rework-pubconf/src/modules/blog/java/src/org/apache/lenya/cms/workflow/usecases/Publish.java</path>
+<path
+   action="M">/lenya/branches/trunk-rework-pubconf/src/java/org/apache/lenya/cms/cocoon/source/RepositorySource.java</path>
+<path
+   action="D">/lenya/branches/trunk-rework-pubconf/src/modules/profiling/xslt/test.xhtml</path>
+<path
+   action="M">/lenya/branches/trunk-rework-pubconf/src/modules/development/test/canoo/test.xml</path>
+<path
+   action="M">/lenya/branches/trunk-rework-pubconf/src/modules/fckeditor/resources/javascript/fckloader.js</path>
+</paths>
+<msg>merged trunk changes
+</msg>
+</logentry>
+<logentry
+   revision="519883">
+<author>andreas</author>
+<date>2007-03-19T09:21:46.840084Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
+</paths>
+<msg>Don't check out doc in FCKEditor sitemap. This fixes bug 41839. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="519884">
+<author>andreas</author>
+<date>2007-03-19T09:31:47.005261Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+</paths>
+<msg>Paste: check if source doc is null. This fixes bug 41850. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="519886">
+<author>andreas</author>
+<date>2007-03-19T09:42:51.923818Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/site/usecases/CreateResource.java</path>
+</paths>
+<msg>Use lowercase extension for images (often necessary on Windows). This fixes bug 41866. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="519893">
+<author>andreas</author>
+<date>2007-03-19T10:16:34.177723Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/xslt/util/identity.xsl</path>
+</paths>
+<msg>Don't show menubar when viewing a revision</msg>
+</logentry>
+<logentry
+   revision="519928">
+<author>andreas</author>
+<date>2007-03-19T12:34:32.120843Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/xslt/link.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/sitemap.xmap</path>
+</paths>
+<msg>Use path instead of UUID for 'insert link' sitetree language URLs</msg>
+</logentry>
+<logentry
+   revision="519931">
+<author>andreas</author>
+<date>2007-03-19T12:46:07.738816Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/xslt/link.xsl</path>
+</paths>
+<msg>Improved layout of 'insert link' screen</msg>
+</logentry>
+<logentry
+   revision="520418">
+<author>andreas</author>
+<date>2007-03-20T15:03:34.502532Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xslt.xsl</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xhtml.xsl</path>
+</paths>
+<msg>Fixed menu XSLT + sitemap (some layout and i18n issues)</msg>
+</logentry>
+<logentry
+   revision="520419">
+<author>andreas</author>
+<date>2007-03-20T15:08:29.998242Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/ac/usecase-policies.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/kupu/config/cocoon-xconf/usecase-kupu.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/kupu/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/homepage/config/menus/homepage.xsp</path>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/config/menu.xsp</path>
+</paths>
+<msg>Add usecase declaration for Kupu</msg>
+</logentry>
+<logentry
+   revision="520425">
+<author>andreas</author>
+<date>2007-03-20T15:17:38.961673Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xhtml.xsl</path>
+</paths>
+<msg>Handle text and i18n elements correctly in menu items</msg>
+</logentry>
+<logentry
+   revision="520448">
+<author>andreas</author>
+<date>2007-03-20T15:54:02.947446Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/xslt/clean-xhtml.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/resources/javascript/fckconfig.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/resources/javascript/fckloader.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/usecases/fckeditor.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/README.txt</path>
+</paths>
+<msg>The patch contains what is required to get FCKeditor 2.4 to work with Lenya. This fixes bug 41842. Thanks to Richard Frovarp.</msg>
+</logentry>
+<logentry
+   revision="520449">
+<author>andreas</author>
+<date>2007-03-20T15:54:48.053084Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/test/canoo/test.xml</path>
+</paths>
+<msg>Added web test to check the last-published footer</msg>
+</logentry>
+<logentry
+   revision="520452">
+<author>andreas</author>
+<date>2007-03-20T15:56:49.939299Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/resources/javascript/insertLink.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/java/src/org/apache/lenya/cms/editors/fckeditor/Fckeditor.java</path>
+</paths>
+<msg>FCKEditor: use UUIDs for links and images. This fixes bug 41863. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="520931">
+<author>andreas</author>
+<date>2007-03-21T16:12:24.720663Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNodeMetaData.java</path>
+</paths>
+<msg>[refactoring] extracted method</msg>
+</logentry>
+<logentry
+   revision="520932">
+<author>andreas</author>
+<date>2007-03-21T16:16:05.999817Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+</paths>
+<msg>Duplicate meta data instead of copying when copying a document to a different area. This fixes bug 40061.</msg>
+</logentry>
+<logentry
+   revision="520933">
+<author>andreas</author>
+<date>2007-03-21T16:17:07.301358Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xhtml.xsl</path>
+</paths>
+<msg>Added i18n for menu labels</msg>
+</logentry>
+<logentry
+   revision="520944">
+<author>andreas</author>
+<date>2007-03-21T16:44:09.309177Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/test/canoo/test.xml</path>
+</paths>
+<msg>Invoke authoring URL to check published footer in web test</msg>
+</logentry>
+<logentry
+   revision="520953">
+<author>andreas</author>
+<date>2007-03-21T17:24:58.268997Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/webdav.xmap</path>
+</paths>
+<msg>Mount webdav sitemap instead of using SourceWritingTransformer in blog publication</msg>
+</logentry>
+<logentry
+   revision="520954">
+<author>andreas</author>
+<date>2007-03-21T17:35:03.107615Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/config/ac/usecase-policies.xml</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/config/menus/entry.xsp</path>
+</paths>
+<msg>Fixed some usecase permissions and a menu item in the blog pub. Deleting doesn't work yet, though.</msg>
+</logentry>
+<logentry
+   revision="521206">
+<author>andreas</author>
+<date>2007-03-22T10:58:32.769698Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+</paths>
+<msg>Create usecase: allow to provide the sample name as parameter</msg>
+</logentry>
+<logentry
+   revision="521330">
+<author>andreas</author>
+<date>2007-03-22T16:35:18.234528Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/SiteSourceFactory.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/SiteSource.java</path>
+</paths>
+<msg>Introduce separated SiteSource class to allow checking for existence</msg>
+</logentry>
+<logentry
+   revision="521331">
+<author>andreas</author>
+<date>2007-03-22T16:36:08.385360Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/collection/samples/children.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/collection/config/cocoon-xconf/resourcetype-collection.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/collection/xslt/sitetree2children.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/collection/xslt/collection2cinclude.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/collection/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/modules/collection/xslt</path>
+</paths>
+<msg>Added option to generate child collection dynamically</msg>
+</logentry>
+<logentry
+   revision="521332">
+<author>andreas</author>
+<date>2007-03-22T16:37:59.986324Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/news/resources</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/installed/index_de.meta</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/homepage/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/resources/shared/css/news.css</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/resources/icons</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/installed/index_de</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/xslt/collection2xhtml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/resources/i18n</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/menus.xmap</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/index_de.meta</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/example-content/sitetree.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/config/cocoon-xconf</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/publication.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/config</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/installed</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/resources/i18n/cmsui.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/config/cocoon-xconf/resourcetype-news.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/xslt/collection2include.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/resources/i18n/cmsui_de.xml</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/index_en</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/config/menu.xsp</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/module.xml</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/installed/index_en.meta</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/homepage/xslt/homepage2xhtml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/xslt</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/resources/shared/css/page.xml</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/installed/index_en</path>
+<path
+   action="A">/lenya/trunk/src/modules/news</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/resources/icons/news.gif</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/index_en.meta</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/example-content/news/index_de</path>
+</paths>
+<msg>Added news module based on collection module.</msg>
+</logentry>
+<logentry
+   revision="521346">
+<author>andreas</author>
+<date>2007-03-22T17:02:05.367707Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/SiteSourceFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/SiteSource.java</path>
+</paths>
+<msg>Initialize SiteSource logger properly</msg>
+</logentry>
+<logentry
+   revision="523183">
+<author>antonio</author>
+<date>2007-03-28T05:38:45.147356Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/java/org/apache/lenya/cms/ant/StaticHTMLExporter.java</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/java/org/apache/lenya/net/WGet.java</path>
+</paths>
+<msg>Extract imports.</msg>
+</logentry>
+<logentry
+   revision="523184">
+<author>antonio</author>
+<date>2007-03-28T05:45:33.098341Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/INSTALL-SRC.txt</path>
+</paths>
+<msg>Lenya already works for java 5. See: http://issues.apache.org/bugzilla/show_bug.cgi?id=32923</msg>
+</logentry>
+<logentry
+   revision="523186">
+<author>antonio</author>
+<date>2007-03-28T05:47:29.477491Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/RELEASE-MANAGEMENT.txt</path>
+</paths>
+<msg>Update to next release 1.2.6.</msg>
+</logentry>
+<logentry
+   revision="523190">
+<author>antonio</author>
+<date>2007-03-28T06:16:43.984819Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/pubs/default/java/src/org/apache/lenya/defaultpub/cms/task/Publish.java</path>
+</paths>
+<msg>Remove published resources before copy resources. It keeps clean the live area.</msg>
+</logentry>
+<logentry
+   revision="524127">
+<author>andreas</author>
+<date>2007-03-30T15:29:40.053043Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentURLModule.java</path>
+</paths>
+<msg>[minor change] fixed javadoc comment</msg>
+</logentry>
+<logentry
+   revision="524160">
+<author>andreas</author>
+<date>2007-03-30T16:30:07.425343Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/cocoon/transformation/UuidToUrlTransformer.java</path>
+</paths>
+<msg>Added support for uuid2url.extension parameter</msg>
+</logentry>
+<logentry
+   revision="524163">
+<author>andreas</author>
+<date>2007-03-30T16:33:48.512387Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/util/Query.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/config/cocoon-xconf/resourcetype-news.xconf</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/xslt/collection2include.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/news/xslt/collection2rss.xsl</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/resources/shared/css/news.css</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/sitemap.xmap</path>
+</paths>
+<msg>Added support for news RSS</msg>
+</logentry>
+<logentry
+   revision="524165">
+<author>andreas</author>
+<date>2007-03-30T16:34:46.569244Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/news/xslt/collection2rss.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/sitemap.xmap</path>
+</paths>
+<msg>Fixed RSS date</msg>
+</logentry>
+<logentry
+   revision="524487">
+<author>antonio</author>
+<date>2007-03-31T21:58:59.434863Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/java/org/apache/lenya/cms/cocoon/uriparameterizer/URIParameterizerImpl.java</path>
+</paths>
+<msg>Fix concurrency issue. Thanks to Jann Forrer (jann.forrer@id.uzh.ch).</msg>
+</logentry>
+</log>
