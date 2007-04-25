@@ -10,7 +10,7 @@
 
 <map:views>
   <map:view name="pretty-content" from-label="data">
-    <map:transform src="xslt/xml2nicexml.xsl"/>
+    <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
     <map:transform src="xslt/xmlverbatimwrapper.xsl">
       <map:parameter name="css-stylesheet" value="{request:contextPath}/modules/profiling/css/xmlverbatim.css"/>
     </map:transform>
@@ -29,7 +29,7 @@
     </map:match>
     <map:match pattern="profile.xml">
       <map:generate type="profiler"/>
-      <map:transform src="xslt/xml2nicexml.xsl"/>
+      <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
       <map:serialize type="xml"/>
     </map:match>    
   </map:pipeline>

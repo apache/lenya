@@ -1,5 +1,6 @@
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.profiling</id>
+  <depends module="org.apache.lenya.modules.prettyprinting"/>
   <package>org.apache.lenya.modules</package>
   <version>0.0.3</version>
   <name>Cocoon Pipeline Profiling Module</name>
