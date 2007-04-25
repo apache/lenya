@@ -81,6 +81,7 @@
     <module name="languageselector"/>
     <module name="administration"/>
     <module name="news"/>
+    <module name="prettyprinting"/>
   </modules>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
