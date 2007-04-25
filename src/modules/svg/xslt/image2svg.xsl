@@ -21,7 +21,18 @@
   
   <xsl:template match="xhtml:img[@height and @width]/@src">
     <xsl:attribute name="src">
-      <xsl:value-of select="."/>
+      <!-- if the src attribute already contains a querystring, cut it off. otherwise, multiple
+           querystrings can accumulate! 
+           NB: substring-before returns the empty string if the needle is not found.
+      -->
+      <xsl:choose>
+        <xsl:when test="contains(.,'?')">
+           <xsl:value-of select="substring-before(.,'?')"/>
+        </xsl:when>
+        <xsl:otherwise>
+           <xsl:value-of select="."/>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:text>?</xsl:text>
       <xsl:text>lenya.module=svg&amp;</xsl:text>
       <xsl:if test="string(../@height)">

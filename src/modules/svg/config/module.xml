@@ -22,7 +22,9 @@
   <id>org.apache.lenya.modules.svg</id>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>SVG</name>
+  <name>SVG image rendering</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>SVG-based image rendering</description>
+  <description>The SVG module generates the rounded corners for
+  the Lenya dialogs, and re-scales pixel-based GIF, JPG and PNG images on the
+  fly, depending on height and width query parameters. It uses Batik.</description>
 </module>
