@@ -61,7 +61,7 @@
           <map:parameter name="parameter-selector-test" value="{request-param:reformat}"/>
           <map:when test=""/>
           <map:otherwise>
-            <map:transform src="fallback://lenya/modules/editors/usecases/forms/prettyprint.xsl"/>
+            <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
           </map:otherwise>
         </map:select> 
         <map:transform src="fallback://lenya/modules/editors/usecases/forms/oneform.xsl">
