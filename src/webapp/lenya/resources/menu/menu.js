@@ -35,6 +35,7 @@ function menuOut() {
 
 //turns on the display for nav menus
 function eventShowMenu(e) {
+    var obj;
     if (activeMenu != null) eventHideMenu();
     activeMenu = "menu"+this.id.substring(3,this.id.length)
     obj = document.getElementById(activeMenu);
@@ -45,6 +46,7 @@ function eventShowMenu(e) {
 
 //hides nav menus and pop ups
 function eventHideMenu() {
+    var obj;
     document.onclick = null;
     if (activeMenu != null) {
         obj = document.getElementById(activeMenu);
@@ -54,7 +56,9 @@ function eventHideMenu() {
 
 //nav events
 function userEventsInit() {
-    for (i=1; i < numberOfMenus + 1; i++) {
+    var obj;
+    var i;
+    for (i=1; i <= numberOfMenus; i++) {
 	    obj = document.getElementById("nav"+i);
 	    if (obj != null) {
 		    obj.onclick = eventShowMenu;
