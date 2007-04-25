@@ -309,6 +309,8 @@
                         </map:act>
                       </map:otherwise> 
                     </map:select>
+                    <!-- pretty-print output for easier debugging and for the benefit of new users -->
+                    <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
                     <map:serialize type="xhtml"/>
                   </map:otherwise>
                 </map:select>
