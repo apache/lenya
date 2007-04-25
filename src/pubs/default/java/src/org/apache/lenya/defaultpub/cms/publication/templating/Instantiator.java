@@ -61,7 +61,8 @@ public class Instantiator extends AbstractLogEnabled implements
 
     protected static final String[] sourcesToCopy = { 
             "config/publication.xconf",
-            "config/ac/ac.xconf", "config/ac/policies/", "config/ac/usecase-policies.xml", 
+            "config/access-control/access-control.xml", "config/access-control/policies/", 
+            "config/access-control/usecase-policies.xml", 
             "config/workflow/workflow.xml",
             "config/" + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE};
 
@@ -214,7 +215,7 @@ public class Instantiator extends AbstractLogEnabled implements
             String indexDir = "lenya/pubs/" + newPublicationId + "/work/lucene/index";
 
             indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/lucene_index.xconf");
+                    + newPublicationId + "/config/search/lucene_index.xconf");
             Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
             Element[] indexElement = DocumentHelper.getChildren(indexDoc.getDocumentElement(), null, "index");
 

@@ -89,7 +89,7 @@
   -->
 
   <!-- You can specify a custom location for your content, outside the Lenya build tree. Note that you will probably also want
-       to specify custom locations for access control (see ac/ac.xconf), so that all your dynamically generated data is in one place
+       to specify custom locations for access control (see access-control/access-control.xml), so that all your dynamically generated data is in one place
        for easy backup. -->
   <!--
        Relative to webapp context: 

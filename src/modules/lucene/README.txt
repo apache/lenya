@@ -6,7 +6,7 @@
   Configuration
   -------------
 
-  Each publication has a configuration at PUB/config/lucene_index.xconf which is being defined
+  Each publication has a configuration at PUB/config/search/lucene_index.xconf which is being defined
   by java/src/org/apache/cocoon/components/search/components/impl/IndexManagerImpl.java
 
 

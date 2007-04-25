@@ -41,7 +41,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 
 /**
- * Resolves the access controller according to the <code>ac.xconf</code> file of a publication.
+ * Resolves the access controller according to the <code>access-control.xml</code> file of a publication.
  */
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
         Initializable {
