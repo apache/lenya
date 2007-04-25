@@ -28,7 +28,7 @@
       <steps>
         <!-- login page -->
         <invoke url="index.html" />
-        <verifyTitle text="LOGIN to the DEFAULT Publication" />
+        <verifyTitle text="Login to the Default Publication" />
         <setInputField name="username" value="lenya"/>
         <setInputField name="password" value="levi"/>
         <clickButton name="submit"/>

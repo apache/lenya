@@ -30,7 +30,7 @@
       <steps>
         <!-- login page -->
         <invoke url="index.html" />
-        <verifyTitle text="LOGIN to the DEFAULT Publication" />
+        <verifyTitle text="Login to the Default Publication" />
         
         <!-- missing fields -->
         <setInputField name="username" value=""/>
@@ -52,9 +52,9 @@
         
         <!-- logout -->
         <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <verifyTitle text="LOGOUT from the Publication" />
+        <verifyTitle text="Logout from the Publication" />
         <clickButton name="submit"/>
-        <verifyTitle text="LOGIN to the DEFAULT Publication" />
+        <verifyTitle text="Login to the Default Publication" />
         
       </steps>
     </webtest>

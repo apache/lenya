@@ -101,7 +101,7 @@
   <message key="Source File(s)">Source File(s)</message>
 
   <!-- login screen -->
-  <message key="login-to-pub">LOGIN to the {0} Publication</message>
+  <message key="login-to-pub">Login to the {0} Publication</message>
   <message key="Login">Login</message>
   <message key="Password">Password</message>
   <message key="Username">Username</message>
@@ -113,7 +113,7 @@
   <message key="have-another-account">If you have another user account with the corresponding privileges, please provide user name and password below.</message>
 
   <!-- logout screen -->
-  <message key="logout-from-pub">LOGOUT from the {0} Publication</message>
+  <message key="logout-from-pub">Logout from the {0} Publication</message>
   <message key="Your History">Your History</message>
   <message key="Login to Authoring Area">Login to Authoring Area</message>
 
