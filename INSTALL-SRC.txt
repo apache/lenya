@@ -14,7 +14,8 @@ Prerequisites
 
     * Java 2 Platform, Standard Edition
       Recommended version: JDK 1.5 (used by most developers, 1.4.2 or later should also work).
-      JDK 6 has not been tested yet, feedback is welcome.
+      JDK 6 has not been tested yet, feedback is welcome. Although it seems that Cocoon has 
+      issues with JDK 6, which means that Lenya can't run either.
       Get the JDK at http://java.sun.com/javase/downloads/index_jdk5.jsp
 
     * Apache Cocoon
