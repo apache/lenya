@@ -403,6 +403,9 @@
   <message key="error-generic">Ein Fehler ist aufgetreten.</message>
   <message key="error-404">404: Seite nicht gefunden</message>
   
+  <message key="publication-does-not-exist">Die Publikation existiert nicht</message>
+  <message key="publication-...-does-not-exist">Die Publikation mit der ID "{0}" existiert nicht.</message>
+  
   <message key="configure-content-repository">
     <xhtml:strong>Hinweis:</xhtml:strong> Überprüfen Sie, ob das Content-Repository
     in <xhtml:code>$PUB_HOME/config/(local.)publication.xml</xhtml:code> richtig konfiguriert ist.
