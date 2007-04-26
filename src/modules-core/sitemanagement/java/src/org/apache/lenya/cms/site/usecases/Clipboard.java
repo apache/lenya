@@ -23,7 +23,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
- * Clipboard for cut/copy/paste of documents. The clipping method is either {@link #METHOD_CUT}or
+ * Clipboard for cut/copy/paste of documents. The clipping method is either {@link #METHOD_CUT} or
  * {@link #METHOD_COPY}.
  * 
  * @version $Id$
@@ -36,8 +36,15 @@ public class Clipboard {
     private String language;
     private int method;
 
-    protected static final int METHOD_CUT = 0;
-    protected static final int METHOD_COPY = 1;
+    /**
+     * The "cut" method.
+     */
+    public static final int METHOD_CUT = 0;
+    
+    /**
+     * The "copy" method.
+     */
+    public static final int METHOD_COPY = 1;
 
     /**
      * Ctor.
