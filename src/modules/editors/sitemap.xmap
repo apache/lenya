@@ -33,13 +33,8 @@
 
     <map:pipeline>
       <map:match pattern="form/*/**">
-        <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
-        <map:select type="parameter">
-          <map:parameter name="parameter-selector-test" value="{request-param:lenya.continutation}"/>
-          <map:when test="">
-            <map:transform src="fallback://lenya/modules/editors/usecases/forms/numberTags.xsl"/>
-          </map:when>
-        </map:select>
+        <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}?session=usecase"/>
+        <map:transform src="fallback://lenya/modules/editors/usecases/forms/numberTags.xsl"/>
         <map:transform src="fallback://lenya/modules/editors/usecases/forms/{1}.xsl">
           <map:parameter name="docid" value="{page-envelope:document-path}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
