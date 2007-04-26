@@ -136,6 +136,13 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             LinkTarget target = resolver.resolve(currentDoc, linkUri);
             Document doc = target.getDocument();
 
+            if (target.isRevisionSpecified()) {
+                if (queryString == null) {
+                    queryString = "";
+                }
+                queryString += "rev=" + target.getRevisionNumber();
+            }
+
             String format = null;
             if (queryString != null) {
                 Query query = new Query(queryString);
