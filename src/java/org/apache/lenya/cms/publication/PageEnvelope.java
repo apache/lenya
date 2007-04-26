@@ -165,7 +165,6 @@ public class PageEnvelope {
 
     /**
      * Constructor.
-     * @param manager The service manager.
      */
     protected PageEnvelope() {
     }
