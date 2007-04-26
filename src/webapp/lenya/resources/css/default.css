@@ -49,9 +49,13 @@ li {
 
 code {
     font-size: 130%; /* hack! the "font-size:small" in the other elements needs to go. */
-    font-weight: bold;
     font-family: monospace;
 }
+
+h1 code, h2 code, h3 code {
+    font-weight: bold;
+}
+
 .lenya-header {
     vertical-align: bottom;
     padding-left: 30px;
