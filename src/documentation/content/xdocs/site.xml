@@ -214,6 +214,9 @@
     <collection_module_section label="collection">
       <collection_module href="collection.html" label="Overview"/>
     </collection_module_section>
+    <fckeditor_module_section label="fckeditor">
+      <fckeditor_module href="fckeditor.html" label="Overview"/>
+    </fckeditor_module_section>
     <news_module_section label="news">
       <news_module href="news.html" label="Overview"/>
     </news_module_section>
