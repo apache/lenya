@@ -122,7 +122,9 @@ public class Paste extends DocumentUsecase {
         super.doExecute();
 
         DocumentFactory identityMap = getDocumentFactory();
-        Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
+        ClipboardHelper helper = new ClipboardHelper();
+        
+        Clipboard clipboard = helper.getClipboard(getContext());
         Publication pub = getSourceDocument().getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
@@ -144,6 +146,8 @@ public class Paste extends DocumentUsecase {
                 this.manager.release(documentManager);
             }
         }
+        
+        helper.removeClipboard(getContext());
     }
 
     protected String getTargetPath() throws SiteException, DocumentBuildException,

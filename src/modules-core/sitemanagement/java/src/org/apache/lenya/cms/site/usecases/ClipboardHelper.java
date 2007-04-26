@@ -72,4 +72,13 @@ public class ClipboardHelper {
         session.setAttribute(getSessionAttributeName(), clipboard);
     }
     
+    /**
+     * Removes the clipboard from the session.
+     * @param context The context.
+     */
+    public void removeClipboard(Context context) {
+        Session session = getSession(context);
+        session.removeAttribute(getSessionAttributeName());
+    }
+    
 }
