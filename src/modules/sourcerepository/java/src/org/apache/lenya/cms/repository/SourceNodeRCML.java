@@ -82,21 +82,8 @@ public class SourceNodeRCML implements RCML {
         this.manager = manager;
 
         if (!SourceUtil.exists(getRcmlSourceUri(), manager)) {
-            // The rcml file does not yet exist, so we create it now...
-            //
-            long lastModified = 0;
-            if (node.exists()) {
-                lastModified = node.getLastModified();
-            }
-
+            // The rcml file does not yet exist, so we create it now
             initDocument();
-
-            // Create a "fake" checkin entry so it looks like the
-            // system checked the document in. We use the filesystem
-            // modification date as checkin time.
-            //
-            checkOutIn(SourceNodeRCML.ci, RevisionController.systemUsername, lastModified, false);
-
             write();
         }
     }
