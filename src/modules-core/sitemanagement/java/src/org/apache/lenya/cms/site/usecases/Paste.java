@@ -29,11 +29,13 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
@@ -41,7 +43,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  * 
  * @version $Id$
  */
-public class Paste extends DocumentUsecase {
+public class Paste extends AbstractUsecase {
 
     protected static final String CLIPBOARD_LABEL = "clipboardLabel";
 
@@ -61,6 +63,20 @@ public class Paste extends DocumentUsecase {
         }
     }
 
+    protected Document getSourceDocument() {
+        Document doc = null;
+        try {
+            DocumentFactory factory = getDocumentFactory();
+            String sourceUrl = getParameterAsString(SOURCE_URL);
+            if (factory.isDocument(sourceUrl)) {
+                doc = factory.getFromURL(sourceUrl);
+            }
+        } catch (DocumentBuildException e) {
+            throw new RuntimeException(e);
+        }
+        return doc;
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
@@ -69,18 +85,24 @@ public class Paste extends DocumentUsecase {
 
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         if (clipboard != null) {
-            if(getSourceDocument() == null) {
-                addErrorMessage("No source document");
-                return;
-            }
             String label;
             try {
-                Publication pub = getSourceDocument().getPublication();
+                Publication pub = getPublication();
                 label = clipboard.getDocument(getDocumentFactory(), pub).getLink().getLabel();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             setParameter(CLIPBOARD_LABEL, label);
+        }
+    }
+
+    protected Publication getPublication() {
+        URLInformation info = new URLInformation(getSourceURL());
+        String pubId = info.getPublicationId();
+        try {
+            return getDocumentFactory().getPublication(pubId);
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -91,15 +113,16 @@ public class Paste extends DocumentUsecase {
         List nodes = new ArrayList();
 
         try {
-            Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
+            Node siteNode = getArea().getSite().getRepositoryNode();
             nodes.add(siteNode);
 
             Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
             DocumentFactory map = getDocumentFactory();
-            Publication pub = getSourceDocument().getPublication();
+            Publication pub = getPublication();
             Document clippedDocument = clipboard.getDocument(map, pub);
 
-            NodeSet subsite = SiteUtil.getSubSite(this.manager, clippedDocument.getLink().getNode());
+            NodeSet subsite = SiteUtil
+                    .getSubSite(this.manager, clippedDocument.getLink().getNode());
             Document[] subsiteDocs = subsite.getDocuments();
 
             for (int i = 0; i < subsiteDocs.length; i++) {
@@ -115,6 +138,16 @@ public class Paste extends DocumentUsecase {
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
+    protected Area getArea() {
+        Publication pub = getPublication();
+        URLInformation info = new URLInformation(getSourceURL());
+        try {
+            return pub.getArea(info.getArea());
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -123,9 +156,9 @@ public class Paste extends DocumentUsecase {
 
         DocumentFactory identityMap = getDocumentFactory();
         ClipboardHelper helper = new ClipboardHelper();
-        
+
         Clipboard clipboard = helper.getClipboard(getContext());
-        Publication pub = getSourceDocument().getPublication();
+        Publication pub = getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
         final String targetPath = getTargetPath();
@@ -146,7 +179,7 @@ public class Paste extends DocumentUsecase {
                 this.manager.release(documentManager);
             }
         }
-        
+
         helper.removeClipboard(getContext());
     }
 
@@ -154,19 +187,20 @@ public class Paste extends DocumentUsecase {
             ServiceException, DocumentException {
         DocumentFactory identityMap = getDocumentFactory();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
-        Publication pub = getSourceDocument().getPublication();
+        Publication pub = getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
-        String targetArea = getSourceDocument().getArea();
+        String targetArea = getArea().getName();
         String language = clippedDocument.getLanguage();
         String nodeId = clippedDocument.getName();
-        String potentialPath = getSourceDocument().getPath() + "/" + nodeId;
 
-        DocumentLocator potentialLoc = DocumentLocator.getLocator(getSourceDocument().getPublication()
-                .getId(),
-                targetArea,
-                potentialPath,
-                language);
+        Document sourceDoc = getSourceDocument();
+        String basePath = sourceDoc != null ? sourceDoc.getPath() : "";
+
+        String potentialPath = basePath + "/" + nodeId;
+
+        DocumentLocator potentialLoc = DocumentLocator.getLocator(getPublication().getId(),
+                targetArea, potentialPath, language);
         return SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), potentialLoc)
                 .getPath();
     }
