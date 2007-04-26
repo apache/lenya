@@ -39,7 +39,7 @@
       <jx:set var="count" value="${usecase.getParameter('entries').size()}"/>
       <jx:forEach var="item" items="${usecase.getParameter('entries')}" end="0">
         <tr>
-          <td><jx:out value="${count}"/></td>
+          <td><jx:out value="${item.version}"/></td>
           <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
           <td><jx:out value="${item.identity}"/></td>
           <td><i18n:text>Current Version</i18n:text></td>
@@ -47,9 +47,8 @@
       </jx:forEach>
       <jx:forEach var="item" items="${usecase.getParameter('entries')}" begin="1">
         <tr>
-          <jx:set var="count" value="${count - 1}"/>
           <td align="right">
-            <a href="?lenya.revision=${item.version}" target="_blank"><jx:out value="${count}"/></a>
+            <a href="?lenya.revision=${item.version}" target="_blank"><jx:out value="${item.version}"/></a>
           </td>
           <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
           <td><jx:out value="${item.identity}"/></td>
