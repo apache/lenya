@@ -82,7 +82,19 @@
           </jx:choose>
           DEFAULT_LANGUAGE = '<jx:out value="${publication.getDefaultLanguage()}"/>';
           IMAGE_PATH = '<jx:out value="${request.contextPath + '/lenya/images/tree/'}"/>';
-          CUT_DOCUMENT_ID = '<jx:out value="${request.getSession().getAttribute('org.apache.lenya.cms.info.cutdocumentid')}"/>';
+          
+          
+          <jx:set var="clipboard" value="${request.getSession().getAttribute('org.apache.lenya.cms.site.usecases.Clipboard')}"/>
+          <jx:choose>
+            <jx:when test="${clipboard != null &amp;&amp; clipboard.getMethod() == Packages.org.apache.lenya.cms.site.usecases.Clipboard.METHOD_CUT}">
+              <jx:set var="cutDocument" value="${clipboard.getDocument(publication.getFactory(), publication)}"/>
+              CUT_DOCUMENT_ID = '<jx:out value="${cutDocument.getPath()}"/>';
+            </jx:when>
+            <jx:otherwise>
+              CUT_DOCUMENT_ID = '';
+            </jx:otherwise>
+          </jx:choose>
+          
           ALL_AREAS = 'authoring,trash,archive';
           PIPELINE_PATH = '/authoring/sitetree-fragment.xml';
           SHOW_LOADING_HINT = true;
