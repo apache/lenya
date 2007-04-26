@@ -23,7 +23,9 @@
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns="http://www.w3.org/1999/xhtml"
   >
+  
   <xsl:import href="../util/page-util.xsl"/>
   
   <xsl:template match="/">
@@ -43,12 +45,23 @@
 	      <div class="lenya-box-body">
 	        <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
             <table>
-              <tr><td><i18n:text>User</i18n:text>:</td><td><xsl:value-of select="rc:user"/></td></tr>
-              <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
-              <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>User</i18n:text>:</td>
+                <td><xsl:value-of select="rc:user"/></td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>Date</i18n:text>:</td>
+                <td><xsl:value-of select="rc:date"/></td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>Filename</i18n:text>:</td>
+                <td><xsl:value-of select="rc:filename"/></td>
+              </tr>
             </table>
             <form id="form-back">
-              <input type="button" value="OK" onClick="history.go(-1)" name="input-ok"/>
+              <p>
+                <input type="button" value="OK" onClick="history.go(-1)" name="input-ok"/>
+              </p>
             </form>		
   	      </div>
   	    </div>
@@ -65,12 +78,23 @@
     	  <div class="lenya-box-body">
 	        <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
             <table>
-              <tr><td><i18n:text>User</i18n:text>:</td><td><xsl:value-of select="rc:user"/></td></tr>
-              <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
-              <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>User</i18n:text>:</td>
+                <td><xsl:value-of select="rc:user"/></td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>Date</i18n:text>:</td>
+                <td><xsl:value-of select="rc:date"/></td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>Filename</i18n:text>:</td>
+                <td><xsl:value-of select="rc:filename"/></td>
+              </tr>
             </table>
             <form id="form-back">
-              <input type="button" value="OK" onClick="history.go(-1)" name="input-ok"/>
+              <p>
+                <input type="button" value="OK" onClick="history.go(-1)" name="input-ok"/>
+              </p>
             </form>		
   	      </div>
   	    </div>
