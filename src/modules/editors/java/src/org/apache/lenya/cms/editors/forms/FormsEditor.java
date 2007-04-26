@@ -182,6 +182,8 @@ public class FormsEditor extends DocumentUsecase {
 
     protected void doExecute() throws Exception {
         super.doExecute();
+        
+        advance();
 
         List errors = (List) getParameter(VALIDATION_ERRORS);
         if (errors != null) {
