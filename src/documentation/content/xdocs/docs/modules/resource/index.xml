@@ -31,5 +31,35 @@
         it allows to store arbitrary media documents.
       </p>
     </section>
+    <section>
+      <title>Resource Icons</title>
+      <p>
+        This module provides only one complete icon (the default one) out of the box.
+        The default icon (<code>default_med.gif</code>) is a question mark. An "empty" version of
+        this icon (without the question mark) can be found in the core
+        (<code>webapp/lenya/resources/images/icons/empty-icon.png</code>).
+        For all file extensions with no corresponding icon, an icon is generated
+        dynamically by adding the first three letters of the extension as a label
+        to the empty icon.
+      </p>
+      
+      <p>
+        If you can provide icons with a ASF style license we are happy 
+        to add them to the module.
+      </p>
+      <p>
+        If you want your own set of icons, then please add them 
+        to <code>$PUB_HOME/lenya/modules/resource/resources/icons/</code>.
+      </p>
+      <p>
+        You can download and extract e.g. the icon package from Wyona in your publication:
+      </p>
+      <source xml:space="preserve">https://svn.wyona.com/repos/public/lenya/modules-resource-icons.tar
+user: anonymous
+pass: anonymous</source>
+      <p>
+        Have fun!
+      </p>
+    </section>
   </body>
 </document>
