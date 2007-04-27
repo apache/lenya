@@ -170,69 +170,165 @@
     </reference>
     
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="Core API"/>
-    <javadoc1.4overview label="Module APIs">
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/ac-impl/index.html" label="ac-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/administration/index.html" label="administration"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/cache/index.html" label="cache"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/cforms/index.html" label="cforms"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/contacform/index.html" label="contactform"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/defaultusecases/index.html" label="defaultusecases"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/editors/index.html" label="editors"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/export/index.html" label="export"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/fckeditor/index.html" label="fckeditor"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/jackrabbit/index.html" label="jackrabbit"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/janitor/index.html" label="janitor"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/jcr/index.html" label="jcr"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/kupu/index.html" label="kupu"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/ldap/index.html" label="ldap"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/lenyadoc/index.html" label="lenyadoc"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/linkcheck/index.html" label="linkcheck"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/linking/index.html" label="linking"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/lucene/index.html" label="lucene"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/notification/index.html" label="notification"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/observation-impl/index.html" label="observation-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/opendocument/index.html" label="opendocument"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/properties/index.html" label="properties"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/repository/index.html" label="repository"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/resource/index.html" label="resource"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/sitemanagement/index.html" label="sitemanagement"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/sitetree/index.html" label="sitetree"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/sourcerepository/index.html" label="sourcerepository"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/templating-impl/index.html" label="templating-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/tinymce/index.html" label="tinymce"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecase/index.html" label="usecase"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecase-impl/index.html" label="usecase-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecasedocument/index.html" label="usecasedocument"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/webdav/index.html" label="webdav"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/workflow-impl/index.html" label="workflow-impl"/>
-    </javadoc1.4overview>    
     
   </docu1.4>
   <module_list href="modules/" label="Modules" tab="modules">
     <index href="index.html" label="Overview"/>
-    <collection_module_section label="collection">
-      <collection_module href="collection.html" label="Overview"/>
-    </collection_module_section>
-    <fckeditor_module_section label="fckeditor">
-      <fckeditor_module href="fckeditor.html" label="Overview"/>
-    </fckeditor_module_section>
-    <news_module_section label="news">
-      <news_module href="news.html" label="Overview"/>
-    </news_module_section>
-    <notification_module_section label="notification">
-      <notification href="notification.html" label="Overview"/>
-    </notification_module_section>
-    <svg_module href="svg/" label="svg">
-      <svg_roundedcorners href="roundedcorners.html" label="Rounded Corners"/>
-    </svg_module>
-    <usecasedocument_module_section label="usecasedocument">
-      <usecasedocument_module href="usecasedocument.html" label="Overview"/>
-    </usecasedocument_module_section>
-    <webdav href="webdav/" label="webdav">
+    <!--
+      The template for this module list is generated.
+      Run "ant modules" in the documentation root directory,
+      but make sure not to include your custom modules.
+    -->
+    
+    <ns0:ac_module_section xmlns:ns0="http://apache.org/forrest/linkmap/1.0" label="ac">
+      <ns2:ac_module_api xmlns:ns2="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/ac/index.html"/>
+    </ns0:ac_module_section>
+    <ns3:acusecases_module_section xmlns:ns3="http://apache.org/forrest/linkmap/1.0" label="acusecases">
+      <ns5:acusecases_module_api xmlns:ns5="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/acusecases/index.html"/>
+    </ns3:acusecases_module_section>
+    <ns6:administration_module_section xmlns:ns6="http://apache.org/forrest/linkmap/1.0" label="administration">
+      <ns8:administration_module_api xmlns:ns8="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/administration/index.html"/>
+    </ns6:administration_module_section>
+    <ns12:blog_module_section xmlns:ns12="http://apache.org/forrest/linkmap/1.0" label="blog">
+      <ns14:blog_module_api xmlns:ns14="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/blog/index.html"/>
+    </ns12:blog_module_section>
+    <ns15:bxe_module_section xmlns:ns15="http://apache.org/forrest/linkmap/1.0" label="bxe">
+      <ns17:bxe_module_api xmlns:ns17="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/bxe/index.html"/>
+    </ns15:bxe_module_section>
+    <ns18:cache_module_section xmlns:ns18="http://apache.org/forrest/linkmap/1.0" label="cache">
+      <ns20:cache_module_api xmlns:ns20="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/cache/index.html"/>
+    </ns18:cache_module_section>
+    <ns21:cforms_module_section xmlns:ns21="http://apache.org/forrest/linkmap/1.0" label="cforms">
+      <ns23:cforms_module_api xmlns:ns23="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/cforms/index.html"/>
+    </ns21:cforms_module_section>
+    <ns24:collection_module_section xmlns:ns24="http://apache.org/forrest/linkmap/1.0" label="collection">
+      <ns25:collection_module_overview xmlns:ns25="http://apache.org/forrest/linkmap/1.0" label="Overview" href="collection.html"/>
+      <ns26:collection_module_api xmlns:ns26="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/collection/index.html"/>
+    </ns24:collection_module_section>
+    <ns27:contactform_module_section xmlns:ns27="http://apache.org/forrest/linkmap/1.0" label="contactform">
+      <ns29:contactform_module_api xmlns:ns29="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/contactform/index.html"/>
+    </ns27:contactform_module_section>
+    <ns30:defaultusecases_module_section xmlns:ns30="http://apache.org/forrest/linkmap/1.0" label="defaultusecases">
+      <ns32:defaultusecases_module_api xmlns:ns32="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/defaultusecases/index.html"/>
+    </ns30:defaultusecases_module_section>
+    <ns33:development_module_section xmlns:ns33="http://apache.org/forrest/linkmap/1.0" label="development">
+      <ns35:development_module_api xmlns:ns35="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/development/index.html"/>
+    </ns33:development_module_section>
+    <ns36:editors_module_section xmlns:ns36="http://apache.org/forrest/linkmap/1.0" label="editors">
+      <ns38:editors_module_api xmlns:ns38="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/editors/index.html"/>
+    </ns36:editors_module_section>
+    <ns39:export_module_section xmlns:ns39="http://apache.org/forrest/linkmap/1.0" label="export">
+      <ns41:export_module_api xmlns:ns41="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/export/index.html"/>
+    </ns39:export_module_section>
+    <ns42:fckeditor_module_section xmlns:ns42="http://apache.org/forrest/linkmap/1.0" label="fckeditor">
+      <ns43:fckeditor_module_overview xmlns:ns43="http://apache.org/forrest/linkmap/1.0" label="Overview" href="fckeditor.html"/>
+      <ns44:fckeditor_module_api xmlns:ns44="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/fckeditor/index.html"/>
+    </ns42:fckeditor_module_section>
+    <ns45:homepage_module_section xmlns:ns45="http://apache.org/forrest/linkmap/1.0" label="homepage">
+      <ns47:homepage_module_api xmlns:ns47="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/homepage/index.html"/>
+    </ns45:homepage_module_section>
+    <ns48:janitor_module_section xmlns:ns48="http://apache.org/forrest/linkmap/1.0" label="janitor">
+      <ns50:janitor_module_api xmlns:ns50="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/janitor/index.html"/>
+    </ns48:janitor_module_section>
+    <ns51:kupu_module_section xmlns:ns51="http://apache.org/forrest/linkmap/1.0" label="kupu">
+      <ns53:kupu_module_api xmlns:ns53="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/kupu/index.html"/>
+    </ns51:kupu_module_section>
+    <ns54:languageselector_module_section xmlns:ns54="http://apache.org/forrest/linkmap/1.0" label="languageselector">
+      <ns56:languageselector_module_api xmlns:ns56="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/languageselector/index.html"/>
+    </ns54:languageselector_module_section>
+    <ns57:ldap_module_section xmlns:ns57="http://apache.org/forrest/linkmap/1.0" label="ldap">
+      <ns59:ldap_module_api xmlns:ns59="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/ldap/index.html"/>
+    </ns57:ldap_module_section>
+    <ns60:lenyadoc_module_section xmlns:ns60="http://apache.org/forrest/linkmap/1.0" label="lenyadoc">
+      <ns62:lenyadoc_module_api xmlns:ns62="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/lenyadoc/index.html"/>
+    </ns60:lenyadoc_module_section>
+    <ns63:linkcheck_module_section xmlns:ns63="http://apache.org/forrest/linkmap/1.0" label="linkcheck">
+      <ns65:linkcheck_module_api xmlns:ns65="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/linkcheck/index.html"/>
+    </ns63:linkcheck_module_section>
+    <ns66:linking_module_section xmlns:ns66="http://apache.org/forrest/linkmap/1.0" label="linking">
+      <ns68:linking_module_api xmlns:ns68="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/linking/index.html"/>
+    </ns66:linking_module_section>
+    <ns69:links_module_section xmlns:ns69="http://apache.org/forrest/linkmap/1.0" label="links">
+      <ns71:links_module_api xmlns:ns71="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/links/index.html"/>
+    </ns69:links_module_section>
+    <ns72:lucene_module_section xmlns:ns72="http://apache.org/forrest/linkmap/1.0" label="lucene">
+      <ns74:lucene_module_api xmlns:ns74="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/lucene/index.html"/>
+    </ns72:lucene_module_section>
+    <ns75:migration_module_section xmlns:ns75="http://apache.org/forrest/linkmap/1.0" label="migration">
+      <ns77:migration_module_api xmlns:ns77="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/migration/index.html"/>
+    </ns75:migration_module_section>
+    <ns78:neutron_module_section xmlns:ns78="http://apache.org/forrest/linkmap/1.0" label="neutron">
+      <ns80:neutron_module_api xmlns:ns80="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/neutron/index.html"/>
+    </ns78:neutron_module_section>
+    <ns81:news_module_section xmlns:ns81="http://apache.org/forrest/linkmap/1.0" label="news">
+      <ns82:news_module_overview xmlns:ns82="http://apache.org/forrest/linkmap/1.0" label="Overview" href="news.html"/>
+      <ns83:news_module_api xmlns:ns83="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/news/index.html"/>
+    </ns81:news_module_section>
+    <ns84:notification_module_section xmlns:ns84="http://apache.org/forrest/linkmap/1.0" label="notification">
+      <ns85:notification_module_overview xmlns:ns85="http://apache.org/forrest/linkmap/1.0" label="Overview" href="notification.html"/>
+      <ns86:notification_module_api xmlns:ns86="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/notification/index.html"/>
+    </ns84:notification_module_section>
+    <ns87:observation_module_section xmlns:ns87="http://apache.org/forrest/linkmap/1.0" label="observation">
+      <ns89:observation_module_api xmlns:ns89="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/observation/index.html"/>
+    </ns87:observation_module_section>
+    <ns90:opendocument_module_section xmlns:ns90="http://apache.org/forrest/linkmap/1.0" label="opendocument">
+      <ns92:opendocument_module_api xmlns:ns92="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/opendocument/index.html"/>
+    </ns90:opendocument_module_section>
+    <ns93:prettyprinting_module_section xmlns:ns93="http://apache.org/forrest/linkmap/1.0" label="prettyprinting">
+      <ns95:prettyprinting_module_api xmlns:ns95="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/prettyprinting/index.html"/>
+    </ns93:prettyprinting_module_section>
+    <ns96:profiling_module_section xmlns:ns96="http://apache.org/forrest/linkmap/1.0" label="profiling">
+      <ns98:profiling_module_api xmlns:ns98="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/profiling/index.html"/>
+    </ns96:profiling_module_section>
+    <ns99:properties_module_section xmlns:ns99="http://apache.org/forrest/linkmap/1.0" label="properties">
+      <ns101:properties_module_api xmlns:ns101="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/properties/index.html"/>
+    </ns99:properties_module_section>
+    <ns102:resource_module_section xmlns:ns102="http://apache.org/forrest/linkmap/1.0" label="resource">
+      <ns104:resource_module_api xmlns:ns104="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/resource/index.html"/>
+    </ns102:resource_module_section>
+    <ns105:simplesite_module_section xmlns:ns105="http://apache.org/forrest/linkmap/1.0" label="simplesite">
+      <ns107:simplesite_module_api xmlns:ns107="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/simplesite/index.html"/>
+    </ns105:simplesite_module_section>
+    <ns108:sitemanagement_module_section xmlns:ns108="http://apache.org/forrest/linkmap/1.0" label="sitemanagement">
+      <ns110:sitemanagement_module_api xmlns:ns110="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/sitemanagement/index.html"/>
+    </ns108:sitemanagement_module_section>
+    <ns111:sitetree_module_section xmlns:ns111="http://apache.org/forrest/linkmap/1.0" label="sitetree">
+      <ns113:sitetree_module_api xmlns:ns113="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/sitetree/index.html"/>
+    </ns111:sitetree_module_section>
+    <ns114:sourcerepository_module_section xmlns:ns114="http://apache.org/forrest/linkmap/1.0" label="sourcerepository">
+      <ns116:sourcerepository_module_api xmlns:ns116="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/sourcerepository/index.html"/>
+    </ns114:sourcerepository_module_section>
+    <ns117:svg_module_section xmlns:ns117="http://apache.org/forrest/linkmap/1.0" label="svg" href="svg/">
+      <ns118:svg_module_overview xmlns:ns118="http://apache.org/forrest/linkmap/1.0" label="Rounded Corners" href="roundedcorners.html"/>
+      <ns119:svg_module_api xmlns:ns119="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/svg/index.html"/>
+    </ns117:svg_module_section>
+    <ns120:templating_module_section xmlns:ns120="http://apache.org/forrest/linkmap/1.0" label="templating">
+      <ns122:templating_module_api xmlns:ns122="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/templating/index.html"/>
+    </ns120:templating_module_section>
+    <ns123:tinymce_module_section xmlns:ns123="http://apache.org/forrest/linkmap/1.0" label="tinymce">
+      <ns125:tinymce_module_api xmlns:ns125="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/tinymce/index.html"/>
+    </ns123:tinymce_module_section>
+    <ns126:usecase_module_section xmlns:ns126="http://apache.org/forrest/linkmap/1.0" label="usecase">
+      <ns128:usecase_module_api xmlns:ns128="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/usecase/index.html"/>
+    </ns126:usecase_module_section>
+    <ns129:usecasedocument_module_section xmlns:ns129="http://apache.org/forrest/linkmap/1.0" label="usecasedocument">
+      <ns131:usecasedocument_module_api xmlns:ns131="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/usecasedocument/index.html"/>
+    </ns129:usecasedocument_module_section>
+    <ns132:webdav_module_section xmlns:ns132="http://apache.org/forrest/linkmap/1.0" label="webdav" href="webdav/">
       <webdav_index href="index.html" label="Getting started"/>
       <monitoring href="monitoring.html" label="Monitoring"/>
       <webdav_server href="webdav.html" label="WebDAV Servers"/>
-    </webdav>
+      <ns134:webdav_module_api xmlns:ns134="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/webdav/index.html"/>
+    </ns132:webdav_module_section>
+    <ns135:workflow_module_section xmlns:ns135="http://apache.org/forrest/linkmap/1.0" label="workflow">
+      <ns137:workflow_module_api xmlns:ns137="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/workflow/index.html"/>
+    </ns135:workflow_module_section>
+    <ns138:xhtml_module_section xmlns:ns138="http://apache.org/forrest/linkmap/1.0" label="xhtml">
+      <ns140:xhtml_module_api xmlns:ns140="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/xhtml/index.html"/>
+    </ns138:xhtml_module_section>
+    <ns141:xopus_module_section xmlns:ns141="http://apache.org/forrest/linkmap/1.0" label="xopus">
+      <ns143:xopus_module_api xmlns:ns143="http://apache.org/forrest/linkmap/1.0" label="API" href="../../../../apidocs/1.4/modules/xopus/index.html"/>
+    </ns141:xopus_module_section>
   </module_list>
   <!--+
     | Version 1.2 tab
