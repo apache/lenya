@@ -71,7 +71,7 @@
         <dd>
           The usecase framework simplifies the implementation of user interaction functionality.
         </dd>
-        <dt><a href="site:notification">Simplified Notification, Inboxes</a></dt>
+        <dt><a href="site:notification_module_overview">Simplified Notification, Inboxes</a></dt>
         <dd>
           It is now easier to trigger notification messages. Each user has a personal
           inbox to read and send messages.
