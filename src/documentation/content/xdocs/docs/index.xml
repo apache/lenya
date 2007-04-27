@@ -22,12 +22,11 @@
   </header>
   <body>
     <p>
-      Documentation is available for various version ...
+      Documentation is available for various versions:
     </p>
     <ul>
       <li><a href="site:docu1.4/index">1.4.x</a> - the trunk version of Lenya</li>
       <li><a href="site:docu1.2.x/index">1.2.x</a> - the stable version of Lenya</li>
-      <li><a href="site:module_list/index">Modules</a> - for the different modules of Lenya</li>
     </ul>
     <p>Besides above documentation you can find as well different instructions 
       to common development topics here, like how to write tests, our coding 
