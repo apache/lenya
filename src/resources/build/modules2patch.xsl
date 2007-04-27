@@ -20,7 +20,8 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:mod="http://apache.org/lenya/module/1.0"
-  xmlns:list="http://apache.org/lenya/module-list/1.0">
+  xmlns:list="http://apache.org/lenya/module-list/1.0"
+  exclude-result-prefixes="mod list">
   
   <xsl:import href="util.xsl"/>
   
