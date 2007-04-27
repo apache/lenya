@@ -18,10 +18,10 @@
 <project name="lenya-docs" default="main">
 
   <target name="modules">
-    <property name="lenyaHome" value="../../trunk"/>
+    <property name="lenyaHome" value="../trunk"/>
     <property name="site" value="src/documentation/content/xdocs/site.xml"/>
     <xslt
-      in="${site}"
+      in="${lenyaHome}/build/lenya/temp/modules.xconf"
       out="build/templates/modules.xml"
       style="tools/generateModuleDocs.xsl">
       <param name="lenyaHome" expression="${lenyaHome}"/>
