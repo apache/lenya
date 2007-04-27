@@ -30,5 +30,41 @@
         The <code>lucene</code> module integrates the Lucene search engine.
       </p>
     </section>
+    
+    <section>
+      <title>Configuration</title>
+      <p>
+        Each publication has a configuration at <code>$PUB_HOME/config/search/lucene_index.xml</code>
+        which is being defined by
+        <code>org.pache.cocoon.components.search.components.impl.IndexManagerImpl</code>.
+      </p>
+    </section>
+    
+    <section>
+      <title>Indexing</title>
+      <p>
+        Indexing is typically triggered by the <code>org.apache.lenya.cms.lucene.IndexUpdaterImpl</code>,
+        which attaches itself as a listener to the repository on startup.
+      </p>
+      <p>
+        Indexing can also be executed explicitely by calling the <code>lucene.index</code>
+        usecase which is defined
+        by <code>config/cocoon-xconf/usecase-lucene.index.xconf</code> and uses as main
+        entry point <code>org.apache.lenya.cms.lucene.IndexDocument</code>.
+      </p>
+      <p>
+        In order to make a resource type indexable one needs to add the format luceneIndex to the
+        resource type configuration (e.g. <code>src/modules/xhtml/config/cocoon-xconf/resource-type-xhtml.xconf</code>)
+        One needs to create or reuse a pipeline for this format within the specified sitemap.
+      </p>
+    </section>
+    
+    <section>
+      <title>Searching</title>
+      <p>
+        To be documented.
+      </p>
+      
+    </section>
   </body>
 </document>

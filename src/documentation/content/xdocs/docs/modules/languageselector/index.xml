@@ -31,5 +31,15 @@
         XHTML widget to switch languages on a website.
       </p>
     </section>
+    <section>
+      <title>Adding Custom Flags</title>
+      <p>
+        More flags can be obtained from 
+        <a href="http://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags">Wikipedia</a>.
+      </p>
+      <p>
+        Be sure to rename them according to <code><![CDATA[<two-letter-language-code>.svg]]></code>.
+      </p>
+    </section>
   </body>
 </document>
