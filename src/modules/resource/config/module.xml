@@ -47,7 +47,7 @@ if [ "$DISPLAY" = "" ] ; then
   <lenya:installation>
 <![CDATA[
 
-    add to yourpub/conf/publication.xml
+    add to yourpub/conf/publication.xconf
     <module name="resource"/>
     <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
     
