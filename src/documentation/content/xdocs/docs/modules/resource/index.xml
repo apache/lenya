@@ -31,6 +31,74 @@
         it allows to store arbitrary media documents.
       </p>
     </section>
+    
+    <section>
+      <title>Installation</title>
+      <ol>
+        <li>
+          <p>
+            Declare the module in the <code><![CDATA[<modules/>]]></code> section of
+            <code>$PUB_HOME/config/publication.xml</code>:
+          </p>
+          <source xml:space="preserve"><![CDATA[<module name="resource"/>]]></source>
+        </li>
+        <li>
+          <p>
+            Assign a workflow schema to the resource type in <code>$PUB_HOME/config/publication.xml</code>:
+          </p>
+          <source xml:space="preserve"><![CDATA[<resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>]]></source>
+        </li>
+        <li>
+          <p>
+            Define the usecase policies in <code>$PUB_HOME/config/access-control/usecase-policies.xml</code>
+            (or use the usecase administration GUI):
+          </p>
+          <source xml:space="preserve"><![CDATA[<usecase id="resource.create">
+  <role id="admin"/>
+  <role id="edit"/>
+</usecase>  
+<usecase id="resource.upload">
+  <role id="admin"/>
+  <role id="edit"/>
+</usecase>]]></source>
+        </li>
+      </ol>
+    </section>
+    
+    <section>
+      <title>Headless Mode</title>
+      <p>
+        Options:
+      </p>
+      <ul>
+        <li><a href="http://www.idautomation.com/kb/xwindow-error.html">http://www.idautomation.com/kb/xwindow-error.html</a></li>
+        <li><a href="http://www.jguru.com/faq/view.jsp?EID=222296">http://www.jguru.com/faq/view.jsp?EID=222296</a></li>
+        <li>try <code>java.awt.headless=true</code> in the case of Java 1.4</li>
+        <li>
+          run X servere:
+          <source xml:space="preserve">Virtual framebuffer X server:
+
+Installation instructions for debian
+
+apt-get install xvfb
+apt-get install xlibs
+apt-get install xfonts-base
+
+nohup Xvfb :0 -screen 0 1024x786x16 &amp;
+export DISPLAY=:0</source>
+        </li>
+      </ul>
+      <p>
+        Also you might want to add <code>export DISPLAY=:0</code> in <code>lenya.sh</code>, such
+        that the <code>DISPLAY</code> variable is set during startup of Jetty, e.g.
+      </p>
+      <source xml:space="preserve"># ----- Verify and Set Required Environment Variables -------------------------
+        
+if [ "$DISPLAY" = "" ] ; then
+export DISPLAY=:0
+fi</source>
+    </section>
+    
     <section>
       <title>Resource Icons</title>
       <p>
