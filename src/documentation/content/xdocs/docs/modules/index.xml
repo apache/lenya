@@ -59,7 +59,7 @@
         <dt>contactform</dt>
         <dd>A simple contact form. This is a usage example for the usecasedocument module.</dd>
         <dt>development</dt>
-        <dd>Rresources to simplify development of Lenya applications.</dd>
+        <dd>Resources to simplify the development of Lenya applications.</dd>
         <dt>editors</dt>
         <dd>Form-based editors.</dd>
         <dt>fckeditor</dt>
