@@ -22,7 +22,7 @@
     <property name="site" value="src/documentation/content/xdocs/site.xml"/>
     <xslt
       in="${site}"
-      out="${site}.new.xml"
+      out="build/templates/modules.xml"
       style="tools/generateModuleDocs.xsl">
       <param name="lenyaHome" expression="${lenyaHome}"/>
     </xslt>
