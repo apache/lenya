@@ -377,7 +377,7 @@
         <ns83:sourcerepository_module_api xmlns:ns83="http://apache.org/forrest/linkmap/1.0"
           label="API" href="../../../../apidocs/1.4/modules/sourcerepository/index.html"/>
       </ns82:sourcerepository_module_section>
-      <ns84:svg_module_section xmlns:ns84="http://apache.org/forrest/linkmap/1.0" label="svg">
+      <ns84:svg_module_section xmlns:ns84="http://apache.org/forrest/linkmap/1.0" label="svg" href="svg/">
         <ns118:svg_module_overview xmlns:ns118="http://apache.org/forrest/linkmap/1.0" label="Rounded Corners" href="roundedcorners.html"/>
         <ns85:svg_module_api xmlns:ns85="http://apache.org/forrest/linkmap/1.0" label="API"
           href="../../../../apidocs/1.4/modules/svg/index.html"/>
@@ -391,7 +391,7 @@
         <ns89:usecasedocument_module_api xmlns:ns89="http://apache.org/forrest/linkmap/1.0"
           label="API" href="../../../../apidocs/1.4/modules/usecasedocument/index.html"/>
       </ns88:usecasedocument_module_section>
-      <ns90:webdav_module_section xmlns:ns90="http://apache.org/forrest/linkmap/1.0" label="webdav">
+      <ns90:webdav_module_section xmlns:ns90="http://apache.org/forrest/linkmap/1.0" label="webdav" href="webdav/">
         <webdav_index href="index.html" label="Getting started"/>
         <monitoring href="monitoring.html" label="Monitoring"/>
         <webdav_server href="webdav.html" label="WebDAV Servers"/>
