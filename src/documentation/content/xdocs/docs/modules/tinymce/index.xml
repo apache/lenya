@@ -30,5 +30,84 @@
         The <code>tinymce</code> module contains the integration of the TinyMCE WYSIWYG editor.
       </p>
     </section>
+    
+    <section>
+      <title>Installation</title>
+      <ol>
+        <li>
+          <p>
+            Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a> and 
+            unpack the archive in the resources directory of this module.
+            That should give you a subdirectory named <code>tinymce</code>.
+          </p>
+          <p>
+            <strong>or</strong>
+          </p>
+          <p>
+            Download TinyMCE and unpack the archive in <code>$PUB_HOME/lenya/modules/tinymce/resource/</code>.
+          </p>
+        </li>
+        <li>
+          Optionally download additional language packs and unpack them
+          in the same place. (The new files will end up in <code>tinymce/</code> as 
+          well.)
+        </li>
+        <li>
+          Check the file permissions of the new "tinymce" directory.
+          It should not be world-writable for security reasons. On UNIX systems,
+          you can fix that with
+          <source>chmod -R og-w tinymce/</source>
+        </li>
+        <li>
+          <p>
+            Add the appropriate permissions to 
+            <code>$PUB_HOME/config/access-control/usecase-policies.xml</code>
+            (or use the usecase administration GUI), for example:
+          </p>
+          <source xml:space="preserve"><![CDATA[<usecase id="tinymce.edit">
+  <role id="admin" method="grant"/>
+  <role id="edit" method="grant"/>
+</usecase>
+
+<usecase id="tinymce.insertImage">
+  <role id="admin" method="grant"/>
+  <role id="edit" method="grant"/>
+</usecase>]]></source>
+          <p>
+            This will allow the "admin" and "edit" roles to access the 
+            usecases to edit and upload images.
+          </p>
+        </li>
+        <li>
+          To add a menu entry, in <code>$PUB_HOME/config/publication.xml</code>
+          add <source><![CDATA[<module name="tinymce"/>]]></source> next to the other module 
+          declarations. This does not work in the default publication, 
+          because it creates its own custom menus. But for a quick test,
+          you can append <code>?lenya.usecase=tinymce.edit</code> to your 
+          address-bar URL.
+        </li>
+      </ol>
+    </section>
+    <section>
+      <title>Make your site plays well with TinyMCE</title>
+      <p>
+        You will find that TinyMCE does not look good with certain layout styles.
+        Specifically, floating objects inside your editable area will result in 
+        sub-optimal layout when the editor is active. To achive true WYSIWYG, try 
+        to design your page so that editable areas have a fixed size and no floats 
+        (you can still have accessible design by using "em" instead of "px").
+      </p>
+      <p>
+        By default, TinyMCE will parse your CSS stylesheet and make all classes
+        available in its styling dropdown menu. That means you should not 
+        introduce classes for one-shot stylings outside the editable area (unless
+        you want to make those stylings available in the content area as well).
+        Use ids instead.
+      </p>
+      <p>
+        This module has been developed and tested with TinyMCE 2.1.0.
+      </p>
+    </section>
+    
   </body>
 </document>
