@@ -24,7 +24,20 @@
   <body>
     
     <section>
-      <title>Running Tests</title>
+      <title>Introduction</title>
+
+      <p>To get an overview of the benefits and principles of unit testing, we recommend the following resources:</p>
+      <ul>
+        <li><a href="http://www.junit.org">JUnit homepage</a></li>
+        <li><a href="http://junit.sourceforge.net/doc/cookbook/cookbook.htm">JUnit Cookbook</a> (Eric Gamma, Kent Beck)</li>
+        <li><a href="http://junit.sourceforge.net/doc/cookstour/cookstour.htm">JUnit: A Cook's Tour</a> (Eric Gamma, Kent Beck)</li>
+        <li><a href="http://junit.sourceforge.net/doc/testinfected/testing.htm">JUnitTest Infected: Programmers Love Writing Tests</a></li>
+      </ul>
+      
+    </section>
+    
+    <section>
+      <title>Running the Tests</title>
       <ul>
         <li><p>To run all tests:</p>
           <code>./build.sh test</code>
