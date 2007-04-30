@@ -23,10 +23,10 @@
 <lenya:contentType>xml</lenya:contentType>
 </lenya:internal>
 <lenya:dc>
-        <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">The XHTML Doctype</dc:title>
+        <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">The XHTML Resource Type</dc:title>
         <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Lenya Development Team</dc:creator>
-        <dc:subject xmlns:dc="http://purl.org/dc/elements/1.1/">XHTML Doctype</dc:subject>
-        <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Explains the XHTML Doctype</dc:description>
+        <dc:subject xmlns:dc="http://purl.org/dc/elements/1.1/">XHTML Resource Type</dc:subject>
+        <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Explains the XHTML Resource Type</dc:description>
         <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Apache Software Foundation</dc:publisher>
         <dc:contributor xmlns:dc="http://purl.org/dc/elements/1.1/"/>
         <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">2005-01-31</dc:date>
