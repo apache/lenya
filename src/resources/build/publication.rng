@@ -154,8 +154,9 @@
         </attribute>
       </element>
     </optional>
-    <!-- FIXME: is template-instantiator optional?-->
-    <element name="template-instantiator"><attribute name="name"><data type="string"/></attribute></element>
+    <optional>
+      <element name="template-instantiator"><attribute name="name"><data type="string"/></attribute></element>
+    </optional>
     <element name="path-mapper">
       <ref name="javaClassName"/>
     </element>
