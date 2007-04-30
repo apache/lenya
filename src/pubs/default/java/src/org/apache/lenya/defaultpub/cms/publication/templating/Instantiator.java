@@ -44,7 +44,7 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
-//import org.apache.lenya.cms.publication.PublicationConfiguration;
+// import org.apache.lenya.cms.publication.PublicationConfiguration;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -59,27 +59,33 @@ import org.xml.sax.SAXException;
 public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
-    protected static final String[] sourcesToCopy = { 
+    protected static final String[] sourcesToCopy = {
             "config/publication.xml",
-            "config/access-control/access-control.xml", "config/access-control/policies/", 
-            "config/access-control/usecase-policies.xml", 
+            "config/access-control/access-control.xml",
+            "config/access-control/policies/",
+            "config/access-control/usecase-policies.xml",
             "config/workflow/workflow.xml",
-            "config/" + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE};
+            "config/"
+                    + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE };
 
-    // the following stuff should actually come from PublicationConfiguration, but there's currently no way to get at it.
-    // the correct solution suggested by andreas is not to meddle with config files here at all, but instead implement
-    // appropriate setter functions in the Publication class. postponed to after 1.4.
-    // thus, don't waste too much effort on this file, it's all an intermediate hack.
+    // the following stuff should actually come from PublicationConfiguration,
+    // but there's currently no way to get at it.
+    // the correct solution suggested by andreas is not to meddle with config
+    // files here at all, but instead implement
+    // appropriate setter functions in the Publication class. postponed to after
+    // 1.4.
+    // thus, don't waste too much effort on this file, it's all an intermediate
+    // hack.
     private static final String CONFIGURATION_FILE = "config/publication.xml";
     private static final String CONFIGURATION_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
     private static final String ELEMENT_NAME = "name";
     private static final String ELEMENT_TEMPLATE = "template";
     private static final String ATTRIBUTE_ID = "id";
-    private static final String ELEMENT_RESOURCE_TYPES = "resource-types";//*
-    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";//*
-    private static final String ELEMENT_MODULES = "modules";//*
-    private static final String ELEMENT_MODULE = "module";//*
- 
+    private static final String ELEMENT_RESOURCE_TYPES = "resource-types";// *
+    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";// *
+    private static final String ELEMENT_MODULES = "modules";// *
+    private static final String ELEMENT_MODULE = "module";// *
+
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
      *      java.lang.String, java.lang.String)
@@ -132,9 +138,7 @@ public class Instantiator extends AbstractLogEnabled implements
             metaSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/" + CONFIGURATION_FILE);
             Document metaDoc = DocumentHelper.readDocument(metaSource.getInputStream());
-            NamespaceHelper helper = new NamespaceHelper(CONFIGURATION_NAMESPACE,
-                    "",
-                    metaDoc);
+            NamespaceHelper helper = new NamespaceHelper(CONFIGURATION_NAMESPACE, "", metaDoc);
             Element nameElement = helper.getFirstChild(metaDoc.getDocumentElement(), ELEMENT_NAME);
             DocumentHelper.setSimpleElementText(nameElement, name);
 
@@ -158,13 +162,13 @@ public class Instantiator extends AbstractLogEnabled implements
                     + newPublicationId + "/" + CONFIGURATION_FILE);
 
             final boolean ENABLE_XML_NAMESPACES = true;
-            DefaultConfiguration config = 
-                    (DefaultConfiguration) new DefaultConfigurationBuilder(ENABLE_XML_NAMESPACES).build(configSource.getInputStream());
+            DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder(
+                    ENABLE_XML_NAMESPACES).build(configSource.getInputStream());
             addTemplateConfiguration(template, config);
-            
+
             removeChildren(config.getMutableChild(ELEMENT_MODULES), ELEMENT_MODULE);
             removeChildren(config.getMutableChild(ELEMENT_RESOURCE_TYPES), ELEMENT_RESOURCE_TYPE);
-            
+
             OutputStream oStream = configSource.getOutputStream();
             new DefaultConfigurationSerializer().serialize(oStream, config);
             if (oStream != null) {
@@ -187,13 +191,16 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
-    protected void addTemplateConfiguration(Publication template, DefaultConfiguration config) throws ConfigurationException {
-        DefaultConfiguration templateConfig = new DefaultConfiguration(ELEMENT_TEMPLATE, null, CONFIGURATION_NAMESPACE, "");
+    protected void addTemplateConfiguration(Publication template, DefaultConfiguration config)
+            throws ConfigurationException {
+        DefaultConfiguration templateConfig = new DefaultConfiguration(ELEMENT_TEMPLATE, null,
+                CONFIGURATION_NAMESPACE, "");
         templateConfig.setAttribute(ATTRIBUTE_ID, template.getId());
         config.addChild(templateConfig);
     }
 
-    protected void removeChildren(MutableConfiguration config, String name) throws ConfigurationException {
+    protected void removeChildren(MutableConfiguration config, String name)
+            throws ConfigurationException {
         MutableConfiguration[] moduleConfigs = config.getMutableChildren(name);
         for (int i = 0; i < moduleConfigs.length; i++) {
             config.removeChild(moduleConfigs[i]);
@@ -214,13 +221,17 @@ public class Instantiator extends AbstractLogEnabled implements
 
             String indexDir = "lenya/pubs/" + newPublicationId + "/work/lucene/index";
 
-            indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/" 
-                    + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE);
+            indexSource = (ModifiableSource) resolver
+                    .resolveURI(publicationsUri
+                            + "/"
+                            + newPublicationId
+                            + "/config/"
+                            + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE);
             Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
-            Element[] indexElement = DocumentHelper.getChildren(indexDoc.getDocumentElement(), null, "index");
+            Element[] indexElement = DocumentHelper.getChildren(indexDoc.getDocumentElement(),
+                    null, "index");
 
-            for (int i=0; i<indexElement.length; i++) {
+            for (int i = 0; i < indexElement.length; i++) {
                 String id = indexElement[i].getAttribute("id");
                 String area = id.split("-")[1];
                 indexElement[i].setAttribute("id", newPublicationId + "-" + area);
@@ -234,7 +245,7 @@ public class Instantiator extends AbstractLogEnabled implements
             indexManager = (IndexManager) manager.lookup(IndexManager.ROLE);
 
             indexManager.addIndexes(indexSource);
-            
+
             // TODO: release all objects!
 
             // RGE: End Soc addition
