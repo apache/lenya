@@ -31,8 +31,7 @@ import org.apache.lenya.cms.repository.Node;
 
 /**
  * A publication's configuration.
- * Keep in sync with src/webapp/lenya/resources/schemas/publication.rng!
- * FIXME: validate publication.xml before attempting to parse
+ * Keep in sync with src/resources/build/publication.rng!
  */
 public class PublicationConfiguration extends AbstractLogEnabled implements Publication {
 

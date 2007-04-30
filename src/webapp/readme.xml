@@ -94,14 +94,14 @@
       in <code>&lt;modules/&gt;</code>, <code>&lt;proxies/&gt;</code>, 
       and <code>&lt;resource-types/&gt;</code>. See the default publication
       for an example.<br />
-      You can use the RNG schema at <code>webapp/lenya/resources/schemas/publication.rng</code>
+      You can use the RNG schema at <code>src/resources/build/publication.rng</code>
       to verify that your file is correct:
     </p>
     <p>
       <code>
         cd $LENYA_HOME<br />
         java -jar lib/jing-20030619.jar \<br />
-        &#160;&#160;src/webapp/lenya/resources/schemas/publication.rng \<br />
+        &#160;&#160;src/resources/build/publication.rng \<br />
         &#160;&#160;$YOURPUB/config/publication.xconf
       </code>
     </p>
