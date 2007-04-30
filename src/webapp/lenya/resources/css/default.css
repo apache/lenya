@@ -118,10 +118,17 @@ div.lenya-error {
     color: black;
 }
 
-.lenya-publication-item {
+.lenya-publication-item, .lenya-publication-item-createpublication {
     padding: 0px 10px;
     margin: 20px 0px;
+}
+
+.lenya-publication-item {
     border-bottom: solid 1px #DDDCCF;
+}
+
+.lenya-publication-item-createpublication {
+    margin-bottom: 2em;
 }
 
 .lenya-sidebar a {

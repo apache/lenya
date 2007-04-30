@@ -44,7 +44,7 @@
 <xsl:template match="lenya:publications">
   <div class="lenya-sidebar">
     <div class="lenya-sidebar-heading"><i18n:text>Publications</i18n:text></div>
-  <div class="lenya-publication-item" style="margin-bottom: 2em;">
+  <div class="lenya-publication-item-createpublication">
     <a href="index.html?lenya.usecase=templating.createPublicationFromTemplate">
       <i18n:text>create-publication</i18n:text> &#187;
     </a>
