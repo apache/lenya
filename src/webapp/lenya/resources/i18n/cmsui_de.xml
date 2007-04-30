@@ -100,6 +100,8 @@
   <message key="Dimension (w x h)">Abmessung (B&#160;x&#160;H)</message>
   <message key="Height">Höhe</message>
   <message key="Width">Breite</message>
+  <message key="Publication">Publikation</message>
+  <message key="Publications">Publikationen</message>
   
 
   <!-- submit screen -->
@@ -394,6 +396,12 @@
   <message key="Templates used">Verwendete Templates</message>
   <message key="Inherited: see template publication">Vererbt: Siehe Template-Publikation</message>
   
+  <!--
+    Publication templating. Can't go in the module yet, since module
+    i18n is only supported in publications.
+  -->
+  <message key="create-publication">Publikation erstellen</message>
+
   <!-- Error messages of a general nature -->
   <message key="error-document-form">Dokument ist nicht wohlgeformt: {0}</message>
   <message key="error-validation">Schema Validierung schlug fehl: {0}</message>

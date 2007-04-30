@@ -91,7 +91,9 @@
   <message key="All rights reserved">All rights reserved.</message>
   <message key="show">&#160;+&#160;</message>
   <message key="hide">&#160;-&#160;</message>
-
+  <message key="Publication">Publication</message>
+  <message key="Publications">Publications</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Submit "{0}" for approval</message>  
   <message key="submit-for-approval?">Do you want to submit <xhtml:em>"{0}"</xhtml:em> for approval?</message>
@@ -383,7 +385,13 @@
   <message key="lenya.rc.nocheckin">Resource could not be checked in</message>
   <message key="Generic Exception">Generic Exception</message>
   <message key="Check the log files.">Check the log files.</message>
-
+  
+  <!--
+  Publication templating. Can't go in the module yet, since module
+  i18n is only supported in publications.
+  -->
+  <message key="create-publication">Create publication</message>
+  
   <!-- Error messages of a general nature -->
   <message key="error-document-form">Document is not well-formed: {0}</message>
   <message key="error-validation">Schema validation failed: {0}</message>
@@ -400,5 +408,5 @@
     <xhtml:strong>Note:</xhtml:strong> Make sure that your content repository
     is configured correctly within <xhtml:code>$PUB_HOME/config/(local.)publication.xml</xhtml:code>.
   </message>
-
+  
 </catalogue>

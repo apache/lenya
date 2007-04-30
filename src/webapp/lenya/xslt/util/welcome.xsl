@@ -24,6 +24,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
 >
 
 <xsl:template match="/*">
@@ -42,9 +43,11 @@
 
 <xsl:template match="lenya:publications">
   <div class="lenya-sidebar">
-  <div class="lenya-sidebar-heading">Publications</div>
-  <div class="lenya-publication-item">
-    <strong><a href="index.html?lenya.usecase=templating.createPublicationFromTemplate">New publication</a></strong>
+    <div class="lenya-sidebar-heading"><i18n:text>Publications</i18n:text></div>
+  <div class="lenya-publication-item" style="margin-bottom: 2em;">
+    <a href="index.html?lenya.usecase=templating.createPublicationFromTemplate">
+      <i18n:text>create-publication</i18n:text> &#187;
+    </a>
   </div>
   <!-- do not list publications with @show="false" 
      (can be used to hide template publications -->
