@@ -19,11 +19,10 @@ package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.util.Assert;
 
-
 /**
  * A message in a usecase. This an encapsulation for an internationalizable
- * message, containing a message content and potentially some parameters.
- * The parameters correspond to the placeholders in dictionary entries.
+ * message, containing a message content and potentially some parameters. The
+ * parameters correspond to the placeholders in dictionary entries.
  * 
  * @version $Id$
  */
@@ -48,7 +47,7 @@ public class UsecaseMessage {
      */
     public UsecaseMessage(String _message, String[] _params) {
         this(_message);
-        
+
         Assert.notNull("params", _params);
         for (int i = 0; i < _params.length; i++) {
             Assert.notNull("params[" + i + "]", _params[i]);
@@ -73,14 +72,15 @@ public class UsecaseMessage {
     }
 
     /**
-     * Retrieve the parameters for this message
+     * Returns the parameters of this message. If no parameters are set,
+     * an empty String array is returned.
      * @return the parameters
      */
     public String[] getParameters() {
-        return params;
+        return this.params == null ? new String[0] : this.params;
     }
 
-    /** 
+    /**
      * Accomodates scripts which do no care about parameters
      * @return a string representation disregarding any parameters
      */
