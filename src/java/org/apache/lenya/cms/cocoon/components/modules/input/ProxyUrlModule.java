@@ -52,7 +52,8 @@ import org.apache.lenya.cms.repository.Session;
  * </p>
  * 
  * <p>
- * If there are no proxy settings in the file conf/publication.xconf, the values of the request
+ * If there are no proxy settings in the file
+ * {@link org.apache.lenya.cms.publication.PublicationConfiguration#CONFIGURATION_FILE}, the values of the request
  * parameters 'server name' and 'port' will be used to construct the URL.
  * </p>
  * 

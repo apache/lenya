@@ -45,8 +45,8 @@ import org.apache.lenya.cms.publication.Publication;
  * 
  * <p>
  * If the publication uses proxying, the base URL is the proxy URL defined in 
- * the file conf/publication.xconf. If no proxying is used, 
- * the result will be {context-path}/{pub-id}/{area}.
+ * the file {@link org.apache.lenya.cms.publication.PublicationConfiguration#CONFIGURATION_FILE}.
+ * If no proxying is used, the result will be {context-path}/{pub-id}/{area}.
  * The ssl parameter is optional, if omitted the protocol (http or https) of the current request will be used.
  * </p>
  * 
