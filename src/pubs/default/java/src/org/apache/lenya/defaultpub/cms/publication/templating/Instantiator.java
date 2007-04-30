@@ -28,6 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.MutableConfiguration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
@@ -193,6 +194,10 @@ public class Instantiator extends AbstractLogEnabled implements
 
     protected void addTemplateConfiguration(Publication template, DefaultConfiguration config)
             throws ConfigurationException {
+        Configuration[] templateConfigs = config.getChildren(ELEMENT_TEMPLATE);
+        for (int i = 0; i < templateConfigs.length; i++) {
+            config.removeChild(templateConfigs[i]);
+        }
         DefaultConfiguration templateConfig = new DefaultConfiguration(ELEMENT_TEMPLATE, null,
                 CONFIGURATION_NAMESPACE, "");
         templateConfig.setAttribute(ATTRIBUTE_ID, template.getId());
