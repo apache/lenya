@@ -24,7 +24,7 @@
   <version>@lenya.version@</version>
   <lenya-version>@lenya.version@</lenya-version>
   <lenya-revision>@lenya.revision@</lenya-revision>
-  <cocoon-version>2.1.8+</cocoon-version>
+  <cocoon-version>2.1.10</cocoon-version>
   <languages>
     <language default="true">en</language>
     <language>de</language>
@@ -32,11 +32,11 @@
   <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
   <document-builder name="default"/>
   <breadcrumb-prefix/>
-  <ssl-prefix/>
   <site-manager name="simple"/>
   <resource-types>
     <resource-type name="entry" workflow="workflow.xml"/>
     <resource-type name="sidebar" workflow="workflow.xml"/>
   </resource-types>
+  <modules/>
 </publication>
 
