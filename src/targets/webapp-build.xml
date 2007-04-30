@@ -71,6 +71,9 @@
     <copyPubs todir="${build.webapp}/lenya/pubs"
       pubsrootdirs="${pubs.root.dirs}"
       excludes="CVS,.svn,cocoon-xconf,lenya-roles,local.publication.xml,local.ac.xconf,.project"/>
+    <jing rngfile="${src.resource.dir}/build/publication.rng">
+      <fileset dir="${build.webapp}" includes="lenya/pubs/*/config/publication.xml"/>
+    </jing>
     
     <bulkCopy 
       sourcedirs="${pubs.root.dirs}" 
