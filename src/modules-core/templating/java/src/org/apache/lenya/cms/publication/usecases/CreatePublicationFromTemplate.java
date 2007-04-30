@@ -52,7 +52,6 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
             }
         }
         setParameter(AVAILABLE_TEMPLATES, templates);
-        setParameter(PUBLICATION_NAME, "New Publication");
     }
 
     /**
