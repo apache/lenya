@@ -66,7 +66,11 @@ public class CreateDocument extends Create {
         }
         setParameter(LANGUAGES, languages);
 
-        String[] relations = { RELATION_CHILD, RELATION_AFTER };
+        Document sourceDoc = getSourceDocument();
+        String[] childOnly = { RELATION_CHILD };
+        String[] childAndAfter = { RELATION_CHILD, RELATION_AFTER };
+        String[] relations = sourceDoc == null ? childOnly : childAndAfter;
+        
         setParameter(RELATIONS, relations);
         setParameter(RELATION, RELATION_CHILD);
 
@@ -152,13 +156,18 @@ public class CreateDocument extends Create {
             return getParameterAsString(PATH);
         } else {
             String relation = getRelation();
-            DocumentLocator sourceLoc = getSourceDocument().getLocator();
-            if (relation.equals(RELATION_CHILD)) {
-                return sourceLoc.getChild(getNewDocumentName()).getPath();
-            } else if (relation.equals(RELATION_BEFORE) || relation.equals(RELATION_AFTER)) {
-                return sourceLoc.getParent().getChild(getNewDocumentName()).getPath();
+            Document sourceDoc = getSourceDocument();
+            if (sourceDoc == null) {
+                return "/" + getNewDocumentName();
             } else {
-                throw new IllegalStateException("unsupported relation " + relation);
+                DocumentLocator sourceLoc = getSourceDocument().getLocator();
+                if (relation.equals(RELATION_CHILD)) {
+                    return sourceLoc.getChild(getNewDocumentName()).getPath();
+                } else if (relation.equals(RELATION_BEFORE) || relation.equals(RELATION_AFTER)) {
+                    return sourceLoc.getParent().getChild(getNewDocumentName()).getPath();
+                } else {
+                    throw new IllegalStateException("unsupported relation " + relation);
+                }
             }
         }
     }
