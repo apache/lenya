@@ -67,20 +67,20 @@ public class CopyPublicationsTask extends Task {
      */
     public void copy(String pubsRootDir, FilenameFilter filter, TwoTuple twoTuple) {
             // In the case the pubsRootDir is publication dir
-            if (new File(pubsRootDir, "/config/publication.xconf").isFile()) {
+            if (new File(pubsRootDir, "/config/publication.xml").isFile()) {
                 File pubDir = new File(pubsRootDir);
                 log("Copy publication: " + pubDir);
                 CopyJavaSourcesTask.copyDir(pubDir, new File(this.toDir.toString()), twoTuple, filter, this);
-                File localPublicationXConf = new File(pubDir, "/config/local.publication.xconf");
+                File localPublicationXConf = new File(pubDir, "/config/local.publication.xml");
                 if (localPublicationXConf.isFile()) {
-                    File publicationXConf = new File(this.toDir.toString() + "/" + pubDir.getName() + "/config/publication.xconf");
+                    File publicationXConf = new File(this.toDir.toString() + "/" + pubDir.getName() + "/config/publication.xml");
                     log("Patch config file with local version: " + localPublicationXConf + " " + publicationXConf);
                     CopyJavaSourcesTask.copyFile(localPublicationXConf, publicationXConf, twoTuple, this, true);
                 }
 
-                File localAccessControlXConf = new File(pubDir, "/config/ac/local.ac.xconf");
+                File localAccessControlXConf = new File(pubDir, "/config/access-control/local.access-control.xml");
                 if (localAccessControlXConf.isFile()) {
-                    File accessControlXConf = new File(this.toDir.toString() + "/" + pubDir.getName() + "/config/ac/ac.xconf");
+                    File accessControlXConf = new File(this.toDir.toString() + "/" + pubDir.getName() + "/config/access-control/access-control.xml");
                     log("Patch access control config file with local version: " + localAccessControlXConf + " " + accessControlXConf);
                     CopyJavaSourcesTask.copyFile(localAccessControlXConf, accessControlXConf, twoTuple, this, true);
                 }

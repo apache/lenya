@@ -35,6 +35,15 @@
     
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
+    <h3>2007-04-26: Renamed
+      <code>$PUB_HOME/config/publication.xconf</code> to <code>publication.xml</code></h3>
+    
+    <p>
+      Please rename your <code>$PUB_HOME/config/publication.xconf</code> file to
+      <code>$PUB_HOME/config/publication.xml</code>.
+      This change was done to preserve consistency with the other configuration file names.
+    </p>
+    
     <h3>2007-04-23: Moved and renamed
     <code>$PUB_HOME/config/lucene_index.xconf</code></h3>
     
@@ -100,7 +109,7 @@
     <p>
       If you want to provide a custom README for your publication (maybe you
       have used the old &lt;lenya:readme/&gt; in the now gone
-      publication.xml), you can put it in <code>$YOURPUB/readme.xml</code>. 
+      publication.xconf), you can put it in <code>$YOURPUB/readme.xml</code>. 
       It is now a standard Lenya CMS page in the
       <code>http://apache.org/cocoon/lenya/cms-page/1.0</code> namespace.
     </p>  

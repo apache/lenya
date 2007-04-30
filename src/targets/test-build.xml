@@ -73,7 +73,7 @@
       </fileset>
     </copy>
     <replace encoding="utf-8"
-      file="${build.webapp}/lenya/pubs/${test.pub.id}/config/publication.xconf"
+      file="${build.webapp}/lenya/pubs/${test.pub.id}/config/publication.xml"
       token="Default Publication" value="Test Publication"/>
   </target>
   

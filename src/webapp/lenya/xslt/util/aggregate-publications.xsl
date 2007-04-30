@@ -34,7 +34,7 @@
     <xsl:for-each select="dir:directory">
       <lenya:publication dirname="{@name}">
         <xi:include 
-          href="lenya/pubs/{@name}/config/publication.xconf"
+          href="lenya/pubs/{@name}/config/publication.xml"
           xpointer="xpointer(/*/*)"
         >
           <xi:fallback>

@@ -217,7 +217,7 @@
       <!-- menu-xml/modules -->
       <!-- menu-xml/modules/{pub-id}/{area}.xml -->
       <map:match pattern="menu-xml/modules/*/*.xml">
-        <map:generate src="aggregate-fallback://config/publication.xconf"/>
+        <map:generate src="aggregate-fallback://config/publication.xml"/>
         <map:transform src="lenya/xslt/modules/modules2xinclude.xsl">
           <map:parameter name="area" value="{2}"/>
         </map:transform>
@@ -373,7 +373,7 @@
       <map:match pattern="*/introduction.html">
         <map:aggregate element="aggregation-wrapper">
           <map:part src="aggregate-fallback://readme.xml"/>
-          <map:part src="lenya/pubs/{1}/config/publication.xconf"/>
+          <map:part src="lenya/pubs/{1}/config/publication.xml"/>
         </map:aggregate>
         <map:transform src="lenya/xslt/util/introduction.xsl"/>
         <map:call resource="style-cms-page"/>

@@ -59,8 +59,8 @@ public class ConfigureCommandLine extends org.apache.lenya.config.core.Configure
 
         /*
         FileConfiguration defaultPub = new PublicationConfiguration();
-        defaultPub.setFilenameDefault(rootDir + "src/pubs/default/config/publication.xconf");
-        defaultPub.setFilenameLocal(rootDir + "src/pubs/default/config/local.publication.xconf");
+        defaultPub.setFilenameDefault(rootDir + "src/pubs/default/config/publication.xml");
+        defaultPub.setFilenameLocal(rootDir + "src/pubs/default/config/local.publication.xml");
         */
 
         /*

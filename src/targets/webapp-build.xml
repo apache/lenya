@@ -70,7 +70,7 @@
     <!-- Copy publications -->
     <copyPubs todir="${build.webapp}/lenya/pubs"
       pubsrootdirs="${pubs.root.dirs}"
-      excludes="CVS,.svn,cocoon-xconf,lenya-roles,local.publication.xconf,local.ac.xconf,.project"/>
+      excludes="CVS,.svn,cocoon-xconf,lenya-roles,local.publication.xml,local.ac.xconf,.project"/>
     
     <bulkCopy 
       sourcedirs="${pubs.root.dirs}" 
@@ -196,7 +196,7 @@
     <replace dir="${build.webapp}">
       <include name="lenya/content/welcome.xml"/>
       <include name="lenya/content/about.xml"/>
-      <include name="**/config/publication.xconf"/>
+      <include name="**/config/publication.xml"/>
       <replacefilter token="@lenya.version@" value="${version}"/>
       <replacefilter token="@lenya.revision@" value="${lenya.revision}"/>
     </replace>

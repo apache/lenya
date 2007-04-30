@@ -57,7 +57,7 @@
         <!-- **                                                          ** -->
         <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
         <!-- **       publication specific DocumentIdToPathMapper which  ** -->
-        <!-- **       is configured within config/publication.xconf      ** -->
+        <!-- **       is configured within config/publication.xml        ** -->
         <!-- ************************************************************** -->
         
           <map:match pattern="open" type="step">

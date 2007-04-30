@@ -31,7 +31,7 @@
   <xsl:template match="catalogue">
     <xsl:copy>
       <xsl:copy-of select="@*|node()"/>
-      <xsl:apply-templates select="document('aggregate-fallback://config/publication.xconf')/*/lenya:modules/lenya:module"/>
+      <xsl:apply-templates select="document('aggregate-fallback://config/publication.xml')/*/lenya:modules/lenya:module"/>
     </xsl:copy>
   </xsl:template>
 

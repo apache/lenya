@@ -60,7 +60,7 @@ public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
     protected static final String[] sourcesToCopy = { 
-            "config/publication.xconf",
+            "config/publication.xml",
             "config/access-control/access-control.xml", "config/access-control/policies/", 
             "config/access-control/usecase-policies.xml", 
             "config/workflow/workflow.xml",
@@ -70,7 +70,7 @@ public class Instantiator extends AbstractLogEnabled implements
     // the correct solution suggested by andreas is not to meddle with config files here at all, but instead implement
     // appropriate setter functions in the Publication class. postponed to after 1.4.
     // thus, don't waste too much effort on this file, it's all an intermediate hack.
-    private static final String CONFIGURATION_FILE = "config/publication.xconf";
+    private static final String CONFIGURATION_FILE = "config/publication.xml";
     private static final String CONFIGURATION_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
     private static final String ELEMENT_NAME = "name";
     private static final String ELEMENT_TEMPLATE = "template";

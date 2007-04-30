@@ -71,7 +71,7 @@ public class CopyJavaSourcesTask extends Task {
 
             if (path.isDirectory()) {
                 // In the case of a publication
-                if (new File(path, "/config/publication.xconf").isFile()) {
+                if (new File(path, "/config/publication.xml").isFile()) {
                     copyContentOfDir(new File(path, this.javaDir),
                             absoluteBuildDir,
                             twoTuple,

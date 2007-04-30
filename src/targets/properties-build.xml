@@ -64,6 +64,12 @@
     </not>
   </condition>
   <fail unless="target.vm">Please use a JVM 1.4 or superior to compile lenya ${version}</fail>
+  
+  <!--
+  The minimal supported Java version. The class files we ship with Lenya (e.g., build tasks)
+  are compiled for this version.
+  -->
+  <property name="target.vm.minimal" value="1.4"/>
 
   <property name="packages"      value="*.*"/>
 
@@ -163,15 +169,14 @@
 
   <!-- Compile tasks -->
   <target name="compile-build-tasks" description="Target to compile tasks needed during build">
-
     <javac srcdir="tools/anttasks/src"
            destdir="tools/anttasks/build/classes"
            debug="${debug}"
            optimize="{optimize}"
            deprecation="${deprecation}"
-           target="${target.vm}"
+           target="${target.vm.minimal}"
            nowarn="${nowarn}"
-           source="${target.vm}"/>
+           source="${target.vm.minimal}"/>
 	   <!--
            classpathref="classpath"
 	   -->

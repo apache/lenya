@@ -18,12 +18,12 @@
 
 <!-- 
   This RELAX NG grammar defines the configuration file of a. Lenya publication.
-  Configuration files must be located under "$YOURPUBROOT/$PUBNAME/config/publication.xconf".
+  Configuration files must be located under "$YOURPUBROOT/$PUBNAME/config/publication.xml".
   
   This schema is new as of 2007-02-23. It is NOT backwards-compatible. It combines the
-  contents of $YOURPUBROOT/$PUBNAME/publication.xml and $YOURPUBROOT/$PUBNAME/config/publication.xconf.
+  contents of $YOURPUBROOT/$PUBNAME/publication.xml and $YOURPUBROOT/$PUBNAME/config/publication.xml.
   
-  The publication.xconf file is parsed by:
+  The publication.xml file is parsed by:
   
   * src/impl/java/org/apache/lenya/cms/publication/PublicationConfiguration.java
   * src/java/org/apache/lenya/cms/publication/templating/ExistingUsecaseResolver.java

@@ -119,7 +119,7 @@
   	<replace dir="${dist.src.dir}">
           <include name="**/welcome.xml"/>
   	  <include name="**/about.xml"/>
-	  <include name="**/config/publication.xconf"/>
+	  <include name="**/config/publication.xml"/>
   	  <replacefilter token="@lenya.version@" value="${version}"/>
   	  <replacefilter token="@lenya.revision@" value="${lenya.revision}"/>
   	</replace>

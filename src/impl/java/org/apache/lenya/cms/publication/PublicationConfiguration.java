@@ -32,7 +32,7 @@ import org.apache.lenya.cms.repository.Node;
 /**
  * A publication's configuration.
  * Keep in sync with src/webapp/lenya/resources/schemas/publication.rng!
- * FIXME: validate publication.xconf before attempting to parse
+ * FIXME: validate publication.xml before attempting to parse
  */
 public class PublicationConfiguration extends AbstractLogEnabled implements Publication {
 
@@ -52,7 +52,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * <code>CONFIGURATION_FILE</code> The publication configuration file
      */
     public static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator
-            + "publication.xconf";
+            + "publication.xml";
 
     private static final String CONFIGURATION_NAMESPACE = 
             "http://apache.org/cocoon/lenya/publication/1.1" ;
@@ -146,7 +146,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 if (config.getChild(ELEMENT_PATH_MAPPER).getNamespace() != CONFIGURATION_NAMESPACE) {
                    getLogger().warn("Deprecated configuration: the publication configuration elements in "
                        + configFile + " must be in the " + CONFIGURATION_NAMESPACE + " namespace."
-                       + " See webapp/lenya/resources/schemas/publication.xconf.");
+                       + " See webapp/lenya/resources/schemas/publication.xml.");
                 }
                 pathMapperClassName = config.getChild(ELEMENT_PATH_MAPPER).getValue();
                 Class pathMapperClass = Class.forName(pathMapperClassName);
@@ -254,7 +254,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     }
 
     /**
-     * @return The configuration file (publication.xconf).
+     * @return The configuration file ({@link #CONFIGURATION_FILE}).
      */
     protected File getConfigurationFile() {
         File configFile = new File(getDirectory(), CONFIGURATION_FILE);
