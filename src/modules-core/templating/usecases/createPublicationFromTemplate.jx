@@ -24,12 +24,12 @@
            >
            
   <page:title>
-    <i18n:text>Create Publication From Template</i18n:text>
+    <i18n:text>Create Publication from Template</i18n:text>
   </page:title>
   <page:body>
     <div class="lenya-box">
       <div class="lenya-box-title">
-        <i18n:text>Create Publication From Template</i18n:text>
+        <i18n:text>Create Publication from Template</i18n:text>
       </div>
       <div class="lenya-box-body">
         <form method="get" action="" id="form-create_pub_from_template">

@@ -401,7 +401,11 @@
     i18n is only supported in publications.
   -->
   <message key="create-publication">Publikation erstellen</message>
-
+  <message key="Create Publication from Template">Publikation von einer Vorlage erstellen</message>
+  <message key="Publication ID">Publikations-ID</message>
+  <message key="Publication Name">Name der Publikation</message>
+  <message key="Template">Vorlage</message>
+  
   <!-- Error messages of a general nature -->
   <message key="error-document-form">Dokument ist nicht wohlgeformt: {0}</message>
   <message key="error-validation">Schema Validierung schlug fehl: {0}</message>
