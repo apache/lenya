@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -37,6 +38,7 @@ import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
@@ -71,7 +73,6 @@ public class Publish extends InvokeWorkflow {
 
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_PUBLISHED = "document-published";
-    protected static final String MISSING_DOCUMENTS = "missingDocuments";
     protected static final String SCHEDULE = "schedule";
     protected static final String SCHEDULE_TIME = "schedule.time";
     protected static final String SEND_NOTIFICATION = "sendNotification";
@@ -136,7 +137,7 @@ public class Publish extends InvokeWorkflow {
             Document doc = getSourceDocument();
             nodes.add(doc.getRepositoryNode());
             nodes.add(doc.area().getSite().getRepositoryNode());
-            
+
             return (org.apache.lenya.cms.repository.Node[]) nodes
                     .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
@@ -203,8 +204,19 @@ public class Publish extends InvokeWorkflow {
             }
 
             if (!missingDocuments.isEmpty()) {
-                addErrorMessage("Cannot publish document unless the following documents are published:");
-                setParameter(MISSING_DOCUMENTS, missingDocuments);
+                addErrorMessage("publish-missing-documents");
+                for (Iterator i = missingDocuments.iterator(); i.hasNext();) {
+                    Document doc = (Document) i.next();
+                    /*
+                     * This doesn't work yet, see
+                     * https://issues.apache.org/jira/browse/COCOON-2057
+                     * String[] params = { doc.getCanonicalWebappURL(),
+                     * doc.getPath() + " (" + doc.getLanguage() + ")" };
+                     */
+                    String[] params = { doc.getPath() + ":" + doc.getLanguage(),
+                            DublinCoreHelper.getTitle(doc) };
+                    addErrorMessage("missing-document", params);
+                }
             }
         }
     }
@@ -294,20 +306,21 @@ public class Publish extends InvokeWorkflow {
         Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
                 getLogger(), authoringDocument);
         Version versions[] = workflowable.getVersions();
-        Version version = versions[versions.length-2];
+        Version version = versions[versions.length - 2];
 
-        // we assume that the document has been submitted, otherwise we do nothing
+        // we assume that the document has been submitted, otherwise we do
+        // nothing
         if (version.getEvent().equals("submit")) {
-            
+
             String userId = version.getUserId();
-            User user = PolicyUtil.getUser(this.manager, authoringDocument
-                    .getCanonicalWebappURL(), userId, getLogger());
-            
+            User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
+                    userId, getLogger());
+
             Identifiable[] recipients = { user };
-    
+
             Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
             String url;
-    
+
             Proxy proxy = liveVersion.getPublication().getProxy(liveVersion, false);
             if (proxy != null) {
                 url = proxy.getURL(liveVersion);
@@ -319,12 +332,12 @@ public class Publish extends InvokeWorkflow {
                 url = serverUrl + request.getContextPath() + webappUrl;
             }
             String[] params = { url };
-            Message message = new Message(MESSAGE_SUBJECT, new String[0], MESSAGE_DOCUMENT_PUBLISHED,
-                    params, sender, recipients);
-            
+            Message message = new Message(MESSAGE_SUBJECT, new String[0],
+                    MESSAGE_DOCUMENT_PUBLISHED, params, sender, recipients);
+
             NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-            RepositoryEvent event = RepositoryEventFactory
-                    .createEvent(this.manager, getSession(), getLogger(), descriptor);
+            RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
+                    getLogger(), descriptor);
             getSession().enqueueEvent(event);
         }
     }

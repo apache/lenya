@@ -30,5 +30,14 @@
   <message key="Actions">Actions</message>
   <message key="state-as-text">State as text</message>
   <message key="state-as-columns">State as columns</message>
+  <message key="publish-missing-documents">
+    The document can't be published unless the following documents are published:
+  </message>
+  <message key="missing-document">
+    <!-- This doesn't work yet, see https://issues.apache.org/jira/browse/COCOON-2057
+    <xhtml:a href="{0}">{1}</xhtml:a>
+    -->
+    {0} ("{1}")
+  </message>
   
 </catalogue>

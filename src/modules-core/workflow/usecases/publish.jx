@@ -63,11 +63,6 @@
                       </i18n:translate>
                     </li>
                   </jx:forEach>
-                  <jx:forEach var="missingDocument" items="${usecase.getParameter('missingDocuments')}">
-                    <li>
-                      <a href="${request.getContextPath() + missingDocument.getCanonicalWebappURL()}"><jx:out value="${missingDocument.getId()}"/> [<jx:out value="${missingDocument.getLanguage()}"/>]</a>
-                    </li>
-                  </jx:forEach>
                   <jx:forEach var="message" items="${usecase.getInfoMessages()}">
                     <li>
                       <i18n:translate>
