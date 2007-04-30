@@ -24,7 +24,6 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
@@ -34,9 +33,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.components.flow.FlowHelper;
-import org.apache.cocoon.components.modules.input.JXPathHelper;
-import org.apache.cocoon.components.modules.input.JXPathHelperConfiguration;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
@@ -49,9 +45,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 
@@ -162,32 +155,6 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             throw new RuntimeException(e);
         }
 
-    }
-
-    protected Session getSession(Map objectModel, String sessionName) throws RepositoryException {
-        Session session;
-        if (sessionName == null) {
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            session = RepositoryUtil.getSession(this.manager, request);
-        } else if (sessionName.equals("usecase")) {
-            session = getUsecaseSession(objectModel);
-        } else {
-            throw new RepositoryException("Invalid session: [" + sessionName + "]");
-        }
-
-        return session;
-    }
-
-    protected Session getUsecaseSession(Map objectModel) throws RepositoryException {
-        try {
-            Configuration config = new DefaultConfiguration("foo");
-            JXPathHelperConfiguration helperConfig = JXPathHelper.setup(config);
-            Object contextObject = FlowHelper.getContextObject(objectModel);
-            return (Session) JXPathHelper.getAttribute("usecase/session", config, helperConfig,
-                    contextObject);
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        }
     }
 
     protected Source getFormatSource(Document doc, String format) throws DocumentException,
