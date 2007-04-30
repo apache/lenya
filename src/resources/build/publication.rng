@@ -163,21 +163,23 @@
         <element name="document-builder"><attribute name="name"><data type="string"/></attribute></element>
         <element name="site-manager"><attribute name="name"><data type="string"/></attribute></element>
         <element name="resource-types">
-          <oneOrMore>
+          <zeroOrMore>
             <element name="resource-type">
               <attribute name="name"><ref name="resourceTypeName"/></attribute>
               <attribute name="workflow"><ref name="workflowUri"/></attribute>
             </element>
-          </oneOrMore>
+          </zeroOrMore>
         </element>
         <element name="modules">
-          <oneOrMore>
+          <zeroOrMore>
             <element name="module">
               <attribute name="name"><ref name="moduleName"/></attribute>
             </element>
-          </oneOrMore>
+          </zeroOrMore>
         </element>
-        <element name="breadcrumb-prefix"><data type="string"/></element>
+        <optional>
+          <element name="breadcrumb-prefix"><data type="string"/></element>
+        </optional>
         <optional>
           <element name="content-dir">
             <attribute name="src">
