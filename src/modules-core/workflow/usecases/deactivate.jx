@@ -48,7 +48,8 @@
                 "<jx:out value="${title}"/>"
               </td>
             </tr>
-            <jx:if test="${!usecase.hasErrors() &amp;&amp; usecase.getParameter('linksToDocument').size() &gt; 0}">
+            <jx:set var="linksToDocument" value="${usecase.getParameter('linksToDocument').getDocuments()}"/>
+            <jx:if test="${!usecase.hasErrors() &amp;&amp; linksToDocument.size() &gt; 0}">
               <tr>
                 <td class="lenya-entry-caption" valign="top">
                   <p>
@@ -57,7 +58,7 @@
                 </td>
                 <td>
                   <ul>
-                    <jx:forEach var="link" items="${usecase.getParameter('linksToDocument')}">
+                    <jx:forEach var="link" items="${linksToDocument}">
                       <li>
                         <a href="${request.contextPath}${link.getCanonicalWebappURL()}">
                           <jx:out value="${link.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></a>

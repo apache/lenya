@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.linking.LinkManager;
@@ -53,16 +54,18 @@ public class Deactivate extends InvokeWorkflow {
         super.doCheckPreconditions();
 
         if (!hasErrors()) {
+            
+            Document doc = getSourceDocument();
 
-            if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
                 addErrorMessage("This usecase can only be invoked from the authoring area.");
                 return;
             }
 
-            if (!getSourceDocument().existsAreaVersion(Publication.LIVE_AREA)) {
+            if (!doc.existsAreaVersion(Publication.LIVE_AREA)) {
                 addErrorMessage("This usecase can only be invoked when the live version exists.");
             } else {
-                Document liveDoc = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
+                Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
                 NodeSet subSite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
                 SiteNode node = liveDoc.getLink().getNode();
                 subSite.remove(node);
@@ -70,34 +73,9 @@ public class Deactivate extends InvokeWorkflow {
                 if (!subSite.isEmpty()) {
                     addErrorMessage("You can't deactivate this document because it has children.");
                 }
-            }
-
-            setParameter(LINKS_TO_DOCUMENT, getLinksToDocument());
-        }
-    }
-
-    protected Document[] getLinksToDocument() {
-        Set docs = new HashSet();
-        LinkManager linkMgr = null;
-        try {
-            linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
-            Document liveVersion = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
-            Document[] referencingDocs = linkMgr.getReferencingDocuments(liveVersion);
-            for (int d = 0; d < referencingDocs.length; d++) {
-                Document doc = referencingDocs[d];
-                if (doc.getArea().equals(Publication.LIVE_AREA)) {
-                    docs.add(doc);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        finally {
-            if (linkMgr != null) {
-                this.manager.release(linkMgr);
+                setParameter(LINKS_TO_DOCUMENT, new LinkList(this.manager, doc));
             }
         }
-        return (Document[]) docs.toArray(new Document[docs.size()]);
     }
 
     /**
@@ -167,6 +145,60 @@ public class Deactivate extends InvokeWorkflow {
 
     protected String getEvent() {
         return "deactivate";
+    }
+    
+    /**
+     * A list of links pointing to a document. Allows lazy loading rom the usecase view.
+     */
+    public static class LinkList {
+        
+        private Document document;
+        private Document[] documents;
+        private ServiceManager manager;
+        
+        /**
+         * @param manager The manager.
+         * @param doc The document to resolve the links from.
+         */
+        public LinkList(ServiceManager manager, Document doc) {
+            this.manager = manager;
+            this.document = doc;
+        }
+        
+        /**
+         * @return The link documents.
+         */
+        public Document[] getDocuments() {
+            if (this.documents == null) {
+                this.documents = getLinksToDocument();
+            }
+            return this.documents;
+        }
+        
+        protected Document[] getLinksToDocument() {
+            Set docs = new HashSet();
+            LinkManager linkMgr = null;
+            try {
+                linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
+                Document liveVersion = this.document.getAreaVersion(Publication.LIVE_AREA);
+                Document[] referencingDocs = linkMgr.getReferencingDocuments(liveVersion);
+                for (int d = 0; d < referencingDocs.length; d++) {
+                    Document doc = referencingDocs[d];
+                    if (doc.getArea().equals(Publication.LIVE_AREA)) {
+                        docs.add(doc);
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            finally {
+                if (linkMgr != null) {
+                    this.manager.release(linkMgr);
+                }
+            }
+            return (Document[]) docs.toArray(new Document[docs.size()]);
+        }
+
     }
 
 }

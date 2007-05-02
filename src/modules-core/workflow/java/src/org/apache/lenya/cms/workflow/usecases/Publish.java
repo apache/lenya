@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
@@ -93,40 +94,10 @@ public class Publish extends InvokeWorkflow {
         setParameter(SCHEDULE_TIME, format.format(now));
 
         setParameter(SEND_NOTIFICATION, Boolean.TRUE);
-
-        setParameter(UNPUBLISHED_LINKS, getUnpublishedLinks());
+        
+        setParameter(UNPUBLISHED_LINKS, new LinkList(this.manager, getSourceDocument()));
     }
-
-    protected Document[] getUnpublishedLinks() {
-        Set docs = new HashSet();
-        LinkManager linkMgr = null;
-        LinkResolver resolver = null;
-        try {
-            linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
-            resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
-            org.apache.lenya.cms.linking.Link[] links = linkMgr.getLinksFrom(getSourceDocument());
-            for (int i = 0; i < links.length; i++) {
-                LinkTarget target = resolver.resolve(getSourceDocument(), links[i].getUri());
-                if (target.exists()) {
-                    Document doc = target.getDocument();
-                    if (!doc.existsAreaVersion(Publication.LIVE_AREA)) {
-                        docs.add(doc);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (linkMgr != null) {
-                this.manager.release(linkMgr);
-            }
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
-        }
-        return (Document[]) docs.toArray(new Document[docs.size()]);
-    }
-
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -355,6 +326,66 @@ public class Publish extends InvokeWorkflow {
             path += "/" + steps[s];
             s++;
         }
+    }
+    
+    /**
+     * A list of links originating from a document. Allows lazy loading rom the usecase view.
+     */
+    public static class LinkList {
+        
+        private Document document;
+        private Document[] documents;
+        private ServiceManager manager;
+        
+        /**
+         * @param manager The manager.
+         * @param doc The document to resolve the links from.
+         */
+        public LinkList(ServiceManager manager, Document doc) {
+            this.manager = manager;
+            this.document = doc;
+        }
+        
+        /**
+         * @return The link documents.
+         */
+        public Document[] getDocuments() {
+            if (this.documents == null) {
+                this.documents = getUnpublishedLinks();
+            }
+            return this.documents;
+        }
+        
+        protected Document[] getUnpublishedLinks() {
+            Set docs = new HashSet();
+            LinkManager linkMgr = null;
+            LinkResolver resolver = null;
+            try {
+                linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
+                resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
+                org.apache.lenya.cms.linking.Link[] links = linkMgr.getLinksFrom(this.document);
+                for (int i = 0; i < links.length; i++) {
+                    LinkTarget target = resolver.resolve(this.document, links[i].getUri());
+                    if (target.exists()) {
+                        Document doc = target.getDocument();
+                        if (!doc.existsAreaVersion(Publication.LIVE_AREA)) {
+                            docs.add(doc);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (linkMgr != null) {
+                    this.manager.release(linkMgr);
+                }
+                if (resolver != null) {
+                    this.manager.release(resolver);
+                }
+            }
+            return (Document[]) docs.toArray(new Document[docs.size()]);
+        }
+
     }
 
 }
