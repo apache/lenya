@@ -42,6 +42,7 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.UUIDGenerator;
@@ -532,6 +533,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 targetDoc = sourceDoc;
             } else {
                 targetDoc = addVersion(sourceDoc, targetArea.getName(), sourceDoc.getLanguage());
+                copyRevisions(sourceDoc, targetDoc);
                 sourceDoc.delete();
             }
 
@@ -541,6 +543,19 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
         SiteNode targetNode = targetArea.getSite().getNode(targetPath);
         targetNode.setVisible(sourceNode.isVisible());
+    }
+
+    protected void copyRevisions(Document sourceDoc, Document targetDoc) throws PublicationException {
+        RevisionController controller = new RevisionController(getLogger());
+        try {
+            Node targetNode = targetDoc.getRepositoryNode();
+            // reset the lock so that the node doesn't complain about being changed
+            targetNode.unlock();
+            controller.copyRCML(sourceDoc.getRepositoryNode(), targetNode);
+            targetNode.lock();
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        }
     }
 
     public void copyAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)

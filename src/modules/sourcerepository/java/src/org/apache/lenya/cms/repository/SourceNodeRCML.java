@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -126,6 +127,19 @@ public class SourceNodeRCML implements RCML {
             throws IOException, Exception {
 
         Document doc = getDocument();
+        
+        Vector entries = getEntries();
+        if (entries.size() == 0) {
+            if (type == ci) {
+                throw new IllegalStateException("Can't check in - not checked out.");
+            }
+        }
+        else {
+            RCMLEntry latestEntry = getLatestEntry();
+            if (type == latestEntry.getType()) {
+                throw new IllegalStateException("RCMLEntry type " + type + " not allowed twice in a row.");
+            }
+        }
 
         if (identity == null) {
             throw new IllegalArgumentException("The identity must not be null!");
@@ -184,9 +198,9 @@ public class SourceNodeRCML implements RCML {
         // finished or the garbage collector calling the finalize()
         // method.
         //
-        if (type == co) {
-            write();
-        }
+        // if (type == co) {
+        // }
+        write();
     }
 
     private long lastModified = 0;
@@ -537,6 +551,31 @@ public class SourceNodeRCML implements RCML {
                 deleteBackup(this.node.getContentSource(), time);
                 deleteBackup(this.node.getMetaSource(), time);
             }
+        } catch (Exception e) {
+            throw new RevisionControlException(e);
+        }
+    }
+
+    public void copyFrom(RCML otherRcml) throws RevisionControlException {
+        
+        SourceNodeRCML other = (SourceNodeRCML) otherRcml;
+        
+        try {
+
+            Vector backupEntries = other.getBackupEntries();
+            for (Iterator i = backupEntries.iterator(); i.hasNext(); ) {
+                RCMLEntry entry = (RCMLEntry) i.next();
+                long time = entry.getTime();
+                String otherContentUri = other.getBackupSourceUri(other.node.getContentSource(), time);
+                String thisContentUri = this.getBackupSourceUri(this.node.getContentSource(), time);
+                SourceUtil.copy(this.manager, otherContentUri, thisContentUri);
+                String otherMetaUri = other.getBackupSourceUri(other.node.getMetaSource(), time);
+                String thisMetaUri = this.getBackupSourceUri(this.node.getMetaSource(), time);
+                SourceUtil.copy(this.manager, otherMetaUri, thisMetaUri);
+            }
+
+            this.xml = other.getDocument();
+            write();
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }

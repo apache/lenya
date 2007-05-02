@@ -279,7 +279,7 @@ public class RevisionController extends AbstractLogEnabled {
     }
 
     /**
-     * delete the rcml file
+     * Delete the revision history.
      * @param node of the document
      * @throws RevisionControlException if something went wrong
      */
@@ -293,6 +293,16 @@ public class RevisionController extends AbstractLogEnabled {
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
+    }
+
+    /**
+     * Copies the revisions from one node to another.
+     * @param source The source node.
+     * @param destination The destination node.
+     * @throws RevisionControlException if an error occurs.
+     */
+    public void copyRCML(Node source, Node destination) throws RevisionControlException {
+        destination.getRcml().copyFrom(source.getRcml());
     }
 
 }

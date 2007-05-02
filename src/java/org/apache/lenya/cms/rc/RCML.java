@@ -23,8 +23,6 @@ package org.apache.lenya.cms.rc;
 import java.io.IOException;
 import java.util.Vector;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 /**
  * Handle with the RCML file
  */
@@ -38,12 +36,6 @@ public interface RCML {
      * <code>ci</code> Checkin
      */
     short ci = 1;
-
-    /**
-     * initialise the RCML-document. Delete all entries
-     * @throws ParserConfigurationException
-     */
-    public void initDocument() throws ParserConfigurationException ;
 
     /**
      * Write the xml RCML-document in the RCML-file.
@@ -164,4 +156,10 @@ public interface RCML {
      * @throws RevisionControlException if an error occurs.
      */
     void deleteRevisions() throws RevisionControlException;
+    
+    /**
+     * @param other The RCML to copy the entries from.
+     * @throws RevisionControlException if an error occurs.
+     */
+    void copyFrom(RCML other) throws RevisionControlException;
 }
