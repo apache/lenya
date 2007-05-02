@@ -80,25 +80,12 @@ public class SourceNodeRCML implements RCML {
         this.node = node;
         this.manager = manager;
 
-        if (!SourceUtil.exists(getRcmlSourceUri(), manager)) {
-            // The rcml file does not yet exist, so we create it now
-            initDocument();
-            write();
-        }
     }
 
     protected static final String RCML_EXTENSION = ".rcml";
 
     protected String getRcmlSourceUri() {
         return this.node.getContentSource().getRealSourceUri() + RCML_EXTENSION;
-    }
-
-    /**
-     * initialise the RCML-document. Delete all entries
-     * @throws ParserConfigurationException
-     */
-    public void initDocument() throws ParserConfigurationException {
-        this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
     }
 
     /**
@@ -139,7 +126,7 @@ public class SourceNodeRCML implements RCML {
      */
     public void checkOutIn(short type, String identity, long time, boolean backup)
             throws IOException, Exception {
-        
+
         Document doc = getDocument();
 
         if (identity == null) {
@@ -203,20 +190,27 @@ public class SourceNodeRCML implements RCML {
             write();
         }
     }
-    
+
     private long lastModified = 0;
 
     protected Document getDocument() throws RevisionControlException {
-        try {
-            String uri = getRcmlSourceUri();
-            long sourceLastModified = SourceUtil.getLastModified(uri, manager);
-            if (this.xml == null || sourceLastModified > this.lastModified) {
-                this.xml = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
-                this.lastModified = sourceLastModified;
+        if (this.xml == null) {
+            try {
+                String uri = getRcmlSourceUri();
+                if (SourceUtil.exists(uri, this.manager)) {
+                    long sourceLastModified = SourceUtil.getLastModified(uri, manager);
+                    if (this.xml == null || sourceLastModified > this.lastModified) {
+                        this.xml = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
+                        this.lastModified = sourceLastModified;
+                    }
+                }
+                else {
+                    this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
+                }
+            } catch (Exception e) {
+                throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
+                        + "]");
             }
-        } catch (Exception e) {
-            throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
-                    + "]");
         }
         return this.xml;
     }
@@ -518,7 +512,8 @@ public class SourceNodeRCML implements RCML {
     }
 
     /**
-     * Delete the revisions, the RCML source and the collection if the latter is empty.
+     * Delete the revisions, the RCML source and the collection if the latter is
+     * empty.
      * @return boolean true, if the file was deleted
      */
     public boolean delete() {
