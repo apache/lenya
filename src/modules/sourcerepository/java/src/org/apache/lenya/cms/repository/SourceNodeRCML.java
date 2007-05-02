@@ -27,8 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
