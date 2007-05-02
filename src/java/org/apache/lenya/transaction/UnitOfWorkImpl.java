@@ -138,7 +138,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i] instanceof Transactionable) {
                     Transactionable t = (Transactionable) objects[i];
-                    if (t.isCheckedOutByUser()) {
+                    if (t.isCheckedOutByUser() && !this.removedObjects.contains(t)) {
                         t.checkin();
                     }
                     if (t.isLocked()) {

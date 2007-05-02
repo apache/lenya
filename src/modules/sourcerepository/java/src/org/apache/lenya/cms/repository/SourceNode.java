@@ -84,6 +84,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public void deleteTransactionable() throws RepositoryException {
         this.contentSource.deleteTransactionable();
         this.metaSource.deleteTransactionable();
+        getRcml().delete();
     }
 
     protected String getUserId() {

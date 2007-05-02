@@ -37,7 +37,6 @@ import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -519,11 +518,12 @@ public class SourceNodeRCML implements RCML {
     }
 
     /**
-     * delete the rcml file and the directory if this one is empty
+     * Delete the revisions, the RCML source and the collection if the latter is empty.
      * @return boolean true, if the file was deleted
      */
     public boolean delete() {
         try {
+            deleteRevisions();
             SourceUtil.delete(getRcmlSourceUri(), this.manager);
             SourceUtil.deleteEmptyCollections(getRcmlSourceUri(), this.manager);
         } catch (Exception e) {
