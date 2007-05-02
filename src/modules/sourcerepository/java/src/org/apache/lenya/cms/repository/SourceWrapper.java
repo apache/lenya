@@ -188,6 +188,12 @@ public class SourceWrapper extends AbstractLogEnabled {
         loadData();
         return this.data != null;
     }
+    
+    private boolean deleted;
+    
+    protected void delete() {
+        this.deleted = true;
+    }
 
     /**
      * Loads the data from the real source.
@@ -196,7 +202,7 @@ public class SourceWrapper extends AbstractLogEnabled {
      */
     protected synchronized void loadData() throws RepositoryException {
 
-        if (this.data != null) {
+        if (this.deleted || this.data != null) {
             return;
         }
 

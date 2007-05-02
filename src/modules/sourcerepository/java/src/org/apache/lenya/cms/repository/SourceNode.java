@@ -421,6 +421,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public void delete() throws RepositoryException {
+        this.contentSource.delete();
+        this.metaSource.delete();
         registerRemoved();
     }
 
