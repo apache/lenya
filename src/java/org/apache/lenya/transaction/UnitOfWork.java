@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.transaction;
 
-import org.apache.lenya.ac.Identity;
-
 /**
  * This is a "Unit of Work" object (see "Unit of Work" pattern by Martin Fowler, 
  * <a href="http://www.martinfowler.com/eaaCatalog/unitOfWork.html">
