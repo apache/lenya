@@ -65,15 +65,8 @@ public class DeleteLanguage extends DocumentUsecase {
         super.doExecute();
 
         Document document = getSourceDocument();
-        DocumentManager documentManager = null;
-        try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.delete(document);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-        }
+        document.getLink().delete();
+        document.delete();
 
         setTargetDocument(DocumentHelper.getExistingLanguageVersion(document));
     }
