@@ -525,6 +525,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             Link sourceLink = sourceNode.getLink(languages[i]);
             String label = sourceLink.getLabel();
             Document sourceDoc = sourceLink.getDocument();
+            sourceLink.delete();
 
             Document targetDoc;
             if (sourceArea.getName().equals(targetArea.getName())) {
@@ -534,7 +535,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 sourceDoc.delete();
             }
 
-            sourceLink.delete();
             Link link = targetArea.getSite().add(targetPath, targetDoc);
             link.setLabel(label);
             Assert.isTrue("label set", targetDoc.getLink().getLabel().equals(label));
