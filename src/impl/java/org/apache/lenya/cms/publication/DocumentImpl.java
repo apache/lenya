@@ -233,11 +233,10 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             if (sourceExtension.equals("xml") || sourceExtension.equals("")) {
                 getLogger().info("Default extension will be used: " + defaultExtension);
                 return defaultExtension;
-            }
-            else {
+            } else {
                 return sourceExtension;
             }
-            
+
         }
         return this.extension;
     }
@@ -396,6 +395,10 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#delete()
      */
     public void delete() throws DocumentException {
+        if (hasLink()) {
+            throw new DocumentException("Can't delete document [" + this
+                    + "], it's still referenced in the site structure.");
+        }
         try {
             getRepositoryNode().delete();
         } catch (Exception e) {
@@ -494,12 +497,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public boolean existsTranslation(String language) {
-        String sourceUri = getSourceURI(getPublication(), getArea(), getUUID(), language);
-        try {
-            return SourceUtil.exists(sourceUri, this.manager);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return area().contains(getUUID(), language);
     }
 
     public Document getAreaVersion(String area) throws DocumentException {
@@ -519,7 +517,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     private Node repositoryNode;
-    
+
     /**
      * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
      */
