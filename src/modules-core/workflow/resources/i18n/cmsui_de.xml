@@ -42,6 +42,7 @@
   
   <message key="unpublished-links">Links zu nicht publizierten Dokumenten:</message>
   <message key="links-to-document">Links von anderen Dokumenten:</message>
+  <message key="publish-broken-links">Das Dokument enthält Links zu nicht existierenden Dokumenten.</message>
   
   <message key="notify-reviewers">Prüfer benachrichtigen</message>
   

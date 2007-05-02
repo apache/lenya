@@ -96,6 +96,33 @@ public class Publish extends InvokeWorkflow {
         setParameter(SEND_NOTIFICATION, Boolean.TRUE);
         
         setParameter(UNPUBLISHED_LINKS, new LinkList(this.manager, getSourceDocument()));
+        
+    }
+    
+    protected boolean hasBrokenLinks() {
+        LinkManager linkMgr = null;
+        LinkResolver resolver = null;
+        try {
+            linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
+            resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
+            org.apache.lenya.cms.linking.Link[] links = linkMgr.getLinksFrom(getSourceDocument());
+            for (int i = 0; i < links.length; i++) {
+                LinkTarget target = resolver.resolve(getSourceDocument(), links[i].getUri());
+                if (!target.exists()) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (linkMgr != null) {
+                this.manager.release(linkMgr);
+            }
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
+        }
+        return false;
     }
     
     /**
@@ -188,6 +215,10 @@ public class Publish extends InvokeWorkflow {
                             DublinCoreHelper.getTitle(doc) };
                     addErrorMessage("missing-document", params);
                 }
+            }
+            
+            if (hasBrokenLinks()) {
+                addInfoMessage("publish-broken-links");
             }
         }
     }
