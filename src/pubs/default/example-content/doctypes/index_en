@@ -28,10 +28,10 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     <h1>Ressource Type Examples</h1>
 
 <p>
-The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML resource type</a>,
-the <a href="doctypes/links.html">Links resource type</a>,
-the <a href="doctypes/opendocument.html">OpenDocument resource type</a> and
-the <a href="doctypes/cforms.html">CForms resource type</a>.
+The default publication comes with the <a href="/default/authoring/doctypes/xhtml-document.html">XHTML resource type</a>,
+the <a href="/default/authoring/doctypes/links.html">Links resource type</a>,
+the <a href="/default/authoring/doctypes/opendocument.html">OpenDocument resource type</a> and
+the <a href="/default/authoring/doctypes/cforms.html">CForms resource type</a>.
 </p>
 
 <p>
