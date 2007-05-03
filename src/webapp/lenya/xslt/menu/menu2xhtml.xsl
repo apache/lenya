@@ -152,15 +152,33 @@
     
     <xsl:variable name="tab-documenturl">
       <xsl:choose>
-        <!-- index.html for link from/to admin area -->
-        <xsl:when test="$tab-area = 'admin' or $area = 'admin'">/index.html</xsl:when>
-        <xsl:when test="($currentTab = 'site') and $documentid = '/'">/index.html</xsl:when>
+        <!-- 
+           Document URLs are not meaningful in some areas. In that case, set the URL to
+           "/". The publication sitemap currently takes care of mapping that to a default page (index.html).
+           FIXME: that solution is sub-optimal, because it breaks when a user deletes the /index page.
+           There should be a mapper from "/" to "first entry in sitetree", and if that does not exist, to a 
+           "create document?" message.
+        -->
+        <!-- from or to the admin area, there's no concept of "document" (it's all usecases) -->
+        <xsl:when test="$tab-area = 'admin' or $area = 'admin'">/</xsl:when>
+        <!-- FIXME: what is documentid? -->
+        <xsl:when test="($currentTab = 'site') and $documentid = '/'">/</xsl:when>
+        <!-- you can't do anything with trashed or archived pages except in the "site" tab. -->
+        <xsl:when test="$area = 'trash' or $area = 'archive'">/</xsl:when>
+        <!-- catch missing trailing slash in urls with just the area: -->
+        <xsl:when test="not($documenturl)">/</xsl:when>
+        <!-- the default case is: use the current $documenturl for the new tab link. -->
         <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="$tabName = $currentTab">
+        <!-- 
+           FIXME: why do we normalize-space here? fiddling with uris is none of our business. 
+           Looks like a workaround for a real bug that should be fixed. Sure, we don't allow spaces
+           in document URLs, but that policy decision is made elsewhere.
+        -->
         <li id="area-{$tab-area}-active" class="area-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
       </xsl:when>
       <xsl:otherwise>
