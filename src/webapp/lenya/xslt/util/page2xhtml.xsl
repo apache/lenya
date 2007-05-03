@@ -33,7 +33,7 @@
   <xsl:template match="page:page">
     <html>
       <head>
-        <title><xsl:apply-templates select="page:title/node()"/></title>
+        <title><xsl:apply-templates select="page:title/node()" mode="htmlTitle"/></title>
         <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" title="default css"/>
         <link rel="icon" href="{$contextprefix}/favicon.ico" type="image/ico"/>
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
@@ -61,6 +61,19 @@
         </table>
       </body>
     </html>
+  </xsl:template>
+  
+  
+  <xsl:template match="i18n:*" mode="htmlTitle">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates select="node()" mode="htmlTitle"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  
+  <xsl:template match="node()" mode="htmlTitle">
+    <xsl:value-of select="."/>
   </xsl:template>
   
   
