@@ -32,7 +32,7 @@
 
 <xsl:template match="/*">
 <page:page>
-  <page:title>Apache Lenya -
+  <page:title><a href="../index.html">Apache Lenya</a> &#187;
     <i18n:translate>
       <i18n:text>... Publication</i18n:text>
       <i18n:param><xsl:value-of select="lenya:publication/lenya:name"/></i18n:param>
