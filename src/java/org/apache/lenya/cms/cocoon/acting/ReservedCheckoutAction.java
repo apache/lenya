@@ -27,6 +27,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
+import org.apache.lenya.cms.repository.Node;
 
 /**
  * Action doing reserved checkout
@@ -44,8 +45,12 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
 
         //check out
         try {
-            getLogger().debug(".act(): Node: " + getNode().getSourceURI());
-            getLogger().debug(".act(): Username: " + getUsername());
+            
+            Node node = getNode();
+            String username = getUsername();
+            
+            getLogger().debug(".act(): Node: " + node.getSourceURI());
+            getLogger().debug(".act(): Username: " + username);
 
             if (getNode() == null) {
                 throw new Exception("Filename is null");
@@ -54,8 +59,10 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             if (getUsername() == null) {
                 throw new Exception("Username is null");
             }
-
-            getRc().reservedCheckOut(getNode(), getUsername());
+            
+            if (!node.isCheckedOutByUser()) {
+                getRc().reservedCheckOut(node, username);
+            }
         } catch (FileReservedCheckOutException e) {
             actionMap.put("exception", "fileReservedCheckOutException");
             actionMap.put("filename", getNode().getSourceURI());

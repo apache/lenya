@@ -27,6 +27,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
+import org.apache.lenya.cms.repository.Node;
 
 /**
  * Checkin document
@@ -51,7 +52,10 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         getLogger().debug("Backup: " + backup);
 
         try {
-            getRc().reservedCheckIn(getNode(), getUsername(), backup, true);
+            Node node = getNode();
+            if (node.isCheckedOutByUser()) {
+                getRc().reservedCheckIn(node, getUsername(), backup, true);
+            }
         } catch (FileReservedCheckInException e) {
             actionMap.put("exception", "fileReservedCheckInException");
             actionMap.put("filename", getNode().getSourceURI());
