@@ -32,17 +32,22 @@
 
 <xsl:template match="/*">
 <page:page>
-  <page:title>Apache Lenya - <xsl:value-of select="lenya:publication/lenya:name"/></page:title>
+  <page:title>Apache Lenya -
+    <i18n:translate>
+      <i18n:text>... Publication</i18n:text>
+      <i18n:param><xsl:value-of select="lenya:publication/lenya:name"/></i18n:param>
+    </i18n:translate>
+  </page:title>
   <page:head/>
   <page:body>
     <div class="lenya-sidebar">
-      <div class="lenya-sidebar-heading">This&#160;Publication</div>
+      <div class="lenya-sidebar-heading"><i18n:text>This Publication</i18n:text></div>
       <ul>
-        <li><a href="authoring/">Login&#160;as&#160;Editor</a></li>
-        <li><a href="live/">Live&#160;View</a></li>
+        <li><a href="authoring/"><i18n:text>Login as Editor</i18n:text></a></li>
+        <li><a href="live/"><i18n:text>Live View</i18n:text></a></li>
       </ul>
-      <div class="lenya-publication-item"><a href="../index.html">Other&#160;Publications</a></div>
-      <div class="lenya-publication-item"><a href="http://lenya.apache.org/docs/index.html">Documentation</a></div>
+      <div class="lenya-publication-item"><a href="../index.html"><i18n:text>Other Publications</i18n:text></a></div>
+      <div class="lenya-publication-item"><a href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></a></div>
       <div class="lenya-publication-item"><a href="http://wiki.apache.org/lenya">Wiki</a></div>
     </div>
 

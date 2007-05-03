@@ -93,6 +93,11 @@
   <message key="hide">&#160;-&#160;</message>
   <message key="Publication">Publication</message>
   <message key="Publications">Publications</message>
+  <message key="... Publication">{0} Publication</message>
+  <message key="This Publication">This&#160;Publication</message>
+  <message key="Login as Editor">Login&#160;as&#160;Editor</message>
+  <message key="Live View">Live&#160;View</message>
+  <message key="Other Publications">Other&#160;Publications</message>
   
   <!-- submit screen -->
   <message key="submit-for-approval">Submit "{0}" for approval</message>  

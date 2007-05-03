@@ -102,6 +102,11 @@
   <message key="Width">Breite</message>
   <message key="Publication">Publikation</message>
   <message key="Publications">Publikationen</message>
+  <message key="... Publication">{0}-Publikation</message>
+  <message key="This Publication">Diese&#160;Publikation</message>
+  <message key="Login as Editor">Als&#160;Editor&#160;anmelden</message>
+  <message key="Live View">Live-Ansicht</message>
+  <message key="Other Publications">Andere&#160;Publikationen</message>
   
 
   <!-- submit screen -->
