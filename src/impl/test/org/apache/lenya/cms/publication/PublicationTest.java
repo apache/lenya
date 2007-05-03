@@ -28,58 +28,59 @@ import org.apache.lenya.ac.impl.AbstractAccessControlTest;
  * Publication test.
  */
 public class PublicationTest extends AbstractAccessControlTest {
-    
+
     /**
      * Tests the publication functionality.
      * @throws Exception
      */
     public void testPublication() throws Exception {
-        
+
         PublicationManager pubMgr = null;
         try {
             pubMgr = (PublicationManager) getManager().lookup(PublicationManager.ROLE);
-            
+
             Publication[] pubs = pubMgr.getPublications(getFactory());
             for (int i = 0; i < pubs.length; i++) {
                 doTestPublication(pubs[i]);
             }
-            
-        }
-        finally {
+
+        } finally {
             if (pubMgr != null) {
                 getManager().release(pubMgr);
             }
         }
-        
-        
+
     }
 
     protected void doTestPublication(Publication pub) throws PublicationException {
         String contentDirPath = pub.getContentDir();
         assertNotNull(contentDirPath);
-        
+
         File contentDir = new File(contentDirPath);
-        
+
         assertTrue(pub.exists());
-        
+
         String[] areaNames = pub.getAreaNames();
         for (int i = 0; i < areaNames.length; i++) {
-            File areaContentDir = pub.getContentDirectory(areaNames[i]);
-            assertTrue(areaContentDir.isDirectory());
-            assertEquals(new File(contentDir, areaNames[i]), areaContentDir);
+            Area area = pub.getArea(areaNames[i]);
+            if (area.getDocuments().length > 0) {
+                File areaContentDir = pub.getContentDirectory(areaNames[i]);
+                assertTrue(areaContentDir.isDirectory());
+                assertEquals(new File(contentDir, areaNames[i]), areaContentDir);
+            }
         }
-        
+
         String[] languages = pub.getLanguages();
         assertTrue(languages.length > 0);
-        
+
         assertNotNull(pub.getDefaultLanguage());
         assertTrue(Arrays.asList(languages).contains(pub.getDefaultLanguage()));
-        
+
         String[] types = pub.getResourceTypeNames();
         assertTrue(types.length > 0);
-        
+
         Set typeSet = new HashSet(Arrays.asList(types));
-        
+
         String[] templateIds = pub.getTemplateIds();
         for (int i = 0; i < templateIds.length; i++) {
             Publication template = pub.getFactory().getPublication(templateIds[i]);
@@ -88,7 +89,7 @@ public class PublicationTest extends AbstractAccessControlTest {
                 assertTrue(typeSet.contains(templateTypes[i]));
             }
         }
-        
+
     }
 
 }
