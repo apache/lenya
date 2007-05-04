@@ -42,7 +42,8 @@ import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 
 /**
- * Usecase scheduler implementation.
+ * <p>Usecase scheduler implementation.</p>
+ * <p>The names of the scheduled jobs have the syntax <code>{usecaseName}:{userId}</code>.
  * 
  * @version $Id$
  */
@@ -68,6 +69,7 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
             objects.put(UsecaseCronJob.USECASE_NAME, usecase.getName());
             objects.put(UsecaseCronJob.SOURCE_URL, usecase.getSourceURL());
 
+            String userId = "";
             Request request = ContextHelper.getRequest(this.context);
             Session session = request.getSession(false);
             if (session != null) {
@@ -75,7 +77,8 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
                 if (identity != null) {
                     User user = identity.getUser();
                     if (user != null) {
-                        objects.put(UsecaseCronJob.USER_ID, user.getId());
+                        userId = user.getId();
+                        objects.put(UsecaseCronJob.USER_ID, userId);
                     }
                     Machine machine = identity.getMachine();
                     if (machine != null) {
@@ -85,7 +88,8 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
             }
 
             String role = CronJob.class.getName() + "/usecase";
-            scheduler.fireJobAt(date, "foo", role, parameters, objects);
+            String name = getJobName(usecase, userId);
+            scheduler.fireJobAt(date, name, role, parameters, objects);
 
         } catch (Exception e) {
             getLogger().error("Could not create job: ", e);
@@ -95,6 +99,10 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
                 this.manager.release(scheduler);
             }
         }
+    }
+    
+    protected String getJobName(Usecase usecase, String userId) {
+        return usecase.getName() + ":" + userId;
     }
     
     protected ServiceManager manager;

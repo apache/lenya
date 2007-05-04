@@ -80,8 +80,18 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
     protected static final String USER_ID = "userId";
     protected static final String MACHINE_IP = "machineIp";
 
-    protected String getUsecaseName() {
+    /**
+     * @return The name of the usecase to execute.
+     */
+    public String getUsecaseName() {
         return this.usecaseName;
+    }
+    
+    /**
+     * @return The ID of the user who scheduled the job.
+     */
+    public String getUserId() {
+        return this.userId;
     }
 
     protected String getSourceURL() {

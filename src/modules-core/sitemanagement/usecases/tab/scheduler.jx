@@ -38,12 +38,21 @@
           <table class="lenya-table-list-noborder">
             <tr>
               <th><i18n:text>Job</i18n:text></th>
+              <th><i18n:text>User</i18n:text></th>
               <th><i18n:text>Time</i18n:text></th>
             </tr>
             <jx:forEach var="job" items="${usecase.getParameter('jobs')}">
+              <!-- see UsecaseSchedulerImpl for job name encoding -->
+              <jx:set var="name" value="${job.getName()}"/>
+              <jx:set var="parts" value="${name.split(':')}"/>
+              <jx:set var="usecaseName" value="${parts[0]}"/>
+              <jx:set var="userId" value="${parts[1]}"/>
               <tr>
                 <td>
-                  <jx:out value="${job.getJobName()}"/>
+                  <jx:out value="${usecaseName}"/>
+                </td>
+                <td>
+                  <a href="${request.requestUri}?lenya.usecase=admin.user&amp;userId=${userId}"><jx:out value="${userId}"/></a>
                 </td>
                 <td>
                   <jx:out value="${job.getNextTime()}"/>
