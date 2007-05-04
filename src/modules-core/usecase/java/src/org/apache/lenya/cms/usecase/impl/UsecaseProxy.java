@@ -183,4 +183,19 @@ public class UsecaseProxy {
         return (Session) getParameter("private.session");
     }
 
+    /**
+     * Returns one of the strings "true" or "false" depending on whether the
+     * corresponding checkbox was checked.
+     * @param name The parameter name.
+     * @return A string.
+     */
+    public String getBooleanCheckboxParameter(String name) {
+        String value = "false";
+        String paramValue = getParameterAsString(name);
+        if (paramValue != null && (paramValue.equals("on") || paramValue.equals("true"))) {
+            value = "true";
+        }
+        return value;
+    }
+
 }
