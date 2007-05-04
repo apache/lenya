@@ -55,7 +55,9 @@
                   <a href="${request.requestUri}?lenya.usecase=admin.user&amp;userId=${userId}"><jx:out value="${userId}"/></a>
                 </td>
                 <td>
-                  <jx:out value="${job.getNextTime()}"/>
+                  <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss Z">
+                    <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss Z" value="${job.getNextTime()}"/>
+                  </i18n:date-time>
                 </td>
               </tr>
             </jx:forEach>
