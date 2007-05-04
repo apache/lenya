@@ -239,24 +239,33 @@
   
   
   <xsl:template name="checkItem">
-    <xsl:choose>
-      <xsl:when test="@checked = 'true'">
-        <img src="{$contextprefix}/lenya/menu/images/checked.png" alt="checked"/>
-      </xsl:when>
-      <xsl:when test="@checked = 'false'">
-        <img src="{$contextprefix}/lenya/menu/images/unchecked.png" alt="unchecked"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <img src="{$contextprefix}/lenya/menu/images/checkedPlaceholder.png" alt=""/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:if test="@checked">
+      <xsl:variable name="image">
+        <xsl:choose>
+          <xsl:when test="@checked = 'true'">
+            <xsl:text>checked.png</xsl:text>
+          </xsl:when>
+          <xsl:when test="@checked = 'false'">
+            <xsl:text>unchecked.png</xsl:text>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:attribute name="style">
+        <xsl:text>background: url('</xsl:text>
+        <xsl:value-of select="$contextprefix"/><xsl:text>/lenya/menu/images/</xsl:text>
+        <xsl:value-of select="$image"/>
+        <xsl:text>') left 2px no-repeat;</xsl:text>
+      </xsl:attribute>
+    </xsl:if>
   </xsl:template>
   
   	
   <xsl:template match="menu:item">
     <xsl:choose>
       <xsl:when test="@href">
-        <li><a>
+        <li>
+          <xsl:call-template name="checkItem"/>
+          <a>
           <xsl:attribute name="href">
             <xsl:value-of select="@href"/>
             <xsl:apply-templates select="@*[local-name() != 'href']"/>
@@ -272,12 +281,12 @@
               </xsl:choose>
             </xsl:if>
           </xsl:attribute>
-          <xsl:call-template name="checkItem"/>
           <span><xsl:apply-templates select="i18n:*|text()"/></span>
         </a></li>
       </xsl:when>
       <xsl:otherwise>
         <li class="disabled">
+          <xsl:call-template name="checkItem"/>
           <a>
             <xsl:for-each select="menu:message">
               <xsl:copy>
@@ -289,7 +298,6 @@
                 </i18n:translate>
               </xsl:copy>
             </xsl:for-each>
-            <xsl:call-template name="checkItem"/>
             <span><xsl:apply-templates select="i18n:*|text()"/></span>
           </a>
         </li>
