@@ -48,6 +48,9 @@
   <message key="Content">Inhalt</message>
   <message key="Size">Größe</message>
   <message key="MimeType">Mime-Type</message>
+  <message key="Dimension (w x h)">Abmessungen (Breite&#160;&#215;&#160;Höhe)</message>
+  <message key="Width">Breite</message>
+  <message key="Height">Höhe</message>
   <message key="Upload File">Datei hochladen</message>
   <message key="Warning">Warnung</message>
   <message key="document-will-be-overwritten">Das existierende Dokument wird überschrieben!</message>

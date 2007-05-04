@@ -92,7 +92,6 @@
   <message key="Image">Imagen</message>
   <message key="Link">Enlace</message>
   <message key="Caption">Subtítulo</message>
-  <message key="Dimension (w x h)">Dimensiones (ancho&#160;x&#160;alto)</message>
   <message key="Height">Altura</message>
   <message key="Width">Anchura</message>
   <message key="All rights reserved">Todos los derechos reservados.</message>

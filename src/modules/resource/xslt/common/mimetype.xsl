@@ -146,6 +146,17 @@
   <xsl:template name="preview">
     <xsl:param name="mimetype"/>
     <xsl:param name="mediaURI"/>
+    <xsl:param name="width"/>
+    <xsl:param name="height"/>
+    
+    <xsl:variable name="previewWidth">400</xsl:variable>
+    
+    <xsl:variable name="svgSuffix">
+      <xsl:text>?lenya.module=svg&amp;height=</xsl:text>
+      <xsl:value-of select="$previewWidth * ($height div $width)"/>
+      <xsl:text>&amp;width=</xsl:text>
+      <xsl:value-of select="$previewWidth"/>
+    </xsl:variable>
     
     <xsl:choose>
       <xsl:when test="$mimetype = 'image/gif'">
@@ -158,7 +169,7 @@
         <img src="{$mediaURI}" border="1" alt="preview"/>
       </xsl:when>
       <xsl:when test="$mimetype = 'image/jpeg'">
-        <img src="{$mediaURI}" border="1" alt="preview"/>
+        <img src="{$mediaURI}{$svgSuffix}" border="1" alt="preview"/>
       </xsl:when>
       <xsl:when test="$mimetype = 'image/pjpeg'">
         <img src="{$mediaURI}" border="1" alt="preview"/>

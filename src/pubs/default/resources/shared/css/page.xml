@@ -339,6 +339,14 @@ td.simple {
     vertical-align: top;
 }
 
+th.vertical {
+  font-size: small;
+  font-weight: normal;
+  text-align: right;
+  padding-right: 1em;
+  color: #666666;
+}
+  
 img.simple {
 }
 
