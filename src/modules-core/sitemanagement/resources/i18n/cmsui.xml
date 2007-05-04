@@ -49,5 +49,7 @@
   <message key="path-already-exists">The path {0} already exists.</message>
   <message key="yes">yes</message>
   <message key="no">no</message>
+  <message key="Type">Type</message>
+  <message key="Method">Method</message>
   
 </catalogue>

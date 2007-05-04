@@ -65,10 +65,10 @@ limitations under the License.
           </td>
         </tr>
         <tr>
-          <th>Type</th>
-          <th>Id</th>
-          <th>Role</th>
-          <th colspan="2">Method</th>
+          <th><i18n:text>Type</i18n:text></th>
+          <th><i18n:text>ID</i18n:text></th>
+          <th><i18n:text>Role</i18n:text></th>
+          <th colspan="2"><i18n:text>Method</i18n:text></th>
         </tr>
         <jx:forEach var="credential"
           items="${usecase.getParameter('parentCredentials')}">
@@ -99,10 +99,10 @@ limitations under the License.
           </td>
         </tr>
         <tr>
-          <th>Type</th>
-          <th>Id</th>
-          <th>Role</th>
-          <th>Method</th>
+          <th><i18n:text>Type</i18n:text></th>
+          <th><i18n:text>ID</i18n:text></th>
+          <th><i18n:text>Role</i18n:text></th>
+          <th><i18n:text>Method</i18n:text></th>
           <th>&#160;
           </th>
         </tr>
@@ -161,10 +161,10 @@ limitations under the License.
           </td>
         </tr>
         <tr>
-          <th>Type</th>
-          <th>Id</th>
-          <th>Role</th>
-          <th>Method</th>
+          <th><i18n:text>Type</i18n:text></th>
+          <th><i18n:text>ID</i18n:text></th>
+          <th><i18n:text>Role</i18n:text></th>
+          <th><i18n:text>Method</i18n:text></th>
           <th>&#160;
           </th>
         </tr>
