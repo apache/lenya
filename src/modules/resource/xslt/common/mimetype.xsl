@@ -181,7 +181,7 @@
         <img src="{$mediaURI}" border="1" alt="preview"/>
       </xsl:when>
       <xsl:otherwise>
-        <i><i18n:text>No preview avalable for this resource</i18n:text></i>
+        <i><i18n:text>no-preview-available</i18n:text></i>
       </xsl:otherwise>
       
     </xsl:choose> 

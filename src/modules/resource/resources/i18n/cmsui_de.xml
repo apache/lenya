@@ -54,6 +54,7 @@
   <message key="Upload File">Datei hochladen</message>
   <message key="Warning">Warnung</message>
   <message key="document-will-be-overwritten">Das existierende Dokument wird überschrieben!</message>
+  <message key="no-preview-available">Für diese Ressource ist keine Vorschau verfügbar.</message>
   
 </catalogue>
 
