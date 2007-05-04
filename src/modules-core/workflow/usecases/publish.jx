@@ -108,11 +108,11 @@
               </td>
               <td>
                 <jx:choose>
-                  <jx:when test="${usecase.getParameter('sendNotification').equals('true')}">
-                    <input name="sendNotification" type="checkbox"/>
+                  <jx:when test="${usecase.getBooleanCheckboxParameter('sendNotification').equals('true')}">
+                    <input name="sendNotification" type="checkbox" checked="checked"/>
                   </jx:when>
                   <jx:otherwise>
-                    <input name="sendNotification" type="checkbox" checked="checked"/>
+                    <input name="sendNotification" type="checkbox"/>
                   </jx:otherwise>
                 </jx:choose>
               </td>
@@ -120,14 +120,21 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Schedule</i18n:text>:</td>
               <td>
-                <input type="checkbox" name="schedule"/>
+                <jx:choose>
+                  <jx:when test="${usecase.getBooleanCheckboxParameter('schedule').equals('true')}">
+                    <input type="checkbox" name="schedule" checked="checked"/>
+                  </jx:when>
+                  <jx:otherwise>
+                    <input type="checkbox" name="schedule"/>
+                  </jx:otherwise>
+                </jx:choose>
                 <input type="text" name="schedule.time" value="${usecase.getParameter('schedule.time')}"/>
               </td>
             </tr>
             <tr>
               <td/>
               <td>
-                <jx:if test="${!usecase.hasErrors()}">
+                <jx:if test="${!usecase.hasErrors() || cocoon.request.getParameter('submit') != null}">
                   <input i18n:attr="value" type="submit" name="submit" value="Publish"/>
                   &#160;
                 </jx:if>

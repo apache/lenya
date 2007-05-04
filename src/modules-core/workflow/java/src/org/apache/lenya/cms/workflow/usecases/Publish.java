@@ -242,6 +242,20 @@ public class Publish extends InvokeWorkflow {
         return link;
     }
 
+    protected void doCheckExecutionConditions() throws Exception {
+        super.doCheckExecutionConditions();
+        boolean schedule = Boolean.valueOf(getBooleanCheckboxParameter(SCHEDULE)).booleanValue();
+        if (schedule) {
+            String dateString = getParameterAsString(SCHEDULE_TIME);
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                format.parse(dateString);
+            } catch (ParseException e) {
+                addErrorMessage("scheduler-date-format-invalid");
+            }
+        }
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -254,16 +268,11 @@ public class Publish extends InvokeWorkflow {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             UsecaseScheduler scheduler = null;
             try {
-                Date date = null;
-                try {
-                    date = format.parse(dateString);
-                } catch (ParseException e) {
-                    addErrorMessage("The scheduler date must be of the form 'yyyy-MM-dd HH:mm:ss'.");
-                }
-                if (date != null) {
-                    scheduler = (UsecaseScheduler) this.manager.lookup(UsecaseScheduler.ROLE);
-                    scheduler.schedule(this, date);
-                }
+                Date date = format.parse(dateString);
+                scheduler = (UsecaseScheduler) this.manager.lookup(UsecaseScheduler.ROLE);
+                scheduler.schedule(this, date);
+            } catch (ParseException e) {
+                addErrorMessage("scheduler-date-format-invalid");
             } finally {
                 if (scheduler != null) {
                     this.manager.release(scheduler);

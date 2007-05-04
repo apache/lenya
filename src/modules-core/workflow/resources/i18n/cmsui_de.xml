@@ -45,6 +45,7 @@
   <message key="publish-broken-links">Das Dokument enthält Links zu nicht existierenden Dokumenten.</message>
   
   <message key="notify-reviewers">Prüfer benachrichtigen</message>
+  <message key="scheduler-date-format-invalid">Das Zeitsteuerungs-Datum muss der Form 'yyyy-MM-dd HH:mm:ss' entsprechen.</message>
   
 </catalogue>
 
