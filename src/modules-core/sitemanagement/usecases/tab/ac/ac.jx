@@ -74,9 +74,7 @@ limitations under the License.
           items="${usecase.getParameter('parentCredentials')}">
           <tr>
             <td>
-              <i18n:text>
-                <jx:out value="${credential.getType()}"/>
-              </i18n:text>
+              <i18n:text><jx:out value="${credential.getType()}"/></i18n:text>
             </td>
             <td>
               <jx:out value="${credential.getAccreditableId()}"/>
@@ -85,7 +83,7 @@ limitations under the License.
               <jx:out value="${credential.getRoleId()}"/>
             </td>
             <td colspan="2">
-              <jx:out value="${credential.getMethod()}"/>
+              <i18n:text><jx:out value="${credential.getMethod()}"/></i18n:text>
             </td>
           </tr>
         </jx:forEach>
@@ -115,24 +113,19 @@ limitations under the License.
               value="${continuation.id}"/>
             <tr>
               <td>
-                <i18n:text>
-                  <jx:out value="${credential.getType()}"/>
-                </i18n:text>
+                <i18n:text><jx:out value="${credential.getType()}"/></i18n:text>
               </td>
               <td>
-                <input type="hidden" name="${credential.getType()}"
-                  value="${credential.getAccreditableId()}"/>
+                <input type="hidden" name="${credential.getType()}" value="${credential.getAccreditableId()}"/>
                 <jx:out value="${credential.getAccreditableId()}"/>
               </td>
               <td>
-                <input type="hidden" name="role"
-                  value="${credential.getRoleId()}"/>
+                <input type="hidden" name="role" value="${credential.getRoleId()}"/>
                 <jx:out value="${credential.getRoleId()}"/>
               </td>
               <td>
-                <input type="hidden" name="method"
-                  value="${credential.getMethod()}"/>
-                <jx:out value="${credential.getMethod()}"/>
+                <input type="hidden" name="method" value="${credential.getMethod()}"/>
+                <i18n:text><jx:out value="${credential.getMethod()}"/></i18n:text>
               </td>
               <td>
                 <input type="submit"
@@ -198,8 +191,8 @@ limitations under the License.
             </td>
             <td>
               <select name="method" class="lenya-form-element-verynarrow">
-                <option value="deny">Deny</option>
-                <option value="grant">Grant</option>
+                <option value="deny"><i18n:text>deny</i18n:text></option>
+                <option value="grant"><i18n:text>grant</i18n:text></option>
               </select>
             </td>
             <td>
@@ -238,8 +231,8 @@ limitations under the License.
             </td>
             <td>
               <select name="method" class="lenya-form-element-verynarrow">
-                <option value="deny">Deny</option>
-                <option value="grant">Grant</option>
+                <option value="deny"><i18n:text>deny</i18n:text></option>
+                <option value="grant"><i18n:text>grant</i18n:text></option>
               </select>
             </td>
             <td>
@@ -276,8 +269,8 @@ limitations under the License.
             </td>
             <td>
               <select name="method" class="lenya-form-element-verynarrow">
-                <option value="deny">Deny</option>
-                <option value="grant">Grant</option>
+                <option value="deny"><i18n:text>deny</i18n:text></option>
+                <option value="grant"><i18n:text>grant</i18n:text></option>
               </select>
             </td>
             <td>
@@ -308,8 +301,8 @@ limitations under the License.
             </td>
             <td>
               <select name="method" class="lenya-form-element-verynarrow">
-                <option value="deny">Deny</option>
-                <option value="grant">Grant</option>
+                <option value="deny"><i18n:text>deny</i18n:text></option>
+                <option value="grant"><i18n:text>grant</i18n:text></option>
               </select>
             </td>
             <td>

@@ -51,5 +51,8 @@
   <message key="no">no</message>
   <message key="Type">Type</message>
   <message key="Method">Method</message>
+  <message key="grant">grant</message>
+  <message key="deny">deny</message>
+  <message key="world">World</message>
   
 </catalogue>

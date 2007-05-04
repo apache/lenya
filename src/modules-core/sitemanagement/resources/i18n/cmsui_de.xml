@@ -51,6 +51,9 @@
   <message key="no">nein</message>
   <message key="Type">Typ</message>
   <message key="Method">Methode</message>
+  <message key="grant">erlauben</message>
+  <message key="deny">verbieten</message>
+  <message key="world">Welt</message>
   
 </catalogue>
 
