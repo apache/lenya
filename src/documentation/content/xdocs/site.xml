@@ -343,6 +343,7 @@
       </sourcerepository_module_section>
       <svg_module_section label="svg" href="svg/">
         <svg_module_overview label="Rounded Corners" href="roundedcorners.html"/>
+        <svg_module_resizeimages label="Resizing Images" href="resizeimages.html"/>
         <svg_module_api label="API" href="../../../../apidocs/1.4/modules/svg/index.html"/>
       </svg_module_section>
       <tinymce_module_section label="tinymce" href="tinymce/">
