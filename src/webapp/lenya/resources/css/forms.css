@@ -41,6 +41,11 @@ td.lenya-entry-caption h2{
     font-family: Verdana, sans-serif;
 }
 
+.lenya-form-element-verynarrow {
+    width: 100px;
+    font-family: Verdana, sans-serif;
+}
+
 .lenya-form-message-error {
     font-weight: bold;
     color: red;

@@ -179,7 +179,7 @@ limitations under the License.
               <i18n:text>user</i18n:text>
             </td>
             <td>
-              <select name="user" class="lenya-form-element-narrow">
+              <select name="user" class="lenya-form-element-verynarrow">
                 <jx:forEach var="user" items="${usecase.getParameter('users')}">
                   <option value="${user}">
                     <jx:out value="${user}"/>
@@ -188,7 +188,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <select name="role" class="lenya-form-element-narrow">
+              <select name="role" class="lenya-form-element-verynarrow">
                 <jx:forEach var="role" items="${usecase.getParameter('roles')}">
                   <option value="${role}">
                     <jx:out value="${role}"/>
@@ -197,7 +197,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <select name="method" class="lenya-form-element-narrow">
+              <select name="method" class="lenya-form-element-verynarrow">
                 <option value="deny">Deny</option>
                 <option value="grant">Grant</option>
               </select>
@@ -219,7 +219,7 @@ limitations under the License.
               <i18n:text>group</i18n:text>
             </td>
             <td>
-              <select name="group" class="lenya-form-element-narrow">
+              <select name="group" class="lenya-form-element-verynarrow">
                 <jx:forEach var="group" items="${usecase.getParameter('groups')}">
                   <option value="${group}">
                     <jx:out value="${group}"/>
@@ -228,7 +228,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <select name="role" class="lenya-form-element-narrow">
+              <select name="role" class="lenya-form-element-verynarrow">
                 <jx:forEach var="role" items="${usecase.getParameter('roles')}">
                   <option value="${role}">
                     <jx:out value="${role}"/>
@@ -237,7 +237,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <select name="method" class="lenya-form-element-narrow">
+              <select name="method" class="lenya-form-element-verynarrow">
                 <option value="deny">Deny</option>
                 <option value="grant">Grant</option>
               </select>
@@ -257,7 +257,7 @@ limitations under the License.
               <i18n:text>IP Range</i18n:text>
             </td>
             <td>
-              <select name="ipRange" class="lenya-form-element-narrow">
+              <select name="ipRange" class="lenya-form-element-verynarrow">
                 <jx:forEach var="ipRange" items="${usecase.getParameter('ipRanges')}">
                   <option value="${ipRange}">
                     <jx:out value="${ipRange}"/>
@@ -266,7 +266,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <select name="role" class="lenya-form-element-narrow">
+              <select name="role" class="lenya-form-element-verynarrow">
                 <jx:forEach var="role" items="${usecase.getParameter('roles')}">
                   <option value="${role}">
                     <jx:out value="${role}"/>
@@ -275,7 +275,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <select name="method" class="lenya-form-element-narrow">
+              <select name="method" class="lenya-form-element-verynarrow">
                 <option value="deny">Deny</option>
                 <option value="grant">Grant</option>
               </select>
@@ -298,7 +298,7 @@ limitations under the License.
             </td>
             <td/>
             <td>
-              <select name="role" class="lenya-form-element-narrow">
+              <select name="role" class="lenya-form-element-verynarrow">
                 <jx:forEach var="role" items="${usecase.getParameter('roles')}">
                   <option value="${role}">
                     <jx:out value="${role}"/>
@@ -307,7 +307,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <select name="method" class="lenya-form-element-narrow">
+              <select name="method" class="lenya-form-element-verynarrow">
                 <option value="deny">Deny</option>
                 <option value="grant">Grant</option>
               </select>
