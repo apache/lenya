@@ -42,8 +42,12 @@ import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 
 /**
- * <p>Usecase scheduler implementation.</p>
- * <p>The names of the scheduled jobs have the syntax <code>{usecaseName}:{userId}</code>.
+ * <p>
+ * Usecase scheduler implementation.
+ * </p>
+ * <p>
+ * The names of the scheduled jobs have the syntax
+ * <code>{usecaseName}:{userId}</code>.
  * 
  * @version $Id$
  */
@@ -62,7 +66,15 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
             Parameters parameters = new Parameters();
             String[] names = usecase.getParameterNames();
             for (int i = 0; i < names.length; i++) {
-                parameters.setParameter(names[i], usecase.getParameterAsString(names[i]));
+                Object value = usecase.getParameter(names[i]);
+                if (value instanceof String) {
+                    parameters.setParameter(names[i], (String) value);
+                } else {
+                    getLogger().warn(
+                            "Parameter [" + names[i] + "] = [" + value + "] ("
+                                    + value.getClass().getName()
+                                    + ") ignored, only string values are supported.");
+                }
             }
 
             Map objects = new HashMap();
@@ -100,11 +112,11 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
             }
         }
     }
-    
+
     protected String getJobName(Usecase usecase, String userId) {
         return usecase.getName() + ":" + userId;
     }
-    
+
     protected ServiceManager manager;
 
     /**
@@ -113,7 +125,7 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
-    
+
     private Context context;
 
     /**
@@ -122,7 +134,7 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
     public void contextualize(Context context) throws ContextException {
         this.context = context;
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler#getJobs()
      */
@@ -131,10 +143,10 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
         JobSchedulerEntry[] entries = null;
         try {
             scheduler = (JobScheduler) this.manager.lookup(JobScheduler.ROLE);
-            
+
             String[] jobNames = scheduler.getJobNames();
             entries = new JobSchedulerEntry[jobNames.length];
-            
+
             for (int i = 0; i < jobNames.length; i++) {
                 JobSchedulerEntry entry = scheduler.getJobSchedulerEntry(jobNames[i]);
                 entries[i] = entry;
