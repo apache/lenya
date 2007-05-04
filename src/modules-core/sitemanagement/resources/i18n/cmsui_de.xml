@@ -54,6 +54,8 @@
   <message key="grant">erlauben</message>
   <message key="deny">verbieten</message>
   <message key="world">Welt</message>
+  <message key="only-in-authoring-area">Dieser Usecase kann nur im Authoring-Bereich ausgeführt werden.</message>
+  <message key="clipboard-empty">Die Zwischenablage ist leer.</message>
   
 </catalogue>
 

@@ -54,5 +54,7 @@
   <message key="grant">grant</message>
   <message key="deny">deny</message>
   <message key="world">World</message>
+  <message key="only-in-authoring-area">This usecase can only be invoked in the authoring area.</message>
+  <message key="clipboard-empty">The clipboard is empty.</message>
   
 </catalogue>

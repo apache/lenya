@@ -56,10 +56,14 @@ public class Paste extends AbstractUsecase {
         if (hasErrors()) {
             return;
         }
+        
+        if (!getArea().getName().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("only-in-authoring-area");
+        }
 
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         if (clipboard == null) {
-            addErrorMessage("Cannot paste - the clipboard is empty.");
+            addErrorMessage("clipboard-empty");
         }
     }
 
