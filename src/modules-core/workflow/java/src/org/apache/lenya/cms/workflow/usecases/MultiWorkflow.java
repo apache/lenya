@@ -40,9 +40,6 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
-import org.apache.lenya.cms.usecase.UsecaseInvoker;
-import org.apache.lenya.cms.usecase.UsecaseMessage;
-import org.apache.lenya.util.Assert;
 
 /**
  * Manage the workflow of multiple documents.
@@ -104,33 +101,6 @@ public class MultiWorkflow extends AbstractUsecase {
             preOrder.addAll(getPreOrder(children[i]));
         }
         return preOrder;
-    }
-
-    protected void doExecute() throws Exception {
-        super.doExecute();
-
-        String usecase = getParameterAsString("usecaseName");
-        Assert.notNull("usecase", usecase);
-        String url = getParameterAsString("url");
-        Assert.notNull("url", url);
-
-        UsecaseInvoker invoker = null;
-        try {
-            invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
-            invoker.invoke(url, usecase, new HashMap());
-
-            if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
-                List messages = invoker.getErrorMessages();
-                for (Iterator i = messages.iterator(); i.hasNext();) {
-                    UsecaseMessage message = (UsecaseMessage) i.next();
-                    addErrorMessage(message.getMessage(), message.getParameters());
-                }
-            }
-        } finally {
-            if (invoker == null) {
-                this.manager.release(invoker);
-            }
-        }
     }
 
     private Map usecase2event = new HashMap();

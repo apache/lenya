@@ -106,16 +106,8 @@
           </jx:choose>
           <td>
             <jx:forEach var="usecaseName" items="${doc.getUsecases()}">
-              <!-- Use this if you prefer links to buttons. Caution: they don't use POST requests.
-              <a href="?lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}&amp;submit=Submit&amp;style=${style}&amp;usecaseName=${usecaseName}&amp;url=${doc.getUrl()}">
-                <i18n:text><jx:out value="${usecaseName}"/></i18n:text>
-              </a>
-              &#160;&#160;
-              -->
-              <form method="POST" id="form-overview" style="display: inline;">
-                <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-                <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-                <input type="hidden" name="style" value="${style}"/>
+              <form action="${request.requestURI}" method="POST" id="form-overview" style="display: inline;">
+                <input type="hidden" name="lenya.usecase" value="workflow.multiWorkflowInvoke"/>
                 <input type="hidden" name="usecaseName" value="${usecaseName}"/>
                 <input type="hidden" name="url" value="${doc.getUrl()}"/>
                 <input type="submit" name="submit" value="${usecaseName}" i18n:attr="value"/>

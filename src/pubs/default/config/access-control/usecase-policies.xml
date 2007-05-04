@@ -313,6 +313,11 @@
     <role id="review" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
+  <usecase id="workflow.multiWorkflowInvoke">
+    <role id="admin" method="grant"/>
+    <role id="review" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
   <usecase id="kupu.edit">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
