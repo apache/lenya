@@ -22,13 +22,15 @@ package org.apache.lenya.cms.publication;
  * An object of this class represents a proxy configuration.
  * </p>
  * <p>
- * Configuration example:
+ * Configuration example (<code>$PUB_HOME/config/publication.xml</code>):
  * </p>
  * <pre>
- * &lt;proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/&gt;
- * &lt;proxy area="live" ssl="false" url="http://www.host.com/default"/&gt;
- * &lt;proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/&gt;
- * &lt;proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/&gt;
+ * &lt;proxies&gt;
+ *   &lt;proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/&gt;
+ *   &lt;proxy area="live" ssl="false" url="http://www.host.com/default"/&gt;
+ *   &lt;proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/&gt;
+ *   &lt;proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/&gt;
+ * &lt;proxies;&gt;
  * </pre>
  * 
  * @version $Id$
