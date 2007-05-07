@@ -41,10 +41,13 @@ import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.cms.ac.PolicyUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * <p>
@@ -106,12 +109,16 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
      * <code>IP_RANGE_MANAGER</code> The IP range manager
      */
     public static final String IP_RANGE_MANAGER = "iprange-manager";
+    /**
+     * Returns if the current page is SSL protected (true|false).
+     */
+    public static final String SSL = "ssl";
 
     /**
      * The names of the AccessControlModule parameters.
      */
     static final String[] PARAMETER_NAMES = { IP_ADDRESS, USER_ID, USER_NAME, USER_EMAIL, ROLE_IDS,
-            USER_MANAGER, GROUP_MANAGER, ROLE_MANAGER, IP_RANGE_MANAGER };
+            USER_MANAGER, GROUP_MANAGER, ROLE_MANAGER, IP_RANGE_MANAGER, SSL };
 
     /**
      * 
@@ -179,6 +186,40 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         if (name.equals(USER_MANAGER) || name.equals(GROUP_MANAGER) || name.equals(ROLE_MANAGER)
                 || name.equals(IP_RANGE_MANAGER)) {
             value = getItemManager(request, name);
+        }
+        
+        if (name.equals(SSL)) {
+            ServiceSelector selector = null;
+            AccessControllerResolver acResolver = null;
+            AccessController accessController = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                        + "Selector");
+                acResolver
+                    = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+    
+                String url = ServletHelper.getWebappURI(request);
+                accessController = acResolver.resolveAccessController(url);
+                AccreditableManager accreditableManager = accessController.getAccreditableManager();
+                PolicyManager policyManager = accessController.getPolicyManager();
+    
+                Policy policy = policyManager.getPolicy(accreditableManager, url);
+                value = Boolean.toString(policy.isSSLProtected());
+            }
+            catch (Exception e) {
+                throw new ConfigurationException("Resolving attribute [" + name + "] failed: ", e);
+            }
+            finally {
+                if (selector != null) {
+                    if (acResolver != null) {
+                        if (accessController != null) {
+                            acResolver.release(accessController);
+                        }
+                        selector.release(acResolver);
+                    }
+                    this.manager.release(selector);
+                }
+            }
         }
 
         return value;
