@@ -23,23 +23,23 @@
   xmlns="http://www.w3.org/1999/xhtml"
   name="">
 <jx:set var="area" value="${usecase.getParameter('document').getArea()}"/>
-<form method="get" name="form_ssl_${area}" id="form_ssl_${area}">
+<form method="POST" name="form_ssl_${area}" id="form_ssl_${area}">
   <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
   <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+  <input type="hidden" name="lenya.submit" value="ok"/>
   <input type="hidden" name="change_ssl" value="true"/>
-  
   <jx:set var="ssl" value="${usecase.getParameter('ssl')}"/>
   <jx:set var="ancestorSsl" value="${usecase.getParameter('ancestorSsl')}"/>
   <jx:choose>
     <jx:when test="${ssl.equals('true') || ancestorSsl.equals('true')}">
       <jx:choose>
         <jx:when test="${ancestorSsl.equals('true')}">
-          <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_${area}.submit()" value="true" checked="checked" disabled="disabled">
+          <input type="checkbox" name="ssl" checked="checked" disabled="disabled">
             <i18n:text>SSL Encryption</i18n:text>
           </input>
         </jx:when>
         <jx:otherwise>
-          <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_${area}.submit()" value="true" checked="checked">
+          <input type="checkbox" name="ssl" onchange="document.forms.form_ssl_${area}.submit()" checked="checked">
             <i18n:text>SSL Encryption</i18n:text>
           </input>
         </jx:otherwise>
@@ -48,12 +48,12 @@
     <jx:otherwise>
       <jx:choose>
         <jx:when test="${ancestorSsl.equals('true')}">
-          <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_${area}.submit()" value="true" disabled="disabled">
+          <input type="checkbox" name="ssl" disabled="disabled">
             <i18n:text>SSL Encryption</i18n:text>
           </input>
         </jx:when>
         <jx:otherwise>
-          <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_${area}.submit()" value="true">
+          <input type="checkbox" name="ssl" onchange="document.forms.form_ssl_${area}.submit()">
             <i18n:text>SSL Encryption</i18n:text>
           </input>
         </jx:otherwise>

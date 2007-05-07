@@ -107,10 +107,9 @@ limitations under the License.
         <jx:forEach var="credential" varStatus="status"
           items="${usecase.getParameter('subCredentials')}">
           <form method="post" id="form-deleteSubCredential">
-            <input type="hidden" name="lenya.usecase"
-              value="${usecase.getName()}"/>
-            <input type="hidden" name="lenya.continuation"
-              value="${continuation.id}"/>
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="submit" value="Submit"/>
             <tr>
               <td>
                 <i18n:text><jx:out value="${credential.getType()}"/></i18n:text>
@@ -164,10 +163,9 @@ limitations under the License.
         <tr>
           
           <form method="post" id="form-addCredential_user">
-            <input type="hidden" name="lenya.usecase"
-              value="${usecase.getName()}"/>
-            <input type="hidden" name="lenya.continuation"
-              value="${continuation.id}"/>
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="submit" value="Submit"/>
             <td>
               <i18n:text>user</i18n:text>
             </td>
@@ -204,10 +202,9 @@ limitations under the License.
         </tr>
         <tr>
           <form method="post" id="form-addCredential_group">
-            <input type="hidden" name="lenya.usecase"
-              value="${usecase.getName()}"/>
-            <input type="hidden" name="lenya.continuation"
-              value="${continuation.id}"/>
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="submit" value="Submit"/>
             <td>
               <i18n:text>group</i18n:text>
             </td>
@@ -246,6 +243,7 @@ limitations under the License.
           <form method="post" id="form-addCredential_ipRange">
             <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="submit" value="Submit"/>
             <td>
               <i18n:text>IP Range</i18n:text>
             </td>
@@ -282,10 +280,9 @@ limitations under the License.
         
         <tr>
           <form method="post" id="form-addCredential_world">
-            <input type="hidden" name="lenya.usecase"
-              value="${usecase.getName()}"/>
-            <input type="hidden" name="lenya.continuation"
-              value="${continuation.id}"/>
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="submit" value="Submit"/>
             <td>
               <i18n:text>world</i18n:text>
             </td>
