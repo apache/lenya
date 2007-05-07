@@ -21,6 +21,21 @@
 <faqs title="Frequently Asked Questions">
   <part id="getting_started">
     <title>Getting Started and Building Lenya</title>
+    <faq id="TransformerFactoryImpl">
+      <question>
+        The build fails with a message like <code>Fatal error during transformation</code>.
+      </question>
+      <answer>
+        <p>
+          You might want to take a look at the comments for
+          <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=40113">bug 40113</link>.
+        </p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part>
+    <title>Internationalisation (i18n)</title>
     <faq id="i18n">
       <question> How to extend the i18n catalog for Lenya 1.4? </question>
       <answer>
@@ -36,6 +51,9 @@
         </p>
       </answer>
     </faq>
+  </part>
+  <part>
+    <title>Editors</title>
     <faq id="bxe-css">
       <question> Is it possible to override in BXE *only* a css style definition? </question>
       <answer>
