@@ -99,7 +99,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             // will be out of bounds, because null becomes "null" in string concatenation
             String pubId = info.getPublicationId();
             String area = info.getArea();
-            String prefix = "/" + ((pubId != null) ? pubId : "");
+            String prefix = "/" + ((pubId != null) ? pubId + "/" : "");
             // String prefix = "/" + pubId + "/";
             String prefixWithArea = prefix + ((area != null) ? area : "");
             // String prefixWithArea = prefix + area;
