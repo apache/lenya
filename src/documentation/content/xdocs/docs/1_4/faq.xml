@@ -38,13 +38,19 @@
     <title>Building Websites</title>
     <faq id="resourcetypes">
       <question>How do I add a custom type of documents?</question>
-      <answer>See section <link href="site:resource-types">resource types</link>.</answer>
+      <answer>
+        <p>
+          See section <link href="site:resource-types">resource types</link>.
+        </p>
+      </answer>
     </faq>
     <faq id="interaction">
       <question>How can I add user interaction to web pages?</question>
       <answer>
-        The <link href="site:usecasedocument_module_overview">usecasedocument</link>
-        module allows to add usecases as CMS documents.
+        <p>
+          The <link href="site:usecasedocument_module_overview">usecasedocument</link>
+          module allows to add usecases as CMS documents.
+        </p>
       </answer>
     </faq>
   </part>
