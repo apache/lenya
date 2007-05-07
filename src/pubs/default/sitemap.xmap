@@ -163,7 +163,7 @@
           <map:parameter name="prefix" value="fallback://"/>
           <map:when test="xslt/page2xhtml-{4}.xsl">
             <map:transform src="fallback://xslt/page2xhtml-{4}.xsl">
-              <map:parameter name="root" value="{base-url:{2}:{3}}"/>
+              <map:parameter name="root" value="{base-url:{2}:{3}:{access-control:ssl}}"/>
               <map:parameter name="publication-id" value="{2}"/>
               <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
@@ -181,7 +181,7 @@
           </map:when>
           <map:otherwise>
             <map:transform src="fallback://xslt/page2xhtml-xhtml.xsl">
-              <map:parameter name="root" value="{base-url:{2}:{3}}"/>
+              <map:parameter name="root" value="{base-url:{2}:{3}:{access-control:ssl}}"/>
               <map:parameter name="publication-id" value="{2}"/>
               <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
