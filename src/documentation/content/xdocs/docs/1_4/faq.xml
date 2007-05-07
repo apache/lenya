@@ -35,6 +35,21 @@
   </part>
   
   <part>
+    <title>Building Websites</title>
+    <faq id="resourcetypes">
+      <question>How do I add a custom type of documents?</question>
+      <answer>See section <link href="site:resource-types">resource types</link>.</answer>
+    </faq>
+    <faq id="interaction">
+      <question>How can I add user interaction to web pages?</question>
+      <answer>
+        The <link href="site:usecasedocument_module_overview">usecasedocument</link>
+        module allows to add usecases as CMS documents.
+      </answer>
+    </faq>
+  </part>
+  
+  <part>
     <title>Internationalisation (i18n)</title>
     <faq id="i18n">
       <question> How to extend the i18n catalog for Lenya 1.4? </question>
