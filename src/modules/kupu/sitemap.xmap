@@ -94,9 +94,6 @@
     <map:pipeline>
       
       <map:match pattern="kupu.open">
-        <!-- Check if Kupu is installed -->
-        <map:act type="resource-exists" 
-          src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/kupu/kupumacros.html">
           <map:act type="reserved-checkout">
             <map:generate type="serverpages" 
               src="fallback://lenya/content/rc/{exception}.xsp">
@@ -133,11 +130,6 @@
               value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=link_libraries"/>
           </map:transform>
           <map:serialize type="xhtml"/>
-        </map:act>
-        <!-- If Kupu is not installed; Action failed -->
-        <map:generate src="fallback://lenya/resources/misc/kupu/download.xhtml"/>
-        <map:call resource="style-cms-page"/>
-        <map:serialize />
       </map:match>
         
         <!-- Requested by Kupu to load the document into the editor -->    
