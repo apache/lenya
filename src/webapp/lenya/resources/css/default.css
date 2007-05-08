@@ -47,13 +47,20 @@ li {
     font-size: small;
 }
 
-code {
-    font-size: 130%; /* hack! the "font-size:small" in the other elements needs to go. */
+code, source {
     font-family: monospace;
+    font-size: 100%;
 }
 
-h1 code, h2 code, h3 code {
+source {
+    padding: 1em;
+    background-color: #F5F4E9;
+    color: black;
+}
+
+h1 code, h2 code, h3 code, h4 code {
     font-weight: bold;
+    font-size: 130%; /* hack! the "font-size:small" in the other elements needs to go. */
 }
 
 .lenya-header {
