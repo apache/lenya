@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -164,41 +168,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">Custom Resource Type</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a title="Decide if you really need a new resource type" href="#Decide+if+you+really+need+a+new+resource+type">Decide if you reall...</a>
-</div>
-<div class="menupageitem">
-<a href="#Choose+a+name">Choose a name</a>
-</div>
-<div class="menupageitem">
-<a title="Define the resource type ID" href="#Define+the+resource+type+ID">Define the resource...</a>
-</div>
-<div class="menupageitem">
-<a title="Create the schema" href="#Create+the+schema">Create the schema...</a>
-</div>
-<div class="menupageitem">
-<a title="Resource type matcher" href="#Resource+type+matcher">Resource type match...</a>
-</div>
-<div class="menupageitem">
-<a href="#Sample+File">Sample File</a>
-</div>
-<div class="menupageitem">
-<a href="#Presentation">Presentation</a>
-</div>
-<div class="menupageitem">
-<a href="#Menus">Menus</a>
-</div>
-<div class="menupageitem">
-<a title="Using an existing menu" href="#Using+an+existing+menu">Using an existing m...</a>
-</div>
-<div class="menupageitem">
-<a title="using a custom menu" href="#using+a+custom+menu">using a custom menu...</a>
-</div>
-<div class="menupageitem">
-<a href="#Workflow">Workflow</a>
-</div>
-</div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/new_mime_type.html">Adding Mime Types</a>
@@ -220,6 +189,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/external_data.html">External Data</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
@@ -503,6 +475,43 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Custom Resource Type How-To</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Decide+if+you+really+need+a+new+resource+type">Decide if you really need a new resource type</a>
+</li>
+<li>
+<a href="#Choose+a+name">Choose a name</a>
+</li>
+<li>
+<a href="#Define+the+resource+type+ID">Define the resource type ID</a>
+</li>
+<li>
+<a href="#Create+the+schema">Create the schema</a>
+</li>
+<li>
+<a href="#Resource+type+matcher">Resource type matcher</a>
+</li>
+<li>
+<a href="#Sample+File">Sample File</a>
+</li>
+<li>
+<a href="#Presentation">Presentation</a>
+</li>
+<li>
+<a href="#Menus">Menus</a>
+</li>
+<li>
+<a href="#Using+an+existing+menu">Using an existing menu</a>
+</li>
+<li>
+<a href="#using+a+custom+menu">using a custom menu</a>
+</li>
+<li>
+<a href="#Workflow">Workflow</a>
+</li>
+</ul>
+</div>
 
 <p>This tutorial explains how to add a custom resource type to the Default publication in order to mix free page editing (as in XHTML) and constrained editing 
 (as you get with a custom resource type). </p>

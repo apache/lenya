@@ -152,5 +152,7 @@ color: #000000;
     
     pre.code { padding: 10px; background-color: #E5E4D9; }
     dt { font-weight: bold; margin-top: .5em; }
+    div#content { padding: 30px 30px 30px 210px; }
+    h1 { padding: 0px 0 10px 0; }
 
   

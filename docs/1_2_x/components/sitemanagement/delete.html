@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -185,6 +189,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/how-to/external_data.html">External Data</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.5', '../../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Components</div>
@@ -412,23 +419,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">Delete</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#Introduction">Introduction</a>
-</div>
-<div class="menupageitem">
-<a href="#Implementation">Implementation</a>
-</div>
-<div class="menupageitem">
-<a href="#Parameters">Parameters</a>
-</div>
-<div class="menupageitem">
-<a href="#usecase">usecase</a>
-</div>
-<div class="menupageitem">
-<a href="#Ant+Task">Ant Task </a>
-</div>
-</div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
@@ -485,6 +475,33 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Delete</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introduction">Introduction</a>
+</li>
+<li>
+<a href="#Implementation">Implementation</a>
+</li>
+<li>
+<a href="#Parameters">Parameters</a>
+</li>
+<li>
+<a href="#usecase">usecase</a>
+<ul class="minitoc">
+<li>
+<a href="#Delete+screen">Delete screen</a>
+</li>
+<li>
+<a href="#Delete+confirmation">Delete confirmation</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ant+Task">Ant Task </a>
+</li>
+</ul>
+</div>
 	
     
 <a name="N1000E"></a><a name="Introduction"></a>

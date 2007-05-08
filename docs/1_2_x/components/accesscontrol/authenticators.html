@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -186,6 +190,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/how-to/external_data.html">External Data</a>
 </div>
+<div class="menuitem">
+<a href="../../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
+</div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.5', '../../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Components</div>
 <div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
@@ -202,20 +209,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">Authenticators</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#Introduction">Introduction</a>
-</div>
-<div class="menupageitem">
-<a title="Declaring the Roles in lenya.roles" href="#Declaring+the+Roles+in+lenya.roles">Declaring the Roles...</a>
-</div>
-<div class="menupageitem">
-<a title="The user authenticator" href="#The+user+authenticator">The user authentica...</a>
-</div>
-<div class="menupageitem">
-<a title="The anonymous authenticator" href="#The+anonymous+authenticator">The anonymous authe...</a>
-</div>
-</div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
@@ -482,6 +475,22 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Authenticators</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introduction">Introduction</a>
+</li>
+<li>
+<a href="#Declaring+the+Roles+in+lenya.roles">Declaring the Roles in lenya.roles</a>
+</li>
+<li>
+<a href="#The+user+authenticator">The user authenticator</a>
+</li>
+<li>
+<a href="#The+anonymous+authenticator">The anonymous authenticator</a>
+</li>
+</ul>
+</div>
 	
 
 <a name="N1000E"></a><a name="Introduction"></a>

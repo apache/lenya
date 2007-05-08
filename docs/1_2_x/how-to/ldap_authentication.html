@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -173,27 +177,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">LDAP Authentication</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a title="Configuring and activating LDAP in Lenya" href="#Configuring+and+activating+LDAP+in+Lenya">Configuring and act...</a>
-</div>
-<div class="menupageitem">
-<a title="Allowing LDAP users to work
-with Lenya" href="#Allowing+LDAP+users+to+work%0Awith+Lenya">Allowing LDAP users...</a>
-</div>
-<div class="menupageitem">
-<a title="Going further with LDAP" href="#Going+further+with+LDAP">Going further with ...</a>
-</div>
-<div class="menupageitem">
-<a href="#Encrypted+LDAP">Encrypted LDAP</a>
-</div>
-<div class="menupageitem">
-<a href="#Notes">Notes</a>
-</div>
-<div class="menupageitem">
-<a title="An example publication using LDAP Authentication: the University of Zurich Lenya Publication" href="#An+example+publication+using+LDAP+Authentication%3A+the+University+of+Zurich+Lenya+Publication">An example publicat...</a>
-</div>
-</div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/cms_menus.html">CMS Menus</a>
@@ -206,6 +189,9 @@ with Lenya" href="#Allowing+LDAP+users+to+work%0Awith+Lenya">Allowing LDAP users
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/external_data.html">External Data</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
@@ -489,6 +475,29 @@ with Lenya" href="#Allowing+LDAP+users+to+work%0Awith+Lenya">Allowing LDAP users
         PDF</a>
 </div>
 <h1>LDAP Authentication How-To</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Configuring+and+activating+LDAP+in+Lenya">Configuring and activating LDAP in Lenya</a>
+</li>
+<li>
+<a href="#Allowing+LDAP+users+to+work%0Awith+Lenya">Allowing LDAP users to work
+with Lenya</a>
+</li>
+<li>
+<a href="#Going+further+with+LDAP">Going further with LDAP</a>
+</li>
+<li>
+<a href="#Encrypted+LDAP">Encrypted LDAP</a>
+</li>
+<li>
+<a href="#Notes">Notes</a>
+</li>
+<li>
+<a href="#An+example+publication+using+LDAP+Authentication%3A+the+University+of+Zurich+Lenya+Publication">An example publication using LDAP Authentication: the University of Zurich Lenya Publication</a>
+</li>
+</ul>
+</div>
 
 <p>Lenya supports LDAP authentication out-of-the-box, and was tested with
   OpenLDAP and MS Active Directory servers.</p>

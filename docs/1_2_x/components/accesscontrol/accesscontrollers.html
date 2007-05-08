@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -186,6 +190,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/how-to/external_data.html">External Data</a>
 </div>
+<div class="menuitem">
+<a href="../../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
+</div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.5', '../../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Components</div>
 <div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
@@ -196,26 +203,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">Access&nbsp;Controllers</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#Introduction">Introduction</a>
-</div>
-<div class="menupageitem">
-<a title="Defining the Role in lenya.roles" href="#Defining+the+Role+in+lenya.roles">Defining the Role i...</a>
-</div>
-<div class="menupageitem">
-<a title="Declaring an AccessController in cocoon.xconf" href="#Declaring+an+AccessController+in+cocoon.xconf">Declaring an Access...</a>
-</div>
-<div class="menupageitem">
-<a title="Default Access Controller" href="#Default+Access+Controller">Default Access Cont...</a>
-</div>
-<div class="menupageitem">
-<a title="Bypassable Access Controller" href="#Bypassable+Access+Controller">Bypassable Access C...</a>
-</div>
-<div class="menupageitem">
-<a title="Customizing Access Control" href="#Customizing+Access+Control">Customizing Access ...</a>
-</div>
-</div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
@@ -488,6 +475,28 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Access Controllers</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introduction">Introduction</a>
+</li>
+<li>
+<a href="#Defining+the+Role+in+lenya.roles">Defining the Role in lenya.roles</a>
+</li>
+<li>
+<a href="#Declaring+an+AccessController+in+cocoon.xconf">Declaring an AccessController in cocoon.xconf</a>
+</li>
+<li>
+<a href="#Default+Access+Controller">Default Access Controller</a>
+</li>
+<li>
+<a href="#Bypassable+Access+Controller">Bypassable Access Controller</a>
+</li>
+<li>
+<a href="#Customizing+Access+Control">Customizing Access Control</a>
+</li>
+</ul>
+</div>
 	
 
 <a name="N1000E"></a><a name="Introduction"></a>

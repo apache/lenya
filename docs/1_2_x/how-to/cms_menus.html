@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -176,23 +180,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">CMS Menus</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a title="Why care about CMS Menus" href="#Why+care+about+CMS+Menus">Why care about CMS ...</a>
-</div>
-<div class="menupageitem">
-<a title="Lenya Core Documentation" href="#Lenya+Core+Documentation">Lenya Core Document...</a>
-</div>
-<div class="menupageitem">
-<a title="Introducing a new menu option" href="#Introducing+a+new+menu+option">Introducing a new m...</a>
-</div>
-<div class="menupageitem">
-<a title="Edit generic.xsp to add the item for the menu option" href="#Edit+generic.xsp+to+add+the+item+for+the+menu+option">Edit generic.xsp to...</a>
-</div>
-<div class="menupageitem">
-<a title="Double-check usecase and workflow configuration" href="#Double-check+usecase+and+workflow+configuration">Double-check usecas...</a>
-</div>
-</div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/cms_screens.html">CMS Screens</a>
@@ -202,6 +189,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/external_data.html">External Data</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
@@ -485,6 +475,25 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>CMS Menus How-To</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Why+care+about+CMS+Menus">Why care about CMS Menus</a>
+</li>
+<li>
+<a href="#Lenya+Core+Documentation">Lenya Core Documentation</a>
+</li>
+<li>
+<a href="#Introducing+a+new+menu+option">Introducing a new menu option</a>
+</li>
+<li>
+<a href="#Edit+generic.xsp+to+add+the+item+for+the+menu+option">Edit generic.xsp to add the item for the menu option</a>
+</li>
+<li>
+<a href="#Double-check+usecase+and+workflow+configuration">Double-check usecase and workflow configuration</a>
+</li>
+</ul>
+</div>
 
 <p>The CMS Menus are the menu options in Lenya that are available only in authoring mode and that are used by the editor, reviewer or admin to trigger operations such as editing, deleting or publishing a page and the like. CMS Menus are completely different and have nothing in common with the navigational menus in your publication! </p>
 

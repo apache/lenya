@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -186,6 +190,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/how-to/external_data.html">External Data</a>
 </div>
+<div class="menuitem">
+<a href="../../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
+</div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.5', '../../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Components</div>
 <div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
@@ -250,29 +257,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">Xopus</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#About+Xopus">About Xopus</a>
-</div>
-<div class="menupageitem">
-<a href="#Demo">Demo</a>
-</div>
-<div class="menupageitem">
-<a href="#Configuration">Configuration</a>
-</div>
-<div class="menupageitem">
-<a href="#Saving+via+POST">Saving via POST</a>
-</div>
-<div class="menupageitem">
-<a href="#Exit+Xopus">Exit Xopus</a>
-</div>
-<div class="menupageitem">
-<a title="Making a page editable with Xopus: Schemas, Views (XSLT) and Menus" href="#Making+a+page+editable+with+Xopus%3A+Schemas%2C+Views+%28XSLT%29+and+Menus">Making a page edita...</a>
-</div>
-<div class="menupageitem">
-<a title="Things to watch out for" href="#Things+to+watch+out+for">Things to watch out...</a>
-</div>
-</div>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.5', '../../../../skin/')" id="menu_1.1.5.5Title" class="menutitle">Layout</div>
@@ -490,7 +474,49 @@ document.write("Last Published: " + document.lastModified);
 <a class="dida" href="xopus.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Xopus</h1> 
+<h1>Xopus</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#About+Xopus">About Xopus</a>
+</li>
+<li>
+<a href="#Demo">Demo</a>
+</li>
+<li>
+<a href="#Configuration">Configuration</a>
+</li>
+<li>
+<a href="#Saving+via+POST">Saving via POST</a>
+</li>
+<li>
+<a href="#Exit+Xopus">Exit Xopus</a>
+</li>
+<li>
+<a href="#Making+a+page+editable+with+Xopus%3A+Schemas%2C+Views+%28XSLT%29+and+Menus">Making a page editable with Xopus: Schemas, Views (XSLT) and Menus</a>
+</li>
+<li>
+<a href="#Things+to+watch+out+for">Things to watch out for</a>
+<ul class="minitoc">
+<li>
+<a href="#Check+your+Internet+Explorer+cache+settings">Check your Internet Explorer cache settings</a>
+</li>
+<li>
+<a href="#Check+your+local.build.properties">Check your local.build.properties</a>
+</li>
+<li>
+<a href="#Check+your+schema+files">Check your schema files</a>
+</li>
+<li>
+<a href="#Check+your+CSS+files">Check your CSS files</a>
+</li>
+<li>
+<a href="#Missing+preparexinclude.xsl">Missing preparexinclude.xsl</a>
+</li>
+</ul>
+</li>
+</ul>
+</div> 
 
 
 <a name="N1000E"></a><a name="About+Xopus"></a>

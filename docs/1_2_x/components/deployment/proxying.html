@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -186,6 +190,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/how-to/external_data.html">External Data</a>
 </div>
+<div class="menuitem">
+<a href="../../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
+</div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.5', '../../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Components</div>
 <div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
@@ -232,17 +239,6 @@ document.write("Last Published: " + document.lastModified);
 <div id="menu_selected_1.1.5.3" class="selectedmenuitemgroup" style="display: block;">
 <div class="menupage">
 <div class="menupagetitle">Proxying</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#Introduction">Introduction</a>
-</div>
-<div class="menupageitem">
-<a title="Configuration in publication.xconf" href="#Configuration+in+publication.xconf">Configuration in pu...</a>
-</div>
-<div class="menupageitem">
-<a title="Apache Webserver setup / Rewrite Rules" href="#Apache+Webserver+setup+%2F+Rewrite+Rules">Apache Webserver se...</a>
-</div>
-</div>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.4', '../../../../skin/')" id="menu_1.1.5.4Title" class="menutitle">Editors</div>
@@ -478,7 +474,28 @@ document.write("Last Published: " + document.lastModified);
 <a class="dida" href="proxying.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Reverse Proxying Apache Lenya</h1> 
+<h1>Reverse Proxying Apache Lenya</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introduction">Introduction</a>
+</li>
+<li>
+<a href="#Configuration+in+publication.xconf">Configuration in publication.xconf</a>
+</li>
+<li>
+<a href="#Apache+Webserver+setup+%2F+Rewrite+Rules">Apache Webserver setup / Rewrite Rules</a>
+<ul class="minitoc">
+<li>
+<a href="#Rules+for+the+authoring+server">Rules for the authoring server</a>
+</li>
+<li>
+<a href="#Rules+for+the+live+server">Rules for the live server</a>
+</li>
+</ul>
+</li>
+</ul>
+</div> 
 
 
 <a name="N1000E"></a><a name="Introduction"></a>

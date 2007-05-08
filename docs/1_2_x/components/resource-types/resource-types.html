@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -186,6 +190,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_2_x/how-to/external_data.html">External Data</a>
 </div>
+<div class="menuitem">
+<a href="../../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
+</div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.5', '../../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Components</div>
 <div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
@@ -280,14 +287,6 @@ document.write("Last Published: " + document.lastModified);
 <div id="menu_selected_1.1.5.7" class="selectedmenuitemgroup" style="display: block;">
 <div class="menupage">
 <div class="menupagetitle">Resource&nbsp;Types</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#Basics">Basics</a>
-</div>
-<div class="menupageitem">
-<a title="Adding a Resource Type to a Publication" href="#Adding+a+Resource+Type+to+a+Publication">Adding a Resource T...</a>
-</div>
-</div>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.8', '../../../../skin/')" id="menu_1.1.5.8Title" class="menutitle">Revision Control</div>
@@ -476,6 +475,42 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Resource Types (formerly known as Document Types)</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Basics">Basics</a>
+</li>
+<li>
+<a href="#Adding+a+Resource+Type+to+a+Publication">Adding a Resource Type to a Publication</a>
+<ul class="minitoc">
+<li>
+<a href="#Choose+a+Unique+Resource+Type+Name">Choose a Unique Resource Type Name</a>
+</li>
+<li>
+<a href="#Providing+a+Sample+XML+Document">Providing a Sample XML Document</a>
+</li>
+<li>
+<a href="#Providing+an+XML+Structure+Definition">Providing an XML Structure Definition</a>
+</li>
+<li>
+<a href="#Creating+a+Workflow+Schema">Creating a Workflow Schema</a>
+</li>
+<li>
+<a href="#The+Resource+Type+Definition">The Resource Type Definition</a>
+</li>
+<li>
+<a href="#Define+the+Mapping+From+URLs+to+Resource+Types">Define the Mapping From URLs to Resource Types</a>
+</li>
+<li>
+<a href="#Define+a+Custom+Menubar">Define a Custom Menubar</a>
+</li>
+<li>
+<a href="#Presentation">Presentation</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 	
 
 <a name="N1000E"></a><a name="Basics"></a>

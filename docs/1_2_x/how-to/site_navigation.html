@@ -63,8 +63,14 @@
 <li>
 <a class="unselected" href="../../../index.html">Project</a>
 </li>
+<li>
+<a class="unselected" href="../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a>
+</li>
 <li class="current">
-<a class="selected" href="../../../docs/index.html">Documentation</a>
+<a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
 <a class="unselected" href="../../../community/index.html">Community</a>
@@ -80,9 +86,7 @@
 <!--+
     |start Subtabs
     +-->
-<div id="level2tabs">
-<a class="unselected" href="../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../docs/modules/index.html">Modules</a><a class="selected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
-</div>
+<div id="level2tabs"></div>
 <!--+
     |end Endtabs
     +-->
@@ -170,20 +174,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">Site Navigation</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a title="Technical Background: How Lenya builds the site navigation" href="#Technical+Background%3A+How+Lenya+builds+the+site+navigation">Technical Backgroun...</a>
-</div>
-<div class="menupageitem">
-<a title="Tabs as main navigation, menubar as sub-navigation" href="#Tabs+as+main+navigation%2C+menubar+as+sub-navigation">Tabs as main naviga...</a>
-</div>
-<div class="menupageitem">
-<a title="Simple solution: Hide the menus using CSS" href="#Simple+solution%3A+Hide+the+menus+using+CSS">Simple solution: Hi...</a>
-</div>
-<div class="menupageitem">
-<a title="Advanced solution: Exclude the menus using XSLT" href="#Advanced+solution%3A+Exclude+the+menus+using+XSLT">Advanced solution: ...</a>
-</div>
-</div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/ldap_authentication.html">LDAP Authentication</a>
@@ -199,6 +189,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_2_x/how-to/external_data.html">External Data</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_2_x/how-to/unittests.html">Unit Tests</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
@@ -482,6 +475,22 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Site Navigation How-To</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Technical+Background%3A+How+Lenya+builds+the+site+navigation">Technical Background: How Lenya builds the site navigation</a>
+</li>
+<li>
+<a href="#Tabs+as+main+navigation%2C+menubar+as+sub-navigation">Tabs as main navigation, menubar as sub-navigation</a>
+</li>
+<li>
+<a href="#Simple+solution%3A+Hide+the+menus+using+CSS">Simple solution: Hide the menus using CSS</a>
+</li>
+<li>
+<a href="#Advanced+solution%3A+Exclude+the+menus+using+XSLT">Advanced solution: Exclude the menus using XSLT</a>
+</li>
+</ul>
+</div>
 
 <p>One of the ingredients for a good website is a well structured navigation. The Default publication in Lenya comes with a <a href="../../../docs/1_2_x/components/layout/navigation.html">navigation framework</a> that is made up of horizontal tabs, breadcrumbs and a menu on the left. A lot of websites use these navigational elements, but depending on the site you're building, you might want to change the navigation or structure if differently. </p>
 
