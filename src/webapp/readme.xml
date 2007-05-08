@@ -35,6 +35,13 @@
     
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
+    <h3>2007-05-05: Introduced <code>workflow.multiWorkflowInvoke</code> usecase</h3>
+    <p>
+      Please add the permissions for this usecase to your
+      <code>config/access-control/usecase-policies.xml</code> file, or use the
+      tab "Usecases" in the administration GUI.
+    </p>
+    
     <h3>2007-04-30: Renamed
       <code>$PUB_HOME/config/publication.xconf</code> to <code>publication.xml</code></h3>
     
