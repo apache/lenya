@@ -1,1 +1,4 @@
+org.apache.lenya.inbox
+org.apache.lenya.inbox.usecases
+org.apache.lenya.inbox.xml
 org.apache.lenya.notification

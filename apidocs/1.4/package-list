@@ -19,7 +19,6 @@ org.apache.lenya.cms.publication.util
 org.apache.lenya.cms.rc
 org.apache.lenya.cms.repository
 org.apache.lenya.cms.site
-org.apache.lenya.cms.site.simple
 org.apache.lenya.cms.site.topicmap
 org.apache.lenya.cms.workflow
 org.apache.lenya.net

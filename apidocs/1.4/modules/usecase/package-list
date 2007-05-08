@@ -1,7 +1,12 @@
 org.apache.lenya.cms.ac.usecase
+org.apache.lenya.cms.ac.usecase.impl
 org.apache.lenya.cms.cocoon.matching
 org.apache.lenya.cms.cocoon.transformation
 org.apache.lenya.cms.usecase
+org.apache.lenya.cms.usecase.cocoon
 org.apache.lenya.cms.usecase.gui
+org.apache.lenya.cms.usecase.gui.impl
+org.apache.lenya.cms.usecase.impl
 org.apache.lenya.cms.usecase.scheduling
+org.apache.lenya.cms.usecase.scheduling.impl
 org.apache.lenya.cms.usecase.xml
