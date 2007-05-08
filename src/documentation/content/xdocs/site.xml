@@ -134,6 +134,7 @@
     </installation14>
     
     <tutorials href="tutorials/" label="Tutorials">
+      <newPublication14 href="newpublication/index.html" label="Create a Publication"/>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
       <tests href="tests.html" label="Writing Tests"/>
       <bestpractises href="bestpractises.html" label="Best Practises"/>

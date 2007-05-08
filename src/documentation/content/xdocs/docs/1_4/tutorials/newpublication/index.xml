@@ -21,24 +21,313 @@
 
 <document>
   <header>
-    <title>Apache Lenya 1.4 Documentation</title>
-    
-    
-    
+    <title>Create a New Publication</title>
   </header>
   <body>
-          <warning>
-            Apache Lenya 1.4 is still under heavy development and should not be used for production yet.
-          </warning>
-        <p>
-           This is the documentation for the 1.4.x releases. The documentation is not as fleshed out as 1.2 yet, so
-           we suggest you also check there for more information while we build up this documentation. 
-        </p>
-        <note label="Help wanted!"> Since 1.4 is new and provide many 
-          enhancements and new features, please help to document them with us. 
-          Send documentation patches and use the wiki. TIA :)</note>
-<p>
-More documentation (work in progress) can be found at the <a href="site:wiki/lenya/">Apache Lenya Wiki</a>.
-</p>
+    
+    <section>
+      <title>Introduction</title>
+      <p>
+        In this tutorial, we guide you through the first steps on the
+        way to your own publication. We assume that the publication is
+        based on Lenya's default publication, at least until your standing
+        firmly on your own feet.
+      </p>
+    </section>
+    
+    <section>
+      <title>Prerequisites</title>
+      <p>
+        We'll use the following directory layout:
+      </p>
+      <source xml:space="preserve">$HOME/
+  apache/
+    lenya-1.4/             The Lenya installation directory, we'll call it $LENYA_HOME.
+  src/
+    lenya/                 The home directory of your Lenya-related sources.
+      pubs/                Your publications.
+        mypub/             Your first publication. We'll call this directory $PUB_HOME.
+      modules/             Your modules.
+      data/                Here you'll store your data:
+        content/           Content (documents, images, ...)
+        access-control/    Access control data
+          passwd/          Users, groups, etc.
+          policies/        Policies (page permissions)</source>
+      
+      <p>
+        By telling Lenya to store the data in your source tree and not in the
+        web application context, you can more easily sync it with your source code repository. 
+      </p>
+      
+      <p>
+        To speed up your development, we recommend to serve the contents of
+        modules directly from their sources. Edit your <code>$LENYA_HOME/local.build.properties</code>
+        and update the <code>modules.copy</code> setting:
+      </p>
+      <source xml:space="preserve">modules.copy=false</source>
+      
+      <p>
+        If you're using Eclipse, you can add a Java project with the <code>src</code>
+        directory as home directory. We recommend to <a href="site:setupide">add the Lenya project</a>
+        to Eclipse as well so you can easily use it's API. 
+      </p>
+      
+    </section>
+    
+    <section>
+      <title>Telling Lenya about Your Publication</title>
+      <p>
+        First, we have to tell Lenya that you want to deploy your publication.
+        This is done in <code>$LENYA_HOME/local.build.properties</code>. Add the path
+        to the directory where you store your publications to <code>pubs.root.dirs</code>:
+      </p>
+      <source xml:space="preserve">pubs.root.dirs=src/pubs:/home/john/src/lenya/pubs</source>
+      <p>
+        If you add multiple publications to this directory, Lenya will detect them
+        automatically.
+      </p>
+    </section>
+    
+    <section>
+      <title>Basic Configuration</title>
+      <p>
+        Now it's time to add the main configuration file of your publication,
+        <code>$PUB_HOME/config/publication.xml</code>. The language settings depend
+        on your requirements, you can add whatever languages you need. But make sure
+        to use the official ISO 639-1 language codes. The entry
+        <code><![CDATA[<template id="default"/>]]></code> tells Lenya that your
+        publication is based on the default publication.
+      </p>
+      <p>
+        Here's an example how your <code>publication.xml</code> file might look like:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<publication xmlns="http://apache.org/cocoon/lenya/publication/1.1">
+  
+  <name>My First Publication</name>
+  <version>1.4-dev</version>
+  <lenya-version>1.4-dev</lenya-version>
+  <cocoon-version>2.1.10</cocoon-version>
+  
+  <languages>
+    <language default="true">en</language>
+    <language>de</language>
+  </languages>
+  
+  <template-instantiator name="default"/>
+  <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
+  <document-builder name="default"/>
+  <site-manager name="tree"/>
+  
+  <template id="default"/>
+  
+  <content-dir src="/home/john/src/lenya/data/content"/>
+  
+  <resource-types/>
+  <modules/>
+  
+</publication>]]></source>
+    </section>
+    
+    <section>
+      <title>Access Control Configuration</title>
+      <p>
+        The access control options are configured in
+        <code>$PUB_HOME/config/access-control/access-control.xml</code>.
+        We'll change the paths where access control data are stored: 
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<access-controller type="bypassable">
+  
+  <accreditable-manager type="file">
+    <parameter name="directory"
+               value="/home/john/src/lenya/data/access-control/passwd"/>
+    <user-manager>
+      <user-type class="org.apache.lenya.ac.file.FileUser">Local User</user-type>
+    </user-manager>
+  </accreditable-manager>
+  
+  <policy-manager type="document">
+    <policy-manager type="file">
+      <parameter name="directory"
+                 value="/home/john/src/lenya/data/access-control/policies"/>
+    </policy-manager>
+  </policy-manager>
+  
+  <authorizer type="policy"/>
+  
+  <authorizer type="usecase">
+    <parameter name="configuration"
+      value="aggregate-fallback://config/access-control/usecase-policies.xml"/>
+  </authorizer>
+  
+</access-controller>]]></source>
+      <p>
+        Now we copy the role files (<code>*.rml</code>, where "rml" means "role markup language")
+        from the default publication to our <code>data/access-control/passwd</code> directory:
+      </p>
+      <source xml:space="preserve">$HOME/src/lenya/data/access-control/passwd/
+  admin.rml
+  edit.rml
+  review.rml
+  visit.rml</source>
+      <p>
+        To be able to log in for the first time, we'll create a superuser account.
+        Add the file <code>data/access-control/passwd/admin.iml</code> ("iml" means
+        "identity markup language"):
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<identity id="admin" class="org.apache.lenya.ac.file.FileUser">
+  <name>Administrator</name>
+  <description></description>
+  <email>admin@yourcompany.com</email>
+  <password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
+  <groups>
+    <group>administrators</group>
+  </groups>
+</identity>]]></source>
+      <p>
+        The encrypted password is copied from the default publication's <code>lenya</code>
+        user, the cleartext is <code>levi</code>.
+      </p>
+      <p>
+        We want to do it properly, so we add an <code>administrators</code> group
+        (<code>passwd/administrators.gml</code>):
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<group class="org.apache.lenya.ac.file.FileGroup" id="administrators"/>]]></source>
+      <p>
+        Each publication has an introduction page (<code>introduction.html</code>).
+        We'll add a policy allowing everyone to visit the page. The file is located
+        at <code>data/access-control/policies/introduction.html/url-policy.acml</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+  <world>
+    <role id="visit"  method="grant"/>
+  </world>
+</policy>]]></source>
+      <p>
+        Finally, we have to add a policy for the authoring environment
+        (<code>data/access-control/policies/authoring/subtree-policy.acml</code>),
+        granting all roles to the <code>administrators</code> group:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+  <group id="administrators">
+    <role id="edit"  method="grant"/>
+    <role id="review"  method="grant"/>
+    <role id="admin"  method="grant"/>
+  </group>
+</policy>]]></source>
+    </section>
+    
+    <section>
+      <title>Configuring the Search Index</title>
+      <p>
+        It is necessary to configure the search indexes for each publication.
+        Add the file <code>$PUB_HOME/config/search/lucene_index.xml</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<indexes>
+  <index id="mypub-live" analyzer="stopword_en"
+    directory="lenya/pubs/mypub/work/lucene/index/live/index">
+    <structure>
+      <field id="url" type="keyword" />
+      <field id="title" type="text" storetext="true"/>
+      <field id="description" type="text" storetext="true"/>
+      <field id="subject" type="keyword" storetext="true" />
+      <field id="body" type="text" storetext="true"/>
+    </structure>
+  </index>
+  <index id="mypub-authoring" analyzer="stopword_en"
+    directory="lenya/pubs/mypub/work/lucene/index/authoring/index">
+    <structure>
+      <field id="url" type="keyword" />
+      <field id="title" type="text" storetext="true"/>
+      <field id="description" type="text" storetext="true"/>
+      <field id="subject" type="keyword" storetext="true" />
+      <field id="body" type="text" storetext="true"/>
+    </structure>
+  </index>
+  <index id="mypub-trash" analyzer="stopword_en"
+    directory="lenya/pubs/mypub/work/lucene/index/trash/index">
+    <structure>
+      <field id="url" type="keyword" />
+      <field id="title" type="text" storetext="true"/>
+      <field id="description" type="text" storetext="true"/>
+      <field id="subject" type="keyword" storetext="true" />
+      <field id="body" type="text" storetext="true"/>
+    </structure>
+  </index>
+  <index id="mypub-archive" analyzer="stopword_en"
+    directory="lenya/pubs/mypub/work/lucene/index/archive/index">
+    <structure>
+      <field id="url" type="keyword" />
+      <field id="title" type="text" storetext="true"/>
+      <field id="description" type="text" storetext="true"/>
+      <field id="subject" type="keyword" storetext="true" />
+      <field id="body" type="text" storetext="true"/>
+    </structure>
+  </index>
+</indexes>]]></source>
+    </section>
+    
+    
+    <section>
+      <title>Deploying Your Publication</title>
+      <p>
+        To deploy your publication, open a shell, go to the directory <code>$LENYA_HOME</code>
+        and execute the build process:
+      </p>
+      <source xml:space="preserve"><![CDATA[$ cd ~/apache/lenya-1.4
+$ ./build.sh]]></source>
+      <p>
+        Wait until the build process is finished, and start the Jetty server using the command
+      </p>
+      <source xml:space="preserve">$ ./lenya.sh</source>
+      <p>
+        To check if Lenya found and deployed our publication correctly,
+        open your browser and go to the URL <a href="http://localhost:8888">http://localhost:8888</a>.
+        In the list at the left-hand side of the page you should see the entry
+        "My First Publication". If not, Lenya didn't find your publication. Double-check
+        the path in <code>local.build.properties</code>.
+      </p>
+      <p>
+        Click on the "My First Publication" link. The introduction page of your publication appears.
+        Click on the link "Login as Editor". Login with the username <code>admin</code>
+        and the password <code>levi</code>.
+      </p>
+      <p>
+        Now a page with the title "First Steps" should appear, asking you to either import the
+        example content of the default publication, or start with your own homepage.
+        We'll do the latter.
+      </p>
+      <p>
+        Click on the button <em>Start with own page</em>. You'll be asked to fill in
+        a form. Enter "Home" as the page title, and select <code>homepage</code> as the
+        resource type. Click the <em>Create</em> button. Congratulations, you've created
+        your first page!
+      </p>
+      <p>
+        To make sure your content directory is configured properly, take a look at the
+        <code>data/content</code> directory. Lenya should have created an <code>authoring</code>
+        directory with some content in it.
+      </p>
+    </section>
+    
+    <section>
+      <title>Next Steps</title>
+      <p>
+        Now you can go on with customizing your publication:
+      </p>
+      <ul>
+        <li>Add groups, users, and policies</li>
+        <li>Customize the layout by overriding the default publication XSLTs</li>
+        <li>Add more content</li>
+        <li>...</li>
+      </ul>
+    </section>
+    
   </body>
 </document>
