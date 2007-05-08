@@ -35,6 +35,16 @@
     
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
+    <h3>2007-05-08: Fixed <code>create-use-case</code> attribute</h3>
+    <p>
+      The value of the <code>create-use-case</code> attribute of the <code>user-type</code>
+      element in <code>access-control.xml</code> was invalid. The admin area didn't use
+      this attribute yet. Since this has been fixed, you have to update your
+      <code>$PUB_HOME/config/access-control/access-control.xml</code> files:
+    </p>
+    <source xml:space="preserve"><![CDATA[<user-type class="org.apache.lenya.ac.file.FileUser"
+    create-use-case="admin.addUser">Local User</user-type>]]></source>
+    
     <h3>2007-05-05: Introduced <code>workflow.multiWorkflowInvoke</code> usecase</h3>
     <p>
       Please add the permissions for this usecase to your
