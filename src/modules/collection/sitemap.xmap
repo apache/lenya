@@ -29,7 +29,7 @@
         <map:generate type="sitetree-fragment">
           <map:parameter name="areas" value="{page-envelope:area}"/>
           <map:parameter name="area" value="{page-envelope:area}"/>
-          <map:parameter name="path" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{1}:{page-envelope:document-language}:path}"/>
+          <map:parameter name="path" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{1}:{2}:path}"/>
           <map:parameter name="initial" value="false"/>
           <map:parameter name="mimetype" value=""/>
         </map:generate>
@@ -39,13 +39,13 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- metadata-{uuid}.xml -->
-      <map:match pattern="metadata-*.xml">
+      <!-- metadata/{uuid}/{language}.xml -->
+      <map:match pattern="metadata/*/*.xml">
         <map:generate type="lenyaMetaData">
           <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
           <map:parameter name="area" value="{page-envelope:area}"/>
           <map:parameter name="uuid" value="{1}"/>
-          <map:parameter name="lang" value="{page-envelope:document-language}"/>
+          <map:parameter name="lang" value="{2}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>

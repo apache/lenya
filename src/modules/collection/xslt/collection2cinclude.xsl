@@ -11,7 +11,7 @@
   <xsl:template match="col:collection">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <ci:include src="cocoon://modules/collection/metadata-{$uuid}.xml"/>
+      <ci:include src="cocoon://modules/collection/metadata/{$uuid}/{$language}.xml"/>
       <xsl:apply-templates select="col:document"/>
     </xsl:copy>
   </xsl:template>
@@ -20,7 +20,7 @@
   <xsl:template match="col:document">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <ci:include src="cocoon://modules/collection/metadata-{@uuid}.xml"/>
+      <ci:include src="cocoon://modules/collection/metadata/{$uuid}/{$language}.xml"/>
       <ci:include src="lenya-document:{@uuid}"/>
     </xsl:copy>
   </xsl:template>
