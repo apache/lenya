@@ -188,17 +188,12 @@ limitations under the License.
 
     <section id="elect">
       <title>Electing new committers and PMC members</title>
-      <p>
-        We conduct the vote on the private PMC mailing list to enable a frank
-        discussion.
-        In most cases we will be inviting people to go straight from developer
-        to PMC member, i.e. they simultaneously become committer and PMC
-        member. However, there may be extraordinary cases where we want
-        limited work-related commit access (not also a PMC member).
-        This will be resolved during the discussion and vote.
-        Notes about this process are in the "committers" svn in the
-        pmc/lenya/ directory.
-      </p>
+      <p> We conduct committer/PMC member proposals on the private PMC mailing list to enable
+        a frank discussion. The vote for committership will be conducted on the lenya dev
+        list, if no concerns are aired prior on the private PMC list. This is out of for
+        historical reasons. We inherited that from cocoon: it shows people that we
+        appreciate them in a ceremonial way. The vote for a new PMC member however will be
+        conducted on the private list and later announced on the dev list. </p>
     </section>
   </section>
 
