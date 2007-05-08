@@ -23,7 +23,7 @@
     <title>Getting Started and Building Lenya</title>
     <faq id="TransformerFactoryImpl">
       <question>
-        The build fails with a message like <code>Fatal error during transformation</code>.
+        The build fails with a message like "<code>Fatal error during transformation</code>".
       </question>
       <answer>
         <p>
@@ -73,6 +73,7 @@
       </answer>
     </faq>
   </part>
+  
   <part>
     <title>Editors</title>
     <faq id="bxe-css">
@@ -81,6 +82,20 @@
         <p> Yes, this is possible.<br/> Just add and edit it like you need it 
           (have a look in the default pub): 
           <code>{pubid}/resources/misc/bxe/{ressourcetype}-bxe.css</code> </p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part>
+    <title>Deployment</title>
+    <faq id="plain-cocoon">
+      <question>Can I serve my public site with Cocoon only?</question>
+      <answer>
+        <p>
+          In general, the answer is "no", because various Lenya components are necessary
+          to access the repository and generate the pages. You'd have to invest a lot
+          of effort to extract these components from Lenya, and this will hardly be worth it.
+        </p>
       </answer>
     </faq>
   </part>
