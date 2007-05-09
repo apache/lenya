@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,26 +37,26 @@
       <jx:set var="includeItems" value="${usecase.getParameter('includeItems')}"/>
       
       <p>
-      <label for="includeItems"><i18n:text>include-items</i18n:text>:</label>
-      <select name="includeItems">
-        <jx:forEach var="number" items="${usecase.getParameter('numbers')}">
-          <jx:choose>
-            <jx:when test="${includeItems == number}">
-              <option value="${number}" selected="selected"><jx:out value="${number}"/></option>
-            </jx:when>
-            <jx:otherwise>
-              <option value="${number}"><jx:out value="${number}"/></option>
-            </jx:otherwise>
-          </jx:choose>
-        </jx:forEach>
-      </select>
+        <label for="includeItems"><i18n:text>include-items</i18n:text>:</label>
+        <select name="includeItems">
+          <jx:forEach var="number" items="${usecase.getParameter('numbers')}">
+            <jx:choose>
+              <jx:when test="${includeItems == number}">
+                <option value="${number}" selected="selected"><jx:out value="${number}"/></option>
+              </jx:when>
+              <jx:otherwise>
+                <option value="${number}"><jx:out value="${number}"/></option>
+              </jx:otherwise>
+            </jx:choose>
+          </jx:forEach>
+        </select>
       </p>
-
+      
       <p>
         <input type="submit" value="Save" name="submit" i18n:attr="value"/>
         <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
       </p>
-          
+      
     </form>
     
   </page:body>
