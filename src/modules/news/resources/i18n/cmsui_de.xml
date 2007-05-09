@@ -26,5 +26,7 @@
   </message>
   <message key="news-settings">News-Einstellungen</message>
   <message key="include-items">Anzahl der Meldungen, die auf der Übersicht dargestellt werden sollen</message>
+  <message key="type-children">Kind-Dokumenten</message>
+  <message key="acquire-news-from">Meldungen beziehen von</message>
   
 </catalogue>

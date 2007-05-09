@@ -47,7 +47,7 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
 
     private Document delegate;
 
-    protected static final String[] TYPES = { TYPE_CHILDREN, TYPE_MANUAL };
+    protected static final String[] TYPES = { TYPE_CHILDREN, TYPE_MANUAL, TYPE_LINK };
 
     /**
      * Ctor.
@@ -145,6 +145,10 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
             if (collectionElement.hasAttribute(ATTRIBUTE_TYPE)) {
                 this.type = collectionElement.getAttribute(ATTRIBUTE_TYPE);
             }
+            
+            if (collectionElement.hasAttribute(ATTRIBUTE_HREF)) {
+                this.href = collectionElement.getAttribute(ATTRIBUTE_HREF);
+            }
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -196,6 +200,8 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
         }
 
         collectionElement.setAttribute(ATTRIBUTE_TYPE, getType());
+        
+        collectionElement.setAttribute(ATTRIBUTE_HREF, getHref());
 
         collectionElement.normalize();
 
@@ -314,6 +320,18 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
             throw new IllegalArgumentException("The type [" + type + "] is not supported!");
         }
         this.type = type;
+    }
+    
+    private String href = "";
+
+    public String getHref() {
+        load();
+        return this.href;
+    }
+
+    public void setHref(String href) {
+        load();
+        this.href = href;
     }
 
 }

@@ -50,6 +50,12 @@ public interface Collection {
     String ATTRIBUTE_TYPE = "type";
 
     /**
+     * Name of the href attribute.
+     */
+    String ATTRIBUTE_HREF = "href";
+
+
+    /**
      * Returns the documents in this collection.
      * @return An array of documents.
      * @throws DocumentException when something went wrong.
@@ -125,12 +131,28 @@ public interface Collection {
     String TYPE_MANUAL = "manual";
 
     /**
-     * @param type One of {@link #TYPE_CHILDREN}, {@link #TYPE_MANUAL}.
+     * Type for manual addition of documents.
+     */
+    String TYPE_LINK = "link";
+
+    /**
+     * @param type One of {@link #TYPE_CHILDREN}, {@link #TYPE_MANUAL}, {@link #TYPE_LINK}.
      */
     void setType(String type);
 
     /**
-     * @return One of {@link #TYPE_CHILDREN}, {@link #TYPE_MANUAL}.
+     * @return One of {@link #TYPE_CHILDREN}, {@link #TYPE_MANUAL}, {@link #TYPE_LINK}.
      */
-    public String getType();
+    String getType();
+    
+    /**
+     * @return The link target.
+     */
+    String getHref();
+    
+    /**
+     * @param href The link target. If the type is not {@link #TYPE_LINK}, calling
+     * this method has no effect.
+     */
+    void setHref(String href);
 }

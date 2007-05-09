@@ -36,7 +36,34 @@
       <jx:set var="newsWrapper" value="${usecase.getParameter('newsWrapper')}"/>
       <jx:set var="includeItems" value="${usecase.getParameter('includeItems')}"/>
       
-      <p>
+      <p><i18n:text>acquire-news-from</i18n:text>:</p>
+      
+      <jx:set var="type" value="${usecase.getParameter('type')}"/>
+      <p style="padding-left: 3em;">
+        <jx:choose>
+          <jx:when test="${type.equals('children')}">
+            <input type="radio" name="type" value="children" checked="checked"/>
+          </jx:when>
+          <jx:otherwise>
+            <input type="radio" name="type" value="children"/>
+          </jx:otherwise>
+        </jx:choose>
+        <i18n:text>type-children</i18n:text>
+      </p>
+      <p style="padding-left: 3em;">
+        <jx:choose>
+          <jx:when test="${type.equals('link')}">
+            <input type="radio" name="type" value="link" checked="checked"/>
+          </jx:when>
+          <jx:otherwise>
+            <input type="radio" name="type" value="link"/>
+          </jx:otherwise>
+        </jx:choose>
+        <i18n:text>Link</i18n:text>:
+        <input type="text" name="href" size="50" value="${usecase.getParameter('href')}"/>
+      </p>
+      
+      <p style="margin: 3em 0;">
         <label for="includeItems"><i18n:text>include-items</i18n:text>:</label>
         <select name="includeItems">
           <jx:forEach var="number" items="${usecase.getParameter('numbers')}">

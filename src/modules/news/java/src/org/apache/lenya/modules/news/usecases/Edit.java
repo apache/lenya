@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
+import org.apache.lenya.modules.collection.CollectionWrapper;
 import org.apache.lenya.modules.news.NewsWrapper;
 
 /**
@@ -31,6 +32,8 @@ public class Edit extends InvokeWorkflow {
     protected static final String INCLUDE_ITEM_NUMBER = "includeItems";
     protected static final String NEWS_WRAPPER = "newsWrapper";
     protected static final String NUMBERS = "numbers";
+    protected static final String TYPE = "type";
+    protected static final String HREF = "href";
     
     protected void initParameters() {
         super.initParameters();
@@ -38,6 +41,8 @@ public class Edit extends InvokeWorkflow {
         setParameter(NEWS_WRAPPER, news);
         
         setParameter(INCLUDE_ITEM_NUMBER, new Short(news.getIncludeItemNumber()));
+        setParameter(TYPE, news.getType());
+        setParameter(HREF, news.getHref());
         
         List numbers = new ArrayList();
         for (int i = 1; i <= 10; i++) {
@@ -55,6 +60,11 @@ public class Edit extends InvokeWorkflow {
         // we must create a new wrapper, because a new (modifiable) session is used
         NewsWrapper news = new NewsWrapper(getSourceDocument(), getLogger());
         news.setIncludeItemNumber(number);
+        String type = getParameterAsString(TYPE);
+        news.setType(type);
+        if (type.equals(CollectionWrapper.TYPE_LINK)) {
+            news.setHref(getParameterAsString(HREF));
+        }
         news.save();
     }
 

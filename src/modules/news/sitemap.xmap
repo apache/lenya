@@ -64,6 +64,9 @@
           <map:parameter name="language" value="{5}"/>
         </map:transform>
         <map:transform type="cinclude"/>
+        <map:transform type="log">
+          <map:parameter name="logfile" value="log.txt"/>
+        </map:transform>
         <map:transform src="fallback://lenya/modules/news/xslt/collection2{1}.xsl">
           <map:parameter name="rendertype" value="{request-param:rendertype}"/>
           <map:parameter name="language" value="{5}"/>

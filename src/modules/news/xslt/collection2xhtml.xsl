@@ -65,9 +65,15 @@
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
     <h2>
       <span class="newsDate">
-        <i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss" locale="{$language}" value="{$date}" />
+        <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss" locale="{$language}" value="{$date}" />
       </span><br />
-      <a href="lenya-document:{@uuid}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
+      <xsl:variable name="href">
+        <xsl:choose>
+          <xsl:when test="@uuid">lenya-document:<xsl:value-of select="@uuid"/></xsl:when>
+          <xsl:when test="@href"><xsl:value-of select="@href"/></xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <a href="{$href}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
     </h2>
     <xsl:apply-templates select="xhtml:html/xhtml:body/xhtml:p[1]"/>
   </xsl:template>

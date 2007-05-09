@@ -33,7 +33,7 @@ public class NewsWrapper extends CollectionWrapper {
 
     protected static final int DEFAULT_INCLUDE_ITEMS = 3;
     protected static final String ATTRIBUTE_INCLUDE_ITEMS = "includeItems";
-
+    
     private short includeItemNumber = DEFAULT_INCLUDE_ITEMS;
 
     /**
