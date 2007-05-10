@@ -31,6 +31,7 @@
     >
     
   <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
+  <xsl:include href="shared.xsl"/>
   
   <xsl:param name="rendertype" select="''"/>
   <xsl:param name="nodeid"/>
@@ -70,10 +71,7 @@
         <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss" locale="{$language}" value="{$date}" />
       </span><br />
       <xsl:variable name="href">
-        <xsl:choose>
-          <xsl:when test="@uuid">lenya-document:<xsl:value-of select="@uuid"/></xsl:when>
-          <xsl:when test="@href"><xsl:value-of select="@href"/></xsl:when>
-        </xsl:choose>
+        <xsl:call-template name="getHref"/>
       </xsl:variable>
       <a href="{$href}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
     </h2>

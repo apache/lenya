@@ -30,6 +30,7 @@
     >
     
   <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
+  <xsl:include href="shared.xsl"/>
   
   <xsl:param name="rendertype" select="''"/>
   <xsl:param name="nodeid"/>
@@ -84,7 +85,10 @@
     <item>
       <title><xsl:value-of select="meta:metadata/dc:elements/dc:title"/></title>
       <description><xsl:value-of select="meta:metadata/dc:elements/dc:description"/></description>
-      <link><xhtml:a href="lenya-document:{@uuid}"/></link>
+      <xsl:variable name="href">
+        <xsl:call-template name="getHref"/>
+      </xsl:variable>
+      <link><xhtml:a href="lenya-document:{$href}"/></link>
       <author><xsl:value-of select="meta:metadata/dc:elements/dc:creator"/></author>
       <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
       <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{$date}" /></pubDate>
