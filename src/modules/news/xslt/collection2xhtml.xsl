@@ -37,6 +37,8 @@
   <xsl:param name="language"/>
   <xsl:param name="area"/>
   
+  <xsl:variable name="maxChars">100</xsl:variable>
+  
   
   <xsl:template match="/col:collection">
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
@@ -75,7 +77,18 @@
       </xsl:variable>
       <a href="{$href}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
     </h2>
-    <xsl:apply-templates select="xhtml:html/xhtml:body/xhtml:p[1]"/>
+    <xsl:apply-templates select="xhtml:html/xhtml:body/xhtml:p[1]" mode="excerpt"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="xhtml:p" mode="excerpt">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:value-of select="substring(., 1, $maxChars)"/>
+      <xsl:if test="string-length(.) &gt; $maxChars">
+        <xsl:text>&#x2026;</xsl:text>
+      </xsl:if>
+    </xsl:copy>
   </xsl:template>
 
 
