@@ -225,6 +225,14 @@
   <target name="war" depends="webapp" description="Builds the deployable war file">
     <mkdir dir="${dist.bin.dir}"/>
     <jar jarfile="${dist.bin.warfile}" basedir="${build.webapp}" excludes="META-INF/MANIFEST.MF"/>
+    <echo>
+The following libraries must be placed in the endorsed library directory for your deployment.
+* jakarta-bcel-20040329.jar
+* jakarta-regexp-1.3.jar
+* xalan-2.6.0.jar
+* xercesImpl-2.6.2.jar
+* xml-apis.jar
+    </echo>
   </target>
 
   <!-- Clean Tomcat directories -->
