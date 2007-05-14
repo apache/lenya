@@ -33,18 +33,24 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableTraversableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceValidity;
 import org.apache.excalibur.source.impl.AbstractSource;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Repository source.
@@ -113,7 +119,24 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
                 Query query = new Query(uri.substring(questionMarkIndex + 1));
                 String revisionString = query.getValue("rev", null);
                 if (revisionString != null) {
-                    revisionNumber = Integer.valueOf(revisionString).intValue();
+                    
+                    ContextUtility util = null;
+                    try {
+                        util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+                        Request request = util.getRequest();
+                        String webappUrl = ServletHelper.getWebappURI(request);
+                        
+                        Publication pub = PublicationUtil.getPublication(this.manager, request);
+                        Document currentDoc = pub.getFactory().getFromURL(webappUrl);
+                        if (currentDoc.getSourceURI().equals(sourceUri)) {
+                            revisionNumber = Integer.valueOf(revisionString).intValue();
+                        }
+                    }
+                    finally {
+                        if (util != null) {
+                            this.manager.release(util);
+                        }
+                    }
                 }
             }
             else {
