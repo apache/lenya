@@ -54,9 +54,18 @@
             </p>
           </xsl:if>
           
-          <xsl:apply-templates select="col:document">
-            <xsl:sort order="descending" select="meta:metadata/dc:elements/dc:date"/>
-          </xsl:apply-templates>
+          <xsl:choose>
+            <xsl:when test="col:document//xhtml:div[@class = 'newsItem']">
+              <xsl:apply-templates select="col:document//xhtml:div[@class = 'newsItem']">
+                <xsl:sort select="xhtml:h2/xhtml:span[@class = 'newsDate']/i18n:date-time/@value" order="descending"/>
+              </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="col:document">
+                <xsl:sort order="descending" select="meta:metadata/dc:elements/dc:date"/>
+              </xsl:apply-templates>
+            </xsl:otherwise>
+          </xsl:choose>
         </div>
       </body>
     </html>
@@ -66,16 +75,18 @@
   <xsl:template match="col:document">
     <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
-    <h2>
-      <span class="newsDate">
-        <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss" locale="{$language}" value="{$date}" />
-      </span><br />
-      <xsl:variable name="href">
-        <xsl:call-template name="getHref"/>
-      </xsl:variable>
-      <a href="{$href}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
-    </h2>
-    <xsl:apply-templates select="xhtml:html/xhtml:body/xhtml:p[1]" mode="excerpt"/>
+    <div class="newsItem">
+      <h2>
+        <span class="newsDate">
+          <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss" locale="{$language}" value="{$date}" />
+        </span><br />
+        <xsl:variable name="href">
+          <xsl:call-template name="getHref"/>
+        </xsl:variable>
+        <a href="{$href}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
+      </h2>
+      <xsl:apply-templates select="xhtml:html/xhtml:body/xhtml:p[1]" mode="excerpt"/>
+    </div>
   </xsl:template>
   
   

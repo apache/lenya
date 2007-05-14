@@ -46,12 +46,24 @@
         <a type="application/rss+xml" href="lenya-document:{$uuid}?uuid2url.extension=rss">RSS 2.0</a>
       </div>
       <h1><xsl:value-of select="$title"/></h1>
-      <xsl:for-each select="col:document">
-        <xsl:sort order="descending" select="meta:metadata/dc:elements/dc:date"/>
-        <xsl:if test="position() &lt;= number($includeItems)">
-          <xsl:apply-templates select="."/>
-        </xsl:if>
-      </xsl:for-each>
+      <xsl:choose>
+        <xsl:when test="col:document//xhtml:div[@class = 'newsItem']">
+          <xsl:for-each select="col:document//xhtml:div[@class = 'newsItem']">
+            <xsl:sort select="xhtml:h2/xhtml:span[@class = 'newsDate']/i18n:date-time/@value" order="descending"/>
+            <xsl:if test="position() &lt;= number($includeItems)">
+              <xsl:apply-templates select="."/>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="col:document">
+            <xsl:sort order="descending" select="meta:metadata/dc:elements/dc:date"/>
+            <xsl:if test="position() &lt;= number($includeItems)">
+              <xsl:apply-templates select="."/>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
     </div>
   </xsl:template>
   
