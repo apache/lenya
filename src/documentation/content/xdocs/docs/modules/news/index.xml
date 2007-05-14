@@ -59,6 +59,42 @@
     </dl>
     
   </section>
+  
+    <section>
+      <title>Aggregating Multiple Newsfeeds</title>
+      <p>
+        If you add news documents as children of a parent news document, the parent
+        automatically aggregates and merges the news items of its children, ordered
+        by time. For example:
+      </p>
+      <source xml:space="preserve">/news
+  /national
+    /n1 (2007-05-03)
+    /n2 (2007-05-01
+  /international
+    /i1 (2007-05-02)
+    /i2 (2007-04-26)
+  /sports
+    /s1 (2007-05-04)
+    /s2 (2007-04-13)
+      </source>
+      <p>
+        will result in the following list of news items displayed at the <code>/news</code> level:
+      </p>
+      <ul>
+        <li>s1</li>
+        <li>n1</li>
+        <li>i1</li>
+        <li>n2</li>
+        <li>i2</li>
+        <li>s2</li>
+      </ul>
+      <p>
+        The <code>includeItems</code> setting of the <code>collection</code> resource type
+        is applied to the result list when it is requested using the <code>include</code>
+        format.
+      </p>
+    </section>
 
   </body>
 </document>

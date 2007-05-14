@@ -42,6 +42,7 @@
       <ul>
         <li>manual</li>
         <li>children</li>
+        <li>link</li>
       </ul>
     </section>
     
@@ -80,6 +81,28 @@
         when the <code>collection</code> format is requested.
       </p>
 
+    </section>
+    
+    <section>
+      <title>Syndicated Collections (Type "link")</title>
+      <p>
+        You can use an external resource to provide the contents of the collection.
+        Typically, a separate module provides this content dynamically, for instance
+        by accessing a newsfeed. 
+      </p>
+      <p>
+        The link is specified using the <code>href</code> attribute of the
+        <code><![CDATA[<col:collection/>]]></code> element. Here's an example:
+      </p>
+      <source xml:space="preserve"><![CDATA[<collection xmlns="http://apache.org/cocoon/lenya/collection/1.0"
+  href="cocoon://modules/feed/atom/http://apache-lenya.blogspot.com/feeds/posts/default"
+  includeItems="3" type="link"/>]]></source>
+  
+      <p>
+        In this example, the feed module accesses the specified URL and returns
+        a valid collection document, wrapping the feed items in <code><![CDATA[<col:document>]]></code>
+        elements.
+      </p>
     </section>
     
     <section>
