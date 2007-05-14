@@ -22,7 +22,7 @@
       <xsl:copy-of select="@*"/>
       <xsl:if test="not(*)">
         <ci:include src="cocoon://modules/collection/metadata/{@uuid}/{$language}.xml"/>
-        <ci:include src="lenya-document:{@uuid}"/>
+        <ci:include src="lenya-document:{@uuid}?format=xhtml"/>
       </xsl:if>
       <xsl:copy-of select="*"/>
     </xsl:copy>
