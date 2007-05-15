@@ -70,17 +70,13 @@
 
         <tr>
           <jx:forEach var="key" items="${usecase.getParameter('keys')}">
-            <th>
-              <jx:choose>
-                <jx:when test="${key.equals(usecase.getParameter('sort'))}">
-                  <i18n:text><jx:out value="${key}"/></i18n:text>
-                </jx:when>
-                <jx:otherwise>
-                  <a href="${request.getRequestURI()}?sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
-                    <i18n:text><jx:out value="${key}"/></i18n:text>
-                  </a>
-                </jx:otherwise>
-              </jx:choose>
+            <th> <i18n:text><jx:out value="${key}"/></i18n:text> 
+              <a href="${request.getRequestURI()}?order=desc&amp;sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
+                <i18n:text><img src="/cforms/forms/img/move_down.gif" class="lenya-no-border"/></i18n:text>
+              </a>
+              <a href="${request.getRequestURI()}?order=asc&amp;sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
+                <i18n:text><img src="/cforms/forms/img/move_up.gif" class="lenya-no-border"/></i18n:text>
+              </a>
             </th>
           </jx:forEach>
         </tr>

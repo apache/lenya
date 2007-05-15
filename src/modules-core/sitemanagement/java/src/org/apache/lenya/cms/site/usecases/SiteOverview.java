@@ -83,6 +83,11 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String VALUE_ALL = "- all -";
 
     protected static final String SORT = "sort";
+    
+    protected static final String ORDER="order";
+    
+    protected static final String DESC="desc";
+    protected static final String ASC="asc";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -236,8 +241,9 @@ public class SiteOverview extends AbstractUsecase {
         }
 
         String sort = getParameterAsString(SORT);
+        String order = getParameterAsString(ORDER,ASC);
         if (sort != null) {
-            Comparator comparator = new EntryComparator(sort);
+            Comparator comparator = new EntryComparator(sort,order);
             Collections.sort(filteredDocuments, comparator);
         }
 
@@ -250,12 +256,14 @@ public class SiteOverview extends AbstractUsecase {
     public static class EntryComparator implements Comparator {
 
         private String key;
+        private String order;
 
         /**
          * @param key The key to compare.
          */
-        public EntryComparator(String key) {
+        public EntryComparator(String key, String order) {
             this.key = key;
+            this.order = order;
         }
 
         /**
@@ -267,8 +275,10 @@ public class SiteOverview extends AbstractUsecase {
 
             String value1 = e1.getValue(this.key);
             String value2 = e2.getValue(this.key);
-
-            return value1.compareTo(value2);
+            if (this.order.equals(DESC))
+              return value2.compareTo(value1);
+            else
+              return value1.compareTo(value2);
         }
 
     }

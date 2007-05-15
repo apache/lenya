@@ -165,4 +165,6 @@ div.lenya-error {
 .lenya-admin-required {
 	color: Red;
 }
-
+.lenya-no-border{
+  border: none;
+}
