@@ -160,7 +160,15 @@
         <xsl:text>
         </xsl:text>
         <textarea id="tinymce.content" name="tinymce.content" style="width:100%">
-          <xsl:apply-templates/>
+          <xsl:choose>
+            <!-- firefox bug workaround: prevent <textarea/> from collapsing if empty -->
+            <xsl:when test=".//*">
+              <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>&#160;</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
         </textarea>
         <xsl:text>
         </xsl:text>
