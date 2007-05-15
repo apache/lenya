@@ -213,7 +213,7 @@
       
     </map:pipeline>
       <!-- menus -->
-    <map:pipeline type="profile-noncaching">  
+    <map:pipeline>  
       <!-- menu-xml/modules -->
       <!-- menu-xml/modules/{pub-id}/{area}.xml -->
       <map:match pattern="menu-xml/modules/*/*.xml">
