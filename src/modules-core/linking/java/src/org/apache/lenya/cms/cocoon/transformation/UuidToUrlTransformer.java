@@ -18,10 +18,14 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -47,6 +51,7 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.util.StringUtil;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -79,6 +84,16 @@ import org.xml.sax.helpers.AttributesImpl;
  * You can add the query parameter <code>uuid2url.extension</code> to
  * <code>lenya-document:</code> URLs to set a specific link extension.
  * </p>
+ * <p>
+ * The resulting URLs can either be absolute (default) or relative.
+ * You can either configure this when declaring the transformer:
+ * </p>
+ * <code><pre>
+ * &lt;map:transformer ... &gt;
+ *   &lt;urls type="relative"/&gt;
+ * &lt;/map:transformer&gt;</pre></code>
+ * <p>or pass a parameter:</p>
+ * <code><pre>&lt;map:parameter name="urls" value="relative"/&gt;</pre></code>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
@@ -99,6 +114,8 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
     private DocumentFactory factory;
     private LinkResolver linkResolver;
     private String contextPath;
+    
+    private boolean relativeUrls = false;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -108,11 +125,15 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, _source, _parameters);
-
+        
         Request _request = ObjectModelHelper.getRequest(_objectModel);
         this.contextPath = _request.getContextPath();
 
         try {
+            if (_parameters.isParameter("urls")) {
+                setUrlType(_parameters.getParameter("urls"));
+            }
+            
             Session session = RepositoryUtil.getSession(this.manager, _request);
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
             String url = ServletHelper.getWebappURI(_request);
@@ -152,6 +173,28 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
             throw new ProcessingException(e);
         } catch (final AccessControlException e) {
             throw new ProcessingException(e);
+        }
+    }
+
+    public void configure(Configuration config) throws ConfigurationException {
+        super.configure(config);
+        Configuration urlConfig = config.getChild("urls", false);
+        if (urlConfig != null) {
+            String value = urlConfig.getAttribute("type");
+            setUrlType(value);
+        }
+    }
+
+    protected void setUrlType(String value) throws ConfigurationException {
+        if (value.equals("relative")) {
+            this.relativeUrls = true;
+        }
+        else if (value.equals("absolute")) {
+            this.relativeUrls = false;
+        }
+        else {
+            throw new ConfigurationException("Invalid URL type [" + value
+                    + "], must be relative or absolute.");
         }
     }
 
@@ -330,16 +373,26 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
             throws AccessControlException {
 
         String webappUrl = targetDocument.getCanonicalWebappURL();
-        Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
-
-        Proxy proxy = targetDocument.getPublication().getProxy(targetDocument,
-                policy.isSSLProtected());
-
+        
         String rewrittenURL;
-        if (proxy == null) {
-            rewrittenURL = this.request.getContextPath() + webappUrl;
-        } else {
-            rewrittenURL = proxy.getURL(targetDocument);
+        if (this.relativeUrls) {
+            rewrittenURL = getRelativeUrlTo(webappUrl);
+        }
+        else {
+            Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
+    
+            Proxy proxy = targetDocument.getPublication().getProxy(targetDocument,
+                    policy.isSSLProtected());
+    
+            if (proxy == null) {
+                rewrittenURL = this.request.getContextPath() + webappUrl;
+            } else {
+                rewrittenURL = proxy.getURL(targetDocument);
+            }
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug(this.indent + "SSL protection: [" + policy.isSSLProtected() + "]");
+                getLogger().debug(this.indent + "Resolved proxy: [" + proxy + "]");
+            }
         }
 
         int lastDotIndex = rewrittenURL.lastIndexOf(".");
@@ -356,12 +409,40 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
         }
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "SSL protection: [" + policy.isSSLProtected() + "]");
-            getLogger().debug(this.indent + "Resolved proxy: [" + proxy + "]");
             getLogger().debug(this.indent + "Rewriting URL to: [" + rewrittenURL + "]");
         }
 
         setAttribute(newAttrs, attributeName, rewrittenURL);
+    }
+
+    private String getRelativeUrlTo(String webappUrl) {
+        String currentUrl = this.currentDocument.getCanonicalWebappURL();
+        List sourceSteps = toList(currentUrl);
+        List targetSteps = toList(webappUrl);
+        
+        while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
+                && sourceSteps.get(0).equals(targetSteps.get(0))) {
+            sourceSteps.remove(0);
+            targetSteps.remove(0);
+        }
+        
+        String upDots = "";
+        if (sourceSteps.size() > 1) {
+            String[] upDotsArray = new String[sourceSteps.size() - 1];
+            Arrays.fill(upDotsArray, "..");
+            upDots = StringUtil.join(upDotsArray, "/") + "/";
+        }
+        
+        String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);
+        String targetPath = StringUtil.join(targetArray, "/");
+        
+        String relativeUrl = upDots + targetPath;
+        return relativeUrl;
+        
+    }
+
+    protected List toList(String url) {
+        return new ArrayList(Arrays.asList(url.substring(1).split("/")));
     }
 
     /**
