@@ -207,7 +207,6 @@ public class UrlToUuidTransformer extends AbstractSAXTransformer {
      * @param targetDocument The target document.
      * @param anchor The anchor (the string after the # character in the URL).
      * @param queryString The query string without question mark.
-     * @param extension The extension to use.
      * @throws AccessControlException when something went wrong.
      */
     protected void rewriteLink(AttributesImpl newAttrs, String attributeName,
