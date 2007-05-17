@@ -4,17 +4,18 @@
       xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
 >
   <head>
-    <title></title>
+    <title>New 2-column XHTML document</title>
   </head>
   <body>  
   
     <h2>New 2-column XHTML document</h2>
     
     <p>Here comes the text of your new document...</p>
-    <p>Click on the menu "File", "edit with BXE" (Firefox users) 
-       or "File", "edit with Kupu" (Explorer users) 
+    <p>
+     To add real content, use one of the editors listed in the
+     <strong>Edit</strong> menu.
     </p>
- 
+
     <div class="column1of2"> 
       <h3>Column 1</h3>
       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
