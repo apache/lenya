@@ -96,29 +96,40 @@
 
 
   <xsl:template name="help">
-          <p>
-The <strong>Cocoon profiler</strong> is a great tool to debug and profile your pipelines.<br />
-In order to use it, change the type of the pipeline you want to inspect to "profile-noncaching", like so:
-          </p>
-<pre>
-
-  &lt;map:pipeline type="profile-noncaching"&gt;
-     ...
-  &lt;/map:pipeline&gt;
-</pre>
-          <p>
-Once you've done this, and you have sent a couple of requests to the pipeline in question, this page will disply 
-useful information about processing and setup time of the individual
-pipeline stages. What's even more interesting, you will be able to view the XML output of all stages!
-          </p>
-          <p>
-To make profiling work, the profiler block in Cocoon must be included, and the profiling pipeline type needs to be declared. 
-Lenya provides both by default.
-          </p>
-          <p>
-For more information, refer to 
-<a href="http://cocoon.apache.org/2.1/userdocs/concepts/profiler.html">the Cocoon documentation</a>.
-          </p>
+    <p>
+      The <strong>Cocoon profiler</strong> is a great tool to debug and 
+      profile your pipelines.<br />
+      In order to use it, change the type of the pipeline you want to 
+      inspect to "profile-noncaching", like so:
+    </p>
+    <p>
+      <code>
+        &lt;map:pipeline type="profile-noncaching"&gt;<br />
+        ...<br />
+        &lt;/map:pipeline&gt;
+      </code>
+    </p>
+    <p>
+      Once you've done this, and you have sent a couple of requests to 
+      the pipeline in question, this page will display useful information
+      about processing and setup time of the individual pipeline components. 
+      What's even more interesting, you will be able to view the XML 
+      output of all intermediate stages!
+    </p>
+    <p>
+      To make profiling work, the profiler block in Cocoon must be
+      included, and the profiling pipeline type needs to be declared. 
+      Lenya provides both by default.
+    </p>
+    <p>
+      For more information, refer to 
+      <a href="http://cocoon.apache.org/2.1/userdocs/concepts/profiler.html">the Cocoon documentation</a>.
+    </p>
+    <p>
+      <em><strong>Note:</strong> profiling comes with a substantial 
+      performance penalty and should not be left activated on production
+      systems unless you are actively debugging them.</em>
+    </p>
   </xsl:template>
 
 
