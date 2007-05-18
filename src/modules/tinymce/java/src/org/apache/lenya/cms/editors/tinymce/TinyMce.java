@@ -15,10 +15,6 @@
  limitations under the License.
  */
 
-/* 
- since there is no really tinymce-specific code in here, perhaps it should
- be made fully generic and moved to the editors module.
- */
 
 package org.apache.lenya.cms.editors.tinymce;
 
@@ -28,10 +24,11 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -47,7 +44,10 @@ import org.xml.sax.SAXException;
 /**
  * TinyMce Usecase
  * 
+ * since there is no really tinymce-specific code in here, most methods should
+ * eventually be moved into DocumentUsecase and shared across all editor usecases.
  */
+
 public class TinyMce extends DocumentUsecase {
 
     /**
@@ -84,33 +84,81 @@ public class TinyMce extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        // Get namespaces
-        String namespaces = getParameterAsString("tinymce.namespaces");
-        if (namespaces == null) {
-            namespaces = new String();
-        } else {
-            namespaces = removeDuplicates(namespaces);
-        }
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(namespaces);
-        }
-
-        // Aggregate content
-        Request request = ContextHelper.getRequest(this.context);
-        String encoding = request.getCharacterEncoding();
-        // bad: hardcoded header. needs work.
-        String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
-                + "<html xmlns=\"http://www.w3.org/1999/xhtml\" " + namespaces + ">\n"
-                + "  <head><title></title></head>\n" + "  <body>\n"
-                + getParameterAsString("tinymce.content") + "  </body>\n" + "</html>\n";
-
-        // content = content.replaceAll("[\r\n]", "");
+        String content = getXmlString(getEncoding());
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(content);
         }
 
-        saveDocument(encoding, content);
+        saveDocument(getEncoding(), content);
+    }
+
+    protected String getEncoding() {
+        Request request = ContextHelper.getRequest(this.context);
+        String encoding = request.getCharacterEncoding();
+        return encoding;
+    }
+
+    protected String getXmlString(String encoding) {
+        // Get namespaces
+        String namespaces = removeRedundantNamespaces(getParameterAsString("tinymce.namespaces"));
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug(namespaces);
+        }
+        // Aggregate content
+        String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
+                + "<html xmlns=\"http://www.w3.org/1999/xhtml\" " + namespaces + ">\n"
+                + "  <head><title></title></head>\n" + "  <body>\n"
+                + getParameterAsString("tinymce.content") + "  </body>\n" + "</html>\n";
+        return content;
+    }
+
+
+    public void advance() throws UsecaseException {
+        clearErrorMessages();
+        try {
+            Document xml = getXml();
+            if (xml != null) {
+                validate(xml);
+            }
+            if (!hasErrors()) {
+                SourceUtil.writeDOM(xml, getSourceDocument().getOutputStream());
+                deleteParameter("content");
+            }
+        } catch (Exception e) {
+            throw new UsecaseException(e);
+        }
+    }
+
+    protected void doCheckExecutionConditions() throws Exception {
+        super.doCheckExecutionConditions();
+        if (hasErrors()) {
+            return;
+        }
+
+        Document xml = getXml();
+        if (xml != null) {
+            validate(xml);
+        }
+    }
+
+    protected void validate(Document xml) throws Exception {
+        ResourceType resourceType = getSourceDocument().getResourceType();
+        Schema schema = resourceType.getSchema();
+        ValidationUtil.validate(this.manager, xml, schema, new UsecaseErrorHandler(this));
+    }
+
+    protected Document getXml() throws ParserConfigurationException, IOException {
+        String encoding = getEncoding();
+        String xmlString = getXmlString(encoding);
+
+        Document xml = null;
+        try {
+            xml = DocumentHelper.readDocument(xmlString, encoding);
+        } catch (SAXException e) {
+            addErrorMessage("error-document-form", new String[] { e.getMessage() });
+        }
+        return xml;
     }
 
    /**
@@ -123,41 +171,10 @@ public class TinyMce extends DocumentUsecase {
      * @throws Exception if an error occurs.
      */
     protected void saveDocument(String encoding, String content) throws Exception {
-        SourceResolver resolver = null;
-        Source indexSource = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            saveXMLFile(encoding, content, getSourceDocument());
+        saveXMLFile(encoding, content, getSourceDocument());
 
-            Document xmlDoc = null;
-
-            try {
-                xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
-            } catch (SAXException e) {
-                addErrorMessage("error-document-form", new String[] { e.getMessage() });
-            }
-
-            if (xmlDoc != null) {
-                ResourceType resourceType = getSourceDocument().getResourceType();
-                Schema schema = resourceType.getSchema();
-
-                ValidationUtil
-                        .validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
-
-                if (!hasErrors()) {
-                    WorkflowUtil.invoke(this.manager, getSession(), getLogger(),
-                            getSourceDocument(), getEvent());
-                }
-            }
-
-        } finally {
-            if (resolver != null) {
-                if (indexSource != null) {
-                    resolver.release(indexSource);
-                }
-                this.manager.release(resolver);
-            }
-        }
+        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
+                getEvent());
     }
 
     /**
@@ -172,7 +189,6 @@ public class TinyMce extends DocumentUsecase {
     private void saveXMLFile(String encoding, String content,
             org.apache.lenya.cms.publication.Document document)
             throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        // FileOutputStream fileoutstream = null;
         Writer writer = null;
 
         try {
@@ -188,32 +204,41 @@ public class TinyMce extends DocumentUsecase {
             // close all streams
             if (writer != null)
                 writer.close();
-            // if (fileoutstream != null)
-            // fileoutstream.close();
         }
     }
 
     /**
-     * Remove duplicates
-     * @param list A list of string tokens (separated by spaces) to check for
-     *        duplicate tokens.
-     * @return The list of string tokens with duplicates removed
+     * Remove redundant namespaces
+     * @param namespaces The namespaces to remove
+     * @return The namespace string without the removed namespaces
      */
-    private String removeDuplicates(String tokenList) {
-        String[] tokens = tokenList.split(" ");
+    private String removeRedundantNamespaces(String namespaces) {
+        String[] namespace = namespaces.split(" ");
 
-        String s = "";
-        for (int i = 0; i < tokens.length; i++) {
-            if (s.indexOf(tokens[i]) < 0) {
-                s = s + " " + tokens[i];
+        String ns = "";
+        for (int i = 0; i < namespace.length; i++) {
+            if (ns.indexOf(namespace[i]) < 0) {
+                ns = ns + " " + namespace[i];
             } else {
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Duplicate token: " + tokens[i]);
+                    getLogger().debug("Redundant namespace: " + namespace[i]);
                 }
             }
         }
-        return s;
+        return ns;
     }
+
+    /**
+     * Add namespaces
+     * @param namespaces The namespaces to add
+     * @param content The content to add them to
+     * @return The content with the added namespaces
+     */
+/*    private String addNamespaces(String namespaces, String content) {
+        int i = content.indexOf(">");
+        return content.substring(0, i) + " " + namespaces + content.substring(i);
+    }
+*/
 
     protected String getEvent() {
         return "edit";
