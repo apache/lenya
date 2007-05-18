@@ -35,15 +35,15 @@
     <form method="POST" name="image" id="image">
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-      <table class="lenya-table">
+      <table class="lenya-table" style="table-layout:fixed; width:100%;">
         <tr>
-          <th/>
-          <th><i18n:text>Assets</i18n:text></th>
-          <th><i18n:text>Preview</i18n:text></th>
-          <th><i18n:text>Title</i18n:text></th>
-          <th><i18n:text>File Size</i18n:text></th>
-          <th><i18n:text>Dimension (w x h)</i18n:text></th>
-          <th><i18n:text>Creation Date</i18n:text></th>
+          <th style="width:1em;"/>
+          <th style="width:14em;"><i18n:text>Assets</i18n:text></th>
+          <th style=""><i18n:text>Preview</i18n:text></th>
+          <th style=""><i18n:text>Title</i18n:text></th>
+          <th style="width:5em;"><i18n:text>File Size</i18n:text></th>
+          <th style="width:8em;"><i18n:text>Dimension (w x h)</i18n:text></th>
+          <th style="width:6em;"><i18n:text>Creation Date</i18n:text></th>
         </tr>
         <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
           <tr>
@@ -52,7 +52,7 @@
                 onClick="javascript:insertData('${cocoon.request.getContextPath()}/${asset.getPublication().getId()}/${asset.getArea()}${asset.getPath()}.${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}', '${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}')"/> 
             </td>
             <td><jx:out value="${asset.getPath()}"/></td>
-            <td>        
+            <td style="overflow:hidden">        
               <jx:set var="mimeType" value="${asset.getMimeType()}"/>
               <jx:if test="${mimeType.startsWith('image/')}">
                 <jx:set var="doc" value="${usecase.getParameter('document')}"/>
