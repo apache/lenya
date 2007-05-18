@@ -285,10 +285,6 @@ The following libraries must be placed in the endorsed library directory for you
       </fileset>
     </copy>
 
-    <!-- Customize tomcatctrl -->
-<!--
-    <echo>TODO: Customize tomcatctrl: src/webapp/lenya/bin/tomcatctrl</echo>
--->
   </target>
 
 
