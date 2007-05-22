@@ -194,7 +194,8 @@
       The formats are defined in the resource type declaration:
     </p>
 <source xml:space="preserve">
-  <![CDATA[<format name="xhtml" uri="cocoon://modules/profile/profile"/>]]>
+  <![CDATA[<format name="xhtml" uri="cocoon://modules/profile/xhtml.xml"/>]]>
+  <![CDATA[<format name="include" uri="cocoon://modules/profile/xhtml-inline.xml"/>]]>
 </source>
     <p>
       The <code>uri</code> attribute of the <code>format</code> element may refer to an arbitrary URL,
@@ -210,32 +211,35 @@
     </ul>
     <p>
       Typically, an XSLT is applied to the content document to transform
-      it into another format (XHTML, XSL-FO, ...):
+      it into another format (XHTML, XSL-FO, ...). In the following example,
+      the name of the XSLT stylesheet is supposed to end with the format name
+      (e.g., <code>profile2xhtml.xsl</code>):
     </p>
     <source xml:space="preserve"><![CDATA[
   <!-- apply a format -->
-  <map:match pattern="xhtml">
-    <map:generate src="cocoon:/xhtml/{page-envelope:publication-id}/ \
-                                     {page-envelope:area}/ \
-                                     {page-envelope:document-uuid}/ \
-                                     {page-envelope:document-language}"/>
+  <!-- {format}.xml (current document) -->
+  <map:match pattern="*.xml">
+    <map:generate src="cocoon:/{1}/{page-envelope:publication-id}/ \
+                                   {page-envelope:area}/ \
+                                   {page-envelope:document-uuid}/ \
+                                   {page-envelope:document-language}"/>
     <map:serialize type="xml"/>
   </map:match>
   
-  <!-- xhtml/{pubId}/{area}/{uuid}/{language} -->
-  <map:match pattern="xhtml/*/*/*/*">
-    <map:generate src="lenyadoc:/{4}/{3}"/>
-    <map:transform src="fallback://lenya/modules/profile/xslt/profile2xhtml.xsl">
+  <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} (specific document) -->
+  <map:match pattern="*.xml/*/*/*/*">
+    <map:generate src="lenya-document:{4},lang={5}{link:rev}"/>
+    <map:transform src="fallback://lenya/modules/profile/xslt/profile2{1}.xsl">
       <map:parameter name="rendertype" value="{request-param:rendertype}"/>
-      <map:parameter name="nodeid" value="{doc-info:{1}:{2}:{3}:{4}:nodeName}"/>
+      <map:parameter name="nodeid" value="{doc-info:{2}:{3}:{4}:{5}:nodeName}"/>
       <map:parameter name="language" value="{4}"/>
     </map:transform>
     <map:serialize type="xml"/>
   </map:match>
 ]]></source>
     <p>
-      To request a formatted document, use the <code>format-...</code> attribute of the
-      <code>resource-type</code> input module:
+      To request a formatted document, you can use the <em>format</em> parameter of the
+      <code>site:</code> and <code>lenya-document:</code> protocols:
     </p>
 <source xml:space="preserve">
   <![CDATA[<!-- aggregate navigation components and XHTML-formatted content -->
@@ -244,19 +248,41 @@
     <map:part src="cocoon://modules/sitetree/{2}/{3}/tabs/{5}.xml"/>
     <map:part src="cocoon://modules/sitetree/{2}/{3}/menu/{5}.xml"/>
     <map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/>
-    <map:part src="{resource-type:format-xhtml}"/>
+    <map:part src="lenya-document:{page-envelope:documente-uuid}?format=xhtml"/>
   </map:aggregate>
 ]]>
 </source>
 
     <p>
-      The <code>site:/</code> and <code>lenya-document:</code> protocols supports a format parameter.
-      This is particularly useful to include formatted documents in other documents:
+      Another usage scenario is to include formatted documents in other documents, e.g. as a teaser or summary:
     </p>
-    <source xml:space="preserve">
-  <![CDATA[<ci:include src="site:/{$language}{$path}?format=xhtml-inline"/>]]></source>
-    <source xml:space="preserve">
-  <![CDATA[<ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/>]]></source>
+    <source xml:space="preserve"><![CDATA[<ci:include src="site:/{$language}{$path}?format=xhtml-inline"/>]]></source>
+    <source xml:space="preserve"><![CDATA[<ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/>]]></source>
+  
+    <p>
+      Since formats allow you to select the presentation style of a document
+      on demand, you can use them as layout templates. But unfortunately formats have to
+      be declared in <code>cocoon.xconf</code>, so you can't add new templates at
+      runtime with this approach at the moment. Here's an example how to use formats to select templates:
+    </p>
+    <ul>
+      <li>
+        Set the Dublin Core element <code>format</code> when you create the document,
+        e.g. using a combo box. We use the Dublin Core for simplicity here, for a cleaner
+        approach you should define your own meta data element set.
+      </li>
+      <li>
+        In the resource type module, provide an XSLT stylesheet
+        <code>{resource-type}2{format}.xsl</code> for each format (see above)
+      </li>
+      <li>
+        <p>
+          Add the format parameter to the <code>lenya-document</code> call:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:generate src="lenya-document:{page-envelope:uuid}?format={dublincore:format}"/>]]></source>
+      </li>
+    </ul>
+  
   </section>
   
   <section><title>Presentation</title>
