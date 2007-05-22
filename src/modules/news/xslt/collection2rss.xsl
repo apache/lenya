@@ -32,7 +32,6 @@
   <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
   <xsl:include href="shared.xsl"/>
   
-  <xsl:param name="rendertype" select="''"/>
   <xsl:param name="nodeid"/>
   <xsl:param name="language"/>
   <xsl:param name="area"/>

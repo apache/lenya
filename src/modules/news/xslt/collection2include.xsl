@@ -32,7 +32,6 @@
     
   <xsl:import href="fallback://lenya/modules/news/xslt/collection2xhtml.xsl"/>
   
-  <xsl:param name="rendertype" select="''"/>
   <xsl:param name="nodeid"/>
   <xsl:param name="language"/>
   <xsl:param name="uuid"/>
