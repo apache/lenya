@@ -39,12 +39,13 @@
     <map:pipeline>
 
       <!-- parametrized doctype matcher -->
-      <!-- pattern="{rendertype}" -->
+      <!-- pattern="{format}.xml" -->
       <map:match pattern="*.xml">
         <map:generate src="cocoon:/{1}.xml/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-uuid}/{page-envelope:document-language}"/>
         <map:serialize type="xml"/>
       </map:match>
       
+      <!-- pattern="{format}.xml/{pubId}/{area}/{uuid}/{language}" -->
       <map:match pattern="*.xml/*/*/*/*">
         
         <!-- This is a workaround (see below). -->
