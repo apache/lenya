@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Production Checklist</title>
+  </header>
+  <body>
+    
+    <p>
+      Here's a list of points you should take care of when running Lenya
+      in a production environment. It covers only the most obvious aspects,
+      but it might prevent you from falling in the biggest traps in
+      first real-world project.
+    </p>
+    
+    <section>
+      <title>General Deployment Recommendations</title>
+      <ul>
+        <li>
+          Seperate your web application from your data. This applies to
+          the content, access control, and work data (search index, cache).
+        </li>
+        <li>
+          When creating backups of your data, make sure you'll still know
+          which version of the application they're compatible with when you
+          need them again.
+        </li>
+        <li>
+          Always have two instances of Lenya ready, and make sure you can
+          switch between them immediately (e.g., by changing a symlink to
+          a proxy configuration file).
+        </li>
+        <li>
+          Consider using vendor branches for Lenya, Cocoon etc. This helps you to
+          stay flexible when you're faced with bugs, endorsed library issues etc.
+        </li>
+        <li>
+          When you deploy a version of your application, <strong>always</strong> create
+          a branch in your code versioning system. This way, you can merge essential
+          bugfixes from the trunk and re-deploy the application. <strong>Never</strong>
+          deploy an un-tagged development version.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>During Development</title>
+      <ul>
+        <li>
+          Run sophisticated and thorough load tests early and often.
+        </li>
+        <li>
+          Run search engine crawlers on your site. Observe the performance behaviour
+          and session handling.
+        </li>
+        <li>
+          Test the site in various browsers, using various settings (disabling
+          JavaScript etc.), and preferrably using different bandwidths.
+        </li>
+        <li>
+          Make sure you don't create weak points for DoS attacks (e.g. by
+          expensive dynamic generation of non-cached pages based on request
+          parameters). 
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Preparation (Internal Pilot Phase)</title>
+      <ul>
+        <li>
+          Set the log level to <em>ERROR</em>.
+        </li>
+        <li>
+          Make sure that the logs stay clean. If exceptions occur, mercilessly
+          track them down and eliminate their causes. Even if you consider some
+          exceptions "normal" behaviour - they aren't.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Production</title>
+      <ul>
+        <li>
+          Double-check your access control settings.
+        </li>
+        <li>
+          Set the log level to <em>FATAL</em> or at least <em>ERROR</em>.
+        </li>
+        <li>
+          Disable all modules which accept request to dynamically generate images
+          to prevent DoS attacks.
+        </li>
+        <li>
+          Consider disabling image upload.
+        </li>
+        <li>
+          Set the session expiration time to the least acceptable value.
+        </li>
+        <li>
+          Prepare for maintenance (updates etc.), either by switching
+          the application or by showing a friendly information page.
+        </li>
+        <li>
+          Prepare for a worst-case scenario. For instance, have a statically
+          exported version of the site ready.
+        </li>
+      </ul>
+    </section>
+
+    
+  </body>
+</document>

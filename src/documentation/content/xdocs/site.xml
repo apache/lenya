@@ -138,6 +138,7 @@
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
       <tests href="tests.html" label="Writing Tests"/>
       <bestpractises href="bestpractises.html" label="Best Practises"/>
+      <production-checklist href="production.html" label="Production Checklist"/>
     </tutorials>
     
     <concepts href="concepts/" label="Concepts">
