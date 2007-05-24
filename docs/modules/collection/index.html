@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>The Collection Module</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
@@ -141,6 +141,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/bestpractises.html">Best Practises</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/production.html">Production Checklist</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Concepts</div>
@@ -682,6 +685,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Dynamic+Collections+%28Type+%22children%22%29">Dynamic Collections (Type "children")</a>
 </li>
 <li>
+<a href="#Syndicated+Collections+%28Type+%22link%22%29">Syndicated Collections (Type "link")</a>
+</li>
+<li>
 <a href="#Resource+Type+Formats">Resource Type Formats</a>
 </li>
 <li>
@@ -720,12 +726,14 @@ document.write("Last Published: " + document.lastModified);
 <li>manual</li>
         
 <li>children</li>
+        
+<li>link</li>
       
 </ul>
 </div>
     
     
-<a name="N1002D"></a><a name="Static+Collections+%28Type+%22manual%22%29"></a>
+<a name="N10030"></a><a name="Static+Collections+%28Type+%22manual%22%29"></a>
 <h2 class="h3">Static Collections (Type "manual")</h2>
 <div class="section">
 <p>
@@ -744,7 +752,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N10041"></a><a name="Dynamic+Collections+%28Type+%22children%22%29"></a>
+<a name="N10044"></a><a name="Dynamic+Collections+%28Type+%22children%22%29"></a>
 <h2 class="h3">Dynamic Collections (Type "children")</h2>
 <div class="section">
 <p>
@@ -763,7 +771,30 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1005E"></a><a name="Resource+Type+Formats"></a>
+<a name="N10061"></a><a name="Syndicated+Collections+%28Type+%22link%22%29"></a>
+<h2 class="h3">Syndicated Collections (Type "link")</h2>
+<div class="section">
+<p>
+        You can use an external resource to provide the contents of the collection.
+        Typically, a separate module provides this content dynamically, for instance
+        by accessing a newsfeed. 
+      </p>
+<p>
+        The link is specified using the <span class="codefrag">href</span> attribute of the
+        <span class="codefrag">&lt;col:collection/&gt;</span> element. Here's an example:
+      </p>
+<pre class="code">&lt;collection xmlns="http://apache.org/cocoon/lenya/collection/1.0"
+  href="cocoon://modules/feed/atom/http://apache-lenya.blogspot.com/feeds/posts/default"
+  includeItems="3" type="link"/&gt;</pre>
+<p>
+        In this example, the feed module accesses the specified URL and returns
+        a valid collection document, wrapping the feed items in <span class="codefrag">&lt;col:document&gt;</span>
+        elements.
+      </p>
+</div>
+    
+    
+<a name="N1007E"></a><a name="Resource+Type+Formats"></a>
 <h2 class="h3">Resource Type Formats</h2>
 <div class="section">
 <p>
@@ -775,7 +806,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1006B"></a><a name="Example%3A+CInclude"></a>
+<a name="N1008B"></a><a name="Example%3A+CInclude"></a>
 <h2 class="h3">Example: CInclude</h2>
 <div class="section">
 <p>
@@ -802,7 +833,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
     
-<a name="N10088"></a><a name="The"></a>
+<a name="N100A8"></a><a name="The"></a>
 <h2 class="h3">The CollectionWrapper Class</h2>
 <div class="section">
 <p>

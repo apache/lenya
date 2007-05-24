@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>The News Feed Module</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
@@ -141,6 +141,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/bestpractises.html">Best Practises</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/production.html">Production Checklist</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Concepts</div>
@@ -675,6 +678,9 @@ document.write("Last Published: " + document.lastModified);
 <li>
 <a href="#Formats">Formats</a>
 </li>
+<li>
+<a href="#Aggregating+Multiple+Newsfeeds">Aggregating Multiple Newsfeeds</a>
+</li>
 </ul>
 </div>
     
@@ -726,6 +732,51 @@ document.write("Last Published: " + document.lastModified);
       </dd>
     
 </dl>
+</div>
+  
+    
+<a name="N1004B"></a><a name="Aggregating+Multiple+Newsfeeds"></a>
+<h2 class="h3">Aggregating Multiple Newsfeeds</h2>
+<div class="section">
+<p>
+        If you add news documents as children of a parent news document, the parent
+        automatically aggregates and merges the news items of its children, ordered
+        by time. For example:
+      </p>
+<pre class="code">/news
+  /national
+    /n1 (2007-05-03)
+    /n2 (2007-05-01
+  /international
+    /i1 (2007-05-02)
+    /i2 (2007-04-26)
+  /sports
+    /s1 (2007-05-04)
+    /s2 (2007-04-13)
+      </pre>
+<p>
+        will result in the following list of news items displayed at the <span class="codefrag">/news</span> level:
+      </p>
+<ul>
+        
+<li>s1</li>
+        
+<li>n1</li>
+        
+<li>i1</li>
+        
+<li>n2</li>
+        
+<li>i2</li>
+        
+<li>s2</li>
+      
+</ul>
+<p>
+        The <span class="codefrag">includeItems</span> setting of the <span class="codefrag">collection</span> resource type
+        is applied to the result list when it is requested using the <span class="codefrag">include</span>
+        format.
+      </p>
 </div>
 
   

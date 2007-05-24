@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>The sourcerepository Module</title>
+<title>Production Checklist</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
@@ -128,8 +128,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/installation/source_version.html">Install Instructions</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4', '../../../skin/')" id="menu_1.1.4Title" class="menutitle">Tutorials</div>
-<div id="menu_1.1.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Tutorials</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/newpublication/index.html">Create a Publication</a>
 </div>
@@ -142,8 +142,8 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/bestpractises.html">Best Practises</a>
 </div>
-<div class="menuitem">
-<a href="../../../docs/1_4/tutorials/production.html">Production Checklist</a>
+<div class="menupage">
+<div class="menupagetitle">Production Checklist</div>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Concepts</div>
@@ -344,8 +344,8 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.9', '../../../skin/')" id="menu_selected_1.1.9Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Standard Modules</div>
-<div id="menu_selected_1.1.9" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.1.9', '../../../skin/')" id="menu_1.1.9Title" class="menutitle">Standard Modules</div>
+<div id="menu_1.1.9" class="menuitemgroup">
 <div onclick="SwitchMenu('menu_1.1.9.1', '../../../skin/')" id="menu_1.1.9.1Title" class="menutitle">blog</div>
 <div id="menu_1.1.9.1" class="menuitemgroup">
 <div class="menuitem">
@@ -571,10 +571,10 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../apidocs/1.4/modules/sitetree/index.html">API</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.9.26', '../../../skin/')" id="menu_selected_1.1.9.26Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">sourcerepository</div>
-<div id="menu_selected_1.1.9.26" class="selectedmenuitemgroup" style="display: block;">
-<div class="menupage">
-<div class="menupagetitle">Overview</div>
+<div onclick="SwitchMenu('menu_1.1.9.26', '../../../skin/')" id="menu_1.1.9.26Title" class="menutitle">sourcerepository</div>
+<div id="menu_1.1.9.26" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/modules/sourcerepository/index.html">Overview</a>
 </div>
 <div class="menuitem">
 <a href="../../../../apidocs/1.4/modules/sourcerepository/index.html">API</a>
@@ -645,10 +645,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 </div>
-<div id="credit">
-<hr>
-<a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="../../../images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
-</div>
+<div id="credit"></div>
 <div id="roundbottom">
 <img style="display: none" class="corner" height="15" width="15" alt="" src="../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
 <!--+
@@ -666,18 +663,162 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="index.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="production.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>The sourcerepository Module</h1>
-    
-<a name="N1000E"></a><a name="Introduction"></a>
-<h2 class="h3">Introduction</h2>
-<div class="section">
-<p>
-        The <span class="codefrag">sourcerepository</span> module provides a repository implementation based on Excalibur sources.
-      </p>
+<h1>Production Checklist</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#General+Deployment+Recommendations">General Deployment Recommendations</a>
+</li>
+<li>
+<a href="#During+Development">During Development</a>
+</li>
+<li>
+<a href="#Preparation+%28Internal+Pilot+Phase%29">Preparation (Internal Pilot Phase)</a>
+</li>
+<li>
+<a href="#Production">Production</a>
+</li>
+</ul>
 </div>
+    
+    
+<p>
+      Here's a list of points you should take care of when running Lenya
+      in a production environment. It covers only the most obvious aspects,
+      but it might prevent you from falling in the biggest traps in
+      first real-world project.
+    </p>
+    
+    
+<a name="N10011"></a><a name="General+Deployment+Recommendations"></a>
+<h2 class="h3">General Deployment Recommendations</h2>
+<div class="section">
+<ul>
+        
+<li>
+          Seperate your web application from your data. This applies to
+          the content, access control, and work data (search index, cache).
+        </li>
+        
+<li>
+          When creating backups of your data, make sure you'll still know
+          which version of the application they're compatible with when you
+          need them again.
+        </li>
+        
+<li>
+          Always have two instances of Lenya ready, and make sure you can
+          switch between them immediately (e.g., by changing a symlink to
+          a proxy configuration file).
+        </li>
+        
+<li>
+          Consider using vendor branches for Lenya, Cocoon etc. This helps you to
+          stay flexible when you're faced with bugs, endorsed library issues etc.
+        </li>
+        
+<li>
+          When you deploy a version of your application, <strong>always</strong> create
+          a branch in your code versioning system. This way, you can merge essential
+          bugfixes from the trunk and re-deploy the application. <strong>Never</strong>
+          deploy an un-tagged development version.
+        </li>
+      
+</ul>
+</div>
+    
+    
+<a name="N10030"></a><a name="During+Development"></a>
+<h2 class="h3">During Development</h2>
+<div class="section">
+<ul>
+        
+<li>
+          Run sophisticated and thorough load tests early and often.
+        </li>
+        
+<li>
+          Run search engine crawlers on your site. Observe the performance behaviour
+          and session handling.
+        </li>
+        
+<li>
+          Test the site in various browsers, using various settings (disabling
+          JavaScript etc.), and preferrably using different bandwidths.
+        </li>
+        
+<li>
+          Make sure you don't create weak points for DoS attacks (e.g. by
+          expensive dynamic generation of non-cached pages based on request
+          parameters). 
+        </li>
+      
+</ul>
+</div>
+    
+    
+<a name="N10046"></a><a name="Preparation+%28Internal+Pilot+Phase%29"></a>
+<h2 class="h3">Preparation (Internal Pilot Phase)</h2>
+<div class="section">
+<ul>
+        
+<li>
+          Set the log level to <em>ERROR</em>.
+        </li>
+        
+<li>
+          Make sure that the logs stay clean. If exceptions occur, mercilessly
+          track them down and eliminate their causes. Even if you consider some
+          exceptions "normal" behaviour - they aren't.
+        </li>
+      
+</ul>
+</div>
+    
+    
+<a name="N10059"></a><a name="Production"></a>
+<h2 class="h3">Production</h2>
+<div class="section">
+<ul>
+        
+<li>
+          Double-check your access control settings.
+        </li>
+        
+<li>
+          Set the log level to <em>FATAL</em> or at least <em>ERROR</em>.
+        </li>
+        
+<li>
+          Disable all modules which accept request to dynamically generate images
+          to prevent DoS attacks.
+        </li>
+        
+<li>
+          Consider disabling image upload.
+        </li>
+        
+<li>
+          Set the session expiration time to the least acceptable value.
+        </li>
+        
+<li>
+          Prepare for maintenance (updates etc.), either by switching
+          the application or by showing a friendly information page.
+        </li>
+        
+<li>
+          Prepare for a worst-case scenario. For instance, have a statically
+          exported version of the site ready.
+        </li>
+      
+</ul>
+</div>
+
+    
   
 </div>
 <!--+
@@ -698,10 +839,9 @@ document.write("Last Published: " + document.lastModified);
         Copyright &copy;
          2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
 </div>
-<div id="logos"></div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/modules/sourcerepository/index.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/tutorials/production.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip

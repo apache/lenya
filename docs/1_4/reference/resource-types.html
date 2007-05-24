@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Resource Types</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
@@ -141,6 +141,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/bestpractises.html">Best Practises</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/production.html">Production Checklist</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Concepts</div>
@@ -877,7 +880,8 @@ document.write("Last Published: " + document.lastModified);
       The formats are defined in the resource type declaration:
     </p>
 <pre class="code">
-  &lt;format name="xhtml" uri="cocoon://modules/profile/profile"/&gt;
+  &lt;format name="xhtml" uri="cocoon://modules/profile/xhtml.xml"/&gt;
+  &lt;format name="include" uri="cocoon://modules/profile/xhtml-inline.xml"/&gt;
 </pre>
 <p>
       The <span class="codefrag">uri</span> attribute of the <span class="codefrag">format</span> element may refer to an arbitrary URL,
@@ -897,32 +901,35 @@ document.write("Last Published: " + document.lastModified);
 </ul>
 <p>
       Typically, an XSLT is applied to the content document to transform
-      it into another format (XHTML, XSL-FO, ...):
+      it into another format (XHTML, XSL-FO, ...). In the following example,
+      the name of the XSLT stylesheet is supposed to end with the format name
+      (e.g., <span class="codefrag">profile2xhtml.xsl</span>):
     </p>
 <pre class="code">
   &lt;!-- apply a format --&gt;
-  &lt;map:match pattern="xhtml"&gt;
-    &lt;map:generate src="cocoon:/xhtml/{page-envelope:publication-id}/ \
-                                     {page-envelope:area}/ \
-                                     {page-envelope:document-uuid}/ \
-                                     {page-envelope:document-language}"/&gt;
+  &lt;!-- {format}.xml (current document) --&gt;
+  &lt;map:match pattern="*.xml"&gt;
+    &lt;map:generate src="cocoon:/{1}/{page-envelope:publication-id}/ \
+                                   {page-envelope:area}/ \
+                                   {page-envelope:document-uuid}/ \
+                                   {page-envelope:document-language}"/&gt;
     &lt;map:serialize type="xml"/&gt;
   &lt;/map:match&gt;
   
-  &lt;!-- xhtml/{pubId}/{area}/{uuid}/{language} --&gt;
-  &lt;map:match pattern="xhtml/*/*/*/*"&gt;
-    &lt;map:generate src="lenyadoc:/{4}/{3}"/&gt;
-    &lt;map:transform src="fallback://lenya/modules/profile/xslt/profile2xhtml.xsl"&gt;
+  &lt;!-- {format}.xml/{pubId}/{area}/{uuid}/{language} (specific document) --&gt;
+  &lt;map:match pattern="*.xml/*/*/*/*"&gt;
+    &lt;map:generate src="lenya-document:{4},lang={5}{link:rev}"/&gt;
+    &lt;map:transform src="fallback://lenya/modules/profile/xslt/profile2{1}.xsl"&gt;
       &lt;map:parameter name="rendertype" value="{request-param:rendertype}"/&gt;
-      &lt;map:parameter name="nodeid" value="{doc-info:{1}:{2}:{3}:{4}:nodeName}"/&gt;
+      &lt;map:parameter name="nodeid" value="{doc-info:{2}:{3}:{4}:{5}:nodeName}"/&gt;
       &lt;map:parameter name="language" value="{4}"/&gt;
     &lt;/map:transform&gt;
     &lt;map:serialize type="xml"/&gt;
   &lt;/map:match&gt;
 </pre>
 <p>
-      To request a formatted document, use the <span class="codefrag">format-...</span> attribute of the
-      <span class="codefrag">resource-type</span> input module:
+      To request a formatted document, you can use the <em>format</em> parameter of the
+      <span class="codefrag">site:</span> and <span class="codefrag">lenya-document:</span> protocols:
     </p>
 <pre class="code">
   &lt;!-- aggregate navigation components and XHTML-formatted content --&gt;
@@ -931,19 +938,46 @@ document.write("Last Published: " + document.lastModified);
     &lt;map:part src="cocoon://modules/sitetree/{2}/{3}/tabs/{5}.xml"/&gt;
     &lt;map:part src="cocoon://modules/sitetree/{2}/{3}/menu/{5}.xml"/&gt;
     &lt;map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/&gt;
-    &lt;map:part src="{resource-type:format-xhtml}"/&gt;
+    &lt;map:part src="lenya-document:{page-envelope:documente-uuid}?format=xhtml"/&gt;
   &lt;/map:aggregate&gt;
 
 </pre>
 <p>
-      The <span class="codefrag">site:/</span> and <span class="codefrag">lenya-document:</span> protocols supports a format parameter.
-      This is particularly useful to include formatted documents in other documents:
+      Another usage scenario is to include formatted documents in other documents, e.g. as a teaser or summary:
     </p>
-<pre class="code">
-  &lt;ci:include src="site:/{$language}{$path}?format=xhtml-inline"/&gt;</pre>
-<pre class="code">
-  &lt;ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/&gt;</pre>
-<a name="N10130"></a><a name="Presentation"></a>
+<pre class="code">&lt;ci:include src="site:/{$language}{$path}?format=xhtml-inline"/&gt;</pre>
+<pre class="code">&lt;ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/&gt;</pre>
+<p>
+      Since formats allow you to select the presentation style of a document
+      on demand, you can use them as layout templates. But unfortunately formats have to
+      be declared in <span class="codefrag">cocoon.xconf</span>, so you can't add new templates at
+      runtime with this approach at the moment. Here's an example how to use formats to select templates:
+    </p>
+<ul>
+      
+<li>
+        Set the Dublin Core element <span class="codefrag">format</span> when you create the document,
+        e.g. using a combo box. We use the Dublin Core for simplicity here, for a cleaner
+        approach you should define your own meta data element set.
+      </li>
+      
+<li>
+        In the resource type module, provide an XSLT stylesheet
+        <span class="codefrag">{resource-type}2{format}.xsl</span> for each format (see above)
+      </li>
+      
+<li>
+        
+<p>
+          Add the format parameter to the <span class="codefrag">lenya-document</span> call:
+        </p>
+        
+<pre class="code">&lt;map:generate src="lenya-document:{page-envelope:uuid}?format={dublincore:format}"/&gt;</pre>
+      
+</li>
+    
+</ul>
+<a name="N10152"></a><a name="Presentation"></a>
 <h3 class="h4">Presentation</h3>
 <p>
       To make your resources available as HTTP pages, you have to add the

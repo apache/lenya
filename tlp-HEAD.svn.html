@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>History of Changes </title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
@@ -67,6 +67,12 @@
 <a class="unselected" href="docs/index.html">Documentation</a>
 </li>
 <li>
+<a class="unselected" href="docs/1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="unselected" href="docs/1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
 <a class="unselected" href="community/index.html">Community</a>
 </li>
 </ul>
@@ -92,7 +98,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-             
+
              &nbsp;
            </div>
 <!--+
@@ -117,14 +123,33 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">log HEAD</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a title="Introduction and explanation of symbols" href="#introduction">Introduction and ex...</a>
 </div>
-<div class="menupageitem">
-<a title="Version 2006-08 ()" href="#version_2006-08">Version 2006-08 ()...</a>
+<div class="menuitem">
+<a href="tlp-2007-04.svn.html">log 2007-04</a>
 </div>
+<div class="menuitem">
+<a href="tlp-2007-03.svn.html">log 2007-03</a>
 </div>
+<div class="menuitem">
+<a href="tlp-2007-02.svn.html">log 2007-02</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2007-01.svn.html">log 2007-01</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-12.svn.html">log 2006-12</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-11.svn.html">log 2006-11</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-10.svn.html">log 2006-10</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-09.svn.html">log 2006-09</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-08.svn.html">log 2006-08</a>
 </div>
 <div class="menuitem">
 <a href="tlp-2006-07.svn.html">log 2006-07</a>
@@ -248,6 +273,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="guidelines.html">Project guidelines</a>
 </div>
 <div class="menuitem">
+<a href="who.html" title="Explain who is involved">Who we are</a>
+</div>
+<div class="menuitem">
 <a href="history.html">History</a>
 </div>
 <div class="menuitem">
@@ -273,7 +301,7 @@ document.write("Last Published: " + document.lastModified);
   |alternative credits
   +-->
 <div id="credit2">
-<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
 </div>
 </div>
 <!--+
@@ -288,6 +316,33 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>History of Changes </h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#introduction">Introduction and explanation of symbols</a>
+</li>
+<li>
+<a href="#version_2007-05">Version 2007-05 ()</a>
+<ul class="minitoc">
+<li>
+<a href="#1.2">1.2</a>
+</li>
+<li>
+<a href="#1.4">1.4</a>
+</li>
+<li>
+<a href="#Documentation">Documentation</a>
+</li>
+<li>
+<a href="#Site">Site</a>
+</li>
+<li>
+<a href="#">Contributors to this release</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <p>
 <a href="changes.rss"><img alt="RSS" src="images/rss.png"></a>
 </p>
@@ -295,22 +350,417 @@ document.write("Last Published: " + document.lastModified);
 <h2 class="h3">Introduction and explanation of symbols</h2>
 <div class="section">
 <p>Changes are sorted <translate>by "{0}" and then<param>type</param>
-</translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="update" src="images/update.jpg">=update</p>
+</translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="remove" src="images/remove.jpg">=remove, <img class="icon" alt="update" src="images/update.jpg">=update</p>
 </div>
-<a name="N10031"></a><a name="version_2006-08"></a>
-<h2 class="h3">Version 2006-08 ()</h2>
+<a name="N10041"></a><a name="version_2007-05"></a>
+<h2 class="h3">Version 2007-05 ()</h2>
 <div class="section">
-<a name="N10038"></a><a name="1.4"></a>
+<a name="N10048"></a><a name="1.2"></a>
+<h3 class="h4">1.2</h3>
+<ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] Updating version since we are after the release <a href="http://svn.apache.org/viewcvs.cgi?rev=536335&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+</ul>
+<a name="N1005A"></a><a name="1.4"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] This commit activate a css link to module css, but only works if the module is called like the {-type}. This makes it possible to provide css e.g. for bxe on a module basis and one does to have them in the pub. <a href="http://svn.apache.org/viewcvs.cgi?rev=427633&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[1.4] Use separate usecase for invocation for multiWorkflow usecase. This fixes bug 42328. <a href="http://svn.apache.org/viewcvs.cgi?rev=535131&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] Simplified resource view, consolidated i18n, limited size of preview image <a href="http://svn.apache.org/viewcvs.cgi?rev=535261&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] Added concurrency JMeter test case <a href="http://svn.apache.org/viewcvs.cgi?rev=540980&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Removed obsolete scheduler usecase handler <a href="http://svn.apache.org/viewcvs.cgi?rev=535150&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Removed obsolete JX template, reduced widget size to avoid wrapping <a href="http://svn.apache.org/viewcvs.cgi?rev=535296&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] removed unused linkRewrite.xsl.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=535919&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] removed unused xslts from core, removed dead profile generation code
+(now in module)
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=535953&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] removed obsolete kupu download.xhtml from core.
+removed "resource-exists" check from kupu sitemap.
+since kupu is now included in the svn, we can be sure it's there.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=536130&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] removed empty directories from core.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=536134&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] removed unused files for file conversion
+if somebody knows a reason to keep them around, please resurrect and put
+them into a
+module, together with some docs.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=536314&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] removed unused scripts from webapp directory and from build targets.
+they now live under tools/misc/ for a short grace period. if nobody
+bothers to test them and add some comments so as to make them useful for
+the general public within two weeks, they will be removed.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=539483&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] fix missing scrollbars in insertAsset usecase popup.
+improve insertAsset table layout to make it more robust for very large
+image sizes.
+get rid of "compiled" js, use pretty-printed one by default. the missing
+scrollbars were caused by the two files being out of sync. if we want to
+preserve bandwidth, we should get rid of js whitespace on-the-fly, not use
+unmaintainable source files in svn.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=539509&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't reload data for deleted source nodes <a href="http://svn.apache.org/viewcvs.cgi?rev=534329&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Simplify document deletion in DeleteLanguage usecase <a href="http://svn.apache.org/viewcvs.cgi?rev=534330&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Throw exception when trying to delete referenced document, don't use source URL to access a node (fixes bug 42300). <a href="http://svn.apache.org/viewcvs.cgi?rev=534331&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Lazy-load link lists for publish and deactivate usecases <a href="http://svn.apache.org/viewcvs.cgi?rev=534338&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Moved i18n messages from default pub to workflow module <a href="http://svn.apache.org/viewcvs.cgi?rev=534349&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed link syntax in example content. This fixes bug 42302. <a href="http://svn.apache.org/viewcvs.cgi?rev=534353&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] DocumentManagerImpl: delete link first, then document <a href="http://svn.apache.org/viewcvs.cgi?rev=534360&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Publish usecase: add info message for broken links. This fixes bug 42303. <a href="http://svn.apache.org/viewcvs.cgi?rev=534361&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Delete RCML files after deleting a node. This fixes bug 42299. <a href="http://svn.apache.org/viewcvs.cgi?rev=534399&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] removed unused import <a href="http://svn.apache.org/viewcvs.cgi?rev=534431&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't write an empty RCML file if not necessary. This fixes bug 42316. <a href="http://svn.apache.org/viewcvs.cgi?rev=534432&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] removed unused import <a href="http://svn.apache.org/viewcvs.cgi?rev=534446&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] removed unused import <a href="http://svn.apache.org/viewcvs.cgi?rev=534530&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Copy RCML files and backup files when copying a node to a different area. This should fix bug 42317. <a href="http://svn.apache.org/viewcvs.cgi?rev=534534&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't try to detect content dirs of empty areas <a href="http://svn.apache.org/viewcvs.cgi?rev=534779&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] an alternative approach to bug 42295 (tab links making no sense going
+from "site-&gt;trash" etc. to "authoring". i think this fixes the root
+cause.
+please review, i'm not too familiar with menu2xhtml.xsl and may have
+broken some corner cases!
+
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=534819&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added i18n to publication introduction page <a href="http://svn.apache.org/viewcvs.cgi?rev=534855&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Breadcrumb title on pub intro page <a href="http://svn.apache.org/viewcvs.cgi?rev=534861&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Use POST forms with submit buttons instead of links to trigger workflow usecases. <a href="http://svn.apache.org/viewcvs.cgi?rev=534870&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't copy html markup in html title <a href="http://svn.apache.org/viewcvs.cgi?rev=534902&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=534905&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added checks to ReservedCheck*Actions to avoid duplicate checkin/checkout. <a href="http://svn.apache.org/viewcvs.cgi?rev=534909&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Improved scheduler usecase view <a href="http://svn.apache.org/viewcvs.cgi?rev=535152&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added i18n for scheduler job time <a href="http://svn.apache.org/viewcvs.cgi?rev=535153&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Pass only string params to cron job, don't convert non-string params to strings. This avoids ClassCastExceptions. <a href="http://svn.apache.org/viewcvs.cgi?rev=535201&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added UsecaseProxy.getBooleanCheckboxParameter(), simplifies checkbox building in JX templates <a href="http://svn.apache.org/viewcvs.cgi?rev=535227&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added i18n for scheduler messages, fixed publish form flow when errors occur <a href="http://svn.apache.org/viewcvs.cgi?rev=535228&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added i18n for non-available resource preview <a href="http://svn.apache.org/viewcvs.cgi?rev=535263&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Improved layout of disabled and checked menu items <a href="http://svn.apache.org/viewcvs.cgi?rev=535282&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added some i18n messages for AC tab <a href="http://svn.apache.org/viewcvs.cgi?rev=535298&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added more i18n for AC tab <a href="http://svn.apache.org/viewcvs.cgi?rev=535302&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added some workflow event i18n messages <a href="http://svn.apache.org/viewcvs.cgi?rev=535307&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Allow paste usecase only in authoring area, added i18n for error messages <a href="http://svn.apache.org/viewcvs.cgi?rev=535316&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] javadoc update to reflect new publication.xml syntax
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=535656&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added ssl parameter to access-control module <a href="http://svn.apache.org/viewcvs.cgi?rev=535788&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added missing slash to URL in policy manager wrapper <a href="http://svn.apache.org/viewcvs.cgi?rev=535789&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Pass SSL parameter to base URL module <a href="http://svn.apache.org/viewcvs.cgi?rev=535790&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Enhanching note to explicitly state, that we do not have to copy the whole build.properties files but only implement the properties that we need to be different from the default one <a href="http://svn.apache.org/viewcvs.cgi?rev=535833&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Refactored AccessControl usecase: use POST forms, submit forms and use doExecute() instead of advance(), fixed handling of SSL parameter <a href="http://svn.apache.org/viewcvs.cgi?rev=535838&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Explain for what you want to use ./configure <a href="http://svn.apache.org/viewcvs.cgi?rev=535865&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed create-use-case attribute for user types, use this attribute in the admin area <a href="http://svn.apache.org/viewcvs.cgi?rev=536190&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added note about multiWorkflowInvoke usecase to readme.xml <a href="http://svn.apache.org/viewcvs.cgi?rev=536191&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Updated CSS rules for &lt;code&gt; and &lt;source&gt; <a href="http://svn.apache.org/viewcvs.cgi?rev=536196&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added note about create-use-case attribute to readme file <a href="http://svn.apache.org/viewcvs.cgi?rev=536197&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Cleaned up internal URLs in collection module <a href="http://svn.apache.org/viewcvs.cgi?rev=536207&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Reverted accidential change (using wrong UUID for meta data access in collection module) <a href="http://svn.apache.org/viewcvs.cgi?rev=536213&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=536468&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added the option to retrieve collection data from URLs. Will add docs tomorrow. <a href="http://svn.apache.org/viewcvs.cgi?rev=536600&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Adding note about endorsed libaries. <a href="http://svn.apache.org/viewcvs.cgi?rev=536869&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Enable truncating the news message on the overview (default = 100 characters) <a href="http://svn.apache.org/viewcvs.cgi?rev=536892&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Use correct href computation for RSS feed <a href="http://svn.apache.org/viewcvs.cgi?rev=536903&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Consider revision when serving homepage documents <a href="http://svn.apache.org/viewcvs.cgi?rev=537807&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] RepositorySource: Apply revision parameter only if the source matches the source of the main document of the current request. This fixes bug 42394. <a href="http://svn.apache.org/viewcvs.cgi?rev=537863&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed accidential check-in of sitemap logging <a href="http://svn.apache.org/viewcvs.cgi?rev=537864&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Add parameterized matcher to XHTML module sitemap <a href="http://svn.apache.org/viewcvs.cgi?rev=537867&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Use XHTML format when expanding news documents. <a href="http://svn.apache.org/viewcvs.cgi?rev=537868&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Wrap news items in divs, enable aggregation of nested news documents <a href="http://svn.apache.org/viewcvs.cgi?rev=537870&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Use parameters to resolve source instead of page envelope (xhtml module sitemap) <a href="http://svn.apache.org/viewcvs.cgi?rev=538158&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Bug 42407 - allowing admin.siteOverview to order desc/asc. I thought we had been in code freeze that is why I did not not committed the patch in the first place. <a href="http://svn.apache.org/viewcvs.cgi?rev=538180&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] add workaround for firefox: check if page is empty, if so, add &amp;#160;.
+this prevents the textarea element from collapsing, which firefox still
+can't handle after all those long long years...
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=538276&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] removed profiling statement from menu generation pipeline. looks like an
+accidental commit to me...
+
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=538303&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added option for relative URLs to UuidToUrlTransformer <a href="http://svn.apache.org/viewcvs.cgi?rev=538644&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] removed invalid javadoc tag <a href="http://svn.apache.org/viewcvs.cgi?rev=538645&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] documentation update. added explicit warning about performance penalty.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=538949&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] updated XHTML doctype samples (wrong hints for 1.4 menu layout)
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=538955&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] copied usecase handler code from oneform editor to fix rollback failure
+when a validation error is encountered.
+FIXME: this code should be moved into DocumentUsecase and shared by all
+editors, rather than duplicated in every module.
+documentation updates.
+
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=539474&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] removed obsolete "rendertype=edit" parameter from tinymce menu link.
+(tinymce delegates the rendering to the publication and does its own
+post-processing afterwards, hence the publication need not be concerned
+with a special "edit" rendering)
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=539499&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] trivial refactoring of default pub sitemap.xmap.
+the doctype-specific xslt is now generated in a separate pipeline. this
+avoids some local code duplication and improves readability.
+
+one functional change: the fallback stylesheet if no doctype-specific
+one is found is now page2xhtml.xsl (used to be page2xhtml-xhtml.xsl).
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=539710&view=rev">Diff</a> 
+       Committed by nettings.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Changing the login as editor caption since one can as well login as reviewer, admin, ... <a href="http://svn.apache.org/viewcvs.cgi?rev=540122&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] fixed sitemap comments <a href="http://svn.apache.org/viewcvs.cgi?rev=540453&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed obsolete rendertype parameter from news module <a href="http://svn.apache.org/viewcvs.cgi?rev=540454&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Always use absolute URLs when serving the sources for WebDAV (BXE) and Kupu <a href="http://svn.apache.org/viewcvs.cgi?rev=540543&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Always use absolute URLs when serving the sources for FCKeditor <a href="http://svn.apache.org/viewcvs.cgi?rev=540544&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] bug 42496. 
+Translation to english of jmeter test file. 
+Work is based on a contribution of Javier Puerto.
+Thanks Javier.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=541227&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] bug 34994
+This patch brings back the auth dialog.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=541241&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't try to check preconditions for non-existing documents in editor usecases <a href="http://svn.apache.org/viewcvs.cgi?rev=541285&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Make SourceNodeRCML.write() synchronized to avoid ConcurrentModificationErrors <a href="http://svn.apache.org/viewcvs.cgi?rev=541302&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Show link to inbox also if no new message is received. See bug 42467 for more information. <a href="http://svn.apache.org/viewcvs.cgi?rev=541338&view=rev">Diff</a> 
+       Committed by andreas.</li>
+</ul>
+<a name="N104F1"></a><a name="Documentation"></a>
+<h3 class="h4">Documentation</h3>
+<ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Documentation] Added docs about resizing images with svg module <a href="http://svn.apache.org/viewcvs.cgi?rev=535257&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Documentation] Added production checklist <a href="http://svn.apache.org/viewcvs.cgi?rev=540905&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Show URL instead of source for resizing images <a href="http://svn.apache.org/viewcvs.cgi?rev=535289&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added FAQ entry about build process <a href="http://svn.apache.org/viewcvs.cgi?rev=535876&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added more faqs <a href="http://svn.apache.org/viewcvs.cgi?rev=535900&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Fixed validation issues <a href="http://svn.apache.org/viewcvs.cgi?rev=535909&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added an FAQ about plain Cocoon <a href="http://svn.apache.org/viewcvs.cgi?rev=536110&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added tutorial how to create a publication with 1.4 <a href="http://svn.apache.org/viewcvs.cgi?rev=536185&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Display ToC on page instead of menu <a href="http://svn.apache.org/viewcvs.cgi?rev=536187&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Adding Renaud to the who.xml <a href="http://svn.apache.org/viewcvs.cgi?rev=536303&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] fixing guidelines regarding voting to reflect the reality of our project <a href="http://svn.apache.org/viewcvs.cgi?rev=536304&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Updating changes to reflect current development <a href="http://svn.apache.org/viewcvs.cgi?rev=536306&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added docs about collection syndication and news aggregation <a href="http://svn.apache.org/viewcvs.cgi?rev=537898&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added more info about resource type formats <a href="http://svn.apache.org/viewcvs.cgi?rev=540451&view=rev">Diff</a> 
+       Committed by andreas.</li>
+</ul>
+<a name="N105AC"></a><a name="Site"></a>
+<h3 class="h4">Site</h3>
+<ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=536292&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Site] Updating java docs for 1.4 <a href="http://svn.apache.org/viewcvs.cgi?rev=536354&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] Updating java docs for 1.2 <a href="http://svn.apache.org/viewcvs.cgi?rev=536336&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] Updating DOAP file to reflect latest release. Reported by Bob Harner. Thanks <a href="http://svn.apache.org/viewcvs.cgi?rev=537580&view=rev">Diff</a> 
        Committed by thorsten.</li>
 </ul>
-<a name="N1004A"></a>
+<a name="N105E5"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
-<p>This is a list of all people who participated as committers:<br> (thorsten).</p>
+<p>This is a list of all people who participated as committers:<br> (andreas),  (nettings),  (thorsten).</p>
 </div>
 </div>
 <!--+
