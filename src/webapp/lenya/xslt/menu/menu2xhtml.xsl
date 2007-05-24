@@ -110,23 +110,24 @@
           <xsl:call-template name="workflow"/>
         </xsl:if>
         <li id="info-user"><i18n:text>User</i18n:text>: <span id="logged-user"><xsl:value-of select="$userid"/></span></li>
-        <xsl:if test="$newMessages != '0'">
-          <li id="info-messages">
-            <a href="?lenya.usecase=notification.inbox">
-              <xsl:choose>
-                <xsl:when test="$newMessages = '1'">
-                  <i18n:text>unread-message</i18n:text>
-                </xsl:when>
-                <xsl:otherwise>
-                  <i18n:translate>
-                    <i18n:text>unread-messages</i18n:text>
-                    <i18n:param><xsl:value-of select="$newMessages"/></i18n:param>
-                  </i18n:translate>
-                </xsl:otherwise>
-              </xsl:choose>
-            </a>
-          </li>
-        </xsl:if>
+        <li id="info-messages">
+          <a href="?lenya.usecase=notification.inbox">
+            <xsl:choose>
+              <xsl:when test="$newMessages = '0'">
+                <i18n:text>Inbox</i18n:text>
+              </xsl:when>
+              <xsl:when test="$newMessages = '1'">
+                <i18n:text>unread-message</i18n:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <i18n:translate>
+                  <i18n:text>unread-messages</i18n:text>
+                  <i18n:param><xsl:value-of select="$newMessages"/></i18n:param>
+                </i18n:translate>
+              </xsl:otherwise>
+            </xsl:choose>
+          </a>
+        </li>
         <li id="info-time"><i18n:text>Server Time</i18n:text>: <span id="server-time"><xsl:value-of select="$servertime"/></span></li>
       </ul>
     </div>

@@ -32,5 +32,6 @@
   <message key="unread-messages">{0} new messages</message>
   <message key="unread-message">1 new message</message>
   <message key="Read">Read</message>
+  <message key="Inbox">Inbox</message>
   
 </catalogue>
