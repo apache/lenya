@@ -116,8 +116,10 @@ public class FormsEditor extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        org.apache.lenya.cms.publication.Document doc = getSourceDocument();
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc, getLogger());
+        if (!hasErrors()) {
+            org.apache.lenya.cms.publication.Document doc = getSourceDocument();
+            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc, getLogger());
+        }
     }
 
     /**

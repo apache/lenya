@@ -60,8 +60,10 @@ public class OneFormEditor extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
+        if (!hasErrors()) {
+            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
                 getLogger());
+        }
         setParameter("executable", Boolean.valueOf(!hasErrors()));
     }
 
