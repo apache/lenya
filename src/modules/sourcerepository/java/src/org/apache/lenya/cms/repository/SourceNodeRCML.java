@@ -104,7 +104,7 @@ public class SourceNodeRCML implements RCML {
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
-    public void write() throws Exception {
+    public synchronized void write() throws Exception {
         if (getDocument() == null) {
             throw new IllegalStateException("The XML for RC source [" + getRcmlSourceUri()
                     + "] is null!");
