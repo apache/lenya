@@ -104,7 +104,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             String prefixWithArea = prefix + ((area != null) ? area : "");
             // String prefixWithArea = prefix + area;
             String authoringUrl = prefix + Publication.AUTHORING_AREA
-                    + webappUrl.substring(prefixWithArea.length());
+                    + ((webappUrl.length()>prefixWithArea.length())?webappUrl.substring(prefixWithArea.length()):"/");
 
             if (map.isDocument(authoringUrl)) {
                 Document authoringDoc = map.getFromURL(authoringUrl);
