@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Creating a Resource Type, Part 1: Prerequisites and Declaration</title>
+  </header>
+  <body>
+    <p>
+      This section explains how to create a new resource type. For more information
+      on resource types, refer to the <a href="site:resource-types">resource types reference</a>.
+      For the sake of simplicity, we'll test the resource type with the default publication.
+    </p>
+    <p>
+      Our resource type will support storing details (name, address, etc.) of people.
+      We'll call it <em>person</em>. Since we're too lazy (and too smart) to invent our
+      own XML schema, we'll just use the one provided by the
+      <a href="http://www.foaf-project.org/"><acronym title="Friend of a Friend">FoaF</acronym></a>
+      project.
+    </p>
+    
+    <section>
+      <title>Prerequisites</title>
+      <p>
+        We'll use the following directory layout:
+      </p>
+      <source xml:space="preserve">$HOME/
+  apache/
+    lenya-1.4/             The Lenya installation directory, we'll call it $LENYA_HOME.
+  src/
+    lenya/                 The home directory of your Lenya-related sources.
+      modules/             Our modules.
+        person/            Our "person" resource type module ($MODULE_HOME).</source>
+      
+    </section>
+    
+    <section>
+      <title>Adding a Module</title>
+      <p>
+        We'll add a module which will contain the resource type. This makes it
+        self-contained, and it will be very easy to re-use our resource type
+        in different publications. Create the <em>person</em> directory (see section
+        <em>Prerequisites</em>) with the following directory layout:
+      </p>
+      
+      <source xml:space="preserve">person/
+  config/                        Configuration of the module.
+    menu.xsp                     The resource type menu items.
+    module.xml                   Module descriptor.
+    cocoon-xconf/                Patch files for cocoon.xconf.
+      resourcetype-person.xconf  The declaration of our resource type.
+  resources/
+    icons/
+      person.gif                 The icon for the sitetree.
+  samples/                       Samples to create person documents.
+    foaf.xml                     The default sample document.
+  xslt/
+    foaf2xhtml.xml               Transform FoaF documents to XHTML.
+  menus.xmap                     The sitemap generating the menu.</source>
+    
+      <p>
+        Each module needs a module descriptor file <code>$MODULE_HOME/config/module.xml</code>.
+        In our case it looks like this (replace <code>org.yourproject</code> with your
+        own package name):
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://apache.org/lenya/module/1.0">
+  <id>org.yourproject.lenya.modules.person</id>
+  <package>org.yourproject.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>person</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>Resource type to store person details</description>
+</module>]]></source>
+      <p>
+        Now we have to let Lenya know that we've added a new module. Edit the
+        file <code>$LENYA_HOME/local.build.properties</code> and add the path
+        to your <code>modules</code> directory (the parent of <code>$MODULE_HOME</code>)
+        at the end of the <code>modules.root.dirs</code> declaration:
+      </p>
+      <source xml:space="preserve">modules.root.dirs=...:/home/john/src/lenya/modules</source>
+      <p>
+        Finally, we'll have to declare the module in the publications which use it
+        (in our case, the default publication). Edit <code>$PUB_HOME/config/publication.xml</code>
+        and add the entry
+      </p>
+      <source><![CDATA[<module name="person"/>]]></source>
+      <p>
+        to the <code><![CDATA[<modules/>]]></code> section.
+      </p>
+    </section>
+    
+    <section>
+      <title>Declaring the Resource Type</title>
+      <p>
+        To let Lenya know that a new resource type exists, we'll add the
+        resource type declaration file <code>resourcetype-person.xconf</code>.
+        This is a patch for the <code>cocoon.xconf</code> file and therefore
+        located in <code>$MODULE_HOME/config/cocoon-xconf</code>.
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0"?>
+<xconf xpath="/cocoon/resource-types"
+       unless="/cocoon/resource-types/component-instance[@name = 'person']">
+  
+  <component-instance name="person" logger="lenya.resourcetypes"
+    class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    
+    <schema language="http://relaxng.org/ns/structure/0.9"
+      src="fallback://lenya/modules/person/resources/schemas/person.rng"/>
+    
+    <!-- Default time in seconds until the resource-type has expired -->  
+    <expires seconds="3600" />
+    
+    <sample-name>fallback://lenya/modules/person/samples/foaf.xml</sample-name>
+    
+    <format name="xhtml" uri="cocoon://modules/person/xhtml.xml"/>
+    <format name="xhtml-include" uri="cocoon://modules/person/xhtml-include.xml"/>
+    <format name="icon" uri="cocoon://modules/person/icon"/>
+    
+  </component-instance>
+  
+</xconf>]]></source>
+      <p>
+        According to this declaration, the Lenya web application creates a new
+        <code>ResourceTypeImpl</code> service on startup which makes the resource
+        type details available to other objects.
+      </p>
+      <p>
+        In the <a href="site:newResourceTypePart2">next section</a> we'll setup the creation of person documents.
+      </p>
+    </section>
+    
+  </body>
+</document>

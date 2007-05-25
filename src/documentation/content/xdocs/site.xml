@@ -135,6 +135,11 @@
     
     <tutorials href="tutorials/" label="Tutorials">
       <newPublication14 href="newpublication/index.html" label="Create a Publication"/>
+      <newResourceType href="resourcetype/" label="Create a Resource Type">
+        <newResourceTypePart1 href="part1.html" label="Part 1"/>
+        <newResourceTypePart2 href="part2.html" label="Part 2"/>
+        <newResourceTypePart3 href="part3.html" label="Part 3"/>
+      </newResourceType>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
       <tests href="tests.html" label="Writing Tests"/>
       <bestpractises href="bestpractises.html" label="Best Practises"/>
@@ -556,6 +561,10 @@
       <usecase-framework-architecture.img href="usecase-framework-architecture.png"/>
       <repositoryWorkspaces.img href="repositoryWorkspaces.png"/>
       <modules-svg-roundedcorners-screenshot.img href="svgmodule/roundedcorners.png"/>
+      <resourceTypeImages href="resourcetype/">
+        <resourceTypeCreateScreen.img href="create-screen.png"/>
+        <resourceTypeNewDocument.img href="new-document.png"/>
+      </resourceTypeImages>
     </live>
   </images>
   

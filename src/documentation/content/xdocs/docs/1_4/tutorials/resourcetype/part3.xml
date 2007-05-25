@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Creating a Resource Type, Part 3: Presentation</title>
+  </header>
+  <body>
+
+    <section>
+      <title>A Basic Presentation Pipeline</title>
+      <p>
+        Now the Lenya web application can create new person documents, but
+        it won't be able to render them as HTML pages (or anything else) yet.
+        In our resource type declaration we specified the format <em>xhtml</em>.
+        According to this specification, we'll setup a basic presentation pipeline
+        which converts our FoaF XML document to XHTML.
+      </p>
+      <p>
+        First we'll add the sitemap (<code>$MODULE_HOME/sitemap.xmap</code>).
+        Note that some lines have been wrapped (marked with backslashes):
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:pipelines>
+    <map:pipeline>
+
+      <!-- {format}.xml -->
+      <map:match pattern="*.xml">
+        <map:generate src="cocoon:/{1}.xml/{page-envelope:publication-id}/ \
+          {page-envelope:area}/{page-envelope:document-uuid}/ \
+          {page-envelope:document-language}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} -->
+      <map:match pattern="*.xml/*/*/*/*">
+        <map:generate src="lenya-document:{4},lang={5}{link:rev}"/>
+        <map:transform src="fallback://lenya/modules/person/xslt/foaf2xhtml.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- The icon for person nodes in the sitetree. -->
+      <map:match pattern="icon/*/*/*/*">
+        <map:read src="fallback://lenya/modules/person/resources/icons/person.gif"/>
+      </map:match>
+      
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>
+      ]]></source>
+      <p>
+        The sitemap uses an XSLT stylesheet <code>$MODULE_HOME/xslt/foaf2xhtml.xsl</code>
+        to render the XHTML view of the FoaF file:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns="http://www.w3.org/1999/xhtml">
+  
+  <xsl:template match="rdf:RDF">
+    <html>
+      <head>
+        <style type="text/css">
+          table.person { font-size: small; }
+          table.person th {
+            font-weight: normal;
+            color: #999999;
+            text-align: left;
+            padding-right: 1em;
+          }
+        </style>
+      </head>
+      <body>
+        <div id="body">
+          <xsl:apply-templates select="foaf:Person"/>
+        </div>
+      </body>
+    </html>
+  </xsl:template>
+  
+  <xsl:template match="foaf:Person">
+    <h2>Person Details</h2>
+    <table class="person">
+      <tr>
+        <th>Title:</th>
+        <td><xsl:value-of select="foaf:title"/></td>
+      </tr>
+      <tr>
+        <th>Given name:</th>
+        <td><xsl:value-of select="foaf:givenname"/></td>
+      </tr>
+      <tr>
+        <th>Family name:</th>
+        <td><xsl:value-of select="foaf:family_name"/></td>
+      </tr>
+      <tr>
+        <th>E-Mail:</th>
+        <td>
+          <xsl:variable name="mbox" select="foaf:mbox/@rdf:resource"/>
+          <a href="{$mbox}">
+            <xsl:value-of select="substring-after($mbox, 'mailto:')"/>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <th>Phone:</th>
+        <td>
+          <xsl:variable name="phone" select="foaf:phone/@rdf:resource"/>
+          <xsl:value-of select="substring-after($phone, 'tel:')"/>
+        </td>
+      </tr>
+      <tr>
+        <th>Homepage:</th>
+        <td>
+          <xsl:variable name="homepage" select="foaf:workplaceHomepage/@rdf:resource"/>
+          <a href="{$homepage}"><xsl:value-of select="$homepage"/></a>
+        </td>
+      </tr>
+    </table>
+  </xsl:template>
+
+</xsl:stylesheet>]]></source>
+      <p>
+        Note that we add some style information to the HTML header to display our table properly.
+      </p>
+    </section>
+    
+    <section>
+      <title>Creating our First Person Document</title>
+      <p>
+        Now it's time to check out if everything works as expected. First, we build the
+        Lenya web application to deploy our new resource type. If Lenya is running, shut it down.
+        Go to <code>$LENYA_HOME</code> and execute
+      </p>
+      <source xml:space="preserve">./build.sh</source>
+      <p>
+        When the build has finished, start the Jetty server:
+      </p>
+      <source xml:space="preserve">./lenya.sh</source>
+      <p>
+        Now go to <a href="http://localhost:8888/default/authoring/index.html">http://localhost:8888/default/authoring/index.html</a>
+        and log in as user "lenya". The <em>File</em> menu should now contain an
+        item <em>New Person Document</em>. But before creating person documents,
+        we'll add a new top level XHTML document <em>People</em>: 
+      </p>
+      <ul>
+        <li>File -> New XHTML Document</li>
+        <li>Node Name: people</li>
+        <li>Navigation Title: People</li>
+      </ul>
+      <p>
+        You end up on the <em>People</em> page. Now you can create a new person document
+        as a child of this document by selecting the <em>New Person Document</em> menu item:
+      </p>
+      <figure src="site:resourceTypeCreateScreen.img" alt="Create a person document"/>
+      <p>
+        After hitting OK, you're redirected to the newly created person document:
+      </p>
+      <figure src="site:resourceTypeNewDocument.img" alt="Person document"/>
+    </section>
+    
+  </body>
+</document>
