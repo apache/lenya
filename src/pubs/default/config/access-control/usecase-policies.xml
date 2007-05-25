@@ -200,6 +200,12 @@
   <usecase id="admin.usecases">
     <role id="admin" method="grant"/>
   </usecase>
+  <usecase id="admin.aboutLenya">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+    <role id="review" method="grant"/>
+    <role id="visit" method="grant"/>
+  </usecase>
   <usecase id="admin.addGroup">
     <role id="admin" method="grant"/>
   </usecase>

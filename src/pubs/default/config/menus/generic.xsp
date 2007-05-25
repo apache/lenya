@@ -124,12 +124,10 @@
 
       <menu i18n:attr="name" name="Help">
         <block areas="authoring site admin">
+          <item uc:usecase="admin.aboutLenya" href="?"><i18n:text>About Apache Lenya</i18n:text></item>
+          <item href="http://lenya.apache.org"><i18n:text>Apache Lenya Homepage</i18n:text></item>
           <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
           <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
-        </block>
-        <block areas="authoring site admin">
-          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
-          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
         </block>
       </menu>
       
