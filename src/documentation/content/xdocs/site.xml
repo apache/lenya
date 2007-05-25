@@ -136,9 +136,10 @@
     <tutorials href="tutorials/" label="Tutorials">
       <newPublication14 href="newpublication/index.html" label="Create a Publication"/>
       <newResourceType href="resourcetype/" label="Create a Resource Type">
-        <newResourceTypePart1 href="part1.html" label="Part 1"/>
-        <newResourceTypePart2 href="part2.html" label="Part 2"/>
-        <newResourceTypePart3 href="part3.html" label="Part 3"/>
+        <newResourceTypePart1 href="part1.html" label="Declaration"/>
+        <newResourceTypePart2 href="part2.html" label="Creation"/>
+        <newResourceTypePart3 href="part3.html" label="Presentation"/>
+        <newResourceTypePart3 href="part4.html" label="Editing"/>
       </newResourceType>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
       <tests href="tests.html" label="Writing Tests"/>
