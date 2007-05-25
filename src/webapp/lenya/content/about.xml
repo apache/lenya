@@ -20,31 +20,28 @@
 
 <page:page
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-  xmlns="http://www.w3.org/1999/xhtml">
-  <page:title>Apache Lenya @lenya.version@ (Revision: @lenya.revision@)</page:title>
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns="http://www.w3.org/1999/xhtml"
+  >
   <page:body>
-    <div class="lenya-box">
-      <div class="lenya-box-title">
-        About Apache Lenya
-      </div>
-      <div class="lenya-box-body">
-        <p>
-          This software consists of voluntary contributions made by many individuals
-          on behalf of the <br /><a href="http://www.apache.org/">Apache Software Foundation</a>.
-        </p>
-        <p>
-          Apache Lenya includes software developed by the 
-          <a href="http://www.apache.org/">Apache Software Foundation</a>, 
-          <a href="http://w3c.org">W3C</a>, and 
-          <a href="http://sf.net/projects/websphinx">WebSPHINX</a>.
-        </p>
-        <p>
-          Copyright (C) 2006 The Apache Software Foundation. All rights reserved.
-        </p>
-        <form id="form-about-back">
-          <input type="button" value="Back" onClick="history.go(-1)" name="input-back"/>
-        </form>		
-      </div>
-    </div>
+    <h2>Apache Lenya @lenya.version@ (Revision: @lenya.revision@)</h2>
+    <p>
+      This software consists of voluntary contributions made by many individuals
+      on behalf of the <br /><a href="http://www.apache.org/">Apache Software Foundation</a>.
+    </p>
+    <p>
+      Apache Lenya includes software developed by the 
+      <a href="http://www.apache.org/">Apache Software Foundation</a>, 
+      <a href="http://w3c.org">W3C</a>, and 
+      <a href="http://sf.net/projects/websphinx">WebSPHINX</a>.
+    </p>
+    <p>
+      Copyright (C) 2006 The Apache Software Foundation. All rights reserved.
+    </p>
+    <form id="form-about-back">
+      <p>
+        <input type="button" value="Back" onClick="history.go(-1)" name="input-back" i18n:attr="value"/>
+      </p>
+    </form>		
   </page:body>
 </page:page>

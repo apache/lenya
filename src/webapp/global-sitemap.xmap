@@ -319,11 +319,6 @@
         <map:call resource="style-cms-page"/>
         <map:serialize />
       </map:match>
-      <map:match pattern="about.html">
-        <map:generate src="lenya/content/about.xml"/>
-        <map:call resource="style-cms-page"/>
-        <map:serialize />
-      </map:match>
 
       <map:match pattern="*">
         <map:redirect-to uri="index.html"/>

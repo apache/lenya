@@ -35,6 +35,13 @@
     
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
+    <h3>2007-05-25: Converted "About Lenya" page to usecase</h3>
+    <p>
+      To enable the "About Lenya" usecase, please set the permissions for the <code>admin.aboutLenya</code>
+      usecase in your <code>config/access-control/usecase-policies.xml</code> file, or use the
+      tab "Usecases" in the administration GUI.
+    </p>
+    
     <h3>2007-05-08: Fixed <code>create-use-case</code> attribute</h3>
     <p>
       The value of the <code>create-use-case</code> attribute of the <code>user-type</code>
