@@ -113,7 +113,11 @@ function isNodeFolder(node) {
 function existsChosenLanguage(node) {
     var children = node.childNodes;
     for (var i = 0; i < children.length; i++) {
-       if (getTagName(children[i]) =='nav:label' && children[i].getAttribute('xml:lang')==CHOSEN_LANGUAGE) {
+       var lang = children[i].getAttribute('xml:lang');
+       if (!lang) {
+           var lang = children[i].getAttribute('lang');
+       }
+       if (getTagName(children[i]) == 'nav:label' && lang == CHOSEN_LANGUAGE) {
           return true;
        } 
     }
