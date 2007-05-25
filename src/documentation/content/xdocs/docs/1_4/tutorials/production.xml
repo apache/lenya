@@ -100,7 +100,7 @@
       <title>Caching</title>
       <p>
         There's a <a href="http://wiki.apache.org/cocoon-data/attachments/GT2006Notes/attachments/10-caching.pdf">great
-        presentation</a> (PDF) about caching in cocoon, held at the Cocoon Get-Together 2006.
+        presentation</a> (PDF) about caching in Cocoon, held at the Cocoon Get-Together 2006.
       </p>
       <p>
         Cocoon's default store implementation is an in-memory store backed by a disk
