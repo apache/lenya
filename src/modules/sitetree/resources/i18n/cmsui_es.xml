@@ -28,7 +28,7 @@
 <catalogue xml:lang="es" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- Nudge document -->
-  <message key="nudge-error-direction-unknown">&iexcl;La dirección {0} no está soportada!</message>
+  <message key="nudge-error-direction-unknown">La dirección {0} no está soportada!</message>
   <message key="nudge-error-direction">No puedo mover el nodo en esta dirección.</message>
   <message key="nudge-error-area">Esta operación solo puede ser llamada en los árboles del sitio.</message>
 
