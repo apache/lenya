@@ -121,17 +121,24 @@
         (e.g. <code>lenya/pubs/default</code>). 
       </p>
       <source xml:space="preserve"><![CDATA[  <content-dir src="/home/USERNAME/data/default"/>]]></source>
-      
       <p>
         The optional <code>proxies</code> section contains the proxy configuration
-        of this publication. For more information see <a href="site:proxying">Proxying</a>.
+        of this publication. For more information see <a href="site:proxying">Proxying</a> and the <a href="site:mod_proxy_and_lenya">turorial</a>.
       </p>
+      <p> In short the idea of the following proxy snippet in the configuration is a rewrite of links.
+        Using proxies will prefix all absolute links (starting with
+        <strong>"/"</strong>) to absoult urls (the proxy host). </p>
       <source xml:space="preserve"><![CDATA[  <proxies>
     <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
     <proxy area="live" ssl="false" url="http://www.host.com/default"/>
     <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
     <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
   </proxies>]]></source>
+      <p>Since we have the concept of areas we define the proxy per area and for the different
+        types of pages (ssl protected or not). For example if a link points to a document in the
+        live area and this document is ssl protected then it will be rewritten to
+        <code>"https://www.host.com/ssl/default{$link}"</code>. Where {$link} is the linked
+        document.</p>
       <source xml:space="preserve"><![CDATA[</publication>]]></source>
     </section>
     
