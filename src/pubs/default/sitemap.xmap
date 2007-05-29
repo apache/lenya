@@ -130,7 +130,7 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- navigation/{1:nav-element}/{2:pub-id}/{3:default-language}/{4:language}/{5:area}/{6:path} -->
+      <!-- navigation-element/{1:widget}/{2:pub-id}/{3:area}/{4:default-language}/{5:language}/{6:path} -->
       <map:match pattern="navigation-element/*/*/*/*/*/**">
         <map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml"/>
         <map:serialize type="xml"/>
