@@ -36,7 +36,7 @@
       <xsl:choose>
         <xsl:when test="@base">
           <xsl:apply-templates>
-            <xsl:with-param name="previous-url" select="@base"/>
+            <xsl:with-param name="parentPath" select="@base"/>
           </xsl:apply-templates>
         </xsl:when>
         <xsl:otherwise>
