@@ -222,6 +222,8 @@
 
     <section>
       <title>2: Installation with Apache Tomcat</title>
+      <warning label="Warning: Tomcat and spaces">The installation path may not contain spaces, otherwise you may get a
+        <code>java.net.URISyntaxException</code> error.</warning>
 
       <ol>
 
