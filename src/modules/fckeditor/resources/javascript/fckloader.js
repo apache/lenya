@@ -15,7 +15,7 @@
 * limitations under the License.
 */
 
-function fckloader(host, requesturi, contextPath)
+function fckloader(requesturi, contextPath)
 {
   var oFCKeditor = new FCKeditor( 'content' ) ;
   oFCKeditor.BasePath	= contextPath + '/modules/fckeditor/fckeditor/' ;
@@ -24,7 +24,6 @@ function fckloader(host, requesturi, contextPath)
   oFCKeditor.Config[ "FullPage" ] = true ;
   oFCKeditor.Config[ "ProcessHTMLEntities" ] = true ;
   oFCKeditor.Config[ "ProcessNumericEntities" ] = true ;
-  oFCKeditor.Config[ "BaseHref" ] = host + requesturi ;
   oFCKeditor.Config["CustomConfigurationsPath"] = contextPath + "/modules/fckeditor/javascript/fckconfig.js"  ;
   oFCKeditor.ToolbarSet = 'Lenya' ;
   oFCKeditor.Config[ "ImageBrowserURL" ] = requesturi +'?lenya.usecase=fckeditor.insertImage' ;

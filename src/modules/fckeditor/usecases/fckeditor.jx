@@ -29,7 +29,7 @@
   <script type="text/javascript">
     window.onload = function()
     {
-      fckloader('${usecase.getParameter('host')}', '${usecase.getParameter('requesturi')}', '${request.getContextPath()}');
+      fckloader('${usecase.getParameter('requesturi')}', '${request.getContextPath()}');
     }
   </script>
   
