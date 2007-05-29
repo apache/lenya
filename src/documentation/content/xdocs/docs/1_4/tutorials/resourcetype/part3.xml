@@ -78,17 +78,6 @@
   
   <xsl:template match="rdf:RDF">
     <html>
-      <head>
-        <style type="text/css">
-          table.person { font-size: small; }
-          table.person th {
-            font-weight: normal;
-            color: #999999;
-            text-align: left;
-            padding-right: 1em;
-          }
-        </style>
-      </head>
       <body>
         <div id="body">
           <xsl:apply-templates select="foaf:Person"/>
@@ -139,9 +128,22 @@
   </xsl:template>
 
 </xsl:stylesheet>]]></source>
+    </section>
+    
+    <section>
+      <title>Adding the CSS</title>
       <p>
-        Note that we add some style information to the HTML header to display our table properly.
+        The default publication allows to add custom CSS files for each resource type.
+        We want to style our table headers a bit, so we add the file
+        <code>pubs/default/resources/shared/css/person.css</code> with the following content:
       </p>
+      <source xml:space="preserve"><![CDATA[table.person { font-size: small; }
+table.person th {
+  font-weight: normal;
+  color: #999999;
+  text-align: left;
+  padding-right: 1em;
+}]]></source>
     </section>
     
     <section>

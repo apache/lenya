@@ -19,7 +19,7 @@
   "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Creating a Resource Type, Part 3: Editing</title>
+    <title>Creating a Resource Type, Part 4: Editing</title>
   </header>
   <body>
     
@@ -139,6 +139,10 @@
       
       <p>
         Now you should be able to edit your person document with the one-form editor.
+      </p>
+      <p>
+        In the <a href="site:newResourceTypePart5">next section</a> we explain how
+        to make person documents editable with the BXE WYSIWYG editor.
       </p>
       
     </section>    

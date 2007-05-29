@@ -29,6 +29,10 @@
       <p>
         The <code>bxe</code> contains the integration of the Bitflux WYSIWYG editor.
       </p>
+      <p>
+        The section <a href="site:newResourceTypePart5">Editing with BXE</a> of the
+        resource type tutorial helps you to get started.
+      </p>
     </section>
   </body>
 </document>
