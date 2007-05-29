@@ -139,7 +139,7 @@
         <newResourceTypePart1 href="part1.html" label="Declaration"/>
         <newResourceTypePart2 href="part2.html" label="Creation"/>
         <newResourceTypePart3 href="part3.html" label="Presentation"/>
-        <!--newResourceTypePart4 href="part4.html" label="Editing"/-->
+        <newResourceTypePart4 href="part4.html" label="Editing"/>
       </newResourceType>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
       <tests href="tests.html" label="Writing Tests"/>

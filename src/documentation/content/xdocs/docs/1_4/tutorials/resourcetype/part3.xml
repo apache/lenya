@@ -177,7 +177,7 @@
       </p>
       <figure src="site:resourceTypeNewDocument.img" alt="Person document"/>
       <p>
-        In the <!--a href="site:newResourceTypePart4"-->next section<!--/a--> we'll make our
+        In the <a href="site:newResourceTypePart4">next section</a> we'll make our
         person documents editable.
       </p>
     </section>
