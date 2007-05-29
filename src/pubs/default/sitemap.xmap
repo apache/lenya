@@ -130,13 +130,13 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- navigation/{1:nav-element}/{2:pub-id}/{3:default-language}/{4:language}/{5:area}/{6:url} -->
+      <!-- navigation/{1:nav-element}/{2:pub-id}/{3:default-language}/{4:language}/{5:area}/{6:path} -->
       <map:match pattern="navigation-element/*/*/*/*/*/**">
         <map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:default-language}/{6:language}/{7:url} -->
+      <!-- /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:default-language}/{6:language}/{7:path} -->
       <map:match pattern="lenyabody-raw-*/*/*/*/*/*/**">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/navigation-element/breadcrumb/{2}/{3}/{5}/{6}/{7}"/>
@@ -173,16 +173,15 @@
       the navigational elements (breadcrumb, tabs, menu) with the actual
       content of the document. -->
     <map:pipeline type="noncaching">
-      <!-- /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:url} -->
+      <!-- /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:path} -->
       <map:match pattern="lenyabody-*/*/*/*/**">
         <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{4}/{page-envelope:default-language}/{page-envelope:document-language}/{5}"/>
-        <map:transform type="uuid2url"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:transform src="cocoon:/getDoctypeXSLT/{4}">
           <map:parameter name="root" value="{base-url:{2}:{3}:{access-control:ssl}}"/>
           <map:parameter name="publication-id" value="{2}"/>
           <map:parameter name="area" value="{3}"/>
-          <map:parameter name="url" value="{5}"/>
+          <map:parameter name="url" value="{page-envelope:document-url}"/>
           <map:parameter name="document-path" value="{page-envelope:document-path}"/>
           <map:parameter name="document-type" value="{4}"/>
           <map:parameter name="language" value="{page-envelope:document-language}"/>
@@ -228,7 +227,7 @@
     <map:pipeline>
       
       <map:match pattern="**.bxe.html">
-        <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+        <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-path}"/>
         <map:serialize type="xml"/>
       </map:match>
       
@@ -259,10 +258,10 @@
                 <map:select type="parameter">
                   <map:parameter name="parameter-selector-test" value="{request-param:rendertype}"/>
                   <map:when test="edit">
-                    <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+                    <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-path}"/>
                   </map:when>
                   <map:otherwise>
-                    <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+                    <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-path}"/>
                   </map:otherwise>
                 </map:select>
           

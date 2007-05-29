@@ -52,13 +52,12 @@ This sitemap creates default navigation components.
     <map:pipeline type="caching">
       
       <!-- sitetree -->
-      <!-- pattern: sitetree/{pub-id}/{area}/{default-language}/{language}/{url}.xml -->
+      <!-- pattern: sitetree/{pub-id}/{area}/{default-language}/{language}/{path}.xml -->
       <map:match pattern="sitetree/*/*/*/*/**.xml">
         <map:generate src="lenya://lenya/pubs/{1}/content/{2}/sitetree.xml"/>
         <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/sitetree2nav.xsl">
-          <map:parameter name="url" value="/{5}"/>
+          <map:parameter name="currentPath" value="/{5}"/>
           <map:parameter name="area" value="{2}"/>
-          <map:parameter name="root" value="{request:contextPath}/{1}/{2}/"/>
           <map:parameter name="chosenlanguage" value="{4}"/>
           <map:parameter name="defaultlanguage" value="{3}"/>
         </map:transform>       

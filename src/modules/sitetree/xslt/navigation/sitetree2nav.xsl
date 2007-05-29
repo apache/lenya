@@ -25,38 +25,10 @@
     xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
     exclude-result-prefixes="tree">
 
-  <xsl:param name="url"/> <!-- the links will be relative to this url (must start with slash)-->
   <xsl:param name="chosenlanguage"/>
   <xsl:param name="defaultlanguage"/>
+  <xsl:param name="currentPath"/>
 
-  <xsl:variable name="relative">
-    <xsl:choose>
-      <xsl:when test="$url != '' and starts-with($url, '/')">true</xsl:when>
-      <xsl:otherwise>false</xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
-  <xsl:variable name="root">
-    <xsl:if test="$relative = 'true'">
-      <xsl:call-template name="create-path-to-context">
-        <xsl:with-param name="local-url" select="substring-after($url, '/')"/>
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:variable>
-
-  <xsl:template name="create-path-to-context">
-    <xsl:param name="local-url"/>
-    <xsl:if test="contains($local-url, '/')">
-      <xsl:variable name="tail" select="substring-after($local-url, '/')"/>
-      <xsl:text>..</xsl:text>
-      <xsl:if test="contains($tail, '/')">
-        <xsl:text>/</xsl:text>
-      </xsl:if>
-      <xsl:call-template name="create-path-to-context">
-        <xsl:with-param name="local-url" select="$tail"/>
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
 
   <xsl:template match="tree:fragment">
     <nav:fragment>
@@ -76,12 +48,10 @@
 
 
   <xsl:template match="tree:site">
-
-    <nav:site url="{$root}{$url}" request-url="{$url}">
+    <nav:site>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
     </nav:site>
-
   </xsl:template>
 
 
@@ -109,8 +79,8 @@ Apply nodes recursively
 -->
   <xsl:template match="tree:node[not(@visible = 'false')]">
 
-  <!-- basic url of parent node -->
-    <xsl:param name="previous-url" select="''"/>
+    <!-- base path of parent node -->
+    <xsl:param name="parentPath" select="''"/>
 
     <xsl:variable name="existinglanguage">
       <xsl:call-template name="resolve-existing-language"/>
@@ -124,70 +94,20 @@ Apply nodes recursively
       <xsl:copy-of select="@folder"/>
       <xsl:copy-of select="@uuid"/>
 
-    <!-- basic url - for all nodes -->
+      <!-- base path - for all nodes -->
 
-      <xsl:variable name="basic-url">
-        <xsl:text/>
-        <xsl:choose>
-          <xsl:when test="@href">
-            <xsl:value-of select="@href"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="concat($previous-url, '/', @id)"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
+      <xsl:variable name="path" select="concat($parentPath, '/', @id)"/>
 
-      <xsl:variable name="language-suffix">
-        <xsl:text>_</xsl:text>
-        <xsl:value-of select="$existinglanguage"/>
-      </xsl:variable>
+      <!-- suffix - only when @href is not present -->
 
-      <xsl:variable name="canonical-language-suffix">
-        <xsl:choose>
-          <xsl:when test="$existinglanguage != '' and $defaultlanguage != $existinglanguage">
-            <xsl:value-of select="$language-suffix"/>
-          </xsl:when>
-          <xsl:otherwise>
-          <!-- no suffix for default language --></xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
-
-    <!-- suffix - only when @href is not present -->
-
-      <xsl:variable name="suffix">
-        <xsl:if test="not(@href)">
-          <xsl:text>.</xsl:text>
-          <xsl:choose>
-            <xsl:when test="@suffix">
-              <xsl:value-of select="@suffix"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:text>html</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
+      <xsl:variable name="extensionParam">
+        <xsl:if test="@suffix">
+          <xsl:text>?uuid2url.extension=</xsl:text>
+          <xsl:value-of select="@suffix"/>
         </xsl:if>
       </xsl:variable>
 
-      <xsl:attribute name="suffix">
-        <xsl:value-of select="$suffix"/>
-      </xsl:attribute>
-      <xsl:attribute name="basic-url">
-        <xsl:value-of select="concat($previous-url, '/', @id)"/>
-      </xsl:attribute>
-      <xsl:attribute name="language-suffix">
-        <xsl:value-of select="$canonical-language-suffix"/>
-      </xsl:attribute>
-
-      <xsl:variable name="canonical-url">
-        <xsl:value-of select="concat($basic-url, $canonical-language-suffix, $suffix)"/>
-      </xsl:variable>
-
-      <xsl:variable name="non-canonical-url">
-        <xsl:value-of select="concat($basic-url, $language-suffix, $suffix)"/>
-      </xsl:variable>
-
-      <xsl:if test="$url = $canonical-url or $url = $non-canonical-url">
+      <xsl:if test="$currentPath = $path">
         <xsl:attribute name="current">true</xsl:attribute>
       </xsl:if>
 
@@ -196,12 +116,11 @@ Apply nodes recursively
           <xsl:when test="@href">
             <xsl:value-of select="@href"/>
           </xsl:when>
-          <xsl:when test="$relative = 'true' and $root = ''">
-            <xsl:value-of select="substring-after($canonical-url, '/')"/>
+          <xsl:when test="@uuid">
+            <xsl:text>lenya-document:</xsl:text>
+            <xsl:value-of select="@uuid"/>
+            <xsl:value-of select="$extensionParam"/>
           </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="concat($root, $canonical-url)"/>
-          </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
 
@@ -221,7 +140,7 @@ Apply nodes recursively
       </xsl:choose>
 
       <xsl:apply-templates select="tree:node">
-        <xsl:with-param name="previous-url" select="$basic-url"/>
+        <xsl:with-param name="parentPath" select="$path"/>
       </xsl:apply-templates>
 
     </nav:node>
