@@ -4,7 +4,7 @@
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:ci="http://apache.org/cocoon/include/1.0"
   >
   
   <page:head>
@@ -14,11 +14,6 @@
     <jx:set var="pubId" value="${java.util.Arrays.asList(steps).get(1)}"/>
     <link rel="stylesheet" href="${request.getContextPath()}/${pubId}/modules/bxe/bxe/css/editor.css" type="text/css"/>
     <script src="${request.getContextPath()}/${pubId}/modules/bxe/bxe/bxeLoader.js" type="text/javascript"/>
-    
-    <meta name="bxeNS" content="xhtml=http://www.w3.org/1999/xhtml"/>
-    <meta name="bxeNS" content="lenya=http://apache.org/cocoon/lenya/page-envelope/1.0"/>
-    <meta name="bxeNS" content="dc=http://purl.org/dc/elements/1.1/"/>
-    <meta name="bxeNS" content="dcterms=http://purl.org/dc/terms/"/>
   </page:head>
   
   <page:title><i18n:text>Bitflux Editor</i18n:text></page:title>
@@ -32,7 +27,7 @@
       </page:body>
     </jx:when>
     <jx:otherwise>
-      <page:body onload="bxe_start('${configFile}?lenya.module=bxe&amp;lenya.step=config&amp;lenya.continuation=${continuation.id}')">
+      <page:body onload="bxe_start('${configFile}?lenya.module=bxe&amp;lenya.step=config')">
     
         <!-- everything in the following div element will be replaced -->
         <div id="bxe_area">
