@@ -1,0 +1,904 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.9-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Creating a Resource Type, Part 3: Presentation</title>
+<link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../../skin/profile.css" rel="stylesheet">
+<script src="../../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="../../../../index.html">Project</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li class="current">
+<a class="selected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="unselected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="unselected" href="../../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Version 1.4</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../../docs/1_4/index.html">Index</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/faq.html">FAQs</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../../../skin/')" id="menu_1.1.3Title" class="menutitle">Installation</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Tutorials</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/newpublication/index.html">Create a Publication</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.4.2', '../../../../skin/')" id="menu_selected_1.1.4.2Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Create a Resource Type</div>
+<div id="menu_selected_1.1.4.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part1.html">Declaration</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part2.html">Creation</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Presentation</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part4.html">Editing (One-Form)</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part5.html">Editing (BXE)</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/setupide/index.html">Setting up Eclipse</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/tests.html">Writing Tests</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/bestpractises.html">Best Practises</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/production.html">Production Checklist</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5', '../../../../skin/')" id="menu_1.1.5Title" class="menutitle">Concepts</div>
+<div id="menu_1.1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/publication.html">Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/documents.html">Working with Documents</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/urlMapping.html">URL Mapping</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/authoring_live.html">Authoring and Live mode</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/wysiwyg.html">WYSIWYG</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6', '../../../../skin/')" id="menu_1.1.6Title" class="menutitle">Technical Reference</div>
+<div id="menu_1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/repository/index.html">Repository</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/ac.html">Access Control Specification</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6.4', '../../../../skin/')" id="menu_1.1.6.4Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.6.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6.5', '../../../../skin/')" id="menu_1.1.6.5Title" class="menutitle">Publications</div>
+<div id="menu_1.1.6.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/publication/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/publication/publication-templating/index.html">Publication Templating</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/resource-types.html">Resource Types</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/modules/index.html">Modules</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6.9', '../../../../skin/')" id="menu_1.1.6.9Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/site.html">site Protocol</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/link-management.html">Link Management</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/index.html">Core API</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8', '../../../../skin/')" id="menu_1.1.8Title" class="menutitle">Core Modules</div>
+<div id="menu_1.1.8" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.8.1', '../../../../skin/')" id="menu_1.1.8.1Title" class="menutitle">ac</div>
+<div id="menu_1.1.8.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/ac/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/ac/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.2', '../../../../skin/')" id="menu_1.1.8.2Title" class="menutitle">acusecases</div>
+<div id="menu_1.1.8.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/acusecases/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/acusecases/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.3', '../../../../skin/')" id="menu_1.1.8.3Title" class="menutitle">administration</div>
+<div id="menu_1.1.8.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/administration/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/administration/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.4', '../../../../skin/')" id="menu_1.1.8.4Title" class="menutitle">cache</div>
+<div id="menu_1.1.8.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/cache/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/cache/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.5', '../../../../skin/')" id="menu_1.1.8.5Title" class="menutitle">janitor</div>
+<div id="menu_1.1.8.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/janitor/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/janitor/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.6', '../../../../skin/')" id="menu_1.1.8.6Title" class="menutitle">ldap</div>
+<div id="menu_1.1.8.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/ldap/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/ldap/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.7', '../../../../skin/')" id="menu_1.1.8.7Title" class="menutitle">linking</div>
+<div id="menu_1.1.8.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/linking/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/linking/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.8', '../../../../skin/')" id="menu_1.1.8.8Title" class="menutitle">observation</div>
+<div id="menu_1.1.8.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/observation/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/observation/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.9', '../../../../skin/')" id="menu_1.1.8.9Title" class="menutitle">properties</div>
+<div id="menu_1.1.8.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/properties/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/properties/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.10', '../../../../skin/')" id="menu_1.1.8.10Title" class="menutitle">sitemanagement</div>
+<div id="menu_1.1.8.10" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/sitemanagement/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/sitemanagement/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.11', '../../../../skin/')" id="menu_1.1.8.11Title" class="menutitle">templating</div>
+<div id="menu_1.1.8.11" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/templating/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/templating/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.12', '../../../../skin/')" id="menu_1.1.8.12Title" class="menutitle">usecase</div>
+<div id="menu_1.1.8.12" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/usecase/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/usecase/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8.13', '../../../../skin/')" id="menu_1.1.8.13Title" class="menutitle">workflow</div>
+<div id="menu_1.1.8.13" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/workflow/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/workflow/index.html">API</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9', '../../../../skin/')" id="menu_1.1.9Title" class="menutitle">Standard Modules</div>
+<div id="menu_1.1.9" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.9.1', '../../../../skin/')" id="menu_1.1.9.1Title" class="menutitle">blog</div>
+<div id="menu_1.1.9.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/blog/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/blog/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.2', '../../../../skin/')" id="menu_1.1.9.2Title" class="menutitle">bxe</div>
+<div id="menu_1.1.9.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/bxe/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/bxe/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.3', '../../../../skin/')" id="menu_1.1.9.3Title" class="menutitle">cforms</div>
+<div id="menu_1.1.9.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/cforms/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/cforms/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.4', '../../../../skin/')" id="menu_1.1.9.4Title" class="menutitle">collection</div>
+<div id="menu_1.1.9.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/collection/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/collection/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.5', '../../../../skin/')" id="menu_1.1.9.5Title" class="menutitle">contactform</div>
+<div id="menu_1.1.9.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/contactform/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/contactform/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.6', '../../../../skin/')" id="menu_1.1.9.6Title" class="menutitle">development</div>
+<div id="menu_1.1.9.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/development/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/development/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.7', '../../../../skin/')" id="menu_1.1.9.7Title" class="menutitle">editors</div>
+<div id="menu_1.1.9.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/editors/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/editors/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.8', '../../../../skin/')" id="menu_1.1.9.8Title" class="menutitle">export</div>
+<div id="menu_1.1.9.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/export/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/export/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.9', '../../../../skin/')" id="menu_1.1.9.9Title" class="menutitle">fckeditor</div>
+<div id="menu_1.1.9.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/fckeditor/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/fckeditor/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.10', '../../../../skin/')" id="menu_1.1.9.10Title" class="menutitle">kupu</div>
+<div id="menu_1.1.9.10" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/kupu/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/kupu/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.11', '../../../../skin/')" id="menu_1.1.9.11Title" class="menutitle">languageselector</div>
+<div id="menu_1.1.9.11" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/languageselector/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/languageselector/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.12', '../../../../skin/')" id="menu_1.1.9.12Title" class="menutitle">lenyadoc</div>
+<div id="menu_1.1.9.12" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/lenyadoc/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/lenyadoc/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.13', '../../../../skin/')" id="menu_1.1.9.13Title" class="menutitle">linkcheck</div>
+<div id="menu_1.1.9.13" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/linkcheck/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/linkcheck/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.14', '../../../../skin/')" id="menu_1.1.9.14Title" class="menutitle">links</div>
+<div id="menu_1.1.9.14" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/links/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/links/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.15', '../../../../skin/')" id="menu_1.1.9.15Title" class="menutitle">lucene</div>
+<div id="menu_1.1.9.15" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/lucene/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/lucene/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.16', '../../../../skin/')" id="menu_1.1.9.16Title" class="menutitle">migration</div>
+<div id="menu_1.1.9.16" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/migration/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/migration/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.17', '../../../../skin/')" id="menu_1.1.9.17Title" class="menutitle">neutron</div>
+<div id="menu_1.1.9.17" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/neutron/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/neutron/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.18', '../../../../skin/')" id="menu_1.1.9.18Title" class="menutitle">news</div>
+<div id="menu_1.1.9.18" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/news/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/news/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.19', '../../../../skin/')" id="menu_1.1.9.19Title" class="menutitle">notification</div>
+<div id="menu_1.1.9.19" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/notification/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/notification/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.20', '../../../../skin/')" id="menu_1.1.9.20Title" class="menutitle">opendocument</div>
+<div id="menu_1.1.9.20" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/opendocument/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/opendocument/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.21', '../../../../skin/')" id="menu_1.1.9.21Title" class="menutitle">prettyprinting</div>
+<div id="menu_1.1.9.21" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/prettyprinting/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/prettyprinting/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.22', '../../../../skin/')" id="menu_1.1.9.22Title" class="menutitle">profiling</div>
+<div id="menu_1.1.9.22" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/profiling/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/profiling/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.23', '../../../../skin/')" id="menu_1.1.9.23Title" class="menutitle">resource</div>
+<div id="menu_1.1.9.23" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/resource/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/resource/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.24', '../../../../skin/')" id="menu_1.1.9.24Title" class="menutitle">simplesite</div>
+<div id="menu_1.1.9.24" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/simplesite/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/simplesite/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.25', '../../../../skin/')" id="menu_1.1.9.25Title" class="menutitle">sitetree</div>
+<div id="menu_1.1.9.25" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/sitetree/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/sitetree/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.26', '../../../../skin/')" id="menu_1.1.9.26Title" class="menutitle">sourcerepository</div>
+<div id="menu_1.1.9.26" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/sourcerepository/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/sourcerepository/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.27', '../../../../skin/')" id="menu_1.1.9.27Title" class="menutitle">svg</div>
+<div id="menu_1.1.9.27" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/svg/roundedcorners.html">Rounded Corners</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/modules/svg/resizeimages.html">Resizing Images</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/svg/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.28', '../../../../skin/')" id="menu_1.1.9.28Title" class="menutitle">tinymce</div>
+<div id="menu_1.1.9.28" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/tinymce/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/tinymce/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.29', '../../../../skin/')" id="menu_1.1.9.29Title" class="menutitle">usecasedocument</div>
+<div id="menu_1.1.9.29" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/usecasedocument/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/usecasedocument/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.30', '../../../../skin/')" id="menu_1.1.9.30Title" class="menutitle">webdav</div>
+<div id="menu_1.1.9.30" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/webdav/index.html">Getting started</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/modules/webdav/monitoring.html">Monitoring</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/modules/webdav/webdav.html">WebDAV Servers</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/webdav/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.31', '../../../../skin/')" id="menu_1.1.9.31Title" class="menutitle">xhtml</div>
+<div id="menu_1.1.9.31" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/xhtml/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/xhtml/index.html">API</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.9.32', '../../../../skin/')" id="menu_1.1.9.32Title" class="menutitle">xopus</div>
+<div id="menu_1.1.9.32" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/modules/xopus/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../apidocs/1.4/modules/xopus/index.html">API</a>
+</div>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="part3.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Creating a Resource Type, Part 3: Presentation</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#A+Basic+Presentation+Pipeline">A Basic Presentation Pipeline</a>
+</li>
+<li>
+<a href="#Adding+the+CSS">Adding the CSS</a>
+</li>
+<li>
+<a href="#Creating+our+First+Person+Document">Creating our First Person Document</a>
+</li>
+</ul>
+</div>
+
+    
+<a name="N1000E"></a><a name="A+Basic+Presentation+Pipeline"></a>
+<h2 class="h3">A Basic Presentation Pipeline</h2>
+<div class="section">
+<p>
+        Now the Lenya web application can create new person documents, but
+        it won't be able to render them as HTML pages (or anything else) yet.
+        In our resource type declaration we specified the format <em>xhtml</em>.
+        According to this specification, we'll setup a basic presentation pipeline
+        which converts our FoaF XML document to XHTML.
+      </p>
+<p>
+        First we'll add the sitemap (<span class="codefrag">$MODULE_HOME/sitemap.xmap</span>).
+        Note that some lines have been wrapped (marked with backslashes):
+      </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0"&gt;
+  &lt;map:pipelines&gt;
+    &lt;map:pipeline&gt;
+
+      &lt;!-- {format}.xml --&gt;
+      &lt;map:match pattern="*.xml"&gt;
+        &lt;map:generate src="cocoon:/{1}.xml/{page-envelope:publication-id}/ \
+          {page-envelope:area}/{page-envelope:document-uuid}/ \
+          {page-envelope:document-language}"/&gt;
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+      
+      &lt;!-- {format}.xml/{pubId}/{area}/{uuid}/{language} --&gt;
+      &lt;map:match pattern="*.xml/*/*/*/*"&gt;
+        &lt;map:generate src="lenya-document:{4},lang={5}{link:rev}"/&gt;
+        &lt;map:transform src="fallback://lenya/modules/person/xslt/foaf2xhtml.xsl"/&gt;
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+
+      &lt;!-- The icon for person nodes in the sitetree. --&gt;
+      &lt;map:match pattern="icon/*/*/*/*"&gt;
+        &lt;map:read src="fallback://lenya/modules/person/resources/icons/person.gif"/&gt;
+      &lt;/map:match&gt;
+      
+    &lt;/map:pipeline&gt;
+  &lt;/map:pipelines&gt;
+&lt;/map:sitemap&gt;
+      </pre>
+<p>
+        The sitemap uses an XSLT stylesheet <span class="codefrag">$MODULE_HOME/xslt/foaf2xhtml.xsl</span>
+        to render the XHTML view of the FoaF file:
+      </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns="http://www.w3.org/1999/xhtml"&gt;
+  
+  &lt;xsl:template match="rdf:RDF"&gt;
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;div id="body"&gt;
+          &lt;xsl:apply-templates select="foaf:Person"/&gt;
+        &lt;/div&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  &lt;/xsl:template&gt;
+  
+  &lt;xsl:template match="foaf:Person"&gt;
+    &lt;h2&gt;Person Details&lt;/h2&gt;
+    &lt;table class="person"&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Title:&lt;/th&gt;
+        &lt;td&gt;&lt;xsl:value-of select="foaf:title"/&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Given name:&lt;/th&gt;
+        &lt;td&gt;&lt;xsl:value-of select="foaf:givenname"/&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Family name:&lt;/th&gt;
+        &lt;td&gt;&lt;xsl:value-of select="foaf:family_name"/&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;E-Mail:&lt;/th&gt;
+        &lt;td&gt;
+          &lt;xsl:variable name="mbox" select="foaf:mbox/@rdf:resource"/&gt;
+          &lt;a href="{$mbox}"&gt;
+            &lt;xsl:value-of select="substring-after($mbox, 'mailto:')"/&gt;
+          &lt;/a&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Phone:&lt;/th&gt;
+        &lt;td&gt;
+          &lt;xsl:variable name="phone" select="foaf:phone/@rdf:resource"/&gt;
+          &lt;xsl:value-of select="substring-after($phone, 'tel:')"/&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Homepage:&lt;/th&gt;
+        &lt;td&gt;
+          &lt;xsl:variable name="homepage" select="foaf:workplaceHomepage/@rdf:resource"/&gt;
+          &lt;a href="{$homepage}"&gt;&lt;xsl:value-of select="$homepage"/&gt;&lt;/a&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</pre>
+</div>
+    
+    
+<a name="N1002F"></a><a name="Adding+the+CSS"></a>
+<h2 class="h3">Adding the CSS</h2>
+<div class="section">
+<p>
+        The default publication allows to add custom CSS files for each resource type.
+        We want to style our table headers a bit, so we add the file
+        <span class="codefrag">pubs/default/resources/shared/css/person.css</span> with the following content:
+      </p>
+<pre class="code">table.person { font-size: small; }
+table.person th {
+  font-weight: normal;
+  color: #999999;
+  text-align: left;
+  padding-right: 1em;
+}</pre>
+</div>
+    
+    
+<a name="N10040"></a><a name="Creating+our+First+Person+Document"></a>
+<h2 class="h3">Creating our First Person Document</h2>
+<div class="section">
+<p>
+        Now it's time to check out if everything works as expected. First, we build the
+        Lenya web application to deploy our new resource type. If Lenya is running, shut it down.
+        Go to <span class="codefrag">$LENYA_HOME</span> and execute
+      </p>
+<pre class="code">./build.sh</pre>
+<p>
+        When the build has finished, start the Jetty server:
+      </p>
+<pre class="code">./lenya.sh</pre>
+<p>
+        Now go to <a href="http://localhost:8888/default/authoring/index.html">http://localhost:8888/default/authoring/index.html</a>
+        and log in as user "lenya". The <em>File</em> menu should now contain an
+        item <em>New Person Document</em>. But before creating person documents,
+        we'll add a new top level XHTML document <em>People</em>: 
+      </p>
+<ul>
+        
+<li>File -&gt; New XHTML Document</li>
+        
+<li>Node Name: people</li>
+        
+<li>Navigation Title: People</li>
+      
+</ul>
+<p>
+        You end up on the <em>People</em> page. Now you can create a new person document
+        as a child of this document by selecting the <em>New Person Document</em> menu item:
+      </p>
+<div id="" style="text-align: center;">
+<img id="" class="figure" alt="Create a person document" src="../../../../images/live/resourcetype/create-screen.png"></div>
+<p>
+        After hitting OK, you're redirected to the newly created person document:
+      </p>
+<div id="" style="text-align: center;">
+<img id="" class="figure" alt="Person document" src="../../../../images/live/resourcetype/new-document.png"></div>
+<p>
+        In the <a href="../../../../docs/1_4/tutorials/resourcetype/part4.html">next section</a> we'll make our
+        person documents editable.
+      </p>
+</div>
+    
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/tutorials/resourcetype/part3.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

@@ -133,6 +133,24 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/newpublication/index.html">Create a Publication</a>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.2', '../../../skin/')" id="menu_1.1.4.2Title" class="menutitle">Create a Resource Type</div>
+<div id="menu_1.1.4.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part1.html">Declaration</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part2.html">Creation</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part3.html">Presentation</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part4.html">Editing (One-Form)</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part5.html">Editing (BXE)</a>
+</div>
+</div>
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
@@ -679,7 +697,16 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Preparation+%28Internal+Pilot+Phase%29">Preparation (Internal Pilot Phase)</a>
 </li>
 <li>
-<a href="#Production">Production</a>
+<a href="#Caching">Caching</a>
+</li>
+<li>
+<a href="#Performance+Tuning">Performance Tuning</a>
+</li>
+<li>
+<a href="#General+Measures+for+Production">General Measures for Production</a>
+</li>
+<li>
+<a href="#Cosmetics">Cosmetics</a>
 </li>
 </ul>
 </div>
@@ -779,8 +806,88 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N10059"></a><a name="Production"></a>
-<h2 class="h3">Production</h2>
+<a name="N10059"></a><a name="Caching"></a>
+<h2 class="h3">Caching</h2>
+<div class="section">
+<p>
+        There's a <a href="http://wiki.apache.org/cocoon-data/attachments/GT2006Notes/attachments/10-caching.pdf">great
+        presentation</a> (PDF) about caching in Cocoon, held at the Cocoon Get-Together 2006.
+      </p>
+<p>
+        Cocoon's default store implementation is an in-memory store backed by a disk
+        store (based on EHCache). You can configure this store using a file called
+        <span class="codefrag">ehcache.xml</span> which is located in <span class="codefrag">org/apache/cocoon/components/store/impl/ehcache.xml</span>.
+        The default entries of the <span class="codefrag">defaultCache</span> are as follows:
+      </p>
+<pre class="code">&lt;defaultCache
+    maxElementsInMemory="10000"
+    eternal="true"
+    timeToIdleSeconds="0"
+    timeToLiveSeconds="0"
+    overflowToDisk="true"
+    diskPersistent="true"
+    diskExpiryThreadIntervalSeconds="120"
+    /&gt;</pre>
+<p>
+        So, when <span class="codefrag">overflow-to-disk</span> is set to true, <span class="codefrag">eternal</span> to true and
+        <span class="codefrag">timeToIdleSeconds=0</span>, then once a cachekey is in memory/disk, it will never
+        be removed which might lead to a cache file becoming very large
+        (see also thread: <a href="http://java2.5341.com/msg/170235.html">http://java2.5341.com/msg/170235.html</a>).
+      </p>
+<p>
+        For production use these setting should be changed. A possible configuration might look like:
+      </p>
+<pre class="code">&lt;defaultCache
+    maxElementsInMemory="10000"
+    eternal="false"
+    timeToIdleSeconds="1800"
+    timeToLiveSeconds="3600"
+    overflowToDisk="true"
+    diskPersistent="true"
+    diskExpiryThreadIntervalSeconds="120"
+    /&gt;</pre>
+<p>
+        This cache contains a maximum in memory of 10000 elements, and will expire an element
+        if it is idle for more than 30 minutes and lives for more than 60 minutes. If there are
+        more than 10000 elements it will overflow to the disk cache.
+      </p>
+</div>
+    
+    
+<a name="N10091"></a><a name="Performance+Tuning"></a>
+<h2 class="h3">Performance Tuning</h2>
+<div class="section">
+<p>
+        The following hints can be considered to improve the performance of your application:
+      </p>
+<ul>
+        
+<li>Set XSLT caching (use-store) to true in <span class="codefrag">cocoon.xconf</span>.</li>
+        
+<li>Turn off reloading of sub-sitemaps.</li>
+        
+<li>Tips about Cocoon performance tuning: <a href="http://wiki.apache.org/cocoon/CocoonPerformance">http://wiki.apache.org/cocoon/CocoonPerformance</a>
+</li>
+        
+<li>Tips about Tomcat performance tuning: <a href="http://marc.theaimsgroup.com/?t=103598885300001&r=1&w=2">http://marc.theaimsgroup.com/?t=103598885300001&amp;r=1&amp;w=2</a>
+</li>
+      
+</ul>
+<p>
+        Doug Chestnut recommends to adapt the garbage collector to make use of all available CPU cores.
+        This can be done by adding the following to your JAVA options (for a machine with 4 cores):
+      </p>
+<pre class="code">-XX:+UseParallelGC -XX:ParallelGCThreads=4</pre>
+<p>   
+        You can also increase stack and heap size to make better use of available memory
+        (be careful not to starve other processes on the same machine, though):
+      </p>
+<pre class="code">-Xms512m -Xmx1024m</pre>
+</div>
+    
+    
+<a name="N100C1"></a><a name="General+Measures+for+Production"></a>
+<h2 class="h3">General Measures for Production</h2>
 <div class="section">
 <ul>
         
@@ -789,7 +896,20 @@ document.write("Last Published: " + document.lastModified);
         </li>
         
 <li>
-          Set the log level to <em>FATAL</em> or at least <em>ERROR</em>.
+          Remove the example publications (default and blog). If you use them as templates,
+          don't forget to remove the example users or change their passwords.
+        </li>
+        
+<li>
+          Set the log level to <em>FATAL</em> or at least <em>ERROR</em>. This makes the code
+          faster and prevents the log files from growing very large while keeping them comprehensible.
+          The log level can be configured in <span class="codefrag">$COCOON_HOME/src/webapp/WEB-INF/log4j.xconf</span> or ultimately
+          in <span class="codefrag">$LENYA_HOME/build/lenya/webapp/WEB-INF/log4j.xconf</span>.
+        </li>
+        
+<li>
+          Set the <em>debug</em> property in <span class="codefrag">src/targets/properties-build.xml</span> to <em>off</em>.
+          This way, the generated byte code will run faster.
         </li>
         
 <li>
@@ -816,6 +936,26 @@ document.write("Last Published: " + document.lastModified);
         </li>
       
 </ul>
+</div>
+    
+    
+<a name="N100FB"></a><a name="Cosmetics"></a>
+<h2 class="h3">Cosmetics</h2>
+<div class="section">
+<p>
+        In order to hide the default and blog publicatons from the root index page
+        (if you're not going to rewrite it anyway), you can set
+      </p>
+<pre class="code">--- lenya/src/pubs/blog/publication.xml (revision 452350)
++++ lenya/src/pubs/blog/publication.xml (working copy)
+@@ -17,11 +17,12 @@
+-&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true"&gt;
++&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false"&gt;</pre>
+<pre class="code">--- lenya/src/pubs/default/publication.xml      (revision 452350)
++++ lenya/src/pubs/default/publication.xml      (working copy)
+@@ -17,12 +17,13 @@
+-&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true"&gt;
++&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false"&gt;</pre>
 </div>
 
     

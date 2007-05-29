@@ -375,6 +375,9 @@ document.write("Last Published: " + document.lastModified);
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Added concurrency JMeter test case <a href="http://svn.apache.org/viewcvs.cgi?rev=540980&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] Converted 'About Lenya' page to usecase. This makes it independent from proxying. See bug 42050 for more information. <a href="http://svn.apache.org/viewcvs.cgi?rev=541590&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] Removed obsolete scheduler usecase handler <a href="http://svn.apache.org/viewcvs.cgi?rev=535150&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
@@ -694,8 +697,37 @@ This patch brings back the auth dialog.
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Show link to inbox also if no new message is received. See bug 42467 for more information. <a href="http://svn.apache.org/viewcvs.cgi?rev=541338&view=rev">Diff</a> 
        Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added workaround for Safari: getAttribute('xml:lang') doesn't work. This fixes bug 42391. <a href="http://svn.apache.org/viewcvs.cgi?rev=541578&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed layout of about page <a href="http://svn.apache.org/viewcvs.cgi?rev=541582&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Converted 'About Lenya' page to usecase. This makes it independent from proxying. See bug 42050 for more information. <a href="http://svn.apache.org/viewcvs.cgi?rev=541591&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] BUG 42496
+Removing 
+The entity "iexcl" was referenced, but not declared. <a href="http://svn.apache.org/viewcvs.cgi?rev=542177&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Use lenya-document:uuid URLs for navigation elements in sitetree module (see bug 42050) <a href="http://svn.apache.org/viewcvs.cgi?rev=542431&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed comment, removed unused parameter, fixed XSLT template parameter in sitetree module <a href="http://svn.apache.org/viewcvs.cgi?rev=542436&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed comments regarding navigation widgets <a href="http://svn.apache.org/viewcvs.cgi?rev=542442&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added note about updated navigation widgets to readme file <a href="http://svn.apache.org/viewcvs.cgi?rev=542454&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] BXE usecase: removed obsolete bxeNS declarations and continuation request parameter <a href="http://svn.apache.org/viewcvs.cgi?rev=542457&view=rev">Diff</a> 
+       Committed by andreas.</li>
 </ul>
-<a name="N104F1"></a><a name="Documentation"></a>
+<a name="N10573"></a><a name="Documentation"></a>
 <h3 class="h4">Documentation</h3>
 <ul>
 <li>
@@ -703,6 +735,12 @@ This patch brings back the auth dialog.
        Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[Documentation] Added production checklist <a href="http://svn.apache.org/viewcvs.cgi?rev=540905&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Documentation] Added tutorial about creating a resource type <a href="http://svn.apache.org/viewcvs.cgi?rev=541690&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Documentation] Added tutorial part about BXE editing <a href="http://svn.apache.org/viewcvs.cgi?rev=542467&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Show URL instead of source for resizing images <a href="http://svn.apache.org/viewcvs.cgi?rev=535289&view=rev">Diff</a> 
@@ -740,8 +778,47 @@ This patch brings back the auth dialog.
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Added more info about resource type formats <a href="http://svn.apache.org/viewcvs.cgi?rev=540451&view=rev">Diff</a> 
        Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added production hints from Wiki <a href="http://svn.apache.org/viewcvs.cgi?rev=541610&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] [minor change] Cocoon starts with a capital letter <a href="http://svn.apache.org/viewcvs.cgi?rev=541611&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added editing section to resource type tutorial <a href="http://svn.apache.org/viewcvs.cgi?rev=541705&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] [minor change] fixed wrong site identifier <a href="http://svn.apache.org/viewcvs.cgi?rev=541706&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added link from section 3 to 4 of resource type tutorial <a href="http://svn.apache.org/viewcvs.cgi?rev=541707&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] fixing link to uncommitted docu  <a href="http://svn.apache.org/viewcvs.cgi?rev=541751&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Fixing linking part2 <a href="http://svn.apache.org/viewcvs.cgi?rev=541882&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Explaining in short the concept of proxies in the publication configuration <a href="http://svn.apache.org/viewcvs.cgi?rev=542142&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added myself to list of committers <a href="http://svn.apache.org/viewcvs.cgi?rev=542384&view=rev">Diff</a> 
+       Committed by bobharner.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added missing part 4 of resource type tutorial <a href="http://svn.apache.org/viewcvs.cgi?rev=542424&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added docs about navigation widgets to sitetree module docs <a href="http://svn.apache.org/viewcvs.cgi?rev=542443&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added myself to list of committers <a href="http://svn.apache.org/viewcvs.cgi?rev=542581&view=rev">Diff</a> 
+       Committed by rfrovarp.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Adding note about tomcat and spaces <a href="http://svn.apache.org/viewcvs.cgi?rev=542584&view=rev">Diff</a> 
+       Committed by thorsten.</li>
 </ul>
-<a name="N105AC"></a><a name="Site"></a>
+<a name="N106F1"></a><a name="Site"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -756,11 +833,14 @@ This patch brings back the auth dialog.
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Site] Updating DOAP file to reflect latest release. Reported by Bob Harner. Thanks <a href="http://svn.apache.org/viewcvs.cgi?rev=537580&view=rev">Diff</a> 
        Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=541379&view=rev">Diff</a> 
+       Committed by thorsten.</li>
 </ul>
-<a name="N105E5"></a>
+<a name="N10737"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
-<p>This is a list of all people who participated as committers:<br> (andreas),  (nettings),  (thorsten).</p>
+<p>This is a list of all people who participated as committers:<br> (andreas),  (bobharner),  (nettings),  (rfrovarp),  (thorsten).</p>
 </div>
 </div>
 <!--+

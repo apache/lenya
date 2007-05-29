@@ -133,6 +133,24 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/newpublication/index.html">Create a Publication</a>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.2', '../../../skin/')" id="menu_1.1.4.2Title" class="menutitle">Create a Resource Type</div>
+<div id="menu_1.1.4.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part1.html">Declaration</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part2.html">Creation</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part3.html">Presentation</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part4.html">Editing (One-Form)</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/resourcetype/part5.html">Editing (BXE)</a>
+</div>
+</div>
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
@@ -670,6 +688,28 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>The sitetree Module</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introduction">Introduction</a>
+</li>
+<li>
+<a href="#Generating+Navigation+Elements">Generating Navigation Elements</a>
+</li>
+<li>
+<a href="#Architecture">Architecture</a>
+</li>
+<li>
+<a href="#Loading+a+Navigation+Widget">Loading a Navigation Widget</a>
+</li>
+<li>
+<a href="#Aggregating+the+Navigation+Widgets">Aggregating the Navigation Widgets</a>
+</li>
+<li>
+<a href="#Developing+Navigation+Widgets">Developing Navigation Widgets</a>
+</li>
+</ul>
+</div>
     
 <a name="N1000E"></a><a name="Introduction"></a>
 <h2 class="h3">Introduction</h2>
@@ -678,6 +718,214 @@ document.write("Last Published: " + document.lastModified);
         The <span class="codefrag">sitetree</span> module provides a tree-based site manager.
       </p>
 </div>
+    
+    
+<a name="N1001B"></a><a name="Generating+Navigation+Elements"></a>
+<h2 class="h3">Generating Navigation Elements</h2>
+<div class="section">
+<p>
+        One purpose of the sitetree module is to simplify and standardize the generation of navigation
+        widgets like menubars, tabs, and breadcrumb paths. It allows to
+      </p>
+<ul>
+        
+<li>
+          use pre-defined XHTML navigation components and present them
+          with a custom CSS,
+        </li>
+        
+<li>
+          override these components in a publication whereby the logic
+          can be reused, and
+        </li>
+        
+<li>
+          create and integrate new publication-specific navigation components
+          using the same scheme.
+        </li>
+      
+</ul>
+</div>
+    
+    
+<a name="N10031"></a><a name="Architecture"></a>
+<h2 class="h3">Architecture</h2>
+<div class="section">
+<p>
+        The navigation element mechanism consists of the following components:
+      </p>
+<dl>
+        
+<dt>
+<span class="codefrag">modules/sitetree/sitemap.xmap</span>
+</dt>
+        
+<dd>The sitemap where the navigation components are generated.<br>
+<br>
+</dd>
+        
+<dt>
+<span class="codefrag">modules/sitetree/xslt/navigation/*.xsl</span>
+</dt>
+        
+<dd>The default navigation components that are shipped with the sitetree module.<br>
+<br>
+</dd>
+        
+<dt>
+<span class="codefrag">{your-publication}/lenya/modules/sitetree/xslt/navigation/*.xsl</span>
+</dt>
+        
+<dd>Custom navigation components of the publication.<br>
+<br>
+</dd>
+      
+</dl>
+</div>
+    
+    
+<a name="N10059"></a><a name="Loading+a+Navigation+Widget"></a>
+<h2 class="h3">Loading a Navigation Widget</h2>
+<div class="section">
+<p>
+        You can load a navigation widget from the following URI:
+      </p>
+<pre class="code">cocoon://modules/sitetree/{widget}/{pub-id}/{area}/{default-lang}/{lang}{path}.xml</pre>
+<p>
+        The URI steps are:
+      </p>
+<dl>
+        
+<dt>
+<span class="codefrag">&lt;widget&gt;</span>
+</dt>
+        
+<dd>
+          The type of navigation widget to load (tabs, menu, etc.).
+          This will be the name of the XSLT which generates the widget.
+        </dd>
+        
+<dt>
+<span class="codefrag">&lt;pub-id&gt;</span>
+</dt>
+        
+<dd>
+          The publicaton ID of the current documen.
+        </dd>
+        
+<dt>
+<span class="codefrag">&lt;area&gt;</span>
+</dt>
+        
+<dd>
+          The area of the current document.
+        </dd>
+        
+<dt>
+<span class="codefrag">&lt;default-lang&gt;</span>
+</dt>
+        
+<dd>
+          The default language of the publication. We pass this value instead of determining
+          it in the module sitemap so that the generated widget doesn't contain any dynamics
+          which are not coded in the URL and therefore can be cached in the publication. 
+        </dd>
+        
+<dt>
+<span class="codefrag">&lt;lang&gt;</span>
+</dt>
+        
+<dd>
+          The language of the document.
+        </dd>
+        
+<dt>
+<span class="codefrag">&lt;path&gt;</span>
+</dt>
+        
+<dd>
+          The path of the current document in the site structure, starting with a slash.
+        </dd>
+      
+</dl>
+<p>
+        Here's an example navigation widget URL:
+      </p>
+<pre class="code">cocoon://modules/sitetree/tabs/mypub/authoring/en/de/foo/bar.xml</pre>
+</div>
+      
+      
+<a name="N1009E"></a><a name="Aggregating+the+Navigation+Widgets"></a>
+<h2 class="h3">Aggregating the Navigation Widgets</h2>
+<div class="section">
+<p>
+          In the publication sitemap (<span class="codefrag">{pub-id}/sitemap.xmap</span>)
+          the navigation widgets are aggregated. Here you decide which components
+          you want to use:
+        </p>
+<pre class="code">&lt;!-- navigation/{1:widget}/{2:pub-id}/{3:area}/{4:def-lang}/{5:lang}/{6:path} --&gt;
+&lt;map:match pattern="navigation-element/*/*/*/*/*/**"&gt;
+  &lt;map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml"/&gt;
+  &lt;map:serialize type="xml"/&gt;
+&lt;/map:match&gt;
+
+&lt;!-- /lenyabody-{1:rendertype}/{2:pub-id}/{3:area}/{4:doctype}/{5:def-lang}/{6:lang}/{7:path} --&gt;
+&lt;map:match pattern="lenyabody-raw-*/*/*/*/*/*/**"&gt;
+  &lt;map:aggregate element="cmsbody"&gt;
+    &lt;map:part src="cocoon:/navigation-element/breadcrumb/{2}/{3}/{5}/{6}/{7}"/&gt;
+    &lt;map:part src="cocoon:/navigation-element/tabs/{2}/{3}/{5}/{6}/{7}"/&gt;
+    &lt;map:part src="cocoon:/navigation-element/menu/{2}/{3}/{5}/{6}/{7}"/&gt;
+    &lt;map:part src="cocoon:/navigation-element/search/{2}/{3}/{5}/{6}/{7}"/&gt;
+    ...
+    &lt;map:part src="{resource-type:format-xhtml}?rendertype={1}"/&gt;
+  &lt;/map:aggregate&gt;
+  &lt;map:serialize type="xml"/&gt;
+&lt;/map:match&gt;</pre>
+</div>
+      
+    
+<a name="N100AE"></a><a name="Developing+Navigation+Widgets"></a>
+<h2 class="h3">Developing Navigation Widgets</h2>
+<div class="section">
+<p>
+        The following contracts define the development of navigation components:
+      </p>
+<ul>
+        
+<li>A navigation widget is generated by an XSLT stylesheet which is located at<br>
+<br>
+          
+<dl>
+            
+<dt>
+<span class="codefrag">modules/sitetree/xslt/navigation/{widget}.xsl</span>
+</dt>
+            
+<dd>for default components and<br>
+<br>
+</dd>
+            
+<dt>
+<span class="codefrag">lenya/pubs/&lt;publication-id&gt;/lenya/modules/sitetree/xslt/navigation/{widget}.xsl</span>
+</dt>
+            
+<dd>for publication-specific components, including the ones that override
+            the default components.<br>
+<br>
+</dd>
+          
+</dl>
+        
+</li>
+        
+<li>
+          The default widgets produce an XHTML fragment with the
+          top level element &lt;div class="{widget}"/&gt;.
+        </li>
+      
+</ul>
+</div>
+    
   
 </div>
 <!--+

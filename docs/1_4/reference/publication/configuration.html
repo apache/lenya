@@ -133,6 +133,24 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_4/tutorials/newpublication/index.html">Create a Publication</a>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.2', '../../../../skin/')" id="menu_1.1.4.2Title" class="menutitle">Create a Resource Type</div>
+<div id="menu_1.1.4.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part1.html">Declaration</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part2.html">Creation</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part3.html">Presentation</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part4.html">Editing (One-Form)</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/resourcetype/part5.html">Editing (BXE)</a>
+</div>
+</div>
 <div class="menuitem">
 <a href="../../../../docs/1_4/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
@@ -773,14 +791,22 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">  &lt;content-dir src="/home/USERNAME/data/default"/&gt;</pre>
 <p>
         The optional <span class="codefrag">proxies</span> section contains the proxy configuration
-        of this publication. For more information see <a href="../../../../docs/1_2_x/components/deployment/proxying.html">Proxying</a>.
+        of this publication. For more information see <a href="../../../../docs/1_2_x/components/deployment/proxying.html">Proxying</a> and the <a href="../../../../docs/1_2_x/tutorial/mod_proxy_and_lenya.html">turorial</a>.
       </p>
+<p> In short the idea of the following proxy snippet in the configuration is a rewrite of links.
+        Using proxies will prefix all absolute links (starting with
+        <strong>"/"</strong>) to absoult urls (the proxy host). </p>
 <pre class="code">  &lt;proxies&gt;
     &lt;proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/&gt;
     &lt;proxy area="live" ssl="false" url="http://www.host.com/default"/&gt;
     &lt;proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/&gt;
     &lt;proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/&gt;
   &lt;/proxies&gt;</pre>
+<p>Since we have the concept of areas we define the proxy per area and for the different
+        types of pages (ssl protected or not). For example if a link points to a document in the
+        live area and this document is ssl protected then it will be rewritten to
+        <span class="codefrag">"https://www.host.com/ssl/default{$link}"</span>. Where {$link} is the linked
+        document.</p>
 <pre class="code">&lt;/publication&gt;</pre>
 </div>
     
