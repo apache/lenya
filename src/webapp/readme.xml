@@ -35,6 +35,15 @@
     
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
+    <h3>2007-05-29: Using UUID-based URLs for navigation elements</h3>
+    <p>
+      Now the sitetree module uses <code>lenya-document:{uuid}</code> URLs for navigation elements.
+      Because no HTTP URLs are evaluated anymore, you need to pass the document's path instead
+      of URL to the navigation element calls, i.e. the step <code>/{6}</code> in the following call
+      has to be the document's path in the site structure: 
+    </p>
+    <source xml:space="preserve"><![CDATA[<map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml>]]></source>
+    
     <h3>2007-05-25: Converted "About Lenya" page to usecase</h3>
     <p>
       To enable the "About Lenya" usecase, please set the permissions for the <code>admin.aboutLenya</code>
