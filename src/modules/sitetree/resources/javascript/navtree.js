@@ -43,7 +43,7 @@ NavNode.prototype.createNewNode = function(node)
   
     newItem.isfolder = isNodeFolder(node);
     newItem.area = this.area;
-    newItem.path = node.getAttribute('basic-url');
+    newItem.path = node.getAttribute('path');
     newItem.uuid = node.getAttribute('uuid');
     newItem.isprotected = isNodeProtected(node);
     newItem.href = node.getAttribute('href');

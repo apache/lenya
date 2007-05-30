@@ -93,10 +93,11 @@ Apply nodes recursively
       <xsl:copy-of select="@protected"/>
       <xsl:copy-of select="@folder"/>
       <xsl:copy-of select="@uuid"/>
-
+      
       <!-- base path - for all nodes -->
 
       <xsl:variable name="path" select="concat($parentPath, '/', @id)"/>
+      <xsl:attribute name="path"><xsl:value-of select="$path"/></xsl:attribute>
 
       <!-- suffix - only when @href is not present -->
 

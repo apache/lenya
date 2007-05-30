@@ -21,7 +21,12 @@
   xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:transformer name="uuid2url" logger="lenya.sitemap.transformer.uuid2url"
-    src="org.apache.lenya.cms.cocoon.transformation.UuidToUrlTransformer"/>
+    src="org.apache.lenya.cms.cocoon.transformation.UuidToUrlTransformer">
+    <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="object" attribute="data"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="img" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="link" attribute="href"/>
+  </map:transformer>
     
   <map:transformer name="url2uuid" logger="lenya.sitemap.transformer.url2uuid"
     src="org.apache.lenya.cms.cocoon.transformation.UrlToUuidTransformer"/>
