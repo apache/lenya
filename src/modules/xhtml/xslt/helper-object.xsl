@@ -38,7 +38,7 @@
             <xsl:when test="starts-with(@data, 'lenya-document:')">
               <xsl:value-of select="@data"/>
             </xsl:when>
-            <xsl:when test="not(starts-with(@data, '/'))">
+            <xsl:when test="not(starts-with(@data, '/') or starts-with(@data, 'http://'))">
               <xsl:value-of select="$nodeid"/>/<xsl:value-of select="@data"/>
             </xsl:when>
             <xsl:otherwise>            
