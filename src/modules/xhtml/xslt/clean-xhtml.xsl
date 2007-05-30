@@ -31,6 +31,23 @@
     </xsl:copy>
   </xsl:template>
   
+  <!-- Prevents empty titles from interfering with IE during editing -->
+  <xsl:template match="xhtml:title">
+    <xsl:param name="title" select="." />
+    <xsl:choose>
+      <xsl:when test="string-length($title) = 0">
+        <xhtml:title>&#160;</xhtml:title>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:apply-templates />
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+
   <!-- Remove tag that disables Firefox spell check in FCK -->
   <xsl:template match="xhtml:body[@spellcheck]" >
     <xsl:copy>
