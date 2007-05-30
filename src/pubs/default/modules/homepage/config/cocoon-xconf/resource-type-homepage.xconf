@@ -31,6 +31,7 @@
     <sample-name>fallback://lenya/modules/homepage/samples/homepage.xml</sample-name>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@data"/>
+    <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@src"/>
     <format name="xhtml" uri="cocoon://modules/homepage/xhtml.xml"/>
     <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index"/>
     <format name="webdavGET" uri="cocoon://modules/xhtml/davget.xml"/>
