@@ -64,8 +64,8 @@ import org.xml.sax.helpers.AttributesImpl;
  * 
  * <p>
  * This transformer is applied to an XHMTL document. It processes all links
- * following the {@link LinkResolver} syntax which are denoted by
- * {@link org.apache.lenya.cms.publication.ResourceType#getLinkAttributeXPaths()}.
+ * following the {@link LinkResolver} syntax which are configured using
+ * <code>&lt;transform/&gt;</code> elements (see below).
  * </p>
  * <p>
  * These links are resolved using the following rules:
@@ -90,15 +90,17 @@ import org.xml.sax.helpers.AttributesImpl;
  * either configure this when declaring the transformer:
  * </p>
  * <code><pre>
- *   &lt;map:transformer ... &gt;
- *     &lt;urls type=&quot;relative&quot;/&gt;
- *   &lt;/map:transformer&gt;
+ * &lt;map:transformer ... &gt;
+ *   &lt;urls type="relative"/&gt;
+ *   &lt;transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/&gt;
+ *   &lt;transform namespace="..." ... /&gt;
+ * &lt;/map:transformer&gt;
  * </pre></code>
  * <p>
  * or pass a parameter:
  * </p>
  * <code><pre>
- *  &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
+ * &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
  * </pre></code>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
@@ -261,8 +263,8 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
     protected static final String[] elementNames = { "a", "object", "img", "link" };
     protected static final String[] attributeNames = { "href", "src", "data" };
 
-    protected AttributeConfiguration[] getMatchingConfigurations(String namespace, String localName,
-            Attributes attrs) {
+    protected AttributeConfiguration[] getMatchingConfigurations(String namespace,
+            String localName, Attributes attrs) {
         List configs = new ArrayList();
         for (Iterator i = this.attributeConfigurations.iterator(); i.hasNext();) {
             AttributeConfiguration config = (AttributeConfiguration) i.next();
@@ -270,7 +272,8 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
                 configs.add(config);
             }
         }
-        return (AttributeConfiguration[]) configs.toArray(new AttributeConfiguration[configs.size()]);
+        return (AttributeConfiguration[]) configs
+                .toArray(new AttributeConfiguration[configs.size()]);
     }
 
     /**
@@ -288,9 +291,9 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
         }
 
         AttributesImpl newAttrs = null;
-        
+
         AttributeConfiguration[] configs = getMatchingConfigurations(uri, name, attrs);
-        
+
         if (configs.length > 0) {
 
             this.ignoreLinkElement = false;
@@ -533,7 +536,7 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
             getLogger().debug(this.indent + "</" + qname + ">");
         }
         boolean matches = false;
-        for (Iterator i = this.attributeConfigurations.iterator(); i.hasNext(); ) {
+        for (Iterator i = this.attributeConfigurations.iterator(); i.hasNext();) {
             AttributeConfiguration config = (AttributeConfiguration) i.next();
             if (config.namespace.equals(uri) && config.element.equals(name)) {
                 matches = true;
