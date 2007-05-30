@@ -22,10 +22,10 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 
 <!-- $Id$ -->
   <head>
-    <title>Ressource Type Examples</title>
+    <title>Resource Type Examples</title>
   </head>
   <body>
-    <h1>Ressource Type Examples</h1>
+    <h1>Resource Type Examples</h1>
 
 <p>
 The default publication comes with the <a href="/default/authoring/doctypes/xhtml-document.html">XHTML resource type</a>,
