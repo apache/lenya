@@ -35,6 +35,8 @@
     <format name="xhtml" uri="cocoon://modules/homepage/xhtml.xml"/>
     <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index"/>
     <format name="webdavGET" uri="cocoon://modules/xhtml/davget.xml"/>
+    <!-- "xslt-clean" format is used by webDAV (and other editors?) to "clean" xml content before it is validated/saved -->
+    <format name="xslt-clean" uri="fallback://lenya/modules/homepage/xslt/clean-homepage.xsl"/>
   </component-instance>
 
 </xconf>
