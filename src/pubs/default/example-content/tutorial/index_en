@@ -77,7 +77,7 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     
     <h2>Lenya Meta Data</h2>
     
-    <p>The LenyaMetaDataGenerator lets you receive the metada for any given document. In
+    <p>The LenyaMetaDataGenerator lets you receive the meta data for any given document. In
       this pub there is an example in the sitemap.xmap (pattern="meta") it only should
       demonstrate one possible usage (you would need to edit this match for your own use case).
       See the meta data from this page with <a href="meta?docid=/tutorial&amp;lang=en">
