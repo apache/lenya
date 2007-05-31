@@ -196,7 +196,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 <li> Lenya uses Unit Tests to discover regressions in the code.
 </li>
-<li> A publication API defines a interface for common CMS operations.
+<li> A publication API defines an interface for common CMS operations.
 </li>
 <li> A "fallback" mechanism allows you to selectively override core functionality in your site where needed. 
     Default implementations are provided for convenience and ease of development.
