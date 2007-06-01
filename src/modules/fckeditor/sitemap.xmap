@@ -79,8 +79,6 @@
         <map:transform type="uuid2url">
           <map:parameter name="urls" value="absolute"/>
         </map:transform>
-        <map:transform
-          src="fallback://lenya/modules/fckeditor/resources/xslt/content2edit.xsl"/>
         <map:serialize type="xml-get"/>
       </map:match>
 
