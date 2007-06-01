@@ -39,7 +39,7 @@
     <!-- search pipeline -->
     <map:pipeline>
       
-      <!-- {pub-id}/{area}{uuid}/{language} -->
+      <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="metadata/*/*/*/*">
         <map:generate type="lenyaMetaData">
           <map:parameter name="pubid" value="{1}"/>
@@ -50,7 +50,7 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- {pub-id}/{area}{uuid}/{language} -->
+      <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
         <map:aggregate element="cmsbody">
           <map:part src="lenyadoc://{1}/{2}/{4}/{3}"/>
