@@ -125,6 +125,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="tlp-HEAD.svn.html">log HEAD</a>
 </div>
 <div class="menuitem">
+<a href="tlp-2007-05.svn.html">log 2007-05</a>
+</div>
+<div class="menuitem">
 <a href="tlp-2007-04.svn.html">log 2007-04</a>
 </div>
 <div class="menuitem">
@@ -377,14 +380,14 @@ document.write("Last Published: " + document.lastModified);
 <p>
 <img alt="Screenshot of the Apache Lenya menu bar" src="images/menubar.png"></p>
 <p>
-Apache Lenya is an Open Source Java/XML Content Management System and comes with revision control, site management, scheduling, search, WYSIWYG editors, and workflow.
+Apache Lenya is an Open Source Java/XML Content Management System and comes with revision control, multi-site management, scheduling, search, WYSIWYG editors, and workflow.
 Please see some <a href="screenshots.html">screenshots</a> or try the <a href="http://lenya.zones.apache.org:8888/">Demo</a>.</p>
 
     
 <a name="N1001D"></a><a name="download"></a>
 <h2 class="h3">Downloads</h2>
 <div class="section">
-<p>Current stable version of Apache Lenya is 1.2.5. This is the recommended version for production. You will at least need the Java 2 Platform, Standard Edition, version 1.4.2. Please follow the <a href="docs/1_2_x/installation/source_version.html">installation instructions</a>.</p>
+<p>The current stable version of Apache Lenya is 1.2.5. This is the recommended version for production use. You will at least need the Java 2 Platform, Standard Edition, version 1.4.2. Please follow the <a href="docs/1_2_x/installation/source_version.html">installation instructions</a>.</p>
 <ul>
     	
 <li>Lenya 1.2.5 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.5-bin.exe">Windows binary</a> (Windows Installer) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.5-bin.exe.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.5-bin.exe.md5">MD5 Checksum</a>
@@ -404,8 +407,8 @@ Please see some <a href="screenshots.html">screenshots</a> or try the <a href="h
     
 </ul>
 <p>The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more information on ASC Signatures and MD5 checksums</a>.</p>
-<p>Please go to the <a href="docs/1_2_x/installation/index.html">download section</a> of version 1.2 for more download options such as SVN.</p>
-<p>You may want to <a href="docs/1_4/installation/index.html">download</a> the current development version 1.4, which is still under heavy development and should not be used for production yet.</p>
+<p>Please go to the <a href="docs/1_2_x/installation/index.html">download section</a> of version 1.2 for more download options such as Subversion.</p>
+<p>You may also <a href="docs/1_4/installation/index.html">download 1.4</a>, the current development version, although this is still under heavy development and should not be used for production yet.</p>
 </div>
 		
 		
@@ -422,10 +425,10 @@ features listed below, you have access to all <a href="http://cocoon.apache.org/
 			</h3>
 <ul>
 
-<li> Browser-based WYSIWYG Editors that validate input against a Relax
+<li> Browser-based WYSIWYG Editors are provided that validate input against a RELAX
 NG Schema. This prevents invalid markup as produced by other WYSIWYG
-editors, and allows to enforce web site style guidelines. ships with the <a href="http://bxe.oscom.org">BXE</a> 
-and <a href="http://kupu.oscom.org">Kupu</a> editors out of the box. Asset management 
+editors and enables enforcement of web site style guidelines. Lenya ships with the <a href="http://bxe.oscom.org">BXE</a> 
+and <a href="http://kupu.oscom.org">Kupu</a> editors out of the box.  Asset management 
 and link management are integrated into BXE and Kupu.
 </li>
 
@@ -437,7 +440,7 @@ and link management are integrated into BXE and Kupu.
     to the same page.
 </li>
 
-<li> Each edit of a page creates a new revision. It is possible to revert to any previous revision of a page.
+<li> Each edit of a page creates a new revision, and you can revert to any previous revision of a page.
 </li>
 		 
 </ul>
@@ -447,14 +450,14 @@ and link management are integrated into BXE and Kupu.
 			</h3>
 <ul>
 
-<li> A customizable workflow engine that uses an easy XML format to define workflows. 
+<li> Lenya includes a customizable workflow engine that uses an easy XML format to define workflows. 
     Standard one- and two-stage workflows are included. Users can be notified by email about pending approvals.
 </li>
 
 <li> Workflow events such as publishing or deactivating a page can be scheduled.
 </li>
 
-<li>Supports separate authoring, staging and live areas. For convenience, the staging area is 
+<li>Separate authoring, staging and live areas are supported. For convenience, the staging area is 
     disabled by default.
 </li>
 
@@ -472,7 +475,7 @@ and link management are integrated into BXE and Kupu.
     displays your page in the default languge if it is not available in a specific language.
 </li>
 
-<li> The user interface is currently localized in spanish, italian, french, german, english, dutch and japanese.
+<li> The user interface is currently localized in Spanish, Italian, French, German, English, Dutch and Japanese.
 </li>
 
 </ul>
@@ -482,25 +485,25 @@ and link management are integrated into BXE and Kupu.
 			</h3>
 <ul>
 
-<li> The publications concept allows reuse of the information architecture of a site and brings modularity 
-    to the content level. Different publications can share content and business logic, and new 
+<li> The "publications" concept allows reuse of the information architecture of a site and brings modularity 
+    to the content level. Different publications (sites) can share content and business logic, and new 
     publications can be created with a cloning process.
 </li>
 
-<li>Supports XHTML+CSS templating, eliminating the need to learn yet another templating language. 
-    Wherever possible, uses CSS for styling, therefore enforcing the separation of content and layout.
+<li> XHTML+CSS templating is supported, eliminating the need to learn yet another templating language. 
+    Wherever possible, Lenya uses CSS for styling, thereby enforcing the separation of content and layout.
 
 </li>
 
 <li>The navigation framework automatically creates navigation items such as menus, breadcrumb paths and tabs. 
-    A sitemap can be easily created.
+    A site map can be easily created.
 </li>
 
-<li>Produces clean URLs without request parameters and is thus optimally accessible for search engines.
+<li>Lenya produces clean URLs without request parameters and is thus optimally accessible to search engines.
 </li>
 
 <li>There are no restrictions on the nesting of templates. You can use 
-    any template you have defined at any level of your site structure thanks to the URI parametrizer.
+    any template you have defined at any level of your site structure thanks to the URI parameterizer.
 </li>
 
 </ul>
@@ -510,8 +513,8 @@ and link management are integrated into BXE and Kupu.
 			</h3>
 <ul>
 
-<li>Allows you to move, copy, rename, archive or delete individual pages or whole parts 
-    of your site within an easy to use site view that shows you the pages of your site in an explorer-like view.
+<li>You can move, copy, rename, archive or delete individual pages or whole parts 
+    of your site with an easy to use site view that shows you the pages of your site in an explorer-like view.
 </li>
 
 <li> Each page has tabs for easy access to meta data, assets, workflow status, revisions, access control 
@@ -525,7 +528,7 @@ and link management are integrated into BXE and Kupu.
 <li> Deleted pages can be retrieved from the trash.
 </li>
 
-<li> Each page can have Dublin Core metadata assigned. Other metadata standards can easily be added if required.
+<li> Each page can have Dublin Core metadata assigned. Other metadata standards can be added if required.
 </li>
 
 <li> Asset management allows you to keep track of images and documents that belong to a page.
@@ -535,15 +538,15 @@ and link management are integrated into BXE and Kupu.
     user has no access to it. Link management also warns users about broken links when they publish a page.
 </li>
 
-<li>Checks if parent pages of a page to be published are already live to avoid inconsistent sites.
+<li> Before publishing a page, Lenya checks whether parent pages are already published, to avoid inconsistent sites.
 
 </li>
 
 <li>Deployment is flexible: Sites can be served dynamically by the authoring server (for small deployments) 
-    or another servlet container. It is also possible to export content statically or to use Apache as a proxy.
+    or another servlet container. It is also possible to export content statically or to use Apache HTTP Server as a proxy.
 </li>
 
-<li>If used with a reverse proxy, can be configured to rewrite URLs based on the site structure of 
+<li>If used with a reverse proxy, URLs can be rewritten based on the site structure of 
     the live site.
 </li>
 
@@ -554,13 +557,13 @@ and link management are integrated into BXE and Kupu.
 			</h3>
 <ul>
 
-<li> Each page or parts of your site can be protected by SSL. Protect just the parts of your site that need 
+<li> Each page or parts of your site can be protected by SSL. You can protect just the parts of your site that need 
     protection for best performance.
 </li>
 
-<li> The access control allows you to restrict access to parts of your site to members of a group or 
-    individuals. You can also restrict specific functionalities, such as editing, approval or 
-    administrative features.
+<li> The access control mechanism allows you to restrict access to parts of your site to members of a group or 
+    individuals. You can restrict access by function, such as viewing, editing, approval or 
+    administration.
 </li>
 
 
@@ -577,10 +580,10 @@ and link management are integrated into BXE and Kupu.
 			</h3>
 <ul>
 
-<li> A Windows Installer makes installation on windows a 3-click process.
+<li> A Windows Installer makes installation on Windows a 3-click process.
 </li>
 
-<li> Apache Lucene is integrated for full-text and field search.
+<li> Apache Lucene is integrated for full-text and fielded searching.
 
 </li>
 
@@ -591,21 +594,21 @@ and link management are integrated into BXE and Kupu.
 			</h3>
 <ul>
 
-<li>Based on Apache Cocoon. All Cocoon components can be used to develop customized functionality.
+<li> Lenya is based on Apache Cocoon. All Cocoon components can be used to develop customized functionality.
 </li>
 
-<li> Unit Tests help to discover regressions in the code.
+<li> Lenya uses Unit Tests to discover regressions in the code.
 </li>
 
-<li> A publication API that defines a interface for common CMS operations.
+<li> A publication API defines an interface for common CMS operations.
 </li>
 
-<li> A fallback concept allows you to selectively override core functionality in your site where needed. 
+<li> A "fallback" mechanism allows you to selectively override core functionality in your site where needed. 
     Default implementations are provided for convenience and ease of development.
 
 </li>
 
-<li>Uses Ant for portable scripting.
+<li>Ant is used for portable scripting.
 </li>
 
 </ul>
@@ -628,7 +631,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="copyright">
         Copyright &copy;
-         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+         2002-2007 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
 </div>
 <div id="logos"></div>
 <div id="feedback">
