@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<log>
+<logentry
+   revision="543517">
+<author>rfrovarp</author>
+<date>2007-06-01T15:54:11.658810Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/fckeditor/resources/xslt</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/modules/fckeditor/resources/xslt/content2edit.xsl</path>
+</paths>
+<msg>Transforms object tags into img tags so that FCKEditor can correctly identify images for modification. XSL modified from Kupu.
+</msg>
+</logentry>
+<logentry
+   revision="543530">
+<author>rfrovarp</author>
+<date>2007-06-01T16:55:28.600813Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/sitemap.xmap</path>
+</paths>
+<msg>Minor: fixed comments
+</msg>
+</logentry>
+<logentry
+   revision="543595">
+<author>rfrovarp</author>
+<date>2007-06-01T20:23:48.509761Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/fckeditor/resources/xslt</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
+</paths>
+<msg>Removing until licensing is cleared up.
+</msg>
+</logentry>
+<logentry
+   revision="544033">
+<author>bobharner</author>
+<date>2007-06-04T02:21:06.408835Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/installation/index.xml</path>
+</paths>
+<msg>Updated to point to 1.2.5 as the current version for download.
+The changed paragraph is copied from the site home page.
+Thanks to Richard Frovarp for pointing out the error.</msg>
+</logentry>
+</log>
