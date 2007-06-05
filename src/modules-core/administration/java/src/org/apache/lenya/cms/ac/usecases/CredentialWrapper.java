@@ -113,7 +113,7 @@ public class CredentialWrapper {
     
     protected static final String USER = "user";
     protected static final String GROUP = "group";
-    protected static final String IPRANGE = "iprange";
+    protected static final String IPRANGE = "ipRange";
     
     private String type;
     private String accreditableId;
