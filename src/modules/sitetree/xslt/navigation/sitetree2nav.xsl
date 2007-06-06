@@ -28,6 +28,9 @@
   <xsl:param name="chosenlanguage"/>
   <xsl:param name="defaultlanguage"/>
   <xsl:param name="currentPath"/>
+  
+  <!-- force a specific extension for node URLs -->
+  <xsl:param name="extension"/>
 
 
   <xsl:template match="tree:fragment">
@@ -102,10 +105,14 @@ Apply nodes recursively
       <!-- suffix - only when @href is not present -->
 
       <xsl:variable name="extensionParam">
-        <xsl:if test="@suffix">
-          <xsl:text>?uuid2url.extension=</xsl:text>
-          <xsl:value-of select="@suffix"/>
-        </xsl:if>
+        <xsl:choose>
+          <xsl:when test="$extension">
+            <xsl:text>?uuid2url.extension=</xsl:text><xsl:value-of select="$extension"/>
+          </xsl:when>
+          <xsl:when test="@suffix">
+            <xsl:text>?uuid2url.extension=</xsl:text><xsl:value-of select="@suffix"/>
+          </xsl:when>
+        </xsl:choose>
       </xsl:variable>
 
       <xsl:if test="$currentPath = $path">

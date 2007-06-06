@@ -125,6 +125,7 @@ This sitemap creates default navigation components.
         <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/sitetree2nav.xsl" label="navtree">
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          <map:parameter name="extension" value="html"/>
         </map:transform>
         <map:transform type="uuid2url-sitetree"/>
         <map:serialize type="xml"/>
