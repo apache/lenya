@@ -206,23 +206,21 @@ public class SourceNodeRCML implements RCML {
     private long lastModified = 0;
 
     protected Document getDocument() throws RevisionControlException {
-        if (this.xml == null) {
-            try {
-                String uri = getRcmlSourceUri();
-                if (SourceUtil.exists(uri, this.manager)) {
-                    long sourceLastModified = SourceUtil.getLastModified(uri, manager);
-                    if (this.xml == null || sourceLastModified > this.lastModified) {
-                        this.xml = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
-                        this.lastModified = sourceLastModified;
-                    }
+        try {
+            String uri = getRcmlSourceUri();
+            if (SourceUtil.exists(uri, this.manager)) {
+                long sourceLastModified = SourceUtil.getLastModified(uri, manager);
+                if (this.xml == null || sourceLastModified > this.lastModified) {
+                    this.xml = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
+                    this.lastModified = sourceLastModified;
                 }
-                else {
-                    this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
-                }
-            } catch (Exception e) {
-                throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
-                        + "]");
             }
+            else {
+                this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
+            }
+        } catch (Exception e) {
+            throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
+                    + "]");
         }
         return this.xml;
     }
