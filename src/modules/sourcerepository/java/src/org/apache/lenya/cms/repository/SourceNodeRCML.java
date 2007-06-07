@@ -23,6 +23,7 @@ package org.apache.lenya.cms.repository;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -105,11 +107,9 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public synchronized void write() throws Exception {
-        if (getDocument() == null) {
-            throw new IllegalStateException("The XML for RC source [" + getRcmlSourceUri()
-                    + "] is null!");
-        }
-        SourceUtil.writeDOM(getDocument(), getRcmlSourceUri(), this.manager);
+        Document xml = getDocument();
+        Assert.notNull("XML document", xml);
+        SourceUtil.writeDOM(xml, getRcmlSourceUri(), this.manager);
         clearDirty();
     }
 
@@ -123,7 +123,7 @@ public class SourceNodeRCML implements RCML {
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
-    public void checkOutIn(short type, String identity, long time, boolean backup)
+    public synchronized void checkOutIn(short type, String identity, long time, boolean backup)
             throws IOException, Exception {
 
         Document doc = getDocument();
@@ -216,7 +216,9 @@ public class SourceNodeRCML implements RCML {
                 }
             }
             else {
-                this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
+                if (this.xml == null) {
+                    this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
+                }
             }
         } catch (Exception e) {
             throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
@@ -413,7 +415,8 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public void pruneEntries() throws Exception {
-        Element parent = getDocument().getDocumentElement();
+        Document doc = getDocument();
+        Element parent = doc.getDocumentElement();
         NodeList entries = XPathAPI.selectNodeList(parent,
                 "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
 
@@ -429,6 +432,7 @@ public class SourceNodeRCML implements RCML {
             // remove the entry from the list
             current.getParentNode().removeChild(current);
         }
+        setDirty();
     }
 
     protected void deleteBackup(SourceWrapper wrapper, long time) throws ServiceException,
@@ -465,6 +469,7 @@ public class SourceNodeRCML implements RCML {
      */
     protected void setDirty() {
         this.dirty = true;
+        this.lastModified = new Date().getTime();
     }
 
     /**
