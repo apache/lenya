@@ -83,6 +83,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ELEMENT_CONTENT_DIR = "content-dir";
     private static final String ATTRIBUTE_SRC = "src";
     private static final String ELEMENT_PROXIES = "proxies";
+    private static final String ATTRIBUTE_ROOT = "root";
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
@@ -179,6 +180,16 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
             Configuration proxyConfig = config.getChild(ELEMENT_PROXIES);
             if (proxyConfig != null) {
+              // root/global proxy 
+              String urlRoot=proxyConfig.getAttribute(ATTRIBUTE_ROOT,null);
+              String sslRoot = proxyConfig.getAttribute(ATTRIBUTE_SSL,null);
+              if (urlRoot!=null & sslRoot!=null){
+                Proxy rootProxy = new Proxy();
+                rootProxy.setUrl(urlRoot);
+                Object rootKey = getProxyKey(ATTRIBUTE_ROOT, Boolean.valueOf(sslRoot).booleanValue());
+                this.areaSsl2proxy.put(rootKey, rootProxy);
+              }
+              // Area proxies
                 Configuration[] proxyConfigs = proxyConfig.getChildren(ELEMENT_PROXY);
                 for (int i = 0; i < proxyConfigs.length; i++) {
                     String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);

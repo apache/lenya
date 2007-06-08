@@ -28,4 +28,10 @@
        <untranslated-text>untranslated</untranslated-text>
        <cache-at-startup>true</cache-at-startup>
     </map:transformer>
+    <map:transformer name="pattern" 
+       src="org.apache.cocoon.transformation.PatternTransformer" 
+       logger="sitemap.transformer.pattern">
+       <parameter name="groups" value="true"/>
+    </map:transformer>
+    <map:transformer name="proxy" logger="lenya.sitemap.transformer.proxy" src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer"/>
 </xmap>

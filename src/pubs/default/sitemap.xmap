@@ -85,7 +85,7 @@
     </map:pipeline>
 
     <map:pipeline>
-    
+
       <map:match pattern="**">
         <map:match pattern="webdav**">
           <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>    
@@ -306,6 +306,7 @@
                     </map:select>
                     <!-- pretty-print output for easier debugging and for the benefit of new users -->
                     <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
+                    <map:transform type="proxy"/>
                     <map:serialize type="xhtml"/>
                   </map:otherwise>
                 </map:select>

@@ -45,6 +45,30 @@
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>
     </map:resource>
+    <map:resource name="proxy-css">
+      <map:act type="resource-exists"
+        src="{url}.xml">
+        <map:generate src="{../url}.xml"/>
+        <map:transform src="fallback://lenya/resources/css/css.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="root"
+            value="{base-url:{page-envelope:publication-id}:{page-envelope:area}:false}"/>
+        </map:transform>
+        <map:call resource="prepare-proxy-css"/>
+      </map:act>
+      <map:generate type="text" src="{url}.css"/>
+      <map:call resource="prepare-proxy-css"/>
+    </map:resource>
+    <map:resource name="prepare-proxy-css">
+      <map:transform type="pattern"
+        src="fallback://lenya/chaperon/grammars/link.xlex"/>
+      <map:transform
+        src="fallback://lenya/chaperon/stylesheets/pattern-to-link.xsl"/>
+      <map:transform type="proxy"/>
+      <map:transform
+        src="fallback://lenya/chaperon/stylesheets/a-to-txt.xsl"/>
+      <map:serialize type="text" mime-type="text/css"/>
+    </map:resource>
  </map:resources>
 
 <!-- =========================== Pipelines ================================= -->
@@ -122,7 +146,7 @@
     <map:pipeline>
       <!-- Lenya GUI -->
       <map:match pattern="lenya/**">
-        <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
       </map:match>
       
 
@@ -231,7 +255,7 @@
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
           <map:when test="fallback://lenya/modules/{2}/menus.xmap">
-            <map:mount uri-prefix="menu-xml/module/{1}/" src="fallback://lenya/modules/{2}/menus.xmap" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="menu-xml/module/{1}/" src="fallback://lenya/modules/{2}/menus.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
           <map:otherwise>
             <map:generate type="serverpages" src="lenya/content/menus/live.xsp"/>
@@ -248,12 +272,12 @@
       
       <!-- menu-xml/{publication-id}/... -->
       <map:match pattern="menu-xml/*/**" internal-only="true">
-        <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
       </map:match>
       
       <!-- Access Control Policies -->
       <map:match pattern="*/policies/**">
-        <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
       </map:match>
       
     </map:pipeline>
