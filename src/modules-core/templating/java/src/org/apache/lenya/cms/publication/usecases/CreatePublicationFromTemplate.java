@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.publication.usecases;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -51,6 +52,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
                 templates.add(pubs[i].getId());
             }
         }
+        Collections.sort(templates);
         setParameter(AVAILABLE_TEMPLATES, templates);
     }
 
