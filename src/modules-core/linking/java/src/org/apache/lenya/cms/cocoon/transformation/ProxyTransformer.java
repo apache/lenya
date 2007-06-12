@@ -1,7 +1,6 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -10,7 +9,6 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -26,17 +24,17 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-public class ProxyTransformer extends AbstractSAXTransformer {
+/**
+ * Proxy transformer.
+ */
+public class ProxyTransformer extends AbstractLinkTransformer {
     
     protected static final String[] elementNames = { "a", "object", "img", "link", "form", "script" };
     protected static final String[] attributeNames = { "href", "src", "data", "action" };
 
-    private boolean ignoreLinkElement = false;
-    private String indent = "";
     private DocumentFactory factory;
     private Publication publication;
     private String url;
@@ -78,52 +76,18 @@ public class ProxyTransformer extends AbstractSAXTransformer {
 
     }
 
-    public void startElement(String uri, String name, String qname, Attributes attrs)
-            throws SAXException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    this.indent + "<" + qname + "> (ignoreAElement = " + this.ignoreLinkElement
-                            + ")");
-            this.indent += "  ";
-        }
-        AttributesImpl newAttrs = null;
-        if (lookingAtLinkElement(name)) {
-
-            for (int i = 0; i < attributeNames.length; i++) {
-                String linkUrl = attrs.getValue(attributeNames[i]);
-                if (linkUrl != null) {
-                    if (linkUrl.startsWith("/")) {
-                        try {
-                            newAttrs = new AttributesImpl(attrs);
-                            rewriteLink(newAttrs, attributeNames[i], linkUrl);
-                            if (getLogger().isDebugEnabled()) {
-                                getLogger().debug(this.indent + "link URL: [" + linkUrl + "]");
-                            }
-                        } catch (final Exception e) {
-                            getLogger().error("startElement failed: ", e);
-                            throw new SAXException(e);
-                        }
-                    }
+    protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs) throws Exception {
+        if (linkUrl.startsWith("/")) {
+            try {
+                rewriteLink(newAttrs, config.attribute, linkUrl);
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(this.indent + "link URL: [" + linkUrl + "]");
                 }
+            } catch (final Exception e) {
+                getLogger().error("startElement failed: ", e);
+                throw new SAXException(e);
             }
-            if (newAttrs == null)
-                super.startElement(uri, name, qname, attrs);
-            else
-                super.startElement(uri, name, qname, newAttrs);
-        } else
-            super.startElement(uri, name, qname, attrs);
-
-    }
-
-    public void endElement(String uri, String name, String qname) throws SAXException {
-        if (getLogger().isDebugEnabled()) {
-            this.indent = this.indent.substring(2);
-            getLogger().debug(this.indent + "</" + qname + ">");
         }
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "</" + qname + "> sent");
-        }
-        super.endElement(uri, name, qname);
     }
 
     private void rewriteLink(AttributesImpl newAttrs, String attributeName, String linkUrl)
@@ -173,24 +137,4 @@ public class ProxyTransformer extends AbstractSAXTransformer {
         setAttribute(newAttrs, attributeName, rewrittenURL);
     }
 
-    private boolean lookingAtLinkElement(String name) {
-        return Arrays.asList(elementNames).contains(name);
-    }
-
-    /**
-     * Sets the value of the href attribute.
-     * 
-     * @param attr The attributes.
-     * @param name The attribute name.
-     * @param value The value.
-     * @throws IllegalArgumentException if the href attribute is not contained
-     *         in this attributes.
-     */
-    protected void setAttribute(AttributesImpl attr, String name, String value) {
-        int position = attr.getIndex(name);
-        if (position == -1) {
-            throw new IllegalArgumentException("The href attribute is not available!");
-        }
-        attr.setValue(position, value);
-    }
 }

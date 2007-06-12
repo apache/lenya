@@ -128,23 +128,6 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer {
     }
 
     /**
-     * Sets the value of the href attribute.
-     * 
-     * @param attr The attributes.
-     * @param name The attribute name.
-     * @param value The value.
-     * @throws IllegalArgumentException if the href attribute is not contained
-     *         in this attributes.
-     */
-    protected void setAttribute(AttributesImpl attr, String name, String value) {
-        int position = attr.getIndex(name);
-        if (position == -1) {
-            throw new IllegalArgumentException("The href attribute is not available!");
-        }
-        attr.setValue(position, value);
-    }
-
-    /**
      * @see org.apache.avalon.excalibur.pool.Recyclable#recycle()
      */
     public void recycle() {

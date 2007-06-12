@@ -33,5 +33,4 @@
        logger="sitemap.transformer.pattern">
        <parameter name="groups" value="true"/>
     </map:transformer>
-    <map:transformer name="proxy" logger="lenya.sitemap.transformer.proxy" src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer"/>
 </xmap>

@@ -205,4 +205,21 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         }
     }
 
+    /**
+     * Sets the value of a certain attribute.
+     * 
+     * @param attr The attributes.
+     * @param name The attribute name.
+     * @param value The value.
+     * @throws IllegalArgumentException if the href attribute is not contained
+     *         in this attributes.
+     */
+    protected void setAttribute(AttributesImpl attr, String name, String value) {
+        int position = attr.getIndex(name);
+        if (position == -1) {
+            throw new IllegalArgumentException("The attribute [" + name + "] is not available!");
+        }
+        attr.setValue(position, value);
+    }
+
 }
