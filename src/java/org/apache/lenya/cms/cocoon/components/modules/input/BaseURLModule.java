@@ -17,8 +17,10 @@
  */
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -49,6 +51,10 @@ import org.apache.lenya.cms.publication.Publication;
  * If no proxying is used, the result will be {context-path}/{pub-id}/{area}.
  * The ssl parameter is optional, if omitted the protocol (http or https) of the current request will be used.
  * </p>
+ * <p>
+ * Both <code>pubid</code> and <code>area</code> can be empty strings. In this case, the context path
+ * is returned.
+ * </p>
  * 
  */
 public class BaseURLModule extends AbstractInputModule implements Serviceable {
@@ -72,7 +78,7 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         
-        final String pubid = attributes[0];
+        final String pubId = attributes[0];
         final String area = attributes[1];
         boolean ssl = false;
         
@@ -85,20 +91,39 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
         String value = null;
         try {
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            Publication publication = factory.getPublication(pubid);
-
-            Proxy proxy = publication.getProxy(area, ssl);
             
-            if (proxy != null) {
-                value = proxy.getUrl();
-            } else {
-                value = request.getContextPath() + "/" + pubid + "/" + area;
+            if (isPublication(factory, pubId)) {
+                Publication publication = factory.getPublication(pubId);
+                Proxy proxy = publication.getProxy(area, ssl);
+                if (proxy == null) {
+                    value = request.getContextPath() + "/" + pubId + "/" + area;
+                } else {
+                    value = proxy.getUrl();
+                }
             }
+            else {
+                value = request.getContextPath();
+            }
+            
             
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);
         }
         return value;
+    }
+
+    /**
+     * @param factory The document factory.
+     * @param pubId The publication ID.
+     * @return If a publication with this ID exists.
+     */
+    protected boolean isPublication(DocumentFactory factory, String pubId) {
+        Publication[] pubs = factory.getPublications();
+        List pubIds = new ArrayList();
+        for (int i = 0; i < pubs.length; i++) {
+            pubIds.add(pubs[i].getId());
+        }
+        return pubIds.contains(pubId);
     }
 
     /**
