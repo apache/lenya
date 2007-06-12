@@ -50,7 +50,15 @@ import org.xml.sax.helpers.AttributesImpl;
 
 public class ProxyTransformerTest extends AbstractAccessControlTest {
 
-    private static final String PUBCONF_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
+    protected static final String PUBCONF_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
+    
+    protected static final String NAMESPACE = XHTMLSerializer.XHTML1_NAMESPACE;
+    protected static final String ELEMENT = "a";
+    protected static final String ATTRIBUTE = "href";
+
+    protected String getWebappUrl() {
+        return "/mock/authoring/index.html";
+    }
 
     public void testProxyTransformer() throws Exception {
 
@@ -80,26 +88,33 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
 
             String documentUrl = "/index.html";
             String linkUrl = "/" + pubId + "/" + area + documentUrl;
-            String namespace = XHTMLSerializer.XHTML1_NAMESPACE;
-            String element = "a";
-            String attribute = "href";
+            String targetUrl = proxyUrl + documentUrl;
+            rewriteLink(transformer, linkUrl, targetUrl);
+            
+            String cssUrl = "/lenya/foo.css";
+            rewriteLink(transformer, cssUrl, proxyUrl + cssUrl);
 
-            AttributesImpl attrs = new AttributesImpl();
-            attrs.addAttribute("", attribute, attribute, "string", linkUrl);
-
-            AbstractLinkTransformer.AttributeConfiguration config = new AbstractLinkTransformer.AttributeConfiguration(
-                    namespace, element, attribute);
-
-            transformer.handleLink(linkUrl, config, attrs);
-
-            String rewrittenUrl = attrs.getValue(attribute);
-            assertEquals(rewrittenUrl, proxyUrl + documentUrl);
+            String moduleUrl = "/modules/foo/bar.html?x=y";
+            rewriteLink(transformer, moduleUrl, proxyUrl + moduleUrl);
 
         } finally {
             if (resolver != null) {
                 getManager().release(resolver);
             }
         }
+    }
+
+    protected void rewriteLink(ProxyTransformer transformer, String linkUrl, String targetUrl) throws Exception {
+        AttributesImpl attrs = new AttributesImpl();
+        attrs.addAttribute("", ATTRIBUTE, ATTRIBUTE, "string", linkUrl);
+
+        AbstractLinkTransformer.AttributeConfiguration config = new AbstractLinkTransformer.AttributeConfiguration(
+                NAMESPACE, ELEMENT, ATTRIBUTE);
+
+        transformer.handleLink(linkUrl, config, attrs);
+
+        String rewrittenUrl = attrs.getValue(ATTRIBUTE);
+        assertEquals(rewrittenUrl, targetUrl);
     }
 
     protected void createMockPublication(String pubId, String area, boolean ssl, String proxyUrl)
@@ -134,7 +149,8 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         NamespaceHelper helper = new NamespaceHelper(PUBCONF_NAMESPACE, "", dom);
 
         Element proxies = helper.createElement("proxies");
-        proxies.setAttribute("ssl", Boolean.toString(ssl));
+        proxies.setAttribute("ssl", Boolean.toString(false));
+        proxies.setAttribute("root", proxyUrl);
         dom.getDocumentElement().appendChild(proxies);
 
         Element proxyElement = helper.createElement("proxy");

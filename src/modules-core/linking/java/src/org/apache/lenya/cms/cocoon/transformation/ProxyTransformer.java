@@ -56,6 +56,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
     private AccessControllerResolver acResolver;
     private AccreditableManager accreditableManager;
     private PolicyManager policyManager;
+    private Publication publication;
 
     protected static final String PARAMETER_FACTORY = "private.factory";
     private static final String ATTRIBUTE_ROOT = "root";
@@ -69,6 +70,11 @@ public class ProxyTransformer extends AbstractLinkTransformer {
             Session session = RepositoryUtil.getSession(this.manager, _request);
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
             this.url = ServletHelper.getWebappURI(_request);
+            URLInformation info = new URLInformation(this.url);
+            String pubId = info.getPublicationId();
+            if (pubId != null && isPublication(pubId)) {
+                this.publication = this.factory.getPublication(pubId);
+            }
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +100,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
             rewriteLink(newAttrs, config.attribute, linkUrl);
         }
     }
-    
+
     /**
      * @param pubId The publication ID.
      * @return If a publication with this ID exists.
@@ -111,37 +117,58 @@ public class ProxyTransformer extends AbstractLinkTransformer {
     protected void rewriteLink(AttributesImpl newAttrs, String attributeName, String linkUrl)
             throws Exception {
         String rewrittenUrl = "";
-        Policy policy = null;
-        if (this.policyManager != null)
-            policy = this.policyManager.getPolicy(this.accreditableManager, linkUrl);
+        boolean ssl = false;
+        if (this.policyManager != null) {
+            Policy policy = this.policyManager.getPolicy(this.accreditableManager, linkUrl);
+            ssl = policy.isSSLProtected();
+        }
 
         URLInformation info = new URLInformation(linkUrl);
         String pubId = info.getPublicationId();
-        
+
+        // link points to publication
         if (pubId != null && isPublication(pubId)) {
             Publication pub = this.factory.getPublication(pubId);
-            String areaName = info.getArea();
-
-            // valid pub, valid area
-            if (areaName != null && Arrays.asList(pub.getAreaNames()).contains(areaName)) {
-                Proxy proxy = pub.getProxy(areaName, policy.isSSLProtected());
-                String proxiedUrl = info.getDocumentUrl();
-                rewrittenUrl = getProxyUrl(linkUrl, proxy, proxiedUrl);
-            }
-
-            // valid pub, invalid area
-            else {
-                Proxy proxy = pub.getProxy(ATTRIBUTE_ROOT, (policy == null) ? false : policy
-                        .isSSLProtected());
-                rewrittenUrl = getProxyUrl(linkUrl, proxy, linkUrl.substring(1));
-            }
+            rewrittenUrl = rewriteLink(linkUrl, pub, ssl);
         }
 
-        // invalid pub
+        // link doesn't point to publication -> use own publication if exists
+        else if (this.publication != null) {
+            rewrittenUrl = rewriteLink(linkUrl, this.publication, ssl);
+        }
+        
+        // link doesn't point to publication, no own publication
         else {
             rewrittenUrl = this.request.getContextPath() + linkUrl;
         }
+        
         setAttribute(newAttrs, attributeName, rewrittenUrl);
+    }
+
+    /**
+     * @param linkUrl The original link URL.
+     * @param pub The publication to use for proxy resolving.
+     * @param ssl If the URL uses SSL.
+     * @return A link URL.
+     */
+    protected String rewriteLink(String linkUrl, Publication pub, boolean ssl) {
+        URLInformation info = new URLInformation(linkUrl);
+        String rewrittenUrl;
+        String areaName = info.getArea();
+
+        // valid area
+        if (areaName != null && Arrays.asList(pub.getAreaNames()).contains(areaName)) {
+            Proxy proxy = pub.getProxy(areaName, ssl);
+            String proxiedUrl = info.getDocumentUrl();
+            rewrittenUrl = getProxyUrl(linkUrl, proxy, proxiedUrl);
+        }
+
+        // invalid area
+        else {
+            Proxy proxy = pub.getProxy(ATTRIBUTE_ROOT, ssl);
+            rewrittenUrl = getProxyUrl(linkUrl, proxy, linkUrl);
+        }
+        return rewrittenUrl;
     }
 
     /**
