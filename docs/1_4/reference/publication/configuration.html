@@ -796,7 +796,7 @@ document.write("Last Published: " + document.lastModified);
 <p> In short the idea of the following proxy snippet in the configuration is a rewrite of links.
         Using proxies will prefix all absolute links (starting with
         <strong>"/"</strong>) to absoult urls (the proxy host). </p>
-<pre class="code">  &lt;proxies&gt;
+<pre class="code">  &lt;proxies ssl="false" root="http://www.host.com/non-ssl/"&gt;
     &lt;proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/&gt;
     &lt;proxy area="live" ssl="false" url="http://www.host.com/default"/&gt;
     &lt;proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/&gt;
@@ -807,6 +807,14 @@ document.write("Last Published: " + document.lastModified);
         live area and this document is ssl protected then it will be rewritten to
         <span class="codefrag">"https://www.host.com/ssl/default{$link}"</span>. Where {$link} is the linked
         document.</p>
+<p>For all links that are not pointing to a document the global proxy rule
+        <span class="codefrag">ssl="false" root="http://www.host.com/no-ssl/</span> is applied. For
+        example a link such as
+        <span class="codefrag">/modules/myModule/somePath/some.thing</span> will be rewritten to
+        <span class="codefrag">
+          http://www.host.com/no-ssl/modules/myModule/somePath/some.thing</span>
+        . In short
+        <span class="codefrag">"/"</span> will be replaced with {proxies/@root}. </p>
 <pre class="code">&lt;/publication&gt;</pre>
 </div>
     

@@ -334,6 +334,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Documentation">Documentation</a>
 </li>
 <li>
+<a href="#Site">Site</a>
+</li>
+<li>
 <a href="#">Contributors to this release</a>
 </li>
 </ul>
@@ -347,40 +350,71 @@ document.write("Last Published: " + document.lastModified);
 <h2 class="h3">Introduction and explanation of symbols</h2>
 <div class="section">
 <p>Changes are sorted <translate>by "{0}" and then<param>type</param>
-</translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="remove" src="images/remove.jpg">=remove, <img class="icon" alt="update" src="images/update.jpg">=update</p>
+</translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="update" src="images/update.jpg">=update</p>
 </div>
-<a name="N10041"></a><a name="version_2007-06"></a>
+<a name="N10039"></a><a name="version_2007-06"></a>
 <h2 class="h3">Version 2007-06 ()</h2>
 <div class="section">
-<a name="N10048"></a><a name="1.4"></a>
+<a name="N10040"></a><a name="1.4"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Transforms object tags into img tags so that FCKEditor can correctly identify images for modification. XSL modified from Kupu.
- <a href="http://svn.apache.org/viewcvs.cgi?rev=543517&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[1.4] Added failing test case for bug 42602 <a href="http://svn.apache.org/viewcvs.cgi?rev=544784&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] Bug 42050 - proxying does not work. 
+Adding proxyTransformer that is doing the proxy rewritte as last step of the transformation for html documents.
+Adding chaperon pattern resolver and using it for css proxing. Can scan any file for pattern and transform them to links, see the way I implemented in css to extend it to e.g. js.
+Extending PublicationConfiguration.java and publication.rng to read and allow the new attributes in the proxies element. <a href="http://svn.apache.org/viewcvs.cgi?rev=545437&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed typo so that ip ranges can now be deleted and moved in AC tabs
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=544630&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Removing until licensing is cleared up.
- <a href="http://svn.apache.org/viewcvs.cgi?rev=543595&view=rev">Diff</a> 
-       Committed by rfrovarp.</li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Use only .html URLs in sitetree on the site tab. This should improve the situation described in bug 42567. <a href="http://svn.apache.org/viewcvs.cgi?rev=544766&view=rev">Diff</a> 
+       Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Minor: fixed comments
- <a href="http://svn.apache.org/viewcvs.cgi?rev=543530&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Check for modifications when lazy-loading source node RCML data. This fixes bug 42602. <a href="http://svn.apache.org/viewcvs.cgi?rev=544822&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't reload source node RCML data if RCML object has been modified <a href="http://svn.apache.org/viewcvs.cgi?rev=545141&view=rev">Diff</a> 
+       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Sorts the list that is displayed when choosing a template.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=546165&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 </ul>
-<a name="N10074"></a><a name="Documentation"></a>
+<a name="N100A0"></a><a name="Documentation"></a>
 <h3 class="h4">Documentation</h3>
 <ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Documentation] Adding missing log <a href="http://svn.apache.org/viewcvs.cgi?rev=544663&view=rev">Diff</a> 
+       Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Updated to point to 1.2.5 as the current version for download.
 The changed paragraph is copied from the site home page.
 Thanks to Richard Frovarp for pointing out the error. <a href="http://svn.apache.org/viewcvs.cgi?rev=544033&view=rev">Diff</a> 
        Committed by bobharner.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Updating the changes page <a href="http://svn.apache.org/viewcvs.cgi?rev=544644&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Bug 42050.
+Adding documentation about the proxies element and their usage. <a href="http://svn.apache.org/viewcvs.cgi?rev=545439&view=rev">Diff</a> 
+       Committed by thorsten.</li>
 </ul>
-<a name="N10086"></a>
+<a name="N100D9"></a><a name="Site"></a>
+<h3 class="h4">Site</h3>
+<ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=544330&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+</ul>
+<a name="N100EB"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
-<p>This is a list of all people who participated as committers:<br> (bobharner),  (rfrovarp).</p>
+<p>This is a list of all people who participated as committers:<br> (andreas),  (bobharner),  (rfrovarp),  (thorsten).</p>
 </div>
 </div>
 <!--+
