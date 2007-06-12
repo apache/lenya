@@ -37,10 +37,8 @@
       <map:call resource="prepare-proxy-css"/>
     </map:resource>
     <map:resource name="prepare-proxy-css">
-      <map:transform type="pattern"
-        src="fallback://lenya/chaperon/grammars/link.xlex"/>
-      <map:transform
-        src="fallback://lenya/chaperon/stylesheets/pattern-to-link.xsl"/>
+      <map:transform type="pattern" src="fallback://lenya/chaperon/grammars/link.xlex"/>
+      <map:transform src="fallback://lenya/chaperon/stylesheets/pattern-to-link.xsl"/>
       <map:transform type="proxy"/>
       <map:transform src="fallback://lenya/chaperon/stylesheets/a-to-txt.xsl"/>
       <map:serialize type="text" mime-type="text/css"/>
