@@ -19,6 +19,7 @@
 <!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
   <map:resources>
     <map:resource name="proxy-css">
       <map:act type="resource-exists" src="{url}.xml">
