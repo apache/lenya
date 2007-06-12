@@ -32,9 +32,6 @@ import org.xml.sax.helpers.AttributesImpl;
  */
 public class ProxyTransformer extends AbstractLinkTransformer {
     
-    protected static final String[] elementNames = { "a", "object", "img", "link", "form", "script" };
-    protected static final String[] attributeNames = { "href", "src", "data", "action" };
-
     private DocumentFactory factory;
     private Publication publication;
     private String url;
