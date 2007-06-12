@@ -25,8 +25,8 @@
         <map:generate src="{../url}.xml"/>
         <map:transform src="fallback://lenya/resources/css/css.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
-          <map:parameter name="root"
-            value="{base-url:{page-envelope:publication-id}:{page-envelope:area}:false}"/>
+          <!-- core: no publication and area -->
+          <map:parameter name="root" value="{base-url:::false}"/>
         </map:transform>
         <map:call resource="prepare-proxy-css"/>
       </map:act>
