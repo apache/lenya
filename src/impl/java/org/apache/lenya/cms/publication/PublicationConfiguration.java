@@ -30,8 +30,8 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.repository.Node;
 
 /**
- * A publication's configuration.
- * Keep in sync with src/resources/build/publication.rng!
+ * A publication's configuration. Keep in sync with
+ * src/resources/build/publication.rng!
  */
 public class PublicationConfiguration extends AbstractLogEnabled implements Publication {
 
@@ -53,17 +53,16 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     public static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator
             + "publication.xml";
 
-    private static final String CONFIGURATION_NAMESPACE = 
-            "http://apache.org/cocoon/lenya/publication/1.1" ;
+    private static final String CONFIGURATION_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
 
     // properties marked with "*" are currently not parsed by this class.
     private static final String ELEMENT_NAME = "name";
-    private static final String ELEMENT_DESCRIPTION = "description"; //*
-    private static final String ELEMENT_LONGDESC = "longdesc"; //*
-    private static final String ELEMENT_VERSION = "version"; //*
-    private static final String ELEMENT_LENYA_VERSION = "lenya-version"; //*
-    private static final String ELEMENT_LENYA_REVISION = "lenya-revision"; //*
-    private static final String ELEMENT_COCOON_VERSION = "cocoon-version"; //*
+    private static final String ELEMENT_DESCRIPTION = "description"; // *
+    private static final String ELEMENT_LONGDESC = "longdesc"; // *
+    private static final String ELEMENT_VERSION = "version"; // *
+    private static final String ELEMENT_LENYA_VERSION = "lenya-version"; // *
+    private static final String ELEMENT_LENYA_REVISION = "lenya-revision"; // *
+    private static final String ELEMENT_COCOON_VERSION = "cocoon-version"; // *
     private static final String ELEMENT_LANGUAGES = "languages";
     private static final String ELEMENT_LANGUAGE = "language";
     private static final String ATTRIBUTE_DEFAULT_LANGUAGE = "default";
@@ -74,11 +73,11 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ELEMENT_PATH_MAPPER = "path-mapper";
     private static final String ELEMENT_DOCUMENT_BUILDER = "document-builder";
     private static final String ELEMENT_SITE_MANAGER = "site-manager";
-    private static final String ELEMENT_RESOURCE_TYPES = "resource-types";//*
-    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";//*
+    private static final String ELEMENT_RESOURCE_TYPES = "resource-types";// *
+    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";// *
     private static final String ATTRIBUTE_WORKFLOW = "workflow";
-    private static final String ELEMENT_MODULES = "modules";//*
-    private static final String ELEMENT_MODULE = "module";//*
+    private static final String ELEMENT_MODULES = "modules";// *
+    private static final String ELEMENT_MODULE = "module";// *
     private static final String ELEMENT_BREADCRUMB_PREFIX = "breadcrumb-prefix";
     private static final String ELEMENT_CONTENT_DIR = "content-dir";
     private static final String ATTRIBUTE_SRC = "src";
@@ -88,7 +87,6 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_SSL = "ssl";
-
 
     /**
      * Creates a new instance of Publication
@@ -127,7 +125,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         } else {
             getLogger().debug("Configuration file [" + configFile + "] exists.");
         }
-        
+
         final boolean ENABLE_XML_NAMESPACES = true;
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder(ENABLE_XML_NAMESPACES);
 
@@ -137,16 +135,20 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
         try {
             config = builder.buildFromFile(configFile);
-            
+
             this.name = config.getChild(ELEMENT_NAME).getValue();
 
             try {
-                // one sanity check for the proper namespace. we should really do that for every element,
-                // but since ELEMENT_PATH_MAPPER is mandatory, this should catch most cases of forgotten namespace.
+                // one sanity check for the proper namespace. we should really
+                // do that for every element,
+                // but since ELEMENT_PATH_MAPPER is mandatory, this should catch
+                // most cases of forgotten namespace.
                 if (config.getChild(ELEMENT_PATH_MAPPER).getNamespace() != CONFIGURATION_NAMESPACE) {
-                   getLogger().warn("Deprecated configuration: the publication configuration elements in "
-                       + configFile + " must be in the " + CONFIGURATION_NAMESPACE + " namespace."
-                       + " See webapp/lenya/resources/schemas/publication.xml.");
+                    getLogger().warn(
+                            "Deprecated configuration: the publication configuration elements in "
+                                    + configFile + " must be in the " + CONFIGURATION_NAMESPACE
+                                    + " namespace."
+                                    + " See webapp/lenya/resources/schemas/publication.xml.");
                 }
                 pathMapperClassName = config.getChild(ELEMENT_PATH_MAPPER).getValue();
                 Class pathMapperClass = Class.forName(pathMapperClassName);
@@ -163,7 +165,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                         .getAttribute(ATTRIBUTE_NAME);
             }
 
-            Configuration[] _languages = config.getChild(ELEMENT_LANGUAGES).getChildren(ELEMENT_LANGUAGE);
+            Configuration[] _languages = config.getChild(ELEMENT_LANGUAGES).getChildren(
+                    ELEMENT_LANGUAGE);
             for (int i = 0; i < _languages.length; i++) {
                 Configuration languageConfig = _languages[i];
                 String language = languageConfig.getValue();
@@ -180,25 +183,26 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
             Configuration proxyConfig = config.getChild(ELEMENT_PROXIES);
             if (proxyConfig != null) {
-              // root/global proxy 
-              String urlRoot=proxyConfig.getAttribute(ATTRIBUTE_ROOT,null);
-              String sslRoot = proxyConfig.getAttribute(ATTRIBUTE_SSL,null);
-              if (urlRoot!=null & sslRoot!=null){
-                Proxy rootProxy = new Proxy();
-                rootProxy.setUrl(urlRoot);
-                Object rootKey = getProxyKey(ATTRIBUTE_ROOT, Boolean.valueOf(sslRoot).booleanValue());
-                this.areaSsl2proxy.put(rootKey, rootProxy);
-              }
-              // Area proxies
+                // root/global proxy
+                String urlRoot = proxyConfig.getAttribute(ATTRIBUTE_ROOT, null);
+                String sslRoot = proxyConfig.getAttribute(ATTRIBUTE_SSL, null);
+                if (urlRoot != null & sslRoot != null) {
+                    Proxy rootProxy = new Proxy();
+                    rootProxy.setUrl(urlRoot);
+                    Object rootKey = getProxyKey(ATTRIBUTE_ROOT, Boolean.valueOf(sslRoot)
+                            .booleanValue());
+                    this.areaSsl2proxy.put(rootKey, rootProxy);
+                }
+                // Area proxies
                 Configuration[] proxyConfigs = proxyConfig.getChildren(ELEMENT_PROXY);
                 for (int i = 0; i < proxyConfigs.length; i++) {
                     String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
                     String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
                     String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
-    
+
                     Proxy proxy = new Proxy();
                     proxy.setUrl(url);
-    
+
                     Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
                     this.areaSsl2proxy.put(key, proxy);
                     if (getLogger().isDebugEnabled()) {
@@ -210,18 +214,20 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
             }
 
             Configuration templateConfig = config.getChild(ELEMENT_TEMPLATE, false);
-            //FIXME: this is a hack. For some reason, the old code seems to imply that a publication
-            // can have multiple templates. This is not the case. All this code should use a simple string
-            // rather than arrays at some point. For now, the old array is kept, to avoid having to deal
+            // FIXME: this is a hack. For some reason, the old code seems to
+            // imply that a publication
+            // can have multiple templates. This is not the case. All this code
+            // should use a simple string
+            // rather than arrays at some point. For now, the old array is kept,
+            // to avoid having to deal
             // with all kinds of NPEs that keep cropping up...
             if (templateConfig == null) {
-                this.templates = new String[0]; // ugh. empty array to keep the legacy code from breaking.
+                this.templates = new String[0]; // ugh. empty array to keep the
+                                                // legacy code from breaking.
+            } else {
+                this.templates = new String[1];
+                this.templates[0] = templateConfig.getAttribute(ATTRIBUTE_ID);
             }
-            else {
-                 this.templates = new String[1];
-                 this.templates[0] = templateConfig.getAttribute(ATTRIBUTE_ID);
-            }
-
 
             Configuration templateInstantiatorConfig = config.getChild(
                     ELEMENT_TEMPLATE_INSTANTIATOR, false);
@@ -241,11 +247,12 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
             Configuration resourceTypeConfig = config.getChild(ELEMENT_RESOURCE_TYPES);
             if (resourceTypeConfig != null) {
-                Configuration[] resourceTypeConfigs = resourceTypeConfig.getChildren(ELEMENT_RESOURCE_TYPE);
+                Configuration[] resourceTypeConfigs = resourceTypeConfig
+                        .getChildren(ELEMENT_RESOURCE_TYPE);
                 for (int i = 0; i < resourceTypeConfigs.length; i++) {
                     String name = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_NAME);
                     this.resourceTypes.add(name);
-    
+
                     String workflow = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_WORKFLOW, null);
                     if (workflow != null) {
                         this.resourceType2workflow.put(name, workflow);
