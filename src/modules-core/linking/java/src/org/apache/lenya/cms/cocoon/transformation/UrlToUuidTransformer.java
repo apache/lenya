@@ -51,7 +51,6 @@ import org.xml.sax.helpers.AttributesImpl;
  */
 public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
-    private boolean ignoreLinkElement = false;
     private Document currentDocument;
     private DocumentFactory factory;
     private String contextPath;
