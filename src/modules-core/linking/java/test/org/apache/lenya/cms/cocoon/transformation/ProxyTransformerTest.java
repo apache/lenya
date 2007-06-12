@@ -1,0 +1,157 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.lenya.cms.cocoon.transformation;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.components.serializers.XHTMLSerializer;
+import org.apache.cocoon.components.source.SourceResolverAdapter;
+import org.apache.excalibur.source.SourceNotFoundException;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.publication.Proxy;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.templating.Instantiator;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
+
+public class ProxyTransformerTest extends AbstractAccessControlTest {
+
+    private static final String PUBCONF_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
+
+    public void testProxyTransformer() throws Exception {
+
+        ProxyTransformer transformer = new ProxyTransformer();
+        transformer.enableLogging(getLogger());
+        transformer.service(getManager());
+
+        String proxyUrl = "http://www.mock.org";
+
+        Proxy proxy = new Proxy();
+        proxy.setUrl(proxyUrl);
+
+        String pubId = "mock";
+        String area = "authoring";
+        boolean ssl = true;
+
+        createMockPublication(pubId, area, ssl, proxyUrl);
+
+        Context context = this.context;
+        Map objectModel = (Map) context.get(ContextHelper.CONTEXT_OBJECT_MODEL);
+
+        SourceResolver resolver = null;
+        try {
+            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
+            transformer.setup(new SourceResolverAdapter(resolver), objectModel, "",
+                    new Parameters());
+
+            String documentUrl = "/index.html";
+            String linkUrl = "/" + pubId + "/" + area + documentUrl;
+            String namespace = XHTMLSerializer.XHTML1_NAMESPACE;
+            String element = "a";
+            String attribute = "href";
+
+            AttributesImpl attrs = new AttributesImpl();
+            attrs.addAttribute("", attribute, attribute, "string", linkUrl);
+
+            AbstractLinkTransformer.AttributeConfiguration config = new AbstractLinkTransformer.AttributeConfiguration(
+                    namespace, element, attribute);
+
+            transformer.handleLink(linkUrl, config, attrs);
+
+            String rewrittenUrl = attrs.getValue(attribute);
+            assertEquals(rewrittenUrl, proxyUrl + documentUrl);
+
+        } finally {
+            if (resolver != null) {
+                getManager().release(resolver);
+            }
+        }
+    }
+
+    protected void createMockPublication(String pubId, String area, boolean ssl, String proxyUrl)
+            throws PublicationException, ServiceException, Exception {
+        if (!existsPublication(pubId)) {
+
+            Publication defaultPub = getPublication("default");
+            Instantiator instantiator = null;
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) getManager().lookup(Instantiator.ROLE + "Selector");
+                instantiator = (Instantiator) selector.select(defaultPub.getInstantiatorHint());
+                instantiator.instantiate(defaultPub, pubId, "Mock");
+                configureProxy(area, ssl, proxyUrl);
+            } finally {
+                if (selector != null) {
+                    if (instantiator != null) {
+                        selector.release(instantiator);
+                    }
+                    getManager().release(selector);
+                }
+            }
+        }
+    }
+
+    protected void configureProxy(String area, boolean ssl, String proxyUrl)
+            throws ServiceException, SourceNotFoundException, ParserConfigurationException,
+            SAXException, IOException, TransformerConfigurationException, TransformerException,
+            MalformedURLException {
+        String configUri = "context://lenya/pubs/mock/config/publication.xml";
+        Document dom = SourceUtil.readDOM(configUri, getManager());
+        NamespaceHelper helper = new NamespaceHelper(PUBCONF_NAMESPACE, "", dom);
+
+        Element proxies = helper.createElement("proxies");
+        proxies.setAttribute("ssl", Boolean.toString(ssl));
+        dom.getDocumentElement().appendChild(proxies);
+
+        Element proxyElement = helper.createElement("proxy");
+        proxyElement.setAttribute("ssl", Boolean.toString(ssl));
+        proxyElement.setAttribute("area", area);
+        proxyElement.setAttribute("url", proxyUrl);
+        proxies.appendChild(proxyElement);
+
+        SourceUtil.writeDOM(dom, configUri, getManager());
+    }
+
+    protected boolean existsPublication(String pubId) {
+        Publication[] pubs = getFactory().getPublications();
+        List pubIds = new ArrayList();
+        for (int i = 0; i < pubs.length; i++) {
+            pubIds.add(pubs[i].getId());
+        }
+        return pubIds.contains(pubId);
+    }
+}
