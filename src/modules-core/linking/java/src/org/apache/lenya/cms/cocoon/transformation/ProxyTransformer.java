@@ -75,15 +75,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
 
     protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs) throws Exception {
         if (linkUrl.startsWith("/")) {
-            try {
-                rewriteLink(newAttrs, config.attribute, linkUrl);
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(this.indent + "link URL: [" + linkUrl + "]");
-                }
-            } catch (final Exception e) {
-                getLogger().error("startElement failed: ", e);
-                throw new SAXException(e);
-            }
+            rewriteLink(newAttrs, config.attribute, linkUrl);
         }
     }
 
