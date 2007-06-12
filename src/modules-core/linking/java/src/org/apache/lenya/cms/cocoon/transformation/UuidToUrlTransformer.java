@@ -20,7 +20,6 @@ package org.apache.lenya.cms.cocoon.transformation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +33,6 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -53,7 +51,6 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.util.StringUtil;
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -90,28 +87,27 @@ import org.xml.sax.helpers.AttributesImpl;
  * either configure this when declaring the transformer:
  * </p>
  * <code><pre>
- * &lt;map:transformer ... &gt;
- *   &lt;urls type="relative"/&gt;
- *   &lt;transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/&gt;
- *   &lt;transform namespace="..." ... /&gt;
- * &lt;/map:transformer&gt;
+ *  &lt;map:transformer ... &gt;
+ *    &lt;urls type=&quot;relative&quot;/&gt;
+ *    &lt;transform namespace=&quot;http://www.w3.org/1999/xhtml&quot; element=&quot;a&quot; attribute=&quot;href&quot;/&gt;
+ *    &lt;transform namespace=&quot;...&quot; ... /&gt;
+ *  &lt;/map:transformer&gt;
  * </pre></code>
  * <p>
  * or pass a parameter:
  * </p>
  * <code><pre>
- * &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
+ *  &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
  * </pre></code>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
-public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disposable {
+public class UuidToUrlTransformer extends AbstractLinkTransformer implements Disposable {
 
     protected static final String BROKEN_ATTRIB = "class";
     protected static final String BROKEN_VALUE = "brokenlink";
     protected static final String EXTENSION_PARAM = "uuid2url.extension";
 
-    private boolean ignoreLinkElement = false;
     private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
     private AccessControllerResolver acResolver;
@@ -192,50 +188,6 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
             String value = urlConfig.getAttribute("type");
             setUrlType(value);
         }
-        Configuration[] transformConfigs = config.getChildren("transform");
-        for (int i = 0; i < transformConfigs.length; i++) {
-            String namespace = transformConfigs[i].getAttribute("namespace");
-            String element = transformConfigs[i].getAttribute("element");
-            String attribute = transformConfigs[i].getAttribute("attribute");
-            AttributeConfiguration attrConfig = new AttributeConfiguration(namespace, element,
-                    attribute);
-            this.attributeConfigurations.add(attrConfig);
-        }
-    }
-
-    private List attributeConfigurations = new ArrayList();
-
-    /**
-     * Declaration of an attribute which should be transformed.
-     */
-    public static class AttributeConfiguration {
-
-        protected final String element;
-        protected final String namespace;
-        protected final String attribute;
-
-        /**
-         * @param namespace The namespace of the element.
-         * @param element The local name of the element.
-         * @param attribute The name of the attribute to transform.
-         */
-        public AttributeConfiguration(String namespace, String element, String attribute) {
-            this.namespace = namespace;
-            this.element = element;
-            this.attribute = attribute;
-        }
-
-        /**
-         * @param uri The namespace URI.
-         * @param name The local name.
-         * @param attrs The attributes.
-         * @return If this configuration matches the parameters.
-         */
-        public boolean matches(String uri, String name, Attributes attrs) {
-            return this.namespace.equals(uri) && this.element.equals(name)
-                    && attrs.getValue(this.attribute) != null;
-        }
-
     }
 
     protected void setUrlType(String value) throws ConfigurationException {
@@ -258,135 +210,65 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
         return this.currentDocument;
     }
 
-    private String indent = "";
+    protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
+            throws Exception {
+        if (linkUrl.startsWith("lenya-document:")) {
+            Document doc = getCurrentDocument();
 
-    protected static final String[] elementNames = { "a", "object", "img", "link" };
-    protected static final String[] attributeNames = { "href", "src", "data" };
+            String anchor = null;
+            String url = null;
 
-    protected AttributeConfiguration[] getMatchingConfigurations(String namespace,
-            String localName, Attributes attrs) {
-        List configs = new ArrayList();
-        for (Iterator i = this.attributeConfigurations.iterator(); i.hasNext();) {
-            AttributeConfiguration config = (AttributeConfiguration) i.next();
-            if (config.matches(namespace, localName, attrs)) {
-                configs.add(config);
+            int anchorIndex = linkUrl.indexOf("#");
+            if (anchorIndex > -1) {
+                url = linkUrl.substring(0, anchorIndex);
+                anchor = linkUrl.substring(anchorIndex + 1);
+            } else {
+                url = linkUrl;
             }
-        }
-        return (AttributeConfiguration[]) configs
-                .toArray(new AttributeConfiguration[configs.size()]);
-    }
 
-    /**
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
-     */
-    public void startElement(String uri, String name, String qname, Attributes attrs)
-            throws SAXException {
+            String[] linkUriAndQuery = url.split("\\?");
+            String linkUri = linkUriAndQuery[0];
+            String queryString = null;
+            String requiredExtension = null;
+            if (linkUriAndQuery.length > 1) {
+                queryString = linkUriAndQuery[1];
+                Query query = new Query(queryString);
+                requiredExtension = query.getValue(EXTENSION_PARAM);
+                query.removeValue(EXTENSION_PARAM);
+                queryString = query.toString();
+            }
+            LinkTarget target = this.linkResolver.resolve(doc, linkUri);
+            if (target.exists() && target.getDocument().hasLink()) {
+                Document targetDocument = target.getDocument();
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    this.indent + "<" + qname + "> (ignoreAElement = " + this.ignoreLinkElement
-                            + ")");
-            this.indent += "  ";
-        }
+                String extension = getExtension(targetDocument, requiredExtension);
 
-        AttributesImpl newAttrs = null;
+                rewriteLink(newAttrs, config.attribute, targetDocument, anchor, queryString,
+                        extension);
+            } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
+                markBrokenLink(newAttrs, config.attribute, linkUrl);
+            } else {
+                this.ignoreLinkElement = true;
+            }
+        } else {
+            /*
+             * This is legacy code. It rewrites links to non-document images (in
+             * resources/shared). These images shouldn't be referenced in
+             * documents since this violates the separation between content and
+             * layout.
+             */
+            String prefix = "/" + this.currentDocument.getPublication().getId() + "/";
+            if (linkUrl.startsWith(prefix)) {
+                String pubUrl = linkUrl.substring(prefix.length());
+                String area = pubUrl.split("/")[0];
 
-        AttributeConfiguration[] configs = getMatchingConfigurations(uri, name, attrs);
-
-        if (configs.length > 0) {
-
-            this.ignoreLinkElement = false;
-
-            for (int i = 0; i < configs.length; i++) {
-                AttributeConfiguration config = configs[i];
-                String linkUrl = attrs.getValue(config.attribute);
-                try {
-                    newAttrs = new AttributesImpl(attrs);
-
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug(this.indent + "link URL: [" + linkUrl + "]");
-                    }
-
-                    if (linkUrl.startsWith("lenya-document:")) {
-                        Document doc = getCurrentDocument();
-
-                        String anchor = null;
-                        String url = null;
-
-                        int anchorIndex = linkUrl.indexOf("#");
-                        if (anchorIndex > -1) {
-                            url = linkUrl.substring(0, anchorIndex);
-                            anchor = linkUrl.substring(anchorIndex + 1);
-                        } else {
-                            url = linkUrl;
-                        }
-
-                        String[] linkUriAndQuery = url.split("\\?");
-                        String linkUri = linkUriAndQuery[0];
-                        String queryString = null;
-                        String requiredExtension = null;
-                        if (linkUriAndQuery.length > 1) {
-                            queryString = linkUriAndQuery[1];
-                            Query query = new Query(queryString);
-                            requiredExtension = query.getValue(EXTENSION_PARAM);
-                            query.removeValue(EXTENSION_PARAM);
-                            queryString = query.toString();
-                        }
-                        LinkTarget target = this.linkResolver.resolve(doc, linkUri);
-                        if (target.exists() && target.getDocument().hasLink()) {
-                            Document targetDocument = target.getDocument();
-
-                            String extension = getExtension(targetDocument, requiredExtension);
-
-                            rewriteLink(newAttrs, config.attribute, targetDocument, anchor,
-                                    queryString, extension);
-                        } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
-                            markBrokenLink(newAttrs, config.attribute, linkUrl);
-                        } else {
-                            this.ignoreLinkElement = true;
-                        }
-                    } else {
-                        /*
-                         * This is legacy code. It rewrites links to
-                         * non-document images (in resources/shared). These
-                         * images shouldn't be referenced in documents since
-                         * this violates the separation between content and
-                         * layout.
-                         */
-                        String prefix = "/" + this.currentDocument.getPublication().getId() + "/";
-                        if (linkUrl.startsWith(prefix)) {
-                            String pubUrl = linkUrl.substring(prefix.length());
-                            String area = pubUrl.split("/")[0];
-
-                            // don't rewrite /{pub}/modules/...
-                            if (area.equals(Publication.AUTHORING_AREA)) {
-                                String areaUrl = pubUrl.substring(area.length());
-                                String newUrl = this.contextPath + prefix
-                                        + this.currentDocument.getArea() + areaUrl;
-                                setAttribute(newAttrs, config.attribute, newUrl);
-                            }
-                        }
-                    }
-
-                } catch (final Exception e) {
-                    getLogger().error("startElement failed: ", e);
-                    throw new SAXException(e);
+                // don't rewrite /{pub}/modules/...
+                if (area.equals(Publication.AUTHORING_AREA)) {
+                    String areaUrl = pubUrl.substring(area.length());
+                    String newUrl = this.contextPath + prefix + this.currentDocument.getArea()
+                            + areaUrl;
+                    setAttribute(newAttrs, config.attribute, newUrl);
                 }
-            }
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreLinkElement);
-        }
-
-        if (!(configs.length > 0 && this.ignoreLinkElement)) {
-            if (newAttrs != null) {
-                attrs = newAttrs;
-            }
-            super.startElement(uri, name, qname, attrs);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this.indent + "<" + qname + "> sent");
             }
         }
     }
@@ -524,32 +406,6 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
             throw new IllegalArgumentException("The href attribute is not available!");
         }
         attr.setValue(position, value);
-    }
-
-    /**
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
-     *      java.lang.String, java.lang.String)
-     */
-    public void endElement(String uri, String name, String qname) throws SAXException {
-        if (getLogger().isDebugEnabled()) {
-            this.indent = this.indent.substring(2);
-            getLogger().debug(this.indent + "</" + qname + ">");
-        }
-        boolean matches = false;
-        for (Iterator i = this.attributeConfigurations.iterator(); i.hasNext();) {
-            AttributeConfiguration config = (AttributeConfiguration) i.next();
-            if (config.namespace.equals(uri) && config.element.equals(name)) {
-                matches = true;
-            }
-        }
-        if (matches && this.ignoreLinkElement) {
-            this.ignoreLinkElement = false;
-        } else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this.indent + "</" + qname + "> sent");
-            }
-            super.endElement(uri, name, qname);
-        }
     }
 
     /**

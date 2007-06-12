@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -26,7 +25,6 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkResolver;
@@ -36,7 +34,6 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -52,7 +49,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
-public class UrlToUuidTransformer extends AbstractSAXTransformer {
+public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
     private boolean ignoreLinkElement = false;
     private Document currentDocument;
@@ -96,108 +93,6 @@ public class UrlToUuidTransformer extends AbstractSAXTransformer {
     }
 
     private String indent = "";
-
-    /**
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
-     */
-    public void startElement(String uri, String name, String qname, Attributes attrs)
-            throws SAXException {
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    this.indent + "<" + qname + "> (ignoreAElement = " + this.ignoreLinkElement
-                            + ")");
-            this.indent += "  ";
-        }
-
-        AttributesImpl newAttrs = null;
-        if (lookingAtLinkElement(name)) {
-
-            this.ignoreLinkElement = false;
-
-            for (int i = 0; i < UuidToUrlTransformer.attributeNames.length; i++) {
-                String completeUrl = attrs.getValue(UuidToUrlTransformer.attributeNames[i]);
-                if (completeUrl != null) {
-                    try {
-                        newAttrs = new AttributesImpl(attrs);
-
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug(this.indent + "link URL: [" + completeUrl + "]");
-                        }
-
-                        String pubId = this.currentDocument.getPublication().getId();
-                        String area = this.currentDocument.getArea();
-
-                        if (completeUrl.startsWith(this.contextPath + "/" + pubId + "/" + area
-                                + "/")) {
-                            final String webappUrl = completeUrl.substring(this.contextPath
-                                    .length());
-
-                            String anchor = null;
-                            String url = null;
-
-                            int anchorIndex = webappUrl.indexOf("#");
-                            if (anchorIndex > -1) {
-                                url = webappUrl.substring(0, anchorIndex);
-                                anchor = webappUrl.substring(anchorIndex + 1);
-                            } else {
-                                url = webappUrl;
-                            }
-
-                            String[] linkUrlAndQuery = url.split("\\?");
-                            String linkUrl = linkUrlAndQuery[0];
-                            String queryString = null;
-                            if (linkUrlAndQuery.length > 1) {
-                                queryString = linkUrlAndQuery[1];
-                            }
-
-                            if (factory.isDocument(linkUrl)) {
-                                Document targetDocument = factory.getFromURL(linkUrl);
-
-                                if (getLogger().isDebugEnabled()) {
-                                    getLogger().debug(
-                                            "Convert links: Check webapp URL [" + linkUrl + "]");
-                                }
-
-                                rewriteLink(newAttrs, UuidToUrlTransformer.attributeNames[i],
-                                        targetDocument, anchor, queryString);
-                            }
-                            else {
-                                /*
-                                 * This is legacy code. It rewrites links to
-                                 * non-document images (in resources/shared). These
-                                 * images shouldn't be referenced in documents since
-                                 * this violates the separation between content and
-                                 * layout.
-                                 */
-                                String newUrl = completeUrl.substring(this.contextPath.length());
-                                setAttribute(newAttrs, UuidToUrlTransformer.attributeNames[i], newUrl);
-                            }
-                        }
-
-                    } catch (final Exception e) {
-                        getLogger().error("startElement failed: ", e);
-                        throw new SAXException(e);
-                    }
-                }
-            }
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreLinkElement);
-        }
-
-        if (!(lookingAtLinkElement(name) && this.ignoreLinkElement)) {
-            if (newAttrs != null) {
-                attrs = newAttrs;
-            }
-            super.startElement(uri, name, qname, attrs);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this.indent + "<" + qname + "> sent");
-            }
-        }
-    }
 
     /**
      * Rewrites a link.
@@ -251,32 +146,57 @@ public class UrlToUuidTransformer extends AbstractSAXTransformer {
     }
 
     /**
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
-     *      java.lang.String, java.lang.String)
-     */
-    public void endElement(String uri, String name, String qname) throws SAXException {
-        if (getLogger().isDebugEnabled()) {
-            this.indent = this.indent.substring(2);
-            getLogger().debug(this.indent + "</" + qname + ">");
-        }
-        if (lookingAtLinkElement(name) && this.ignoreLinkElement) {
-            this.ignoreLinkElement = false;
-        } else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this.indent + "</" + qname + "> sent");
-            }
-            super.endElement(uri, name, qname);
-        }
-    }
-
-    private boolean lookingAtLinkElement(String name) {
-        return Arrays.asList(UuidToUrlTransformer.elementNames).contains(name);
-    }
-
-    /**
      * @see org.apache.avalon.excalibur.pool.Recyclable#recycle()
      */
     public void recycle() {
         this.ignoreLinkElement = false;
+    }
+
+    protected void handleLink(String originalUrl, AttributeConfiguration config,
+            AttributesImpl newAttrs) throws Exception {
+
+        String pubId = this.currentDocument.getPublication().getId();
+        String area = this.currentDocument.getArea();
+
+        if (originalUrl.startsWith(this.contextPath + "/" + pubId + "/" + area + "/")) {
+            final String webappUrl = originalUrl.substring(this.contextPath.length());
+
+            String anchor = null;
+            String url = null;
+
+            int anchorIndex = webappUrl.indexOf("#");
+            if (anchorIndex > -1) {
+                url = webappUrl.substring(0, anchorIndex);
+                anchor = webappUrl.substring(anchorIndex + 1);
+            } else {
+                url = webappUrl;
+            }
+
+            String[] linkUrlAndQuery = url.split("\\?");
+            String linkUrl = linkUrlAndQuery[0];
+            String queryString = null;
+            if (linkUrlAndQuery.length > 1) {
+                queryString = linkUrlAndQuery[1];
+            }
+
+            if (factory.isDocument(linkUrl)) {
+                Document targetDocument = factory.getFromURL(linkUrl);
+
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Convert links: Check webapp URL [" + linkUrl + "]");
+                }
+
+                rewriteLink(newAttrs, config.attribute, targetDocument, anchor, queryString);
+            } else {
+                /*
+                 * This is legacy code. It rewrites links to non-document images
+                 * (in resources/shared). These images shouldn't be referenced
+                 * in documents since this violates the separation between
+                 * content and layout.
+                 */
+                String newUrl = originalUrl.substring(this.contextPath.length());
+                setAttribute(newAttrs, config.attribute, newUrl);
+            }
+        }
     }
 }

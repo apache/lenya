@@ -29,6 +29,11 @@
   </map:transformer>
     
   <map:transformer name="url2uuid" logger="lenya.sitemap.transformer.url2uuid"
-    src="org.apache.lenya.cms.cocoon.transformation.UrlToUuidTransformer"/>
+    src="org.apache.lenya.cms.cocoon.transformation.UrlToUuidTransformer">
+    <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="object" attribute="data"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="img" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="link" attribute="href"/>
+  </map:transformer>
     
 </xmap>
