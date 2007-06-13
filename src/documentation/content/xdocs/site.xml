@@ -152,7 +152,6 @@
     <concepts href="concepts/" label="Concepts">
       <publication href="publication.html" label="Publication" />
       <documents href="documents.html" label="Working with Documents"/>
-      <urlMapping href="urlMapping.html" label="URL Mapping" />
       <authoring href="authoring_live.html" label="Authoring and Live mode" />
       <wysiwyg href="wysiwyg.html" label="WYSIWYG" />
     </concepts>
@@ -178,7 +177,10 @@
         <lenyadoc href="lenyadoc.html" label="lenyadoc Protocol"/>
         <siteprotocol href="site.html" label="site Protocol"/>
       </protocols>
-      <link-management href="link-management.html" label="Link Management"/>
+      <urls-and-links label="URLs and Links">
+        <urlMapping href="urlMapping.html" label="URL Mapping" />
+        <link-management href="link-management.html" label="Link Management"/>
+      </urls-and-links>
     </reference>
     
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="Core API"/>
