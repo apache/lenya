@@ -36,6 +36,7 @@
   <xsl:param name="language"/>
   <xsl:param name="area"/>
   <xsl:param name="baseUrl"/>
+  <xsl:param name="proxyUrl"/>
   
   
   <xsl:template match="/col:collection">
@@ -45,7 +46,7 @@
       
       <channel>
         <title><xsl:value-of select="$title"/></title>
-        <link><xsl:value-of select="$baseUrl"/></link>
+        <link><xsl:value-of select="$proxyUrl"/></link>
         <description></description>
         <language><xsl:value-of select="$language"/></language>
         <copyright></copyright>
