@@ -40,7 +40,7 @@
             If you want to change the inherited usecase permissions of a template publication, please go
             to the administration GUI of one of the templates
             (<jx:forEach var="template" items="${usecase.getParameter('templates')}">
-              <a href="${request.contextPath + '/' + template + '/authoring/index.html?lenya.usecase=admin.usecases'}"><jx:out value="${template}"/></a>
+              <a href="${'/' + template + '/authoring/index.html?lenya.usecase=admin.usecases'}"><jx:out value="${template}"/></a>
             </jx:forEach>).
           </p>
         </jx:if>
