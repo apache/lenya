@@ -87,7 +87,7 @@
       <xsl:variable name="href">
         <xsl:call-template name="getHref"/>
       </xsl:variable>
-      <link><xhtml:a href="lenya-document:{$href}"/></link>
+      <link><xhtml:a href="{$href}"/></link>
       <author><xsl:value-of select="meta:metadata/dc:elements/dc:creator"/></author>
       <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
       <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{$date}" /></pubDate>
