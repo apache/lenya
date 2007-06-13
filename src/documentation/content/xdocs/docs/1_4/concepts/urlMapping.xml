@@ -17,20 +17,24 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Mapping URLs to documents.</title>
+    <title>Mapping URLs to Documents</title>
   </header>
   <body>
     <section>
-      <title>Current URLs axioms</title>
-      <p>Currently, Lenya is based on the following axioms:</p>
+      <title>URL Axioms</title>
+      <p>Lenya 1.4 is based on the following axioms:</p>
       <ul>
         <li>A URL is represented by exactly one document.</li>
         <li>A document can be represented by an arbitrary number of URLs.</li>
         <li>For each document, there is exactly one canonical URL.</li>
       </ul>
-      <p> This is reflected in the following methods: </p>
-      <source> DocumentBuilder.buildDocument(...) 
- DocumentBuilder.buildCanonicalUrl(...)</source>
+      <p>
+      This is reflected in the following methods:
+      </p>
+      <ul>
+        <li><code>DocumentBuilder.buildDocument(...)</code></li>
+        <li><code>DocumentBuilder.buildCanonicalUrl(...)</code></li>
+      </ul>
       <p>The concept of multiple URLs per document is typically 
         used for language versions (foo_{defaultlanguage}.html = foo.html) and 
         to support different URL suffixes (foo, foo.htm, foo.html, foo.pdf). </p>
