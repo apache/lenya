@@ -71,10 +71,10 @@
           <map:parameter name="area" value="{3}"/>
           <map:parameter name="uuid" value="{4}"/>
           <map:parameter name="baseUrl" value="/{2}/{3}"/>
-          <map:parameter name="proxyUrl" value="{base-url:{2}:{3}}"/> <!-- needed for RSS link -->
         </map:transform>
         <map:match pattern="rss.xml/**">
           <map:transform type="uuid2url"/>
+          <map:transform type="proxy"/>
           <map:transform src="xslt/rss/xhtmllink2rsslink.xsl"/>
           <map:transform type="i18n">
             <map:parameter name="locale" value="{5}"/>
