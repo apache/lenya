@@ -55,7 +55,7 @@
         <jx:forEach var="ipRange" items="${usecase.getParameter('ipRanges')}">
           <tr>
             <td style="vertical-align: middle">
-              <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.ipRange&amp;ipRangeId=${ipRange.getId()}"><jx:out value="${ipRange.getId()}"/></a>
+              <a href="${request.pathInfo}?lenya.usecase=admin.ipRange&amp;ipRangeId=${ipRange.getId()}"><jx:out value="${ipRange.getId()}"/></a>
             </td>
             <td style="vertical-align: middle">
               <jx:out value="${ipRange.getName()}"/>
@@ -63,7 +63,7 @@
             <td>
               <jx:if test="${ipRange.getGroups().size() == 0}"><span style="color: #999999">--</span></jx:if>
               <jx:forEach var="group" items="${ipRange.getGroups()}">
-                <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
+                <a href="${request.pathInfo}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
               </jx:forEach>
             </td>
             <td style="vertical-align: middle">

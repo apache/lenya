@@ -87,12 +87,12 @@
               <td>
                 <jx:choose>
                   <jx:when test="${key.equals('keyPath')}">
-                    <a href="${request.getContextPath()}${entry.getValue('keyUrl')}">
+                    <a href="${entry.getValue('keyUrl')}">
                       <i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text>
                     </a>
                   </jx:when>
                   <jx:when test="${key.equals('keyCheckedOut') &amp;&amp; !entry.getValue(key).equals('')}">
-                    <a href="${request.getRequestURI()}?lenya.usecase=admin.user&amp;userId=${entry.getValue(key)}">
+                    <a href="${request.pathInfo}?lenya.usecase=admin.user&amp;userId=${entry.getValue(key)}">
                       <i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text>
                     </a>
                   </jx:when>
