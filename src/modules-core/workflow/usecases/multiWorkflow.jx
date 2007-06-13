@@ -83,7 +83,7 @@
             </td>
           </jx:if>
           <td>
-            <a href="${request.contextPath}${doc.getUrl()}"><jx:out value="${doc.getLanguage()}"/></a>
+            <a href="${doc.getUrl()}"><jx:out value="${doc.getLanguage()}"/></a>
           </td>
           <jx:choose>
             <jx:when test="${style.equals('text')}">
@@ -106,7 +106,7 @@
           </jx:choose>
           <td>
             <jx:forEach var="usecaseName" items="${doc.getUsecases()}">
-              <form action="${request.requestURI}" method="POST" id="form-overview" style="display: inline;">
+              <form action="${usecase.getSourceURL()}" method="POST" id="form-overview" style="display: inline;">
                 <input type="hidden" name="lenya.usecase" value="workflow.multiWorkflowInvoke"/>
                 <input type="hidden" name="usecaseName" value="${usecaseName}"/>
                 <input type="hidden" name="url" value="${doc.getUrl()}"/>

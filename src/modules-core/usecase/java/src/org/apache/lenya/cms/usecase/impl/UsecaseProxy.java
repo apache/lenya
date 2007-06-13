@@ -197,5 +197,12 @@ public class UsecaseProxy {
         }
         return value;
     }
+    
+    /**
+     * @return The source URL of the usecase.
+     */
+    public String getSourceURL() {
+        return this.sourceUrl;
+    }
 
 }

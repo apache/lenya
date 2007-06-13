@@ -92,7 +92,7 @@
                     </a>
                   </jx:when>
                   <jx:when test="${key.equals('keyCheckedOut') &amp;&amp; !entry.getValue(key).equals('')}">
-                    <a href="${request.pathInfo}?lenya.usecase=admin.user&amp;userId=${entry.getValue(key)}">
+                    <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${entry.getValue(key)}">
                       <i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text>
                     </a>
                   </jx:when>
