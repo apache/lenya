@@ -60,7 +60,7 @@
             <td style="vertical-align: middle">
               <jx:out value="${ipRange.getName()}"/>
             </td>
-            <td>
+            <td style="vertical-align: middle">
               <jx:if test="${ipRange.getGroups().size() == 0}"><span style="color: #999999">--</span></jx:if>
               <jx:forEach var="group" items="${ipRange.getGroups()}">
                 <a href="${request.pathInfo}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
