@@ -35,6 +35,19 @@
     
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
+    <h3>2007-06-13: Apply ProxyTransformer after UuidToUrlTransformer</h3>
+    <p>
+      The uuid2url and proxy transformers now complement each other. You have
+      to apply the proxy transformer right after the uuid2url transformer:
+    </p>
+    <source xml:space="preserve"><![CDATA[<map:transform type="uuid2url"/>
+<map:transform type="proxy"/>
+...]]></source>
+    <p>
+      Internal links (to documents, CSS, etc.) don't need to contain the context path
+      anymore, this is now handled by the proxy transformer.
+    </p>
+    
     <h3>2007-05-29: Using UUID-based URLs for navigation elements</h3>
     <p>
       Now the sitetree module uses <code>lenya-document:{uuid}</code> URLs for navigation elements.
