@@ -23,8 +23,6 @@
  xmlns="http://www.w3.org/1999/xhtml"
  xmlns:status="http://apache.org/cocoon/status/2.0">
  
-  <xsl:param name="contextPath"/>
-
   <xsl:template match="status:statusinfo">
     <div>
       <h2><xsl:value-of select="@status:host"/> - <xsl:value-of select="@status:date"/></h2>

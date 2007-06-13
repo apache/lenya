@@ -95,7 +95,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
 
             String moduleUrl = "/modules/foo/bar.html?x=y";
             rewriteLink(transformer, moduleUrl, proxyUrl + moduleUrl);
-
+            
         } finally {
             if (resolver != null) {
                 getManager().release(resolver);

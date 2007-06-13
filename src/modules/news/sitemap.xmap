@@ -70,7 +70,7 @@
           <map:parameter name="title" value=""/>
           <map:parameter name="area" value="{3}"/>
           <map:parameter name="uuid" value="{4}"/>
-          <map:parameter name="baseUrl" value="{base-url:{2}:{3}}"/>
+          <map:parameter name="baseUrl" value="/{2}/{3}"/>
         </map:transform>
         <map:match pattern="rss.xml/**">
           <map:transform type="uuid2url"/>

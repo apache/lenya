@@ -18,39 +18,25 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.AccessController;
-import org.apache.lenya.ac.AccessControllerResolver;
-import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.Policy;
-import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.lenya.util.StringUtil;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -83,22 +69,9 @@ import org.xml.sax.helpers.AttributesImpl;
  * <code>lenya-document:</code> URLs to set a specific link extension.
  * </p>
  * <p>
- * The resulting URLs can either be absolute (default) or relative. You can
- * either configure this when declaring the transformer:
+ * The resulting URLs are absolute web application URLs (without the servlet
+ * context path).
  * </p>
- * <code><pre>
- *  &lt;map:transformer ... &gt;
- *    &lt;urls type=&quot;relative&quot;/&gt;
- *    &lt;transform namespace=&quot;http://www.w3.org/1999/xhtml&quot; element=&quot;a&quot; attribute=&quot;href&quot;/&gt;
- *    &lt;transform namespace=&quot;...&quot; ... /&gt;
- *  &lt;/map:transformer&gt;
- * </pre></code>
- * <p>
- * or pass a parameter:
- * </p>
- * <code><pre>
- *  &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
- * </pre></code>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
@@ -108,19 +81,11 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     protected static final String BROKEN_VALUE = "brokenlink";
     protected static final String EXTENSION_PARAM = "uuid2url.extension";
 
-    private ServiceSelector serviceSelector;
-    private PolicyManager policyManager;
-    private AccessControllerResolver acResolver;
-    private AccreditableManager accreditableManager;
-
     private Document currentDocument;
     private String currentUrl;
 
     private DocumentFactory factory;
     private LinkResolver linkResolver;
-    private String contextPath;
-
-    private boolean relativeUrls = false;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -132,72 +97,15 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
         super.setup(_resolver, _objectModel, _source, _parameters);
 
         Request _request = ObjectModelHelper.getRequest(_objectModel);
-        this.contextPath = _request.getContextPath();
 
         try {
-            if (_parameters.isParameter("urls")) {
-                setUrlType(_parameters.getParameter("urls"));
-            }
-
             Session session = RepositoryUtil.getSession(this.manager, _request);
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
             this.currentUrl = ServletHelper.getWebappURI(_request);
             this.currentDocument = this.factory.getFromURL(currentUrl);
-        } catch (final Exception e1) {
-            throw new ProcessingException(e1);
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Setting up transformer");
-            getLogger().debug("    Processed version:       [" + getCurrentDocument() + "]");
-        }
-
-        this.serviceSelector = null;
-        this.acResolver = null;
-        this.policyManager = null;
-        this.linkResolver = null;
-
-        try {
-            this.serviceSelector = (ServiceSelector) this.manager
-                    .lookup(AccessControllerResolver.ROLE + "Selector");
-            this.acResolver = (AccessControllerResolver) this.serviceSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
-            }
-            String webappUrl = ServletHelper.getWebappURI(_request);
-            AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
-            this.accreditableManager = accessController.getAccreditableManager();
-            this.policyManager = accessController.getPolicyManager();
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Using policy manager [" + this.policyManager + "]");
-            }
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
-        } catch (final ServiceException e) {
+        } catch (final Exception e) {
             throw new ProcessingException(e);
-        } catch (final AccessControlException e) {
-            throw new ProcessingException(e);
-        }
-    }
-
-    public void configure(Configuration config) throws ConfigurationException {
-        super.configure(config);
-        Configuration urlConfig = config.getChild("urls", false);
-        if (urlConfig != null) {
-            String value = urlConfig.getAttribute("type");
-            setUrlType(value);
-        }
-    }
-
-    protected void setUrlType(String value) throws ConfigurationException {
-        if (value.equals("relative")) {
-            this.relativeUrls = true;
-        } else if (value.equals("absolute")) {
-            this.relativeUrls = false;
-        } else {
-            throw new ConfigurationException("Invalid URL type [" + value
-                    + "], must be relative or absolute.");
         }
     }
 
@@ -265,8 +173,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
                 // don't rewrite /{pub}/modules/...
                 if (area.equals(Publication.AUTHORING_AREA)) {
                     String areaUrl = pubUrl.substring(area.length());
-                    String newUrl = this.contextPath + prefix + this.currentDocument.getArea()
-                            + areaUrl;
+                    String newUrl = prefix + this.currentDocument.getArea() + areaUrl;
                     setAttribute(newAttrs, config.attribute, newUrl);
                 }
             }
@@ -321,74 +228,24 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
 
         String webappUrl = targetDocument.getCanonicalWebappURL();
 
-        String rewrittenURL;
-        if (this.relativeUrls) {
-            rewrittenURL = getRelativeUrlTo(webappUrl);
-        } else {
-            Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
-
-            Proxy proxy = targetDocument.getPublication().getProxy(targetDocument,
-                    policy.isSSLProtected());
-
-            if (proxy == null) {
-                rewrittenURL = this.request.getContextPath() + webappUrl;
-            } else {
-                rewrittenURL = proxy.getURL(targetDocument);
-            }
-            if (getLogger().isDebugEnabled()) {
-                getLogger()
-                        .debug(this.indent + "SSL protection: [" + policy.isSSLProtected() + "]");
-                getLogger().debug(this.indent + "Resolved proxy: [" + proxy + "]");
-            }
-        }
-
-        int lastDotIndex = rewrittenURL.lastIndexOf(".");
+        int lastDotIndex = webappUrl.lastIndexOf(".");
         if (lastDotIndex > -1) {
-            rewrittenURL = rewrittenURL.substring(0, lastDotIndex) + extension;
+            webappUrl = webappUrl.substring(0, lastDotIndex) + extension;
         }
 
         if (anchor != null) {
-            rewrittenURL += "#" + anchor;
+            webappUrl += "#" + anchor;
         }
 
         if (queryString != null && queryString.length() > 0) {
-            rewrittenURL += "?" + queryString;
+            webappUrl += "?" + queryString;
         }
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "Rewriting URL to: [" + rewrittenURL + "]");
+            getLogger().debug(this.indent + "Rewriting URL to: [" + webappUrl + "]");
         }
 
-        setAttribute(newAttrs, attributeName, rewrittenURL);
-    }
-
-    private String getRelativeUrlTo(String webappUrl) {
-        List sourceSteps = toList(this.currentUrl);
-        List targetSteps = toList(webappUrl);
-
-        while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
-                && sourceSteps.get(0).equals(targetSteps.get(0))) {
-            sourceSteps.remove(0);
-            targetSteps.remove(0);
-        }
-
-        String upDots = "";
-        if (sourceSteps.size() > 1) {
-            String[] upDotsArray = new String[sourceSteps.size() - 1];
-            Arrays.fill(upDotsArray, "..");
-            upDots = StringUtil.join(upDotsArray, "/") + "/";
-        }
-
-        String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);
-        String targetPath = StringUtil.join(targetArray, "/");
-
-        String relativeUrl = upDots + targetPath;
-        return relativeUrl;
-
-    }
-
-    protected List toList(String url) {
-        return new ArrayList(Arrays.asList(url.substring(1).split("/")));
+        setAttribute(newAttrs, attributeName, webappUrl);
     }
 
     /**
@@ -412,15 +269,6 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing transformer");
-        }
-        if (this.serviceSelector != null) {
-            if (this.acResolver != null) {
-                this.serviceSelector.release(this.acResolver);
-            }
-            this.manager.release(this.serviceSelector);
-        }
         if (this.linkResolver != null) {
             this.manager.release(this.linkResolver);
         }

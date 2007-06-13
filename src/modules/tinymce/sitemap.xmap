@@ -27,10 +27,10 @@
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
         <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
       </map:transform>
       <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
+      <map:transform type="proxy"/>
     </map:resource>
   </map:resources>
 
@@ -65,7 +65,7 @@
         <map:generate src="context://lenya/content/util/empty.xml"/>
         <map:transform src="fallback://lenya/modules/tinymce/xslt/link.xsl" label="content">
           <map:parameter name="infoarea" value="true"/>
-          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="contextprefix" value=""/>
           <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           <map:parameter name="area" value="authoring"/>
           <map:parameter name="tab" value="en"/>
@@ -92,7 +92,7 @@
               <map:part src="cocoon:/tinymce.getUsecaseMessages"/>
             </map:aggregate>
             <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
-              <map:parameter name="contextPath" value="{request:contextPath}"/>
+              <map:parameter name="contextPath" value=""/>
               <map:parameter name="continuationId" value="{flow-continuation:id}"/>
               <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
               <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>

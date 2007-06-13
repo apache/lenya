@@ -12,8 +12,8 @@
     <jx:set var="pathInfo" value="${request.getRequestURI().substring(contextPath.length())}"/>
     <jx:set var="steps" value="${pathInfo.split('/')}"/>
     <jx:set var="pubId" value="${java.util.Arrays.asList(steps).get(1)}"/>
-    <link rel="stylesheet" href="${request.getContextPath()}/${pubId}/modules/bxe/bxe/css/editor.css" type="text/css"/>
-    <script src="${request.getContextPath()}/${pubId}/modules/bxe/bxe/bxeLoader.js" type="text/javascript"/>
+    <link rel="stylesheet" href="/${pubId}/modules/bxe/bxe/css/editor.css" type="text/css"/>
+    <script src="/${pubId}/modules/bxe/bxe/bxeLoader.js" type="text/javascript"/>
   </page:head>
   
   <page:title><i18n:text>Bitflux Editor</i18n:text></page:title>

@@ -4,7 +4,7 @@
       <map:pipeline>
          <map:match pattern="**">
             <map:generate type="serverpages" src="config/menu.xsp">
-              <map:parameter name="servlet-context" value="{request:contextPath}"/>
+              <map:parameter name="servlet-context" value=""/>
             </map:generate>
             <map:serialize type="xml"/>
          </map:match>

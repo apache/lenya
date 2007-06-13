@@ -29,9 +29,7 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
-      </map:transform>
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
       <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
     </map:resource>
     
@@ -39,7 +37,6 @@
       <map:generate src="fallback://lenya/content/{serverpage}" type="serverpages"/>
       <map:transform src="fallback://lenya/xslt/{stylesheet}">
         <map:parameter name="use-request-parameters" value="true"/>
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>      
     </map:resource>
     
@@ -82,6 +79,7 @@
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-screen.xsl"/>
+        <map:transform type="proxy"/>
         <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xhtml"/>
       </map:match>
@@ -106,7 +104,7 @@
         <map:generate src="context://lenya/content/util/empty.xml"/>
         <map:transform src="fallback://lenya/modules/bxe/xslt/link.xsl" label="content">
           <map:parameter name="infoarea" value="true"/>
-          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="contextprefix" value=""/>
           <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           <map:parameter name="area" value="authoring"/>
           <map:parameter name="tab" value="en"/>

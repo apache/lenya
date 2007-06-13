@@ -12,8 +12,9 @@
   <map:view name="pretty-content" from-label="data">
     <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
     <map:transform src="xslt/xmlverbatimwrapper.xsl">
-      <map:parameter name="css-stylesheet" value="{request:contextPath}/modules/profiling/css/xmlverbatim.css"/>
+      <map:parameter name="css-stylesheet" value="/modules/profiling/css/xmlverbatim.css"/>
     </map:transform>
+    <map:transform type="proxy"/>
     <map:serialize type="xhtml"/>
   </map:view>
 </map:views>

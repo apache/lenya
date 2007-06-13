@@ -23,6 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
@@ -42,14 +45,37 @@ import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.util.StringUtil;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
+ * <p>
  * Proxy transformer.
+ * </p>
+ * <p>
+ * The resulting URLs can either be absolute (default) or relative. You can
+ * either configure this when declaring the transformer:
+ * </p>
+ * <code><pre>
+ *   &lt;map:transformer ... &gt;
+ *     &lt;urls type=&quot;relative&quot;/&gt;
+ *     ...
+ *   &lt;/map:transformer&gt;
+ * </pre></code>
+ * <p>
+ * or pass a parameter:
+ * </p>
+ * <code><pre>
+ *   &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
+ * </pre></code>
  */
-public class ProxyTransformer extends AbstractLinkTransformer {
+public class ProxyTransformer extends AbstractLinkTransformer implements Disposable {
 
+    protected static final String URL_TYPE_ABSOLUTE = "absolute";
+    protected static final String URL_TYPE_RELATIVE = "relative";
+    protected static final String PARAMETER_URLS = "urls";
+    
     private DocumentFactory factory;
     private String url;
     private ServiceSelector serviceSelector;
@@ -57,6 +83,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
     private AccreditableManager accreditableManager;
     private PolicyManager policyManager;
     private Publication publication;
+    private boolean relativeUrls = false;
 
     protected static final String PARAMETER_FACTORY = "private.factory";
     private static final String ATTRIBUTE_ROOT = "root";
@@ -67,6 +94,10 @@ public class ProxyTransformer extends AbstractLinkTransformer {
         Request _request = ObjectModelHelper.getRequest(_objectModel);
 
         try {
+            if (_parameters.isParameter(PARAMETER_URLS)) {
+                setUrlType(_parameters.getParameter(PARAMETER_URLS));
+            }
+
             Session session = RepositoryUtil.getSession(this.manager, _request);
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
             this.url = ServletHelper.getWebappURI(_request);
@@ -117,31 +148,37 @@ public class ProxyTransformer extends AbstractLinkTransformer {
     protected void rewriteLink(AttributesImpl newAttrs, String attributeName, String linkUrl)
             throws Exception {
         String rewrittenUrl = "";
-        boolean ssl = false;
-        if (this.policyManager != null) {
-            Policy policy = this.policyManager.getPolicy(this.accreditableManager, linkUrl);
-            ssl = policy.isSSLProtected();
+
+        if (this.relativeUrls) {
+            rewrittenUrl = getRelativeUrlTo(linkUrl);
+        } else {
+            boolean ssl = false;
+            if (this.policyManager != null) {
+                Policy policy = this.policyManager.getPolicy(this.accreditableManager, linkUrl);
+                ssl = policy.isSSLProtected();
+            }
+
+            URLInformation info = new URLInformation(linkUrl);
+            String pubId = info.getPublicationId();
+
+            // link points to publication
+            if (pubId != null && isPublication(pubId)) {
+                Publication pub = this.factory.getPublication(pubId);
+                rewrittenUrl = rewriteLink(linkUrl, pub, ssl);
+            }
+
+            // link doesn't point to publication -> use own publication if
+            // exists
+            else if (this.publication != null) {
+                rewrittenUrl = rewriteLink(linkUrl, this.publication, ssl);
+            }
+
+            // link doesn't point to publication, no own publication
+            else {
+                rewrittenUrl = this.request.getContextPath() + linkUrl;
+            }
         }
 
-        URLInformation info = new URLInformation(linkUrl);
-        String pubId = info.getPublicationId();
-
-        // link points to publication
-        if (pubId != null && isPublication(pubId)) {
-            Publication pub = this.factory.getPublication(pubId);
-            rewrittenUrl = rewriteLink(linkUrl, pub, ssl);
-        }
-
-        // link doesn't point to publication -> use own publication if exists
-        else if (this.publication != null) {
-            rewrittenUrl = rewriteLink(linkUrl, this.publication, ssl);
-        }
-        
-        // link doesn't point to publication, no own publication
-        else {
-            rewrittenUrl = this.request.getContextPath() + linkUrl;
-        }
-        
         setAttribute(newAttrs, attributeName, rewrittenUrl);
     }
 
@@ -187,4 +224,65 @@ public class ProxyTransformer extends AbstractLinkTransformer {
         }
         return rewrittenUrl;
     }
+
+    public void configure(Configuration config) throws ConfigurationException {
+        super.configure(config);
+        Configuration urlConfig = config.getChild(PARAMETER_URLS, false);
+        if (urlConfig != null) {
+            String value = urlConfig.getAttribute("type");
+            setUrlType(value);
+        }
+    }
+
+    protected void setUrlType(String value) throws ConfigurationException {
+        if (value.equals(URL_TYPE_RELATIVE)) {
+            this.relativeUrls = true;
+        } else if (value.equals(URL_TYPE_ABSOLUTE)) {
+            this.relativeUrls = false;
+        } else {
+            throw new ConfigurationException("Invalid URL type [" + value
+                    + "], must be relative or absolute.");
+        }
+    }
+
+    protected String getRelativeUrlTo(String webappUrl) {
+        List sourceSteps = toList(this.url);
+        List targetSteps = toList(webappUrl);
+
+        while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
+                && sourceSteps.get(0).equals(targetSteps.get(0))) {
+            sourceSteps.remove(0);
+            targetSteps.remove(0);
+        }
+
+        String upDots = "";
+        if (sourceSteps.size() > 1) {
+            String[] upDotsArray = new String[sourceSteps.size() - 1];
+            Arrays.fill(upDotsArray, "..");
+            upDots = StringUtil.join(upDotsArray, "/") + "/";
+        }
+
+        String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);
+        String targetPath = StringUtil.join(targetArray, "/");
+
+        String relativeUrl = upDots + targetPath;
+        return relativeUrl;
+    }
+
+    protected List toList(String url) {
+        return new ArrayList(Arrays.asList(url.substring(1).split("/")));
+    }
+
+    /**
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
+     */
+    public void dispose() {
+        if (this.serviceSelector != null) {
+            if (this.acResolver != null) {
+                this.serviceSelector.release(this.acResolver);
+            }
+            this.manager.release(this.serviceSelector);
+        }
+    }
+
 }

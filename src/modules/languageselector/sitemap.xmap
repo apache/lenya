@@ -51,7 +51,7 @@
         <map:parameter name="document-languages-csv" value="{page-envelope:document-languages-csv}"/>
         <map:parameter name="text" value="{1}"/>
         <map:parameter name="flagsize" value="{2}"/>
-        <map:parameter name="context" value="{request:contextPath}"/>
+        <map:parameter name="context" value=""/>
       </map:transform>
       <map:transform type="i18n">
         <map:parameter name="locale" value="{request:locale}"/>

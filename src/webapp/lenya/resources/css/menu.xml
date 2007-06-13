@@ -19,7 +19,7 @@
     
 body { background-color: #fff; margin: 0; padding: 0; }
 
-#lenya-menus { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 57px; background: url(<context-prefix/>/lenya/menu/images/menu-background.gif) 0 0 repeat-x; }
+#lenya-menus { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 57px; background: url(/lenya/menu/images/menu-background.gif) 0 0 repeat-x; }
 
 #lenya-logo { position: absolute; z-index: 3; width: 90px; height: 25px; top: 31px; left: 100%; margin-left: -90px; }
 
@@ -77,9 +77,9 @@ body { background-color: #fff; margin: 0; padding: 0; }
 
 #lenya-areas ul li a span { font: bold 10px/1.0 Arial, Verdana, sans-serif; text-transform: uppercase; vertical-align: top; }
 
-#lenya-areas ul li.area-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+#lenya-areas ul li.area-active a { color: #3975b3; background: url(/lenya/menu/images/active.gif) 0 0 repeat-x; }
 
-#lenya-areas ul li.area-inactive a { background: url(<context-prefix/>/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
+#lenya-areas ul li.area-inactive a { background: url(/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
 
 #lenya-areas ul li.area-inactive a:hover { background-position: 0 -25px; }
 

@@ -34,8 +34,8 @@ This sitemap creates default navigation components.
       </map:matcher>
     </map:matchers>
     <map:transformers default="xslt">
-      <map:transformer logger="lenya.sitemap.transformer.uuid2url" name="uuid2url-sitetree"
-          src="org.apache.lenya.cms.cocoon.transformation.UuidToUrlTransformer">
+      <map:transformer logger="lenya.sitemap.transformer.proxy" name="proxy-sitetree"
+          src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
         <urls type="relative"/>
         <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="href"/>
       </map:transformer>
@@ -77,7 +77,7 @@ This sitemap creates default navigation components.
         <map:generate src="cocoon:/sitetree/{2}/{3}/{4}/{5}/{6}.xml"/>
         <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/{1}.xsl">
           <map:parameter name="area" value="{2}"/>
-          <map:parameter name="root" value="{request:contextPath}/{2}/{3}/"/>
+          <map:parameter name="root" value="/{2}/{3}/"/>
           <map:parameter name="chosenlanguage" value="{5}"/>
           <map:parameter name="defaultlanguage" value="{4}"/>
         </map:transform>       
@@ -127,7 +127,8 @@ This sitemap creates default navigation components.
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="extension" value="html"/>
         </map:transform>
-        <map:transform type="uuid2url-sitetree"/>
+        <map:transform type="uuid2url"/>
+        <map:transform type="proxy-sitetree"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
