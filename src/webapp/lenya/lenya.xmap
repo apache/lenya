@@ -22,18 +22,7 @@
   
   <map:resources>
     <map:resource name="proxy-css">
-      <map:act type="resource-exists" src="{url}.xml">
-        <map:generate src="{../url}.xml"/>
-        <map:transform src="fallback://lenya/resources/css/css.xsl">
-          <!-- core: no publication and area -->
-          <map:parameter name="root" value=""/>
-        </map:transform>
-        <map:call resource="prepare-proxy-css"/>
-      </map:act>
       <map:generate type="text" src="{url}.css"/>
-      <map:call resource="prepare-proxy-css"/>
-    </map:resource>
-    <map:resource name="prepare-proxy-css">
       <map:transform type="pattern" src="fallback://lenya/chaperon/grammars/link.xlex"/>
       <map:transform src="fallback://lenya/chaperon/stylesheets/pattern-to-link.xsl"/>
       <map:transform type="proxy"/>
