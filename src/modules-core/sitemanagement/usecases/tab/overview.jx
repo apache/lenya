@@ -76,7 +76,7 @@
                     </jx:when>
                     <jx:otherwise>
                       <jx:set var="translation" value="${document.getTranslation(language)}"/>
-                      <a href="${request.contextPath}${translation.getCanonicalWebappURL()}?lenya.usecase=tab.overview">
+                      <a href="${translation.getCanonicalWebappURL()}?lenya.usecase=tab.overview">
                         <jx:out value="${language}"/></a>
                     </jx:otherwise>
                   </jx:choose>
