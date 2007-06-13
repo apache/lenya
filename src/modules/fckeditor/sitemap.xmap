@@ -50,6 +50,7 @@
         </map:transform>
         <map:transform type="cinclude"/>
         <map:transform src="cocoon://lenya-screen.xsl"/>
+        <map:transform type="proxy"/>
         <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xhtml"/>
       </map:match>

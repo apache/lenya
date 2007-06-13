@@ -24,8 +24,8 @@
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
   >
   
-  <script type="text/javascript" src="${request.getContextPath()}/modules/fckeditor/fckeditor/fckeditor.js">&#160;</script>
-  <script type="text/javascript" src="${request.getContextPath()}/modules/fckeditor/javascript/fckloader.js">&#160;</script>
+  <script type="text/javascript" src="/modules/fckeditor/fckeditor/fckeditor.js">&#160;</script>
+  <script type="text/javascript" src="/modules/fckeditor/javascript/fckloader.js">&#160;</script>
   <script type="text/javascript">
     window.onload = function()
     {
