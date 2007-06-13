@@ -52,7 +52,7 @@
                   <jx:out value="${usecaseName}"/>
                 </td>
                 <td>
-                  <a href="${request.requestUri}?lenya.usecase=admin.user&amp;userId=${userId}"><jx:out value="${userId}"/></a>
+                  <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${userId}"><jx:out value="${userId}"/></a>
                 </td>
                 <td>
                   <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss Z">

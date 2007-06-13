@@ -56,7 +56,7 @@
           </td>
           <td>
             <div class="lenya-box-body">
-              <a href="${request.requestURI}?lenya.usecase=jcr.export&amp;scope=publication" target="_blank">Download Publication Content</a>
+              <a href="${usecase.getSourceURL()}?lenya.usecase=jcr.export&amp;scope=publication" target="_blank">Download Publication Content</a>
             </div>
           </td>
         </tr>
