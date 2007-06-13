@@ -72,40 +72,6 @@
     </section>
     
     <section>
-      <title>HTML Links</title>
-      <p>
-        The <code>UuidToUrlTransformer</code> is responsible for translating <code>lenya-document:</code>
-        links into the corresponding HTML links which can be understood by the browser.
-      </p>
-      <p>
-        If your source document contains a link like this:
-      </p>
-      <source xml:space="preserve">&lt;a href="lenya-document:031&#8230;"&gt;News&lt;/a&gt;</source>
-      <p>
-        and your pipeline contains a call to the <code>UuidToUrlTransformer</code>:
-      </p>
-      <source xml:space="preserve"><![CDATA[<map:transform type="uuid2url"/>]]></source>
-      <p>
-        the resulting HTML link will look like this:
-      </p>
-      <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
-      
-      <section>
-        <title>Specifying an Extension</title>
-        <p>
-          The <code>UuidToUrlTransformer</code> recognizes the query string parameter
-          <code>uuid2url.extension</code>. You can use it to force a specific extension.
-          For instance
-        </p>
-        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="lenya-document:031&#8230;?uuid2url.extension=rss"&gt;RSS Feed&lt;/a&gt;</source>
-        <p>
-          will result in
-        </p>
-        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="/default/authoring/news.rss"&gt;RSS Feed&lt;/a&gt;</source>
-      </section>
-    </section>
-    
-    <section>
       <title>Specifying the Resource Type Format</title>
       <p>
         Sometimes you want to specify the format of the link target. This can be done using the
@@ -132,6 +98,68 @@
       </p>
       <source xml:space="preserve"><![CDATA[<map:transform type="cinclude"/>]]></source>
       <p>the teaser version of each document will be included.</p>
+    </section>
+    
+    <section>
+      <title>Converting UUID-based URLs to Web Application URLs</title>
+      <p>
+        The <code>UuidToUrlTransformer</code> is responsible for translating <code>lenya-document:</code>
+        links into the corresponding web application links. The context path or proxy settings
+        are not considered yet, this is the responsibility of the ProxyTransformer (see below).
+        So don't forget to apply the ProxyTransformer after the UuidToUrlTransformer.
+      </p>
+      <p>
+        If your source document contains a link like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="lenya-document:031&#8230;"&gt;News&lt;/a&gt;</source>
+      <p>
+        and your pipeline contains a call to the UuidToUrlTransformer:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform type="uuid2url"/>]]></source>
+      <p>
+        the resulting HTML link will look like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+      
+      <section>
+        <title>Specifying an Extension</title>
+        <p>
+          The UuidToUrlTransformer recognizes the query string parameter
+          <code>uuid2url.extension</code>. You can use it to force a specific extension.
+          For instance
+        </p>
+        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="lenya-document:031&#8230;?uuid2url.extension=rss"&gt;RSS Feed&lt;/a&gt;</source>
+        <p>
+          will result in
+        </p>
+        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="/default/authoring/news.rss"&gt;RSS Feed&lt;/a&gt;</source>
+      </section>
+    </section>
+    
+    <section>
+      <title>Converting Web Application Links to Servlet Container or Proxy Links</title>
+      <p>
+        The <code>ProxyTransformer</code> converts all web application links to final links
+        by adding the servlet context path or the proxy URL. For instance, if you run your
+        Lenya servlet in Tomcat under the context path <em>lenya14</em>, transforming
+      </p>
+      <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+      <p>
+        with the ProxyTransformer
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform type="proxy"/>]]></source>
+      <p>
+        will result in
+      </p>
+      <source xml:space="preserve">&lt;a href="/lenya14/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+      <p>
+        If you have declared a proxy for the authoring area, the resulting link might look like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="http://cms.mysite.com/news.html"&gt;News&lt;/a&gt;</source>
+      <p>
+        Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
+        For more information on the ProxyTransformer, consult the API documentation.
+      </p>
     </section>
     
   </body>
