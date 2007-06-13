@@ -16,13 +16,17 @@
   limitations under the License.
 -->
 <xsl:stylesheet version="1.0" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:template match="a">
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <xsl:template match="xhtml:a">
     <xsl:value-of select="@href"/>
   </xsl:template>
+  
   <xsl:template match="@*|*|text()|processing-instruction()" priority="-1">
     <xsl:copy>
       <xsl:apply-templates select="@*|*|text()|processing-instruction()"/>
     </xsl:copy>
   </xsl:template>
+  
 </xsl:stylesheet>

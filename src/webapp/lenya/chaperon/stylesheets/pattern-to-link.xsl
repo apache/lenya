@@ -17,12 +17,13 @@
 -->
 <xsl:stylesheet version="1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:lex="http://chaperon.sourceforge.net/schema/lexemes/2.0">
+    xmlns:lex="http://chaperon.sourceforge.net/schema/lexemes/2.0"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <xsl:template match="lex:lexeme[@symbol='link']">
     <xsl:choose>
 <!-- it is possible to disable link writing by prefixing by '\' -->
-      <xsl:when test="not( starts-with( @text, '\') )"><a href="{@text}">
-        <xsl:value-of select="@text"/></a>
+      <xsl:when test="not( starts-with( @text, '\') )"><xhtml:a href="{@text}">
+        <xsl:value-of select="@text"/></xhtml:a>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="lex:group[2]"/>
@@ -32,15 +33,15 @@
   <xsl:template match="lex:lexeme[@symbol='email']">
     <xsl:choose>
 <!-- it is possible to disable link writing by prefixing by '\' -->
-      <xsl:when test="not( starts-with( @text, '\') )"><a href="mailto:{@text}">
-        <xsl:value-of select="lex:group[2]"/> at <xsl:value-of select="lex:group[3]"/></a>
+      <xsl:when test="not( starts-with( @text, '\') )"><xhtml:a href="mailto:{@text}">
+        <xsl:value-of select="lex:group[2]"/> at <xsl:value-of select="lex:group[3]"/></xhtml:a>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="lex:group[2]"/>@<xsl:value-of select="lex:group[3]"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="lex:lexeme[@symbol='cssurl']"><xsl:value-of select="lex:group[2]"/><a href="{lex:group[3]}"/><xsl:value-of select="lex:group[4]"/>
+  <xsl:template match="lex:lexeme[@symbol='cssurl']"><xsl:value-of select="lex:group[2]"/><xhtml:a href="{lex:group[3]}"/><xsl:value-of select="lex:group[4]"/>
   </xsl:template>
   <xsl:template match="@*|*|text()|processing-instruction()" priority="-1">
     <xsl:copy>
