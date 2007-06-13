@@ -73,9 +73,8 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
 
         String pubId = "mock";
         String area = "authoring";
-        boolean ssl = true;
 
-        createMockPublication(pubId, area, ssl, proxyUrl);
+        createMockPublication(pubId, area, proxyUrl);
 
         Context context = this.context;
         Map objectModel = (Map) context.get(ContextHelper.CONTEXT_OBJECT_MODEL);
@@ -117,7 +116,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         assertEquals(rewrittenUrl, targetUrl);
     }
 
-    protected void createMockPublication(String pubId, String area, boolean ssl, String proxyUrl)
+    protected void createMockPublication(String pubId, String area, String proxyUrl)
             throws PublicationException, ServiceException, Exception {
         if (!existsPublication(pubId)) {
 
@@ -128,7 +127,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
                 selector = (ServiceSelector) getManager().lookup(Instantiator.ROLE + "Selector");
                 instantiator = (Instantiator) selector.select(defaultPub.getInstantiatorHint());
                 instantiator.instantiate(defaultPub, pubId, "Mock");
-                configureProxy(area, ssl, proxyUrl);
+                configureProxy(area, proxyUrl);
             } finally {
                 if (selector != null) {
                     if (instantiator != null) {
@@ -140,7 +139,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         }
     }
 
-    protected void configureProxy(String area, boolean ssl, String proxyUrl)
+    protected void configureProxy(String area, String proxyUrl)
             throws ServiceException, SourceNotFoundException, ParserConfigurationException,
             SAXException, IOException, TransformerConfigurationException, TransformerException,
             MalformedURLException {
@@ -154,10 +153,16 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         dom.getDocumentElement().appendChild(proxies);
 
         Element proxyElement = helper.createElement("proxy");
-        proxyElement.setAttribute("ssl", Boolean.toString(ssl));
+        proxyElement.setAttribute("ssl", Boolean.toString(false));
         proxyElement.setAttribute("area", area);
         proxyElement.setAttribute("url", proxyUrl);
         proxies.appendChild(proxyElement);
+
+        Element sslProxyElement = helper.createElement("proxy");
+        sslProxyElement.setAttribute("ssl", Boolean.toString(true));
+        sslProxyElement.setAttribute("area", area);
+        sslProxyElement.setAttribute("url", proxyUrl);
+        proxies.appendChild(sslProxyElement);
 
         SourceUtil.writeDOM(dom, configUri, getManager());
     }
