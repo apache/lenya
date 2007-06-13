@@ -90,7 +90,7 @@
                   <ul>
                     <jx:forEach var="link" items="${unpublishedLinks}">
                       <li>
-                        <a href="${request.contextPath}${link.getCanonicalWebappURL()}">
+                        <a href="${link.getCanonicalWebappURL()}">
                           <jx:out value="${link.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></a>
                         <span>
                           (<jx:out value="${link.getPath()}"/>,

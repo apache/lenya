@@ -19,7 +19,7 @@
         </i18n:translate>
       </p>
       <p>
-        <a href="/${contextPath}"><i18n:text>Back</i18n:text></a>
+        <a href="/index.html"><i18n:text>Back</i18n:text></a>
       </p>
     </page:body>
     
