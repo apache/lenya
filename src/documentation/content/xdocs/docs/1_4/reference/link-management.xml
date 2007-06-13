@@ -157,9 +157,29 @@
       </p>
       <source xml:space="preserve">&lt;a href="http://cms.mysite.com/news.html"&gt;News&lt;/a&gt;</source>
       <p>
+        If you have configured the proxy transformer to use relative URLs, the link will be converted to
+        something like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="../../news.html"&gt;News&lt;/a&gt;</source>
+      <p>
         Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
         For more information on the ProxyTransformer, consult the API documentation.
       </p>
+    </section>
+    
+    <section>
+      <title>URLs in CSS Files</title>
+      <p>
+        URLs in <acronym title="Cascading StyleSheet">CSS</acronym> files are converted
+        to valid links automatically. In your CSS, you can just write
+      </p>
+      <source xml:space="preserve">div.news { background: url('/mypub/live/images/news.png') left top no-repeat }</source>
+      <p>
+        and, according to your proxy settings or context path, this will end up as one of these:
+      </p>
+      <source xml:space="preserve">div.news { background: url('/lenya14/mypub/live/images/news.png') left top no-repeat }</source>
+      <source xml:space="preserve">div.news { background: url('http://mysite.com/images/news.png') left top no-repeat }</source>
+      <source xml:space="preserve">div.news { background: url('../images/news.png') left top no-repeat }</source>
     </section>
     
   </body>
