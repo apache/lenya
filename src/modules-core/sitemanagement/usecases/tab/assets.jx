@@ -48,7 +48,7 @@
               <tr>
                 <jx:set var="title" value="${doc.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/>
                 <td>
-                  <a href="${request.getContextPath()}${doc.getCanonicalWebappURL()}"><jx:out value="${title}"/></a>
+                  <a href="${doc.getCanonicalWebappURL()}"><jx:out value="${title}"/></a>
                 </td>
                 <td>        
                   <jx:set var="mimeType" value="${doc.getMimeType()}"/>
@@ -56,7 +56,7 @@
                     <jx:set var="extension" value="${doc.getSourceExtension()}"/>
                     <jx:set var="url" value="${doc.getCanonicalWebappURL()}"/>
                     <jx:set var="imageUrl" value="${url.replaceFirst('\.html', '\.' + extension)}"/>
-                    <img src="${request.getContextPath()}${imageUrl}"
+                    <img src="${imageUrl}"
                       style="height: 32px; vertical-align: middle;"/>&#160;
                   </jx:if>
                 </td>
