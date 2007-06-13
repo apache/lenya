@@ -79,7 +79,7 @@
         <input type="hidden" name="lenya.usecase" value="resource.create"/>
         <input type="hidden" name="doctype" value="resource"/>
         <input type="hidden" name="lenya.exitUsecase" value="tab.assets"/>
-        <input type="hidden" name="lenya.exitUri" value="${request.contextPath}${usecase.getParameter('document').getCanonicalWebappURL()}"/>
+        <input type="hidden" name="lenya.exitUri" value="${usecase.getParameter('document').getCanonicalWebappURL()}"/>
         <input i18n:attr="value" name="submit" type="submit" value="New Asset"/>
        </form>
      </jx:if>
