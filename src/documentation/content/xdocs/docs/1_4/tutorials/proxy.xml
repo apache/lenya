@@ -93,8 +93,8 @@
     RewriteLog /Users/john/src/www/logs/www.example.com-rewrite_log
     RewriteLogLevel 4
     RewriteRule ^/([^/\.]+)$ $1/ [R]
-    RewriteRule ^/(.*) http://www.example.com:8888/$1 [P,L]
-    ProxyPassReverse / http://www.example.com:8888/
+    RewriteRule ^/(.*) http://www.example.com:8888/default/live/$1 [P,L]
+    ProxyPassReverse / http://www.example.com:8888/default/live/
     ErrorLog /Users/john/src/www/logs/www.example.com-error_log
     CustomLog /Users/john/src/www/logs/www.example.com-access_log common
 </VirtualHost>
