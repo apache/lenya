@@ -76,7 +76,7 @@
     ProxyRequests Off
     RewriteEngine On
     RewriteLog /Users/john/src/www/logs/cms.example.com-rewrite_log
-    RewriteLogLevel 9
+    RewriteLogLevel 4
     RewriteRule ^/([^/\.]+)$ $1/ [R]
     RewriteRule ^/(.*) http://cms.example.com:8888/default/authoring/$1 [P,L]
     ProxyPassReverse / http://cms.example.com:8888/default/authoring/
@@ -91,7 +91,7 @@
     ProxyRequests Off
     RewriteEngine On
     RewriteLog /Users/john/src/www/logs/www.example.com-rewrite_log
-    RewriteLogLevel 9
+    RewriteLogLevel 4
     RewriteRule ^/([^/\.]+)$ $1/ [R]
     RewriteRule ^/(.*) http://www.example.com:8888/$1 [P,L]
     ProxyPassReverse / http://www.example.com:8888/
@@ -106,7 +106,7 @@
     ProxyRequests Off
     RewriteEngine On
     RewriteLog /Users/john/src/www/logs/lenya.example.com-rewrite_log
-    RewriteLogLevel 9
+    RewriteLogLevel 4
     RewriteRule ^/([^/\.]+)$ $1/ [R]
     RewriteRule ^/(.*) http://lenya.example.com:8888/$1 [P,L]
     ProxyPassReverse / http://lenya.example.com:8888/
