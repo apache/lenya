@@ -270,7 +270,7 @@ public class ProxyTransformer extends AbstractLinkTransformer implements Disposa
     }
 
     protected List toList(String url) {
-        return new ArrayList(Arrays.asList(url.substring(1).split("/")));
+        return new ArrayList(Arrays.asList(url.substring(1).split("/", -1)));
     }
 
     /**
