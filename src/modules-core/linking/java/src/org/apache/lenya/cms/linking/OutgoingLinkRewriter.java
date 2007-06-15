@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessController;
@@ -29,7 +28,6 @@ import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
@@ -47,12 +45,11 @@ import org.apache.lenya.util.StringUtil;
  * Objects of this class are not thread-safe.
  * </p>
  */
-public class OutgoingLinkRewriter implements LinkRewriter {
+public class OutgoingLinkRewriter extends ServletLinkRewriter {
 
     private static final String ATTRIBUTE_ROOT = "root";
 
     private boolean relativeUrls;
-    private ServiceManager manager;
     private PolicyManager policyManager;
     private AccreditableManager accreditableManager;
     private DocumentFactory factory;
@@ -67,7 +64,7 @@ public class OutgoingLinkRewriter implements LinkRewriter {
     public OutgoingLinkRewriter(ServiceManager manager, Session session, String requestUrl,
             boolean relativeUrls) {
         
-        this.manager = manager;
+        super(manager);
         this.requestUrl = requestUrl;
         this.relativeUrls = relativeUrls;
 
@@ -147,28 +144,8 @@ public class OutgoingLinkRewriter implements LinkRewriter {
         return rewrittenUrl;
     }
 
-    private String contextPath;
-
     private String requestUrl;
     
-    protected String getContextPath() {
-        if (this.contextPath == null) {
-            ContextUtility context = null;
-            try {
-                context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                this.contextPath = context.getRequest().getContextPath();
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-            finally {
-                if (context != null) {
-                    this.manager.release(context);
-                }
-            }
-        }
-        return this.contextPath;
-    }
-
     /**
      * @param linkUrl The original link URL.
      * @param pub The publication to use for proxy resolving.

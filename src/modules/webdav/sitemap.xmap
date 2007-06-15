@@ -93,6 +93,7 @@
       
       <map:match pattern="request/generate">
         <map:generate type="stream" />
+        <map:transform type="incoming-proxy"/>
         <map:transform type="url2uuid"/>
         <map:serialize type="xml" />
       </map:match>
@@ -110,6 +111,7 @@
           <map:transform src="fallback://lenya/modules/{page-envelope:document-type}/xslt/clean-{page-envelope:document-type}.xsl"/>        
           <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         </map:act>
+        <map:transform type="incoming-proxy"/>
         <map:transform type="url2uuid"/>
         <map:serialize type="xml"/>
       </map:match>

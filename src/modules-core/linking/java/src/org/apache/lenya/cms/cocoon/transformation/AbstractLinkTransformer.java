@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
+import org.apache.lenya.cms.linking.LinkRewriter;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -34,10 +35,10 @@ import org.xml.sax.helpers.AttributesImpl;
  * <code>&lt;transform/&gt;</code> elements:
  * </p>
  * <code><pre>
- *  &lt;map:transformer ... &gt;
- *    &lt;transform namespace=&quot;http://www.w3.org/1999/xhtml&quot; element=&quot;a&quot; attribute=&quot;href&quot;/&gt;
- *    &lt;transform namespace=&quot;...&quot; ... /&gt;
- *  &lt;/map:transformer&gt;
+ *   &lt;map:transformer ... &gt;
+ *     &lt;transform namespace=&quot;http://www.w3.org/1999/xhtml&quot; element=&quot;a&quot; attribute=&quot;href&quot;/&gt;
+ *     &lt;transform namespace=&quot;...&quot; ... /&gt;
+ *   &lt;/map:transformer&gt;
  * </pre></code>
  */
 public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
@@ -180,12 +181,17 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * Handle a link in the source SAX stream.
      * @param linkUrl The link URL.
      * @param config The attribute configuration which matched the link.
-     * @param newAttrs The new attributes which will be added to the result element.
+     * @param newAttrs The new attributes which will be added to the result
+     *        element.
      * @throws Exception if an error occurs.
      */
-    protected abstract void handleLink(String linkUrl, AttributeConfiguration config,
-            AttributesImpl newAttrs) throws Exception;
-    
+    protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
+            throws Exception {
+        if (getLinkRewriter().matches(linkUrl)) {
+            setAttribute(newAttrs, config.attribute, getLinkRewriter().rewrite(linkUrl));
+        }
+    }
+
     /**
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
@@ -221,5 +227,10 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         }
         attr.setValue(position, value);
     }
+
+    /**
+     * @return The link rewriter used by this transformer.
+     */
+    protected abstract LinkRewriter getLinkRewriter();
 
 }

@@ -28,6 +28,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.linking.LinkResolver;
+import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -281,5 +282,9 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
         this.ignoreLinkElement = false;
         this.currentDocument = null;
         this.currentUrl = null;
+    }
+
+    protected LinkRewriter getLinkRewriter() {
+        return null;
     }
 }

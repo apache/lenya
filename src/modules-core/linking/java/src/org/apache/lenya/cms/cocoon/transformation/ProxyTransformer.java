@@ -32,7 +32,6 @@ import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * <p>
@@ -54,6 +53,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * <code><pre>
  *    &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
  * </pre></code>
+ * @see OutgoingLinkRewriter
  */
 public class ProxyTransformer extends AbstractLinkTransformer {
 
@@ -81,13 +81,6 @@ public class ProxyTransformer extends AbstractLinkTransformer {
         }
     }
 
-    protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
-            throws Exception {
-        if (this.rewriter.matches(linkUrl)) {
-            setAttribute(newAttrs, config.attribute, this.rewriter.rewrite(linkUrl));
-        }
-    }
-
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
         Configuration urlConfig = config.getChild(PARAMETER_URLS, false);
@@ -106,6 +99,10 @@ public class ProxyTransformer extends AbstractLinkTransformer {
             throw new ConfigurationException("Invalid URL type [" + value
                     + "], must be relative or absolute.");
         }
+    }
+
+    protected LinkRewriter getLinkRewriter() {
+        return this.rewriter;
     }
 
 }
