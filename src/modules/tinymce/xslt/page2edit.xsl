@@ -57,7 +57,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="{$contextPath}/{$publicationid}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"
+          src="/{$publicationid}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -66,7 +66,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="{$contextPath}/{$publicationid}/modules/tinymce/javascript/tiny_lenya_glue.js"
+          src="/{$publicationid}/modules/tinymce/javascript/tiny_lenya_glue.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -75,7 +75,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="{$contextPath}/{$publicationid}/modules/tinymce/javascript/tiny_config.js"
+          src="/{$publicationid}/modules/tinymce/javascript/tiny_config.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -84,7 +84,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="{$contextPath}/{$publicationid}/modules/tinymce/javascript/tiny_valid_elements.js"
+          src="/{$publicationid}/modules/tinymce/javascript/tiny_valid_elements.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -125,7 +125,7 @@
  messages.)
 -->
 <xsl:template match="xhtml:html/xhtml:head/xhtml:*[1]">
-  <link rel="stylesheet" type="text/css" href="{$contextPath}/lenya/css/default.css"/>
+  <link rel="stylesheet" type="text/css" href="/lenya/css/default.css"/>
   <xsl:call-template name="identity"/>
 </xsl:template>
 
