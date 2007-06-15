@@ -8,8 +8,7 @@
   >
   
   <page:head>
-    <jx:set var="contextPath" value="${request.getContextPath()}"/>
-    <jx:set var="pathInfo" value="${request.getRequestURI().substring(contextPath.length())}"/>
+    <jx:set var="pathInfo" value="${usecase.getSourceURL()}"/>
     <jx:set var="steps" value="${pathInfo.split('/')}"/>
     <jx:set var="pubId" value="${java.util.Arrays.asList(steps).get(1)}"/>
     <link rel="stylesheet" href="/${pubId}/modules/bxe/bxe/css/editor.css" type="text/css"/>
@@ -18,8 +17,10 @@
   
   <page:title><i18n:text>Bitflux Editor</i18n:text></page:title>
   
-  <jx:set var="configFile" value="${request.getRequestURI()}"/>
-
+  <jx:set var="sourceUrl" value="${usecase.getSourceURL()}"/>
+  <jx:set var="steps" value="${sourceUrl.split('/')}"/>
+  <jx:set var="lastStep" value="${steps[steps.size() - 1]}"/>
+  
   <jx:choose>
     <jx:when test="${usecase.hasErrors()}">
       <page:body>
@@ -27,7 +28,7 @@
       </page:body>
     </jx:when>
     <jx:otherwise>
-      <page:body onload="bxe_start('${configFile}?lenya.module=bxe&amp;lenya.step=config')">
+      <page:body onload="bxe_start('${lastStep}?lenya.module=bxe&amp;lenya.step=config')">
     
         <!-- everything in the following div element will be replaced -->
         <div id="bxe_area">
