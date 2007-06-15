@@ -183,18 +183,30 @@ public interface Publication extends RepositoryItem {
     String getContentDir();
 
     /**
-     * Returns the proxy which is used for a particular document.
+     * Returns the proxy which is used for a particular document's area
+     * (see {@link #getProxy(String, boolean)}).
      * @param document The document.
      * @param isSslProtected A boolean value.
-     * @return A proxy or <code>null</code> if no proxy is defined for this version.
+     * @return A proxy.
      */
     Proxy getProxy(Document document, boolean isSslProtected);
 
     /**
+     * <p>
      * Returns the proxy which is used for the given area and the ssl parameter.
+     * </p>
+     * <p>
+     * If no proxy is defined in the publication configuration file, a default proxy
+     * with the URL <code>{contextPath}/{pubId}/{area}</code> is returned.
+     * </p>
+     * <p>
+     * If the area string is "root", the global proxy is returned. If no global proxy
+     * is defined, a default global proxy with the URL <code>{contextPath}</code>
+     * is returned. 
+     * </p>
      * @param area area
      * @param isSslProtected A boolean value.
-     * @return A proxy or <code>null</code> if no proxy is defined for these parameters.
+     * @return A proxy.
      */
     Proxy getProxy(String area, boolean isSslProtected);
 

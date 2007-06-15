@@ -82,7 +82,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ELEMENT_CONTENT_DIR = "content-dir";
     private static final String ATTRIBUTE_SRC = "src";
     private static final String ELEMENT_PROXIES = "proxies";
-    private static final String ATTRIBUTE_ROOT = "root";
+    protected static final String ATTRIBUTE_ROOT = "root";
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
@@ -439,6 +439,16 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         Object key = getProxyKey(area, isSslProtected);
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
         return proxy;
+    }
+    
+    /**
+     * @param area The area.
+     * @param isSslProtected If the proxy is for SSL-protected URLs.
+     * @param proxy The proxy to set.
+     */
+    protected void setProxy(String area, boolean isSslProtected, Proxy proxy) {
+        Object key = getProxyKey(area, isSslProtected);
+        this.areaSsl2proxy.put(key, proxy);
     }
 
     private String siteManagerName;

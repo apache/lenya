@@ -94,12 +94,7 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
             
             if (isPublication(factory, pubId)) {
                 Publication publication = factory.getPublication(pubId);
-                Proxy proxy = publication.getProxy(area, ssl);
-                if (proxy == null) {
-                    value = request.getContextPath() + "/" + pubId + "/" + area;
-                } else {
-                    value = proxy.getUrl();
-                }
+                value = publication.getProxy(area, ssl).getUrl();
             }
             else {
                 value = request.getContextPath();

@@ -196,31 +196,13 @@ public class ProxyTransformer extends AbstractLinkTransformer implements Disposa
         // valid area
         if (areaName != null && Arrays.asList(pub.getAreaNames()).contains(areaName)) {
             Proxy proxy = pub.getProxy(areaName, ssl);
-            String proxiedUrl = info.getDocumentUrl();
-            rewrittenUrl = getProxyUrl(linkUrl, proxy, proxiedUrl);
+            rewrittenUrl = proxy.getUrl() + info.getDocumentUrl();
         }
 
         // invalid area
         else {
             Proxy proxy = pub.getProxy(ATTRIBUTE_ROOT, ssl);
-            rewrittenUrl = getProxyUrl(linkUrl, proxy, linkUrl);
-        }
-        return rewrittenUrl;
-    }
-
-    /**
-     * @param linkUrl The complete link URL.
-     * @param proxy The proxy (may be null).
-     * @param proxiedUrl The URL to append to the proxy URL.
-     * @return Either {proxy.url}{proxiedUrl} (if proxy != null) or
-     *         {contextPath}{linkUrl} (if proxy == null).
-     */
-    protected String getProxyUrl(String linkUrl, Proxy proxy, String proxiedUrl) {
-        String rewrittenUrl;
-        if (proxy == null) {
-            rewrittenUrl = this.request.getContextPath() + linkUrl;
-        } else {
-            rewrittenUrl = proxy.getUrl() + proxiedUrl;
+            rewrittenUrl = proxy.getUrl() + linkUrl;
         }
         return rewrittenUrl;
     }

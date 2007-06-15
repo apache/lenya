@@ -26,8 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 
 /**
  * A publication.
@@ -106,11 +108,51 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     public Proxy getProxy(Document document, boolean isSslProtected) {
-        return delegate.getProxy(document, isSslProtected);
+        return getProxy(document.getArea(), isSslProtected);
     }
 
     public Proxy getProxy(String area, boolean isSslProtected) {
-        return delegate.getProxy(area, isSslProtected);
+        Proxy proxy = delegate.getProxy(area, isSslProtected);
+        if (proxy == null) {
+            String url = getDefaultProxyUrl(area);
+            proxy = new Proxy();
+            proxy.setUrl(url);
+            this.delegate.setProxy(area, isSslProtected, proxy);
+        }
+        return proxy;
+    }
+    
+    private String contextPath;
+    
+    protected String getContextPath() {
+        if (this.contextPath == null) {
+            ContextUtility context = null;
+            try {
+                context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+                this.contextPath = context.getRequest().getContextPath();
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+            finally {
+                if (context != null) {
+                    this.manager.release(context);
+                }
+            }
+        }
+        return this.contextPath;
+    }
+
+    /**
+     * @param area The area.
+     * @return The proxy URL if no proxy is declared in {@link PublicationConfiguration#CONFIGURATION_FILE}.
+     */
+    protected String getDefaultProxyUrl(String area) {
+        if (area.equals(PublicationConfiguration.ATTRIBUTE_ROOT)) {
+            return getContextPath();
+        }
+        else {
+            return getContextPath() + "/" + getId() + "/" + area;
+        }
     }
 
     private List allResourceTypes;
