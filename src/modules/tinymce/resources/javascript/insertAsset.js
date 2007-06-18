@@ -15,15 +15,17 @@
   limitations under the License.
 */
 
-   ext = '';
-   
+   ext = ''; 
+
    function insertAsset(nodeid) {
       var src = document.forms['image'].assetName.value;
       var title = document.forms['image'].caption.value;
       var type = document.forms['image'].type.value;
       var size = document.forms['image'].assetSize.value;
-      window.top.opener.TinyMCE_SimpleBrowserPlugin.browserCallback(src) ;
-	  window.top.close() ;
+      var win = window.top.opener.tinyMCE.getWindowArg("window");
+      win.document.getElementById('alt').value = title;
+      win.document.getElementById('src').value = src;
+      window.top.close() ;
     }
    
    function insertImage(nodeid) { 
@@ -34,9 +36,16 @@
       var type = document.forms['image'].type.value;
       var height = document.forms['image'].height.value;
       var width = document.forms['image'].width.value;
-      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" type="'+type+'" data="'+src+'" height="'+height+'" width="'+width+'">'+src+'</object>'; 
-      window.top.opener.TinyMCE_SimpleBrowserPlugin.browserCallback(src) ;
-	  window.top.close() ;
+      var win = window.top.opener.tinyMCE.getWindowArg("window");
+      win.document.getElementById('alt').value = title;
+      win.document.getElementById('src').value = src;
+      if(height > 0 && width > 0) {
+         win.document.getElementById('width').value = width;
+         win.document.getElementById('height').value = height;
+     } else {
+        win.getImageData();
+     }
+     window.top.close() ;
    }
 
    function insertCaption(name, caption, type, size) { 
