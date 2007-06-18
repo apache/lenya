@@ -16,7 +16,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: insertAsset.jx 473861 2006-11-12 03:51:14Z gregor $ -->
+<!-- $Id: insertAsset.jx 546840 2007-06-13 12:38:45Z andreas $ -->
 
 <page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
@@ -26,227 +26,121 @@
   <page:head>
     <script src="/modules/tinymce/javascript/insertAsset.js"/>
   </page:head>
-
-   <page:title>
-     <i18n:text>TinyMCE - Insert Lenya resource</i18n:text>
-   </page:title>
+  
+  <page:title>
+    <i18n:text>TinyMCE - Insert Lenya resource</i18n:text>
+  </page:title>
   
   <page:body>
     <form method="POST" name="image" id="image">
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-      <table class="lenya-table" style="table-layout:fixed; width:100%;">
-        <tr>
-          <th style="width:1em;"/>
-          <th style="width:14em;"><i18n:text>Assets</i18n:text></th>
-          <th style=""><i18n:text>Preview</i18n:text></th>
-          <th style=""><i18n:text>Title</i18n:text></th>
-          <th style="width:5em;"><i18n:text>File Size</i18n:text></th>
-          <th style="width:8em;"><i18n:text>Dimension (w x h)</i18n:text></th>
-          <th style="width:6em;"><i18n:text>Creation Date</i18n:text></th>
-        </tr>
-        <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
-          <tr>
-            <td>
-              <input type="radio" name="asset" value="${asset.getPath()}" 
-                onClick="javascript:insertData('${cocoon.request.getContextPath()}/${asset.getPublication().getId()}/${asset.getArea()}${asset.getPath()}.${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}', '${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}')"/> 
-            </td>
-            <td><jx:out value="${asset.getPath()}"/></td>
-            <td style="overflow:hidden">        
-              <jx:set var="mimeType" value="${asset.getMimeType()}"/>
-              <jx:if test="${mimeType.startsWith('image/')}">
-                <jx:set var="doc" value="${usecase.getParameter('document')}"/>
-                <img src="/${asset.getPublication().getId()}/${asset.getArea()}${asset.getPath()}.${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}"
-                  style="height: 32px; vertical-align: middle;"/>&#160;
-              </jx:if>
-            </td>
-            <td><jx:out value="${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></td>
-            <td align="right"><jx:out value="${asset.getContentLength() / 1000}"/> kB</td>
-            <td align="right"><jx:if test="${mimeType.startsWith('image/')}"><jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}"/> x <jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}"/></jx:if></td>
-            <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
-          </tr>
-        </jx:forEach>
-        <tr>
-          <td colspan="6">
-            <input type="hidden" name="type" value=""/>
-            <input type="hidden" name="assetName" value=""/>
-            <input type="hidden" name="assetSize" value=""/>
-            <input type="hidden" name="ratio" value=""/>
+      <div class="lenya-box">
+        <div class="lenya-box-title"><i18n:text>Available Assets</i18n:text></div>
+        <div class="lenya-box-body">
+          <table class="lenya-table-list" style="border: none">
+            <tr>
+              <th style="background: none;"/>
+              <th style="background: none;"><i18n:text>Assets</i18n:text></th>
+              <th style="background: none;"><i18n:text>Preview</i18n:text></th>
+              <th style="background: none;"><i18n:text>Title</i18n:text></th>
+              <th style="background: none;"><i18n:text>File Size</i18n:text></th>
+              <th style="background: none;"><i18n:text>Dimension (w x h)</i18n:text></th>
+              <th style="background: none;"><i18n:text>Creation Date</i18n:text></th>
+            </tr>
+            <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
+              <jx:set var="originalUrl" value="${asset.getCanonicalWebappURL()}"/>
+              <jx:set var="lastDotIndex" value="${originalUrl.lastIndexOf('.')}"/>
+              <jx:set var="extension" value="${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}"/>
+              <jx:set var="url" value="${originalUrl.substring(0, lastDotIndex).concat('.').concat(extension)}"/>
+              <tr>
+                <td>
+                  <input type="radio" name="asset" value="${asset.getPath()}" 
+                    onClick="javascript:insertData('${url}', '${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}')"/> 
+                </td>
+                <td><jx:out value="${asset.getPath()}"/></td>
+                <td>
+                  <jx:set var="mimeType" value="${asset.getMimeType()}"/>
+                  <jx:if test="${mimeType.startsWith('image/')}">
+                    <jx:set var="doc" value="${usecase.getParameter('document')}"/>
+                    <img src="${url}" style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160;
+                  </jx:if>
+                </td>
+                <td><jx:out value="${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></td>
+                <td align="right"><jx:out value="${asset.getContentLength() / 1000}"/> kB</td>
+                <td align="right"><jx:if test="${mimeType.startsWith('image/')}"><jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}"/> x <jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}"/></jx:if></td>
+                <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
+              </tr>
+            </jx:forEach>
+          </table>
+          <br/>
+          <input type="hidden" name="type" value=""/>
+          <input type="hidden" name="assetName" value=""/>
+          <input type="hidden" name="assetSize" value=""/>
+          <input type="hidden" name="ratio" value=""/>
+          <table class="lenya-table-noborder">
+            <tr>
+              <td class="lenya-entry-caption"><label for="caption"><i18n:text>Caption</i18n:text></label>:</td>
+              <td><input class="lenya-form-element" type="text" name="caption"/></td>
+            </tr>
+            <jx:if test="${usecase.getName().equals('tinymce.insertImage')}">
+              <tr>
+                <td class="lenya-entry-caption"><label for="width"><i18n:text>width</i18n:text></label>:</td>
+                <td><input class="lenya-form-element" type="text" name="width" onchange="javascript:scaleHeight(this.value)"/></td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><label for="height"><i18n:text>height</i18n:text></label>:</td>
+                <td><input class="lenya-form-element" type="text" name="height" onchange="javascript:scaleWidth(this.value)"/></td>
+              </tr>
+            </jx:if>
+            <tr>
+              <td colspan="2">
+                <input i18n:attr="value" type="submit" value="Insert"
+                  onClick="javascript:${usecase.getView().getParameter('callbackFunction')}('${usecase.getParameter('document').getName()}');" />
+                &#160;
+                <input i18n:attr="value" type="submit" name="cancel" value="Cancel"
+                  onClick="location.href='javascript:window.close();';" />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </form>
+    
+    <div class="lenya-box">
+      <div class="lenya-box-title"><i18n:text>Upload Asset</i18n:text></div>
+      <div class="lenya-box-body">
+        <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
+          <form method="POST" enctype="multipart/form-data" id="form-add_asset">
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            
+            <input type="hidden" name="doctype" value="resource"/>
+            <input type="hidden" name="relation" value="child"/>
+            
             <table class="lenya-table-noborder">
               <tr>
-                <td class="lenya-entry-caption"><label for="caption"><i18n:text>Caption</i18n:text></label>:</td>
-                <td><input class="lenya-form-element" type="text" name="caption"/></td>
-              </tr>
-              <jx:if test="${usecase.getName().equals('tinymce.insertImage')}">
-                <tr>
-                  <td class="lenya-entry-caption"><label for="width"><i18n:text>width</i18n:text></label>:</td>
-                  <td><input class="lenya-form-element" type="text" name="width" onchange="javascript:scaleHeight(this.value)"/></td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption"><label for="height"><i18n:text>height</i18n:text></label>:</td>
-                  <td><input class="lenya-form-element" type="text" name="height" onchange="javascript:scaleWidth(this.value)"/></td>
-                </tr>
-              </jx:if>
-              <tr>
                 <td colspan="2">
-                  <input i18n:attr="value" type="submit" value="Submit"
-                    onClick="javascript:${usecase.getView().getParameter('callbackFunction')}('${usecase.getParameter('document').getName()}');" />
-                  &#160;
-                  <input i18n:attr="value" type="submit" name="cancel" value="Cancel"
-                    onClick="location.href='javascript:window.close();';" />
+                  <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+                </td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><label for="file">
+                  <i18n:text>File</i18n:text> *</label></td>
+                <td><input type="file" name="file" class="lenya-form-element"/></td>
+              </tr>
+              <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/site/createFields.jx"/>
+              <tr>
+                <td/>
+                <td>
+                  <input i18n:attr="value" name="submit" type="submit"
+                    value="New Asset"/>
                 </td>
               </tr>
             </table>
-          </td>
-        </tr>
-      </table>
-    </form>
-    <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
-      <form method="POST" enctype="multipart/form-data" id="form-add_asset">
-        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-        <table class="lenya-table-noborder">
-          <tr>
-            <td colspan="2">
-              <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
-            </td>
-          </tr>
-          <jx:choose>
-            <jx:when test="${usecase.getParameter('pathProvided')}">
-              <tr>
-                <td class="lenya-entry-caption">
-                  <label for="nodeName"><i18n:text>Path</i18n:text>: </label>
-                </td>
-                <td>
-                  <jx:out value="${usecase.getParameter('path')}"/>
-                </td>
-              </tr>
-            </jx:when>
-            <jx:otherwise>
-              <tr>
-                <td class="lenya-entry-caption">
-                  <label for="nodeName"><i18n:text>Parent Path</i18n:text>: </label>
-                </td>
-                <td>
-                  <jx:out value="${usecase.getParameter('parentPath')}"/>
-                </td>
-              </tr>
-              <tr>
-                <td class="lenya-entry-caption">
-                  <label for="nodeName"><i18n:text>Node Name</i18n:text>*: </label>
-                </td>
-                <td>
-                  <input class="lenya-form-element" type="text" name="nodeName" value="${usecase.getParameter('nodeName')}"/>
-                  <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)
-                </td>
-              </tr>
-            </jx:otherwise>
-          </jx:choose>
-          <tr>
-            <td class="lenya-entry-caption"><label for="file">
-              <i18n:text>File</i18n:text> *</label></td>
-            <td><input type="file" name="file" class="lenya-form-element"/></td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption">
-              <label for="dublincore.title"><i18n:text>Navigation Title</i18n:text>*:
-              </label></td>
-            <td>
-              <input class="lenya-form-element" type="text" name="dublincore.title"
-                value="${usecase.getParameter('dublincore.title')}"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption">
-              <label for="visibleinnav"><i18n:text>Document visible in Navigation</i18n:text>*:
-              </label></td>
-            <jx:set var="visible" value="yes"/>
-            <jx:if
-              test="${usecase.getParameter('visibleInNav').equals('false')}">
-              <jx:set var="visible" value="no"/>
-            </jx:if>
-            <td>
-              <select class="lenya-form-element" name="visibleInNav">
-                <jx:choose>
-                  <jx:when test="${visible.equals('yes')}">
-                    <option value="true" selected="selected">
-                      <i18n:text>yes</i18n:text></option>
-                    <option value="false"><i18n:text>no</i18n:text></option>
-                  </jx:when>
-                  <jx:otherwise>
-                    <option value="true"><i18n:text>yes</i18n:text></option>
-                    <option value="false" selected="selected">
-                      <i18n:text>no</i18n:text></option>
-                  </jx:otherwise>
-                </jx:choose>
-              </select>
-            </td>
-          </tr>
-          <jx:if test="${!usecase.getParameter('documentIdProvided')}">
-            <tr>
-              <td class="lenya-entry-caption">
-                <label for="relation"><i18n:text>Relation</i18n:text>*:
-                </label>
-              </td>
-              <td>
-                <jx:forEach var="relation"
-                  items="${usecase.getParameter('relations')}">
-                  <jx:choose>
-                    <jx:when
-                      test="${relation.equals(usecase.getParameter('relation'))}">
-                      <input type="radio" name="relation" value="${relation}"
-                        checked="checked"/><i18n:text>${relation}</i18n:text>
-                    </jx:when>
-                    <jx:otherwise>
-                      <input type="radio" name="relation" value="${relation}"/>
-                      <i18n:text>${relation}</i18n:text>
-                    </jx:otherwise>
-                  </jx:choose>
-                </jx:forEach>
-              </td>
-            </tr>
-          </jx:if>
-          <jx:set var="languages" value="${usecase.getParameter('languages')}"/>
-          <jx:choose>
-            <jx:when test="${languages.size() &gt; 1}">
-              <tr>
-                <td class="lenya-entry-caption">
-                  <label for="language"><i18n:text>Language</i18n:text>*:
-                  </label></td>
-                <td>
-                  <select class="lenya-form-element" name="language">
-                    <jx:forEach var="language"
-                      items="${usecase.getParameter('languages')}">
-                      <option value="${language}">${language}</option>
-                    </jx:forEach>
-                  </select>
-                </td>
-              </tr>
-            </jx:when>
-            <jx:otherwise>
-              <tr>
-                <td colspan="2">
-                  <jx:set var="language" value="${languages[0]}"/>
-                  <input type="hidden" name="language" value="${language}"/>
-                </td>
-              </tr>
-            </jx:otherwise>
-          </jx:choose>
-          <input type="hidden" name="doctype" value="resource" />
-          <tr>
-            <td class="lenya-entry-caption">*
-              <i18n:text>required fields</i18n:text>
-            </td>
-          </tr>
-          <tr>
-            <td/>
-            <td>
-              <input i18n:attr="value" name="submit" type="submit"
-                value="New Asset"/>
-            </td>
-          </tr>
-        </table>
-      </form>
-    </jx:if>
+          </form>
+        </jx:if>
+      </div>
+    </div>
   </page:body>
 </page:page>
