@@ -40,7 +40,7 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
     plugins  : "save,fullscreen,searchreplace,table,contextmenu,simplebrowser",
     
        plugin_simplebrowser_browselinkurl : currentURL + '?lenya.module=tinymce&lenya.step=link-show&language=en',
-       plugin_simplebrowser_browseimageurl : currentURL + '?lenya.usecase=tinymce.insertAsset',
+       plugin_simplebrowser_browseimageurl : currentURL + '?lenya.usecase=tinymce.insertImage',
        plugin_simplebrowser_browseflashurl : '',
      
 
