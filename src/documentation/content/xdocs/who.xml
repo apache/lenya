@@ -18,7 +18,7 @@
         community. Thanks to the many people for their contributions of patches,
         assistance, ideas, and email discussion. Some are mentioned at the
         changes pages. See how we
-        <a href="guidelines.html#contribution">acknowledge</a> contributions.
+        <a href="site:guidelines">acknowledge</a> contributions.
       </p>
       <p>
         Please do not send emails directly to individual developers asking for
@@ -76,8 +76,8 @@
       <title>Notes</title>
       <p>
         Strong type denotes "Project Management Committee
-        (<a href="guidelines.html#pmc">PMC</a>) member". Emphasis type denotes
-        "emeritus PMC member". See the <a href="guidelines.html#roles">ASF role
+        (<a href="site:guidelines">PMC</a>) member". Emphasis type denotes
+        "emeritus PMC member". See the <a href="site:guidelines">ASF role
         definitions</a> for detailed role information. The actual list of PMC
         members is in the SVN "committers" repository at
         /board/committee-info.txt
@@ -86,20 +86,20 @@
         Some people were committers prior to Lenya becoming a top-level
         project and so gaining a PMC. They were not around since then, so have
         never been on the PMC. All new committers are
-        <a href="guidelines.html#pmc-committers">encouraged</a> to be PMC
+        <a href="site:guidelines">encouraged</a> to be PMC
         members.
       </p>
       <p>
         Committers can be as active as they choose and there is no performance
         pressure from the project. For those who are interested in the work that
         each paticular committer has done, see the
-        <a href="guidelines.html#contribution">acknowledgements</a> section.
+        <a href="site:guidelines">acknowledgements</a> section.
       </p>
       <p>
         All <a href="http://cocoon.apache.org/community/members.html">Apache
         Cocoon committers</a> and
-        <a href="http://lenya.apache.org/community/acknowledgements.html">Apache
-        Lenya committers</a> also have rights to commit to Lenya.
+        <a href="http://forrest.apache.org/who.html">Apache
+        Forrest committers</a> also have rights to commit to Lenya.
       </p>
     </section>
   </body>
