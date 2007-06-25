@@ -21,6 +21,7 @@
 <jx:template
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:proxy="http://apache.org/lenya/proxy/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   name="">
   
@@ -68,7 +69,9 @@
     <div id="lenya-info-tree">
       <div id="tree">
         <script type="text/javascript">
-          CONTEXT_PREFIX = '<jx:out value="${request.contextPath}"/>';
+          WEBAPP_BASE_PATH = '<proxy:url href="/"/>';
+          AREA_BASE_PATH = '<proxy:url href="/${publicationId}/authoring"/>';
+          
           PUBLICATION_ID = '<jx:out value="${publicationId}"/>';
           <jx:choose>
             <jx:when test="${docExists.booleanValue()}">
@@ -79,7 +82,7 @@
             </jx:otherwise>
           </jx:choose>
           DEFAULT_LANGUAGE = '<jx:out value="${publication.getDefaultLanguage()}"/>';
-          IMAGE_PATH = '<jx:out value="${request.contextPath + '/lenya/images/tree/'}"/>';
+          IMAGE_PATH = '<proxy:url href="/lenya/images/tree/"/>';
           
           
           <jx:set var="clipboard" value="${request.getSession().getAttribute('org.apache.lenya.cms.site.usecases.Clipboard')}"/>
@@ -94,7 +97,7 @@
           </jx:choose>
           
           ALL_AREAS = 'authoring,trash,archive';
-          PIPELINE_PATH = '/authoring/sitetree-fragment.xml';
+          PIPELINE_PATH = '/sitetree-fragment.xml';
           SHOW_LOADING_HINT = true;
           SHOW_ICONS = true;
           

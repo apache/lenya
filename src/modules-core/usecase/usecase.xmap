@@ -27,6 +27,10 @@
   <map:components>
     <map:transformers default="xslt">    
       <map:transformer name="browser-update" src="org.apache.cocoon.ajax.BrowserUpdateTransformer"/>
+      <map:transformer name="usecase-proxy" logger="lenya.sitemap.transformer.proxy"
+        src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+        <transform namespace="http://apache.org/lenya/proxy/1.0" element="url" attribute="href"/>
+      </map:transformer>
     </map:transformers>
     <map:selectors>
       <map:selector name="ajax-request" src="org.apache.cocoon.ajax.AjaxRequestSelector"/>
@@ -55,6 +59,10 @@
         <map:transform type="browser-update"/>
         <map:transform type="cinclude"/>
         <map:transform type="forms" />
+        
+        <map:transform type="usecase-proxy"/>
+        <map:transform src="xslt/proxyUrl2text.xsl"/>
+        
         <map:transform src="cocoon://lenya-screen.xsl"/>
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>

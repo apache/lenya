@@ -41,7 +41,6 @@ This sitemap creates default navigation components.
       </map:transformer>
       <map:transformer logger="lenya.sitemap.transformer.proxy" name="proxy-sitetree"
           src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
-        <urls type="relative"/>
         <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="href"/>
       </map:transformer>
     </map:transformers>

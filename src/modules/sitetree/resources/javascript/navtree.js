@@ -15,6 +15,10 @@
   limitations under the License.
 */
 
+/*
+Required variables: see lenyatree.js
+*/
+
 /******************************************
  *  NavNode 
  ******************************************/
@@ -62,7 +66,7 @@ NavNode.prototype.getBasePath = function() {
 NavNode.prototype.getLoadSubTreeURL = function() {
     area = this.area;
     var path = this.getBasePath();
-    return encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree');
+    return encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree');
 }
 
 NavNode.prototype.getStyle = function() {
@@ -147,7 +151,7 @@ NavTree.prototype.init = function(id) {
 };
 
 NavTree.prototype.loadInitialTree = function(area, path) {
-    var url = encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS+'&lenya.module=sitetree');
+    var url = encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS+'&lenya.module=sitetree');
     
     callback = function(fragment, param) {
         var tree = param[0];
@@ -203,8 +207,7 @@ NavTree.prototype.addLoadedSite = function(site)
 
 NavTree.prototype.handleItemClick = function(item, event) {
     if (!item.isprotected) { // && item.root!=item) {
-        var itemhref = item.href.replace(/^\//, "");
-        href = encodeURI(CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/"+item.area+"/"+itemhref+"?lenya.usecase=tab.overview"); 
+        href = encodeURI(item.href + "?lenya.usecase=tab.overview"); 
         window.location = href;
     }
 };

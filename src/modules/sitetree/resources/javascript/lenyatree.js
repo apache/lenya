@@ -18,7 +18,8 @@
 
 /*
   The following variables must be set:
-  CONTEXT_PREFIX
+  WEBAPP_BASE_PATH - path to the web application root, including the trailing slash
+  AREA_BASE_PATH - path to the area root, without the trailing slash
   PUBLICATION_ID
   PIPELINE_PATH
   IMAGE_PATH
@@ -83,7 +84,7 @@ LenyaNode.prototype.loadSubTree = function(handler) {
 
 LenyaNode.prototype.getLoadSubTreeURL = function() {
     var path = this.getPath();
-    return encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
+    return encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
 }
 
 
@@ -193,7 +194,7 @@ LenyaTree.prototype.loadInitialTree = function(path) {
 };
 
 LenyaTree.prototype.getLoadInitialTreeURL = function(path) {
-    return encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
+    return encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
 }
 
 LenyaTree.prototype.initialTreeLoaded = function(xml) {
@@ -244,7 +245,7 @@ LenyaTree.prototype.getIcon = function(item) {
         else {
             var img = this.doc.createElement('img');
             var language = CHOSEN_LANGUAGE;
-            img.setAttribute('src', CONTEXT_PREFIX + item.getPath() + '_' + language + '.gif?lenya.module=sitetree');
+            img.setAttribute('src', AREA_BASE_PATH + item.path + '_' + language + '.gif?lenya.module=sitetree');
             img.setAttribute('alt', '');
             return img;
         }
