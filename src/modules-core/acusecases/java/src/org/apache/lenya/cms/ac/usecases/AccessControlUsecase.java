@@ -48,8 +48,8 @@ public class AccessControlUsecase extends AbstractUsecase {
     private AccessController accessController;
 
     /**
-     * Initializes the accreditable managers. FIXME: This method resolves the AccessController, it
-     * has to be released after it is used!
+     * Initializes the accreditable managers. FIXME: This method resolves the
+     * AccessController, it has to be released after it is used!
      */
     protected void initializeAccessController() {
         super.doInitialize();
@@ -64,11 +64,18 @@ public class AccessControlUsecase extends AbstractUsecase {
         try {
             selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
-            resolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             this.accessController = resolver.resolveAccessController(getSourceURL());
 
-            AccreditableManager accreditableManager = this.accessController.getAccreditableManager();
+            if (this.accessController == null) {
+                throw new RuntimeException("No access controller could be resolved for URL ["
+                        + getSourceURL() + "].");
+            }
+
+            AccreditableManager accreditableManager = this.accessController
+                    .getAccreditableManager();
 
             this.userManager = accreditableManager.getUserManager();
             this.groupManager = accreditableManager.getGroupManager();
@@ -124,7 +131,9 @@ public class AccessControlUsecase extends AbstractUsecase {
     protected UserManager getUserManager() {
         if (this.userManager == null) {
             if (getLogger().isDebugEnabled())
-                getLogger().debug("getUserManager() accessed, is null, so calling initializeAccessController");
+                getLogger()
+                        .debug(
+                                "getUserManager() accessed, is null, so calling initializeAccessController");
             initializeAccessController();
         }
         return this.userManager;
