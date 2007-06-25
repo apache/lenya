@@ -19,7 +19,7 @@
   "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Running Lenya Behind a Proxy</title>
+    <title>Running Lenya Behind a Proxy Server</title>
   </header>
   <body>
     
@@ -120,6 +120,13 @@
       </p>
       <source xml:space="preserve"><![CDATA[    RewriteRule ^/(.*) http://cms.example.com:8080/lenya14/default/authoring/$1 [P,L]
     ProxyPassReverse / http://cms.example.com:8080/lenya14/default/authoring/]]></source>
+      <note>
+        You'll certainly run into cookie problems when using a non-empty context path
+        (like <em>lenya14</em> in the example above) instead of running Lenya in the root context.
+        This causes errors like "The session doesn't contain the identity.".
+        You'll have to add some code to manipulate the cookies. If you need this functionality,
+        please send a mail to the developers list or file an enhancement bug.
+      </note>
       <p>
         The Apache web server can now be restarted using
       </p>
