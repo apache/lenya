@@ -31,29 +31,33 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.linking.LinkRewriter;
+import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
- * Input module for getting the base URL which may be prepended to internal 
- * URLs to construct links.
- * The base-url contains no trailing slash.
+ * Input module for getting the base URL which may be prepended to internal URLs
+ * to construct links. The base-url contains no trailing slash.
  * 
  * <p>
- * Usage: <code>{base-url:{pubid}:{area}:{ssl}}</code>
+ * Usage: <code>{base-url:{pubid}:{area}}</code>
  * </p>
  * 
  * <p>
- * If the publication uses proxying, the base URL is the proxy URL defined in 
- * the file {@link org.apache.lenya.cms.publication.PublicationConfiguration#CONFIGURATION_FILE}.
+ * If the publication uses proxying, the base URL is the proxy URL defined in
+ * the file
+ * {@link org.apache.lenya.cms.publication.PublicationConfiguration#CONFIGURATION_FILE}.
  * If no proxying is used, the result will be {context-path}/{pub-id}/{area}.
- * The ssl parameter is optional, if omitted the protocol (http or https) of the current request will be used.
  * </p>
  * <p>
- * Both <code>pubid</code> and <code>area</code> can be empty strings. In this case, the context path
- * is returned.
+ * Both <code>pubid</code> and <code>area</code> can be empty strings. In
+ * this case, the context path or the root proxy of the publication, resp., is returned.
  * </p>
  * 
  */
@@ -63,13 +67,14 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
 
         // Get parameters
-        final String[] attributes = name.split(":");
+        final String[] attributes = name.split(":", -1);
 
         if (attributes.length < 2) {
             throw new ConfigurationException("Invalid number of parameters: " + attributes.length
@@ -77,29 +82,21 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
         }
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        
+
         final String pubId = attributes[0];
         final String area = attributes[1];
-        boolean ssl = false;
-        
-        if (attributes.length == 3) {
-            ssl = Boolean.valueOf(attributes[2]).booleanValue();
-        } else if (request.getScheme().equals("https")) {
-            ssl = true;
-        }
-        
+
         String value = null;
         try {
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            
-            if (isPublication(factory, pubId)) {
-                Publication publication = factory.getPublication(pubId);
-                value = publication.getProxy(area, ssl).getUrl();
+
+            if (pubId.equals("") && area.equals("")) {
+                value = rewrite(request, "/");
+                if (value.endsWith("/")) {
+                    value = value.substring(0, value.length() - 1);
+                }
+            } else {
+                value = rewrite(request, "/" + pubId + "/" + area);
             }
-            else {
-                value = request.getContextPath();
-            }
-            
             
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);
@@ -107,18 +104,13 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
         return value;
     }
 
-    /**
-     * @param factory The document factory.
-     * @param pubId The publication ID.
-     * @return If a publication with this ID exists.
-     */
-    protected boolean isPublication(DocumentFactory factory, String pubId) {
-        Publication[] pubs = factory.getPublications();
-        List pubIds = new ArrayList();
-        for (int i = 0; i < pubs.length; i++) {
-            pubIds.add(pubs[i].getId());
-        }
-        return pubIds.contains(pubId);
+    protected String rewrite(Request request, String url) throws RepositoryException {
+        String value;
+        Session session = RepositoryUtil.getSession(this.manager, request);
+        LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, request
+                .getRequestURI(), false);
+        value = rewriter.rewrite(url);
+        return value;
     }
 
     /**
@@ -132,7 +124,8 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
