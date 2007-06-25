@@ -180,10 +180,10 @@
            Looks like a workaround for a real bug that should be fixed. Sure, we don't allow spaces
            in document URLs, but that policy decision is made elsewhere.
         -->
-        <li id="area-{$tab-area}-active" class="area-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
+        <li id="area-{$tab-area}-active" class="area-active"><a href="/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
       </xsl:when>
       <xsl:otherwise>
-        <li id="area-{$tab-area}" class="area-inactive"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
+        <li id="area-{$tab-area}" class="area-inactive"><a href="/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
