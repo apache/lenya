@@ -53,8 +53,9 @@ public class URLInformation {
      * @return A string.
      */
     public String getCompleteArea() {
-        if (this.completeArea == null) {
-            String pubUrl = this.url.substring(getPublicationId().length());
+        String pubId = getPublicationId();
+        if (this.completeArea == null && pubId != null) {
+            String pubUrl = this.url.substring(pubId.length());
             if (pubUrl.startsWith("/")) {
                 this.completeArea = extractBeforeSlash(pubUrl.substring(1));
             } else {
