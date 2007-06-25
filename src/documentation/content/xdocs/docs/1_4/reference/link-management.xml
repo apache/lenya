@@ -165,6 +165,11 @@
         Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
         For more information on the ProxyTransformer, consult the API documentation.
       </p>
+      <p>
+        The <code>ProxyModule</code> provides the same functionality in sitemaps.
+        It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:parameter name="url" value="{proxy:/default/authoring/news.html}"/>]]></source>
     </section>
     
     <section>
