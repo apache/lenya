@@ -17,10 +17,8 @@
  */
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -33,35 +31,22 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Proxy;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
  * Input module for getting the base URL which may be prepended to internal URLs
- * to construct links. The base-url contains no trailing slash.
+ * to construct links. The functionality corresponds to the
+ * {@link org.apache.lenya.cms.cocoon.transformation.ProxyTransformer} with one
+ * exception: If the <em>webappUrl</em> parameter is an empty string, the root
+ * proxy URL (or the context prefix, resp.) is returned.
  * 
  * <p>
- * Usage: <code>{base-url:{pubid}:{area}}</code>
+ * Usage: <code>{proxy:{webappUrl}}</code>
  * </p>
- * 
- * <p>
- * If the publication uses proxying, the base URL is the proxy URL defined in
- * the file
- * {@link org.apache.lenya.cms.publication.PublicationConfiguration#CONFIGURATION_FILE}.
- * If no proxying is used, the result will be {context-path}/{pub-id}/{area}.
- * </p>
- * <p>
- * Both <code>pubid</code> and <code>area</code> can be empty strings. In
- * this case, the context path or the root proxy of the publication, resp., is returned.
- * </p>
- * 
  */
-public class BaseURLModule extends AbstractInputModule implements Serviceable {
+public class ProxyModule extends AbstractInputModule implements Serviceable {
 
     private ServiceManager manager;
 
@@ -73,44 +58,36 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
 
-        // Get parameters
-        final String[] attributes = name.split(":", -1);
-
-        if (attributes.length < 2) {
-            throw new ConfigurationException("Invalid number of parameters: " + attributes.length
-                    + ". Expected pubid, area, [ssl].");
-        }
-
+        final String webappUrl = name;
         Request request = ObjectModelHelper.getRequest(objectModel);
-
-        final String pubId = attributes[0];
-        final String area = attributes[1];
 
         String value = null;
         try {
-
-            if (pubId.equals("") && area.equals("")) {
+            if (webappUrl.equals("")) {
                 value = rewrite(request, "/");
                 if (value.endsWith("/")) {
                     value = value.substring(0, value.length() - 1);
                 }
             } else {
-                value = rewrite(request, "/" + pubId + "/" + area);
+                value = rewrite(request, webappUrl);
             }
-            
+        } catch (ConfigurationException e) {
+            throw e;
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);
         }
         return value;
     }
 
-    protected String rewrite(Request request, String url) throws RepositoryException {
-        String value;
+    protected String rewrite(Request request, String url) throws RepositoryException,
+            ConfigurationException {
         Session session = RepositoryUtil.getSession(this.manager, request);
         LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, request
                 .getRequestURI(), false);
-        value = rewriter.rewrite(url);
-        return value;
+        if (!rewriter.matches(url)) {
+            throw new ConfigurationException("The URL [" + url + "] can't be rewritten!");
+        }
+        return rewriter.rewrite(url);
     }
 
     /**

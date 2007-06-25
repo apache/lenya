@@ -21,7 +21,7 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'proxy-url']">
-    <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
-      class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyUrlModule"/>
+  <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'proxy']">
+    <component-instance name="proxy" logger="sitemap.modules.input.proxy"
+      class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyModule"/>
   </xconf>
