@@ -39,7 +39,8 @@ import org.apache.lenya.util.StringUtil;
 /**
  * <p>
  * Converts web application links to links which will be sent to the browser by
- * using the publication's proxy settings.
+ * using the publication's proxy settings. If the current request is SSL-encrypted,
+ * all link URLs will use the SSL proxy.
  * </p>
  * <p>
  * Objects of this class are not thread-safe.
@@ -54,19 +55,22 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     private AccreditableManager accreditableManager;
     private DocumentFactory factory;
     private Publication publication;
+    private boolean ssl;
 
     /**
      * @param manager The service manager to use.
      * @param session The current session.
      * @param requestUrl The request URL where the links should be rewritten.
+     * @param ssl If the current page is SSL-encrypted.
      * @param relativeUrls If relative URLs should be created.
      */
     public OutgoingLinkRewriter(ServiceManager manager, Session session, String requestUrl,
-            boolean relativeUrls) {
-        
+            boolean ssl, boolean relativeUrls) {
+
         super(manager);
         this.requestUrl = requestUrl;
         this.relativeUrls = relativeUrls;
+        this.ssl = ssl;
 
         ServiceSelector serviceSelector = null;
         AccessControllerResolver acResolver = null;
@@ -78,7 +82,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
             if (pubId != null && isPublication(pubId)) {
                 this.publication = this.factory.getPublication(pubId);
             }
-            
+
             serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
             acResolver = (AccessControllerResolver) serviceSelector
@@ -112,10 +116,10 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
             if (this.relativeUrls) {
                 rewrittenUrl = getRelativeUrlTo(url);
             } else {
-                boolean ssl = false;
-                if (this.policyManager != null) {
+                boolean useSsl = this.ssl;
+                if (!useSsl && this.policyManager != null) {
                     Policy policy = this.policyManager.getPolicy(this.accreditableManager, url);
-                    ssl = policy.isSSLProtected();
+                    useSsl = policy.isSSLProtected();
                 }
 
                 URLInformation info = new URLInformation(url);
@@ -124,13 +128,13 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
                 // link points to publication
                 if (pubId != null && isPublication(pubId)) {
                     Publication pub = this.factory.getPublication(pubId);
-                    rewrittenUrl = rewriteLink(url, pub, ssl);
+                    rewrittenUrl = rewriteLink(url, pub, useSsl);
                 }
 
                 // link doesn't point to publication -> use own publication if
                 // exists
                 else if (this.publication != null) {
-                    rewrittenUrl = rewriteLink(url, this.publication, ssl);
+                    rewrittenUrl = rewriteLink(url, this.publication, useSsl);
                 }
 
                 // link doesn't point to publication, no own publication
@@ -145,7 +149,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     }
 
     private String requestUrl;
-    
+
     /**
      * @param linkUrl The original link URL.
      * @param pub The publication to use for proxy resolving.

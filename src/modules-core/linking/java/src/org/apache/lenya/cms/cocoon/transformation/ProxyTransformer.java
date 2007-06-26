@@ -42,16 +42,16 @@ import org.xml.sax.SAXException;
  * either configure this when declaring the transformer:
  * </p>
  * <code><pre>
- *    &lt;map:transformer ... &gt;
- *      &lt;urls type=&quot;relative&quot;/&gt;
- *      ...
- *    &lt;/map:transformer&gt;
+ *     &lt;map:transformer ... &gt;
+ *       &lt;urls type=&quot;relative&quot;/&gt;
+ *       ...
+ *     &lt;/map:transformer&gt;
  * </pre></code>
  * <p>
  * or pass a parameter:
  * </p>
  * <code><pre>
- *    &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
+ *     &lt;map:parameter name=&quot;urls&quot; value=&quot;relative&quot;/&gt;
  * </pre></code>
  * @see OutgoingLinkRewriter
  */
@@ -74,8 +74,9 @@ public class ProxyTransformer extends AbstractLinkTransformer {
                 setUrlType(_parameters.getParameter(PARAMETER_URLS));
             }
             Session session = RepositoryUtil.getSession(this.manager, _request);
+            boolean ssl = request.getScheme().equals("https");
             this.rewriter = new OutgoingLinkRewriter(this.manager, session, _request
-                    .getRequestURI(), this.relativeUrls);
+                    .getRequestURI(), ssl, this.relativeUrls);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
