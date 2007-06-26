@@ -98,7 +98,7 @@
       </map:match>
       
       <map:match pattern="**/">
-         <map:redirect-to uri="index.html"/>
+        <map:redirect-to uri="{proxy:/{page-envelope:publication-id}/{1}/index.html}"/>
       </map:match>
     </map:pipeline>
     
