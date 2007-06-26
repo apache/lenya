@@ -96,7 +96,7 @@
       <map:act type="authorizer">
         <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:act>
-      <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=ac.login&amp;referrerQueryString={url-encode:{request:queryString}}"/>        
+      <map:redirect-to session="true" uri="{proxy:/{1}}?lenya.usecase=ac.login&amp;referrerQueryString={url-encode:{request:queryString}}"/>        
     </map:match>
 
     </map:pipeline>
