@@ -25,7 +25,7 @@
   
   <map:pipelines>
     
-    <map:pipeline type="noncaching">
+    <map:pipeline>
       <!-- enable client side caching of resources -->
       <map:parameter name="expires" value="access plus 2 hours"/>
       
