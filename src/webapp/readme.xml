@@ -35,6 +35,20 @@
     
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
+    <h3>
+      2007-06-26: <code>base-url</code> and <code>proxy-url</code> input modules
+      replaced by <code>proxy</code> module
+    </h3>
+    <p>
+      The <code>base-url</code> and <code>proxy-url</code> input modules have been replaced by the
+      <code>proxy</code> module. The functionality of this module corresponds to the ProxyTransformer
+      with one exception: If the <em>webappUrl</em> parameter is an empty string, the root
+      proxy URL (or the context prefix, resp.) is returned.
+    </p>
+    <p>
+      Usage: <code>{proxy:{webappUrl}}</code>.
+    </p>
+    
     <h3>2007-06-13: Apply ProxyTransformer after UuidToUrlTransformer</h3>
     <p>
       The uuid2url and proxy transformers now complement each other. You have
