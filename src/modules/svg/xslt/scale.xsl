@@ -24,9 +24,21 @@
   <xsl:param name="height"/>
   <xsl:param name="width"/>
   
+  <!-- Workaround: Batik doesn't seem to like SSL URLs -->
+  <xsl:param name="nonSslUrl">
+    <xsl:choose>
+      <xsl:when test="starts-with($url, 'https:')">
+        <xsl:text>http</xsl:text><xsl:value-of select="substring($url, 6)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$url"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:param>
+  
   <xsl:template match="/">
     <svg width="{$width}" height="{$height}" version="1.1">
-      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$url}" preserveAspectRatio="none"/>        
+      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$nonSslUrl}" preserveAspectRatio="none"/>        
     </svg>
   </xsl:template>
 </xsl:stylesheet>

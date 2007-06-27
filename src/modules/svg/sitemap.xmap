@@ -25,7 +25,7 @@
   
   <map:pipelines>
     
-    <map:pipeline>
+    <map:pipeline type="noncaching">
       <!-- enable client side caching of resources -->
       <map:parameter name="expires" value="access plus 2 hours"/>
       
@@ -87,7 +87,7 @@
         <map:act type="resource-exists">
           <map:parameter name="url" value="site://{1}/{2}/{page-envelope:default-language}/{3}"/>
           <map:transform src="xslt/scale.xsl">
-            <map:parameter name="url" value="http://localhost:{request:serverPort}{request:contextPath}/{../1}/{../2}/{../3}.{../4}"/>
+            <map:parameter name="url" value="{proxy:/{../1}/{../2}/{../3}.{../4}}"/>
             <map:parameter name="width" value="{request-param:width}"/>
             <map:parameter name="height" value="{request-param:height}"/>
           </map:transform>
