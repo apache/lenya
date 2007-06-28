@@ -81,6 +81,8 @@ function publication_image_library() {
     var rootPath = cocoon.parameters["rootPath"];
     var allNodes = site.getNode(rootPath).preOrder();
     
+    var baseUrl = cocoon.parameters["baseUrl"];
+    
     for (var i=0; i < allNodes.length; i++) {
     
         if (allNodes[i].getPath().equals(pageEnvelope.getDocument().getPath()))
@@ -92,15 +94,13 @@ function publication_image_library() {
             if (doc.getResourceType().getName().equals("resource")) {
             
 	            var title = getTitle(doc);
-	            var url = doc.getCanonicalWebappURL();
+	            var url = doc.getCanonicalDocumentURL();
 	            url = url.substring(0, url.length() - 4);
 	            url = url + doc.getSourceExtension();
 	            
 	            imageInfos.add({
-	                    "previewurl" : pageEnvelope.getContext() + url,
-	                    "url" : pageEnvelope.getContext() + url,
-	                    // FIXME: this uses UUIDs, but they are not resolved to URLs yet
-	                    // "url" : "lenya-document:" + doc.getUUID(),
+	                    "previewurl" : baseUrl + url,
+	                    "url" : baseUrl + url,
 	                    "name" : doc.getName(),
 	                    "title" : title,
 	                    "length" : doc.getContentLength(),
