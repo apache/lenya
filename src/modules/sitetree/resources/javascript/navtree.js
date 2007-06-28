@@ -198,7 +198,7 @@ NavTree.prototype.addLoadedSite = function(site)
   newSite.area = siteArea;
   newSite.path = '/';
   newSite.isprotected = isNodeProtected(site);
-  newSite.href = langSuffix;
+  newSite.href = AREA_BASE_PATH + "/" + langSuffix;
   newSite.langSuffix = langSuffix;
   newSite.label = site.getAttribute('label');
   
