@@ -21,12 +21,16 @@
   xmlns:xlink="http://www.w3.org/1999/xlink">
   
   <xsl:param name="url"/>
+  <xsl:param name="nonProxyBaseUrl"/>
   <xsl:param name="height"/>
   <xsl:param name="width"/>
   
   <!-- Workaround: Batik doesn't seem to like SSL URLs -->
-  <xsl:param name="nonSslUrl">
+  <xsl:param name="imageUrl">
     <xsl:choose>
+      <xsl:when test="starts-with($url, '/')">
+        <xsl:value-of select="$nonProxyBaseUrl"/><xsl:value-of select="$url"/>
+      </xsl:when>
       <xsl:when test="starts-with($url, 'https:')">
         <xsl:text>http</xsl:text><xsl:value-of select="substring($url, 6)"/>
       </xsl:when>
@@ -38,7 +42,7 @@
   
   <xsl:template match="/">
     <svg width="{$width}" height="{$height}" version="1.1">
-      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$nonSslUrl}" preserveAspectRatio="none"/>        
+      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$imageUrl}" preserveAspectRatio="none"/>        
     </svg>
   </xsl:template>
 </xsl:stylesheet>
