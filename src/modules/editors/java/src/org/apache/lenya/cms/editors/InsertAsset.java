@@ -18,10 +18,16 @@
 package org.apache.lenya.cms.editors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.linking.LinkRewriter;
+import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -38,16 +44,16 @@ import org.apache.lenya.cms.site.usecases.CreateResource;
 public class InsertAsset extends CreateResource {
 
     protected static final String DOCUMENT = "document";
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {
         super.initParameters();
-        
+
         deleteParameter(RELATIONS);
         loadResources();
-        
+
         setParameter(DOCUMENT, getSourceDocument());
         try {
             User user = getSession().getIdentity().getUser();
@@ -58,7 +64,7 @@ public class InsertAsset extends CreateResource {
             throw new RuntimeException(e);
         }
     }
-    
+
     protected void doCheckPreconditions() throws Exception {
         if (!ServletHelper.isUploadEnabled(manager)) {
             addErrorMessage("Upload is not enabled please check local.build.properties!");
@@ -74,34 +80,56 @@ public class InsertAsset extends CreateResource {
             }
         }
         return (Document[]) list.toArray(new Document[list.size()]);
-    }    
-    
-    protected void loadResources() {        
-        try {            
+    }
+
+    protected void loadResources() {
+        ContextUtility context = null;
+        try {
+            context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            Request request = context.getRequest();
+            boolean ssl = request.isSecure();
+
+            LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getSession(),
+                    getSourceURL(), ssl, false);
+            Map asset2proxyUrl = new HashMap();
+            setParameter("asset2proxyUrl", asset2proxyUrl);
+
             Document[] resources = getResourceDocuments();
 
             List selectedResources = new ArrayList();
             String mimeTypePrefix = getParameterAsString("mimeTypePrefix", "");
             for (int i = 0; i < resources.length; i++) {
                 String resMimeType = resources[i].getMimeType();
-                if(resMimeType == null)
+                if (resMimeType == null)
                     resMimeType = "unknown";
                 if (resMimeType.startsWith(mimeTypePrefix)) {
                     selectedResources.add(resources[i]);
                 }
+                
+                String originalUrl = resources[i].getCanonicalWebappURL();
+                int lastDotIndex = originalUrl.lastIndexOf('.');
+                String extension = resources[i].getSourceExtension();
+                String url = originalUrl.substring(0, lastDotIndex) + "." + extension;
+
+                String proxyUrl = rewriter.rewrite(url);
+                asset2proxyUrl.put(resources[i], proxyUrl);
+                
             }
 
             setParameter("assets", selectedResources);
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } 
+        } finally {
+            if (context != null) {
+                this.manager.release(context);
+            }
+        }
     }
 
     /**
-     * Delegates to the main assets usecase; the name of
-     * the usecase being delegated to is set in the
-     * configuration parameter "asset-usecase".
-     *
+     * Delegates to the main assets usecase; the name of the usecase being
+     * delegated to is set in the configuration parameter "asset-usecase".
+     * 
      * @see org.apache.lenya.cms.usecase.Usecase#advance()
      */
     public void advance() throws UsecaseException {
@@ -113,28 +141,29 @@ public class InsertAsset extends CreateResource {
                 String usecaseName = getParameterAsString("asset-usecase");
 
                 if (getLogger().isDebugEnabled())
-                    getLogger().debug("InsertAsset::advance() calling invoker with usecaseName [" + usecaseName + "]");
+                    getLogger().debug(
+                            "InsertAsset::advance() calling invoker with usecaseName ["
+                                    + usecaseName + "]");
                 invoker.invoke(getSourceURL(), usecaseName, getParameters());
                 if (invoker.getResult() == UsecaseInvoker.SUCCESS) {
                     loadResources();
                     deleteParameter("title");
                     deleteParameter("creator");
                     deleteParameter("rights");
-                }
-                else {
+                } else {
                     List messages = invoker.getErrorMessages();
-                    for (Iterator i = messages.iterator(); i.hasNext(); ) {
+                    for (Iterator i = messages.iterator(); i.hasNext();) {
                         UsecaseMessage message = (UsecaseMessage) i.next();
                         addErrorMessage(message.getMessage());
                     }
                 }
                 /*
-                 * The <input type="file"/> value cannot be passed to the next screen because
-                 * the browser doesn't allow this for security reasons.
+                 * The <input type="file"/> value cannot be passed to the next
+                 * screen because the browser doesn't allow this for security
+                 * reasons.
                  */
                 deleteParameter("file");
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new UsecaseException(e);
             } finally {
                 if (invoker != null) {
