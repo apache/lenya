@@ -19,7 +19,7 @@
   "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Running Lenya Behind Apache with mod_proxy</title>
+    <title>Running Lenya Behind Apache with mod_proxy_ajp</title>
   </header>
   <body>
     
@@ -28,9 +28,9 @@
 
       <p>
         This tutorial aims at getting you started with a proxy environment.
-        We're using Apache HTTPD 2.2 with the <em>mod_proxy</em> module. You'll find
-        a lot of documentation on the web how to set up the web server on your
-        machine.
+        We're using Apache HTTPD 2.2 with the <em>mod_proxy_ajp</em> module, which is
+        included in the Apache distribution. You'll find a lot of documentation on the 
+        eb how to set up the web server on your machine.
       </p>
       <p>
         Our goal is to run two virtual servers on your local machine:
@@ -59,12 +59,24 @@
     </section>
     
     <section>
+      <title>Configuring the AJP Connector in Tomcat</title>
+      <p>
+        The file <code>$TOMCAT_HOME/conf/server.xml</code> contains an AJP 1.3 connector on
+        port 8009 by default:
+      </p>
+      <source xml:space="preserve"><![CDATA[<Connector port="8009" enableLookups="false" redirectPort="8443" protocol="AJP/1.3"/>]]></source>
+      <p>
+        If the connector is not present, you have to add it.
+      </p>
+    </section>
+    
+    <section>
       <title>Configuring the Apache Web Server</title>
       <p>
         Now we'll declare the virtual hosts for the Apache web server. This is done in
         a file called <code>httpd-vhosts.conf</code>. On Mac OS X, it is located in the directory
-        <code>/opt/local/apache2/conf/extra</code>. If you're using Jetty on port 8888, the
-        contents of the file should look like this:
+        <code>/opt/local/apache2/conf/extra</code>. The contents of the file should
+        look like this:
       </p>
       <source xml:space="preserve"><![CDATA[NameVirtualHost *:80
 NameVirtualHost *:443
@@ -74,97 +86,101 @@ NameVirtualHost *:443
     ServerAdmin webmaster@cms.example.com
     ServerName cms.example.com
     ServerAlias cms
-    
-    # Turn proxy requests off for security reasons
+
     ProxyRequests Off
-    
+
     RewriteEngine On
     RewriteLog /home/john/src/www/logs/cms.example.com-rewrite_log
     RewriteLogLevel 4
-    
-    # First we match everything which is not mapped to /default/authoring
-    RewriteRule ^/lenya/(.*) http://cms.example.com:8888/lenya/$1 [P,L]
-    RewriteRule ^/modules/(.*) http://cms.example.com.com:8888/modules/$1 [P,L]
-    RewriteRule ^/default/modules/(.*) http://cms.example.com:8888/default/modules/$1 [P,L]
     
     # Redirect the login usecase to https
     RewriteCond %{QUERY_STRING} (.*)lenya\.usecase=ac\.login(.*)
     RewriteRule ^/(.*) https://%{SERVER_NAME}/$1 [R,L]
 
-    # Forward the authoring area to the proxy
-    RewriteRule ^/(.*) http://cms.example.com:8888/default/authoring/$1 [P,L]
-    ProxyPassReverse / http://cms.example.com:8888/default/authoring/
-    
+    <Location /lenya/>
+      ProxyPass ajp://localhost:8009/lenya/
+      ProxyPassReverse http://cms.example.com/lenya/
+    </Location>
+
+    <Location /modules/>
+      ProxyPass ajp://localhost:8009/modules/
+      ProxyPassReverse http://cms.example.com/modules/
+    </Location>
+
+    <Location /default/modules/>
+      ProxyPass ajp://localhost:8009/default/modules/
+      ProxyPassReverse http://cms.example.com/default/modules/
+    </Location>
+
+    <Location />
+      ProxyPass ajp://localhost:8009/default/authoring/
+      ProxyPassReverse http://cms.example.com/default/authoring/
+    </Location>
+
     ErrorLog /home/john/src/www/logs/cms.example.com-error_log
     CustomLog /home/john/src/www/logs/cms.example.com-access_log common
 </VirtualHost>
 
 # This is the SSL host for the authoring area.
 <VirtualHost *:443>
-    ServerAdmin webmaster@cms.example.com
     ServerName cms.example.com
     ServerAlias cms
+
+    ProxyRequests Off
 
     SSLEngine On
     SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
     SSLCertificateFile /home/john/pki/server.crt
     SSLCertificateKeyFile /home/john/pki/server.key
 
-    ProxyRequests Off
-    RewriteEngine On
-    RewriteLog /home/john/src/www/logs/cms.example.com-rewrite_log
-    RewriteLogLevel 4
+    <Location /lenya/>
+      ProxyPass ajp://localhost:8009/lenya/
+      ProxyPassReverse https://cms.example.com/lenya/
+    </Location> 
 
-    RewriteRule ^/lenya/(.*) http://cms.example.com:8888/lenya/$1 [P,L]
-    RewriteRule ^/modules/(.*) http://cms.example.com.com:8888/modules/$1 [P,L]
-    RewriteRule ^/default/modules/(.*) http://cms.example.com:8888/default/modules/$1 [P,L]
+    <Location /modules/>
+      ProxyPass ajp://localhost:8009/modules/
+      ProxyPassReverse https://cms.example.com/modules/
+    </Location>
 
-    RewriteRule ^/(.*) http://cms.example.com:8888/default/authoring/$1 [P,L]
-    ProxyPassReverse / http://cms.example.com:8888/default/authoring/
+    <Location /default/modules/>
+      ProxyPass ajp://localhost:8009/default/modules/
+      ProxyPassReverse https://cms.example.com/default/modules/
+    </Location>
     
-    ErrorLog /home/john/src/www/logs/cms.example.com-error_log
-    CustomLog /home/john/src/www/logs/cms.example.com-access_log common
+    <Location />
+      ProxyPass ajp://localhost:8009/default/authoring/
+      ProxyPassReverse https://cms.example.com/default/authoring/
+    </Location>
+
+    ErrorLog /home/john/src/www/logs/ssl.cms.example.com-error_log
+    CustomLog /home/john/src/www/logs/ssl.cms.example.com-access_log common
+
 </VirtualHost>
 
 # This is the non-SSL host for the live area.
 <VirtualHost *:80>
     ServerAdmin webmaster@www.example.com
     ServerName www.example.com
-    ServerAlias lenya
-    
+    ServerAlias www
+
     ProxyRequests Off
-    RewriteEngine On
-    RewriteLog /Users/john/src/www/logs/www.example.com-rewrite_log
-    RewriteLogLevel 4
-    
-    RewriteRule ^/([^/\.]+)$ $1/ [R]
-    RewriteRule ^/(.*) http://www.example.com:8888/default/live/$1 [P,L]
-    ProxyPassReverse / http://www.example.com:8888/default/live/
-    
-    ErrorLog /Users/john/src/www/logs/www.example.com-error_log
-    CustomLog /Users/john/src/www/logs/www.example.com-access_log common
+
+    <Location />
+      ProxyPass ajp://localhost:8009/default/live/
+      ProxyPassReverse http://www.example.com/default/live/
+    </Location>
+
+    ErrorLog /home/john/src/www/logs/www.example.com-error_log
+    CustomLog /home/john/src/www/logs/www.example.com-access_log common
 </VirtualHost>]]></source>
 
-      <p>
-        If you're using Tomcat on port 8080 with Lenya in the context path <em>lenya14</em>,
-        you have to change the port and add the context path accordingly: 
-      </p>
-      <source xml:space="preserve"><![CDATA[    RewriteRule ^/(.*) http://cms.example.com:8080/lenya14/default/authoring/$1 [P,L]
-    ProxyPassReverse / http://cms.example.com:8080/lenya14/default/authoring/]]></source>
       <note>
         You'll certainly run into cookie problems when using a non-empty context path
-        (like <em>lenya14</em> in the example above) instead of running Lenya in the root context.
+        instead of running Lenya in the root context.
         This causes errors like "The session doesn't contain the identity.".
         You'll have to add some code to manipulate the cookies. If you need this functionality,
         please send a mail to the developers list or file an enhancement bug.
-      </note>
-      <note>
-        With this setup, your browser might show error messages like "You have requested an
-        encrypted page that contains some unencrypted information" when accessing a page
-        with the <code>https</code> protocol. This is because Apache always connects to Lenya
-        with the <code>http</code> protocol, so Lenya doesn't know that it should use <code>https</code>
-        links to include images etc. on this page. This problem won't occur if you use the
-        <a href="site:mod_proxy_ajp">mod_proxy_ajp</a> approach.
       </note>
       <p>
         The Apache web server can now be restarted using
@@ -183,6 +199,9 @@ NameVirtualHost *:443
       <source xml:space="preserve"><![CDATA[<proxies ssl="false" root="http://lenya.example.com">
   <proxy ssl="false" area="authoring" url="http://cms.example.com"/>
   <proxy ssl="false" area="live" url="http://www.example.com"/>
+</proxies>
+
+<proxies ssl="true" root="https://lenya.example.com">
   <proxy ssl="true" area="authoring" url="https://cms.example.com"/>
   <proxy ssl="true" area="live" url="https://www.example.com"/>
 </proxies>
