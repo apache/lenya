@@ -59,9 +59,6 @@ public class InsertAsset extends CreateResource {
         }
     }
     
-    /**
-     * @see org.apache.lenya.cms.usecase.DocumentUsecase#doCheckPreconditions()
-     */
     protected void doCheckPreconditions() throws Exception {
         if (!ServletHelper.isUploadEnabled(manager)) {
             addErrorMessage("Upload is not enabled please check local.build.properties!");
