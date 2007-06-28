@@ -83,6 +83,9 @@
           <xsl:when test="starts-with(@src, '/')">
             <xsl:value-of select="@src"/>              
           </xsl:when>
+          <xsl:when test="starts-with(@src, 'http:') or starts-with(@src, 'https:')">
+            <xsl:value-of select="@src"/>              
+          </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="substring-after(@src, '/')"/>
           </xsl:otherwise>
