@@ -114,10 +114,8 @@
             <map:parameter name="context-prefix" value="{request:contextPath}/{page-envelope:publication-id}/modules/kupu"/>
             <!-- Only used to display the document path of the edited doc  -->
             <map:parameter name="document-path" value="{page-envelope:document-path}"/>
-            <map:parameter name="save-destination" 
-              value="{proxy:{request:requestURI}}?lenya.event=edit"/>
-            <map:parameter name="exit-destination" 
-              value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=exit"/>
+            <map:parameter name="save-destination" value="{proxy:{request:requestURI}}?lenya.event=edit"/>
+            <map:parameter name="exit-destination" value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=exit"/>
             <map:parameter name="reload-after-save" value="1"/>
             <map:parameter name="use-css" value="1"/>
             <map:parameter name="imagedrawer-xsl-uri" 
