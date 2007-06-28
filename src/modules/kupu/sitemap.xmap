@@ -70,13 +70,13 @@
       <!-- Flow callbacks -->
       <map:match pattern="sitetree_link_library_template">
         <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/sitetree_link_library.xml.jx" type="jx">
-          <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
+          <map:parameter name="resource-icon-url" value="{proxy:/{global:resourceIconUrl}}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>      
       <map:match pattern="publication_image_library_template">
         <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/publication_image_library.xml.jx" type="jx">
-          <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
+          <map:parameter name="resource-icon-url" value="{proxy:/{global:resourceIconUrl}}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>      
@@ -110,24 +110,24 @@
             src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/kupu/kupumacros.html"/>
           <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupumacros.xsl">
             <map:parameter name="contentfile" 
-              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=content"/>
+              value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=content"/>
             <map:parameter name="context-prefix" value="{request:contextPath}/{page-envelope:publication-id}/modules/kupu"/>
             <!-- Only used to display the document path of the edited doc  -->
             <map:parameter name="document-path" value="{page-envelope:document-path}"/>
             <map:parameter name="save-destination" 
-              value="{request:requestURI}?lenya.event=edit"/>
+              value="{proxy:{request:requestURI}}?lenya.event=edit"/>
             <map:parameter name="exit-destination" 
-              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=exit"/>
+              value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=exit"/>
             <map:parameter name="reload-after-save" value="1"/>
             <map:parameter name="use-css" value="1"/>
             <map:parameter name="imagedrawer-xsl-uri" 
-              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=imagedrawerxsl"/>
+              value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=imagedrawerxsl"/>
             <map:parameter name="linkdrawer-xsl-uri" 
-              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=linkdrawerxsl"/>
+              value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=linkdrawerxsl"/>
             <map:parameter name="image-libraries-uri" 
-              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=image_libraries"/>
+              value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=image_libraries"/>
             <map:parameter name="link-libraries-uri" 
-              value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=link_libraries"/>
+              value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=link_libraries"/>
           </map:transform>
           <map:serialize type="xhtml"/>
       </map:match>
@@ -135,11 +135,10 @@
         <!-- Requested by Kupu to load the document into the editor -->    
         <map:match pattern="content" type="step">
           <map:match pattern="*/authoring/**">
-            <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
+            <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}"/>
             <map:transform 
               src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/content2edit.xsl">
-              <map:parameter name="css" 
-                value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
+              <map:parameter name="css" value="{proxy:/{1}/authoring/css/page.css}"/>
               <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
             </map:transform>
             <map:transform type="uuid2url"/>
@@ -156,26 +155,27 @@
           <map:generate type="jx" src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/{1}drawer.xsl">
             <!-- We need to use the hole uri scheme i.e. http://servername:port/, since IE xslt processor  
                  throws an access violation upon loading of xslts from the internet.
+                 This requires to configure the proxy accordingly in publication.xml.
              -->
             <map:parameter name="import-stylesheet-url"
-              value="{request:scheme}://{request:serverName}:{request:serverPort}{page-envelope:context-prefix}/modules/kupu/kupu/common/kupudrawers/drawer.xsl"/>
+              value="{proxy:/modules/kupu/kupu/common/kupudrawers/drawer.xsl}"/>
           </map:generate>  
           <map:serialize type="xml"/>
         </map:match>
         
         <map:match pattern="image_libraries" type="step">
           <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/imagelibraries.xml.jx" type="jx">
-            <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=publication_image_library"/>
-            <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=page_image_library"/>
-            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/{global:imageBase}"/>
+            <map:parameter name="pubLibUrl" value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=publication_image_library"/>
+            <map:parameter name="pageLibUrl" value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=page_image_library"/>
+            <map:parameter name="imageBaseUrl" value="{proxy:/{global:imageBase}}"/>
           </map:generate>
           <map:serialize type="xml"/>
         </map:match>
         <map:match pattern="link_libraries" type="step">
           <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/linklibraries.xml.jx" type="jx">
-            <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=sitetree_link_library"/>
-            <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=other_link_library"/>
-            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/{global:imageBase}"/>
+            <map:parameter name="pubLibUrl" value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=sitetree_link_library"/>
+            <map:parameter name="pageLibUrl" value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=other_link_library"/>
+            <map:parameter name="imageBaseUrl" value="{proxy:/{global:imageBase}}"/>
           </map:generate>
           <map:serialize type="xml"/>
         </map:match>
@@ -183,7 +183,7 @@
         <map:match pattern="page_image_library" type="step">
           <map:call function="publication_image_library">
             <map:parameter name="template" value="publication_image_library_template"/>
-            <map:parameter name="iconUrl" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
+            <map:parameter name="iconUrl" value="{proxy:/{global:resourceIconUrl}}"/>
             <map:parameter name="rootPath" value=""/>
           </map:call>
         </map:match>
@@ -193,7 +193,7 @@
         <map:match pattern="publication_image_library" type="step">
           <map:call function="publication_image_library">
             <map:parameter name="template" value="publication_image_library_template"/>
-            <map:parameter name="iconUrl" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
+            <map:parameter name="iconUrl" value="{proxy:/{global:resourceIconUrl}}"/>
             <map:parameter name="rootPath" value="{page-envelope:document-path}"/>
           </map:call>
         </map:match>
