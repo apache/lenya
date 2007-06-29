@@ -20,10 +20,11 @@
 
     <component-instance name="fckeditor.insertAsset" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.InsertAsset">
-      <view template="modules/fckeditor/usecases/insertAsset.jx" menu="false">
+      <view template="modules/editors/usecases/insertAsset.jx" menu="false">
         <parameter name="callbackFunction" value="insertAsset"/>
       </view>
       <parameter name="asset-usecase" value="tab.assets"/>
+      <parameter name="editor" value="fckeditor"/>
       <exit usecase="fckeditor.insertAsset"/>
     </component-instance>
     

@@ -24,10 +24,11 @@
 
     <component-instance name="tinymce.insertAsset" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.InsertAsset">
-      <view template="modules/tinymce/usecases/insertAsset.jx" menu="false">
+      <view template="modules/editors/usecases/insertAsset.jx" menu="false">
         <parameter name="callbackFunction" value="insertAsset"/>
       </view>
       <parameter name="asset-usecase" value="tab.assets"/>
+      <parameter name="editor" value="tinymce"/>
       <exit usecase="tinymce.insertAsset"/>
     </component-instance>
     
