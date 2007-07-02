@@ -6,8 +6,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 
 /**
- * this Searcher Component allow: <br/> - search in several indexes <br/> - sort hits with a
- * speficied
+ * this Searcher Component allows: <br/> - searching in several indexes <br/> - sorting hits by a
+ * specified field and order
  * 
  * @author Nicolas Maisonneuve
  */
@@ -24,7 +24,7 @@ public interface Searcher {
     String ROLE = Searcher.class.getName();
 
     /**
-     * add a lucene directory you can add several directories
+     * Add a lucene directory -- you can add several directories
      * <p>
      * The directory specifies the directory used for looking up the index. It defines the physical
      * place of the index
@@ -35,7 +35,7 @@ public interface Searcher {
     public void addDirectory(Directory directory);
 
     /**
-     * Set sort the hits with a field
+     * Set the field by which the search results are to be sorted
      * @param field the index field
      * @param reverse reverse order or not
      */
