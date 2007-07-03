@@ -36,6 +36,16 @@
     <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
     
     <h3>
+      2007-07-03: <code>publication.xml/proxies</code> replaced by <code>cocoon.xconf/GlobalProxies</code>
+    </h3>
+    <p>
+      The <code>&lt;proxies&gt;</code> element in <code>publication.xml</code> is not
+      supported anymore. Instead, you have to configure the <code>GlobalProxies</code>
+      service entry in <code>cocoon.xconf</code>. For more information, see
+      <a href="http://www.nabble.com/-1.4---Proposal--Global-proxy-configuration-tf3999411.html">[Proposal] Global proxy configuration</a>.
+    </p>
+    
+    <h3>
       2007-06-26: <code>base-url</code> and <code>proxy-url</code> input modules
       replaced by <code>proxy</code> module
     </h3>
