@@ -100,13 +100,16 @@
   -->
   
   <!-- Lenya can rewrite the links to cater to special proxy setups.
-       For information about these settings, read http://lenya.apache.org/1_2_x/components/deployment/proxying.html
-       (yes, this needs some updating... sorry.)--><!--
-  <proxies ssl="false" root="http://www.host.com/non-ssl/">
-    <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
-    <proxy area="live" ssl="false" url="http://www.host.com/default"/>
-    <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
-    <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
-  </proxies>
+       Make sure to update the GlobalProxies configuration in cocoon.xconf as well.
+       For information about these settings, read
+       http://lenya.zones.apache.org/docu/docs/1_4/tutorials/proxy.html
+       FIXME: Update to lenya.apache.org page as soon as the website is updated
+       -->
+  <!--
+  <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
+  <proxy area="live" ssl="false" url="http://www.host.com/default"/>
+  <proxy area="authoring" ssl="true" url="https://cms.host.com/default"/>
+  <proxy area="authoring" ssl="false" url="http://cms.host.com/default"/>
   -->
+  
 </publication>

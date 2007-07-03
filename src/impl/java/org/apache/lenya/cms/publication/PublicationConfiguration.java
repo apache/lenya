@@ -81,8 +81,6 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ELEMENT_BREADCRUMB_PREFIX = "breadcrumb-prefix";
     private static final String ELEMENT_CONTENT_DIR = "content-dir";
     private static final String ATTRIBUTE_SRC = "src";
-    private static final String ELEMENT_PROXIES = "proxies";
-    protected static final String ATTRIBUTE_ROOT = "root";
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
@@ -181,35 +179,21 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 this.siteManagerName = siteManagerConfiguration.getAttribute(ATTRIBUTE_NAME);
             }
 
-            Configuration proxyConfig = config.getChild(ELEMENT_PROXIES);
-            if (proxyConfig != null) {
-                // root/global proxy
-                String urlRoot = proxyConfig.getAttribute(ATTRIBUTE_ROOT, null);
-                String sslRoot = proxyConfig.getAttribute(ATTRIBUTE_SSL, null);
-                if (urlRoot != null & sslRoot != null) {
-                    Proxy rootProxy = new Proxy();
-                    rootProxy.setUrl(urlRoot);
-                    Object rootKey = getProxyKey(ATTRIBUTE_ROOT, Boolean.valueOf(sslRoot)
-                            .booleanValue());
-                    this.areaSsl2proxy.put(rootKey, rootProxy);
-                }
-                // Area proxies
-                Configuration[] proxyConfigs = proxyConfig.getChildren(ELEMENT_PROXY);
-                for (int i = 0; i < proxyConfigs.length; i++) {
-                    String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
-                    String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
-                    String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
+            Configuration[] proxyConfigs = config.getChildren(ELEMENT_PROXY);
+            for (int i = 0; i < proxyConfigs.length; i++) {
+                String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
+                String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
+                String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
 
-                    Proxy proxy = new Proxy();
-                    proxy.setUrl(url);
+                Proxy proxy = new Proxy();
+                proxy.setUrl(url);
 
-                    Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
-                    this.areaSsl2proxy.put(key, proxy);
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug(
-                                "Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
-                                        + "]");
-                    }
+                Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
+                this.areaSsl2proxy.put(key, proxy);
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(
+                            "Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
+                                    + "]");
                 }
             }
 
@@ -223,7 +207,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
             // with all kinds of NPEs that keep cropping up...
             if (templateConfig == null) {
                 this.templates = new String[0]; // ugh. empty array to keep the
-                                                // legacy code from breaking.
+                // legacy code from breaking.
             } else {
                 this.templates = new String[1];
                 this.templates[0] = templateConfig.getAttribute(ATTRIBUTE_ID);
@@ -440,7 +424,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
         return proxy;
     }
-    
+
     /**
      * @param area The area.
      * @param isSslProtected If the proxy is for SSL-protected URLs.

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessController;
@@ -39,8 +40,8 @@ import org.apache.lenya.util.StringUtil;
 /**
  * <p>
  * Converts web application links to links which will be sent to the browser by
- * using the publication's proxy settings. If the current request is SSL-encrypted,
- * all link URLs will use the SSL proxy.
+ * using the publication's proxy settings. If the current request is
+ * SSL-encrypted, all link URLs will use the SSL proxy.
  * </p>
  * <p>
  * Objects of this class are not thread-safe.
@@ -48,14 +49,12 @@ import org.apache.lenya.util.StringUtil;
  */
 public class OutgoingLinkRewriter extends ServletLinkRewriter {
 
-    private static final String ATTRIBUTE_ROOT = "root";
-
     private boolean relativeUrls;
     private PolicyManager policyManager;
     private AccreditableManager accreditableManager;
     private DocumentFactory factory;
-    private Publication publication;
     private boolean ssl;
+    private GlobalProxies globalProxies;
 
     /**
      * @param manager The service manager to use.
@@ -77,11 +76,6 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
 
         try {
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
-            URLInformation info = new URLInformation(requestUrl);
-            String pubId = info.getPublicationId();
-            if (pubId != null && isPublication(pubId)) {
-                this.publication = this.factory.getPublication(pubId);
-            }
 
             serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
@@ -102,7 +96,17 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
                 this.manager.release(serviceSelector);
             }
         }
+    }
 
+    protected GlobalProxies getGlobalProxies() {
+        if (this.globalProxies == null) {
+            try {
+                this.globalProxies = (GlobalProxies) this.manager.lookup(GlobalProxies.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.globalProxies;
     }
 
     public boolean matches(String url) {
@@ -131,15 +135,10 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
                     rewrittenUrl = rewriteLink(url, pub, useSsl);
                 }
 
-                // link doesn't point to publication -> use own publication if
-                // exists
-                else if (this.publication != null) {
-                    rewrittenUrl = rewriteLink(url, this.publication, useSsl);
-                }
-
-                // link doesn't point to publication, no own publication
+                // link doesn't point to publication
                 else {
-                    rewrittenUrl = getContextPath() + url;
+                    Proxy proxy = getGlobalProxies().getProxy(ssl);
+                    rewrittenUrl = proxy.getUrl() + url;
                 }
             }
         } catch (Exception e) {
@@ -169,7 +168,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
 
         // invalid area
         else {
-            Proxy proxy = pub.getProxy(ATTRIBUTE_ROOT, ssl);
+            Proxy proxy = getGlobalProxies().getProxy(ssl);
             rewrittenUrl = proxy.getUrl() + linkUrl;
         }
         return rewrittenUrl;

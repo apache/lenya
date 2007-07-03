@@ -147,12 +147,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      * @return The proxy URL if no proxy is declared in {@link PublicationConfiguration#CONFIGURATION_FILE}.
      */
     protected String getDefaultProxyUrl(String area) {
-        if (area.equals(PublicationConfiguration.ATTRIBUTE_ROOT)) {
-            return getContextPath();
-        }
-        else {
-            return getContextPath() + "/" + getId() + "/" + area;
-        }
+        return getContextPath() + "/" + getId() + "/" + area;
     }
 
     private List allResourceTypes;
