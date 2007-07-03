@@ -20,8 +20,19 @@
 
 <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.linking.GlobalProxies']">
 
+  <!-- Lenya can rewrite the links to cater to special proxy setups.
+    Make sure to update the proxy configuration in publication.xml as well.
+    For information about these settings, read
+    http://lenya.zones.apache.org/docu/docs/1_4/tutorials/proxy.html
+    FIXME: Update to lenya.apache.org page as soon as the website is updated
+  -->
   <component logger="lenya.proxy"
     role="org.apache.lenya.cms.linking.GlobalProxies"
-    class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl"/>
+    class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl">
+    <!--
+    <proxy ssl="false" url="http://cms.host.com"/>
+    <proxy ssl="true" url="https://cms.host.com"/>
+    -->
+  </component>
   
 </xconf>
