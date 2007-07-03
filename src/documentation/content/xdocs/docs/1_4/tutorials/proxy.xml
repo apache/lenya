@@ -178,15 +178,31 @@ NameVirtualHost *:443
         When you use a proxy, Lenya has to convert all internal links accordingly.
         Therefore you have to tell the publication about the proxy configuration.
         Open the file <code>pubs/default/config/publication.xml</code> and uncomment
-        and modify the <code><![CDATA[<proxies/]]></code> section:
+        and modify the <code><![CDATA[<proxy/]]></code> elements:
       </p>
-      <source xml:space="preserve"><![CDATA[<proxies ssl="false" root="http://lenya.example.com">
-  <proxy ssl="false" area="authoring" url="http://cms.example.com"/>
-  <proxy ssl="false" area="live" url="http://www.example.com"/>
-  <proxy ssl="true" area="authoring" url="https://cms.example.com"/>
-  <proxy ssl="true" area="live" url="https://www.example.com"/>
-</proxies>
-      ]]></source>
+      <source xml:space="preserve"><![CDATA[<proxy ssl="false" area="authoring" url="http://cms.example.com"/>
+<proxy ssl="false" area="live" url="http://www.example.com"/>
+<proxy ssl="true" area="authoring" url="https://cms.example.com"/>
+<proxy ssl="true" area="live" url="https://www.example.com"/>]]></source>
+    </section>
+    
+    <section>
+      <title>Configuring the Global Proxies</title>
+      <p>
+        The application-wide (publication independent) proxies are configured in
+        <code>WEB-INF/cocoon.xconf</code>. Look for the declaration of the <code>GlobalProxies</code>
+        service and update this entry:
+      </p>
+      <source xml:space="preserve"><![CDATA[<component logger="lenya.proxy"
+    role="org.apache.lenya.cms.linking.GlobalProxies"
+    class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl">
+  <proxy ssl="false" url="http://cms.host.com"/>
+  <proxy ssl="true" url="https://cms.host.com"/>
+</component>]]></source>
+    </section>
+    
+    <section>
+      <title>Testing the Settings</title>
       <p>
         After re-deploying the publication and restarting your servlet container,
         you should be able to access the

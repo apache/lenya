@@ -146,7 +146,7 @@
       </newResourceType>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
       <proxy label="Proxying">
-        <proxy href="proxy.html" label="mod_proxy"/>
+        <mod_proxy_14 href="proxy.html" label="mod_proxy"/>
         <mod_proxy_ajp href="mod_proxy_ajp.html" label="mod_proxy_ajp"/>
       </proxy>
       <bestpractises href="bestpractises.html" label="Best Practises"/>

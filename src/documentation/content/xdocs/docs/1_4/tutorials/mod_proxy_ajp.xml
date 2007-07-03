@@ -189,28 +189,10 @@ NameVirtualHost *:443
     </section>
     
     <section>
-      <title>Configuring the Publication for Proxying</title>
+      <title>Configuring Lenya for Proxying</title>
       <p>
-        When you use a proxy, Lenya has to convert all internal links accordingly.
-        Therefore you have to tell the publication about the proxy configuration.
-        Open the file <code>pubs/default/config/publication.xml</code> and uncomment
-        and modify the <code><![CDATA[<proxies/]]></code> section:
-      </p>
-      <source xml:space="preserve"><![CDATA[<proxies ssl="false" root="http://lenya.example.com">
-  <proxy ssl="false" area="authoring" url="http://cms.example.com"/>
-  <proxy ssl="false" area="live" url="http://www.example.com"/>
-</proxies>
-
-<proxies ssl="true" root="https://lenya.example.com">
-  <proxy ssl="true" area="authoring" url="https://cms.example.com"/>
-  <proxy ssl="true" area="live" url="https://www.example.com"/>
-</proxies>
-      ]]></source>
-      <p>
-        After re-deploying the publication and restarting your servlet container,
-        you should be able to access the
-        authoring environment of the default publication at the URL
-        <a href="http://cms.example.com/">http://cms.example.com/</a>.
+        Now follow the steps described in the final sections of the
+        <a href="site:mod_proxy_14">mod_proxy tutorial</a>.
       </p>
     </section>
     
