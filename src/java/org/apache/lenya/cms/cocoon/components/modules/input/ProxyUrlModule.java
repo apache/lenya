@@ -132,8 +132,7 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
             } else {
                 // Take server name and port from request.
                 Request request = ObjectModelHelper.getRequest(objectModel);
-                value = "http://" + request.getServerName() + ":" + request.getServerPort()
-                        + request.getContextPath() + doc.getCompleteURL();
+                value = request.getContextPath() + doc.getCompleteURL();
             }
 
         } catch (Exception e) {
