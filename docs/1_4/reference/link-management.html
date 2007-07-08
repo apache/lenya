@@ -64,16 +64,16 @@
 <a class="unselected" href="../../../index.html">Project</a>
 </li>
 <li>
-<a class="unselected" href="../../../docs/index.html">Documentation</a>
+<a class="unselected" href="../../../docs/index.html">Developer</a>
+</li>
+<li>
+<a class="unselected" href="../../../community/index.html">Community</a>
 </li>
 <li class="current">
 <a class="selected" href="../../../docs/1_4/index.html">Version 1.4</a>
 </li>
 <li>
 <a class="unselected" href="../../../docs/1_2_x/index.html">Version 1.2</a>
-</li>
-<li>
-<a class="unselected" href="../../../community/index.html">Community</a>
 </li>
 </ul>
 <!--+
@@ -154,8 +154,14 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.4', '../../../skin/')" id="menu_1.1.4.4Title" class="menutitle">Proxying</div>
+<div id="menu_1.1.4.4" class="menuitemgroup">
 <div class="menuitem">
-<a href="../../../docs/1_4/tutorials/tests.html">Writing Tests</a>
+<a href="../../../docs/1_4/tutorials/proxy.html">mod_proxy</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/tutorials/mod_proxy_ajp.html">mod_proxy_ajp</a>
+</div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/tutorials/bestpractises.html">Best Practises</a>
@@ -171,9 +177,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/concepts/documents.html">Working with Documents</a>
-</div>
-<div class="menuitem">
-<a href="../../../docs/1_4/concepts/urlMapping.html">URL Mapping</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/concepts/authoring_live.html">Authoring and Live mode</a>
@@ -235,8 +238,14 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/reference/protocols/site.html">site Protocol</a>
 </div>
 </div>
+<div onclick="SwitchMenu('menu_selected_1.1.6.10', '../../../skin/')" id="menu_selected_1.1.6.10Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">URLs and Links</div>
+<div id="menu_selected_1.1.6.10" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../docs/1_4/reference/urlMapping.html">URL Mapping</a>
+</div>
 <div class="menupage">
 <div class="menupagetitle">Link Management</div>
+</div>
 </div>
 </div>
 <div class="menuitem">
@@ -670,7 +679,7 @@ document.write("Last Published: " + document.lastModified);
   |alternative credits
   +-->
 <div id="credit2">
-<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
+<a href="http://wiki.apache.org/lenya/MeetingZurich2007"><img border="0" title="Meeting Zurich 2007" alt="Meeting Zurich 2007 - logo" src="../../../images/apache-lenya-meeting-zurich-2007_small.png" style="width: 150px;height: 39px;"></a><a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
 </div>
 </div>
 <!--+
@@ -694,10 +703,16 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Syntax+for+Internal+Links">Syntax for Internal Links</a>
 </li>
 <li>
-<a href="#HTML+Links">HTML Links</a>
+<a href="#Specifying+the+Resource+Type+Format">Specifying the Resource Type Format</a>
 </li>
 <li>
-<a href="#Specifying+the+Resource+Type+Format">Specifying the Resource Type Format</a>
+<a href="#Converting+UUID-based+URLs+to+Web+Application+URLs">Converting UUID-based URLs to Web Application URLs</a>
+</li>
+<li>
+<a href="#Converting+Web+Application+Links+to+Servlet+Container+or+Proxy+Links">Converting Web Application Links to Servlet Container or Proxy Links</a>
+</li>
+<li>
+<a href="#URLs+in+CSS+Files">URLs in CSS Files</a>
 </li>
 </ul>
 </div>
@@ -769,41 +784,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1006D"></a><a name="HTML+Links"></a>
-<h2 class="h3">HTML Links</h2>
-<div class="section">
-<p>
-        The <span class="codefrag">UuidToUrlTransformer</span> is responsible for translating <span class="codefrag">lenya-document:</span>
-        links into the corresponding HTML links which can be understood by the browser.
-      </p>
-<p>
-        If your source document contains a link like this:
-      </p>
-<pre class="code">&lt;a href="lenya-document:031&hellip;"&gt;News&lt;/a&gt;</pre>
-<p>
-        and your pipeline contains a call to the <span class="codefrag">UuidToUrlTransformer</span>:
-      </p>
-<pre class="code">&lt;map:transform type="uuid2url"/&gt;</pre>
-<p>
-        the resulting HTML link will look like this:
-      </p>
-<pre class="code">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
-<a name="N10094"></a><a name="Specifying+an+Extension"></a>
-<h3 class="h4">Specifying an Extension</h3>
-<p>
-          The <span class="codefrag">UuidToUrlTransformer</span> recognizes the query string parameter
-          <span class="codefrag">uuid2url.extension</span>. You can use it to force a specific extension.
-          For instance
-        </p>
-<pre class="code">&lt;a type="application/rss+xhtml" href="lenya-document:031&hellip;?uuid2url.extension=rss"&gt;RSS Feed&lt;/a&gt;</pre>
-<p>
-          will result in
-        </p>
-<pre class="code">&lt;a type="application/rss+xhtml" href="/default/authoring/news.rss"&gt;RSS Feed&lt;/a&gt;</pre>
-</div>
-    
-    
-<a name="N100B0"></a><a name="Specifying+the+Resource+Type+Format"></a>
+<a name="N1006D"></a><a name="Specifying+the+Resource+Type+Format"></a>
 <h2 class="h3">Specifying the Resource Type Format</h2>
 <div class="section">
 <p>
@@ -831,6 +812,97 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <pre class="code">&lt;map:transform type="cinclude"/&gt;</pre>
 <p>the teaser version of each document will be included.</p>
+</div>
+    
+    
+<a name="N10092"></a><a name="Converting+UUID-based+URLs+to+Web+Application+URLs"></a>
+<h2 class="h3">Converting UUID-based URLs to Web Application URLs</h2>
+<div class="section">
+<p>
+        The <span class="codefrag">UuidToUrlTransformer</span> is responsible for translating <span class="codefrag">lenya-document:</span>
+        links into the corresponding web application links. The context path or proxy settings
+        are not considered yet, this is the responsibility of the ProxyTransformer (see below).
+        So don't forget to apply the ProxyTransformer after the UuidToUrlTransformer.
+      </p>
+<p>
+        If your source document contains a link like this:
+      </p>
+<pre class="code">&lt;a href="lenya-document:031&hellip;"&gt;News&lt;/a&gt;</pre>
+<p>
+        and your pipeline contains a call to the UuidToUrlTransformer:
+      </p>
+<pre class="code">&lt;map:transform type="uuid2url"/&gt;</pre>
+<p>
+        the resulting HTML link will look like this:
+      </p>
+<pre class="code">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
+<a name="N100B6"></a><a name="Specifying+an+Extension"></a>
+<h3 class="h4">Specifying an Extension</h3>
+<p>
+          The UuidToUrlTransformer recognizes the query string parameter
+          <span class="codefrag">uuid2url.extension</span>. You can use it to force a specific extension.
+          For instance
+        </p>
+<pre class="code">&lt;a type="application/rss+xhtml" href="lenya-document:031&hellip;?uuid2url.extension=rss"&gt;RSS Feed&lt;/a&gt;</pre>
+<p>
+          will result in
+        </p>
+<pre class="code">&lt;a type="application/rss+xhtml" href="/default/authoring/news.rss"&gt;RSS Feed&lt;/a&gt;</pre>
+</div>
+    
+    
+<a name="N100CF"></a><a name="Converting+Web+Application+Links+to+Servlet+Container+or+Proxy+Links"></a>
+<h2 class="h3">Converting Web Application Links to Servlet Container or Proxy Links</h2>
+<div class="section">
+<p>
+        The <span class="codefrag">ProxyTransformer</span> converts all web application links to final links
+        by adding the servlet context path or the proxy URL. For instance, if you run your
+        Lenya servlet in Tomcat under the context path <em>lenya14</em>, transforming
+      </p>
+<pre class="code">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
+<p>
+        with the ProxyTransformer
+      </p>
+<pre class="code">&lt;map:transform type="proxy"/&gt;</pre>
+<p>
+        will result in
+      </p>
+<pre class="code">&lt;a href="/lenya14/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
+<p>
+        If you have declared a proxy for the authoring area, the resulting link might look like this:
+      </p>
+<pre class="code">&lt;a href="http://cms.mysite.com/news.html"&gt;News&lt;/a&gt;</pre>
+<p>
+        If you have configured the proxy transformer to use relative URLs, the link will be converted to
+        something like this:
+      </p>
+<pre class="code">&lt;a href="../../news.html"&gt;News&lt;/a&gt;</pre>
+<p>
+        Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
+        For more information on the ProxyTransformer, consult the API documentation.
+      </p>
+<p>
+        The <span class="codefrag">ProxyModule</span> provides the same functionality in sitemaps.
+        It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
+      </p>
+<pre class="code">&lt;map:parameter name="url" value="{proxy:/default/authoring/news.html}"/&gt;</pre>
+</div>
+    
+    
+<a name="N1010C"></a><a name="URLs+in+CSS+Files"></a>
+<h2 class="h3">URLs in CSS Files</h2>
+<div class="section">
+<p>
+        URLs in <acronym title="Cascading StyleSheet">CSS</acronym> files are converted
+        to valid links automatically. In your CSS, you can just write
+      </p>
+<pre class="code">div.news { background: url('/mypub/live/images/news.png') left top no-repeat }</pre>
+<p>
+        and, according to your proxy settings or context path, this will end up as one of these:
+      </p>
+<pre class="code">div.news { background: url('/lenya14/mypub/live/images/news.png') left top no-repeat }</pre>
+<pre class="code">div.news { background: url('http://mysite.com/images/news.png') left top no-repeat }</pre>
+<pre class="code">div.news { background: url('../images/news.png') left top no-repeat }</pre>
 </div>
     
   
