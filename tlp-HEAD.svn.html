@@ -64,16 +64,16 @@
 <a class="selected" href="index.html">Project</a>
 </li>
 <li>
-<a class="unselected" href="docs/index.html">Documentation</a>
+<a class="unselected" href="docs/index.html">Developer</a>
+</li>
+<li>
+<a class="unselected" href="community/index.html">Community</a>
 </li>
 <li>
 <a class="unselected" href="docs/1_4/index.html">Version 1.4</a>
 </li>
 <li>
 <a class="unselected" href="docs/1_2_x/index.html">Version 1.2</a>
-</li>
-<li>
-<a class="unselected" href="community/index.html">Community</a>
 </li>
 </ul>
 <!--+
@@ -123,6 +123,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">log HEAD</div>
+</div>
+<div class="menuitem">
+<a href="tlp-2007-06.svn.html">log 2007-06</a>
 </div>
 <div class="menuitem">
 <a href="tlp-2007-05.svn.html">log 2007-05</a>
@@ -270,16 +273,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 <div class="menuitem">
-<a href="charter.html">Charter</a>
-</div>
-<div class="menuitem">
-<a href="guidelines.html">Project guidelines</a>
-</div>
-<div class="menuitem">
 <a href="who.html" title="Explain who is involved">Who we are</a>
-</div>
-<div class="menuitem">
-<a href="history.html">History</a>
 </div>
 <div class="menuitem">
 <a href="screenshots.html">Screenshots</a>
@@ -291,10 +285,10 @@ document.write("Last Published: " + document.lastModified);
 <a href="license.html">License</a>
 </div>
 <div class="menuitem">
-<a href="resolution.html">Resolution</a>
+<a href="related-projects.html">Related Projects</a>
 </div>
 <div class="menuitem">
-<a href="related-projects.html">Related Projects</a>
+<a href="history.html">History</a>
 </div>
 </div>
 <div id="credit"></div>
@@ -304,7 +298,7 @@ document.write("Last Published: " + document.lastModified);
   |alternative credits
   +-->
 <div id="credit2">
-<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
+<a href="http://wiki.apache.org/lenya/MeetingZurich2007"><img border="0" title="Meeting Zurich 2007" alt="Meeting Zurich 2007 - logo" src="images/apache-lenya-meeting-zurich-2007_small.png" style="width: 150px;height: 39px;"></a><a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
 </div>
 </div>
 <!--+
@@ -325,8 +319,11 @@ document.write("Last Published: " + document.lastModified);
 <a href="#introduction">Introduction and explanation of symbols</a>
 </li>
 <li>
-<a href="#version_2007-06">Version 2007-06 ()</a>
+<a href="#version_2007-07">Version 2007-07 ()</a>
 <ul class="minitoc">
+<li>
+<a href="#1.2">1.2</a>
+</li>
 <li>
 <a href="#1.4">1.4</a>
 </li>
@@ -352,69 +349,73 @@ document.write("Last Published: " + document.lastModified);
 <p>Changes are sorted <translate>by "{0}" and then<param>type</param>
 </translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="update" src="images/update.jpg">=update</p>
 </div>
-<a name="N10039"></a><a name="version_2007-06"></a>
-<h2 class="h3">Version 2007-06 ()</h2>
+<a name="N10039"></a><a name="version_2007-07"></a>
+<h2 class="h3">Version 2007-07 ()</h2>
 <div class="section">
-<a name="N10040"></a><a name="1.4"></a>
+<a name="N10040"></a><a name="1.2"></a>
+<h3 class="h4">1.2</h3>
+<ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=42825 <a href="http://svn.apache.org/viewcvs.cgi?rev=553896&view=rev">Diff</a> 
+       Committed by jann.</li>
+</ul>
+<a name="N10052"></a><a name="1.4"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Added failing test case for bug 42602 <a href="http://svn.apache.org/viewcvs.cgi?rev=544784&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] javadoc grammer/wording <a href="http://svn.apache.org/viewcvs.cgi?rev=552382&view=rev">Diff</a> 
+       Committed by bobharner.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Replaced per-publication &lt;proxies root=/&gt; configuration with GlobalProxies service. See http://www.nabble.com/-1.4---Proposal--Global-proxy-configuration-tf3999411.html. <a href="http://svn.apache.org/viewcvs.cgi?rev=552818&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Bug 42050 - proxying does not work. 
-Adding proxyTransformer that is doing the proxy rewritte as last step of the transformation for html documents.
-Adding chaperon pattern resolver and using it for css proxing. Can scan any file for pattern and transform them to links, see the way I implemented in css to extend it to e.g. js.
-Extending PublicationConfiguration.java and publication.rng to read and allow the new attributes in the proxies element. <a href="http://svn.apache.org/viewcvs.cgi?rev=545437&view=rev">Diff</a> 
-       Committed by thorsten.</li>
-<li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed typo so that ip ranges can now be deleted and moved in AC tabs
- <a href="http://svn.apache.org/viewcvs.cgi?rev=544630&view=rev">Diff</a> 
-       Committed by rfrovarp.</li>
-<li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use only .html URLs in sitetree on the site tab. This should improve the situation described in bug 42567. <a href="http://svn.apache.org/viewcvs.cgi?rev=544766&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Updating publication.xml schema after changes to proxy configuration <a href="http://svn.apache.org/viewcvs.cgi?rev=552820&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Check for modifications when lazy-loading source node RCML data. This fixes bug 42602. <a href="http://svn.apache.org/viewcvs.cgi?rev=544822&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added note about GlobalProxies configuration to readme file <a href="http://svn.apache.org/viewcvs.cgi?rev=552822&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't reload source node RCML data if RCML object has been modified <a href="http://svn.apache.org/viewcvs.cgi?rev=545141&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added comment to GlobalProxies service configuration <a href="http://svn.apache.org/viewcvs.cgi?rev=552825&view=rev">Diff</a> 
        Committed by andreas.</li>
-<li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Sorts the list that is displayed when choosing a template.
- <a href="http://svn.apache.org/viewcvs.cgi?rev=546165&view=rev">Diff</a> 
-       Committed by rfrovarp.</li>
 </ul>
-<a name="N100A0"></a><a name="Documentation"></a>
+<a name="N10098"></a><a name="Documentation"></a>
 <h3 class="h4">Documentation</h3>
 <ul>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[Documentation] Adding missing log <a href="http://svn.apache.org/viewcvs.cgi?rev=544663&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[Documentation] bug 42830.
+adding images for zurich meeting promo
+Thanks to Daniel Br&uuml;&szlig;ler who contributed the images.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=554284&view=rev">Diff</a> 
        Committed by thorsten.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[Documentation] Updated to point to 1.2.5 as the current version for download.
-The changed paragraph is copied from the site home page.
-Thanks to Richard Frovarp for pointing out the error. <a href="http://svn.apache.org/viewcvs.cgi?rev=544033&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Marked jcr module as experimental, not wanting to
+mislead readers. <a href="http://svn.apache.org/viewcvs.cgi?rev=552380&view=rev">Diff</a> 
        Committed by bobharner.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[Documentation] Updating the changes page <a href="http://svn.apache.org/viewcvs.cgi?rev=544644&view=rev">Diff</a> 
-       Committed by thorsten.</li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Updated docs about GlobalProxies configuration <a href="http://svn.apache.org/viewcvs.cgi?rev=552832&view=rev">Diff</a> 
+       Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[Documentation] Bug 42050.
-Adding documentation about the proxies element and their usage. <a href="http://svn.apache.org/viewcvs.cgi?rev=545439&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] bug 42830.                                           
+ adding images for zurich meeting promo
+Thanks to Daniel Br&uuml;&szlig;ler who contributed the images. <a href="http://svn.apache.org/viewcvs.cgi?rev=554442&view=rev">Diff</a> 
        Committed by thorsten.</li>
 </ul>
-<a name="N100D9"></a><a name="Site"></a>
+<a name="N100D1"></a><a name="Site"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=544330&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=554282&view=rev">Diff</a> 
+       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] bug 42830.
+ adding images for zurich meeting promo
+Thanks to Daniel Br&uuml;&szlig;ler who contributed the images. <a href="http://svn.apache.org/viewcvs.cgi?rev=554439&view=rev">Diff</a> 
        Committed by thorsten.</li>
 </ul>
-<a name="N100EB"></a>
+<a name="N100F0"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
-<p>This is a list of all people who participated as committers:<br> (andreas),  (bobharner),  (rfrovarp),  (thorsten).</p>
+<p>This is a list of all people who participated as committers:<br> (andreas),  (bobharner),  (jann),  (thorsten).</p>
 </div>
 </div>
 <!--+
