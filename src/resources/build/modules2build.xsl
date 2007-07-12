@@ -16,8 +16,6 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap 393761 2006-04-13 08:38:00Z michi $ -->
-
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:mod="http://apache.org/lenya/module/1.0"
   xmlns:list="http://apache.org/lenya/module-list/1.0">
@@ -64,7 +62,7 @@
       
       <xsl:variable name="compileDependencyList">
         <xsl:for-each select="list:module">
-          <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call"/>
+          <xsl:apply-templates select="mod:module" mode="call"/>
           <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
@@ -72,7 +70,7 @@
       
       <xsl:variable name="testDependencyList">
         <xsl:for-each select="list:module">
-          <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="patch-test"/>
+          <xsl:apply-templates select="mod:module" mode="patch-test"/>
           <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
@@ -89,7 +87,7 @@
       
       <xsl:variable name="canooDependencyList">
         <xsl:for-each select="list:module">
-          <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="test-canoo"/>
+          <xsl:apply-templates select="mod:module" mode="test-canoo"/>
           <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
@@ -113,7 +111,7 @@
   
   
   <xsl:template match="list:module" mode="call-test">
-    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call-test"/>
+    <xsl:apply-templates select="mod:module" mode="call-test"/>
   </xsl:template>
   
   <xsl:template match="mod:module" mode="call-test">
@@ -122,7 +120,7 @@
   
   
   <xsl:template match="list:module" mode="call-test-canoo">
-    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call-test-canoo"/>
+    <xsl:apply-templates select="mod:module" mode="call-test-canoo"/>
   </xsl:template>
   
   <xsl:template match="mod:module" mode="call-test-canoo">
@@ -136,7 +134,7 @@
   
   
   <xsl:template match="list:module" mode="call-javadocs">
-    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="call-javadocs"/>
+    <xsl:apply-templates select="mod:module" mode="call-javadocs"/>
   </xsl:template>
   
   <xsl:template match="mod:module" mode="call-javadocs">
@@ -145,7 +143,7 @@
   
   
   <xsl:template match="list:module" mode="target">
-    <xsl:apply-templates select="document(concat(@src, $configFile))/mod:module" mode="target">
+    <xsl:apply-templates select="mod:module" mode="target">
       <xsl:with-param name="src" select="@src"/>
     </xsl:apply-templates>
   </xsl:template>

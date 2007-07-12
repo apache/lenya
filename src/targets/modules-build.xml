@@ -36,11 +36,17 @@
       moduleDirs="${modules.root.dirs}"
       moduleFile="${build.dir}/temp/modules.xml"/>
     
+    <!-- aggregate all module config files to one file: -->
     <xslt
       in="${build.dir}/temp/modules.xml"
+      out="${build.dir}/temp/modules-config.xml"
+      style="${src.resource.dir}/build/modules2config.xsl">
+    </xslt>
+    
+    <xslt
+      in="${build.dir}/temp/modules-config.xml"
       out="${build.dir}/temp/modules-build.xml"
       style="${src.resource.dir}/build/modules2build.xsl">
-      <factory name="org.apache.xalan.xsltc.trax.TransformerFactoryImpl" />
       <param name="cocoon-xconf" expression="${cocoon.xconf}" />
       <param name="module-schema" expression="${src.resource.dir}/build/module.rng"/>
       <param name="copy-modules" expression="${modules.copy}"/>
