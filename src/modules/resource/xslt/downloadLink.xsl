@@ -73,7 +73,7 @@ limitations under the License.
       </a>
       &#160;
       <a href="lenya-document:{$uuid},lang={$language}" title="{text()}">
-        <xsl:value-of select="dc:elements/dc:title"/>
+        <xsl:value-of select="$title"/>
       </a>
       (<xsl:value-of select="number($size)"/> KB)
     </p>
