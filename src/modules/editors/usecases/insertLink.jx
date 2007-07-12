@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: insertAsset.jx 508032 2007-02-15 17:41:53Z andreas $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  
+  <jx:set var="area" value="${usecase.getParameterAsString('area')}"/>
+  <jx:set var="areaBasePath" value="${usecase.getParameterAsString('areaBasePath')}"/>
+  <jx:set var="chosenLanguage" value="${usecase.getParameterAsString('chosenLanguage')}"/>
+  <jx:set var="defaultLanguage" value="${usecase.getParameterAsString('defaultlanguage')}"/>
+  <jx:set var="languages" value="${usecase.getParameterAsString('languages').split(',')}"/>
+  <jx:set var="documentExtension" value="${usecase.getParameterAsString('documentExtension')}"/>
+  <jx:set var="path" value="${usecase.getParameterAsString('path');}"/>
+  <jx:set var="publicationId" value="${usecase.getParameterAsString('publicationId')}"/>
+  <page:head>
+    <script type="text/javascript" src="/modules/sitetree/javascript/tree.js">&#160;</script>
+        <script type="text/javascript" src="/modules/sitetree/javascript/lenyatree.js">&#160;</script>
+        <script type="text/javascript" src="/modules/sitetree/javascript/navtree.js">&#160;</script>
+        <script type="text/javascript" src="/modules/bxe/javascript/insertLink.js">&#160;</script>
+        <script type="text/javascript" >
+          AREA = "${area}";
+          DOCUMENT_ID = "${path}";
+          PUBLICATION_ID = "${publicationId}";
+          CHOSEN_LANGUAGE = "${chosenLanguage}";
+          DEFAULT_LANGUAGE = "${defaultLanguage}";
+          IMAGE_PATH = "/lenya/images/tree/";
+          CUT_DOCUMENT_ID = '';
+          ALL_AREAS = "authoring";
+          PIPELINE_PATH = '/sitetree-fragment.xml';
+          AREA_BASE_PATH = "${areaBasePath}";
+        </script>
+  </page:head>
+  
+  <page:title>
+    <i18n:text>Insert Link</i18n:text>
+  </page:title>
+  
+  <page:body>
+
+    <div id="lenya-info-treecanvas" style="width: 30%">
+
+      <div class="lenya-tabs">
+        <jx:forEach var="thisTabLanguage" items="${languages}">
+          <jx:set var="classSuffix" value="">
+            <jx:if test="${chosenLanguage.equals(thisTabLanguage)}">-active</jx:if>
+          </jx:set>
+          <a id="${thisTabLanguage}"
+             href="/${areaBasePath}/${path}_${thisTabLanguage}${documentExtension}?lenya.usecase=${usecasse.getName()}"
+             class="lenya-tablink${classSuffix}">
+             <jx:out value="${thisTabLanguage}"/>
+          </a>
+        </jx:forEach>
+      </div>
+
+      <div id="lenya-info-tree">
+        <div id="tree">
+          <script type="text/javascript">
+            buildTree();
+          </script>
+        </div>
+      </div>
+
+    </div>
+
+    <form action="" name="link" id="link" onsubmit="insertLink()">
+      <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <table class="lenya-table-noborder">
+        <tr>
+          <td colspan="2" class="lenya-form-caption">You can either click on a node in the tree for an internal link or enter a link in the URL field. </td>
+        </tr>
+        <tr>
+          <td colspan="2">&#160;</td>
+        </tr>
+        <tr>
+          <td class="lenya-form-caption"><i18n:text>URL</i18n:text>:</td>
+          <td>
+            <input class="lenya-form-element" type="text" name="url"/>
+          </td>
+        </tr>
+        <tr>
+          <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
+          <td>
+            <input class="lenya-form-element" type="text" name="title"/>
+          </td>
+        </tr>
+        <tr>
+          <td class="lenya-form-caption">Link text:</td>
+          <td>
+            <input 
+              class="lenya-form-element" 
+              type="text" 
+              name="text"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">&#160;</td>
+        </tr>
+        <tr>
+          <td/>
+          <td> 
+            <input 
+               type="submit" 
+               value="Insert" 
+               name="input-insert"
+            />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+  </page:body>
+</page:page>
