@@ -28,7 +28,7 @@
   </page:head>
   
   <page:title>
-    <i18n:text>Insert Lenya resource</i18n:text>
+    <i18n:text>Insert Asset</i18n:text>
   </page:title>
   
   <page:body>
