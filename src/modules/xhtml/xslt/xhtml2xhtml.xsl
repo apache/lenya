@@ -24,6 +24,7 @@
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:ci="http://apache.org/cocoon/include/1.0" 
     exclude-result-prefixes="xhtml lenya"
     >
     
@@ -68,22 +69,7 @@
   </xsl:template>
 
  <xsl:template match="lenya:asset">
-   <xsl:variable name="extent">
-     <xsl:value-of select="@size"/>
-   </xsl:variable>
-   <xsl:variable name="suffix">
-     <xsl:call-template name="substring-after-last">
-       <xsl:with-param name="input" select="@src"/>
-       <xsl:with-param name="substr">.</xsl:with-param>
-     </xsl:call-template>
-   </xsl:variable>
-   <div class="asset">
-       <xsl:text>&#160;</xsl:text>
-       <a href="{@src}" title="{text()}">
-         <xsl:value-of select="text()"/>
-       </a>
-       (<xsl:value-of select="number($extent)"/>KB)
-   </div>
+   <ci:include src="{@src}?format=downloadLink"/>
  </xsl:template>
 
  <xsl:template match="dc:metadata"/>

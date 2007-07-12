@@ -95,6 +95,7 @@
           <map:parameter name="nodeid" value="{doc-info:{2}:{3}:{4}:{5}:nodeName}"/>
           <map:parameter name="language" value="{4}"/>
         </map:transform>
+        <map:transform type="cinclude"/>
         <map:serialize type="xml"/>
       </map:match>
 
