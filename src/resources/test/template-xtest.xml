@@ -30,6 +30,10 @@
       shorthand="source-resolver"
       default-class="org.apache.excalibur.source.impl.SourceResolverImpl"/>
       
+    <role name="org.apache.cocoon.components.search.LuceneCocoonSearcher"
+      shorthand="cocoon-searcher"
+      default-class="org.apache.cocoon.components.search.SimpleLuceneCocoonSearcherImpl"/>
+      
   </roles>
   
   <components/>
