@@ -394,8 +394,12 @@ h2 {
 .asset { 
     display: block;
     color: #000;
-    font-size: 10px;
     margin: 10px 10px 10px 5px;
+    font-size: small;
+}
+
+.asset img {
+    vertical-align: middle;
 }
 
 div.search-box {
