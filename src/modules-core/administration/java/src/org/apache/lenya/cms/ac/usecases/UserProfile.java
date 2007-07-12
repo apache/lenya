@@ -44,8 +44,8 @@ public class UserProfile extends AccessControlUsecase {
     protected void doCheckExecutionConditions() throws Exception {
         
         String email = getParameterAsString(UserProfile.EMAIL);
-        if (email.length() == 0) {
-            addErrorMessage("Please enter an e-mail address.");
+        if (!email.matches("(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*")) {
+            addErrorMessage("Please enter a valid e-mail address.");
         }
     }
     

@@ -58,8 +58,8 @@ public class AddUser extends AccessControlUsecase {
             addErrorMessage("This is not a valid user ID.");
         }
 
-        if (email.length() == 0) {
-            addErrorMessage("Please enter an e-mail address.");
+        if (!email.matches("(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*")) {
+            addErrorMessage("Please enter a valid e-mail address.");
         }
 
         if (className.equals(LDAPUser.class.getName())) {
