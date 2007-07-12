@@ -37,8 +37,6 @@ limitations under the License.
   <xsl:param name="pubid"/>
   <xsl:param name="language"/>
   <xsl:param name="document-type"/>
-  <xsl:param name="documentParent"/>
-  <xsl:param name="title"/>
   <xsl:param name="contentLength"/>
   <xsl:param name="mimeType"/>
   <xsl:param name="documentUrl"/>
@@ -46,7 +44,6 @@ limitations under the License.
   <xsl:param name="imageprefix"/>
   
   <xsl:variable name="mediaUrl" select="concat(substring-before($documentUrl, '.html'), '.', $sourceExtension)"/>
-  <xsl:variable name="nodeid" select="concat($root, $documentParent)"/>
   
   <xsl:template match="/">
     <xhtml:div id="body">
