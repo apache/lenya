@@ -100,11 +100,8 @@
       </map:match>
       
       <map:match pattern="link-show" type="step">
-        <!-- just a dummy xsp since we call the info area directly -->
         <map:generate src="context://lenya/content/util/empty.xml"/>
         <map:transform src="fallback://lenya/modules/bxe/xslt/link.xsl" label="content">
-          <map:parameter name="infoarea" value="true"/>
-          <map:parameter name="contextprefix" value=""/>
           <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           <map:parameter name="area" value="authoring"/>
           <map:parameter name="tab" value="en"/>
@@ -114,6 +111,8 @@
           <map:parameter name="documentextension" value="{page-envelope:document-extension}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/>
+          <map:parameter name="areabasepath"
+             value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}}"/>
         </map:transform>
         <map:call resource="style-cms-page"/>
         <map:serialize />

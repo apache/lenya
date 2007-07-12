@@ -29,7 +29,6 @@
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"     
   >
   
-  <xsl:param name="contextprefix"/>
   <xsl:param name="publicationid"/>
   <xsl:param name="area"/>
   <xsl:param name="tab"/>
@@ -39,6 +38,7 @@
   <xsl:param name="languages"/>
   <xsl:param name="chosenlanguage"/>
   <xsl:param name="defaultlanguage"/>
+  <xsl:param name="areabasepath"/>
   
   <xsl:variable name="extension"><xsl:if test="$documentextension != ''">.</xsl:if><xsl:value-of select="$documentextension"/></xsl:variable>
   
@@ -46,21 +46,21 @@
     <page:page>
       <page:title>Insert Link</page:title>
       <page:body>
-        <script type="text/javascript" src="{$contextprefix}/modules/sitetree/javascript/tree.js">&#160;</script>
-        <script type="text/javascript" src="{$contextprefix}/modules/sitetree/javascript/lenyatree.js">&#160;</script>
-        <script type="text/javascript" src="{$contextprefix}/modules/sitetree/javascript/navtree.js">&#160;</script>
-        <script type="text/javascript" src="{$contextprefix}/modules/bxe/javascript/insertLink.js">&#160;</script>
+        <script type="text/javascript" src="/modules/sitetree/javascript/tree.js">&#160;</script>
+        <script type="text/javascript" src="/modules/sitetree/javascript/lenyatree.js">&#160;</script>
+        <script type="text/javascript" src="/modules/sitetree/javascript/navtree.js">&#160;</script>
+        <script type="text/javascript" src="/modules/bxe/javascript/insertLink.js">&#160;</script>
         <script type="text/javascript" >
           AREA = "<xsl:value-of select="$area"/>";
           DOCUMENT_ID = "<xsl:value-of select="$path"/>";
-          CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
           PUBLICATION_ID = "<xsl:value-of select="$publicationid"/>";
           CHOSEN_LANGUAGE = "<xsl:value-of select="$chosenlanguage"/>";
           DEFAULT_LANGUAGE = "<xsl:value-of select="$defaultlanguage"/>";
-          IMAGE_PATH = "<xsl:value-of select="$contextprefix"/>/lenya/images/tree/";
+          IMAGE_PATH = "/lenya/images/tree/";
           CUT_DOCUMENT_ID = '';
-          ALL_AREAS = "authoring"
-          PIPELINE_PATH = '/authoring/sitetree-fragment.xml'
+          ALL_AREAS = "authoring";
+          PIPELINE_PATH = '/sitetree-fragment.xml';
+          AREA_BASE_PATH = "<xsl:value-of select="$areabasepath"/>";
         </script>
         
         <div id="lenya-info-treecanvas" style="width: 30%">
@@ -169,7 +169,7 @@
   
   <xsl:template name="activate">
     <xsl:param name="tablanguage"/>
-    <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$path"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.module=bxe&amp;lenya.step=link-show</xsl:attribute>
+    <xsl:attribute name="href">/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$path"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.module=bxe&amp;lenya.step=link-show</xsl:attribute>
     <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
   </xsl:template>
   
