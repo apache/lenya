@@ -114,6 +114,13 @@ Apply nodes recursively
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
+      
+      <xsl:variable name="area" select="ancestor::tree:fragment/@area"/>
+      <xsl:variable name="areaParam">
+        <xsl:if test="$area">
+          <xsl:text>,area=</xsl:text><xsl:value-of select="$area"/>
+        </xsl:if>
+      </xsl:variable>
 
       <xsl:if test="$currentPath = $path">
         <xsl:attribute name="current">true</xsl:attribute>
@@ -127,6 +134,7 @@ Apply nodes recursively
           <xsl:when test="@uuid">
             <xsl:text>lenya-document:</xsl:text>
             <xsl:value-of select="@uuid"/>
+            <xsl:value-of select="$areaParam"/>
             <xsl:value-of select="$extensionParam"/>
           </xsl:when>
         </xsl:choose>
