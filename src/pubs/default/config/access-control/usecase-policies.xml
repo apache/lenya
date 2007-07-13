@@ -20,6 +20,17 @@
     
 <!--+++NOTE+++ The usecase list was initialized using modules/usecase-impl/xslt/initUsecasePolicies.xsl.-->
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+
+  <usecase id="ac.logout">
+    <role id="session" method="grant"/>
+  </usecase>
+  <usecase id="ac.login">
+    <role id="session" method="grant"/>
+  </usecase>
+  <usecase id="admin.aboutLenya">
+    <role id="session" method="grant"/>
+  </usecase>
+
   <usecase id="bxe.edit">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
@@ -200,12 +211,6 @@
   <usecase id="admin.usecases">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="admin.aboutLenya">
-    <role id="admin" method="grant"/>
-    <role id="edit" method="grant"/>
-    <role id="review" method="grant"/>
-    <role id="visit" method="grant"/>
-  </usecase>
   <usecase id="admin.addGroup">
     <role id="admin" method="grant"/>
   </usecase>
@@ -327,12 +332,6 @@
   <usecase id="kupu.edit">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
-  </usecase>
-  <usecase id="ac.logout">
-    <role id="admin" method="grant"/>
-    <role id="edit" method="grant"/>
-    <role id="review" method="grant"/>
-    <role id="visit" method="grant"/>
   </usecase>
   <usecase id="resource.upload">
     <role id="admin" method="grant"/>
