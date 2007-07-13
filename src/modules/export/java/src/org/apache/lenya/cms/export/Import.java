@@ -23,6 +23,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
@@ -33,11 +34,24 @@ public class Import extends AbstractUsecase {
 
     protected void initParameters() {
         super.initParameters();
-        
-        Publication defaultPub = getDefaultPub();
-        String pubPath = defaultPub.getDirectory().getAbsolutePath();
-        String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
+
+        Publication publication;
+        try {
+            publication = PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
+                    getSourceURL());
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+        String path = getExampleContentPath(publication);
+        if (!new File(path).exists()) {
+            path = getExampleContentPath(getDefaultPub());
+        }
         setParameter("path", path);
+    }
+
+    protected String getExampleContentPath(Publication publication) {
+        return publication.getDirectory().getAbsolutePath().replace(File.separatorChar, '/')
+                + "/example-content";
     }
 
     protected Publication getDefaultPub() {
