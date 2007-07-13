@@ -339,10 +339,9 @@ forrest -f publish.xml deploy</pre>
             Then a cronjob on the server will automatically publish it (see next section). 
           </p>
 <p>You can use a similar script we are using on the zones server in $lenya.docu.</p>
-<pre class="code">#!/bin/sh
+<pre class="code">#!/bin/bash
 svn up
-# the last revision number should be set automatic (first commit of this month)
-LAST=418787
+source SVN-HEAD-REV.txt
 svn log -r $LAST:HEAD -v --xml http://svn.apache.org/repos/asf/lenya &gt; src/documentation/content/svn-log/tlp-HEAD.svn.xml
 forrest -f publish.xml build
 forrest -f publish.xml deploy</pre>
