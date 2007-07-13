@@ -31,8 +31,6 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class IPRangeGroups extends AccessControlUsecase {
 
-    private IPRange ipRange;
-
     protected static final String IP_RANGE_GROUPS = "ipRangeGroups";
     protected static final String OTHER_GROUPS = "otherGroups";
     protected static final String ADD = "add";
@@ -46,14 +44,24 @@ public class IPRangeGroups extends AccessControlUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         
-        this.ipRange.removeFromAllGroups();
+        IPRange ipRange = getIpRange();
+        ipRange.removeFromAllGroups();
         
         List ipRangeGroups = (List) getParameter(IP_RANGE_GROUPS);
         for (Iterator i = ipRangeGroups.iterator(); i.hasNext(); ) {
             Group group = (Group) i.next();
-            group.add(this.ipRange);
+            group.add(ipRange);
         }
         ipRange.save();
+    }
+    
+    protected IPRange getIpRange() {
+        String ipRangeId = getParameterAsString(IPRangeProfile.ID);
+        IPRange ipRange = getIpRangeManager().getIPRange(ipRangeId);
+        if (ipRange == null) {
+            throw new RuntimeException("IP range [" + ipRangeId + "] not found.");
+        }
+        return ipRange;
     }
 
     /**
@@ -101,37 +109,21 @@ public class IPRangeGroups extends AccessControlUsecase {
 
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
-     *      java.lang.Object)
-     */
-    public void setParameter(String name, Object value) {
-        super.setParameter(name, value);
-        if (name.equals(IPRangeProfile.ID)) {
-            String ipRangeId = (String) value;
-            this.ipRange = getIpRangeManager().getIPRange(ipRangeId);
-            if (this.ipRange == null) {
-                throw new RuntimeException("IP range [" + ipRangeId + "] not found.");
+    protected void initParameters() {
+        super.initParameters();
+        Group[] ipRangeGroupArray = getIpRange().getGroups();
+        
+        List ipRangeGroups = new ArrayList(Arrays.asList(ipRangeGroupArray));
+        setParameter(IP_RANGE_GROUPS, ipRangeGroups);
+
+        Group[] allGroups = getGroupManager().getGroups();
+        List otherGroups = new ArrayList();
+        for (int i = 0; i < allGroups.length; i++) {
+            if (!ipRangeGroups.contains(allGroups[i])) {
+                otherGroups.add(allGroups[i]);
             }
-
-            Group[] ipRangeGroupArray = this.ipRange.getGroups();
-            List ipRangeGroups = new ArrayList(Arrays.asList(ipRangeGroupArray));
-
-            setParameter(IP_RANGE_GROUPS, ipRangeGroups);
-
-            Group[] allGroups = getGroupManager().getGroups();
-
-            List otherGroups = new ArrayList();
-
-            for (int i = 0; i < allGroups.length; i++) {
-                if (!ipRangeGroups.contains(allGroups[i])) {
-                    otherGroups.add(allGroups[i]);
-                }
-            }
-
-            setParameter(OTHER_GROUPS, otherGroups);
         }
-
+        setParameter(OTHER_GROUPS, otherGroups);
     }
 
 }

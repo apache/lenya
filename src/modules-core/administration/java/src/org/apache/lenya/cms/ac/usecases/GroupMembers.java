@@ -33,8 +33,6 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class GroupMembers extends AccessControlUsecase {
 
-    private Group group;
-
     protected static final String GROUP_USERS = "groupUsers";
     protected static final String OTHER_USERS = "otherUsers";
     protected static final String ADD = "add";
@@ -47,6 +45,26 @@ public class GroupMembers extends AccessControlUsecase {
      */
     protected void initParameters() {
         super.initParameters();
+        
+        Groupable[] members = getGroup().getMembers();
+        List groupUsers = new ArrayList();
+        for (int i = 0; i < members.length; i++) {
+            if (members[i] instanceof User) {
+                groupUsers.add(members[i]);
+            }
+        }
+        setParameter(GROUP_USERS, groupUsers);
+
+        User[] allUsers = getUserManager().getUsers();
+
+        List otherUsers = new ArrayList();
+        for (int i = 0; i < allUsers.length; i++) {
+            if (!groupUsers.contains(allUsers[i])) {
+                otherUsers.add(allUsers[i]);
+            }
+        }
+        setParameter(OTHER_USERS, otherUsers);
+        
         setExitParameter(GroupProfile.ID, getParameterAsString(GroupProfile.ID));
     }
 
@@ -56,12 +74,13 @@ public class GroupMembers extends AccessControlUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        this.group.removeAllMembers();
+        final Group group = getGroup();
+        group.removeAllMembers();
 
         List groupUsers = (List) getParameter(GROUP_USERS);
         for (Iterator i = groupUsers.iterator(); i.hasNext();) {
             User user = (User) i.next();
-            this.group.add(user);
+            group.add(user);
             user.save();
         }
     }
@@ -110,41 +129,14 @@ public class GroupMembers extends AccessControlUsecase {
         }
 
     }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
-     */
-    public void setParameter(String name, Object value) {
-        super.setParameter(name, value);
-        if (name.equals(GroupProfile.ID)) {
-            String groupId = (String) value;
-            this.group = getGroupManager().getGroup(groupId);
-            if (this.group == null) {
-                throw new RuntimeException("Group [" + groupId + "] not found.");
-            }
-
-            Groupable[] members = this.group.getMembers();
-            List groupUsers = new ArrayList();
-            for (int i = 0; i < members.length; i++) {
-                if (members[i] instanceof User) {
-                    groupUsers.add(members[i]);
-                }
-            }
-            setParameter(GROUP_USERS, groupUsers);
-
-            User[] allUsers = getUserManager().getUsers();
-
-            List otherUsers = new ArrayList();
-
-            for (int i = 0; i < allUsers.length; i++) {
-                if (!groupUsers.contains(allUsers[i])) {
-                    otherUsers.add(allUsers[i]);
-                }
-            }
-
-            setParameter(OTHER_USERS, otherUsers);
+    
+    protected Group getGroup() {
+        String groupId = getParameterAsString(GroupProfile.ID);
+        Group group = getGroupManager().getGroup(groupId);
+        if (group == null) {
+            throw new RuntimeException("Group [" + groupId + "] not found.");
         }
-
+        return group;
     }
 
 }
