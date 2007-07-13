@@ -102,7 +102,7 @@
                 <jx:set var="groups" value="${user.getGroups()}"/>
                 <jx:if test="${groups.size() == 0}"><i18n:text>No groups assigned</i18n:text></jx:if>
                 <jx:forEach var="group" items="${groups}"><jx:if test="${group != groups[0]}">, </jx:if>
-                  <a href="${request.pathInfo}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a></jx:forEach>
+                  <a href="${request.pathInfo}?lenya.usecase=admin.group&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a></jx:forEach>
               </td>
             </tr>
             
