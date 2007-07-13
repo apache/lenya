@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.ItemUtil;
 
 /**
  * Usecase to edit a user's profile.
@@ -44,7 +45,7 @@ public class UserProfile extends AccessControlUsecase {
     protected void doCheckExecutionConditions() throws Exception {
         
         String email = getParameterAsString(UserProfile.EMAIL);
-        if (!email.matches("(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*")) {
+        if (!ItemUtil.isValidEmail(email)) {
             addErrorMessage("Please enter a valid e-mail address.");
         }
     }

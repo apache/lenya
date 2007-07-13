@@ -58,7 +58,7 @@ public class AddUser extends AccessControlUsecase {
             addErrorMessage("This is not a valid user ID.");
         }
 
-        if (!email.matches("(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*")) {
+        if (!ItemUtil.isValidEmail(email)) {
             addErrorMessage("Please enter a valid e-mail address.");
         }
 
