@@ -31,8 +31,6 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class UserGroups extends AccessControlUsecase {
 
-    private User user;
-
     protected static final String USER_GROUPS = "userGroups";
     protected static final String OTHER_GROUPS = "otherGroups";
     protected static final String ADD = "add";
@@ -45,13 +43,14 @@ public class UserGroups extends AccessControlUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        
-        this.user.removeFromAllGroups();
-        
+
+        User user = getUser();
+        user.removeFromAllGroups();
+
         List userGroups = (List) getParameter(USER_GROUPS);
-        for (Iterator i = userGroups.iterator(); i.hasNext(); ) {
+        for (Iterator i = userGroups.iterator(); i.hasNext();) {
             Group group = (Group) i.next();
-            group.add(this.user);
+            group.add(user);
         }
         user.save();
     }
@@ -68,7 +67,7 @@ public class UserGroups extends AccessControlUsecase {
 
             List userGroups = (List) getParameter(USER_GROUPS);
             List otherGroups = (List) getParameter(OTHER_GROUPS);
-            
+
             if (add != null) {
                 String groupId = getParameterAsString(OTHER_GROUP);
                 if (groupId != null) {
@@ -92,7 +91,7 @@ public class UserGroups extends AccessControlUsecase {
                     userGroups.remove(group);
                 }
             }
-            
+
             deleteParameter(ADD);
             deleteParameter(REMOVE);
             deleteParameter(USER_GROUP);
@@ -101,37 +100,30 @@ public class UserGroups extends AccessControlUsecase {
 
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
-     *      java.lang.Object)
-     */
-    public void setParameter(String name, Object value) {
-        super.setParameter(name, value);
-        if (name.equals(UserProfile.USER_ID)) {
-            String userId = (String) value;
-            this.user = getUserManager().getUser(userId);
-            if (this.user == null) {
-                throw new RuntimeException("User [" + userId + "] not found.");
-            }
-
-            Group[] userGroupArray = this.user.getGroups();
-            List userGroups = new ArrayList(Arrays.asList(userGroupArray));
-
-            setParameter(USER_GROUPS, userGroups);
-
-            Group[] allGroups = getGroupManager().getGroups();
-
-            List otherGroups = new ArrayList();
-
-            for (int i = 0; i < allGroups.length; i++) {
-                if (!userGroups.contains(allGroups[i])) {
-                    otherGroups.add(allGroups[i]);
-                }
-            }
-
-            setParameter(OTHER_GROUPS, otherGroups);
+    protected User getUser() {
+        String userId = getParameterAsString(UserProfile.USER_ID);
+        User user = getUserManager().getUser(userId);
+        if (user == null) {
+            throw new RuntimeException("User [" + userId + "] not found.");
         }
+        return user;
+    }
 
+    protected void initParameters() {
+        super.initParameters();
+        
+        Group[] userGroupArray = getUser().getGroups();
+        List userGroups = new ArrayList(Arrays.asList(userGroupArray));
+        setParameter(USER_GROUPS, userGroups);
+        
+        Group[] allGroups = getGroupManager().getGroups();
+        List otherGroups = new ArrayList();
+        for (int i = 0; i < allGroups.length; i++) {
+            if (!userGroups.contains(allGroups[i])) {
+                otherGroups.add(allGroups[i]);
+            }
+        }
+        setParameter(OTHER_GROUPS, otherGroups);
     }
 
 }
