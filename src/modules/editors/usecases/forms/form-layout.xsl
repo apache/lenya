@@ -130,7 +130,7 @@
 
 <xsl:template match="insert-after" mode="nodes">
     <tr>
-      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT AFTER" name="insert-after"/></td>
+      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT" name="insert-after"/></td>
       <td colspan="2" style="background-color: #DCDBBF">
         <select name="&lt;xupdate:insert-after select=&quot;{@select}&quot;/&gt;" size="1">
             <option value="null">Choose element ...</option>
