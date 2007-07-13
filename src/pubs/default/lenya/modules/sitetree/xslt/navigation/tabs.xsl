@@ -34,7 +34,7 @@
     <tr>
     <xsl:call-template name="pre-separator"/>
     <xsl:for-each select="nav:node">
-      <xsl:if test="position() &gt; 1">
+      <xsl:if test="position() &gt; 1 and @visibleinnav = 'true'">
         <xsl:call-template name="separator"/>
       </xsl:if>
       
