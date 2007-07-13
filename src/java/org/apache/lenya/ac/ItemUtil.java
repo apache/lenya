@@ -30,5 +30,15 @@ public class ItemUtil {
     public static boolean isValidId(String id) {
         return id != null && id.matches("\\w+");
     }
+    
+    /**
+     * Check if a string is a valid email using the following regex
+     * <code>(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*</code>
+     * @param email
+     * @return
+     */
+    public static boolean isValidEmail(String email) {
+    	return email != null && email.matches("(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*");
+    }
 
 }
