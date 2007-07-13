@@ -630,7 +630,8 @@
     <wiki href="http://wiki.apache.org/">
       <lenya href="lenya/">
         <FAQ href="FAQ"/>
-        <webdav href="HowToEditWithWebDAV"/>
+	<webdav href="HowToEditWithWebDAV"/>
+	<MetaStylesheets href="MetaStylesheets"/>
       </lenya>
       <cocoon href="cocoon/">
         <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>

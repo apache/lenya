@@ -147,7 +147,7 @@ In this approach, the publication simply builds its XHTML
 page without any additional XML. The Lenya menubar is added using
 a meta stylesheet in the last transformation step.
 You find more information on meta stylesheets on the page
-<a href="http://wiki.apache.org/cocoon/MetaStylesheets">MetaStylesheets</a>
+<a href="ext:wiki/lenya/MetaStylesheets">MetaStylesheets</a>
 in the Cocoon wiki.
 </p>
 
