@@ -40,10 +40,16 @@ public class DeleteLanguage extends DocumentUsecase {
             return;
         }
 
-        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+        Document doc = getSourceDocument();
+        
+        if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
-        } else if (getSourceDocument().getLanguages().length == 1) {
+        } else if (doc.getLanguages().length == 1) {
             addErrorMessage("The last language version cannot be removed.");
+        }
+        
+        if (doc.existsVersion(Publication.LIVE_AREA, doc.getLanguage())) {
+            addErrorMessage("The document can't be deleted if a live version exists.");
         }
     }
 
