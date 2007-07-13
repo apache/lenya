@@ -25,7 +25,7 @@ import org.apache.lenya.ac.User;
  */
 public abstract class AbstractChangePassword extends AccessControlUsecase {
 
-    protected static final String NEW_PASSWORD = "password";
+    protected static final String NEW_PASSWORD = "newPassword";
     protected static final String CONFIRM_PASSWORD = "confirmPassword";
 
     protected abstract User getUser();

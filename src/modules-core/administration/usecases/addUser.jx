@@ -71,8 +71,8 @@
         
         <jx:if test="${request.getParameter('className') != 'org.apache.lenya.ac.ldap.LDAPUser'}">
         <tr>
-          <td class="lenya-entry-caption"><label for="password"><i18n:text>Password</i18n:text> *</label></td>
-          <td><input type="password" name="password" class="lenya-form-element" value="${request.getParameter('password')}"/></td>
+          <td class="lenya-entry-caption"><label for="newPassword"><i18n:text>Password</i18n:text> *</label></td>
+          <td><input type="password" name="newPassword" class="lenya-form-element" value="${request.getParameter('newPassword')}"/></td>
         </tr>
         <tr>
           <td class="lenya-entry-caption"><label for="confirmPassword"><i18n:text>Confirm password</i18n:text> *</label></td>
