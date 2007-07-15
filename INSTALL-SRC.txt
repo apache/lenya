@@ -18,7 +18,7 @@ Prerequisites
 
     * Apache Cocoon
       Recommended version: BRANCH_2_1_X (https://svn.apache.org/repos/asf/cocoon/branches/BRANCH_2_1_X)
-      When you check out Lenya 1.4 from svn, Cocoon will be included as an svn external 
+      When you check out the latest Lenya source from svn, Cocoon will be included as an svn external 
       and you don't need to download it separately.
       Note that Cocoon is needed when building the source version of Lenya, but the 
       resulting Lenya webapp is completely self contained and therefore it does not need 
@@ -52,11 +52,11 @@ Standalone Installation (using the built-in Jetty)
    2. Check out Apache Lenya from SVN:
       Change into the directory where you want your Lenya sources to be, and do
   
-        svn checkout http://svn.apache.org/repos/asf/lenya/trunk lenya-1.4.x
+        svn checkout http://svn.apache.org/repos/asf/lenya/trunk lenya-2.0.x
 
    3. Configure Lenya:
 
-      In the newly created lenya-1.4.x directory, copy build.properties to local.build.properties
+      In the newly created lenya-2.0.x directory, copy build.properties to local.build.properties
       and edit it to taste or use the configure script:
 
           * Linux: configure.sh (works also on Windows with Cygwin)

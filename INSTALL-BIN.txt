@@ -1,2 +1,2 @@
-There is no binary release of Lenya 1.4 at this point.
+There is no binary release of Lenya 2.0 at this point.
 We recommend checking out the SVN repository instead (see INSTALL-SRC.txt).
