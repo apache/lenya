@@ -33,7 +33,7 @@ function checkinDocument() {
 
 /**
  * Saves a Source to the document in the current PageEnvelope.
- * TODO: Use nobby's new usecase fw in 1.4 branch. Exception handling e.g. display appropriate error pages.
+ * TODO: Use nobby's new usecase fw in 2.0 branch. Exception handling e.g. display appropriate error pages.
  * @param sourceUri An URI of a Source providing the edited document data
  * @param useBuffer If "true", the source Source is read into a buffer before it is written to its final destination.
  * @param workflowEvent Name of the workflow event to trigger. Default is "edit".

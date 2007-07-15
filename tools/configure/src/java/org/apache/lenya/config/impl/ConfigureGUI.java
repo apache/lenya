@@ -47,7 +47,7 @@ import org.apache.lenya.config.core.ContextEventQueue;
 import org.apache.lenya.config.core.Parameter;
 
 /**
- * A GUI tool to configure Lenya 1.4 build
+ * A GUI tool to configure the Lenya build
  */
 public class ConfigureGUI {
 

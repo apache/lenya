@@ -74,7 +74,7 @@ public class Instantiator extends AbstractLogEnabled implements
     // the correct solution suggested by andreas is not to meddle with config
     // files here at all, but instead implement
     // appropriate setter functions in the Publication class. postponed to after
-    // 1.4.
+    // 2.0.
     // thus, don't waste too much effort on this file, it's all an intermediate
     // hack.
     private static final String CONFIGURATION_FILE = "config/publication.xml";

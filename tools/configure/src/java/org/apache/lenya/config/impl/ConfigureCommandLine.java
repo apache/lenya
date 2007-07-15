@@ -27,7 +27,7 @@ import org.apache.lenya.config.core.FileConfiguration;
 import org.apache.lenya.config.core.Parameter;
 
 /**
- * A command line tool to configure Lenya 1.4 build
+ * A command line tool to configure the Lenya build
  */
 public class ConfigureCommandLine extends org.apache.lenya.config.core.ConfigureCommandLine {
 
@@ -35,7 +35,7 @@ public class ConfigureCommandLine extends org.apache.lenya.config.core.Configure
      * @param args Command line args
      */
     public static void main(String[] args) {
-        System.out.println("\nWelcome to the command line interface to configure the building process of Apache Lenya 1.4-dev");
+        System.out.println("\nWelcome to the command line interface to configure the building process of Apache Lenya");
 
         if (args.length != 1) {
             System.err.println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");

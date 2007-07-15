@@ -71,7 +71,7 @@ management?
   <name>My Own Editor</name>
   <!-- the required lenya version -->
 FIXME: is this actually used?
-  <lenya-version>1.4-dev</lenya-version>
+  <lenya-version>2.0-dev</lenya-version>
   <!-- a detailed description of your module -->
   <description>
     This is my own editor.
