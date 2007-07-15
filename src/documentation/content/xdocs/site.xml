@@ -120,15 +120,15 @@
     | Version 1.4 tab
     +-->
   
-  <docu1.4 href="docs/1_4/" label="Version 1.4" target="1.4" tab="1_4">
+  <docu1.4 href="docs/1_4/" label="Version 2.0" target="1.4" tab="1_4">
     <index href="index.html" label="Index"/>
      <faq label="FAQs" href="faq.html">
           <i18n href="#i18n"/>
           <bxe-css href="#bxe-css"/>
         </faq>
     
-    <!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
-      <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
+    <!--          <whole_docu href="../documentation-1-4.pdf" label="2.0 PDF docs (all in one)" />
+      <whole_docu href="../documentation-1-4.html" label="2.0 HTML docs (all in one)" />
     -->          
     <installation14 href="installation/" label="Installation">
       <download14 href="index.html" label="Download"/>

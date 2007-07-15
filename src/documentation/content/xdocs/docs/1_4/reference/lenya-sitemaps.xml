@@ -205,7 +205,7 @@
 			
 <section><title id="head-fbc9e3a3c8fa10b2383dbed3e8d0afbfc73fa211">The "lenya:" scheme</title>
 
-<p>When reading the sitemaps in Lenya 1.4 you probably came across the lenya-scheme, often also referred to as the lenya protocol. For example, in the doctypes.xmap, you will find this section: </p>
+<p>When reading the sitemaps in Lenya 2.0 you probably came across the lenya-scheme, often also referred to as the lenya protocol. For example, in the doctypes.xmap, you will find this section: </p>
 
 <source>
       &lt;!-- parametrized doctype matcher --&gt;

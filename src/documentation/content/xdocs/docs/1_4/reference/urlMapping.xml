@@ -22,7 +22,7 @@
   <body>
     <section>
       <title>URL Axioms</title>
-      <p>Lenya 1.4 is based on the following axioms:</p>
+      <p>Lenya 2.0 is based on the following axioms:</p>
       <ul>
         <li>A URL is represented by exactly one document.</li>
         <li>A document can be represented by an arbitrary number of URLs.</li>

@@ -58,7 +58,7 @@
   <part>
     <title>Internationalisation (i18n)</title>
     <faq id="i18n">
-      <question> How to extend the i18n catalog for Lenya 1.4? </question>
+      <question> How to extend the i18n catalog for Lenya 2.0? </question>
       <answer>
         <p> In the default publication you can find 
           <code>pubs/default/lenya/resources/i18n</code>. That are the files 

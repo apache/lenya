@@ -60,14 +60,14 @@ usability best practice?</li>
 
 <section id="releases"><title>Releases</title>
 <p>
-Three releases are planned: 1.0, 1.2 and 1.4, with the possibility of smaller maintenance releases
+Three releases are planned: 1.0, 1.2 and 1.4 (subsequently called 2.0), with the possibility of smaller maintenance releases
 in between. Even numbers are stable releases, odd numbers development releases. Minor releases are
 used for bug fixes, e.g. 1.2.2.
 </p>
 <ul>
 <li>Release 1.0 Summer 2003</li>
 <li>Release 1.2 Fall 2003</li>
-<li>Release 1.4 - coming soon</li>
+<li>Release 2.0 - coming soon</li>
 </ul>
 </section>
 
@@ -230,7 +230,7 @@ used for bug fixes, e.g. 1.2.2.
 </ul>
 
 </section></section>
-<section id="release_1.4"><title>Release 1.4</title>
+<section id="release_1.4"><title>Release 2.0</title>
 <section><title>Community</title>
 
 <ul>

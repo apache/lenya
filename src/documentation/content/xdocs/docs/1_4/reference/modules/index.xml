@@ -109,7 +109,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
   <package>org.myproject.lenya.modules</package>
   <version>0.1-dev</version>
   <name>My Own Editor</name>
-  <lenya-version>1.4-dev</lenya-version>
+  <lenya-version>2.0-dev</lenya-version>
   <description>
     This is my own editor.
     For more information, visit http://myproject.org/editor.

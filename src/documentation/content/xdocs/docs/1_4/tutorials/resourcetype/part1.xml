@@ -42,7 +42,7 @@
       </p>
       <source xml:space="preserve">$HOME/
   apache/
-    lenya-1.4/             The Lenya installation directory, we'll call it $LENYA_HOME.
+    lenya-2.0/             The Lenya installation directory, we'll call it $LENYA_HOME.
   src/
     lenya/                 The home directory of your Lenya-related sources.
       modules/             Our modules.

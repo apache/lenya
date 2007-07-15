@@ -133,7 +133,7 @@ finally {
     
     <section>
       <title>Storage</title>
-      <p>In 1.4.x meta data is stored separately from the document content but in the same 
+      <p>In 2.0.x meta data is stored separately from the document content but in the same 
         directory (index_{lang}.meta).
         A typical sample for a meta data XML document may be the following:
       </p>

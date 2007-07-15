@@ -25,7 +25,7 @@
     <section>
       <title>Monitoring the WebDAV exchange</title>
       <note>We assume you have cocoon HEAD version of the cocoon-2.1.x branch 
-        set to be your $COCOON_HOME! <br/>If you are using 1.4.x and using the 
+        set to be your $COCOON_HOME! <br/>If you are using 2.0.x and using the 
         default settings then <br/>$COCOON_HOME=$LENYA_HOME/external/cocoon_2_1_x</note>
       <source> <![CDATA[
 cd $COCOON_HOME

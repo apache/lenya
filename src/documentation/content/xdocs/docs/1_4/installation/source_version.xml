@@ -21,7 +21,7 @@
 
 <document>
   <header>
-    <title>Apache Lenya 1.4 install instructions</title>
+    <title>Apache Lenya 2.0 install instructions</title>
   </header>
 
   <body>
@@ -29,10 +29,10 @@
   		<title>Introduction</title>
   	
           <warning>
-            Apache Lenya 1.4 is still under heavy development and should not be used for production yet.
+            Apache Lenya 2.0 is still under heavy development and should not be used for production yet.
           </warning>
   		<p>
-  			This document explains how to install Lenya 1.4 from source.
+  			This document explains how to install Lenya 2.0 from source.
   			There are different ways to install and run Lenya:
   			<br/>
   			Choose between
@@ -84,7 +84,7 @@
       		<source>
             your_home/ (or c:\ on Windows, NOT My Documents)
               `-- src/
-                   |-- lenya-1.4.x/            $LENYA_HOME
+                   |-- lenya-2.0.x/            $LENYA_HOME
                      `-- externals/
                        `-- cocoon_2_1_x/       $COCOON_HOME
                          `-- build/

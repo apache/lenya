@@ -42,7 +42,7 @@
       </p>
       <source xml:space="preserve">$HOME/
   apache/
-    lenya-1.4/             The Lenya installation directory, we'll call it $LENYA_HOME.
+    lenya-2.0/             The Lenya installation directory, we'll call it $LENYA_HOME.
   src/
     lenya/                 The home directory of your Lenya-related sources.
       pubs/                Your publications.
@@ -105,8 +105,8 @@
 <publication xmlns="http://apache.org/cocoon/lenya/publication/1.1">
   
   <name>My First Publication</name>
-  <version>1.4-dev</version>
-  <lenya-version>1.4-dev</lenya-version>
+  <version>2.0-dev</version>
+  <lenya-version>2.0-dev</lenya-version>
   <cocoon-version>2.1.10</cocoon-version>
   
   <languages>
@@ -280,7 +280,7 @@
         To deploy your publication, open a shell, go to the directory <code>$LENYA_HOME</code>
         and execute the build process:
       </p>
-      <source xml:space="preserve"><![CDATA[$ cd ~/apache/lenya-1.4
+      <source xml:space="preserve"><![CDATA[$ cd ~/apache/lenya-2.0
 $ ./build.sh]]></source>
       <p>
         Wait until the build process is finished, and start the Jetty server using the command

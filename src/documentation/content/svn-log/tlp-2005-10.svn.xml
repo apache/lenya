@@ -598,7 +598,7 @@ Thanks to a patch by Felix Röthenbacher, fixes Bug 37050 </msg>
 <msg>Adds a cforms doctype to the default publication to show the possibilites of
 CForms/Ajax together with Lenya.
 
-See http://wiki.apache.org/lenya/HowToCFormsInLenya1.4 for some basic notes.
+See http://wiki.apache.org/lenya/HowToCFormsInLenya2.0 for some basic notes.
 
 There is still an issue with saving the document when Ajax is used.
 

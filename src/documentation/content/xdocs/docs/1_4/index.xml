@@ -21,17 +21,17 @@
 
 <document>
   <header>
-    <title>Apache Lenya 1.4 Documentation</title>
+    <title>Apache Lenya 2.0 Documentation</title>
   </header>
   <body>
     <warning>
-      Apache Lenya 1.4 is still under development and should not be used for production yet.
+      Apache Lenya 2.0 is still under development and should not be used for production yet.
     </warning>
     <p>
-      This is the documentation for the 1.4.x releases. The documentation is not as fleshed out as 1.2 yet, so
+      This is the documentation for the 2.0.x releases. The documentation is not as fleshed out as 1.2 yet, so
       we suggest you also check there for more information while we build up this documentation. 
     </p>
-    <note label="Help wanted!"> Since 1.4 is new and provides many 
+    <note label="Help wanted!"> Since 2.0 is new and provides many 
       enhancements and new features, please help to document them with us. 
       Send documentation patches and use the Wiki. Thanks in advance :)</note>
     <p>
@@ -39,7 +39,7 @@
     </p>
     
     <section>
-      <title>What's New in Lenya 1.4</title>
+      <title>What's New in Lenya 2.0</title>
       <dl>
         <dt><a href="site:modules">Modularization</a></dt>
         <dd>

@@ -36,8 +36,8 @@
 </code></p>
       <p>The Lenya <code>global-sitemap.xmap</code> will redirect requests with a <code>lenya.usecase</code> request parameter to the 
       <code>$LENYA_WEBAPP/lenya/usecase.xmap</code>
-      sub-sitemap. From version 1.4 on, the following pipeline in this sitemap is used to recognonize usecases which are implemented 
-      in Java using the new 1.4 usecase framework:</p>
+      sub-sitemap. From version 2.0 on, the following pipeline in this sitemap is used to recognonize usecases which are implemented 
+      in Java using the new 2.0 usecase framework:</p>
 <source xml:space="preserve"><![CDATA[
 <map:pipeline>
   <map:match type="registered-usecase">
@@ -54,9 +54,9 @@
 	correctly, there should be a <code>lenya.step</code> parameter in the request.</p>
 	<p>If the usecase could be resolved successfully into an Avalon component, processing will continue in the 
 	<code>$LENYA_WEBAPP/lenya/usecases/usecase.xmap</code> (as opposed to <code>$LENYA_WEBAPP/lenya/usecase.xmap</code>) with
-	the new JX and Java based 1.4 usecase framework.</p>
+	the new JX and Java based 2.0 usecase framework.</p>
       <p>
-        The <em>usecase framework</em> in Lenya 1.4 is a simple framework to implement usecases using JX templates and Java.
+        The <em>usecase framework</em> in Lenya 2.0 is a simple framework to implement usecases using JX templates and Java.
         This approach is an "85% solution". It enables the user to implement a big range of common usecases.
       </p>
       <note>
