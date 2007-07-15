@@ -33,7 +33,7 @@
       welcome page, and also on the introduction page of every publication.
     </p>
     
-    <h2>Important notes for beta testers of Lenya 1.4-RC</h2>
+    <h2>Important notes for beta testers of Lenya 2.0</h2>
     
     <h3>
       2007-07-03: <code>publication.xml/proxies</code> replaced by <code>cocoon.xconf/GlobalProxies</code>
