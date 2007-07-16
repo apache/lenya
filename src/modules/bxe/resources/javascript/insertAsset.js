@@ -3,9 +3,8 @@
    function insertAsset(nodeid) {
       var src = document.forms['image'].assetName.value;
       var title = document.forms['image'].caption.value;
-      var type = document.forms['image'].type.value;
-      var size = document.forms['image'].assetSize.value;
-      window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'" size="'+size+'" type="'+type+'">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
+      window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'
+          + src + '">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
       window.close();
     }
    
