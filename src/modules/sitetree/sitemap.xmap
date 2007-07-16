@@ -147,12 +147,12 @@ This sitemap creates default navigation components.
     
     <!-- Resource type icons -->
     <map:pipeline>
-      <map:match pattern="*/*/**_*.gif">
+      <map:match pattern="*/*/**.gif">
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test"
-            value="{resource-type:{doc-info:{1}:{2}:{page-envelope:document-uuid}:{4}:resourceType}:supportsFormat:icon}"/>
+            value="{resource-type:{doc-info:{1}:{2}:{page-envelope:document-uuid}:{page-envelope:document-language}:resourceType}:supportsFormat:icon}"/>
           <map:when test="true">
-            <map:read src="site://{1}/{2}/{4}/{3}?format=icon"/>
+            <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language},area={2},pub={1}?format=icon"/>
           </map:when>
           <map:otherwise>
             <map:read src="fallback://lenya/modules/sitetree/resources/icons/default.gif"/>

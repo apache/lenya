@@ -245,7 +245,7 @@ LenyaTree.prototype.getIcon = function(item) {
         else {
             var img = this.doc.createElement('img');
             var language = CHOSEN_LANGUAGE;
-            img.setAttribute('src', AREA_BASE_PATH + item.path + '_' + language + '.gif?lenya.module=sitetree');
+            img.setAttribute('src', item.href + '.gif?lenya.module=sitetree');
             img.setAttribute('alt', '');
             return img;
         }
