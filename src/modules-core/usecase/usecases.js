@@ -366,7 +366,7 @@ function executeUsecase() {
         proxy.setup(usecase);
         passRequestParameters(usecase);
         usecase.checkExecutionConditions();
-        var hasErrors = usecase.hasErrors()
+        var hasErrors = usecase.hasErrors();
         if (!hasErrors) {
             state = executeFlow(usecase);
             hasErrors = usecase.hasErrors();
@@ -375,6 +375,7 @@ function executeUsecase() {
         if (hasErrors) {
             proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
             cocoon.sendPage("usecases-view/nomenu/modules/usecase/templates/error.jx", { "usecase" : proxy});
+            return;
         }
     }
     //getTargetURL takes a boolean that is true on success:

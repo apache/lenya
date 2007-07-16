@@ -26,27 +26,9 @@
   <jx:set var="pubId" value="${usecase.getParameterAsString('publicationId')}"/>
 
   <page:title>
-    <jx:choose>
-      <jx:when test="${usecase.getParameter('currentUser') != null}">
-        <i18n:text>Access Denied</i18n:text>
-      </jx:when>
-      <jx:otherwise>
-        <i18n:translate>
-          <i18n:text i18n:key="login-to-pub"/>
-          <i18n:param><jx:out value="${pubId.toUpperCase()}"/></i18n:param>
-        </i18n:translate>
-      </jx:otherwise>
-    </jx:choose>
+    <i18n:text>could-not-execute-usecase</i18n:text>
   </page:title>
   <page:body>
-    
-    <div class="lenya-box">
-      <div class="lenya-box-title">
-        <i18n:text>Error</i18n:text>
-      </div>
-      
-      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
-
-    </div>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
   </page:body>
 </page:page>
