@@ -152,6 +152,7 @@
       </proxy>
       <bestpractises href="bestpractises.html" label="Best Practises"/>
       <production-checklist href="production.html" label="Production Checklist"/>
+      <tests href="tests.html" label="Writing Tests"/>
     </tutorials>
     
     <concepts href="concepts/" label="Concepts">
