@@ -322,7 +322,6 @@ LenyaTree.prototype.createItemHtml = function(item) {
     addEventHandler(line, 'click', this.handleItemClick, this, item);
     addEventHandler(item.opensign, 'click', this.handleItemSignClick, 
                     this, item);
-
     if (this.selected == item.getPath()) {
         this.unselect();
         this.select(item);

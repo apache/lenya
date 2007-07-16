@@ -101,13 +101,12 @@
           SHOW_LOADING_HINT = true;
           SHOW_ICONS = true;
           
+          <jx:set var="pubName" value="${publication.getName()}"/>
+          var pubName = '<i18n:translate><i18n:text>... Publication</i18n:text><i18n:param><jx:out value="${pubName}"/></i18n:param></i18n:translate>';
+          
           var tree = new NavTree(document, document.getElementById('tree'));
           
-          <jx:set var="pubName" value="${publication.getName()}"/>
-          
-          var rootLabel = '<i18n:translate><i18n:text>... Publication</i18n:text><i18n:param><jx:out value="${pubName}"/></i18n:param></i18n:translate>';
-          
-          tree.init(rootLabel);
+          tree.init(PUBLICATION_ID, pubName);
           tree.render();
           <jx:choose>
             <jx:when test="${docExists.booleanValue()}">

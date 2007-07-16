@@ -72,6 +72,8 @@ NavNode.prototype.getLoadSubTreeURL = function() {
 NavNode.prototype.getStyle = function() {
     if (this.tree.root == this) {
         return 'lenya-info-root';
+    } else if (this.parent == this.tree.root) {
+        return 'lenya-info-area';
     } else if (this.isprotected) {
         return 'lenya-info-protected';
     } else if (this.path == CUT_DOCUMENT_ID) {
@@ -140,13 +142,14 @@ function NavTree(doc, treeElement) {
 
 NavTree.prototype = new LenyaTree;
 
-NavTree.prototype.init = function(id) {
+NavTree.prototype.init = function(id, label) {
     this.root = new NavNode(id);
     this.root.tree = this;
     this.root.depth = 0;
     this.root.reopen = false;
     this.root.isprotected = false;
     this.root.isfolder = true;
+    this.root.label = label;
     this._currentId = 0;
 };
 
