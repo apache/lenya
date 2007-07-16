@@ -131,12 +131,14 @@
 #lenya-info-tree div {
 }
 
-#lenya-info-treecanvas .lenya-info-root { font-weight: bold; cursor: default; }
+#lenya-info-treecanvas .lenya-info-root { cursor: default; }
+#lenya-info-treecanvas .lenya-info-area { font-weight: bold; }
 #lenya-info-treecanvas .lenya-info-nolanguage { color: #AAAAAA; }
 #lenya-info-treecanvas .lenya-info-cut { color: #FFAAAA; font-style: italic; }
 #lenya-info-treecanvas .lenya-info-cut img { opacity: .2; }
 #lenya-info-treecanvas .lenya-info-protected { color: #CC3333; }
 #lenya-info-treecanvas span:hover { text-decoration: underline; }
+#lenya-info-treecanvas span.lenya-info-root:hover { text-decoration: none; }
 
 #lenya-info-tree table { 
   border-spacing: 0px;
