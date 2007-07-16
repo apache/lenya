@@ -36,15 +36,15 @@
         <setInputField name="password" value="levi"/>
         <clickButton name="submit"/>
         
-        <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='links.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='features.html']]]"/>
+        <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='/default/authoring/links.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='/default/authoring/features.html']]]"/>
         
         <invoke url="links.html?lenya.usecase=sitetree.nudge&amp;direction=down"/>
         <invoke url="index.html"/>
-        <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='features.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='links.html']]]"/>
+        <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='/default/authoring/features.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='/default/authoring/links.html']]]"/>
 
         <invoke url="links.html?lenya.usecase=sitetree.nudge&amp;direction=up"/>
         <invoke url="index.html"/>
-        <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='links.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='features.html']]]"/>
+        <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='/default/authoring/links.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='/default/authoring/features.html']]]"/>
         
         <!-- logout -->
         <invoke url="index.html?lenya.usecase=ac.logout"/>
