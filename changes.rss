@@ -53115,39 +53115,4 @@ These actions are used in the html-form-editor.xmap sitemap
         
         :
         [0.8] 
-            New repository initialized by cvs2svn. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        antonio
-        :
-        [1.2] 
-            Don't check 2 time expression 'cie != null'. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        antonio
-        :
-        [1.2] 
-            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        antonio
-        :
-        [1.2] 
-            Formatting. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        antonio
-        :
-        [1.2] 
-            Code formatting. Remove unused imports and Use imports. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        antonio
-        :
-        [1.2] 
-            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            allow client editors to save (should allow kupu to save) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        antonio
-        :
-        [1.2] 
-            Use StringBuffer inside cycles. Diff </description></item></channel></rss>
+            New repository initialized by cvs2svn. Diff </description></item></channel></rss>

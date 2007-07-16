@@ -4792,7 +4792,7 @@ and added fallback:// to shared resources for pub templating</msg>
 <logentry
    revision="202184">
 <author>andreas</author>
-<date>2005-06-28T13:55:21.493222Z</date>
+<date>2005-06-28T13:55:22.093222Z</date>
 <paths>
 <path
    action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>

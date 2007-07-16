@@ -455,17 +455,12 @@ acronym { cursor: help; }
 }
 
 #motd-area {
-    position: relative; /* IE bugfix cont'd */
-    float: right;
     width: 35%;
     background-color: #f0f0ff;
     border-top: solid 1px #4C6C8F;
     border-bottom: solid 1px #4C6C8F;
-    margin-bottom: 15px;
-    margin-left: 15px;
-    margin-right: 10%;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    margin: 15px;
+    padding: 5px;
 }
 
 #minitoc-area {

@@ -70,7 +70,7 @@
 <a class="unselected" href="../../../../community/index.html">Community</a>
 </li>
 <li class="current">
-<a class="selected" href="../../../../docs/1_4/index.html">Version 1.4</a>
+<a class="selected" href="../../../../docs/1_4/index.html">Version 2.0</a>
 </li>
 <li>
 <a class="unselected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
@@ -108,7 +108,7 @@ document.write("Last Published: " + document.lastModified);
     |start Menu
     +-->
 <div id="menu">
-<div onclick="SwitchMenu('menu_selected_1.1', '../../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Version 1.4</div>
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Version 2.0</div>
 <div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../../docs/1_4/index.html">Index</a>
@@ -774,8 +774,8 @@ document.write("Last Published: " + document.lastModified);
 </p>
 <p>The Lenya <span class="codefrag">global-sitemap.xmap</span> will redirect requests with a <span class="codefrag">lenya.usecase</span> request parameter to the 
       <span class="codefrag">$LENYA_WEBAPP/lenya/usecase.xmap</span>
-      sub-sitemap. From version 1.4 on, the following pipeline in this sitemap is used to recognonize usecases which are implemented 
-      in Java using the new 1.4 usecase framework:</p>
+      sub-sitemap. From version 2.0 on, the following pipeline in this sitemap is used to recognonize usecases which are implemented 
+      in Java using the new 2.0 usecase framework:</p>
 <pre class="code">
 &lt;map:pipeline&gt;
   &lt;map:match type="registered-usecase"&gt;
@@ -792,9 +792,9 @@ document.write("Last Published: " + document.lastModified);
 	correctly, there should be a <span class="codefrag">lenya.step</span> parameter in the request.</p>
 <p>If the usecase could be resolved successfully into an Avalon component, processing will continue in the 
 	<span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecase.xmap</span> (as opposed to <span class="codefrag">$LENYA_WEBAPP/lenya/usecase.xmap</span>) with
-	the new JX and Java based 1.4 usecase framework.</p>
+	the new JX and Java based 2.0 usecase framework.</p>
 <p>
-        The <em>usecase framework</em> in Lenya 1.4 is a simple framework to implement usecases using JX templates and Java.
+        The <em>usecase framework</em> in Lenya 2.0 is a simple framework to implement usecases using JX templates and Java.
         This approach is an "85% solution". It enables the user to implement a big range of common usecases.
       </p>
 <div class="note">
