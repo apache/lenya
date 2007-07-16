@@ -292,19 +292,21 @@ Tree.prototype.createItemHtml = function(item) {
 };
 
 Tree.prototype.createItemLine = function(item) {
+    var div = this.doc.createElement('div');
     /* creates the item name and any icons and such */
     var span = this.doc.createElement('span');
     var icon = this.getIcon(item);
     if (icon.nodeType == 1) {
         icon.className = 'treenode_icon';
     };
-    span.appendChild(icon);
+    div.appendChild(icon);
     
     var text = this.doc.createTextNode(item.name ? item.name : item.id);
     span.className = 'treenode_label';
     span.appendChild(text);
+    div.appendChild(span);
     
-    return span;
+    return div;
 };
 
 Tree.prototype.unrenderItem = function(item) {

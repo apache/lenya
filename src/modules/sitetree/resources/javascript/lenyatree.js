@@ -239,13 +239,20 @@ LenyaTree.prototype.getIcon = function(item) {
     if (SHOW_ICONS) {
         var steps = new Array();
         steps = item.getPath().split('/');
-        if (steps.length < 4) {
+        if (steps.length < 2) {
             return this.doc.createTextNode('');
         }
         else {
+            var href;
+            if (steps.length < 4) {
+                href = AREA_BASE_PATH + "/folder";
+            }
+            else {
+                href = item.href;
+            }
             var img = this.doc.createElement('img');
             var language = CHOSEN_LANGUAGE;
-            img.setAttribute('src', item.href + '.gif?lenya.module=sitetree');
+            img.setAttribute('src', href + '.gif?lenya.module=sitetree');
             img.setAttribute('alt', '');
             return img;
         }
@@ -256,20 +263,22 @@ LenyaTree.prototype.getIcon = function(item) {
 
 /* creates the item name and any icons and such */
 LenyaTree.prototype.createItemLine = function(item) {
+    var div = this.doc.createElement('div');
     var span = this.doc.createElement('span');
     var icon = this.getIcon(item);
     if (icon.nodeType == 1) {
         icon.className = 'treenode_icon';
     };
-    span.appendChild(icon);
+    div.appendChild(icon);
     
     var text = this.doc.createTextNode(item.label ? item.label : item.id);
     
     span.className = item.getStyle();
     
     span.appendChild(text);
+    div.appendChild(span);
     
-    return span;
+    return div;
 };
 
 LenyaTree.prototype.createItemHtml = function(item) {
