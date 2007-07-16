@@ -64,7 +64,7 @@
         <!-- ADMIN TAB -->
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'admin']/@show = 'false')">
           <xsl:call-template name="area-tab">
-            <xsl:with-param name="tab-area">authoring</xsl:with-param>
+            <xsl:with-param name="tab-area"><xsl:value-of select="$area"/></xsl:with-param>
             <xsl:with-param name="tabName">admin</xsl:with-param>
             <xsl:with-param name="queryString">?lenya.usecase=admin.users</xsl:with-param>
           </xsl:call-template>
@@ -72,7 +72,7 @@
           
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'info']/@show = 'false')">
           <xsl:call-template name="area-tab">
-            <xsl:with-param name="tab-area">authoring</xsl:with-param>
+            <xsl:with-param name="tab-area"><xsl:value-of select="$area"/></xsl:with-param>
             <xsl:with-param name="queryString">?lenya.usecase=tab.overview</xsl:with-param>
             <xsl:with-param name="tabName">site</xsl:with-param>
           </xsl:call-template>
@@ -80,8 +80,8 @@
           
         <!-- AUTHORING TAB -->
         <xsl:call-template name="area-tab">
-          <xsl:with-param name="tab-area">authoring</xsl:with-param>
-          <xsl:with-param name="tabName">authoring</xsl:with-param>
+          <xsl:with-param name="tab-area"><xsl:value-of select="$area"/></xsl:with-param>
+          <xsl:with-param name="tabName"><xsl:value-of select="$area"/></xsl:with-param>
         </xsl:call-template>
           
         <!-- STAGING TAB -->
@@ -164,8 +164,6 @@
         <xsl:when test="$tab-area = 'admin' or $area = 'admin'">/</xsl:when>
         <!-- FIXME: what is documentid? -->
         <xsl:when test="($currentTab = 'site') and $documentid = '/'">/</xsl:when>
-        <!-- you can't do anything with trashed or archived pages except in the "site" tab. -->
-        <xsl:when test="$area = 'trash' or $area = 'archive'">/</xsl:when>
         <!-- catch missing trailing slash in urls with just the area: -->
         <xsl:when test="not($documenturl)">/</xsl:when>
         <!-- the default case is: use the current $documenturl for the new tab link. -->
