@@ -120,7 +120,7 @@
     | Version 1.4 tab
     +-->
   
-  <docu1.4 href="docs/1_4/" label="Version 2.0" target="1.4" tab="1_4">
+  <docu2.0 href="docs/2_0_x/" label="Version 2.0" target="2.0" tab="2_0">
     <index href="index.html" label="Index"/>
      <faq label="FAQs" href="faq.html">
           <i18n href="#i18n"/>
@@ -189,7 +189,7 @@
       </urls-and-links>
     </reference>
     
-    <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="Core API"/>
+    <javadoc2.0 href="../../../../apidocs/1.4/index.html" label="Core API"/>
     
     <!-- 
     <index href="../modules/index.html" label="List of Modules"/>
@@ -388,7 +388,7 @@
       </xopus_module_section>
     </standard_modules>
     
-  </docu1.4>
+  </docu2.0>
   
   
   <!--+
