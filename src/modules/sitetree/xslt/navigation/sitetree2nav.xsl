@@ -23,6 +23,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tree="http://apache.org/cocoon/lenya/sitetree/1.0"
     xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     exclude-result-prefixes="tree">
 
   <xsl:param name="chosenlanguage"/>
@@ -51,8 +52,8 @@
 
 
   <xsl:template match="tree:site">
-    <nav:site href="/{/tree:fragment/@publication}/{@area}">
-      <xsl:copy-of select="@*"/>
+    <nav:site href="/{/tree:fragment/@publication}/{@area}" label="{@area}-area" i18n:attr="label">
+      <xsl:copy-of select="@*[local-name() != 'label']"/>
       <xsl:apply-templates/>
     </nav:site>
   </xsl:template>

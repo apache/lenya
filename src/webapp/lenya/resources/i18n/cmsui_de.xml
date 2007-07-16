@@ -339,6 +339,13 @@
   <message key="notify-submitter">Benachrichtigung an den einreichenden Nutzer senden</message>
   <message key="document-published">Ein von Ihnen eingereichtes Dokument wurde publiziert: {0}</message>
   
+  <!-- areas -->
+  <message key="authoring-area">Bearbeitung</message>
+  <message key="live-area">Live</message>
+  <message key="archive-area">Archiv</message>
+  <message key="trash-area">Papierkorb</message>
+  <message key="staging-area">Staging</message>
+
   <!-- Info asset  --> 
   <message key="New Asset">Neue Anlage</message>
 

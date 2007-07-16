@@ -333,6 +333,13 @@
   <message key="document-published">A document you submitted was published: {0}</message>
   <message key="document-submitted">A document has been submitted for you to review: {0}</message>
   <message key="document-rejected">A document you submitted was rejected for the following reason: {0}, {1}</message>
+  
+  <!-- areas -->
+  <message key="authoring-area">Authoring</message>
+  <message key="live-area">Live</message>
+  <message key="archive-area">Archive</message>
+  <message key="trash-area">Trash</message>
+  <message key="staging-area">Staging</message>
 
   <!-- Info asset  --> 
   <message key="New Asset">New Asset</message>

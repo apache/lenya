@@ -131,6 +131,9 @@ This sitemap creates default navigation components.
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="extension" value="html"/>
         </map:transform>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
         <map:transform type="uuid2url-sitetree"/>
         <map:transform type="proxy-sitetree"/>
         <map:serialize type="xml"/>
