@@ -38,7 +38,7 @@
 
     <menus>
       <menu i18n:attr="name" name="File">
-        <block areas="site authoring">
+        <block areas="site authoring" id="create">
           <item uc:usecase="opendocument.create" href="?doctype=opendocument">
             <i18n:translate>
               <i18n:text>New ... Document</i18n:text>
