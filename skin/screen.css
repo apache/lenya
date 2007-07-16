@@ -455,11 +455,12 @@ acronym { cursor: help; }
 }
 
 #motd-area {
+    position:relative;
+    float:right;
     width: 35%;
     background-color: #f0f0ff;
-    border-top: solid 1px #4C6C8F;
-    border-bottom: solid 1px #4C6C8F;
-    margin: 15px;
+    border: solid 1px #4C6C8F;
+    margin: 0px 0px 10px 10px;
     padding: 5px;
 }
 
@@ -477,6 +478,10 @@ acronym { cursor: help; }
     list-style-image: url('images/current.gif');
     font-weight: normal;
 }
+
+.abstract{
+    text-align:justify;
+    }
 
 li p {
     margin: 0;
