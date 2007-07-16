@@ -98,6 +98,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
     protected static final String ATTR_ID = "id";
     protected static final String ATTR_FOLDER = "folder";
     protected static final String ATTR_AREA = "area";
+    protected static final String ATTR_PUBLICATION = "publication";
     protected static final String ATTR_LABEL = "label";
     protected static final String ATTR_VISIBLEINNAV = "visibleinnav";
     protected static final String ATTR_LINK = "link";
@@ -176,6 +177,9 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.contentHandler.startPrefixMapping(PREFIX, URI);
 
             this.attributes.clear();
+            this.attributes.addAttribute("", ATTR_PUBLICATION, ATTR_PUBLICATION, "CDATA",
+                    this.publication.getId());
+            
             if (!this.initialTree) {
                 this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", this.area);
                 this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.path);

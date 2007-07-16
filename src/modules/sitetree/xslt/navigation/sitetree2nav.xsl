@@ -51,7 +51,7 @@
 
 
   <xsl:template match="tree:site">
-    <nav:site>
+    <nav:site href="/{/tree:fragment/@publication}/{@area}">
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
     </nav:site>
