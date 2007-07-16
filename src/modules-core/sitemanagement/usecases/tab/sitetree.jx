@@ -70,7 +70,7 @@
       <div id="tree">
         <script type="text/javascript">
           WEBAPP_BASE_PATH = '<proxy:url href="/"/>';
-          AREA_BASE_PATH = '<proxy:url href="/${publicationId}/authoring"/>';
+          AREA_BASE_PATH = '<proxy:url href="/${publicationId}/${area}"/>';
           
           PUBLICATION_ID = '<jx:out value="${publicationId}"/>';
           <jx:choose>
