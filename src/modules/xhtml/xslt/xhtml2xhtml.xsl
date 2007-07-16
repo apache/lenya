@@ -68,8 +68,8 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="lenya:asset">
-    <ci:include src="{@src}?format=downloadLink"/>
+  <xsl:template match="xhtml:a[@class = 'asset']">
+    <ci:include src="{@href}?format=downloadLink"/>
   </xsl:template>
 
  <xsl:template match="dc:metadata"/>
