@@ -67,6 +67,10 @@ body { background-color: #fff; margin: 0; padding: 0; }
 
 #lenya-options ul li ul li a:hover { background: #fff; }
 
+#info-messages a {  color: #fff; }
+
+#info-messages a:visited {  color: #fff; }
+
 #lenya-areas ul { margin: 0; padding: 0; }
 
 #lenya-areas ul li { list-style: none; float: left; display: block; margin: 0 1px 0 0; }
