@@ -38,5 +38,6 @@
     <resource-type name="sidebar" workflow="workflow.xml"/>
   </resource-types>
   <modules/>
+  <proxies/>
 </publication>
 

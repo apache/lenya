@@ -81,6 +81,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ELEMENT_BREADCRUMB_PREFIX = "breadcrumb-prefix";
     private static final String ELEMENT_CONTENT_DIR = "content-dir";
     private static final String ATTRIBUTE_SRC = "src";
+    private static final String ELEMENT_PROXIES = "proxies";
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
@@ -179,7 +180,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 this.siteManagerName = siteManagerConfiguration.getAttribute(ATTRIBUTE_NAME);
             }
 
-            Configuration[] proxyConfigs = config.getChildren(ELEMENT_PROXY);
+            Configuration proxiesConfig = config.getChild(ELEMENT_PROXIES);
+            Configuration[] proxyConfigs = proxiesConfig.getChildren(ELEMENT_PROXY);
             for (int i = 0; i < proxyConfigs.length; i++) {
                 String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
                 String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);

@@ -187,13 +187,15 @@
             </attribute>
           </element>
         </optional>
-        <zeroOrMore>
-          <element name="proxy">
-            <attribute name="area"><ref name="lenyaAreaName"/></attribute>
-            <attribute name="ssl"><ref name="booleanString"/></attribute>
-            <attribute name="url"><data type="anyURI"/></attribute>
-          </element>
-        </zeroOrMore>
+        <element name="proxies">
+          <zeroOrMore>
+            <element name="proxy">
+              <attribute name="area"><ref name="lenyaAreaName"/></attribute>
+              <attribute name="ssl"><ref name="booleanString"/></attribute>
+              <attribute name="url"><data type="anyURI"/></attribute>
+            </element>
+          </zeroOrMore>
+        </element>
       </interleave>
       
     </element>
