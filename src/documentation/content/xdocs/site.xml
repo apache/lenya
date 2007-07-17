@@ -189,7 +189,7 @@
       </urls-and-links>
     </reference>
     
-    <javadoc2.0 href="../../../../apidocs/1.4/index.html" label="Core API"/>
+    <javadoc2.0 href="../../../../apidocs/2.0/index.html" label="Core API"/>
     
     <!-- 
     <index href="../modules/index.html" label="List of Modules"/>
@@ -203,188 +203,188 @@
     <core_modules label="Core Modules" href="../modules/">
       <ac_module_section label="ac" href="ac/">
         <ac_module_overview label="Overview" href="index.html"/>
-        <ac_module_api label="API" href="../../../../apidocs/1.4/modules/ac/index.html"/>
+        <ac_module_api label="API" href="../../../../apidocs/2.0/modules/ac/index.html"/>
       </ac_module_section>
       <acusecases_module_section label="acusecases" href="acusecases/">
         <acusecases_module_overview label="Overview" href="index.html"/>
-        <acusecases_module_api label="API" href="../../../../apidocs/1.4/modules/acusecases/index.html"/>
+        <acusecases_module_api label="API" href="../../../../apidocs/2.0/modules/acusecases/index.html"/>
       </acusecases_module_section>
       <administration_module_section label="administration" href="administration/">
         <administration_module_overview label="Overview" href="index.html"/>
-        <administration_module_api label="API" href="../../../../apidocs/1.4/modules/administration/index.html"/>
+        <administration_module_api label="API" href="../../../../apidocs/2.0/modules/administration/index.html"/>
       </administration_module_section>
       <cache_module_section label="cache" href="cache/">
         <cache_module_overview label="Overview" href="index.html"/>
-        <cache_module_api label="API" href="../../../../apidocs/1.4/modules/cache/index.html"/>
+        <cache_module_api label="API" href="../../../../apidocs/2.0/modules/cache/index.html"/>
       </cache_module_section>
       <janitor_module_section label="janitor" href="janitor/">
         <janitor_module_overview label="Overview" href="index.html"/>
-        <janitor_module_api label="API" href="../../../../apidocs/1.4/modules/janitor/index.html"/>
+        <janitor_module_api label="API" href="../../../../apidocs/2.0/modules/janitor/index.html"/>
       </janitor_module_section>
       <ldap_module_section label="ldap" href="ldap/">
         <ldap_module_overview label="Overview" href="index.html"/>
-        <ldap_module_api label="API" href="../../../../apidocs/1.4/modules/ldap/index.html"/>
+        <ldap_module_api label="API" href="../../../../apidocs/2.0/modules/ldap/index.html"/>
       </ldap_module_section>
       <linking_module_section label="linking" href="linking/">
         <linking_module_overview label="Overview" href="index.html"/>
-        <linking_module_api label="API" href="../../../../apidocs/1.4/modules/linking/index.html"/>
+        <linking_module_api label="API" href="../../../../apidocs/2.0/modules/linking/index.html"/>
       </linking_module_section>
       <observation_module_section label="observation" href="observation/">
         <observation_module_overview label="Overview" href="index.html"/>
-        <observation_module_api label="API" href="../../../../apidocs/1.4/modules/observation/index.html"/>
+        <observation_module_api label="API" href="../../../../apidocs/2.0/modules/observation/index.html"/>
       </observation_module_section>
       <properties_module_section label="properties" href="properties/">
         <properties_module_overview label="Overview" href="index.html"/>
-        <properties_module_api label="API" href="../../../../apidocs/1.4/modules/properties/index.html"/>
+        <properties_module_api label="API" href="../../../../apidocs/2.0/modules/properties/index.html"/>
       </properties_module_section>
       <sitemanagement_module_section label="sitemanagement" href="sitemanagement/">
         <sitemanagement_module_overview label="Overview" href="index.html"/>
-        <sitemanagement_module_api label="API" href="../../../../apidocs/1.4/modules/sitemanagement/index.html"/>
+        <sitemanagement_module_api label="API" href="../../../../apidocs/2.0/modules/sitemanagement/index.html"/>
       </sitemanagement_module_section>
       <templating_module_section label="templating" href="templating/">
         <templating_module_overview label="Overview" href="index.html"/>
-        <templating_module_api label="API" href="../../../../apidocs/1.4/modules/templating/index.html"/>
+        <templating_module_api label="API" href="../../../../apidocs/2.0/modules/templating/index.html"/>
       </templating_module_section>
       <usecase_module_section label="usecase" href="usecase/">
         <usecase_module_overview label="Overview" href="index.html"/>
-        <usecase_module_api label="API" href="../../../../apidocs/1.4/modules/usecase/index.html"/>
+        <usecase_module_api label="API" href="../../../../apidocs/2.0/modules/usecase/index.html"/>
       </usecase_module_section>
       <workflow_module_section label="workflow" href="workflow/">
         <workflow_module_overview label="Overview" href="index.html"/>
-        <workflow_module_api label="API" href="../../../../apidocs/1.4/modules/workflow/index.html"/>
+        <workflow_module_api label="API" href="../../../../apidocs/2.0/modules/workflow/index.html"/>
       </workflow_module_section>
     </core_modules>
     <standard_modules label="Standard Modules" href="../modules/">
       <blog_module_section label="blog" href="blog/">
         <blog_module_overview label="Overview" href="index.html"/>
-        <blog_module_api label="API" href="../../../../apidocs/1.4/modules/blog/index.html"/>
+        <blog_module_api label="API" href="../../../../apidocs/2.0/modules/blog/index.html"/>
       </blog_module_section>
       <bxe_module_section label="bxe" href="bxe/">
         <bxe_module_overview label="Overview" href="index.html"/>
-        <bxe_module_api label="API" href="../../../../apidocs/1.4/modules/bxe/index.html"/>
+        <bxe_module_api label="API" href="../../../../apidocs/2.0/modules/bxe/index.html"/>
       </bxe_module_section>
       <cforms_module_section label="cforms" href="cforms/">
         <cforms_module_overview label="Overview" href="index.html"/>
-        <cforms_module_api label="API" href="../../../../apidocs/1.4/modules/cforms/index.html"/>
+        <cforms_module_api label="API" href="../../../../apidocs/2.0/modules/cforms/index.html"/>
       </cforms_module_section>
       <collection_module_section label="collection" href="collection/">
         <collection_module_overview label="Overview" href="index.html"/>
-        <collection_module_api label="API" href="../../../../apidocs/1.4/modules/collection/index.html"/>
+        <collection_module_api label="API" href="../../../../apidocs/2.0/modules/collection/index.html"/>
       </collection_module_section>
       <contactform_module_section label="contactform" href="contactform/">
         <contactform_module_overview label="Overview" href="index.html"/>
-        <contactform_module_api label="API" href="../../../../apidocs/1.4/modules/contactform/index.html"/>
+        <contactform_module_api label="API" href="../../../../apidocs/2.0/modules/contactform/index.html"/>
       </contactform_module_section>
       <development_module_section label="development" href="development/">
         <development_module_overview label="Overview" href="index.html"/>
-        <development_module_api label="API" href="../../../../apidocs/1.4/modules/development/index.html"/>
+        <development_module_api label="API" href="../../../../apidocs/2.0/modules/development/index.html"/>
       </development_module_section>
       <editors_module_section label="editors" href="editors/">
         <editors_module_overview label="Overview" href="index.html"/>
-        <editors_module_api label="API" href="../../../../apidocs/1.4/modules/editors/index.html"/>
+        <editors_module_api label="API" href="../../../../apidocs/2.0/modules/editors/index.html"/>
       </editors_module_section>
       <export_module_section label="export" href="export/">
         <export_module_overview label="Overview" href="index.html"/>
-        <export_module_api label="API" href="../../../../apidocs/1.4/modules/export/index.html"/>
+        <export_module_api label="API" href="../../../../apidocs/2.0/modules/export/index.html"/>
       </export_module_section>
       <fckeditor_module_section label="fckeditor" href="fckeditor/">
         <fckeditor_module_overview label="Overview" href="index.html"/>
-        <fckeditor_module_api label="API" href="../../../../apidocs/1.4/modules/fckeditor/index.html"/>
+        <fckeditor_module_api label="API" href="../../../../apidocs/2.0/modules/fckeditor/index.html"/>
       </fckeditor_module_section>
       <kupu_module_section label="kupu" href="kupu/">
         <kupu_module_overview label="Overview" href="index.html"/>
-        <kupu_module_api label="API" href="../../../../apidocs/1.4/modules/kupu/index.html"/>
+        <kupu_module_api label="API" href="../../../../apidocs/2.0/modules/kupu/index.html"/>
       </kupu_module_section>
       <languageselector_module_section label="languageselector" href="languageselector/">
         <languageselector_module_overview label="Overview" href="index.html"/>
-        <languageselector_module_api label="API" href="../../../../apidocs/1.4/modules/languageselector/index.html"/>
+        <languageselector_module_api label="API" href="../../../../apidocs/2.0/modules/languageselector/index.html"/>
       </languageselector_module_section>
       <lenyadoc_module_section label="lenyadoc" href="lenyadoc/">
         <lenyadoc_module_overview label="Overview" href="index.html"/>
-        <lenyadoc_module_api label="API" href="../../../../apidocs/1.4/modules/lenyadoc/index.html"/>
+        <lenyadoc_module_api label="API" href="../../../../apidocs/2.0/modules/lenyadoc/index.html"/>
       </lenyadoc_module_section>
       <linkcheck_module_section label="linkcheck" href="linkcheck/">
         <linkcheck_module_overview label="Overview" href="index.html"/>
-        <linkcheck_module_api label="API" href="../../../../apidocs/1.4/modules/linkcheck/index.html"/>
+        <linkcheck_module_api label="API" href="../../../../apidocs/2.0/modules/linkcheck/index.html"/>
       </linkcheck_module_section>
       <links_module_section label="links" href="links/">
         <links_module_overview label="Overview" href="index.html"/>
-        <links_module_api label="API" href="../../../../apidocs/1.4/modules/links/index.html"/>
+        <links_module_api label="API" href="../../../../apidocs/2.0/modules/links/index.html"/>
       </links_module_section>
       <lucene_module_section label="lucene" href="lucene/">
         <lucene_module_overview label="Overview" href="index.html"/>
-        <lucene_module_api label="API" href="../../../../apidocs/1.4/modules/lucene/index.html"/>
+        <lucene_module_api label="API" href="../../../../apidocs/2.0/modules/lucene/index.html"/>
       </lucene_module_section>
       <migration_module_section label="migration" href="migration/">
         <migration_module_overview label="Overview" href="index.html"/>
-        <migration_module_api label="API" href="../../../../apidocs/1.4/modules/migration/index.html"/>
+        <migration_module_api label="API" href="../../../../apidocs/2.0/modules/migration/index.html"/>
       </migration_module_section>
       <neutron_module_section label="neutron" href="neutron/">
         <neutron_module_overview label="Overview" href="index.html"/>
-        <neutron_module_api label="API" href="../../../../apidocs/1.4/modules/neutron/index.html"/>
+        <neutron_module_api label="API" href="../../../../apidocs/2.0/modules/neutron/index.html"/>
       </neutron_module_section>
       <news_module_section label="news" href="news/">
         <news_module_overview label="Overview" href="index.html"/>
-        <news_module_api label="API" href="../../../../apidocs/1.4/modules/news/index.html"/>
+        <news_module_api label="API" href="../../../../apidocs/2.0/modules/news/index.html"/>
       </news_module_section>
       <notification_module_section label="notification" href="notification/">
         <notification_module_overview label="Overview" href="index.html"/>
-        <notification_module_api label="API" href="../../../../apidocs/1.4/modules/notification/index.html"/>
+        <notification_module_api label="API" href="../../../../apidocs/2.0/modules/notification/index.html"/>
       </notification_module_section>
       <opendocument_module_section label="opendocument" href="opendocument/">
         <opendocument_module_overview label="Overview" href="index.html"/>
-        <opendocument_module_api label="API" href="../../../../apidocs/1.4/modules/opendocument/index.html"/>
+        <opendocument_module_api label="API" href="../../../../apidocs/2.0/modules/opendocument/index.html"/>
       </opendocument_module_section>
       <prettyprinting_module_section label="prettyprinting" href="prettyprinting/">
         <prettyprinting_module_overview label="Overview" href="index.html"/>
-        <prettyprinting_module_api label="API" href="../../../../apidocs/1.4/modules/prettyprinting/index.html"/>
+        <prettyprinting_module_api label="API" href="../../../../apidocs/2.0/modules/prettyprinting/index.html"/>
       </prettyprinting_module_section>
       <profiling_module_section label="profiling" href="profiling/">
         <profiling_module_overview label="Overview" href="index.html"/>
-        <profiling_module_api label="API" href="../../../../apidocs/1.4/modules/profiling/index.html"/>
+        <profiling_module_api label="API" href="../../../../apidocs/2.0/modules/profiling/index.html"/>
       </profiling_module_section>
       <resource_module_section label="resource" href="resource/">
         <resource_module_overview label="Overview" href="index.html"/>
-        <resource_module_api label="API" href="../../../../apidocs/1.4/modules/resource/index.html"/>
+        <resource_module_api label="API" href="../../../../apidocs/2.0/modules/resource/index.html"/>
       </resource_module_section>
       <simplesite_module_section label="simplesite" href="simplesite/">
         <simplesite_module_overview label="Overview" href="index.html"/>
-        <simplesite_module_api label="API" href="../../../../apidocs/1.4/modules/simplesite/index.html"/>
+        <simplesite_module_api label="API" href="../../../../apidocs/2.0/modules/simplesite/index.html"/>
       </simplesite_module_section>
       <sitetree_module_section label="sitetree" href="sitetree/">
         <sitetree_module_overview label="Overview" href="index.html"/>
-        <sitetree_module_api label="API" href="../../../../apidocs/1.4/modules/sitetree/index.html"/>
+        <sitetree_module_api label="API" href="../../../../apidocs/2.0/modules/sitetree/index.html"/>
       </sitetree_module_section>
       <sourcerepository_module_section label="sourcerepository" href="sourcerepository/">
         <sourcerepository_module_overview label="Overview" href="index.html"/>
-        <sourcerepository_module_api label="API" href="../../../../apidocs/1.4/modules/sourcerepository/index.html"/>
+        <sourcerepository_module_api label="API" href="../../../../apidocs/2.0/modules/sourcerepository/index.html"/>
       </sourcerepository_module_section>
       <svg_module_section label="svg" href="svg/">
         <svg_module_overview label="Rounded Corners" href="roundedcorners.html"/>
         <svg_module_resizeimages label="Resizing Images" href="resizeimages.html"/>
-        <svg_module_api label="API" href="../../../../apidocs/1.4/modules/svg/index.html"/>
+        <svg_module_api label="API" href="../../../../apidocs/2.0/modules/svg/index.html"/>
       </svg_module_section>
       <tinymce_module_section label="tinymce" href="tinymce/">
         <tinymce_module_overview label="Overview" href="index.html"/>
-        <tinymce_module_api label="API" href="../../../../apidocs/1.4/modules/tinymce/index.html"/>
+        <tinymce_module_api label="API" href="../../../../apidocs/2.0/modules/tinymce/index.html"/>
       </tinymce_module_section>
       <usecasedocument_module_section label="usecasedocument" href="usecasedocument/">
         <usecasedocument_module_overview label="Overview" href="index.html"/>
-        <usecasedocument_module_api label="API" href="../../../../apidocs/1.4/modules/usecasedocument/index.html"/>
+        <usecasedocument_module_api label="API" href="../../../../apidocs/2.0/modules/usecasedocument/index.html"/>
       </usecasedocument_module_section>
       <webdav_module_section label="webdav" href="webdav/">
         <webdav_index href="index.html" label="Getting started"/>
         <monitoring href="monitoring.html" label="Monitoring"/>
         <webdav_server href="webdav.html" label="WebDAV Servers"/>
-        <webdav_module_api label="API" href="../../../../apidocs/1.4/modules/webdav/index.html"/>
+        <webdav_module_api label="API" href="../../../../apidocs/2.0/modules/webdav/index.html"/>
       </webdav_module_section>
       <xhtml_module_section label="xhtml" href="xhtml/">
         <xhtml_module_overview label="Overview" href="index.html"/>
-        <xhtml_module_api label="API" href="../../../../apidocs/1.4/modules/xhtml/index.html"/>
+        <xhtml_module_api label="API" href="../../../../apidocs/2.0/modules/xhtml/index.html"/>
       </xhtml_module_section>
       <xopus_module_section label="xopus" href="xopus/">
         <xopus_module_overview label="Overview" href="index.html"/>
-        <xopus_module_api label="API" href="../../../../apidocs/1.4/modules/xopus/index.html"/>
+        <xopus_module_api label="API" href="../../../../apidocs/2.0/modules/xopus/index.html"/>
       </xopus_module_section>
     </standard_modules>
     
