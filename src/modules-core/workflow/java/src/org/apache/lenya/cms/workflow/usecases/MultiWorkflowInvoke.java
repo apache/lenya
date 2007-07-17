@@ -21,13 +21,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
-import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
-import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.util.Assert;
 
 /**
