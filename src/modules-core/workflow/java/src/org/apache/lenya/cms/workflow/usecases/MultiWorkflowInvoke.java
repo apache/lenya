@@ -21,22 +21,29 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
+import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
+import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.util.Assert;
 
 /**
  * Invocation usecase for the multi-workflow usecase.
  */
 public class MultiWorkflowInvoke extends AbstractUsecase {
-
+    
+    protected static final String URL = "url";
+    protected static final String USECASE_NAME = "usecaseName";
+    
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        String usecase = getParameterAsString("usecaseName");
+        String usecase = getParameterAsString(USECASE_NAME);
         Assert.notNull("usecase", usecase);
-        String url = getParameterAsString("url");
+        String url = getParameterAsString(URL);
         Assert.notNull("url", url);
 
         UsecaseInvoker invoker = null;
