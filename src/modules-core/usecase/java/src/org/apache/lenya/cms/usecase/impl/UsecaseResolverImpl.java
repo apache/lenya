@@ -158,7 +158,10 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      */
     public Usecase resolve(String webappUrl, String name) throws ServiceException {
         Object usecaseName = getUsecaseName(webappUrl, name);
-        return (Usecase) getSelector().select(usecaseName);
+        Usecase usecase = (Usecase) getSelector().select(usecaseName);
+        usecase.setName(name);
+        usecase.setSourceURL(webappUrl);
+        return usecase;
     }
 
     /**

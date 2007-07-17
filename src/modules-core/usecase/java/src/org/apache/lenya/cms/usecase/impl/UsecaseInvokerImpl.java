@@ -65,8 +65,6 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             if (testSession != null) {
                 usecase.setTestSession(testSession);
             }
-            usecase.setSourceURL(webappUrl);
-            usecase.setName(usecaseName);
 
             passParameters(usecase, parameters);
 
