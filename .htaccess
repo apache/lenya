@@ -1,3 +1,4 @@
 AddDefaultCharset UTF-8
 Redirect permanent /1_2_x http://lenya.apache.org/docs/1_2_x
-Redirect permanent /1_4 http://lenya.apache.org/docs/1_4
+Redirect permanent /1_4 http://lenya.apache.org/docs/2_0_x
+Redirect permanent /docs/1_4 http://lenya.apache.org/docs/2_0_x
