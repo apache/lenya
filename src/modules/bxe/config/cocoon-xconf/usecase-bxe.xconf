@@ -24,6 +24,7 @@
     <component-instance name="bxe.edit" logger="lenya.publication" 
       class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow">
       <view template="modules/bxe/usecases/bxe.jx" menu="false" createContinuation="false"/>
+      <transaction policy="pessimistic"/>
       <event id="edit"/>
     </component-instance>
     
