@@ -94,18 +94,6 @@
     <map:pipeline>
       
       <map:match pattern="kupu.open">
-          <map:act type="reserved-checkout">
-            <map:generate type="serverpages" 
-              src="fallback://lenya/content/rc/{exception}.xsp">
-              <map:parameter name="user" value="{user}"/>
-              <map:parameter name="filename" value="{filename}"/>
-              <map:parameter name="date" value="{date}"/>
-              <map:parameter name="message" value="{message}"/>
-            </map:generate>
-            <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
-            <map:call resource="style-cms-page"/>
-            <map:serialize />
-          </map:act>
           <map:generate 
             src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/kupu/kupumacros.html"/>
           <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupumacros.xsl">
@@ -113,7 +101,7 @@
               value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=content"/>
             <map:parameter name="context-prefix" value="{request:contextPath}/{page-envelope:publication-id}/modules/kupu"/>
             <!-- Only used to display the document path of the edited doc  -->
-            <map:parameter name="document-path" value="{page-envelope:document-path}"/>
+            <map:parameter name="document-path" value="&quot;{dublincore:title}&quot;"/>
             <map:parameter name="save-destination" value="{proxy:{request:requestURI}}?lenya.event=edit"/>
             <map:parameter name="exit-destination" value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=exit"/>
             <map:parameter name="reload-after-save" value="1"/>
@@ -127,7 +115,7 @@
             <map:parameter name="link-libraries-uri" 
               value="{proxy:{request:requestURI}}?lenya.module=kupu&amp;lenya.step=link_libraries"/>
           </map:transform>
-          <map:serialize type="xhtml"/>
+          <map:serialize type="xml"/>
       </map:match>
         
         <!-- Requested by Kupu to load the document into the editor -->    

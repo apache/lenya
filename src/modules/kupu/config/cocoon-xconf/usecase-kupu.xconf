@@ -22,8 +22,9 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'kupu.edit']">
     
     <component-instance name="kupu.edit" logger="lenya.publication" 
-    class="org.apache.lenya.cms.workflow.usecases.CheckWorkflow">
-      <view uri="cocoon://modules/kupu/kupu.open" menu="false" createContinuation="false"/>
+      class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow">
+      <view template="modules/kupu/usecases/kupu.jx" menu="false" createContinuation="false"/>
+      <transaction policy="pessimistic"/>
       <event id="edit"/>
     </component-instance>
     
