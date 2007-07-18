@@ -322,8 +322,7 @@ public abstract class Create extends AbstractUsecase {
             if (samples.length == 0) {
                 addErrorMessage("The resource type [" + resourceType.getName()
                         + "] doesn't provide any samples!");
-            }
-            else {
+            } else {
                 setParameter(SAMPLES, samples);
                 String presetSample = getParameterAsString(SAMPLE);
                 if (presetSample == null) {
@@ -388,8 +387,6 @@ public abstract class Create extends AbstractUsecase {
         return info.getArea();
     }
 
-    private Publication publication;
-
     /**
      * Access to the current publication. Use this when the publication is not
      * yet known in the usecase: e.g. when creating a global asset. When adding
@@ -399,15 +396,12 @@ public abstract class Create extends AbstractUsecase {
      * @return the publication in which the use-case is being executed
      */
     protected Publication getPublication() {
-        if (this.publication == null) {
-            try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                        getDocumentFactory(), getSourceURL());
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            return PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
+                    getSourceURL());
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
         }
-        return this.publication;
     }
 
     /**
