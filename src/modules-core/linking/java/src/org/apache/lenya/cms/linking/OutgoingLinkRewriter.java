@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.linking;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -113,32 +114,34 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         return url.startsWith("/");
     }
 
-    public String rewrite(String url) {
+    public String rewrite(final String url) {
+        
         String rewrittenUrl = "";
 
         try {
+            final String normalizedUrl = new URI(url).normalize().toString();
             if (this.relativeUrls) {
-                rewrittenUrl = getRelativeUrlTo(url);
+                rewrittenUrl = getRelativeUrlTo(normalizedUrl);
             } else {
                 boolean useSsl = this.ssl;
                 if (!useSsl && this.policyManager != null) {
-                    Policy policy = this.policyManager.getPolicy(this.accreditableManager, url);
+                    Policy policy = this.policyManager.getPolicy(this.accreditableManager, normalizedUrl);
                     useSsl = policy.isSSLProtected();
                 }
 
-                URLInformation info = new URLInformation(url);
+                URLInformation info = new URLInformation(normalizedUrl);
                 String pubId = info.getPublicationId();
 
                 // link points to publication
                 if (pubId != null && isPublication(pubId)) {
                     Publication pub = this.factory.getPublication(pubId);
-                    rewrittenUrl = rewriteLink(url, pub, useSsl);
+                    rewrittenUrl = rewriteLink(normalizedUrl, pub, useSsl);
                 }
 
                 // link doesn't point to publication
                 else {
                     Proxy proxy = getGlobalProxies().getProxy(ssl);
-                    rewrittenUrl = proxy.getUrl() + url;
+                    rewrittenUrl = proxy.getUrl() + normalizedUrl;
                 }
             }
         } catch (Exception e) {
