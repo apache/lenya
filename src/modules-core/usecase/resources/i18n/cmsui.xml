@@ -22,7 +22,7 @@
   
   <message key="could-not-execute-usecase">Could not execute usecase</message>
   <message key="objects-checked-out">
-    The operation cannot be executed because one ore more of the involved objects are checked out.
+    Involved objects are checked out.
   </message>
   
 </catalogue>

@@ -22,8 +22,7 @@
   
   <message key="could-not-execute-usecase">Der Usecase konnte nicht ausgeführt werden</message>
   <message key="objects-checked-out">
-    Die Operation konnte nicht ausgeführt werden, da eines oder mehrere der beteiligten
-    Objekte ausgecheckt sind.
+    Beteiligte Objekte sind ausgecheckt.
   </message>
   
 </catalogue>
