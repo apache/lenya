@@ -100,4 +100,14 @@ public interface ResourceType {
      * @return The URI to get the formatted content at.
      */
     String getFormatURI(String format);
+    
+    /**
+     * @return The label of the resource type.
+     */
+    String getLabel();
+    
+    /**
+     * @param label The label of the resource type.
+     */
+    void setLabel(String label);
 }

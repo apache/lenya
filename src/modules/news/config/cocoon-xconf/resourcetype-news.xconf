@@ -23,7 +23,8 @@
   <component-instance name="news"
                       logger="lenya.resourcetypes.news"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-                      
+    <label>News</label>
+    
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="3600" />
     

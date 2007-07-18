@@ -38,7 +38,6 @@ import org.apache.lenya.workflow.Workflowable;
  */
 public class Overview extends SiteUsecase {
 
-    protected static final String RESOURCE_TYPE = "resourcetype";
     protected static final String LASTMODIFIED = "lastmodified";
     protected static final String LANGUAGES = "languages";
     protected static final String STATE = "state";
@@ -75,7 +74,6 @@ public class Overview extends SiteUsecase {
                 String lastModified = format
                         .format(new Date(getSourceDocument().getLastModified()));
                 setParameter(LASTMODIFIED, lastModified);
-                setParameter(RESOURCE_TYPE, doc.getResourceType());
                 boolean visible = doc.getLink().getNode().isVisible();
                 setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 

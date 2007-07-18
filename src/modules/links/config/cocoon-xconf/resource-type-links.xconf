@@ -23,6 +23,7 @@
   <component-instance name="links"
                       logger="lenya.resourcetypes.links"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    <label>Links</label>
     <schema language="http://relaxng.org/ns/structure/0.9"
             src="fallback://lenya/modules/links/resources/schema/links.rng"/>
     <sample-name>fallback://lenya/modules/links/samples/links.xml</sample-name>
