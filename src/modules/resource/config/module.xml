@@ -6,7 +6,6 @@
   <lenya:id>org.apache.lenya.modules.resource</lenya:id>
   <lenya:export package="org.apache.lenya.cms.site.usecases"/>
   <lenya:depends module="org.apache.lenya.modules.usecase"/>
-  <lenya:depends module="org.apache.lenya.modules.defaultusecases"/>
   <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
   <lenya:package>org.apache.lenya.modules</lenya:package>
   <lenya:version>0.1-dev</lenya:version>
