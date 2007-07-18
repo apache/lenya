@@ -55,6 +55,8 @@ import org.apache.lenya.transaction.LockException;
 public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Configurable,
         Contextualizable, Serviceable, Initializable {
 
+    protected static final String ERROR_OBJECTS_CHECKED_OUT = "objects-checked-out";
+
     protected static final StateMachine.Transition[] TRANSITIONS = {
             new StateMachine.Transition("start", "preChecked", "checkPreconditions"),
             new StateMachine.Transition("preChecked", "nodesLocked", "lockInvolvedObjects"),
@@ -769,8 +771,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                     }
                 }
             } else {
-                addErrorMessage("The operation cannot be executed because one ore more of the "
-                        + "involved objects are checked out.");
+                addErrorMessage(ERROR_OBJECTS_CHECKED_OUT);
             }
 
         } catch (RepositoryException e) {

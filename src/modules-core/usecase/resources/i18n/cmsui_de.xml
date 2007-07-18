@@ -21,5 +21,9 @@
 <catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <message key="could-not-execute-usecase">Der Usecase konnte nicht ausgeführt werden</message>
+  <message key="objects-checked-out">
+    Die Operation konnte nicht ausgeführt werden, da eines oder mehrere der beteiligten
+    Objekte ausgecheckt sind.
+  </message>
   
 </catalogue>

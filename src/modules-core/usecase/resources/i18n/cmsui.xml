@@ -21,5 +21,8 @@
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <message key="could-not-execute-usecase">Could not execute usecase</message>
+  <message key="objects-checked-out">
+    The operation cannot be executed because one ore more of the involved objects are checked out.
+  </message>
   
 </catalogue>
