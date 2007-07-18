@@ -107,7 +107,7 @@ public class SiteOverview extends AbstractUsecase {
                 else {
                     entry.setValue(KEY_PATH, "not in site structure");
                 }
-                entry.setValue(KEY_RESOURCE_TYPE, documents[i].getResourceType().getName());
+                entry.setValue(KEY_RESOURCE_TYPE, documents[i].getResourceType().getLabel());
                 entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
                 entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
 
