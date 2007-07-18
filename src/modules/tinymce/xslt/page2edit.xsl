@@ -143,42 +143,44 @@
   </xsl:for-each>
     <!-- insert usecase messages, if any -->
     <xsl:apply-templates select="/tinymceWrapper/xhtml:div[@class='lenya-error']"/>
+  <xsl:if test="not(/tinymceWrapper/xhtml:div[@class = 'lenya-error']/*)">
     <!-- insert tinymce form hook -->
-    <xsl:comment>special code for the tinymce.edit usecase view</xsl:comment>
-    <xsl:text>
-    </xsl:text>
-    <form method="post">
-        <xsl:text>
-        </xsl:text>
-        <input type="hidden" name="lenya.continuation" value="{$continuationId}"/>
-        <xsl:text>
-        </xsl:text>
-        <input type="hidden" name="lenya.usecase" value="{$usecaseName}"/>		
-        <xsl:text>
-        </xsl:text>
-        <input type="hidden" name="tinymce.namespaces" value=""/>
-        <xsl:text>
-        </xsl:text>
-        <textarea id="tinymce.content" name="tinymce.content" style="width:100%">
-          <xsl:choose>
-            <!-- firefox bug workaround: prevent <textarea/> from collapsing if empty -->
-            <xsl:when test=".//*">
-              <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:text>&#160;</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
-        </textarea>
-        <xsl:text>
-        </xsl:text>
-        <input i18n:attr="value" type="submit" name="submit" value="Submit"/>		
-        <xsl:text>
-        </xsl:text>
-        <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>		
-        <xsl:text>
-    </xsl:text>
-    </form>
+      <xsl:comment>special code for the tinymce.edit usecase view</xsl:comment>
+      <xsl:text>
+      </xsl:text>
+      <form method="post">
+          <xsl:text>
+          </xsl:text>
+          <input type="hidden" name="lenya.continuation" value="{$continuationId}"/>
+          <xsl:text>
+          </xsl:text>
+          <input type="hidden" name="lenya.usecase" value="{$usecaseName}"/>		
+          <xsl:text>
+          </xsl:text>
+          <input type="hidden" name="tinymce.namespaces" value=""/>
+          <xsl:text>
+          </xsl:text>
+          <textarea id="tinymce.content" name="tinymce.content" style="width:100%">
+            <xsl:choose>
+              <!-- firefox bug workaround: prevent <textarea/> from collapsing if empty -->
+              <xsl:when test=".//*">
+                <xsl:apply-templates/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>&#160;</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </textarea>
+          <xsl:text>
+          </xsl:text>
+          <input i18n:attr="value" type="submit" name="submit" value="Submit"/>		
+          <xsl:text>
+          </xsl:text>
+          <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>		
+          <xsl:text>
+      </xsl:text>
+      </form>
+    </xsl:if>
     <xsl:text>
     </xsl:text>
 </xsl:copy>
