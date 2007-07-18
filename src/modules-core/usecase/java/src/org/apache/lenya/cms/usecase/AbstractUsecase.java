@@ -232,6 +232,11 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         try {
             clearErrorMessages();
             clearInfoMessages();
+            
+            Node[] nodes = getNodesToLock();
+            if (!canCheckOut(nodes)) {
+                addErrorMessage(ERROR_OBJECTS_CHECKED_OUT);
+            }
             doCheckPreconditions();
             
             List _errorMessages = getErrorMessages();
@@ -744,39 +749,36 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                             + (objects != null));
 
         try {
-            boolean canExecute = true;
-
             for (int i = 0; i < objects.length; i++) {
-                if (objects[i].isCheckedOut() && !objects[i].isCheckedOutByUser()) {
+                if (!objects[i].isLocked()) {
                     if (getLogger().isDebugEnabled())
                         getLogger().debug(
-                                "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
-                                        + objects[i] + "] is already checked out");
-
-                    canExecute = false;
+                                "AbstractUsecase::lockInvolvedObjects() locking " + objects[i]);
+                    objects[i].lock();
+                }
+                if (!isOptimistic() && !objects[i].isCheckedOutByUser()) {
+                    objects[i].checkout();
                 }
             }
-
-            if (canExecute) {
-                for (int i = 0; i < objects.length; i++) {
-                    if (!objects[i].isLocked()) {
-                        if (getLogger().isDebugEnabled())
-                            getLogger().debug(
-                                    "AbstractUsecase::lockInvolvedObjects() locking " + objects[i]);
-
-                        objects[i].lock();
-                    }
-                    if (!isOptimistic() && !objects[i].isCheckedOutByUser()) {
-                        objects[i].checkout();
-                    }
-                }
-            } else {
-                addErrorMessage(ERROR_OBJECTS_CHECKED_OUT);
-            }
-
         } catch (RepositoryException e) {
             throw new UsecaseException(e);
         }
+    }
+
+    protected boolean canCheckOut(Node[] objects) throws RepositoryException {
+        boolean canExecute = true;
+
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i].isCheckedOut() && !objects[i].isCheckedOutByUser()) {
+                if (getLogger().isDebugEnabled())
+                    getLogger().debug(
+                            "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
+                                    + objects[i] + "] is already checked out");
+
+                canExecute = false;
+            }
+        }
+        return canExecute;
     }
 
     /**
