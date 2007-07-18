@@ -62,28 +62,6 @@
     
     <map:pipeline type="noncaching">
     
-      <map:match pattern="bxe.open">
-        <map:act type="reserved-checkout">
-            <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
-              <map:parameter name="user" value="{user}"/>
-              <map:parameter name="filename" value="{filename}"/>
-              <map:parameter name="date" value="{date}"/>
-              <map:parameter name="message" value="{message}"/>
-            </map:generate>
-            <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
-            <map:call resource="style-cms-page"/>
-            <map:serialize />
-        </map:act>    
-        <map:generate type="jx" src="fallback://lenya/modules/bxe/usecases/bxe.jx"/>
-        <map:transform type="i18n">
-          <map:parameter name="locale" value="{request:locale}"/>
-        </map:transform>
-        <map:transform src="cocoon://lenya-screen.xsl"/>
-        <map:transform type="proxy"/>
-        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="xhtml"/>
-      </map:match>
-      
       <map:match pattern="bxe.close">
         <map:act type="reserved-checkin">
             <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
