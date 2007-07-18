@@ -24,5 +24,6 @@
   <message key="objects-checked-out">
     Beteiligte Objekte sind ausgecheckt.
   </message>
+  <message key="Access denied">Zugriff verweigert</message>
   
 </catalogue>
