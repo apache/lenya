@@ -27,6 +27,17 @@
         <parameter-name>lenya.action</parameter-name>
       </map:matcher>
     </map:matchers>
+    <map:transformers default="xslt">
+      <map:transformer logger="lenya.sitemap.transformer.uuid2url" name="uuid2url-sitetree"
+        src="org.apache.lenya.cms.cocoon.transformation.UuidToUrlTransformer">
+        <urls type="relative"/>
+        <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="href"/>
+      </map:transformer>
+      <map:transformer logger="lenya.sitemap.transformer.proxy" name="proxy-sitetree"
+        src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+        <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="href"/>
+      </map:transformer>
+    </map:transformers>
   </map:components>
   
   <map:pipelines>
@@ -40,6 +51,24 @@
           <map:parameter name="uri" value="{proxy:{request:requestURI}}"/>
         </map:transform>
         <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match type="action" pattern="sitetree">
+        <map:match pattern="*/*/**">
+          <map:generate src="cocoon://modules/sitetree/{1}/{2}/sitetree.xml"/>
+          <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/sitetree2nav.xsl" label="navtree">
+            <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+            <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+            <map:parameter name="extension" value="html"/>
+          </map:transform>
+          <map:transform type="i18n">
+            <map:parameter name="locale" value="{request:locale}"/>
+          </map:transform>
+          <map:transform type="uuid2url-sitetree"/>
+          <map:transform type="proxy-sitetree"/>
+          <map:transform src="xslt/sitetree.xsl"/>
+          <map:serialize type="xml"/>
+        </map:match>
       </map:match>
       
       <!-- document -->

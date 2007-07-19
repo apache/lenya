@@ -28,6 +28,10 @@
 <xsl:template match="/">
   <introspection>
 
+    <navigation>
+      <sitetree href="{$uri}?lenya.module=neutron&amp;lenya.action=sitetree" method="GET"/>
+    </navigation>
+    
     <!--
     TODO: In order to get the WYSIWYG view one needs to change the mime-type
     to xhtml+xml, but somehow this causes problems re saving ...
