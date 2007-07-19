@@ -38,6 +38,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionController;
@@ -83,11 +84,11 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String VALUE_ALL = "- all -";
 
     protected static final String SORT = "sort";
-    
-    protected static final String ORDER="order";
-    
-    protected static final String DESC="desc";
-    protected static final String ASC="asc";
+
+    protected static final String ORDER = "order";
+
+    protected static final String DESC = "desc";
+    protected static final String ASC = "asc";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -103,11 +104,11 @@ public class SiteOverview extends AbstractUsecase {
                 Entry entry = new Entry();
                 if (documents[i].hasLink()) {
                     entry.setValue(KEY_PATH, documents[i].getPath());
-                }
-                else {
+                } else {
                     entry.setValue(KEY_PATH, "not in site structure");
                 }
-                entry.setValue(KEY_RESOURCE_TYPE, documents[i].getResourceType().getLabel());
+                entry.setValue(KEY_RESOURCE_TYPE, ResourceType.I18N_PREFIX
+                        + documents[i].getResourceType().getName());
                 entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
                 entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
 
@@ -117,18 +118,14 @@ public class SiteOverview extends AbstractUsecase {
 
                 if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), documents[i])) {
                     Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                            getSession(),
-                            getLogger(),
-                            documents[i]);
+                            getSession(), getLogger(), documents[i]);
                     Version latestVersion = workflowable.getLatestVersion();
                     String state;
                     if (latestVersion != null) {
                         state = latestVersion.getState();
                     } else {
                         Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
-                                getSession(),
-                                getLogger(),
-                                documents[i]);
+                                getSession(), getLogger(), documents[i]);
                         state = workflow.getInitialState();
                     }
                     entry.setValue(KEY_WORKFLOW_STATE, state);
@@ -191,8 +188,7 @@ public class SiteOverview extends AbstractUsecase {
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            documents = siteManager.getDocuments(identityMap,
-                    publication,
+            documents = siteManager.getDocuments(identityMap, publication,
                     Publication.AUTHORING_AREA);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
@@ -213,8 +209,7 @@ public class SiteOverview extends AbstractUsecase {
      * @throws PublicationException if an error occurs.
      */
     protected Publication getPublication() throws PublicationException {
-        return PublicationUtil.getPublicationFromUrl(this.manager,
-                getDocumentFactory(),
+        return PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
                 getSourceURL());
     }
 
@@ -231,7 +226,8 @@ public class SiteOverview extends AbstractUsecase {
             String key = "key" + FILTERS[i].substring("filter".length());
             String filterValue = getParameterAsString(FILTERS[i]);
             if (!filterValue.equals(VALUE_ALL)) {
-                Entry[] entries = (Entry[]) filteredDocuments.toArray(new Entry[filteredDocuments.size()]);
+                Entry[] entries = (Entry[]) filteredDocuments.toArray(new Entry[filteredDocuments
+                        .size()]);
                 for (int entryIndex = 0; entryIndex < entries.length; entryIndex++) {
                     if (!entries[entryIndex].getValue(key).equals(filterValue)) {
                         filteredDocuments.remove(entries[entryIndex]);
@@ -241,9 +237,9 @@ public class SiteOverview extends AbstractUsecase {
         }
 
         String sort = getParameterAsString(SORT);
-        String order = getParameterAsString(ORDER,ASC);
+        String order = getParameterAsString(ORDER, ASC);
         if (sort != null) {
-            Comparator comparator = new EntryComparator(sort,order);
+            Comparator comparator = new EntryComparator(sort, order);
             Collections.sort(filteredDocuments, comparator);
         }
 
@@ -260,6 +256,7 @@ public class SiteOverview extends AbstractUsecase {
 
         /**
          * @param key The key to compare.
+         * @param order The order string ({@link SiteOverview#ASC} or {@link SiteOverview#DESC}).
          */
         public EntryComparator(String key, String order) {
             this.key = key;
@@ -276,9 +273,9 @@ public class SiteOverview extends AbstractUsecase {
             String value1 = e1.getValue(this.key);
             String value2 = e2.getValue(this.key);
             if (this.order.equals(DESC))
-              return value2.compareTo(value1);
+                return value2.compareTo(value1);
             else
-              return value1.compareTo(value2);
+                return value1.compareTo(value2);
         }
 
     }
