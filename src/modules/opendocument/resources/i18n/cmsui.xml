@@ -20,7 +20,7 @@
 
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="resourceType-opendocument">OpenDocument</message>
+  <message key="resourceType-opendocument">ODT</message>
   <message key="Upload ODT">Upload ODT</message>
   <message key="Download ODT">Download ODT</message>
   <message key="Upload ODT File">Upload ODT File</message>

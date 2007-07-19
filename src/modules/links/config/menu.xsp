@@ -42,7 +42,7 @@
           <item uc:usecase="sitemanagement.create" href="?doctype=links">
             <i18n:translate>
               <i18n:text>New ... Document</i18n:text>
-              <i18n:param>Links</i18n:param>
+              <i18n:param><i18n:text>resourceType-links</i18n:text></i18n:param>
             </i18n:translate>
           </item>
         </block>

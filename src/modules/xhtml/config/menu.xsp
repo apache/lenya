@@ -41,7 +41,7 @@
         <block areas="site authoring" id="create">
           <item uc:usecase="sitemanagement.create" href="?doctype=xhtml"><i18n:translate>
               <i18n:text>New ... Document</i18n:text>
-              <i18n:param>XHTML</i18n:param>
+              <i18n:param><i18n:text>resourceType-xhtml</i18n:text></i18n:param>
             </i18n:translate>
           </item>
         </block>
