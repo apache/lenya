@@ -29,8 +29,7 @@
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="3600" />
     
-    <sample-name mime-type="application/xhtml+xml">fallback://lenya/modules/xhtml/samples/xhtml.xml</sample-name>
-    <!-- <sample-name name="Two Column Layout" mime-type="application/xhtml+xml">fallback://lenya/modules/xhtml/samples/xhtml-2col.xml</sample-name> -->
+    <samples uri="fallback://lenya/modules/xhtml/samples/samples.xml"/>
     
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@data"/>

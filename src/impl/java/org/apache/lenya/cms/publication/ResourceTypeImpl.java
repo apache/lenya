@@ -27,8 +27,14 @@ import java.util.Set;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.Schema;
 
@@ -38,12 +44,13 @@ import org.apache.lenya.xml.Schema;
  * @version $Id:$
  */
 public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable, ThreadSafe,
-        ResourceType {
+        ResourceType, Serviceable {
 
     protected static final String SCHEMA_ELEMENT = "schema";
     protected static final String SRC_ATTRIBUTE = "src";
     protected static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
     protected static final String ATTRIBUTE_XPATH = "xpath";
+    protected static final String ELEMENT_SAMPLES = "samples";
     protected static final String SAMPLE_NAME = "sample-name";
     protected static final String SAMPLE_NAME_ATTRIBUTE = "name";
     protected static final String SAMPLE_MIME_TYPE_ATTRIBUTE = "mime-type";
@@ -63,6 +70,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     private Map samples;
     private String[] linkAttributeXPaths;
     private long expires = 0;
+    private String samplesUri = null;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -80,14 +88,14 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             }
 
             // determine the sample content locations.
-            Configuration[] samplesConf = config.getChildren(SAMPLE_NAME);
-            this.samples = new HashMap();
-            for (int i = 0; i < samplesConf.length; i++) {
-                String name = samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE, DEFAULT_SAMPLE_NAME);
-                String mimeType = samplesConf[i].getAttribute(SAMPLE_MIME_TYPE_ATTRIBUTE);
-                String uri = samplesConf[i].getValue();
-                this.samples.put(name, new Sample(name, mimeType, uri));
+            Configuration samplesFileConf = config.getChild(ELEMENT_SAMPLES, false);
+            if (samplesFileConf != null) {
+                this.samplesUri = samplesFileConf.getAttribute(ATTRIBUTE_URI);
             }
+            else {
+                this.samples = loadSamples(config);
+            }
+            
 
             Configuration[] rewriteAttributeConfigs = config.getChildren(ELEMENT_REWRITE_ATTRIBUTE);
             List xPaths = new ArrayList();
@@ -115,6 +123,42 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     }
 
+    protected Map loadSamples(Configuration samplesParentConfig) throws ConfigurationException {
+        Configuration[] samplesConf = samplesParentConfig.getChildren(SAMPLE_NAME);
+        Map samples = new HashMap();
+        for (int i = 0; i < samplesConf.length; i++) {
+            String name = samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE, DEFAULT_SAMPLE_NAME);
+            String mimeType = samplesConf[i].getAttribute(SAMPLE_MIME_TYPE_ATTRIBUTE);
+            String uri = samplesConf[i].getValue();
+            samples.put(name, new Sample(name, mimeType, uri));
+        }
+        return samples;
+    }
+
+    protected Configuration readConfiguration(String uri) throws ConfigurationException {
+        Configuration config;
+        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(uri);
+            config = builder.build(source.getInputStream());
+        }
+        catch (Exception e) {
+            throw new ConfigurationException("Loading samples from URI [" + uri + "] failed: ", e);
+        }
+        finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+        return config;
+    }
+
     public Date getExpires() {
         Date date = new Date();
         date.setTime(date.getTime() + this.expires * 1000l);
@@ -128,17 +172,33 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     public String[] getLinkAttributeXPaths() {
         return this.linkAttributeXPaths;
     }
+    
+    protected Map getSamples() {
+        if (this.samplesUri == null) {
+            return this.samples;
+        }
+        else {
+            try {
+                Configuration samplesConfig = readConfiguration(this.samplesUri);
+                return loadSamples(samplesConfig);
+            } catch (ConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+            
+        }
+    }
 
     public String[] getSampleNames() {
-        Set names = this.samples.keySet();
+        Set names = getSamples().keySet();
         return (String[]) names.toArray(new String[names.size()]);
     }
     
     public Sample getSample(String name) {
-        if (!this.samples.containsKey(name)) {
+        Map samples = getSamples();
+        if (!samples.containsKey(name)) {
             throw new IllegalArgumentException("No sample with name [" + name + "] found.");
         }
-        return (Sample) this.samples.get(name);
+        return (Sample) samples.get(name);
     }
 
     public void setName(String name) {
@@ -153,6 +213,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     private Map formats = new HashMap();
+    private ServiceManager manager;
 
     public String[] getFormats() {
         Set names = this.formats.keySet();
@@ -192,6 +253,10 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             return this.uri;
         }
 
+    }
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
     
 }

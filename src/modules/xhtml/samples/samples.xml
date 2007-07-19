@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<samples>
+  <sample-name mime-type="application/xhtml+xml">fallback://lenya/modules/xhtml/samples/xhtml.xml</sample-name>
+  <sample-name name="Two Column Layout" mime-type="application/xhtml+xml">fallback://lenya/modules/xhtml/samples/xhtml-2col.xml</sample-name>
+</samples>
