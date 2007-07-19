@@ -26,6 +26,7 @@ import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
+import org.apache.lenya.util.Assert;
 
 /**
  * Source-node-based meta data.
@@ -108,6 +109,9 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public void setValue(String key, String value) throws MetaDataException {
         checkKey(key);
+        if (value == null) {
+            throw new MetaDataException("The value for key [" + key + "] must not be null.");
+        }
         getHandler().setValue(this.namespaceUri, key, value);
     }
 
