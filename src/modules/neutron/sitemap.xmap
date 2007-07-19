@@ -33,6 +33,7 @@
       
     <!-- Introspection -->
     <map:pipeline type="noncaching">
+      
       <map:match type="action" pattern="introspect">
         <map:generate src="context://lenya/content/util/empty.xml"/>
         <map:transform src="fallback://lenya/modules/neutron/xslt/introspection.xsl">
@@ -40,6 +41,16 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+      
+      <!-- document -->
+      <map:match pattern="document">
+        <map:generate src="lenya-document:{page-envelope:document-uuid}"/>
+        <map:transform src="fallback://lenya/modules/neutron/xslt/addCss.xsl">
+          <map:parameter name="css" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}/css/page.css}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
     </map:pipeline>
   
   </map:pipelines>

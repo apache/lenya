@@ -23,6 +23,6 @@
   </jx:when>
   <jx:otherwise>
     <jx:set var="document" value="${usecase.getParameter('document')}"/>
-    <ci:include src="lenya-document:${document.getUUID()},lang=${document.getLanguage()}"/>
+    <ci:include src="cocoon://modules/neutron/document"/>
   </jx:otherwise>
 </jx:choose>

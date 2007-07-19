@@ -24,12 +24,9 @@
 >
 
 <xsl:param name="uri"/>
-
+  
 <xsl:template match="/">
   <introspection>
-<!--
-    <edit mime-type="application/xml" name="Body Content">
--->
 
     <!--
     TODO: In order to get the WYSIWYG view one needs to change the mime-type
@@ -45,7 +42,7 @@
 <!--
       <save url="{$uri}?lenya.module=neutron&amp;lenya.step=save" method="PUT"/>
 -->
-      <checkin url="{$uri}?lenya.usecase=neutron.checkin" method="PUT"/>
+      <checkin url="{$uri}?lenya.usecase=bxe.close" method="PUT"/>
 
 <!--
       <schemas>
@@ -53,8 +50,7 @@
         <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/default.rng" type="RelaxNG"/>
       </schemas>
       <styles>
-        <style href="http://foo.bar.com/lenya/modules/xhtml/styles/default.xsl"/>
-        <style href="http://foo.bar.com/lenya/modules/xhtml/styles/simple.xsl"/>
+        <style href="{$uri}.xsl"/>
       </styles>
 -->
     </edit>
