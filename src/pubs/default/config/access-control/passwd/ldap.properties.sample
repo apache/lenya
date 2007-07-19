@@ -5,9 +5,11 @@
 
 #############################################################################
 # General settings 
+#    set handl-referrals to "follow" is your ldap server uses referrals
 #############################################################################
 provider-url=ldaps://ldap.example.com:389/dc=example,dc=com
 base-dn=dc=example,dc=com
+handle-referrals=
 
 #############################################################################
 # User parameters for authentication:
