@@ -78,6 +78,8 @@ public class LDAPUser extends FileUser {
     private static String USR_AUTH_TYPE_DEFAULT = "simple";
     private static String BASE_DN_PROP = "base-dn";
     private static String DOMAIN_NAME_PROP = "domain-name";
+    private static String HANDLE_REFERRALS_PROP = "handle-referrals";
+    private static String HANDLE_REFERRALS_DEFAULT = "ignore";
 
     private String ldapId;
     private String ldapName;
@@ -350,6 +352,7 @@ public class LDAPUser extends FileUser {
             env.put(Context.SECURITY_PRINCIPAL, principal);
             env.put(Context.SECURITY_CREDENTIALS, credentials);
         }
+        env.put(Context.REFERRAL, defaultProperties.getProperty(HANDLE_REFERRALS_PROP, HANDLE_REFERRALS_DEFAULT));
 
         DirContext ctx = new InitialLdapContext(env, null);
 
