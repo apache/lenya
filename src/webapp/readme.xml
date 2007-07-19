@@ -35,6 +35,13 @@
     
     <h2>Important notes for beta testers of Lenya 2.0</h2>
     
+    <h3>2007-07-19: <code>mime-type</code> attribute for resource type samples</h3>
+    <p>
+      The <code>&lt;sample-name&gt;</code> elements of the resource type declaration
+      must have a <code>mime-type</code> attribute. This allows the Create usecase to initialize
+      the MIME type of the document correctly.
+    </p>
+    
     <h3>2007-07-12: <code>publication.xml/proxies</code> wrapper element re-introduced</h3>
     <p>
       The <code>&lt;proxies&gt;</code> wrapper element is now required again for consistency reasons.
