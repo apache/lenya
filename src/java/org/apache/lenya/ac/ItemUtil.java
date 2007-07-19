@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.ac;
 
+import org.apache.commons.validator.EmailValidator;
+
 /**
  * Utility class for access control items.
  */
@@ -32,13 +34,12 @@ public class ItemUtil {
     }
     
     /**
-     * Check if a string is a valid email using the following regex
-     * <code>(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*</code>
-     * @param email
-     * @return
+     * Checks if a string is a valid e-mail address.
+     * @param email The string.
+     * @return A boolean value.
      */
     public static boolean isValidEmail(String email) {
-    	return email != null && email.matches("(\\w+\\.)*(\\w+)@(\\w+\\.)(\\w+)(\\.\\w+)*");
+        return EmailValidator.getInstance().isValid(email);
     }
 
 }
