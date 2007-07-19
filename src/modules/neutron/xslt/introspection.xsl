@@ -23,11 +23,7 @@
     xmlns="http://www.wyona.org/neutron/1.0"
 >
 
-<xsl:param name="context" select="'context-null'"/>
-<xsl:param name="publication" select="'publication-null'"/>
-<xsl:param name="area" select="'area-null'"/>
-<xsl:param name="page-id" select="'page-id-null'"/>
-<xsl:param name="uri" select="'/foo/bar.xml'"/>
+<xsl:param name="uri"/>
 
 <xsl:template match="/">
   <introspection>
@@ -43,13 +39,13 @@
     -->
     <edit mime-type="application/xhtml+xml" name="Body Content">
 
-      <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron.checkout" method="GET"/>
+      <checkout url="{$uri}?lenya.usecase=neutron.checkout" method="GET"/>
 
 <!-- Save without releasing the lock, e.g. for "global" temporary saving -->
 <!--
-      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=save" method="PUT"/>
+      <save url="{$uri}?lenya.module=neutron&amp;lenya.step=save" method="PUT"/>
 -->
-      <checkin url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron.checkin" method="PUT"/>
+      <checkin url="{$uri}?lenya.usecase=neutron.checkin" method="PUT"/>
 
 <!--
       <schemas>

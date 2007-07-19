@@ -20,56 +20,28 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
+  <map:components>
+    <map:matchers default="wildcard">
+      <map:matcher logger="sitemap.matcher.usecase" name="action"
+          src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>lenya.action</parameter-name>
+      </map:matcher>
+    </map:matchers>
+  </map:components>
+  
   <map:pipelines>
       
     <!-- Introspection -->
-    <map:pipeline>
-      <map:match pattern="*/**/introspection.xml">
+    <map:pipeline type="noncaching">
+      <map:match type="action" pattern="introspect">
         <map:generate src="context://lenya/content/util/empty.xml"/>
         <map:transform src="fallback://lenya/modules/neutron/xslt/introspection.xsl">
-          <map:parameter name="context" value="{page-envelope:context-prefix}"/>
-          <map:parameter name="publication" value="{page-envelope:publication-id}"/>
-          <map:parameter name="area" value="{1}"/>
-          <map:parameter name="page-id" value="{2}"/>
+          <map:parameter name="uri" value="{proxy:{request:requestURI}}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
   
-    <map:pipeline>
-        
-      <map:match pattern="load.xml">
-        <map:select type="parameter">
-          <map:parameter name="parameter-selector-test" value="{flow-attr:count(usecase/errorMessages)}"/>
-          <map:when test="0.0">
-            <map:read src="lenya-document:{page-envelope:document-uuid}"/>
-          </map:when>
-          <map:otherwise>
-            <map:generate src="context://lenya/content/util/empty.xml"/>
-            <map:serialize type="xml" status-code="500"/>
-          </map:otherwise>
-        </map:select>
-      </map:match>
-      
-      <map:match pattern="checkout.xml">
-        <map:select type="resource-exists">
-          <map:when test="lenya-document:{page-envelope:document-uuid}">
-            <map:act type="reserved-checkout">
-              <!-- TODO: add info from RCML ... -->
-              <map:generate src="checkout-exception.xml"/>
-              <map:serialize type="xml" status-code="500"/>
-            </map:act>
-            <map:read src="lenya-document:{page-envelope:document-uuid}"/>
-          </map:when>
-          <map:otherwise>
-            <map:generate src="context://lenya/content/util/empty.xml"/>
-            <map:serialize type="xml" status-code="412"/>
-          </map:otherwise>
-        </map:select>
-      </map:match>
-      
-    </map:pipeline>
-    
   </map:pipelines>
 
 </map:sitemap>
