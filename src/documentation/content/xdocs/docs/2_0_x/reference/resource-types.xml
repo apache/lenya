@@ -150,8 +150,11 @@
     <schema src="fallback://lenya/resources/schemas/profile.rng"
             language="http://relaxng.org/ns/structure/0.9"/>
             
-    <sample-name name="Empty Profile">fallback://lenya/resources/samples/empty.xml</sample-name>
-    <sample-name name="Example Profile">fallback://lenya/resources/samples/example.xml</sample-name>
+    <sample-name name="Empty Profile" mime-type="application/xml">
+        fallback://lenya/resources/samples/empty.xml</sample-name>
+        
+    <sample-name name="Example Profile" mime-type="application/xml">
+        fallback://lenya/resources/samples/example.xml</sample-name>
     
     <link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/>
     

@@ -128,7 +128,7 @@
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="3600" />
     
-    <sample-name>fallback://lenya/modules/person/samples/foaf.xml</sample-name>
+    <sample-name mime-type="application/rdf+xml">fallback://lenya/modules/person/samples/foaf.xml</sample-name>
     
     <format name="xhtml" uri="cocoon://modules/person/xhtml.xml"/>
     <format name="xhtml-include" uri="cocoon://modules/person/xhtml-include.xml"/>
