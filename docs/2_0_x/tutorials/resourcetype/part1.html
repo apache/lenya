@@ -709,6 +709,9 @@ document.write("Last Published: " + document.lastModified);
 <li>
 <a href="#Declaring+the+Resource+Type">Declaring the Resource Type</a>
 </li>
+<li>
+<a href="#Adding+I18n+Messages+for+the+Resource+Type+Name">Adding I18n Messages for the Resource Type Name</a>
+</li>
 </ul>
 </div>
 </div>
@@ -760,6 +763,7 @@ document.write("Last Published: " + document.lastModified);
     cocoon-xconf/                Patch files for cocoon.xconf.
       resourcetype-person.xconf  The declaration of our resource type.
   resources/
+    i18n/                        The internationalization catalogues.
     icons/
       person.gif                 The icon for the sitetree.
   samples/                       Samples to create person documents.
@@ -822,7 +826,7 @@ document.write("Last Published: " + document.lastModified);
     &lt;!-- Default time in seconds until the resource-type has expired --&gt;  
     &lt;expires seconds="3600" /&gt;
     
-    &lt;sample-name&gt;fallback://lenya/modules/person/samples/foaf.xml&lt;/sample-name&gt;
+    &lt;sample-name mime-type="application/rdf+xml"&gt;fallback://lenya/modules/person/samples/foaf.xml&lt;/sample-name&gt;
     
     &lt;format name="xhtml" uri="cocoon://modules/person/xhtml.xml"/&gt;
     &lt;format name="xhtml-include" uri="cocoon://modules/person/xhtml-include.xml"/&gt;
@@ -838,6 +842,29 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <p>
         In the <a href="../../../../docs/2_0_x/tutorials/resourcetype/part2.html">next section</a> we'll setup the creation of person documents.
+      </p>
+</div>
+    
+    
+<a name="N10097"></a><a name="Adding+I18n+Messages+for+the+Resource+Type+Name"></a>
+<h2 class="h3">Adding I18n Messages for the Resource Type Name</h2>
+<div class="section">
+<p>
+        Now we'll provide <acronym title="Internationalization">i18n</acronym> messages for each
+        language to show the resource type name in a human-readable form. There is a convention
+        that the message key <em>resourceType-{name}</em> is used.
+      </p>
+<p>
+        Create the file <span class="codefrag">$MODULE_HOME/resources/i18n/cmsui.xml</span> with the following content:
+      </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"&gt;
+  &lt;message key="resourceType-person"&gt;Person&lt;/message&gt;
+&lt;/catalogue&gt;</pre>
+<p>
+        For other languages, use the language code as suffix (<span class="codefrag">cmsui_de.xhml</span> etc.) and
+        don't forget to set the <em>xml:lang</em> attribute of the <span class="codefrag">&lt;catalogue&gt;</span>
+        element.
       </p>
 </div>
     

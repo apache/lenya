@@ -733,7 +733,8 @@ document.write("Last Published: " + document.lastModified);
 &lt;/map:sitemap&gt;</pre>
 <p>
         According to this sitemap, the menu XSP is located at
-        <span class="codefrag">$MODULE_HOME/config/menu.xsp</span>:
+        <span class="codefrag">$MODULE_HOME/config/menu.xsp</span>. Note that we're using the i18n
+        message for the resource type label which we added in the previous section:
       </p>
 <pre class="code">&lt;?xml version="1.0"?&gt;
 &lt;xsp:page 
@@ -749,7 +750,7 @@ document.write("Last Published: " + document.lastModified);
           &lt;item uc:usecase="sitemanagement.create" href="?doctype=person"&gt;
             &lt;i18n:translate&gt;
               &lt;i18n:text&gt;New ... Document&lt;/i18n:text&gt;
-              &lt;i18n:param&gt;Person&lt;/i18n:param&gt;
+              &lt;i18n:param&gt;&lt;i18n:text&gt;resourceType-person&lt;/i18n:text&gt;&lt;/i18n:param&gt;
             &lt;/i18n:translate&gt;
           &lt;/item&gt;
         &lt;/block&gt;

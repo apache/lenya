@@ -708,7 +708,7 @@ document.write("Last Published: " + document.lastModified);
 </li>
 <li>
 <a href="#Adding+the+Resource+Type+to+a+Publication">Adding the Resource Type to a Publication</a>
-<ul class="minitoc">
+</li>
 <li>
 <a href="#Providing+One+or+More+Sample+XML+Documents">Providing One or More Sample XML Documents</a>
 </li>
@@ -722,6 +722,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="#The+Resource+Type+Definition">The Resource Type Definition</a>
 </li>
 <li>
+<a href="#I18n+for+the+Resource+Type+Label">I18n for the Resource Type Label</a>
+</li>
+<li>
 <a href="#Define+a+Custom+Menubar">Define a Custom Menubar</a>
 </li>
 <li>
@@ -729,8 +732,6 @@ document.write("Last Published: " + document.lastModified);
 </li>
 <li>
 <a href="#Presentation">Presentation</a>
-</li>
-</ul>
 </li>
 </ul>
 </div>
@@ -741,12 +742,12 @@ document.write("Last Published: " + document.lastModified);
 <h2 class="h3">Introduction</h2>
 <div class="section">
 <p>
-	A resource type defines a certain XML source format, together with processing options.
+	A resource type defines a certain (XML or binary) source format, together with processing options.
 	It typically consists of
 	</p>
 <ul>
 	  
-<li>an XML structure definition (e.g., Relax NG)</li>
+<li>an XML structure definition (e.g., Relax NG), if the resource type is XML-based,</li>
 	  
 <li>some presentation pipelines,</li>
 	  
@@ -760,16 +761,15 @@ document.write("Last Published: " + document.lastModified);
 	</p>
 <p>
 	  The information describing a resource type is managed by a
-	  <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceType.html"><span class="codefrag">ResourceType</span></a>
-	  service. The default implementation is 
-	  <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceTypeImpl.html"><span class="codefrag">ResourceTypeImpl</span></a>.
+	  <a href="http://lenya.apache.org/apidocs/2.0/org/apache/lenya/cms/publication/ResourceType.html"><span class="codefrag">ResourceType</span></a>
+	  service. The default implementation is <span class="codefrag">ResourceTypeImpl</span>.
 	  It implements <span class="codefrag">ThreadSafe</span>, which ensures that only a single instance of every resource type is created.
 	  It is not possible to declare multiple resource types with the same name. 
 	</p>
 </div>
 
 
-<a name="N10039"></a><a name="Choose+a+Unique+Resource+Type+Name"></a>
+<a name="N10037"></a><a name="Choose+a+Unique+Resource+Type+Name"></a>
 <h2 class="h3">Choose a Unique Resource Type Name</h2>
 <div class="section">
 <p>
@@ -784,7 +784,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 	  
 
-<a name="N10048"></a><a name="Adding+the+Resource+Type+to+a+Publication"></a>
+<a name="N10046"></a><a name="Adding+the+Resource+Type+to+a+Publication"></a>
 <h2 class="h3">Adding the Resource Type to a Publication</h2>
 <div class="section">
 <p>
@@ -814,24 +814,64 @@ document.write("Last Published: " + document.lastModified);
 <li>resource types of the publication itself.</li>
   
 </ul>
-<p>
-    Adding a custom resource type to your publication includes the following steps:
-  </p>
-<a name="N1006D"></a><a name="Providing+One+or+More+Sample+XML+Documents"></a>
-<h3 class="h4">Providing One or More Sample XML Documents</h3>
+</div>
+  
+  
+<a name="N10069"></a><a name="Providing+One+or+More+Sample+XML+Documents"></a>
+<h2 class="h3">Providing One or More Sample XML Documents</h2>
+<div class="section">
 <p>
       If you want to enable users to create new resources belonging to
       your resource type, it is useful to provide one more more sample XML documents.
     </p>
 <p>
-      The sample document(s) are typically placed in
-      <span class="codefrag">&lt;publication&gt;/lenya/resources/samples/</span>.
+      The sample document(s) are typically placed in the directory
+      <span class="codefrag">$MODULE_HOME/samples</span>.
       You can choose arbitrary filenames, but for a single sample
       it is recommended to use the resource type name
       (e.g., <span class="codefrag">profile.xml</span>).
     </p>
-<a name="N1007F"></a><a name="Providing+an+XML+Structure+Definition"></a>
-<h3 class="h4">Providing an XML Structure Definition</h3>
+<p>
+      There are two ways of declaring the samples. The first option is very
+      convenient if you don't need custom samples per publication. You just add
+      the samples to the resource type declaration:
+    </p>
+<pre class="code">&lt;component-instance name="profile" ...
+  ...
+  &lt;sample-name name="Empty Profile" mime-type="application/xml"&gt;
+    fallback://lenya/modules/profile/samples/empty.xml&lt;/sample-name&gt;
+  &lt;sample-name name="Example Profile" mime-type="application/xml"&gt;
+    fallback://lenya/modules/profile/samples/example.xml&lt;/sample-name&gt;
+  ...
+&lt;/component-instance&gt;
+    </pre>
+<p>
+      The second option allows you to specify a file where the samples declarations
+      are stored. This enables you to override this file in your publications,
+      providing a different sample list per publication:
+    </p>
+<pre class="code">&lt;component-instance name="profile" ...
+  ...
+  &lt;samples uri="fallback://lenya/modules/profile/samples/samples.xml"/&gt;
+  ...
+&lt;/component-instance&gt;
+    </pre>
+<p>
+      The <span class="codefrag">samples.xml</span> file uses the same syntax:
+    </p>
+<pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;samples&gt;
+  &lt;sample-name name="Empty Profile" mime-type="application/xml"&gt;
+    fallback://lenya/modules/profile/samples/empty.xml&lt;/sample-name&gt;
+  &lt;sample-name name="Example Profile" mime-type="application/xml"&gt;
+    fallback://lenya/modules/profile/samples/example.xml&lt;/sample-name&gt;
+&lt;/samples&gt;</pre>
+</div>
+  
+  
+<a name="N10093"></a><a name="Providing+an+XML+Structure+Definition"></a>
+<h2 class="h3">Providing an XML Structure Definition</h2>
+<div class="section">
 <p>
       This step is only needed if you want to edit resources with Lenya
       or validate them after they have been imported or manipulated.
@@ -843,12 +883,16 @@ document.write("Last Published: " + document.lastModified);
       editor requires a Relax NG document.
     </p>
 <p>The structure definition document is typically placed in the directory
-      <span class="codefrag">&lt;publication&gt;/lenya/resources/schemas/</span>. The name
+      <span class="codefrag">$MODULE_HOME/resources/schemas</span>. The name
       of the file is arbitrary, but it is recommended to use the
       resource type name (e.g., <span class="codefrag">profile.rng</span>).
     </p>
-<a name="N1009D"></a><a name="Creating+a+Workflow+Schema"></a>
-<h3 class="h4">Creating a Workflow Schema</h3>
+</div>
+  
+  
+<a name="N100B1"></a><a name="Creating+a+Workflow+Schema"></a>
+<h2 class="h3">Creating a Workflow Schema</h2>
+<div class="section">
 <p>
       If your resources should have a workflow, you have to add a workflow
       schema for your resource type as described in
@@ -857,12 +901,16 @@ document.write("Last Published: " + document.lastModified);
       The workflow schema is assigned to a resource type in <span class="codefrag">publication.xconf</span>
       (see section <em>Adding Resource Types to a Publication</em>).
     </p>
-<a name="N100B0"></a><a name="The+Resource+Type+Definition"></a>
-<h3 class="h4">The Resource Type Definition</h3>
+</div>
+  
+  
+<a name="N100C4"></a><a name="The+Resource+Type+Definition"></a>
+<h2 class="h3">The Resource Type Definition</h2>
+<div class="section">
 <p>
     To declare a custom resource type and assign the creator, schema etc. to it,
 	  add the component instance to an XPatch file (e.g.,
-	  <span class="codefrag">&lt;publication&gt;/config/cocoon-xconf/resourcetype-profile.xconf</span>):
+	  <span class="codefrag">$MODULE_HOME/config/cocoon-xconf/resourcetype-profile.xconf</span>):
     </p>
 <pre class="code">&lt;xconf xpath="/cocoon/resource-types"
        unless="/cocoon/resource-types/component-instance[@name = 'profile']"&gt;
@@ -871,11 +919,14 @@ document.write("Last Published: " + document.lastModified);
                       logger="lenya.resourcetypes.profile"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl"&gt;
                       
-    &lt;schema src="fallback://lenya/resources/schemas/profile.rng"
+    &lt;schema src="fallback://lenya/modules/profile/resources/schemas/profile.rng"
             language="http://relaxng.org/ns/structure/0.9"/&gt;
             
-    &lt;sample-name name="Empty Profile"&gt;fallback://lenya/resources/samples/empty.xml&lt;/sample-name&gt;
-    &lt;sample-name name="Example Profile"&gt;fallback://lenya/resources/samples/example.xml&lt;/sample-name&gt;
+    &lt;sample-name name="Empty Profile" mime-type="application/xml"&gt;
+        fallback://lenya/modules/profile/samples/empty.xml&lt;/sample-name&gt;
+        
+    &lt;sample-name name="Example Profile" mime-type="application/xml"&gt;
+        fallback://lenya/modules/profile/samples/example.xml&lt;/sample-name&gt;
     
     &lt;link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/&gt;
     
@@ -889,8 +940,26 @@ document.write("Last Published: " + document.lastModified);
       a <span class="codefrag">./build</span> command). Its contents will be patched into
       <span class="codefrag">&lt;lenya-webapp&gt;/WEB-INF/cocoon.xconf</span>.
     </p>
-<a name="N100C9"></a><a name="Define+a+Custom+Menubar"></a>
-<h3 class="h4">Define a Custom Menubar</h3>
+</div>
+  
+  
+<a name="N100DD"></a><a name="I18n+for+the+Resource+Type+Label"></a>
+<h2 class="h3">I18n for the Resource Type Label</h2>
+<div class="section">
+<p>
+      There is a convention that the message key <em>resourceType-{name}</em> is used for a
+      human-readable, translated resource type label:
+    </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"&gt;
+  &lt;message key="resourceType-profile"&gt;Profile&lt;/message&gt;
+&lt;/catalogue&gt;</pre>
+</div>
+  
+  
+<a name="N100EE"></a><a name="Define+a+Custom+Menubar"></a>
+<h2 class="h3">Define a Custom Menubar</h2>
+<div class="section">
 <p>
       If you want to use a custom menubar for your resource type,
       follow the guidelines on the page
@@ -902,11 +971,18 @@ document.write("Last Published: " + document.lastModified);
       To let the user create new resources using the <span class="codefrag">DefaultBranchCreator</span>,
       you have to add the following menu item:
     </p>
-<pre class="code">
-  &lt;item uc:usecase="site.create" href="?doctype=profile"&gt;&lt;i18n:text&gt;New Profile Document&lt;/i18n:text&gt;&lt;/item&gt;
-</pre>
-<a name="N100E0"></a><a name="Formats"></a>
-<h3 class="h4">Formats</h3>
+<pre class="code">&lt;item uc:usecase="sitemanagement.create" href="?doctype=profile"&gt;
+  &lt;i18n:translate&gt;
+    &lt;i18n:text&gt;New ... Document&lt;/i18n:text&gt;
+    &lt;i18n:param&gt;&lt;i18n:text&gt;resourceType-profile&lt;/i18n:text&gt;&lt;/i18n:param&gt;
+  &lt;/i18n:translate&gt;
+&lt;/item&gt;</pre>
+</div>
+  
+  
+<a name="N10105"></a><a name="Formats"></a>
+<h2 class="h3">Formats</h2>
+<div class="section">
 <p>
       A resource type provides a set of <em>formats</em> to provide different ways of presenting content documents.
       The formats are defined in the resource type declaration:
@@ -1009,8 +1085,12 @@ document.write("Last Published: " + document.lastModified);
 </li>
     
 </ul>
-<a name="N10152"></a><a name="Presentation"></a>
-<h3 class="h4">Presentation</h3>
+</div>
+  
+  
+<a name="N10177"></a><a name="Presentation"></a>
+<h2 class="h3">Presentation</h2>
+<div class="section">
 <p>
       To make your resources available as HTTP pages, you have to add the
       appropriate pipelines and XSLT stylesheets. In general, there are no
