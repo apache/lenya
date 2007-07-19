@@ -27,7 +27,7 @@
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="3600" />
     
-    <sample-name>fallback://lenya/modules/news/samples/news.xml</sample-name>
+    <sample-name mime-type="application/xml">fallback://lenya/modules/news/samples/news.xml</sample-name>
     <format name="xhtml" uri="cocoon://modules/news/xhtml.xml"/>
     <format name="include" uri="cocoon://modules/news/include.xml"/>
     <format name="rss" uri="cocoon://modules/news/rss.xml"/>

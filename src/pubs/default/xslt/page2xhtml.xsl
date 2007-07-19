@@ -52,7 +52,11 @@
   <xsl:template match="cmsbody">
     <html>
       <head>
+        <!-- 
         <link rel="neutron-introspection" type="application/neutron+xml" href="{$root}{$document-path}/introspection.xml"/>
+         -->
+        <link rel="neutron-introspection" type="application/neutron+xml"
+          href="{$root}{$document-path}.xml?lenya.module=neutron&amp;lenya.action=introspect"/>
         <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
         <!-- Load doctype-specific CSS -->
         <xsl:choose>

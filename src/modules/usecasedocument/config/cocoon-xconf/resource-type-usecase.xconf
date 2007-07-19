@@ -26,7 +26,7 @@
     <schema language="http://relaxng.org/ns/structure/0.9"
       src="fallback://lenya/modules/usecasedocument/resources/schemas/usecase.rng"/>
     
-    <sample-name>fallback://lenya/modules/usecasedocument/samples/usecase.xml</sample-name>
+    <sample-name mime-type="application/xml">fallback://lenya/modules/usecasedocument/samples/usecase.xml</sample-name>
     
     <format name="xhtml" uri="cocoon://modules/usecasedocument/usecase.xml"/>
   </component-instance>

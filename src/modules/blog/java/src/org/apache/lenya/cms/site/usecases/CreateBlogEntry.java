@@ -122,7 +122,8 @@ public class CreateBlogEntry extends DocumentUsecase {
 
             String documentId = getDocumentID();
             
-            String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);
+            String sampleName = resourceType.getSampleNames()[0];
+            String sampleUri = resourceType.getSample(sampleName).getUri();
 
             Document document = documentManager.add(map,
                     resourceType,

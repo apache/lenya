@@ -17,6 +17,7 @@
 <lenya:resourceType>usecase</lenya:resourceType>
 <lenya:contentType>xml</lenya:contentType>
 <lenya:extension>xml</lenya:extension>
+  <lenya:mimeType>application/xml</lenya:mimeType>
 </lenya:internal>
 </lenya:meta>
 </lenya:document>

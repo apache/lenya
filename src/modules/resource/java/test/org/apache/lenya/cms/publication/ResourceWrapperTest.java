@@ -119,9 +119,10 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
             selector = (ServiceSelector) manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select("resource");
 
-            String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);
-            doc = docManager.add(factory, resourceType, sampleUri, pub, Publication.AUTHORING_AREA,
+            ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
+            doc = docManager.add(factory, resourceType, sample.getUri(), pub, Publication.AUTHORING_AREA,
                     path, pub.getDefaultLanguage(), extension, "Test Resource", true);
+            doc.setMimeType(sample.getMimeType());
 
             ResourceWrapper resource = new ResourceWrapper(doc, manager, logger);
             resource.write(IMAGE_URL);

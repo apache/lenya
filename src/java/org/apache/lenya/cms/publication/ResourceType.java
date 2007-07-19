@@ -35,30 +35,34 @@
 package org.apache.lenya.cms.publication;
 
 import java.util.Date;
+
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.Schema;
 
 /**
  * @version $Id:$
  */
 public interface ResourceType {
-    
+
     /**
      * The Avalon service role.
      */
     String ROLE = ResourceType.class.getName();
-    
+
     /**
      * Prefix for translating the resource type name, e.g.
-     * &lt;i18n:text&gt;resourceType-&lt;jx:out value="${resourceType.getName()}"/&gt;&lt;/i18n:text&gt;
+     * &lt;i18n:text&gt;resourceType-&lt;jx:out
+     * value="${resourceType.getName()}"/&gt;&lt;/i18n:text&gt;
      */
     String I18N_PREFIX = "resourceType-";
-    
+
     /**
-     * Returns the date at which point the requested resource is considered expired
+     * Returns the date at which point the requested resource is considered
+     * expired
      * @return a string in RFC 1123 date format
      */
     Date getExpires();
-    
+
     /**
      * Returns the name of this document type.
      * @return A string value.
@@ -71,40 +75,78 @@ public interface ResourceType {
     Schema getSchema();
 
     /**
-     * Returns an array of XPaths representing attributes to be rewritten
-     * when a document URL has changed.
+     * Returns an array of XPaths representing attributes to be rewritten when a
+     * document URL has changed.
      * @return An array of strings.
      */
     String[] getLinkAttributeXPaths();
 
     /**
-     * Returns the a sample contents and their names for this type
-     * @return A set of the sample names
+     * @return The names of all available samples. The first one is the default sample.
      */
     String[] getSampleNames();
-    
+
     /**
-     * Returns the location of sample contents for this type
-     * @param name The name of the sample.
-     * @return A string value.
-     * @see #getSampleNames()
+     * @param name The name.
+     * @return The sample with the specified name.
      */
-    String getSampleURI(String name);
-    
+    Sample getSample(String name);
+
     /**
      * @param name The name of the resource type.
      */
     void setName(String name);
-    
+
     /**
      * @return All supported formats.
      */
     String[] getFormats();
-    
+
     /**
      * @param format The format.
      * @return The URI to get the formatted content at.
      */
     String getFormatURI(String format);
-    
+
+    /**
+     * A resource type sample.
+     */
+    public static class Sample {
+        
+        protected Sample(String name, String mimeType, String uri) {
+            Assert.notNull("name", name);
+            this.name = name;
+            Assert.notNull("mimeType", mimeType);
+            this.mimeType = mimeType;
+            Assert.notNull("uri", uri);
+            this.uri = uri;
+        }
+
+        private String name;
+        private String mimeType;
+        private String uri;
+
+        /**
+         * @return The name of the sample.
+         */
+        public String getName() {
+            return this.name;
+        }
+
+        /**
+         * @return The MIME type of the sample.
+         */
+        public String getMimeType() {
+            return this.mimeType;
+        }
+
+        /**
+         * @return The URI of the sample source.
+         */
+        public String getUri() {
+            return this.uri;
+        }
+
+    }
+
 }

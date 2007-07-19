@@ -75,7 +75,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
                 sourceDocument.getInputStream(), sourceDocument.getPublication(), area, path,
-                language, extension, navigationTitle, visibleInNav);
+                language, extension, navigationTitle, visibleInNav, sourceDocument.getMimeType());
 
         copyMetaData(sourceDocument, document);
         return document;
@@ -137,7 +137,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     protected Document add(DocumentFactory factory, ResourceType documentType,
             InputStream initialContentsStream, Publication pub, String area, String path,
-            String language, String extension, String navigationTitle, boolean visibleInNav)
+            String language, String extension, String navigationTitle, boolean visibleInNav, String mimeType)
             throws DocumentBuildException, DocumentException, PublicationException {
 
         Area areaObj = pub.getArea(area);
@@ -148,7 +148,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
 
         Document document = add(factory, documentType, initialContentsStream, pub, area, language,
-                extension);
+                extension, mimeType);
 
         addToSiteManager(path, document, navigationTitle, visibleInNav);
         return document;
@@ -166,7 +166,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI(initialContentsURI);
             return add(factory, documentType, uuid, source.getInputStream(), pub, area, language,
-                    extension);
+                    extension, getMimeType(source));
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -179,18 +179,26 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
+    protected String getMimeType(Source source) {
+        String mimeType = source.getMimeType();
+        if (mimeType == null) {
+            mimeType = "";
+        }
+        return mimeType;
+    }
+
     protected Document add(DocumentFactory factory, ResourceType documentType,
             InputStream initialContentsStream, Publication pub, String area, String language,
-            String extension) throws DocumentBuildException, DocumentException,
+            String extension, String mimeType) throws DocumentBuildException, DocumentException,
             PublicationException {
 
         String uuid = generateUUID();
         return add(factory, documentType, uuid, initialContentsStream, pub, area, language,
-                extension);
+                extension, mimeType);
     }
 
     protected Document add(DocumentFactory factory, ResourceType documentType, String uuid,
-            InputStream stream, Publication pub, String area, String language, String extension)
+            InputStream stream, Publication pub, String area, String language, String extension, String mimeType)
             throws DocumentBuildException {
         try {
 
@@ -205,6 +213,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
             document.setResourceType(documentType);
             document.setSourceExtension(extension);
+            document.setMimeType(mimeType);
 
             // Write Lenya-internal meta-data
             MetaData lenyaMetaData = document.getMetaData(DocumentImpl.METADATA_NAMESPACE);
@@ -936,7 +945,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throws DocumentBuildException, DocumentException, PublicationException {
         Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
                 sourceDocument.getUUID(), sourceDocument.getInputStream(), sourceDocument
-                        .getPublication(), area, language, sourceDocument.getSourceExtension());
+                        .getPublication(), area, language, sourceDocument.getSourceExtension(),
+                        sourceDocument.getMimeType());
         copyMetaData(sourceDocument, document);
 
         return document;

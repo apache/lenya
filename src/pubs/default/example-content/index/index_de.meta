@@ -24,6 +24,7 @@
 <lenya:internal>
 <lenya:resourceType>homepage</lenya:resourceType>
 <lenya:contentType>xml</lenya:contentType>
+  <lenya:mimeType>application/xhtml+xml</lenya:mimeType>
 </lenya:internal>
 <lenya:dc>
         <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Willkommen zur Lenya Standardpublikation</dc:title>

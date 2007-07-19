@@ -124,6 +124,9 @@ public class Importer extends AbstractLogEnabled {
             Element resourceTypeElement = helper.getFirstChild(internalElement, "resourceType");
             String resourceTypeName = DocumentHelper.getSimpleElementText(resourceTypeElement);
 
+            Element mimeTypeElement = helper.getFirstChild(internalElement, "mimeType");
+            String mimeType = DocumentHelper.getSimpleElementText(mimeTypeElement);
+
             selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select(resourceTypeName);
 
@@ -134,6 +137,7 @@ public class Importer extends AbstractLogEnabled {
                 newDoc = docManager.add(area.getPublication().getFactory(), resourceType,
                         contentUri, area.getPublication(), area.getName(), path, language, "xml",
                         navigationTitle, visibleInNav);
+                newDoc.setMimeType(mimeType);
             } else {
                 SiteNode node = site.getNode(path);
                 Document doc = node.getLink(node.getLanguages()[0]).getDocument();

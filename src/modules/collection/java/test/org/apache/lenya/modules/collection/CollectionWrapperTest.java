@@ -99,8 +99,10 @@ public class CollectionWrapperTest extends AbstractAccessControlTest {
             typeSelector = (ServiceSelector) getManager().lookup(ResourceType.ROLE + "Selector");
             type = (ResourceType) typeSelector.select("collection");
             docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-            String sampleUri = type.getSampleURI(type.getSampleNames()[0]);
-            doc = docMgr.add(getFactory(), type, sampleUri, pub, "authoring", "en", "xml");
+            ResourceType.Sample sample = type.getSample(type.getSampleNames()[0]);
+            doc = docMgr.add(getFactory(), type, sample.getUri(), pub, "authoring", "en", "xml");
+            doc.setMimeType(sample.getMimeType());
+            
         } finally {
             if (docMgr != null) {
                 getManager().release(docMgr);

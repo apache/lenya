@@ -24,8 +24,12 @@
   xmlns:ci="http://apache.org/cocoon/include/1.0" 
   >
   
+  <xsl:import href="xhtml2xhtml.xsl"/>
+  <!-- 
   <xsl:import href="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl"/>
-  
+   <xsl:param name="rendertype"/>
+    -->
+    
   <xsl:param name="pubId"/>
   <xsl:param name="contextPath"/>
   <xsl:param name="language"/>
@@ -35,7 +39,10 @@
     <xsl:copy-of select="lenya:meta"/>
     <html>
       <head>
+      <!-- 
         <link rel="stylesheet" href="{$contextPath}/{$pubId}/modules/homepage/css/homepage.css" type="text/css"/>
+         -->
+        <link rel="stylesheet" href="/default/authoring/css/page.css" type="text/css"/>
         <ci:include src="cocoon:/news-header_{$language}.xml"/>
       </head>
       <body>

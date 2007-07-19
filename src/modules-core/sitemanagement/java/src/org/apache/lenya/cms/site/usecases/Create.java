@@ -173,11 +173,12 @@ public abstract class Create extends AbstractUsecase {
                     selector = (ServiceSelector) this.manager
                             .lookup(ResourceType.ROLE + "Selector");
                     resourceType = (ResourceType) selector.select(getDocumentTypeName());
-                    String sample = getParameterAsString(SAMPLE, resourceType.getSampleNames()[0]);
-                    String sampleUri = resourceType.getSampleURI(sample);
-                    document = documentManager.add(getDocumentFactory(), resourceType, sampleUri,
+                    String sampleName = getParameterAsString(SAMPLE, resourceType.getSampleNames()[0]);
+                    ResourceType.Sample sample = resourceType.getSample(sampleName);
+                    document = documentManager.add(getDocumentFactory(), resourceType, sample.getUri(),
                             getPublication(), getArea(), getNewDocumentPath(), language,
                             getSourceExtension(), title, getVisibleInNav());
+                    document.setMimeType(sample.getMimeType());
                 } else {
                     document = documentManager.add(initialDocument, getArea(),
                             getNewDocumentPath(), language, getSourceExtension(), title,

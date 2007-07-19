@@ -46,6 +46,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String ATTRIBUTE_XPATH = "xpath";
     protected static final String SAMPLE_NAME = "sample-name";
     protected static final String SAMPLE_NAME_ATTRIBUTE = "name";
+    protected static final String SAMPLE_MIME_TYPE_ATTRIBUTE = "mime-type";
     protected static final String ELEMENT_FORMAT = "format";
     protected static final String ATTRIBUTE_URI = "uri";
     protected static final String ATTRIBUTE_NAME = "name";
@@ -59,7 +60,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     public static final String DEFAULT_SAMPLE_NAME = "Default Sample";
 
     private Schema schema = null;
-    private Sample[] samples;
+    private Map samples;
     private String[] linkAttributeXPaths;
     private long expires = 0;
 
@@ -80,11 +81,12 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
             // determine the sample content locations.
             Configuration[] samplesConf = config.getChildren(SAMPLE_NAME);
-            this.samples = new Sample[samplesConf.length];
+            this.samples = new HashMap();
             for (int i = 0; i < samplesConf.length; i++) {
                 String name = samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE, DEFAULT_SAMPLE_NAME);
+                String mimeType = samplesConf[i].getAttribute(SAMPLE_MIME_TYPE_ATTRIBUTE);
                 String uri = samplesConf[i].getValue();
-                this.samples[i] = new Sample(name, uri);
+                this.samples.put(name, new Sample(name, mimeType, uri));
             }
 
             Configuration[] rewriteAttributeConfigs = config.getChildren(ELEMENT_REWRITE_ATTRIBUTE);
@@ -128,21 +130,15 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     public String[] getSampleNames() {
-        String[] names = new String[this.samples.length];
-        for (int i = 0; i < names.length; i++) {
-            names[i] = this.samples[i].getName();
-        }
-        return names;
+        Set names = this.samples.keySet();
+        return (String[]) names.toArray(new String[names.size()]);
     }
-
-    public String getSampleURI(String name) {
-        for (int i = 0; i < this.samples.length; i++) {
-            if (this.samples[i].getName().equals(name)) {
-                return this.samples[i].getUri();
-            }
+    
+    public Sample getSample(String name) {
+        if (!this.samples.containsKey(name)) {
+            throw new IllegalArgumentException("No sample with name [" + name + "] found.");
         }
-        throw new IllegalArgumentException("The resource type [" + getName()
-                + "] doesn't support the sample [" + name + "]!");
+        return (Sample) this.samples.get(name);
     }
 
     public void setName(String name) {
@@ -173,41 +169,6 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         return ((Format) this.formats.get(format)).getURI();
     }
     
-    /**
-     * A sample.
-     */
-    public static class Sample {
-        
-        private String name;
-        private String uri;
-        
-        /**
-         * @param name The name.
-         * @param uri The URI.
-         */
-        public Sample(String name, String uri) {
-            Assert.notNull("name", name);
-            this.name = name;
-            Assert.notNull("uri", uri);
-            this.uri = uri;
-        }
-        
-        /**
-         * @return The name.
-         */
-        public String getName() {
-            return this.name;
-        }
-        
-        /**
-         * @return The URI.
-         */
-        public String getUri() {
-            return this.uri;
-        }
-        
-    }
-
     /**
      * A format.
      */

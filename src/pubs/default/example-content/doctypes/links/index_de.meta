@@ -13,6 +13,7 @@
 <lenya:internal>
 <lenya:resourceType>links</lenya:resourceType>
 <lenya:contentType>xml</lenya:contentType>
+  <lenya:mimeType>application/xml</lenya:mimeType>
 </lenya:internal>
 </lenya:meta>
 </lenya:document>

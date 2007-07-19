@@ -11,6 +11,7 @@
     <lenya:resourceType>opendocument</lenya:resourceType>
     <lenya:contentType>odt</lenya:contentType>
      <lenya:extension>odt</lenya:extension>
+    <lenya:mimeType>application/vnd.oasis.opendocument.text</lenya:mimeType>
   </lenya:internal>
 </lenya:meta>
 </lenya:document>

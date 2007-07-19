@@ -124,9 +124,10 @@ public class Put extends CreateDocument {
                     String path = doc.getPath();
                     // lookupResourceType(extension)
                     resourceType = lookUpExtension(extension, selector);
-                    String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);
-                    doc = documentManager.add(map, resourceType, sampleUri, getPublication(), doc
+                    ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
+                    doc = documentManager.add(map, resourceType, sample.getUri(), getPublication(), doc
                             .getArea(), path, doc.getLanguage(), extension, doc.getName(), true);
+                    doc.setMimeType(sample.getMimeType());
                     setMetaData(doc);
                 } finally {
                     if (documentManager != null) {
