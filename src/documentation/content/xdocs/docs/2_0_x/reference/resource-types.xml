@@ -86,9 +86,7 @@
     <li>resource types of the publication itself.</li>
   </ul>
   
-  <p>
-    Adding a custom resource type to your publication includes the following steps:
-  </p>
+  </section>
   
   <section><title>Providing One or More Sample XML Documents</title>
     <p>
@@ -355,8 +353,6 @@
     </p>
     
   </section>
-
-</section>
 
 	</body>
 </document>
