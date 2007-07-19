@@ -23,7 +23,6 @@
   <component-instance name="collection"
                       logger="lenya.resourcetypes.collectoin"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <label>Collection</label>
     <sample-name name="Manual">fallback://lenya/modules/collection/samples/collection.xml</sample-name>
     <sample-name name="Children">fallback://lenya/modules/collection/samples/children.xml</sample-name>
     <format name="collection" uri="cocoon://modules/collection/collection.xml"/>

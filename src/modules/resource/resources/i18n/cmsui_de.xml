@@ -20,6 +20,7 @@
 
 <catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
+  <message key="resourceType-resource">Media</message>
   <message key="Insert Image">Bild einfügen</message>
   <message key="Insert Asset">Anlage einfügen</message>
   <message key="Asset Upload">Anlage hochladen</message>

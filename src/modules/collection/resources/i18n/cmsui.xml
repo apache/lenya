@@ -20,7 +20,6 @@
 
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="resourceType-cforms">CForms</message>
-  <message key="With CForms">With CForms</message>
+  <message key="resourceType-collection">Collection</message>
   
 </catalogue>

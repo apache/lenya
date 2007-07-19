@@ -23,7 +23,6 @@
   <component-instance name="usecase"
     logger="lenya.resourcetypes.usecase"
     class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <label>Usecase</label>
     <schema language="http://relaxng.org/ns/structure/0.9"
       src="fallback://lenya/modules/usecasedocument/resources/schemas/usecase.rng"/>
     

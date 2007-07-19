@@ -23,7 +23,6 @@
   <component-instance name="opendocument"
                       logger="lenya.resourcetypes.opendocument"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <label>OpenDocument</label>
     <sample-name>fallback://lenya/modules/opendocument/samples/helloworld.odt</sample-name>
     <!-- NOTE: Will be matched within sitemap of this module (modules/opendocument/sitemap.xmap) -->
     <format name="xhtml" uri="cocoon://modules/opendocument/xhtml.xml"/>

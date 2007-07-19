@@ -16,11 +16,10 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml 446542 2006-09-15 08:14:39Z andreas $ -->
+<!-- $Id: cmsui.xml 446564 2006-09-15 10:13:16Z andreas $ -->
 
-<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="resourceType-cforms">CForms</message>
-  <message key="With CForms">With CForms</message>
+  <message key="resourceType-xhtml">XHTML</message>
   
 </catalogue>

@@ -23,7 +23,6 @@
   <component-instance name="resource"
                       logger="lenya.resourcetypes.resource"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <label>Media</label>
     <schema src="fallback://lenya/modules/resource/resources/schemas/resource.rng" language="http://relaxng.org/ns/structure/0.9"/>
     <sample-name>fallback://lenya/modules/resource/samples/resource.xml</sample-name>
     <format name="xhtml" uri="cocoon://modules/resource/xhtml.xml"/>
