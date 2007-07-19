@@ -50,6 +50,9 @@
         </jx:choose>
         <i18n:text>type-children</i18n:text>
       </p>
+      <p style="padding-left: 3em; color: #999999;">
+        <i18n:text>note-feed-module</i18n:text>
+      </p>
       <p style="padding-left: 3em;">
         <jx:choose>
           <jx:when test="${type.equals('link')}">
@@ -59,7 +62,7 @@
             <input type="radio" name="type" value="link"/>
           </jx:otherwise>
         </jx:choose>
-        <i18n:text>Link</i18n:text>:
+        <i18n:text>external-source</i18n:text>:
         <input type="text" name="href" size="50" value="${usecase.getParameter('href')}"/>
       </p>
       

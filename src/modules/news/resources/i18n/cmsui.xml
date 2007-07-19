@@ -26,5 +26,10 @@
   <message key="include-items">Number of items to display on overview page</message>
   <message key="type-children">Child documents</message>
   <message key="acquire-news-from">Acquire messages from</message>
+  <message key="external-source">External source</message>
+  <message key="note-feed-module">
+    Acquiring messages from a link requires the <em>feeds</em> module which
+    is currently in the sandbox (not stable yet).
+  </message>
   
 </catalogue>

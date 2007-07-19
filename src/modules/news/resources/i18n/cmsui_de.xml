@@ -29,5 +29,10 @@
   <message key="include-items">Anzahl der Meldungen, die auf der Übersicht dargestellt werden sollen</message>
   <message key="type-children">Kind-Dokumenten</message>
   <message key="acquire-news-from">Meldungen beziehen von</message>
+  <message key="external-source">Externe Quelle</message>
+  <message key="note-feed-module">
+    Um Meldungen von einer externen Quelle beziehen zu können, ist das <em>feeds</em>-Modul erforderlich,
+    das sich derzeit in der Sandbox befindet (noch nicht stabil).
+  </message>
   
 </catalogue>
