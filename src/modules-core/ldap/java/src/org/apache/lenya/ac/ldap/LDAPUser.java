@@ -44,6 +44,7 @@ import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.file.FileUser;
 
 import com.sun.jndi.ldap.LdapCtxFactory;
+import com.sun.jndi.ldap.LdapURL;
 
 /**
  * LDAP user.
@@ -188,13 +189,11 @@ public class LDAPUser extends FileUser {
 
                 Attributes attributes = entry.getAttributes();
                 if (attributes != null) {
-                    Attribute userNames = attributes.get(usrNameAttr);
-                    if (userNames != null)
-                        for (NamingEnumeration enumeration = userNames.getAll(); enumeration
-                                .hasMore(); enumeration.next())
-                            name.append((String) userNames.get());
+                    Attribute userName = attributes.get(usrNameAttr);	
+                    if (userName != null) name.append((String) userName.get());
                 }
-                this.ldapName = name.toString();
+
+                	this.ldapName = name.toString();
                 if (getLogger().isDebugEnabled())
                     getLogger().debug("initialize() set name to " + this.ldapName);
             } else {
@@ -517,9 +516,15 @@ public class LDAPUser extends FileUser {
                 // 2. Principal is constructed from directory entry
                 SearchResult entry = getDirectoryEntry(getLdapId());
                 principal = entry.getName();
-                if (entry.isRelative())
+                if (entry.isRelative()){
                     if (principal.length() > 0)
-                        principal = principal + "," + defaultProperties.getProperty(BASE_DN_PROP);
+                        principal = principal + "," + defaultProperties.getProperty(BASE_DN_PROP);	
+                } else {
+                    // if the item is found following a referral an URL string is
+                    // returned which can not be used as principal
+                    LdapURL ldapurl = new LdapURL(principal);
+                    principal = ldapurl.getDN();
+                }
             } else
                 // 3. Principal is constructed from properties
                 principal = constructPrincipal(getLdapId());
