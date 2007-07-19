@@ -25,11 +25,11 @@
 	<title>Introduction</title>
 	
 	<p>
-	A resource type defines a certain XML source format, together with processing options.
+	A resource type defines a certain (XML or binary) source format, together with processing options.
 	It typically consists of
 	</p>
 	<ul>
-	  <li>an XML structure definition (e.g., Relax NG)</li>
+	  <li>an XML structure definition (e.g., Relax NG), if the resource type is XML-based,</li>
 	  <li>some presentation pipelines,</li>
 	  <li>some presentation XSLT stylesheets,</li>
 	  <li>usecases to manipulate documents.</li>
@@ -152,7 +152,7 @@
       editor requires a Relax NG document.
     </p>
     <p>The structure definition document is typically placed in the directory
-      <code>&lt;publication&gt;/lenya/resources/schemas/</code>. The name
+      <code>$MODULE_HOME/resources/schemas</code>. The name
       of the file is arbitrary, but it is recommended to use the
       resource type name (e.g., <code>profile.rng</code>).
     </p>
