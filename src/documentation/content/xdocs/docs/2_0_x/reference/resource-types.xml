@@ -97,12 +97,47 @@
       your resource type, it is useful to provide one more more sample XML documents.
     </p>
     <p>
-      The sample document(s) are typically placed in
-      <code><![CDATA[<publication>/lenya/resources/samples/]]></code>.
+      The sample document(s) are typically placed in the directory
+      <code>$MODULE_HOME/samples</code>.
       You can choose arbitrary filenames, but for a single sample
       it is recommended to use the resource type name
       (e.g., <code>profile.xml</code>).
     </p>
+    <p>
+      There are two ways of declaring the samples. The first option is very
+      convenient if you don't need custom samples per publication. You just add
+      the samples to the resource type declaration:
+    </p>
+    <source xml:space="preserve"><![CDATA[<component-instance name="profile" ...
+  ...
+  <sample-name name="Empty Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/empty.xml</sample-name>
+  <sample-name name="Example Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/example.xml</sample-name>
+  ...
+</component-instance>]]>
+    </source>
+    <p>
+      The second option allows you to specify a file where the samples declarations
+      are stored. This enables you to override this file in your publications,
+      providing a different sample list per publication:
+    </p>
+    <source xml:space="preserve"><![CDATA[<component-instance name="profile" ...
+  ...
+  <samples uri="fallback://lenya/modules/profile/samples/samples.xml</sample-name>
+  ...
+</component-instance>]]>
+    </source>
+    <p>
+      The <code>samples.xml</code> uses the same syntax:
+    </p>
+    <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<samples>
+  <sample-name name="Empty Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/empty.xml</sample-name>
+  <sample-name name="Example Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/example.xml</sample-name>
+</samples>]]></source>
   </section>
   
   <section><title>Providing an XML Structure Definition</title>
@@ -138,7 +173,7 @@
     <p>
     To declare a custom resource type and assign the creator, schema etc. to it,
 	  add the component instance to an XPatch file (e.g.,
-	  <code>&lt;publication&gt;/config/cocoon-xconf/resourcetype-profile.xconf</code>):
+	  <code>$MODULE_HOME/config/cocoon-xconf/resourcetype-profile.xconf</code>):
     </p>
     <source><![CDATA[<xconf xpath="/cocoon/resource-types"
        unless="/cocoon/resource-types/component-instance[@name = 'profile']">
@@ -147,14 +182,14 @@
                       logger="lenya.resourcetypes.profile"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
                       
-    <schema src="fallback://lenya/resources/schemas/profile.rng"
+    <schema src="fallback://lenya/modules/profile/resources/schemas/profile.rng"
             language="http://relaxng.org/ns/structure/0.9"/>
             
     <sample-name name="Empty Profile" mime-type="application/xml">
-        fallback://lenya/resources/samples/empty.xml</sample-name>
+        fallback://lenya/modules/profile/samples/empty.xml</sample-name>
         
     <sample-name name="Example Profile" mime-type="application/xml">
-        fallback://lenya/resources/samples/example.xml</sample-name>
+        fallback://lenya/modules/profile/samples/example.xml</sample-name>
     
     <link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/>
     
