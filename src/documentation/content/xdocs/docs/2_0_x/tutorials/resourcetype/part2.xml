@@ -45,7 +45,8 @@
 </map:sitemap>]]></source>
       <p>
         According to this sitemap, the menu XSP is located at
-        <code>$MODULE_HOME/config/menu.xsp</code>:
+        <code>$MODULE_HOME/config/menu.xsp</code>. Note that we're using the i18n
+        message for the resource type label which we added in the previous section:
       </p>
       <source xml:space="preserve"><![CDATA[<?xml version="1.0"?>
 <xsp:page 
@@ -61,7 +62,7 @@
           <item uc:usecase="sitemanagement.create" href="?doctype=person">
             <i18n:translate>
               <i18n:text>New ... Document</i18n:text>
-              <i18n:param>Person</i18n:param>
+              <i18n:param><i18n:text>resourceType-person</i18n:text></i18n:param>
             </i18n:translate>
           </item>
         </block>

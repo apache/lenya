@@ -66,6 +66,7 @@
     cocoon-xconf/                Patch files for cocoon.xconf.
       resourcetype-person.xconf  The declaration of our resource type.
   resources/
+    i18n/                        The internationalization catalogues.
     icons/
       person.gif                 The icon for the sitetree.
   samples/                       Samples to create person documents.
@@ -143,6 +144,27 @@
       </p>
       <p>
         In the <a href="site:newResourceTypePart2">next section</a> we'll setup the creation of person documents.
+      </p>
+    </section>
+    
+    <section>
+      <title>Adding I18n Messages for the Resource Type Name</title>
+      <p>
+        Now we'll provide <acronym title="Internationalization">i18n</acronym> messages for each
+        language to show the resource type name in a human-readable form. There is a convention
+        that the message key <em>resourceType-{name}</em> is used.
+      </p>
+      <p>
+        Create the file <code>$MODULE_HOME/resources/i18n/cmsui.xml</code> with the following content:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <message key="resourceType-person">Person</message>
+</catalogue>]]></source>
+      <p>
+        For other languages, use the language code as suffix (<code>cmsui_de.xhml</code> etc.) and
+        don't forget to set the <em>xml:lang</em> attribute of the <code><![CDATA[<catalogue>]]></code>
+        element.
       </p>
     </section>
     
