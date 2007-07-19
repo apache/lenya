@@ -128,7 +128,7 @@
 </component-instance>]]>
     </source>
     <p>
-      The <code>samples.xml</code> uses the same syntax:
+      The <code>samples.xml</code> file uses the same syntax:
     </p>
     <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <samples>
