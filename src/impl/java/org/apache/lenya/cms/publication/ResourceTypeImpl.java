@@ -52,7 +52,6 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String ATTRIBUTE_LANGUAGE = "language";
     protected static final String EXPIRES_ELEMENT = "expires";
     protected static final String SECONDS_ATTRIBUTE = "seconds";
-    protected static final String ELEMENT_LABEL = "label";
 
     /**
      * The default sample name.
@@ -108,11 +107,6 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 this.expires = expiresConf.getAttributeAsLong(SECONDS_ATTRIBUTE);
             }
             
-            Configuration labelConf = config.getChild(ELEMENT_LABEL, false);
-            if (labelConf != null) {
-                this.label = labelConf.getValue();
-            }
-
         } catch (Exception e) {
             throw new ConfigurationException("Configuring resource type failed: ", e);
         }
@@ -239,17 +233,4 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     }
     
-    private String label;
-
-    public String getLabel() {
-        if (this.label == null) {
-            this.label = getName();
-        }
-        return this.label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
 }

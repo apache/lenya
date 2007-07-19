@@ -48,6 +48,12 @@ public interface ResourceType {
     String ROLE = ResourceType.class.getName();
     
     /**
+     * Prefix for translating the resource type name, e.g.
+     * &lt;i18n:text&gt;resourceType-&lt;jx:out value="${resourceType.getName()}"/&gt;&lt;/i18n:text&gt;
+     */
+    String I18N_PREFIX = "resourceType-";
+    
+    /**
      * Returns the date at which point the requested resource is considered expired
      * @return a string in RFC 1123 date format
      */
@@ -101,13 +107,4 @@ public interface ResourceType {
      */
     String getFormatURI(String format);
     
-    /**
-     * @return The label of the resource type.
-     */
-    String getLabel();
-    
-    /**
-     * @param label The label of the resource type.
-     */
-    void setLabel(String label);
 }
