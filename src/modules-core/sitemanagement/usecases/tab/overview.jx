@@ -30,6 +30,7 @@
       <h1><i18n:text>Overview</i18n:text></h1>
       <jx:choose>
         <jx:when test="${not(empty(usecase.getParameter('title')))}">
+          <jx:set var="document" value="${usecase.getParameter('document')}"/>
           <table class="lenya-table-noborder">
             <tr>
               <td colspan="2">
@@ -65,7 +66,6 @@
                 <i18n:text><jx:out value="${usecase.getParameter('isLive')}"/></i18n:text>
               </td>
             </tr>
-            <jx:set var="document" value="${usecase.getParameter('document')}"/>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Available Languages</i18n:text>:</td>
               <td>
@@ -107,19 +107,31 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>UUID</i18n:text>:</td>
               <td>
-                <jx:out value="${usecase.getParameter('document').getUUID()}"/>
+                <jx:out value="${document.getUUID()}"/>
               </td>
             </tr>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Path</i18n:text>:</td>
               <td>
-                <jx:out value="${usecase.getParameter('document').getPath()}"/>
+                <jx:out value="${document.getPath()}"/>
               </td>
             </tr>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Resource Type</i18n:text>:</td>
               <td>
-                <i18n:text>resourceType-<jx:out value="${usecase.getParameter('document').getResourceType().getName()}"/></i18n:text>
+                <i18n:text>resourceType-<jx:out value="${document.getResourceType().getName()}"/></i18n:text>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Mime Type</i18n:text>:</td>
+              <td>
+                <jx:out value="${document.getMimeType()}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Document Size</i18n:text>:</td>
+              <td>
+                <jx:out value="${document.getContentLength()}"/> B
               </td>
             </tr>
             <tr>

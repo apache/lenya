@@ -56,6 +56,9 @@
   <message key="world">Welt</message>
   <message key="only-in-authoring-area">Dieser Usecase kann nur im Authoring-Bereich ausgeführt werden.</message>
   <message key="clipboard-empty">Die Zwischenablage ist leer.</message>
+  <message key="Resource Type">Ressourcen-Typ</message>
+  <message key="Mime Type">Mime-Type</message>
+  <message key="Document Size">Größe des Dokuments</message>
   
 </catalogue>
 

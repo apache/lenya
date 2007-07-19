@@ -56,5 +56,8 @@
   <message key="world">World</message>
   <message key="only-in-authoring-area">This usecase can only be invoked in the authoring area.</message>
   <message key="clipboard-empty">The clipboard is empty.</message>
+  <message key="Resource Type">Resource Type</message>
+  <message key="Mime Type">Mime Type</message>
+  <message key="Document Size">Document Size</message>
   
 </catalogue>
