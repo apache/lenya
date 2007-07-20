@@ -26,6 +26,7 @@
   
   <script type="text/javascript" src="/modules/fckeditor/fckeditor/fckeditor.js">&#160;</script>
   <script type="text/javascript" src="/modules/fckeditor/javascript/fckloader.js">&#160;</script>
+  <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js">&#160;</script>
   <script type="text/javascript">
     window.onload = function()
     {
@@ -42,7 +43,7 @@
             </page:body>
           </jx:when>
           <jx:otherwise>
-	    <page:body>
+            <page:body onkeydown="return checkBackspace(event)" onkeypress="return checkBackspace(event)" >
 	  
                 <div class="lenya-box">
                   <div class="lenya-box-title">Information</div>
