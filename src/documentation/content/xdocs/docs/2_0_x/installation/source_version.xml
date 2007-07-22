@@ -62,7 +62,7 @@
           <p>
             <strong>Java 2 Platform, Standard Edition</strong>
             <br/>
-            version 1.4.2 or newer, <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.5.x works with limitations</a>.
+            version 1.4.2 or newer, <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.6.x works with limitations</a>.
             <br/>
             Get it from <a href="site:java">http://java.sun.com/j2se/1.4.2/download.html</a>
           </p>
