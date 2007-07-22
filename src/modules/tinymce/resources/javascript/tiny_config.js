@@ -39,7 +39,7 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
       and search-and-replace. */
     plugins  : "save,fullscreen,searchreplace,table,contextmenu,simplebrowser",
     
-       plugin_simplebrowser_browselinkurl : currentURL + '?lenya.module=tinymce&lenya.step=link-show&language=en',
+       plugin_simplebrowser_browselinkurl : currentURL + '?lenya.usecase=editors.insertLink&lenya.editorModule=tinymce',
        plugin_simplebrowser_browseimageurl : currentURL + '?lenya.usecase=tinymce.insertImage',
        plugin_simplebrowser_browseflashurl : '',
      

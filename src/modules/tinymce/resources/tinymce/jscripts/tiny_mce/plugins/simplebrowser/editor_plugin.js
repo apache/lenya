@@ -89,9 +89,9 @@ var TinyMCE_SimpleBrowserPlugin = {
 		}
 	},
 
-	browserCallback : function(returnValue) {
-		if(!returnValue) return;
-		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements[TinyMCE_SimpleBrowserPlugin.options['field']].value = returnValue;
+	browserCallback : function(linkData) {
+		if(!linkData) return;
+		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements[TinyMCE_SimpleBrowserPlugin.options['field']].value = linkData['href'];
 	}
 };
 
