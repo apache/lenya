@@ -25,8 +25,9 @@
   <depends module="org.apache.lenya.modules.sitemanagement"/>
   <depends module="org.apache.lenya.modules.linking"/>
   <package>org.apache.lenya.modules</package>
-  <version>0.1-dev</version>
+  <version>0.2-dev</version>
   <name>Editors</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Editor base and support classes</description>
+  <description>Editor base and support classes, Forms and Oneform editor
+  implementations, generic insertLink usecase implementation</description>
 </module>
