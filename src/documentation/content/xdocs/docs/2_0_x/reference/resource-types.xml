@@ -59,8 +59,9 @@
   <title>Adding the Resource Type to a Publication</title>
   
   <p>
-    The resource types used by a publication are declared in <code>publication.xconf</code>,
-    including the assignment of a workflow schema to a resource type:
+    The resource types used by a publication are declared in <code>publication.xml</code>,
+    including the assignment of a workflow schema to a resource type. You have to add your
+    resource type to the <code><![CDATA[<resource-types>]]></code> section of this file:
   </p>
   
 <source xml:space="preserve"><![CDATA[<publication>
