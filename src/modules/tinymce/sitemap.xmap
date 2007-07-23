@@ -88,6 +88,25 @@
         <map:serialize type="xhtml"/>
       </map:match>
 
+      <!-- check requested locale and set appropriate tinymce language, if available. if not, fall back to english -->
+      <map:match pattern="tiny_config.xml">
+        <map:generate src="fallback://lenya/modules/tinymce/resources/javascript/tiny_config.xml"/>
+        <map:select type="resource-exists">
+          <!-- fixme: is this an appropriate test for language packs? -->
+          <map:when test="fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/langs/{request:locale}.js">
+            <map:transform src="fallback://lenya/modules/tinymce/xslt/tiny_config.xsl">  
+              <map:parameter name="locale" value="{request:locale}"/>
+            </map:transform>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="fallback://lenya/modules/tinymce/xslt/tiny_config.xsl">  
+              <map:parameter name="locale" value="en"/>
+            </map:transform>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="text"/>
+      </map:match>
+
     </map:pipeline>
 
   </map:pipelines>

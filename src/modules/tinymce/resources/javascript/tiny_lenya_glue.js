@@ -33,16 +33,6 @@ var linkElm, imageElm, inst;
 }
 
 
-// this function will be called by the generic insertAsset
-// usecase.
-function insertCallback(content, editor_id) {
-  // FIXME: this is not tested and not finished. How are internal links handled atm?
-  alert("insertCallback called.\n" 
-         + "content   : " + content + "\n"
-         + "editor_id : " + editor_id
-  );
-  tinyMCE.execCommand('mceInsertContent', decodeURI(editor_id), content);
-}
 
 function LenyaSaveContent(element_id, html, body) {
   // Do some custom HTML cleanup
@@ -53,4 +43,24 @@ function LenyaSaveContent(element_id, html, body) {
   return html;
 }
 
+/**
+  * This function is called by the editors.insertLink view to
+  * get default values and to determine which fields will be enabled.
+  * @returns a linkData hash map.
+  */
+function LenyaGetLinkData() {
+  var currentURL = TinyMCE_SimpleBrowserPlugin.options['curl'];
+  return {
+    'href' : currentURL ? currentURL : ""
+  };
+}
 
+/**
+  * This function is called by the editors.insertLink view to
+  * update the editor with the new user-supplied values.
+  */
+function LenyaSetLinkData(linkData) { 
+  TinyMCE_SimpleBrowserPlugin.browserCallback(linkData);
+}
+
+var lenyaLinkData;

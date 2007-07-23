@@ -75,7 +75,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="/{$publicationid}/modules/tinymce/javascript/tiny_config.js"
+          src="/{$publicationid}/modules/tinymce/tiny_config.xml"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
