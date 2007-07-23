@@ -103,8 +103,11 @@
       </p>
       <source><![CDATA[<module name="person"/>]]></source>
       <p>
-        to the <code><![CDATA[<modules/>]]></code> section.
+        to the <code><![CDATA[<modules/>]]></code> section. Additionally, you can assign a workflow
+        to the resource type in the <code><![CDATA[<resource-types>]]></code> section of
+        <code>publication.xml</code>:
       </p>
+      <source><![CDATA[<resource-type name="person" workflow="fallback://config/workflow/workflow.xml"/>]]></source>
     </section>
     
     <section>
