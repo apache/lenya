@@ -254,6 +254,26 @@
   <![CDATA[<format name="include" uri="cocoon://modules/profile/xhtml-inline.xml"/>]]>
 </source>
     <p>
+      The following figure illustrates some usage examples of formats:
+    </p>
+    <figure src="site:resourceTypeFormats.img" alt="Resource type formats"/>
+    <ul>
+      <li>
+        Example <strong>A</strong> shows the most typical case - a <em>msg</em> (message) document
+        is rendered using the format <em>xhtml</em> to be displayed as page content.
+      </li>
+      <li>
+        In example <strong>B</strong>, the format <em>teaser</em> is used to render teaser versions
+        of the <em>msg</em> documents to be displayed in the sidebar. This is usually done using
+        an include mechanism (see below).
+      </li>
+      <li>
+        In example <strong>C</strong>, a <em>news</em> document includes the <em>teaser</em>
+        versions of message documents. The <em>news</em> document in turn provides the format
+        <em>xhtml</em> to be rendered as page content.
+      </li>
+    </ul>
+    <p>
       The <code>uri</code> attribute of the <code>format</code> element may refer to an arbitrary URL,
       which is typically a request into the module itself. This URI is matched inside the module
       sitemap (in our case, <code>modules/profile/sitemap.xmap</code>).
@@ -312,10 +332,11 @@
 </source>
 
     <p>
-      Another usage scenario is to include formatted documents in other documents, e.g. as a teaser or summary:
+      Another usage scenario is to include formatted documents in other documents, e.g. as a teaser or summary
+      (see the figure above):
     </p>
-    <source xml:space="preserve"><![CDATA[<ci:include src="site:/{$language}{$path}?format=xhtml-inline"/>]]></source>
-    <source xml:space="preserve"><![CDATA[<ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/>]]></source>
+    <source xml:space="preserve"><![CDATA[<ci:include src="site:/{$language}{$path}?format=teaser"/>]]></source>
+    <source xml:space="preserve"><![CDATA[<ci:include src="lenya-document:{$uuid}?format=teaser"/>]]></source>
   
     <p>
       Since formats allow you to select the presentation style of a document

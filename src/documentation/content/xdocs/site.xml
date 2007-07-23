@@ -575,6 +575,7 @@
         <resourceTypeCreateScreen.img href="create-screen.png"/>
         <resourceTypeNewDocument.img href="new-document.png"/>
         <resourceTypeBxe.img href="bxe.png"/>
+        <resourceTypeFormats.img href="resourceTypeFormats.png"/>
       </resourceTypeImages>
     </live>
   </images>
