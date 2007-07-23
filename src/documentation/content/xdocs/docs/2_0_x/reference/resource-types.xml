@@ -161,7 +161,8 @@
       schema for your resource type as described in
       <a href="site:wfconfig">Workflow Configuration</a>.
       A workflow schema can be shared between multiple resource types.
-      The workflow schema is assigned to a resource type in <code>publication.xconf</code>
+      The workflow schema is assigned to a resource type in
+      <code>$PUB_HOME/config/publication.xml</code>
       (see section <em>Adding Resource Types to a Publication</em>).
     </p>
   </section>
@@ -241,7 +242,8 @@
     
     <p>
       A resource type provides a set of <em>formats</em> to provide different ways of presenting content documents.
-      The formats are defined in the resource type declaration:
+      The formats are defined in the resource type declaration in
+      <code>$MODULE_HOME/config/cocoon-xconf/resourcetype-profile.xconf</code>:
     </p>
 <source xml:space="preserve">
   <![CDATA[<format name="xhtml" uri="cocoon://modules/profile/xhtml.xml"/>]]>
