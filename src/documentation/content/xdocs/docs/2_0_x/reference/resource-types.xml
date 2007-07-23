@@ -343,13 +343,15 @@
       restrictions.
     </p>
     <p>
-      If you derive your publication from the default publication,
-      the pipelines have to be placed in
-      <code>&lt;publication&gt;/doctypes.xmap</code>. The stylesheets are located in
-      <code>&lt;publication&gt;/xslt/</code> and are named <code>&lt;resource-type&gt;2xhtml.xsl</code>
-      (e.g., <code>profile2xhtml.xsl</code>). The stylesheet is supposed to generate
-      a valid XHTML fragment (in the XHTML namespace) with <code>&lt;div id="body"&gt;</code>
-      as the document element.
+      The pipelines have to be placed in
+      <code>$MODULE_HOME/sitemap.xmap</code>. The stylesheets are typically located in
+      <code>$MODULE_HOME/xslt/</code> and named <code>{resource-type}2{format}.xsl</code>
+      (e.g., <code>profile2xhtml.xsl</code>).
+    </p>
+    <p>  
+      In the case of the <em>xhtml</em> format, the stylesheet is supposed to generate
+      a valid XHTML document (in the XHTML namespace). The output of other formats depends
+      on the purpose of the respective format.
     </p>
     
   </section>
