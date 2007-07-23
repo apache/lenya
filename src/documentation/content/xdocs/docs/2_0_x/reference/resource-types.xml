@@ -291,7 +291,9 @@
 ]]></source>
     <p>
       To request a formatted document, you can use the <em>format</em> parameter of the
-      <code>site:</code> and <code>lenya-document:</code> protocols:
+      <code>site:</code> and <code>lenya-document:</code> protocols. You can issue such
+      a request from an arbitrary sitemap (e.g., from your publication sitemap or from
+      a different module sitemap).
     </p>
 <source xml:space="preserve">
   <![CDATA[<!-- aggregate navigation components and XHTML-formatted content -->
