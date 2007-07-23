@@ -92,16 +92,13 @@
         <map:transform src="fallback://lenya/modules/editors/xslt/insertLink.xsl">
           <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
           <map:parameter name="area" value="authoring"/>
-          <map:parameter name="areaBasePath"
-             value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}}"/>
-          <map:parameter name="tab" value="en"/>
-          <map:parameter name="chosenLanguage" value="{page-envelope:document-language}"/>
-          <map:parameter name="path" value="{page-envelope:document-path}"/>
-          <map:parameter name="documentId" value="{page-envelope:document-uuid}"/>
+          <map:parameter name="documentPath" value="{page-envelope:document-path}"/>
+          <map:parameter name="documentLanguage" value="{page-envelope:document-language}"/>
           <map:parameter name="documentExtension" value="{page-envelope:document-extension}"/>
           <map:parameter name="defaultLanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/>
-          <map:parameter name="editorModule" value="{request-param:lenya.editorModule}"/>
+          <map:parameter name="areaBasePath"
+             value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}}"/>
         </map:transform>
         <map:call resource="style-cms-page"/>
         <map:serialize />

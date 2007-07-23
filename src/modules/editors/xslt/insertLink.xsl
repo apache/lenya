@@ -31,14 +31,12 @@
   
   <xsl:param name="publicationId"/>
   <xsl:param name="area"/>
-  <xsl:param name="tab"/>
-  <xsl:param name="path"/>
+  <xsl:param name="documentPath"/>
+  <xsl:param name="documentLanguage"/>
   <xsl:param name="documentExtension"/>
-  <xsl:param name="languages"/>
-  <xsl:param name="chosenLanguage"/>
   <xsl:param name="defaultLanguage"/>
+  <xsl:param name="languages"/>
   <xsl:param name="areaBasePath"/>
-  <xsl:param name="editorModule" select="editors"/>
   
   <xsl:variable name="extension">
     <xsl:if test="$documentExtension != ''">
@@ -49,18 +47,17 @@
   
   <xsl:template match="/">
     <page:page>
-      <page:title>Insert Link</page:title>
+      <page:title><i18n:text key="insertLink.heading"/></page:title>
       <page:body>
         <script type="text/javascript" src="/modules/sitetree/javascript/tree.js">&#160;</script>
         <script type="text/javascript" src="/modules/sitetree/javascript/lenyatree.js">&#160;</script>
         <script type="text/javascript" src="/modules/sitetree/javascript/navtree.js">&#160;</script>
         <script type="text/javascript" src="/modules/editors/javascript/insertLink.js">&#160;</script>
-        <script type="text/javascript" src="/modules/{$editorModule}/javascript/editorCallbacks.js">&#160;</script>
-        <script type="text/javascript" >
+        <script type="text/javascript">
           AREA = "<xsl:value-of select="$area"/>";
-          DOCUMENT_ID = "<xsl:value-of select="$path"/>";
+          DOCUMENT_ID = "<xsl:value-of select="$documentPath"/>";
           PUBLICATION_ID = "<xsl:value-of select="$publicationId"/>";
-          CHOSEN_LANGUAGE = "<xsl:value-of select="$chosenLanguage"/>";
+          CHOSEN_LANGUAGE = "<xsl:value-of select="$documentLanguage"/>";
           DEFAULT_LANGUAGE = "<xsl:value-of select="$defaultLanguage"/>";
           IMAGE_PATH = "/lenya/images/tree/";
           CUT_DOCUMENT_ID = '';
@@ -69,7 +66,7 @@
           AREA_BASE_PATH = "<xsl:value-of select="$areaBasePath"/>";
         </script>
         
-        <div id="lenya-info-treecanvas" style="width: 30%">
+        <div id="lenya-info-treecanvas" style="width: 30%; float:left;">
           <div class="lenya-tabs">
             <xsl:call-template name="languageTabs">
               <xsl:with-param name="languages" select="$languages"/>
@@ -78,30 +75,30 @@
           <div id="lenya-info-tree">
             <div id="tree">
               <script type="text/javascript">
-                LenyaBuildTree();
+                lenyaBuildTree();
               </script>
             </div>
           </div>
         </div>
         
-        <form action="" name="LenyaInsertLink" id="LenyaInsertLink" onsubmit="LenyaInvokeInsertLink()">
+        <form action="" name="LenyaInsertLink" id="LenyaInsertLink" onsubmit="lenyaInvokeInsertLink()">
           <table class="lenya-table-noborder">
             <tr>
-              <td colspan="2" class="lenya-form-caption">You can either click on a node in the tree for an internal link or enter a link in the URL field. </td>
+              <td colspan="2" class="lenya-form-caption"><i18n:text key="insertLink.clickTreeOrType"/></td>
             </tr>
             <tr>
               <td colspan="2">&#160;</td>
             </tr>
             <tr>
-              <td class="lenya-form-caption"><i18n:text>URL</i18n:text>:</td>
+              <td class="lenya-form-caption"><i18n:text key="insertLink.URL"/>:</td>
               <td><input class="lenya-form-element" type="text" name="url"/></td>
             </tr>
             <tr>
-              <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
+              <td class="lenya-form-caption"><i18n:text key="insertLink.title"/>:</td>
               <td><input class="lenya-form-element" type="text" name="title"/></td>
             </tr>
             <tr>
-              <td class="lenya-form-caption">Link text:</td>
+              <td class="lenya-form-caption"><i18n:text key="insertLink.text"/>:</td>
               <td><input class="lenya-form-element" type="text" name="text"/></td>
             </tr>
             <tr>
@@ -109,7 +106,7 @@
             </tr>
             <tr>
               <td/>
-              <td><input type="submit" value="Insert" name="input-insert"/></td>
+              <td><input i18n:attr="value" type="submit" value="insertLink.submit" name="input-insert"/></td>
             </tr>
           </table>
         </form>
@@ -149,17 +146,15 @@
         <xsl:value-of select="$publicationId"/>
         <xsl:text>/</xsl:text>
         <xsl:value-of select="$area"/>
-        <xsl:value-of select="$path"/>
+        <xsl:value-of select="$documentPath"/>
         <xsl:text>_</xsl:text>
         <xsl:value-of select="$language"/>
         <xsl:value-of select="$extension"/>
         <xsl:text>?lenya.usecase=editors.insertLink</xsl:text>
-        <xsl:text>&amp;lenya.editorModule=</xsl:text>
-        <xsl:value-of select="$editorModule"/>
       </xsl:attribute>
       <xsl:attribute name="class">
         <xsl:text>lenya-tablink</xsl:text>
-        <xsl:if test="$chosenLanguage = $language">
+        <xsl:if test="$documentLanguage = $language">
           <xsl:text>-active</xsl:text>
         </xsl:if>
       </xsl:attribute>

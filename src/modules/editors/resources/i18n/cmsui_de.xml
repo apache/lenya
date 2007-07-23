@@ -22,4 +22,13 @@
   
   <message key="Reformat">Formatieren</message>
 
+  <message key="insertLink.heading">Link einfügen</message>
+  <message key="insertLink.clickTreeOrType">
+    Sie können entweder ein Dokument im Baum auswählen oder eine beliebige URL eingeben.
+  </message>
+  <message key="insertLink.URL">URL</message>
+  <message key="insertLink.text">Link-Text</message>
+  <message key="insertLink.title">Link-Titel</message>
+  <message key="insertLink.submit">Link einfügen!</message>
+            
 </catalogue>

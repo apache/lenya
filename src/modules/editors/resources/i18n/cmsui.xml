@@ -22,4 +22,12 @@
   
   <message key="Reformat">Reformat</message>
 
+  <message key="insertLink.heading">Insert Link</message>
+  <message key="insertLink.clickTreeOrType">
+    You can either click on a node in the tree for an internal link or enter a link in the URL field.
+  </message>
+  <message key="insertLink.URL">URL</message>
+  <message key="insertLink.text">Link text</message>
+  <message key="insertLink.title">Link title</message>
+  <message key="insertLink.submit">Insert Link!</message>
 </catalogue>

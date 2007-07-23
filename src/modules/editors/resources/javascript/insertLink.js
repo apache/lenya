@@ -16,35 +16,49 @@
 */
 
 
-/* this file implements the generic part of an LenyaInsertLink usecase. for the editor-specific glue,
-   a callback function must be provided by the editor module. */
+/* this file implements the generic part of an insertLink usecase.
+   for the editor-specific glue, a callback function must be provided by the editor module.
+   see http://wiki.apache.org/lenya/GenericEditorAPI .
+ */
 
-function LenyaInvokeInsertLink() { 
+function lenyaInvokeInsertLink() { 
   // prepare linkData object (this is part of the callback API!):
+  var form = document.forms["LenyaInsertLink"]
   var linkData = {
-    'href':  document.forms["LenyaInsertLink"].url.value,
-    'text':  document.forms["LenyaInsertLink"].text.value,
-    'title': document.forms["LenyaInsertLink"].title.value,
+    'href':  form.url.value,
+    'text':  form.text.value,
+    'title': form.title.value,
     'name':  "",
     'lang':  ""
   };
 
   // invoke callback:
-  LenyaInsertLink(linkData);
+  window.opener.LenyaSetLinkData(linkData);
+  window.close();
 }
 
 /**
-  * if the user selected some text in the editor, use it to fill the "text" field.
+  * fill the form with defaults.
   */
-function LenyaSetText() { 
-    var selectionContent = window.opener.getSelection().getEditableRange().toString(); 
-    if (selectionContent.length != 0) { 
-        document.forms["LenyaInsertLink"].text.value = selectionContent;
-    } 
-    focus(); 
+function lenyaSetDefaults(linkData) { 
+    var linkData = window.opener.LenyaGetLinkData();
+    var form = document.forms["LenyaInsertLink"];
+    if (linkData['href'] !== undefined)
+      form.url.value = linkData['href'];
+    else
+      form.url.disabled = true;
+     if (linkData['text'] !== undefined)
+      form.text.value = linkData['text'];
+    else
+      form.text.disabled = true;
+    if (linkData['title'] !== undefined)
+       form.title.value = linkData['title'];
+    else
+       form.title.disabled = true;
+    window.focus();
 }
 
-function LenyaLinkTree(doc, treeElement) {
+function lenyaLinkTree(doc, treeElement) {
     this.doc = doc;
     this.treeElement = treeElement;
     this.selected = null;
@@ -52,24 +66,26 @@ function LenyaLinkTree(doc, treeElement) {
 
 /**
   * FIXME: CHOSEN_LANGUAGE should not be a global variable!
-  * a callback used by the LenyaLinkTree object.
+  * a callback used by the lenyaLinkTree object.
   */
-function LenyaSetLink(uuid) {
+function lenyaSetLink(uuid) {
     var language = CHOSEN_LANGUAGE;
     document.forms["LenyaInsertLink"].url.value = "lenya-document:" + uuid + ",lang=" + language;
 }
 
-function LenyaBuildTree() {
+function lenyaBuildTree() {
     var placeholder = document.getElementById('tree');
-    var tree = new LenyaLinkTree(document, placeholder);
+    var tree = new lenyaLinkTree(document, placeholder);
     tree.init(PUBLICATION_ID);
     tree.render();
     tree.loadInitialTree(AREA, DOCUMENT_ID);
 }
 
-window.onload = LenyaSetText;
+lenyaLinkTree.prototype = new NavTree;
+lenyaLinkTree.prototype.handleItemClick = function(item, event) {
+    lenyaSetLink(item.uuid);
+}
 
-LenyaLinkTree.prototype = new NavTree;
-LenyaLinkTree.prototype.handleItemClick = function(item, event) {
-    LenyaSetLink(item.uuid);
+window.onload = function() {
+  lenyaSetDefaults();
 }
