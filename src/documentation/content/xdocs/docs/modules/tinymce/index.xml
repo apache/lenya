@@ -37,7 +37,8 @@
         <li>
           <p>
             Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a> and 
-            unpack the archive in the resources directory of this module.
+            unpack the archive in the resources directory of the tinymce module
+            (<code>$LENYA_HOME/src/modules/tinymce/resources/</code>)
             That should give you a subdirectory named <code>tinymce</code>.
           </p>
           <p>
@@ -51,6 +52,9 @@
           Optionally download additional language packs and unpack them
           in the same place. (The new files will end up in <code>tinymce/</code> as 
           well.)
+          As of module version 0.5.1, TinyMCE will present itself in the
+          locale that your browser requests, <em>if</em> an appropriate
+          language pack can be found.
         </li>
         <li>
           Check the file permissions of the new "tinymce" directory.
@@ -105,7 +109,7 @@
         Use ids instead.
       </p>
       <p>
-        This module has been developed and tested with TinyMCE 2.1.0.
+        This module has been tested with TinyMCE 2.1.1.1.
       </p>
     </section>
     
