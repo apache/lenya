@@ -36,6 +36,11 @@ as namespace prefix (<html> instead of <xhtml:html>).
     </xsl:element>
   </xsl:template>
 
+  <!-- fixme: this might be generalized to also pass on processing instructions etc...-->
+  <xsl:template match="comment()">
+    <xsl:copy/>
+  </xsl:template>
+                                          
   <!--
     Workaround to prevent the serializer from collapsing these
     elements, since browsers currently can not handle things like
