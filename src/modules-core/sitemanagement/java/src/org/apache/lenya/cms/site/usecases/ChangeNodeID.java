@@ -66,21 +66,22 @@ public class ChangeNodeID extends DocumentUsecase {
         List nodes = new ArrayList();
 
         try {
-            Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
-            nodes.add(siteNode);
+            if(getSourceDocument() != null) {
+                Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
+                nodes.add(siteNode);
 
-            Document sourceDocument = getSourceDocument();
-
-            NodeSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument.getLink().getNode());
-            for (NodeIterator i = subsite.ascending(); i.hasNext();) {
-                SiteNode node = i.next();
-                String[] languages = node.getLanguages();
-                for (int l = 0; l < languages.length; l++) {
-                    Document doc = node.getLink(languages[l]).getDocument();
-                    nodes.add(doc.getRepositoryNode());
+                Document sourceDocument = getSourceDocument();
+  
+                NodeSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument.getLink().getNode());
+                for (NodeIterator i = subsite.ascending(); i.hasNext();) {
+                    SiteNode node = i.next();
+                    String[] languages = node.getLanguages();
+                    for (int l = 0; l < languages.length; l++) {
+                        Document doc = node.getLink(languages[l]).getDocument();
+                        nodes.add(doc.getRepositoryNode());
+                    }
                 }
             }
-
         } catch (Exception e) {
             throw new UsecaseException(e);
         }

@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
@@ -75,9 +78,13 @@ public class ChangeVisibility extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        SiteStructure structure = getSourceDocument().area().getSite();
-        Node[] objects = { structure.getRepositoryNode() };
-        return objects;
+        List nodes = new ArrayList();
+        if(getSourceDocument() != null) {
+            SiteStructure structure = getSourceDocument().area().getSite();
+            nodes.add(structure.getRepositoryNode());
+        }
+
+        return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
 }
