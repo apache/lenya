@@ -22,7 +22,7 @@
   <depends module="org.apache.lenya.modules.resource"/>
   <depends module="org.apache.lenya.modules.editors"/>
   <package>org.apache.lenya.modules</package>
-  <version>0.5.0</version>
+  <version>0.5.1</version>
   <name>TinyMCE Module</name>
   <lenya-version>@lenya.version@</lenya-version>
   <description>Module for the TinyMCE WYSIWYG XHTML editor. Work in
