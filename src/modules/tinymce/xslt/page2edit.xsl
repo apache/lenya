@@ -16,6 +16,7 @@
 <xsl:param name="continuationId" select="'tinymce.ERROR'"/>
 <xsl:param name="usecaseName" select="'tinymce.ERROR'"/>
 <xsl:param name="publicationid" />
+<xsl:param name="locale" select="'tinymce.ERROR'"/>
 
 
 <!--
@@ -24,14 +25,30 @@
 -->
 <xsl:template match="tinymceWrapper">
   <xsl:if test="$contextPath='tinymce.ERROR'">
-    <xsl:message terminate="yes"><i18n:text>Missing contextPath parameter! Check your tinymce sitemap.</i18n:text></xsl:message>
+    <xsl:message terminate="yes">
+      <i18n:text>Missing contextPath parameter!</i18n:text>
+      <i18n:text>Check your tinymce sitemap.</i18n:text>
+    </xsl:message>
   </xsl:if>
   <xsl:if test="$continuationId='tinymce.ERROR'">
-    <xsl:message terminate="yes"><i18n:text>Missing continuationId parameter! Check your tinymce sitemap.</i18n:text></xsl:message>
+    <xsl:message terminate="yes">
+      <i18n:text>Missing continuationId parameter!</i18n:text>
+      <i18n:text>Check your tinymce sitemap.</i18n:text>
+    </xsl:message>
   </xsl:if>
   <xsl:if test="$usecaseName='tinymce.ERROR'">
-    <xsl:message terminate="yes"><i18n:text>Missing usecaseName parameter! Check your tinymce sitemap.</i18n:text></xsl:message>
+    <xsl:message terminate="yes">
+      <i18n:text>Missing usecaseName parameter!</i18n:text>
+      <i18n:text>Check your tinymce sitemap.</i18n:text>
+    </xsl:message>
   </xsl:if>
+  <xsl:if test="$locale='tinymce.ERROR'">
+    <xsl:message terminate="yes">
+      <i18n:text>Missing locale parameter!</i18n:text>
+      <i18n:text>Check your tinymce sitemap.</i18n:text>
+    </xsl:message>
+  </xsl:if>
+
   <xsl:apply-templates select="xhtml:html"/>
 </xsl:template>
 
@@ -49,7 +66,7 @@
   <xsl:comment>special code for tinymce.edit usecase view</xsl:comment>
   <xsl:text>
   </xsl:text>
-  <xsl:comment>without the &#160; weirdness, firefox tends to interpret the whole page as a comment or something.</xsl:comment>
+  <xsl:comment>without the space between opening and closing script tag, Firefox tends to interpret the whole page as a comment or something :(</xsl:comment>
   <xsl:text>
   </xsl:text>
   <xsl:comment>the tinymce code:</xsl:comment>
@@ -75,7 +92,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="/{$publicationid}/modules/tinymce/tiny_config.xml"
+          src="/{$publicationid}/modules/tinymce/javascript/tiny_config.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -104,18 +121,25 @@
 
     /* pass all the stylesheets of the current page (except for those specific
        to the Lenya authoring GUI) to TinyMCE for true WYSIWYG editing */
+
+    config['language'] = "</xsl:text>
+    <xsl:value-of select="$locale"/>
+    <xsl:text>";
     config['content_css'] = "</xsl:text>
+
     <xsl:value-of select="$contextPath"/>
     <xsl:text>/modules/tinymce/css/editor_content.css</xsl:text>
     <xsl:for-each select="../xhtml:link[@rel='stylesheet' and not(contains(@href, '/lenya/css/'))]">
         <xsl:text>,</xsl:text>
         <xsl:value-of select="@href"/>
     </xsl:for-each>
+
     <xsl:text>";
 
     tinyMCE.init(config);
 
     </xsl:text>
+
     </script>
 </xsl:template>
 

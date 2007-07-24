@@ -57,11 +57,12 @@
         <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
+
     </map:pipeline>
 
     <map:pipeline>
 
-      <!-- this is the view of the usecase (see config/cocoon-xconf/usecases.xconf) -->
+      <!-- this is the view of the usecase (see config/cocoon-xconf/usecase-tinymce-edit.xconf) -->
 
       <map:match pattern="tinymce.edit">
         <!-- check if TinyMCE is installed -->
@@ -72,12 +73,28 @@
               <map:part src="cocoon:/tinymce.delegateToPubSitemap/authoring{page-envelope:document-url}"/>
               <map:part src="cocoon:/tinymce.getUsecaseMessages"/>
             </map:aggregate>
-            <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
-              <map:parameter name="contextPath" value=""/>
-              <map:parameter name="continuationId" value="{flow-continuation:id}"/>
-              <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
-              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-            </map:transform>
+            <!-- Check for language pack to render TinyMCE according to the 
+                 requested locale. If it does not exist, fall back to English. --> 
+            <map:select type="resource-exists">
+              <map:when test="fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/langs/{request:locale}.js">
+                <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
+                  <map:parameter name="contextPath" value=""/>
+                  <map:parameter name="continuationId" value="{flow-continuation:id}"/>
+                  <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
+                  <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+                  <map:parameter name="locale" value="{request:locale}"/>
+                </map:transform>
+              </map:when>
+              <map:otherwise>
+                <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
+                  <map:parameter name="contextPath" value=""/>
+                  <map:parameter name="continuationId" value="{flow-continuation:id}"/>
+                  <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
+                  <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+                  <map:parameter name="locale" value="en"/>
+                </map:transform>
+              </map:otherwise>
+            </map:select>
           </map:when>
           <!-- TinyMCE is not installed - generate info page for the user -->
           <map:otherwise>
@@ -86,25 +103,6 @@
         </map:select>
         <map:call resource="style-cms-page"/>
         <map:serialize type="xhtml"/>
-      </map:match>
-
-      <!-- check requested locale and set appropriate tinymce language, if available. if not, fall back to english -->
-      <map:match pattern="tiny_config.xml">
-        <map:generate src="fallback://lenya/modules/tinymce/resources/javascript/tiny_config.xml"/>
-        <map:select type="resource-exists">
-          <!-- fixme: is this an appropriate test for language packs? -->
-          <map:when test="fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/langs/{request:locale}.js">
-            <map:transform src="fallback://lenya/modules/tinymce/xslt/tiny_config.xsl">  
-              <map:parameter name="locale" value="{request:locale}"/>
-            </map:transform>
-          </map:when>
-          <map:otherwise>
-            <map:transform src="fallback://lenya/modules/tinymce/xslt/tiny_config.xsl">  
-              <map:parameter name="locale" value="en"/>
-            </map:transform>
-          </map:otherwise>
-        </map:select>
-        <map:serialize type="text"/>
       </map:match>
 
     </map:pipeline>

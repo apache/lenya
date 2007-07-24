@@ -1,4 +1,3 @@
-<javascript>
   /*
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -24,7 +23,6 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
 
 
     currentURL = location.href.replace(/\?.*$/,"");
-    locale = "<locale/>";
 
     config = {
 
@@ -34,9 +32,6 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
     /* only the element whose ID is listed under "elements" will be editable */
     mode     : "exact",
     elements : "tinymce.content",
-
-    /* FIXME: how do I get the user's language preference for authoring? */
-    language : locale,
 
     /* enable plugins for custom save function, fullscreen editing
       and search-and-replace. */
@@ -126,5 +121,3 @@ Lenya/TinyMCE glue code
     /* insert custom save handler to do some extra clean-up. */
     save_callback : "LenyaSaveContent"
     };
-
-</javascript>
