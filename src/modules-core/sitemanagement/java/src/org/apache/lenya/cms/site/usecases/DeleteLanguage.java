@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
@@ -57,10 +60,14 @@ public class DeleteLanguage extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        Node docNode = getSourceDocument().getRepositoryNode();
-        Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
-        Node[] nodes = { docNode, siteNode };
-        return nodes;
+        List nodes = new ArrayList();
+        if(getSourceDocument() != null) {
+            Node docNode = getSourceDocument().getRepositoryNode();
+            Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
+            nodes.add(docNode);
+            nodes.add(siteNode);
+        }
+        return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
     /**
