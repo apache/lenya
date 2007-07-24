@@ -98,27 +98,30 @@ public abstract class MoveSubsite extends DocumentUsecase {
      * changes to the site structure would compromise the operation.
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        try {
+        Set nodes = new HashSet();
+  
+        if(getSourceDocument() != null) {
+            try {
 
-            Set nodes = new HashSet();
+                SiteStructure sourceSite = getSourceDocument().area().getSite();
+                SiteStructure targetSite = getSourceDocument().getPublication()
+                        .getArea(getTargetArea()).getSite();
 
-            SiteStructure sourceSite = getSourceDocument().area().getSite();
-            SiteStructure targetSite = getSourceDocument().getPublication()
-                    .getArea(getTargetArea()).getSite();
+                nodes.add(sourceSite.getRepositoryNode());
+                nodes.add(targetSite.getRepositoryNode());
 
-            nodes.add(sourceSite.getRepositoryNode());
-            nodes.add(targetSite.getRepositoryNode());
+                Document[] docs = SiteUtil.getSubSite(this.manager,
+                        getSourceDocument().getLink().getNode()).getDocuments();
+                for (int i = 0; i < docs.length; i++) {
+                    nodes.add(docs[i].getRepositoryNode());
+                }
 
-            Document[] docs = SiteUtil.getSubSite(this.manager,
-                    getSourceDocument().getLink().getNode()).getDocuments();
-            for (int i = 0; i < docs.length; i++) {
-                nodes.add(docs[i].getRepositoryNode());
+            } catch (PublicationException e) {
+                throw new UsecaseException(e);
             }
-
-            return (Node[]) nodes.toArray(new Node[nodes.size()]);
-        } catch (PublicationException e) {
-            throw new UsecaseException(e);
         }
+ 
+        return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
     /**

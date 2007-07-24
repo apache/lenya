@@ -86,9 +86,11 @@ public class Deactivate extends InvokeWorkflow {
             List nodes = new ArrayList();
 
             Document doc = getSourceDocument();
-            Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-            nodes.add(liveDoc.getRepositoryNode());
-            nodes.add(liveDoc.area().getSite().getRepositoryNode());
+            if(doc != null) {
+                Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
+                nodes.add(liveDoc.getRepositoryNode());
+                nodes.add(liveDoc.area().getSite().getRepositoryNode());
+            }
             return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
         } catch (Exception e) {

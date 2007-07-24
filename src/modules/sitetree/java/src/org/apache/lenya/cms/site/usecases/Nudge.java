@@ -104,8 +104,11 @@ public class Nudge extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        Node node = getSourceDocument().area().getSite().getRepositoryNode();
-        Node[] nodes = { node };
+        Node[] nodes = new Node[0];
+        if(getSourceDocument() != null) {
+            Node node = getSourceDocument().area().getSite().getRepositoryNode();
+            nodes = new Node[] { node };
+        }
         return nodes;
     }
 

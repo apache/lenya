@@ -45,7 +45,10 @@ public class Metadata extends SiteUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        Node[] objects = { getSourceDocument().getRepositoryNode() };
+        Node[] objects = new Node[0];
+        if(getSourceDocument() != null) {
+            objects = new Node[] { getSourceDocument().getRepositoryNode() };
+        }
         return objects;
     }
 

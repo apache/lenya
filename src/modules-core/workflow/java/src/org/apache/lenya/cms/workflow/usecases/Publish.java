@@ -133,8 +133,10 @@ public class Publish extends InvokeWorkflow {
             List nodes = new ArrayList();
 
             Document doc = getSourceDocument();
-            nodes.add(doc.getRepositoryNode());
-            nodes.add(doc.area().getSite().getRepositoryNode());
+            if(doc != null) {
+                nodes.add(doc.getRepositoryNode());
+                nodes.add(doc.area().getSite().getRepositoryNode());
+            }
 
             return (org.apache.lenya.cms.repository.Node[]) nodes
                     .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
