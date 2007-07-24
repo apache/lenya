@@ -117,21 +117,25 @@ public class Paste extends AbstractUsecase {
         List nodes = new ArrayList();
 
         try {
-            Node siteNode = getArea().getSite().getRepositoryNode();
-            nodes.add(siteNode);
 
             Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
-            DocumentFactory map = getDocumentFactory();
-            Publication pub = getPublication();
-            Document clippedDocument = clipboard.getDocument(map, pub);
+            if (clipboard != null) {
+                
+                Node siteNode = getArea().getSite().getRepositoryNode();
+                nodes.add(siteNode);
 
-            NodeSet subsite = SiteUtil
-                    .getSubSite(this.manager, clippedDocument.getLink().getNode());
-            Document[] subsiteDocs = subsite.getDocuments();
-
-            for (int i = 0; i < subsiteDocs.length; i++) {
-                if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-                    nodes.add(subsiteDocs[i].getRepositoryNode());
+                DocumentFactory map = getDocumentFactory();
+                Publication pub = getPublication();
+                Document clippedDocument = clipboard.getDocument(map, pub);
+    
+                NodeSet subsite = SiteUtil
+                        .getSubSite(this.manager, clippedDocument.getLink().getNode());
+                Document[] subsiteDocs = subsite.getDocuments();
+    
+                for (int i = 0; i < subsiteDocs.length; i++) {
+                    if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+                        nodes.add(subsiteDocs[i].getRepositoryNode());
+                    }
                 }
             }
 
