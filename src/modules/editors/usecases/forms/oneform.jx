@@ -77,14 +77,9 @@
           <div style="float: left;">
             <input type="submit" value="Save" name="submit" i18n:attr="value"/>
             <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
-<!--
-
-FIXME: this does not currently work (see bug http://issues.apache.org/bugzilla/show_bug.cgi?id=42237)
-there is a working fix in bugzilla, but since it touches a low-level part of the core API, we decided to
-postpone it until 2.0.1.
 
             <input type="submit" value="Reformat" name="reformat" i18n:attr="value"/>
--->
+
           </div>
 
           <div style="clear: both;">
