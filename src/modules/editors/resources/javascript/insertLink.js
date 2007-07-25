@@ -15,50 +15,8 @@
   limitations under the License.
 */
 
-
-/* this file implements the generic part of an insertLink usecase.
-   for the editor-specific glue, a callback function must be provided by the editor module.
-   see http://wiki.apache.org/lenya/GenericEditorAPI .
- */
-
-function lenyaInvokeInsertLink() { 
-  // prepare linkData object (this is part of the callback API!):
-  var form = document.forms["LenyaInsertLink"]
-  var linkData = {
-    'href':  form.url.value,
-    'text':  form.text.value,
-    'title': form.title.value,
-    'name':  "",
-    'lang':  ""
-  };
-
-  // invoke callback:
-  window.opener.LenyaSetLinkData(linkData);
-  window.close();
-}
-
-/**
-  * fill the form with defaults.
-  */
-function lenyaSetDefaults(linkData) { 
-    var linkData = window.opener.LenyaGetLinkData();
-    var form = document.forms["LenyaInsertLink"];
-    if (linkData['href'] !== undefined)
-      form.url.value = linkData['href'];
-    else
-      form.url.disabled = true;
-     if (linkData['text'] !== undefined)
-      form.text.value = linkData['text'];
-    else
-      form.text.disabled = true;
-    if (linkData['title'] !== undefined)
-       form.title.value = linkData['title'];
-    else
-       form.title.disabled = true;
-    window.focus();
-}
-
-function lenyaLinkTree(doc, treeElement) {
+/* Constructor for LinkTree object */
+function LinkTree(doc, treeElement) {
     this.doc = doc;
     this.treeElement = treeElement;
     this.selected = null;
@@ -66,26 +24,30 @@ function lenyaLinkTree(doc, treeElement) {
 
 /**
   * FIXME: CHOSEN_LANGUAGE should not be a global variable!
-  * a callback used by the lenyaLinkTree object.
+  * a callback used by the LinkTree object.
   */
-function lenyaSetLink(uuid) {
+function setLink(uuid) {
     var language = CHOSEN_LANGUAGE;
-    document.forms["LenyaInsertLink"].url.value = "lenya-document:" + uuid + ",lang=" + language;
+    document.forms["insertLink"].url.value = "lenya-document:" + uuid + ",lang=" + language;
 }
 
-function lenyaBuildTree() {
+
+function buildTree() {
     var placeholder = document.getElementById('tree');
-    var tree = new lenyaLinkTree(document, placeholder);
+    var tree = new LinkTree(document, placeholder);
     tree.init(PUBLICATION_ID);
     tree.render();
     tree.loadInitialTree(AREA, DOCUMENT_ID);
 }
 
-lenyaLinkTree.prototype = new NavTree;
-lenyaLinkTree.prototype.handleItemClick = function(item, event) {
-    lenyaSetLink(item.uuid);
+LinkTree.prototype = new NavTree;
+LinkTree.prototype.handleItemClick = function(item, event) {
+    setLink(item.uuid);
 }
 
 window.onload = function() {
-  lenyaSetDefaults();
-}
+  buildTree();
+  org.apache.lenya.editors.handleFormLoad('insertLink');
+};
+              
+ 
