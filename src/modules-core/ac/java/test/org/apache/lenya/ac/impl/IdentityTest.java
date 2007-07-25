@@ -52,12 +52,10 @@ public class IdentityTest extends AbstractAccessControlTest {
     public void testBelongsTo() throws Exception {
         AccreditableManager testMgr = getAccessController(getSession(), "test").getAccreditableManager();
         AccreditableManager defaultMgr = getAccessController(getSession(), "default").getAccreditableManager();
-        AccreditableManager blogMgr = getAccessController(getSession(), "blog").getAccreditableManager();
         
         String userId = "lenya";
         User testUser = testMgr.getUserManager().getUser(userId);
         User defaultUser = defaultMgr.getUserManager().getUser(userId);
-        User blogUser = blogMgr.getUserManager().getUser(userId);
         
         Identity testIdentity = new Identity(getLogger());
         testIdentity.addIdentifiable(testUser);
@@ -65,18 +63,11 @@ public class IdentityTest extends AbstractAccessControlTest {
         Identity defaultIdentity = new Identity(getLogger());
         defaultIdentity.addIdentifiable(defaultUser);
         
-        Identity blogIdentity = new Identity(getLogger());
-        blogIdentity.addIdentifiable(blogUser);
-        
         assertTrue(testIdentity.belongsTo(testMgr));
         assertTrue(defaultIdentity.belongsTo(defaultMgr));
-        assertTrue(blogIdentity.belongsTo(blogMgr));
         
         assertTrue(testIdentity.belongsTo(defaultMgr));
         assertTrue(defaultIdentity.belongsTo(testMgr));
-        
-        assertFalse(testIdentity.belongsTo(blogMgr));
-        assertFalse(blogIdentity.belongsTo(testMgr));
     }
 
 }
