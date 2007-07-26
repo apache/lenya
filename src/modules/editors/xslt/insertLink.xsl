@@ -47,11 +47,13 @@
   
   <xsl:template match="/">
     <page:page>
-      <page:title><i18n:text key="insertLink.heading"/></page:title>
+      <page:title><i18n:text>insertLink.heading</i18n:text></page:title>
       <page:body>
+
         <script type="text/javascript" src="/modules/sitetree/javascript/tree.js">&#160;</script>
         <script type="text/javascript" src="/modules/sitetree/javascript/lenyatree.js">&#160;</script>
         <script type="text/javascript" src="/modules/sitetree/javascript/navtree.js">&#160;</script>
+        <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script>
         <script type="text/javascript" src="/modules/editors/javascript/insertLink.js">&#160;</script>
         <script type="text/javascript">
           AREA = "<xsl:value-of select="$area"/>";
@@ -65,7 +67,7 @@
           PIPELINE_PATH = '/sitetree-fragment.xml';
           AREA_BASE_PATH = "<xsl:value-of select="$areaBasePath"/>";
         </script>
-        
+
         <div id="lenya-info-treecanvas" style="width: 30%; float:left;">
           <div class="lenya-tabs">
             <xsl:call-template name="languageTabs">
@@ -74,43 +76,59 @@
           </div>
           <div id="lenya-info-tree">
             <div id="tree">
-              <script type="text/javascript">
-                lenyaBuildTree();
-              </script>
             </div>
           </div>
         </div>
         
-        <form action="" name="LenyaInsertLink" id="LenyaInsertLink" onsubmit="lenyaInvokeInsertLink()">
+        <form 
+          name="insertLink" 
+          onsubmit="org.apache.lenya.editors.handleFormSubmit('insertLink')"
+        >
           <table class="lenya-table-noborder">
             <tr>
-              <td colspan="2" class="lenya-form-caption"><i18n:text key="insertLink.clickTreeOrType"/></td>
+              <td colspan="2" class="lenya-form-caption">
+                <i18n:text>insertLink.clickTreeOrType</i18n:text>
+              </td>
             </tr>
             <tr>
               <td colspan="2">&#160;</td>
             </tr>
             <tr>
-              <td class="lenya-form-caption"><i18n:text key="insertLink.URL"/>:</td>
-              <td><input class="lenya-form-element" type="text" name="url"/></td>
+              <td class="lenya-form-caption">
+                <i18n:text>insertLink.URL</i18n:text>:
+              </td>
+              <td>
+                <input class="lenya-form-element" type="text" name="url"/>
+              </td>
             </tr>
             <tr>
-              <td class="lenya-form-caption"><i18n:text key="insertLink.title"/>:</td>
-              <td><input class="lenya-form-element" type="text" name="title"/></td>
+              <td class="lenya-form-caption">
+                <i18n:text>insertLink.title</i18n:text>:
+              </td>
+              <td>
+                <input class="lenya-form-element" type="text" name="title"/>
+              </td>
             </tr>
             <tr>
-              <td class="lenya-form-caption"><i18n:text key="insertLink.text"/>:</td>
-              <td><input class="lenya-form-element" type="text" name="text"/></td>
+              <td class="lenya-form-caption">
+                <i18n:text>insertLink.text</i18n:text>:</td>
+              <td>
+                <input class="lenya-form-element" type="text" name="text"/>
+              </td>
             </tr>
             <tr>
               <td colspan="2">&#160;</td>
             </tr>
             <tr>
               <td/>
-              <td><input i18n:attr="value" type="submit" value="insertLink.submit" name="input-insert"/></td>
+              <td>
+                <input i18n:attr="value" type="submit" value="insertLink.submit" name="input-insert"/>
+                &#160;
+                <input i18n:attr="value" type="button" value="insertLink.createResource" onclick="location.href='?doctype=resource&amp;lenya.usecase=resource.create&amp;lenya.exitUsecase=editors.insertLink'"/>
+              </td>
             </tr>
           </table>
         </form>
-              
       </page:body>
     </page:page>
   </xsl:template>
@@ -162,4 +180,4 @@
     </a>
   </xsl:template>
 
-</xsl:stylesheet> 
+</xsl:stylesheet>
