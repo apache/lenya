@@ -16,21 +16,12 @@
   limitations under the License.
 -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'editors.insertAsset']">
-
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'editors.createResource']">
   <component-instance 
-      name="editors.insertAsset"
-      logger="lenya.publication"
-      class="org.apache.lenya.cms.editors.InsertAsset"
+      name="editors.createResource" 
+      logger="lenya.site" 
+      class="org.apache.lenya.cms.site.usecases.CreateResource"
   >
-    <view 
-      template="modules/editors/usecases/insertAsset.jx" 
-      menu="false"
-      createContinuation="false"
-    />
-    <parameter name="mode" value="Asset"/>
-    <parameter name="asset-usecase" value="tab.asset"/>
+    <view template="modules/resource/usecases/create-resource.jx" menu="false"/>
   </component-instance>
-
 </xconf>
-

@@ -5,7 +5,11 @@
       logger="lenya.publication"
       class="org.apache.lenya.cms.usecase.DummyUsecase"
   >
-    <view uri="cocoon://modules/editors/editors.insertLink" menu="false"/>
+    <view 
+      uri="cocoon://modules/editors/editors.insertLink" 
+      menu="false"
+      createContinuation="false"
+    />
   </component-instance>
 
 </xconf>

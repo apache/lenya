@@ -23,7 +23,11 @@
       logger="lenya.publication"
       class="org.apache.lenya.cms.editors.InsertAsset"
   >
-    <view template="modules/editors/usecases/insertAsset.jx" menu="false"/>
+    <view 
+      template="modules/editors/usecases/insertAsset.jx" 
+      menu="false"
+      createContinuation="false"
+    />
     <parameter name="mode" value="Image"/>
     <parameter name="asset-usecase" value="tab.asset"/>
   </component-instance>
