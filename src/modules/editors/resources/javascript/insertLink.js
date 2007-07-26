@@ -49,5 +49,3 @@ window.onload = function() {
   buildTree();
   org.apache.lenya.editors.handleFormLoad('insertLink');
 };
-              
- 

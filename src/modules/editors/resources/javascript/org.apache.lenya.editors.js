@@ -1,13 +1,13 @@
 // create a domain-based "package" to keep the global namespace clean
 var org;
-if (!org) org = {};
-if (!org.apache) org.apache = {};
-if (!org.apache.lenya) org.apache.lenya = {};
-if (!org.apache.lenya.editors) org.apache.lenya.editors = {};
+if (!org) org = new Object();
+if (!org.apache) org.apache = new Object();
+if (!org.apache.lenya) org.apache.lenya = new Object();
+if (!org.apache.lenya.editors) org.apache.lenya.editors = new Object();
 
 
 /**
-  * defines the interface between generic editor usecases and editor implementations
+  * the interface between generic editor usecases and editor implementations
   *
   * The idea is to use the same data structure for links, images and assets.
   * Thus, insertLink, insertImage and insertAsset can all share most of the javascript code.
@@ -15,19 +15,46 @@ if (!org.apache.lenya.editors) org.apache.lenya.editors = {};
   * FIXME: objectData is an exceptionally stupid term. Please fix if you can think of 
   * something that encompasses "data for to-be-inserted links, images and assets in general".
   */
-org.apache.lenya.editors.objectDataTemplate = {
-  url    : "",  // href for links, src for assets and images
-  title  : "",  // xhtml title attribute
-  text   : "",  // element content for links and assets, alt text for images
-  width  : "",  // width for images
-  height : "",  // height for images
-  type   : "",  // MIME Type for images and assets.
-/* probably not necessary now that we have windowName...
-  editorID : "" // an optional field that can be used by the calling editor instance
-                // to identify the transaction in case multiple usecases are triggered
-                // at the same time or multiple editors are active on one page.
-*/
-} 
+
+/**
+  * ObjectData constructor.
+  *
+  * @param an optional hash map of initial values
+  */
+org.apache.lenya.editors.ObjectData = function(init) {
+  if (init) {
+    for (var i in this) {
+      if (typeof this[i] == "function") continue;
+      //alert("Checking this[" + i + "], init[" + i + "] is '" + init[i] + "'.");
+      this[i] = init[i];
+    }
+  //alert("Created new ObjectData = " + this.toString());
+  }
+}
+
+// href for links, src for assets and images:
+org.apache.lenya.editors.ObjectData.prototype.url = undefined;
+// XHTML title attribute:
+org.apache.lenya.editors.ObjectData.prototype.title = undefined;
+// element content for links and assets, alt text for images:
+org.apache.lenya.editors.ObjectData.prototype.text = undefined;
+// width for images
+org.apache.lenya.editors.ObjectData.prototype.width = undefined;
+// height for images
+org.apache.lenya.editors.ObjectData.prototype.height = undefined;
+// MIME Type for images and assets.
+org.apache.lenya.editors.ObjectData.prototype.type = undefined;
+
+org.apache.lenya.editors.ObjectData.prototype.toString = function() {
+  var s = "\n";
+  for (var i in this) {
+    if (typeof this[i] != "function") {
+      s += "\t" + i + ": [" + this[i] + "] (" + typeof this[i] + ")\n";
+    }
+  } 
+  return s;
+}
+
 
 /**
   * set objectData object in editor
@@ -37,7 +64,9 @@ org.apache.lenya.editors.objectDataTemplate = {
   * @param windowName the ID of the usecase window (window.name).
   * @see org.apache.lenya.editors.objectDataTemplate
   */
-org.apache.lenya.editors.setObjectData = undefined;
+org.apache.lenya.editors.setObjectData = function(objectData, windowName) {
+  alert("Programming error:\n  You must override org.apache.lenya.editors.setObjectData(objectData, windowName)!");
+};
 
 
 /**
@@ -48,8 +77,9 @@ org.apache.lenya.editors.setObjectData = undefined;
   * @returns an objectData object.
   * @see org.apache.lenya.editors.objectDataTemplate
    */
-org.apache.lenya.editors.getObjectData = undefined;
-
+org.apache.lenya.editors.getObjectData = function(windowName) {
+  alert("Programming error:\n  You must override org.apache.lenya.editors.getObjectData(windowName)!");
+};
 
 /**
   * sets default values of the usecase form
@@ -66,7 +96,7 @@ org.apache.lenya.editors.getObjectData = undefined;
   */
 org.apache.lenya.editors.setFormValues = function(formName,objectData) {
   var form = document.forms[formName];
-  for (var i in org.apache.lenya.editors.objectDataTemplate) {
+  for (var i in org.apache.lenya.editors.ObjectData.prototype) {
     if (form[i] !== undefined) {
       if (objectData[i] !== undefined) {
         form[i].value = objectData[i];
@@ -89,8 +119,8 @@ org.apache.lenya.editors.setFormValues = function(formName,objectData) {
   */
 org.apache.lenya.editors.getFormValues = function(formName) {
   var form = document.forms[formName];
-  var objectData = new Object();
-  for (var i in org.apache.lenya.editors.objectDataTemplate) {
+  var objectData = new org.apache.lenya.editors.ObjectData();
+  for (var i in org.apache.lenya.editors.ObjectData.prototype) {
     if (form[i] !== undefined) {
       objectData[i] = form[i].value;
     }
@@ -168,25 +198,102 @@ org.apache.lenya.editors.openUsecaseWindow = function(usecase, windowName) {
   }
   return usecaseWindow;
 }
+
+/**
+  * this data structure handles insertion of generated tags 
+  */
+org.apache.lenya.editors.contentSnippetTemplate = {
+  beforeSelection  : "", // the characters to be inserted before the selected text
+  afterSelection   : "", // the characters to be inserted after the selected text
+  replaceSelection : ""  // the text to replace the currently selected area (if any)
+}
+
+/**
+  * generates a content snippet to be inserted into the editor area
+  * 
+  * @param usecase the usecase for which the snippet should be generated
+  * @param objectData an objectData object for the contents
+  * @returns an object of type contentSnippetTemplate 
+  * @see org.apache.lenya.editors.contentSnippetTemplate
+  */
+org.apache.lenya.editors.generateContentSnippet = function(usecase, objectData) {
+  var snippet = {};
+
+  switch (usecase) {
+
+    case "insertLink":
+      snippet.beforeSelection = '<a'
+        + (objectData.url ? ' href="' + objectData.url + '"' : '')
+        + (objectData.title ? ' title="' + objectData.title + '"' : '')
+        + '>';
+      snippet.afterSelection = '</a>';
+      snippet.replaceSelection =
+        objectData.text ? objectData.text : undefined;
+      break;
+
+    case "insertAsset":
+      snippet.beforeSelection = '<a'
+        + (objectData.url ? ' href="' + objectData.url + '"' : '')
+        + (objectData.title ? ' title="' + objectData.title + '"' : '')
+        + ' class="lenya.asset">';
+      snippet.afterSelection = '</a>';
+      snippet.replaceSelection =
+        objectData.text ? objectData.text : undefined;
+      break;
+
+    case "insertImage":
+      snippet.beforeSelection = '<img'
+        + (objectData.url ? ' src="' + objectData.url + '"' : '')
+        + (objectData.title ? ' title="' + objectData.title + '"' : '')
+        + (objectData.text ? ' alt="' + objectData.text + '"' : '')
+        + '/>';
+      snippet.afterSelection = undefined;
+      snippet.replaceSelection = undefined;
+      break;
+
+    default:
+      alert("setObjectData: Unknown usecase " + currentUsecase + ". This is likely a programming error.");
+      return undefined;
+  }
+  return snippet;
+}
+
+
+/**
+  * a cross-browser helper to obtain selected text in form elements
+  *
+  * @param formElement a XHTML form element (document.forms[foo].bar)
+  * In IE, this parameter is disregarded, since IE uses a document-wide 
+  * selection mechanism.
+  * @returns the selected text or the empty string.
+  */
+org.apache.lenya.editors.getSelectedText = function(formElement) {
+  if (formElement.selectionStart !== undefined) {
+    return formElement.value.substr(
+         formElement.selectionStart, 
+         formElement.selectionEnd - formElement.selectionStart);
+  } else 
+  if (document.selection !== undefined) {
+    return document.selection.createRange().text;
+  } else {
+  alert("Sorry, your browser apparently doesn't support text selection via javascript.");
+    return "";
+  }
+}
+
 /**
   * a cross-browser helper to insert data at the selected position in a form field (textarea etc.)
   *
   * @param formElement a XHTML form element (document.forms[foo].bar)
-  * @param beforeSelection the text snippet that should be inserted before the selected text
-  * @param afterSelection the text snippet that should be inserted after the selected text
-  * @param replaceSelection (optional) replaces the currently selected text (retained if absent)
+  * @param contentSnippet a org.apache.lenya.editors.contentSnippetTemplate with the text to insert
   *
   * inspired by http://aktuell.de.selfhtml.org/artikel/javascript/bbcode/
   */
-org.apache.lenya.editors.insertContent = function(
-    formElement, 
-    beforeSelection, 
-    afterSelection, 
-    replaceSelection) {
+org.apache.lenya.editors.insertContent = function(formElement, contentSnippet) {
 
-  /* alert("beforeSelection: '" + beforeSelection + "'\n"
-      + "afterSelection: '" + afterSelection + "'\n"
-      + "replaceSelection: '" + replaceSelection + "'\n"
+  /* alert("contentSnippet.beforeSelection: '" + contentSnippet.beforeSelection + "'\n"
+      + "contentSnippet.afterSelection: '" + contentSnippet.afterSelection + "'\n"
+      + "contentSnippet.replaceSelection: '" + contentSnippet.replaceSelection + "'\n"
   );*/
  
   // Danger, Will Robinson: you are leaving the w3c sector!
@@ -200,9 +307,9 @@ org.apache.lenya.editors.insertContent = function(
     var selection = content.substring(begin, end);
     // alert("Found selection beginning at [" + begin + "], ending at [" + end + "].");
     formElement.value = content.substr(0, begin)
-      + (beforeSelection ? beforeSelection : "")
-      + (replaceSelection ? replaceSelection : selection)
-      + (afterSelection ? afterSelection : "") 
+      + (contentSnippet.beforeSelection ? contentSnippet.beforeSelection : "")
+      + (contentSnippet.replaceSelection ? contentSnippet.replaceSelection : selection)
+      + (contentSnippet.afterSelection ? contentSnippet.afterSelection : "") 
       + content.substr(end);
     // update cursor position:
     formElement.selectionStart = begin;
@@ -213,16 +320,16 @@ org.apache.lenya.editors.insertContent = function(
     alert("Hey, you are using IE, right? Please get in touch with dev@lenya.apache.org to test this feature!");
     var range = document.selection.createRange();
     var selection = range.text;
-    range.text = (beforeSelection ? beforeSelection : "")
-      + (replaceSelection ? replaceSelection : selection)
-      + (afterSelection ? afterSelection : "");
+    range.text = (contentSnippet.beforeSelection ? contentSnippet.beforeSelection : "")
+      + (contentSnippet.replaceSelection ? contentSnippet.replaceSelection : selection)
+      + (contentSnippet.afterSelection ? contentSnippet.afterSelection : "");
     range.select();
   } else {
   // for all other browsers, paste the stuff at the end...
     alert("Hey, what kind of browser is this? Please get in touch with dev@lenya.apache.org to make this feature work properly for you!");
     formElement.value = formElement.value
-      + (beforeSelection ? beforeSelection : "")
-      + (replaceSelection ? replaceSelection : selection)
-      + (afterSelection ? afterSelection : "");
+      + (contentSnippet.beforeSelection ? contentSnippet.beforeSelection : "")
+      + (contentSnippet.replaceSelection ? contentSnippet.replaceSelection : selection)
+      + (contentSnippet.afterSelection ? contentSnippet.afterSelection : "");
   }
 }

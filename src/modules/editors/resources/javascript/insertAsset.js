@@ -1,30 +1,34 @@
 /**
   * updates the hidden form data whenever the user selects a new asset radiobutton.
   */
-function updateData(url, text, type, size, height, width) { 
-  // we store the ratio with every image to allow preview re-scaling.
+function updateData(url, title, height, width, type) { 
+  
+  var text = document.forms["insertAsset"].text.value;
+  if (text && text != document.forms["insertAsset"].title.value) {
+    // if the user has provided an entry for "text" 
+    //    (other than a copy of "title"), use that:
+    text  = document.forms["insertAsset"].text.value;
+  } else {
+    // otherwise just copy the title value:
+    text = title;
+  }
+  // we store the ratio with every image for correct re-scaling.
   var ratio = 1;
   if (width != 0) {
     ratio = height / width;
   }
   document.forms["insertAsset"].ratio.value = ratio;
 
-  org.apache.lenya.editors.setFormValues("insertAsset", {
-    url : url,
-    text : text,
-    size : size,
+  var objectData = new org.apache.lenya.editors.ObjectData({
+    url    : url,
+    title  : title,
+    text   : text,
     height : height,
-    width : width,
-    type : type
+    width  : width,
+    type   : type
   });
-  /*  alert("Setting hidden form data:\n"
-      + "url    : " + url + "\n"
-      + "text   : " + text + "\n"
-      + "size   : " + size + "\n"
-      + "height : " + height + "\n"
-      + "width  : " + width + "\n"
-      + "type   : " + type);
-  */
+  //alert("Setting form data:" + objectData.toString());
+  org.apache.lenya.editors.setFormValues("insertAsset", objectData);
 }
 
 /**
