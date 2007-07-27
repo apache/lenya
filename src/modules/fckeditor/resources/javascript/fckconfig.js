@@ -21,14 +21,14 @@
  */
 
 FCKConfig.ToolbarSets["Lenya"] = [
-	['Source','DocProps','-','lenyaSave','Preview','-','Templates'],
+	['Source','DocProps','-','Lenya_save','Preview','-','Templates'],
 	['Cut','Copy','Paste','PasteText','PasteWord','-','Print'],
 	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
 	['OrderedList','UnorderedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
-	['Link','Unlink','Anchor'],
-	['Image','Table','Rule','Smiley','SpecialChar','PageBreak'],
+	['Link', 'Lenya_insertLink','Unlink','Anchor'],
+	['Image', 'Lenya_insertImage','Table','Rule','Smiley','SpecialChar','PageBreak'],
 	['Form','Checkbox','Radio','TextField','Textarea','Select','Button','ImageButton','HiddenField'],
 	'/',
 	['Style','FontFormat','FontName','FontSize'],
@@ -39,7 +39,7 @@ FCKConfig.ToolbarSets["Lenya"] = [
  /*
  * plugin for save in lenya
  */  
-FCKConfig.Plugins.Add( 'lenyaSave', 'de,en', '../../plugins/' ) ;
+FCKConfig.Plugins.Add( 'fck_lenya_glue', 'de,en', '../../plugins/' ) ;
 
 /*
  * disable uploads since it needs to be done from withing Lenya

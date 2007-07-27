@@ -27,6 +27,8 @@
   <script type="text/javascript" src="/modules/fckeditor/fckeditor/fckeditor.js">&#160;</script>
   <script type="text/javascript" src="/modules/fckeditor/javascript/fckloader.js">&#160;</script>
   <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js">&#160;</script>
+  <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script> 
+  <script type="text/javascript" src="/modules/fckeditor/javascript/fck_lenya_glue.js">&#160;</script>
   <script type="text/javascript">
     window.onload = function()
     {

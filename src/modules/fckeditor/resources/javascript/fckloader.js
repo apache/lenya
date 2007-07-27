@@ -26,7 +26,10 @@ function fckloader(requesturi, contextPath)
   oFCKeditor.Config[ "ProcessNumericEntities" ] = true ;
   oFCKeditor.Config["CustomConfigurationsPath"] = contextPath + "/modules/fckeditor/javascript/fckconfig.js"  ;
   oFCKeditor.ToolbarSet = 'Lenya' ;
-  oFCKeditor.Config[ "ImageBrowserURL" ] = requesturi +'?lenya.usecase=fckeditor.insertImage' ;
-  oFCKeditor.Config[ "LinkBrowserURL" ] = requesturi +'?lenya.module=fckeditor&lenya.step=link-show&language=en' ;
+// the current API does not support this anymore. there is a plugin for that job now.
+// with an extra html page, this function could probably be restored easily, which would be
+// nice because it plugs into the rather comfortable image and link dialogs of FCK...
+//  oFCKeditor.Config[ "ImageBrowserURL" ] = requesturi +'?lenya.usecase=editors.insertImage' ;
+//  oFCKeditor.Config[ "LinkBrowserURL" ] = requesturi +'?lenya.usecase=editors.insertLink' ;
   oFCKeditor.ReplaceTextarea() ;
 }

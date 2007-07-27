@@ -15,4 +15,6 @@
 * limitations under the License.
 */
 
-FCKLang['lenyaSaveDlgToolbarName'] = 'Save Lenya Document'; 
+FCKLang['DlgLenya_saveTitle'] = 'Lenya-Dokument speichern'; 
+FCKLang['DlgLenya_insertLinkTitle'] = 'Lenya-Link einfügen'; 
+FCKLang['DlgLenya_insertImageTitle'] = 'Lenya-Bild einfügen'; 

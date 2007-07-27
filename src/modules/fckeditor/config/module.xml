@@ -22,8 +22,9 @@
   <id>org.apache.lenya.modules.fckeditor</id>
   <depends module="org.apache.lenya.modules.usecase"/>
   <package>org.apache.lenya.modules</package>
-  <version>0.1-dev</version>
+  <version>0.2-dev</version>
   <name>FCK Editor</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>FCK Editor</description>
+  <description>FCK Editor, now uses generic usecases to insert links, images and
+  assets</description>
 </module>
