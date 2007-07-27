@@ -61,6 +61,11 @@ public class AddUser extends AccessControlUsecase {
         if (!ItemUtil.isValidEmail(email)) {
             addErrorMessage("Please enter a valid e-mail address.");
         }
+        
+        if (className == null) {
+            addErrorMessage("Internal error - the user class name has not been provided. " + 
+                    "Please consult your system administrator.");
+        }
 
         if (className.equals(LDAPUser.class.getName())) {
             LDAPUser ldapUser = new LDAPUser(getUserManager(), getLogger());
