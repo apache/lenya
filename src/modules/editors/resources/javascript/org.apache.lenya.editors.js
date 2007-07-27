@@ -384,11 +384,11 @@ org.apache.lenya.editors.generateContentSnippet = function(usecase, objectData, 
   *
   * @returns the selected text or the empty string.
   *
-  * NOTE: This function is really versatile and powerful. It is also totally
-  * untested on anything except Firefox.
+  * NOTE: This function is really versatile and powerful. It is also not
+  * particularly well tested except with IE 6/7 and Firefox under Windows and Linux.
   */
 org.apache.lenya.editors.getSelectedText = function(sourceElement) {
-  var debug = true;
+  var debug = false;
 
   if (!sourceElement) sourceElement = window;
 
