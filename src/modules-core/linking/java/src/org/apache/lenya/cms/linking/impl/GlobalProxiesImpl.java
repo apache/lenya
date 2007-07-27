@@ -81,8 +81,16 @@ public class GlobalProxiesImpl extends AbstractLogEnabled implements GlobalProxi
             String url = proxyConfigs[p].getAttribute("url");
             Proxy proxy = new Proxy();
             proxy.setUrl(url);
-            this.ssl2proxy.put(Boolean.valueOf(ssl), proxy);
+            setProxy(ssl, proxy);
         }
+    }
+
+    /**
+     * @param ssl If the proxy is responsible for SSL requests.
+     * @param proxy A proxy.
+     */
+    public void setProxy(boolean ssl, Proxy proxy) {
+        this.ssl2proxy.put(Boolean.valueOf(ssl), proxy);
     }
 
 }
