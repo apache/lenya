@@ -81,10 +81,14 @@ public class UsecaseMessage {
     }
 
     /**
-     * Accomodates scripts which do no care about parameters
-     * @return a string representation disregarding any parameters
+     * @return A string representation, the parameters are included as a comma-separated list.
      */
     public String toString() {
-        return message;
+        StringBuffer msg = new StringBuffer(getMessage());
+        String[] params = getParameters();
+        for (int i = 0; i < params.length; i++) {
+            msg.append(", " + params[i]);
+        }
+        return msg.toString();
     }
 }

@@ -20,6 +20,7 @@ package org.apache.lenya.cms.repository;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
+import org.apache.lenya.transaction.ConcurrentModificationException;
 import org.apache.lenya.transaction.UnitOfWork;
 
 /**
@@ -35,8 +36,10 @@ public interface Session extends UnitOfWork {
     /**
      * Commits the transaction.
      * @throws RepositoryException if an error occurs.
+     * @throws ConcurrentModificationException if a transactionable has been
+     *         modified by another session.
      */
-    void commit() throws RepositoryException;
+    void commit() throws RepositoryException, ConcurrentModificationException;
 
     /**
      * Rolls the transaction back.
@@ -58,27 +61,27 @@ public interface Session extends UnitOfWork {
      * @throws RepositoryException if the listener is already registered.
      */
     void addListener(RepositoryListener listener) throws RepositoryException;
-    
+
     /**
      * Checks if a listener is registered.
      * @param listener The listener.
      * @return A boolean value.
      */
     boolean isListenerRegistered(RepositoryListener listener);
-    
+
     /**
      * @param event The event to add to the queue.
      */
     void enqueueEvent(RepositoryEvent event);
-    
+
     /**
      * @param identity The identity.
      */
     void setIdentity(Identity identity);
-    
+
     /**
      * @return if the repository items in this session can be modified.
      */
     boolean isModifiable();
-    
+
 }

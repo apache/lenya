@@ -45,6 +45,7 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.transaction.ConcurrentModificationException;
 import org.apache.lenya.transaction.LockException;
 
 /**
@@ -87,9 +88,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     protected String SOURCE_URL = "private.sourceUrl";
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL()
-     * We don't use getParameterAsString() because this will typically
-     * cause stack overflows or NPEs in connection with initParameters().
+     * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL() We don't use
+     *      getParameterAsString() because this will typically cause stack
+     *      overflows or NPEs in connection with initParameters().
      */
     public String getSourceURL() {
         return (String) this.parameters.get(SOURCE_URL);
@@ -232,13 +233,13 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         try {
             clearErrorMessages();
             clearInfoMessages();
-            
+
             Node[] nodes = getNodesToLock();
             if (!canCheckOut(nodes)) {
                 addErrorMessage(ERROR_OBJECTS_CHECKED_OUT);
             }
             doCheckPreconditions();
-            
+
             List _errorMessages = getErrorMessages();
             for (int i = 0; i < _errorMessages.size(); i++) {
                 getLogger().info(_errorMessages.get(i).toString());
@@ -303,8 +304,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 } else {
                     getSession().rollback();
                 }
+            } catch (ConcurrentModificationException e) {
+                getLogger().error(
+                        "Could not commit/rollback usecase [" + getName() + "]: " + e.getMessage());
+                addErrorMessage(e.getMessage());
             } catch (Exception e1) {
-                getLogger().error("Exception during commit or rollback: ", e1);
+                getLogger().error("Could not commit/rollback usecase [" + getName() + "]: ", e1);
                 addErrorMessage("Exception during commit or rollback: " + e1.getMessage()
                         + " (see logfiles for details)");
             }

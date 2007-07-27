@@ -32,6 +32,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
+import org.apache.lenya.transaction.ConcurrentModificationException;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.transaction.Lock;
@@ -105,12 +106,16 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     /**
      * Commits the transaction.
      * @throws RepositoryException if an error occurs.
+     * @throws ConcurrentModificationException if a transactionable has been
+     *         modified by another session.
      */
-    public void commit() throws RepositoryException {
+    public void commit() throws RepositoryException, ConcurrentModificationException {
 
         try {
             getUnitOfWork().commit();
             getSharedItemStore().clear();
+        } catch (ConcurrentModificationException e) {
+            throw e;
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }

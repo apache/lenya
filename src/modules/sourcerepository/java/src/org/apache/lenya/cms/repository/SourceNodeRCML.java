@@ -127,17 +127,18 @@ public class SourceNodeRCML implements RCML {
             throws IOException, Exception {
 
         Document doc = getDocument();
-        
+        String elementName = (String) ELEMENTS.get(new Short(type));
+
         Vector entries = getEntries();
         if (entries.size() == 0) {
             if (type == ci) {
                 throw new IllegalStateException("Can't check in - not checked out.");
             }
-        }
-        else {
+        } else {
             RCMLEntry latestEntry = getLatestEntry();
             if (type == latestEntry.getType()) {
-                throw new IllegalStateException("RCMLEntry type " + type + " not allowed twice in a row.");
+                throw new IllegalStateException("RCML entry type <" + elementName
+                        + "> not allowed twice in a row.");
             }
         }
 
@@ -155,7 +156,6 @@ public class SourceNodeRCML implements RCML {
         Element timeElement = doc.createElement("Time");
         timeElement.appendChild(doc.createTextNode("" + time));
 
-        String elementName = (String) ELEMENTS.get(new Short(type));
         Element checkOutElement = doc.createElement(elementName);
 
         checkOutElement.appendChild(identityElement);
@@ -214,8 +214,7 @@ public class SourceNodeRCML implements RCML {
                     this.xml = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
                     this.lastModified = sourceLastModified;
                 }
-            }
-            else {
+            } else {
                 if (this.xml == null) {
                     this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
                 }
@@ -560,16 +559,17 @@ public class SourceNodeRCML implements RCML {
     }
 
     public void copyFrom(RCML otherRcml) throws RevisionControlException {
-        
+
         SourceNodeRCML other = (SourceNodeRCML) otherRcml;
-        
+
         try {
 
             Vector backupEntries = other.getBackupEntries();
-            for (Iterator i = backupEntries.iterator(); i.hasNext(); ) {
+            for (Iterator i = backupEntries.iterator(); i.hasNext();) {
                 RCMLEntry entry = (RCMLEntry) i.next();
                 long time = entry.getTime();
-                String otherContentUri = other.getBackupSourceUri(other.node.getContentSource(), time);
+                String otherContentUri = other.getBackupSourceUri(other.node.getContentSource(),
+                        time);
                 String thisContentUri = this.getBackupSourceUri(this.node.getContentSource(), time);
                 SourceUtil.copy(this.manager, otherContentUri, thisContentUri);
                 String otherMetaUri = other.getBackupSourceUri(other.node.getMetaSource(), time);
