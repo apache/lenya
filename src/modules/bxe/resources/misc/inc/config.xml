@@ -122,7 +122,8 @@
         <button name="sub" col="4" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
         <button name="sup" col="5" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
         <button name="clean_inline" col="0" row="6" action="CleanInline"/>
-        <button name="link" col="0" row="5" type="insertElement" ns="http://www.w3.org/1999/xhtml">a</button>
+        <!--button name="link" col="0" row="5" type="insertElement" ns="http://www.w3.org/1999/xhtml">a</button-->
+        <button name="link" col="0" row="5" type="function">triggerInsertLink</button>
         <button name="unlink" col="1" row="5" action="DeleteLink"/>
         <button name="create_table" col="2" row="5" action="InsertTable"/>
         <button name="Unordered_List" col="3" row="2" action="UnorderedList"/>
@@ -134,18 +135,22 @@
         <button name="PasteDialog" col="4" row="4" action="ClipboardPasteDialog"/>
 
         <button name="Paste" col="2" row="4" action="ClipboardPaste"/>
-        <button name="Image" col="3" row="5" action="InsertImage"/>
+        <!--button name="Image" col="3" row="5" action="InsertImage"/-->
+        <button name="Image" col="3" row="5" type="function">triggerInsertImage</button>
         <button name="Save" col="1" row="6" action="DocumentSave"/>
         <button name="Undo" col="3" row="6" action="Undo"/>
         <button name="Redo" col="4" row="6" action="Redo"/>
-        <button name="Asset" col="2" row="6" action="InsertAsset"/>
+        <!-- button name="Asset" col="2" row="6" action="InsertAsset"/-->
+        <button name="Asset" col="2" row="6" type="function">triggerInsertAsset</button>
     </buttons>
     <callbacks>
+        <element name="table" ns="http://www.w3.org/1999/xhtml" type="function">bxe_InsertTableCallback</element>
+<!--
         <element name="object" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxe.insertImage</element>
         <element name="img" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxe.insertImage</element>
-        <element name="table" ns="http://www.w3.org/1999/xhtml" type="function">bxe_InsertTableCallback</element>
         <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0" type="popup">?lenya.usecase=bxe.insertAsset</element>
         <element name="a" ns="http://www.w3.org/1999/xhtml" precheck="bxe_checkIfNotALink" type="popup">?lenya.module=bxe&amp;lenya.step=link-show</element>
+-->
     </callbacks>
     <options>
      <option name="autoParaElementName">p</option>

@@ -23,8 +23,8 @@
   <depends module="org.apache.lenya.modules.webdav"/>
   <depends module="org.apache.lenya.modules.resource"/>
   <package>org.apache.lenya.modules</package>
-  <version>0.1-dev</version>
+  <version>1.0-alpha1</version>
   <name>BXE Editor</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>http://bxe.oscom.org</description>
+  <description>http://bxe.oscom.org, now using generic editor usecases</description>
 </module>
