@@ -229,7 +229,7 @@ org.apache.lenya.editors.usecaseWindowOptions =
     + "scrollbars=yes,"
     + "status=no,"
     + "resizable=yes,"
-    + "dependent=yes,"
+//  + "dependent=yes,"  not in IE6, and the moz people want to get rid of it, too...
     + "width=600,"
     + "height=700";
 
@@ -240,7 +240,7 @@ org.apache.lenya.editors.USECASE_INSERTASSET = 'insertAsset';
 
 
 org.apache.lenya.editors.generateUniqueWindowName = function() {
-  return new String("Lenya-" + Math.random().toString().substr(2));
+  return new String("Lenya_" + Math.random().toString().substr(2));
 }
 
 
@@ -272,6 +272,7 @@ org.apache.lenya.editors.openUsecaseWindow = function(usecase, windowName) {
         windowName,
         org.apache.lenya.editors.usecaseWindowOptions
       );
+      usecaseWindow.focus(); //IE6 likes to open windows in the back...
       break;
     default:
       alert("openUsecaseWindow: Unknown usecase '" + usecase + "'. This is likely a programming error.");
