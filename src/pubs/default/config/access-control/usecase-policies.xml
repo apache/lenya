@@ -39,23 +39,7 @@
     <role id="admin"/>
     <role id="edit"/>
   </usecase>  
-  <usecase id="bxe.insertAsset">
-    <role id="admin" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
-  <usecase id="bxe.insertImage">
-    <role id="admin" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
   <usecase id="cforms.edit">
-    <role id="admin" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
-  <usecase id="fckeditor.insertAsset">
-    <role id="admin" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
-  <usecase id="fckeditor.insertImage">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
@@ -377,5 +361,32 @@
   <usecase id="news.edit">
     <role id="edit" method="grant"/>
   </usecase>
+  <usecase id="">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="editors.insertLink">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="editors.insertImage">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="editors.insertAsset">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="editors.createResource">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="tinymce.edit">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="fckeditor.edit">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
 </usecases>
-    

@@ -35,6 +35,23 @@
     
     <h2>Important notes for beta testers of Lenya 2.0</h2>
     
+    <h3>2007-07-27: new generic editor usecases</h3>
+    <p>
+      A new generic set of editor helper usecases has been introduced:
+    </p>
+    <ul>
+      <li>editors.insertLink</li>
+      <li>editors.insertImage</li>
+      <li>editors.insertAsset</li>
+      <li>editors.createResource</li>
+    </ul>
+    <p>
+      These are now re-used by all editors, which got us rid of a lot of
+      code duplication. Internet Explorer users watch out: if you have
+      problems with selections not working properly when using those new
+      usecases, please complain on the dev list.
+    </p>
+    
     <h3>2007-07-19: <code>mime-type</code> attribute for resource type samples</h3>
     <p>
       The <code>&lt;sample-name&gt;</code> elements of the resource type declaration
