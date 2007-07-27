@@ -120,11 +120,27 @@
               <td colspan="2">&#160;</td>
             </tr>
             <tr>
-              <td/>
-              <td>
-                <input i18n:attr="value" type="submit" value="insertLink.submit" name="input-insert"/>
+              <td colspan="2">
+                <input 
+                  i18n:attr="value" 
+                  type="submit" 
+                  value="insertLink.submit" 
+                  name="input-insert"
+                />
                 &#160;
-                <input i18n:attr="value" type="button" value="insertLink.createResource" onclick="location.href='?doctype=resource&amp;lenya.usecase=resource.create&amp;lenya.exitUsecase=editors.insertLink'"/>
+                <input 
+                  i18n:attr="value"
+                  type="submit"
+                  value="Cancel" 
+                  onclick="window.close()"
+                />
+                &#160;
+                <input 
+                  i18n:attr="value" 
+                  type="button" 
+                  value="insertAsset.createResource" 
+                  onclick="location.href='?lenya.usecase=editors.createResource&amp;doctype=resource&amp;lenya.exitUsecase=editors.insertLink'"
+                />
               </td>
             </tr>
           </table>

@@ -22,8 +22,9 @@ function checkBackspace(e)
      key = window.event.keyCode;
    else
      key = e.which;
-   if (key == 8)
+   if (key == 8) {
+     alert("disablebackspace.js just ate a backspace event. Burp!");
      return false;
-   else
+   } else
      return true;
 }

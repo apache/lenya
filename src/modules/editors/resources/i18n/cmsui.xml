@@ -29,5 +29,23 @@
   <message key="insertLink.URL">URL</message>
   <message key="insertLink.text">Link text</message>
   <message key="insertLink.title">Link title</message>
-  <message key="insertLink.submit">Insert Link!</message>
+  <message key="insertLink.submit">Insert Link</message>
+  
+  <message key="insertAsset.headingAsset">Insert Asset</message>
+  <message key="insertAsset.headingImage">Insert Image</message>
+  <message key="insertAsset.availableAsset">Available assets</message>
+  <message key="insertAsset.availableImage">Available images</message>
+  <message key="insertAsset.file">File</message>
+  <message key="insertAsset.preview">Preview</message>
+  <message key="insertAsset.title">Title</message>
+  <message key="insertAsset.fileSize">Size</message>
+  <message key="insertAsset.imageSize">W x H</message>
+  <message key="insertAsset.creationDate">created</message>
+  <message key="insertAsset.captionImage">Image description</message>
+  <message key="insertAsset.captionAsset">Asset text</message>
+  <message key="insertAsset.width">Width</message>
+  <message key="insertAsset.height">height</message>
+  <message key="insertAsset.insertAsset">Insert asset</message>
+  <message key="insertAsset.insertImage">Insert image</message>
+  <message key="insertAsset.createResource">Upload new resource</message>
 </catalogue>
