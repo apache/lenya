@@ -32,6 +32,9 @@
   </page:title>
   
   <page:body>
+    
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+    
     <form method="POST" name="image" id="image">
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>

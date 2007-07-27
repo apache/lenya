@@ -55,6 +55,8 @@
   </page:title>
   
   <page:body>
+    
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
 
     <div id="lenya-info-treecanvas" style="width: 30%">
 

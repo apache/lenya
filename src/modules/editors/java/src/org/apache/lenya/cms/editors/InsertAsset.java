@@ -72,11 +72,18 @@ public class InsertAsset extends CreateResource {
     }
 
     protected Document[] getResourceDocuments() throws DocumentException {
+        String mimeTypePrefix = getParameterAsString("mimeTypePrefix", "");
         List list = new ArrayList();
         Document[] docs = getSourceDocument().area().getDocuments();
         for (int i = 0; i < docs.length; i++) {
             if (docs[i].getResourceType().getName().equals("resource")) {
-                list.add(docs[i]);
+                String resMimeType = docs[i].getMimeType();
+                if (resMimeType == null) {
+                    resMimeType = "unknown";
+                }
+                if (resMimeType.startsWith(mimeTypePrefix)) {
+                    list.add(docs[i]);
+                }
             }
         }
         return (Document[]) list.toArray(new Document[list.size()]);
@@ -96,16 +103,8 @@ public class InsertAsset extends CreateResource {
 
             Document[] resources = getResourceDocuments();
 
-            List selectedResources = new ArrayList();
-            String mimeTypePrefix = getParameterAsString("mimeTypePrefix", "");
             for (int i = 0; i < resources.length; i++) {
-                String resMimeType = resources[i].getMimeType();
-                if (resMimeType == null)
-                    resMimeType = "unknown";
-                if (resMimeType.startsWith(mimeTypePrefix)) {
-                    selectedResources.add(resources[i]);
-                }
-                
+
                 String originalUrl = resources[i].getCanonicalWebappURL();
                 int lastDotIndex = originalUrl.lastIndexOf('.');
                 String extension = resources[i].getSourceExtension();
@@ -113,10 +112,10 @@ public class InsertAsset extends CreateResource {
 
                 String proxyUrl = rewriter.rewrite(url);
                 asset2proxyUrl.put(resources[i], proxyUrl);
-                
+
             }
 
-            setParameter("assets", selectedResources);
+            setParameter("assets", resources);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
