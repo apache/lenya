@@ -80,10 +80,8 @@
           </div>
         </div>
         
-        <form 
-          name="insertLink" 
-          onsubmit="org.apache.lenya.editors.handleFormSubmit('insertLink')"
-        >
+        <form name="insertLink">
+
           <table class="lenya-table-noborder">
             <tr>
               <td colspan="2" class="lenya-form-caption">
@@ -125,13 +123,14 @@
                   i18n:attr="value" 
                   type="submit" 
                   value="insertLink.submit" 
-                  name="input-insert"
+                  onclick="org.apache.lenya.editors.handleFormSubmit('insertLink')"
                 />
                 &#160;
                 <input 
                   i18n:attr="value"
                   type="submit"
                   value="Cancel" 
+                  name="cancel"
                   onclick="window.close()"
                 />
                 &#160;
