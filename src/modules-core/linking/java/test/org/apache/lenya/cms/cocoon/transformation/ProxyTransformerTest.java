@@ -38,6 +38,8 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.linking.GlobalProxies;
+import org.apache.lenya.cms.linking.impl.GlobalProxiesImpl;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -67,10 +69,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         transformer.service(getManager());
 
         String proxyUrl = "http://www.mock.org";
-
-        Proxy proxy = new Proxy();
-        proxy.setUrl(proxyUrl);
-
+        
         String pubId = "mock";
         String area = "authoring";
 
@@ -91,10 +90,10 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
             rewriteLink(transformer, linkUrl, targetUrl);
             
             String cssUrl = "/lenya/foo.css";
-            rewriteLink(transformer, cssUrl, proxyUrl + cssUrl);
+            rewriteLink(transformer, cssUrl, cssUrl);
 
             String moduleUrl = "/modules/foo/bar.html?x=y";
-            rewriteLink(transformer, moduleUrl, proxyUrl + moduleUrl);
+            rewriteLink(transformer, moduleUrl, moduleUrl);
             
         } finally {
             if (resolver != null) {
@@ -147,24 +146,25 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         Document dom = SourceUtil.readDOM(configUri, getManager());
         NamespaceHelper helper = new NamespaceHelper(PUBCONF_NAMESPACE, "", dom);
 
-        Element proxies = helper.createElement("proxies");
-        proxies.setAttribute("ssl", Boolean.toString(false));
-        proxies.setAttribute("root", proxyUrl);
-        dom.getDocumentElement().appendChild(proxies);
+        Element proxies = helper.getFirstChild(dom.getDocumentElement(), "proxies");
+        if (proxies == null) {
+            proxies = helper.createElement("proxies");
+            dom.getDocumentElement().appendChild(proxies);
+        }
 
+        addProxyElement(helper, proxies, area, proxyUrl, false);
+        addProxyElement(helper, proxies, area, proxyUrl, true);
+
+        SourceUtil.writeDOM(dom, configUri, getManager());
+    }
+
+    protected void addProxyElement(NamespaceHelper helper, Element proxies, String area,
+            String proxyUrl, boolean ssl) {
         Element proxyElement = helper.createElement("proxy");
-        proxyElement.setAttribute("ssl", Boolean.toString(false));
+        proxyElement.setAttribute("ssl", Boolean.toString(ssl));
         proxyElement.setAttribute("area", area);
         proxyElement.setAttribute("url", proxyUrl);
         proxies.appendChild(proxyElement);
-
-        Element sslProxyElement = helper.createElement("proxy");
-        sslProxyElement.setAttribute("ssl", Boolean.toString(true));
-        sslProxyElement.setAttribute("area", area);
-        sslProxyElement.setAttribute("url", proxyUrl);
-        proxies.appendChild(sslProxyElement);
-
-        SourceUtil.writeDOM(dom, configUri, getManager());
     }
 
     protected boolean existsPublication(String pubId) {
