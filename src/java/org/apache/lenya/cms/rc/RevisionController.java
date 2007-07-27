@@ -28,14 +28,16 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.repository.Node;
 
 /**
- * Controller for the reserved check-in, check-out, the backup versions and the rollback
+ * Controller for the reserved check-in, check-out, the backup versions and the
+ * rollback
  */
 public class RevisionController extends AbstractLogEnabled {
 
     /**
-     * <code>systemUsername</code> The system user name. This is used for - creating dummy checkin
-     * events in a new RCML file when it is created on-the-fly - system override on checkin, i.e.
-     * you can force a checkin into the repository if you use this username as identity parameter to
+     * <code>systemUsername</code> The system user name. This is used for -
+     * creating dummy checkin events in a new RCML file when it is created
+     * on-the-fly - system override on checkin, i.e. you can force a checkin
+     * into the repository if you use this username as identity parameter to
      * reservedCheckIn()
      */
     public static final String systemUsername = "System";
@@ -65,7 +67,8 @@ public class RevisionController extends AbstractLogEnabled {
     }
 
     /**
-     * Try to make a reserved check out of the file source for a user with identity
+     * Try to make a reserved check out of the file source for a user with
+     * identity
      * 
      * @param node The node to check out
      * @param identity The identity of the user
@@ -76,19 +79,17 @@ public class RevisionController extends AbstractLogEnabled {
         RCML rcml = node.getRcml();
 
         RCMLEntry entry = rcml.getLatestEntry();
-
-        // The same user is allowed to check out repeatedly without
-        // having to check back in first.
-        //
-        if (entry != null) {
-            getLogger().debug("entry: " + entry);
-            getLogger().debug("entry.type:" + entry.getType());
-            getLogger().debug("entry.identity" + entry.getIdentity());
-        }
-
-        if ((entry != null) && (entry.getType() != RCML.ci)
-                && !entry.getIdentity().equals(identity)) {
-            throw new FileReservedCheckOutException(node.getSourceURI(), rcml);
+        if (entry != null && entry.getType() == RCML.co) {
+            
+            // don't check out twice
+            if (entry.getIdentity().equals(identity)) {
+                return;
+            }
+            
+            // checked out by somebody else
+            else {
+                throw new FileReservedCheckOutException(node.getSourceURI(), rcml);
+            }
         }
 
         rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false);
@@ -105,19 +106,8 @@ public class RevisionController extends AbstractLogEnabled {
         RCML rcml = node.getRcml();
 
         RCMLEntry entry = rcml.getLatestEntry();
-
-        // The same user is allowed to check out repeatedly without
-        // having to check back in first.
-        //
-        if (entry != null) {
-            getLogger().debug("entry: " + entry);
-            getLogger().debug("entry.type:" + entry.getType());
-            getLogger().debug("entry.identity" + entry.getIdentity());
-        }
-
         boolean checkedOutByOther = entry != null && entry.getType() != RCML.ci
                 && !entry.getIdentity().equals(identity);
-
         return !checkedOutByOther;
     }
 
@@ -128,37 +118,29 @@ public class RevisionController extends AbstractLogEnabled {
      */
     public boolean isCheckedOut(Node node) throws Exception {
         RCML rcml = node.getRcml();
-
         RCMLEntry entry = rcml.getLatestEntry();
-
-        // The same user is allowed to check out repeatedly without
-        // having to check back in first.
-        //
-        if (entry != null) {
-            getLogger().debug("entry: " + entry);
-            getLogger().debug("entry.type:" + entry.getType());
-            getLogger().debug("entry.identity" + entry.getIdentity());
-        }
         return entry != null && entry.getType() == RCML.co;
     }
 
     /**
-     * Try to make a reserved check in of the file destination for a user with identity. A backup
-     * copy can be made.
+     * Try to make a reserved check in of the file destination for a user with
+     * identity. A backup copy can be made.
      * 
      * @param node The node to control.
      * @param identity The identity of the user
-     * @param backup if true, a backup will be created, else no backup will be made.
+     * @param backup if true, a backup will be created, else no backup will be
+     *        made.
      * @param newVersion If true, a new version will be created.
      * 
      * @return long The time.
      * 
-     * @exception FileReservedCheckInException if the document couldn't be checked in (for instance
-     *                because it is already checked out by someone other ...)
+     * @exception FileReservedCheckInException if the document couldn't be
+     *            checked in (for instance because it is already checked out by
+     *            someone other ...)
      * @exception Exception if other problems occur
      */
-    public long reservedCheckIn(Node node, String identity, boolean backup,
-            boolean newVersion) throws FileReservedCheckInException, Exception {
+    public long reservedCheckIn(Node node, String identity, boolean backup, boolean newVersion)
+            throws FileReservedCheckInException, Exception {
 
         RCML rcml;
         long time = new Date().getTime();
@@ -179,18 +161,20 @@ public class RevisionController extends AbstractLogEnabled {
             /*
              * Possible cases and rules:
              * 
-             * 1.) we were able to read the latest checkin and it is later than latest checkout
-             * (i.e. there is no open checkout to match this checkin, an unusual case) 1.1.)
-             * identity of latest checkin is equal to current user -> checkin allowed, same user
-             * may check in repeatedly 1.2.) identity of latest checkin is not equal to current
-             * user -> checkin rejected, may not overwrite the revision which another user
-             * checked in previously 2.) there was no checkin or the latest checkout is later
-             * than latest checkin (i.e. there is an open checkout) 2.1.) identity of latest
-             * checkout is equal to current user -> checkin allowed, user checked out and may
-             * check in again (the most common case) 2.2.) identity of latest checkout is not
-             * equal to current user -> checkin rejected, may not check in while another user is
-             * working on this document
-             *  
+             * 1.) we were able to read the latest checkin and it is later than
+             * latest checkout (i.e. there is no open checkout to match this
+             * checkin, an unusual case) 1.1.) identity of latest checkin is
+             * equal to current user -> checkin allowed, same user may check in
+             * repeatedly 1.2.) identity of latest checkin is not equal to
+             * current user -> checkin rejected, may not overwrite the revision
+             * which another user checked in previously 2.) there was no checkin
+             * or the latest checkout is later than latest checkin (i.e. there
+             * is an open checkout) 2.1.) identity of latest checkout is equal
+             * to current user -> checkin allowed, user checked out and may
+             * check in again (the most common case) 2.2.) identity of latest
+             * checkout is not equal to current user -> checkin rejected, may
+             * not check in while another user is working on this document
+             * 
              */
             if ((cie != null) && (cie.getTime() > coe.getTime())) {
                 // We have case 1
@@ -208,7 +192,7 @@ public class RevisionController extends AbstractLogEnabled {
                 }
             }
         }
-        
+
         if (backup) {
             rcml.makeBackup(time);
         }
@@ -228,11 +212,14 @@ public class RevisionController extends AbstractLogEnabled {
      * Rolls back to the given point in time.
      * @param node The node which will be rolled back
      * @param identity The identity of the user
-     * @param backupFlag If true, a backup of the current version will be made before the rollback
+     * @param backupFlag If true, a backup of the current version will be made
+     *        before the rollback
      * @param time The time point of the desired version
      * @return long The time of the version to roll back to.
-     * @exception FileReservedCheckInException if the current version couldn't be checked in again
-     * @exception FileReservedCheckOutException if the current version couldn't be checked out
+     * @exception FileReservedCheckInException if the current version couldn't
+     *            be checked in again
+     * @exception FileReservedCheckOutException if the current version couldn't
+     *            be checked out
      * @exception FileNotFoundException if a file couldn't be found
      * @exception Exception if another problem occurs
      */
@@ -249,8 +236,10 @@ public class RevisionController extends AbstractLogEnabled {
         // Try to check back in, this might cause
         // a backup of the current version to be created if
         // desired by the user.
-        //XXX:  what is the use of a backup if doc isn't versioned, can't rollback?
-        //long newtime = reservedCheckIn(destination, identity, backupFlag, false);
+        // XXX: what is the use of a backup if doc isn't versioned, can't
+        // rollback?
+        // long newtime = reservedCheckIn(destination, identity, backupFlag,
+        // false);
         long newtime = reservedCheckIn(node, identity, backupFlag, backupFlag);
 
         return newtime;
@@ -260,8 +249,8 @@ public class RevisionController extends AbstractLogEnabled {
      * Delete the check in and roll back the file to the backup at time
      * @param time The time point of the back version we want to retrieve
      * @param node The node for which we want undo the check in
-     * @exception Exception FileNotFoundException if the back version or the current version
-     *                couldn't be found
+     * @exception Exception FileNotFoundException if the back version or the
+     *            current version couldn't be found
      */
     public void undoCheckIn(long time, Node node) throws Exception {
         RCML rcml = node.getRcml();
