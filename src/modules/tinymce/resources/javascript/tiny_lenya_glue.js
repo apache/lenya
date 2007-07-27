@@ -43,24 +43,16 @@ function LenyaSaveContent(element_id, html, body) {
   return html;
 }
 
-/**
-  * This function is called by the editors.insertLink view to
-  * get default values and to determine which fields will be enabled.
-  * @returns a linkData hash map.
-  */
-function LenyaGetLinkData() {
+
+/* interface to generic editor usecases */
+
+org.apache.lenya.editors.setObjectData = function(objectData) {
+  TinyMCE_SimpleBrowserPlugin.browserCallback(objectData.url);
+}
+
+org.apache.lenya.editors.getObjectData = function() {
   var currentURL = TinyMCE_SimpleBrowserPlugin.options['curl'];
-  return {
-    'href' : currentURL ? currentURL : ""
-  };
+  return new org.apache.lenya.editors.ObjectData({
+    url : currentURL ? currentURL : ""
+  });
 }
-
-/**
-  * This function is called by the editors.insertLink view to
-  * update the editor with the new user-supplied values.
-  */
-function LenyaSetLinkData(linkData) { 
-  TinyMCE_SimpleBrowserPlugin.browserCallback(linkData);
-}
-
-var lenyaLinkData;

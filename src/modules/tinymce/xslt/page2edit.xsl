@@ -81,12 +81,6 @@
   <xsl:comment>custom event handlers for lenya:</xsl:comment>
   <xsl:text>
   </xsl:text>
-  <script language="javascript" 
-          type="text/javascript" 
-          src="/{$publicationid}/modules/tinymce/javascript/tiny_lenya_glue.js"
-  >&#160;</script>
-  <xsl:text>
-  </xsl:text>
   <xsl:comment>the main configuration of tinymce:</xsl:comment>
   <xsl:text>
   </xsl:text>
@@ -105,7 +99,19 @@
   >&#160;</script>
   <xsl:text>
   </xsl:text>
-   <script language="javascript" type="text/javascript">
+  <script language="javascript" 
+          type="text/javascript" 
+          src="/{$publicationid}/modules/editors/javascript/org.apache.lenya.editors.js"
+  >&#160;</script>
+  <xsl:text>
+  </xsl:text>
+  <script language="javascript" 
+          type="text/javascript" 
+          src="/{$publicationid}/modules/tinymce/javascript/tiny_lenya_glue.js"
+  >&#160;</script>
+  <xsl:text>
+  </xsl:text>
+  <script language="javascript" type="text/javascript">
   <xsl:text>
 
 /* 

@@ -35,20 +35,22 @@ config = {
     
     /* enable plugins for custom save function, fullscreen editing
        and search-and-replace. */
-    //plugins : "save,fullscreen,searchreplace,table,contextmenu,simplebrowser",
-    plugins : "fullscreen,searchreplace,table,contextmenu,simplebrowser",
+    plugins : "/*save,fullscreen,*/searchreplace,table,contextmenu,simplebrowser/*,xhtmlxtras*/",
         
     /* grey out the "save" button unless there are unsaved changes: */
     //save_enablewhendirty : false,
     
     /* some special settings for fullscreen mode (they override the 
        settings further down) */
+/*
+    fullscreen_new_window : true,
+
     fullscreen_settings : {
         auto_resize : false,
         theme_advanced_toolbar_location : "top",
         theme_advanced_statusbar_location : "bottom"
     },
-    
+*/    
     /* auto-resize the editing area. docs say this is "experimental"! */
     auto_resize : true,
     
@@ -101,7 +103,10 @@ config = {
     
     /* three button rows are active by default. override. */
     theme_advanced_buttons3 : "",
-    
+/*
+    //for xhtmlxtras, use this:
+    theme_advanced_buttons3 : "cite,ins,del,abbr,acronym,attribs",
+*/    
     /* the following items define the elements presented in the "Format" dropdown. 
        the default setting is very restrictive to enforce a corporate design and clean
        code at the expense of flexibility. */
@@ -112,7 +117,7 @@ config = {
 
     /* the simplebrowser plugin is used to wire the generic editors.insertFOO usecases into TinyMCE */
     plugin_simplebrowser_browselinkurl : currentURL + '?lenya.usecase=editors.insertLink',
-    plugin_simplebrowser_browseimageurl : currentURL + '?lenya.usecase=tinymce.insertImage',
+    plugin_simplebrowser_browseimageurl : currentURL + '?lenya.usecase=editors.insertImage',
     plugin_simplebrowser_browseflashurl : '',
     
     /* this callback can override arbitrary tinymce commands. neato!
