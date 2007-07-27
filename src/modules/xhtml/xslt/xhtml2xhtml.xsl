@@ -68,7 +68,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="xhtml:a[@class = 'asset']">
+  <xsl:template match="xhtml:a[@class = 'lenya.asset']">
     <ci:include src="{@href}?format=downloadLink"/>
   </xsl:template>
 

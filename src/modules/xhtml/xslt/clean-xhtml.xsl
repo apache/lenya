@@ -114,7 +114,7 @@
   
   <xsl:template match="lenya:asset">
     <p>
-      <a href="{@src}" class="asset"><xsl:apply-templates/></a>
+      <a href="{@src}" class="lenya.asset"><xsl:apply-templates/></a>
     </p>
   </xsl:template>
 
