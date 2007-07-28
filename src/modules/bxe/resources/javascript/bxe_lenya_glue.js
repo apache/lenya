@@ -3,14 +3,14 @@ org.apache.lenya.editors.setObjectData = function(objectData, windowName) {
   var namespace;
 
   switch (usecase) {
-    case "insertLink":
-    case "insertImage":
+    case org.apache.lenya.editors.USECASE_INSERTLINK:
+    case org.apache.lenya.editors.USECASE_INSERTIMAGE:
       namespace = "http://www.w3.org/1999/xhtml";
       break;
     // FIXME: that is a shotgun approach to getting the broken <asset> thing to run.
     // We get an asset, but it throws validation errors.
     // it needs to be thrown out and replaced by <a href="" class="lenya.asset"/> anyways.
-    case "insertAsset":
+    case org.apache.lenya.editors.USECASE_INSERTASSET:
       namespace = "http://apache.org/cocoon/lenya/page-envelope/1.0";
       break;
   }
@@ -23,13 +23,13 @@ org.apache.lenya.editors.setObjectData = function(objectData, windowName) {
   
   // FIXME: someone with better bxe insights might want to check the options below...
   switch (usecase) {
-    case "insertLink":
-    case "insertImage":
+    case org.apache.lenya.editors.USECASE_INSERTLINK:
+    case org.apache.lenya.editors.USECASE_INSERTIMAGE:
       // If something was selected, it ends up in the alt attribute only, and is lost from view.
       // better to keep it in the text as well (cf. replace behaviour...)
       window.bxe_insertContent(content, window.BXE_SELECTION,window.BXE_SPLIT_IF_INLINE);
       break;
-    case "insertAsset":
+    case org.apache.lenya.editors.USECASE_INSERTASSET:
       window.bxe_insertContent(content, window.BXE_SELECTION);
       break;
   }
@@ -50,7 +50,7 @@ function triggerInsertLink() {
     text  : "",
     title : ""
   });
-  triggerUsecase('insertLink', objectData);
+  triggerUsecase(org.apache.lenya.editors.USECASE_INSERTLINK, objectData);
 }
 
 function triggerInsertImage() {
@@ -61,7 +61,7 @@ function triggerInsertImage() {
     width : "",
     height: ""
   });
-  triggerUsecase('insertImage', objectData);
+  triggerUsecase(org.apache.lenya.editors.USECASE_INSERTIMAGE, objectData);
 }
 
 function triggerInsertAsset() {
@@ -70,7 +70,7 @@ function triggerInsertAsset() {
     text  : "",
     title : ""
   });
-  triggerUsecase('insertAsset', objectData);
+  triggerUsecase(org.apache.lenya.editors.USECASE_INSERTASSET, objectData);
 
 }
 

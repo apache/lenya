@@ -18,7 +18,7 @@ function triggerUsecase(usecase) {
   var selectedText = org.apache.lenya.editors.getSelectedText(document.forms[0].elements['content']);
   switch (usecase) {
 
-    case "insertLink":
+    case org.apache.lenya.editors.USECASE_INSERTLINK:
       objectData[windowName] = new org.apache.lenya.editors.ObjectData({
         url   : "",
         text  : selectedText,
@@ -26,7 +26,7 @@ function triggerUsecase(usecase) {
       });
       break;
 
-    case "insertImage":
+    case org.apache.lenya.editors.USECASE_INSERTIMAGE:
       objectData[windowName] = new org.apache.lenya.editors.ObjectData({
         url   : "",
         text  : selectedText,
@@ -36,7 +36,7 @@ function triggerUsecase(usecase) {
       });
       break;
 
-    case "insertAsset":
+    case org.apache.lenya.editors.USECASE_INSERTASSET:
       objectData[windowName] = new org.apache.lenya.editors.ObjectData({
         url   : "",
         text  : selectedText,
