@@ -37,12 +37,14 @@ org.apache.lenya.editors.setObjectData = function(objectData, windowName) {
   objectData[windowName] = undefined; // we're done!
 }
 
+
 org.apache.lenya.editors.getObjectData = function(windowName) {
   return objectData[windowName];
 }
 
 // 3 functions are needed because bxe's config file accepts only function names,
 // no parameters.
+
 
 function triggerInsertLink() {
   var objectData = new org.apache.lenya.editors.ObjectData({
@@ -52,6 +54,7 @@ function triggerInsertLink() {
   });
   triggerUsecase(org.apache.lenya.editors.USECASE_INSERTLINK, objectData);
 }
+
 
 function triggerInsertImage() {
   var objectData = new org.apache.lenya.editors.ObjectData({
@@ -64,6 +67,7 @@ function triggerInsertImage() {
   triggerUsecase(org.apache.lenya.editors.USECASE_INSERTIMAGE, objectData);
 }
 
+
 function triggerInsertAsset() {
  var objectData = new org.apache.lenya.editors.ObjectData({
     url   : "",
@@ -74,18 +78,18 @@ function triggerInsertAsset() {
 
 }
 
+
 function triggerUsecase(usecase, data) {
   var windowName = org.apache.lenya.editors.generateUniqueWindowName();
   data.text = window.getSelection();// this works cross-browser, because bxe's editable area is not a form field 
-  alert("triggerUsecase[" + usecase +"]\n selectedText: '" + data.text + "'");
   org.apache.lenya.editors.openUsecaseWindow(usecase, windowName);
   //store some information about the new window for later:
   usecaseMap[windowName] = usecase;
   objectData[windowName] = data;
-  alert("Stored values for new window " + windowName + ":\n"
+  /* alert("Stored values for new window " + windowName + ":\n"
       + "objectData[windowName] = '" + objectData[windowName] + "'\n"
       + "usecaseMap[windowName] = '" + usecaseMap[windowName] + "'"
-  ); 
+  ); */ 
 }
 
 

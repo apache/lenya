@@ -46,10 +46,10 @@ function triggerUsecase(usecase) {
   }
   org.apache.lenya.editors.openUsecaseWindow(usecase, windowName);
   usecaseMap[windowName] = usecase;
-    alert("Stored values for new window " + windowName + ":\n"
+  /*  alert("Stored values for new window " + windowName + ":\n"
       + "objectData[windowName] = '" + objectData[windowName] + "'\n"
       + "usecaseMap[windowName] = '" + usecaseMap[windowName] + "'"
-  ); 
+  ); */ 
 }
 
 var objectData = new Array();
