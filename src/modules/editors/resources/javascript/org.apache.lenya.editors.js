@@ -347,7 +347,7 @@ org.apache.lenya.editors.generateContentSnippet = function(usecase, objectData, 
         + (namespace ? ' xmlns="' + namespace + '"' : '')
         + (objectData.url ? ' href="' + objectData.url + '"' : '')
         + (objectData.title ? ' title="' + objectData.title + '"' : '')
-        + ' class="asset">';
+        + ' class="lenya.asset">';
       snippet.afterSelection = '</a>';
       snippet.replaceSelection =
         objectData.text ? objectData.text : undefined;
