@@ -59,6 +59,16 @@
   <message key="Resource Type">Ressourcen-Typ</message>
   <message key="Mime Type">Mime-Type</message>
   <message key="Document Size">Größe des Dokuments</message>
-  
+  <message key="no-rollback">Rollback ist deaktiviert.</message>
+  <message key="workflow-state">Das Dokument ist im Arbeitsschritt "{0}".</message>
+  <message key="view-revision-in-new-window">Version in neuem Fenster ansehen</message>
+  <message key="view-revision">Version ansehen</message>
+  <message key="is-current-version">(aktuell)</message>
+  <message key="rollback">Wiederherstellen</message>
+  <message key="rollback-ok">diese Version wiederherstellen</message>
+  <message key="no-rollback-in-review">Im Arbeitsschritt "Freigabe" ist
+  keine Wiederherstellung möglich.</message>
+  <message key="no-rollback-no-privileges">Keine ausreichenden Rechte zum Wiederherstellen.</message>
+                   
 </catalogue>
 

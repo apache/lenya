@@ -59,5 +59,15 @@
   <message key="Resource Type">Resource Type</message>
   <message key="Mime Type">Mime Type</message>
   <message key="Document Size">Document Size</message>
-  
+  <message key="no-rollback">Rollback is disabled.</message>
+  <message key="workflow-state">Workflow state is "{0}".</message>
+  <message key="view-revision-in-new-window">view revision in new window</message>  
+  <message key="view-revision">View revision</message>
+  <message key="is-current-version">(is current)</message>
+  <message key="rollback">Roll back</message>
+  <message key="rollback-ok">roll back to this version</message>
+  <message key="no-rollback-in-review">Rollback disabled. Document is in
+  review state.</message>
+  <message key="no-rollback-no-privileges">Rollback disabled. You do not
+  have sufficient privileges.</message>
 </catalogue>

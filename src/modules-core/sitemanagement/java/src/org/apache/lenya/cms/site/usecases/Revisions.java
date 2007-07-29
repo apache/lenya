@@ -19,7 +19,10 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.Vector;
 
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.rc.RCML;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * Usecase to display revisions of a resource.
@@ -30,16 +33,18 @@ public class Revisions extends SiteUsecase {
 
     private RCML rcml = null;
 
+    public static final String WORKFLOW_EVENT_EDIT = "edit";
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
      *      filter out checkin entries
      */
     protected void initParameters() {
         super.initParameters();
-        
-        if (getSourceDocument() != null) {
+        Document sourceDoc = getSourceDocument();
+        if (sourceDoc != null) {
             try {
-                this.rcml = getSourceDocument().getRepositoryNode().getRcml();
+                this.rcml = sourceDoc.getRepositoryNode().getRcml();
             } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
@@ -51,7 +56,68 @@ public class Revisions extends SiteUsecase {
                 throw new RuntimeException(e);
             }
             setParameter("entries", entries);
+           
+            Boolean canRollback;
+            try { 
+                canRollback = new Boolean(WorkflowUtil.canInvoke(
+                    this.manager, 
+                    getDocumentFactory().getSession(),
+                    getLogger(),
+                    sourceDoc,
+                    WORKFLOW_EVENT_EDIT));
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+            setParameter("canRollback", canRollback);
+
+            String workflowState;
+            try {
+                // looks like this throws a null pointer exception
+                // when a document has never been edited :(
+                // guess this should be fixed elsewhere. for now
+                // let's abuse the exception handler.
+                workflowState = WorkflowUtil.getWorkflowable(
+                    this.manager, 
+                    getDocumentFactory().getSession(),
+                    getLogger(),
+                    sourceDoc
+                ).getLatestVersion().getState();
+                setParameter("workflowState", workflowState);
+            } catch (final Exception e) {
+                setParameter("workflowState", ""); //FIXME: should return Workflow.getInitialState(). But then again, there should not be an NPÈ anyways...
+                //throw new RuntimeException(e);
+            }
+            
+/*
+            // since we need both state and canInvoke, we could deal with the avalon
+            // component ourselves rather than using WorkflowUtil - saves one
+            // service manager lookup.
+            // problem is that DocumentWorkflowable is not public and Workflowable is abstract :(
+
+            WorkflowManager wfManager = null;
+            String workflowState;
+            Boolean canRollback;
+            try {
+                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+                Workflowable workflowable = new DocumentWorkflowable(
+                    this.manager, 
+                    getDocumentFactory().getSession(),
+                    sourceDoc,
+                    getLogger()
+                );
+                workflowState = workflowable.getLatestVersion().getState();
+                canRollback = new Boolean(wfManager.canInvoke(workflowable, WORKFLOW_EVENT_EDIT));
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (wfManager != null) {
+                    manager.release(wfManager);
+                }
+            }
+            setParameter("workflowState", workflowState);
+            setParameter("canRollback", canRollback);
+*/
+
         }
     }
-
 }
