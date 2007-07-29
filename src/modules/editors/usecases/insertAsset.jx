@@ -28,7 +28,8 @@
     <script type="text/javascript" src="/modules/editors/javascript/insertAsset.js">&#160;</script>
   </page:head>
   
-  <!-- This view can handle both insertAsset and insertImage, depending on the setting of the mode parameter ("Asset"|"Image") -->
+  <!-- This view can handle both insertAsset and insertImage, 
+       depending on the setting of the mode parameter ("Asset"|"Image") -->
   <jx:set var="mode" value="${usecase.getParameterAsString('mode')}"/>
   
   <page:title>
@@ -64,11 +65,27 @@
             <jx:set var="asset2proxyUrl" value="${usecase.getParameter('asset2proxyUrl')}"/>
             <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
               <jx:set var="mimeType" value="${asset.getMimeType()}"/>
+              <!-- Images are displayed in both "Asset" and "Image" mode. Other resources
+                   are displayed only in "Asset" mode. -->
               <jx:if test="${mode.equals('Asset') || mimeType.startsWith('image/')}">
-                <jx:set var="url" value="${asset2proxyUrl.get(asset)}"/>
+                <!-- We must differenciate between images and assets here: 
+                     images get a path-based URL to allow WYSIWYG editors to render them 
+                     (they will be converted to lenya-document: UR later). 
+                     Assets get a UUID-based lenya-document URL.
+                -->
+               <jx:choose>
+                  <jx:when test="${mode.equals('Image')}">
+                    <jx:set var="url" value="${asset2proxyUrl.get(asset)}"/>
+                  </jx:when>
+                  <jx:otherwise>
+                    <jx:set var="url" value="${('lenya-document:' + asset.getUUID() + ',lang=' + asset.getLanguage())}"/>
+                  </jx:otherwise>
+                </jx:choose>
                 <tr>
                   <td>
-                    <!-- the +'' is to avoid nulls, which would cause the form field to be disabled -->
+                    <!-- The "+''" construction is to avoid nulls (it forces them to be cast to the empty string).
+                         Undefined values would cause the form field to be disabled.
+                    -->
                     <input type="radio" name="asset" value="${asset.getPath()}" 
                       onClick="updateData(
                           '${url}',

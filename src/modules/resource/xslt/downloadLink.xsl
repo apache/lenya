@@ -64,7 +64,7 @@ limitations under the License.
       <xsl:value-of select="format-number($contentLength div 1024, '#,###.##')"/>
     </xsl:variable>
     
-    <p class="asset">
+    <span class="asset">
       <a href="lenya-document:{$uuid},lang={$language}" title="{text()}">
         <xsl:call-template name="icon">
           <xsl:with-param name="mimetype" select="$mimeType"/>
@@ -76,7 +76,7 @@ limitations under the License.
         <xsl:value-of select="$title"/>
       </a>
       (<xsl:value-of select="number($size)"/> KB)
-    </p>
+    </span>
 
   </xsl:template>
   
