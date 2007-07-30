@@ -23,12 +23,9 @@ package org.apache.lenya.cms.rc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * Revision Controller test
@@ -37,11 +34,9 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
 
     /**
      * @see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug 41005</a>
-     * @throws AccessControlException
-     * @throws RepositoryException
-     * @throws ServiceException
+     * @throws Exception
      */
-    public void testCheckIn() throws AccessControlException, RepositoryException, ServiceException {
+    public void testCheckIn() throws Exception {
         login("lenya");
         
         DocumentManager docMgr = null;
