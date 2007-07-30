@@ -22,7 +22,8 @@
   <body>
     <warning>
       The <code>lenyadoc:</code> protocol is deprecated and being phased out in favour of the much more
-      versatile <a href="site:lenya-document"><code>lenya-document:</code> protocol.<br />
+      versatile <a
+      href="site:lenya-document"><code>lenya-document:</code></a> protocol.<br />
       New code should not use it anymore. This documentation remains here to help people make sense of legacy code.
     </warning>
     <p>
