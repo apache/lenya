@@ -180,8 +180,9 @@
       <protocols href="protocols/" label="Protocols">
         <protocols-overview href="index.html" label="Overview"/>
         <lenya href="lenya.html" label="lenya Protocol"/>
-        <lenyadoc href="lenyadoc.html" label="lenyadoc Protocol"/>
+        <lenya-document href="lenya-document.html" label="lenya-document Protocol"/>
         <siteprotocol href="site.html" label="site Protocol"/>
+        <lenyadoc href="lenyadoc.html" label="lenyadoc Protocol"/>
       </protocols>
       <urls-and-links label="URLs and Links">
         <urlMapping href="urlMapping.html" label="URL Mapping" />
