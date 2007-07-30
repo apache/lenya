@@ -246,19 +246,6 @@ public class RevisionController extends AbstractLogEnabled {
     }
 
     /**
-     * Delete the check in and roll back the file to the backup at time
-     * @param time The time point of the back version we want to retrieve
-     * @param node The node for which we want undo the check in
-     * @exception Exception FileNotFoundException if the back version or the
-     *            current version couldn't be found
-     */
-    public void undoCheckIn(long time, Node node) throws Exception {
-        RCML rcml = node.getRcml();
-        rcml.restoreBackup(time);
-        rcml.deleteFirstCheckIn();
-    }
-
-    /**
      * delete the revisions
      * @param node of the document
      * @throws RevisionControlException when somthing went wrong
