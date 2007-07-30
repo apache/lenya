@@ -23,15 +23,18 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
   >
-  
+ 
+  <jx:set var="pathInfo" value="${usecase.getSourceURL()}"/>
+  <jx:set var="steps" value="${pathInfo.split('/')}"/>
+  <jx:set var="pubId" value="${java.util.Arrays.asList(steps).get(1)}"/>
+ 
   <script type="text/javascript" src="/modules/fckeditor/fckeditor/fckeditor.js">&#160;</script>
   <script type="text/javascript" src="/modules/fckeditor/javascript/fckloader.js">&#160;</script>
   <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js">&#160;</script>
   <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script> 
-  <script type="text/javascript" src="/modules/fckeditor/javascript/fck_lenya_glue.js">&#160;</script>
   <script type="text/javascript">
     function loadfckloader() {
-      fckloader('${usecase.getParameter('requesturi')}', '${request.getContextPath()}');
+      fckloader('${usecase.getParameter('requesturi')}', '${pubId}');
     }
 
     if(typeof window.addEventListener != 'undefined') {
