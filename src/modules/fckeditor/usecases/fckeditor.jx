@@ -30,9 +30,18 @@
   <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script> 
   <script type="text/javascript" src="/modules/fckeditor/javascript/fck_lenya_glue.js">&#160;</script>
   <script type="text/javascript">
-    window.onload = function()
-    {
+    function loadfckloader() {
       fckloader('${usecase.getParameter('requesturi')}', '${request.getContextPath()}');
+    }
+
+    if(typeof window.addEventListener != 'undefined') {
+      window.addEventListener('load',loadfckloader,false);
+    }
+    else if(typeof window.attachEvent != 'undefined') {
+      window.attachEvent('onload',loadfckloader);
+    }
+    else {
+      window.onload = loadfckloader();
     }
   </script>
   
@@ -45,7 +54,7 @@
             </page:body>
           </jx:when>
           <jx:otherwise>
-            <page:body onkeydown="return checkBackspace(event)" onkeypress="return checkBackspace(event)" >
+            <page:body>
 	  
                 <div class="lenya-box">
                   <div class="lenya-box-title">Information</div>

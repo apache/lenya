@@ -15,16 +15,37 @@
 * limitations under the License.
 */
 
-function checkBackspace(e)
+/* 
+* Processes the event. Ordering is important for Opera 9 on Windows,
+* as it must use the Mozilla style code, but will match IE style code.
+*/
+function LenyaDisableBackspace(e)
 {
-   var key;
-   if(window.event)
-     key = window.event.keyCode;
-   else
-     key = e.which;
-   if (key == 8) {
-     alert("disablebackspace.js just ate a backspace event. Burp!");
-     return false;
-   } else
-     return true;
+  // Mozilla style code for Opera and Safari as well
+  // For Opera 9 under Windows to work properly, the Mozilla test must be first.
+  if(typeof document.addEventListener != 'undefined' && e.which == 8) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+  // IE style code for IE 6 and IE 7. Should work on IE 5.5+
+  else if(typeof document.attachEvent != 'undefined' && window.event && window.event.keyCode == 8) {
+    window.event.cancelBubble = true;
+    return false;
+  }
+  return true;
 }
+
+/*
+* Register event handler.
+* This does not need to wait for onload to fire.
+*/
+// Mozilla style for Opera and Safari as well
+if(typeof document.addEventListener != 'undefined') {
+  document.addEventListener('keypress',LenyaDisableBackspace,false);
+}
+// IE style code for IE 6 and IE 7. Should work on IE 5.5+
+else if(typeof document.attachEvent != 'undefined') {
+  document.attachEvent('onkeydown',LenyaDisableBackspace);
+}
+
