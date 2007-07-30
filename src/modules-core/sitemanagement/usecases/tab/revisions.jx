@@ -25,6 +25,7 @@
 
   <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
 
+  <!-- if the usecase cannot be invoked, find the cause: -->
   <jx:choose>
     <jx:when test="${usecase.getParameter('canRollback') == 'true'}">
       <jx:set var="rollbackMessage" value="rollback-ok"/>
@@ -41,90 +42,109 @@
     </jx:otherwise>
   </jx:choose>
 
+  <page:head>
+    <script type="text/javascript">
+
+  function showRevision(revision) {
+    window.open(
+        '?lenya.revision=' + revision,
+        'Lenya_ViewRevision',
+        'menubar=no,addressbar=no,toolbar=no,statusbar=no'
+    );
+  }
+
+  function rollback(toTime) {
+    window.location.href="?lenya.usecase=sitemanagement.rollback"
+        + String.fromCharCode(38)  // an &amp; does not work, since it's not being decoded
+        + "rollbackTime=" + toTime;
+  }
+
+    </script>
+  </page:head>
   <page:body>
+
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+
     <div id="contentblock1" class="lenya-tab-sitetree">
       <h1><i18n:text>Revisions</i18n:text></h1>
-    <form name="revisions">
-    <table class="lenya-table-list-noborder">
-      <tr>
-        <th><i18n:text>No.</i18n:text></th>
-        <th><i18n:text>Time</i18n:text></th>
-        <th><i18n:text>Editor</i18n:text></th>
-        <th><i18n:text>Actions</i18n:text></th>
-      </tr>
-      <jx:set var="count" value="${usecase.getParameter('entries').size()}"/>
-<!--
-      <jx:forEach var="item" items="${usecase.getParameter('entries')}" end="0">
-        <tr>
-          <td><input type="button" disabled="disabled" value="${item.version}"/></td>
-          <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-          <td><jx:out value="${item.identity}"/></td>
-          <td><i18n:text>Current Version</i18n:text></td>
-        </tr>
-      </jx:forEach>
--->
-      <jx:set var="isFirstItem" value="true"/>
-      <jx:forEach var="item" items="${usecase.getParameter('entries')}" begin="0">
-        <tr>
-          <td align="right">
-            <input 
-               type="button" 
-               i18n:attr="title" 
-               onclick="window.open('?lenya.revision=${item.version}','Lenya_ViewRevision','menubar=no,addressbar=no,toolbar=no,statusbar=no');" 
-               title="view-revision-in-new-window"
-               value="${item.version}"
-            />
-          </td>
-          <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-          <td><jx:out value="${item.identity}"/></td>
-          <td>
-            <input 
-               type="button" 
-               i18n:attr="value title" 
-               onclick="window.open('?lenya.revision=${item.version}','Lenya_ViewRevision','menubar=no,addressbar=no,toolbar=no,statusbar=no');" 
-               title="view-revision-in-new-window"
-               value="view-revision"
-            />
-            <jx:choose>
-              <jx:when test="${isFirstItem == 'true'}">
-                <jx:set var="isFirstItem" value="false"/>
-                <i18n:text key="is-current-version"/>
-              </jx:when>
-              <jx:when test="${usecase.getParameter('canRollback') == 'true'}">
-                &#160;
+  
+      <form name="revisions">
+  
+        <table class="lenya-table-list-noborder">
+
+          <tr>
+            <th><i18n:text>No.</i18n:text></th>
+            <th><i18n:text>Time</i18n:text></th>
+            <th><i18n:text>Editor</i18n:text></th>
+            <th><i18n:text>Actions</i18n:text></th>
+          </tr>
+  
+          <jx:set var="count" value="${usecase.getParameter('entries').size()}"/>
+          <jx:set var="isFirstItem" value="true"/>
+          <jx:forEach var="item" items="${usecase.getParameter('entries')}" begin="0">
+            <tr>
+              <td align="right">
                 <input 
                   type="button" 
-                  i18n:attr="value title"
-                  title="${rollbackMessage}" 
-                  onclick="?lenya.usecase=sitemanagement.rollback&amp;rollbackTime=${item.time}" 
-                  value="rollback"
+                  i18n:attr="title" 
+                  onclick="showRevision(${item.version});"
+                  title="view-revision-in-new-window"
+                  value="${item.version}"
                 />
-              </jx:when>
-              <jx:otherwise>
+              </td>
+              <td align="right"><i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></i18n:date-time></td>
+              <td><jx:out value="${item.identity}"/></td>
+              <td>
                 <input 
                   type="button" 
-                  i18n:attr="value title"
-                  title="${rollbackMessage}"
-                  disabled="disabled"
-                  value="rollback"
+                  i18n:attr="value title" 
+                  onclick="showRevision(${item.version});"
+                  title="view-revision-in-new-window"
+                  value="view-revision"
                 />
-              </jx:otherwise>
-            </jx:choose>
-          </td>
-        </tr>
-      </jx:forEach>
-      <jx:if test="${usecase.getParameter('canRollback') != 'true'}">
-        <tr>
-          <td/>
-          <td colspan="3">
-            <strong><i18n:text key="${rollbackMessage}"/></strong>
-          </td>
-        </tr>
-      </jx:if>
-    </table>
-    </form>
+                <jx:choose>
+                  <jx:when test="${isFirstItem == 'true'}">
+                    <jx:set var="isFirstItem" value="false"/>
+                    <i18n:text key="is-current-version"/>
+                  </jx:when>
+                  <jx:when test="${usecase.getParameter('canRollback') == 'true'}">
+                    &#160;
+                    <input 
+                      type="button" 
+                      i18n:attr="value title"
+                      title="${rollbackMessage}" 
+                      onclick="void rollback(${item.time});" 
+                      value="rollback"
+                    />
+                  </jx:when>
+                  <jx:otherwise>
+                    <input 
+                      type="button" 
+                      i18n:attr="value title"
+                      title="${rollbackMessage}"
+                      disabled="disabled"
+                      value="rollback"
+                    />
+                  </jx:otherwise>
+                </jx:choose>
+              </td>
+            </tr>
+          </jx:forEach>
+  
+          <jx:if test="${usecase.getParameter('canRollback') != 'true'}">
+            <tr>
+              <td/>
+              <td colspan="3">
+                <strong><i18n:text key="${rollbackMessage}"/></strong>
+              </td>
+            </tr>
+          </jx:if>
+
+        </table>
+  
+      </form>
+  
     </div>
   </page:body>
 </page:page>
