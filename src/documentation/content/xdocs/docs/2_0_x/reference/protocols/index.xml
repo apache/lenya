@@ -21,13 +21,13 @@
   </header>
   <body>
     <p>Cocoon uses different protocols to access sources. The protocols are handled by a <code>SourceFactory</code> which resolves the
-       given URI to a source. There are two protocols specific to Lenya:
+       given URI to a source. There are a few protocols specific to Lenya:
     </p>
     <ul>
-      <li><a href="site:lenya"><code>lenya:</code></a> Get a <code>RepositorySource</code> in the context of Lenya.</li>
-      <li><a href="site:lenyadoc"><code>lenyadoc:</code></a> Get a <code>RepositorySource</code> of a specific document using the UUID.</li>
-      <li><a href="site:link-management"><code>lenya-document:</code></a> Reference a document.</li>
+      <li><a href="site:lenya-document"><code>lenya-document:</code></a> Reference a document by UUID. The swiss army knife of Lenya. Used for all internal links.</li>
       <li><a href="site:siteprotocol"><code>site:</code></a> Get a <code>RepositorySource</code> using the path of a document in the site structure.</li>
+      <li><a href="site:lenya"><code>lenya:</code></a> Get a <code>RepositorySource</code> in the context of Lenya. Used mainly internally.</li>
+      <li><em>deprecated</em> <a href="site:lenyadoc"><code>lenyadoc:</code></a> Get a <code>RepositorySource</code> of a specific document using the UUID.</li>
     </ul>
   </body>
 </document>

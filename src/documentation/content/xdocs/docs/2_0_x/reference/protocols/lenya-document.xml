@@ -17,15 +17,17 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
-    <title><code>lenya:</code> Protocol</title> 
+    <title>lenya-document: Protocol</title> 
   </header>
   <body>
     <p>
-      The <code>lenya:</code> protocol creates a <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/RepositorySource.html">
-      <code>RepositorySource</code></a>, which is a 
-      <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/TransactionableSource.html"><code>TransactionableSource</code></a>.
-      The resolution of the URI is based on the <code>context:</code> protocol
-      handler, i.e. you are accessing files under the webapp base directory.
+      The <code>lenya-document:</code> protocol allows to access the source of a Lenya document <strong>by
+      its UUID, publication ID, area, language and revision</strong>, regardless of the sitetree layout.
+      All Lenya-internal links use it, so that links will not break when documents are moved around
+      in the sitetree. 
+    </p>
+    <p>
+      Since it is such a fundamental concept, it is documented in detail under <a href="site:link-management">Link Management</a>.
     </p>
   </body>
 </document>

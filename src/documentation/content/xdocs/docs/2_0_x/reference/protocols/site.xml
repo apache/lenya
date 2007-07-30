@@ -21,7 +21,7 @@
   </header>
   <body>
     <p>
-      The <code>site:</code> protocol allows to access the source of a Lenya document without knowing the
+      The <code>site:</code> protocol allows to access the source of a Lenya document <strong>by its sitetree path</strong> without knowing the
       underlying storage structure. If the relative syntax is used, only the language and the path of
       the document in the site structure are needed.
       If the absolute syntax is used, the publication id and the area has to be specified additionally.
