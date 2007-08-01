@@ -171,7 +171,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         SiteNode[] children = this.parent.getChildren();
         int pos = Arrays.asList(children).indexOf(this);
         List siblings = new ArrayList();
-        for (int i = 0; i < pos - 1; i++) {
+        for (int i = 0; i < pos ; i++) {
             siblings.add(children[i]);
         }
         return (SiteTreeNode[]) siblings.toArray(new TreeNodeImpl[siblings.size()]);
