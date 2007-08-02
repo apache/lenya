@@ -40,7 +40,8 @@ public class RCMLEntry {
     }
     
     /**
-     * Get the identity.
+     * Get the identity of the creator.
+     * FIXME: Is that the user name?
      * @return the identity
      */
     public String getIdentity() {
@@ -48,7 +49,7 @@ public class RCMLEntry {
     }
 
     /**
-     * Get the time.
+     * Get the creation time.
      * @return the time
      */
     public long getTime() {
@@ -56,7 +57,7 @@ public class RCMLEntry {
     }
 
     /**
-     * Get the type.
+     * Get the type (checkin or checkout).
      * @return the type
      */
     public short getType() {
@@ -64,7 +65,7 @@ public class RCMLEntry {
     }
     
     /**
-     * Set the type.
+     * Set the type (checkin or checkout).
      * @param s the type
      */
     protected void setType(short s) {
