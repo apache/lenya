@@ -40,8 +40,8 @@ public class RCMLEntry {
     }
     
     /**
-     * Get the identity of the creator.
-     * FIXME: Is that the user name?
+     * Get the identity of the creator (i.e. the user name)
+     * FIXME: this should be changed to an o.a.l.ac.Identity object
      * @return the identity
      */
     public String getIdentity() {
@@ -58,6 +58,8 @@ public class RCMLEntry {
 
     /**
      * Get the type (checkin or checkout).
+     * @see org.apache.lenya.cms.rc.RCML.ci
+     * @see org.apache.lenya.cms.rc.RCML.co
      * @return the type
      */
     public short getType() {
@@ -66,6 +68,8 @@ public class RCMLEntry {
     
     /**
      * Set the type (checkin or checkout).
+     * @see org.apache.lenya.cms.rc.RCML.ci
+     * @see org.apache.lenya.cms.rc.RCML.co
      * @param s the type
      */
     protected void setType(short s) {
