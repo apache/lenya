@@ -22,7 +22,6 @@ import java.util.Vector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * Usecase to display revisions of a resource.
@@ -84,7 +83,7 @@ public class Revisions extends SiteUsecase {
                 ).getLatestVersion().getState();
                 setParameter("workflowState", workflowState);
             } catch (final Exception e) {
-                setParameter("workflowState", ""); //FIXME: should return Workflow.getInitialState(). But then again, there should not be an NPÈ anyways...
+                setParameter("workflowState", ""); //FIXME: should return Workflow.getInitialState(). But then again, there should not be an NPE anyways...
                 //throw new RuntimeException(e);
             }
             
