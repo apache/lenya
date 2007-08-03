@@ -20,6 +20,7 @@ package org.apache.lenya.cms.publication;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -125,7 +126,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     protected Map loadSamples(Configuration samplesParentConfig) throws ConfigurationException {
         Configuration[] samplesConf = samplesParentConfig.getChildren(SAMPLE_NAME);
-        Map samples = new HashMap();
+        Map samples = new LinkedHashMap();
         for (int i = 0; i < samplesConf.length; i++) {
             String name = samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE, DEFAULT_SAMPLE_NAME);
             String mimeType = samplesConf[i].getAttribute(SAMPLE_MIME_TYPE_ATTRIBUTE);
