@@ -22,6 +22,9 @@ import java.util.Vector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Usecase to display revisions of a resource.
@@ -31,8 +34,6 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
 public class Revisions extends SiteUsecase {
 
     private RCML rcml = null;
-
-    public static final String WORKFLOW_EVENT_EDIT = "edit";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
@@ -47,7 +48,7 @@ public class Revisions extends SiteUsecase {
             } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
-    
+
             Vector entries;
             try {
                 entries = this.rcml.getBackupEntries();
@@ -55,68 +56,58 @@ public class Revisions extends SiteUsecase {
                 throw new RuntimeException(e);
             }
             setParameter("entries", entries);
-           
+
             Boolean canRollback;
-            try { 
-                canRollback = new Boolean(WorkflowUtil.canInvoke(
-                    this.manager, 
-                    getDocumentFactory().getSession(),
-                    getLogger(),
-                    sourceDoc,
-                    WORKFLOW_EVENT_EDIT));
+            try {
+                canRollback = new Boolean(WorkflowUtil.canInvoke(this.manager, getDocumentFactory()
+                        .getSession(), getLogger(), sourceDoc, getEvent()));
             } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
             setParameter("canRollback", canRollback);
 
-            String workflowState;
             try {
-                // looks like this throws a null pointer exception
-                // when a document has never been edited :(
-                // guess this should be fixed elsewhere. for now
-                // let's abuse the exception handler.
-                workflowState = WorkflowUtil.getWorkflowable(
-                    this.manager, 
-                    getDocumentFactory().getSession(),
-                    getLogger(),
-                    sourceDoc
-                ).getLatestVersion().getState();
-                setParameter("workflowState", workflowState);
-            } catch (final Exception e) {
-                setParameter("workflowState", ""); //FIXME: should return Workflow.getInitialState(). But then again, there should not be an NPE anyways...
-                //throw new RuntimeException(e);
-            }
-            
-/*
-            // since we need both state and canInvoke, we could deal with the avalon
-            // component ourselves rather than using WorkflowUtil - saves one
-            // service manager lookup.
-            // problem is that DocumentWorkflowable is not public and Workflowable is abstract :(
-
-            WorkflowManager wfManager = null;
-            String workflowState;
-            Boolean canRollback;
-            try {
-                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                Workflowable workflowable = new DocumentWorkflowable(
-                    this.manager, 
-                    getDocumentFactory().getSession(),
-                    sourceDoc,
-                    getLogger()
-                );
-                workflowState = workflowable.getLatestVersion().getState();
-                canRollback = new Boolean(wfManager.canInvoke(workflowable, WORKFLOW_EVENT_EDIT));
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (wfManager != null) {
-                    manager.release(wfManager);
+                if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), sourceDoc)) {
+                    Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
+                            getSession(), getLogger(), sourceDoc);
+                    Version latestVersion = workflowable.getLatestVersion();
+                    String state;
+                    if (latestVersion != null) {
+                        state = latestVersion.getState();
+                    } else {
+                        Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
+                                getSession(), getLogger(), sourceDoc);
+                        state = workflow.getInitialState();
+                    }
+                    setParameter("workflowState", state);
                 }
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
             }
-            setParameter("workflowState", workflowState);
-            setParameter("canRollback", canRollback);
-*/
+
+            /*
+             * // since we need both state and canInvoke, we could deal with the
+             * avalon // component ourselves rather than using WorkflowUtil -
+             * saves one // service manager lookup. // problem is that
+             * DocumentWorkflowable is not public and Workflowable is abstract :(
+             * 
+             * WorkflowManager wfManager = null; String workflowState; Boolean
+             * canRollback; try { wfManager = (WorkflowManager)
+             * this.manager.lookup(WorkflowManager.ROLE); Workflowable
+             * workflowable = new DocumentWorkflowable( this.manager,
+             * getDocumentFactory().getSession(), sourceDoc, getLogger() );
+             * workflowState = workflowable.getLatestVersion().getState();
+             * canRollback = new Boolean(wfManager.canInvoke(workflowable,
+             * WORKFLOW_EVENT_EDIT)); } catch (ServiceException e) { throw new
+             * RuntimeException(e); } finally { if (wfManager != null) {
+             * manager.release(wfManager); } } setParameter("workflowState",
+             * workflowState); setParameter("canRollback", canRollback);
+             */
 
         }
+    }
+
+    protected String getEvent() {
+        return getParameterAsString("workflowEvent");
     }
 }

@@ -26,6 +26,7 @@
       <view template="modules/sitemanagement/usecases/tab/revisions.jx" menu="true">
         <tab group="site" name="revisions"/>
       </view>
+      <parameter name="workflowEvent" value="edit"/>
       <exit usecase="tab.revisions"/>
     </component-instance>
   </xconf>
