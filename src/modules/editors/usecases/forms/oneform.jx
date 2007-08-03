@@ -28,6 +28,7 @@
   <page:head>
     <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js"/>
     <script type="text/javascript" src="/modules/editors/javascript/oneform_lenya_glue.js"/>
+    <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js"/>
   </page:head>
   <page:body>
     
