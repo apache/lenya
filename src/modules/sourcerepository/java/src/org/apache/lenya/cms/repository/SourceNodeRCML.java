@@ -31,6 +31,7 @@ import java.util.Vector;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.CheckOutEntry;
@@ -380,10 +381,16 @@ public class SourceNodeRCML implements RCML {
 
     protected void restoreBackup(SourceWrapper wrapper, long time) throws RevisionControlException {
         String backupSourceUri = getBackupSourceUri(wrapper, time);
+        SourceResolver resolver = null;
         try {
-            SourceUtil.copy(this.manager, backupSourceUri, wrapper.getRealSourceUri());
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            SourceUtil.copy(resolver, backupSourceUri, wrapper.getOutputStream());
         } catch (Exception e) {
             throw new RevisionControlException(e);
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
     }
 

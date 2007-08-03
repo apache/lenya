@@ -17,17 +17,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.FileNotFoundException;
-import java.util.Map;
-
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
-import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -37,7 +27,7 @@ import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
  * Rollback.
  */
 public class Rollback extends DocumentUsecase {
-	
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -61,43 +51,18 @@ public class Rollback extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        // Get parameters                                                                                                                       
         String rollbackTime = getParameterAsString("rollbackTime");
-            
-        // Do the rollback to an earlier version
-        long newtime = 0;
-        
+
         Document document = getSourceDocument();
+        long time = new Long(rollbackTime).longValue();
+        document.getRepositoryNode().getRcml().restoreBackup(time);
         
-        // Initialize Revision Controller
-        RevisionController rc = new RevisionController(getLogger());
-        
-        Map objectModel = ContextHelper.getObjectModel(getContext());
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(false);
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        User user = identity.getUser();
-        
-        try {
-            newtime = rc.rollback(document.getRepositoryNode(), user.getId(), true, new Long(rollbackTime).longValue());
-            WorkflowUtil.invoke(this.manager,
-                getSession(),
-                getLogger(),
-                getSourceDocument(),
+        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
                 getEvent());
-        } catch (FileNotFoundException e) {
-            addErrorMessage("Unable to roll back!" + e);
-        } catch (Exception e) {
-            addErrorMessage("Unable to roll back!" + e);
-        }
-            
-        getLogger().debug("rollback complete, old (and now current) time was " + rollbackTime +
-              " backup time is " + newtime);
-                
     }
 
     protected String getEvent() {
-        return "edit";
+        return getParameterAsString("workflowEvent");
     }
 
 }

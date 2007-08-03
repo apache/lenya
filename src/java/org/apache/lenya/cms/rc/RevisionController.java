@@ -20,7 +20,6 @@
 
 package org.apache.lenya.cms.rc;
 
-import java.io.FileNotFoundException;
 import java.util.Date;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -211,38 +210,13 @@ public class RevisionController extends AbstractLogEnabled {
     /**
      * Rolls back to the given point in time.
      * @param node The node which will be rolled back
-     * @param identity The identity of the user
-     * @param backupFlag If true, a backup of the current version will be made
      *        before the rollback
      * @param time The time point of the desired version
-     * @return long The time of the version to roll back to.
-     * @exception FileReservedCheckInException if the current version couldn't
-     *            be checked in again
-     * @exception FileReservedCheckOutException if the current version couldn't
-     *            be checked out
-     * @exception FileNotFoundException if a file couldn't be found
-     * @exception Exception if another problem occurs
+     * @exception Exception if a problem occurs
      */
-    public long rollback(Node node, String identity, boolean backupFlag, long time)
+    public void rollback(Node node, long time)
             throws Exception {
-
-        // Make sure the old version exists
-        RCML rcml = node.getRcml();
-
-        // Try to check out current version
-        reservedCheckOut(node, identity);
-        rcml.restoreBackup(time);
-
-        // Try to check back in, this might cause
-        // a backup of the current version to be created if
-        // desired by the user.
-        // XXX: what is the use of a backup if doc isn't versioned, can't
-        // rollback?
-        // long newtime = reservedCheckIn(destination, identity, backupFlag,
-        // false);
-        long newtime = reservedCheckIn(node, identity, backupFlag, backupFlag);
-
-        return newtime;
+        node.getRcml().restoreBackup(time);
     }
 
     /**
