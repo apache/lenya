@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -51,8 +53,13 @@ public class OneFormEditor extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
-        org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
-        return objects;
+        org.apache.lenya.cms.publication.Document doc = getSourceDocument();
+        Set nodes = new HashSet();
+        if (doc != null) {
+            nodes.add(doc.getRepositoryNode());
+        }
+        return (org.apache.lenya.cms.repository.Node[])
+            nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
     }
 
     /**

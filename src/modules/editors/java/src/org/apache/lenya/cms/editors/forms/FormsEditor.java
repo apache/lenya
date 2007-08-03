@@ -24,8 +24,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -107,8 +109,13 @@ public class FormsEditor extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
-        org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
-        return objects;
+        org.apache.lenya.cms.publication.Document doc = getSourceDocument();
+        Set nodes = new HashSet();
+        if (doc != null) {
+            nodes.add(doc.getRepositoryNode());
+        }
+        return (org.apache.lenya.cms.repository.Node[])
+            nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
     }
 
     /**
