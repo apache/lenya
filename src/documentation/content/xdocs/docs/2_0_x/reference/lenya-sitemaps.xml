@@ -194,7 +194,7 @@
 					<title>Part 4: The usecase parameter (optional)</title>
 					<p>Right after the document URL there may be
 					an additional parameter,
-					<code>lenya.usecase=$USECASE</code>.
+					<code>lenya.usecase=$USECASE</code>.</p>
 					<p>For an explaination of this usecase parameter, see the
 					<a href="site:usecase-framework-overview">usecase framework</a>.</p>
 				</section>
