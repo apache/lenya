@@ -47,7 +47,14 @@
       
       <source xml:space="preserve">lenya-document:{uuid}[,lang={&#8230;}][,pub={&#8230;}][,area={&#8230;}][,rev={&#8230;}][{queryString}]</source>
       <ul>
-        <li>The <code>{uuid}</code> value is mandatory.</li>
+        <li>
+          The <code>{uuid}</code> value is usually present, but optional.
+          This enables you to create links to "the russian translation of
+          this page" (<code>&lt;a href="lenya-document:,lang=ru"&gt;...</code>).
+          The language selector module makes use of this feature.
+          Other conceivable uses are links to the current document in another area
+          or revision.
+        </li>
         <li>
           The parameters <code>lang</code>, <code>pub</code>, <code>area</code>,
           and <code>rev</code> are optional. If omitted, the corresponding values
