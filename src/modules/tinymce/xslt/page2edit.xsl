@@ -105,6 +105,16 @@
   >&#160;</script>
   <xsl:text>
   </xsl:text>
+  <xsl:comment>catch backspace key - it maps to "back in history" in some popular 
+  browsers under windows, which can confuse users and lead to data loss</xsl:comment>
+  <xsl:text>
+  </xsl:text>
+  <script language="javascript" 
+          type="text/javascript" 
+          src="/{$publicationid}/modules/editors/javascript/disablebackspace.js"
+  >&#160;</script>
+  <xsl:text>
+  </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
           src="/{$publicationid}/modules/tinymce/javascript/tiny_lenya_glue.js"
@@ -125,14 +135,16 @@
 
 /* some dynamic configuration that depends on pipeline information */
 
-    /* pass all the stylesheets of the current page (except for those specific
-       to the Lenya authoring GUI) to TinyMCE for true WYSIWYG editing */
+    /* pass the locale of the current request to TinyMCE, so that it is properly localized */
 
     config['language'] = "</xsl:text>
     <xsl:value-of select="$locale"/>
     <xsl:text>";
-    config['content_css'] = "</xsl:text>
 
+    /* pass all the stylesheets of the current page (except for those specific
+       to the Lenya authoring GUI) to TinyMCE for true WYSIWYG editing */
+
+    config['content_css'] = "</xsl:text>
     <xsl:value-of select="$contextPath"/>
     <xsl:text>/modules/tinymce/css/editor_content.css</xsl:text>
     <xsl:for-each select="../xhtml:link[@rel='stylesheet' and not(contains(@href, '/lenya/css/'))]">
