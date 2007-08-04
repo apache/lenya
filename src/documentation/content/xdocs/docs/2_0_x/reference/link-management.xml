@@ -192,6 +192,12 @@
       <source xml:space="preserve">div.news { background: url('/lenya14/mypub/live/images/news.png') left top no-repeat }</source>
       <source xml:space="preserve">div.news { background: url('http://mysite.com/images/news.png') left top no-repeat }</source>
       <source xml:space="preserve">div.news { background: url('../images/news.png') left top no-repeat }</source>
+      <p>
+        This operation cannot be performed by our standard XSLT transformer,
+      because a CSS file is not well-formed XML. The <a
+        href="http://chaperon.sourceforge.net">Chaperon</a> transformer is
+      used instead.
+      </p>
     </section>
     
   </body>
