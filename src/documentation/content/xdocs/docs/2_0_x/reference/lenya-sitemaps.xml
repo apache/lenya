@@ -138,14 +138,16 @@
 					</ul>
 					<p>The CMS menus are nothing but a convenience mechanism for the CMS user to trigger usecases.
 					As an alternative to choosing the "Workflow"->"Submit" menu option, you could as well append
-					<code>?lenya.usecase=submit</code> to the document URL. As soon as Lenya finds a lenya.usecase
+					<code>?lenya.usecase=workflow.submit</code> to the document URL. As soon as Lenya finds a lenya.usecase
 					request parameter it will branch into the <code>lenya/usecases/usecase.xmap</code> sitemap.</p>
 					<p>All usecases start in the Lenya core. The core contains most of the common access control,
 					workflow and editing usecases. A publication can introduce publication specific usecases.</p>
 					<p>Some usecases require CMS screens to be displayed. These are rendered through the usecase 
 					sitemap portions as well. That way one could for example introduce a new skin for the CMS
 					screens just by means of the Cocoon sitemap.</p>
-					<p>For details on usecases, have a look at the Lenya Usecase Framework.</p>
+					<p>For details on usecases, have a look at the
+					<a href="site:usecase-framework-overview">Lenya Usecase Framework</a>.
+					</p>
 					</section>
 				</section>
 				
@@ -189,18 +191,12 @@
 				</section>
 				
 				<section>
-					<title>Part 4: The usecase and workflow parameters (optional)</title>
-					<p>Right after the document URL there may be additional paramters, especially</p>
-					<ul>
-					<li>lenya.usecase and mabye</li>
-					<li>lenya.step</li>
-					</ul>
-					<p>as well as maybe</p>
-					<ul>
-					<li>wf.event</li>
-					</ul>
-					<p>For an explaination of the usecase parameters, see the usecase framework.</p>
-					<p>For an explaination of the workflow engine, see the workflow engine (coming soon).</p>
+					<title>Part 4: The usecase parameter (optional)</title>
+					<p>Right after the document URL there may be
+					an additional parameter,
+					<code>lenya.usecase=$USECASE</code>.
+					<p>For an explaination of this usecase parameter, see the
+					<a href="site:usecase-framework-overview">usecase framework</a>.</p>
 				</section>
 			
 <section><title id="head-fbc9e3a3c8fa10b2383dbed3e8d0afbfc73fa211">The "lenya:" scheme</title>
