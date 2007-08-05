@@ -21,7 +21,7 @@
 <policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 
   <world>
-    <role id="visit" method="deny"/>
+    <role id="visit" method="grant"/>
   </world>
 
 </policy> 

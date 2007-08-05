@@ -20,7 +20,6 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.ac</id>
-  <export package="org.apache.lenya.cms.ac.usecase"/>
   <export package="org.apache.lenya.ac.file"/>
   <depends module="org.apache.lenya.modules.cache"/>
   <package>org.apache.lenya.modules</package>
