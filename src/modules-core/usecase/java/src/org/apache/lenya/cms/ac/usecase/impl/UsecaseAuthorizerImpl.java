@@ -276,12 +276,11 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
     /**
      * Retrieves access control configuration of a specific publication.
-     * FIXME: shouldn't be public either
      * @param publication The publication.
      * @return Configuration
      * @throws AccessControlException when something went wrong.
      */
-    public Configuration getConfiguration(Publication publication) throws AccessControlException {
+    private Configuration getConfiguration(Publication publication) throws AccessControlException {
         File configurationFile = new File(publication.getDirectory(), AC_CONFIGURATION_FILE);
 
         if (configurationFile.isFile()) {
