@@ -37,6 +37,14 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
+    /**
+     * The name of the pseudo-usecase that governs access to pages.
+     * It was introduced to map the page access authorization onto
+     * a usecase authorization,so that the existing usecase policy management
+     * and its GUI can be re-used for governing access to pages.
+     */
+    public static final String VISIT_USECASE = "ac.visit";
+
     private PolicyManager policyManager;
     private AccreditableManager accreditableManager;
 
@@ -50,33 +58,23 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
     /**
      * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
      */
-    public boolean authorize(Request request)
-        throws AccessControlException {
-        return authorize(request, ServletHelper.getWebappURI(request));
-    }
-
-    protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
+    public boolean authorize(Request request) throws AccessControlException {
+        String webappUrl = ServletHelper.getWebappURI(request);
         Session session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Trying to authorize identity: " + identity);
-        }
-
-        boolean authorized;
+        boolean authorized = false;
 
         if (identity.belongsTo(getAccreditableManager())) {
-            authorized = authorizePolicy(identity, request, webappUrl);
+            Role[] roles = getPolicyManager().getGrantedRoles(getAccreditableManager(), identity, webappUrl);
+            saveRoles(request, roles);
+            authorized = (roles.length > 0);
+            getLogger().debug("Authorized identity [" + identity + "]: " + authorized);
         } else {
             getLogger().debug(
                 "Identity ["
                     + identity
                     + "] not authorized - belongs to wrong accreditable manager.");
-            authorized = false;
         }
-
-        getLogger().debug("Authorized: " + authorized);
-
         return authorized;
     }
 
@@ -112,25 +110,6 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      */
     public AccreditableManager getAccreditableManager() {
         return this.accreditableManager;
-    }
-
-     /**
-     * Authorizes an request for an identity depending on a policy.
-     * @param identity The identity to authorize.
-     * @param request The request to authorize.
-     * @param webappUrl The web application URL.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected boolean authorizePolicy(
-        Identity identity,
-        Request request,
-        String webappUrl)
-        throws AccessControlException {
-
-        Role[] roles = getPolicyManager().getGrantedRoles(getAccreditableManager(), identity, webappUrl);
-        saveRoles(request, roles);
-        return roles.length > 0;
     }
 
     /**
