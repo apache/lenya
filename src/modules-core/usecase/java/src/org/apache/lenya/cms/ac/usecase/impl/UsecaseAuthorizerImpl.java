@@ -140,10 +140,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         return authorized;
     }
 
-    /**
-     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase
-     */
-    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
+    private boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
             throws AccessControlException {
         getLogger().debug("Authorizing usecase [" + usecase + "]");
         boolean authorized = false;
