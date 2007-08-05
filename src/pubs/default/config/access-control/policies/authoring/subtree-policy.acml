@@ -22,19 +22,22 @@
 
   <group id="editor">
     <role id="edit"  method="grant"/>
+    <role id="visit" method="grant"/>
   </group>
 
   <group id="reviewer">
     <role id="review"  method="grant"/>
+    <role id="visit" method="grant"/>
   </group>
 
   <group id="admin">
     <role id="admin"  method="grant"/>
+    <role id="visit" method="grant"/>
   </group>
  
   <!-- the "session" role grants access to login, logout and aboutLenya -->
   <world>
     <role id="session" method="grant"/>
   </world>
-
+  
 </policy> 

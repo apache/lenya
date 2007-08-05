@@ -21,6 +21,10 @@ package org.apache.lenya.ac.impl;
 import java.util.Arrays;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
@@ -29,13 +33,17 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
  * Policy-based authorizer.
  * @version $Id$
  */
-public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
+public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable {
 
     /**
      * The name of the pseudo-usecase that governs access to pages.
@@ -47,6 +55,8 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
     private PolicyManager policyManager;
     private AccreditableManager accreditableManager;
+    private ServiceManager manager;
+    private ServiceSelector authSelector;
 
     /**
      * Creates a new policy authorizer.
@@ -66,9 +76,22 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
         if (identity.belongsTo(getAccreditableManager())) {
             Role[] roles = getPolicyManager().getGrantedRoles(getAccreditableManager(), identity, webappUrl);
-            saveRoles(request, roles);
-            authorized = (roles.length > 0);
-            getLogger().debug("Authorized identity [" + identity + "]: " + authorized);
+            UsecaseAuthorizer auth = null;
+            Publication pub;
+            try {
+                saveRoles(request, roles);
+                authSelector = (ServiceSelector) this.manager.lookup(Authorizer.ROLE + "Selector");
+                auth = (UsecaseAuthorizer) authSelector.select(org.apache.lenya.cms.ac.usecase.impl.UsecaseAuthorizerImpl.TYPE);
+                pub = PublicationUtil.getPublication(this.manager, request);
+                authorized = auth.authorizeUsecase(VISIT_USECASE, roles, pub);
+                getLogger().debug("Authorized identity [" + identity + "]: " + authorized);
+            } catch (ServiceException e) {
+                throw new AccessControlException("Can't get UsecaseAuthorizer component: " + e);
+            } catch (PublicationException e) {
+                throw new AccessControlException("Can't get Publication: " + e);
+            } finally {
+                this.manager.release(auth);
+            }
         } else {
             getLogger().debug(
                 "Identity ["
@@ -110,6 +133,10 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      */
     public AccreditableManager getAccreditableManager() {
         return this.accreditableManager;
+    }
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
     /**

@@ -55,8 +55,9 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements UsecaseAuthorizer,
         Serviceable, Disposable, Parameterizable {
 
+    public static final String TYPE = "usecase";
+
     protected static final String PARAMETER_CONFIGURATION = "configuration";
-    protected static final String TYPE = "usecase";
     protected static final String USECASE_PARAMETER = "lenya.usecase";
     private static final String AC_CONFIGURATION_FILE
         = "config/access-control/access-control.xml".replace('/', File.separatorChar);
