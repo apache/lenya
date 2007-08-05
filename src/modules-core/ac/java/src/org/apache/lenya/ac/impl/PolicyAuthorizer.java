@@ -37,12 +37,56 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
+    private PolicyManager policyManager;
+    private AccreditableManager accreditableManager;
+
     /**
-     * Returns the accreditable manager.
-     * @return An accreditable manager.
+     * Creates a new policy authorizer.
      */
-    public AccreditableManager getAccreditableManager() {
-        return this.accreditableManager;
+    public PolicyAuthorizer() {
+        // do nothing
+    }
+
+    /**
+     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
+     */
+    public boolean authorize(Request request)
+        throws AccessControlException {
+        return authorize(request, ServletHelper.getWebappURI(request));
+    }
+
+    protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
+        Session session = request.getSession(true);
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Trying to authorize identity: " + identity);
+        }
+
+        boolean authorized;
+
+        if (identity.belongsTo(getAccreditableManager())) {
+            authorized = authorizePolicy(identity, request, webappUrl);
+        } else {
+            getLogger().debug(
+                "Identity ["
+                    + identity
+                    + "] not authorized - belongs to wrong accreditable manager.");
+            authorized = false;
+        }
+
+        getLogger().debug("Authorized: " + authorized);
+
+        return authorized;
+    }
+
+   /**
+     * Sets the policy manager.
+     * @param manager A policy manager.
+     */
+    public void setPolicyManager(PolicyManager manager) {
+        assert manager != null;
+        this.policyManager = manager;
     }
 
     /**
@@ -54,26 +98,6 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
     }
 
     /**
-     * Creates a new policy authorizer.
-     */
-    public PolicyAuthorizer() {
-	    // do nothing
-    }
-    
-    private PolicyManager policyManager;
-    
-    /**
-     * Sets the policy manager.
-     * @param manager A policy manager.
-     */
-    public void setPolicyManager(PolicyManager manager) {
-        assert manager != null;
-        this.policyManager = manager;
-    }
-    
-    private AccreditableManager accreditableManager;
-    
-    /**
      * Sets the accreditable manager.
      * @param manager An accreditable manager.
      */
@@ -83,14 +107,14 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
     }
 
     /**
-     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
+     * Returns the accreditable manager.
+     * @return An accreditable manager.
      */
-    public boolean authorize(Request request)
-        throws AccessControlException {
-        return authorize(request, ServletHelper.getWebappURI(request));
+    public AccreditableManager getAccreditableManager() {
+        return this.accreditableManager;
     }
 
-    /**
+     /**
      * Authorizes an request for an identity depending on a policy.
      * @param identity The identity to authorize.
      * @param request The request to authorize.
@@ -121,31 +145,6 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         }
         getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
         request.setAttribute(Role.class.getName(), Arrays.asList(roles));
-    }
-    
-    protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
-        Session session = request.getSession(true);
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Trying to authorize identity: " + identity);
-        }
-
-        boolean authorized;
-
-        if (identity.belongsTo(getAccreditableManager())) {
-            authorized = authorizePolicy(identity, request, webappUrl);
-        } else {
-            getLogger().debug(
-                "Identity ["
-                    + identity
-                    + "] not authorized - belongs to wrong accreditable manager.");
-            authorized = false;
-        }
-
-        getLogger().debug("Authorized: " + authorized);
-
-        return authorized;
     }
 
 }
