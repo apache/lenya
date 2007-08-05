@@ -35,12 +35,11 @@ public interface UsecaseAuthorizer extends Authorizer {
      * @param usecase The usecase ID.
      * @param roles The roles of the current identity.
      * @param publication The publication.
-     * @param requestURI The request URI.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    boolean authorizeUsecase(String usecase, Role[] roles, Publication publication,
-            String requestURI) throws AccessControlException;
+    boolean authorizeUsecase(String usecase, Role[] roles, Publication publication) 
+            throws AccessControlException;
 
     /**
      * @param usecase The usecase.

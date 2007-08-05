@@ -105,8 +105,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                     }
                     if (!this.authorizer.authorizeUsecase(usecaseName,
                             this.roles,
-                            this.publication,
-                            this.request.getRequestURI())) {
+                            this.publication)) {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Usecase not authorized");
                         }

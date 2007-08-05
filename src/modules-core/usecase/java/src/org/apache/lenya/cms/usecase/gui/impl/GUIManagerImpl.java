@@ -180,7 +180,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 Publication pub = PublicationUtil.getPublicationFromUrl(this.manager,
                         factory,
                         this.webappUrl);
-                if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub, this.requestURI)) {
+                if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub)) {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Usecase not authorized");
                     }

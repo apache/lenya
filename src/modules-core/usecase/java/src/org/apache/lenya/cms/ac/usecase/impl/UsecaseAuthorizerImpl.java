@@ -49,6 +49,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Authorizer for usecases.
+ *
  * @version $Id: UsecaseAuthorizer.java 392449 2006-04-07 23:20:38Z michi $
  */
 public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements UsecaseAuthorizer,
@@ -64,10 +65,9 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
      * Returns the configuration source cache.
      * @return A source cache.
      */
-    public SourceCache getCache() {
+    private SourceCache getCache() {
         return this.cache;
     }
-
     private Map pubId2configUri = new HashMap();
 
     /**
@@ -121,8 +121,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
                 }
 
                 Role[] roles = PolicyUtil.getRoles(request);
-                authorized = authorizeUsecase(usecase, roles, _configurationUri, request
-                        .getRequestURI());
+                authorized = authorizeUsecase(usecase, roles, _configurationUri);
             } else {
                 getLogger().debug("No usecase to authorize. Granting access.");
             }
@@ -142,18 +141,10 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     }
 
     /**
-     * Authorizes a usecase.
-     * 
-     * @param usecase The usecase ID.
-     * @param roles The roles of the current identity.
-     * @param _configurationUri The URI to retrieve the policy configuration
-     *        from.
-     * @param requestURI The request URI.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase
      */
-    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri,
-            String requestURI) throws AccessControlException {
+    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
+            throws AccessControlException {
         getLogger().debug("Authorizing usecase [" + usecase + "]");
         boolean authorized = false;
 
@@ -226,37 +217,28 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
     }
 
-    /**
-     * Returns the configuration URL.
-     * @return The configuration URL.
-     */
-    public String getConfigurationURI() {
+    private String getConfigurationURI() {
         return this.configurationUri;
     }
 
     /**
-     * Authorizes a usecase.
-     * 
-     * @param usecase The usecase to authorize.
-     * @param roles The roles of the identity.
-     * @param publication The publication.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase(java.lang.String, org.apache.lenya.ac.Role[], org.apache.lenya.cms.publication.Publication)
      */
-    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication,
-            String requestURI) throws AccessControlException {
-        return authorizeUsecase(usecase, roles, getConfigurationURI(publication), requestURI);
+    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication)
+           throws AccessControlException {
+        return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
     }
 
-    protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
+    private boolean authorize(Request request, String webappUrl) throws AccessControlException {
         return authorize(request);
     }
 
-    protected static final String AC_CONFIGURATION_FILE
+    private static final String AC_CONFIGURATION_FILE
         = "config/access-control/access-control.xml".replace('/', File.separatorChar);
 
     /**
      * Retrieves access control configuration of a specific publication.
+     * FIXME: shouldn't be public either
      * @param publication The publication.
      * @return Configuration
      * @throws AccessControlException when something went wrong.
@@ -277,6 +259,9 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#isPermitted(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role)
+       */
     public boolean isPermitted(String usecase, Publication publication, Role role)
             throws AccessControlException {
         String configUri = getConfigurationURI(publication);
@@ -285,6 +270,9 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         return Arrays.asList(roles).contains(role.getId());
     }
 
+    /**
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#setPermission(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role, boolean)
+     */
     public void setPermission(String usecase, Publication publication, Role role, boolean granted)
             throws AccessControlException {
         String configUri = getConfigurationURI(publication);
