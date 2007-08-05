@@ -55,47 +55,96 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements UsecaseAuthorizer,
         Serviceable, Disposable, Parameterizable {
 
+    protected static final String PARAMETER_CONFIGURATION = "configuration";
     protected static final String TYPE = "usecase";
     protected static final String USECASE_PARAMETER = "lenya.usecase";
+    private static final String AC_CONFIGURATION_FILE
+        = "config/access-control/access-control.xml".replace('/', File.separatorChar);
 
     private SourceCache cache;
     private String configurationUri;
-
-    /**
-     * Returns the configuration source cache.
-     * @return A source cache.
-     */
-    private SourceCache getCache() {
-        return this.cache;
-    }
+    private ServiceManager manager;
     private Map pubId2configUri = new HashMap();
 
-    /**
-     * Returns the source URI of the usecase role configuration file for a
-     * certain publication.
-     * 
-     * @param publication The publication.
-     * @return A string representing a URI.
-     */
-    protected String getConfigurationURI(Publication publication) {
 
-        String configURI = (String) this.pubId2configUri.get(publication.getId());
-        if (configURI == null) {
-            try {
-                Configuration config = getConfiguration(publication);
-                Configuration[] authorizerConfigs = config.getChildren("authorizer");
-                for (int i = 0; i < authorizerConfigs.length; i++) {
-                    if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
-                        Configuration paraConfig = authorizerConfigs[i].getChild("parameter");
-                        configURI = paraConfig.getAttribute("value");
-                        this.pubId2configUri.put(publication.getId(), configURI);
-                    }
-                }
-            } catch (Exception e) {
-                getLogger().error(e.getMessage(), e);
+    /**
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase(java.lang.String, org.apache.lenya.ac.Role[], org.apache.lenya.cms.publication.Publication)
+     */
+    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication)
+           throws AccessControlException {
+        return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
+    }
+
+    private boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
+            throws AccessControlException {
+        getLogger().debug("Authorizing usecase [" + usecase + "]");
+        boolean authorized = false;
+
+        UsecaseRoles usecaseRoles = getUsecaseRoles(_configurationUri);
+
+        if (usecaseRoles == null) {
+            throw new AccessControlException("Usecase policies configuration not found at ["
+                    + _configurationUri + "]");
+        }
+
+        if (usecaseRoles.hasRoles(usecase)) {
+            getLogger().debug("Roles for usecase found.");
+
+            List usecaseRoleIds = Arrays.asList(usecaseRoles.getRoles(usecase));
+
+            int i = 0;
+            while (!authorized && i < roles.length) {
+                authorized = usecaseRoleIds.contains(roles[i].getId());
+                getLogger()
+                        .debug(
+                                "Authorization for role [" + roles[i].getId() + "] is ["
+                                        + authorized + "]");
+                i++;
+            }
+        } else {
+            getLogger().debug("No roles for usecase [" + usecase + "] found. Denying access.");
+        }
+        return authorized;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#isPermitted(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role)
+       */
+    public boolean isPermitted(String usecase, Publication publication, Role role)
+            throws AccessControlException {
+        String configUri = getConfigurationURI(publication);
+        UsecaseRoles usecaseRoles = getUsecaseRoles(configUri);
+        String[] roles = usecaseRoles.getRoles(usecase);
+        return Arrays.asList(roles).contains(role.getId());
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#setPermission(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role, boolean)
+     */
+    public void setPermission(String usecase, Publication publication, Role role, boolean granted)
+            throws AccessControlException {
+        String configUri = getConfigurationURI(publication);
+        if (configUri.startsWith("aggregate-")) {
+            configUri = configUri.substring("aggregate-".length());
+        }
+        UsecaseRoles usecaseRoles = getUsecaseRoles(configUri);
+        List roles = Arrays.asList(usecaseRoles.getRoles(usecase));
+        String roleId = role.getId();
+        if (granted) {
+            if (!roles.contains(roleId)) {
+                usecaseRoles.addRole(usecase, roleId);
+            }
+        } else {
+            if (roles.contains(roleId)) {
+                usecaseRoles.removeRole(usecase, roleId);
             }
         }
-        return configURI;
+        UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
+        try {
+            builder.save(usecaseRoles, configUri, this.manager);
+        } catch (BuildException e) {
+            throw new AccessControlException(e);
+        }
     }
 
     /**
@@ -140,37 +189,42 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         return authorized;
     }
 
-    private boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
-            throws AccessControlException {
-        getLogger().debug("Authorizing usecase [" + usecase + "]");
-        boolean authorized = false;
-
-        UsecaseRoles usecaseRoles = getUsecaseRoles(_configurationUri);
-
-        if (usecaseRoles == null) {
-            throw new AccessControlException("Usecase policies configuration not found at ["
-                    + _configurationUri + "]");
-        }
-
-        if (usecaseRoles.hasRoles(usecase)) {
-            getLogger().debug("Roles for usecase found.");
-
-            List usecaseRoleIds = Arrays.asList(usecaseRoles.getRoles(usecase));
-
-            int i = 0;
-            while (!authorized && i < roles.length) {
-                authorized = usecaseRoleIds.contains(roles[i].getId());
-                getLogger()
-                        .debug(
-                                "Authorization for role [" + roles[i].getId() + "] is ["
-                                        + authorized + "]");
-                i++;
-            }
-        } else {
-            getLogger().debug("No roles for usecase [" + usecase + "] found. Denying access.");
-        }
-        return authorized;
+    /**
+     * Returns the configuration source cache.
+     * @return A source cache.
+     */
+    private SourceCache getCache() {
+        return this.cache;
     }
+
+    /**
+     * Returns the source URI of the usecase role configuration file for a
+     * certain publication.
+     * 
+     * @param publication The publication.
+     * @return A string representing a URI.
+     */
+    protected String getConfigurationURI(Publication publication) {
+
+        String configURI = (String) this.pubId2configUri.get(publication.getId());
+        if (configURI == null) {
+            try {
+                Configuration config = getConfiguration(publication);
+                Configuration[] authorizerConfigs = config.getChildren("authorizer");
+                for (int i = 0; i < authorizerConfigs.length; i++) {
+                    if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
+                        Configuration paraConfig = authorizerConfigs[i].getChild("parameter");
+                        configURI = paraConfig.getAttribute("value");
+                        this.pubId2configUri.put(publication.getId(), configURI);
+                    }
+                }
+            } catch (Exception e) {
+                getLogger().error(e.getMessage(), e);
+            }
+        }
+        return configURI;
+    }
+
 
     protected UsecaseRoles getUsecaseRoles(String _configurationUri) throws AccessControlException {
         UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
@@ -182,8 +236,6 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
         return usecaseRoles;
     }
-
-    private ServiceManager manager;
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
@@ -203,8 +255,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
     }
 
-    protected static final String PARAMETER_CONFIGURATION = "configuration";
-
+ 
     /**
      * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
      */
@@ -218,20 +269,10 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         return this.configurationUri;
     }
 
-    /**
-     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase(java.lang.String, org.apache.lenya.ac.Role[], org.apache.lenya.cms.publication.Publication)
-     */
-    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication)
-           throws AccessControlException {
-        return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
-    }
 
     private boolean authorize(Request request, String webappUrl) throws AccessControlException {
         return authorize(request);
     }
-
-    private static final String AC_CONFIGURATION_FILE
-        = "config/access-control/access-control.xml".replace('/', File.separatorChar);
 
     /**
      * Retrieves access control configuration of a specific publication.
@@ -253,46 +294,6 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
             }
         } else {
             throw new AccessControlException("No such file or directory: " + configurationFile);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#isPermitted(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role)
-       */
-    public boolean isPermitted(String usecase, Publication publication, Role role)
-            throws AccessControlException {
-        String configUri = getConfigurationURI(publication);
-        UsecaseRoles usecaseRoles = getUsecaseRoles(configUri);
-        String[] roles = usecaseRoles.getRoles(usecase);
-        return Arrays.asList(roles).contains(role.getId());
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#setPermission(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role, boolean)
-     */
-    public void setPermission(String usecase, Publication publication, Role role, boolean granted)
-            throws AccessControlException {
-        String configUri = getConfigurationURI(publication);
-        if (configUri.startsWith("aggregate-")) {
-            configUri = configUri.substring("aggregate-".length());
-        }
-        UsecaseRoles usecaseRoles = getUsecaseRoles(configUri);
-        List roles = Arrays.asList(usecaseRoles.getRoles(usecase));
-        String roleId = role.getId();
-        if (granted) {
-            if (!roles.contains(roleId)) {
-                usecaseRoles.addRole(usecase, roleId);
-            }
-        } else {
-            if (roles.contains(roleId)) {
-                usecaseRoles.removeRole(usecase, roleId);
-            }
-        }
-        UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
-        try {
-            builder.save(usecaseRoles, configUri, this.manager);
-        } catch (BuildException e) {
-            throw new AccessControlException(e);
         }
     }
 
