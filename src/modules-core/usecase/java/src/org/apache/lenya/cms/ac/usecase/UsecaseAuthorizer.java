@@ -30,7 +30,7 @@ import org.apache.lenya.cms.publication.Publication;
 public interface UsecaseAuthorizer extends Authorizer {
 
     /**
-     * Authorizes a usecase.
+     * Authorizes a usecase by considering all roles of the current identity
      * 
      * @param usecase The usecase ID.
      * @param roles The roles of the current identity.
@@ -42,6 +42,8 @@ public interface UsecaseAuthorizer extends Authorizer {
             throws AccessControlException;
 
     /**
+     * Grants or denies a usecase to a role
+     *
      * @param usecase The usecase.
      * @param publication The publication.
      * @param role The role.
@@ -52,6 +54,8 @@ public interface UsecaseAuthorizer extends Authorizer {
             throws AccessControlException;
 
     /**
+     * Checks whether the specified role is permitted to invoke a given usecase
+     *
      * @param usecase The usecase.
      * @param publication The publication.
      * @param role The role.
