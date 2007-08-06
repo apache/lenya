@@ -16,6 +16,13 @@
  *
  */
 
+/*
+  This file is deprecated. You should not base new code on it. 
+  It's still used by Kupu and BXE,  that's why it remains for now. 
+  In the future, generic editor functionality and document handling 
+  helpers should be provided by the editors module only.
+*/
+
 importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
 importClass(Packages.org.apache.excalibur.source.SourceResolver);
 importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
