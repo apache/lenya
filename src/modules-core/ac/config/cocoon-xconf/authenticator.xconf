@@ -16,22 +16,17 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-    This file defines the publication specific use-cases
--->
-
-  <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.ac.Authenticator']">
-    <component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.ac.impl.UserAuthenticator"
-      role="org.apache.lenya.ac.Authenticator"/>
-      
-    <!--
-      Enable this authenticator and disable the UserAuthenticator for anonymous authentication (useful for client certs, for instance)
-      
-      <component logger="lenya.ac.authenticator"
-        class="org.apache.lenya.ac.impl.AnonymousAuthenticator"
-        role="org.apache.lenya.ac.Authenticator"/>      
-    -->
+<xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.ac.Authenticator']">
+  <component logger="lenya.ac.authenticator"
+    class="org.apache.lenya.ac.impl.UserAuthenticator"
+    role="org.apache.lenya.ac.Authenticator"/>
     
-  </xconf>
+  <!--
+    Enable this authenticator and disable the UserAuthenticator for anonymous authentication (useful for client certs, for instance)
+    
+    <component logger="lenya.ac.authenticator"
+      class="org.apache.lenya.ac.impl.AnonymousAuthenticator"
+      role="org.apache.lenya.ac.Authenticator"/>      
+  -->
+  
+</xconf>

@@ -16,16 +16,10 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-    This file defines the publication specific use-cases
--->
-
-  <xconf xpath="/cocoon" unless="/cocoon/authorizers/component-instance[@name = 'policy']">
-    <authorizers>
-      <component-instance name="policy"
-        class="org.apache.lenya.ac.impl.PolicyAuthorizer"
-        logger="lenya.ac.authorizer.policy"/>
-    </authorizers>
-  </xconf>
-  
+<xconf xpath="/cocoon" unless="/cocoon/authorizers/component-instance[@name = 'policy']">
+  <authorizers>
+    <component-instance name="policy"
+      class="org.apache.lenya.ac.impl.PolicyAuthorizer"
+      logger="lenya.ac.authorizer.policy"/>
+  </authorizers>
+</xconf>

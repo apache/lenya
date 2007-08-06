@@ -16,22 +16,17 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-    This file defines the publication specific use-cases
--->
-
-  <xconf xpath="/cocoon" unless="/cocoon/policy-managers">
-    <policy-managers>
-      <component-instance name="document"
-        class="org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper"
-        logger="lenya.ac.policymanager.document"/>
-      <component-instance name="file"
-        class="org.apache.lenya.ac.file.FilePolicyManager"
-        logger="lenya.ac.policymanager.file"/>
-      <component-instance name="sitemap"
-        class="org.apache.lenya.cms.ac.SitemapPolicyManager"
-        logger="lenya.ac.policymanager.sitemap"/>
-    </policy-managers>
-    
-  </xconf>
+<xconf xpath="/cocoon" unless="/cocoon/policy-managers">
+  <policy-managers>
+    <component-instance name="document"
+      class="org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper"
+      logger="lenya.ac.policymanager.document"/>
+    <component-instance name="file"
+      class="org.apache.lenya.ac.file.FilePolicyManager"
+      logger="lenya.ac.policymanager.file"/>
+    <component-instance name="sitemap"
+      class="org.apache.lenya.cms.ac.SitemapPolicyManager"
+      logger="lenya.ac.policymanager.sitemap"/>
+  </policy-managers>
+  
+</xconf>

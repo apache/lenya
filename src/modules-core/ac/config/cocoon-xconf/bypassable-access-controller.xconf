@@ -16,21 +16,16 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-    This file defines the publication specific use-cases
--->
-
-  <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.ac.AccessController/bypassable']">
-    <component logger="lenya.ac.accesscontroller.bypassable"
-      class="org.apache.lenya.ac.impl.BypassableAccessController"
-      role="org.apache.lenya.ac.AccessController/bypassable">
-      
-      <public-extensions>css,jpg,gif,png,rng,xsl</public-extensions>
-      
-      <!-- bad performance, use only for complex patterns
-        <public>.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
-      -->
-      
-    </component>
-  </xconf>
+<xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.ac.AccessController/bypassable']">
+  <component logger="lenya.ac.accesscontroller.bypassable"
+    class="org.apache.lenya.ac.impl.BypassableAccessController"
+    role="org.apache.lenya.ac.AccessController/bypassable">
+    
+    <public-extensions>css,jpg,gif,png,rng,xsl</public-extensions>
+    
+    <!-- bad performance, use only for complex patterns
+      <public>.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
+    -->
+    
+  </component>
+</xconf>

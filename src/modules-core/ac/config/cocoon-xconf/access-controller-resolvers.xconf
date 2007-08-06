@@ -16,27 +16,22 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-    This file defines the publication specific use-cases
--->
-
-  <xconf xpath="/cocoon" unless="/cocoon/access-controller-resolvers">
-    <access-controller-resolvers>
-      <component-instance name="publication"
-        class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"
-        logger="lenya.ac.accesscontrollerresolver.publication">
-      </component-instance>
-      <component-instance name="global"
-        class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"
-        logger="lenya.ac.accesscontrollerresolver.global">
-        <access-controller type="global"/>
-      </component-instance>
-      <component-instance name="composable"
-        class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
-        logger="lenya.ac.accesscontrollerresolver.composable">
-        <resolver type="publication"/>
-        <!--      <resolver type="global"/>-->
-      </component-instance>
-    </access-controller-resolvers>
-  </xconf>
+<xconf xpath="/cocoon" unless="/cocoon/access-controller-resolvers">
+  <access-controller-resolvers>
+    <component-instance name="publication"
+      class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"
+      logger="lenya.ac.accesscontrollerresolver.publication">
+    </component-instance>
+    <component-instance name="global"
+      class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"
+      logger="lenya.ac.accesscontrollerresolver.global">
+      <access-controller type="global"/>
+    </component-instance>
+    <component-instance name="composable"
+      class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
+      logger="lenya.ac.accesscontrollerresolver.composable">
+      <resolver type="publication"/>
+      <!--      <resolver type="global"/>-->
+    </component-instance>
+  </access-controller-resolvers>
+</xconf>

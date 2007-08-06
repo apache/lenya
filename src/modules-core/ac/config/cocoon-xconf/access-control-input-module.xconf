@@ -16,12 +16,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-    This file defines the publication specific use-cases
--->
-
-  <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'access-control']">
-    <component-instance logger="core.modules.input.access-control" name="access-control"
-      class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
-  </xconf>
+<xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'access-control']">
+  <component-instance logger="core.modules.input.access-control" name="access-control"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
+</xconf>
