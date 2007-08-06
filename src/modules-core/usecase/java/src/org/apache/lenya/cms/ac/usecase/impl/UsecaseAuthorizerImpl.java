@@ -155,10 +155,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         String usecase = request.getParameter(USECASE_PARAMETER);
         boolean authorized = true;
 
-        SourceResolver resolver = null;
-
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             if (usecase != null) {
 
                 String _configurationUri;
@@ -174,16 +171,10 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
             } else {
                 getLogger().debug("No usecase to authorize. Granting access.");
             }
-        } catch (final ServiceException e) {
-            throw new AccessControlException(e);
         } catch (final PublicationException e) {
             throw new AccessControlException(e);
         } catch (final AccessControlException e) {
             throw new AccessControlException(e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
 
         return authorized;
