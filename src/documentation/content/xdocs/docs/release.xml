@@ -21,61 +21,181 @@
     <title>Release Management</title>
   </header>
   <body>
-    <!-- FIXME: create better layout for notes, just dumping text inside source elements for now. -->
     <section>
-      <title>Overview</title>
-      <source>   0)
-    # Do a vote if a release shall be done
-    # Send email to dev@lenya.apache.org with Subject: [VOTE] Release 1.2.5
+      <title>Process Overview</title>
+      <section>
+        <title>Preparation</title>
+        <ul>
+          <li>A vote is necessary to determine if a release shall be done.</li>
+          <li>Send email to <em>dev@lenya.apache.org</em> with Subject: <code>[VOTE] Release $VERSION</code>.</li>
+          <li>Determine the official Cocoon release which the Lenya release will be based on.</li>
+        </ul>
+      </section>
+      <section>
+        <title>Code Freeze Announcement</title>
+        <p>
+          Announce the freeze 7 days ahead of the actual freeze.<br/>
+          Send email to <em>dev@lenya.apache.org</em> with subject: <code>[FREEZE-ANNOUNCEMENT]  Release $VERSION</code>.
+        </p>
+      </section>
+      <section>
+        <title>Start the Code Freeze</title>
+        <p>
+          Start the actual freeze:<br/>
+          Send email to <em>dev@lenya.apache.org</em> with subject: <code>[FREEZE-START]  Release $VERSION</code>.
+        </p>
+        <p>
+          During the freeze, the developers watch commits mailing list for commits to freezed branch, and inspect diffs to determine risk level. Risky changes are alerted on the developer list and rolled back, unless a vote passes to keep the risky change.
+        </p>
+      </section>
+      <section>
+        <title>Create a Tagged Version</title>
+        <p>
+          Browse to <a href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</a>
+        </p>
+        <source><![CDATA[
+FIXME: this does not apply to releases from trunk!
 
-
-   1)
-    # Announce the freeze 7 days ahead of the actual freeze:
-    # Send email to dev@lenya.apache.org with subject: [FREEZE-ANNOUNCEMENT]
-
-   
-   2)
-    # Remind of the actual freeze:
-    # Send email to dev@lenya.apache.org with subject: [FREEZE-REMINDER]
-
-
-   3)
-    # Create tagged version
-    # Browse to http://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
-    # http://svnbook.red-bean.com/en/1.1/ch04s06.html
-
-    svn co -r 373588 https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
-    cd branches/BRANCH_1_2_X
-    svn copy branches/BRANCH_1_2_X tags/RELEASE_1_2_5
-    svn ci -m "Release 1_2_5 added" tags/RELEASE_1_2_5
-
-
-   4)
-    # Add release notes (SVN URL, SVN Revision, What's new, Cocoon version 2.1.8, etc.):
-
-    svn add RELEASE-NOTES.txt
-    svn ci -m "release notes added" RELEASE-NOTES.txt
-    
-
-   5)
-    # Lock tagged version (Is this really necessary or just a project policy)
-
-    #??? svn lock tags/RELEASE_1_2_5
-
-
-   6)
-    # Start testing this tagged version (based on the specified Cocoon version, e.g. 2.1.8)
-    # Use Test-Suite: http://wiki.apache.org/lenya/TestCases
-    # Maybe do a sprint over IRC irc.freenode.org#lenya
-
-    # If tests are successfull, then freeze can be canceled
-    # If tests fail, then ...
-
-
-   7)
-    # Release source and binary versions based on this tagged version
-        
-      </source>
+svn co -r $REVISION https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
+cd branches/BRANCH_1_2_X
+svn copy branches/BRANCH_1_2_X tags/RELEASE_1_2_5
+svn ci -m "Release 1_2_5 added" tags/RELEASE_1_2_5
+]]></source>
+        <p>
+          More info: <a href="http://svnbook.red-bean.com/en/1.1/ch04s06.html">http://svnbook.red-bean.com/en/1.1/ch04s06.html</a>.
+        </p>
+      </section>
+      <section>
+        <title>Update the svn:externals properties</title>
+        <p>
+          Set the <code>svn:externals</code> properties for Cocoon and all other included repositories to the respective release tags.
+        </p>
+        <source><![CDATA[
+cd externals
+svn propdel cocoon_2_1_x .
+svn propset cocoon_2_1_10 https://svn.apache.org/repos/asf/cocoon/tags/cocoon-2.1/RELEASE_2_1_10 .
+]]></source>
+        <p>
+          Update the path to Cocoon in build.properties.
+        </p>
+        <source><![CDATA[
+cocoon.src.dir=externals/cocoon_2_1_10
+]]></source>
+      </section>
+      <section>
+        <title>Testing</title>
+        <ul>
+          <li>Start testing the tagged version (based on the specified Cocoon version, e.g. 2.1.8).</li>
+          <li>Use the test suite: <a href="http://wiki.apache.org/lenya/TestCases">TestCases (Wiki)</a> (FIXME: Move normative set of test cases to official docs?)</li>
+          <li>Maybe do a sprint over IRC (server irc.freenode.org, channel lenya). Try to find a day where lots of devs are present.</li>
+          <li>New bugs must be recorded in the issue tracker.</li>
+          <li>If all tests are successful (i.e., no <em>critical</em> or <em>blocker</em> bugs have been found), proceed with step <em>Create a Tagged Version</em>.</li>
+          <li>If <em>critical</em> or <em>blocker</em> bugs have been found, the release process is canceled.</li>
+        </ul>
+      </section>
+      <section>
+        <title>(If necessary:) Cancelling the Freeze</title>
+        <p>
+          The freeze can be canceled via a vote on the <em>dev@lenya.apache.org</em> mailing list under certain circumstance (very rare):
+        </p>
+        <ul>
+          <li>New blocker bugs that need bigger changes</li>
+          <li>Critical architectural changes</li>
+        </ul>
+      </section>
+      <section>
+        <title>Add the Release Notes</title>
+        <p>
+          Add the release notes (SVN URL, SVN Revision, What's new, Cocoon version 2.1.8, etc.) to the tagged version:
+        </p>
+        <source><![CDATA[
+svn add RELEASE-NOTES.txt
+svn ci -m "release notes added" RELEASE-NOTES.txt
+]]></source>
+      </section>
+      <section>
+        <title>Lock the Tagged Version (Optional)</title>
+        <source><![CDATA[
+svn lock tags/RELEASE_1_2_5
+]]></source>
+      </section>
+      <section>
+        <title>Release the Tarballs</title>
+        <ul>
+          <li>Upload the tarballs. (FIXME: Instructions?)</li>
+          <li>Edit the <em>Downloads</em> links on the web site with links to the new release files. Currently that's <a href="http://svn.apache.org/repos/asf/lenya/docu/src/documentation/content/xdocs/index.xml"> index.xml</a> and <a href="http://svn.apache.org/repos/asf/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/index.xml">docs/2_0_x/installation/index.xml</a>.</li>
+        </ul>
+      </section>
+      <section>
+        <title>Create binary packages (NOTE: moved from "issues" below - ok?)</title>
+        <ul>
+          <li>compile a pristine cocoon with the local properties from lenya</li>
+          <li>set property <em>version</em> in file <em>src/targets/properties-build.xml</em> to the appropriate Lenya version</li>
+          <li>regenerate INSTALL-src.txt and INSTALL-bin.txt with the appropriate XSLT (FIXME: which one is that, and where are the sources?)</li>
+          <li>build all distribution archives, except the windows installer .exe, with <em>./build.sh|build dist</em> in the Lenya source root directory. You will find the distribution archives under <em>dist/</em>. The <em>dist</em> target will also build and package the editors BXE and Kupu.</li>
+          <li>to create a windows installer, edit <em>lenya.nsi</em> and replace all version numbers appropriately, then compile lenya.nsi with the <a href="http://nsis.sourceforge.net/home/">NSIS compiler</a> (use the LZMA compressor for the smallest binaries)</li>
+          <li>sign the release archives/installers with your PGP/GPG key (see instructions below)</li>
+          <li>upload the release to <em>minotaur.apache.org:/x1/www/www.apache.org/dist/lenya</em></li>
+        </ul>
+      </section>
+      <section>
+        <title>Publish a Release Announcement</title>
+        <p>
+          Publish a <em>Project Release Announcement</em> to appropriate places (see section <em>Release Announcement</em> below).
+        </p>
+      </section>
+      <section>
+        <title>Update the DOAP file</title>
+        <p>
+          Update the Lenya DOAP file (<a href="http://svn.apache.org/repos/asf/lenya/site/doap_Lenya.rdf">http://svn.apache.org/repos/asf/lenya/site/doap_Lenya.rdf</a>) with the version and date of this new release.
+        </p>
+      </section>
+    </section>
+    <section>
+      <title>Signing</title>
+      <section>
+        <title>PGP/GPG signatures on releases</title>
+        <ul>
+          <li>
+            If not yet done add your key to the <a href="http://svn.apache.org/repos/asf/lenya/trunk/KEYS">KEYS</a> file. Follow the instruction at the top of that file.
+          </li>
+          <li>
+            Export you public key with <code>gpg -a -export [[apache account]] > .pgpkey</code> and place the file <code>.pgpkey</code> on <code>minotaur.apache.org</code> in your home directory. You also would sign up at <a href="https://www.biglumber.com/">Big Lumber; Key management made easy</a> to easily coordinate and manage signatures for your key. 
+          </li>
+          <li>
+            Update the KEYS file at <code>minotaur.apache.org:/x1/www/www.apache.org/dist/lenya/KEYS</code> from Lenya SVN.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>ASF signing Resources</title>
+        <ul>
+          <li><a href="http://wiki.apache.org/incubator/SigningReleases">Signing Releases How-To</a></li>
+          <li><a href="http://www.apache.org/~henkp/sig/#cant-lenya">State of signed Apache software releases</a></li>
+          <li><a href="http://www.apache.org/~henkp/trust/apache.html">ASF web of trust</a></li>
+          <li><a href="http://www.apache.org/~henkp/cgi-bin/md5.cgi"> ASF MD5 checksum veryfier</a></li>
+          <li><a href="https://www.biglumber.com/"> Big Lumber; Key management made easy</a></li>
+        </ul>
+      </section>
+    </section>
+    <section>
+      <title>Release Announcement</title>
+      <p>
+        The release announcement can be published at the following places:
+      </p>
+      <ul>
+        <li>Lenya website </li>
+        <li>user@lenya.apache.org</li>
+        <li>users@cocoon.apache.org</li>
+        <li>announce@apache.org</li>
+        <li>lwn@lwn.net</li>
+        <li>general@oscom.org</li>
+        <li>http://mailman.skybuilders.com/mailman/listinfo/cms-pr (subcribe if needed) </li>
+        <li>http://www.cmsmatrix.org/matrix?func=editSubmission&amp;sid=new&amp;wid=5</li>
+        <li>http://www.contentmanager.net (via contact form)</li>
+        <li>http://www.javalobby.org/forums/post!default.jspa?forumID=17</li>
+        <li>http://www.theserverside.com/news/post.tss</li>
+      </ul>
     </section>
   </body>
 </document>
