@@ -47,13 +47,13 @@
 
   <map:pipelines>
     
-    <map:pipeline type="noncaching">
+    <map:pipeline type="noncaching" internal-only="true">
       <!-- 
-        This internal sitemap fragment renders the usecase, once the
+        This internal pipeline renders the usecase, once the
         executeUsecase() flowscript has completed and issued a redirect,
         which is matched here.
         -->
-      <map:match pattern="usecases-view/*/**" internal-only="true">
+      <map:match pattern="usecases-view/*/**">
         
         <map:generate type="jx" src="fallback://lenya/{2}"/>
         <map:transform type="browser-update"/>
