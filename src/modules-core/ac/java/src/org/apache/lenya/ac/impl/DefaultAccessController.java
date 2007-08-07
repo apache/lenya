@@ -66,14 +66,15 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     protected static final String ACCREDITABLE_MANAGER_ELEMENT = "accreditable-manager";
     protected static final String POLICY_MANAGER_ELEMENT = "policy-manager";
 
-    private static final String REGEX = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
+    private static final String VALID_IP = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
+    private ServiceManager manager;
     private ServiceSelector accreditableManagerSelector;
-    private AccreditableManager accreditableManager;
     private ServiceSelector authorizerSelector;
+    private ServiceSelector policyManagerSelector;
+    private AccreditableManager accreditableManager;
+    private PolicyManager policyManager;
     private Map authorizers = new HashMap();
     private List authorizerKeys = new ArrayList();
-    private ServiceSelector policyManagerSelector;
-    private PolicyManager policyManager;
     private Authenticator authenticator;
 
     /**
@@ -136,23 +137,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         return authorized;
     }
 
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-
-        try {
-            setupAccreditableManager(conf);
-            setupAuthorizers(conf);
-            setupPolicyManager(conf);
-            setupAuthenticator();
-        } catch (ConfigurationException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ConfigurationException("Configuration failed: ", e);
-        }
-    }
-
+    
     /**
      * Configures or parameterizes a component, depending on the implementation
      * as Configurable or Parameterizable.
@@ -169,6 +154,23 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         if (component instanceof Parameterizable) {
             Parameters parameters = Parameters.fromConfiguration(configuration);
             ((Parameterizable) component).parameterize(parameters);
+        }
+    }
+
+    /**
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration conf) throws ConfigurationException {
+
+        try {
+            setupAccreditableManager(conf);
+            setupAuthorizers(conf);
+            setupPolicyManager(conf);
+            setupAuthenticator();
+        } catch (ConfigurationException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ConfigurationException("Configuration failed: ", e);
         }
     }
 
@@ -257,8 +259,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     protected void setupAuthenticator() throws ServiceException {
         this.authenticator = (Authenticator) this.manager.lookup(Authenticator.ROLE);
     }
-
-    private ServiceManager manager;
 
     /**
      * Set the global component manager.
@@ -384,7 +384,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             String clientAddress = request.getHeader("x-forwarded-for");
 
             if (clientAddress != null) {
-                Pattern p = Pattern.compile(REGEX);
+                Pattern p = Pattern.compile(VALID_IP);
                 Matcher m = p.matcher(clientAddress);
 
                 if (m.find()) {
