@@ -26,7 +26,6 @@ function LenyaDisableBackspace(e)
   if(typeof document.addEventListener != 'undefined') {
     var src = e.target.type;
     var key = e.which;
-//alert(src);
     if( key == 8 && (src != 'text' && src != 'textarea')) {
       e.preventDefault();
       e.stopPropagation();
