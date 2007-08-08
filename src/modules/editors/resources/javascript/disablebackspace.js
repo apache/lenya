@@ -23,15 +23,24 @@ function LenyaDisableBackspace(e)
 {
   // Mozilla style code for Opera and Safari as well
   // For Opera 9 under Windows to work properly, the Mozilla test must be first.
-  if(typeof document.addEventListener != 'undefined' && e.which == 8) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
+  if(typeof document.addEventListener != 'undefined') {
+    var src = e.target.type;
+    var key = e.which;
+//alert(src);
+    if( key == 8 && (src != 'text' && src != 'textarea')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
   }
   // IE style code for IE 6 and IE 7. Should work on IE 5.5+
-  else if(typeof document.attachEvent != 'undefined' && window.event && window.event.keyCode == 8) {
-    window.event.cancelBubble = true;
-    return false;
+  else if(typeof document.attachEvent != 'undefined' && window.event) {
+    var src = event.srcElement.type;
+    var key = window.event.keyCode;
+    if(key == 8 && (src != 'text' && src != 'textarea')) {
+      window.event.cancelBubble = true;
+      return false;
+    }
   }
   return true;
 }
