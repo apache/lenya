@@ -35,7 +35,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.cache.BuildException;
@@ -49,7 +48,15 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Authorizer for usecases.
- *
+ * <p>
+ * Supported parameters via {@link Parameterizable}:
+ * </p>
+ * <ul>
+ * <li>
+ *   {@link #PARAMETER_CONFIGURATION} - location of the usecase policies file
+ *   (parameterizable for testing purposes)
+ * </li>
+ * </ul>
  * @version $Id: UsecaseAuthorizer.java 392449 2006-04-07 23:20:38Z michi $
  */
 public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements UsecaseAuthorizer,
@@ -71,7 +78,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     /**
      * Maps publication IDs to their configuration URIs.
      * This is a persistent map to avoid unnecessary publication lookups.
-     * Whenever an autorization request for a new publication is dealt with,
+     * Whenever an authorization request for a new publication is dealt with,
      * the publication's configuration URI is stored, to be re-used on later
      * occasions (for the lifetime of the component).
      */
@@ -170,19 +177,11 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
             if (usecase != null) {
 
                 String _configurationUri;
-                // FIXME: this is not clear to me. please comment if you are familiar with this code...
-                // check if this component has a configurationURI. iiuc, that would have to be specified
-                // in the relevant patchfile, in this case
-                //     src/modules-core/usecase/config/cocoon-xconf/usecase-authorizer.xconf
-                // however, that file does not specify such a URI.
+                // Check if the service has been parameterized with a configuration URI. This
+                // can be used for testing purposes etc.
                 if (getConfigurationURI() != null) {
-                    // so this is never called. if it were, usecase permissions would break iiuc.
-                    // please clarify this.
                     _configurationUri = getConfigurationURI();
                 } else {
-                    // ok, here we get the usecase-permissions.xml of the current publication from
-                    // its access-control.xml configuration file.
-                    // this i understand.
                     Publication publication = PublicationUtil.getPublication(this.manager, request);
                     _configurationUri = getConfigurationURI(publication);
                 }
@@ -267,10 +266,6 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
     }
 
- 
-    /**
-     * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
-     */
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(PARAMETER_CONFIGURATION)) {
             this.configurationUri = parameters.getParameter(PARAMETER_CONFIGURATION);
@@ -279,11 +274,6 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
     private String getConfigurationURI() {
         return this.configurationUri;
-    }
-
-
-    private boolean authorize(Request request, String webappUrl) throws AccessControlException {
-        return authorize(request);
     }
 
     /**
