@@ -31,7 +31,7 @@
           <i18n:text key="delete-doc"/>
           <jx:set var="document" value="${usecase.getParameter('document')}"/>
           <jx:choose>
-            <jx:when test="${document.hasLink}">
+            <jx:when test="${document.hasLink()}">
               <i18n:param><q><jx:out value="${document.getLink().getLabel()}"/></q></i18n:param>
             </jx:when>
             <jx:otherwise>
