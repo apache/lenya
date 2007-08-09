@@ -440,9 +440,18 @@
                 <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
               </RegexExtractor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="regex submit" enabled="true">
+                <stringProp name="RegexExtractor.default">error</stringProp>
+                <stringProp name="RegexExtractor.regex">value=&quot;Create&quot;</stringProp>
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.match_number">0</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.refname">submit</stringProp>
+              </RegexExtractor>
+              <hashTree/>
             </hashTree>
             <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
-              <stringProp name="IfController.condition">&quot;${lenya.continuation}&quot; != &quot;&quot;</stringProp>
+              <stringProp name="IfController.condition">&quot;${submit}&quot; != &quot;&quot;</stringProp>
             </IfController>
             <hashTree>
               <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Validation" enabled="true">
@@ -577,6 +586,11 @@
                   <stringProp name="Argument.metadata">=</stringProp>
                   <stringProp name="Argument.value"></stringProp>
                   <stringProp name="Argument.name">lenya.continuation</stringProp>
+                </elementProp>
+                <elementProp name="submit" elementType="Argument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value"></stringProp>
+                  <stringProp name="Argument.name">submit</stringProp>
                 </elementProp>
               </collectionProp>
             </Arguments>
