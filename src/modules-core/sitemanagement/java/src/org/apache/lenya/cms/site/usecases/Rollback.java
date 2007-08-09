@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -55,7 +56,8 @@ public class Rollback extends DocumentUsecase {
 
         Document document = getSourceDocument();
         long time = new Long(rollbackTime).longValue();
-        document.getRepositoryNode().getRcml().restoreBackup(time);
+        Node node = document.getRepositoryNode();
+        node.getRcml().restoreBackup(node, time);
         
         WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
                 getEvent());

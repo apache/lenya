@@ -35,7 +35,7 @@ import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RCMLEntry;
+import org.apache.lenya.cms.rc.RevisionControlException;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
@@ -103,17 +103,18 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @see org.apache.lenya.transaction.Transactionable#checkin()
      */
     public void checkin() throws RepositoryException {
-        if (!isCheckedOut()) {
-            throw new RepositoryException("Cannot check in node [" + getSourceURI()
-                    + "]: not checked out!");
-        }
-
-        try {
-            String userName = getUserId();
-            boolean newVersion = getSession().isDirty(this);
-            getRevisionController().reservedCheckIn(this, userName, exists(), newVersion);
-        } catch (Exception e) {
-            throw new RepositoryException(e);
+        RCML rcml = getRcml();
+        synchronized (rcml) {
+            try {
+                if (!rcml.isCheckedOut()) {
+                    throw new RepositoryException("Cannot check in node [" + getSourceURI()
+                            + "]: not checked out!");
+                }
+                boolean newVersion = getSession().isDirty(this);
+                rcml.checkIn(this, exists(), newVersion);
+            } catch (Exception e) {
+                throw new RepositoryException(e);
+            }
         }
     }
 
@@ -122,25 +123,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      */
     public boolean isCheckedOut() throws RepositoryException {
         try {
-            return getRevisionController().isCheckedOut(this);
+            return getRcml().isCheckedOut();
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#isCheckedOutByUser()
+     * @see org.apache.lenya.transaction.Transactionable#isCheckedOutBySession()
      */
-    public boolean isCheckedOutByUser() throws RepositoryException {
+    public boolean isCheckedOutBySession() throws RepositoryException {
         try {
-            if (getRcml().getEntries().size() > 0) {
-                RCMLEntry entry = getRcml().getLatestEntry();
-                if (entry.getIdentity().equals(getUserId()) && isCheckedOut()) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (Exception e) {
+            return getRcml().isCheckedOutBySession(getSession());
+        } catch (RevisionControlException e) {
             throw new RepositoryException(e);
         }
     }
@@ -153,10 +148,17 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         if (getLogger().isDebugEnabled())
             getLogger().debug("SourceNode::checkout() called, sourceURI [" + getSourceURI() + "]");
 
-        if (!isCheckedOut()) {
+        RCML rcml = getRcml();
+        synchronized (rcml) {
             try {
-                getRevisionController().reservedCheckOut(this, getUserId());
-            } catch (Exception e) {
+                if (rcml.isCheckedOut() && !rcml.isCheckedOutBySession(getSession())) {
+                    throw new RepositoryException("The node [" + this
+                            + "] is already checked out by another session!");
+                }
+                if (!rcml.isCheckedOut()) {
+                    rcml.checkOut(this);
+                }
+            } catch (RevisionControlException e) {
                 throw new RepositoryException(e);
             }
         }
@@ -223,8 +225,9 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws RepositoryException {
-        if (isCheckedOut() && !isCheckedOutByUser()) {
-            throw new RepositoryException("Cannot lock [" + this + "]: node is checked out.");
+        if (isCheckedOut() && !isCheckedOutBySession()) {
+            throw new RepositoryException("Cannot lock [" + this
+                    + "]: node is checked out by this session.");
         }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
@@ -342,8 +345,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     protected void enqueueEvent(Object descriptor) {
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, this,
-                getLogger(), descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, this, getLogger(),
+                descriptor);
         getSession().enqueueEvent(event);
     }
 
@@ -358,13 +361,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     private RCML rcml;
 
-    public RCML getRcml() {
+    public synchronized RCML getRcml() {
         if (this.rcml == null) {
-            try {
-                this.rcml = new SourceNodeRCML(this, this.manager);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            SourceNodeRcmlFactory factory = SourceNodeRcmlFactory.getInstance();
+            this.rcml = factory.getRcml(this, this.manager);
         }
         return this.rcml;
     }
@@ -416,7 +416,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         return this.metaSource.getMetaDataNamespaceUris();
     }
 
-    public void saveTransactionable() throws TransactionException {
+    public synchronized void saveTransactionable() throws TransactionException {
+        if (!isCheckedOut()) {
+            throw new RepositoryException("Cannot save node [" + getSourceURI()
+                    + "]: not checked out!");
+        }
         this.contentSource.saveTransactionable();
         this.metaSource.saveTransactionable();
     }

@@ -26,11 +26,12 @@ package org.apache.lenya.cms.rc;
 public class CheckOutEntry extends RCMLEntry {
     /**
      * Creates a new CheckOutEntry object.
+     * @param sessionId The session ID.
      * @param identity The identity
      * @param time The time
      */
-    public CheckOutEntry(String identity, long time) {
-        super(identity, time);
+    public CheckOutEntry(String sessionId, String identity, long time) {
+        super(sessionId, identity, time);
         setType(RCML.co);
     }
 }

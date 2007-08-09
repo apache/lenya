@@ -21,15 +21,14 @@
 package org.apache.lenya.cms.repository;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -50,13 +49,15 @@ import org.w3c.dom.Element;
 public class SourceNodeRCML implements RCML {
 
     protected static final String NAMESPACE = "";
-    
-    private SourceNode node;
-    private Document xml = null;
+
     private boolean dirty = false;
     private int maximalNumberOfEntries = 5;
+    private Vector entries;
 
     private ServiceManager manager;
+
+    private String contentSourceUri;
+    private String metaSourceUri;
 
     private static Map ELEMENTS = new HashMap();
     protected static final String ELEMENT_CHECKIN = "CheckIn";
@@ -66,6 +67,7 @@ public class SourceNodeRCML implements RCML {
     protected static final String ELEMENT_VERSION = "Version";
     protected static final String ELEMENT_IDENTITY = "Identity";
     protected static final String ELEMENT_XPSREVISIONCONTROL = "XPSRevisionControl";
+    protected static final String ELEMENT_SESSION = "session";
 
     {
         ELEMENTS.put(new Short(ci), ELEMENT_CHECKIN);
@@ -73,25 +75,22 @@ public class SourceNodeRCML implements RCML {
     }
 
     /**
-     * create a RCML-File if no one exists already
-     * @param node The node to control.
+     * @param contentSourceUri The content source URI.
+     * @param metaSourceUri The meta source URI.
      * @param manager The service manager.
-     * @throws Exception if an error occurs
      */
-    public SourceNodeRCML(SourceNode node, ServiceManager manager) throws Exception {
-
+    public SourceNodeRCML(String contentSourceUri, String metaSourceUri, ServiceManager manager) {
         this.maximalNumberOfEntries = 10;
         this.maximalNumberOfEntries = (2 * this.maximalNumberOfEntries) + 1;
-
-        this.node = node;
         this.manager = manager;
-
+        this.contentSourceUri = contentSourceUri;
+        this.metaSourceUri = metaSourceUri;
     }
 
     protected static final String RCML_EXTENSION = ".rcml";
 
     protected String getRcmlSourceUri() {
-        return this.node.getContentSource().getRealSourceUri() + RCML_EXTENSION;
+        return this.contentSourceUri + RCML_EXTENSION;
     }
 
     /**
@@ -105,19 +104,18 @@ public class SourceNodeRCML implements RCML {
             write();
         }
     }
-    
-    private static final Object classLock = SourceNodeRCML.class;
-    
+
     /**
-     * Write the xml RCML-document in the RCML-file.
-     * @throws IOException if an error occurs
-     * @throws Exception if an error occurs
+     * Write the XML RCML-document in the RCML-file.
+     * @throws RevisionControlException if an error occurs
      */
-    public synchronized void write() throws Exception {
-        Document xml = getDocument();
-        Assert.notNull("XML document", xml);
-        synchronized (classLock) {
-            SourceUtil.writeDOM(xml, getRcmlSourceUri(), this.manager);
+    public synchronized void write() throws RevisionControlException {
+        NamespaceHelper helper = saveToXml();
+        Assert.notNull("XML document", helper);
+        try {
+            SourceUtil.writeDOM(helper.getDocument(), getRcmlSourceUri(), this.manager);
+        } catch (Exception e) {
+            throw new RevisionControlException(e);
         }
         clearDirty();
     }
@@ -125,18 +123,16 @@ public class SourceNodeRCML implements RCML {
     /**
      * Write a new entry for a check out or a check in the RCML-File made by the
      * user with identity at time
+     * @param node The node.
      * @param type co for a check out, ci for a check in
-     * @param identity The identity of the user
-     * @param time Time at which the check in/out is made
+     * @param time
      * @param backup Create backup element
-     * @throws IOException if an error occurs
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public synchronized void checkOutIn(short type, String identity, long time, boolean backup)
-            throws IOException, Exception {
+    public synchronized void checkOutIn(Node node, short type, long time, boolean backup)
+            throws RevisionControlException {
 
-        NamespaceHelper helper = getNamespaceHelper();
-        String elementName = (String) ELEMENTS.get(new Short(type));
+        String identity = node.getSession().getIdentity().getUser().getId();
 
         Vector entries = getEntries();
         if (entries.size() == 0) {
@@ -146,100 +142,84 @@ public class SourceNodeRCML implements RCML {
         } else {
             RCMLEntry latestEntry = getLatestEntry();
             if (type == latestEntry.getType()) {
+                String elementName = (String) ELEMENTS.get(new Short(type));
                 throw new IllegalStateException("RCML entry type <" + elementName
-                        + "> not allowed twice in a row.");
+                        + "> not allowed twice in a row. Before: [" + latestEntry.getIdentity()
+                        + "], now: [" + identity + "], node: [" + this.contentSourceUri + "]");
             }
         }
 
-        if (identity == null) {
-            throw new IllegalArgumentException("The identity must not be null!");
-        }
+        String sessionId = node.getSession().getId();
 
-        if (type != co && type != ci) {
-            throw new IllegalArgumentException("ERROR: " + this.getClass().getName()
-                    + ".checkOutIn(): No such type");
-        }
-
-        Element identityElement = helper.createElement(ELEMENT_IDENTITY, identity);
-        Element timeElement = helper.createElement(ELEMENT_TIME, Long.toString(time));
-
-        Element checkOutElement = helper.createElement(elementName);
-
-        checkOutElement.appendChild(identityElement);
-        checkOutElement.appendChild(timeElement);
-
-        if (type == ci) {
+        RCMLEntry entry;
+        switch (type) {
+        case RCML.ci:
             int version = 0;
             CheckInEntry latestEntry = getLatestCheckInEntry();
             if (latestEntry != null) {
                 version = latestEntry.getVersion();
             }
             version++;
-            Element versionElement = helper.createElement(ELEMENT_VERSION, Integer
-                    .toString(version));
-            checkOutElement.appendChild(versionElement);
+            entry = new CheckInEntry(sessionId, identity, time, version, backup);
+            break;
+        case RCML.co:
+            entry = new CheckOutEntry(sessionId, identity, time);
+            break;
+        default:
+            throw new IllegalArgumentException("No such type: [" + type + "]");
         }
 
-        if (backup) {
-            Element backupElement = helper.createElement(ELEMENT_BACKUP);
-            checkOutElement.appendChild(backupElement);
-        }
-
-        Element root = helper.getDocument().getDocumentElement();
-        root.insertBefore(checkOutElement, root.getFirstChild());
-
+        entries.add(0, entry);
         setDirty();
-
-        // If this is a checkout, we write back the changed state
-        // to the file immediately because otherwise another
-        // process might read the file and think there is no open
-        // checkout (as it is only visible in our private DOM tree
-        // at this time).
-        //
-        // If, however, this is a checkin, we do not yet write it
-        // out because then another process might again check it
-        // out immediately and manipulate the file contents
-        // *before* our caller has finished writing back the
-        // changed data to the destination file. We therefore rely
-        // on either our caller invoking the write() method when
-        // finished or the garbage collector calling the finalize()
-        // method.
-        //
-        // if (type == co) {
-        // }
         write();
     }
 
-    private long lastModified = 0;
+    protected Element saveToXml(NamespaceHelper helper, RCMLEntry entry)
+            throws RevisionControlException {
+        String elementName = (String) ELEMENTS.get(new Short(entry.getType()));
+        Element sessionElement = helper.createElement(ELEMENT_SESSION, entry.getSessionId());
+        Element identityElement = helper.createElement(ELEMENT_IDENTITY, entry.getIdentity());
+        Element timeElement = helper.createElement(ELEMENT_TIME, Long.toString(entry.getTime()));
 
-    protected NamespaceHelper getNamespaceHelper() throws RevisionControlException {
-        return new NamespaceHelper(NAMESPACE, "", getDocument());
-    }
+        Element entryElement = helper.createElement(elementName);
 
-    protected Document getDocument() throws RevisionControlException {
-        try {
-            String uri = getRcmlSourceUri();
-            if (SourceUtil.exists(uri, this.manager)) {
-                long sourceLastModified = SourceUtil.getLastModified(uri, manager);
-                if (this.xml == null || sourceLastModified > this.lastModified) {
-                    this.xml = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
-                    this.lastModified = sourceLastModified;
-                }
-            } else {
-                if (this.xml == null) {
-                    NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "",
-                            ELEMENT_XPSREVISIONCONTROL);
-                    this.xml = helper.getDocument();
-                }
+        entryElement.appendChild(identityElement);
+        entryElement.appendChild(timeElement);
+        entryElement.appendChild(sessionElement);
+
+        if (entry.getType() == ci) {
+            CheckInEntry checkInEntry = (CheckInEntry) entry;
+            Element versionElement = helper.createElement(ELEMENT_VERSION, Integer
+                    .toString(checkInEntry.getVersion()));
+            entryElement.appendChild(versionElement);
+            if (checkInEntry.hasBackup()) {
+                Element backupElement = helper.createElement(ELEMENT_BACKUP);
+                entryElement.appendChild(backupElement);
             }
-        } catch (Exception e) {
-            throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
-                    + "]");
         }
-        return this.xml;
+
+        return entryElement;
     }
 
-    protected Element getLatestElement(NamespaceHelper helper, String type) throws Exception {
+    protected NamespaceHelper saveToXml() throws RevisionControlException {
+        try {
+            NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", ELEMENT_XPSREVISIONCONTROL);
+            Element root = helper.getDocument().getDocumentElement();
+            Vector entries = getEntries();
+            for (Iterator i = entries.iterator(); i.hasNext();) {
+                RCMLEntry entry = (RCMLEntry) i.next();
+                Element element = saveToXml(helper, entry);
+                root.appendChild(element);
+            }
+            return helper;
+        } catch (Exception e) {
+            throw new RevisionControlException("Could create revision control XML ["
+                    + getRcmlSourceUri() + "]", e);
+        }
+    }
+
+    protected Element getLatestElement(NamespaceHelper helper, String type)
+            throws RevisionControlException {
         Element parent = helper.getDocument().getDocumentElement();
         return helper.getFirstChild(parent, type);
     }
@@ -247,52 +227,61 @@ public class SourceNodeRCML implements RCML {
     /**
      * get the latest check out
      * @return CheckOutEntry The entry of the check out
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public CheckOutEntry getLatestCheckOutEntry() throws Exception {
-        return (CheckOutEntry) getLatestEntry(getNamespaceHelper(), (String) ELEMENTS
-                .get(new Short(RCML.co)));
+    public CheckOutEntry getLatestCheckOutEntry() throws RevisionControlException {
+        return (CheckOutEntry) getLatestEntry(RCML.co);
     }
 
     /**
      * get the latest check in
      * @return CheckInEntry The entry of the check in
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public CheckInEntry getLatestCheckInEntry() throws Exception {
-        return (CheckInEntry) getLatestEntry(getNamespaceHelper(), (String) ELEMENTS.get(new Short(
-                RCML.ci)));
+    public CheckInEntry getLatestCheckInEntry() throws RevisionControlException {
+        return (CheckInEntry) getLatestEntry(RCML.ci);
     }
 
     /**
      * get the latest entry (a check out or check in)
+     * @param type The type.
      * @return RCMLEntry The entry of the check out/in
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public RCMLEntry getLatestEntry() throws Exception {
-        return getLatestEntry(getNamespaceHelper(), "*");
+    public RCMLEntry getLatestEntry(short type) throws RevisionControlException {
+        Vector entries = getEntries();
+        for (Iterator i = entries.iterator(); i.hasNext(); ) {
+            RCMLEntry entry = (RCMLEntry) i.next();
+            if (entry.getType() == type) {
+                return entry;
+            }
+        }
+        return null;
     }
 
-    protected RCMLEntry getLatestEntry(NamespaceHelper helper, String elementName) throws Exception {
-        Element element = getLatestElement(helper, elementName);
-        if (element == null) {
+    public RCMLEntry getLatestEntry() throws RevisionControlException {
+        Vector entries = getEntries();
+        if (entries.isEmpty()) {
             return null;
-        } else {
-            return getEntry(helper, element);
+        }
+        else {
+            return (RCMLEntry) entries.firstElement();
         }
     }
 
     protected RCMLEntry getEntry(NamespaceHelper helper, Element element) {
         String type = element.getLocalName();
+        String sessionId = getChildValue(helper, element, ELEMENT_SESSION, "");
         String identity = getChildValue(helper, element, ELEMENT_IDENTITY);
         String timeString = getChildValue(helper, element, ELEMENT_TIME);
         long time = new Long(timeString).longValue();
         if (type.equals(ELEMENT_CHECKIN)) {
             String versionString = getChildValue(helper, element, ELEMENT_VERSION);
             int version = new Integer(versionString).intValue();
-            return new CheckInEntry(identity, time, version);
+            boolean backup = helper.getChildren(element, ELEMENT_BACKUP).length > 0;
+            return new CheckInEntry(sessionId, identity, time, version, backup);
         } else if (type.equals(ELEMENT_CHECKOUT)) {
-            return new CheckOutEntry(identity, time);
+            return new CheckOutEntry(sessionId, identity, time);
         } else {
             throw new RuntimeException("Unsupported RCML entry type: [" + type + "]");
         }
@@ -321,18 +310,29 @@ public class SourceNodeRCML implements RCML {
     /**
      * get all check in and check out
      * @return Vector of all check out and check in entries in this RCML-file
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public Vector getEntries() throws Exception {
-        NamespaceHelper helper = getNamespaceHelper();
-        Element parent = helper.getDocument().getDocumentElement();
-        Element[] elements = helper.getChildren(parent);
-        Vector entries = new Vector();
-        for (int i = 0; i < elements.length; i++) {
-            RCMLEntry entry = getEntry(helper, elements[i]);
-            entries.add(entry);
+    public synchronized Vector getEntries() throws RevisionControlException {
+        if (this.entries == null) {
+            this.entries = new Vector();
+            String uri = getRcmlSourceUri();
+            try {
+                if (SourceUtil.exists(uri, this.manager)) {
+                    Document xml = SourceUtil.readDOM(uri, this.manager);
+                    NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", xml);
+                    Element parent = xml.getDocumentElement();
+                    Element[] elements = helper.getChildren(parent);
+                    for (int i = 0; i < elements.length; i++) {
+                        RCMLEntry entry = getEntry(helper, elements[i]);
+                        entries.add(entry);
+                    }
+                }
+            } catch (Exception e) {
+                throw new RevisionControlException(e);
+            }
+
         }
-        return entries;
+        return this.entries;
     }
 
     /**
@@ -340,46 +340,42 @@ public class SourceNodeRCML implements RCML {
      * @return Vector of all entries in this RCML-file with a backup
      * @throws Exception if an error occurs
      */
-    public Vector getBackupEntries() throws Exception {
-        NamespaceHelper helper = getNamespaceHelper();
-        Element parent = helper.getDocument().getDocumentElement();
-        Element[] elements = helper.getChildren(parent, ELEMENT_CHECKIN);
-
-        Vector entries = new Vector();
-
-        for (int i = 0; i < elements.length; i++) {
-            if (helper.getChildren(elements[i], ELEMENT_BACKUP).length > 0) {
-                RCMLEntry entry = getEntry(helper, elements[i]);
-                entries.add(entry);
+    public synchronized Vector getBackupEntries() throws Exception {
+        Vector entries = getEntries();
+        Vector backupEntries = new Vector();
+        for (Iterator i = entries.iterator(); i.hasNext();) {
+            RCMLEntry entry = (RCMLEntry) i.next();
+            if (entry.getType() == RCML.ci && ((CheckInEntry) entry).hasBackup()) {
+                backupEntries.add(entry);
             }
         }
-
-        return entries;
+        return backupEntries;
     }
 
-    public void makeBackup(long time) throws RevisionControlException {
-        makeBackup(this.node.getContentSource(), time);
-        makeBackup(this.node.getMetaSource(), time);
+    public synchronized void makeBackup(long time) throws RevisionControlException {
+        makeBackup(this.contentSourceUri, time);
+        makeBackup(this.metaSourceUri, time);
     }
 
-    protected void makeBackup(SourceWrapper wrapper, long time) throws RevisionControlException {
-        String backupSourceUri = getBackupSourceUri(wrapper, time);
+    protected synchronized void makeBackup(String sourceUri, long time)
+            throws RevisionControlException {
+        String backupSourceUri = getBackupSourceUri(sourceUri, time);
         try {
-            String uri = wrapper.getRealSourceUri();
-            if (SourceUtil.exists(uri, manager)) {
-                SourceUtil.copy(this.manager, uri, backupSourceUri);
+            if (SourceUtil.exists(sourceUri, manager)) {
+                SourceUtil.copy(this.manager, sourceUri, backupSourceUri);
             }
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
     }
 
-    public void restoreBackup(long time) throws RevisionControlException {
-        restoreBackup(this.node.getContentSource(), time);
-        restoreBackup(this.node.getMetaSource(), time);
+    public synchronized void restoreBackup(Node node, long time) throws RevisionControlException {
+        SourceNode sourceNode = (SourceNode) node;
+        restoreBackup(sourceNode.getContentSource(), time);
+        restoreBackup(sourceNode.getMetaSource(), time);
     }
 
-    protected void restoreBackup(SourceWrapper wrapper, long time) throws RevisionControlException {
+    protected synchronized void restoreBackup(SourceWrapper wrapper, long time) throws RevisionControlException {
         String backupSourceUri = getBackupSourceUri(wrapper, time);
         SourceResolver resolver = null;
         try {
@@ -407,45 +403,33 @@ public class SourceNodeRCML implements RCML {
      * Prune the list of entries and delete the corresponding backups. Limit the
      * number of entries to the value maximalNumberOfEntries
      * (2maxNumberOfRollbacks(configured)+1)
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public void pruneEntries() throws Exception {
-        NamespaceHelper helper = getNamespaceHelper();
-        Element parent = helper.getDocument().getDocumentElement();
-        Element[] elements = helper.getChildren(parent);
+    public synchronized void pruneEntries() throws RevisionControlException {
+        Vector entries = getEntries();
+        RCMLEntry[] array = (RCMLEntry[]) entries.toArray(new RCMLEntry[entries.size()]);
 
-        for (int i = this.maximalNumberOfEntries; i < elements.length; i++) {
-
+        for (int i = this.maximalNumberOfEntries; i < entries.size(); i++) {
             // remove the backup file associated with this entry
-            String time = getChildValue(helper, elements[i], ELEMENT_TIME);
-            long timeLong = Long.valueOf(time).longValue();
-            deleteBackup(this.node.getContentSource(), timeLong);
-            deleteBackup(this.node.getMetaSource(), timeLong);
-
-            parent.removeChild(elements[i]);
+            RCMLEntry entry = array[i];
+            if (entry.getType() == ci && ((CheckInEntry) entry).hasBackup()) {
+                long time = entry.getTime();
+                deleteBackup(this.contentSourceUri, time);
+                deleteBackup(this.metaSourceUri, time);
+                this.entries.remove(entry);
+            }
         }
         setDirty();
     }
 
-    protected void deleteBackup(SourceWrapper wrapper, long time) throws ServiceException,
-            MalformedURLException, IOException {
-        String uri = getBackupSourceUri(wrapper, time);
-        SourceUtil.delete(uri, this.manager);
-        SourceUtil.deleteEmptyCollections(uri, this.manager);
-    }
-
-    /**
-     * Get a clone document
-     * @return org.w3c.dom.Document The clone document
-     * @throws Exception if an error occurs
-     */
-    public org.w3c.dom.Document getDOMDocumentClone() throws Exception {
-        Document documentClone = DocumentHelper.createDocument(null, "dummy", null);
-        documentClone.removeChild(documentClone.getDocumentElement());
-        documentClone.appendChild(documentClone
-                .importNode(getDocument().getDocumentElement(), true));
-
-        return documentClone;
+    protected synchronized void deleteBackup(String sourceUri, long time) throws RevisionControlException {
+        String uri = getBackupSourceUri(sourceUri, time);
+        try {
+            SourceUtil.delete(uri, this.manager);
+            SourceUtil.deleteEmptyCollections(uri, this.manager);
+        } catch (Exception e) {
+            throw new RevisionControlException(e);
+        }
     }
 
     /**
@@ -461,7 +445,6 @@ public class SourceNodeRCML implements RCML {
      */
     protected void setDirty() {
         this.dirty = true;
-        this.lastModified = new Date().getTime();
     }
 
     /**
@@ -473,27 +456,23 @@ public class SourceNodeRCML implements RCML {
 
     /**
      * Delete the latest check in
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public void deleteFirstCheckIn() throws Exception {
-        deleteLatestEntry(ELEMENT_CHECKIN);
+    public synchronized void deleteFirstCheckIn() throws RevisionControlException {
+        deleteLatestEntry(ci);
     }
 
     /**
      * Delete the latest check in
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public void deleteFirstCheckOut() throws Exception {
-        deleteLatestEntry(ELEMENT_CHECKOUT);
+    public synchronized void deleteFirstCheckOut() throws RevisionControlException {
+        deleteLatestEntry(co);
     }
 
-    protected void deleteLatestEntry(String type) throws RevisionControlException, Exception {
-        NamespaceHelper helper = getNamespaceHelper();
-        Element parent = helper.getDocument().getDocumentElement();
-        Element element = getLatestElement(helper, type);
-        parent.removeChild(element);
-        // parent.removeChild(parent.getFirstChild()); // remove EOL (end of
-        // line)
+    protected synchronized void deleteLatestEntry(short type) throws RevisionControlException {
+        RCMLEntry entry = getLatestEntry(type);
+        this.entries.remove(entry);
         setDirty();
     }
 
@@ -503,15 +482,13 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public String[] getBackupsTime() throws Exception {
-        NamespaceHelper helper = getNamespaceHelper();
-        Element parent = helper.getDocument().getDocumentElement();
-        Element[] elements = helper.getChildren(parent, ELEMENT_CHECKIN);
 
-        ArrayList times = new ArrayList();
-        for (int i = 0; i < elements.length; i++) {
-            String time = getChildValue(helper, elements[i], ELEMENT_TIME);
-            if (helper.getChildren(elements[i], ELEMENT_BACKUP).length > 0) {
-                times.add(time);
+        Vector entries = getEntries();
+        List times = new ArrayList();
+        for (Iterator i = entries.iterator(); i.hasNext(); ) {
+            RCMLEntry entry = (RCMLEntry) i.next();
+            if (entry.getType() == ci && ((CheckInEntry) entry).hasBackup()) {
+                times.add(Long.toString(entry.getTime()));
             }
         }
         return (String[]) times.toArray(new String[times.size()]);
@@ -523,7 +500,7 @@ public class SourceNodeRCML implements RCML {
      * empty.
      * @return boolean true, if the file was deleted
      */
-    public boolean delete() {
+    public synchronized boolean delete() {
         try {
             deleteRevisions();
             SourceUtil.delete(getRcmlSourceUri(), this.manager);
@@ -538,43 +515,102 @@ public class SourceNodeRCML implements RCML {
      * delete the revisions
      * @throws RevisionControlException when somthing went wrong
      */
-    public void deleteRevisions() throws RevisionControlException {
+    public synchronized void deleteRevisions() throws RevisionControlException {
         try {
             String[] times = getBackupsTime();
             for (int i = 0; i < times.length; i++) {
                 long time = new Long(times[i]).longValue();
-                deleteBackup(this.node.getContentSource(), time);
-                deleteBackup(this.node.getMetaSource(), time);
+                deleteBackup(this.contentSourceUri, time);
+                deleteBackup(this.metaSourceUri, time);
             }
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
     }
 
-    public void copyFrom(RCML otherRcml) throws RevisionControlException {
+    public synchronized void copyFrom(Node node, Node otherNode) throws RevisionControlException {
 
-        SourceNodeRCML other = (SourceNodeRCML) otherRcml;
+        SourceNode otherSourceNode = (SourceNode) otherNode;
+        SourceNode sourceNode = (SourceNode) node;
+        SourceNodeRCML otherRcml = (SourceNodeRCML) otherNode.getRcml();
 
         try {
 
-            Vector backupEntries = other.getBackupEntries();
+            Vector backupEntries = otherRcml.getBackupEntries();
             for (Iterator i = backupEntries.iterator(); i.hasNext();) {
                 RCMLEntry entry = (RCMLEntry) i.next();
                 long time = entry.getTime();
-                String otherContentUri = other.getBackupSourceUri(other.node.getContentSource(),
-                        time);
-                String thisContentUri = this.getBackupSourceUri(this.node.getContentSource(), time);
+                String otherContentUri = otherRcml.getBackupSourceUri(otherSourceNode
+                        .getContentSource(), time);
+                String thisContentUri = this
+                        .getBackupSourceUri(sourceNode.getContentSource(), time);
                 SourceUtil.copy(this.manager, otherContentUri, thisContentUri);
-                String otherMetaUri = other.getBackupSourceUri(other.node.getMetaSource(), time);
-                String thisMetaUri = this.getBackupSourceUri(this.node.getMetaSource(), time);
+
+                String otherMetaUri = otherRcml.getBackupSourceUri(otherSourceNode.getMetaSource(),
+                        time);
+                String thisMetaUri = this.getBackupSourceUri(sourceNode.getMetaSource(), time);
                 SourceUtil.copy(this.manager, otherMetaUri, thisMetaUri);
             }
 
-            this.xml = other.getDocument();
+            this.entries = new Vector();
+            Vector otherEntries = otherRcml.getEntries();
+            for (Iterator i = otherEntries.iterator(); i.hasNext();) {
+                RCMLEntry entry = (RCMLEntry) i.next();
+                RCMLEntry newEntry = null;
+                switch (entry.getType()) {
+                case co:
+                    newEntry = new CheckOutEntry(entry.getSessionId(), entry.getIdentity(), entry
+                            .getTime());
+                    break;
+                case ci:
+                    CheckInEntry ciEntry = (CheckInEntry) entry;
+                    newEntry = new CheckInEntry(ciEntry.getSessionId(), ciEntry.getIdentity(),
+                            ciEntry.getTime(), ciEntry.getVersion(), ciEntry.hasBackup());
+                    break;
+                }
+                this.entries.add(newEntry);
+            }
+
             write();
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
+    }
+
+    public synchronized boolean isCheckedOut() throws RevisionControlException {
+        RCMLEntry entry = getLatestEntry();
+        return entry != null && entry.getType() == RCML.co;
+    }
+
+    public synchronized void checkIn(Node node, boolean backup, boolean newVersion)
+            throws RevisionControlException {
+
+        long time = new Date().getTime();
+
+        if (backup) {
+            makeBackup(time);
+        }
+
+        if (newVersion) {
+            checkOutIn(node, RCML.ci, time, backup);
+        } else {
+            deleteFirstCheckOut();
+        }
+        pruneEntries();
+        write();
+    }
+
+    public synchronized void checkOut(Node node) throws RevisionControlException {
+        checkOutIn(node, RCML.co, new Date().getTime(), false);
+    }
+
+    public boolean isCheckedOutBySession(Session session) throws RevisionControlException {
+        Vector entries = getEntries();
+        if (entries.size() > 0) {
+            RCMLEntry entry = (RCMLEntry) entries.get(0);
+            return entry.getType() == co && entry.getSessionId().equals(session.getId());
+        }
+        return false;
     }
 
 }

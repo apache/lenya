@@ -20,11 +20,15 @@
 
 package org.apache.lenya.cms.rc;
 
-import java.io.IOException;
 import java.util.Vector;
 
+import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.Session;
+
 /**
- * Handle with the RCML file
+ * An object of this class handles the revisions of a node. The node is passed
+ * as a parameter so an RCML object can be shared between sessions for synchronization
+ * purposes.
  */
 public interface RCML {
 
@@ -38,118 +42,108 @@ public interface RCML {
     short ci = 1;
 
     /**
-     * Write the xml RCML-document in the RCML-file.
-     * @throws IOException if an error occurs
-     * @throws Exception if an error occurs
+     * Check the RCML in.
+     * @param node The node.
+     * @param backup If a backup shall be created.
+     * @param newVersion If a new version shall be created.
+     * @throws RevisionControlException if an error occurs.
      */
-    public void write() throws Exception;
-
+    void checkIn(Node node, boolean backup, boolean newVersion) throws RevisionControlException;
+    
     /**
-     * Write a new entry for a check out or a check in the RCML-File made by the user with identity
-     * at time
-     * @param type co for a check out, ci for a check in
-     * @param identity The identity of the user
-     * @param time Time at which the check in/out is made
-     * @param backup Create backup element
-     * @throws IOException if an error occurs
-     * @throws Exception if an error occurs
+     * Check the RCML out.
+     * @param node The node.
+     * @throws RevisionControlException if an error occurs.
      */
-    public void checkOutIn(short type, String identity, long time, boolean backup)
-            throws Exception;
+    void checkOut(Node node) throws RevisionControlException;
 
     /**
      * get the latest check out
      * @return CheckOutEntry The entry of the check out
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public CheckOutEntry getLatestCheckOutEntry() throws Exception;
+    CheckOutEntry getLatestCheckOutEntry() throws RevisionControlException;
 
     /**
      * get the latest check in
      * @return CheckInEntry The entry of the check in
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public CheckInEntry getLatestCheckInEntry() throws Exception;
+    CheckInEntry getLatestCheckInEntry() throws RevisionControlException;
 
     /**
      * get the latest entry (a check out or check in)
      * @return RCMLEntry The entry of the check out/in
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public RCMLEntry getLatestEntry() throws Exception;
+    RCMLEntry getLatestEntry() throws RevisionControlException;
 
     /**
      * get all check in and check out
      * @return Vector of all check out and check in entries in this RCML-file
-     * @throws Exception if an error occurs
+     * @throws RevisionControlException if an error occurs
      */
-    public Vector getEntries() throws Exception;
+    Vector getEntries() throws RevisionControlException;
 
     /**
      * get all backup entries
      * @return Vector of all entries in this RCML-file with a backup
      * @throws Exception if an error occurs
      */
-    public Vector getBackupEntries() throws Exception;
+    Vector getBackupEntries() throws Exception;
     
     /**
      * Creates a backup.
      * @param time The time.
      * @throws RevisionControlException
      */
-    public void makeBackup(long time) throws RevisionControlException;
+    void makeBackup(long time) throws RevisionControlException;
 
     /**
      * Restores a backup.
+     * @param node The node to restore the backup to.
      * @param time The time.
      * @throws RevisionControlException
      */
-    public void restoreBackup(long time) throws RevisionControlException;
+    void restoreBackup(Node node, long time) throws RevisionControlException;
 
     /**
      * Prune the list of entries and delete the corresponding backups. Limit the number of entries
      * to the value maximalNumberOfEntries (2maxNumberOfRollbacks(configured)+1)
      * @throws Exception if an error occurs
      */
-    public void pruneEntries() throws Exception;
-
-    /**
-     * Get a clone document
-     * @return org.w3c.dom.Document The clone document
-     * @throws Exception if an error occurs
-     */
-    public org.w3c.dom.Document getDOMDocumentClone() throws Exception;
+    void pruneEntries() throws Exception;
 
     /**
      * Check if the document is dirty
      * @return boolean dirty
      */
-    public boolean isDirty();
+    boolean isDirty();
 
     /**
      * Delete the latest check in
      * @throws Exception if an error occurs
      */
-    public void deleteFirstCheckIn() throws Exception;
+    void deleteFirstCheckIn() throws Exception;
 
     /**
      * Delete the latest check in
      * @throws Exception if an error occurs
      */
-    public void deleteFirstCheckOut() throws Exception;
+    void deleteFirstCheckOut() throws Exception;
 
     /**
      * get the time's value of the backups
      * @return String[] the times
      * @throws Exception if an error occurs
      */
-    public String[] getBackupsTime() throws Exception;
+    String[] getBackupsTime() throws Exception;
 
     /**
-     * delete the rcml file and the directory if this one is empty
+     * delete the RCML file and the directory if this one is empty
      * @return boolean true, if the file was deleted
      */
-    public boolean delete();
+    boolean delete();
     
     /**
      * Delete all revisions.
@@ -158,8 +152,22 @@ public interface RCML {
     void deleteRevisions() throws RevisionControlException;
     
     /**
-     * @param other The RCML to copy the entries from.
+     * @param node The target node.
+     * @param otherNode The source node.
      * @throws RevisionControlException if an error occurs.
      */
-    void copyFrom(RCML other) throws RevisionControlException;
+    void copyFrom(Node node, Node otherNode) throws RevisionControlException;
+    
+    /**
+     * @return if the RCML is checked out.
+     * @throws RevisionControlException if an error occurs.
+     */
+    boolean isCheckedOut() throws RevisionControlException;
+
+    /**
+     * @param session The session.
+     * @return if the RCML is checked out by this session.
+     * @throws RevisionControlException if an error occurs.
+     */
+    boolean isCheckedOutBySession(Session session) throws RevisionControlException;
 }

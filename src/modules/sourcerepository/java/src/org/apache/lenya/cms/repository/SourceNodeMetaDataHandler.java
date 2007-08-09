@@ -85,16 +85,14 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
     protected Map namespace2metamap = null;
 
-    protected Map getMetaDataMap(String namespaceUri) throws MetaDataException {
+    protected synchronized Map getMetaDataMap(String namespaceUri) throws MetaDataException {
         if (this.namespace2metamap == null) {
             loadMetaData();
         }
         Map map = (Map) this.namespace2metamap.get(namespaceUri);
         if (map == null) {
-            synchronized (this) {
-                map = new HashMap();
-                this.namespace2metamap.put(namespaceUri, map);
-            }
+            map = new HashMap();
+            this.namespace2metamap.put(namespaceUri, map);
         }
         return map;
     }

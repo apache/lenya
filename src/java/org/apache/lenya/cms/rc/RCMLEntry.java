@@ -28,15 +28,18 @@ public class RCMLEntry {
     private String identity = null;
     private long time = 0;
     private short type = 0;
+    private String sessionId;
 
     /**
      * Creates a new RCMLEntry object.
+     * @param sessionId The session ID.
      * @param _identity The identity of the person for this RCML
      * @param _time The time of the checkin / checkout
      */
-    public RCMLEntry(String _identity, long _time) {
+    public RCMLEntry(String sessionId, String _identity, long _time) {
         this.identity = _identity;
         this.time = _time;
+        this.sessionId = sessionId;
     }
     
     /**
@@ -74,6 +77,10 @@ public class RCMLEntry {
      */
     protected void setType(short s) {
         this.type = s;
+    }
+    
+    public String getSessionId() {
+        return this.sessionId;
     }
 
 }

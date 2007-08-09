@@ -26,7 +26,6 @@ import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
-import org.apache.lenya.util.Assert;
 
 /**
  * Source-node-based meta data.

@@ -66,18 +66,24 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         this.manager = manager;
 
         this.identityMap = new IdentityMapImpl(logger);
-
         this.identity = identity;
-
+        
         ObservationRegistry registry = null;
+        UUIDGenerator generator = null;
         try {
             registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
             addListener(registry);
+            
+            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
+            this.id = generator.nextUUID();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (registry != null) {
                 this.manager.release(registry);
+            }
+            if (generator == null) {
+                this.manager.release(generator);
             }
         }
         
@@ -232,6 +238,12 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
     public boolean isModifiable() {
         return this.unitOfWork != null;
+    }
+    
+    private String id;
+
+    public String getId() {
+        return this.id;
     }
 
 }

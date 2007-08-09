@@ -21,7 +21,6 @@
 package org.apache.lenya.cms.rc;
 
 import java.io.PrintWriter;
-import java.util.Date;
 
 import org.w3c.dom.Document;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
@@ -67,7 +66,7 @@ public class RCMLTest extends AbstractAccessControlTest {
 		try {
             org.apache.lenya.cms.publication.Document doc = null;
 			RCML rcml = doc.getRepositoryNode().getRcml();
-			rcml.checkOutIn(RCML.co, "michi", new Date().getTime(), false);
+			rcml.checkOut(doc.getRepositoryNode());
 
 			(new PrintWriter(System.out)).print(this.document);
 

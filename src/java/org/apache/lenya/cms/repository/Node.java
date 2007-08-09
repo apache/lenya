@@ -105,10 +105,10 @@ public interface Node extends RepositoryItem, ContentHolder {
     boolean isCheckedOut() throws RepositoryException;
 
     /**
-     * @return if the node is checked out by the current user.
+     * @return if the node is checked out by the current session.
      * @throws RepositoryException if an error occurs.
      */
-    boolean isCheckedOutByUser() throws RepositoryException;
+    boolean isCheckedOutBySession() throws RepositoryException;
 
     /**
      * @return if the node is locked.

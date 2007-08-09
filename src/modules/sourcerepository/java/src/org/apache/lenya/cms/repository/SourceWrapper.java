@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -249,62 +251,77 @@ public class SourceWrapper extends AbstractLogEnabled {
             }
         }
     }
-
+    
+    /**
+     * Store the source URLs which are currently written.
+     */
+    private static Map lockedUris = new WeakHashMap();
+    
     /**
      * @throws RepositoryException if an error occurs.
      * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
      */
-    public synchronized void saveTransactionable() throws RepositoryException {
-        if (!getNode().isCheckedOut()) {
-            throw new RepositoryException("Cannot save node [" + getSourceUri()
-                    + "]: not checked out!");
-        }
+    protected synchronized void saveTransactionable() throws RepositoryException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Saving [" + this + "] to source [" + getRealSourceUri() + "]");
         }
 
         if (this.data != null) {
-            SourceResolver resolver = null;
-            ModifiableSource source = null;
-            InputStream in = null;
-            OutputStream out = null;
+            
+            String realSourceUri = getRealSourceUri();
+            Object lock = lockedUris.get(realSourceUri);
+            if (lock == null) {
+                lock = this;
+                lockedUris.put(realSourceUri, lock);
+            }
+            
+            synchronized(lock) {
+                saveTransactionable(realSourceUri);
+            }
+        }
+    }
+
+    protected void saveTransactionable(String realSourceUri) throws RepositoryException {
+        SourceResolver resolver = null;
+        ModifiableSource source = null;
+        InputStream in = null;
+        OutputStream out = null;
+        
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            source = (ModifiableSource) resolver.resolveURI(realSourceUri);
+   
+            out = source.getOutputStream();
+   
+            byte[] buf = new byte[4096];
+            in = new ByteArrayInputStream(this.data);
+            int read = in.read(buf);
+   
+            while (read > 0) {
+                out.write(buf, 0, read);
+                read = in.read(buf);
+            }
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        } finally {
+   
             try {
-
-                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-                source = (ModifiableSource) resolver.resolveURI(getRealSourceUri());
-
-                out = source.getOutputStream();
-
-                byte[] buf = new byte[4096];
-                in = new ByteArrayInputStream(this.data);
-                int read = in.read(buf);
-
-                while (read > 0) {
-                    out.write(buf, 0, read);
-                    read = in.read(buf);
+                if (in != null) {
+                    in.close();
                 }
-            } catch (Exception e) {
-                throw new RepositoryException(e);
-            } finally {
-
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                    if (out != null) {
-                        out.flush();
-                        out.close();
-                    }
-                } catch (Throwable t) {
-                    throw new RuntimeException("Could not close streams: ", t);
+                if (out != null) {
+                    out.flush();
+                    out.close();
                 }
-
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    manager.release(resolver);
+            } catch (Throwable t) {
+                throw new RuntimeException("Could not close streams: ", t);
+            }
+   
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
                 }
+                manager.release(resolver);
             }
         }
     }

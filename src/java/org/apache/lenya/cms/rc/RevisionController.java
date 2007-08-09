@@ -20,8 +20,6 @@
 
 package org.apache.lenya.cms.rc;
 
-import java.util.Date;
-
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.repository.Node;
@@ -66,35 +64,6 @@ public class RevisionController extends AbstractLogEnabled {
     }
 
     /**
-     * Try to make a reserved check out of the file source for a user with
-     * identity
-     * 
-     * @param node The node to check out
-     * @param identity The identity of the user
-     * @throws Exception if an error occurs
-     */
-    public void reservedCheckOut(Node node, String identity) throws Exception {
-
-        RCML rcml = node.getRcml();
-
-        RCMLEntry entry = rcml.getLatestEntry();
-        if (entry != null && entry.getType() == RCML.co) {
-            
-            // don't check out twice
-            if (entry.getIdentity().equals(identity)) {
-                return;
-            }
-            
-            // checked out by somebody else
-            else {
-                throw new FileReservedCheckOutException(node.getSourceURI(), rcml);
-            }
-        }
-
-        rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false);
-    }
-
-    /**
      * Checks if a source can be checked out.
      * @param node The node.
      * @param identity The identity who requests checking out.
@@ -111,118 +80,9 @@ public class RevisionController extends AbstractLogEnabled {
     }
 
     /**
-     * @param node A node.
-     * @return If the node is checked out.
-     * @throws Exception if an error occurs.
-     */
-    public boolean isCheckedOut(Node node) throws Exception {
-        RCML rcml = node.getRcml();
-        RCMLEntry entry = rcml.getLatestEntry();
-        return entry != null && entry.getType() == RCML.co;
-    }
-
-    /**
-     * Try to make a reserved check in of the file destination for a user with
-     * identity. A backup copy can be made.
-     * 
-     * @param node The node to control.
-     * @param identity The identity of the user
-     * @param backup if true, a backup will be created, else no backup will be
-     *        made.
-     * @param newVersion If true, a new version will be created.
-     * 
-     * @return long The time.
-     * 
-     * @exception FileReservedCheckInException if the document couldn't be
-     *            checked in (for instance because it is already checked out by
-     *            someone other ...)
-     * @exception Exception if other problems occur
-     */
-    public long reservedCheckIn(Node node, String identity, boolean backup, boolean newVersion)
-            throws FileReservedCheckInException, Exception {
-
-        RCML rcml;
-        long time = new Date().getTime();
-
-        rcml = node.getRcml();
-
-        CheckOutEntry coe = rcml.getLatestCheckOutEntry();
-        CheckInEntry cie = rcml.getLatestCheckInEntry();
-
-        // If there has never been a checkout for this object
-        // *or* if the user attempting the checkin right now
-        // is the system itself, we will skip any checks and proceed
-        // right away to the actual checkin.
-        // In all other cases we enforce the revision control
-        // rules inside this if clause:
-        //
-        if (!((coe == null) || identity.equals(RevisionController.systemUsername))) {
-            /*
-             * Possible cases and rules:
-             * 
-             * 1.) we were able to read the latest checkin and it is later than
-             * latest checkout (i.e. there is no open checkout to match this
-             * checkin, an unusual case) 1.1.) identity of latest checkin is
-             * equal to current user -> checkin allowed, same user may check in
-             * repeatedly 1.2.) identity of latest checkin is not equal to
-             * current user -> checkin rejected, may not overwrite the revision
-             * which another user checked in previously 2.) there was no checkin
-             * or the latest checkout is later than latest checkin (i.e. there
-             * is an open checkout) 2.1.) identity of latest checkout is equal
-             * to current user -> checkin allowed, user checked out and may
-             * check in again (the most common case) 2.2.) identity of latest
-             * checkout is not equal to current user -> checkin rejected, may
-             * not check in while another user is working on this document
-             * 
-             */
-            if ((cie != null) && (cie.getTime() > coe.getTime())) {
-                // We have case 1
-                if (!cie.getIdentity().equals(identity)) {
-                    // Case 1.2., abort...
-                    //
-                    throw new FileReservedCheckInException(node.getSourceURI(), rcml);
-                }
-            } else {
-                // Case 2
-                if (!coe.getIdentity().equals(identity)) {
-                    // Case 2.2., abort...
-                    //
-                    throw new FileReservedCheckInException(node.getSourceURI(), rcml);
-                }
-            }
-        }
-
-        if (backup) {
-            rcml.makeBackup(time);
-        }
-
-        if (newVersion) {
-            rcml.checkOutIn(RCML.ci, identity, time, backup);
-        } else {
-            rcml.deleteFirstCheckOut();
-        }
-        rcml.pruneEntries();
-        rcml.write();
-
-        return time;
-    }
-
-    /**
-     * Rolls back to the given point in time.
-     * @param node The node which will be rolled back
-     *        before the rollback
-     * @param time The time point of the desired version
-     * @exception Exception if a problem occurs
-     */
-    public void rollback(Node node, long time)
-            throws Exception {
-        node.getRcml().restoreBackup(time);
-    }
-
-    /**
      * delete the revisions
      * @param node of the document
-     * @throws RevisionControlException when somthing went wrong
+     * @throws RevisionControlException when something went wrong
      */
     public void deleteRevisions(Node node) throws RevisionControlException {
         node.getRcml().deleteRevisions();
@@ -252,7 +112,7 @@ public class RevisionController extends AbstractLogEnabled {
      * @throws RevisionControlException if an error occurs.
      */
     public void copyRCML(Node source, Node destination) throws RevisionControlException {
-        destination.getRcml().copyFrom(source.getRcml());
+        destination.getRcml().copyFrom(destination, source);
     }
 
 }

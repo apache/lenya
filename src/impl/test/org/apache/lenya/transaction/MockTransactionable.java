@@ -74,7 +74,7 @@ public class MockTransactionable implements Transactionable {
         return MockRevisionController.getHistory(this).isCheckedOut();
     }
 
-    public boolean isCheckedOutByUser() throws TransactionException {
+    public boolean isCheckedOutBySession() throws TransactionException {
         String user = MockRevisionController.getHistory(this).getCheckOutUser();
         return user != null && user.equals(getUserId());
     }

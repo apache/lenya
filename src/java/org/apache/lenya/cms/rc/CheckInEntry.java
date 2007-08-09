@@ -27,14 +27,17 @@ package org.apache.lenya.cms.rc;
 public class CheckInEntry extends RCMLEntry {
     /**
      * Creates a new CheckInEntry object.
+     * @param sessionId The session ID.
      * @param identity The identity to use
      * @param time The time
      * @param version The version number.
+     * @param backup If this entry has a backup.
      */
-    public CheckInEntry(String identity, long time, int version) {
-        super(identity, time);
+    public CheckInEntry(String sessionId, String identity, long time, int version, boolean backup) {
+        super(sessionId, identity, time);
         setType(RCML.ci);
         this.version = version;
+        this.backup = backup;
     }
     
     /**
@@ -45,5 +48,10 @@ public class CheckInEntry extends RCMLEntry {
     }
 
     private int version = 0;
+    private boolean backup;
+    
+    public boolean hasBackup() {
+        return this.backup;
+    }
     
 }

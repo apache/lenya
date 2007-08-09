@@ -1,7 +1,7 @@
 <jmeterTestPlan version="1.2" properties="1.8">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="CMS" enabled="true">
-      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="Benutzer definierte Variablen" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="server" elementType="Argument">
             <stringProp name="Argument.metadata">=</stringProp>
@@ -25,10 +25,10 @@
         <longProp name="ThreadGroup.start_time">1178792744000</longProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.num_threads">2</stringProp>
+        <stringProp name="ThreadGroup.num_threads">5</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador Loop" enabled="true">
-          <stringProp name="LoopController.loops">25</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
         <longProp name="ThreadGroup.end_time">1178792744000</longProp>
@@ -46,18 +46,28 @@
           <stringProp name="HTTPSampler.path"></stringProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.protocol">HTTP</stringProp>
+          <stringProp name="HTTPSampler.port">8888</stringProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.port">8888</stringProp>
         </ConfigTestElement>
         <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="password" elementType="Argument">
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.value">foo123</stringProp>
+              <stringProp name="Argument.name">password</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
         <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="Random Timer" enabled="true">
-          <stringProp name="RandomTimer.range">500</stringProp>
           <stringProp name="ConstantTimer.delay">1500</stringProp>
+          <stringProp name="RandomTimer.range">500</stringProp>
         </GaussianRandomTimer>
         <hashTree/>
-        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Only once" enabled="true"/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Login &quot;lenya&quot;" enabled="true"/>
         <hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
             <stringProp name="HTTPSampler.path">/default/authoring/index.html</stringProp>
@@ -81,8 +91,8 @@
               <stringProp name="RegexExtractor.default">error</stringProp>
               <stringProp name="RegexExtractor.regex">lenya.continuation=(.*?)&amp;amp;lenya.usecase=ac.login&quot;&gt;</stringProp>
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
               <stringProp name="RegexExtractor.match_number">0</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
               <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
             </RegexExtractor>
             <hashTree/>
@@ -98,7 +108,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <stringProp name="Argument.metadata">=</stringProp>
-                  <stringProp name="Argument.value">admin${__counter(FALSE,numAdmin)}</stringProp>
+                  <stringProp name="Argument.value">lenya</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">username</stringProp>
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -138,9 +148,268 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <InterleaveControl guiclass="InterleaveControlGui" testclass="InterleaveControl" testname="Interleave" enabled="true">
-          <intProp name="InterleaveControl.style">1</intProp>
-        </InterleaveControl>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Add admin user" enabled="true"/>
+        <hashTree>
+          <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Add user" enabled="true">
+            <stringProp name="HTTPSampler.path">/default/authoring/index.html?lenya.usecase=admin.addUser</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.mimetype"></stringProp>
+            <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
+            <stringProp name="HTTPSampler.monitor">false</stringProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          </HTTPSampler>
+          <hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+              <stringProp name="RegexExtractor.default">error</stringProp>
+              <stringProp name="RegexExtractor.regex">name=\&quot;lenya.continuation\&quot;[\s]value=\&quot;(.*)\&quot;</stringProp>
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Add user" enabled="true">
+            <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=admin.addUser&amp;lenya.continuation=${lenya.continuation}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">admin${__threadNum}</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">userId</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">${password}</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">newPassword</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">Submit</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">submit</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">${password}</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">confirmPassword</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">foo@bar.com</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">email</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">org.apache.lenya.ac.file.FileUser</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">className</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.mimetype"></stringProp>
+            <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
+            <stringProp name="HTTPSampler.monitor">false</stringProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          </HTTPSampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Logout" enabled="true"/>
+        <hashTree>
+          <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Logout page" enabled="true">
+            <stringProp name="HTTPSampler.path">/default/authoring/index.html</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">ac.logout</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">lenya.usecase</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.mimetype"></stringProp>
+            <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
+            <stringProp name="HTTPSampler.monitor">false</stringProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          </HTTPSampler>
+          <hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+              <stringProp name="RegexExtractor.default">error</stringProp>
+              <stringProp name="RegexExtractor.regex">name=\&quot;lenya.continuation\&quot;[\s]value=\&quot;(.*)\&quot;</stringProp>
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Logout page" enabled="true">
+            <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=ac.logout&amp;lenya.continuation=${lenya.continuation}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">Login</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">submit</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.mimetype"></stringProp>
+            <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
+            <stringProp name="HTTPSampler.monitor">false</stringProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          </HTTPSampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Login admin user" enabled="true"/>
+        <hashTree>
+          <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
+            <stringProp name="HTTPSampler.path">/default/authoring/index.html</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.mimetype"></stringProp>
+            <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
+            <stringProp name="HTTPSampler.monitor">false</stringProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          </HTTPSampler>
+          <hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+              <stringProp name="RegexExtractor.default">error</stringProp>
+              <stringProp name="RegexExtractor.regex">lenya.continuation=(.*?)&amp;amp;lenya.usecase=ac.login&quot;&gt;</stringProp>
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
+            <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=ac.login&amp;lenya.continuation=${lenya.continuation}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">lenya</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">username</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">levi</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">password</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+                <elementProp name="" elementType="HTTPArgument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">Login</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">submit</stringProp>
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.mimetype"></stringProp>
+            <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
+            <stringProp name="HTTPSampler.monitor">false</stringProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          </HTTPSampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop" enabled="true">
+          <stringProp name="LoopController.loops">20</stringProp>
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+        </LoopController>
         <hashTree>
           <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="News" enabled="true"/>
           <hashTree>
@@ -166,135 +435,153 @@
                 <stringProp name="RegexExtractor.default">error</stringProp>
                 <stringProp name="RegexExtractor.regex">name=&quot;lenya.continuation&quot; value=&quot;(.*?)&quot;</stringProp>
                 <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-                <stringProp name="RegexExtractor.template">$1$</stringProp>
                 <stringProp name="RegexExtractor.match_number">0</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
                 <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
               </RegexExtractor>
               <hashTree/>
             </hashTree>
-            <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Validation" enabled="true">
-              <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html</stringProp>
-              <stringProp name="HTTPSampler.method">GET</stringProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">${lenya.continuation}</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">lenya.continuation</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">sitemanagement.create</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">lenya.usecase</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">Noticia${contador_noticia}</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">nodeName</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">Noticia+${contador_noticia}</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">dublincore.title</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">true</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">visibleInNav</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">child</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">relation</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">en</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">language</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">lenya</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">dublincore.creator</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value"></stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">dublincore.subject</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value"></stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">dublincore.publisher</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value"></stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">dublincore.rights</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">Default+Sample</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">sample</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.metadata">=</stringProp>
-                    <stringProp name="Argument.value">Create</stringProp>
-                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                    <stringProp name="Argument.name">submit</stringProp>
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.mimetype"></stringProp>
-              <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
-              <stringProp name="HTTPSampler.monitor">false</stringProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            </HTTPSampler>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
+              <stringProp name="IfController.condition">&quot;${lenya.continuation}&quot; != &quot;&quot;</stringProp>
+            </IfController>
             <hashTree>
-              <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="counter" enabled="true">
-                <stringProp name="CounterConfig.start">1</stringProp>
-                <stringProp name="CounterConfig.incr">1</stringProp>
-                <stringProp name="CounterConfig.name">contador_noticia</stringProp>
-                <stringProp name="CounterConfig.format"></stringProp>
-                <boolProp name="CounterConfig.per_user">false</boolProp>
-                <stringProp name="CounterConfig.end">10000</stringProp>
-              </CounterConfig>
-              <hashTree/>
+              <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Validation" enabled="true">
+                <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">${lenya.continuation}</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">lenya.continuation</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">sitemanagement.create</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">lenya.usecase</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">Noticia${__Random(1,10000,DOCUMENT)}</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">nodeName</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">Noticia+${__Random(1,10000,DOCUMENT)}</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">dublincore.title</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">true</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">visibleInNav</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">child</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">relation</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">en</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">language</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">lenya</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">dublincore.creator</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value"></stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">dublincore.subject</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value"></stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">dublincore.publisher</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value"></stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">dublincore.rights</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">Default+Sample</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">sample</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                    <elementProp name="" elementType="HTTPArgument">
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <stringProp name="Argument.value">Create</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      <stringProp name="Argument.name">submit</stringProp>
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.mimetype"></stringProp>
+                <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
+                <stringProp name="HTTPSampler.monitor">false</stringProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              </HTTPSampler>
+              <hashTree>
+                <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="counter" enabled="true">
+                  <stringProp name="CounterConfig.start">1</stringProp>
+                  <stringProp name="CounterConfig.incr">1</stringProp>
+                  <stringProp name="CounterConfig.name">contador_noticia</stringProp>
+                  <stringProp name="CounterConfig.format"></stringProp>
+                  <boolProp name="CounterConfig.per_user">false</boolProp>
+                  <stringProp name="CounterConfig.end">10000</stringProp>
+                </CounterConfig>
+                <hashTree/>
+              </hashTree>
             </hashTree>
+            <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="DOCUMENT" elementType="Argument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value">${__Random(0,10000,FOO)}</stringProp>
+                  <stringProp name="Argument.name">DOCUMENT</stringProp>
+                </elementProp>
+                <elementProp name="lenya.continuation" elementType="Argument">
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <stringProp name="Argument.value"></stringProp>
+                  <stringProp name="Argument.name">lenya.continuation</stringProp>
+                </elementProp>
+              </collectionProp>
+            </Arguments>
+            <hashTree/>
           </hashTree>
-          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Files" enabled="true"/>
-          <hashTree/>
         </hashTree>
         <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Report" enabled="true">
           <objProp>
@@ -384,10 +671,10 @@
           <stringProp name="HTTPSampler.path"></stringProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.protocol">HTTP</stringProp>
+          <stringProp name="HTTPSampler.port">8888</stringProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.port">8888</stringProp>
         </ConfigTestElement>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set" enabled="true">
@@ -398,8 +685,8 @@
         </CSVDataSet>
         <hashTree/>
         <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="Random timer" enabled="true">
-          <stringProp name="RandomTimer.range">500</stringProp>
           <stringProp name="ConstantTimer.delay">1500</stringProp>
+          <stringProp name="RandomTimer.range">500</stringProp>
         </GaussianRandomTimer>
         <hashTree/>
         <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
@@ -424,21 +711,12 @@
             <stringProp name="RegexExtractor.default">error</stringProp>
             <stringProp name="RegexExtractor.regex">lenya.continuation=(.*?)&amp;amp;lenya.usecase=ac.login&quot;&gt;</stringProp>
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
             <stringProp name="RegexExtractor.match_number">0</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
             <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
           </RegexExtractor>
           <hashTree/>
         </hashTree>
-        <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="regex" enabled="true">
-          <stringProp name="RegexExtractor.default">error</stringProp>
-          <stringProp name="RegexExtractor.regex">lenya.continuation=(.*?)&amp;amp;lenya.usecase=ac.login&quot;&gt;</stringProp>
-          <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-          <stringProp name="RegexExtractor.template">$1$</stringProp>
-          <stringProp name="RegexExtractor.match_number">0</stringProp>
-          <stringProp name="RegexExtractor.refname">lenya.continuation</stringProp>
-        </RegexExtractor>
-        <hashTree/>
         <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
           <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=ac.login&amp;lenya.continuation=${lenya.continuation}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -489,15 +767,6 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP header" enabled="true">
-          <collectionProp name="HeaderManager.headers">
-            <elementProp name="" elementType="Header">
-              <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
-              <stringProp name="Header.name">Content-Type</stringProp>
-            </elementProp>
-          </collectionProp>
-        </HeaderManager>
-        <hashTree/>
         <InterleaveControl guiclass="InterleaveControlGui" testclass="InterleaveControl" testname="Interleave" enabled="true">
           <intProp name="InterleaveControl.style">1</intProp>
         </InterleaveControl>

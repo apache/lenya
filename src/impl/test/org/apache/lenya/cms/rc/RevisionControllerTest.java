@@ -26,6 +26,7 @@ import java.io.IOException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * Revision Controller test
@@ -33,29 +34,31 @@ import org.apache.lenya.cms.publication.DocumentManager;
 public class RevisionControllerTest extends AbstractAccessControlTest {
 
     /**
-     * @see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug 41005</a>
+     * @see <a
+     *      href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug
+     *      41005</a>
      * @throws Exception
      */
     public void testCheckIn() throws Exception {
         login("lenya");
-        
+
         DocumentManager docMgr = null;
         try {
             docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-            Document source = getPublication("test").getArea("authoring").getSite().getNode("/links").getLink("en").getDocument();
+            Document source = getPublication("test").getArea("authoring").getSite().getNode(
+                    "/links").getLink("en").getDocument();
             Document target = docMgr.addVersion(source, "authoring", "es");
             target.delete();
-        }
-        finally {
+        } finally {
             if (docMgr != null) {
                 getManager().release(docMgr);
             }
         }
-        
+
         getFactory().getSession().commit();
     }
 
-    public void testRevisionController() {
+    public void testRevisionController() throws RepositoryException, RevisionControlException {
 
         String[] args = { "", "", "", "" };
 
@@ -78,35 +81,8 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         String identityD = args[2];
         String destination = args[3];
         RevisionController rc = new RevisionController(getLogger());
-        try {
-            rc.reservedCheckOut(doc1.getRepositoryNode(), identityS);
-        } catch (FileNotFoundException e) // No such source file
-        {
-            System.out.println(e.toString());
-        } catch (FileReservedCheckOutException e) // Source has been checked
-                                                    // out already
-        {
-            System.out.println(e.toString());
-            // System.out.println(error(e.source + "is already check out by " +
-            // e.checkOutUsername + " since " + e.checkOutDate));
-            return;
-
-        } catch (IOException e) { // Cannot create rcml file
-            System.out.println(e.toString());
-            return;
-
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return;
-        }
-
-        try {
-            rc.reservedCheckIn(doc2.getRepositoryNode(), identityD, true, true);
-        } catch (FileReservedCheckInException e) {
-            System.out.println(e.toString());
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        doc1.getRepositoryNode().checkout();
+        doc2.getRepositoryNode().getRcml().checkIn(doc2.getRepositoryNode(), true, true);
     }
 
 }

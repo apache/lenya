@@ -108,5 +108,9 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
     public synchronized void clear() {
         this.map = null;
     }
+
+    public String getId() {
+        return getClass().getName();
+    }
     
 }

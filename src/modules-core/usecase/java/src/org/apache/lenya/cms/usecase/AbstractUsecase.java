@@ -306,7 +306,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 }
             } catch (ConcurrentModificationException e) {
                 getLogger().error(
-                        "Could not commit/rollback usecase [" + getName() + "]: " + e.getMessage());
+                        "Could not commit usecase [" + getName() + "]: " + e.getMessage());
                 addErrorMessage(e.getMessage());
             } catch (Exception e1) {
                 getLogger().error("Could not commit/rollback usecase [" + getName() + "]: ", e1);
@@ -761,7 +761,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                                 "AbstractUsecase::lockInvolvedObjects() locking " + objects[i]);
                     objects[i].lock();
                 }
-                if (!isOptimistic() && !objects[i].isCheckedOutByUser()) {
+                if (!isOptimistic() && !objects[i].isCheckedOutBySession()) {
                     objects[i].checkout();
                 }
             }
@@ -774,7 +774,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         boolean canExecute = true;
 
         for (int i = 0; i < objects.length; i++) {
-            if (objects[i].isCheckedOut() && !objects[i].isCheckedOutByUser()) {
+            if (objects[i].isCheckedOut() && !objects[i].isCheckedOutBySession()) {
                 if (getLogger().isDebugEnabled())
                     getLogger().debug(
                             "AbstractUsecase::lockInvolvedObjects() can not execute, object ["

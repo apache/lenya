@@ -29,10 +29,8 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -170,15 +168,9 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      */
     public void reservedCheckIn(FOM_Cocoon cocoon, boolean backup)
             throws FileReservedCheckInException, Exception {
-        final Identity identity = (Identity) ObjectModelHelper.getRequest(cocoon.getObjectModel())
-                .getSession()
-                .getAttribute(Identity.class.getName());
         final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
         Node node = pageEnvelope.getDocument().getRepositoryNode();
-        getRevisionController(cocoon).reservedCheckIn(node,
-                identity.getUser().getId(),
-                backup,
-                true);
+        node.getRcml().checkIn(node, backup, true);
     }
 
     private ServiceManager manager;

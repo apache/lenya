@@ -26,8 +26,9 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.rc.FileReservedCheckOutException;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.util.Assert;
 
 /**
  * Action doing reserved checkout
@@ -49,31 +50,13 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             Node node = getNode();
             String username = getUsername();
             
-            getLogger().debug(".act(): Node: " + node.getSourceURI());
-            getLogger().debug(".act(): Username: " + username);
+            Assert.notNull("node", node);
+            Assert.notNull("username", username);
 
-            if (getNode() == null) {
-                throw new Exception("Filename is null");
+            if (!node.isCheckedOutBySession()) {
+                node.checkout();
             }
-
-            if (getUsername() == null) {
-                throw new Exception("Username is null");
-            }
-            
-            if (!node.isCheckedOutByUser()) {
-                getRc().reservedCheckOut(node, username);
-            }
-        } catch (FileReservedCheckOutException e) {
-            actionMap.put("exception", "fileReservedCheckOutException");
-            actionMap.put("filename", getNode().getSourceURI());
-            actionMap.put("user", e.getCheckOutUsername());
-            actionMap.put("date", e.getCheckOutDate());
-            getLogger().warn(
-                    "Node " + getNode().getSourceURI() + " already checked-out by "
-                            + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
-
-            return actionMap;
-        } catch (Exception e) {
+        } catch (RepositoryException e) {
             actionMap.put("exception", "genericException");
             actionMap.put("filename", getNode().getSourceURI());
             actionMap.put("message", "" + e.getMessage());

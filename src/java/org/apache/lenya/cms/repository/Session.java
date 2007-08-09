@@ -84,4 +84,8 @@ public interface Session extends UnitOfWork {
      */
     boolean isModifiable();
 
+    /**
+     * @return The ID of this session.
+     */
+    String getId();
 }
