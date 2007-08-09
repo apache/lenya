@@ -25,7 +25,9 @@
     </map:actions>
 
     <map:transformers default="xslt">
-      <map:transformer name="index2" logger="sitemap.transformer.luceneindextransformer2" src="org.apache.cocoon.transformation.LuceneIndexTransformer2"/>
+      <map:transformer name="index2" logger="sitemap.transformer.luceneindextransformer2" src="org.apache.cocoon.transformation.LuceneIndexTransformer2">
+        <notify user="lenya"/>
+      </map:transformer>
       <map:transformer name="cinclude" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
       <map:transformer name="uuid2url" src="org.apache.cocoon.transformation.UuidToUrlTransformer"/>
     </map:transformers>
@@ -124,7 +126,12 @@
           <map:parameter name="index" value="{1}-{2}"/>
           <map:parameter name="id" value="{3}:{4}"/>
         </map:transform>
-        <map:transform type="index2"/>
+        <map:transform type="index2">
+          <map:parameter name="publicationId" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="uuid" value="{3}"/>
+          <map:parameter name="language" value="{4}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       
@@ -136,7 +143,12 @@
           <map:parameter name="id" value="{3}:{4}"/>
         </map:transform>
 
-        <map:transform type="index2"/>
+        <map:transform type="index2">
+          <map:parameter name="publicationId" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="uuid" value="{3}"/>
+          <map:parameter name="language" value="{4}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 

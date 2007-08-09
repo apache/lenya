@@ -20,7 +20,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.excalibur.pool.Recyclable;
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -31,7 +34,17 @@ import org.apache.cocoon.components.search.IndexException;
 import org.apache.cocoon.components.search.components.AnalyzerManager;
 import org.apache.cocoon.components.search.components.IndexManager;
 import org.apache.cocoon.components.search.components.Indexer;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.Identifiable;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.notification.Message;
+import org.apache.lenya.notification.NotificationUtil;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -115,8 +128,8 @@ import org.xml.sax.helpers.AttributesImpl;
  * @author Nicolas Maisonneuve
  */
 
-public class LuceneIndexTransformer2 extends AbstractTransformer implements
-        Recyclable, Serviceable {
+public class LuceneIndexTransformer2 extends AbstractTransformer implements Recyclable,
+        Serviceable, Configurable {
 
     public static final String DIRECTORY_DEFAULT = "index";
 
@@ -217,15 +230,32 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
 
     private StringBuffer fieldvalue;
 
+    private Request request;
+
+    private String pubId;
+    private String area;
+    private String uuid;
+    private String language;
+
     /**
      * Setup the transformer.
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src,
-            Parameters parameters) throws ProcessingException, SAXException,
-            IOException {
+    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
+            throws ProcessingException, SAXException, IOException {
+        this.request = ObjectModelHelper.getRequest(objectModel);
+        try {
+            this.pubId = parameters.getParameter("publicationId");
+            this.area = parameters.getParameter("area");
+            this.uuid = parameters.getParameter("uuid");
+            this.language = parameters.getParameter("language");
+        } catch (ParameterException e) {
+            throw new ProcessingException(e);
+        }
     }
 
     public void recycle() {
+        this.index = null;
+        this.indexer = null;
         this.processing = NO_PROCESSING;
     }
 
@@ -244,13 +274,10 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
     /**
      * Begin the scope of a prefix-URI Namespace mapping.
      * 
-     * @param prefix
-     *            The Namespace prefix being declared.
-     * @param uri
-     *            The Namespace URI the prefix is mapped to.
+     * @param prefix The Namespace prefix being declared.
+     * @param uri The Namespace URI the prefix is mapped to.
      */
-    public void startPrefixMapping(String prefix, String uri)
-            throws SAXException {
+    public void startPrefixMapping(String prefix, String uri) throws SAXException {
         if (processing == NO_PROCESSING) {
             super.startPrefixMapping(prefix, uri);
         }
@@ -259,8 +286,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
     /**
      * End the scope of a prefix-URI mapping.
      * 
-     * @param prefix
-     *            The prefix that was being mapping.
+     * @param prefix The prefix that was being mapping.
      */
     public void endPrefixMapping(String prefix) throws SAXException {
         if (processing == NO_PROCESSING) {
@@ -268,8 +294,8 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
         }
     }
 
-    public void startElement(String namespaceURI, String localName,
-            String qName, Attributes atts) throws SAXException {
+    public void startElement(String namespaceURI, String localName, String qName, Attributes atts)
+            throws SAXException {
 
         // getLogger().debug("START processing: "+processing+" "+localName);
 
@@ -282,7 +308,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
                 if (LUCENE_INDEXING_ELEMENT.equals(localName)) {
                     this.initIndexer(atts);
                     processing = INDEX_PROCESS;
-                    
+
                     super.startElement(namespaceURI, localName, qName, attrs);
                 }
                 // delete action
@@ -302,17 +328,15 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
 
                     uid = atts.getValue(LUCENE_DOCUMENT_UID_ATTRIBUTE);
                     if (uid == null) {
-                        handleError("<" + LUCENE_PREXIF + ":"
-                                + LUCENE_DOCUMENT_ELEMENT
-                                + "> element must contain "
-                                + LUCENE_DOCUMENT_UID_ATTRIBUTE + " attribute");
+                        handleError("<" + LUCENE_PREXIF + ":" + LUCENE_DOCUMENT_ELEMENT
+                                + "> element must contain " + LUCENE_DOCUMENT_UID_ATTRIBUTE
+                                + " attribute");
                     }
                     bodyDocument = index.createDocument(uid);
                     processing = IN_DOCUMENT_PROCESS;
                 } else {
-                    handleError("element " + localName
-                            + " is not allowed in  <" + LUCENE_PREXIF + ":"
-                            + LUCENE_DOCUMENT_ELEMENT + "> element ");
+                    handleError("element " + localName + " is not allowed in  <" + LUCENE_PREXIF
+                            + ":" + LUCENE_DOCUMENT_ELEMENT + "> element ");
                 }
                 break;
 
@@ -321,15 +345,13 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
                 if (LUCENE_DOCUMENT_ELEMENT.equals(localName)) {
                     uid = atts.getValue(LUCENE_DOCUMENT_UID_ATTRIBUTE);
                     if (uid == null) {
-                        handleError("<" + LUCENE_PREXIF + ":"
-                                + LUCENE_DOCUMENT_ELEMENT
-                                + "> element must contain "
-                                + LUCENE_DOCUMENT_UID_ATTRIBUTE + " attribute");
+                        handleError("<" + LUCENE_PREXIF + ":" + LUCENE_DOCUMENT_ELEMENT
+                                + "> element must contain " + LUCENE_DOCUMENT_UID_ATTRIBUTE
+                                + " attribute");
                     }
                     processing = DELETING_PROCESS;
                 } else {
-                    handleError("element " + localName
-                            + " is not a <lucene:document> element ");
+                    handleError("element " + localName + " is not a <lucene:document> element ");
                 }
                 break;
 
@@ -346,8 +368,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
                     this.fieldvalue = new StringBuffer();
 
                     // set boost value
-                    String fieldboostS = atts
-                            .getValue(LUCENE_FIELD_BOOST_ATTRIBUTE);
+                    String fieldboostS = atts.getValue(LUCENE_FIELD_BOOST_ATTRIBUTE);
                     if (fieldboostS == null) {
                         fieldboost = 1.0f;
                     } else {
@@ -355,8 +376,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
                     }
                     processing = IN_FIELD_PROCESS;
                 } else {
-                    handleError("<" + LUCENE_PREXIF + ":"
-                            + LUCENE_FIELD_ELEMENT + " was expected!");
+                    handleError("<" + LUCENE_PREXIF + ":" + LUCENE_FIELD_ELEMENT + " was expected!");
                 }
                 break;
             }
@@ -366,8 +386,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
         }
     }
 
-    public void endElement(String namespaceURI, String localName, String qName)
-            throws SAXException {
+    public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
 
         // getLogger().debug("END processing: "+processing+" "+localName);
 
@@ -381,8 +400,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
                     this.processing = NO_PROCESSING;
                     super.endElement(namespaceURI, localName, qName);
                 } else {
-                    handleError("</lucene:" + LUCENE_DELETING_ELEMENT
-                            + " was expected!");
+                    handleError("</lucene:" + LUCENE_DELETING_ELEMENT + " was expected!");
                 }
                 break;
 
@@ -393,55 +411,51 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
                     this.processing = NO_PROCESSING;
                     super.endElement(namespaceURI, localName, qName);
                 } else {
-                    handleError("</lucene:" + LUCENE_DELETING_ELEMENT
-                            + " was expected!");
+                    handleError("</lucene:" + LUCENE_DELETING_ELEMENT + " was expected!");
                 }
                 break;
 
             case IN_DOCUMENT_PROCESS:
                 if (LUCENE_DOCUMENT_ELEMENT.equals(localName)) {
-                    // index the document
-                    try {
-                        this.indexer.index(bodyDocument);
-                    } catch (IndexException ex1) {
-                        handleError(ex1);
+                    if (canIndex()) {
+                        // index the document
+                        try {
+                            this.indexer.index(bodyDocument);
+                        } catch (IndexException ex1) {
+                            handleError(ex1);
+                        }
                     }
                     if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger().debug(
-                                " lucene document: " + this.bodyDocument);
+                        this.getLogger().debug(" lucene document: " + this.bodyDocument);
                     }
                     bodyDocument = null;
                     attrs.clear();
-                    attrs
-                            .addAttribute(namespaceURI, "uid", "uid", "CDATA",
-                                    uid);
+                    attrs.addAttribute(namespaceURI, "uid", "uid", "CDATA", uid);
                     super.startElement(namespaceURI, localName, qName, attrs);
                     super.endElement(namespaceURI, localName, qName);
                     this.processing = INDEX_PROCESS;
                 } else {
-                    handleError("</lucene:" + LUCENE_DOCUMENT_ELEMENT
-                            + " was expected!");
+                    handleError("</lucene:" + LUCENE_DOCUMENT_ELEMENT + " was expected!");
                 }
                 break;
 
             case DELETING_PROCESS:
                 if (LUCENE_DOCUMENT_ELEMENT.equals(localName)) {
                     // delete a document
-                    try {
-                        indexer.del(uid);
-                    } catch (IndexException ex2) {
-                        handleError(ex2);
+                    if (canIndex()) {
+                        try {
+                            indexer.del(uid);
+                        } catch (IndexException ex2) {
+                            handleError(ex2);
+                        }
                     }
                     attrs.clear();
-                    attrs
-                            .addAttribute(namespaceURI, "uid", "uid", "CDATA",
-                                    uid);
+                    attrs.addAttribute(namespaceURI, "uid", "uid", "CDATA", uid);
                     super.startElement(namespaceURI, localName, qName, attrs);
                     super.endElement(namespaceURI, localName, qName);
                     this.processing = DELETE_PROCESS;
                 } else {
-                    handleError("</lucene:" + LUCENE_DOCUMENT_ELEMENT
-                            + " was expected!");
+                    handleError("</lucene:" + LUCENE_DOCUMENT_ELEMENT + " was expected!");
                 }
                 break;
 
@@ -461,8 +475,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
                     bodyDocument.add(f);
                     processing = IN_DOCUMENT_PROCESS;
                 } else {
-                    handleError("</lucene:" + LUCENE_FIELD_ELEMENT
-                            + " was expected!");
+                    handleError("</lucene:" + LUCENE_FIELD_ELEMENT + " was expected!");
                 }
                 break;
 
@@ -474,8 +487,11 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
         }
     }
 
-    public void characters(char[] ch, int start, int length)
-            throws SAXException {
+    protected boolean canIndex() {
+        return this.indexer != null;
+    }
+
+    public void characters(char[] ch, int start, int length) throws SAXException {
         if (processing == IN_FIELD_PROCESS) {
             this.fieldvalue.append(ch, start, length);
         } else {
@@ -487,8 +503,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
     /**
      * Configure the Indexer
      * 
-     * @param id
-     *            the indexid
+     * @param id the indexid
      * @param analyzerid
      * @param mergeF
      * @param clear
@@ -497,28 +512,23 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
     private void initIndexer(Attributes atts) throws SAXException {
 
         String id = atts.getValue(LUCENE_INDEXING_INDEXID_ATTRIBUTE);
-        String analyzerid = atts.getValue(LUCENE_URI,
-                LUCENE_INDEXING_ANALYZER_ATTRIBUTE);
-        String mergeF = atts.getValue(LUCENE_URI,
-                LUCENE_INDEXING_MERGE_FACTOR_ATTRIBUTE);
-        String clear = atts.getValue(LUCENE_URI,
-                LUCENE_INDEXING_CREATE_ATTRIBUTE);
+        String analyzerid = atts.getValue(LUCENE_URI, LUCENE_INDEXING_ANALYZER_ATTRIBUTE);
+        String mergeF = atts.getValue(LUCENE_URI, LUCENE_INDEXING_MERGE_FACTOR_ATTRIBUTE);
+        String clear = atts.getValue(LUCENE_URI, LUCENE_INDEXING_CREATE_ATTRIBUTE);
         attrs = new AttributesImpl(atts);
-        
+
         // set the indexer
         try {
-            IndexManager indexM = (IndexManager) manager
-                    .lookup(IndexManager.ROLE);
+            IndexManager indexM = (IndexManager) manager.lookup(IndexManager.ROLE);
             index = indexM.getIndex(id);
             if (index == null) {
-                handleError("index id: " + id
-                        + " no found in the index definition");
+                handleError("index id: " + id + " no found in the index definition");
             }
             indexer = index.getIndexer();
             manager.release(indexM);
         } catch (ServiceException ex1) {
             handleError("service Exception", ex1);
-        
+
         } catch (IndexException ex3) {
             handleError(" get Indexer error for index " + id, ex3);
         }
@@ -527,8 +537,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
         if (analyzerid != null) {
             Analyzer analyzer = null;
             try {
-                AnalyzerManager analyzerM = (AnalyzerManager) manager
-                        .lookup(IndexManager.ROLE);
+                AnalyzerManager analyzerM = (AnalyzerManager) manager.lookup(IndexManager.ROLE);
                 analyzer = analyzerM.getAnalyzer(analyzerid);
                 indexer.setAnalyzer(analyzer);
                 manager.release(analyzerM);
@@ -537,34 +546,35 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
             } catch (ConfigurationException ex2) {
                 this.handleError("set analyzer error for index" + id, ex2);
             }
-        }else {
-        
-            attrs.addAttribute(LUCENE_URI, LUCENE_INDEXING_ANALYZER_ATTRIBUTE,LUCENE_INDEXING_ANALYZER_ATTRIBUTE, "CDATA",
-                    index.getDefaultAnalyzerID());    
+        } else {
+
+            attrs.addAttribute(LUCENE_URI, LUCENE_INDEXING_ANALYZER_ATTRIBUTE,
+                    LUCENE_INDEXING_ANALYZER_ATTRIBUTE, "CDATA", index.getDefaultAnalyzerID());
         }
 
-        // set clear mode
-        boolean new_index = (clear != null && clear.toLowerCase()
-                .equals("true")) ? true : false;
-        if (new_index) {
-            try {
-                indexer.clearIndex();
-            } catch (IndexException ex3) {
-                handleError(" clear index error ", ex3);
+        if (canIndex()) {
+            // set clear mode
+            boolean new_index = (clear != null && clear.toLowerCase().equals("true")) ? true
+                    : false;
+            if (new_index) {
+                try {
+                    indexer.clearIndex();
+                } catch (IndexException ex3) {
+                    handleError(" clear index error ", ex3);
+                }
             }
-        }
 
-        // set the mergeFactor
-        if (mergeF != null) {
-            int mergeFactor = Integer.parseInt(mergeF);
-            indexer.setMergeFactor(mergeFactor);
-        }
-        
-        
-        if (this.getLogger().isDebugEnabled()) {
-            this.getLogger().debug(
-                    "index " + id + " clear: " + new_index + " analyzerid: "
-                            + analyzerid + "mergefactor: " + mergeF);
+            // set the mergeFactor
+            if (mergeF != null) {
+                int mergeFactor = Integer.parseInt(mergeF);
+                indexer.setMergeFactor(mergeFactor);
+            }
+
+            if (this.getLogger().isDebugEnabled()) {
+                this.getLogger().debug(
+                        "index " + id + " clear: " + new_index + " analyzerid: " + analyzerid
+                                + "mergefactor: " + mergeF);
+            }
         }
     }
 
@@ -585,13 +595,32 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
      */
     void handleError(String msg, Exception ex) throws SAXException {
         closeIndexer();
-        if (ex == null) {
-            // this.getLogger().error(msg);
-            throw new SAXException(msg);
-        } else {
-            // this.getLogger().error(msg, ex);
-            throw new SAXException(msg, ex);
+
+        try {
+            Session session = RepositoryUtil.getSession(this.manager, this.request);
+            User sender = session.getIdentity().getUser();
+            UserManager userManager = (UserManager) sender.getItemManager();
+            User recipient = userManager.getUser(this.notificationRecipient);
+            Identifiable[] recipients = { recipient };
+
+            String subject = "indexing-failed-subject";
+            String[] subjectParams = new String[0];
+            String body = "indexing-failed-body";
+            String[] bodyParams = { this.pubId, this.area, this.uuid, this.language,
+                    ex.getMessage() };
+
+            Message message = new Message(subject, subjectParams, body, bodyParams, sender,
+                    recipients);
+            NotificationUtil.notify(this.manager, message);
+        } catch (Exception e) {
+            throw new SAXException(e);
         }
+
+        /*
+         * if (ex == null) { // this.getLogger().error(msg); throw new
+         * SAXException(msg); } else { // this.getLogger().error(msg, ex); throw
+         * new SAXException(msg, ex); }
+         */
     }
 
     /**
@@ -603,6 +632,12 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
         if (index != null) {
             index.releaseIndexer(indexer);
         }
+    }
+
+    private String notificationRecipient = null;
+
+    public void configure(Configuration config) throws ConfigurationException {
+        this.notificationRecipient = config.getChild("notify").getAttribute("user");
     }
 
 }

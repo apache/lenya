@@ -26,4 +26,7 @@
   <message key="No Title">(no title)</message>
   <message key="hits">{0} hits</message>
   
+  <message key="indexing-failed-subject">Indexing failed</message>
+  <message key="indexing-failed-body">The document [{0}:{1}:{2}:{3}] could not be indexed: {4}</message>
+  
 </catalogue>
