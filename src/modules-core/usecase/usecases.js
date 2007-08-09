@@ -176,17 +176,16 @@ function log(level, message, usecaseName) {
  * @param view, a org.apache.lenya.cms.usecase.UsecaseView object
  * @param proxy, a org.apache.lenya.cms.usecase.UsecaseProxy object
  * @param generic, a generic Javascript object for custom flow code to preserve state information (currently not used by the default code)
- * @param preconditionsOK, if the preconditions were complied, which means we create a continuation
  *
  * This function invokes customLoopFlow if it exists.
  * Otherwise it falls back to defaultLoopFlow.
  */
-function loopFlow(view, proxy, generic, preconditionsOK) {
+function loopFlow(view, proxy, generic) {
     if (customLoopFlow != undefined) {
         log("info", "Using customLoopFlow function", proxy.getName());
-        return customLoopFlow(view, proxy, generic, preconditionsOK);
+        return customLoopFlow(view, proxy, generic);
     } else{
-        return defaultLoopFlow(view, proxy, preconditionsOK);
+        return defaultLoopFlow(view, proxy);
     }
 }
 
@@ -215,7 +214,7 @@ function submitFlow(usecase, generic) {
 /**
  * @see loopFlow.
  */
-function defaultLoopFlow(view, proxy, preconditionsOK) {
+function defaultLoopFlow(view, proxy) {
     var viewUri = view.getViewURI();
     // we used to allow a cocoon:/ prefix (which sendPageXXX does not handle),
     // but it is now deprecated!
@@ -230,7 +229,7 @@ function defaultLoopFlow(view, proxy, preconditionsOK) {
             + (view.showMenu() ? "menu" : "nomenu")
             + "/" + viewUri;
     }
-    if (view.createContinuation() && preconditionsOK) {
+    if (view.createContinuation()) {
         log("debug", "Creating view and continuation, calling Cocoon with viewUri = [" + viewUri + "]");
         cocoon.sendPageAndWait(viewUri, { "usecase" : proxy });
     } else {
@@ -340,7 +339,7 @@ function executeUsecase() {
         do {
             // show the view:
             try {
-                loopFlow(view, proxy, generic, preconditionsOK); //usecase must be released here!
+                loopFlow(view, proxy, generic); //usecase must be released here!
             } catch (exception) {
                 // if something went wrong, try and rollback the usecase:
                 log("error", "Exception during loopFlow(): " + exception, usecaseName);
@@ -353,15 +352,17 @@ function executeUsecase() {
                     releaseUsecase(usecase);
                 }
             }
-            log("debug", "Advancing in usecase.", usecaseName);
-            // restore the usecase state and handle the user input:
-            usecase = getUsecase(usecaseName);
-            proxy.setup(usecase);
-            passRequestParameters(usecase);
-            state = submitFlow(usecase, generic);
-            // create a new proxy with the updated usecase state
-            proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
-            releaseUsecase(usecase);
+            if (preconditionsOK) {
+                log("debug", "Advancing in usecase.", usecaseName);
+                // restore the usecase state and handle the user input:
+                usecase = getUsecase(usecaseName);
+                proxy.setup(usecase);
+                passRequestParameters(usecase);
+                state = submitFlow(usecase, generic);
+                // create a new proxy with the updated usecase state
+                proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
+                releaseUsecase(usecase);
+            }
         } while (state == "continue");
     // If the usecase does not have a view uri, we can directly jump to 
     // executeFlow().
