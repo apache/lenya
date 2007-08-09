@@ -176,16 +176,17 @@ function log(level, message, usecaseName) {
  * @param view, a org.apache.lenya.cms.usecase.UsecaseView object
  * @param proxy, a org.apache.lenya.cms.usecase.UsecaseProxy object
  * @param generic, a generic Javascript object for custom flow code to preserve state information (currently not used by the default code)
+ * @param preconditionsOK, if the preconditions were complied, which means we create a continuation
  *
  * This function invokes customLoopFlow if it exists.
  * Otherwise it falls back to defaultLoopFlow.
  */
-function loopFlow(view, proxy, generic) {
+function loopFlow(view, proxy, generic, preconditionsOK) {
     if (customLoopFlow != undefined) {
         log("info", "Using customLoopFlow function", proxy.getName());
-        return customLoopFlow(view, proxy, generic);
+        return customLoopFlow(view, proxy, generic, preconditionsOK);
     } else{
-        return defaultLoopFlow(view, proxy);
+        return defaultLoopFlow(view, proxy, preconditionsOK);
     }
 }
 
@@ -214,7 +215,7 @@ function submitFlow(usecase, generic) {
 /**
  * @see loopFlow.
  */
-function defaultLoopFlow(view, proxy) {
+function defaultLoopFlow(view, proxy, preconditionsOK) {
     var viewUri = view.getViewURI();
     // we used to allow a cocoon:/ prefix (which sendPageXXX does not handle),
     // but it is now deprecated!
@@ -229,7 +230,7 @@ function defaultLoopFlow(view, proxy) {
             + (view.showMenu() ? "menu" : "nomenu")
             + "/" + viewUri;
     }
-    if (view.createContinuation()) {
+    if (view.createContinuation() && preconditionsOK) {
         log("debug", "Creating view and continuation, calling Cocoon with viewUri = [" + viewUri + "]");
         cocoon.sendPageAndWait(viewUri, { "usecase" : proxy });
     } else {
@@ -309,13 +310,16 @@ function executeUsecase() {
     var state; // the state of the usecase ("continue"|"success"|"cancel");
     var targetUrl; // URL to redirect to after completion.
     var generic = new Object; // a generic helper object for custom flow code to preserve state information.
+    
+    var preconditionsOK;
 
     try {
         usecaseName = cocoon.parameters["usecaseName"];
         usecase = getUsecase(usecaseName);
         passRequestParameters(usecase);
         usecase.checkPreconditions();
-        if (!usecase.hasErrors()) {
+        preconditionsOK = !usecase.hasErrors();
+        if (preconditionsOK) {
             usecase.lockInvolvedObjects();
         }
         // create proxy object to save usecase state
@@ -335,8 +339,8 @@ function executeUsecase() {
     if (view != null && view.getViewURI()) {
         do {
             // show the view:
-                loopFlow(view, proxy, generic); //usecase must be released here!
             try {
+                loopFlow(view, proxy, generic, preconditionsOK); //usecase must be released here!
             } catch (exception) {
                 // if something went wrong, try and rollback the usecase:
                 log("error", "Exception during loopFlow(): " + exception, usecaseName);
