@@ -627,7 +627,20 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#getView()
      */
     public UsecaseView getView() {
+        try {
+            prepareView();
+        } catch (Exception e) {
+            getLogger().error("View preparation for usecase [" + getName() + "] failed: ", e);
+            addErrorMessage(e.getMessage());
+        }
         return this.view;
+    }
+
+    /**
+     * Override this method to prepare the view (add information messages etc.).
+     * @throws Exception If an error occurs.
+     */
+    protected void prepareView() throws Exception {
     }
 
     protected static final String ELEMENT_PARAMETER = "parameter";

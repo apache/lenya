@@ -50,16 +50,17 @@ public class ForceCheckIn extends DocumentUsecase {
             String[] params = { DublinCoreHelper.getTitle(doc) };
             addErrorMessage("not-checked-out", params);
         }
+    }
 
+    protected void prepareView() throws Exception {
+        Node node = getSourceDocument().getRepositoryNode();
+        String userId = node.getCheckoutUserId();
+        String[] params = { userId };
+        if (isLoggedIn(userId)) {
+            addInfoMessage("user-logged-in", params);
+        }
         else {
-            String userId = node.getCheckoutUserId();
-            String[] params = { userId };
-            if (isLoggedIn(userId)) {
-                addInfoMessage("user-logged-in", params);
-            }
-            else {
-                addInfoMessage("user-not-logged-in", params);
-            }
+            addInfoMessage("user-not-logged-in", params);
         }
     }
 
