@@ -171,9 +171,6 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         }
         try {
             Node repoNode = getRepositoryNode();
-            if (repoNode.exists() && repoNode.getLastModified() > this.lastModified) {
-                throw new RuntimeException("The sitetree repository node has been modified!");
-            }
             NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", "site");
             saveNodes(getRoot(), helper, helper.getDocument().getDocumentElement());
             helper.save(repoNode.getOutputStream());
