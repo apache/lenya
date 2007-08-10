@@ -612,6 +612,12 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
             Message message = new Message(subject, subjectParams, body, bodyParams, sender,
                     recipients);
             NotificationUtil.notify(this.manager, message);
+
+            getLogger().error(
+                    "Could not index document [" + this.pubId + ":" + this.area + ":" + this.uuid
+                            + ":" + this.language + "], sent message to user ["
+                            + this.notificationRecipient + "].");
+
         } catch (Exception e) {
             throw new SAXException(e);
         }
