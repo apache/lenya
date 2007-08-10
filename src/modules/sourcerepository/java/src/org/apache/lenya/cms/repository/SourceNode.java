@@ -34,6 +34,7 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
+import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RevisionControlException;
 import org.apache.lenya.transaction.Lock;
@@ -109,8 +110,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     throw new RepositoryException("Cannot check in node [" + getSourceURI()
                             + "]: not checked out by this session!");
                 }
-                boolean newVersion = getSession().isDirty(this);
-                rcml.checkIn(this, exists(), newVersion);
+                rcml.checkIn(this, exists());
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }
@@ -125,7 +125,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     throw new RepositoryException("Cannot check in node [" + getSourceURI()
                             + "]: not checked out!");
                 }
-                rcml.checkIn(this, false, false);
+                rcml.checkIn(this, false);
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }
@@ -193,12 +193,18 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
     }
 
-    protected int getCurrentRevisionNumber() {
-        if (getHistory().getRevisionNumbers().length > 0) {
-            return getHistory().getLatestRevision().getNumber();
+    protected int getCurrentRevisionNumber() throws RepositoryException {
+        CheckInEntry entry;
+        try {
+            entry = getRcml().getLatestCheckInEntry();
+        } catch (RevisionControlException e) {
+            throw new RepositoryException(e);
+        }
+        if (entry == null) {
+            return 0;
         }
         else {
-            return 0;
+            return entry.getVersion();
         }
     }
 

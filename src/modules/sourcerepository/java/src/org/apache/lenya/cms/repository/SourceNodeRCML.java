@@ -250,7 +250,7 @@ public class SourceNodeRCML implements RCML {
      */
     public RCMLEntry getLatestEntry(short type) throws RevisionControlException {
         Vector entries = getEntries();
-        for (Iterator i = entries.iterator(); i.hasNext(); ) {
+        for (Iterator i = entries.iterator(); i.hasNext();) {
             RCMLEntry entry = (RCMLEntry) i.next();
             if (entry.getType() == type) {
                 return entry;
@@ -263,8 +263,7 @@ public class SourceNodeRCML implements RCML {
         Vector entries = getEntries();
         if (entries.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return (RCMLEntry) entries.firstElement();
         }
     }
@@ -375,7 +374,8 @@ public class SourceNodeRCML implements RCML {
         restoreBackup(sourceNode.getMetaSource(), time);
     }
 
-    protected synchronized void restoreBackup(SourceWrapper wrapper, long time) throws RevisionControlException {
+    protected synchronized void restoreBackup(SourceWrapper wrapper, long time)
+            throws RevisionControlException {
         String backupSourceUri = getBackupSourceUri(wrapper, time);
         SourceResolver resolver = null;
         try {
@@ -422,7 +422,8 @@ public class SourceNodeRCML implements RCML {
         setDirty();
     }
 
-    protected synchronized void deleteBackup(String sourceUri, long time) throws RevisionControlException {
+    protected synchronized void deleteBackup(String sourceUri, long time)
+            throws RevisionControlException {
         String uri = getBackupSourceUri(sourceUri, time);
         try {
             SourceUtil.delete(uri, this.manager);
@@ -455,28 +456,6 @@ public class SourceNodeRCML implements RCML {
     }
 
     /**
-     * Delete the latest check in
-     * @throws RevisionControlException if an error occurs
-     */
-    public synchronized void deleteFirstCheckIn() throws RevisionControlException {
-        deleteLatestEntry(ci);
-    }
-
-    /**
-     * Delete the latest check in
-     * @throws RevisionControlException if an error occurs
-     */
-    public synchronized void deleteFirstCheckOut() throws RevisionControlException {
-        deleteLatestEntry(co);
-    }
-
-    protected synchronized void deleteLatestEntry(short type) throws RevisionControlException {
-        RCMLEntry entry = getLatestEntry(type);
-        this.entries.remove(entry);
-        setDirty();
-    }
-
-    /**
      * get the time's value of the backups
      * @return String[] the times
      * @throws Exception if an error occurs
@@ -485,7 +464,7 @@ public class SourceNodeRCML implements RCML {
 
         Vector entries = getEntries();
         List times = new ArrayList();
-        for (Iterator i = entries.iterator(); i.hasNext(); ) {
+        for (Iterator i = entries.iterator(); i.hasNext();) {
             RCMLEntry entry = (RCMLEntry) i.next();
             if (entry.getType() == ci && ((CheckInEntry) entry).hasBackup()) {
                 times.add(Long.toString(entry.getTime()));
@@ -582,19 +561,14 @@ public class SourceNodeRCML implements RCML {
         return entry != null && entry.getType() == RCML.co;
     }
 
-    public synchronized void checkIn(Node node, boolean backup, boolean newVersion)
-            throws RevisionControlException {
+    public synchronized void checkIn(Node node, boolean backup) throws RevisionControlException {
         long time = new Date().getTime();
 
         if (backup) {
             makeBackup(time);
         }
 
-        if (newVersion) {
-            checkOutIn(node, RCML.ci, time, backup);
-        } else {
-            deleteFirstCheckOut();
-        }
+        checkOutIn(node, RCML.ci, time, backup);
         pruneEntries();
         write();
     }

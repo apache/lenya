@@ -45,10 +45,9 @@ public interface RCML {
      * Check the RCML in.
      * @param node The node.
      * @param backup If a backup shall be created.
-     * @param newVersion If a new version shall be created.
      * @throws RevisionControlException if an error occurs.
      */
-    void checkIn(Node node, boolean backup, boolean newVersion) throws RevisionControlException;
+    void checkIn(Node node, boolean backup) throws RevisionControlException;
     
     /**
      * Check the RCML out.
@@ -119,18 +118,6 @@ public interface RCML {
      * @return boolean dirty
      */
     boolean isDirty();
-
-    /**
-     * Delete the latest check in
-     * @throws Exception if an error occurs
-     */
-    void deleteFirstCheckIn() throws Exception;
-
-    /**
-     * Delete the latest check in
-     * @throws Exception if an error occurs
-     */
-    void deleteFirstCheckOut() throws Exception;
 
     /**
      * get the time's value of the backups
