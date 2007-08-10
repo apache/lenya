@@ -39,9 +39,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RCMLEntry;
-import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -133,11 +131,9 @@ public class SiteOverview extends AbstractUsecase {
                     entry.setValue(KEY_WORKFLOW_STATE, "");
                 }
 
-                if (documents[i].getRepositoryNode().isCheckedOut()) {
-                    RCML rcml = documents[i].getRepositoryNode().getRcml();
-                    RCMLEntry lastEntry = rcml.getLatestCheckOutEntry();
-                    String userId = lastEntry.getIdentity();
-                    entry.setValue(KEY_CHECKED_OUT, userId);
+                Node node = documents[i].getRepositoryNode();
+                if (node.isCheckedOut()) {
+                    entry.setValue(KEY_CHECKED_OUT, node.getCheckoutUserId());
                 } else {
                     entry.setValue(KEY_CHECKED_OUT, "");
                 }
@@ -167,10 +163,6 @@ public class SiteOverview extends AbstractUsecase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    protected RevisionController getRevisionController() {
-        return new RevisionController(getLogger());
     }
 
     /**

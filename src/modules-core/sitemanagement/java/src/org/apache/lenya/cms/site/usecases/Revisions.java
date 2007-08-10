@@ -17,10 +17,9 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.util.Vector;
-
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.rc.RCML;
+import org.apache.lenya.cms.repository.History;
+import org.apache.lenya.cms.repository.Revision;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -33,8 +32,6 @@ import org.apache.lenya.workflow.Workflowable;
  */
 public class Revisions extends SiteUsecase {
 
-    private RCML rcml = null;
-
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
      *      filter out checkin entries
@@ -44,29 +41,19 @@ public class Revisions extends SiteUsecase {
         Document sourceDoc = getSourceDocument();
         if (sourceDoc != null) {
             try {
-                this.rcml = sourceDoc.getRepositoryNode().getRcml();
-            } catch (final Exception e) {
-                throw new RuntimeException(e);
-            }
+                History history = sourceDoc.getRepositoryNode().getHistory();
 
-            Vector entries;
-            try {
-                entries = this.rcml.getBackupEntries();
-            } catch (final Exception e) {
-                throw new RuntimeException(e);
-            }
-            setParameter("entries", entries);
+                int[] numbers = history.getRevisionNumbers();
+                Revision[] revisions = new Revision[numbers.length];
+                for (int i = 0; i < numbers.length; i++) {
+                    revisions[i] = history.getRevision(numbers[i]);
+                }
+                setParameter("revisions", revisions);
 
-            Boolean canRollback;
-            try {
-                canRollback = new Boolean(WorkflowUtil.canInvoke(this.manager, getDocumentFactory()
-                        .getSession(), getLogger(), sourceDoc, getEvent()));
-            } catch (final Exception e) {
-                throw new RuntimeException(e);
-            }
-            setParameter("canRollback", canRollback);
+                Boolean canRollback = new Boolean(WorkflowUtil.canInvoke(this.manager,
+                        getDocumentFactory().getSession(), getLogger(), sourceDoc, getEvent()));
+                setParameter("canRollback", canRollback);
 
-            try {
                 if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), sourceDoc)) {
                     Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                             getSession(), getLogger(), sourceDoc);

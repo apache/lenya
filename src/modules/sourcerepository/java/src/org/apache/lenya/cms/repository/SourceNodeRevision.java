@@ -42,6 +42,8 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
     private SourceNode node;
     private int number;
     private ServiceManager manager;
+    private long time = -1;
+    private String userId;
 
     /**
      * @param node The node.
@@ -56,9 +58,12 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
         ContainerUtil.enableLogging(this, logger);
     }
 
-    private long time = -1;
+    public long getTime() {
+        initialize();
+        return this.time;
+    }
 
-    protected long getTime() {
+    protected void initialize() {
         try {
             if (this.time == -1) {
                 SourceNodeRCML rcml = (SourceNodeRCML) this.node.getRcml();
@@ -68,6 +73,7 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
                     if (entry.getType() == RCML.ci
                             && ((CheckInEntry) entry).getVersion() == this.number) {
                         this.time = entry.getTime();
+                        this.userId = entry.getIdentity();
                     }
                 }
             }
@@ -78,7 +84,6 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return this.time;
     }
 
     public InputStream getInputStream() {
@@ -171,6 +176,11 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
+    }
+
+    public String getUserId() {
+        initialize();
+        return this.userId;
     }
 
 }

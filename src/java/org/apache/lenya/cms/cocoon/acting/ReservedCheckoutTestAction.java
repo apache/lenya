@@ -26,8 +26,7 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RCMLEntry;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 
 
@@ -48,9 +47,9 @@ public class ReservedCheckoutTestAction extends RevisionControllerAction {
         HashMap actionMap = new HashMap();
 
         try {
-            RCMLEntry entry = getNode().getRcml().getLatestEntry();
+            Node node = getNode();
 
-			if ((entry == null) || (entry.getType() != RCML.co) || !entry.getIdentity().equals(getUsername())) {
+			if (!node.isCheckedOut() || !node.getCheckoutUserId().equals(getUsername())) {
 				//check out
 			    getNode().checkout();
 			}

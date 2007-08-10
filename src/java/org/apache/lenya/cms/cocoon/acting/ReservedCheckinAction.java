@@ -54,7 +54,7 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         try {
             Node node = getNode();
             if (node.isCheckedOutBySession()) {
-                node.getRcml().checkIn(node, backup, true);
+                node.checkin();
             }
         } catch (RepositoryException e) {
             actionMap.put("exception", "genericException");

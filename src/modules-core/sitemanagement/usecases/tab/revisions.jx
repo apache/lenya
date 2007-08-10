@@ -53,10 +53,10 @@
     );
   }
 
-  function rollback(toTime) {
+  function rollback(toRevision) {
     window.location.href="?lenya.usecase=sitemanagement.rollback"
         + String.fromCharCode(38)  // an &amp; does not work, since it's not being decoded
-        + "rollbackTime=" + toTime;
+        + "rollbackRevision=" + toRevision;
   }
 
     </script>
@@ -80,26 +80,26 @@
             <th><i18n:text>Actions</i18n:text></th>
           </tr>
   
-          <jx:set var="count" value="${usecase.getParameter('entries').size()}"/>
+          <jx:set var="count" value="${usecase.getParameter('revisions').size()}"/>
           <jx:set var="isFirstItem" value="true"/>
-          <jx:forEach var="item" items="${usecase.getParameter('entries')}" begin="0">
+          <jx:forEach var="revision" items="${usecase.getParameter('revisions')}" begin="0">
             <tr>
               <td align="right">
                 <input 
                   type="button" 
                   i18n:attr="title" 
-                  onclick="showRevision(${item.version});"
+                  onclick="showRevision(${revision.getNumber()});"
                   title="view-revision-in-new-window"
-                  value="${item.version}"
+                  value="${revision.getNumber()}"
                 />
               </td>
-              <td align="right"><i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></i18n:date-time></td>
-              <td><jx:out value="${item.identity}"/></td>
+              <td align="right"><i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss"><jx:formatDate value="${revision.getTime()}" pattern="yyyy-MM-dd HH:mm:ss"/></i18n:date-time></td>
+              <td><jx:out value="${revision.getUserId()}"/></td>
               <td>
                 <input 
                   type="button" 
                   i18n:attr="value title" 
-                  onclick="showRevision(${item.version});"
+                  onclick="showRevision(${revision.getNumber()});"
                   title="view-revision-in-new-window"
                   value="view-revision"
                 />
@@ -110,22 +110,12 @@
                   </jx:when>
                   <jx:when test="${usecase.getParameter('canRollback') == 'true'}">
                     &#160;
-                    <input 
-                      type="button" 
-                      i18n:attr="value title"
-                      title="${rollbackMessage}" 
-                      onclick="void rollback(${item.time});" 
-                      value="rollback"
+                    <input type="button" i18n:attr="value title" title="${rollbackMessage}" value="rollback" 
+                      onclick="void rollback(${revision.getNumber()});" 
                     />
                   </jx:when>
                   <jx:otherwise>
-                    <input 
-                      type="button" 
-                      i18n:attr="value title"
-                      title="${rollbackMessage}"
-                      disabled="disabled"
-                      value="rollback"
-                    />
+                    <input type="button" i18n:attr="value title" title="${rollbackMessage}" disabled="disabled" value="rollback"/>
                   </jx:otherwise>
                 </jx:choose>
               </td>

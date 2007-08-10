@@ -20,8 +20,6 @@ package org.apache.lenya.cms.repository;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import org.apache.lenya.cms.rc.RCML;
-
 /**
  * Repository node.
  * 
@@ -105,10 +103,28 @@ public interface Node extends RepositoryItem, ContentHolder {
     boolean isCheckedOut() throws RepositoryException;
 
     /**
+     * @return The ID of the user who has checked out this node. 
+     * @throws RepositoryException if the node is not checked out.
+     */
+    String getCheckoutUserId() throws RepositoryException;
+
+    /**
      * @return if the node is checked out by the current session.
      * @throws RepositoryException if an error occurs.
      */
     boolean isCheckedOutBySession() throws RepositoryException;
+    
+    /**
+     * @param source The node to copy the revisions from.
+     * @throws RepositoryException if an error occurs.
+     */
+    void copyRevisionsFrom(Node source) throws RepositoryException;
+    
+    /**
+     * @param revisionNumber The revision number to roll back.
+     * @throws RepositoryException if this revision doesn't exist.
+     */
+    void rollback(int revisionNumber) throws RepositoryException;
 
     /**
      * @return if the node is locked.
@@ -122,12 +138,6 @@ public interface Node extends RepositoryItem, ContentHolder {
      */
     void registerRemoved() throws RepositoryException;
     
-    
-    /**
-     * @return The RCML to use for this node.
-     */
-    RCML getRcml();
-    
     /**
      * @return The revision history.
      */
@@ -138,5 +148,5 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @throws RepositoryException if an error occurs.
      */
     void delete() throws RepositoryException;
-
+    
 }

@@ -42,7 +42,6 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.UUIDGenerator;
@@ -555,12 +554,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     protected void copyRevisions(Document sourceDoc, Document targetDoc) throws PublicationException {
-        RevisionController controller = new RevisionController(getLogger());
         try {
             Node targetNode = targetDoc.getRepositoryNode();
             // reset the lock so that the node doesn't complain about being changed
             targetNode.unlock();
-            controller.copyRCML(sourceDoc.getRepositoryNode(), targetNode);
+            targetNode.copyRevisionsFrom(sourceDoc.getRepositoryNode());
             targetNode.lock();
         } catch (Exception e) {
             throw new PublicationException(e);

@@ -23,6 +23,11 @@ package org.apache.lenya.cms.repository;
 public interface History {
     
     /**
+     * @return The available revision numbers in descending order (starting with the newest one).
+     */
+    int[] getRevisionNumbers();
+    
+    /**
      * @return The latest revision.
      */
     Revision getLatestRevision();

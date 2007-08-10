@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.cocoon.flow;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
@@ -27,7 +26,6 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -101,24 +99,11 @@ public interface FlowHelper {
             PageEnvelopeException, AccessControlException;
 
     /**
-     * Get a RevisionController instance.
-     * @param cocoon The Cocoon Flow Object Model
-     * @return A RevisionController
-     * @throws PageEnvelopeException Page envelope can not operate properly.
-     * @throws IOException If an IOException occurs.
-     * @see PageEnvelope
-     * @see RevisionController
-     */
-    RevisionController getRevisionController(FOM_Cocoon cocoon) throws PageEnvelopeException,
-            IOException;
-
-    /**
      * Checkis in the current document from the PageEnvelope context.
      * @param cocoon The Cocoon Flow Object Model
      * @param backup Wether a new revision should be created.
      * @throws FileReservedCheckInException
      * @throws Exception
-     * @see RevisionController#reservedCheckIn(org.apache.lenya.cms.repository.Node, String, boolean, boolean)
      */
     void reservedCheckIn(FOM_Cocoon cocoon, boolean backup) throws FileReservedCheckInException,
             Exception;

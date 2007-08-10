@@ -20,9 +20,6 @@
 
 package org.apache.lenya.cms.rc;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -67,7 +64,7 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         if (args.length != 4) {
             System.out
                     .println("Usage: "
-                            + RevisionController.class.getName()
+                            + RevisionControllerTest.class.getName()
                             + " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
 
             return;
@@ -80,9 +77,8 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         String source = args[1];
         String identityD = args[2];
         String destination = args[3];
-        RevisionController rc = new RevisionController(getLogger());
         doc1.getRepositoryNode().checkout();
-        doc2.getRepositoryNode().getRcml().checkIn(doc2.getRepositoryNode(), true, true);
+        doc2.getRepositoryNode().checkin();
     }
 
 }

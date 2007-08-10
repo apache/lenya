@@ -25,8 +25,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RCMLEntry;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
 /**
@@ -56,12 +55,14 @@ public class FilePropfind extends SiteUsecase {
 
             Document doc = getTargetDocument(false);
             docs.add(doc);
-
-            RCMLEntry entry = doc.getRepositoryNode().getRcml().getLatestEntry();
-            if ((entry != null) && (entry.getType() == RCML.co))
-                checkedOut.add(entry);
-            else
+            
+            Node node = doc.getRepositoryNode();
+            if (node.isCheckedOut()) {
+                checkedOut.add(node.getCheckoutUserId());
+            }
+            else {
                 checkedOut.add(null);
+            }
 
             setParameter(DOCUMENTS, docs);
             setParameter(RC, checkedOut);

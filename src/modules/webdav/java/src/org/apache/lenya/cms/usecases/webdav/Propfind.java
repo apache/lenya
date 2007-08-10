@@ -26,8 +26,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RCMLEntry;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
@@ -87,11 +86,13 @@ public class Propfind extends SiteUsecase {
                 if (test.equals(request)) {
                     docs.add(documents[i]);
 
-                    RCMLEntry entry = documents[i].getRepositoryNode().getRcml().getLatestEntry();
-                    if ((entry != null) && (entry.getType() == RCML.co))
-                        checkedOut.add(entry);
-                    else
+                    Node node = documents[i].getRepositoryNode();
+                    if (node.isCheckedOut()) {
+                        checkedOut.add(node.getCheckoutUserId());
+                    }
+                    else {
                         checkedOut.add(null);
+                    }
                 }
             }
 

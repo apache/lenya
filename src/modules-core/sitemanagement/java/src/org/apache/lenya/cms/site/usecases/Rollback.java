@@ -52,12 +52,11 @@ public class Rollback extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        String rollbackTime = getParameterAsString("rollbackTime");
+        int revision = getParameterAsInteger("rollbackRevision", -1);
 
         Document document = getSourceDocument();
-        long time = new Long(rollbackTime).longValue();
         Node node = document.getRepositoryNode();
-        node.getRcml().restoreBackup(node, time);
+        node.rollback(revision);
         
         WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
                 getEvent());

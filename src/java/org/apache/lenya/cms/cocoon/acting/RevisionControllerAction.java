@@ -39,7 +39,6 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 
@@ -53,7 +52,6 @@ public class RevisionControllerAction extends ServiceableAction {
 
     private String rcmlDirectory = null;
     private String backupDirectory = null;
-    private RevisionController rc = null;
     private String username = null;
     private Node node = null;
 
@@ -106,10 +104,6 @@ public class RevisionControllerAction extends ServiceableAction {
         this.backupDirectory = rcEnvironment.getBackupDirectory();
         this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
 
-        // Initialize Revision Controller
-        this.rc = new RevisionController(getLogger());
-
-        // /Initialize Revision Controller
         // Get session
         Session session = request.getSession(false);
 
@@ -176,14 +170,6 @@ public class RevisionControllerAction extends ServiceableAction {
      */
     protected Node getNode() {
         return this.node;
-    }
-
-    /**
-     * Get the revision controller.
-     * @return the revision controller
-     */
-    protected RevisionController getRc() {
-        return this.rc;
     }
 
     /**

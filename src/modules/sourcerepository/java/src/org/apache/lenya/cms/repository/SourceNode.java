@@ -36,7 +36,6 @@ import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RevisionControlException;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
@@ -164,15 +163,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
     }
 
-    private RevisionController revisionController;
-
-    protected RevisionController getRevisionController() throws RepositoryException {
-        if (this.revisionController == null) {
-            this.revisionController = new RevisionController(getLogger());
-        }
-        return this.revisionController;
-    }
-
     private Lock lock;
 
     /**
@@ -180,11 +170,20 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      */
     public boolean hasChanged() throws RepositoryException {
         try {
-            int currentVersion = getRevisionController().getLatestVersion(this);
+            int currentVersion = getCurrentRevisionNumber();
             int lockVersion = getLock().getVersion();
             return currentVersion > lockVersion;
         } catch (Exception e) {
             throw new RepositoryException(e);
+        }
+    }
+
+    protected int getCurrentRevisionNumber() {
+        if (getHistory().getRevisionNumbers().length > 0) {
+            return getHistory().getLatestRevision().getNumber();
+        }
+        else {
+            return 0;
         }
     }
 
@@ -232,13 +231,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
         }
-        int currentVersion;
         try {
-            currentVersion = getRevisionController().getLatestVersion(this);
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        }
-        try {
+            int currentVersion = getCurrentRevisionNumber();
             this.lock = getSession().createLock(this, currentVersion);
         } catch (TransactionException e) {
             throw new RepositoryException(e);
@@ -361,7 +355,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     private RCML rcml;
 
-    public synchronized RCML getRcml() {
+    protected synchronized RCML getRcml() {
         if (this.rcml == null) {
             SourceNodeRcmlFactory factory = SourceNodeRcmlFactory.getInstance();
             this.rcml = factory.getRcml(this, this.manager);
@@ -429,6 +423,37 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         this.contentSource.delete();
         this.metaSource.delete();
         registerRemoved();
+    }
+
+    public String getCheckoutUserId() throws RepositoryException {
+        RCML rcml = getRcml();
+        synchronized (rcml) {
+            try {
+                if (!rcml.isCheckedOut()) {
+                    throw new RepositoryException("The node [" + this + "] is not checked out!");
+                }
+                return rcml.getLatestEntry().getIdentity();
+            } catch (RevisionControlException e) {
+                throw new RepositoryException(e);
+            }
+        }
+    }
+
+    public void copyRevisionsFrom(Node source) throws RepositoryException {
+        try {
+            getRcml().copyFrom(this, source);
+        } catch (RevisionControlException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public void rollback(int revisionNumber) throws RepositoryException {
+        try {
+            long time = getHistory().getRevision(revisionNumber).getTime();
+            getRcml().restoreBackup(this, time);
+        } catch (RevisionControlException e) {
+            throw new RepositoryException(e);
+        }
     }
 
 }

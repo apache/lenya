@@ -20,7 +20,6 @@
 
 package org.apache.lenya.cms.cocoon.flow;
 
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -41,7 +40,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -155,14 +153,6 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
     }
 
     /**
-     * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getRevisionController(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
-     */
-    public RevisionController getRevisionController(FOM_Cocoon cocoon)
-            throws PageEnvelopeException, IOException {
-        return new RevisionController(getLogger());
-    }
-
-    /**
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#reservedCheckIn(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon,
      *      boolean)
      */
@@ -170,7 +160,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
             throws FileReservedCheckInException, Exception {
         final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
         Node node = pageEnvelope.getDocument().getRepositoryNode();
-        node.getRcml().checkIn(node, backup, true);
+        node.checkin();
     }
 
     private ServiceManager manager;

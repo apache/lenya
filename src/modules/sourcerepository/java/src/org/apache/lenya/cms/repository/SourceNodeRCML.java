@@ -532,7 +532,7 @@ public class SourceNodeRCML implements RCML {
 
         SourceNode otherSourceNode = (SourceNode) otherNode;
         SourceNode sourceNode = (SourceNode) node;
-        SourceNodeRCML otherRcml = (SourceNodeRCML) otherNode.getRcml();
+        SourceNodeRCML otherRcml = (SourceNodeRCML) ((SourceNode) otherNode).getRcml();
 
         try {
 

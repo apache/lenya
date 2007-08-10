@@ -24,8 +24,7 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RCMLEntry;
+import org.apache.lenya.cms.repository.Node;
 
 
 /**
@@ -42,11 +41,11 @@ public class DiscoverCheckoutAction extends RevisionControllerAction {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
-        final RCMLEntry entry = getNode().getRcml().getLatestEntry();
+        Node node = getNode();
 
-        if ((entry != null) && (entry.getType() == RCML.co) ) {
-            actionMap.put("filename", getNode().getSourceURI());
-            actionMap.put("user", entry.getIdentity());
+        if (node.isCheckedOut()) {
+            actionMap.put("filename", node.getSourceURI());
+            actionMap.put("user", node.getCheckoutUserId());
             return actionMap;
         }
         return null;

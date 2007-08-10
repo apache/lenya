@@ -17,10 +17,14 @@
  */
 package org.apache.lenya.cms.repository;
 
+import java.util.Vector;
+
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.rc.CheckInEntry;
+import org.apache.lenya.cms.rc.RCML;
 
 /**
  * Revision history implementation.
@@ -44,8 +48,13 @@ public class SourceNodeHistory extends AbstractLogEnabled implements History {
 
     public Revision getLatestRevision() {
         try {
-            int latestRevisionNumber = this.node.getRcml().getLatestCheckInEntry().getVersion();
-            return getRevision(latestRevisionNumber);
+            int[] numbers = getRevisionNumbers();
+            if (numbers.length > 0) {
+                return getRevision(numbers[0]);
+            }
+            else {
+                throw new RepositoryException("There is no revision for node [" + this.node + "] yet.");
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -53,6 +62,21 @@ public class SourceNodeHistory extends AbstractLogEnabled implements History {
 
     public Revision getRevision(int number) throws RepositoryException {
         return new SourceNodeRevision(this.node, number, this.manager, getLogger());
+    }
+
+    public int[] getRevisionNumbers() {
+        RCML rcml = this.node.getRcml();
+        try {
+            Vector entries = rcml.getBackupEntries();
+            int[] numbers = new int[entries.size()];
+            for (int i = 0; i < entries.size(); i++) {
+                CheckInEntry entry = (CheckInEntry) entries.get(i);
+                numbers[i] = entry.getVersion();
+            }
+            return numbers;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
