@@ -60,6 +60,20 @@
     </section>
     
     <section>
+      <title>Indexing Issues</title>
+      <p>
+        When the system is under high load, it can occur that a document is not indexed after a change
+        because the indexer is busy. In this case, a notification message is sent to a user which can
+        be configured in <code>modules/lucene/sitemap.xmap</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transformer name="index2"
+    logger="sitemap.transformer.luceneindextransformer2"
+    src="org.apache.cocoon.transformation.LuceneIndexTransformer2">
+  <notify user="lenya"/>
+</map:transformer>]]></source>
+    </section>
+    
+    <section>
       <title>Searching</title>
       <p>
         To be documented.

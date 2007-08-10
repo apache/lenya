@@ -127,15 +127,37 @@ svn lock tags/RELEASE_1_2_5
         </ul>
       </section>
       <section>
-        <title>Create binary packages (NOTE: moved from "issues" below - ok?)</title>
+        <title>Create the Binary Packages</title>
         <ul>
-          <li>compile a pristine cocoon with the local properties from lenya</li>
-          <li>set property <em>version</em> in file <em>src/targets/properties-build.xml</em> to the appropriate Lenya version</li>
-          <li>regenerate INSTALL-src.txt and INSTALL-bin.txt with the appropriate XSLT (FIXME: which one is that, and where are the sources?)</li>
-          <li>build all distribution archives, except the windows installer .exe, with <em>./build.sh|build dist</em> in the Lenya source root directory. You will find the distribution archives under <em>dist/</em>. The <em>dist</em> target will also build and package the editors BXE and Kupu.</li>
-          <li>to create a windows installer, edit <em>lenya.nsi</em> and replace all version numbers appropriately, then compile lenya.nsi with the <a href="http://nsis.sourceforge.net/home/">NSIS compiler</a> (use the LZMA compressor for the smallest binaries)</li>
-          <li>sign the release archives/installers with your PGP/GPG key (see instructions below)</li>
-          <li>upload the release to <em>minotaur.apache.org:/x1/www/www.apache.org/dist/lenya</em></li>
+          <li>
+            Compile a pristine Cocoon with the local properties from Lenya.
+          </li>
+          <li>
+            Set the property <em>version</em> in file <code>src/targets/properties-build.xml</code>
+            to the appropriate Lenya version.
+          </li>
+          <li>
+            Re-generate <code>INSTALL-src.txt</code> and <code>INSTALL-bin.txt</code> with the
+            XSLT stylesheet <code>https://svn.apache.org/repos/asf/lenya/docu/tools/document2txt.xsl</code>. 
+          </li>
+          <li>
+            Build all distribution archives, except the windows installer .exe, with
+            <code>./build.sh|build dist</code> in the Lenya source root directory.
+            You will find the distribution archives under <em>dist/</em>. The <em>dist</em> target
+            will also build and package the editors BXE and Kupu.
+          </li>
+          <li>
+            To create a Windows installer, edit <code>lenya.nsi</code> and replace all version
+            numbers appropriately, then compile <code>lenya.nsi</code> with the
+            <a href="http://nsis.sourceforge.net/home/">NSIS compiler</a>
+            (use the LZMA compressor for the smallest binaries)
+          </li>
+          <li>
+            Sign the release archives/installers with your PGP/GPG key (see instructions below).
+          </li>
+          <li>
+            Upload the release to <code>minotaur.apache.org:/x1/www/www.apache.org/dist/lenya</code>.
+          </li>
         </ul>
       </section>
       <section>
