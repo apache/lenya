@@ -39,6 +39,8 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.rc.CheckInEntry;
+import org.apache.lenya.cms.rc.RevisionControlException;
 import org.apache.lenya.util.Assert;
 
 /**
@@ -229,7 +231,6 @@ public class SourceWrapper extends AbstractLogEnabled {
 
                 this.data = out.toByteArray();
                 this.mimeType = source.getMimeType();
-                this.lastModified = source.getLastModified();
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
@@ -363,7 +364,14 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @see org.apache.lenya.cms.repository.Node#getLastModified()
      */
     public long getLastModified() throws RepositoryException {
-        loadData();
+        try {
+            CheckInEntry entry = this.node.getRcml().getLatestCheckInEntry();
+            if (entry != null) {
+                this.lastModified = entry.getTime();
+            }
+        } catch (RevisionControlException e) {
+            throw new RepositoryException(e);
+        }
         return this.lastModified;
     }
     
