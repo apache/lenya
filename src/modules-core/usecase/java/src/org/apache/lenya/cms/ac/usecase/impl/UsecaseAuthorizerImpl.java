@@ -52,44 +52,48 @@ import org.apache.lenya.cms.publication.PublicationUtil;
  * Supported parameters via {@link Parameterizable}:
  * </p>
  * <ul>
- * <li>
- *   {@link #PARAMETER_CONFIGURATION} - location of the usecase policies file
- *   (parameterizable for testing purposes)
- * </li>
+ * <li> {@link #PARAMETER_CONFIGURATION} - location of the usecase policies file
+ * (parameterizable for testing purposes) </li>
  * </ul>
  * @version $Id: UsecaseAuthorizer.java 392449 2006-04-07 23:20:38Z michi $
  */
 public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements UsecaseAuthorizer,
         Serviceable, Disposable, Parameterizable {
 
+    /**
+     * The name of the pseudo-usecase that governs access to pages.
+     */
+    public static final String VISIT_USECASE = "ac.visit";
+
     protected static final String PARAMETER_CONFIGURATION = "configuration";
     protected static final String TYPE = "usecase";
     protected static final String USECASE_PARAMETER = "lenya.usecase";
-    private static final String AC_CONFIGURATION_FILE
-        = "config/access-control/access-control.xml".replace('/', File.separatorChar);
+    private static final String AC_CONFIGURATION_FILE = "config/access-control/access-control.xml"
+            .replace('/', File.separatorChar);
 
     private SourceCache cache;
-    /** 
-      * the configuration URI for this component 
-      */
+    /**
+     * the configuration URI for this component
+     */
     private String configurationUri;
     private ServiceManager manager;
 
     /**
-     * Maps publication IDs to their configuration URIs.
-     * This is a persistent map to avoid unnecessary publication lookups.
-     * Whenever an authorization request for a new publication is dealt with,
-     * the publication's configuration URI is stored, to be re-used on later
-     * occasions (for the lifetime of the component).
+     * Maps publication IDs to their configuration URIs. This is a persistent
+     * map to avoid unnecessary publication lookups. Whenever an authorization
+     * request for a new publication is dealt with, the publication's
+     * configuration URI is stored, to be re-used on later occasions (for the
+     * lifetime of the component).
      */
     private Map pubId2configUri = new HashMap();
 
-
     /**
-     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase(java.lang.String, org.apache.lenya.ac.Role[], org.apache.lenya.cms.publication.Publication)
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase(java.lang.String,
+     *      org.apache.lenya.ac.Role[],
+     *      org.apache.lenya.cms.publication.Publication)
      */
     public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication)
-           throws AccessControlException {
+            throws AccessControlException {
         return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
     }
 
@@ -126,8 +130,10 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#isPermitted(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role)
-       */
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#isPermitted(java.lang.String,
+     *      org.apache.lenya.cms.publication.Publication,
+     *      org.apache.lenya.ac.Role)
+     */
     public boolean isPermitted(String usecase, Publication publication, Role role)
             throws AccessControlException {
         String configUri = getConfigurationURI(publication);
@@ -137,7 +143,9 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#setPermission(java.lang.String, org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role, boolean)
+     * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#setPermission(java.lang.String,
+     *      org.apache.lenya.cms.publication.Publication,
+     *      org.apache.lenya.ac.Role, boolean)
      */
     public void setPermission(String usecase, Publication publication, Role role, boolean granted)
             throws AccessControlException {
@@ -166,31 +174,32 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     }
 
     /**
+     * This method will substitute VISIT_USECASE if no USECASE_PARAMETER is set,
+     * so that it can be used to authorize plain page access as well.
      * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
      */
     public boolean authorize(Request request) throws AccessControlException {
 
         String usecase = request.getParameter(USECASE_PARAMETER);
-        boolean authorized = true;
+        if (usecase == null || "".equals(usecase)) {
+            usecase = VISIT_USECASE;
+        }
+
+        boolean authorized = false;
 
         try {
-            if (usecase != null) {
-
-                String _configurationUri;
-                // Check if the service has been parameterized with a configuration URI. This
-                // can be used for testing purposes etc.
-                if (getConfigurationURI() != null) {
-                    _configurationUri = getConfigurationURI();
-                } else {
-                    Publication publication = PublicationUtil.getPublication(this.manager, request);
-                    _configurationUri = getConfigurationURI(publication);
-                }
-
-                Role[] roles = PolicyUtil.getRoles(request);
-                authorized = authorizeUsecase(usecase, roles, _configurationUri);
+            String _configurationUri;
+            // Check if the service has been parameterized with a
+            // configuration URI. This can be used for testing purposes etc.
+            if (getConfigurationURI() != null) {
+                _configurationUri = getConfigurationURI();
             } else {
-                getLogger().debug("No usecase to authorize. Granting access.");
+                Publication publication = PublicationUtil.getPublication(this.manager, request);
+                _configurationUri = getConfigurationURI(publication);
             }
+
+            Role[] roles = PolicyUtil.getRoles(request);
+            authorized = authorizeUsecase(usecase, roles, _configurationUri);
         } catch (final PublicationException e) {
             throw new AccessControlException(e);
         } catch (final AccessControlException e) {
@@ -235,7 +244,6 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
         return configURI;
     }
-
 
     protected UsecaseRoles getUsecaseRoles(String _configurationUri) throws AccessControlException {
         UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
