@@ -244,10 +244,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     /**
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
-    public void lock() throws RepositoryException {
+    public synchronized void lock() throws RepositoryException {
         if (isCheckedOut() && !isCheckedOutBySession()) {
             throw new RepositoryException("Cannot lock [" + this
-                    + "]: node is checked out by this session.");
+                    + "]: node is checked out by another session.");
         }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
