@@ -44,7 +44,10 @@ public class ForceCheckIn extends DocumentUsecase {
         super.doCheckPreconditions();
 
         Document doc = getSourceDocument();
-
+        if (doc == null) {
+            return;
+        }
+        
         Node node = doc.getRepositoryNode();
         if (!node.isCheckedOut()) {
             String[] params = { DublinCoreHelper.getTitle(doc) };
