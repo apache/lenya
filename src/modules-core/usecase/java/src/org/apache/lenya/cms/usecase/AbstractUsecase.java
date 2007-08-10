@@ -47,6 +47,7 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.transaction.ConcurrentModificationException;
 import org.apache.lenya.transaction.LockException;
+import org.apache.lenya.transaction.TransactionLock;
 
 /**
  * Abstract usecase implementation.
@@ -305,8 +306,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                     getSession().rollback();
                 }
             } catch (ConcurrentModificationException e) {
-                getLogger().error(
-                        "Could not commit usecase [" + getName() + "]: " + e.getMessage());
+                getLogger()
+                        .error("Could not commit usecase [" + getName() + "]: " + e.getMessage());
                 addErrorMessage(e.getMessage());
             } catch (Exception e1) {
                 getLogger().error("Could not commit/rollback usecase [" + getName() + "]: ", e1);
@@ -729,6 +730,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
+     * <p>
+     * This method is locked via the class lock to avoid inter-usecase
+     * synchronization issues.
+     * </p>
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
     public final void lockInvolvedObjects() throws UsecaseException {
@@ -738,7 +743,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         } catch (RepositoryException e) {
             throw new UsecaseException(e);
         }
-        lockInvolvedObjects(getNodesToLock());
+        synchronized (TransactionLock.LOCK) {
+            lockInvolvedObjects(getNodesToLock());
+        }
     }
 
     protected void startTransaction() throws RepositoryException {
@@ -748,11 +755,13 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
+     * <p>
      * Lock the objects, for example when you need to change them (for example,
      * delete). If you know when entering the usecase what these objects are,
      * you do not need to call this, the framework will take of it if you
      * implement getObjectsToLock(). If you do not know in advance what the
      * objects are, you can call this method explicitly when appropriate.
+     * </p>
      * 
      * @param objects the transactionable objects to lock
      * @throws UsecaseException if an error occurs.
@@ -760,18 +769,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see #getNodesToLock()
      */
     public final void lockInvolvedObjects(Node[] objects) throws UsecaseException {
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug(
-                    "AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? "
-                            + (objects != null));
-
         try {
             for (int i = 0; i < objects.length; i++) {
                 if (!objects[i].isLocked()) {
-                    if (getLogger().isDebugEnabled())
-                        getLogger().debug(
-                                "AbstractUsecase::lockInvolvedObjects() locking " + objects[i]);
                     objects[i].lock();
                 }
                 if (!isOptimistic() && !objects[i].isCheckedOutBySession()) {
@@ -788,11 +788,11 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
         for (int i = 0; i < objects.length; i++) {
             if (objects[i].isCheckedOut() && !objects[i].isCheckedOutBySession()) {
-                if (getLogger().isDebugEnabled())
+                if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
                             "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
                                     + objects[i] + "] is already checked out");
-
+                }
                 canExecute = false;
             }
         }

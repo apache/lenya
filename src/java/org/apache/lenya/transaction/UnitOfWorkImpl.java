@@ -88,8 +88,6 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         this.removedObjects.add(object);
     }
 
-    private static Object classLock = UnitOfWorkImpl.class;
-
     /**
      * Commit the transaction. We lock this method for the whole class to avoid
      * synchronization problems.
@@ -100,7 +98,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             getLogger().debug("UnitOfWorkImpl::commit() called");
         }
 
-        synchronized (classLock) {
+        synchronized (TransactionLock.LOCK) {
 
             Set lockedObjects = this.locks.keySet();
 
@@ -186,7 +184,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("UnitOfWorkImpl::rollback() called");
         }
-        synchronized (classLock) {
+        synchronized (TransactionLock.LOCK) {
             if (getIdentityMap() != null) {
                 Object[] objects = getIdentityMap().getObjects();
                 for (int i = 0; i < objects.length; i++) {

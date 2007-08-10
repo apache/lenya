@@ -54,7 +54,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     /**
      * Ctor.
      * @param identity The identity.
-     * @param modifiable Determins if the repository items in this session can be modified. 
+     * @param modifiable Determins if the repository items in this session can
+     *        be modified.
      * @param manager The service manager.
      * @param logger The logger.
      */
@@ -67,13 +68,13 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
         this.identityMap = new IdentityMapImpl(logger);
         this.identity = identity;
-        
+
         ObservationRegistry registry = null;
         UUIDGenerator generator = null;
         try {
             registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
             addListener(registry);
-            
+
             generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
             this.id = generator.nextUUID();
         } catch (Exception e) {
@@ -86,7 +87,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
                 this.manager.release(generator);
             }
         }
-        
+
         if (modifiable) {
             this.unitOfWork = new UnitOfWorkImpl(this.identityMap, this.identity, getLogger());
         }
@@ -109,6 +110,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         return this.unitOfWork;
     }
 
+    private boolean committed = false;
+
     /**
      * Commits the transaction.
      * @throws RepositoryException if an error occurs.
@@ -125,6 +128,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
+
+        this.committed = true;
 
         for (Iterator i = this.events.iterator(); i.hasNext();) {
             RepositoryEvent event = (RepositoryEvent) i.next();
@@ -148,7 +153,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         }
         this.events.clear();
     }
-    
+
     protected SharedItemStore getSharedItemStore() {
         if (this.sharedItemStore == null) {
             try {
@@ -166,11 +171,10 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
-        
+
         if (!isModifiable() && factory.isSharable()) {
             return getSharedItemStore().getRepositoryItem(factory, key);
-        }
-        else {
+        } else {
             RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
             return (RepositoryItem) getIdentityMap().get(wrapper, key);
         }
@@ -224,9 +228,14 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     private List events = new ArrayList();
     private IdentityMap identityMap;
 
-    public void enqueueEvent(RepositoryEvent event) {
+    public synchronized void enqueueEvent(RepositoryEvent event) {
         if (!isModifiable()) {
             throw new RuntimeException("Can't enqueue event in unmodifiable session!");
+        }
+        if (committed) {
+            throw new RuntimeException(
+                    "No events can be queued after the session has been committed. Event: ["
+                            + event.getDescriptor() + "]");
         }
         Assert.isTrue("event belongs to session", event.getSession() == this);
         this.events.add(event);
@@ -239,7 +248,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     public boolean isModifiable() {
         return this.unitOfWork != null;
     }
-    
+
     private String id;
 
     public String getId() {
