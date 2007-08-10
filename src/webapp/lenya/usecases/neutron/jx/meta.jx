@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<dc:metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <dc:title>${title}</dc:title>
+  <dc:type></dc:type>
+  <dc:rights>All rights reserved.</dc:rights>
+  <dc:publisher></dc:publisher>
+  <dc:date></dc:date>
+  <dc:language></dc:language>
+  <dc:creator>${creator}</dc:creator>
+  <dc:coverage></dc:coverage>
+  <dc:description></dc:description>
+  <dc:extent></dc:extent>
+  <dc:identifier></dc:identifier>
+  <dc:subject></dc:subject>
+  <dc:relation></dc:relation>
+  <dc:contributor></dc:contributor>
+  <dc:source></dc:source>
+  <dc:format>${mimeType}</dc:format>
+</dc:metadata>

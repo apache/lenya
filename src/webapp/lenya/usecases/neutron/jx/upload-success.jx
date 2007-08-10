@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<status xmlns="http://www.wyona.org/neutron/1.0" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  <message>Upload completed</message>
+  <resource name="${filename}" uri="${filename}" internalURI="${filename}"/>
+</status>
+
