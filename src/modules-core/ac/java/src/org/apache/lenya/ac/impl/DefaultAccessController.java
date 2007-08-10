@@ -19,6 +19,7 @@
 package org.apache.lenya.ac.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,10 +54,12 @@ import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Default access controller implementation.
- * @version $Id$
+ * @version $Id: DefaultAccessController.java 563459 2007-08-07 12:00:20Z
+ *          nettings $
  */
 public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
         Configurable, Serviceable, Disposable, ItemManagerListener {
@@ -99,6 +102,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         getLogger().debug("=========================================================");
         getLogger().debug("Beginning authorization.");
 
+        resolveRoles(request);
+
         if (hasAuthorizers()) {
             Authorizer[] _authorizers = getAuthorizers();
             int i = 0;
@@ -109,12 +114,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("---------------------------------------------------------");
                     getLogger().debug("Invoking authorizer [" + _authorizers[i] + "]");
-                }
-
-                if (_authorizers[i] instanceof PolicyAuthorizer) {
-                    PolicyAuthorizer authorizer = (PolicyAuthorizer) _authorizers[i];
-                    authorizer.setAccreditableManager(this.accreditableManager);
-                    authorizer.setPolicyManager(this.policyManager);
                 }
 
                 authorized = authorized && _authorizers[i].authorize(request);
@@ -137,7 +136,37 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         return authorized;
     }
 
-    
+    protected void resolveRoles(Request request) throws AccessControlException {
+        String webappUrl = ServletHelper.getWebappURI(request);
+        Session session = request.getSession(true);
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+
+        Role[] roles;
+        if (identity.belongsTo(this.accreditableManager)) {
+            roles = this.policyManager.getGrantedRoles(this.accreditableManager, identity, webappUrl);
+        } else {
+            roles = new Role[0];
+            getLogger().debug(
+                    "No roles resolved for identity [" + identity
+                            + "] - belongs to wrong accreditable manager.");
+        }
+        saveRoles(request, roles);
+    }
+
+    /**
+     * Saves the roles of the current identity to the request.
+     * @param request The request.
+     * @param roles The roles.
+     */
+    protected void saveRoles(Request request, Role[] roles) {
+        String rolesString = "";
+        for (int i = 0; i < roles.length; i++) {
+            rolesString += " " + roles[i];
+        }
+        getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
+        request.setAttribute(Role.class.getName(), Arrays.asList(roles));
+    }
+
     /**
      * Configures or parameterizes a component, depending on the implementation
      * as Configurable or Parameterizable.
@@ -188,11 +217,11 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         if (config != null) {
             AccreditableManagerFactory factory = null;
             try {
-                factory = (AccreditableManagerFactory) this.manager.lookup(AccreditableManagerFactory.ROLE);
+                factory = (AccreditableManagerFactory) this.manager
+                        .lookup(AccreditableManagerFactory.ROLE);
                 this.accreditableManager = factory.getAccreditableManager(config);
                 this.accreditableManager.addItemManagerListener(this);
-            }
-            finally {
+            } finally {
                 if (factory != null) {
                     this.manager.release(factory);
                 }
@@ -212,7 +241,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             ConfigurationException, ParameterException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
         if (authorizerConfigurations.length > 0) {
-            this.authorizerSelector = (ServiceSelector) this.manager.lookup(Authorizer.ROLE + "Selector");
+            this.authorizerSelector = (ServiceSelector) this.manager.lookup(Authorizer.ROLE
+                    + "Selector");
 
             for (int i = 0; i < authorizerConfigurations.length; i++) {
                 String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
@@ -247,7 +277,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             }
             this.policyManagerSelector = (ServiceSelector) this.manager.lookup(PolicyManager.ROLE
                     + "Selector");
-            this.policyManager = (PolicyManager) this.policyManagerSelector.select(policyManagerType);
+            this.policyManager = (PolicyManager) this.policyManagerSelector
+                    .select(policyManagerType);
             configureOrParameterize(this.policyManager, policyManagerConfiguration);
         }
     }
@@ -445,7 +476,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getLogger().debug("Item was removed: [" + item + "]");
             getLogger().debug("Notifying policy manager");
         }
-        
+
         if (!(item instanceof Role)) {
             getPolicyManager().accreditableRemoved(getAccreditableManager(), (Accreditable) item);
         }

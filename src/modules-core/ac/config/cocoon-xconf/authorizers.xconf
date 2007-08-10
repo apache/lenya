@@ -16,10 +16,6 @@
   limitations under the License.
 -->
 
-<xconf xpath="/cocoon" unless="/cocoon/authorizers/component-instance[@name = 'policy']">
-  <authorizers>
-    <component-instance name="policy"
-      class="org.apache.lenya.ac.impl.PolicyAuthorizer"
-      logger="lenya.ac.authorizer.policy"/>
-  </authorizers>
+<xconf xpath="/cocoon" unless="/cocoon/authorizers">
+  <authorizers/>
 </xconf>
