@@ -584,7 +584,6 @@ public class SourceNodeRCML implements RCML {
 
     public synchronized void checkIn(Node node, boolean backup, boolean newVersion)
             throws RevisionControlException {
-
         long time = new Date().getTime();
 
         if (backup) {
@@ -608,7 +607,8 @@ public class SourceNodeRCML implements RCML {
         Vector entries = getEntries();
         if (entries.size() > 0) {
             RCMLEntry entry = (RCMLEntry) entries.get(0);
-            return entry.getType() == co && entry.getSessionId().equals(session.getId());
+            String otherSessionId = entry.getSessionId();
+            return entry.getType() == co && otherSessionId.equals(session.getId());
         }
         return false;
     }

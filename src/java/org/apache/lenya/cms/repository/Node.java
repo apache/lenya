@@ -26,7 +26,7 @@ import java.util.Collection;
  * @version $Id$
  */
 public interface Node extends RepositoryItem, ContentHolder {
-    
+
     /**
      * @return The session this node belongs to.
      */
@@ -65,7 +65,7 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @throws RepositoryException if the node does not exist.
      */
     OutputStream getOutputStream() throws RepositoryException;
-    
+
     /**
      * Locks the node.
      * @throws RepositoryException if an error occurs.
@@ -80,15 +80,22 @@ public interface Node extends RepositoryItem, ContentHolder {
 
     /**
      * Checks out the node.
-     * @throws RepositoryException if an error occurs. 
+     * @throws RepositoryException if an error occurs.
      */
     void checkout() throws RepositoryException;
 
     /**
      * Checks in the node.
-     * @throws RepositoryException if an error occurs. 
+     * @throws RepositoryException if the node is not checked out or is checked
+     *         out by a different session.
      */
     void checkin() throws RepositoryException;
+
+    /**
+     * Checks in the node even if it is checked out by a different session.
+     * @throws RepositoryException if the node is not checked out.
+     */
+    void forceCheckIn() throws RepositoryException;
 
     /**
      * Registers the node as dirty.
@@ -103,7 +110,7 @@ public interface Node extends RepositoryItem, ContentHolder {
     boolean isCheckedOut() throws RepositoryException;
 
     /**
-     * @return The ID of the user who has checked out this node. 
+     * @return The ID of the user who has checked out this node.
      * @throws RepositoryException if the node is not checked out.
      */
     String getCheckoutUserId() throws RepositoryException;
@@ -113,13 +120,13 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @throws RepositoryException if an error occurs.
      */
     boolean isCheckedOutBySession() throws RepositoryException;
-    
+
     /**
      * @param source The node to copy the revisions from.
      * @throws RepositoryException if an error occurs.
      */
     void copyRevisionsFrom(Node source) throws RepositoryException;
-    
+
     /**
      * @param revisionNumber The revision number to roll back.
      * @throws RepositoryException if this revision doesn't exist.
@@ -137,7 +144,7 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @throws RepositoryException if an error occurs.
      */
     void registerRemoved() throws RepositoryException;
-    
+
     /**
      * @return The revision history.
      */
@@ -148,5 +155,5 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @throws RepositoryException if an error occurs.
      */
     void delete() throws RepositoryException;
-    
+
 }

@@ -114,6 +114,10 @@
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>  
+  <usecase id="sitemanagement.forceCheckIn">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>  
   <usecase id="tab.acArchive">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>

@@ -70,4 +70,11 @@
   review state.</message>
   <message key="no-rollback-no-privileges">Rollback disabled. You do not
   have sufficient privileges.</message>
+  
+  <!-- force check-in -->
+  <message key="force-checkin">Force Check-In</message>
+  <message key="force-checkin-question">Do you really want to check-in the document '{0}'?</message>
+  <message key="user-logged-in">The user '{0}' is still logged in.</message>
+  <message key="user-not-logged-in">The user '{0}' is not logged in anymore.</message>
+  <message key="not-checked-out">The document '{0}' is not checked out.</message>
 </catalogue>

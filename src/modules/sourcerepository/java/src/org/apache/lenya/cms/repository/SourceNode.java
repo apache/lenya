@@ -105,12 +105,27 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         RCML rcml = getRcml();
         synchronized (rcml) {
             try {
+                if (!rcml.isCheckedOutBySession(getSession())) {
+                    throw new RepositoryException("Cannot check in node [" + getSourceURI()
+                            + "]: not checked out by this session!");
+                }
+                boolean newVersion = getSession().isDirty(this);
+                rcml.checkIn(this, exists(), newVersion);
+            } catch (Exception e) {
+                throw new RepositoryException(e);
+            }
+        }
+    }
+    
+    public void forceCheckIn() throws RepositoryException {
+        RCML rcml = getRcml();
+        synchronized (rcml) {
+            try {
                 if (!rcml.isCheckedOut()) {
                     throw new RepositoryException("Cannot check in node [" + getSourceURI()
                             + "]: not checked out!");
                 }
-                boolean newVersion = getSession().isDirty(this);
-                rcml.checkIn(this, exists(), newVersion);
+                rcml.checkIn(this, false, false);
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }

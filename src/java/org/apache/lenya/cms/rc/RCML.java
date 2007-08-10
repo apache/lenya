@@ -170,4 +170,5 @@ public interface RCML {
      * @throws RevisionControlException if an error occurs.
      */
     boolean isCheckedOutBySession(Session session) throws RevisionControlException;
+
 }

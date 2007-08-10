@@ -70,5 +70,11 @@
   keine Wiederherstellung möglich.</message>
   <message key="no-rollback-no-privileges">Keine ausreichenden Rechte zum Wiederherstellen.</message>
                    
+  <!-- force check-in -->
+  <message key="force-checkin">Check-In erzwingen</message>
+  <message key="force-checkin-question">Wollen Sie das Dokument "{0}" wirklich einchecken?</message>
+  <message key="user-logged-in">Der Nutzer "{0}" ist noch eingeloggt.</message>
+  <message key="user-not-logged-in">Der Nutzer "{0}" ist nicht mehr eingeloggt.</message>
+  <message key="not-checked-out">Das Dokument "{0}" ist nicht ausgecheckt.</message>
 </catalogue>
 
