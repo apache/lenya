@@ -245,10 +245,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public synchronized void lock() throws RepositoryException {
-        if (isCheckedOut() && !isCheckedOutBySession()) {
-            throw new RepositoryException("Cannot lock [" + this
-                    + "]: node is checked out by another session.");
-        }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
         }
@@ -409,7 +405,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public long getLastModified() throws RepositoryException {
-
+        
         if (!exists()) {
             throw new RepositoryException("The node [" + this + "] does not exist!");
         }
