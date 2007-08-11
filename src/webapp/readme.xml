@@ -35,6 +35,17 @@
     
     <h2>Important notes for beta testers of Lenya 2.0</h2>
     
+    <h3>2007-07-27: PolicyAuthorizer removed</h3>
+    <p>
+      The access control for Lenya documents is now also handled by the
+    UsecaseAuthorizer via a newly introduced usecase "ac.visit". For your
+      custom publications, you will need to give your users the appropriate
+    permissions. We suggest copying the <code>visit.rml</code> role from the default
+      publication.<br />
+      Moreover, be sure to remove the <code>&lt;authorizer
+      type="policy"/&gt;</code> line from your publications'
+    <code>config/access-control/access-control.xml</code>.
+    </p>
     <h3>2007-07-27: new generic editor usecases</h3>
     <p>
       A new generic set of editor helper usecases has been introduced:
@@ -93,9 +104,9 @@
       The uuid2url and proxy transformers now complement each other. You have
       to apply the proxy transformer right after the uuid2url transformer:
     </p>
-    <source xml:space="preserve"><![CDATA[<map:transform type="uuid2url"/>
+    <p><code><![CDATA[<map:transform type="uuid2url"/>
 <map:transform type="proxy"/>
-...]]></source>
+...]]></code></p>
     <p>
       Internal links (to documents, CSS, etc.) don't need to contain the context path
       anymore, this is now handled by the proxy transformer.
@@ -108,7 +119,7 @@
       of URL to the navigation element calls, i.e. the step <code>/{6}</code> in the following call
       has to be the document's path in the site structure: 
     </p>
-    <source xml:space="preserve"><![CDATA[<map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml>]]></source>
+    <p><code><![CDATA[<map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml>]]></code></p>
     
     <h3>2007-05-25: Converted "About Lenya" page to usecase</h3>
     <p>
@@ -124,8 +135,8 @@
       this attribute yet. Since this has been fixed, you have to update your
       <code>$PUB_HOME/config/access-control/access-control.xml</code> files:
     </p>
-    <source xml:space="preserve"><![CDATA[<user-type class="org.apache.lenya.ac.file.FileUser"
-    create-use-case="admin.addUser">Local User</user-type>]]></source>
+    <p><code><![CDATA[<user-type class="org.apache.lenya.ac.file.FileUser"
+    create-use-case="admin.addUser">Local User</user-type>]]></code></p>
     
     <h3>2007-05-05: Introduced <code>workflow.multiWorkflowInvoke</code> usecase</h3>
     <p>
