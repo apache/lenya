@@ -81,6 +81,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     protected void initParameters() {
     }
 
+    /**
+     * Advance the usecase state machine to the next state. This method has to be 
+     * called at the end of the corresponding method to ensure that the subsequent
+     * methods can only be invoked if nothing went wrong.
+     * @param event The vent to invoke.
+     */
     protected void advanceState(String event) {
         StateMachine machine = (StateMachine) getParameter(PARAMETER_STATE_MACHINE);
         machine.invoke(event);
@@ -283,7 +289,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#execute()
      */
     public final void execute() throws UsecaseException {
-        advanceState("execute");
         Exception exception = null;
         try {
             clearErrorMessages();
@@ -315,6 +320,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                         + " (see logfiles for details)");
             }
         }
+        advanceState("execute");
     }
 
     /**
@@ -331,7 +337,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#checkPostconditions()
      */
     public void checkPostconditions() throws UsecaseException {
-        advanceState("checkPostconditions");
         try {
             clearErrorMessages();
             clearInfoMessages();
@@ -344,6 +349,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 throw new UsecaseException(e);
             }
         }
+        advanceState("checkPostconditions");
     }
 
     /**
@@ -545,8 +551,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     protected DocumentFactory getDocumentFactory() {
         DocumentFactory factory = (DocumentFactory) getParameter(PARAMETER_FACTORY);
-        if (factory == null || factory.getSession() != getSession()) {
-            factory = DocumentUtil.createDocumentFactory(this.manager, getSession());
+        Session session = getSession();
+        if (factory == null || factory.getSession() != session) {
+            factory = DocumentUtil.createDocumentFactory(this.manager, session);
             setParameter(PARAMETER_FACTORY, factory);
         }
         return factory;
@@ -737,7 +744,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
     public final void lockInvolvedObjects() throws UsecaseException {
-        advanceState("lockInvolvedObjects");
         try {
             startTransaction();
         } catch (RepositoryException e) {
@@ -746,6 +752,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         synchronized (TransactionLock.LOCK) {
             lockInvolvedObjects(getNodesToLock());
         }
+        advanceState("lockInvolvedObjects");
     }
 
     protected void startTransaction() throws RepositoryException {
