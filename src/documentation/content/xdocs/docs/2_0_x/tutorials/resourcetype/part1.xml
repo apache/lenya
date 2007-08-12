@@ -125,13 +125,19 @@
   <component-instance name="person" logger="lenya.resourcetypes"
     class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     
-    <schema language="http://relaxng.org/ns/structure/0.9"
-      src="fallback://lenya/modules/person/resources/schemas/foaf.rng"/>
+    <schema 
+       namespace="http://relaxng.org/ns/structure/0.9"
+       uri="fallback://lenya/modules/person/resources/schemas/foaf.rng"
+    />
     
-    <!-- Default time in seconds until the resource-type has expired -->  
+    <!-- Default time cache time in seconds for this resource type -->  
     <expires seconds="3600" />
     
-    <sample-name mime-type="application/rdf+xml">fallback://lenya/modules/person/samples/foaf.xml</sample-name>
+    <sample
+       name="Basic FOAF sample"
+       mime-type="application/rdf+xml"
+       uri="fallback://lenya/modules/person/samples/foaf.xml"
+    />
     
     <format name="xhtml" uri="cocoon://modules/person/xhtml.xml"/>
     <format name="xhtml-include" uri="cocoon://modules/person/xhtml-include.xml"/>
