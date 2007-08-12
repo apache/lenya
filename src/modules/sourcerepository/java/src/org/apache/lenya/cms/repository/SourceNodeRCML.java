@@ -69,6 +69,12 @@ public class SourceNodeRCML implements RCML {
     protected static final String ELEMENT_XPSREVISIONCONTROL = "XPSRevisionControl";
     protected static final String ELEMENT_SESSION = "session";
 
+    protected static final String ATTR_BACKUP = "backup";
+    protected static final String ATTR_TIME = "time";
+    protected static final String ATTR_VERSION = "version";
+    protected static final String ATTR_IDENTITY = "identity";
+    protected static final String ATTR_SESSION = "session";
+
     {
         ELEMENTS.put(new Short(ci), ELEMENT_CHECKIN);
         ELEMENTS.put(new Short(co), ELEMENT_CHECKOUT);
@@ -80,7 +86,7 @@ public class SourceNodeRCML implements RCML {
      * @param manager The service manager.
      */
     public SourceNodeRCML(String contentSourceUri, String metaSourceUri, ServiceManager manager) {
-        this.maximalNumberOfEntries = 10;
+        this.maximalNumberOfEntries = 200;
         this.maximalNumberOfEntries = (2 * this.maximalNumberOfEntries) + 1;
         this.manager = manager;
         this.contentSourceUri = contentSourceUri;
@@ -177,24 +183,17 @@ public class SourceNodeRCML implements RCML {
     protected Element saveToXml(NamespaceHelper helper, RCMLEntry entry)
             throws RevisionControlException {
         String elementName = (String) ELEMENTS.get(new Short(entry.getType()));
-        Element sessionElement = helper.createElement(ELEMENT_SESSION, entry.getSessionId());
-        Element identityElement = helper.createElement(ELEMENT_IDENTITY, entry.getIdentity());
-        Element timeElement = helper.createElement(ELEMENT_TIME, Long.toString(entry.getTime()));
-
         Element entryElement = helper.createElement(elementName);
 
-        entryElement.appendChild(identityElement);
-        entryElement.appendChild(timeElement);
-        entryElement.appendChild(sessionElement);
+        entryElement.setAttribute(ATTR_IDENTITY, entry.getIdentity());
+        entryElement.setAttribute(ATTR_SESSION, entry.getSessionId());
+        entryElement.setAttribute(ATTR_TIME, Long.toString(entry.getTime()));
 
         if (entry.getType() == ci) {
             CheckInEntry checkInEntry = (CheckInEntry) entry;
-            Element versionElement = helper.createElement(ELEMENT_VERSION, Integer
-                    .toString(checkInEntry.getVersion()));
-            entryElement.appendChild(versionElement);
+            entryElement.setAttribute(ATTR_VERSION, Integer.toString(checkInEntry.getVersion()));
             if (checkInEntry.hasBackup()) {
-                Element backupElement = helper.createElement(ELEMENT_BACKUP);
-                entryElement.appendChild(backupElement);
+                entryElement.setAttribute(ATTR_BACKUP, "true");
             }
         }
 
@@ -269,6 +268,28 @@ public class SourceNodeRCML implements RCML {
     }
 
     protected RCMLEntry getEntry(NamespaceHelper helper, Element element) {
+        if (element.hasAttribute(ATTR_IDENTITY)) {
+            String type = element.getLocalName();
+            String sessionId = element.getAttribute(ATTR_SESSION);
+            String identity = element.getAttribute(ATTR_IDENTITY);
+            String timeString = element.getAttribute(ATTR_TIME);
+            long time = new Long(timeString).longValue();
+            if (type.equals(ELEMENT_CHECKIN)) {
+                String versionString = element.getAttribute(ATTR_VERSION);
+                int version = new Integer(versionString).intValue();
+                boolean backup = element.hasAttribute(ATTR_BACKUP);
+                return new CheckInEntry(sessionId, identity, time, version, backup);
+            } else if (type.equals(ELEMENT_CHECKOUT)) {
+                return new CheckOutEntry(sessionId, identity, time);
+            } else {
+                throw new RuntimeException("Unsupported RCML entry type: [" + type + "]");
+            }
+        } else {
+            return getLegacyEntry(helper, element);
+        }
+    }
+
+    protected RCMLEntry getLegacyEntry(NamespaceHelper helper, Element element) {
         String type = element.getLocalName();
         String sessionId = getChildValue(helper, element, ELEMENT_SESSION, "");
         String identity = getChildValue(helper, element, ELEMENT_IDENTITY);
@@ -329,7 +350,6 @@ public class SourceNodeRCML implements RCML {
             } catch (Exception e) {
                 throw new RevisionControlException(e);
             }
-
         }
         return this.entries;
     }
@@ -416,8 +436,8 @@ public class SourceNodeRCML implements RCML {
                 long time = entry.getTime();
                 deleteBackup(this.contentSourceUri, time);
                 deleteBackup(this.metaSourceUri, time);
-                this.entries.remove(entry);
             }
+            this.entries.remove(entry);
         }
         setDirty();
     }
