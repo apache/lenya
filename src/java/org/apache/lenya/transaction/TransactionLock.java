@@ -22,6 +22,9 @@ package org.apache.lenya.transaction;
  */
 public class TransactionLock {
 
+    /**
+     * The global transaction lock.
+     */
     public static final Object LOCK = TransactionLock.class;
     
 }

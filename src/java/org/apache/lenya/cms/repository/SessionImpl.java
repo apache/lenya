@@ -38,6 +38,7 @@ import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.Lockable;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.TransactionLock;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.transaction.UnitOfWorkImpl;
@@ -105,7 +106,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     protected UnitOfWork getUnitOfWork() {
         if (this.unitOfWork == null) {
-            throw new RuntimeException("This session is not modifiable!");
+            throw new RuntimeException("This session [" + getId() + "] is not modifiable!");
         }
         return this.unitOfWork;
     }
@@ -121,8 +122,10 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     public void commit() throws RepositoryException, ConcurrentModificationException {
 
         try {
-            getUnitOfWork().commit();
-            getSharedItemStore().clear();
+            synchronized (TransactionLock.LOCK) {
+                getUnitOfWork().commit();
+                getSharedItemStore().clear();
+            }
         } catch (ConcurrentModificationException e) {
             throw e;
         } catch (TransactionException e) {
@@ -147,7 +150,9 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     public void rollback() throws RepositoryException {
         try {
-            getUnitOfWork().rollback();
+            synchronized (TransactionLock.LOCK) {
+                getUnitOfWork().rollback();
+            }
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }

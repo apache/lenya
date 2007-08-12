@@ -98,61 +98,58 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             getLogger().debug("UnitOfWorkImpl::commit() called");
         }
 
-        synchronized (TransactionLock.LOCK) {
+        Set lockedObjects = this.locks.keySet();
 
-            Set lockedObjects = this.locks.keySet();
-
-            for (Iterator i = lockedObjects.iterator(); i.hasNext();) {
-                Transactionable t = (Transactionable) i.next();
-                if (t.hasChanged()) {
-                    throw new ConcurrentModificationException(t);
-                }
+        for (Iterator i = lockedObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            if (t.hasChanged()) {
+                throw new ConcurrentModificationException(t);
             }
+        }
 
-            Set involvedObjects = new HashSet();
-            involvedObjects.addAll(this.newObjects);
-            involvedObjects.addAll(this.modifiedObjects);
-            involvedObjects.addAll(this.removedObjects);
+        Set involvedObjects = new HashSet();
+        involvedObjects.addAll(this.newObjects);
+        involvedObjects.addAll(this.modifiedObjects);
+        involvedObjects.addAll(this.removedObjects);
 
-            for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
-                Transactionable t = (Transactionable) i.next();
-                t.checkout();
-            }
+        for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.checkout();
+        }
 
-            for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
-                Transactionable t = (Transactionable) i.next();
-                t.createTransactionable();
-                t.saveTransactionable();
+        for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.createTransactionable();
+            t.saveTransactionable();
+        }
+        for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("UnitOfWorkImpl::commit() calling save on [" + t + "]");
             }
-            for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
-                Transactionable t = (Transactionable) i.next();
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("UnitOfWorkImpl::commit() calling save on [" + t + "]");
-                }
-                t.saveTransactionable();
-            }
-            for (Iterator i = this.removedObjects.iterator(); i.hasNext();) {
-                Transactionable t = (Transactionable) i.next();
-                t.deleteTransactionable();
-            }
+            t.saveTransactionable();
+        }
+        for (Iterator i = this.removedObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.deleteTransactionable();
+        }
 
-            if (getIdentityMap() != null) {
-                Object[] objects = getIdentityMap().getObjects();
-                for (int i = 0; i < objects.length; i++) {
-                    if (objects[i] instanceof Transactionable) {
-                        Transactionable t = (Transactionable) objects[i];
-                        if (t.isCheckedOutBySession() && !this.removedObjects.contains(t)) {
-                            t.checkin();
-                        }
-                        if (t.isLocked()) {
-                            t.unlock();
-                        }
+        if (getIdentityMap() != null) {
+            Object[] objects = getIdentityMap().getObjects();
+            for (int i = 0; i < objects.length; i++) {
+                if (objects[i] instanceof Transactionable) {
+                    Transactionable t = (Transactionable) objects[i];
+                    if (t.isCheckedOutBySession() && !this.removedObjects.contains(t)) {
+                        t.checkin();
+                    }
+                    if (t.isLocked()) {
+                        t.unlock();
                     }
                 }
             }
-
-            resetTransaction();
         }
+
+        resetTransaction();
 
     }
 
@@ -184,18 +181,16 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("UnitOfWorkImpl::rollback() called");
         }
-        synchronized (TransactionLock.LOCK) {
-            if (getIdentityMap() != null) {
-                Object[] objects = getIdentityMap().getObjects();
-                for (int i = 0; i < objects.length; i++) {
-                    if (objects[i] instanceof Transactionable) {
-                        Transactionable t = (Transactionable) objects[i];
-                        if (t.isCheckedOutBySession()) {
-                            t.checkin();
-                        }
-                        if (t.isLocked()) {
-                            t.unlock();
-                        }
+        if (getIdentityMap() != null) {
+            Object[] objects = getIdentityMap().getObjects();
+            for (int i = 0; i < objects.length; i++) {
+                if (objects[i] instanceof Transactionable) {
+                    Transactionable t = (Transactionable) objects[i];
+                    if (t.isCheckedOutBySession()) {
+                        t.checkin();
+                    }
+                    if (t.isLocked()) {
+                        t.unlock();
                     }
                 }
             }
