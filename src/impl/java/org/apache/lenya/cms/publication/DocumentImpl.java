@@ -581,7 +581,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                 return structure.getByUuid(getUUID(), getLanguage());
             } else {
                 throw new DocumentException("The document [" + this
-                        + "] is not referenced in the site structure!");
+                        + "] is not referenced in the site structure [" + structure + "].");
             }
         } catch (Exception e) {
             throw new DocumentException(e);
