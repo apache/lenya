@@ -28,7 +28,6 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
