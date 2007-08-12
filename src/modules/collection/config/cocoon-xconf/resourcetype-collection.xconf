@@ -21,8 +21,14 @@
 <xconf xpath="/cocoon/resource-types" unless="/cocoon/resource-types/component-instance[@name = 'collection']">
 
   <component-instance name="collection"
-                      logger="lenya.resourcetypes.collectoin"
+                      logger="lenya.resourcetypes.collection"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    <!-- FIXME: shouldn't this resource type provide validation? 
+    <schema
+      namespace="http://relaxng.org/ns/structure/0.9"
+      uri=""
+    />
+    -->
     <sample name="Manual" mime-type="application/xml" uri="fallback://lenya/modules/collection/samples/collection.xml"/>
     <sample name="Children" mime-type="application/xml" uri="fallback://lenya/modules/collection/samples/children.xml"/>
     <format name="collection" uri="cocoon://modules/collection/collection.xml"/>

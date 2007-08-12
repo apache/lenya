@@ -43,11 +43,21 @@
     </p>
     <ul>
       <li>
-        <code>&lt;sample-name&gt;fallback://foo&gt;/sample-name&gt;</code>
+        <code>&lt;sample-name mime-type="baz" name="bar"&gt;fallback://foo&lt;/sample-name&gt;</code>
         becomes
-        <code>&lt;sample uri="fallback://foo"/&gt;</code>
+        <code>&lt;sample mime-type="baz" name="bar" uri="fallback://foo"/&gt;</code>
+      </li>
+      <li>
+        <code>&lt;schema src="fallback://foo.rng" language="http://relaxng.org/ns/structure/0.9"/&gt;</code>
+        becomes
+        <code>&lt;schema uri="fallback://foo.rng" namespace="http://relaxng.org/ns/structure/0.9"/&gt;</code>
       </li>
     </ul>
+    <p>
+      After that, you need to delete
+    <code>build/lenya/webapp/WEB-INF/cocoon.xconf</code> and rebuild Lenya
+      to deploy the changes.
+    </p>
     
     <h3>2007-07-27: PolicyAuthorizer removed</h3>
     <p>

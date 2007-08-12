@@ -23,8 +23,10 @@
   <component-instance name="usecase"
     logger="lenya.resourcetypes.usecase"
     class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema language="http://relaxng.org/ns/structure/0.9"
-      src="fallback://lenya/modules/usecasedocument/resources/schemas/usecase.rng"/>
+    <schema 
+      namespace="http://relaxng.org/ns/structure/0.9"
+      uri="fallback://lenya/modules/usecasedocument/resources/schemas/usecase.rng"
+    />
     <sample 
       mime-type="application/xml"
       uri="fallback://lenya/modules/usecasedocument/samples/usecase.xml"

@@ -23,7 +23,10 @@
   <component-instance name="homepage"
                       logger="lenya.resourcetypes.homepage"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/modules/homepage/resources/schemas/homepage.rng" language="http://relaxng.org/ns/structure/0.9"/>
+    <schema 
+       uri="fallback://lenya/modules/homepage/resources/schemas/homepage.rng"
+       namespace="http://relaxng.org/ns/structure/0.9"
+    />
 
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="0" />

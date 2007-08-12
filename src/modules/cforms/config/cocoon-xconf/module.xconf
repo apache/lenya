@@ -23,7 +23,10 @@
   <component-instance name="cforms"
                       logger="lenya.resourcetypes.cforms"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/modules/cforms/schemas/cforms.rng" language="http://relaxng.org/ns/structure/0.9"/>
+    <schema 
+      uri="fallback://lenya/modules/cforms/schemas/cforms.rng" 
+      namespace="http://relaxng.org/ns/structure/0.9"
+    />
     <sample 
       mime-type="application/xml"
       uri="fallback://lenya/modules/cforms/samples/cforms.xml"

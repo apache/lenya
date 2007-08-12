@@ -47,18 +47,16 @@ import org.apache.lenya.xml.Schema;
 public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable, ThreadSafe,
         ResourceType, Serviceable {
 
+    protected static final String ATTRIBUTE_URI = "uri";
+    protected static final String ATTRIBUTE_NAME = "name";
     protected static final String ELEMENT_SCHEMA = "schema";
-    protected static final String ATTRIBUTE_SRC = "src";
+    protected static final String ATTRIBUTE_NAMESPACE = "namespace";
     protected static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
     protected static final String ATTRIBUTE_XPATH = "xpath";
     protected static final String ELEMENT_SAMPLES = "samples";
     protected static final String ELEMENT_SAMPLE = "sample";
-    protected static final String ATTRIBUTE_SAMPLE_NAME = "name";
     protected static final String ATTRIBUTE_SAMPLE_MIME_TYPE = "mime-type";
     protected static final String ELEMENT_FORMAT = "format";
-    protected static final String ATTRIBUTE_URI = "uri";
-    protected static final String ATTRIBUTE_NAME = "name";
-    protected static final String ATTRIBUTE_LANGUAGE = "language";
     protected static final String EXPIRES_ELEMENT = "expires";
     protected static final String SECONDS_ATTRIBUTE = "seconds";
 
@@ -83,8 +81,8 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             Configuration schemaConf = config.getChild(ELEMENT_SCHEMA, false);
 
             if (schemaConf != null) {
-                String uri = schemaConf.getAttribute(ATTRIBUTE_SRC);
-                String language = schemaConf.getAttribute(ATTRIBUTE_LANGUAGE);
+                String uri = schemaConf.getAttribute(ATTRIBUTE_URI);
+                String language = schemaConf.getAttribute(ATTRIBUTE_NAMESPACE);
                 this.schema = new Schema(language, uri);
             }
 
@@ -128,7 +126,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         Configuration[] samplesConf = samplesParentConfig.getChildren(ELEMENT_SAMPLE);
         Map samples = new LinkedHashMap();
         for (int i = 0; i < samplesConf.length; i++) {
-            String name = samplesConf[i].getAttribute(ATTRIBUTE_SAMPLE_NAME, DEFAULT_SAMPLE_NAME);
+            String name = samplesConf[i].getAttribute(ATTRIBUTE_NAME, DEFAULT_SAMPLE_NAME);
             String mimeType = samplesConf[i].getAttribute(ATTRIBUTE_SAMPLE_MIME_TYPE);
             String uri = samplesConf[i].getAttribute(ATTRIBUTE_URI);
             samples.put(name, new Sample(name, mimeType, uri));

@@ -23,8 +23,14 @@
   <component-instance name="resource"
                       logger="lenya.resourcetypes.resource"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/modules/resource/resources/schemas/resource.rng" language="http://relaxng.org/ns/structure/0.9"/>
-    <sample mime-type="application/xml" uri="fallback://lenya/modules/resource/samples/resource.xml"/>
+    <schema 
+       uri="fallback://lenya/modules/resource/resources/schemas/resource.rng" 
+       namespace="http://relaxng.org/ns/structure/0.9"
+    />
+    <sample 
+       mime-type="application/xml" 
+       uri="fallback://lenya/modules/resource/samples/resource.xml"
+    />
     <format name="xhtml" uri="cocoon://modules/resource/xhtml.xml"/>
     <format name="downloadLink" uri="cocoon://modules/resource/downloadLink.xml"/>
     <format name="icon" uri="cocoon://modules/resource/icon"/>

@@ -23,8 +23,9 @@
   <component-instance name="xhtml"
     logger="lenya.resourcetypes.xhtml"
     class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema language="http://relaxng.org/ns/structure/0.9"
-      src="fallback://lenya/modules/xhtml/resources/schemas/xhtml.rng"/>
+    <schema 
+      namespace="http://relaxng.org/ns/structure/0.9"
+      uri="fallback://lenya/modules/xhtml/resources/schemas/xhtml.rng"/>
     
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="3600" />
