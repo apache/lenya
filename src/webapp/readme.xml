@@ -28,12 +28,26 @@
     <h2>Note to developers</h2>
     <p>
       Please use this new README to inform users
-      about changes in the code or behaviour of Lenya. It is located under
+      about changes in the code or behaviour of Lenya, particularly those
+      that require custom code or publications to be modified. This file is located under
       <code>src/webapp/readme.xml</code>. Its contents will be shown on the global 
       welcome page, and also on the introduction page of every publication.
     </p>
     
     <h2>Important notes for beta testers of Lenya 2.0</h2>
+    
+    <h3>2007-08-12: Resource type configuration changed</h3>
+    <p>
+      The configuration syntax of resource types has been changed for consistency. 
+      Please apply the following changes to your custom resource type configurations:
+    </p>
+    <ul>
+      <li>
+        <code>&lt;sample-name&gt;fallback://foo&gt;/sample-name&gt;</code>
+        becomes
+        <code>&lt;sample uri="fallback://foo"/&gt;</code>
+      </li>
+    </ul>
     
     <h3>2007-07-27: PolicyAuthorizer removed</h3>
     <p>

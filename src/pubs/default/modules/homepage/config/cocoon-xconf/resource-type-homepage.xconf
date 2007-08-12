@@ -28,7 +28,10 @@
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="0" />
 
-    <sample-name mime-type="application/xhtml+xml">fallback://lenya/modules/homepage/samples/homepage.xml</sample-name>
+    <sample 
+       mime-type="application/xhtml+xml"
+       uri="fallback://lenya/modules/homepage/samples/homepage.xml"
+    />
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@data"/>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@src"/>
