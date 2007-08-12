@@ -26,14 +26,11 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -87,17 +84,18 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     protected static final String NAMESPACE = "http://apache.org/cocoon/lenya/sitetree/1.0";
 
     private static final boolean DEFAULT_VISIBILITY = true;
-    
+
     private boolean loaded = false;
 
     protected synchronized void load() {
-        
+
+        Node repoNode = getRepositoryNode();
+
         if (this.loaded) {
             return;
         }
-        
+
         try {
-            Node repoNode = getRepositoryNode();
             // lastModified check is necessary for clustering, but can cause 404s
             // because of the 1s file system last modification granularity
             if (repoNode.exists() /* && repoNode.getLastModified() > this.lastModified */) {
@@ -112,14 +110,14 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
                 this.loading = false;
                 this.lastModified = lastModified;
             }
-            
+
             if (!repoNode.exists() && this.lastModified > -1) {
                 reset();
                 this.lastModified = -1;
             }
-            
+
             this.loaded = true;
-            
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -392,30 +390,9 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     public Publication getPublication() {
         return this.area.getPublication();
     }
-    
+
     protected Session getSession() {
-        Session areaSession = this.area.getPublication().getFactory().getSession();
-        
-        // if the session which the sitetree originates from is modifiable, we use this one
-        if (areaSession.isModifiable()) {
-            return areaSession;
-        }
-        
-        // otherwise, we have to use the current request's session, not the SharedItemStore
-        else {
-            ContextUtility ctxUtil = null;
-            try {
-                ctxUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                Request req = ctxUtil.getRequest();
-                return RepositoryUtil.getSession(this.manager, req);
-            } catch (Exception e) {
-                throw new RuntimeException("Creating repository node failed: ", e);
-            } finally {
-                if (ctxUtil != null) {
-                    this.manager.release(ctxUtil);
-                }
-            }
-        }
+        return this.area.getPublication().getFactory().getSession();
     }
 
     public Node getRepositoryNode() {
@@ -479,9 +456,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         TreeNode parent;
         if (node.isTopLevel()) {
             parent = getRoot();
-        }
-        else {
-            parent = (TreeNode) node.getParent();;
+        } else {
+            parent = (TreeNode) node.getParent();
         }
         return parent;
     }
