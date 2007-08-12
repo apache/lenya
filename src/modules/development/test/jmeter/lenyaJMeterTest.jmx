@@ -67,7 +67,7 @@
           <stringProp name="RandomTimer.range">500</stringProp>
         </GaussianRandomTimer>
         <hashTree/>
-        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Login &quot;lenya&quot;" enabled="true"/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Login &quot;lenya&quot;" enabled="false"/>
         <hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
             <stringProp name="HTTPSampler.path">/default/authoring/index.html</stringProp>
@@ -98,7 +98,7 @@
             <hashTree/>
           </hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
-            <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=ac.login&amp;lenya.continuation=${lenya.continuation}</stringProp>
+            <stringProp name="HTTPSampler.path">/default/authoring/index.html?lenya.usecase=ac.login&amp;lenya.continuation=${lenya.continuation}</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -148,7 +148,7 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Add admin user" enabled="true"/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Add admin user" enabled="false"/>
         <hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Add user" enabled="true">
             <stringProp name="HTTPSampler.path">/default/authoring/index.html?lenya.usecase=admin.addUser</stringProp>
@@ -179,7 +179,7 @@
             <hashTree/>
           </hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Add user" enabled="true">
-            <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=admin.addUser&amp;lenya.continuation=${lenya.continuation}</stringProp>
+            <stringProp name="HTTPSampler.path">/default/authoring/index.html?lenya.usecase=admin.addUser&amp;lenya.continuation=${lenya.continuation}</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -250,7 +250,7 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Logout" enabled="true"/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Logout" enabled="false"/>
         <hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Logout page" enabled="true">
             <stringProp name="HTTPSampler.path">/default/authoring/index.html</stringProp>
@@ -289,7 +289,7 @@
             <hashTree/>
           </hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Logout page" enabled="true">
-            <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=ac.logout&amp;lenya.continuation=${lenya.continuation}</stringProp>
+            <stringProp name="HTTPSampler.path">/default/authoring/index.html?lenya.usecase=ac.logout&amp;lenya.continuation=${lenya.continuation}</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -356,7 +356,7 @@
             <hashTree/>
           </hashTree>
           <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Login page" enabled="true">
-            <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?lenya.usecase=ac.login&amp;lenya.continuation=${lenya.continuation}</stringProp>
+            <stringProp name="HTTPSampler.path">/default/authoring/index.html?lenya.usecase=ac.login&amp;lenya.continuation=${lenya.continuation}</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -407,21 +407,29 @@
           </hashTree>
         </hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop" enabled="true">
-          <stringProp name="LoopController.loops">20</stringProp>
+          <stringProp name="LoopController.loops">10</stringProp>
           <boolProp name="LoopController.continue_forever">true</boolProp>
         </LoopController>
         <hashTree>
           <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="News" enabled="true"/>
           <hashTree>
             <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Create News" enabled="true">
-              <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html?doctype=xhtml&amp;lenya.usecase=sitemanagement.create</stringProp>
+              <stringProp name="HTTPSampler.path">/default/authoring/index.html?doctype=xhtml&amp;lenya.usecase=sitemanagement.create</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
-                <collectionProp name="Arguments.arguments"/>
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <stringProp name="Argument.value">true</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">optimisticLocking</stringProp>
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  </elementProp>
+                </collectionProp>
               </elementProp>
               <stringProp name="HTTPSampler.mimetype"></stringProp>
               <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
@@ -455,7 +463,7 @@
             </IfController>
             <hashTree>
               <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="Validation" enabled="true">
-                <stringProp name="HTTPSampler.path">/default/authoring/jmeter.html</stringProp>
+                <stringProp name="HTTPSampler.path">/default/authoring/index.html</stringProp>
                 <stringProp name="HTTPSampler.method">GET</stringProp>
                 <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
                 <stringProp name="HTTPSampler.protocol"></stringProp>
