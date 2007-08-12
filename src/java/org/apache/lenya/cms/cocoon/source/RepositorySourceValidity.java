@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.cocoon.source;
 
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * Validity for repository sources.
