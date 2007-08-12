@@ -36,6 +36,12 @@ public class StateMachine {
     }
 
     void invoke(String event) {
+        Transition transition = getTransition(event);
+        checkTransition(event, transition);
+        this.currentState = transition.destination;
+    }
+
+    protected Transition getTransition(String event) {
         Assert.notNull("event", event);
         Transition[] transitions = this.model.getTransitions();
         Transition transition = null;
@@ -49,15 +55,23 @@ public class StateMachine {
                 transition = t;
             }
         }
-        if (transition == null) {
-            throw new IllegalStateException("No transition found for event [" + event
-                    + "] in state [" + this.currentState + "]!");
-        }
-        this.currentState = transition.destination;
+        return transition;
     }
 
     protected boolean canFire(Transition t, String event) {
         return t.getSource().equals(this.currentState) && t.getEvent().equals(event);
+    }
+    
+    void checkEvent(String event) {
+        Transition transition = getTransition(event);
+        checkTransition(event, transition);
+    }
+
+    protected void checkTransition(String event, Transition transition) {
+        if (transition == null) {
+            throw new IllegalStateException("No transition found for event [" + event
+                    + "] in state [" + this.currentState + "]!");
+        }
     }
 
     /**

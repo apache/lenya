@@ -57,15 +57,25 @@ import org.apache.lenya.transaction.TransactionLock;
 public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Configurable,
         Contextualizable, Serviceable, Initializable {
 
+    protected static final String EVENT_CHECK_POSTCONDITIONS = "checkPostconditions";
+
+    protected static final String EVENT_EXECUTE = "execute";
+
+    protected static final String EVENT_CHECK_PRECONDITIONS = "checkPreconditions";
+
+    protected static final String EVENT_CHECK_EXECUTION_CONDITIONS = "checkExecutionConditions";
+
     protected static final String ERROR_OBJECTS_CHECKED_OUT = "objects-checked-out";
 
     protected static final StateMachine.Transition[] TRANSITIONS = {
-            new StateMachine.Transition("start", "preChecked", "checkPreconditions"),
+            new StateMachine.Transition("start", "preChecked", EVENT_CHECK_PRECONDITIONS),
             new StateMachine.Transition("preChecked", "nodesLocked", "lockInvolvedObjects"),
-            new StateMachine.Transition("nodesLocked", "execChecked", "checkExecutionConditions"),
-            new StateMachine.Transition("execChecked", "execChecked", "checkExecutionConditions"),
-            new StateMachine.Transition("execChecked", "executed", "execute"),
-            new StateMachine.Transition("executed", "postChecked", "checkPostconditions") };
+            new StateMachine.Transition("nodesLocked", "execChecked",
+                    EVENT_CHECK_EXECUTION_CONDITIONS),
+            new StateMachine.Transition("execChecked", "execChecked",
+                    EVENT_CHECK_EXECUTION_CONDITIONS),
+            new StateMachine.Transition("execChecked", "executed", EVENT_EXECUTE),
+            new StateMachine.Transition("executed", "postChecked", EVENT_CHECK_POSTCONDITIONS) };
 
     protected static final StateMachine.Model MODEL = new StateMachine.Model("start", TRANSITIONS);
 
@@ -82,22 +92,30 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Advance the usecase state machine to the next state. This method has to be 
-     * called at the end of the corresponding method to ensure that the subsequent
-     * methods can only be invoked if nothing went wrong.
+     * Advance the usecase state machine to the next state. This method has to be called at the end
+     * of the corresponding method to ensure that the subsequent methods can only be invoked if
+     * nothing went wrong.
      * @param event The vent to invoke.
      */
     protected void advanceState(String event) {
+        getStateMachine().invoke(event);
+    }
+
+    protected StateMachine getStateMachine() {
         StateMachine machine = (StateMachine) getParameter(PARAMETER_STATE_MACHINE);
-        machine.invoke(event);
+        return machine;
+    }
+
+    protected void checkEvent(String event) {
+        getStateMachine().checkEvent(event);
     }
 
     protected String SOURCE_URL = "private.sourceUrl";
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL() We don't use
-     *      getParameterAsString() because this will typically cause stack
-     *      overflows or NPEs in connection with initParameters().
+     * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL() We don't use getParameterAsString()
+     *      because this will typically cause stack overflows or NPEs in connection with
+     *      initParameters().
      */
     public String getSourceURL() {
         return (String) this.parameters.get(SOURCE_URL);
@@ -112,8 +130,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Determine if the usecase has error messages. Provides a way of checking
-     * for errors without actually retrieving them.
+     * Determine if the usecase has error messages. Provides a way of checking for errors without
+     * actually retrieving them.
      * @return true if the usecase resulted in error messages.
      */
     public boolean hasErrors() {
@@ -128,8 +146,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Determine if the usecase has info messages. Provides a way of checking
-     * for info messages without actually retrieving them.
+     * Determine if the usecase has info messages. Provides a way of checking for info messages
+     * without actually retrieving them.
      * @return true if the usecase resulted in info messages being generated.
      */
     public boolean hasInfoMessages() {
@@ -140,8 +158,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Checks if the operation can be executed and returns the error messages.
-     * Error messages prevent the operation from being executed.
+     * Checks if the operation can be executed and returns the error messages. Error messages
+     * prevent the operation from being executed.
      * @return A boolean value.
      */
     public List getErrorMessages() {
@@ -150,8 +168,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     /**
      * Returns the information messages to show on the confirmation screen.
-     * @return An array of strings. Info messages do not prevent the operation
-     *         from being executed.
+     * @return An array of strings. Info messages do not prevent the operation from being executed.
      */
     public List getInfoMessages() {
         return Collections.unmodifiableList(new ArrayList(this.infoMessages));
@@ -208,6 +225,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#checkExecutionConditions()
      */
     public final void checkExecutionConditions() throws UsecaseException {
+        checkEvent(EVENT_CHECK_EXECUTION_CONDITIONS);
         try {
             clearErrorMessages();
             clearInfoMessages();
@@ -221,7 +239,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             }
         }
         if (!hasErrors()) {
-            advanceState("checkExecutionConditions");
+            advanceState(EVENT_CHECK_EXECUTION_CONDITIONS);
         }
     }
 
@@ -237,6 +255,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#checkPreconditions()
      */
     public final void checkPreconditions() throws UsecaseException {
+        checkEvent(EVENT_CHECK_PRECONDITIONS);
         try {
             clearErrorMessages();
             clearInfoMessages();
@@ -259,7 +278,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             }
         }
         if (!hasErrors()) {
-            advanceState("checkPreconditions");
+            advanceState(EVENT_CHECK_PRECONDITIONS);
         }
     }
 
@@ -289,6 +308,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#execute()
      */
     public final void execute() throws UsecaseException {
+        checkEvent(EVENT_EXECUTE);
         Exception exception = null;
         try {
             clearErrorMessages();
@@ -320,7 +340,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                         + " (see logfiles for details)");
             }
         }
-        advanceState("execute");
+        if (!hasErrors()) {
+            advanceState(EVENT_EXECUTE);
+        }
     }
 
     /**
@@ -337,6 +359,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#checkPostconditions()
      */
     public void checkPostconditions() throws UsecaseException {
+        checkEvent(EVENT_CHECK_POSTCONDITIONS);
         try {
             clearErrorMessages();
             clearInfoMessages();
@@ -349,7 +372,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 throw new UsecaseException(e);
             }
         }
-        advanceState("checkPostconditions");
+        if (!hasErrors()) {
+            advanceState(EVENT_CHECK_POSTCONDITIONS);
+        }
     }
 
     /**
@@ -371,8 +396,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     private Map parameters = new HashMap();
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
-     *      java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
     public void setParameter(String name, Object value) {
         if (getLogger().isDebugEnabled()) {
@@ -397,8 +421,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String,
-     *      java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String, java.lang.Object)
      */
     public Object getParameter(String name, Object defaultValue) {
         Object value = getParameter(name);
@@ -421,8 +444,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns a parameter as string. If the parameter does not exist, a default
-     * value is returned.
+     * Returns a parameter as string. If the parameter does not exist, a default value is returned.
      * @param name The parameter name.
      * @param defaultValue The default value.
      * @return A string.
@@ -437,8 +459,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns a parameter as integer. If the parameter does not exist, a
-     * default value is returned.
+     * Returns a parameter as integer. If the parameter does not exist, a default value is returned.
      * @param name The parameter name.
      * @param defaultValue The default value.
      * @return An integer.
@@ -453,8 +474,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns a parameter as boolean. If the parameter does not exist, a
-     * default value is returned.
+     * Returns a parameter as boolean. If the parameter does not exist, a default value is returned.
      * @param name The parameter name.
      * @param defaultValue The default value.
      * @return A boolean value..
@@ -485,8 +505,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns one of the strings "true" or "false" depending on whether the
-     * corresponding checkbox was checked.
+     * Returns one of the strings "true" or "false" depending on whether the corresponding checkbox
+     * was checked.
      * @param name The parameter name.
      * @return A string.
      */
@@ -502,8 +522,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     private String DEFAULT_TARGET_URL = "private.defaultTargetUrl";
 
     /**
-     * Sets the default target URL which should be used if no explicit target
-     * URL is set.
+     * Sets the default target URL which should be used if no explicit target URL is set.
      * @param url A URL string.
      */
     protected void setDefaultTargetURL(String url) {
@@ -511,8 +530,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * If {@link #setDefaultTargetURL(String)}was not called, the source
-     * document ( {@link #getSourceURL()}) is returned.
+     * If {@link #setDefaultTargetURL(String)}was not called, the source document (
+     * {@link #getSourceURL()}) is returned.
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
@@ -665,9 +684,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     private boolean isOptimistic = true;
 
     /**
-     * @return <code>true</code> if the transaction policy is optimistic
-     *         offline lock, <code>false</code> if it is pessimistic offline
-     *         lock.
+     * @return <code>true</code> if the transaction policy is optimistic offline lock,
+     *         <code>false</code> if it is pessimistic offline lock.
      */
     protected boolean isOptimistic() {
         return this.isOptimistic;
@@ -738,8 +756,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     /**
      * <p>
-     * This method is locked via the class lock to avoid inter-usecase
-     * synchronization issues.
+     * This method is locked via the class lock to avoid inter-usecase synchronization issues.
      * </p>
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
@@ -763,10 +780,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     /**
      * <p>
-     * Lock the objects, for example when you need to change them (for example,
-     * delete). If you know when entering the usecase what these objects are,
-     * you do not need to call this, the framework will take of it if you
-     * implement getObjectsToLock(). If you do not know in advance what the
+     * Lock the objects, for example when you need to change them (for example, delete). If you know
+     * when entering the usecase what these objects are, you do not need to call this, the framework
+     * will take of it if you implement getObjectsToLock(). If you do not know in advance what the
      * objects are, you can call this method explicitly when appropriate.
      * </p>
      * 
