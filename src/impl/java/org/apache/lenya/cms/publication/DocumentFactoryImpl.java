@@ -27,7 +27,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 
@@ -217,17 +216,14 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @return A key.
      */
     public String getKey(String webappUrl) {
-        DocumentLocator locator = getLocator(webappUrl);
-        String area = locator.getArea();
-        String uuid = null;
         try {
-            Publication publication = getPublication(locator.getPublicationId());
-            if (SiteUtil.isDocument(this, webappUrl)) {
-                uuid = publication.getArea(area).getSite().getNode(locator.getPath()).getUuid();
-            } else {
-                UUIDGenerator generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
-                uuid = generator.nextUUID();
+            if (!isDocument(webappUrl)) {
+                throw new RuntimeException("No document for URL [" + webappUrl + "] found.");
             }
+            DocumentLocator locator = getLocator(webappUrl);
+            Publication publication = getPublication(locator.getPublicationId());
+            String area = locator.getArea();
+            String uuid = publication.getArea(area).getSite().getNode(locator.getPath()).getUuid();
             return getKey(publication, area, uuid, locator.getLanguage());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -287,8 +283,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     }
 
     /**
-     * Creates a new document object. Override this method to create specific
-     * document objects, e.g., for different document IDs.
+     * Creates a new document object. Override this method to create specific document objects,
+     * e.g., for different document IDs.
      * @param map The identity map.
      * @param identifier The identifier.
      * @param builder The document builder.
