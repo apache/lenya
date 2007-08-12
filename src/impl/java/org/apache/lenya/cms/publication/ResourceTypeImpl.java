@@ -47,6 +47,11 @@ import org.apache.lenya.xml.Schema;
 public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable, ThreadSafe,
         ResourceType, Serviceable {
 
+    /**
+     * The default sample name.
+     */
+    public static final String DEFAULT_SAMPLE_NAME = "Default Sample";
+
     protected static final String ATTRIBUTE_URI = "uri";
     protected static final String ATTRIBUTE_NAME = "name";
     protected static final String ELEMENT_SCHEMA = "schema";
@@ -55,21 +60,40 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String ATTRIBUTE_XPATH = "xpath";
     protected static final String ELEMENT_SAMPLES = "samples";
     protected static final String ELEMENT_SAMPLE = "sample";
-    protected static final String ATTRIBUTE_SAMPLE_MIME_TYPE = "mime-type";
+    protected static final String ATTRIBUTE_MIME_TYPE = "mime-type";
     protected static final String ELEMENT_FORMAT = "format";
-    protected static final String EXPIRES_ELEMENT = "expires";
-    protected static final String SECONDS_ATTRIBUTE = "seconds";
-
-    /**
-     * The default sample name.
-     */
-    public static final String DEFAULT_SAMPLE_NAME = "Default Sample";
+    protected static final String ELEMENT_EXPIRES = "expires";
+    protected static final String ATTRIBUTE_SECONDS = "seconds";
 
     private Schema schema = null;
-    private Map samples;
     private String[] linkAttributeXPaths;
-    private long expires = 0;
+    private Map samples;
     private String samplesUri = null;
+    private Map formats = new HashMap();
+    private long expires = 0;
+    private String name;
+    private ServiceManager manager;
+
+    /**
+     * A format.
+     */
+    public static class Format {
+        private String uri;
+        /**
+         * @param uri The uri.
+         */
+        public Format(String uri) {
+            Assert.notNull("uri", uri);
+            this.uri = uri;
+        }
+        /**
+         * @return The uri.
+         */
+        public String getURI() {
+            return this.uri;
+        }
+    }
+
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -111,9 +135,9 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 this.formats.put(name, new Format(uri));
             }
 
-            Configuration expiresConf = config.getChild(EXPIRES_ELEMENT, false);
+            Configuration expiresConf = config.getChild(ELEMENT_EXPIRES, false);
             if (expiresConf != null) {
-                this.expires = expiresConf.getAttributeAsLong(SECONDS_ATTRIBUTE);
+                this.expires = expiresConf.getAttributeAsLong(ATTRIBUTE_SECONDS);
             }
             
         } catch (Exception e) {
@@ -127,7 +151,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         Map samples = new LinkedHashMap();
         for (int i = 0; i < samplesConf.length; i++) {
             String name = samplesConf[i].getAttribute(ATTRIBUTE_NAME, DEFAULT_SAMPLE_NAME);
-            String mimeType = samplesConf[i].getAttribute(ATTRIBUTE_SAMPLE_MIME_TYPE);
+            String mimeType = samplesConf[i].getAttribute(ATTRIBUTE_MIME_TYPE);
             String uri = samplesConf[i].getAttribute(ATTRIBUTE_URI);
             samples.put(name, new Sample(name, mimeType, uri));
         }
@@ -205,14 +229,9 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         this.name = name;
     }
 
-    private String name;
-
     public String getName() {
         return this.name;
     }
-
-    private Map formats = new HashMap();
-    private ServiceManager manager;
 
     public String[] getFormats() {
         Set names = this.formats.keySet();
@@ -229,31 +248,6 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         return ((Format) this.formats.get(format)).getURI();
     }
     
-    /**
-     * A format.
-     */
-    public static class Format {
-
-        private String uri;
-
-        /**
-         * Ctor.
-         * @param uri The uri.
-         */
-        public Format(String uri) {
-            Assert.notNull("uri", uri);
-            this.uri = uri;
-        }
-
-        /**
-         * @return The uri.
-         */
-        public String getURI() {
-            return this.uri;
-        }
-
-    }
-
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
