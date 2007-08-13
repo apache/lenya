@@ -20,6 +20,7 @@ package org.apache.lenya.cms.linking;
 import java.net.MalformedURLException;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
 
 /**
  * <p>
@@ -88,5 +89,14 @@ public interface LinkResolver {
      * @throws MalformedURLException if the URI is invalid.
      */
     LinkTarget resolve(Document currentDocument, String linkUri) throws MalformedURLException;
+
+    /**
+     * Resolve a link. The link URI has to contain the UUID, language, area and publication ID.
+     * @param factory The document factory to use.
+     * @param linkUri The link URI.
+     * @return A link target.
+     * @throws MalformedURLException if the URI is invalid.
+     */
+    LinkTarget resolve(DocumentFactory factory, String linkUri) throws MalformedURLException;
 
 }

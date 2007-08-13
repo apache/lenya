@@ -25,8 +25,10 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.util.Assert;
 
 /**
  * Link resolver implementation.
@@ -42,55 +44,27 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
 
         Link link = new Link(linkUri);
 
-        String uuid = getValue(link.getUuid(), currentDoc.getUUID());
         String language = getValue(link.getLanguage(), currentDoc.getLanguage());
         String revisionString = getValue(link.getRevision(), null);
         String area = getValue(link.getArea(), currentDoc.getArea());
         String pubId = getValue(link.getPubId(), currentDoc.getPublication().getId());
-
-        int revision;
-        if (revisionString == null) {
-            revision = -1;
-        } else {
-            revision = Integer.valueOf(revisionString).intValue();
-        }
-
+        
+        String uuid = getValue(link.getUuid(), currentDoc.getUUID());
         if (uuid.length() == 0) {
             uuid = currentDoc.getUUID();
         }
 
-        try {
-            Publication pub = currentDoc.getFactory().getPublication(pubId);
-            Area areaObj = pub.getArea(area);
-            Document doc;
-            if (areaObj.contains(uuid, language)) {
-                doc = areaObj.getDocument(uuid, language);
-            } else {
-                if (this.fallbackMode == MODE_FAIL) {
-                    doc = null;
-                } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
-                    if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
-                        doc = areaObj.getDocument(uuid, pub.getDefaultLanguage());
-                    } else {
-                        doc = null;
-                    }
-                } else {
-                    throw new RuntimeException("The fallback mode [" + this.fallbackMode
-                            + "] is not supported!");
-                }
-            }
-            if (doc == null) {
-                return new LinkTarget();
-            } else {
-                if (revision > -1) {
-                    return new LinkTarget(doc, revision);
-                } else {
-                    return new LinkTarget(doc);
-                }
-            }
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
+        Link newLink = new Link();
+        newLink.setPubId(pubId);
+        newLink.setArea(area);
+        newLink.setUuid(uuid);
+        newLink.setLanguage(language);
+        if (revisionString != null) {
+            newLink.setRevision(revisionString);
         }
+        
+        return resolve(currentDoc.getFactory(), newLink.getUri());
+
     }
 
     protected String getValue(String value, String defaultValue) {
@@ -122,6 +96,61 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
             } else {
                 setFallbackMode(MODE_FAIL);
             }
+        }
+    }
+
+    public LinkTarget resolve(DocumentFactory factory, String linkUri) throws MalformedURLException {
+
+        Link link = new Link(linkUri);
+        String language = link.getLanguage();
+        Assert.notNull("language", language);
+        String uuid = link.getUuid();
+        Assert.notNull("uuid", uuid);
+        String area = link.getArea();
+        Assert.notNull("area", area);
+        String pubId = link.getPubId();
+        Assert.notNull("publication ID", pubId);
+
+        String revisionString = getValue(link.getRevision(), null);
+        
+        int revision;
+        if (revisionString == null) {
+            revision = -1;
+        } else {
+            revision = Integer.valueOf(revisionString).intValue();
+        }
+
+        try {
+            Publication pub = factory.getPublication(pubId);
+            Area areaObj = pub.getArea(area);
+            Document doc;
+            if (areaObj.contains(uuid, language)) {
+                doc = areaObj.getDocument(uuid, language);
+            } else {
+                if (this.fallbackMode == MODE_FAIL) {
+                    doc = null;
+                } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
+                    if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
+                        doc = areaObj.getDocument(uuid, pub.getDefaultLanguage());
+                    } else {
+                        doc = null;
+                    }
+                } else {
+                    throw new RuntimeException("The fallback mode [" + this.fallbackMode
+                            + "] is not supported!");
+                }
+            }
+            if (doc == null) {
+                return new LinkTarget();
+            } else {
+                if (revision > -1) {
+                    return new LinkTarget(doc, revision);
+                } else {
+                    return new LinkTarget(doc);
+                }
+            }
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
         }
     }
 
