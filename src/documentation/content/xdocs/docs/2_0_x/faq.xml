@@ -67,7 +67,7 @@
         <p>However you can as well extend the catalog with modules, that you 
           can reuse in different publications. You need to add at least 
           <code>modules/{yourModule}/lenya/resources/i18n/cmsui.xml</code>.
-          Don't forget to declare the module in <code>publication.xconf</code>
+          Don't forget to declare the module in <code>publication.xml</code>
           so that the i18n catalog is detected.
         </p>
       </answer>

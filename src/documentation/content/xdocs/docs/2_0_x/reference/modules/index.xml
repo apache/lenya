@@ -216,7 +216,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
       
       <p>
       A module can provide menu items which are added to the publication menu.
-      To insert the menu items of a module, you have to add the module declaration to <code>publication.xconf</code>:
+      To insert the menu items of a module, you have to add the module declaration to <code>publication.xml</code>:
       </p>
       
 <source xml:space="preserve"><![CDATA[<publication>

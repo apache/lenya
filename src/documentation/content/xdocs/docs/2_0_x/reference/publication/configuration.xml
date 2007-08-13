@@ -22,9 +22,9 @@
   <body>
     
     <section>
-      <title>The publication.xconf file</title>
+      <title>The publication.xml file</title>
       <p>
-        The main configuration file of a publication is <code>$PUB_HOME/config/publication.xconf</code>.
+        The main configuration file of a publication is <code>$PUB_HOME/config/publication.xml</code>.
         The namespace of this XML file is <code>http://apache.org/cocoon/lenya/publication/1.1</code>.
       </p>
       <source xml:space="preserve"><![CDATA[<publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" >]]></source>

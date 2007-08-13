@@ -98,7 +98,7 @@
     
     <section>
       <title>Declaration of a Template</title>
-      <p>The template of a publication is declared in <code>my-pub/config/publication.xconf</code>:</p>
+      <p>The template of a publication is declared in <code>my-pub/config/publication.xml</code>:</p>
       
 <source xml:space="preserve"><![CDATA[<publication>
   ...
@@ -176,7 +176,7 @@
 </map:match>]]></source>
       <p>
         The decision which <code>usecase.xmap</code> to choose is based on the usecase configuration
-        in <code>publication.xconf</code>. To declare a usecase to be implemented by a publication,
+        in <code>publication.xml</code>. To declare a usecase to be implemented by a publication,
         add the corresponding entry:
       </p>
 <source xml:space="preserve"><![CDATA[<publication>
@@ -230,7 +230,7 @@ public class MyInstantiator extends AbstractLogEnabled implements Instantiator {
       </section>
       
       <section>
-        <title>Declare the Instantiator in <code>publication.xconf</code></title>
+        <title>Declare the Instantiator in <code>publication.xml</code></title>
       </section>
       
 <source xml:space="preserve"><![CDATA[<publication>

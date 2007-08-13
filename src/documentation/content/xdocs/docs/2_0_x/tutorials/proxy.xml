@@ -178,12 +178,14 @@ NameVirtualHost *:443
         When you use a proxy, Lenya has to convert all internal links accordingly.
         Therefore you have to tell the publication about the proxy configuration.
         Open the file <code>pubs/default/config/publication.xml</code> and uncomment
-        and modify the <code><![CDATA[<proxy/]]></code> elements:
+        and modify the <code><![CDATA[<proxy/>]]></code> elements:
       </p>
-      <source xml:space="preserve"><![CDATA[<proxy ssl="false" area="authoring" url="http://cms.example.com"/>
-<proxy ssl="false" area="live" url="http://www.example.com"/>
-<proxy ssl="true" area="authoring" url="https://cms.example.com"/>
-<proxy ssl="true" area="live" url="https://www.example.com"/>]]></source>
+      <source xml:space="preserve"><![CDATA[<proxies>
+  <proxy ssl="false" area="authoring" url="http://cms.example.com"/>
+  <proxy ssl="false" area="live" url="http://www.example.com"/>
+  <proxy ssl="true" area="authoring" url="https://cms.example.com"/>
+  <proxy ssl="true" area="live" url="https://www.example.com"/>
+</proxies>]]></source>
     </section>
     
     <section>
