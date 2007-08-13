@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.editors.fckeditor;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -270,7 +269,6 @@ public class Fckeditor extends DocumentUsecase {
      */
     private void saveXMLFile(String encoding, String content, OutputStream out)
             throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FileOutputStream fileoutstream = null;
         Writer writer = null;
 
         try {
@@ -286,8 +284,6 @@ public class Fckeditor extends DocumentUsecase {
             // close all streams
             if (writer != null)
                 writer.close();
-            if (fileoutstream != null)
-                fileoutstream.close();
         }
     }
 
