@@ -48,7 +48,7 @@
   <xsl:template match="/">
     <page:page>
       <page:title><i18n:text>insertLink.heading</i18n:text></page:title>
-      <page:body>
+      <page:body style="width:auto;">
 
         <script type="text/javascript" src="/modules/sitetree/javascript/tree.js">&#160;</script>
         <script type="text/javascript" src="/modules/sitetree/javascript/lenyatree.js">&#160;</script>
@@ -68,82 +68,87 @@
           AREA_BASE_PATH = "<xsl:value-of select="$areaBasePath"/>";
         </script>
 
-        <div id="lenya-info-treecanvas" style="width: 30%; float:left;">
+        <div id="lenya-info-treecanvas" style="width: 250px;">
           <div class="lenya-tabs">
             <xsl:call-template name="languageTabs">
               <xsl:with-param name="languages" select="$languages"/>
             </xsl:call-template>
           </div>
           <div id="lenya-info-tree">
-            <div id="tree">
+            <div id="tree">&#160;
             </div>
           </div>
         </div>
-        
-        <form name="insertLink">
+        <div class="lenya-box" style="margin-left: 260px;">
+          <div class="lenya-box-title"><i18n:text>insertLink.heading</i18n:text></div>
+          <div class="lenya-box-body">
 
-          <table class="lenya-table-noborder">
-            <tr>
-              <td colspan="2" class="lenya-form-caption">
-                <i18n:text>insertLink.clickTreeOrType</i18n:text>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">&#160;</td>
-            </tr>
-            <tr>
-              <td class="lenya-form-caption">
-                <i18n:text>insertLink.URL</i18n:text>:
-              </td>
-              <td>
-                <input class="lenya-form-element" type="text" name="url"/>
-              </td>
-            </tr>
-            <tr>
-              <td class="lenya-form-caption">
-                <i18n:text>insertLink.title</i18n:text>:
-              </td>
-              <td>
-                <input class="lenya-form-element" type="text" name="title"/>
-              </td>
-            </tr>
-            <tr>
-              <td class="lenya-form-caption">
-                <i18n:text>insertLink.text</i18n:text>:</td>
-              <td>
-                <input class="lenya-form-element" type="text" name="text"/>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">&#160;</td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <input 
-                  i18n:attr="value" 
-                  type="submit" 
-                  value="insertLink.submit" 
-                  onclick="org.apache.lenya.editors.handleFormSubmit('insertLink')"
-                />
-                &#160;
-                <input 
-                  i18n:attr="value"
-                  type="submit"
-                  value="Cancel" 
-                  name="cancel"
-                  onclick="window.close()"
-                />
-                &#160;
-                <input 
-                  i18n:attr="value" 
-                  type="button" 
-                  value="insertAsset.createResource" 
-                  onclick="location.href='?lenya.usecase=editors.createResource&amp;doctype=resource&amp;lenya.exitUsecase=editors.insertLink'"
-                />
-              </td>
-            </tr>
-          </table>
-        </form>
+            <form name="insertLink">
+
+              <table class="lenya-table-noborder">
+                <tr>
+                  <td colspan="2" class="lenya-form-caption">
+                    <i18n:text>insertLink.clickTreeOrType</i18n:text>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">&#160;</td>
+                </tr>
+                <tr>
+                  <td class="lenya-form-caption">
+                    <i18n:text>insertLink.URL</i18n:text>:
+                  </td>
+                  <td>
+                    <input class="lenya-form-element" type="text" name="url"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lenya-form-caption">
+                    <i18n:text>insertLink.title</i18n:text>:
+                  </td>
+                  <td>
+                    <input class="lenya-form-element" type="text" name="title"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lenya-form-caption">
+                    <i18n:text>insertLink.text</i18n:text>:</td>
+                  <td>
+                    <input class="lenya-form-element" type="text" name="text"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">&#160;</td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <input 
+                      i18n:attr="value" 
+                      type="submit" 
+                      value="insertLink.submit" 
+                      onclick="org.apache.lenya.editors.handleFormSubmit('insertLink')"
+                    />
+                    &#160;
+                    <input 
+                      i18n:attr="value"
+                      type="submit"
+                      value="Cancel" 
+                      name="cancel"
+                      onclick="window.close()"
+                    />
+                    &#160;
+                    <input 
+                      i18n:attr="value" 
+                      type="button" 
+                      value="insertAsset.createResource" 
+                      onclick="location.href='?lenya.usecase=editors.createResource&amp;doctype=resource&amp;lenya.exitUsecase=editors.insertLink'"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </div>
+        </div>
       </page:body>
     </page:page>
   </xsl:template>
