@@ -64,7 +64,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
      */
     public static final String LAST_DATE_PREFIX = "lastDate.";
 
-    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    protected final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     static final String[] PARAMETER_NAMES = { STATE };
 
@@ -121,7 +121,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                         String event = name.substring(LAST_DATE_PREFIX.length());
                         Version latestEventVersion = getLatestVersion(workflowable, event);
                         if (latestEventVersion != null) {
-                            value = DATE_FORMAT.format(latestEventVersion.getDate());
+                            value = this.DATE_FORMAT.format(latestEventVersion.getDate());
                         }
                     } else {
                         throw new ConfigurationException("The attribute [" + name
