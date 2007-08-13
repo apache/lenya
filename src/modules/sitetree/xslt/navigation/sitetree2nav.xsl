@@ -135,6 +135,7 @@ Apply nodes recursively
           <xsl:when test="@uuid">
             <xsl:text>lenya-document:</xsl:text>
             <xsl:value-of select="@uuid"/>
+            <xsl:text>,lang=</xsl:text><xsl:value-of select="$chosenlanguage"/>
             <xsl:value-of select="$areaParam"/>
             <xsl:value-of select="$extensionParam"/>
           </xsl:when>
