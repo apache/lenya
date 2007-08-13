@@ -75,7 +75,7 @@ public abstract class FieldDefinition {
     public static FieldDefinition create(String name, int type) {
         FieldDefinition field = null;
 
-        if (name == null || name == "") {
+        if (name == null || name.trim().equals("")) {
             throw new IllegalArgumentException("name cannot be empty");
         }
         switch (type) {
@@ -126,7 +126,7 @@ public abstract class FieldDefinition {
     }
 
     public boolean equals(FieldDefinition fielddef) {
-        if (name == fielddef.name() && getType() == fielddef.getType()) {
+        if (name.equals(fielddef.name()) && getType() == fielddef.getType()) {
             return true;
         } else {
             return false;
