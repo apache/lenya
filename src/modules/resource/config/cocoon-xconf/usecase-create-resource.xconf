@@ -20,6 +20,6 @@
     <component-instance name="resource.create" 
                         logger="lenya.site" 
                         class="org.apache.lenya.cms.site.usecases.CreateResource">
-      <view template="modules/resource/usecases/create-resource.jx" menu="true"/>
+      <view template="modules/resource/usecases/create-resource.jx"/>
     </component-instance>
   </xconf>
