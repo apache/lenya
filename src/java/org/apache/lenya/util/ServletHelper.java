@@ -124,9 +124,10 @@ public final class ServletHelper {
 
             if (node == null) {
                 ServletHelper.uploadEnabled = Boolean.FALSE;
+            } else {
+                boolean enabled = node.getNodeValue().equals("true");
+                ServletHelper.uploadEnabled = Boolean.valueOf(enabled);
             }
-            boolean enabled = node.getNodeValue().equals("true");
-            ServletHelper.uploadEnabled = Boolean.valueOf(enabled);
         }
         return ServletHelper.uploadEnabled.booleanValue();
     }
