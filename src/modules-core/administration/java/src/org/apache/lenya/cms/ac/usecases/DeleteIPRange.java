@@ -33,7 +33,7 @@ public class DeleteIPRange extends AccessControlUsecase {
         String id = getParameterAsString(IPRangeProfile.ID);
         org.apache.lenya.ac.IPRange ipRange = getIpRangeManager().getIPRange(id);
         if (ipRange == null) {
-            throw new RuntimeException("IP range [" + ipRange + "] not found.");
+            throw new RuntimeException("IP range [" + id + "] not found.");
         }
         
         getIpRangeManager().remove(ipRange);
