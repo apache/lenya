@@ -38,6 +38,25 @@ import org.w3c.dom.NodeList;
  */
 public class WorkflowBuilder extends AbstractLogEnabled {
 
+    protected static final String STATE_ELEMENT = "state";
+    protected static final String TRANSITION_ELEMENT = "transition";
+    protected static final String EVENT_ELEMENT = "event";
+    protected static final String CONDITION_ELEMENT = "condition";
+    //protected static final String ACTION_ELEMENT = "action";
+    protected static final String ID_ATTRIBUTE = "id";
+    protected static final String INITIAL_ATTRIBUTE = "initial";
+    protected static final String SOURCE_ATTRIBUTE = "source";
+    protected static final String DESTINATION_ATTRIBUTE = "destination";
+    protected static final String CLASS_ATTRIBUTE = "class";
+    protected static final String VARIABLE_ELEMENT = "variable";
+    protected static final String ASSIGNMENT_ELEMENT = "assign";
+    protected static final String VARIABLE_ATTRIBUTE = "variable";
+    protected static final String VALUE_ATTRIBUTE = "value";
+    protected static final String NAME_ATTRIBUTE = "name";
+    protected static final String SYNCHRONIZED_ATTRIBUTE = "synchronized";
+
+    private ConditionFactory conditionFactory = null;
+
     /**
      * Ctor.
      * @param logger The logger to use.
@@ -135,23 +154,6 @@ public class WorkflowBuilder extends AbstractLogEnabled {
                 && (initialAttribute.equals("yes") || initialAttribute.equals("true"));
     }
 
-    protected static final String STATE_ELEMENT = "state";
-    protected static final String TRANSITION_ELEMENT = "transition";
-    protected static final String EVENT_ELEMENT = "event";
-    protected static final String CONDITION_ELEMENT = "condition";
-    protected static final String ACTION_ELEMENT = "action";
-    protected static final String ID_ATTRIBUTE = "id";
-    protected static final String INITIAL_ATTRIBUTE = "initial";
-    protected static final String SOURCE_ATTRIBUTE = "source";
-    protected static final String DESTINATION_ATTRIBUTE = "destination";
-    protected static final String CLASS_ATTRIBUTE = "class";
-    protected static final String VARIABLE_ELEMENT = "variable";
-    protected static final String ASSIGNMENT_ELEMENT = "assign";
-    protected static final String VARIABLE_ATTRIBUTE = "variable";
-    protected static final String VALUE_ATTRIBUTE = "value";
-    protected static final String NAME_ATTRIBUTE = "name";
-    protected static final String SYNCHRONIZED_ATTRIBUTE = "synchronized";
-
     /**
      * Builds a state from an XML element.
      * @param element An XML element.
@@ -219,6 +221,8 @@ public class WorkflowBuilder extends AbstractLogEnabled {
          */
 
         // set synchronization
+
+        /* FIXME: this is not used in the default publication, and is not currently accepted by the workflow xml validation. what does it do? */
         if (element.hasAttribute(SYNCHRONIZED_ATTRIBUTE)) {
             Boolean isSynchronized = Boolean.valueOf(element.getAttribute(SYNCHRONIZED_ATTRIBUTE));
             transition.setSynchronized(isSynchronized.booleanValue());
@@ -236,7 +240,6 @@ public class WorkflowBuilder extends AbstractLogEnabled {
         return element.getAttribute(ID_ATTRIBUTE);
     }
 
-    private ConditionFactory conditionFactory = null;
 
     /**
      * Builds a condition from an XML element.
