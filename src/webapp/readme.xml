@@ -35,6 +35,16 @@
     </p>
     
     <h2>Important notes for beta testers of Lenya 2.0</h2>
+
+    <h3>2007-08-13: Workflow schema validation fixed</h3>
+    <p>
+      The old XSD-based schema validation in <code>workflow.xml</code> was
+    never used. It has now been ported to RNG for consistency and is applied to your custom
+      workflows during deployment. You will need to remove the
+    <code>xsi:schemaLocation</code> attribute (and you can then also remove
+      the <code>xmlns:xsi</code> declaration) from your custom publications'
+      <code>config/workflow/workflow.xml</code> if you have defined one.
+    </p>    
     
     <h3>2007-08-12: Resource type configuration changed</h3>
     <p>

@@ -74,6 +74,9 @@
     <jing rngfile="${src.resource.dir}/build/publication.rng">
       <fileset dir="${build.webapp}" includes="lenya/pubs/*/config/publication.xml"/>
     </jing>
+    <jing rngfile="${src.resource.dir}/build/workflow.rng">
+      <fileset dir="${build.webapp}" includes="lenya/pubs/*/config/workflow/workflow.xml"/>    
+    </jing>
     
     <bulkCopy 
       sourcedirs="${pubs.root.dirs}" 
