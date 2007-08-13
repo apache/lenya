@@ -88,6 +88,7 @@
   </usecase>
   <usecase id="sitemanagement.copy">
     <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.create">
     <role id="admin" method="grant"/>
@@ -99,6 +100,7 @@
   </usecase>
   <usecase id="sitemanagement.cut">
     <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.delete">
     <role id="admin" method="grant"/>
