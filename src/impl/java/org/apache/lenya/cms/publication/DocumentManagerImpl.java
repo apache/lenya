@@ -272,7 +272,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         boolean useBuffer = true;
 
-        Source source = null;
         OutputStream destOutputStream = null;
         try {
             destOutputStream = destination.getOutputStream();
@@ -291,9 +290,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
             if (sourceInputStream != null) {
                 sourceInputStream.close();
-            }
-            if (source != null) {
-                resolver.release(source);
             }
         }
     }
