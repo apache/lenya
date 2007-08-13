@@ -27,6 +27,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.LinkTarget;
@@ -34,6 +35,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
@@ -47,31 +49,28 @@ import org.xml.sax.helpers.AttributesImpl;
  * </p>
  * 
  * <p>
- * This transformer is applied to an XHMTL document. It processes all links
- * following the {@link LinkResolver} syntax which are configured using
- * <code>&lt;transform/&gt;</code> elements (see below).
+ * This transformer is applied to an XHMTL document. It processes all links following the
+ * {@link LinkResolver} syntax which are configured using <code>&lt;transform/&gt;</code> elements
+ * (see below).
  * </p>
  * <p>
  * These links are resolved using the following rules:
  * </p>
  * <ul>
  * <li>The current area (obtained from the page envelope) is used.</li>
- * <li>A URL prefix is added depending on the proxy configuration of the
- * publication.</li>
- * <li>If the target document does not exist and is in the authoring area, the
- * href attribute is removed and a class="brokenlink" attribute is added to the
- * <code>&lt;a/&gt;</code> element.</li>
- * <li>If the target document does not exist and is in the live area, the
- * <code>&lt;a/&gt;</code> element is removed to disable the link.</li>
+ * <li>A URL prefix is added depending on the proxy configuration of the publication.</li>
+ * <li>If the target document does not exist and is in the authoring area, the href attribute is
+ * removed and a class="brokenlink" attribute is added to the <code>&lt;a/&gt;</code> element.</li>
+ * <li>If the target document does not exist and is in the live area, the <code>&lt;a/&gt;</code>
+ * element is removed to disable the link.</li>
  * </ul>
  * 
  * <p>
- * You can add the query parameter <code>uuid2url.extension</code> to
- * <code>lenya-document:</code> URLs to set a specific link extension.
+ * You can add the query parameter <code>uuid2url.extension</code> to <code>lenya-document:</code>
+ * URLs to set a specific link extension.
  * </p>
  * <p>
- * The resulting URLs are absolute web application URLs (without the servlet
- * context path).
+ * The resulting URLs are absolute web application URLs (without the servlet context path).
  * </p>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
@@ -82,16 +81,15 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     protected static final String BROKEN_VALUE = "brokenlink";
     protected static final String EXTENSION_PARAM = "uuid2url.extension";
 
-    private Document currentDocument;
     private String currentUrl;
 
     private DocumentFactory factory;
     private LinkResolver linkResolver;
+    private Document currentDoc;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
@@ -103,26 +101,20 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
             Session session = RepositoryUtil.getSession(this.manager, _request);
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
             this.currentUrl = ServletHelper.getWebappURI(_request);
-            this.currentDocument = this.factory.getFromURL(currentUrl);
+            if (this.factory.isDocument(this.currentUrl)) {
+                this.currentDoc = this.factory.getFromURL(this.currentUrl);
+            }
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
         } catch (final Exception e) {
             throw new ProcessingException(e);
         }
     }
 
-    /**
-     * Returns the currently processed document.
-     * 
-     * @return A document.
-     */
-    protected Document getCurrentDocument() {
-        return this.currentDocument;
-    }
-
     protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
             throws Exception {
+        
+        URLInformation info = new URLInformation(this.currentUrl);
         if (linkUrl.startsWith("lenya-document:")) {
-            Document doc = getCurrentDocument();
 
             String anchor = null;
             String url = null;
@@ -146,27 +138,35 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
                 query.removeValue(EXTENSION_PARAM);
                 queryString = query.toString();
             }
-            LinkTarget target = this.linkResolver.resolve(doc, linkUri);
+            
+            LinkTarget target;
+            if (this.currentDoc != null) {
+                target = this.linkResolver.resolve(this.currentDoc, linkUri);
+            }
+            else {
+                Link link = new Link(linkUri);
+                link.setPubId(info.getPublicationId());
+                link.setArea(info.getArea());
+                target = this.linkResolver.resolve(this.factory, link.getUri());
+            }
+
             if (target.exists() && target.getDocument().hasLink()) {
                 Document targetDocument = target.getDocument();
-
                 String extension = getExtension(targetDocument, requiredExtension);
-
                 rewriteLink(newAttrs, config.attribute, targetDocument, anchor, queryString,
                         extension);
-            } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
+            } else if (info.getArea().equals(Publication.AUTHORING_AREA)) {
                 markBrokenLink(newAttrs, config.attribute, linkUrl);
             } else {
                 this.ignoreLinkElement = true;
             }
         } else {
             /*
-             * This is legacy code. It rewrites links to non-document images (in
-             * resources/shared). These images shouldn't be referenced in
-             * documents since this violates the separation between content and
-             * layout.
+             * This is legacy code. It rewrites links to non-document images (in resources/shared).
+             * These images shouldn't be referenced in documents since this violates the separation
+             * between content and layout.
              */
-            String prefix = "/" + this.currentDocument.getPublication().getId() + "/";
+            String prefix = "/" + info.getPublicationId() + "/";
             if (linkUrl.startsWith(prefix)) {
                 String pubUrl = linkUrl.substring(prefix.length());
                 String area = pubUrl.split("/")[0];
@@ -174,7 +174,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
                 // don't rewrite /{pub}/modules/...
                 if (area.equals(Publication.AUTHORING_AREA)) {
                     String areaUrl = pubUrl.substring(area.length());
-                    String newUrl = prefix + this.currentDocument.getArea() + areaUrl;
+                    String newUrl = prefix + area + areaUrl;
                     setAttribute(newAttrs, config.attribute, newUrl);
                 }
             }
@@ -191,8 +191,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     }
 
     /**
-     * Marks a <code>&lt;a/&gt;</code> element as broken and removes href
-     * attribute.
+     * Marks a <code>&lt;a/&gt;</code> element as broken and removes href attribute.
      * 
      * @param newAttrs The new attributes.
      * @param attrName The attribute name.
@@ -255,8 +254,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
      * @param attr The attributes.
      * @param name The attribute name.
      * @param value The value.
-     * @throws IllegalArgumentException if the href attribute is not contained
-     *         in this attributes.
+     * @throws IllegalArgumentException if the href attribute is not contained in this attributes.
      */
     protected void setAttribute(AttributesImpl attr, String name, String value) {
         int position = attr.getIndex(name);
@@ -280,7 +278,6 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
      */
     public void recycle() {
         this.ignoreLinkElement = false;
-        this.currentDocument = null;
         this.currentUrl = null;
     }
 
