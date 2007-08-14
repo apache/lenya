@@ -579,7 +579,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
     }
 
     void handleError(String msg) throws SAXException {
-        this.handleError(msg, null);
+        this.handleError(msg, new Exception());
     }
 
     void handleError(Exception ex) throws SAXException {
