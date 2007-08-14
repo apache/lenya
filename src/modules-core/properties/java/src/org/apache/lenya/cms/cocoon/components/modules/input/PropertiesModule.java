@@ -17,7 +17,6 @@
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -211,7 +210,6 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
             ParserConfigurationException, SAXException {
 
         Source source = null;
-        InputStream in = null;
         try {
 
             source = m_resolver.resolveURI(propertiesStringURI);
@@ -241,12 +239,6 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
         } finally {
             if (source != null) {
                 m_resolver.release(source);
-            }
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                }
             }
         }
 

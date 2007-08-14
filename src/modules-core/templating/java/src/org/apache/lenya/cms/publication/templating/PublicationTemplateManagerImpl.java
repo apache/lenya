@@ -184,7 +184,6 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
      */
     public Object getSelectableHint(Publication publication, ServiceSelector selector,
             final String originalHint) throws ServiceException {
-        PublicationTemplateManager templateManager = null;
         Object selectableHint = null;
 
         try {
@@ -200,11 +199,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
             String message = "Resolving hint [" + originalHint + "] failed: ";
             getLogger().error(message, e);
             throw new RuntimeException(message, e);
-        } finally {
-            if (templateManager != null) {
-                this.manager.release(templateManager);
-            }
-        }
+        } 
         return selectableHint;
     }
 

@@ -29,7 +29,6 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.site.usecases.Create;
-import org.apache.lenya.workflow.WorkflowManager;
 
 /**
  * Supports WebDAV PUT.
@@ -57,7 +56,6 @@ public class Mkcol extends Create {
     protected void doExecute() throws Exception {
         // super.doExecute();
         SourceResolver resolver = null;
-        WorkflowManager wfManager = null;
         ResourceType resourceType = null;
 
         try {
@@ -103,9 +101,6 @@ public class Mkcol extends Create {
         } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
-            }
-            if (wfManager != null) {
-                this.manager.release(wfManager);
             }
         }
     }

@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -116,8 +114,6 @@ public class Deactivate extends InvokeWorkflow {
         boolean success = false;
 
         DocumentManager documentManager = null;
-        SourceResolver resolver = null;
-        Source source = null;
         try {
             Document liveDocument = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
 
@@ -128,12 +124,6 @@ public class Deactivate extends InvokeWorkflow {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Deactivate document [" + authoringDocument + "]. Success: ["
                         + success + "]");
