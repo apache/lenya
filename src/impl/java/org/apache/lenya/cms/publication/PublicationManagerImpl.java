@@ -77,7 +77,7 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
             throw new PublicationException("The publication for ID [" + id
                     + "] could not be created.");
         }
-        PublicationFactory pubFactory = new PublicationFactory(this.manager, factory, config);
+        PublicationFactory pubFactory = new PublicationFactory(this.manager, config);
         try {
             return (Publication) factory.getSession().getRepositoryItem(pubFactory, id);
         } catch (RepositoryException e) {
