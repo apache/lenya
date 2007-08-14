@@ -45,9 +45,10 @@ public interface RCML {
      * Check the RCML in.
      * @param node The node.
      * @param backup If a backup shall be created.
+     * @param newVersion If the revision number should be increased.
      * @throws RevisionControlException if an error occurs.
      */
-    void checkIn(Node node, boolean backup) throws RevisionControlException;
+    void checkIn(Node node, boolean backup, boolean newVersion) throws RevisionControlException;
     
     /**
      * Check the RCML out.

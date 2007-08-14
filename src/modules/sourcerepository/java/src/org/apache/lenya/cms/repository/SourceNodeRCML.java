@@ -133,9 +133,10 @@ public class SourceNodeRCML implements RCML {
      * @param type co for a check out, ci for a check in
      * @param time
      * @param backup Create backup element
+     * @param newVersion If the revision number shall be increased.
      * @throws RevisionControlException if an error occurs
      */
-    public synchronized void checkOutIn(Node node, short type, long time, boolean backup)
+    public synchronized void checkOutIn(Node node, short type, long time, boolean backup, boolean newVersion)
             throws RevisionControlException {
 
         String identity = node.getSession().getIdentity().getUser().getId();
@@ -165,7 +166,9 @@ public class SourceNodeRCML implements RCML {
             if (latestEntry != null) {
                 version = latestEntry.getVersion();
             }
-            version++;
+            if (newVersion) {
+                version++;
+            }
             entry = new CheckInEntry(sessionId, identity, time, version, backup);
             break;
         case RCML.co:
@@ -581,20 +584,20 @@ public class SourceNodeRCML implements RCML {
         return entry != null && entry.getType() == RCML.co;
     }
 
-    public synchronized void checkIn(Node node, boolean backup) throws RevisionControlException {
+    public synchronized void checkIn(Node node, boolean backup, boolean newVersion) throws RevisionControlException {
         long time = new Date().getTime();
 
         if (backup) {
             makeBackup(time);
         }
 
-        checkOutIn(node, RCML.ci, time, backup);
+        checkOutIn(node, RCML.ci, time, backup, newVersion);
         pruneEntries();
         write();
     }
 
     public synchronized void checkOut(Node node) throws RevisionControlException {
-        checkOutIn(node, RCML.co, new Date().getTime(), false);
+        checkOutIn(node, RCML.co, new Date().getTime(), false, false);
     }
 
     public boolean isCheckedOutBySession(Session session) throws RevisionControlException {

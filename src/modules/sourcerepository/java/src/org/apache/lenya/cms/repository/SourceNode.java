@@ -110,7 +110,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     throw new RepositoryException("Cannot check in node [" + getSourceURI()
                             + "]: not checked out by this session!");
                 }
-                rcml.checkIn(this, exists());
+                rcml.checkIn(this, exists(), getSession().isDirty(this));
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }
@@ -125,7 +125,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     throw new RepositoryException("Cannot check in node [" + getSourceURI()
                             + "]: not checked out!");
                 }
-                rcml.checkIn(this, false);
+                rcml.checkIn(this, false, false);
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }
@@ -472,5 +472,5 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             throw new RepositoryException(e);
         }
     }
-
+    
 }
