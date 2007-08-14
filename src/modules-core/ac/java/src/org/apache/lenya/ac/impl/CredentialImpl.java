@@ -105,4 +105,8 @@ public class CredentialImpl implements Credential {
         Credential cred = (Credential) obj;
         return cred.getAccreditable().equals(getAccreditable()) && cred.getRole().equals(getRole());
     }
+
+    public int hashCode() {
+        return Integer.valueOf(getAccreditable().hashCode() + getRole().hashCode()).hashCode();
+    }
 }
