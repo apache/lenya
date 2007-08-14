@@ -50,7 +50,7 @@ public class Revisions extends SiteUsecase {
                 }
                 setParameter("revisions", revisions);
 
-                Boolean canRollback = new Boolean(WorkflowUtil.canInvoke(this.manager,
+                Boolean canRollback = Boolean.valueOf(WorkflowUtil.canInvoke(this.manager,
                         getDocumentFactory().getSession(), getLogger(), sourceDoc, getEvent()));
                 setParameter("canRollback", canRollback);
 

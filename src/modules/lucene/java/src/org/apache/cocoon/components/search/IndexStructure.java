@@ -101,7 +101,7 @@ public final class IndexStructure {
     }
 
     public String toString() {
-        String result = new String("DocumentFactory:");
+        String result = "DocumentFactory:";
         Iterator iter = this.fielddefs.values().iterator();
         while (iter.hasNext()) {
             FieldDefinition item = (FieldDefinition) iter.next();

@@ -455,10 +455,10 @@ public class LinkStatusGenerator extends ServiceableGenerator
                 // content is supposed to be a list of links,
                 // relative to current URL
                 String line;
-                String referrer = url_of_referrer.toString();
+                String referrer = url_of_referrer;
 
                 while ((line = br.readLine()) != null) {
-                    String new_url = new String(line);
+                    String new_url = line;
                     boolean add_url = true;
                     // don't add new_url twice
                     if (add_url) {
@@ -467,7 +467,7 @@ public class LinkStatusGenerator extends ServiceableGenerator
 
                     // don't add new_url if it has been crawled already
                     if (add_url) {
-                        add_url &= !crawled.contains(new_url.toString());
+                        add_url &= !crawled.contains(new_url);
                     }
 
                     Link new_link = new Link(line, referrer, referrerDepth+1);
@@ -477,17 +477,17 @@ public class LinkStatusGenerator extends ServiceableGenerator
 
                     // don't add if is not matched by existing include definition
                     if (add_url) {
-                        add_url &= isIncludedURL(new_url.toString());
+                        add_url &= isIncludedURL(new_url);
                     }
                     
                     //don't add id matched by existing exclude definition
                     if (add_url) {
-                        add_url &= !(isExcludedURL(new_url.toString()));
+                        add_url &= !(isExcludedURL(new_url));
                     }
 
                     if (add_url) {
                         if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("Add URL: " + new_url.toString());
+                            getLogger().debug("Add URL: " + new_url);
                         }
                         url_links.add(new_link);
                     }
@@ -558,7 +558,7 @@ public class LinkStatusGenerator extends ServiceableGenerator
                 responseMessage = h.getResponseMessage();
                 responseCode = h.getResponseCode();
             } else {
-                String tempURI = new String(uri);
+                String tempURI = uri;
                 if (!(uri.startsWith("/"))) {
                     String contextURI = referrer.substring(0,referrer.lastIndexOf("/")+1);
                     tempURI = contextURI + uri;
