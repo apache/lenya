@@ -134,7 +134,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
                 listener.eventFired(event);
             }
         };
-        new Thread(notifier).run();
+        new Thread(notifier).start();
     }
 
     private ServiceManager manager;
