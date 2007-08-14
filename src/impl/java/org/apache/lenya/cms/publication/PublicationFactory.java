@@ -29,23 +29,20 @@ import org.apache.lenya.cms.repository.Session;
 public class PublicationFactory implements RepositoryItemFactory {
 
     private ServiceManager manager;
-    private DocumentFactory factory;
     private PublicationConfiguration config;
 
     /**
      * @param manager The service manager.
-     * @param factory The document factory.
      * @param config The publication configuration.
      */
-    public PublicationFactory(ServiceManager manager, DocumentFactory factory,
-            PublicationConfiguration config) {
+    public PublicationFactory(ServiceManager manager, PublicationConfiguration config) {
         this.manager = manager;
-        this.factory = factory;
         this.config = config;
     }
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        return new PublicationImpl(this.manager, this.factory, config);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+        return new PublicationImpl(this.manager, factory, config);
     }
 
     public String getItemType() {
