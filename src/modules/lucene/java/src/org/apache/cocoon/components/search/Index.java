@@ -141,15 +141,13 @@ public class Index {
      */
     public synchronized Indexer getIndexer() throws IndexException {
 
-        int tmptries = numtries;
-
+        long endTime = System.currentTimeMillis() + numtries * 1000;
         // wait the end of the indexing
-        while (indexer_busy && tmptries > 0) {
+        while (indexer_busy && System.currentTimeMillis() < endTime) {
             try {
-                Thread.sleep(1000);
+                wait(1000);
             } catch (InterruptedException ex) {
             }
-            tmptries--;
         }
 
         if (indexer_busy) {
@@ -191,6 +189,7 @@ public class Index {
             this.manager.release(indexer);
             indexer_busy = false;
         }
+        notifyAll();
     }
 
     /**
