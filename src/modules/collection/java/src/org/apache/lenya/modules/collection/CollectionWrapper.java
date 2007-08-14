@@ -189,8 +189,8 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
      */
     protected void saveXml(NamespaceHelper helper) throws TransformerException, DocumentException {
         Element collectionElement = helper.getDocument().getDocumentElement();
-        if (collectionElement.getAttributeNS(null, ATTRIBUTE_UUID) == null
-                | collectionElement.getAttribute(ATTRIBUTE_UUID).equals("")) {
+        if (collectionElement.getAttributeNS(null, ATTRIBUTE_UUID).equals("")
+                || collectionElement.getAttribute(ATTRIBUTE_UUID).equals("")) {
             collectionElement.setAttributeNS(null, ATTRIBUTE_UUID, getDelegate().getUUID());
         }
         Element[] existingDocumentElements = helper.getChildren(collectionElement,
