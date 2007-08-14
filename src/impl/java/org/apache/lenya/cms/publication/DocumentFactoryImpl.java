@@ -179,16 +179,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                     webappUrl);
             if (publication.exists()) {
                 DocumentBuilder builder = publication.getDocumentBuilder();
-                if (builder.isDocument(this, webappUrl)) {
-                    DocumentLocator locator = builder.getLocator(this, webappUrl);
-                    String area = locator.getArea();
-                    String path = locator.getPath();
-                    String language = locator.getLanguage();
-                    SiteStructure site = publication.getArea(area).getSite();
-                    return site.contains(path, language);
-                } else {
-                    return false;
-                }
+                return builder.isDocument(this, webappUrl);
             } else {
                 return false;
             }

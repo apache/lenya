@@ -534,7 +534,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         NodeFactory factory = null;
         try {
             factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
-            factory.setSession(session);
             return (Node) session.getRepositoryItem(factory, sourceUri);
         } catch (Exception e) {
             throw new RuntimeException("Creating repository node failed: ", e);
@@ -636,6 +635,10 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Session getSession() {
+        return getFactory().getSession();
     }
 
 }

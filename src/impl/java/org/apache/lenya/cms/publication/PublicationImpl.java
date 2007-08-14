@@ -30,6 +30,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * A publication.
@@ -252,6 +253,10 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     public String getName() {
         return delegate.getName();
+    }
+
+    public Session getSession() {
+        return getFactory().getSession();
     }
 
 }

@@ -29,7 +29,6 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.NodeFactory;
@@ -487,7 +486,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             NodeFactory factory = null;
             try {
                 factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
-                factory.setSession(session);
                 this.repositoryNode = (org.apache.lenya.cms.repository.Node)
                     session.getRepositoryItem(factory, this.sourceUri);
             } catch (Exception e) {
@@ -642,6 +640,10 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             return node.hasLink(language);
         }
         return false;
+    }
+
+    public Session getSession() {
+        return getRepositoryNode().getSession();
     }
 
 }

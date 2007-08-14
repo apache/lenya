@@ -108,7 +108,6 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         NodeFactory factory = null;
         try {
             factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
-            factory.setSession(session);
             
             String sourceUri;
             int revisionNumber = -1;

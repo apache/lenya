@@ -28,9 +28,4 @@ public interface NodeFactory extends RepositoryItemFactory {
      */
     String ROLE = NodeFactory.class.getName();
     
-    /**
-     * @param session The session.
-     */
-    void setSession(Session session);
-
 }

@@ -32,7 +32,6 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
         ThreadSafe {
 
     private ServiceManager manager;
-    private Session session;
 
     /**
      * Ctor.
@@ -40,18 +39,8 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
     public SourceNodeFactory() {
     }
 
-    /**
-     * @param session The session.
-     */
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        if (this.session == null) {
-            throw new RepositoryException("The session has not been set!");
-        }
-        Node node = new SourceNode(this.session, key, this.manager, getLogger());
+        Node node = new SourceNode(session, key, this.manager, getLogger());
         return node;
     }
 

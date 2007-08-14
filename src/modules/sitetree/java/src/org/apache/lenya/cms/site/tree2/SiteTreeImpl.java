@@ -101,6 +101,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             if (repoNode.exists() /* && repoNode.getLastModified() > this.lastModified */) {
                 long lastModified = repoNode.getLastModified();
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(repoNode.getInputStream());
+
                 NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", xml);
                 Assert.isTrue("document element is site", xml.getDocumentElement().getLocalName()
                         .equals("site"));
@@ -170,6 +171,11 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         try {
             Node repoNode = getRepositoryNode();
             NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", "site");
+
+            int revision = getRevision(repoNode) + 1;
+            helper.getDocument().getDocumentElement().setAttribute("revision",
+                    Integer.toString(revision));
+
             saveNodes(getRoot(), helper, helper.getDocument().getDocumentElement());
             helper.save(repoNode.getOutputStream());
             this.lastModified = repoNode.getLastModified();
@@ -179,6 +185,14 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             throw new RuntimeException(e);
         }
 
+    }
+
+    protected int getRevision(Node repoNode) {
+        int revision = 0;
+        if (repoNode.getHistory().getRevisionNumbers().length > 0) {
+            revision = repoNode.getHistory().getLatestRevision().getNumber();
+        }
+        return revision;
     }
 
     protected void saveNodes(TreeNode parent, NamespaceHelper helper, Element parentElement)
@@ -391,17 +405,15 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         return this.area.getPublication();
     }
 
-    protected Session getSession() {
+    public Session getSession() {
         return this.area.getPublication().getFactory().getSession();
     }
 
     public Node getRepositoryNode() {
         NodeFactory factory = null;
         try {
-            Session session = getSession();
             factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
-            factory.setSession(session);
-            return (Node) session.getRepositoryItem(factory, getSourceUri());
+            return (Node) getSession().getRepositoryItem(factory, getSourceUri());
         } catch (Exception e) {
             throw new RuntimeException("Creating repository node failed: ", e);
         } finally {

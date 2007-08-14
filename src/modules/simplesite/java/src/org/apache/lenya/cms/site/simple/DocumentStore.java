@@ -32,6 +32,7 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -297,5 +298,9 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure {
             return node.hasLink(language);
         }
         return false;
+    }
+
+    public Session getSession() {
+        return getRepositoryNode().getSession();
     }
 }

@@ -28,6 +28,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * A publication's configuration. Keep in sync with
@@ -553,6 +554,10 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     public String getName() {
         loadConfiguration();
         return this.name;
+    }
+
+    public Session getSession() {
+        throw new UnsupportedOperationException();
     }
 
 }
