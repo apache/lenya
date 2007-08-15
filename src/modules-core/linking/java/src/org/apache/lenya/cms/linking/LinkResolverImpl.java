@@ -53,18 +53,8 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
         if (uuid.length() == 0) {
             uuid = currentDoc.getUUID();
         }
-
-        Link newLink = new Link();
-        newLink.setPubId(pubId);
-        newLink.setArea(area);
-        newLink.setUuid(uuid);
-        newLink.setLanguage(language);
-        if (revisionString != null) {
-            newLink.setRevision(revisionString);
-        }
         
-        return resolve(currentDoc.getFactory(), newLink.getUri());
-
+        return resolve(currentDoc.getFactory(), pubId, area, uuid, language, revisionString);
     }
 
     protected String getValue(String value, String defaultValue) {
@@ -113,6 +103,11 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
 
         String revisionString = getValue(link.getRevision(), null);
         
+        return resolve(factory, pubId, area, uuid, language, revisionString);
+    }
+
+    protected LinkTarget resolve(DocumentFactory factory, String pubId, String area, String uuid,
+            String language, String revisionString) {
         int revision;
         if (revisionString == null) {
             revision = -1;
