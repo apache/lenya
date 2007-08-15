@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.linking;
 
 import java.net.MalformedURLException;
+import java.util.StringTokenizer;
 
 import org.apache.lenya.util.Query;
 
@@ -52,8 +53,9 @@ public class Link {
             throw new MalformedURLException("The string [" + linkUri + "] is not a valid link URI!");
         }
         
-        String[] schemeAndPath = linkUri.split(":");
-        String path = schemeAndPath[1];
+        StringTokenizer schemeAndPath = new StringTokenizer(linkUri, ":");
+        schemeAndPath.nextToken();
+        String path = schemeAndPath.nextToken();
 
         if (path.indexOf(PAIR_DELIMITER) > -1) {
             int firstDelimiterIndex = path.indexOf(PAIR_DELIMITER);
