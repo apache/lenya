@@ -27,6 +27,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
@@ -39,7 +40,7 @@ import org.apache.lenya.util.CacheMap;
  */
 public class SourceCacheImpl
     extends AbstractLogEnabled
-    implements SourceCache, Serviceable, Disposable {
+    implements SourceCache, Serviceable, Disposable, ThreadSafe {
 
     /**
      * Returns the service manager.
@@ -80,7 +81,7 @@ public class SourceCacheImpl
     /**
      * @see org.apache.lenya.ac.cache.SourceCache#get(java.lang.String, org.apache.lenya.ac.cache.InputStreamBuilder)
      */
-    public Object get(String sourceUri, InputStreamBuilder builder) throws CachingException {
+    public synchronized Object get(String sourceUri, InputStreamBuilder builder) throws CachingException {
 
         String key = sourceUri;
         Object value = null;
@@ -192,7 +193,7 @@ public class SourceCacheImpl
      * @throws SourceNotFoundException when an error occurs.
      * @throws BuildException if an error occurs.
      */
-    protected Object buildObject(String sourceUri, InputStreamBuilder builder)
+    protected synchronized Object buildObject(String sourceUri, InputStreamBuilder builder)
         throws MalformedURLException, IOException, SourceNotFoundException, BuildException {
         Object value = null;
         Source source = null;
@@ -217,7 +218,7 @@ public class SourceCacheImpl
      * @throws MalformedURLException when an error occurs.
      * @throws IOException when an error occurs.
      */
-    protected SourceValidity getSourceValidity(String sourceUri)
+    protected synchronized SourceValidity getSourceValidity(String sourceUri)
         throws MalformedURLException, IOException {
         SourceValidity sourceValidity;
         Source source = null;
