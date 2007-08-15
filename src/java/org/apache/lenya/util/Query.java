@@ -20,6 +20,7 @@ package org.apache.lenya.util;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * <p>
@@ -66,12 +67,13 @@ public class Query {
     protected void analyze() {
         if (this.key2value == null) {
             this.key2value = new HashMap();
-            String[] pairs = this.string.split(getPairDelimiter());
-            for (int i = 0; i < pairs.length; i++) {
-                String[] keyAndValue = pairs[i].split(getKeyValueDelimiter());
-                if (keyAndValue.length == 2) {
-                    final String key = keyAndValue[0];
-                    final String value = keyAndValue[1];
+            StringTokenizer tokenizer = new StringTokenizer(this.string, getPairDelimiter());
+            while (tokenizer.hasMoreTokens()) {
+                String token = tokenizer.nextToken();
+                StringTokenizer keyValueTokenizer = new StringTokenizer(token, getKeyValueDelimiter());
+                if (keyValueTokenizer.countTokens() == 2) {
+                    final String key = keyValueTokenizer.nextToken();
+                    final String value = keyValueTokenizer.nextToken();
                     this.key2value.put(key, value);
                 }
             }
