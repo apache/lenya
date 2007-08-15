@@ -58,6 +58,7 @@ public class SiteSource extends AbstractLogEnabled implements Source {
      * @param manager The service manager.
      * @param request The cocoon request.
      * @param location The source URI.
+     * @param logger The logger.
      */
     public SiteSource(ServiceManager manager, Request request, String location, Logger logger) {
         ContainerUtil.enableLogging(this, logger);
