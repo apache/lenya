@@ -25,12 +25,14 @@ import java.util.Set;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -89,11 +91,11 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     protected synchronized void load() {
 
-        Node repoNode = getRepositoryNode();
-
         if (this.loaded) {
             return;
         }
+
+        Node repoNode = getRepositoryNode();
 
         try {
             // lastModified check is necessary for clustering, but can cause 404s
@@ -408,18 +410,25 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     public Session getSession() {
         return this.area.getPublication().getFactory().getSession();
     }
+    
+    private NodeFactory nodeFactory;
+    
+    protected NodeFactory getNodeFactory() {
+        if (this.nodeFactory == null) {
+            try {
+                this.nodeFactory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException("Creating repository node failed: ", e);
+            }
+        }
+        return this.nodeFactory;
+    }
 
     public Node getRepositoryNode() {
-        NodeFactory factory = null;
         try {
-            factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
-            return (Node) getSession().getRepositoryItem(factory, getSourceUri());
-        } catch (Exception e) {
+            return (Node) getSession().getRepositoryItem(getNodeFactory(), getSourceUri());
+        } catch (RepositoryException e) {
             throw new RuntimeException("Creating repository node failed: ", e);
-        } finally {
-            if (factory != null) {
-                manager.release(factory);
-            }
         }
     }
 
