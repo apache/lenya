@@ -22,11 +22,9 @@ import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
 
 /**
  * Utility to handle site structures.
@@ -106,24 +104,6 @@ public class SiteUtil {
                 }
                 manager.release(selector);
             }
-        }
-    }
-
-    public static boolean isDocument(DocumentFactory factory, String webappUrl)
-            throws SiteException {
-
-        URLInformation info = new URLInformation(webappUrl);
-        try {
-            Publication pub = factory.getPublication(info.getPublicationId());
-            if (pub.exists()) {
-                DocumentBuilder builder = pub.getDocumentBuilder();
-                return builder.isDocument(factory, webappUrl);
-            }
-            return false;
-        } catch (SiteException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new SiteException(e);
         }
     }
 

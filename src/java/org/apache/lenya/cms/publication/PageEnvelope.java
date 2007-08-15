@@ -25,7 +25,6 @@ import java.io.File;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * A page envelope carries a set of information that are needed during the presentation of a
@@ -284,7 +283,7 @@ public class PageEnvelope {
         if (!documentChecked) {
             try {
                 documentChecked = true;
-                if (SiteUtil.isDocument(getDocumentFactory(), this.webappUrl)) {
+                if (getDocumentFactory().isDocument(this.webappUrl)) {
                     this.document = getDocumentFactory().getFromURL(this.webappUrl);
                 }
             } catch (final Exception e) {
