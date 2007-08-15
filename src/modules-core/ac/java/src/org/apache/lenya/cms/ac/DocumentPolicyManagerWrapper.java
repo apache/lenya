@@ -71,12 +71,22 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
 
     /**
      * Returns the URI which is used to obtain the policy for a webapp URL.
-     * @param controller The accreditable manager.
-     * @param webappUrl The webapp URL.
+     * @param webappUrl The web application URL.
      * @return A string.
      * @throws AccessControlException when something went wrong.
      */
     protected String getPolicyURL(String webappUrl)
+            throws AccessControlException {
+        return getPolicyUrlCorrect(webappUrl);
+    }
+    
+    /**
+     * Returns the URI which is used to obtain the policy for a webapp URL.
+     * @param webappUrl The web application URL.
+     * @return A string.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected String getPolicyUrlCorrect(String webappUrl)
             throws AccessControlException {
 
         if (getLogger().isDebugEnabled()) {
