@@ -18,6 +18,8 @@
 package org.apache.lenya.cms.repository;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -74,18 +76,33 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
     }
 
     public String[] getValues(String key) throws MetaDataException {
-        checkKey(key);
-        return getHandler().getValues(this.namespaceUri, key);
+        String[] values = getHandler().getValues(this.namespaceUri, key);
+        if (values.length == 0) {
+            checkKey(key);
+        }
+        return values;
     }
 
     public String getFirstValue(String key) throws MetaDataException {
-        checkKey(key);
         String[] values = getValues(key);
         if (values.length == 0) {
+            checkKey(key);
             return null;
         } else {
             return values[0];
         }
+    }
+    
+    /**
+     * Cache for better performance.
+     */
+    private Set availableKeys;
+    
+    protected Set availableKeys() {
+        if (this.availableKeys == null) {
+            this.availableKeys = new HashSet(Arrays.asList(getAvailableKeys()));
+        }
+        return this.availableKeys;
     }
 
     public String[] getAvailableKeys() {
@@ -156,7 +173,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
     }
 
     public boolean isValidAttribute(String key) {
-        return Arrays.asList(getAvailableKeys()).contains(key);
+        return availableKeys().contains(key);
     }
 
     public long getLastModified() throws MetaDataException {
