@@ -42,7 +42,7 @@ FCKConfig.ToolbarSets["Lenya"] = [
 FCKConfig.Plugins.Add( 'fck_lenya_glue', 'de,en', '../../plugins/' ) ;
 
 /*
- * disable uploads since it needs to be done from withing Lenya
+ * disable uploads since it needs to be done from within Lenya
  */
 FCKConfig.ImageUpload = false;
 FCKConfig.LinkUpload  = false;
