@@ -83,7 +83,7 @@ public class ProxyModule extends AbstractInputModule implements Serviceable {
             ConfigurationException {
         Session session = RepositoryUtil.getSession(this.manager, request);
         LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, request
-                .getRequestURI(), request.isSecure(), false);
+                .getRequestURI(), request.isSecure(), false, false);
         if (!rewriter.matches(url)) {
             throw new ConfigurationException("The URL [" + url + "] can't be rewritten!");
         }

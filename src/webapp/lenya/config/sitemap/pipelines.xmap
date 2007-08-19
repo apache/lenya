@@ -63,6 +63,12 @@
     <map:pipeline>
 
     <map:match pattern="**">
+      
+      <!-- redirect to SSL if the policy requires this -->
+      <map:act type="ssl-redirect">
+        <map:redirect-to uri="{redirectUri}" session="true"/>
+      </map:act>
+      
       <map:match pattern="*/webdav**">
         <map:act type="authorizer">
             <map:mount check-reload="true" reload-method="synchron" src="global-sitemap.xmap" uri-prefix=""/> 

@@ -18,9 +18,12 @@
 package org.apache.lenya.cms.linking;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -34,15 +37,16 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.StringUtil;
 
 /**
  * <p>
- * Converts web application links to links which will be sent to the browser by
- * using the publication's proxy settings. If the current request is
- * SSL-encrypted, all link URLs will use the SSL proxy.
+ * Converts web application links to links which will be sent to the browser by using the
+ * publication's proxy settings. If the current request is SSL-encrypted, all link URLs will use the
+ * SSL proxy.
  * </p>
  * <p>
  * Objects of this class are not thread-safe.
@@ -56,21 +60,26 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     private DocumentFactory factory;
     private boolean ssl;
     private GlobalProxies globalProxies;
+    private boolean considerSslPolicies;
 
     /**
      * @param manager The service manager to use.
      * @param session The current session.
      * @param requestUrl The request URL where the links should be rewritten.
      * @param ssl If the current page is SSL-encrypted.
+     * @param considerSslPolicies If the SSL protection of policies should be considered when
+     *        resolving the corresponding proxy. Setting this to <code>true</code> leads to a
+     *        substantial performance overhead.
      * @param relativeUrls If relative URLs should be created.
      */
     public OutgoingLinkRewriter(ServiceManager manager, Session session, String requestUrl,
-            boolean ssl, boolean relativeUrls) {
+            boolean ssl, boolean considerSslPolicies, boolean relativeUrls) {
 
         super(manager);
         this.requestUrl = requestUrl;
         this.relativeUrls = relativeUrls;
         this.ssl = ssl;
+        this.considerSslPolicies = considerSslPolicies;
 
         ServiceSelector serviceSelector = null;
         AccessControllerResolver acResolver = null;
@@ -78,15 +87,23 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         try {
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
 
-            serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-            acResolver = (AccessControllerResolver) serviceSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
-            AccessController accessController = acResolver.resolveAccessController(requestUrl);
-            if (accessController != null) {
-                this.accreditableManager = accessController.getAccreditableManager();
-                this.policyManager = accessController.getPolicyManager();
+            if (this.considerSslPolicies) {
+                serviceSelector = (ServiceSelector) this.manager
+                        .lookup(AccessControllerResolver.ROLE + "Selector");
+                acResolver = (AccessControllerResolver) serviceSelector
+                        .select(AccessControllerResolver.DEFAULT_RESOLVER);
+                AccessController accessController = acResolver.resolveAccessController(requestUrl);
+                if (accessController != null) {
+                    this.accreditableManager = accessController.getAccreditableManager();
+                    this.policyManager = accessController.getPolicyManager();
+                }
             }
+            
+            Publication[] pubs = this.factory.getPublications();
+            for (int i = 0; i < pubs.length; i++) {
+                this.publicationCache.put(pubs[i].getId(), pubs[i]);
+            }
+            
         } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -114,27 +131,38 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         return url.startsWith("/");
     }
 
+    private Map publicationCache = new HashMap();
+
+    protected Publication getPublication(String pubId) throws PublicationException {
+        return (Publication) this.publicationCache.get(pubId);
+    }
+
     public String rewrite(final String url) {
-        
+
         String rewrittenUrl = "";
 
         try {
-            final String normalizedUrl = new URI(url).normalize().toString();
+            String normalizedUrl = normalizeUrl(url);
             if (this.relativeUrls) {
                 rewrittenUrl = getRelativeUrlTo(normalizedUrl);
             } else {
                 boolean useSsl = this.ssl;
                 if (!useSsl && this.policyManager != null) {
-                    Policy policy = this.policyManager.getPolicy(this.accreditableManager, normalizedUrl);
+                    Policy policy = this.policyManager.getPolicy(this.accreditableManager,
+                            normalizedUrl);
                     useSsl = policy.isSSLProtected();
                 }
 
                 URLInformation info = new URLInformation(normalizedUrl);
                 String pubId = info.getPublicationId();
 
+                Publication pub = null;
+                if (pubId != null) {
+                    pub = getPublication(pubId);
+                }
+
                 // link points to publication
-                if (pubId != null && isPublication(pubId)) {
-                    Publication pub = this.factory.getPublication(pubId);
+                if (pub != null) {
                     rewrittenUrl = rewriteLink(normalizedUrl, pub, useSsl);
                 }
 
@@ -150,7 +178,36 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         return rewrittenUrl;
     }
 
+    protected String normalizeUrl(final String url) throws URISyntaxException {
+        String normalizedUrl;
+        if (url.indexOf("..") > -1) {
+            normalizedUrl = new URI(url).normalize().toString();
+        }
+        else {
+            normalizedUrl = url;
+        }
+        return normalizedUrl;
+    }
+
     private String requestUrl;
+    
+    private Map pubId2areaList = new HashMap();
+    
+    /**
+     * Checks if a publication has an area by using a cache for performance reasons.
+     * @param pub The publication.
+     * @param area The area name.
+     * @return if the publication contains the area.
+     */
+    protected boolean hasArea(Publication pub, String area) {
+        String pubId = pub.getId();
+        List areas = (List) this.pubId2areaList.get(pubId);
+        if (areas == null) {
+            areas = Arrays.asList(pub.getAreaNames());
+            this.pubId2areaList.put(pubId, areas);
+        }
+        return areas.contains(area);
+    }
 
     /**
      * @param linkUrl The original link URL.
@@ -164,7 +221,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         String areaName = info.getArea();
 
         // valid area
-        if (areaName != null && Arrays.asList(pub.getAreaNames()).contains(areaName)) {
+        if (areaName != null && hasArea(pub, areaName)) {
             Proxy proxy = pub.getProxy(areaName, ssl);
             rewrittenUrl = proxy.getUrl() + info.getDocumentUrl();
         }
@@ -203,19 +260,6 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
 
     protected List toList(String url) {
         return new ArrayList(Arrays.asList(url.substring(1).split("/", -1)));
-    }
-
-    /**
-     * @param pubId The publication ID.
-     * @return If a publication with this ID exists.
-     */
-    protected boolean isPublication(String pubId) {
-        Publication[] pubs = this.factory.getPublications();
-        List pubIds = new ArrayList();
-        for (int i = 0; i < pubs.length; i++) {
-            pubIds.add(pubs[i].getId());
-        }
-        return pubIds.contains(pubId);
     }
 
 }

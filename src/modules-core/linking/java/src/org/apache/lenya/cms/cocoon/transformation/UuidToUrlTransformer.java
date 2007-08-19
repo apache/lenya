@@ -19,6 +19,7 @@ package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -127,12 +128,12 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
                 url = linkUrl;
             }
 
-            String[] linkUriAndQuery = url.split("\\?");
-            String linkUri = linkUriAndQuery[0];
+            StringTokenizer tokenizer = new StringTokenizer(url, "?");
+            String linkUri = tokenizer.nextToken();
             String queryString = null;
             String requiredExtension = null;
-            if (linkUriAndQuery.length > 1) {
-                queryString = linkUriAndQuery[1];
+            if (tokenizer.hasMoreTokens()) {
+                queryString = tokenizer.nextToken();
                 Query query = new Query(queryString);
                 requiredExtension = query.getValue(EXTENSION_PARAM);
                 query.removeValue(EXTENSION_PARAM);
@@ -169,7 +170,8 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
             String prefix = "/" + info.getPublicationId() + "/";
             if (linkUrl.startsWith(prefix)) {
                 String pubUrl = linkUrl.substring(prefix.length());
-                String area = pubUrl.split("/")[0];
+                StringTokenizer tokenizer = new StringTokenizer(pubUrl, "/");
+                String area = tokenizer.nextToken();
 
                 // don't rewrite /{pub}/modules/...
                 if (area.equals(Publication.AUTHORING_AREA)) {

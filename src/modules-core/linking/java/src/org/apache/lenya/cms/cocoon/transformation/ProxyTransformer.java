@@ -75,7 +75,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
             }
             Session session = RepositoryUtil.getSession(this.manager, _request);
             this.rewriter = new OutgoingLinkRewriter(this.manager, session, _request
-                    .getRequestURI(), request.isSecure(), this.relativeUrls);
+                    .getRequestURI(), request.isSecure(), false, this.relativeUrls);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }

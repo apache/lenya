@@ -17,9 +17,12 @@
  */
 package org.apache.lenya.cms.cocoon.transformation;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -42,14 +45,12 @@ import org.xml.sax.helpers.AttributesImpl;
  * </pre></code>
  */
 public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
-
-    private List attrConfigs = new ArrayList();
-
-    protected AttributeConfiguration[] getAttributeConfigurations() {
-        return (AttributeConfiguration[]) this.attrConfigs
-                .toArray(new AttributeConfiguration[this.attrConfigs.size()]);
-    }
-
+    
+    /**
+     * Set of supported local names for quick pre-checks.
+     */
+    private Set localNames = new HashSet();
+    
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
         Configuration[] transformConfigs = config.getChildren("transform");
@@ -59,7 +60,14 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             String attribute = transformConfigs[i].getAttribute("attribute");
             AttributeConfiguration attrConfig = new AttributeConfiguration(namespace, element,
                     attribute);
-            this.attrConfigs.add(attrConfig);
+            String key = getCacheKey(namespace, element);
+            Set configs = (Set) this.namespaceLocalname2configSet.get(key);
+            if (configs == null) {
+                configs = new HashSet();
+                this.localNames.add(element);
+                this.namespaceLocalname2configSet.put(key, configs);
+            }
+            configs.add(attrConfig);
         }
     }
 
@@ -96,29 +104,58 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
 
     }
 
-    protected AttributeConfiguration[] getMatchingConfigurations(String namespace,
+    /**
+     * @param namespace The namespace URI.
+     * @param localName The local name.
+     * @param attrs The attributes.
+     * @return A set of {@link AttributeConfiguration} objects.
+     */
+    protected Set getMatchingConfigurations(String namespace,
             String localName, Attributes attrs) {
-        List configs = new ArrayList();
-        for (Iterator i = this.attrConfigs.iterator(); i.hasNext();) {
+        
+        // pre-check for performance reasons
+        if (!existsMatchingConfiguration(namespace, localName)) {
+            return Collections.EMPTY_SET;
+        }
+        
+        String key = getCacheKey(namespace, localName);
+        
+        // don't initialize yet for performance reasons
+        Set configs = null;
+        Set allConfigs = (Set) this.namespaceLocalname2configSet.get(key);
+        for (Iterator i = allConfigs.iterator(); i.hasNext(); ) {
             AttributeConfiguration config = (AttributeConfiguration) i.next();
             if (config.matches(namespace, localName, attrs)) {
+                if (configs == null) {
+                    configs = new HashSet();
+                }
                 configs.add(config);
             }
         }
-        return (AttributeConfiguration[]) configs
-                .toArray(new AttributeConfiguration[configs.size()]);
+        if (configs == null) {
+            configs = Collections.EMPTY_SET;
+        }
+        return configs;
     }
+    
+    /**
+     * Cache to improve performance.
+     */
+    private Map namespaceLocalname2configSet = new HashMap();
 
     protected boolean existsMatchingConfiguration(String namespace, String localName) {
-        boolean matches = false;
-        AttributeConfiguration[] attrConfigs = getAttributeConfigurations();
-        for (int i = 0; i < attrConfigs.length; i++) {
-            if (attrConfigs[i].namespace.equals(namespace)
-                    && attrConfigs[i].element.equals(localName)) {
-                matches = true;
-            }
+        // quick pre-check
+        if (!this.localNames.contains(localName)) {
+            return false;
         }
-        return matches;
+        
+        // more expensive check
+        String key = getCacheKey(namespace, localName);
+        return this.namespaceLocalname2configSet.containsKey(key);
+    }
+
+    protected String getCacheKey(String namespace, String localName) {
+        return namespace + " " + localName;
     }
 
     protected String indent = "";
@@ -140,14 +177,14 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
 
         AttributesImpl newAttrs = null;
 
-        AttributeConfiguration[] configs = getMatchingConfigurations(uri, name, attrs);
+        Set configs = getMatchingConfigurations(uri, name, attrs);
 
-        if (configs.length > 0) {
+        if (!configs.isEmpty()) {
 
             this.ignoreLinkElement = false;
 
-            for (int i = 0; i < configs.length; i++) {
-                AttributeConfiguration config = configs[i];
+            for (Iterator i = configs.iterator(); i.hasNext(); ) {
+                AttributeConfiguration config = (AttributeConfiguration) i.next();
                 String linkUrl = attrs.getValue(config.attribute);
                 try {
                     if (getLogger().isDebugEnabled()) {
@@ -166,7 +203,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreLinkElement);
         }
 
-        if (!(configs.length > 0 && this.ignoreLinkElement)) {
+        if (!(!configs.isEmpty() && this.ignoreLinkElement)) {
             if (newAttrs != null) {
                 attrs = newAttrs;
             }
