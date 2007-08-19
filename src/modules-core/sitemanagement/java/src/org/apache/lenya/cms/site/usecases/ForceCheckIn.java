@@ -57,13 +57,15 @@ public class ForceCheckIn extends DocumentUsecase {
 
     protected void prepareView() throws Exception {
         Node node = getSourceDocument().getRepositoryNode();
-        String userId = node.getCheckoutUserId();
-        String[] params = { userId };
-        if (isLoggedIn(userId)) {
-            addInfoMessage("user-logged-in", params);
-        }
-        else {
-            addInfoMessage("user-not-logged-in", params);
+        if (node.isCheckedOut()) {
+            String userId = node.getCheckoutUserId();
+            String[] params = { userId };
+            if (isLoggedIn(userId)) {
+                addInfoMessage("user-logged-in", params);
+            }
+            else {
+                addInfoMessage("user-not-logged-in", params);
+            }
         }
     }
 
