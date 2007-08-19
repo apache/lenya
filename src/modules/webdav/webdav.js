@@ -162,6 +162,8 @@ function executeUsecase(usecaseName) {
     var usecase;
     var sourceUrl;
     
+    var preconditionsOk;
+    
     if (cocoon.log.isDebugEnabled())
        cocoon.log.debug("usecases.js::executeUsecase() called, parameter lenya.usecase = [" + usecaseName + "]");
     
@@ -180,7 +182,10 @@ function executeUsecase(usecaseName) {
         passRequestParameters(flowHelper, usecase);
         passRequestHeaders(flowHelper, usecase);
         usecase.checkPreconditions();
-        usecase.lockInvolvedObjects();
+        preconditionsOk = !usecase.hasErrors();
+        if (preconditionsOk) {
+            usecase.lockInvolvedObjects();
+        }
         proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
     }
     finally {
@@ -301,13 +306,15 @@ function executeUsecase(usecaseName) {
             usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
             proxy.setup(usecase);
             
-            usecase.checkExecutionConditions();
-            if (!usecase.hasErrors()) {
-                usecase.execute();
-                if (! usecase.hasErrors()) {
-                    usecase.checkPostconditions();
+            if (preconditionsOk) {
+                usecase.checkExecutionConditions();
+                if (!usecase.hasErrors()) {
+                    usecase.execute();
                     if (! usecase.hasErrors()) {
-                        success = true;
+                        usecase.checkPostconditions();
+                        if (! usecase.hasErrors()) {
+                            success = true;
+                        }
                     }
                 }
             }
