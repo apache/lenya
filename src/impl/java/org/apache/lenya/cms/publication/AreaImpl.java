@@ -20,9 +20,11 @@ package org.apache.lenya.cms.publication;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
@@ -37,6 +39,7 @@ public class AreaImpl implements Area {
     private String name;
     private Publication pub;
     private DocumentFactory factory;
+    private NodeFactory nodeFactory;
     private ServiceManager manager;
 
     /**
@@ -54,19 +57,27 @@ public class AreaImpl implements Area {
 
     public boolean contains(String uuid, String language) {
         String sourceUri = DocumentImpl.getSourceURI(pub, name, uuid, language);
-        Node node = DocumentImpl.getRepositoryNode(this.manager, this.factory, sourceUri);
         try {
+            Node node = (Node) getPublication().getSession().getRepositoryItem(getNodeFactory(), sourceUri);
             return node.exists();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }
+    
+    protected NodeFactory getNodeFactory() {
+        if (this.nodeFactory == null) {
+            try {
+                this.nodeFactory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.nodeFactory;
+    }
+    
 
     public Document getDocument(String uuid, String language) throws PublicationException {
-        if (!contains(uuid, language)) {
-            throw new PublicationException("The area [" + this + "] doesn't contain the document ["
-                    + uuid + ":" + language + "].");
-        }
         return this.factory.get(getPublication(), getName(), uuid, language);
     }
 
@@ -78,25 +89,28 @@ public class AreaImpl implements Area {
         return this.pub;
     }
 
+    private SiteStructure site;
+
     public SiteStructure getSite() {
-        // The site structure has to be loaded every time because the publication factory is sharable
-        // and therefore the danger of stale site structures could occur.
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            return siteManager.getSiteStructure(this.factory, getPublication(), getName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
+        if (this.site == null) {
+            SiteManager siteManager = null;
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+                siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+                this.site = siteManager.getSiteStructure(this.factory, getPublication(), getName());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (selector != null) {
+                    if (siteManager != null) {
+                        selector.release(siteManager);
+                    }
+                    this.manager.release(selector);
                 }
-                this.manager.release(selector);
             }
         }
+        return this.site;
     }
 
     public String toString() {
