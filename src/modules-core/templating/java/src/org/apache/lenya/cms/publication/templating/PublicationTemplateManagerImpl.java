@@ -108,7 +108,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
             uris.add(getBaseURI(publications[i]));
         }
 
-        String coreBaseURI = "context://";
+        String coreBaseURI = publication.getServletContext().getAbsolutePath() + "/";
         uris.add(coreBaseURI);
 
         return (String[]) uris.toArray(new String[uris.size()]);
@@ -120,9 +120,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
      * @return A string.
      */
     public static String getBaseURI(Publication publication) {
-        String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
-                + publication.getId();
-        return publicationUri;
+        return publication.getDirectory().getAbsolutePath() + "/";
     }
 
     /**
