@@ -36,7 +36,6 @@ public class Query {
 
     protected static final String PAIR_DELIMITER = "&";
     protected static final String KEY_VALUE_DELIMITER = "=";
-    private String string;
     private String pairDelimiter;
     private String keyValueDelimiter;
 
@@ -57,31 +56,24 @@ public class Query {
      * @param keyValueDelimiter The delimiter between key and value.
      */
     public Query(String string, String pairDelimiter, String keyValueDelimiter) {
-        this.string = string;
+        this.key2value = new HashMap();
         this.pairDelimiter = pairDelimiter;
         this.keyValueDelimiter = keyValueDelimiter;
-    }
-
-    private Map key2value;
-
-    protected void analyze() {
-        if (this.key2value == null) {
-            this.key2value = new HashMap();
-            StringTokenizer tokenizer = new StringTokenizer(this.string, getPairDelimiter());
-            while (tokenizer.hasMoreTokens()) {
-                String token = tokenizer.nextToken();
-                StringTokenizer keyValueTokenizer = new StringTokenizer(token, getKeyValueDelimiter());
-                if (keyValueTokenizer.countTokens() == 2) {
-                    final String key = keyValueTokenizer.nextToken();
-                    final String value = keyValueTokenizer.nextToken();
-                    this.key2value.put(key, value);
-                }
+        StringTokenizer tokenizer = new StringTokenizer(string, pairDelimiter);
+        while (tokenizer.hasMoreTokens()) {
+            String token = tokenizer.nextToken();
+            StringTokenizer keyValueTokenizer = new StringTokenizer(token, keyValueDelimiter);
+            if (keyValueTokenizer.countTokens() == 2) {
+                final String key = keyValueTokenizer.nextToken();
+                final String value = keyValueTokenizer.nextToken();
+                this.key2value.put(key, value);
             }
         }
     }
 
+    private Map key2value;
+
     public String getValue(String key) {
-        analyze();
         return (String) this.key2value.get(key);
     }
 
