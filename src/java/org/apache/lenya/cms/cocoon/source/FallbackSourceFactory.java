@@ -19,10 +19,7 @@ package org.apache.lenya.cms.cocoon.source;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Map;
 
 import org.apache.avalon.framework.context.ContextException;
@@ -68,8 +65,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
      */
     public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
-
-        long startTime = new GregorianCalendar().getTimeInMillis();
 
         // Remove the protocol and the first '//'
         int pos = location.indexOf("://");
@@ -163,13 +158,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             if (sourceResolver != null) {
                 this.manager.release(sourceResolver);
             }
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            long endTime = new GregorianCalendar().getTimeInMillis();
-            long time = endTime - startTime;
-            getLogger().debug("Processing time: "
-                    + new SimpleDateFormat("hh:mm:ss.S").format(new Date(time)));
         }
 
         return source;
