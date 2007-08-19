@@ -44,8 +44,7 @@ public class ModuleManagerImpl extends AbstractLogEnabled implements ModuleManag
             baseUri = "context://lenya/modules/" + shortcut;
         }
         else {
-            String path = (String) this.module2src.get(shortcut);
-            baseUri = new File(path).toURI().toString();
+            return (String) this.module2src.get(shortcut);
         }
         return baseUri;
     }
@@ -66,7 +65,8 @@ public class ModuleManagerImpl extends AbstractLogEnabled implements ModuleManag
         for (int i = 0; i < modules.length; i++) {
             String shortcut = modules[i].getAttribute("shortcut");
             String src = modules[i].getAttribute("src");
-            this.module2src.put(shortcut, src);
+            String uri = new File(src).toURI().toString();
+            this.module2src.put(shortcut, uri);
         }
 
     }
