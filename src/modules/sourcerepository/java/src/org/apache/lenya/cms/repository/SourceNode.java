@@ -143,21 +143,15 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
     }
 
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#isCheckedOutBySession()
-     */
-    public boolean isCheckedOutBySession() throws RepositoryException {
+    public boolean isCheckedOutBySession(Session session) throws RepositoryException {
         try {
-            return getRcml().isCheckedOutBySession(getSession());
+            return getRcml().isCheckedOutBySession(session);
         } catch (RevisionControlException e) {
             throw new RepositoryException(e);
         }
     }
 
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#checkout()
-     */
-    public void checkout() throws RepositoryException {
+    public void checkout(boolean restrictedToSession) throws RepositoryException {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("SourceNode::checkout() called, sourceURI [" + getSourceURI() + "]");
@@ -170,12 +164,16 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                             + "] is already checked out by another session!");
                 }
                 if (!rcml.isCheckedOut()) {
-                    rcml.checkOut(this);
+                    rcml.checkOut(this, restrictedToSession);
                 }
             } catch (RevisionControlException e) {
                 throw new RepositoryException(e);
             }
         }
+    }
+    
+    public void checkout() throws RepositoryException {
+        checkout(true);
     }
 
     private Lock lock;
@@ -471,6 +469,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (RevisionControlException e) {
             throw new RepositoryException(e);
         }
+    }
+
+    public boolean isCheckedOutBySession() throws TransactionException {
+        return isCheckedOutBySession(getSession());
     }
     
 }

@@ -95,6 +95,8 @@ public class SourceNodeRCML implements RCML {
 
     protected static final String RCML_EXTENSION = ".rcml";
 
+    private static final String ALL_SESSIONS = "unrestricted";
+
     protected String getRcmlSourceUri() {
         return this.contentSourceUri + RCML_EXTENSION;
     }
@@ -127,17 +129,20 @@ public class SourceNodeRCML implements RCML {
     }
 
     /**
-     * Write a new entry for a check out or a check in the RCML-File made by the
-     * user with identity at time
+     * Write a new entry for a check out or a check in the RCML-File made by the user with identity
+     * at time
      * @param node The node.
      * @param type co for a check out, ci for a check in
      * @param time
-     * @param backup Create backup element
-     * @param newVersion If the revision number shall be increased.
+     * @param backup Create backup element (only considered for check-in entries).
+     * @param newVersion If the revision number shall be increased (only considered for check-in
+     *        entries).
+     * @param restrictedToSession If the check-out is restricted to the session (only considered for
+     *        check-out entries).
      * @throws RevisionControlException if an error occurs
      */
-    public synchronized void checkOutIn(Node node, short type, long time, boolean backup, boolean newVersion)
-            throws RevisionControlException {
+    public synchronized void checkOutIn(Node node, short type, long time, boolean backup,
+            boolean newVersion, boolean restrictedToSession) throws RevisionControlException {
 
         String identity = node.getSession().getIdentity().getUser().getId();
 
@@ -156,7 +161,13 @@ public class SourceNodeRCML implements RCML {
             }
         }
 
-        String sessionId = node.getSession().getId();
+        String sessionId;
+        if (type == RCML.co && !restrictedToSession) {
+            sessionId = ALL_SESSIONS;
+        }
+        else {
+            sessionId = node.getSession().getId();
+        }
 
         RCMLEntry entry;
         switch (type) {
@@ -423,9 +434,8 @@ public class SourceNodeRCML implements RCML {
     }
 
     /**
-     * Prune the list of entries and delete the corresponding backups. Limit the
-     * number of entries to the value maximalNumberOfEntries
-     * (2maxNumberOfRollbacks(configured)+1)
+     * Prune the list of entries and delete the corresponding backups. Limit the number of entries
+     * to the value maximalNumberOfEntries (2maxNumberOfRollbacks(configured)+1)
      * @throws RevisionControlException if an error occurs
      */
     public synchronized void pruneEntries() throws RevisionControlException {
@@ -498,8 +508,7 @@ public class SourceNodeRCML implements RCML {
     }
 
     /**
-     * Delete the revisions, the RCML source and the collection if the latter is
-     * empty.
+     * Delete the revisions, the RCML source and the collection if the latter is empty.
      * @return boolean true, if the file was deleted
      */
     public synchronized boolean delete() {
@@ -584,20 +593,26 @@ public class SourceNodeRCML implements RCML {
         return entry != null && entry.getType() == RCML.co;
     }
 
-    public synchronized void checkIn(Node node, boolean backup, boolean newVersion) throws RevisionControlException {
+    public synchronized void checkIn(Node node, boolean backup, boolean newVersion)
+            throws RevisionControlException {
         long time = new Date().getTime();
 
         if (backup) {
             makeBackup(time);
         }
 
-        checkOutIn(node, RCML.ci, time, backup, newVersion);
+        checkOutIn(node, RCML.ci, time, backup, newVersion, false);
         pruneEntries();
         write();
     }
 
     public synchronized void checkOut(Node node) throws RevisionControlException {
-        checkOutIn(node, RCML.co, new Date().getTime(), false, false);
+        checkOut(node, true);
+    }
+
+    public synchronized void checkOut(Node node, boolean restrictedToSession)
+            throws RevisionControlException {
+        checkOutIn(node, RCML.co, new Date().getTime(), false, false, restrictedToSession);
     }
 
     public boolean isCheckedOutBySession(Session session) throws RevisionControlException {
@@ -605,9 +620,20 @@ public class SourceNodeRCML implements RCML {
         if (entries.size() > 0) {
             RCMLEntry entry = (RCMLEntry) entries.get(0);
             String otherSessionId = entry.getSessionId();
-            return entry.getType() == co && otherSessionId.equals(session.getId());
+            if (entry.getType() == co) {
+                // not restricted to session
+                if (otherSessionId.equals(ALL_SESSIONS)) {
+                    String otherUserId = entry.getIdentity();
+                    String userId = session.getIdentity().getUser().getId();
+                    return userId.equals(otherUserId);
+                }
+                // restricted to session
+                if (otherSessionId.equals(session.getId())) {
+                    return true;
+                }
+            }
         }
         return false;
     }
-
+    
 }

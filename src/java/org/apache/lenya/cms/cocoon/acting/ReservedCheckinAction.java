@@ -53,7 +53,7 @@ public class ReservedCheckinAction extends RevisionControllerAction {
 
         try {
             Node node = getNode();
-            if (node.isCheckedOutBySession()) {
+            if (node.isCheckedOutBySession(node.getSession())) {
                 node.checkin();
             }
         } catch (RepositoryException e) {

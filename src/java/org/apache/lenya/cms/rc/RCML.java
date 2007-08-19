@@ -26,9 +26,8 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.Session;
 
 /**
- * An object of this class handles the revisions of a node. The node is passed
- * as a parameter so an RCML object can be shared between sessions for synchronization
- * purposes.
+ * An object of this class handles the revisions of a node. The node is passed as a parameter so an
+ * RCML object can be shared between sessions for synchronization purposes.
  */
 public interface RCML {
 
@@ -49,13 +48,22 @@ public interface RCML {
      * @throws RevisionControlException if an error occurs.
      */
     void checkIn(Node node, boolean backup, boolean newVersion) throws RevisionControlException;
-    
+
     /**
-     * Check the RCML out.
+     * Check the RCML out with restriction to the current session.
      * @param node The node.
      * @throws RevisionControlException if an error occurs.
      */
     void checkOut(Node node) throws RevisionControlException;
+
+    /**
+     * Check the RCML out.
+     * @param node The node.
+     * @param restrictedToSession If only the current session may check the node in, or all sessions
+     *        belonging to this user.
+     * @throws RevisionControlException if an error occurs.
+     */
+    void checkOut(Node node, boolean restrictedToSession) throws RevisionControlException;
 
     /**
      * get the latest check out
@@ -91,7 +99,7 @@ public interface RCML {
      * @throws Exception if an error occurs
      */
     Vector getBackupEntries() throws Exception;
-    
+
     /**
      * Creates a backup.
      * @param time The time.
@@ -132,20 +140,20 @@ public interface RCML {
      * @return boolean true, if the file was deleted
      */
     boolean delete();
-    
+
     /**
      * Delete all revisions.
      * @throws RevisionControlException if an error occurs.
      */
     void deleteRevisions() throws RevisionControlException;
-    
+
     /**
      * @param node The target node.
      * @param otherNode The source node.
      * @throws RevisionControlException if an error occurs.
      */
     void copyFrom(Node node, Node otherNode) throws RevisionControlException;
-    
+
     /**
      * @return if the RCML is checked out.
      * @throws RevisionControlException if an error occurs.

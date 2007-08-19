@@ -82,6 +82,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     protected static final String PARAMETER_STATE_MACHINE = "private.stateMachine";
     protected static final String PARAMETER_SESSION = "private.session";
     protected static final String PARAMETER_FACTORY = "private.factory";
+    protected static final String PARAMETER_CHECKOUT_RESTRICTED_TO_SESSION = "checkoutRestrictedToSession";
 
     protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
 
@@ -797,8 +798,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 if (!objects[i].isLocked()) {
                     objects[i].lock();
                 }
-                if (!isOptimistic() && !objects[i].isCheckedOutBySession()) {
-                    objects[i].checkout();
+                if (!isOptimistic() && !objects[i].isCheckedOutBySession(getSession())) {
+                    objects[i].checkout(checkoutRestrictedToSession());
                 }
             }
         } catch (RepositoryException e) {
@@ -810,7 +811,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         boolean canExecute = true;
 
         for (int i = 0; i < objects.length; i++) {
-            if (objects[i].isCheckedOut() && !objects[i].isCheckedOutBySession()) {
+            if (objects[i].isCheckedOut() && !objects[i].isCheckedOutBySession(getSession())) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
                             "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
@@ -898,6 +899,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     public void setTestSession(Session session) {
         this.commitEnabled = false;
         setSession(session);
+    }
+    
+    protected boolean checkoutRestrictedToSession() {
+        return getParameterAsBoolean(PARAMETER_CHECKOUT_RESTRICTED_TO_SESSION, true);
     }
 
 }

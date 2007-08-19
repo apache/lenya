@@ -79,10 +79,19 @@ public interface Node extends RepositoryItem, ContentHolder {
     void unlock() throws RepositoryException;
 
     /**
-     * Checks out the node.
+     * Checks out the node with restriction to the current session..
      * @throws RepositoryException if an error occurs.
      */
     void checkout() throws RepositoryException;
+
+    /**
+     * Checks out the node with the possibility to allow other sessions to check it in.
+     * This is a workaround for the current WYSIWYG editor infrastructure, which can't
+     * use the same session for opening and saving a node.
+     * @param restrictedToSession if the check-out is restricted to the current session.
+     * @throws RepositoryException if an error occurs.
+     */
+    void checkout(boolean restrictedToSession) throws RepositoryException;
 
     /**
      * Checks in the node.
@@ -116,10 +125,13 @@ public interface Node extends RepositoryItem, ContentHolder {
     String getCheckoutUserId() throws RepositoryException;
 
     /**
-     * @return if the node is checked out by the current session.
+     * Checks if the node is checked out by a certain session. We pass the session
+     * as a parameter to allow the check for nodes from the shared item store.
+     * @param session The session.
+     * @return if the node is checked out by a specific session.
      * @throws RepositoryException if an error occurs.
      */
-    boolean isCheckedOutBySession() throws RepositoryException;
+    boolean isCheckedOutBySession(Session session) throws RepositoryException;
 
     /**
      * @param source The node to copy the revisions from.

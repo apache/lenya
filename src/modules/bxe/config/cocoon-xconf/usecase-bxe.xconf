@@ -26,6 +26,7 @@
       <view template="modules/bxe/usecases/bxe.jx" menu="false" createContinuation="false"/>
       <transaction policy="pessimistic"/>
       <event id="edit"/>
+      <parameter name="checkoutRestrictedToSession" value="false"/>
     </component-instance>
     
   </xconf>
