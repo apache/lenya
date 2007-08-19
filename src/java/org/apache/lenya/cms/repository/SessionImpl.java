@@ -49,14 +49,14 @@ import org.apache.lenya.util.Assert;
  */
 public class SessionImpl extends AbstractLogEnabled implements Session {
 
+    protected static final String UNMODIFIABLE_SESSION_ID = "unmodifiable";
     private ServiceManager manager;
     private Identity identity;
 
     /**
      * Ctor.
      * @param identity The identity.
-     * @param modifiable Determins if the repository items in this session can
-     *        be modified.
+     * @param modifiable Determins if the repository items in this session can be modified.
      * @param manager The service manager.
      * @param logger The logger.
      */
@@ -69,29 +69,40 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
         this.identityMap = new IdentityMapImpl(logger);
         this.identity = identity;
+        this.id = modifiable ? createUuid() : UNMODIFIABLE_SESSION_ID;
 
         ObservationRegistry registry = null;
-        UUIDGenerator generator = null;
         try {
             registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
             addListener(registry);
-
-            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
-            this.id = generator.nextUUID();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (registry != null) {
                 this.manager.release(registry);
             }
-            if (generator == null) {
-                this.manager.release(generator);
-            }
         }
 
         if (modifiable) {
             this.unitOfWork = new UnitOfWorkImpl(this.identityMap, this.identity, getLogger());
         }
+    }
+
+    protected String createUuid() {
+        String id;
+        UUIDGenerator generator = null;
+        try {
+
+            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
+            id = generator.nextUUID();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (generator == null) {
+                this.manager.release(generator);
+            }
+        }
+        return id;
     }
 
     public Identity getIdentity() {
@@ -116,8 +127,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     /**
      * Commits the transaction.
      * @throws RepositoryException if an error occurs.
-     * @throws ConcurrentModificationException if a transactionable has been
-     *         modified by another session.
+     * @throws ConcurrentModificationException if a transactionable has been modified by another
+     *         session.
      */
     public void commit() throws RepositoryException, ConcurrentModificationException {
 
