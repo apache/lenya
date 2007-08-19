@@ -24,8 +24,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.container.ContainerUtil;
@@ -52,31 +54,37 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
     public PublicationManagerImpl() {
     }
 
-    private static Map id2config = new HashMap();
+    private Map id2config;
 
-    public synchronized Publication getPublication(DocumentFactory factory, String id)
+    protected synchronized Map getId2config() throws PublicationException {
+        if (this.id2config == null) {
+            this.id2config = new HashMap();
+            File servletContext = new File(this.servletContextPath);
+            File publicationsDirectory = new File(servletContext, Publication.PUBLICATION_PREFIX);
+            File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
+                public boolean accept(File file) {
+                    File configFile = new File(file, PublicationConfiguration.CONFIGURATION_FILE);
+                    return configFile.exists();
+                }
+            });
+            for (int i = 0; i < publicationDirectories.length; i++) {
+                String id = publicationDirectories[i].getName();
+                addPublication(id);
+            }
+        }
+        return this.id2config;
+    }
+
+    public Publication getPublication(DocumentFactory factory, String id)
             throws PublicationException {
 
         Assert.notNull("publication ID", id);
-        if (id.indexOf("/") != -1) {
-            throw new PublicationException("The publication ID [" + id
-                    + "] must not contain a slash!");
+        Map id2config = getId2config();
+        if (!id2config.containsKey(id)) {
+            throw new PublicationException("The publication [" + id + "] does not exist.");
         }
 
-        PublicationConfiguration config = null;
-
-        if (id2config.containsKey(id)) {
-            config = (PublicationConfiguration) id2config.get(id);
-        } else {
-            config = new PublicationConfiguration(id, servletContextPath);
-            ContainerUtil.enableLogging(config, getLogger());
-            id2config.put(id, config);
-        }
-
-        if (config == null) {
-            throw new PublicationException("The publication for ID [" + id
-                    + "] could not be created.");
-        }
+        PublicationConfiguration config = (PublicationConfiguration) id2config.get(id);
         PublicationFactory pubFactory = new PublicationFactory(this.manager, config);
         try {
             return (Publication) factory.getSession().getRepositoryItem(pubFactory, id);
@@ -85,29 +93,33 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
         }
     }
 
-    public Publication[] getPublications(DocumentFactory factory) throws PublicationException {
+    public Publication[] getPublications(DocumentFactory factory) {
         List publications = new ArrayList();
 
         try {
-            File servletContext = new File(this.servletContextPath);
-            File publicationsDirectory = new File(servletContext, Publication.PUBLICATION_PREFIX);
-            File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
-                public boolean accept(File file) {
-                    return file.isDirectory();
-                }
-            });
-
-            for (int i = 0; i < publicationDirectories.length; i++) {
-                String publicationId = publicationDirectories[i].getName();
+            Map id2config = getId2config();
+            for (Iterator i = id2config.keySet().iterator(); i.hasNext();) {
+                String publicationId = (String) i.next();
                 Publication publication = getPublication(factory, publicationId);
                 publications.add(publication);
             }
-
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
-            throw new PublicationException(e);
+            throw new RuntimeException(e);
         }
 
         return (Publication[]) publications.toArray(new Publication[publications.size()]);
+    }
+
+    public String[] getPublicationIds() {
+        Set ids;
+        try {
+            ids = getId2config().keySet();
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+        return (String[]) ids.toArray(new String[ids.size()]);
     }
 
     private String servletContextPath;
@@ -133,6 +145,20 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
                 this.manager.release(resolver);
             }
         }
+    }
+
+    public void addPublication(String pubId) throws PublicationException {
+        if (this.id2config.containsKey(pubId)) {
+            throw new PublicationException("The publication [" + pubId + "] already exists.");
+        }
+        PublicationConfiguration config = new PublicationConfiguration(pubId,
+                this.servletContextPath);
+        ContainerUtil.enableLogging(config, getLogger());
+        this.id2config.put(pubId, config);
+    }
+
+    protected String getServletContextPath() {
+        return this.servletContextPath;
     }
 
 }

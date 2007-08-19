@@ -20,6 +20,7 @@ package org.apache.lenya.cms.cocoon.source;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
@@ -119,8 +120,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
             pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            Publication pub = pubMgr.getPublication(factory, publicationId);
-            if (pub.exists()) {
+            if (Arrays.asList(pubMgr.getPublicationIds()).contains(publicationId)) {
+                Publication pub = pubMgr.getPublication(factory, publicationId);
                 VisitingSourceResolver resolver = getSourceVisitor();
                 templateManager.visit(pub, path, resolver);
                 source = resolver.getSource();

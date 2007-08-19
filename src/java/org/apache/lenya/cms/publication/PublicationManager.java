@@ -30,16 +30,27 @@ public interface PublicationManager {
     /**
      * @param factory The factory.
      * @return All publications.
-     * @throws PublicationException if an error occurrs.
      */
-    Publication[] getPublications(DocumentFactory factory) throws PublicationException;
+    Publication[] getPublications(DocumentFactory factory);
     
     /**
      * @param factory The factory.
      * @param id The publication ID.
      * @return A publication.
-     * @throws PublicationException if an error occurs.
+     * @throws PublicationException if the publication does not exist.
      */
     Publication getPublication(DocumentFactory factory, String id) throws PublicationException;
+    
+    /**
+     * @return The IDs of all available publications.
+     */
+    String[] getPublicationIds();
+    
+    /**
+     * Adds a publication.
+     * @param id The publication ID.
+     * @throws PublicationException if the publication already exists.
+     */
+    void addPublication(String id) throws PublicationException;
     
 }

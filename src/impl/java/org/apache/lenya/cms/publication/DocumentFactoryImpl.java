@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.container.ContainerUtil;
@@ -174,11 +175,13 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      */
     public boolean isDocument(String webappUrl) throws DocumentBuildException {
 
+        PublicationManager pubMgr = getPubManager();
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
-                    webappUrl);
-            if (publication.exists()) {
-                DocumentBuilder builder = publication.getDocumentBuilder();
+            URLInformation info = new URLInformation(webappUrl);
+            String pubId = info.getPublicationId();
+            if (pubId != null && Arrays.asList(pubMgr.getPublicationIds()).contains(pubId)) {
+                Publication pub = pubMgr.getPublication(this, pubId);
+                DocumentBuilder builder = pub.getDocumentBuilder();
                 return builder.isDocument(this, webappUrl);
             } else {
                 return false;
@@ -307,35 +310,28 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     }
 
     public Publication getPublication(String id) throws PublicationException {
-        PublicationManager pubManager = null;
-        try {
-            pubManager = (PublicationManager) manager.lookup(PublicationManager.ROLE);
-            return pubManager.getPublication(this, id);
-        } catch (ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (pubManager != null) {
-                manager.release(pubManager);
-            }
-        }
+        return getPubManager().getPublication(this, id);
     }
 
     public Publication[] getPublications() {
-        PublicationManager pubManager = null;
-        try {
-            pubManager = (PublicationManager) manager.lookup(PublicationManager.ROLE);
-            return pubManager.getPublications(this);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (pubManager != null) {
-                manager.release(pubManager);
-            }
-        }
+        return getPubManager().getPublications(this);
     }
 
     public boolean isSharable() {
         return false;
+    }
+
+    private PublicationManager pubManager;
+
+    protected PublicationManager getPubManager() {
+        if (this.pubManager == null) {
+            try {
+                this.pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.pubManager;
     }
 
 }

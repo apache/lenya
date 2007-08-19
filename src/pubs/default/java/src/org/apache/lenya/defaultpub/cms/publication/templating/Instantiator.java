@@ -45,6 +45,7 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationManager;
 // import org.apache.lenya.cms.publication.PublicationConfiguration;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -96,6 +97,7 @@ public class Instantiator extends AbstractLogEnabled implements
 
         SourceResolver resolver = null;
         Source publicationsSource = null;
+        PublicationManager pubManager = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
@@ -118,6 +120,9 @@ public class Instantiator extends AbstractLogEnabled implements
             configureSearchIndex(resolver, template, newPublicationId, publicationsUri);
 
             updateConfiguration(resolver, template, newPublicationId, publicationsUri);
+            
+            pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
+            pubManager.addPublication(newPublicationId);
 
         } finally {
             if (resolver != null) {
@@ -125,6 +130,9 @@ public class Instantiator extends AbstractLogEnabled implements
                 if (publicationsSource != null) {
                     resolver.release(publicationsSource);
                 }
+            }
+            if (pubManager != null) {
+                this.manager.release(pubManager);
             }
         }
 
