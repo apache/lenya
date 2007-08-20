@@ -29,6 +29,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SharedItemStore;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
@@ -54,12 +55,28 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String areaName = snippets[1];
-        SiteTreeImpl tree;
+        SiteTree tree;
         try {
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication publication = factory.getPublication(publicationId);
             Area  area = publication.getArea(areaName);
-            tree = new SiteTreeImpl(this.manager, area, getLogger());
+            
+            if (session.isModifiable() || session instanceof SharedItemStore) {
+                tree = new SiteTreeImpl(this.manager, area, getLogger());
+            }
+            else {
+                SharedItemStore store = null;
+                try {
+                    store = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
+                    SiteTreeImpl sharedTree = (SiteTreeImpl) store.getRepositoryItem(this, key);
+                    tree = new DelegatingSiteTree(this.manager, area, sharedTree);
+                }
+                finally {
+                    if (store != null) {
+                        this.manager.release(store);
+                    }
+                }
+            }
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -68,10 +85,6 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
 
     public String getItemType() {
         return SiteTree.IDENTIFIABLE_TYPE;
-    }
-
-    public boolean isSharable() {
-        return true;
     }
 
 }

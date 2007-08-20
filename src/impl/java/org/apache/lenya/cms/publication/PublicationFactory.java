@@ -49,8 +49,4 @@ public class PublicationFactory implements RepositoryItemFactory {
         return Publication.ITEM_TYPE;
     }
 
-    public boolean isSharable() {
-        return true;
-    }
-
 }

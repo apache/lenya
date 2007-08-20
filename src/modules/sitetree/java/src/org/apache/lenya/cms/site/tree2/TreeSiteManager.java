@@ -34,6 +34,7 @@ import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 /**
@@ -42,20 +43,20 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 public class TreeSiteManager extends AbstractSiteManager {
 
     /**
-     * Returns the sitetree for a specific area of this publication. Sitetrees
-     * are created on demand and are cached.
+     * Returns the sitetree for a specific area of this publication. Sitetrees are created on demand
+     * and are cached.
      * 
      * @param area The area.
      * @return A site tree.
      * @throws SiteException if an error occurs.
      */
-    protected SiteTreeImpl getTree(Area area) throws SiteException {
+    protected SiteTree getTree(Area area) throws SiteException {
 
         String key = getKey(area);
-        SiteTreeImpl sitetree;
+        SiteTree sitetree;
         RepositoryItemFactory factory = new SiteTreeFactory(this.manager, getLogger());
         try {
-            sitetree = (SiteTreeImpl) area.getPublication().getFactory().getSession()
+            sitetree = (SiteTree) area.getPublication().getFactory().getSession()
                     .getRepositoryItem(factory, key);
         } catch (Exception e) {
             throw new SiteException(e);
@@ -85,7 +86,7 @@ public class TreeSiteManager extends AbstractSiteManager {
     }
 
     public void copy(Document srcDoc, Document destDoc) throws SiteException {
-        SiteTreeImpl destinationTree = getTree(destDoc.area());
+        SiteTree destinationTree = getTree(destDoc.area());
 
         try {
             TreeNodeImpl sourceNode = (TreeNodeImpl) srcDoc.getLink().getNode();
@@ -155,7 +156,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         String path = locator.getPath();
 
         Publication pub;
-        SiteTreeImpl tree;
+        SiteTree tree;
         try {
             pub = factory.getPublication(locator.getPublicationId());
             tree = getTree(pub.getArea(locator.getArea()));
@@ -201,7 +202,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         } catch (PublicationException e) {
             throw new SiteException(e);
         }
-        SiteTreeImpl tree = getTree(areaObj);
+        SiteTree tree = getTree(areaObj);
         SiteNode[] preOrder = tree.preOrder();
         List docs = new ArrayList();
         for (int i = 0; i < preOrder.length; i++) {
@@ -270,7 +271,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         if (contains(document)) {
             throw new SiteException("The document [" + document + "] is already contained!");
         }
-        SiteTreeImpl tree = getTree(document.area());
+        SiteTreeImpl tree = (SiteTreeImpl) getTree(document.area());
         TreeNodeImpl node = (TreeNodeImpl) tree.getNode(path);
         node.setUuid(document.getUUID());
         tree.save();

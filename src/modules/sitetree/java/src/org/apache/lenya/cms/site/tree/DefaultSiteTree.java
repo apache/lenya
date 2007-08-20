@@ -646,4 +646,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         return getRepositoryNode().getSession();
     }
 
+    public SiteNode[] preOrder() {
+        List preOrder = getRootNode().preOrder();
+        return (SiteNode[]) preOrder.toArray(new SiteNode[preOrder.size()]);
+    }
+
 }

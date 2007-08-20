@@ -15,24 +15,32 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
+package org.apache.lenya.cms.site.tree2;
+
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.site.AbstractLink;
 
 /**
- * Interface for repository item factories.
+ * Site tree link which delegates all operations to a shared link.
  */
-public interface RepositoryItemFactory {
+public class DelegatingLink extends AbstractLink {
     
     /**
-     * @return The item type.
+     * @param factory The document factory.
+     * @param node The node which this link belongs to.
+     * @param label The label.
+     * @param language The language.
      */
-    String getItemType();
+    public DelegatingLink(DocumentFactory factory, DelegatingNode node, String label, String language) {
+        super(factory, node, label, language);
+    }
 
-    /**
-     * @param session The current session.
-     * @param key The key.
-     * @return A repository item.
-     * @throws RepositoryException if an error occurs.
-     */
-    RepositoryItem buildItem(Session session, String key) throws RepositoryException;
-    
+    public void delete() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setLabel(String label) {
+        throw new UnsupportedOperationException();
+    }
+
 }

@@ -187,13 +187,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
-
-        if (!isModifiable() && factory.isSharable()) {
-            return getSharedItemStore().getRepositoryItem(factory, key);
-        } else {
-            RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
-            return (RepositoryItem) getIdentityMap().get(wrapper, key);
-        }
+        RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
+        return (RepositoryItem) getIdentityMap().get(wrapper, key);
     }
 
     public void registerNew(Transactionable object) throws TransactionException {

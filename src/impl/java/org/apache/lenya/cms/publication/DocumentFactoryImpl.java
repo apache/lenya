@@ -317,10 +317,6 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         return getPubManager().getPublications(this);
     }
 
-    public boolean isSharable() {
-        return false;
-    }
-
     private PublicationManager pubManager;
 
     protected PublicationManager getPubManager() {

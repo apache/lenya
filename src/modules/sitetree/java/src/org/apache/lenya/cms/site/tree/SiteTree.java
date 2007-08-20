@@ -19,6 +19,7 @@
 package org.apache.lenya.cms.site.tree;
 
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 
 /**
@@ -47,5 +48,10 @@ public interface SiteTree extends SiteStructure {
      * @throws SiteException if the moving failed.
      */
     void moveDown(String path) throws SiteException;
+
+    /**
+     * @return The nodes in pre order.
+     */
+    SiteNode[] preOrder();
 
 }
