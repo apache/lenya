@@ -97,7 +97,7 @@ public class InsertAsset extends CreateResource {
             boolean ssl = request.isSecure();
 
             LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getSession(),
-                    getSourceURL(), ssl, false);
+                    getSourceURL(), ssl, false, false);
             Map asset2proxyUrl = new HashMap();
             setParameter("asset2proxyUrl", asset2proxyUrl);
 
