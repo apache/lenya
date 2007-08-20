@@ -82,6 +82,10 @@ public class ForceCheckIn extends DocumentUsecase {
 
             Identity identity = (Identity) nextsession.getAttribute(IDENTITY);
 
+            if(identity == null) {
+                continue;
+            }
+
             User user = identity.getUser();
             Vector history = (Vector) nextsession.getAttribute(HISTORY);
             String publicationID = getPublicationIDfromHistory(history);
