@@ -29,7 +29,7 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 /**
  * Site tree node which delegates all operations to a shared tree node.
  */
-public class DelegatingNode implements SiteNode, TreeNode {
+public class DelegatingNode implements TreeNode {
     
     private SiteNode node;
     private DelegatingSiteTree tree;

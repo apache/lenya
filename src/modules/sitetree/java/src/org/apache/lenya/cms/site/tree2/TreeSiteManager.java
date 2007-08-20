@@ -229,15 +229,15 @@ public class TreeSiteManager extends AbstractSiteManager {
     public SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource)
             throws SiteException {
         NodeSet nodes = new NodeSet(this.manager);
-        SiteTreeImpl tree = ((TreeNodeImpl) resource).getTree();
+        SiteTree tree = (SiteTree) resource.getStructure();
 
-        TreeNodeImpl node = (TreeNodeImpl) tree.getNode(resource.getPath());
+        TreeNode node = (TreeNode) tree.getNode(resource.getPath());
         if (node != null) {
             SiteNode[] preOrder = node.preOrder();
 
             // exclude original resource (does not require itself)
             for (int i = 1; i < preOrder.length; i++) {
-                TreeNodeImpl descendant = (TreeNodeImpl) preOrder[i];
+                TreeNode descendant = (TreeNode) preOrder[i];
                 nodes.add(descendant);
             }
         }
