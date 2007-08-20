@@ -235,8 +235,6 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
             throw new RuntimeException("Config file error", e);
         } catch (ServiceException e) {
             throw new RuntimeException("PublicationManager lookup error", e);
-        } catch (PublicationException e) {
-            throw new RuntimeException("Publication error", e);
         } finally {
             if (pubManager != null) {
                 this.manager.release(pubManager);
