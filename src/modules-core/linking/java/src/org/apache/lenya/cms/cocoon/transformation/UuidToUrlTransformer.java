@@ -113,7 +113,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
 
     protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
             throws Exception {
-        
+
         URLInformation info = new URLInformation(this.currentUrl);
         if (linkUrl.startsWith("lenya-document:")) {
 
@@ -139,12 +139,11 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
                 query.removeValue(EXTENSION_PARAM);
                 queryString = query.toString();
             }
-            
+
             LinkTarget target;
             if (this.currentDoc != null) {
                 target = this.linkResolver.resolve(this.currentDoc, linkUri);
-            }
-            else {
+            } else {
                 Link link = new Link(linkUri);
                 link.setPubId(info.getPublicationId());
                 link.setArea(info.getArea());
@@ -183,9 +182,15 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
         }
     }
 
+    /**
+     * Get the extension of a document. Caution: resolving the extension is expensive!
+     * @param targetDocument The document.
+     * @param requiredExtension The required extension.
+     * @return The required extension or, if it is null, the document's default extension.
+     */
     protected String getExtension(Document targetDocument, String requiredExtension) {
-        String docExtension = targetDocument.getExtension();
-        String extension = requiredExtension != null ? requiredExtension : docExtension;
+        String extension = requiredExtension != null ? requiredExtension : targetDocument
+                .getExtension();
         if (extension.length() > 0) {
             extension = "." + extension;
         }
