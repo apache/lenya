@@ -117,5 +117,10 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @return All publications.
      */
     Publication[] getPublications();
-
+    
+    /**
+     * @param id The publication ID.
+     * @return If a publication with this ID exists.
+     */
+    boolean existsPublication(String id);
 }

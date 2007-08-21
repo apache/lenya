@@ -21,7 +21,6 @@
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -32,7 +31,6 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.ServletHelper;
 
@@ -73,14 +71,12 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
             Context context = ObjectModelHelper.getContext(objectModel);
             String servletContextPath = context.getRealPath("");
 
-            PublicationManager pubMgr = null;
             try {
                 DocumentFactory factory = getDocumentFactory();
                 Publication pub = null;
-                pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
                 String pubId = new URLInformation(webappUrl).getPublicationId();
-                if (pubId != null && Arrays.asList(pubMgr.getPublicationIds()).contains(pubId)) {
-                    pub = pubMgr.getPublication(factory, pubId);
+                if (pubId != null && factory.existsPublication(pubId)) {
+                    pub = factory.getPublication(pubId);
                 }
                 envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
                         factory,
@@ -90,10 +86,6 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
                         pub);
             } catch (Exception e) {
                 throw new ConfigurationException("Resolving page envelope failed: ", e);
-            } finally {
-                if (pubMgr != null) {
-                    this.manager.release(pubMgr);
-                }
             }
             request.setAttribute(PageEnvelope.class.getName(), envelope);
         }

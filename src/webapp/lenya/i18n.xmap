@@ -28,8 +28,9 @@
   
   <map:resources>
     <map:resource name="serializeCatalogue">
-      <map:select type="resource-exists">
-        <map:when test="context://lenya/pubs/{page-envelope:publication-id}/config/publication.xml">
+      <map:select type="parameter">
+        <map:parameter name="parameter-selector-test" value="{page-envelope:is-publication}"/>
+        <map:when test="true">
           <map:transform src="resources/i18n/modules2xinclude.xsl">
             <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
             <map:parameter name="catalogue" value="{catalogue}"/>

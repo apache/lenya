@@ -330,4 +330,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         return this.pubManager;
     }
 
+    public boolean existsPublication(String id) {
+        return Arrays.asList(getPubManager().getPublicationIds()).contains(id);
+    }
+
 }

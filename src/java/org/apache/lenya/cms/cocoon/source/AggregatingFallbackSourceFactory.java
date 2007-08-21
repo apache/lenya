@@ -100,13 +100,12 @@ public class AggregatingFallbackSourceFactory extends AbstractLogEnabled impleme
                 publicationId = info.getPublicationId();
             }
 
-            pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
 
             String[] uris;
 
-            if (Arrays.asList(pubMgr.getPublicationIds()).contains(publicationId)) {
-                Publication pub = pubMgr.getPublication(factory, publicationId);
+            if (factory.existsPublication(publicationId)) {
+                Publication pub = factory.getPublication(publicationId);
                 AllExistingSourceResolver resolver = new AllExistingSourceResolver();
                 templateManager.visit(pub, path, resolver);
                 uris = resolver.getUris();

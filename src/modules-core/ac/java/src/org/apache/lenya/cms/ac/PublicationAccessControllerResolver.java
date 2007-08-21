@@ -21,7 +21,6 @@
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
-import java.util.Arrays;
 
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
@@ -38,7 +37,6 @@ import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 
 /**
@@ -107,24 +105,19 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
 
-            PublicationManager pubMgr = null;
             ContextUtility util = null;
             try {
                 util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
                 Request request = util.getRequest();
                 DocumentFactory factory = DocumentUtil.getDocumentFactory(manager, request);
-                if (pubId != null && Arrays.asList(pubMgr.getPublicationIds()).contains(pubId)) {
-                    publication = pubMgr.getPublication(factory, pubId);
+                if (pubId != null && factory.existsPublication(pubId)) {
+                    publication = factory.getPublication(pubId);
                 }
             } catch (Exception e) {
                 throw new AccessControlException(e);
             } finally {
                 if (util != null) {
                     this.manager.release(util);
-                }
-                if (pubMgr != null) {
-                    this.manager.release(pubMgr);
                 }
             }
             if (publication != null) {

@@ -35,7 +35,7 @@ public class PageEnvelope {
      * The names of the page envelope parameters.
      */
     public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT,
-            PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION,
+            PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION, PageEnvelope.IS_PUBLICATION,
             PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT,
             PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_PARENT, PageEnvelope.DOCUMENT_NAME,
             PageEnvelope.DOCUMENT_LABEL, PageEnvelope.DOCUMENT_URL,
@@ -53,6 +53,10 @@ public class PageEnvelope {
      * <code>PUBLICATION</code> The publication
      */
     public static final String PUBLICATION = "publication";
+    /**
+     * <code>IS_PUBLICATION</code> If the current URL refers to a publication ("true" or "false").
+     */
+    public static final String IS_PUBLICATION = "is-publication";
     /**
      * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's languages,
      * comma-seperated

@@ -73,6 +73,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 value = envelope.getArea();
             } else if (name.equals(PageEnvelope.CONTEXT)) {
                 value = envelope.getContext();
+            } else if (name.equals(PageEnvelope.IS_PUBLICATION)) {
+                value = Boolean.toString(envelope.getPublication() != null);
             } else if (name.equals(PageEnvelope.PUBLICATION_ID)) {
                 value = envelope.getPublication().getId();
             } else if (name.equals(PageEnvelope.PUBLICATION)) {

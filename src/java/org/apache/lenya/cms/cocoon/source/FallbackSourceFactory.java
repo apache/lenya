@@ -19,7 +19,6 @@ package org.apache.lenya.cms.cocoon.source;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.avalon.framework.context.ContextException;
@@ -39,7 +38,6 @@ import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
@@ -94,7 +92,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             getLogger().debug("Path:         [" + path + "]");
         }
 
-        PublicationManager pubMgr = null;
         PublicationTemplateManager templateManager = null;
         SourceResolver sourceResolver = null;
         Source source = null;
@@ -113,10 +110,9 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                 publicationId = info.getPublicationId();
             }
 
-            pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            if (Arrays.asList(pubMgr.getPublicationIds()).contains(publicationId)) {
-                Publication pub = pubMgr.getPublication(factory, publicationId);
+            if (factory.existsPublication(publicationId)) {
+                Publication pub = factory.getPublication(publicationId);
                 VisitingSourceResolver resolver = getSourceVisitor();
                 templateManager.visit(pub, path, resolver);
                 source = resolver.getSource();
@@ -151,9 +147,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         } finally {
             if (templateManager != null) {
                 this.manager.release(templateManager);
-            }
-            if (pubMgr != null) {
-                this.manager.release(pubMgr);
             }
             if (sourceResolver != null) {
                 this.manager.release(sourceResolver);

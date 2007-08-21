@@ -134,13 +134,10 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
 
             URLInformation info = new URLInformation(webappUrl);
-            String publicationId = info.getPublicationId();
+            String pubId = info.getPublicationId();
 
-            if (publicationId != null) {
-                Publication pub = factory.getPublication(publicationId);
-                if (pub.exists()) {
-                    publication = pub;
-                }
+            if (pubId != null && factory.existsPublication(pubId)) {
+                publication = factory.getPublication(pubId);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

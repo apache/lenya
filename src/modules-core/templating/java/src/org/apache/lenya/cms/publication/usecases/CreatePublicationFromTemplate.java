@@ -67,8 +67,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
         if (!PublicationUtil.isValidPublicationID(publicationId)) {
             addErrorMessage("Please enter a valid publication ID!");
         } else {
-            Publication publication = getDocumentFactory().getPublication(publicationId);
-            if (publication.exists()) {
+            if (getDocumentFactory().existsPublication(publicationId)) {
                 addErrorMessage("A publication with this ID already exists.");
             }
         }
