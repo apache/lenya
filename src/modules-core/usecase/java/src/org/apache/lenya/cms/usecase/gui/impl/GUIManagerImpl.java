@@ -250,7 +250,6 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
     }
 
     private String webappUrl;
-    private String requestURI;
     private Role[] roles;
 
     /**
@@ -264,7 +263,6 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
             throw new ContextException("Obtaining roles failed: ", e);
         }
         this.webappUrl = ServletHelper.getWebappURI(request);
-        this.requestURI = request.getRequestURI();
     }
 
 }
