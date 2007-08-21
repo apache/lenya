@@ -34,7 +34,7 @@
     Force a specific extension for node URLs. This bypasses resolving the actual extension.
     We're setting this to 'html' by default because resolving the actual extension is quite expensive.
   -->
-  <xsl:param name="extension" select="html"/>
+  <xsl:param name="extension">html</xsl:param>
 
 
   <xsl:template match="tree:fragment">
