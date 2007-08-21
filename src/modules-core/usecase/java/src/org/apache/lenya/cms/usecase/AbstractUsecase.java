@@ -757,6 +757,11 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     /**
      * <p>
+     * This method starts the transaction and locks all involved objects immediately.
+     * This way, all changes to the objects in the session occur after the locking,
+     * avoiding overriding changes of other sessions.
+     * </p>
+     * <p>
      * This method is locked via the class lock to avoid inter-usecase synchronization issues.
      * </p>
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
@@ -773,6 +778,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         advanceState("lockInvolvedObjects");
     }
 
+    /**
+     * Start a transaction by using a new, modifiable session.
+     * @throws RepositoryException if an error occurs.
+     */
     protected void startTransaction() throws RepositoryException {
         if (this.commitEnabled) {
             setSession(RepositoryUtil.createSession(this.manager, getSession().getIdentity(), true));
