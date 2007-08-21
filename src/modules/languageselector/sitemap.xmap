@@ -34,7 +34,7 @@
   <map:pipelines>
   
     <map:pipeline>
-    
+      
     <!-- {1} determines the presentation of the language list. it can be either of
            "abbr": show 2-letter ISO language codes [default]
            "long": show full language names (must be provided by i18n catalogue)
@@ -62,7 +62,8 @@
     </map:pipeline>
   
     <map:pipeline>
-    
+      <map:parameter name="expires" value="access plus 2 hours"/>
+      
     <!-- flag-<language-code>-<height in pixels>.png -->
     <map:match pattern="flag-*-*.png">
       <map:select type="resource-exists">
