@@ -32,21 +32,30 @@ import org.w3c.dom.Element;
 /**
  * Modifiable meta data handler.
  */
-public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler {
+public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler implements Persistable {
     
     private MetaSourceWrapper sourceWrapper;
+    private boolean changed = false;
     
     /**
      * @param manager The service manager.
-     * @param sourceWrapper The soure wrapper.
+     * @param sourceWrapper The source wrapper.
      */
     public ModifiableMetaDataHandler(ServiceManager manager, MetaSourceWrapper sourceWrapper) {
         super(manager, sourceWrapper.getRealSourceUri());
         this.sourceWrapper = sourceWrapper;
+        try {
+            this.sourceWrapper.getNode().setPersistable(this);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
     }
     
 
-    protected void saveMetaData() throws MetaDataException {
+    public void save() throws RepositoryException {
+        if (!changed) {
+            return;
+        }
         try {
             NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", ELEMENT_METADATA);
             Collection namespaces = this.namespace2metamap.keySet();
@@ -89,20 +98,20 @@ public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler {
                 }
             }
         } catch (Exception e) {
-            throw new MetaDataException(e);
+            throw new RepositoryException(e);
         }
     }
 
     protected void addValue(String namespaceUri, String key, String value) throws MetaDataException {
         List values = getValueList(namespaceUri, key);
         values.add(value);
-        saveMetaData();
+        changed();
     }
 
     protected void removeAllValues(String namespaceUri, String key) throws MetaDataException {
         List values = getValueList(namespaceUri, key);
         values.clear();
-        saveMetaData();
+        changed();
     }
 
 
@@ -110,7 +119,12 @@ public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler {
         List values = getValueList(namespaceUri, key);
         values.clear();
         values.add(value);
-        saveMetaData();
+        changed();
+    }
+
+
+    private void changed() {
+        this.changed = true;
     }
 
 }

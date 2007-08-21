@@ -132,8 +132,11 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     public void commit() throws RepositoryException, ConcurrentModificationException {
 
+        savePersistables();
+        
         try {
             synchronized (TransactionLock.LOCK) {
+                
                 getUnitOfWork().commit();
                 getSharedItemStore().clear();
             }
@@ -153,6 +156,22 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
             }
         }
         this.events.clear();
+    }
+
+    /**
+     * Save all persistable objects to their nodes.
+     * @throws RepositoryException if an error occurs.
+     */
+    protected void savePersistables() throws RepositoryException {
+        Object[] objects = getIdentityMap().getObjects();
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i] instanceof Node) {
+                Node node = (Node) objects[i];
+                if (node.getPersistable() != null) {
+                    node.getPersistable().save();
+                }
+            }
+        }
     }
 
     /**

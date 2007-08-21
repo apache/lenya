@@ -200,4 +200,8 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
         return (SiteNode[]) this.preOrder.toArray(new SiteNode[this.preOrder.size()]);
     }
 
+    public void save() throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
 }

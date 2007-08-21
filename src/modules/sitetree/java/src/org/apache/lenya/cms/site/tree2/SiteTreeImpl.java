@@ -32,6 +32,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.Persistable;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
@@ -47,7 +48,7 @@ import org.w3c.dom.Element;
 /**
  * Simple site tree implementation.
  */
-public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, SiteTree {
+public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, SiteTree, Persistable {
 
     private Area area;
     protected ServiceManager manager;
@@ -98,6 +99,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         Node repoNode = getRepositoryNode();
 
         try {
+            repoNode.setPersistable(this);
+            
             // lastModified check is necessary for clustering, but can cause 404s
             // because of the 1s file system last modification granularity
             if (repoNode.exists() /* && repoNode.getLastModified() > this.lastModified */) {
@@ -166,8 +169,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         }
     }
 
-    protected void save() {
-        if (loading) {
+    public void save() throws RepositoryException {
+        if (loading || !changed) {
             return;
         }
         try {
@@ -184,7 +187,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RepositoryException(e);
         }
 
     }
@@ -412,6 +415,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
     
     private NodeFactory nodeFactory;
+    private boolean changed = false;
     
     protected NodeFactory getNodeFactory() {
         if (this.nodeFactory == null) {
@@ -494,5 +498,9 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             return node.hasLink(language);
         }
         return false;
+    }
+
+    protected void changed() {
+        this.changed = true;
     }
 }

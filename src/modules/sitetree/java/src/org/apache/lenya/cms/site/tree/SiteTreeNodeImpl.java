@@ -191,7 +191,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         Element labelElem = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, label);
         labelElem.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, language);
         node.insertBefore(labelElem, node.getFirstChild());
-        getTree().save();
+        getTree().changed();
     }
 
     public void removeLabel(String language) {
@@ -215,7 +215,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                         if (languageAttribute != null
                                 && languageAttribute.getNodeValue().equals(language)) {
                             this.node.removeChild(child);
-                            getTree().save();
+                            getTree().changed();
                             break;
                         }
                     }

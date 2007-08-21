@@ -69,11 +69,14 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     protected static final StateMachine.Transition[] TRANSITIONS = {
             new StateMachine.Transition("start", "preChecked", EVENT_CHECK_PRECONDITIONS),
+            new StateMachine.Transition("preChecked", "preChecked", EVENT_CHECK_PRECONDITIONS),
             new StateMachine.Transition("preChecked", "nodesLocked", "lockInvolvedObjects"),
             new StateMachine.Transition("nodesLocked", "execChecked",
                     EVENT_CHECK_EXECUTION_CONDITIONS),
             new StateMachine.Transition("execChecked", "execChecked",
                     EVENT_CHECK_EXECUTION_CONDITIONS),
+            new StateMachine.Transition("execChecked", "preChecked",
+                            EVENT_CHECK_PRECONDITIONS),
             new StateMachine.Transition("execChecked", "executed", EVENT_EXECUTE),
             new StateMachine.Transition("executed", "postChecked", EVENT_CHECK_POSTCONDITIONS) };
 
@@ -688,7 +691,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @return <code>true</code> if the transaction policy is optimistic offline lock,
      *         <code>false</code> if it is pessimistic offline lock.
      */
-    protected boolean isOptimistic() {
+    public boolean isOptimistic() {
         return this.isOptimistic;
     }
 

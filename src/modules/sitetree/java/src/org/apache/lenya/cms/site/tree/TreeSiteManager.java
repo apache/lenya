@@ -341,7 +341,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         DefaultSiteTree tree = getTree(document);
         SiteTreeNodeImpl node = (SiteTreeNodeImpl) tree.getNode(path);
         node.setUUID(document.getUUID());
-        tree.save();
+        tree.changed();
     }
 
     /**

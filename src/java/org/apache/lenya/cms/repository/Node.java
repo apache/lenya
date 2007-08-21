@@ -21,7 +21,7 @@ import java.io.OutputStream;
 import java.util.Collection;
 
 /**
- * Repository node.
+ * A repository node is used to persist a {@link Persistable}.
  * 
  * @version $Id$
  */
@@ -167,5 +167,17 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @throws RepositoryException if an error occurs.
      */
     void delete() throws RepositoryException;
+    
+    /**
+     * @param persistable The object which is persisted using the node.
+     * @throws RepositoryException if the node already has an item.
+     */
+    void setPersistable(Persistable persistable) throws RepositoryException;
+    
+    /**
+     * @return The object which is persisted using this node or <code>null</code>
+     * if no object is registered.
+     */
+    Persistable getPersistable();
 
 }

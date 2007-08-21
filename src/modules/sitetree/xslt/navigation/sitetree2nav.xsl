@@ -30,8 +30,11 @@
   <xsl:param name="defaultlanguage"/>
   <xsl:param name="currentPath"/>
   
-  <!-- force a specific extension for node URLs -->
-  <xsl:param name="extension"/>
+  <!--
+    Force a specific extension for node URLs. This bypasses resolving the actual extension.
+    We're setting this to 'html' by default because resolving the actual extension is quite expensive.
+  -->
+  <xsl:param name="extension" select="html"/>
 
 
   <xsl:template match="tree:fragment">

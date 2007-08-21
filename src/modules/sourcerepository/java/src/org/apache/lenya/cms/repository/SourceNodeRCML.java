@@ -191,7 +191,6 @@ public class SourceNodeRCML implements RCML {
 
         entries.add(0, entry);
         setDirty();
-        write();
     }
 
     protected Element saveToXml(NamespaceHelper helper, RCMLEntry entry)
@@ -613,6 +612,7 @@ public class SourceNodeRCML implements RCML {
     public synchronized void checkOut(Node node, boolean restrictedToSession)
             throws RevisionControlException {
         checkOutIn(node, RCML.co, new Date().getTime(), false, false, restrictedToSession);
+        write();
     }
 
     public boolean isCheckedOutBySession(Session session) throws RevisionControlException {

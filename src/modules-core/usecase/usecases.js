@@ -243,10 +243,20 @@ function defaultLoopFlow(view, proxy) {
  * @see submitFlow
  */
 function defaultSubmitFlow(usecase) {
+    var preconditionsOk = true;
     if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")=="ok") {
-        usecase.checkExecutionConditions();
-        if (! usecase.hasErrors()) {
-            return executeFlow(usecase);
+        if (usecase.isOptimistic()) {
+            usecase.checkPreconditions();
+            preconditionsOk = !usecase.hasErrors();
+        }
+        if (preconditionsOk) {
+            if (usecase.isOptimistic()) {
+                usecase.lockInvolvedObjects();
+            }
+            usecase.checkExecutionConditions();
+            if (! usecase.hasErrors()) {
+                return executeFlow(usecase);
+            }
         }
     } else if (cocoon.request.getParameter("cancel")) {
         usecase.cancel();
@@ -318,7 +328,7 @@ function executeUsecase() {
         passRequestParameters(usecase);
         usecase.checkPreconditions();
         preconditionsOK = !usecase.hasErrors();
-        if (preconditionsOK) {
+        if (preconditionsOK && !usecase.isOptimistic()) {
             usecase.lockInvolvedObjects();
         }
         // create proxy object to save usecase state
@@ -370,11 +380,22 @@ function executeUsecase() {
         usecase = getUsecase(usecaseName);
         proxy.setup(usecase);
         passRequestParameters(usecase);
-        usecase.checkExecutionConditions();
-        var hasErrors = usecase.hasErrors();
-        if (!hasErrors) {
-            state = executeFlow(usecase);
-            hasErrors = usecase.hasErrors();
+        
+        if (usecase.isOptimistic()) {
+            usecase.checkPreconditions();
+            preconditionsOK = !usecase.hasErrors();
+        }
+        
+        if (preconditionsOK) {
+            usecase.checkExecutionConditions();
+            if (usecase.isOptimistic()) {
+                usecase.lockInvolvedObjects();
+            }
+            var hasErrors = usecase.hasErrors();
+            if (!hasErrors) {
+                state = executeFlow(usecase);
+                hasErrors = usecase.hasErrors();
+            }
         }
         releaseUsecase(usecase);
         if (hasErrors) {

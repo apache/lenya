@@ -211,4 +211,8 @@ public interface Usecase {
      */
     void setTestSession(Session session);
     
+    /**
+     * @return if the usecase uses optimistic offline lock.
+     */
+    boolean isOptimistic();
 }

@@ -207,9 +207,9 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
 
     /**
      * Test moving a node up
-     * @throws SiteException if an error occurs
+     * @throws RepositoryException 
      */
-    final public void testMoveUp() throws SiteException {
+    final public void testMoveUp() throws RepositoryException {
         this.siteTree.moveUp("/foo/lala");
         this.siteTree.save();
         assertNotNull(this.siteTree.getNode("/foo/lala"));
@@ -217,9 +217,9 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
 
     /**
      * Test moving a node down
-     * @throws SiteException if an error occurs
+     * @throws RepositoryException 
      */
-    final public void testMoveDown() throws SiteException {
+    final public void testMoveDown() throws RepositoryException {
         this.siteTree.moveDown("/foo");
         this.siteTree.save();
         assertNotNull(this.siteTree.getNode("/foo"));

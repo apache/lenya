@@ -32,6 +32,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -73,6 +74,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     private DocumentFactory factory;
 
     private org.apache.lenya.cms.repository.Node repositoryNode;
+
+    private boolean changed;
 
     /**
      * Create a DefaultSiteTree
@@ -499,8 +502,12 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         return this.repositoryNode;
     }
 
-    protected void save() throws SiteException {
-        saveDocument();
+    public void save() throws RepositoryException {
+        try {
+            saveDocument();
+        } catch (SiteException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public String getArea() {
@@ -649,6 +656,10 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public SiteNode[] preOrder() {
         List preOrder = getRootNode().preOrder();
         return (SiteNode[]) preOrder.toArray(new SiteNode[preOrder.size()]);
+    }
+
+    public void changed() {
+        this.changed = true;
     }
 
 }

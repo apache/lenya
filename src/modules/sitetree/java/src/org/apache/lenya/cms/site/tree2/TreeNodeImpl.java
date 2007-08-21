@@ -164,7 +164,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     protected void changed() {
-        getTree().save();
+        getTree().changed();
     }
 
     public SiteTreeNode[] getPrecedingSiblings() {
@@ -293,7 +293,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         this.children.add(pos, node);
         this.name2child.put(name, node);
         getTree().nodeAdded(node);
-        getTree().save();
+        getTree().changed();
         return node;
     }
 

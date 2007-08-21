@@ -369,6 +369,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     private RCML rcml;
+    private Persistable persistable;
 
     protected synchronized RCML getRcml() {
         if (this.rcml == null) {
@@ -473,6 +474,14 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public boolean isCheckedOutBySession() throws TransactionException {
         return isCheckedOutBySession(getSession());
+    }
+
+    public void setPersistable(Persistable item) throws RepositoryException {
+        this.persistable = item;
+    }
+
+    public Persistable getPersistable() {
+        return this.persistable;
     }
     
 }

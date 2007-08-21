@@ -274,7 +274,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         SiteTreeImpl tree = (SiteTreeImpl) getTree(document.area());
         TreeNodeImpl node = (TreeNodeImpl) tree.getNode(path);
         node.setUuid(document.getUUID());
-        tree.save();
+        tree.changed();
     }
 
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
