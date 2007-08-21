@@ -1,7 +1,9 @@
-  Installation of the source version of Apache Lenya 1.2.x 
 
-  This is an abbreviated version of the installation instuctions found
-  at http://lenya.apache.org/installation/source_version.html
+  Installation of the source version of Apache Lenya 1.2.x
+  ========================================================
+
+  This is an abbreviated version of the installation instructions found
+  at http://lenya.apache.org/docs/1_2_x/installation/source_version.html
 
   It is assumed that you follow the preparation steps, otherwise make 
   sure to adjust some values in local.build.properties 
