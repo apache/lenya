@@ -30,7 +30,6 @@ function loadMenu(e) {
 			initialize();
 		},
 		error: function(type, error) {
-		alert(error.message);
 			dojo.log.error(error.message);
 		},
 		mimetype: "text/xml",
