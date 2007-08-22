@@ -49,6 +49,8 @@
 <xsl:variable name="image-prefix"><xsl:value-of select="$contextprefix"/>/lenya/menu/images</xsl:variable>
  
 <xsl:template match="/menu:menu">
+  
+  <div>
     
   <!-- Lenya graphic -->
   <div id="lenya-logo">
@@ -138,6 +140,8 @@
         <xsl:apply-templates select="menu:menus/menu:menu" mode="nav"/>
       </ul>
     </div>
+    
+  </div>
 
   </div>
 

@@ -316,16 +316,21 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline>
-      
-      <!-- Usecases -->
-      <map:match type="usecase" pattern="*">
-        <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-
-    </map:pipeline>
-
-    <map:pipeline>
+   <map:pipeline>
+     
+     <!-- Enter a module -->
+     <map:match type="request-parameter" pattern="lenya.module">
+       <map:mount uri-prefix="" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+     </map:match>
+     
+     <!-- Usecases -->
+     <map:match type="usecase" pattern="*">
+       <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+     </map:match>
+     
+   </map:pipeline>
+   
+   <map:pipeline>
       <map:match pattern="index.html">
         <map:aggregate element="aggregation-wrapper" label="aggregate">
           <map:part src="cocoon:/aggregate-publications"/>
@@ -390,11 +395,6 @@
         <map:transform src="lenya/xslt/util/introduction.xsl"/>
         <map:call resource="style-cms-page"/>
         <map:serialize />
-      </map:match>
-      
-      <!-- Enter a module -->
-      <map:match type="request-parameter" pattern="lenya.module">
-        <map:mount uri-prefix="" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- Resources -->

@@ -55,8 +55,8 @@
             </head>
             <body>
               <xso:apply-templates select="xhtml:html/xhtml:body/@*"/>
-              <xsl:apply-templates select="xhtml:div[@id = 'lenya-logo']"/>
-              <xsl:apply-templates select="xhtml:div[@id = 'lenya-menus']"/>
+              <xsl:apply-templates select="xhtml:div/xhtml:div[@id = 'lenya-logo']"/>
+              <xsl:apply-templates select="xhtml:div/xhtml:div[@id = 'lenya-menus']"/>
               <div id="lenya-cmsbody">
                 <xso:apply-templates select="xhtml:html/xhtml:body/node()"/>
               </div>
