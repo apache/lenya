@@ -387,10 +387,10 @@ function executeUsecase() {
         }
         
         if (preconditionsOK) {
-            usecase.checkExecutionConditions();
             if (usecase.isOptimistic()) {
                 usecase.lockInvolvedObjects();
             }
+            usecase.checkExecutionConditions();
             var hasErrors = usecase.hasErrors();
             if (!hasErrors) {
                 state = executeFlow(usecase);
