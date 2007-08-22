@@ -20,8 +20,6 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-  xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   >
