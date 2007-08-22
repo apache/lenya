@@ -75,8 +75,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                     EVENT_CHECK_EXECUTION_CONDITIONS),
             new StateMachine.Transition("execChecked", "execChecked",
                     EVENT_CHECK_EXECUTION_CONDITIONS),
-            new StateMachine.Transition("execChecked", "preChecked",
-                            EVENT_CHECK_PRECONDITIONS),
+            new StateMachine.Transition("nodesLocked", "preChecked", EVENT_CHECK_PRECONDITIONS),
             new StateMachine.Transition("execChecked", "executed", EVENT_EXECUTE),
             new StateMachine.Transition("executed", "postChecked", EVENT_CHECK_POSTCONDITIONS) };
 
