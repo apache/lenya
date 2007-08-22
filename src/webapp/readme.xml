@@ -36,6 +36,17 @@
     
     <h2>Important notes for beta testers of Lenya 2.0</h2>
 
+    <h3>2007-08-22: User names are now case insensitive</h3>
+    <p>
+      User names are now case insensitive to better support Windows, user assumptions, auto form 
+      completion, and support. This is done by converting all user names to lower case. Any
+      previously created accounts with upper case characters will no longer work. To fix
+      delete and recreate the account using the built in tools. Or optionally, rename any
+      *.iml files in your publication's <code>config/access-control/passwd</code> directory
+      so that the file names are all lower case. You will also have to edit the <code>id</code> 
+      attribute of the <code>identity</code> element to make it lower case in those files as well.
+    </p>
+
     <h3>2007-08-13: Workflow schema validation fixed</h3>
     <p>
       The old XSD-based schema validation in <code>workflow.xml</code> was

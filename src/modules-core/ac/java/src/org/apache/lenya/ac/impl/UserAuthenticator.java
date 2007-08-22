@@ -59,7 +59,7 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
         }
 
         if (encoded.length() == 0 && request.getParameter("username") != null) {
-                username = request.getParameter("username");
+                username = request.getParameter("username").toLowerCase();
                 password = request.getParameter("password");
         }
 

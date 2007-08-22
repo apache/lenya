@@ -43,7 +43,7 @@ public class AddUser extends AccessControlUsecase {
      */
     void validate() throws UsecaseException {
 
-        String userId = getParameterAsString(UserProfile.USER_ID);
+        String userId = getParameterAsString(UserProfile.USER_ID).toLowerCase();
         String email = getParameterAsString(UserProfile.EMAIL);
         String className = getParameterAsString(CLASS_NAME);
         String ldapId = getParameterAsString(LDAP_ID);
@@ -102,7 +102,7 @@ public class AddUser extends AccessControlUsecase {
     protected void doExecute() throws Exception {
         UserManager userManager = (FileUserManager) getUserManager();
 
-        String userId = getParameterAsString(UserProfile.USER_ID);
+        String userId = getParameterAsString(UserProfile.USER_ID).toLowerCase();
         String fullName = getParameterAsString(UserProfile.FULL_NAME);
         String description = getParameterAsString(UserProfile.DESCRIPTION);
         String email = getParameterAsString(UserProfile.EMAIL);
