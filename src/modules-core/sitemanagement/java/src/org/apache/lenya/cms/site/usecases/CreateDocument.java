@@ -111,13 +111,17 @@ public class CreateDocument extends Create {
                 addErrorMessage("path-already-exists", params);
             }
         } else {
-            String nodeName = getParameterAsString(NODE_NAME).trim();
+            String nodeName = getNodeName();
             if (nodeName.equals("")) {
                 addErrorMessage("missing-node-name");
             } else if (!builder.isValidDocumentName(nodeName)) {
                 addErrorMessage("node-name-special-characters");
             }
         }
+    }
+
+    protected String getNodeName() {
+        return getParameterAsString(NODE_NAME).trim();
     }
 
     protected boolean isPathValid() {
@@ -135,7 +139,7 @@ public class CreateDocument extends Create {
             final String path = getParameterAsString(PATH);
             nodeName = path.substring(path.lastIndexOf("/") + 1);
         } else {
-            nodeName = getParameterAsString(NODE_NAME);
+            nodeName = getNodeName();
         }
         return nodeName;
     }
