@@ -55,7 +55,7 @@
     </faq>
   </part>
   
-  <part id="i18n">
+  <part id="i18n_">
     <title>Internationalisation (i18n)</title>
     <faq id="i18n">
       <question> How to extend the i18n catalog for Lenya 2.0? </question>
