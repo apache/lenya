@@ -19,15 +19,22 @@ dojo.require("dojo.logging.*");
 dojo.require("dojo.event.*");
 dojo.require("dojo.io.*");
 
-function loadMenu(e) {
+function loadMenu(event) {
+    var menuNumber = event.target.id.substring("nav".length);
 	var menuFunction = {
-		url: MENU_URL + "&lenya.module=menubar",
+		url: MENU_URL + "&lenya.module=menubar&lenya.menu=" + menuNumber,
 		load: function(type, data, evt) {
-			var placeholderElement = document.getElementById("lenyaMenuPlaceholder");
-			var menuElement = document.getElementById("lenyaMenuContainer");
-			menuElement.removeChild(placeholderElement);
-			menuElement.appendChild(data.documentElement);
-			initialize();
+		    var docElement = data.documentElement
+		    var attrValue = docElement.getAttribute("id");
+            var menuNumber = attrValue.substring("menu".length);
+			var element = document.getElementById("menu" + menuNumber);
+			var placeholderElement = document.getElementById("menuPlaceholder" + menuNumber);
+			element.removeChild(placeholderElement);
+			var children = docElement.childNodes;
+			for (var i = 0; i < children.length; i++) {
+				element.appendChild(children[i].cloneNode(true));
+			}
+			dojo.event.disconnect(dojo.byId("nav" + menuNumber), "onclick", "loadMenu");
 		},
 		error: function(type, error) {
 			dojo.log.error(error.message);
@@ -42,7 +49,10 @@ function loadMenu(e) {
 * Customize this method for event-based loading.
 */
 function initAjax() {
-	dojo.event.connect(dojo.byId("dojotest"), "onclick", "loadMenu");
+	var menuNumber = 5;
+	for (var i = 1; i <= menuNumber; i++) {
+		dojo.event.connect(dojo.byId("nav" + i), "onclick", "loadMenu");
+	}
 }
 
-dojo.addOnLoad(loadMenu);
+dojo.addOnLoad(initAjax);

@@ -80,15 +80,11 @@
           <body>
             <xso:apply-templates select="xhtml:html/xhtml:body/@*"/>
             <xsl:apply-templates select="xhtml:div[@id = 'lenya-logo']"/>
-            <div id="lenyaMenuContainer">
-              <div id="lenyaMenuPlaceholder"/>
-            </div>
+            <xsl:apply-templates select="xhtml:div/xhtml:div[@id = 'lenya-menus']"/>
             <div id="lenya-cmsbody">
               <xso:apply-templates select="xhtml:html/xhtml:body/node()"/>
             </div>
-            <!--
-              <script type="text/javascript"> initialize(); </script>
-            -->
+            <script type="text/javascript"> initialize(); </script>
           </body>
         </html>
       </xso:template>
@@ -127,21 +123,22 @@
     
   </xsl:template>
   
+
+  <xsl:template match="xhtml:li[starts-with(@id, 'nav')]">
+    <xsl:copy>
+      <xsl:copy-of select="@*|node()"/>
+      <ul id="menu{position()}">
+        <li id="menuPlaceholder{position()}"><img src="/modules/menubar/images/indicator.gif"/></li>
+      </ul>
+    </xsl:copy>
+  </xsl:template>
+
+  
   
   <xsl:template match="xhtml:*">
     <xsl:element name="{local-name()}">
       <xsl:apply-templates select="@*|node()"/>
     </xsl:element>
-  </xsl:template>
-  
-  
-  <!-- add only first message as title attribute --> 
-  <xsl:template match="menu:message[preceding-sibling::menu:message]"/>
-  
-  <xsl:template match="menu:message">
-    <xsl:attribute name="title">
-      <xsl:value-of select="."/>
-    </xsl:attribute>
   </xsl:template>
   
   

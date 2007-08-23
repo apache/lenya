@@ -25,13 +25,29 @@
     <map:pipeline internal-only="true">  
       
       <map:match pattern="ajaxmenu/*/*/**">
-        <map:generate src="fallback://lenya/content/util/empty.xml"/>
+        <map:generate src="xslt/emptyMenu.xml"/>
+        <map:transform src="fallback://lenya/xslt/menu/menubar2xhtml.xsl">
+          <map:parameter name="publicationid" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+          <map:parameter name="userid" value="{access-control:user-id}"/>
+          <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
+          <map:parameter name="workflowstate" value="{workflow:state}"/>
+          <map:parameter name="islive" value="{workflow:variable.is_live}"/>
+          <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
+          <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
+          <map:parameter name="newMessages" value="{inbox:newMessageCount}"/>
+        </map:transform>
         <map:transform src="xslt/menu2xslt-ajax.xsl">
           <map:parameter name="contextPrefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="area" value="{2}"/>
           <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
           <map:parameter name="queryString" value="{request:queryString}"/>
+        </map:transform>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
@@ -87,6 +103,11 @@
        
        <map:transform src="fallback://lenya/xslt/menu/merge-menus.xsl"/>
        
+       
+       <map:transform src="xslt/selectSingleMenu.xsl">
+         <map:parameter name="menu" value="{request-param:lenya.menu}"/>
+       </map:transform>
+       
        <map:transform src="fallback://lenya/xslt/menu/filter-menu.xsl">
          <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
        </map:transform>
@@ -106,6 +127,7 @@
          <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
          <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
          <map:parameter name="newMessages" value="{inbox:newMessageCount}"/>
+         <map:parameter name="position" value="{request-param:lenya.menu}"/>
        </map:transform>
        
        <map:transform type="i18n">
