@@ -19,6 +19,7 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedSet;
@@ -39,9 +40,10 @@ import org.apache.cocoon.components.modules.input.DefaultsModule;
 import org.apache.cocoon.components.modules.input.InputModule;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.forrest.conf.AntProperties;
+import org.apache.lenya.cms.publication.Publication;	
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.module.ModuleManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -55,11 +57,16 @@ import org.xml.sax.SAXException;
  */
 public class PropertiesModule extends DefaultsModule implements InputModule,
         Initializable, ThreadSafe, Serviceable {
+    
+    private HashSet pubInit;
+    
     private AntProperties filteringProperties;
 
     private SourceResolver m_resolver;
 
     private ModuleManager moduleManager;
+    
+    private ServiceManager serviceManager;
 
     private final static String lenyaHome = "context:/";
 
@@ -73,17 +80,19 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
             throws ConfigurationException {
         String attributeValue;
 
+        loadPublicationPropertiesIfNotDone(objectModel);
         attributeValue = filteringProperties.getProperty(name);
         if (attributeValue == null) {
             String error = "Unable to get attribute value for "
-                    + name
-                    + "\n"
-                    + "Please make sure you defined "
-                    + name
-                    + " in lenya.properties.xml either in $LENYA_HOME or in the module that is requesting this property"
-                    + "\n"
-                    + "If you see this message, most of the time you spotted a module bug "
-                    + "(forget to define the default property). Please report it to our mailing list.";
+                + name
+                + ".\n"
+                + "Please make sure you defined "
+                + name
+                + " in lenya.properties.xml either in $LENYA_HOME, $PUB_HOME or "
+                + "in the module that is requesting this property.\n"
+                + "If you see this message, most of the time you spotted a module bug "
+                + "(forget to define the default property). Please report it to "
+                + "our mailing list.";           
             throw new ConfigurationException(error);
         }
 
@@ -97,6 +106,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
     public Object[] getAttributeValues(String name, Configuration modeConf,
             Map objectModel) throws ConfigurationException {
+        loadPublicationPropertiesIfNotDone(objectModel);
         Object[] attributeValues = super.getAttributeValues(name, modeConf,
                 objectModel);
         for (int i = 0; i < attributeValues.length; i++) {
@@ -109,7 +119,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-
+        loadPublicationPropertiesIfNotDone(objectModel);
         SortedSet matchset = new TreeSet();
         Enumeration enumeration = filteringProperties.keys();
         while (enumeration.hasMoreElements()) {
@@ -124,22 +134,31 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
     public void initialize() throws Exception {
 
+        pubInit = new HashSet();
+        
         // add all homes important to Lenya to the properties
         setHomes();
 
         loadSystemProperties(filteringProperties);
 
         // NOTE: the first values set get precedence, as in AntProperties
+        // 
+        // Order of precedence:        
+        // 1. Publication (lazy loaded in loadPublicationPropertiesIfNotDone())
+        // 2. Lenya local
+        // 3. Modules (all modules, not only the ones referenced in the publication)
+        // 4. Lenya
+        //
         String lenyaPropertiesStringURI = "";
 
-        // get the values from local.lenya.properties.xml
         try {
+            // get the values from local.lenya.properties.xml
             lenyaPropertiesStringURI = lenyaHome + SystemUtils.FILE_SEPARATOR
                     + PROPERTY_NAME_LOCAL;
-
             filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
-                    lenyaPropertiesStringURI);
+                    lenyaPropertiesStringURI, false);
 
+            // get the values from all modules
             String[] module2src = moduleManager.getModuleIds();
             for (int i = 0; i < module2src.length; i++) {
                 String id = module2src[i];
@@ -148,17 +167,15 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
                     lenyaPropertiesStringURI = value + SystemUtils.FILE_SEPARATOR
                             + PROPERTY_NAME;
                     filteringProperties = loadXMLPropertiesFromURI(
-                            filteringProperties, lenyaPropertiesStringURI);
+                            filteringProperties, lenyaPropertiesStringURI, false);
                 }
             }
             // get the values from lenya.properties.xml this are the default
-            // lenya
-            // values
+            // lenya values
             lenyaPropertiesStringURI = lenyaHome + SystemUtils.FILE_SEPARATOR
                     + PROPERTY_NAME;
-
             filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
-                    lenyaPropertiesStringURI);
+                    lenyaPropertiesStringURI, false);
         } finally {
             if (debugging())
                 debug("Loaded project lenya.properties.xml:" + filteringProperties);
@@ -186,26 +203,30 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
             String propName = (String) e.nextElement();
             String systemPropValue = System.getProperty(propName);
             if (systemPropValue != null) {
-                // AntProperties.setProperty doesn't let you override, so we
-                // have to remove the property then add it again
-                props.remove(propName);
-                props.setProperty(propName, systemPropValue);
+                overwriteProperty(props, propName, systemPropValue);
             }
         }
     }
 
+    private void overwriteProperty(AntProperties props, String propName, String propValue) {
+        //
+        // AntProperties.setProperty doesn't let you override, so we
+        // have to remove the property then add it again
+        props.remove(propName);
+        props.setProperty(propName, propValue);
+    }
+
     /**
+     * @param precedingProperties
      * @param propertiesStringURI
+     * @param overwrite
      * @throws IOException
      * @throws MalformedURLException
-     * @throws MalformedURLException
-     * @throws IOException
      * @throws ParserConfigurationException
      * @throws SAXException
-     * @throws SourceNotFoundException
      */
-    private AntProperties loadXMLPropertiesFromURI(
-            AntProperties precedingProperties, String propertiesStringURI)
+    private AntProperties loadXMLPropertiesFromURI(AntProperties precedingProperties, 
+            String propertiesStringURI, boolean overwrite)
             throws MalformedURLException, IOException,
             ParserConfigurationException, SAXException {
 
@@ -225,8 +246,13 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
                 if (nl != null && nl.getLength() > 0) {
                     for (int i = 0; i < nl.getLength(); i++) {
                         Element el = (Element) nl.item(i);
-                        filteringProperties.setProperty(el.getAttribute("name"), el
-                                .getAttribute("value"));
+                        if (overwrite == true) {
+                            overwriteProperty(filteringProperties, el.getAttribute("name"), 
+                                              el.getAttribute("value"));
+                        } else {
+                            filteringProperties.setProperty(el.getAttribute("name"), 
+                                                            el.getAttribute("value"));
+                        }
                     }
                 }
 
@@ -245,7 +271,36 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
         return filteringProperties;
     }
 
-    public void service(ServiceManager manager) throws ServiceException {
+    /**
+     * Get the properties from the requested publication
+     */
+    private void loadPublicationPropertiesIfNotDone(Map objectModel) 
+            throws ConfigurationException {
+        Publication pub;
+        String pubId;
+
+        try {
+            pub = PublicationUtil.getPublication(serviceManager, objectModel);
+        } catch (Exception e) {
+            throw new ConfigurationException(e.getMessage());
+        }
+        pubId = pub.getId();
+        if (pubInit.contains(pubId)) {
+            return;
+        }
+        try {
+            filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
+                                  PROPERTY_NAME, true);
+        } catch (IOException e) {       
+          getLogger().warn("Could not load properties from pub \""+pubId+"\".\n"+e);
+        } catch (Exception e) {
+            throw new ConfigurationException(e.getMessage());
+        }
+        pubInit.add(pubId);
+    }
+
+    public void service(ServiceManager manager) throws ServiceException {        
+        this.serviceManager = manager;
         m_resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
         moduleManager = (ModuleManager) manager.lookup(ModuleManager.ROLE);
     }
