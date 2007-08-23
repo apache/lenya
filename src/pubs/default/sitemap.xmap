@@ -312,8 +312,12 @@
                         </map:act>
                       </map:otherwise> 
                     </map:select>
-                    <!-- pretty-print output for easier debugging and for the benefit of new users -->
+                    <!-- pretty-print output for easier debugging and for the benefit of new users 
+                         NOTE: you may want to disable this in production for performance reasons,
+                         but it's on by default in the default publication to make the generated code 
+                         easier to work with for new users. -->
                     <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
+                    <!-- the proxy transformer handles proxy-related URL rewriting -->
                     <map:transform type="proxy"/>
                     <map:serialize type="xhtml"/>
                   </map:otherwise>
