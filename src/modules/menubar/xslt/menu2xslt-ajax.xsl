@@ -26,7 +26,8 @@
   xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
   exclude-result-prefixes="menu"
   >
-  
+ 
+  <xsl:param name="contextPrefix"/> 
   <xsl:param name="publicationid"/>
   <xsl:param name="area"/>
   <xsl:param name="documenturl"/>
@@ -72,7 +73,7 @@
             </script>
             <script type="text/javascript" src="/cforms/dojo/dojo.js">&#160;</script>
             <script type="text/javascript">
-              MENU_URL = "<xsl:value-of select="concat('/', $publicationid, '/', $area, $documenturl, '?', $queryString)"/>";
+              MENU_URL = "<xsl:value-of select="concat($contextPrefix,'/', $publicationid, '/', $area, $documenturl, '?', $queryString)"/>";
             </script>
             <script type="text/javascript" src="/modules/menubar/javascript/loadmenu.js">&#160;</script>
           </head>
