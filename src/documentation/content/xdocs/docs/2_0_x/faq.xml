@@ -23,7 +23,7 @@
     <title>Getting Started and Building Lenya</title>
     <faq id="TransformerFactoryImpl">
       <question>
-        The build fails with a message like "<code>Fatal error during transformation</code>".
+        The build fails with a message like Fatal error during transformation. 
       </question>
       <answer>
         <p>
@@ -34,7 +34,7 @@
     </faq>
   </part>
   
-  <part>
+  <part id="BuildingWebsites">
     <title>Building Websites</title>
     <faq id="resourcetypes">
       <question>How do I add a custom type of documents?</question>
@@ -55,7 +55,7 @@
     </faq>
   </part>
   
-  <part>
+  <part id="i18n">
     <title>Internationalisation (i18n)</title>
     <faq id="i18n">
       <question> How to extend the i18n catalog for Lenya 2.0? </question>
@@ -74,7 +74,7 @@
     </faq>
   </part>
   
-  <part>
+  <part id="editors">
     <title>Editors</title>
     <faq id="bxe-css">
       <question> Is it possible to override in BXE *only* a css style definition? </question>
@@ -86,7 +86,7 @@
     </faq>
   </part>
   
-  <part>
+  <part id="Deployment">
     <title>Deployment</title>
     <faq id="plain-cocoon">
       <question>Can I serve my public site with Cocoon only?</question>
