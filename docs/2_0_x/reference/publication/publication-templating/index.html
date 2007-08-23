@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -734,7 +737,7 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Add+it+to">Add it to cocoon.xconf Using a Patch File</a>
 </li>
 <li>
-<a href="#Declare+the+Instantiator+in">Declare the Instantiator in publication.xconf</a>
+<a href="#Declare+the+Instantiator+in">Declare the Instantiator in publication.xml</a>
 </li>
 </ul>
 </li>
@@ -837,7 +840,7 @@ document.write("Last Published: " + document.lastModified);
 <a name="N10069"></a><a name="Declaration+of+a+Template"></a>
 <h2 class="h3">Declaration of a Template</h2>
 <div class="section">
-<p>The template of a publication is declared in <span class="codefrag">my-pub/config/publication.xconf</span>:</p>
+<p>The template of a publication is declared in <span class="codefrag">my-pub/config/publication.xml</span>:</p>
 <pre class="code">&lt;publication&gt;
   ...
   &lt;templates&gt;
@@ -935,7 +938,7 @@ document.write("Last Published: " + document.lastModified);
 &lt;/map:match&gt;</pre>
 <p>
         The decision which <span class="codefrag">usecase.xmap</span> to choose is based on the usecase configuration
-        in <span class="codefrag">publication.xconf</span>. To declare a usecase to be implemented by a publication,
+        in <span class="codefrag">publication.xml</span>. To declare a usecase to be implemented by a publication,
         add the corresponding entry:
       </p>
 <pre class="code">&lt;publication&gt;
@@ -982,7 +985,7 @@ public class MyInstantiator extends AbstractLogEnabled implements Instantiator {
 
 &lt;/xconf&gt;</pre>
 <a name="N10123"></a><a name="Declare+the+Instantiator+in"></a>
-<h3 class="h4">Declare the Instantiator in publication.xconf</h3>
+<h3 class="h4">Declare the Instantiator in publication.xml</h3>
 <pre class="code">&lt;publication&gt;
   ...
   &lt;template-instantiator name="mypub"/&gt;

@@ -234,11 +234,14 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">lenyadoc Protocol</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">lenyadoc Protocol</div>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -710,13 +713,22 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
     
+<div class="warning">
+<div class="label">Warning</div>
+<div class="content">
+      The <span class="codefrag">lenyadoc:</span> protocol is deprecated and being phased out in favour of the much more
+      versatile <a href="../../../../docs/2_0_x/reference/protocols/lenya-document.html"><span class="codefrag">lenya-document:</span></a> protocol.<br>
+      New code should not use it anymore. This documentation remains here to help people make sense of legacy code.
+    </div>
+</div>
+    
 <p>
       The <span class="codefrag">lenyadoc:</span> protocol allows to access the source of a Lenya document without knowing the
       underlying storage structure. If the relative syntax is used, only the language and the UUID
       is needed. If the absolute syntax is used, the publication id and the area has to be specified additionally.
     </p>
     
-<a name="N10013"></a><a name="Relative+Syntax"></a>
+<a name="N10020"></a><a name="Relative+Syntax"></a>
 <h2 class="h3">Relative Syntax</h2>
 <div class="section">
 <p>
@@ -741,7 +753,7 @@ document.write("Last Published: " + document.lastModified);
 </pre>
 </div>
     
-<a name="N1002F"></a><a name="Absolute+Syntax"></a>
+<a name="N1003C"></a><a name="Absolute+Syntax"></a>
 <h2 class="h3">Absolute Syntax</h2>
 <div class="section">
 <p>

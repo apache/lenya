@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -894,12 +897,14 @@ NameVirtualHost *:443
         When you use a proxy, Lenya has to convert all internal links accordingly.
         Therefore you have to tell the publication about the proxy configuration.
         Open the file <span class="codefrag">pubs/default/config/publication.xml</span> and uncomment
-        and modify the <span class="codefrag">&lt;proxy/</span> elements:
+        and modify the <span class="codefrag">&lt;proxy/&gt;</span> elements:
       </p>
-<pre class="code">&lt;proxy ssl="false" area="authoring" url="http://cms.example.com"/&gt;
-&lt;proxy ssl="false" area="live" url="http://www.example.com"/&gt;
-&lt;proxy ssl="true" area="authoring" url="https://cms.example.com"/&gt;
-&lt;proxy ssl="true" area="live" url="https://www.example.com"/&gt;</pre>
+<pre class="code">&lt;proxies&gt;
+  &lt;proxy ssl="false" area="authoring" url="http://cms.example.com"/&gt;
+  &lt;proxy ssl="false" area="live" url="http://www.example.com"/&gt;
+  &lt;proxy ssl="true" area="authoring" url="https://cms.example.com"/&gt;
+  &lt;proxy ssl="true" area="live" url="https://www.example.com"/&gt;
+&lt;/proxies&gt;</pre>
 </div>
     
     

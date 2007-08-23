@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -734,7 +737,8 @@ document.write("Last Published: " + document.lastModified);
           
 <p>
             Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a> and 
-            unpack the archive in the resources directory of this module.
+            unpack the archive in the resources directory of the tinymce module
+            (<span class="codefrag">$LENYA_HOME/src/modules/tinymce/resources/</span>)
             That should give you a subdirectory named <span class="codefrag">tinymce</span>.
           </p>
           
@@ -754,6 +758,9 @@ document.write("Last Published: " + document.lastModified);
           Optionally download additional language packs and unpack them
           in the same place. (The new files will end up in <span class="codefrag">tinymce/</span> as 
           well.)
+          As of module version 0.5.1, TinyMCE will present itself in the
+          locale that your browser requests, <em>if</em> an appropriate
+          language pack can be found.
         </li>
         
 <li>
@@ -801,7 +808,7 @@ document.write("Last Published: " + document.lastModified);
 </ol>
 </div>
     
-<a name="N10068"></a><a name="Make+your+site+plays+well+with+TinyMCE"></a>
+<a name="N1006E"></a><a name="Make+your+site+plays+well+with+TinyMCE"></a>
 <h2 class="h3">Make your site plays well with TinyMCE</h2>
 <div class="section">
 <p>
@@ -819,7 +826,7 @@ document.write("Last Published: " + document.lastModified);
         Use ids instead.
       </p>
 <p>
-        This module has been developed and tested with TinyMCE 2.1.0.
+        This module has been tested with TinyMCE 2.1.1.1.
       </p>
 </div>
     

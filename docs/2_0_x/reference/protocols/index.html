@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -703,22 +706,22 @@ document.write("Last Published: " + document.lastModified);
 <div id="front-matter"></div>
     
 <p>Cocoon uses different protocols to access sources. The protocols are handled by a <span class="codefrag">SourceFactory</span> which resolves the
-       given URI to a source. There are two protocols specific to Lenya:
+       given URI to a source. There are a few protocols specific to Lenya:
     </p>
     
 <ul>
       
 <li>
-<a href="../../../../docs/2_0_x/reference/protocols/lenya.html"><span class="codefrag">lenya:</span></a> Get a <span class="codefrag">RepositorySource</span> in the context of Lenya.</li>
-      
-<li>
-<a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html"><span class="codefrag">lenyadoc:</span></a> Get a <span class="codefrag">RepositorySource</span> of a specific document using the UUID.</li>
-      
-<li>
-<a href="../../../../docs/2_0_x/reference/link-management.html"><span class="codefrag">lenya-document:</span></a> Reference a document.</li>
+<a href="../../../../docs/2_0_x/reference/protocols/lenya-document.html"><span class="codefrag">lenya-document:</span></a> Reference a document by UUID. The swiss army knife of Lenya. Used for all internal links.</li>
       
 <li>
 <a href="../../../../docs/2_0_x/reference/protocols/site.html"><span class="codefrag">site:</span></a> Get a <span class="codefrag">RepositorySource</span> using the path of a document in the site structure.</li>
+      
+<li>
+<a href="../../../../docs/2_0_x/reference/protocols/lenya.html"><span class="codefrag">lenya:</span></a> Get a <span class="codefrag">RepositorySource</span> in the context of Lenya. Used mainly internally.</li>
+      
+<li>
+<em>deprecated</em> <a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html"><span class="codefrag">lenyadoc:</span></a> Get a <span class="codefrag">RepositorySource</span> of a specific document using the UUID.</li>
     
 </ul>
   

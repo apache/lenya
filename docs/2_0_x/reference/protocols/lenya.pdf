@@ -5,10 +5,10 @@
 /Producer (FOP 0.20.5) >>
 endobj
 5 0 obj
-<< /Length 670 /Filter [ /ASCII85Decode /FlateDecode ]
+<< /Length 727 /Filter [ /ASCII85Decode /FlateDecode ]
  >>
 stream
-Gatm8_2b!=&A@ZM4sl$n[_\?tX]oqKp=*^-;q$BNE<6che2U1opGEM68[;>H<Cjoaa)BhYoCt$J_P[[e(bj+@!H(+W^h=MqK\]!,CR5[*5a8&mgS8\n;H5+70LlMn;n"[^@^OZ`QZMd>AY0ta6\P/X;\0R-K&[mtbLInfGn\LA,ft/GOS-j<KG$hZ2UrUY$d.2_B$r)9<AQ\S)=g-1r!7To[/,R[MO+l-><E7t_qUs-FXciC-,Pa!NfN<`p_l8,P=j+kAqquA7mrEs9%CL%X>ZthI5"RT.I^@IN&q(]^j;;N><ddLf,tX4OLYF0G+kjmNL!:0+:`b1?0^H:\Sjh!>,/.&kn8d'9H^hAE]kL+Fj(5]TD;4VY`o51p_;36%_pSNWY*Yp\e;3C)Aa=,lt[2()F<HR'>V9a;%2f#s/Q,%R`@=Ude\;"(lp`gs&XibFDcb^]-8N')3a;'_Mr;PH"\p&TAFnBpq\Va:SZlaq'm;jnGoR>J2_,/3dOGj9F4<s=nTu;Bq?QdJ6hWU*U$a-Ro1,kStKB922)_%m_%KO*s6)q.'t#?$:P(.f3V'pbWLjkk!2hBZD5cZI]r($.<`6B0>9;TA@*c)FQ$PRFId",NH^rcU]%:'p*bm_H.%I_,?geVgK'W8d1L%S>;aS$<#`%;hiT%"3<~>
+Gatm8_2b!=&A@ZM4sn^tfFGo3Dr%Et[APoU:JD@[E<(i'C7M0sq\faF8[?lIWfV`KcTJsfT(,_tK[3:V,)ALq$W-R0!<ROs!O<4?Zs/Dj%$tr8dQR@hX(6Y<O)qNJ/?rus03T5><&FnF5l00n;1Qc=2[.#j(o(aE8IKg#?erXV$KHB"0^ef&*gg?&>U;6DC(!A?iatMMDIi&Qr!`BE%=SK`&m0Vd!C84QXZAQG,E'#99<1tWGq+>P65_b7Qf)ZKPYN\g,O$1Q#WbA7iEA.>/WJ2V(Nn(khC7sf1_ApYoDk@`@8-80L:oj62d@%0.\2@-.5N:(&Aon9lu$Nn$cTghKp>-X@G>]??8I.dfiOZR;sN>cD8LuR%$HarYp`'"'$</SN)>)S1l3C@<@0QjNcB1=X2l)>O&i9+h/Zpr<V(&Rh_$`s;,?3O$@S8dNS<m)g9FXf1.#K\QE@.s*N&G-Sbk?pn@/(gqkpg_XirnXq?l02JL-W=MT&MG6IeR)2Lc\"-)Qc1kM8mM_<\1cqS?YN-$7^0*P>G%?E%08fsYI_44gX:r!VFZB2[V%4(<)&-i+kFQ8d&f2J6TtQD0in3:6N(k[>?`MunmJIfp&]>(YS_gVc#>GSMTZ7FZ*EN#9KiD+^k]5jH$t::eXWj"B@$U"EKN+gS=*k$7)P)2rcfV`O]DmEG+%hr&c\<Zg2k(%fqSar*?nf!Ap<oe2_Yec,Z;.$.@~>
 endstream
 endobj
 6 0 obj
@@ -40,7 +40,7 @@ endobj
 9 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 183.3 595.4 334.5 583.4 ]
+/Rect [ 105.66 595.4 256.86 583.4 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
 /A << /URI (http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/TransactionableSource.html)
@@ -101,20 +101,20 @@ endobj
 xref
 0 15
 0000000000 65535 f 
-0000002019 00000 n 
-0000002077 00000 n 
-0000002127 00000 n 
+0000002078 00000 n 
+0000002136 00000 n 
+0000002186 00000 n 
 0000000015 00000 n 
 0000000071 00000 n 
-0000000832 00000 n 
-0000000952 00000 n 
-0000000983 00000 n 
-0000001224 00000 n 
-0000001466 00000 n 
-0000001579 00000 n 
-0000001689 00000 n 
-0000001797 00000 n 
-0000001903 00000 n 
+0000000889 00000 n 
+0000001009 00000 n 
+0000001040 00000 n 
+0000001281 00000 n 
+0000001525 00000 n 
+0000001638 00000 n 
+0000001748 00000 n 
+0000001856 00000 n 
+0000001962 00000 n 
 trailer
 <<
 /Size 15
@@ -122,5 +122,5 @@ trailer
 /Info 4 0 R
 >>
 startxref
-2250
+2309
 %%EOF

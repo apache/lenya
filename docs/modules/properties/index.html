@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -700,17 +703,128 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>The properties Module</h1>
-<div id="front-matter"></div>
+<div id="front-matter">
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introduction">Introduction</a>
+</li>
+<li>
+<a href="#Sample">Sample</a>
+</li>
+<li>
+<a href="#Order+of+precedence">Order of precedence</a>
+</li>
+<li>
+<a href="#Locations">Locations</a>
+</li>
+<li>
+<a href="#Usage">Usage</a>
+<ul class="minitoc">
+<li>
+<a href="#sitemap.xmap">sitemap.xmap</a>
+</li>
+<li>
+<a href="#java">java</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
     
 <a name="N1000E"></a><a name="Introduction"></a>
 <h2 class="h3">Introduction</h2>
 <div class="section">
 <p>
-        The <span class="codefrag">properties</span> module provides a service to configure
-        publications using properties.
+        The <span class="codefrag">properties</span> module provides a service (InputModule) to configure
+        publications using properties. The idea is to have a fallback of properties.
       </p>
 </div>
     
+<a name="N1001B"></a><a name="Sample"></a>
+<h2 class="h3">Sample</h2>
+<div class="section">
+<pre class="code">&lt;properties&gt;
+  &lt;property name="pubs.default.author" value="Miguel de Cervantes Saavedra"/&gt;
+&lt;/properties&gt;</pre>
+</div>
+    
+<a name="N10026"></a><a name="Order+of+precedence"></a>
+<h2 class="h3">Order of precedence</h2>
+<div class="section">
+<div class="note">
+<div class="label">Note</div>
+<div class="content">The first values set get precedence, as in AntProperties</div>
+</div>
+<ol>
+        
+<li>Publication (lazy loaded in loadPublicationPropertiesIfNotDone()) </li>
+        
+<li>Lenya local</li>
+        
+<li>Modules (all modules, not only the ones referenced in the publication)</li>
+        
+<li>Lenya</li>
+      
+</ol>
+</div>
+    
+<a name="N1003F"></a><a name="Locations"></a>
+<h2 class="h3">Locations</h2>
+<div class="section">
+<ol>
+        
+<li>{pubDir}/lenya.properties.xml</li>
+        
+<li>$LENYA_HOME/src/webapp/local.lenya.properties.xml</li>
+        
+<li>{module}/lenya.properties.xml</li>
+        
+<li>$LENYA_HOME/src/webapp/lenya.properties.xml</li>
+      
+</ol>
+</div>
+    
+<a name="N10055"></a><a name="Usage"></a>
+<h2 class="h3">Usage</h2>
+<div class="section">
+<p>To activate your properties you need to save the above sample file in one of the above locations.</p>
+<ol>
+        
+<li>Publication - on a publication level you are able to implement all properties and override all possible default ones.</li>
+        
+<li>Lenya local - use this for global properties for all your lenya based pubs</li>
+        
+<li>Modules - modules can use properties to allow user to override module specific properties.</li>
+        
+<li>Lenya - global default properties</li>
+      
+</ol>
+<a name="N1006D"></a><a name="sitemap.xmap"></a>
+<h3 class="h4">sitemap.xmap</h3>
+<p>Since the properties module is a cocoon input module, you can use it as any other
+          input module.</p>
+<pre class="code">...
+&lt;map:transform src="cocoon:/getDoctypeXSLT/{4}"&gt;
+  &lt;map:parameter name="author" value="{properties:pubs.default.author}"/&gt;
+  ...
+&lt;/map:transform&gt;
+        </pre>
+<a name="N1007B"></a><a name="java"></a>
+<h3 class="h4">java</h3>
+<p>In your custom cocoon components use like follows.</p>
+<pre class="code"> InputModule inputModule = null;
+ ServiceSelector selector = null;
+ String propKey = "pubs.default.author";
+   try {
+     selector = (ServiceSelector) m_manager.lookup(InputModule.ROLE + "Selector");
+     inputModule = (InputModule) selector.select("properties");   
+     String propValue = (String) inputModule.getAttribute(propKey, null,
+                    objectModel)
+...
+        </pre>
+</div>
   
 </div>
 <!--+

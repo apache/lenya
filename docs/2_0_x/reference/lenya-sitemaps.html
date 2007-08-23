@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -719,7 +722,7 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Part+3%3A+The+document+URL">Part 3: The document URL</a>
 </li>
 <li>
-<a href="#Part+4%3A+The+usecase+and+workflow+parameters+%28optional%29">Part 4: The usecase and workflow parameters (optional)</a>
+<a href="#Part+4%3A+The+usecase+parameter+%28optional%29">Part 4: The usecase parameter (optional)</a>
 </li>
 <li>
 <a href="#The+%22lenya%3A%22+scheme">The "lenya:" scheme</a>
@@ -871,15 +874,17 @@ document.write("Last Published: " + document.lastModified);
 </ul>
 <p>The CMS menus are nothing but a convenience mechanism for the CMS user to trigger usecases.
 					As an alternative to choosing the "Workflow"-&gt;"Submit" menu option, you could as well append
-					<span class="codefrag">?lenya.usecase=submit</span> to the document URL. As soon as Lenya finds a lenya.usecase
+					<span class="codefrag">?lenya.usecase=workflow.submit</span> to the document URL. As soon as Lenya finds a lenya.usecase
 					request parameter it will branch into the <span class="codefrag">lenya/usecases/usecase.xmap</span> sitemap.</p>
 <p>All usecases start in the Lenya core. The core contains most of the common access control,
 					workflow and editing usecases. A publication can introduce publication specific usecases.</p>
 <p>Some usecases require CMS screens to be displayed. These are rendered through the usecase 
 					sitemap portions as well. That way one could for example introduce a new skin for the CMS
 					screens just by means of the Cocoon sitemap.</p>
-<p>For details on usecases, have a look at the Lenya Usecase Framework.</p>
-<a name="N100EF"></a><a name="Part+3%3A+The+document+URL"></a>
+<p>For details on usecases, have a look at the
+					<a href="../../../docs/2_0_x/reference/usecase-framework/index.html">Lenya Usecase Framework</a>.
+					</p>
+<a name="N100F3"></a><a name="Part+3%3A+The+document+URL"></a>
 <h3 class="h4">Part 3: The document URL</h3>
 <p>Now it's the publication sitemap's task to take the document URL portion of the
 					original URL (<span class="codefrag">tutorial/new_doctype.html</span> in our example) and generate and
@@ -924,25 +929,14 @@ document.write("Last Published: " + document.lastModified);
 					the rendering pipelines whithout having to write Java code.</p>
 <p>An example of an entirely different mapping between the document URL and the repository
 					is the Lenya Weblog publication that comes as a second sample with the Lenya distribution.</p>
-<a name="N10123"></a><a name="Part+4%3A+The+usecase+and+workflow+parameters+%28optional%29"></a>
-<h3 class="h4">Part 4: The usecase and workflow parameters (optional)</h3>
-<p>Right after the document URL there may be additional paramters, especially</p>
-<ul>
-					
-<li>lenya.usecase and mabye</li>
-					
-<li>lenya.step</li>
-					
-</ul>
-<p>as well as maybe</p>
-<ul>
-					
-<li>wf.event</li>
-					
-</ul>
-<p>For an explaination of the usecase parameters, see the usecase framework.</p>
-<p>For an explaination of the workflow engine, see the workflow engine (coming soon).</p>
-<a name="N10145"></a><a name="The+%22lenya%3A%22+scheme"></a>
+<a name="N10127"></a><a name="Part+4%3A+The+usecase+parameter+%28optional%29"></a>
+<h3 class="h4">Part 4: The usecase parameter (optional)</h3>
+<p>Right after the document URL there may be
+					an additional parameter,
+					<span class="codefrag">lenya.usecase=$USECASE</span>.</p>
+<p>For an explaination of this usecase parameter, see the
+					<a href="../../../docs/2_0_x/reference/usecase-framework/index.html">usecase framework</a>.</p>
+<a name="N1013B"></a><a name="The+%22lenya%3A%22+scheme"></a>
 <h3 class="h4">The "lenya:" scheme</h3>
 <p>When reading the sitemaps in Lenya 2.0 you probably came across the lenya-scheme, often also referred to as the lenya protocol. For example, in the doctypes.xmap, you will find this section: </p>
 <pre class="code">
@@ -955,7 +949,7 @@ document.write("Last Published: " + document.lastModified);
 </pre>
 <p>The lenya: scheme just needs the document path to locate the source document, i.e. lenya:/concepts/index_en.xml. All other elements of the actual storage location of the document (publication id and area) will be read from the page envelope and interpreted in the LenyaSourceFactory. </p>
 <p>In other words: The lenya: scheme hides the storage implementation details from the sitemap. </p>
-<a name="N10158"></a><a name="What+is+a+scheme%3F"></a>
+<a name="N1014E"></a><a name="What+is+a+scheme%3F"></a>
 <h4>What is a scheme?</h4>
 <p>The lenya scheme is a virtual protocol in Cocoon, similar to the cocoon and context scheme. </p>
 <p>Note: In case you are not familiar with the latest official naming of the components of a URI or you still think that a URL is the same as a URI, please read this: <a href="http://www.bernzilla.com/item.php?id=100"> http://www.bernzilla.com/item.php?id=100</a>. </p>

@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <div class="menupagetitle">lenya Protocol</div>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -701,9 +704,10 @@ document.write("Last Published: " + document.lastModified);
     
 <p>
       The <span class="codefrag">lenya:</span> protocol creates a <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/RepositorySource.html">
-      <span class="codefrag">RepositorySource</span></a> which is a transactionable source
+      <span class="codefrag">RepositorySource</span></a>, which is a 
       <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/TransactionableSource.html"><span class="codefrag">TransactionableSource</span></a>.
-      The resolution of the URI is based on the <span class="codefrag">context:</span> protocol handler.
+      The resolution of the URI is based on the <span class="codefrag">context:</span> protocol
+      handler, i.e. you are accessing files under the webapp base directory.
     </p>
   
 </div>

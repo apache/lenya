@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.6.10', '../../../skin/')" id="menu_selected_1.1.6.10Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">URLs and Links</div>
@@ -750,7 +753,14 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">lenya-document:{uuid}[,lang={&hellip;}][,pub={&hellip;}][,area={&hellip;}][,rev={&hellip;}][{queryString}]</pre>
 <ul>
         
-<li>The <span class="codefrag">{uuid}</span> value is mandatory.</li>
+<li>
+          The <span class="codefrag">{uuid}</span> value is usually present, but optional.
+          This enables you to create links to "the russian translation of
+          this page" (<span class="codefrag">&lt;a href="lenya-document:,lang=ru"&gt;...</span>).
+          The language selector module makes use of this feature.
+          Other conceivable uses are links to the current document in another area
+          or revision.
+        </li>
         
 <li>
           The parameters <span class="codefrag">lang</span>, <span class="codefrag">pub</span>, <span class="codefrag">area</span>,
@@ -789,7 +799,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1006D"></a><a name="Specifying+the+Resource+Type+Format"></a>
+<a name="N10070"></a><a name="Specifying+the+Resource+Type+Format"></a>
 <h2 class="h3">Specifying the Resource Type Format</h2>
 <div class="section">
 <p>
@@ -820,7 +830,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N10092"></a><a name="Converting+UUID-based+URLs+to+Web+Application+URLs"></a>
+<a name="N10095"></a><a name="Converting+UUID-based+URLs+to+Web+Application+URLs"></a>
 <h2 class="h3">Converting UUID-based URLs to Web Application URLs</h2>
 <div class="section">
 <p>
@@ -841,7 +851,7 @@ document.write("Last Published: " + document.lastModified);
         the resulting HTML link will look like this:
       </p>
 <pre class="code">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
-<a name="N100B6"></a><a name="Specifying+an+Extension"></a>
+<a name="N100B9"></a><a name="Specifying+an+Extension"></a>
 <h3 class="h4">Specifying an Extension</h3>
 <p>
           The UuidToUrlTransformer recognizes the query string parameter
@@ -856,7 +866,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N100CF"></a><a name="Converting+Web+Application+Links+to+Servlet+Container+or+Proxy+Links"></a>
+<a name="N100D2"></a><a name="Converting+Web+Application+Links+to+Servlet+Container+or+Proxy+Links"></a>
 <h2 class="h3">Converting Web Application Links to Servlet Container or Proxy Links</h2>
 <div class="section">
 <p>
@@ -894,7 +904,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1010C"></a><a name="URLs+in+CSS+Files"></a>
+<a name="N1010F"></a><a name="URLs+in+CSS+Files"></a>
 <h2 class="h3">URLs in CSS Files</h2>
 <div class="section">
 <p>
@@ -908,6 +918,11 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">div.news { background: url('/lenya14/mypub/live/images/news.png') left top no-repeat }</pre>
 <pre class="code">div.news { background: url('http://mysite.com/images/news.png') left top no-repeat }</pre>
 <pre class="code">div.news { background: url('../images/news.png') left top no-repeat }</pre>
+<p>
+        This operation cannot be performed by our standard XSLT transformer,
+      because a CSS file is not well-formed XML. The <a href="http://chaperon.sourceforge.net">Chaperon</a> transformer is
+      used instead.
+      </p>
 </div>
     
   

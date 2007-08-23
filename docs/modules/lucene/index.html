@@ -235,10 +235,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -713,6 +716,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Indexing">Indexing</a>
 </li>
 <li>
+<a href="#Indexing+Issues">Indexing Issues</a>
+</li>
+<li>
 <a href="#Searching">Searching</a>
 </li>
 </ul>
@@ -760,7 +766,23 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1004A"></a><a name="Searching"></a>
+<a name="N1004A"></a><a name="Indexing+Issues"></a>
+<h2 class="h3">Indexing Issues</h2>
+<div class="section">
+<p>
+        When the system is under high load, it can occur that a document is not indexed after a change
+        because the indexer is busy. In this case, a notification message is sent to a user which can
+        be configured in <span class="codefrag">modules/lucene/sitemap.xmap</span>:
+      </p>
+<pre class="code">&lt;map:transformer name="index2"
+    logger="sitemap.transformer.luceneindextransformer2"
+    src="org.apache.cocoon.transformation.LuceneIndexTransformer2"&gt;
+  &lt;notify user="lenya"/&gt;
+&lt;/map:transformer&gt;</pre>
+</div>
+    
+    
+<a name="N1005B"></a><a name="Searching"></a>
 <h2 class="h3">Searching</h2>
 <div class="section">
 <p>
