@@ -163,6 +163,11 @@
         (be careful not to starve other processes on the same machine, though):
       </p>
       <source xml:space="preserve">-Xms512m -Xmx1024m</source>
+      <p>
+        Lenya does XML prettyprinting by default, which comes with a performance penalty.
+        You might want to disable the transformation for maximum speed:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>]]></source>
     </section>
     
     <section>
