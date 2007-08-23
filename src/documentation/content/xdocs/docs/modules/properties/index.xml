@@ -27,9 +27,15 @@
     <section>
       <title>Introduction</title>
       <p>
-        The <code>properties</code> module provides a service to configure
+        The <code>properties</code> module provides a service (InputModule) to configure
         publications using properties. The idea is to have a fallback of properties.
       </p>
+    </section>
+    <section>
+      <title>Sample</title>
+      <source><![CDATA[<properties>
+  <property name="pubs.default.author" value="Miguel de Cervantes Saavedra"/>
+</properties>]]></source>
     </section>
     <section>
       <title>Order of precedence</title>
@@ -52,6 +58,13 @@
     </section>
     <section>
       <title>Usage</title>
+      <p>To activate your properties you need to save the above sample file in one of the above locations.</p>
+      <ol>
+        <li>Publication - on a publication level you are able to implement all properties and override all possible default ones.</li>
+        <li>Lenya local - use this for global properties for all your lenya based pubs</li>
+        <li>Modules - modules can use properties to allow user to override module specific properties.</li>
+        <li>Lenya - global default properties</li>
+      </ol>
       <section>
         <title>sitemap.xmap</title>
         <p>Since the properties module is a cocoon input module, you can use it as any other
