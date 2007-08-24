@@ -61,7 +61,6 @@ limitations under the License.
       </map:match>
       
       <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} -->
-      <!-- FIXME: page envelope calls have to be removed -->
       <map:match pattern="xhtml.xml/*/*/*/*">
         <map:generate src="cocoon:/lenyametadata.xml/{1}/{2}/{3}/{4}/{request-param:lenya.revision}"/>
         <map:transform src="fallback://lenya/modules/resource/xslt/resource2xhtml.xsl">
