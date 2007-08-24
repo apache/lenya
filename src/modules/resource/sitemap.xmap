@@ -41,31 +41,6 @@ limitations under the License.
     
     <map:pipeline>
       
-      <!-- View Revision? -->
-      <!--
-      <map:match pattern="*.xml">
-        <map:match type="step" pattern="view-revision">
-          <map:generate type="serverpages"
-            src="fallback://lenya/content/rc/view.xsp">
-          </map:generate>
-          <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
-          <map:transform src="fallback://lenya/modules/resource/xslt/resource2xhtml.xsl">
-            <map:parameter name="document-type" value="{page-envelope:document-type}"/>
-            <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
-            <map:parameter name="language" value="{page-envelope:document-language}"/>
-            <map:parameter name="title" value="{dublincore:title}"/>
-            <map:parameter name="root" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}}"/>
-            <map:parameter name="mimeType" value="{doc-info:mimeType}"/>
-            <map:parameter name="contentLength" value="{doc-info:contentLength}"/>
-            <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
-          </map:transform>
-          <map:transform type="i18n"/>
-          <map:transform type="proxy"/>
-          <map:serialize type="xml"/>
-        </map:match>
-      </map:match>
-      -->
-      
       <!-- pattern="{format}.xml" -->
       <map:match pattern="*.xml">
         <map:generate src="cocoon:/{1}.xml/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-uuid}/{page-envelope:document-language}"/>
