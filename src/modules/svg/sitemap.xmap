@@ -61,6 +61,10 @@
         <map:serialize type="svg2png"/>
       </map:match>
       
+    </map:pipeline>
+    
+    <map:pipeline type="noncaching">
+      
       <!--
         image resizing pipelines
       -->
@@ -89,6 +93,7 @@
           <map:transform src="xslt/scale.xsl">
             <map:parameter name="nonProxyBaseUrl" value="http://localhost:{request:serverPort}{request:contextPath}"/>
             <map:parameter name="url" value="{proxy:/{../1}/{../2}/{../3}.{../4}}"/>
+            <map:parameter name="revision" value="{request-param:lenya.revision}"/>
             <map:parameter name="width" value="{request-param:width}"/>
             <map:parameter name="height" value="{request-param:height}"/>
           </map:transform>
@@ -98,6 +103,7 @@
           <map:parameter name="type" value="file"/>
           <map:transform src="xslt/scale.xsl">
             <map:parameter name="url" value="{fallback:resources/shared/{../3}.{../4}}"/>
+            <map:parameter name="revision" value="{request-param:lenya.revision}"/>
             <map:parameter name="width" value="{request-param:width}"/>
             <map:parameter name="height" value="{request-param:height}"/>
           </map:transform>

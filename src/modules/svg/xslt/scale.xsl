@@ -24,6 +24,7 @@
   <xsl:param name="nonProxyBaseUrl"/>
   <xsl:param name="height"/>
   <xsl:param name="width"/>
+  <xsl:param name="revision"/>
   
   <!-- Workaround: Batik doesn't seem to like SSL URLs -->
   <xsl:param name="imageUrl">
@@ -38,6 +39,7 @@
         <xsl:value-of select="$url"/>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:if test="$revision != ''">?lenya.revision=<xsl:value-of select="$revision"/></xsl:if>
   </xsl:param>
   
   <xsl:template match="/">
