@@ -165,10 +165,20 @@ limitations under the License.
     <xsl:param name="width"/>
     <xsl:param name="height"/>
     
-    <xsl:variable name="previewWidth">400</xsl:variable>
+    <xsl:variable name="maxPreviewWidth">400</xsl:variable>
+    <xsl:variable name="previewWidth">
+      <xsl:choose>
+        <xsl:when test="$width &gt; $maxPreviewWidth"><xsl:value-of select="$maxPreviewWidth"/></xsl:when>
+        <xsl:otherwise><xsl:value-of select="$width"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     
     <xsl:variable name="svgSuffix">
-      <xsl:text>?lenya.module=svg&amp;height=</xsl:text>
+      <xsl:choose>
+        <xsl:when test="contains($mediaURI, '?')">&amp;</xsl:when>
+        <xsl:otherwise>?</xsl:otherwise>
+      </xsl:choose>
+      <xsl:text>lenya.module=svg&amp;height=</xsl:text>
       <xsl:value-of select="$previewWidth * ($height div $width)"/>
       <xsl:text>&amp;width=</xsl:text>
       <xsl:value-of select="$previewWidth"/>

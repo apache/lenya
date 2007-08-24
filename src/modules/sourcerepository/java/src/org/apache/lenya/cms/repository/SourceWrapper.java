@@ -102,7 +102,8 @@ public class SourceWrapper extends AbstractLogEnabled {
         try {
             String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
             String publicationsPath = sourceUri.substring(pubBase.length());
-            publicationId = publicationsPath.split("/")[0];
+            int firstSlashIndex = publicationsPath.indexOf("/");
+            publicationId = publicationsPath.substring(0, firstSlashIndex);
             DocumentFactory factory = DocumentUtil.createDocumentFactory(manager, session);
             Publication pub = factory.getPublication(publicationId);
             contentDir = pub.getContentDir();
@@ -129,22 +130,21 @@ public class SourceWrapper extends AbstractLogEnabled {
             uriSuffix = "/" + fileSuffix;
         }
 
-        try {
-            if (!SourceUtil.exists(contentBaseUri, manager)) {
-                logger.info("The content directory [" + contentBaseUri + "] does not exist. "
-                        + "It will be created as soon as documents are added.");
-            }
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         String realSourceUri = contentBaseUri + uriSuffix;
 
         if (logger.isDebugEnabled()) {
+            try {
+                if (!SourceUtil.exists(contentBaseUri, manager)) {
+                    logger.debug("The content directory [" + contentBaseUri + "] does not exist. "
+                            + "It will be created as soon as documents are added.");
+                }
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             logger.debug("Real Source URI: " + realSourceUri);
         }
 
@@ -177,7 +177,8 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @see org.apache.lenya.cms.repository.Node#getInputStream()
      */
     public synchronized InputStream getInputStream() throws RepositoryException {
-        if (!exists()) {
+        loadData();
+        if (this.data == null) {
             throw new RuntimeException(this + " does not exist!");
         }
         return new ByteArrayInputStream(this.data);
@@ -189,12 +190,21 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @see org.apache.lenya.cms.repository.Node#exists()
      */
     public boolean exists() throws RepositoryException {
-        loadData();
-        return this.data != null;
+        if (this.deleted == true) {
+            return false;
+        } else if (this.data != null) {
+            return true;
+        } else {
+            try {
+                return SourceUtil.exists(getRealSourceUri(), this.manager);
+            } catch (Exception e) {
+                throw new RepositoryException(e);
+            }
+        }
     }
-    
+
     private boolean deleted;
-    
+
     protected void delete() {
         this.deleted = true;
     }
@@ -252,12 +262,12 @@ public class SourceWrapper extends AbstractLogEnabled {
             }
         }
     }
-    
+
     /**
      * Store the source URLs which are currently written.
      */
     private static Map lockedUris = new WeakHashMap();
-    
+
     /**
      * @throws RepositoryException if an error occurs.
      * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
@@ -268,15 +278,15 @@ public class SourceWrapper extends AbstractLogEnabled {
         }
 
         if (this.data != null) {
-            
+
             String realSourceUri = getRealSourceUri();
             Object lock = lockedUris.get(realSourceUri);
             if (lock == null) {
                 lock = this;
                 lockedUris.put(realSourceUri, lock);
             }
-            
-            synchronized(lock) {
+
+            synchronized (lock) {
                 saveTransactionable(realSourceUri);
             }
         }
@@ -287,17 +297,17 @@ public class SourceWrapper extends AbstractLogEnabled {
         ModifiableSource source = null;
         InputStream in = null;
         OutputStream out = null;
-        
+
         try {
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
             source = (ModifiableSource) resolver.resolveURI(realSourceUri);
-   
+
             out = source.getOutputStream();
-   
+
             byte[] buf = new byte[4096];
             in = new ByteArrayInputStream(this.data);
             int read = in.read(buf);
-   
+
             while (read > 0) {
                 out.write(buf, 0, read);
                 read = in.read(buf);
@@ -305,7 +315,7 @@ public class SourceWrapper extends AbstractLogEnabled {
         } catch (Exception e) {
             throw new RepositoryException(e);
         } finally {
-   
+
             try {
                 if (in != null) {
                     in.close();
@@ -317,7 +327,7 @@ public class SourceWrapper extends AbstractLogEnabled {
             } catch (Throwable t) {
                 throw new RuntimeException("Could not close streams: ", t);
             }
-   
+
             if (resolver != null) {
                 if (source != null) {
                     resolver.release(source);
@@ -374,7 +384,7 @@ public class SourceWrapper extends AbstractLogEnabled {
         }
         return this.lastModified;
     }
-    
+
     private String mimeType;
 
     /**

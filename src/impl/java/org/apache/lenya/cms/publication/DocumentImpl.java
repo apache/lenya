@@ -34,6 +34,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -52,6 +53,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     private DocumentIdentifier identifier;
     private DocumentFactory factory;
     protected ServiceManager manager;
+    private int revision = -1;
 
     /**
      * The meta data namespace.
@@ -93,10 +95,11 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param manager The service manager.
      * @param map The identity map the document belongs to.
      * @param identifier The identifier.
+     * @param revision The revision number or -1 if the latest revision should be used.
      * @param _logger a logger
      */
     protected DocumentImpl(ServiceManager manager, DocumentFactory map,
-            DocumentIdentifier identifier, Logger _logger) {
+            DocumentIdentifier identifier, int revision, Logger _logger) {
 
         ContainerUtil.enableLogging(this, _logger);
         if (getLogger().isDebugEnabled()) {
@@ -112,6 +115,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
 
         this.factory = map;
+        this.revision = revision;
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(
@@ -274,6 +278,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param _extension A string.
      */
     protected void setExtension(String _extension) {
+        checkWritability();
         assert _extension != null;
         Assert.isTrue("Extension doesn't start with a dot", !_extension.startsWith("."));
         this.extension = _extension;
@@ -434,11 +439,11 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
-        return getRepositoryNode().getMetaData(namespaceUri);
+        return getContentHolder().getMetaData(namespaceUri);
     }
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
-        return getRepositoryNode().getMetaDataNamespaceUris();
+        return getContentHolder().getMetaDataNamespaceUris();
     }
 
     public String getMimeType() throws DocumentException {
@@ -455,13 +460,14 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public long getContentLength() throws DocumentException {
         try {
-            return getRepositoryNode().getContentLength();
+            return getContentHolder().getContentLength();
         } catch (RepositoryException e) {
             throw new DocumentException(e);
         }
     }
 
     public void setMimeType(String mimeType) throws DocumentException {
+        checkWritability();
         try {
             getMetaData(METADATA_NAMESPACE).setValue(METADATA_MIME_TYPE, mimeType);
         } catch (MetaDataException e) {
@@ -527,6 +533,20 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
         return this.repositoryNode;
     }
+    
+    protected ContentHolder getContentHolder() {
+        Node node = getRepositoryNode();
+        if (this.revision == -1) {
+            return node;
+        }
+        else {
+            try {
+                return node.getHistory().getRevision(revision);
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     protected static Node getRepositoryNode(ServiceManager manager, DocumentFactory docFactory,
             String sourceUri) {
@@ -591,16 +611,16 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return area().getSite().containsByUuid(getUUID(), getLanguage());
     }
 
-    private Area area;
-
     public Area area() {
-        if (this.area == null) {
-            this.area = new AreaImpl(this.manager, getFactory(), getPublication(), getArea());
+        try {
+            return getPublication().getArea(getArea());
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
         }
-        return this.area;
     }
 
     public void setResourceType(ResourceType resourceType) {
+        checkWritability();
         Assert.notNull("resource type", resourceType);
         try {
             MetaData meta = getMetaData(DocumentImpl.METADATA_NAMESPACE);
@@ -611,6 +631,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public void setSourceExtension(String extension) {
+        checkWritability();
         Assert.notNull("extension", extension);
         Assert.isTrue("extension doesn't start with a dot", !extension.startsWith("."));
         try {
@@ -622,10 +643,17 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public OutputStream getOutputStream() {
+        checkWritability();
         try {
             return getRepositoryNode().getOutputStream();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    protected void checkWritability() {
+        if (this.revision == -1) {
+            throw new UnsupportedOperationException();
         }
     }
 
@@ -639,6 +667,15 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public Session getSession() {
         return getFactory().getSession();
+    }
+    
+    public int getRevisionNumber() {
+        if (this.revision == -1) {
+            return getRepositoryNode().getHistory().getLatestRevision().getNumber();
+        }
+        else {
+            return this.revision;
+        }
     }
 
 }

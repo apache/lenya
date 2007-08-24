@@ -25,54 +25,45 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.caching.CacheableProcessingComponent;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.source.SourceValidity;
 import org.apache.excalibur.source.impl.validity.TimeStampValidity;
 import org.apache.excalibur.xml.dom.DOMParser;
+import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.ContentHolder;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * <p>Generates the meta data of a document.</p>
- * <p>Parameters to specify the document:</p>
- * <ul>
- * <li><strong>pubid</strong> - mandatory</li>
- * <li><strong>area</strong> - mandatory</li>
- * <li><strong>uuid</strong> - mandatory</li>
- * <li><strong>lang</strong> - mandatory</li>
- * </ul>
- * <p>Example output:</p>
+ * <p>
+ * Generates the meta data of a document. The <code>src</code> attribute must be
+ * a {@link RepositorySource} URI (e.g., <code>lenya-document:...</code>).
+ * </p>
+ * <p>
+ * Example output:
+ * </p>
+ * 
  * <pre>
-&lt;lenya:metadata xmlns:lenya="http://apache.org/cocoon/lenya/metadata/1.0"&gt;
-  &lt;elements xmlns="http://purl.org/dc/elements/1.1/"&gt;
-    &lt;title&gt;Search&lt;/title&gt;
-    &lt;date&gt;2006-06-12 13:43:14&lt;/date&gt;
-    &lt;language&gt;en&lt;/language&gt;
-    &lt;creator&gt;lenya&lt;/creator&gt;
-  &lt;/elements&gt;
-  &lt;elements xmlns="http://apache.org/lenya/metadata/document/1.0"&gt;
-    &lt;extension&gt;xml&lt;/extension&gt;
-    &lt;resourceType&gt;usecase&lt;/resourceType&gt;
-    &lt;contentType&gt;xml&lt;/contentType&gt;
-  &lt;/elements&gt;
-&lt;/lenya:metadata&gt;
-</pre>
+ *  &lt;lenya:metadata xmlns:lenya=&quot;http://apache.org/cocoon/lenya/metadata/1.0&quot;&gt;
+ *  &lt;elements xmlns=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;
+ *  &lt;title&gt;Search&lt;/title&gt;
+ *  &lt;date&gt;2006-06-12 13:43:14&lt;/date&gt;
+ *  &lt;language&gt;en&lt;/language&gt;
+ *  &lt;creator&gt;lenya&lt;/creator&gt;
+ *  &lt;/elements&gt;
+ *  &lt;elements xmlns=&quot;http://apache.org/lenya/metadata/document/1.0&quot;&gt;
+ *  &lt;extension&gt;xml&lt;/extension&gt;
+ *  &lt;resourceType&gt;usecase&lt;/resourceType&gt;
+ *  &lt;contentType&gt;xml&lt;/contentType&gt;
+ *  &lt;/elements&gt;
+ *  &lt;/lenya:metadata&gt;
+ * </pre>
  */
 public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         CacheableProcessingComponent {
-
-    /** The corresponding lenya document */
-    protected Document document;
 
     /** Node and attribute names */
     protected AttributesImpl attributes;
@@ -86,50 +77,24 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     /** The namespace prefix for this namespace */
     protected static final String PREFIX_META = "lenya";
 
-    /** Custom metadata */
-    protected static final String ROOT_CUSTOM_META_NODE_NAME = "custom";
-
-    /** Internal metadata */
-    protected static final String ROOT_INTERNAL_META_NODE_NAME = "internal";
-
-    /** Dublin Core metadata */
-    protected static final String ROOT_DC_META_NODE_NAME = "dc";
-
-    /** Namespace prefix for the dublin core */
-    protected static final String PREFIX_META_DC = "dc";
-
-    /** The URI of the namespace of the dublin core metadata */
-    protected static final String URI_META_DC = "http://purl.org/dc/elements/1.1/";
-
     /** The parser for the XML snippets to be included. */
     protected DOMParser parser = null;
-
-    /** The document that should be parsed and (partly) included. */
-    protected org.w3c.dom.Document doc = null;
-
-    /** Helper for lenya document retrival */
-    protected String publicationId = null;
-
-    protected String area = null;
-
-    protected String language = null;
-
-    protected String uuid = null;
+    
+    private String src;
+    
+    /** The repository content holder to generate the meta data for */
+    private ContentHolder content;
 
     /**
      * Recycle this component. All instance variables are set to <code>null</code>.
      */
     public void recycle() {
-        this.document = null;
-        this.uuid = null;
-        this.language = null;
-        this.area = null;
-        this.publicationId = null;
-        this.doc = null;
+        this.content = null;
+        this.src = null;
         this.parser = null;
         super.recycle();
     }
-
+    
     /**
      * Serviceable
      * 
@@ -148,50 +113,22 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
      */
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
             throws ProcessingException, SAXException, IOException {
-
+        
         super.setup(resolver, objectModel, src, par);
-
-        this.publicationId = par.getParameter("pubid", null);
-        if (this.publicationId == null) {
-            throw new ProcessingException("The pubid is not set! Please set like e.g. <map:parameter name='pubid' value='{request-param:pubid}'/>");
-        }
-
-        this.area = par.getParameter("area", null);
-        if (this.area == null) {
-            throw new ProcessingException("The area is not set! Please set like e.g. <map:parameter name='area' value='{request-param:area}'/>");
-        }
-
-        uuid = par.getParameter("uuid", null);
-        if (this.uuid == null) {
-            throw new ProcessingException("The uuid is not set! Please set like e.g. <map:parameter name='uuid' value='{request-param:uuid}'/>");
-        }
-
-        language = par.getParameter("lang", null);
-        if (language == null)
-            throw new ProcessingException("The 'lang' parameter is not set.");
-
+        this.src = src;
+        
+        RepositorySource source = null;
         try {
-            prepareLenyaDoc(objectModel);
-        } catch (DocumentBuildException e) {
-            throw new ProcessingException(src + " threw DocumentBuildException: " + e);
-        }
-
-    }
-
-    protected void prepareLenyaDoc(Map objectModel) throws DocumentBuildException,
-            ProcessingException {
-
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        Publication pub;
-        try {
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            pub = factory.getPublication(this.publicationId);
-            this.document = pub.getArea(area).getDocument(uuid, language);
+            source = (RepositorySource) resolver.resolveURI(src);
+            this.content = source.getContent();
         } catch (Exception e) {
-            throw new ProcessingException("Error geting publication id / area from page envelope",
-                    e);
+            throw new RuntimeException(e);
         }
-
+        finally {
+            if (source != null) {
+                resolver.release(source);
+            }
+        }
     }
 
     /**
@@ -200,7 +137,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
      * @return The generated key hashes the src
      */
     public Serializable getKey() {
-        return language + "$$" + uuid;
+        return this.src;
     }
 
     /**
@@ -212,7 +149,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     public SourceValidity getValidity() {
         long lastModified;
         try {
-            lastModified = document.getLastModified();
+            lastModified = this.content.getLastModified();
         } catch (Exception e) {
             getLogger().error("Error determining last modification date", e);
             return null;
@@ -230,9 +167,9 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     }
 
     private void performIncludesMeta() throws SAXException, ProcessingException {
-        
+
         try {
-            String[] namespaces = this.document.getMetaDataNamespaceUris();
+            String[] namespaces = this.content.getMetaDataNamespaceUris();
             for (int i = 0; i < namespaces.length; i++) {
                 this.contentHandler.startPrefixMapping("", namespaces[i]);
                 startNodeMeta(namespaces[i]);
@@ -243,7 +180,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         } catch (MetaDataException e) {
             throw new ProcessingException(e);
         }
-        
+
     }
 
     private void parseMetaData(String namespace) throws ProcessingException, SAXException {
@@ -257,7 +194,8 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
                 throw new ProcessingException(e);
             }
             for (int j = 0; j < values.length; j++) {
-                this.contentHandler.startElement(namespace, names[i], names[i], new AttributesImpl());
+                this.contentHandler.startElement(namespace, names[i], names[i],
+                        new AttributesImpl());
                 char[] valueChars = values[j].toCharArray();
                 this.contentHandler.characters(valueChars, 0, valueChars.length);
                 this.contentHandler.endElement(namespace, names[i], names[i]);
@@ -274,17 +212,12 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     private void startNodeRoot() throws SAXException {
         this.contentHandler.startDocument();
         this.contentHandler.startPrefixMapping(PREFIX_META, URI_META);
-        this.contentHandler.startElement(URI_META,
-                "metadata",
-                PREFIX_META + ":metadata",
+        this.contentHandler.startElement(URI_META, "metadata", PREFIX_META + ":metadata",
                 attributes);
     }
 
     private void startNodeMeta(String namespace) throws SAXException {
-        this.contentHandler.startElement(namespace,
-                "elements",
-                "elements",
-                attributes);
+        this.contentHandler.startElement(namespace, "elements", "elements", attributes);
     }
 
     private void endNodeMeta(String namespace) throws SAXException {
@@ -292,13 +225,11 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     }
 
     protected MetaData getMetaData(String namespaceUri) throws ProcessingException {
-        MetaData metaData = null;
         try {
-            metaData = this.document.getMetaData(namespaceUri);
+            return this.content.getMetaData(namespaceUri);
         } catch (Exception e1) {
-            throw new ProcessingException("Obtaining custom meta data value for ["
-                    + document + "] failed: ", e1);
+            throw new ProcessingException("Obtaining meta data value for [" + this.content
+                    + "] failed: ", e1);
         }
-        return metaData;
     }
 }

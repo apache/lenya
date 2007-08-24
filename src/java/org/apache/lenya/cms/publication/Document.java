@@ -319,4 +319,8 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      */
     InputStream getInputStream();
     
+    /**
+     * @return The revision number of this document.
+     */
+    int getRevisionNumber();
 }

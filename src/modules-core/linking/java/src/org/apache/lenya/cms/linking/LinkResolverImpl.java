@@ -126,7 +126,7 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
                     doc = null;
                 } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
                     if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
-                        doc = areaObj.getDocument(uuid, pub.getDefaultLanguage());
+                        doc = factory.get(pub, area, uuid, pub.getDefaultLanguage(), revision);
                     } else {
                         doc = null;
                     }

@@ -42,8 +42,15 @@ limitations under the License.
   <xsl:param name="documentUrl"/>
   <xsl:param name="sourceExtension"/>
   <xsl:param name="imageprefix"/>
+  <xsl:param name="revision"/>
   
-  <xsl:variable name="mediaUrl" select="concat(substring-before($documentUrl, '.html'), '.', $sourceExtension)"/>
+  <xsl:variable name="revisionSuffix">
+    <xsl:if test="$revision != ''">
+      <xsl:text>?lenya.revision=</xsl:text><xsl:value-of select="$revision"/>
+    </xsl:if>
+  </xsl:variable>
+  
+  <xsl:variable name="mediaUrl" select="concat(substring-before($documentUrl, '.html'), '.', $sourceExtension, $revisionSuffix)"/>
   
   <xsl:template match="/">
     <xhtml:div id="body">

@@ -56,15 +56,21 @@ public class AreaImpl implements Area {
     }
 
     public boolean contains(String uuid, String language) {
-        String sourceUri = DocumentImpl.getSourceURI(pub, name, uuid, language);
-        try {
-            Node node = (Node) getPublication().getSession().getRepositoryItem(getNodeFactory(), sourceUri);
-            return node.exists();
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
+        // check site structure first (performance)
+        if (getSite().containsByUuid(uuid, language)) {
+            return true;
+        } else {
+            String sourceUri = DocumentImpl.getSourceURI(pub, name, uuid, language);
+            try {
+                Node node = (Node) getPublication().getSession().getRepositoryItem(
+                        getNodeFactory(), sourceUri);
+                return node.exists();
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-    
+
     protected NodeFactory getNodeFactory() {
         if (this.nodeFactory == null) {
             try {
@@ -75,7 +81,6 @@ public class AreaImpl implements Area {
         }
         return this.nodeFactory;
     }
-    
 
     public Document getDocument(String uuid, String language) throws PublicationException {
         return this.factory.get(getPublication(), getName(), uuid, language);

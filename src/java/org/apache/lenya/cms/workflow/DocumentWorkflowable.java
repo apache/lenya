@@ -32,6 +32,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
@@ -203,7 +204,10 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         string += " state:" + version.getState();
 
         Identity identity = getSession().getIdentity();
-        string += " user:" + identity.getUser().getId();
+        User user = identity.getUser();
+        if (user != null) {
+            string += " user:" + identity.getUser().getId();
+        }
         string += " machine:" + identity.getMachine().getIp();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

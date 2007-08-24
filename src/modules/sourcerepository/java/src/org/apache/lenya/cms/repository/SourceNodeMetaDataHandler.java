@@ -58,23 +58,24 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
 
-        MetaDataRegistry registry = null;
-        try {
-            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-            if (!registry.isRegistered(namespaceUri)) {
-                throw new MetaDataException("The namespace [" + namespaceUri
-                        + "] is not registered!");
-            }
-        } catch (ServiceException e) {
-            throw new MetaDataException(e);
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
-
         MetaData meta = (MetaData) this.namespace2metadata.get(namespaceUri);
         if (meta == null) {
+            
+            MetaDataRegistry registry = null;
+            try {
+                registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+                if (!registry.isRegistered(namespaceUri)) {
+                    throw new MetaDataException("The namespace [" + namespaceUri
+                            + "] is not registered!");
+                }
+            } catch (ServiceException e) {
+                throw new MetaDataException(e);
+            } finally {
+                if (registry != null) {
+                    this.manager.release(registry);
+                }
+            }
+            
             synchronized (this) {
                 meta = new SourceNodeMetaData(namespaceUri, this, this.manager);
                 this.namespace2metadata.put(namespaceUri, meta);

@@ -282,7 +282,10 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
 
     }
     
-    protected ContentHolder getContent() {
+    /**
+     * @return The content of this source.
+     */
+    public ContentHolder getContent() {
         return this.content;
     }
 

@@ -48,6 +48,19 @@ public interface DocumentFactory extends RepositoryItemFactory {
             throws DocumentBuildException;
 
     /**
+     * Returns a revision of a document.
+     * @param publication The publication.
+     * @param area The area.
+     * @param uuid The document ID.
+     * @param language The language.
+     * @param revision The revision..
+     * @return A document.
+     * @throws DocumentBuildException if the document does not exist.
+     */
+    Document get(Publication publication, String area, String uuid, String language, int revision)
+            throws DocumentBuildException;
+
+    /**
      * Returns the document identified by a certain web application URL.
      * @param webappUrl The web application URL.
      * @return A document.

@@ -70,14 +70,18 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      */
     public Document get(Publication publication, String area, String uuid, String language)
             throws DocumentBuildException {
+        return get(publication, area, uuid, language, -1);
+    }
 
+    public Document get(Publication publication, String area, String uuid, String language,
+            int revision) throws DocumentBuildException {
         if (getLogger().isDebugEnabled())
             getLogger().debug(
                     "DocumentIdentityMap::get() called on publication [" + publication.getId()
                             + "], area [" + area + "], UUID [" + uuid + "], language [" + language
                             + "]");
 
-        String key = getKey(publication, area, uuid, language);
+        String key = getKey(publication, area, uuid, language, revision);
 
         if (getLogger().isDebugEnabled())
             getLogger().debug(
@@ -197,10 +201,11 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @param area The area.
      * @param uuid The document UUID.
      * @param language The language.
+     * @param revision 
      * @return A key.
      */
-    public String getKey(Publication publication, String area, String uuid, String language) {
-        return publication.getId() + ":" + area + ":" + uuid + ":" + language;
+    public String getKey(Publication publication, String area, String uuid, String language, int revision) {
+        return publication.getId() + ":" + area + ":" + uuid + ":" + language + ":" + revision;
     }
 
     /**
@@ -217,7 +222,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             Publication publication = getPublication(locator.getPublicationId());
             String area = locator.getArea();
             String uuid = publication.getArea(area).getSite().getNode(locator.getPath()).getUuid();
-            return getKey(publication, area, uuid, locator.getLanguage());
+            return getKey(publication, area, uuid, locator.getLanguage(), -1);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -250,6 +255,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         String area = tokenizer.nextToken();
         String uuid = tokenizer.nextToken();
         String language = tokenizer.nextToken();
+        String revisionString = tokenizer.nextToken();
+        int revision = Integer.valueOf(revisionString).intValue();
 
         Document document;
         try {
@@ -257,7 +264,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             DocumentBuilder builder = publication.getDocumentBuilder();
             DocumentIdentifier identifier = new DocumentIdentifier(publication, area, uuid,
                     language);
-            document = buildDocument(this, identifier, builder);
+            document = buildDocument(this, identifier, revision, builder);
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -268,9 +275,9 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     }
 
     protected Document buildDocument(DocumentFactory map, DocumentIdentifier identifier,
-            DocumentBuilder builder) throws DocumentBuildException {
+            int revision, DocumentBuilder builder) throws DocumentBuildException {
 
-        DocumentImpl document = createDocument(map, identifier, builder);
+        DocumentImpl document = createDocument(map, identifier, revision, builder);
         ContainerUtil.enableLogging(document, getLogger());
         return document;
     }
@@ -280,13 +287,14 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * e.g., for different document IDs.
      * @param map The identity map.
      * @param identifier The identifier.
+     * @param revision The revision or -1 for the latest revision.
      * @param builder The document builder.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
     protected DocumentImpl createDocument(DocumentFactory map, DocumentIdentifier identifier,
-            DocumentBuilder builder) throws DocumentBuildException {
-        return new DocumentImpl(this.manager, map, identifier, getLogger());
+            int revision, DocumentBuilder builder) throws DocumentBuildException {
+        return new DocumentImpl(this.manager, map, identifier, revision, getLogger());
     }
 
     public Document get(DocumentIdentifier identifier) throws DocumentBuildException {

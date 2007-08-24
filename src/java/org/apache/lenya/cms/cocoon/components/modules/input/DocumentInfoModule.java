@@ -70,6 +70,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String PARAM_UUID = "uuid";
     protected final static String PARAM_DOCUMENT_LANGUAGE = "document-language";
     protected final static String PARAM_PROPERTY = "property";
+    protected final static String PARAM_REVISION = "revision";
     protected final static int MIN_MANDATORY_PARAMS = 5;
 
     protected final static String UUID = "uuid";
@@ -87,7 +88,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String VISIBLE_IN_NAVIGATION = "visibleInNav";
 
     protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_UUID,
-            PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY };
+            PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY, PARAM_REVISION };
 
     protected final static String META_RESOURCE_TYPE = "resourceType";
     protected final static String META_EXPIRES = "expires";
@@ -100,12 +101,13 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
      * @param area The area.
      * @param uuid The document UUID.
      * @param language The document language.
+     * @param revision The revision.
      * @param objectModel The object model.
      * @return The document object created.
      * @throws ConfigurationException
      */
     protected Document getDocument(String publicationId, String area, String uuid, String language,
-            Map objectModel) throws ConfigurationException {
+            int revision, Map objectModel) throws ConfigurationException {
         Document document = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -114,7 +116,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             Session session = RepositoryUtil.getSession(this.manager, request);
             DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication pub = docFactory.getPublication(publicationId);
-            document = pub.getArea(area).getDocument(uuid, language);
+            document = docFactory.get(pub, area, uuid, language, revision);
         } catch (Exception e) {
             throw new ConfigurationException("Error getting document [" + publicationId + ":"
                     + area + ":" + uuid + ":" + language + "]: " + e.getMessage(), e);
@@ -131,11 +133,20 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         Object value = null;
 
         InputModuleParameters params = new InputModuleParameters(name, PARAMS, MIN_MANDATORY_PARAMS);
-
+        
         try {
+            int rev = -1;
+            if (params.isParameter(PARAM_REVISION)) {
+                String revision = params.getParameter(PARAM_REVISION);
+                if (!revision.equals("")) {
+                    rev = Integer.valueOf(revision).intValue();
+                }
+            }
+
             Document document = getDocument(params.getParameter(PARAM_PUBLICATION_ID), params
                     .getParameter(PARAM_AREA), params.getParameter(PARAM_UUID), params
-                    .getParameter(PARAM_DOCUMENT_LANGUAGE), objectModel);
+                    .getParameter(PARAM_DOCUMENT_LANGUAGE), rev, objectModel);
+            
             String attribute = params.getParameter(PARAM_PROPERTY);
 
             if (attribute.equals(RESOURCE_TYPE)) {

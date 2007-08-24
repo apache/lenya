@@ -350,12 +350,12 @@
       <map:match pattern="*/**.*">
         <!-- TODO: http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 -->
         <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
-          <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}" mime-type="application/pdf">
+          <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}" mime-type="application/pdf">
             <map:parameter name="byte-ranges" value="false"/>
           </map:read>
         </map:match>      
         <map:act type="language-exists">
-          <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
+          <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}"/>
         </map:act>
 
         <map:generate type="serverpages" src="fallback://lenya/content/exception/document-does-not-exist.xsp"/>
