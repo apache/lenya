@@ -429,7 +429,7 @@
             <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
           </map:when>
           <map:otherwise>
-            <map:generate type="jx" src="fallback://lenya/content/exception/publication-does-not-exist.jx">
+            <map:generate type="jx" src="lenya/content/exception/publication-does-not-exist.jx">
               <map:parameter name="publicationId" value="{1}"/>
             </map:generate>
             <map:transform type="i18n">
