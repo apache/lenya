@@ -76,7 +76,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             } else if (name.equals(PageEnvelope.IS_PUBLICATION)) {
                 value = Boolean.toString(envelope.getPublication() != null);
             } else if (name.equals(PageEnvelope.PUBLICATION_ID)) {
-                value = envelope.getPublication().getId();
+                Publication pub = envelope.getPublication();
+                value = pub != null ? pub.getId() : "";
             } else if (name.equals(PageEnvelope.PUBLICATION)) {
                 value = envelope.getPublication();
             } else if (name.equals(PageEnvelope.PUBLICATION_LANGUAGES_CSV)) {
