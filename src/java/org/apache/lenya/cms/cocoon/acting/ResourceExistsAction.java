@@ -20,16 +20,16 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
-import java.io.File;
-import java.net.URL;
+import java.util.Collections;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.acting.ServiceableAction;
+import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.TraversableSource;
 
 
 /**
@@ -46,41 +46,42 @@ import org.apache.excalibur.source.Source;
  * should be preferred to this component, as the semantics of a Selector better
  * match the supplied functionality.
  */
-public class ResourceExistsAction extends ServiceableAction implements ThreadSafe {
+public class ResourceExistsAction extends AbstractAction implements ThreadSafe {
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
         Parameters parameters) throws Exception {
-        String urlstring = parameters.getParameter("url", source);
-        String typestring = parameters.getParameter("type", "resource");
+        String url = parameters.getParameter("url", source);
+        String type = parameters.getParameter("type", "resource");
         Source src = null;
 
         try {
-            src = resolver.resolveURI(urlstring);
-
-            File resource = new File(new URL(src.getURI()).getFile());
-
-            if (typestring.equals("resource") && src.exists()) {
-                getLogger().debug(".act(): Resource (file or directory) exists: " + src.getURI());
-
-                return EMPTY_MAP;
-            } else if (typestring.equals("file") && resource.isFile()) {
-                getLogger().debug(".act(): File exists: " + resource);
-
-                return EMPTY_MAP;
-            } else if (typestring.equals("directory") && resource.isDirectory()) {
-                getLogger().debug(".act(): Directory exists: " + resource);
-
-                return EMPTY_MAP;
-            } else {
-                getLogger().debug(".act(): Resource " + resource + " as type \"" + typestring +
-                    "\" does not exist");
+            src = resolver.resolveURI(url);
+            
+            if (src.exists()) {
+                
+                boolean isCollection = false;
+                if (src instanceof TraversableSource) {
+                    TraversableSource traversableSource = (TraversableSource) src;
+                    isCollection = traversableSource.isCollection();
+                }
+                
+                boolean exists = type.equals("resource")
+                    || type.equals("file") && !isCollection
+                    || type.equals("directory") && isCollection;
+                
+                if (exists) {
+                    getLogger().debug(type + " exists: " + src.getURI());
+                    return Collections.EMPTY_MAP;
+                }
             }
-        } catch (Exception e) {
-            getLogger().warn(".act(): Exception", e);
+            getLogger().debug(".act(): Resource " + source + " as type \"" + type +
+                "\" does not exist");
         } finally {
-            resolver.release(src);
+            if (src != null) {
+                resolver.release(src);
+            }
         }
 
         return null;
