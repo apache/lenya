@@ -93,7 +93,7 @@
      |
      | You may have as many pipelines in your sitemap as you like.
      +-->
- <map:pipelines>
+<map:pipelines>
 
   <map:component-configurations>
     <global-variables>
@@ -274,10 +274,21 @@
       </map:match>
       
     </map:pipeline>
+
+    <!-- Module requests -->
+   
+    <!-- preliminary handler for internal module requests to avoid the resource-exists check -->
+    <map:pipeline internal-only="true">
+      <map:match pattern="modules/*/**">
+        <map:mount uri-prefix="modules/{1}/" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      <map:match pattern="*/modules/*/**">
+        <map:mount uri-prefix="{1}/modules/{2}/" src="fallback://lenya/modules/{2}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
     
     <map:pipeline>
       
-      <!-- Module requests -->
       <map:match pattern="modules/*/**">
         
         <map:select type="resource-exists">
@@ -396,6 +407,17 @@
         <map:call resource="style-cms-page"/>
         <map:serialize />
       </map:match>
+     
+    </map:pipeline>
+  
+    <!-- preliminary handler for internal publication requests to avoid the resource-exists check -->
+    <map:pipeline internal-only="true">
+      <map:match pattern="*/**">
+        <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+    
+    <map:pipeline>
       
       <!-- Resources -->
       
@@ -404,12 +426,12 @@
         <map:act type="resource-exists-enhanced">
           <map:parameter name="url" value="fallback://resources/{2}/{3}"/>
           <map:parameter name="type" value="file"/>
-          <map:mount uri-prefix="" src="{fallback://lenya/resources.xmap}" check-reload="true" reload-method="synchron"/>
+          <map:mount uri-prefix="" src="{fallback:lenya/resources.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
         <map:act type="resource-exists-enhanced">
           <map:parameter name="url" value="fallback://resources/shared/{3}"/>
           <map:parameter name="type" value="file"/>
-          <map:mount uri-prefix="" src="{fallback://lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
+          <map:mount uri-prefix="" src="{fallback:lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
         <!-- Ancestors resources, css, js, etc... -->
         <!-- {publication-id}/{area}/{filename}.inherited.{extention} -->
@@ -417,31 +439,32 @@
           <map:act type="resource-exists-enhanced">
             <map:parameter name="url" value="template-fallback://resources/shared/{3}.{4}"/>
             <map:parameter name="type" value="file"/>
-            <map:mount uri-prefix="" src="{fallback://lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="" src="{fallback:lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
           </map:act>
         </map:match>
       </map:match>
       
-      <!-- Enter the actual publication -->
-      <map:match pattern="*/**">
-        <map:select type="resource-exists">
-          <map:when test="context://lenya/pubs/{1}">
-            <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
-          </map:when>
-          <map:otherwise>
-            <map:generate type="jx" src="lenya/content/exception/publication-does-not-exist.jx">
-              <map:parameter name="publicationId" value="{1}"/>
-            </map:generate>
-            <map:transform type="i18n">
-              <map:parameter name="locale" value="{request:locale}"></map:parameter>
-            </map:transform>
-            <map:call resource="style-cms-page"/>
-            <map:serialize status-code="404" />
-          </map:otherwise>
-        </map:select>
-      </map:match>
+     <!-- Enter the actual publication -->
+     <map:match pattern="*/**">
+       <map:select type="parameter">
+         <map:parameter name="parameter-selector-test" value="{page-envelope:publication-id}"/>
+         <map:when test="">
+           <map:generate type="jx" src="lenya/content/exception/publication-does-not-exist.jx">
+             <map:parameter name="publicationId" value="{1}"/>
+           </map:generate>
+           <map:transform type="i18n">
+             <map:parameter name="locale" value="{request:locale}"></map:parameter>
+           </map:transform>
+           <map:call resource="style-cms-page"/>
+           <map:serialize status-code="404" />
+         </map:when>
+         <map:otherwise>
+           <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+         </map:otherwise>
+       </map:select>
+     </map:match>
    </map:pipeline>
 
- </map:pipelines>
+</map:pipelines>
 
 </map:sitemap>
