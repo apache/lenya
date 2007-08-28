@@ -61,9 +61,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
 
     /**
-     * The name of the resource type attribute. A resource has a resource type;
-     * this information can be used e.g. for different rendering of different
-     * types.
+     * The name of the resource type attribute. A resource has a resource type; this information can
+     * be used e.g. for different rendering of different types.
      */
     protected static final String METADATA_RESOURCE_TYPE = "resourceType";
 
@@ -73,15 +72,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     protected static final String METADATA_MIME_TYPE = "mimeType";
 
     /**
-     * The name of the content type attribute. Any content managed by Lenya has
-     * a type; this information can be used e.g. to provide an appropriate
-     * management interface.
+     * The name of the content type attribute. Any content managed by Lenya has a type; this
+     * information can be used e.g. to provide an appropriate management interface.
      */
     protected static final String METADATA_CONTENT_TYPE = "contentType";
 
     /**
-     * The number of seconds from the request that a document can be cached
-     * before it expires
+     * The number of seconds from the request that a document can be cached before it expires
      */
     protected static final String METADATA_EXPIRES = "expires";
 
@@ -416,8 +413,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     private ResourceType resourceType;
 
     /**
-     * Convenience method to read the document's resource type from the
-     * meta-data.
+     * Convenience method to read the document's resource type from the meta-data.
      * @see Document#getResourceType()
      */
     public ResourceType getResourceType() throws DocumentException {
@@ -533,18 +529,17 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
         return this.repositoryNode;
     }
-    
+
     protected ContentHolder getContentHolder() {
         Node node = getRepositoryNode();
-        if (this.revision == -1) {
-            return node;
-        }
-        else {
+        if (isRevisionSpecified()) {
             try {
                 return node.getHistory().getRevision(revision);
             } catch (RepositoryException e) {
                 throw new RuntimeException(e);
             }
+        } else {
+            return node;
         }
     }
 
@@ -652,9 +647,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     protected void checkWritability() {
-        if (this.revision == -1) {
+        if (isRevisionSpecified()) {
             throw new UnsupportedOperationException();
         }
+    }
+
+    protected boolean isRevisionSpecified() {
+        return this.revision != -1;
     }
 
     public InputStream getInputStream() {
@@ -668,14 +667,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public Session getSession() {
         return getFactory().getSession();
     }
-    
+
     public int getRevisionNumber() {
-        if (this.revision == -1) {
-            return getRepositoryNode().getHistory().getLatestRevision().getNumber();
+        if (!isRevisionSpecified()) {
+            throw new UnsupportedOperationException(
+                    "This is not a particular revision of the document [" + this + "].");
         }
-        else {
-            return this.revision;
-        }
+        return this.revision;
     }
 
 }
