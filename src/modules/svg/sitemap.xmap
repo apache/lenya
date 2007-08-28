@@ -27,7 +27,7 @@
     
     <map:pipeline>
       <!-- enable client side caching of resources -->
-      <map:parameter name="expires" value="access plus 2 hours"/>
+      <map:parameter name="expires" value="{global:pipeline-expiration}"/>
       
       <!--
         Views for shape flowscripts.

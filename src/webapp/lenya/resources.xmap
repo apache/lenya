@@ -33,6 +33,7 @@
   
   <map:pipelines>
     <map:pipeline>
+      <map:parameter name="expires" value="{global:pipeline-expiration}"/>
       
       <!-- Lenya Publications -->      
           <!-- matches pub-id/area/css/*.css -->

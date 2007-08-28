@@ -34,6 +34,9 @@
   <map:pipelines>
     
     <map:pipeline>
+      <!-- enable client side caching of resources -->
+      <map:parameter name="expires" value="{global:pipeline-expiration}"/>
+      
       <!-- Lenya Core -->
       
       <!-- matches lenya/**.js -->

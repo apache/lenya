@@ -105,6 +105,12 @@
            | These values are inherited into sub-sitemaps and can
            | be extended there.
            +-->
+      
+      <!-- pipeline expiration, see http://httpd.apache.org/docs/2.0/mod/mod_expires.html for syntax documentation -->
+      <pipeline-expiration>now</pipeline-expiration>
+      <!--
+        <pipeline-expiration>access plus 2 hours</pipeline-expiration>
+      -->
     </global-variables>
   </map:component-configurations>
 
