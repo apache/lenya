@@ -41,12 +41,7 @@
       
       <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="metadata/*/*/*/*">
-        <map:generate type="lenyaMetaData">
-          <map:parameter name="pubid" value="{1}"/>
-          <map:parameter name="area" value="{2}"/>
-          <map:parameter name="uuid" value="{3}"/>
-          <map:parameter name="lang" value="{4}"/>
-        </map:generate>
+        <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4}"/>
         <map:serialize type="xml"/>
       </map:match>
       
