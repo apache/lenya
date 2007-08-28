@@ -97,7 +97,7 @@
     </section>
     
     <section>
-      <title>Caching</title>
+      <title>Caching in Cocoon</title>
       <p>
         There's a <a href="http://wiki.apache.org/cocoon-data/attachments/GT2006Notes/attachments/10-caching.pdf">great
         presentation</a> (PDF) about caching in Cocoon, held at the Cocoon Get-Together 2006.
@@ -150,6 +150,13 @@
       <ul>
         <li>Set XSLT caching (use-store) to true in <code>cocoon.xconf</code>.</li>
         <li>Turn off reloading of sub-sitemaps.</li>
+        <li>
+          Enable client-side caching by changing the <code>pipeline-expiration</code> parameter
+          in <code>global-sitemap.xmap</code>, for instance:
+          <source xml:space="preserve"><![CDATA[<global-variables>
+  <pipeline-expiration>access plus 2 hours</pipeline-expiration>
+</global-variables>]]></source>
+        </li>
         <li>Tips about Cocoon performance tuning: <a href="http://wiki.apache.org/cocoon/CocoonPerformance">http://wiki.apache.org/cocoon/CocoonPerformance</a></li>
         <li>Tips about Tomcat performance tuning: <a href="http://marc.theaimsgroup.com/?t=103598885300001&amp;r=1&amp;w=2">http://marc.theaimsgroup.com/?t=103598885300001&amp;r=1&amp;w=2</a></li>
       </ul>
