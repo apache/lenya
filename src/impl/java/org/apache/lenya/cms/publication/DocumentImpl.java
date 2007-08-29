@@ -164,11 +164,20 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
+    private Publication publication;
+    
     /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
     public Publication getPublication() {
-        return this.identifier.getPublication();
+        if (this.publication == null) {
+            try {
+                this.publication = getFactory().getPublication(getIdentifier().getPublicationId());
+            } catch (PublicationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.publication;
     }
 
     /**

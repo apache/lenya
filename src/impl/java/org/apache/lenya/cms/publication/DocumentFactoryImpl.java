@@ -262,7 +262,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         try {
             Publication publication = getPublication(publicationId);
             DocumentBuilder builder = publication.getDocumentBuilder();
-            DocumentIdentifier identifier = new DocumentIdentifier(publication, area, uuid,
+            DocumentIdentifier identifier = new DocumentIdentifier(publicationId, area, uuid,
                     language);
             document = buildDocument(this, identifier, revision, builder);
         } catch (Exception e) {
@@ -298,8 +298,12 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     }
 
     public Document get(DocumentIdentifier identifier) throws DocumentBuildException {
-        return get(identifier.getPublication(), identifier.getArea(), identifier.getUUID(),
-                identifier.getLanguage());
+        try {
+            Publication pub = getPublication(identifier.getPublicationId());
+            return get(pub, identifier.getArea(), identifier.getUUID(), identifier.getLanguage());
+        } catch (PublicationException e) {
+            throw new DocumentBuildException(e);
+        }
     }
 
     public String getItemType() {

@@ -17,31 +17,24 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.util.Arrays;
-
 /**
  * Value object to identify documents.
  */
 public class DocumentIdentifier {
 
-    private Publication publication;
+    private String publicationId;
     private String area;
     private String language;
     private String uuid;
 
     /**
      * Ctor.
-     * @param publication The publication.
+     * @param pubId The publication ID.
      * @param area The area.
      * @param uuid The document UUID.
      * @param language The language.
      */
-    public DocumentIdentifier(Publication publication, String area, String uuid, String language) {
-
-        if (!Arrays.asList(publication.getLanguages()).contains(language)) {
-            throw new IllegalArgumentException("The language [" + language
-                    + "] is not supported by publication [" + publication.getId() + "]!");
-        }
+    public DocumentIdentifier(String pubId, String area, String uuid, String language) {
 
         if (uuid.startsWith("/") && uuid.split("-").length == 4) {
             throw new IllegalArgumentException("The UUID [" + uuid + "] must not begin with a '/'!");
@@ -51,7 +44,7 @@ public class DocumentIdentifier {
                     + "] must not contain a '/' after the first position!");
         }
 
-        this.publication = publication;
+        this.publicationId = pubId;
         this.area = area;
         this.language = language;
         this.uuid = uuid;
@@ -79,10 +72,10 @@ public class DocumentIdentifier {
     }
 
     /**
-     * @return The publication.
+     * @return The publication ID.
      */
-    public Publication getPublication() {
-        return publication;
+    public String getPublicationId() {
+        return publicationId;
     }
 
     public boolean equals(Object obj) {
@@ -94,7 +87,7 @@ public class DocumentIdentifier {
     }
 
     protected String getKey() {
-        return this.publication.getId() + ":" + this.area + ":" + this.uuid + ":" + this.language;
+        return this.publicationId + ":" + this.area + ":" + this.uuid + ":" + this.language;
     }
 
     public String toString() {

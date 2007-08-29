@@ -24,24 +24,16 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.util.Assert;
 
 /**
- * Observation manager. Works as an observation registry and sends the
- * notifications.
+ * Observation manager. Works as an observation registry and sends the notifications.
  */
 public class ObservationManager extends AbstractLogEnabled implements ObservationRegistry,
-        ThreadSafe, Serviceable {
+        ThreadSafe {
 
     private Map identifier2listeners = new HashMap();
     private Set listeners = new HashSet();
@@ -76,17 +68,8 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     protected DocumentIdentifier getIdentifier(DocumentEvent event) {
 
         Assert.notNull("event", event);
-
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, event
-                .getSession());
-        Publication pub;
-        try {
-            pub = factory.getPublication(event.getPublicationId());
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
-        DocumentIdentifier id = new DocumentIdentifier(pub, event.getArea(), event.getUuid(), event
-                .getLanguage());
+        DocumentIdentifier id = new DocumentIdentifier(event.getPublicationId(), event.getArea(),
+                event.getUuid(), event.getLanguage());
         return id;
     }
 
@@ -125,8 +108,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         if (event instanceof DocumentEvent) {
             DocumentIdentifier id = getIdentifier((DocumentEvent) event);
             listeners = getAllListeners(id);
-        }
-        else {
+        } else {
             listeners = this.listeners;
         }
         Notifier notifier = new Notifier(listeners, event) {
@@ -135,12 +117,6 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             }
         };
         new Thread(notifier).run();
-    }
-
-    private ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
 }
