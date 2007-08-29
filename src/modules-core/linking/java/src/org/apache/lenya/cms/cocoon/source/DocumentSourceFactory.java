@@ -124,9 +124,15 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
             String webappUrl = ServletHelper.getWebappURI(request);
-            Document currentDoc = factory.getFromURL(webappUrl);
+            LinkTarget target;
+            if (factory.isDocument(webappUrl)) {
+                Document currentDoc = factory.getFromURL(webappUrl);
+                target = resolver.resolve(currentDoc, linkUri);
+            }
+            else {
+                target = resolver.resolve(factory, linkUri);
+            }
 
-            LinkTarget target = resolver.resolve(currentDoc, linkUri);
             Document doc = target.getDocument();
 
             if (target.isRevisionSpecified()) {
