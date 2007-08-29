@@ -533,6 +533,7 @@ public class SourceNodeRCML implements RCML {
                 deleteBackup(this.contentSourceUri, time);
                 deleteBackup(this.metaSourceUri, time);
             }
+            this.entries.clear();
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
