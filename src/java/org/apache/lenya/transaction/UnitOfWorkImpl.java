@@ -112,38 +112,41 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         involvedObjects.addAll(this.modifiedObjects);
         involvedObjects.addAll(this.removedObjects);
 
-        for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
-            Transactionable t = (Transactionable) i.next();
-            t.checkout();
-        }
-
-        for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
-            Transactionable t = (Transactionable) i.next();
-            t.createTransactionable();
-            t.saveTransactionable();
-        }
-        for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
-            Transactionable t = (Transactionable) i.next();
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("UnitOfWorkImpl::commit() calling save on [" + t + "]");
+        try {
+            for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
+                Transactionable t = (Transactionable) i.next();
+                t.checkout();
             }
-            t.saveTransactionable();
-        }
-        for (Iterator i = this.removedObjects.iterator(); i.hasNext();) {
-            Transactionable t = (Transactionable) i.next();
-            t.deleteTransactionable();
-        }
 
-        if (getIdentityMap() != null) {
-            Object[] objects = getIdentityMap().getObjects();
-            for (int i = 0; i < objects.length; i++) {
-                if (objects[i] instanceof Transactionable) {
-                    Transactionable t = (Transactionable) objects[i];
-                    if (t.isCheckedOutBySession() && !this.removedObjects.contains(t)) {
-                        t.checkin();
-                    }
-                    if (t.isLocked()) {
-                        t.unlock();
+            for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
+                Transactionable t = (Transactionable) i.next();
+                t.createTransactionable();
+                t.saveTransactionable();
+            }
+            for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
+                Transactionable t = (Transactionable) i.next();
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("UnitOfWorkImpl::commit() calling save on [" + t + "]");
+                }
+                t.saveTransactionable();
+            }
+            for (Iterator i = this.removedObjects.iterator(); i.hasNext();) {
+                Transactionable t = (Transactionable) i.next();
+                t.deleteTransactionable();
+            }
+    
+        } finally {
+            if (getIdentityMap() != null) {
+                Object[] objects = getIdentityMap().getObjects();
+                for (int i = 0; i < objects.length; i++) {
+                    if (objects[i] instanceof Transactionable) {
+                        Transactionable t = (Transactionable) objects[i];
+                        if (t.isCheckedOutBySession() && !this.removedObjects.contains(t)) {
+                            t.checkin();
+                        }
+                        if (t.isLocked()) {
+                            t.unlock();
+                        }
                     }
                 }
             }
