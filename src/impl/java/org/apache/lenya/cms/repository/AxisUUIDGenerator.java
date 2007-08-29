@@ -27,9 +27,17 @@ import org.apache.axis.components.uuid.UUIDGenFactory;
  */
 public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator, ThreadSafe {
 
+    private UUIDGen delegate;
+
+    protected UUIDGen getDelegate() {
+        if (this.delegate == null) {
+            this.delegate = UUIDGenFactory.getUUIDGen();
+        }
+        return this.delegate;
+    }
+
     public String nextUUID() {
-        UUIDGen generator = UUIDGenFactory.getUUIDGen();
-        return generator.nextUUID();
+        return getDelegate().nextUUID();
     }
 
 }
