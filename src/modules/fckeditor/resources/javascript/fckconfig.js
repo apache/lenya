@@ -47,3 +47,10 @@ FCKConfig.Plugins.Add( 'fck_lenya_glue', 'de,en', '../../plugins/' ) ;
 FCKConfig.ImageUpload = false;
 FCKConfig.LinkUpload  = false;
 FCKConfig.FlashUpload = false;
+
+/*
+ * disable server browsing since we now use plugins for that
+ */
+FCKConfig.ImageBrowser = false;
+FCKConfig.LinkBrowser = false;
+
