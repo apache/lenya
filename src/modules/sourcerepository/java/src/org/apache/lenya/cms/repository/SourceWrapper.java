@@ -282,7 +282,7 @@ public class SourceWrapper extends AbstractLogEnabled {
             String realSourceUri = getRealSourceUri();
             Object lock = lockedUris.get(realSourceUri);
             if (lock == null) {
-                lock = this;
+                lock = new Object();
                 lockedUris.put(realSourceUri, lock);
             }
 
