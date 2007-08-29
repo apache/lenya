@@ -48,7 +48,7 @@
       <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
         <map:aggregate element="cmsbody">
-          <map:part src="lenya-document:{3},pub={1},area={2},lang={4}/"/>
+          <map:part src="lenya-document:{3},pub={1},area={2},lang={4}"/>
           <map:part src="cocoon:/metadata/{1}/{2}/{3}/{4}"/>
         </map:aggregate>
   
