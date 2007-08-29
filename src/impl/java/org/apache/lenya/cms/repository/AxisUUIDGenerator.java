@@ -24,7 +24,7 @@ import org.apache.axis.components.uuid.UUIDGenFactory;
 /**
  * UUID generator based on Apache Axis.
  */
-public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator {
+public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator, ThreadSafe {
 
     public String nextUUID() {
         UUIDGen generator = UUIDGenFactory.getUUIDGen();
