@@ -48,6 +48,9 @@ public class ResourceWrapper extends AbstractLogEnabled {
     private ServiceManager manager;
     private Document document;
 
+    private static final String MIME_IMAGE_PJPEG = "image/pjpeg";
+    private static final String MIME_IMAGE_JPEG = "image/jpeg";
+
     /**
      * @param document The document to wrap.
      * @param manager The service manager.
@@ -177,8 +180,22 @@ public class ResourceWrapper extends AbstractLogEnabled {
      * @return A boolean value.
      */
     public static boolean canReadMimeType(String mimeType) {
-        Iterator iter = ImageIO.getImageReadersByMIMEType(mimeType);
+        Iterator iter = ImageIO.getImageReadersByMIMEType(translateMimeType(mimeType));
         return iter.hasNext();
     }
 
+    /**
+     * Translates the mime type if it can be read, but the tools don't think so.
+     * For example, all jpegs from IE are marked as image/pjpeg, which ImageIO
+     * doesn't return a ImageReader for, even though the one for image/jpeg 
+     * works just fine, even for a real image/pjpeg.
+     * @param mimeType The mime type.
+     * @return The translated or original mime type if no translation was applied
+     */
+    private static String translateMimeType(String mimeType) {
+        if(mimeType.equals(MIME_IMAGE_PJPEG)) {
+            return MIME_IMAGE_JPEG;
+        }
+        return mimeType;
+    }
 }
