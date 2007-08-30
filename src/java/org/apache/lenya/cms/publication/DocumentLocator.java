@@ -38,10 +38,8 @@ public class DocumentLocator {
      */
     public static DocumentLocator getLocator(String pubId, String area, String path, String language) {
         String key = DocumentLocator.getKey(pubId, area, path, language);
-        DocumentLocator locator = null;
-        if (locators.containsKey(key)) {
-            locator = (DocumentLocator) locators.get(key);
-        } else {
+        DocumentLocator locator = (DocumentLocator) locators.get(key);
+        if (locator == null) {
             locator = new DocumentLocator(pubId, area, path, language);
             locators.put(key, locator);
         }
