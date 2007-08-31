@@ -116,7 +116,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             }
         }
     }
-    
+
     public void forceCheckIn() throws RepositoryException {
         RCML rcml = getRcml();
         synchronized (rcml) {
@@ -171,7 +171,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             }
         }
     }
-    
+
     public void checkout() throws RepositoryException {
         checkout(true);
     }
@@ -200,15 +200,13 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
         if (entry == null) {
             return 0;
-        }
-        else {
+        } else {
             return entry.getVersion();
         }
     }
 
     /**
-     * @return The document node, if this is a meta data node, or the node
-     *         itself otherwise.
+     * @return The document node, if this is a meta data node, or the node itself otherwise.
      * @throws ServiceException
      * @throws RepositoryException
      */
@@ -245,6 +243,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public synchronized void lock() throws RepositoryException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
+        }
+        if (getContentSource().isLoaded() || getMetaSource().isLoaded()) {
+            throw new RepositoryException("Node [" + this
+                    + "] is already loaded, locking would have no effect "
+                    + "and could lead to an inconsistent repository.");
         }
         try {
             int currentVersion = getCurrentRevisionNumber();
@@ -404,7 +407,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public long getLastModified() throws RepositoryException {
-        
+
         if (!exists()) {
             throw new RepositoryException("The node [" + this + "] does not exist!");
         }
@@ -483,5 +486,5 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public Persistable getPersistable() {
         return this.persistable;
     }
-    
+
 }

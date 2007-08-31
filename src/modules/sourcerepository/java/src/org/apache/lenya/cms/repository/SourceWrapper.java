@@ -204,6 +204,7 @@ public class SourceWrapper extends AbstractLogEnabled {
     }
 
     private boolean deleted;
+    private boolean loaded = false;
 
     protected void delete() {
         this.deleted = true;
@@ -261,6 +262,7 @@ public class SourceWrapper extends AbstractLogEnabled {
                 this.manager.release(resolver);
             }
         }
+        this.loaded = true;
     }
 
     /**
@@ -414,6 +416,10 @@ public class SourceWrapper extends AbstractLogEnabled {
             getLogger().debug("Get OutputStream for " + getSourceUri());
         loadData();
         return new NodeOutputStream();
+    }
+    
+    protected boolean isLoaded() {
+        return this.loaded;
     }
 
 }
