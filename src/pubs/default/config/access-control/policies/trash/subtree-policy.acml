@@ -32,4 +32,9 @@
     <role id="admin" method="grant"/>
   </group>
 
+  <!-- the "session" role grants access to login, logout and aboutLenya -->
+  <world>
+    <role id="session" method="grant"/>
+  </world>
+
 </policy> 
