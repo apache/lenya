@@ -123,7 +123,7 @@ public class Message {
      * @return The time when the message was sent.
      */
     public Date getTime() {
-        return this.time;
+        return (Date)this.time.clone();
     }
 
 }

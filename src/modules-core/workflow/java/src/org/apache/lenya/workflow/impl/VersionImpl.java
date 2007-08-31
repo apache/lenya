@@ -57,7 +57,7 @@ public class VersionImpl implements Version {
      * @return A string.
      */
     public Date getDate() {
-        return this.date;
+        return (Date)this.date.clone();
     }
 
     /**
