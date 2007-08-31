@@ -148,13 +148,14 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
     }
 
     public void addPublication(String pubId) throws PublicationException {
-        if (this.id2config.containsKey(pubId)) {
+        Map id2config = getId2config();
+        if (id2config.containsKey(pubId)) {
             throw new PublicationException("The publication [" + pubId + "] already exists.");
         }
         PublicationConfiguration config = new PublicationConfiguration(pubId,
                 this.servletContextPath);
         ContainerUtil.enableLogging(config, getLogger());
-        this.id2config.put(pubId, config);
+        id2config.put(pubId, config);
     }
 
     protected String getServletContextPath() {
