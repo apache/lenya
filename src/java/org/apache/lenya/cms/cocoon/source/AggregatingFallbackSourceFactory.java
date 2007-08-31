@@ -84,7 +84,6 @@ public class AggregatingFallbackSourceFactory extends AbstractLogEnabled impleme
             getLogger().debug("Path:         [" + path + "]");
         }
 
-        PublicationManager pubMgr = null;
         PublicationTemplateManager templateManager = null;
         try {
             templateManager = (PublicationTemplateManager) this.manager
@@ -145,9 +144,6 @@ public class AggregatingFallbackSourceFactory extends AbstractLogEnabled impleme
         } finally {
             if (templateManager != null) {
                 this.manager.release(templateManager);
-            }
-            if (pubMgr != null) {
-                this.manager.release(pubMgr);
             }
         }
     }
