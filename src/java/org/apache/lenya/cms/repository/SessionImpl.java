@@ -130,7 +130,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @throws ConcurrentModificationException if a transactionable has been modified by another
      *         session.
      */
-    public void commit() throws RepositoryException, ConcurrentModificationException {
+    public synchronized void commit() throws RepositoryException, ConcurrentModificationException {
 
         savePersistables();
         
