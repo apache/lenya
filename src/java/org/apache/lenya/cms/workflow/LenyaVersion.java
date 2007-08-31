@@ -65,7 +65,7 @@ public class LenyaVersion implements Version {
      * @param _date A date.
      */
     public void setDate(Date _date) {
-        this.date = _date.clone();
+        this.date = (Date)_date.clone();
     }
 
     /**
