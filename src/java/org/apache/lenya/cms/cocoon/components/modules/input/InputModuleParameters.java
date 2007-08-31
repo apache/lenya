@@ -47,7 +47,7 @@ public class InputModuleParameters {
     throws ConfigurationException
     {
         params = new Parameters();
-        this.paramList = paramList;
+        this.paramList = (String[])paramList.clone();
         parseParameters(parameters, minParams);
     }
     
