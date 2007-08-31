@@ -208,15 +208,15 @@ public abstract class Create extends AbstractUsecase {
         Object param = getParameter(DUBLIN_CORE_PREFIX + name);
         if (param != null && getParameter(DUBLIN_CORE_PREFIX + name).getClass().isArray()) {
             String[] values = (String[]) getParameter(DUBLIN_CORE_PREFIX + name);
-            String paramValue = "";
+            StringBuffer paramValue = new StringBuffer();
             for (int i = 0; i < values.length; i++) {
                 String value = values[i];
                 if (i > 0)
-                    paramValue = paramValue + ',' + value;
+                    paramValue.append(',').append(value);
                 else
-                    paramValue = value;
+                    paramValue.append(value);
             }
-            return paramValue;
+            return paramValue.toString();
         }
         return getParameterAsString(DUBLIN_CORE_PREFIX + name, null);
     }
