@@ -159,11 +159,13 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * @param roles The roles.
      */
     protected void saveRoles(Request request, Role[] roles) {
-        String rolesString = "";
-        for (int i = 0; i < roles.length; i++) {
-            rolesString += " " + roles[i];
+         if(getLogger().isDebugEnabled()) {
+            StringBuffer rolesBuffer = new StringBuffer();
+            for (int i = 0; i < roles.length; i++) {
+               rolesBuffer.append(" ").append(roles[i]);
+            }
+            getLogger().debug("Adding roles [" + rolesBuffer + " ] to request [" + request + "]");
         }
-        getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
         request.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
 

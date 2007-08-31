@@ -200,25 +200,26 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
     protected String encodeVersion(Workflow workflow, Version version) {
 
-        String string = "event:" + version.getEvent();
-        string += " state:" + version.getState();
+        StringBuffer stringBuf = new StringBuffer("event:").append(version.getEvent());
+        stringBuf.append(" state:").append(version.getState());
 
         Identity identity = getSession().getIdentity();
         User user = identity.getUser();
         if (user != null) {
-            string += " user:" + identity.getUser().getId();
+            stringBuf.append(" user:").append(identity.getUser().getId());
         }
-        string += " machine:" + identity.getMachine().getIp();
+        stringBuf.append(" machine:").append(identity.getMachine().getIp());
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        string += " date:" + format.format(new Date());
+        stringBuf.append(" date:").append(format.format(new Date()));
 
         String names[] = workflow.getVariableNames();
         for (int i = 0; i < names.length; i++) {
             String value = Boolean.toString(version.getValue(names[i]));
-            string += " var:" + names[i] + "=" + value;
+            stringBuf.append(" var:").append(names[i]);
+            stringBuf.append("=").append(value);
         }
-        return string;
+        return stringBuf.toString();
     }
 
     protected Version decodeVersion(String string) {

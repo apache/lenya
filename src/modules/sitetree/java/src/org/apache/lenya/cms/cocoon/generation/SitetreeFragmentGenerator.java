@@ -150,11 +150,11 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.getLogger().debug("Parameter area: " + this.area);
             this.getLogger().debug("Parameter path: " + this.path);
             this.getLogger().debug("Parameter initialTree: " + this.initialTree);
-            String areasStr = "";
+            StringBuffer areasStr = new StringBuffer();
             for (int i = 0; i < this.areas.length; i++) {
-                areasStr += this.areas[i] + " ";
+                areasStr.append(this.areas[i]).append(" ");
             }
-            this.getLogger().debug("Parameter areas: " + areasStr);
+            this.getLogger().debug("Parameter areas: " + areasStr.toString());
         }
 
         try {

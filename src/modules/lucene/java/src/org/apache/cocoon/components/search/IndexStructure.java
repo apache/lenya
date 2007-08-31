@@ -101,13 +101,13 @@ public final class IndexStructure {
     }
 
     public String toString() {
-        String result = "DocumentFactory:";
+        StringBuffer result = new StringBuffer("DocumentFactory:");
         Iterator iter = this.fielddefs.values().iterator();
         while (iter.hasNext()) {
             FieldDefinition item = (FieldDefinition) iter.next();
-            result += "\n" + item.toString();
+            result.append("\n").append(item.toString());
         }
-        return result;
+        return result.toString();
     }
 
 }

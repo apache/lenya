@@ -506,7 +506,7 @@ public class FormsEditor extends DocumentUsecase {
     private XUpdateAttributes getAttributes(String update, String tagID) {
         getLogger().debug(update);
 
-        String xupdateString = "<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>";
+        StringBuffer xupdateBuffer = new StringBuffer("<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>");
 
         String[] attributes = update.substring(0, update.indexOf(">")).split(" ");
         for (int i = 1; i < attributes.length; i++) {
@@ -516,15 +516,15 @@ public class FormsEditor extends DocumentUsecase {
                 String name = attributes[i].substring(0, index);
                 String value = attributes[i].substring(index + 2, attributes[i].length() - 1);
                 if (name.indexOf("xmlns") < 0) {
-                    xupdateString = xupdateString + "<xupdate:attribute name=\"" + name + "\">"
-                            + value + "</xupdate:attribute>";
+                    xupdateBuffer.append("<xupdate:attribute name=\"" + name + "\">");
+                    xupdateBuffer.append(value).append("</xupdate:attribute>");
                 }
             }
         }
 
-        getLogger().debug("Attributes: " + xupdateString);
+        getLogger().debug("Attributes: " + xupdateBuffer.toString());
 
-        return new XUpdateAttributes(xupdateString, tagID);
+        return new XUpdateAttributes(xupdateBuffer.toString(), tagID);
     }
 
     /**

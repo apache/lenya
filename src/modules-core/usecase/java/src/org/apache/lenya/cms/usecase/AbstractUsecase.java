@@ -865,21 +865,21 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      *         <code>?lenya.usecase=...&amp;param1=foo&amp;param2=bar</code>.
      */
     protected String getExitQueryString() {
-        String queryString = "";
+        StringBuffer queryBuffer = new StringBuffer();
         if (this.exitUsecaseName != null) {
-            queryString = "?lenya.usecase=" + this.exitUsecaseName;
+            queryBuffer.append("?lenya.usecase=").append(this.exitUsecaseName);
             for (Iterator i = this.exitUsecaseParameters.keySet().iterator(); i.hasNext();) {
                 String key = (String) i.next();
                 String value = (String) this.exitUsecaseParameters.get(key);
-                queryString += "&" + key + "=" + value;
+                queryBuffer.append("&").append(key).append("=").append(value);
             }
         } else {
             String exitUsecase = getParameterAsString("lenya.exitUsecase");
             if (exitUsecase != null && !"".equals(exitUsecase)) {
-                queryString = "?lenya.usecase=" + exitUsecase;
+                queryBuffer.append("?lenya.usecase=").append(exitUsecase);
             }
         }
-        return queryString;
+        return queryBuffer.toString();
     }
 
     public Session getSession() {

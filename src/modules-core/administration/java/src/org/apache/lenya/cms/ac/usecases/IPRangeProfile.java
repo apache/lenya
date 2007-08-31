@@ -57,24 +57,24 @@ public class IPRangeProfile extends AccessControlUsecase {
         ipRange.setName(name);
         ipRange.setDescription(description);
 
-        String networkString = "";
-        String subnetString = "";
+        StringBuffer networkBuffer = new StringBuffer();
+        StringBuffer subnetBuffer = new StringBuffer();
 
         for (int i = 0; i < 4; i++) {
             if (i > 0) {
-                networkString += ".";
-                subnetString += ".";
+                networkBuffer.append(".");
+                subnetBuffer.append(".");
             }
             Part netPart = (Part) getParameter(IPRangeProfile.NETWORK_ADDRESS + "-" + i);
-            networkString += netPart.getValue();
+            networkBuffer.append(netPart.getValue());
             Part subPart = (Part) getParameter(IPRangeProfile.SUBNET_MASK + "-" + i);
-            subnetString += subPart.getValue();
+            subnetBuffer.append(subPart.getValue());
         }
 
-        InetAddress networkAddress = InetAddress.getByName(networkString);
+        InetAddress networkAddress = InetAddress.getByName(networkBuffer.toString());
         ipRange.setNetworkAddress(networkAddress.getAddress());
 
-        InetAddress subnetMask = InetAddress.getByName(subnetString);
+        InetAddress subnetMask = InetAddress.getByName(subnetBuffer.toString());
         ipRange.setSubnetMask(subnetMask.getAddress());
 
         ipRange.save();
