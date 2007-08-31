@@ -52,7 +52,7 @@ public class UsecaseMessage {
         for (int i = 0; i < _params.length; i++) {
             Assert.notNull("params[" + i + "]", _params[i]);
         }
-        this.params = _params;
+        this.params = (String[])_params.clone();
     }
 
     /**

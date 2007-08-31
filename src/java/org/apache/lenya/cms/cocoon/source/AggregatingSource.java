@@ -32,7 +32,7 @@ public class AggregatingSource implements Source {
      */
     public AggregatingSource(String uri, String[] uris, ServiceManager manager) {
         this.manager = manager;
-        this.sourceUris = uris;
+        this.sourceUris = (String[])uris.clone();
         this.uri = uri;
     }
 
