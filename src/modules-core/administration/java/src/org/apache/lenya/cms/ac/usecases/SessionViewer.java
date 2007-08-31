@@ -63,7 +63,11 @@ public class SessionViewer extends AccessControlUsecase {
             HttpSession nextsession = (HttpSession) entry.getValue();
 
             Identity identity = (Identity) nextsession.getAttribute(IDENTITY);
-
+            
+            if(identity == null) { 
+                continue;
+            }   
+          
             User user = identity.getUser();
             if (user != null) {
                 Vector history = (Vector) nextsession.getAttribute(HISTORY);
