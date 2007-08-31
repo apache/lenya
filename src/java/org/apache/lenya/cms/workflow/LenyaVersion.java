@@ -31,8 +31,11 @@ import org.apache.lenya.workflow.Version;
  */
 public class LenyaVersion implements Version {
 
+    private Date date;
     private String event;
+    private String ipAddress;
     private String state;
+    private String userId;
     private Map variableValues = new HashMap();
     
     /**
@@ -49,10 +52,6 @@ public class LenyaVersion implements Version {
         return this.state;
     }
     
-    private Date date;
-    private String userId;
-    private String ipAddress;
-
     /**
      * Returns the date.
      * @return A string.
@@ -66,7 +65,7 @@ public class LenyaVersion implements Version {
      * @param _date A date.
      */
     public void setDate(Date _date) {
-        this.date = _date;
+        this.date = _date.clone();
     }
 
     /**
