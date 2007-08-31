@@ -169,7 +169,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         }
     }
 
-    public void save() throws RepositoryException {
+    public synchronized void save() throws RepositoryException {
         if (loading || !changed) {
             return;
         }
