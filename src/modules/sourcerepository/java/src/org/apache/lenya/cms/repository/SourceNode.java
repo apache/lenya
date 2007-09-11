@@ -244,14 +244,17 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
         }
-        if (getContentSource().isLoaded() || getMetaSource().isLoaded()) {
-            throw new RepositoryException("Node [" + this
-                    + "] is already loaded, locking would have no effect "
-                    + "and could lead to an inconsistent repository.");
-        }
         try {
-            int currentVersion = getCurrentRevisionNumber();
-            this.lock = getSession().createLock(this, currentVersion);
+            int currentRev = getCurrentRevisionNumber();
+            
+            int contentLoadRev = getContentSource().getLoadRevision();
+            int contentRev = contentLoadRev == -1 ? currentRev : contentLoadRev;
+            
+            int metaLoadRev = getMetaSource().getLoadRevision();
+            int metaRev = metaLoadRev == -1 ? currentRev : metaLoadRev;
+            
+            int lockRev = Math.min(contentRev, metaRev);
+            this.lock = getSession().createLock(this, lockRev);
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }

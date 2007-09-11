@@ -204,7 +204,7 @@ public class SourceWrapper extends AbstractLogEnabled {
     }
 
     private boolean deleted;
-    private boolean loaded = false;
+    private int loadRevision = -1;
 
     protected void delete() {
         this.deleted = true;
@@ -262,7 +262,7 @@ public class SourceWrapper extends AbstractLogEnabled {
                 this.manager.release(resolver);
             }
         }
-        this.loaded = true;
+        this.loadRevision = this.node.getCurrentRevisionNumber();
     }
 
     /**
@@ -418,8 +418,8 @@ public class SourceWrapper extends AbstractLogEnabled {
         return new NodeOutputStream();
     }
     
-    protected boolean isLoaded() {
-        return this.loaded;
+    protected int getLoadRevision() {
+        return this.loadRevision;
     }
 
 }

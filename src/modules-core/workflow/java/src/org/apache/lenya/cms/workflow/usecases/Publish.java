@@ -135,7 +135,14 @@ public class Publish extends InvokeWorkflow {
             Document doc = getSourceDocument();
             if(doc != null) {
                 nodes.add(doc.getRepositoryNode());
+                
+                // lock the authoring site to avoid having live nodes for which no corresponding
+                // authoring node exists
                 nodes.add(doc.area().getSite().getRepositoryNode());
+                
+                // lock the live site to avoid overriding changes made by others
+                SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
+                nodes.add(liveSite.getRepositoryNode());
             }
 
             return (org.apache.lenya.cms.repository.Node[]) nodes
