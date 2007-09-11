@@ -38,7 +38,7 @@ public class CacheMap extends HashMap {
      * @param capacity The maximum number of entries.
      */
     public CacheMap(int capacity) {
-        assert capacity > -1;
+//        assert capacity > -1;
         this.capacity = capacity;
     }
     

@@ -201,7 +201,7 @@ public abstract class PublicationTask extends AbstractTask {
 
                 Event event = getExecutableEvent(instance, situation);
 
-                assert event != null;
+//                assert event != null;
 
                 if (log.isDebugEnabled()) {
                     log.debug("Invoking event [" + event.getName() + "]");

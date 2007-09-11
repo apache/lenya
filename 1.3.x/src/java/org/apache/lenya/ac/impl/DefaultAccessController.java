@@ -14,15 +14,14 @@
  * the License.
  *  
  */
-
 package org.apache.lenya.ac.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.*;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.configuration.Configurable;
@@ -53,16 +52,15 @@ import org.apache.lenya.ac.PolicyManager;
 
 /**
  * Default access controller implementation.
- * @version $Id$
+ * 
+ * @version $Id: DefaultAccessController.java 413285 2006-06-10 11:10:23Z
+ *          thorsten $
  */
-public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
-        Configurable, Serviceable, Disposable, ItemManagerListener {
-
+public class DefaultAccessController extends AbstractLogEnabled implements AccessController, Configurable, Serviceable, Disposable, ItemManagerListener {
     protected static final String AUTHORIZER_ELEMENT = "authorizer";
     protected static final String TYPE_ATTRIBUTE = "type";
     protected static final String ACCREDITABLE_MANAGER_ELEMENT = "accreditable-manager";
     protected static final String POLICY_MANAGER_ELEMENT = "policy-manager";
-
     private static final String REGEX = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
     private ServiceSelector accreditableManagerSelector;
     private AccreditableManager accreditableManager;
@@ -72,73 +70,54 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     private ServiceSelector policyManagerSelector;
     private PolicyManager policyManager;
     private Authenticator authenticator;
-
     /**
      * @see org.apache.lenya.ac.AccessController#authenticate(org.apache.cocoon.environment.Request)
      */
     public boolean authenticate(Request request) throws AccessControlException {
-
-        assert request != null;
+        // assert request /// null;
         boolean authenticated = getAuthenticator().authenticate(getAccreditableManager(), request);
-
         return authenticated;
     }
-
     /**
      * @see org.apache.lenya.ac.AccessController#authorize(org.apache.cocoon.environment.Request)
      */
     public boolean authorize(Request request) throws AccessControlException {
-
-        assert request != null;
-
+        // assert request != null;
         boolean authorized = false;
-
         getLogger().debug("=========================================================");
         getLogger().debug("Beginning authorization.");
-
         if (hasAuthorizers()) {
             Authorizer[] authorizers = getAuthorizers();
             int i = 0;
             authorized = true;
-
             while ((i < authorizers.length) && authorized) {
-
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("---------------------------------------------------------");
                     getLogger().debug("Invoking authorizer [" + authorizers[i] + "]");
                 }
-
                 if (authorizers[i] instanceof PolicyAuthorizer) {
                     PolicyAuthorizer authorizer = (PolicyAuthorizer) authorizers[i];
                     authorizer.setAccreditableManager(accreditableManager);
                     authorizer.setPolicyManager(policyManager);
                 }
-
                 authorized = authorized && authorizers[i].authorize(request);
-
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(
-                            "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
+                    getLogger().debug("Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
                 }
-
                 i++;
             }
         }
-
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("=========================================================");
             getLogger().debug("Authorization complete, result: [" + authorized + "]");
             getLogger().debug("=========================================================");
         }
-
         return authorized;
     }
-
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration conf) throws ConfigurationException {
-
         try {
             setupAccreditableManager(conf);
             setupAuthorizers(conf);
@@ -150,17 +129,20 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             throw new ConfigurationException("Configuration failed: ", e);
         }
     }
-
     /**
      * Configures or parameterizes a component, depending on the implementation
      * as Configurable or Parameterizable.
-     * @param component The component.
-     * @param configuration The configuration to use.
-     * @throws ConfigurationException when an error occurs during configuration.
-     * @throws ParameterException when an error occurs during parameterization.
+     * 
+     * @param component
+     *            The component.
+     * @param configuration
+     *            The configuration to use.
+     * @throws ConfigurationException
+     *             when an error occurs during configuration.
+     * @throws ParameterException
+     *             when an error occurs during parameterization.
      */
-    public static void configureOrParameterize(Component component, Configuration configuration)
-            throws ConfigurationException, ParameterException {
+    public static void configureOrParameterize(Component component, Configuration configuration) throws ConfigurationException, ParameterException {
         if (component instanceof Configurable) {
             ((Configurable) component).configure(configuration);
         }
@@ -169,56 +151,52 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             ((Parameterizable) component).parameterize(parameters);
         }
     }
-
     /**
      * Creates the accreditable manager.
      * 
-     * @param configuration The access controller configuration.
-     * @throws ConfigurationException when the configuration failed.
-     * @throws ServiceException when something went wrong.
-     * @throws ParameterException when something went wrong.
+     * @param configuration
+     *            The access controller configuration.
+     * @throws ConfigurationException
+     *             when the configuration failed.
+     * @throws ServiceException
+     *             when something went wrong.
+     * @throws ParameterException
+     *             when something went wrong.
      */
-    protected void setupAccreditableManager(Configuration configuration)
-            throws ConfigurationException, ServiceException, ParameterException {
-
-        Configuration accreditableManagerConfiguration = configuration.getChild(
-                ACCREDITABLE_MANAGER_ELEMENT, false);
+    protected void setupAccreditableManager(Configuration configuration) throws ConfigurationException, ServiceException, ParameterException {
+        Configuration accreditableManagerConfiguration = configuration.getChild(ACCREDITABLE_MANAGER_ELEMENT, false);
         if (accreditableManagerConfiguration != null) {
-            String accreditableManagerType = accreditableManagerConfiguration
-                    .getAttribute(TYPE_ATTRIBUTE);
+            String accreditableManagerType = accreditableManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
             }
-
-            accreditableManagerSelector = (ServiceSelector) manager.lookup(AccreditableManager.ROLE
-                    + "Selector");
-            accreditableManager = (AccreditableManager) accreditableManagerSelector
-                    .select(accreditableManagerType);
+            accreditableManagerSelector = (ServiceSelector) manager.lookup(AccreditableManager.ROLE + "Selector");
+            accreditableManager = (AccreditableManager) accreditableManagerSelector.select(accreditableManagerType);
             accreditableManager.addItemManagerListener(this);
             configureOrParameterize(accreditableManager, accreditableManagerConfiguration);
         }
     }
-
     /**
      * Creates the authorizers.
      * 
-     * @param configuration The access controller configuration.
-     * @throws ConfigurationException when the configuration failed.
-     * @throws ServiceException when something went wrong.
-     * @throws ParameterException when something went wrong.
+     * @param configuration
+     *            The access controller configuration.
+     * @throws ConfigurationException
+     *             when the configuration failed.
+     * @throws ServiceException
+     *             when something went wrong.
+     * @throws ParameterException
+     *             when something went wrong.
      */
-    protected void setupAuthorizers(Configuration configuration) throws ServiceException,
-            ConfigurationException, ParameterException {
+    protected void setupAuthorizers(Configuration configuration) throws ServiceException, ConfigurationException, ParameterException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
         if (authorizerConfigurations.length > 0) {
             authorizerSelector = (ServiceSelector) manager.lookup(Authorizer.ROLE + "Selector");
-
             for (int i = 0; i < authorizerConfigurations.length; i++) {
                 String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Adding authorizer [" + type + "]");
                 }
-
                 Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
                 authorizerKeys.add(type);
                 authorizers.put(type, authorizer);
@@ -226,52 +204,51 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             }
         }
     }
-
     /**
      * Creates the policy manager.
      * 
-     * @param configuration The access controller configuration.
-     * @throws ConfigurationException when the configuration failed.
-     * @throws ServiceException when something went wrong.
-     * @throws ParameterException when something went wrong.
+     * @param configuration
+     *            The access controller configuration.
+     * @throws ConfigurationException
+     *             when the configuration failed.
+     * @throws ServiceException
+     *             when something went wrong.
+     * @throws ParameterException
+     *             when something went wrong.
      */
-    protected void setupPolicyManager(Configuration configuration) throws ServiceException,
-            ConfigurationException, ParameterException {
-        Configuration policyManagerConfiguration = configuration.getChild(POLICY_MANAGER_ELEMENT,
-                false);
+    protected void setupPolicyManager(Configuration configuration) throws ServiceException, ConfigurationException, ParameterException {
+        Configuration policyManagerConfiguration = configuration.getChild(POLICY_MANAGER_ELEMENT, false);
         if (policyManagerConfiguration != null) {
             String policyManagerType = policyManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Adding policy manager type: [" + policyManagerType + "]");
             }
-            policyManagerSelector = (ServiceSelector) manager.lookup(PolicyManager.ROLE
-                    + "Selector");
+            policyManagerSelector = (ServiceSelector) manager.lookup(PolicyManager.ROLE + "Selector");
             policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
             configureOrParameterize(policyManager, policyManagerConfiguration);
         }
     }
-
     /**
      * Sets up the authenticator.
      * 
-     * @throws ServiceException when something went wrong.
+     * @throws ServiceException
+     *             when something went wrong.
      */
     protected void setupAuthenticator() throws ServiceException {
         authenticator = (Authenticator) manager.lookup(Authenticator.ROLE);
     }
-
     private ServiceManager manager;
-
     /**
      * Set the global component manager.
      * 
-     * @param manager The global component manager
-     * @throws ServiceException when something went wrong.
+     * @param manager
+     *            The global component manager
+     * @throws ServiceException
+     *             when something went wrong.
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
-
     /**
      * Returns the service manager.
      * 
@@ -280,23 +257,19 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     protected ServiceManager getManager() {
         return manager;
     }
-
     /**
      * Returns the authorizers of this action.
      * 
      * @return An array of authorizers.
      */
     public Authorizer[] getAuthorizers() {
-
         Authorizer[] authorizerArray = new Authorizer[authorizers.size()];
         for (int i = 0; i < authorizers.size(); i++) {
             String key = (String) authorizerKeys.get(i);
             authorizerArray[i] = (Authorizer) authorizers.get(key);
         }
-
         return authorizerArray;
     }
-
     /**
      * Returns if this action has authorizers.
      * 
@@ -305,12 +278,10 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     protected boolean hasAuthorizers() {
         return !authorizers.isEmpty();
     }
-
     /**
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
-
         if (accreditableManagerSelector != null) {
             if (accreditableManager != null) {
                 accreditableManager.removeItemManagerListener(this);
@@ -318,14 +289,12 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             }
             getManager().release(accreditableManagerSelector);
         }
-
         if (policyManagerSelector != null) {
             if (policyManager != null) {
                 policyManagerSelector.release(policyManager);
             }
             getManager().release(policyManagerSelector);
         }
-
         if (authorizerSelector != null) {
             Authorizer[] authorizers = getAuthorizers();
             for (int i = 0; i < authorizers.length; i++) {
@@ -333,16 +302,13 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             }
             getManager().release(authorizerSelector);
         }
-
         if (authenticator != null) {
             getManager().release(authenticator);
         }
-
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Disposing [" + this + "]");
         }
     }
-
     /**
      * Returns the accreditable manager.
      * 
@@ -351,7 +317,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     public AccreditableManager getAccreditableManager() {
         return accreditableManager;
     }
-
     /**
      * Returns the policy manager.
      * 
@@ -360,7 +325,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     public PolicyManager getPolicyManager() {
         return policyManager;
     }
-
     /**
      * Returns the authenticator.
      * 
@@ -369,18 +333,18 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     public Authenticator getAuthenticator() {
         return authenticator;
     }
-
     /**
      * Checks if this identity was initialized by this access controller.
      * 
-     * @param identity An identity.
+     * @param identity
+     *            An identity.
      * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
+     * @throws AccessControlException
+     *             when something went wrong.
      */
     public boolean ownsIdenity(Identity identity) throws AccessControlException {
         return identity.belongsTo(getAccreditableManager());
     }
-
     /**
      * @see org.apache.lenya.ac.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
      */
@@ -390,18 +354,14 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             Identity identity = new Identity();
             String remoteAddress = request.getRemoteAddr();
             String clientAddress = request.getHeader("x-forwarded-for");
-
             if (clientAddress != null) {
                 Pattern p = Pattern.compile(REGEX);
                 Matcher m = p.matcher(clientAddress);
-
                 if (m.find()) {
                     remoteAddress = m.group();
                 }
             }
-
             getLogger().info("Remote Address to use: [" + remoteAddress + "]");
-
             Machine machine = new Machine(remoteAddress);
             IPRange[] ranges = accreditableManager.getIPRangeManager().getIPRanges();
             for (int i = 0; i < ranges.length; i++) {
@@ -409,19 +369,19 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
                     machine.addIPRange(ranges[i]);
                 }
             }
-
             identity.addIdentifiable(machine);
             session.setAttribute(Identity.class.getName(), identity);
         }
     }
-
     /**
      * Checks if the session contains an identity that is not null and belongs
      * to the used access controller.
      * 
-     * @param session The current session.
+     * @param session
+     *            The current session.
      * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
+     * @throws AccessControlException
+     *             when something went wrong.
      */
     protected boolean hasValidIdentity(Session session) throws AccessControlException {
         boolean valid = true;
@@ -431,7 +391,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         }
         return valid;
     }
-
     /**
      * @see org.apache.lenya.ac.ItemManagerListener#itemAdded(org.apache.lenya.ac.Item)
      */
@@ -444,7 +403,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getPolicyManager().accreditableAdded(getAccreditableManager(), (Accreditable) item);
         }
     }
-
     /**
      * @see org.apache.lenya.ac.ItemManagerListener#itemRemoved(org.apache.lenya.ac.Item)
      */
@@ -455,5 +413,4 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         }
         getPolicyManager().accreditableRemoved(getAccreditableManager(), (Accreditable) item);
     }
-
 }

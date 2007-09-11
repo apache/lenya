@@ -14,9 +14,7 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.util.ArrayList;
@@ -26,52 +24,48 @@ import java.util.List;
  * A set of documents.
  */
 public class DocumentSet {
-
-    /**
-	 * Ctor.
-	 */
-    public DocumentSet() {
-    }
-    
     /**
      * Ctor.
-     * @param documents The initial documents.
+     */
+    public DocumentSet() {
+    }
+    /**
+     * Ctor.
+     * 
+     * @param documents
+     *            The initial documents.
      */
     public DocumentSet(Document[] documents) {
         for (int i = 0; i < documents.length; i++) {
             add(documents[i]);
         }
     }
-
     private List documents = new ArrayList();
-
     /**
-	 * Returns the documents contained in this set.
-	 * 
-	 * @return An array of documents.
-	 */
+     * Returns the documents contained in this set.
+     * 
+     * @return An array of documents.
+     */
     public Document[] getDocuments() {
         return (Document[]) documents.toArray(new Document[documents.size()]);
     }
-
     /**
-	 * Adds a document to this set.
-	 * 
-	 * @param document The document to add.
-	 */
+     * Adds a document to this set.
+     * 
+     * @param document
+     *            The document to add.
+     */
     public void add(Document document) {
-        assert document != null;
-        assert !documents.contains(document);
+        // assert document != null;
+        // assert !documents.contains(document);
         documents.add(document);
     }
-
     /**
-	 * Checks if this set is empty.
-	 * 
-	 * @return A boolean value.
-	 */
+     * Checks if this set is empty.
+     * 
+     * @return A boolean value.
+     */
     public boolean isEmpty() {
         return documents.isEmpty();
     }
-    
 }

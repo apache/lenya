@@ -14,7 +14,6 @@
  *  limitations under the License.
  *
  */
-
 package org.apache.lenya.ac;
 
 import java.io.Serializable;
@@ -25,55 +24,49 @@ import java.util.List;
 
 /**
  * A machine (representing an IP address).
+ * 
  * @version $Id$
  */
 public class Machine implements Identifiable, Serializable {
-
     /**
-     * Creates a new machine object. This method accepts
-     * numeric IPv4 addresses like <code>"129.168.0.32"</code>,
-     * numeric IPv6 addresses like <code>"1080::8:800:200C:417A"</code>
-     * as well as hostnames (if DNS resolution is available) like
-     * <code>"localhost"</code> or <code>"www.apache.com"</code>.
+     * Creates a new machine object. This method accepts numeric IPv4 addresses
+     * like <code>"129.168.0.32"</code>, numeric IPv6 addresses like
+     * <code>"1080::8:800:200C:417A"</code> as well as hostnames (if DNS
+     * resolution is available) like <code>"localhost"</code> or
+     * <code>"www.apache.com"</code>.
      * 
-     * @param ip a <code>String</code> like <code>"192.168.0.32"</code>,
-     *      <code>"::1"</code>, ...
-     * .
-     * @throws AccessControlException when the conversion of the
-     *      <code>String</code> to an <code>InetAddress</code> failed
+     * @param ip
+     *            a <code>String</code> like <code>"192.168.0.32"</code>,
+     *            <code>"::1"</code>, ... .
+     * @throws AccessControlException
+     *             when the conversion of the <code>String</code> to an
+     *             <code>InetAddress</code> failed
      */
     public Machine(String ip) throws AccessControlException {
         try {
             setAddress(InetAddress.getByName(ip));
-        } catch(UnknownHostException uhe) {
-            throw new AccessControlException
-                ("Failed to convert address [" + ip + "]: ", uhe);
+        } catch (UnknownHostException uhe) {
+            throw new AccessControlException("Failed to convert address [" + ip + "]: ", uhe);
         }
     }
-
     private InetAddress address;
-
     /**
      * @see java.lang.Object#equals(Object)
      */
     public boolean equals(Object otherObject) {
         boolean equals = false;
-
         if (otherObject instanceof Machine) {
             Machine otherMachine = (Machine) otherObject;
             equals = getAddress().equals(otherMachine.getAddress());
         }
-
         return equals;
     }
-
     /**
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
         return getAddress().hashCode();
     }
-
     /**
      * @see org.apache.lenya.ac.Accreditable#getAccreditables()
      */
@@ -82,32 +75,32 @@ public class Machine implements Identifiable, Serializable {
         Accreditable[] accreditables = new Accreditable[ranges.length + 1];
         accreditables[0] = this;
         for (int i = 0; i < ranges.length; i++) {
-            accreditables[i+1] = ranges[i];
+            accreditables[i + 1] = ranges[i];
         }
         return accreditables;
     }
-
     /**
      * Returns the IP address.
+     * 
      * @return The IP address.
      */
     public String getIp() {
         return getAddress().getHostAddress();
     }
-
     /**
      * Converts a string to an IP addres.
-     * @param string The IP address, represented by a string.
-     * @return An InetAddress object.
-     * @throws AccessControlException when something went wrong.
      * 
-     * @deprecated This method is unnecessary and does not work for IPv6.
-     *      Use <code>InetAddress.getByName(string)</code> instead!
+     * @param string
+     *            The IP address, represented by a string.
+     * @return An InetAddress object.
+     * @throws AccessControlException
+     *             when something went wrong.
+     * 
+     * @deprecated This method is unnecessary and does not work for IPv6. Use
+     *             <code>InetAddress.getByName(string)</code> instead!
      */
-    public static InetAddress getAddress(String string)
-        throws AccessControlException {
+    public static InetAddress getAddress(String string) throws AccessControlException {
         String[] strings = string.split("\\.");
-
         InetAddress address;
         try {
             byte[] numbers = new byte[strings.length];
@@ -118,57 +111,53 @@ public class Machine implements Identifiable, Serializable {
                 }
                 numbers[i] = (byte) number;
             }
-
             address = InetAddress.getByAddress(numbers);
         } catch (Exception e) {
-            throw new AccessControlException(
-                "Failed to convert address [" + string + "]: ",
-                e);
+            throw new AccessControlException("Failed to convert address [" + string + "]: ", e);
         }
         return address;
     }
-
     /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
         return getIp();
     }
-
     /**
      * Returns the IP address.
+     * 
      * @return An IP address.
      */
     public InetAddress getAddress() {
         return address;
     }
-
     /**
      * Sets the IP address.
-     * @param address An IP address.
+     * 
+     * @param address
+     *            An IP address.
      */
     public void setAddress(InetAddress address) {
         this.address = address;
     }
-
     private List ipRanges = new ArrayList();
-    
     /**
      * Adds an IP range to this machine.
-     * @param range An IP range this machine belongs to.
+     * 
+     * @param range
+     *            An IP range this machine belongs to.
      */
     public void addIPRange(IPRange range) {
-        assert range != null;
-        assert !ipRanges.contains(range);
+        // assert range != null;
+        // assert !ipRanges.contains(range);
         ipRanges.add(range);
     }
-    
     /**
      * Returns the IP ranges this machine belongs to.
+     * 
      * @return An array of IP ranges.
      */
     public IPRange[] getIPRanges() {
         return (IPRange[]) ipRanges.toArray(new IPRange[ipRanges.size()]);
     }
-    
 }

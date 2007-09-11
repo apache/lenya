@@ -14,19 +14,15 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.ac.impl;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
-
 
 /**
  * A group is a set of {@link Groupable}s.
@@ -37,64 +33,65 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      */
     public AbstractGroup() {
     }
-
     /**
      * Creates a new group.
-     * @param id The group ID.
+     * 
+     * @param id
+     *            The group ID.
      */
     public AbstractGroup(String id) {
         setId(id);
     }
-
     private Set members = new HashSet();
-
     /**
      * Returns the members of this group.
+     * 
      * @return An array of {@link Groupable}s.
      */
     public Groupable[] getMembers() {
         return (Groupable[]) members.toArray(new Groupable[members.size()]);
     }
-
     /**
-    * Adds a member to this group.
-     * @param member The member to add.
+     * Adds a member to this group.
+     * 
+     * @param member
+     *            The member to add.
      */
     public void add(Groupable member) {
-        assert (member != null) && !members.contains(member);
+        // assert (member != null) && !members.contains(member);
         members.add(member);
         member.addedToGroup(this);
     }
-
     /**
      * Removes a member from this group.
-     * @param member The member to remove.
+     * 
+     * @param member
+     *            The member to remove.
      */
     public void remove(Groupable member) {
-        assert (member != null) && members.contains(member);
+        // assert (member != null) && members.contains(member);
         members.remove(member);
         member.removedFromGroup(this);
     }
-    
     /**
      * Removes all members from this group.
      */
     public void removeAllMembers() {
         Groupable[] members = getMembers();
         for (int i = 0; i < members.length; i++) {
-            remove(members[i]); 
+            remove(members[i]);
         }
     }
-
     /**
      * Returns if this group contains this member.
-     * @param member The member to check.
+     * 
+     * @param member
+     *            The member to check.
      * @return A boolean value.
      */
     public boolean contains(Groupable member) {
         return members.contains(member);
     }
-
     /**
      * @see org.apache.lenya.ac.Accreditable#getAccreditables()
      */
@@ -102,11 +99,11 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
         Accreditable[] accreditables = { this };
         return accreditables;
     }
-    
     /**
      * Delete a group
-     *
-     * @throws AccessControlException if the delete failed
+     * 
+     * @throws AccessControlException
+     *             if the delete failed
      */
     public void delete() throws AccessControlException {
         Groupable[] members = getMembers();
@@ -114,5 +111,4 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
             remove(members[i]);
         }
     }
-
 }

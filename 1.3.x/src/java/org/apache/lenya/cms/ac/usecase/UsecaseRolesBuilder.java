@@ -14,15 +14,12 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.ac.usecase;
 
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.cache.BuildException;
 import org.apache.lenya.ac.cache.InputStreamBuilder;
@@ -32,35 +29,25 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class UsecaseRolesBuilder implements InputStreamBuilder {
-
     protected static final String USECASES_ELEMENT = "usecases";
     protected static final String USECASE_ELEMENT = "usecase";
     protected static final String ROLE_ELEMENT = "role";
     protected static final String ID_ATTRIBUTE = "id";
-
     /**
      * @see org.apache.lenya.ac.cache.InputStreamBuilder#build(java.io.InputStream)
      */
     public Object build(InputStream stream) throws BuildException {
-
         UsecaseRoles usecaseRoles = new UsecaseRoles();
-
         Document document;
         try {
             document = DocumentHelper.readDocument(stream);
         } catch (Exception e) {
             throw new BuildException(e);
         }
-        assert document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
-
-        NamespaceHelper helper =
-            new NamespaceHelper(
-                AccessController.NAMESPACE,
-                AccessController.DEFAULT_PREFIX,
-                document);
-
-        Element[] usecaseElements =
-            helper.getChildren(document.getDocumentElement(), USECASE_ELEMENT);
+        // assert
+        // document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
+        NamespaceHelper helper = new NamespaceHelper(AccessController.NAMESPACE, AccessController.DEFAULT_PREFIX, document);
+        Element[] usecaseElements = helper.getChildren(document.getDocumentElement(), USECASE_ELEMENT);
         for (int i = 0; i < usecaseElements.length; i++) {
             String usecaseId = usecaseElements[i].getAttribute(ID_ATTRIBUTE);
             Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
@@ -74,5 +61,4 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
         }
         return usecaseRoles;
     }
-
 }

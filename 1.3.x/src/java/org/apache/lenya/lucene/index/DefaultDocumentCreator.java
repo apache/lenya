@@ -14,46 +14,44 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
-
 import org.apache.lenya.lucene.parser.HTMLParser;
 import org.apache.lenya.lucene.parser.HTMLParserFactory;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 
 public class DefaultDocumentCreator extends AbstractDocumentCreator {
-
-    /** 
+    /**
      * Creates a new instance of DefaultDocumentCreator
      */
     public DefaultDocumentCreator() {
     }
-
     /**
      * DOCUMENT ME!
-     *
-     * @param file DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
+     * 
+     * @param file
+     *            DOCUMENT ME!
+     * @param htdocsDumpDir
+     *            DOCUMENT ME!
+     * 
      * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * 
+     * @throws Exception
+     *             DOCUMENT ME!
      */
     public Document getDocument(File file, File htdocsDumpDir) throws Exception {
         Document document = super.getDocument(file, htdocsDumpDir);
-
         HTMLParser parser = HTMLParserFactory.newInstance(file);
         parser.parse(file);
-
-        document.add(Field.Text("title", parser.getTitle()));
-        document.add(Field.Text("keywords", parser.getKeywords()));
-        document.add(Field.Text("contents", parser.getReader()));
-
+        // document.add(Field.Text("title", parser.getTitle()));
+        document.add(new Field("title", parser.getTitle(), Field.Store.YES, Field.Index.TOKENIZED, Field.TermVector.YES));
+        // document.add(Field.Text("keywords", parser.getKeywords()));
+        document.add(new Field("keywords", parser.getKeywords(), Field.Store.YES, Field.Index.TOKENIZED, Field.TermVector.YES));
+        // document.add(Field.Text("contents", parser.getReader()));
+        document.add(new Field("contents", parser.getReader()));
         return document;
     }
 }

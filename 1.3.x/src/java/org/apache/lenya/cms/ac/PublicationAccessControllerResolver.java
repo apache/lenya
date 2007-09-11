@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
-
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -37,139 +34,112 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
 
 /**
- * Resolves the access controller according to the <code>ac.xconf</code> file of a publication.
+ * Resolves the access controller according to the <code>ac.xconf</code> file
+ * of a publication.
  */
-public class PublicationAccessControllerResolver
-    extends AbstractAccessControllerResolver
-    implements Initializable {
-
-    protected static final String CONFIGURATION_FILE =
-        "config/ac/ac.xconf".replace('/', File.separatorChar);
+public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements Initializable {
+    protected static final String CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/', File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
-
     /**
-     * This implementation uses the publication ID in combination with the context path
-     * as cache key.
-     * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#generateCacheKey(java.lang.String, org.apache.excalibur.source.SourceResolver)
+     * This implementation uses the publication ID in combination with the
+     * context path as cache key.
+     * 
+     * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#generateCacheKey(java.lang.String,
+     *      org.apache.excalibur.source.SourceResolver)
      */
-    protected Object generateCacheKey(String webappUrl, SourceResolver resolver)
-        throws AccessControlException {
-        	
+    protected Object generateCacheKey(String webappUrl, SourceResolver resolver) throws AccessControlException {
         URLInformation info = new URLInformation(webappUrl);
-
         String publicationId = info.getPublicationId();
         if (getLogger().isDebugEnabled()) {
-			getLogger().debug(
-				"Using first URL step (might be publication ID) as cache key: [" + publicationId + "]");
+            getLogger().debug("Using first URL step (might be publication ID) as cache key: [" + publicationId + "]");
         }
-
         return super.generateCacheKey(publicationId, resolver);
     }
-
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
      */
-    public AccessController doResolveAccessController(String webappUrl)
-        throws AccessControlException {
+    public AccessController doResolveAccessController(String webappUrl) throws AccessControlException {
         getLogger().debug("Resolving controller for URL [" + webappUrl + "]");
-
         AccessController controller = null;
         Publication publication = getPublication(webappUrl);
-
         if (publication != null) {
             String publicationUrl = webappUrl.substring(("/" + publication.getId()).length());
             controller = resolveAccessController(publication, publicationUrl);
         }
         return controller;
     }
-
     /**
-     * Returns the publication for the webapp URL or null if the URL is not included
-     * in a publication.
-     * @param webappUrl The webapp URL.
+     * Returns the publication for the webapp URL or null if the URL is not
+     * included in a publication.
+     * 
+     * @param webappUrl
+     *            The webapp URL.
      * @return A publication.
-     * @throws AccessControlException when something went wrong.
+     * @throws AccessControlException
+     *             when something went wrong.
      */
     protected Publication getPublication(String webappUrl) throws AccessControlException {
         Publication publication = null;
-
-        assert webappUrl.startsWith("/");
+        // assert webappUrl.startsWith("/");
         // remove leading slash
         String url = webappUrl.substring(1);
-
         if (url.length() > 0) {
-
-			URLInformation info = new URLInformation(webappUrl);
+            URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
-
             File contextDir = getContext();
-            if (PublicationFactory
-                .existsPublication(publicationId, contextDir.getAbsolutePath())) {
-
+            if (PublicationFactory.existsPublication(publicationId, contextDir.getAbsolutePath())) {
                 getLogger().debug("Publication [" + publicationId + "] exists.");
                 try {
-                    publication =
-                        PublicationFactory.getPublication(
-                            publicationId,
-                            contextDir.getAbsolutePath());
+                    publication = PublicationFactory.getPublication(publicationId, contextDir.getAbsolutePath());
                 } catch (PublicationException e) {
                     throw new AccessControlException(e);
                 }
-
             } else {
                 getLogger().debug("Publication [" + publicationId + "] does not exist.");
             }
         }
         return publication;
     }
-
     /**
-     * Returns the servlet context. 
+     * Returns the servlet context.
+     * 
      * @return A file.
-     * @throws AccessControlException when something went wrong.
+     * @throws AccessControlException
+     *             when something went wrong.
      */
     protected File getContext() throws AccessControlException {
         return context;
     }
-
     private File context;
-
     /**
      * Resolves an access controller for a certain URL within a publication.
-     * @param publication The publication.
-     * @param url The url within the publication.
+     * 
+     * @param publication
+     *            The publication.
+     * @param url
+     *            The url within the publication.
      * @return An access controller.
-     * @throws AccessControlException when something went wrong.
+     * @throws AccessControlException
+     *             when something went wrong.
      */
-    public AccessController resolveAccessController(Publication publication, String url)
-        throws AccessControlException {
-
-        assert publication != null;
-
+    public AccessController resolveAccessController(Publication publication, String url) throws AccessControlException {
+        // assert publication != null;
         AccessController accessController = null;
         File configurationFile = new File(publication.getDirectory(), CONFIGURATION_FILE);
-
         if (configurationFile.isFile()) {
             try {
-                Configuration configuration =
-                    new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
                 String type = configuration.getAttribute(TYPE_ATTRIBUTE);
-
-                accessController =
-                    (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
-
+                accessController = (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
                 if (accessController instanceof Configurable) {
                     ((Configurable) accessController).configure(configuration);
                 }
-
             } catch (Exception e) {
                 throw new AccessControlException(e);
             }
         }
-
         return accessController;
     }
-
     /**
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
@@ -181,11 +151,9 @@ public class PublicationAccessControllerResolver
             resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
             contextSource = resolver.resolveURI("context:///");
             contextDir = SourceUtil.getFile(contextSource);
-            
             if (contextDir == null || !contextDir.isDirectory()) {
                 throw new AccessControlException("The servlet context is not a directory!");
             }
-            
         } finally {
             if (resolver != null) {
                 if (contextSource != null) {
@@ -196,5 +164,4 @@ public class PublicationAccessControllerResolver
         }
         this.context = contextDir;
     }
-
 }

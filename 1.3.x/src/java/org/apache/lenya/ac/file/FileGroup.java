@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.ac.file;
 
 import java.io.File;
-
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
@@ -34,7 +31,6 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  * File-based group implementation.
  */
 public class FileGroup extends AbstractGroup implements Item {
-    
     /**
      * @see org.apache.lenya.ac.Group#delete()
      */
@@ -42,34 +38,37 @@ public class FileGroup extends AbstractGroup implements Item {
         super.delete();
         getFile().delete();
     }
-
     /**
      * Creates a new FileGroup object.
      */
     public FileGroup() {
     }
-
     /**
      * Create a new instance of <code>FileGroup</code>
-     * @param configurationDirectory to which the group will be attached to
-     * @param id the ID of the group
-         */
+     * 
+     * @param configurationDirectory
+     *            to which the group will be attached to
+     * @param id
+     *            the ID of the group
+     */
     public FileGroup(File configurationDirectory, String id) {
         super(id);
         setConfigurationDirectory(configurationDirectory);
     }
-
     /**
      * Configures this file group.
-     * @param config The configuration.
-     * @throws ConfigurationException when something went wrong.
+     * 
+     * @param config
+     *            The configuration.
+     * @throws ConfigurationException
+     *             when something went wrong.
      */
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
     }
-    
     /**
      * Returns the configuration file.
+     * 
      * @return A file object.
      */
     protected File getFile() {
@@ -77,56 +76,51 @@ public class FileGroup extends AbstractGroup implements Item {
         File xmlFile = new File(xmlPath, getId() + FileGroupManager.SUFFIX);
         return xmlFile;
     }
-
     /**
      * Save this group
-     *
-     * @throws AccessControlException if the save failed
+     * 
+     * @throws AccessControlException
+     *             if the save failed
      */
     public void save() throws AccessControlException {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
         Configuration config = createConfiguration();
         File xmlfile = getFile();
-
         try {
             serializer.serializeToFile(xmlfile, config);
         } catch (Exception e) {
             throw new AccessControlException(e);
         }
     }
-
     /**
      * Group configuration element.
      */
     public static final String GROUP = "group";
-
     /**
      * Create a configuration containing the group details
-     *
+     * 
      * @return a <code>Configuration</code>
      */
     private Configuration createConfiguration() {
         DefaultConfiguration config = new DefaultConfiguration(GROUP);
         new ItemConfiguration().save(this, config);
-
         return config;
     }
-
     private File configurationDirectory;
-
     /**
      * Returns the configuration directory.
+     * 
      * @return A file object.
      */
     protected File getConfigurationDirectory() {
         return configurationDirectory;
     }
-
     /**
      * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
     public void setConfigurationDirectory(File configurationDirectory) {
-        assert (configurationDirectory != null) && configurationDirectory.isDirectory();
+        // assert (configurationDirectory != null) &&
+        // configurationDirectory.isDirectory();
         this.configurationDirectory = configurationDirectory;
     }
 }

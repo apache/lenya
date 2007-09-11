@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.ac.impl;
 
 import org.apache.lenya.ac.Role;
-
 
 /**
  * A Role embodies the privilege to do certain things.
@@ -31,14 +28,14 @@ public abstract class AbstractRole extends AbstractItem implements Role {
      */
     public AbstractRole() {
     }
-
     /**
      * Creates a new instance of Role.
-     * @param name The role name.
+     * 
+     * @param name
+     *            The role name.
      */
     public AbstractRole(String name) {
-        assert name != null;
+        // assert name != null;
         setName(name);
     }
-
 }

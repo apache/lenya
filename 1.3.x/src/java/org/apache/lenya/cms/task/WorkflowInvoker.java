@@ -223,7 +223,7 @@ public class WorkflowInvoker extends ParameterWrapper {
 					}
 				}
 
-				assert event != null;
+//				assert event != null;
 				
 				log.debug("Invoking transition.");
 				instance.invoke(situation, event);

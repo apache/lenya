@@ -14,9 +14,7 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
@@ -27,54 +25,52 @@ import org.apache.lenya.workflow.impl.WorkflowImpl;
 import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 
 public class WorkflowDocument extends WorkflowInstanceImpl {
-	
-	/**
-	 * Create a new <code>WorkflowDocument</code>
-	 * 
-	 * @param document the document
-	 * 
-	 * @throws WorkflowException if an error occurs
-	 */
+    /**
+     * Create a new <code>WorkflowDocument</code>
+     * 
+     * @param document
+     *            the document
+     * 
+     * @throws WorkflowException
+     *             if an error occurs
+     */
     protected WorkflowDocument(Document document) throws WorkflowException {
-        assert document != null;
+        // assert document != null;
         this.document = document;
     }
-
     private Document document;
-
     /**
      * Returns the document of this WorkflowDocument object.
+     * 
      * @return A document object.
      */
     public Document getDocument() {
         return document;
     }
-
     /**
      * DOCUMENT ME!
-     *
-     * @param situation DOCUMENT ME!
-     * @param eventName DOCUMENT ME!
-     *
-     * @throws WorkflowException DOCUMENT ME!
+     * 
+     * @param situation
+     *            DOCUMENT ME!
+     * @param eventName
+     *            DOCUMENT ME!
+     * 
+     * @throws WorkflowException
+     *             DOCUMENT ME!
      */
-    public void invoke(Situation situation, String eventName)
-        throws WorkflowException {
-        assert eventName != null;
-
+    public void invoke(Situation situation, String eventName) throws WorkflowException {
+        // assert eventName != null;
         Event event = ((WorkflowImpl) getWorkflow()).getEvent(eventName);
         invoke(situation, event);
     }
-
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see org.apache.lenya.workflow.impl.WorkflowInstanceImpl#getWorkflow(java.lang.String)
      */
-    protected WorkflowImpl getWorkflow(String workflowName)
-        throws WorkflowException {
-        assert workflowName != null && !"".equals(workflowName);
-        WorkflowImpl workflow = (WorkflowImpl) WorkflowFactory.buildWorkflow(document.getPublication(),
-                workflowName);
-
+    protected WorkflowImpl getWorkflow(String workflowName) throws WorkflowException {
+        // assert workflowName != null && !"".equals(workflowName);
+        WorkflowImpl workflow = (WorkflowImpl) WorkflowFactory.buildWorkflow(document.getPublication(), workflowName);
         return workflow;
     }
 }

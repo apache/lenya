@@ -185,7 +185,7 @@ public class CMSHistory extends History {
      * @throws WorkflowException when something went wrong.
      */
     protected void move(Document newDocument) throws WorkflowException {
-        assert newDocument != null;
+//        assert newDocument != null;
         move(getHistoryFile(newDocument));
         setDocument(newDocument);
     }

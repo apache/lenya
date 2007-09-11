@@ -14,9 +14,7 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
@@ -27,19 +25,19 @@ import java.util.Date;
  * A typical CMS document.
  */
 public class DefaultDocument implements Document {
-    
     private String id;
     private Publication publication;
     private DublinCore dublincore;
-
     /**
      * Creates a new instance of DefaultDocument.
-     * @param publication The publication the document belongs to.
-     * @param id The document ID (starting with a slash).
+     * 
+     * @param publication
+     *            The publication the document belongs to.
+     * @param id
+     *            The document ID (starting with a slash).
      * @deprecated Use {@link DefaultDocumentBuilder} instead.
      */
     public DefaultDocument(Publication publication, String id) {
-        
         if (id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
@@ -47,19 +45,20 @@ public class DefaultDocument implements Document {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
         this.id = id;
-
-        assert(publication != null) && !"".equals(publication.getId());
+        // assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
         this.dublincore = new DublinCoreProxy(this);
     }
-
     /**
-     * Creates a new instance of DefaultDocument.
-     * The language of the document is the default language of
-     * the publication.
-     * @param publication The publication the document belongs to.
-     * @param id The document ID (starting with a slash).
-     * @param area The area.
+     * Creates a new instance of DefaultDocument. The language of the document
+     * is the default language of the publication.
+     * 
+     * @param publication
+     *            The publication the document belongs to.
+     * @param id
+     *            The document ID (starting with a slash).
+     * @param area
+     *            The area.
      */
     protected DefaultDocument(Publication publication, String id, String area) {
         if (id == null) {
@@ -69,24 +68,23 @@ public class DefaultDocument implements Document {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
         this.id = id;
-
-        assert(publication != null) && !"".equals(publication.getId());
+        // assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
-
         setArea(area);
         setLanguage(publication.getDefaultLanguage());
-
         this.dublincore = new DublinCoreProxy(this);
-
     }
-
     /**
      * Creates a new instance of DefaultDocument.
      * 
-     * @param publication The publication the document belongs to.
-     * @param id The document ID (starting with a slash).
-     * @param area The area.
-     * @param language the language
+     * @param publication
+     *            The publication the document belongs to.
+     * @param id
+     *            The document ID (starting with a slash).
+     * @param area
+     *            The area.
+     * @param language
+     *            the language
      */
     protected DefaultDocument(Publication publication, String id, String area, String language) {
         if (id == null) {
@@ -96,33 +94,26 @@ public class DefaultDocument implements Document {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
         this.id = id;
-
-        assert(publication != null) && !"".equals(publication.getId());
+        // assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
         this.language = language;
         setArea(area);
-
         this.dublincore = new DublinCoreProxy(this);
-
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getId()
      */
     public String getId() {
         return id;
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getName()
      */
     public String getName() {
         String[] ids = id.split("/");
         String nodeId = ids[ids.length - 1];
-
         return nodeId;
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getNodeId()
      * @deprecated replaced by getName()
@@ -130,49 +121,39 @@ public class DefaultDocument implements Document {
     public String getNodeId() {
         return getName();
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
     public Publication getPublication() {
         return publication;
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getLastModified()
      */
     public Date getLastModified() {
         return new Date(getFile().lastModified());
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getDublinCore()
      */
     public DublinCore getDublinCore() {
         return dublincore;
     }
-
     /**
      * Returns the file for this document.
+     * 
      * @return A file object.
      */
     public File getFile() {
-        return getPublication().getPathMapper().getFile(
-            getPublication(),
-            getArea(),
-            getId(),
-            getLanguage());
+        return getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(), getLanguage());
     }
-
     private String language = "";
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getLanguage()
      */
     public String getLanguage() {
         return language;
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getLanguage()
      */
@@ -195,19 +176,18 @@ public class DefaultDocument implements Document {
         } catch (SiteTreeException e) {
             throw new DocumentException(e);
         }
-
         return (String[]) languages.toArray(new String[languages.size()]);
     }
-
     /**
      * Sets the language of this document.
-     * @param language The language.
+     * 
+     * @param language
+     *            The language.
      */
     public void setLanguage(String language) {
-        assert language != null;
+        // /// language != null;
         this.language = language;
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getLabel()
      */
@@ -223,96 +203,84 @@ public class DefaultDocument implements Document {
         }
         return label;
     }
-
     private String area;
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getArea()
      */
     public String getArea() {
         return area;
     }
-
     /**
      * @see Document#getCompleteURL(String)
      */
     public String getCompleteURL() {
         return "/" + getPublication().getId() + "/" + getArea() + getDocumentURL();
     }
-
     /**
      * @see Document#getCompleteInfoURL(String)
      */
     public String getCompleteInfoURL() {
-        return "/"
-            + getPublication().getId()
-            + "/"
-            + Publication.INFO_AREA_PREFIX
-            + getArea()
-            + getDocumentURL();
+        return "/" + getPublication().getId() + "/" + Publication.INFO_AREA_PREFIX + getArea() + getDocumentURL();
     }
-
     /**
      * @see Document#getCompleteURL(String)
      */
     public String getCompleteURLWithoutLanguage() {
         String extensionSuffix = "".equals(getExtension()) ? "" : ("." + getExtension());
-
         return "/" + getPublication().getId() + "/" + getArea() + getId() + extensionSuffix;
     }
-
     /**
      * Sets the area.
-     * @param area A string.
+     * 
+     * @param area
+     *            A string.
      */
-// LENYA1.3 BEGIN - Area as Module cannot error, so assume "live".
+    // LENYA1.3 BEGIN - Area as Module cannot error, so assume "live".
     protected void setArea(String area) {
         if (!AbstractPublication.isValidArea(area)) {
-           this.area = Publication.LIVE_AREA;
-        }else{
-           this.area = area;
+            this.area = Publication.LIVE_AREA;
+        } else {
+            this.area = area;
         }
     }
-// LENYA1.3 END
-
-
+    // LENYA1.3 END
     private String extension = "html";
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getExtension()
      */
     public String getExtension() {
         return extension;
     }
-
     /**
      * Sets the extension of the file in the URL.
-     * @param extension A string.
+     * 
+     * @param extension
+     *            A string.
      */
     protected void setExtension(String extension) {
-        assert extension != null;
+        // assert extension != null;
         this.extension = extension;
     }
-
     private String documentURL;
-
     /**
      * Sets the document URL.
-     * @param url The document URL (without publication ID and area).
+     * 
+     * @param url
+     *            The document URL (without publication ID and area).
      */
     public void setDocumentURL(String url) {
-        assert url != null;
+        // assert url != null;
         this.documentURL = url;
     }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getDocumentURL()
      */
     public String getDocumentURL() {
         return documentURL;
     }
-
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see org.apache.lenya.cms.publication.Document#exists()
      */
     public boolean exists() throws DocumentException {
@@ -330,8 +298,9 @@ public class DefaultDocument implements Document {
         }
         return exists;
     }
-
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
      */
     public boolean existsInAnyLanguage() throws DocumentException {
@@ -349,7 +318,6 @@ public class DefaultDocument implements Document {
         }
         return exists;
     }
-
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -357,40 +325,21 @@ public class DefaultDocument implements Document {
         boolean equals = false;
         if (getClass().isInstance(object)) {
             Document document = (Document) object;
-            equals =
-                getPublication().equals(document.getPublication())
-                    && getId().equals(document.getId())
-                    && getArea().equals(document.getArea())
-                    && getLanguage().equals(document.getLanguage());
+            equals = getPublication().equals(document.getPublication()) && getId().equals(document.getId()) && getArea().equals(document.getArea()) && getLanguage().equals(document.getLanguage());
         }
         return equals;
-
     }
-
     /**
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
-
-        String key =
-            getPublication().getId()
-                + ":"
-                + getPublication().getServletContext()
-                + ":"
-                + getArea()
-                + ":"
-                + getId()
-                + ":"
-                + getLanguage();
-
+        String key = getPublication().getId() + ":" + getPublication().getServletContext() + ":" + getArea() + ":" + getId() + ":" + getLanguage();
         return key.hashCode();
     }
-
     /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
         return getPublication().getId() + ":" + getArea() + ":" + getId() + ":" + getLanguage();
     }
-
 }

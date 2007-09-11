@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-
 
 /**
  * A document type.
@@ -28,50 +25,46 @@ import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 public class DocumentType {
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/doctypes/1.0";
     public static final String DEFAULT_PREFIX = "dt";
-
-    /** Creates a new instance of DocumentType
+    /**
+     * Creates a new instance of DocumentType
      * 
-     * @param name the name of the document type
+     * @param name
+     *            the name of the document type
      * 
      */
     protected DocumentType(String name) {
-        assert name != null;
+        // assert name != null;
         this.name = name;
     }
-
     private String name;
-
     /**
-    * Returns the name of this document type.
+     * Returns the name of this document type.
+     * 
      * @return A string value.
      */
     public String getName() {
         return name;
     }
-
     private ParentChildCreatorInterface creator = null;
-
-	/**
-	 * Get the creator for this document type.
-	 * 
-	 * @return a <code>ParentChildCreatorInterface</code>
-	 */
+    /**
+     * Get the creator for this document type.
+     * 
+     * @return a <code>ParentChildCreatorInterface</code>
+     */
     public ParentChildCreatorInterface getCreator() {
         return creator;
     }
-
-	/**
-	 * Set the creator
-	 * 
-	 * @param creator a <code>ParentChildCreatorInterface</code>
-	 */
+    /**
+     * Set the creator
+     * 
+     * @param creator
+     *            a <code>ParentChildCreatorInterface</code>
+     */
     protected void setCreator(ParentChildCreatorInterface creator) {
-        assert creator != null;
+        // assert creator != null;
         this.creator = creator;
     }
-
     private String workflowFile = null;
-
     /**
      * Returns if this document type has a workflow definition.
      * 
@@ -80,35 +73,34 @@ public class DocumentType {
     public boolean hasWorkflow() {
         return workflowFile != null;
     }
-
-	/**
-	 * Get the file name of the workflow file.
-	 * 
-	 * @return a <code>String</code>
-	 * 
-	 * @throws DocumentTypeBuildException if the document type has no workflow
-	 */
+    /**
+     * Get the file name of the workflow file.
+     * 
+     * @return a <code>String</code>
+     * 
+     * @throws DocumentTypeBuildException
+     *             if the document type has no workflow
+     */
     public String getWorkflowFileName() throws DocumentTypeBuildException {
         if (!hasWorkflow()) {
-            throw new DocumentTypeBuildException("The document type '" + getName() +
-                "' has no workflow!");
+            throw new DocumentTypeBuildException("The document type '" + getName() + "' has no workflow!");
         }
-
         return workflowFile;
     }
-
-	/**
-	 * Set the file name of the workflow file.
-	 * 
-	 * @param string the new file name
-	 */
+    /**
+     * Set the file name of the workflow file.
+     * 
+     * @param string
+     *            the new file name
+     */
     public void setWorkflowFileName(String string) {
-        assert string != null;
+        // assert string != null;
         workflowFile = string;
     }
-
-    /** (non-Javadoc)
-     * @see java.lang.Object#toString()
+    /**
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()ssss
      */
     public String toString() {
         return getName();

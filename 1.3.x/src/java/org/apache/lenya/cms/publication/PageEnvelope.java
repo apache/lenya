@@ -14,21 +14,18 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.util.Map;
-
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * A page envelope carries a set of information that are needed during the presentation of a
- * document.
+ * A page envelope carries a set of information that are needed during the
+ * presentation of a document.
  */
 public class PageEnvelope {
     public static final String PUBLICATION_ID = "publication-id";
@@ -51,47 +48,62 @@ public class PageEnvelope {
     public static final String DOCUMENT_LANGUAGE = "document-language";
     public static final String DOCUMENT_LANGUAGES = "document-languages";
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
+    /**
+     * @deprecated Use
+     *             {@link org.apache.lenya.cms.publication.Document#getDublinCore()}
+     *             instead
+     */
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
+    /**
+     * @deprecated Use
+     *             {@link org.apache.lenya.cms.publication.Document#getDublinCore()}
+     *             instead
+     */
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
+    /**
+     * @deprecated Use
+     *             {@link org.apache.lenya.cms.publication.Document#getDublinCore()}
+     *             instead
+     */
     public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
+    /**
+     * @deprecated Use
+     *             {@link org.apache.lenya.cms.publication.Document#getDublinCore()}
+     *             instead
+     */
     public static final String DOCUMENT_DC_PUBLISHER = "document-dc-publisher";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
+    /**
+     * @deprecated Use
+     *             {@link org.apache.lenya.cms.publication.Document#getDublinCore()}
+     *             instead
+     */
     public static final String DOCUMENT_DC_DATE_CREATED = "document-dc-date-created";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
+    /**
+     * @deprecated Use
+     *             {@link org.apache.lenya.cms.publication.Document#getDublinCore()}
+     *             instead
+     */
     public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
+    /**
+     * @deprecated Use
+     *             {@link org.apache.lenya.cms.publication.Document#getDublinCore()}
+     *             instead
+     */
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
-    
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
-
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
-
     public static final String SSL_PREFIX = "ssl-prefix";
-
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
     public static final String DEFAULT_PREFIX = "lenya";
-
     private String context;
-
     /**
      * Constructor.
      */
     protected PageEnvelope() {
     }
-
     /**
-     * Creates a new instance of PageEnvelope from a sitemap inside a publication.
+     * Creates a new instance of PageEnvelope from a sitemap inside a
+     * publication.
      * 
      * @param publication
      *            The publication the page belongs to.
@@ -99,13 +111,12 @@ public class PageEnvelope {
      *            The request that calls the page.
      * @exception PageEnvelopeException
      *                if an error occurs
-     * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)}
-     *             instead.
+     * @deprecated Performance problems. Use
+     *             {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
     public PageEnvelope(Publication publication, Request request) throws PageEnvelopeException {
         init(publication, request);
     }
-
     /**
      * Creates a page envelope from an object model.
      * 
@@ -113,50 +124,47 @@ public class PageEnvelope {
      *            The object model.
      * @throws PageEnvelopeException
      *             when something went wrong.
-     * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)}
-     *             instead.
+     * @deprecated Performance problems. Use
+     *             {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
     public PageEnvelope(Map objectModel) throws PageEnvelopeException {
         try {
-            init(
-                PublicationFactory.getPublication(objectModel),
-                ObjectModelHelper.getRequest(objectModel));
+            init(PublicationFactory.getPublication(objectModel), ObjectModelHelper.getRequest(objectModel));
         } catch (PublicationException e) {
             throw new PageEnvelopeException(e);
         }
     }
-
     /**
-     * Creates a new instance of PageEnvelope from a sitemap inside a publication.
+     * Creates a new instance of PageEnvelope from a sitemap inside a
+     * publication.
      * 
-     * @param publication The publication the page belongs to.
-     * @param request The request that calls the page.
+     * @param publication
+     *            The publication the page belongs to.
+     * @param request
+     *            The request that calls the page.
      * @param createdByFactory
-     *            A dummy parameter to allow creating an additional protected constructor that is
-     *            not deprecated.
-     * @exception PageEnvelopeException if an error occurs
+     *            A dummy parameter to allow creating an additional protected
+     *            constructor that is not deprecated.
+     * @exception PageEnvelopeException
+     *                if an error occurs
      */
-    public PageEnvelope(Publication publication, Request request, boolean createdByFactory)
-        throws PageEnvelopeException {
+    public PageEnvelope(Publication publication, Request request, boolean createdByFactory) throws PageEnvelopeException {
         this(publication, request);
     }
-
     /**
      * Creates a page envelope from an object model.
      * 
      * @param objectModel
      *            The object model.
      * @param createdByFactory
-     *            A dummy parameter to allow creating an additional protected constructor that is
-     *            not deprecated.
+     *            A dummy parameter to allow creating an additional protected
+     *            constructor that is not deprecated.
      * @throws PageEnvelopeException
      *             when something went wrong.
      */
-    protected PageEnvelope(Map objectModel, boolean createdByFactory)
-        throws PageEnvelopeException {
+    protected PageEnvelope(Map objectModel, boolean createdByFactory) throws PageEnvelopeException {
         this(objectModel);
     }
-
     /**
      * Setup an instance of Publication.
      * 
@@ -172,39 +180,39 @@ public class PageEnvelope {
      */
     protected void init(Publication publication, Request request)
     // FIXME: this method is mainly needed because the deprecated
-    // constructor PageEnvelope(Map objectModel) needs to handle an exception in
-    // one of the arguments to another constructor. That's why the constructor
-    // functionality is factored out into this method.
-    // If the deprecated constructor PageEnvelope(Map objectModel) is removed
-    // this method might not be needed anymore and the functionality could
-    // be moved back to the constructor PageEnvelope(Publication publication, Request request).
-    throws PageEnvelopeException {
-        assert publication != null;
-        assert request != null;
+            // constructor PageEnvelope(Map objectModel) needs to handle an
+            // exception in
+            // one of the arguments to another constructor. That's why the
+            // constructor
+            // functionality is factored out into this method.
+            // If the deprecated constructor PageEnvelope(Map objectModel) is
+            // removed
+            // this method might not be needed anymore and the functionality
+            // could
+            // be moved back to the constructor PageEnvelope(Publication
+            // publication, Request request).
+            throws PageEnvelopeException {
+        // assert publication != null;
+        // assert request != null;
         String webappURI;
         try {
-
             context = request.getContextPath();
             if (context == null) {
                 context = "";
             }
-
             webappURI = ServletHelper.getWebappURI(request);
-            Document document =
-                publication.getDocumentBuilder().buildDocument(publication, webappURI);
+            Document document = publication.getDocumentBuilder().buildDocument(publication, webappURI);
             setDocument(document);
-
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }
-
         // plausibility check
         /*
-         * if (!webappURI .startsWith( "/" + getPublication().getId() + "/" + document.getArea() +
-         * document.getId())) { throw new PageEnvelopeException(createExceptionMessage(request)); }
+         * if (!webappURI .startsWith( "/" + getPublication().getId() + "/" +
+         * document.getArea() + document.getId())) { throw new
+         * PageEnvelopeException(createExceptionMessage(request)); }
          */
     }
-
     /**
      * Creates the message to report when creating the envelope failed.
      * 
@@ -213,19 +221,8 @@ public class PageEnvelope {
      * @return A string.
      */
     protected String createExceptionMessage(Request request) {
-        return "Resolving page envelope failed:"
-            + "\n  URI: "
-            + request.getRequestURI()
-            + "\n  Context: "
-            + getContext()
-            + "\n  Publication ID: "
-            + getPublication().getId()
-            + "\n  Area: "
-            + document.getArea()
-            + "\n  Document ID: "
-            + document.getId();
+        return "Resolving page envelope failed:" + "\n  URI: " + request.getRequestURI() + "\n  Context: " + getContext() + "\n  Publication ID: " + getPublication().getId() + "\n  Area: " + document.getArea() + "\n  Document ID: " + document.getId();
     }
-
     /**
      * Returns the publication of this PageEnvelope.
      * 
@@ -234,7 +231,6 @@ public class PageEnvelope {
     public Publication getPublication() {
         return getDocument().getPublication();
     }
-
     /**
      * Returns the rcEnvironment.
      * 
@@ -244,7 +240,6 @@ public class PageEnvelope {
     public RCEnvironment getRCEnvironment() {
         return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath());
     }
-
     /**
      * Returns the context, e.g. "/lenya".
      * 
@@ -253,53 +248,18 @@ public class PageEnvelope {
     public String getContext() {
         return context;
     }
-
     /**
      * Returns the document-path.
      * 
      * @return a <code>File<code> value
      */
     public String getDocumentPath() {
-
-        return getPublication().getPathMapper().getPath(
-            getDocument().getId(),
-            getDocument().getLanguage());
+        return getPublication().getPathMapper().getPath(getDocument().getId(), getDocument().getLanguage());
     }
-
     /**
      * The names of the page envelope parameters.
      */
-    public static final String[] PARAMETER_NAMES =
-        {
-            PageEnvelope.AREA,
-            PageEnvelope.CONTEXT,
-            PageEnvelope.PUBLICATION_ID,
-            PageEnvelope.PUBLICATION,
-            PageEnvelope.PUBLICATION_LANGUAGES_CSV,
-            PageEnvelope.DOCUMENT,
-            PageEnvelope.DOCUMENT_ID,
-            PageEnvelope.DOCUMENT_NAME,
-            PageEnvelope.DOCUMENT_NODE_ID,
-            PageEnvelope.DOCUMENT_LABEL,
-            PageEnvelope.DOCUMENT_URL,
-            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
-            PageEnvelope.DOCUMENT_PATH,
-            PageEnvelope.DOCUMENT_EXTENSION,
-            PageEnvelope.DEFAULT_LANGUAGE,
-            PageEnvelope.DOCUMENT_LANGUAGE,
-            PageEnvelope.DOCUMENT_LANGUAGES,
-            PageEnvelope.DOCUMENT_LANGUAGES_CSV,
-            PageEnvelope.DOCUMENT_DC_TITLE,
-            PageEnvelope.DOCUMENT_DC_CREATOR,
-            PageEnvelope.DOCUMENT_DC_PUBLISHER,
-            PageEnvelope.DOCUMENT_DC_SUBJECT,
-            PageEnvelope.DOCUMENT_DC_DATE_CREATED,
-            PageEnvelope.DOCUMENT_DC_DESCRIPTION,
-            PageEnvelope.DOCUMENT_DC_RIGHTS,
-            PageEnvelope.DOCUMENT_LASTMODIFIED,
-            PageEnvelope.BREADCRUMB_PREFIX,
-            PageEnvelope.SSL_PREFIX };
-
+    public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT, PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION, PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT, PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_NODE_ID, PageEnvelope.DOCUMENT_LABEL, PageEnvelope.DOCUMENT_URL, PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE, PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_EXTENSION, PageEnvelope.DEFAULT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES, PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_DC_TITLE, PageEnvelope.DOCUMENT_DC_CREATOR, PageEnvelope.DOCUMENT_DC_PUBLISHER, PageEnvelope.DOCUMENT_DC_SUBJECT, PageEnvelope.DOCUMENT_DC_DATE_CREATED, PageEnvelope.DOCUMENT_DC_DESCRIPTION, PageEnvelope.DOCUMENT_DC_RIGHTS, PageEnvelope.DOCUMENT_LASTMODIFIED, PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX };
     /**
      * @param string
      *            The context.
@@ -307,9 +267,7 @@ public class PageEnvelope {
     protected void setContext(String string) {
         context = string;
     }
-
     private Document document;
-
     /**
      * Returns the document.
      * 
@@ -318,7 +276,6 @@ public class PageEnvelope {
     public Document getDocument() {
         return document;
     }
-
     /**
      * Sets the document.
      * 
@@ -328,5 +285,4 @@ public class PageEnvelope {
     public void setDocument(Document document) {
         this.document = document;
     }
-
 }

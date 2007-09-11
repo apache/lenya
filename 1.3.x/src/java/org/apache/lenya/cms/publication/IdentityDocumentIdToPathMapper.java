@@ -14,56 +14,55 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
 public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
-
     /**
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication,
+     *      java.lang.String, java.lang.String, java.lang.String)
      */
     public File getFile(Publication publication, String area, String documentId, String language) {
-        File areaDirectory =
-            new File(publication.getDirectory(), Publication.CONTENT_PATH + File.separator + area);
+        File areaDirectory = new File(publication.getDirectory(), Publication.CONTENT_PATH + File.separator + area);
         File file = new File(areaDirectory, getPath(documentId, language));
         return file;
     }
-
     /**
-     *  (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+     * (non-Javadoc)
+     * 
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication,
+     *      java.lang.String, java.lang.String)
      */
     public File getDirectory(Publication publication, String area, String documentId, String language) {
         return getDirectory(publication, area, documentId);
     }
-
     /**
      * @deprecated because language is missing
      * 
-     *  (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication,
+     *      java.lang.String, java.lang.String)
      */
     public File getDirectory(Publication publication, String area, String documentId) {
         return getFile(publication, area, documentId, null).getParentFile();
     }
-
     /**
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String,
+     *      java.lang.String)
      */
     public String getPath(String documentId, String language) {
-        assert documentId.startsWith("/");
+        // assert documentId.startsWith("/");
         // remove leading slash
         documentId = documentId.substring(1);
         return documentId + getSuffix(language);
     }
-
     /**
      * Constructs the filename for a given language.
-     * @param language The language.
+     * 
+     * @param language
+     *            The language.
      * @return A string value.
      */
     protected String getSuffix(String language) {
@@ -73,5 +72,4 @@ public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
         }
         return languageSuffix + ".xml";
     }
-
 }
