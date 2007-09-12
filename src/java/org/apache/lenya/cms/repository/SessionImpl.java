@@ -56,7 +56,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     /**
      * Ctor.
      * @param identity The identity.
-     * @param modifiable Determins if the repository items in this session can be modified.
+     * @param modifiable Determines if the repository items in this session can be modified.
      * @param manager The service manager.
      * @param logger The logger.
      */
