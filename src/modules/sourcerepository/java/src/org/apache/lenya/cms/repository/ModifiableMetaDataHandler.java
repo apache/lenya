@@ -114,7 +114,6 @@ public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler impleme
         changed();
     }
 
-
     protected void setValue(String namespaceUri, String key, String value) throws MetaDataException {
         List values = getValueList(namespaceUri, key);
         values.clear();
@@ -122,9 +121,12 @@ public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler impleme
         changed();
     }
 
-
     private void changed() {
         this.changed = true;
+    }
+
+    public boolean isModified() {
+        return this.changed;
     }
 
 }

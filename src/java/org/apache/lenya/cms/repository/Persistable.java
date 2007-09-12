@@ -28,5 +28,10 @@ public interface Persistable {
      * @throws RepositoryException if the object couldn't be saved.
      */
     void save() throws RepositoryException;
+    
+    /**
+     * @return if the persistable object has been modified, i.e. if it needs to be saved.
+     */
+    boolean isModified();
 
 }

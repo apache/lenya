@@ -501,6 +501,12 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     protected void changed() {
-        this.changed = true;
+        if (!this.loading) {
+            this.changed = true;
+        }
+    }
+
+    public boolean isModified() {
+        return this.changed;
     }
 }

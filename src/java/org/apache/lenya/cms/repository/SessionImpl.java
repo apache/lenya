@@ -167,8 +167,9 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] instanceof Node) {
                 Node node = (Node) objects[i];
-                if (node.getPersistable() != null) {
-                    node.getPersistable().save();
+                Persistable persistable = node.getPersistable();
+                if (persistable != null && persistable.isModified()) {
+                    persistable.save();
                 }
             }
         }
