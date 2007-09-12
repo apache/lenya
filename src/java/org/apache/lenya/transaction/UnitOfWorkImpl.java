@@ -89,8 +89,8 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
     }
 
     /**
-     * Commit the transaction. We lock this method for the whole class to avoid
-     * synchronization problems.
+     * Commit the transaction. We lock this method for the whole class to avoid synchronization
+     * problems.
      * @see org.apache.lenya.transaction.UnitOfWork#commit()
      */
     public void commit() throws TransactionException {
@@ -134,7 +134,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
                 Transactionable t = (Transactionable) i.next();
                 t.deleteTransactionable();
             }
-    
+
         } finally {
             if (getIdentityMap() != null) {
                 Object[] objects = getIdentityMap().getObjects();
@@ -172,12 +172,14 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#isDirty(org.apache.lenya.transaction.Transactionable)
      */
     public boolean isDirty(Transactionable transactionable) {
-        return this.modifiedObjects.contains(transactionable);
+        return this.modifiedObjects.contains(transactionable)
+                || this.newObjects.contains(transactionable)
+                || this.removedObjects.contains(transactionable);
     }
 
     /**
-     * Rollback the transaction. We lock this method for the whole class to
-     * avoid synchronization problems.
+     * Rollback the transaction. We lock this method for the whole class to avoid synchronization
+     * problems.
      * @see org.apache.lenya.transaction.UnitOfWork#rollback()
      */
     public synchronized void rollback() throws TransactionException {
