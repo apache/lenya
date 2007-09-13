@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: profile.xsp 473841 2006-11-12 00:46:38Z gregor $ -->
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  >
+  
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.ac.Message</xsp:include>
+  </xsp:structure>
+  
+  <page>
+    <title><jpath:value-of select="page-title"/></title>
+    <continuation><jpath:continuation/></continuation>
+    <messages>
+      <xsp:logic>
+        java.util.List messages = (java.util.List) <jpath:value-of select="messages"/>;
+        for (Iterator i = messages.iterator(); i.hasNext(); ) {
+          Message msg = (Message) i.next();
+          <message>
+            <i18n:translate>
+              <i18n:text><xsp:expr>msg.getText()</xsp:expr></i18n:text>
+              <xsp:logic>
+                String[] params = msg.getParameters();
+                for (int p = 0; p &lt; params.length; p++) {
+                  <i18n:param>params[p]</i18n:param>
+                }
+              </xsp:logic>
+            </i18n:translate>
+          </message>
+        }
+      </xsp:logic>
+    </messages>
+    <group>
+      <xsp:attribute name="new"><jpath:value-of select="new-group"/></xsp:attribute>
+      <message type="error"><jpath:value-of select="message"/></message>
+      <id><jpath:value-of select="group-id"/></id>
+      <name><jpath:value-of select="name"/></name>
+      <description><jpath:value-of select="description"/></description>
+      <rule><jpath:value-of select="rule"/></rule>
+    </group>
+    <attributeNames>
+      <xsp:logic>
+        String[] names = (String[]) <jpath:value-of select="attribute-names"/>;
+        for (int i = 0; i &lt; names.length; i++) {
+            <attributeName><xsp:expr>names[i]</xsp:expr></attributeName>
+        }
+      </xsp:logic>
+    </attributeNames>
+  </page>
+  
+</xsp:page>

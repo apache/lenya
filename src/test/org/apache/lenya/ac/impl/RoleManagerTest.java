@@ -1,0 +1,124 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+/* $Id: RoleManagerTest.java 473841 2006-11-12 00:46:38Z gregor $  */
+
+package org.apache.lenya.ac.impl;
+
+import java.io.File;
+
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.components.ComponentContext.ComponentManagerWrapper;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.file.FileAccreditableManager;
+import org.apache.lenya.ac.file.FileRole;
+import org.apache.lenya.ac.file.FileRoleManager;
+import org.apache.lenya.cms.PublicationHelper;
+
+public class RoleManagerTest extends AccessControlTest {
+    /**
+     * Constructor for RoleManagerTest.
+     * @param arg0 command line args
+     */
+    public RoleManagerTest(String arg0) {
+        super(arg0);
+    }
+
+    /**
+     * DOCUMENT ME!
+     * 
+     * @param args DOCUMENT ME!
+     */
+    public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
+        junit.textui.TestRunner.run(RoleManagerTest.class);
+    }
+
+    /**
+     * DOCUMENT ME!
+     * 
+     * @throws AccessControlException DOCUMENT ME!
+     */
+    final public void testInstance() throws AccessControlException {
+        FileRoleManager manager = getRoleManager();
+        assertNotNull(manager);
+
+        FileRoleManager anotherManager = getRoleManager();
+        assertNotNull(anotherManager);
+        assertEquals(manager, anotherManager);
+    }
+
+    protected FileRoleManager getRoleManager() throws AccessControlException {
+        ServiceManager wrapper = new ComponentManagerWrapper(this.manager);
+        return FileRoleManager.instance(wrapper,
+                (FileAccreditableManager) getAccreditableManager(), getLogEnabledLogger());
+    }
+
+    /**
+     * DOCUMENT ME!
+     */
+    final public void testGetRoles() {
+    }
+
+    /**
+     * Test add(Role)
+     * 
+     * @throws AccessControlException if an error occurs
+     */
+    final public void testAddRole() throws AccessControlException {
+        String name = "test";
+        FileRoleManager manager = null;
+        manager = getRoleManager();
+        assertNotNull(manager);
+        Role role = new FileRole(manager.getConfigurationDirectory(), name);
+        manager.add(role);
+
+        assertTrue(manager.getRoles().length > 0);
+    }
+
+    /**
+     * Test for void remove(Role)
+     * 
+     */
+    final public void testRemoveRole() throws AccessControlException {
+        File configDir = getAccreditablesDirectory();
+        String name = "test2";
+        Role role = new FileRole(configDir, name);
+        FileRoleManager manager = null;
+
+        try {
+            manager = getRoleManager();
+        } catch (AccessControlException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(manager);
+
+        Role[] roles = manager.getRoles();
+        int roleCountBefore = roles.length;
+
+        manager.add(role);
+        manager.remove(role);
+
+        roles = manager.getRoles();
+        int roleCountAfter = roles.length;
+
+        assertEquals(roleCountBefore, roleCountAfter);
+    }
+}

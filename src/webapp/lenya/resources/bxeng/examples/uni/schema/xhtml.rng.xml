@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--+
+    | UniZH XHTML doctype
+    +-->
+
+<grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:unizh="http://unizh.ch/doctypes/elements/1.0"
+         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         >
+
+<include href="lenya.rng.xml"/>
+<include href="unizh.rng.xml"/>
+
+
+<!-- include original XHTML transitional schema -->
+<include href="xhtml/xhtml-strict.rng.xml">
+
+  <define name="html">
+    <element name="html">
+      <ref name="html.attlist"/>
+      <ref name="lenya.meta"/>
+      <ref name="unizh.highlights"/>
+    
+      <!-- head element not allowed -->
+      <!-- <ref name="head"/> -->
+    
+      <ref name="body"/>
+    </element>
+  </define>
+
+  <define name="html.attlist">
+    <ref name="XHTML.version.attrib"/>
+    <ref name="I18n.attrib"/>
+    <ref name="unizh.columns.attrib"/>
+    <ref name="dummy.attlist"/>
+  </define>
+  
+  <define name="ol.attlist">
+    <ref name="ol.Common.attrib"/>
+  </define>
+
+  <define name="ul.attlist">
+    <ref name="ul.Common.attrib"/>
+  </define>
+
+  <define name="object.attlist">
+    <optional>
+      <attribute name="href">
+        <ref name="URI.datatype"/>
+      </attribute>
+    </optional>
+  <ref name="Common.attrib"/>
+  <optional>
+    <attribute name="declare">
+      <value>declare</value>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="classid">
+      <ref name="URI.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="codebase">
+      <ref name="URI.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="data">
+      <ref name="URI.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="type">
+      <ref name="ContentType.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="codetype">
+      <ref name="ContentType.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="archive">
+      <ref name="URIs.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="standby">
+      <ref name="Text.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="height">
+      <ref name="Length.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="width">
+      <ref name="Length.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="name"/>
+  </optional>
+  <optional>
+    <attribute name="tabindex">
+      <ref name="Number.datatype"/>
+    </attribute>
+  </optional>
+  </define>
+
+  <define name="table.attlist">
+    <ref name="table.Common.attrib"/>
+    <optional>
+      <attribute name="summary">
+        <ref name="Text.datatype"/>
+      </attribute>
+    </optional>
+  </define>
+
+</include>
+
+
+<define name="ol.Core.attrib">
+  <ref name="id.attrib"/>
+  <ref name="title.attrib"/>
+  <attribute name="class">
+    <choice>
+      <value type="string">type1</value>
+      <value type="string">type2</value>
+    </choice>
+  </attribute>
+</define>
+
+<define name="ol.Common.attrib">
+  <ref name="ol.Core.attrib"/>
+  <ref name="I18n.attrib"/>
+</define>
+
+<define name="ul.Core.attrib">
+  <ref name="id.attrib"/>
+  <ref name="title.attrib"/>
+  <attribute name="class">
+    <choice>
+      <value type="string">type1</value>
+      <value type="string">type2</value>
+      <value type="string">type3</value>
+    </choice>
+  </attribute>
+</define>
+
+<define name="ul.Common.attrib">
+  <ref name="ul.Core.attrib"/>
+  <ref name="I18n.attrib"/>
+</define>
+
+<define name="table.Core.attrib">
+  <ref name="id.attrib"/>
+  <ref name="title.attrib"/>
+  <attribute name="class">
+    <choice>
+      <value type="string">ornate</value>
+      <value type="string">basic</value>
+    </choice>
+  </attribute>
+</define>
+
+<define name="table.Common.attrib">
+  <ref name="table.Core.attrib"/>
+  <ref name="I18n.attrib"/>
+</define>
+
+
+
+
+<!-- additional block elements -->
+<define name="Block.class" combine="choice">
+  <choice>
+    <ref name="lenya.asset"/>
+    <ref name="unizh.toc"/>
+    <ref name="unizh.children"/>
+  </choice>
+</define>
+
+
+<!-- additional inline elements -->
+<define name="Inline.class" combine="choice">
+  <choice>
+    <ref name="unizh.attention"/>
+    <ref name="unizh.important"/>
+  </choice>
+</define>
+
+
+</grammar>

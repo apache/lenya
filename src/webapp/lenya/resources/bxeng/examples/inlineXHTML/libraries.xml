@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<libraries>
+
+  <library id="library1">
+   <uri>images.xml</uri>
+    <title>Images</title>
+    <src>images.xml</src>
+    
+  </library>
+ <library id="library2">
+    <uri>pictures.xml</uri>
+    <title>Pictures</title>
+    <src>pictures.xml</src>
+    
+  </library>
+</libraries>

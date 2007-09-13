@@ -1,0 +1,124 @@
+<?xml version="1.0" ?>
+<!-- $Id: config.xml 1039 2004-12-15 13:48:11Z chregu $ -->
+<config>
+    <files>
+    <!-- the following file definitions are presumably the most important
+             ones for BXE (= Bitflux Editor). They define, where exactly the files
+             come from (and go to). 
+             Some Remarks for the beginning:
+             - Be sure that all xml documents come with mime-type text/xml, this is
+               important for files ending with .xsd/.xml and .xsl. Most certainly you   
+               have to adjust your webserver for doing that.
+             - You can't get different files from different servers/ports (except css files)
+               For example, if "index.html" comes from somehost/index.html, you can't 
+               get the xml-file from otherhost/index.html, not even from 
+               somehost:81/index.html. If you have can't avoid that, you need some kind
+               of proxy script which redirect the traffic from one host to another. I 
+               wrote a PHP script, which exactly does that, if anyone interested,
+               contact  me (chregu@bitflux.ch)
+
+            You can define the file location in different ways:
+            The most standard  is:
+            <file name="BX_xmlfile">xml/article.xml</file>
+            which gets the file with a HTTP-get from xml/article.xml (relativ to
+            index.html)
+
+            If you want to provide the location via an URL-Parameter:
+            <file name="BX_xmlfile" isParam="true">xml-url</file>
+            
+            and the request "index.html?xml-url=xml/article.xml" leads to the same as the above
+            example.
+            
+            If you want to provide the location via an URL-Parameter:
+            <file name="BX_xmlfile" isConfigParam="true">keyNameOfArrayElement</file>
+            
+            and the request bxe_start("config.xml",true/false, array("keyNameOfArrayElement"=>"xml/article.xml")) leads to the same as the above
+            example. (note: the example doesn't work, you have to create your array in another way...
+            
+            
+            Furthermore you have the option "prefix", which just prefixes the url with
+            this value. The following example would do the same as above again (postfix
+            is currently missing) 
+            <file name="BX_xmlfile" prefix="xml/">article.xml</file>
+
+            
+            If you want to access your files with other methods than http-get and put, you can
+            use the  parameter "method".
+            It's only implemented for BX_xmlfile currently. If you need that in more places, we could
+            certainly add it.
+            Default for BX_xmlfile is method="webdav"
+            Look at mozile/td/ for different implementation of it.
+
+            -->
+        <input>
+            <!-- The XML-document with the actual data -->
+            <file name="BX_xmlfile">inline.xml</file>
+            <file name="BX_validationfile">relaxng.xml</file> 
+        </input>
+
+        <output>
+         </output>
+        
+        <!-- You can't provide a different "method" than http.get for the following files -->
+        <css>
+            <!-- Document specific css
+                This is the one, which you should adjust.
+             -->
+             <file>../../css/editor.css</file>
+             <file>inline.css</file>
+            
+          
+        </css>
+        
+        <scripts>
+        <!-- These are the to be included js files 
+        the important .js files are included by bxeLoader.js, but you should
+        not have to worry about them. 
+        You can also add your own js-files here.
+        -->
+            <file>js/bxehtmltb.js</file>
+            <file>mozile/jsdav.js</file>
+            <file>js/table.js</file>
+            <file>mozile/td/webdav.js</file>
+            <file>td/relaxngtest.js</file>
+            <file>mozile/mozilekb.js</file>
+            <file>relaxng/AttributeVDOM.js</file>
+            <file>relaxng/NodeVDOM.js</file>
+            <file>relaxng/DocumentVDOM.js</file>
+            <file>relaxng/ElementVDOM.js</file>
+            <file>relaxng/DocumentVAL.js</file>
+            <file>relaxng/NodeVAL.js</file>
+            <file>relaxng/ElementVAL.js</file>
+            <file>relaxng/RelaxNG.js</file>
+        
+        </scripts>
+        
+        
+    </files>
+        <buttons>
+    <dimension  width="120" height="140" buttonwidth="20" buttonheight="20"/>
+        <button name="bold" col="1" row="1" action="ToggleTextClass"/>
+        <button name="emphasize" col="0" row="1" action="ToggleTextClass"/>
+        <button name="underline" col="2" row="1" action="ToggleTextClass"/>
+       <!-- <button name="strikethrough" col="3" row="1" action="ToggleTextClass" />-->
+        <button name="subscript" col="4" row="1" action="ToggleTextClass" />
+        <button name="superscript" col="5" row="1" action="ToggleTextClass"/>
+         <button name="clean_inline" col="0" row="6" action="CleanInline"/>
+    
+      <!--  <button name="link" col="0" row="5" action="InsertLink"/>
+         <button name="unlink" col="1" row="5" action="DeleteLink"/>
+        <button name="create_table" col="2" row="5" action="InsertTable"/>
+        <button name="Unordered_List" col="3" row="2" action="UnorderedList"/>
+        <button name="Ordered_List" col="2" row="2" action="OrderedList"/>
+        -->
+        <button name="Copy" col="0" row="4" action="ClipboardCopy"/>
+        <button name="Cut" col="1" row="4" action="ClipboardCut"/>
+        <button name="Paste" col="2" row="4" action="ClipboardPaste"/>
+       <!-- <button name="Image" col="3" row="5" action="InsertImage"/>-->
+        <button name="Save" col="1" row="6" action="DocumentSave"/>
+        <button name="Undo" col="3" row="6" action="Undo"/>
+        <button name="Redo" col="4" row="6" action="Redo"/>
+        
+    </buttons>
+
+</config>

@@ -1,0 +1,106 @@
+body { 
+ margin-top: 0px;
+}
+title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    display: block;    
+}
+
+title:first-child { 
+    margin-top: 0em;
+} 
+
+
+.title, .article, .main, .para, .section, .itemizedlist, .listitem, .simplelist, .member, .blockquote, .attribution, .pre {
+    display: block;
+    max-width: 450px;
+}
+
+.title, .article, .main, .para, .section, .itemizedlist, .blockquote, .attribution, .pre {
+    margin-top: 0.5em;
+}
+
+.titel, .title, .subtitle, .titel2 {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-style: normal;
+   color: #333333;
+   text-decoration: none;
+   font-weight: bold;
+   line-height: 20px;
+}
+
+.titel, .title {
+   letter-spacing: 1px;
+   font-size: 18px;
+   line-height: 20px;
+}
+
+.subtitle {
+   font-size: 14px;
+   line-height: 18px;
+   }
+
+.titel2, .section .titel {
+   font-size: 12px;
+}
+
+.para {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: 1em;
+    line-height: 18px;
+}
+
+.itemizedlist {
+    margin-left: 35px;
+}
+
+.listitem {
+    display: list-item;
+    list-style: square;
+}
+
+.pre {
+    font-family: Courier, monospace;
+}
+
+.attribution {
+    font-weight: bold;
+    margin-left: 0px;
+}
+
+.emphasize {
+    font-style: italic;
+}
+
+
+.bold {
+    font-wight: bold;
+}
+
+.ulink {
+   color: #FF6600;
+   text-decoration:none;
+   display: inline;
+}
+
+.ulink:hover {
+    color: #FF6600;
+    text-decoration:underline;
+} 
+
+.superscript {
+     vertical-align: super
+}
+
+.subscript {
+     vertical-align: sub
+}
+

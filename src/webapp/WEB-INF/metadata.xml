@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<EntitiesDescriptor
+    xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:shibmd="urn:mace:shibboleth:metadata:1.0"
+    xsi:schemaLocation="urn:oasis:names:tc:SAML:2.0:metadata ../schemas/saml-schema-metadata-2.0.xsd urn:mace:shibboleth:metadata:1.0 ../schemas/shibboleth-metadata-1.0.xsd http://www.w3.org/2000/09/xmldsig# ../schemas/xmldsig-core-schema.xsd"
+    Name="urn:mace:shibboleth:examples"
+    validUntil="2010-01-01T00:00:00Z">
+
+	<!--
+	This is a starter set of metadata for testing Shibboleth. It shows
+	a pair of example entities, one an IdP and one an SP. Each party
+	requires metadata from its opposite in order to interact with it.
+	Thus, your metadata describes you, and your partner(s)' metadata
+	is fed into your configuration.
+	
+	The software components do not configure themselves using metadata
+	(e.g. the IdP does not configure itself using IdP metadata). Instead,
+	metadata about SPs is fed into IdPs and metadata about IdPs is fed into
+	SPs. Other metadata is ignored, so the software does not look for
+	conflicts between its own configuration and the metadata that might
+	be present about itself. Metadata is instead maintained based on the
+	external details of your configuration.
+	-->
+
+	<EntityDescriptor entityID="https://idp.shibtest.org/shibboleth">
+	<!--
+	The entityID above looks like a location, but it's actually just a name.
+	Each entity is assigned a URI name. By convention, it will often be a
+	URL, but it should never contain a physical machine hostname that you
+	would not otherwise publish to users of the service. For example, if your
+	installation runs on a machine named "gryphon.example.org", you would
+	generally register that machine in DNS under a second, logical name
+	(such as idp.example.org). This logical name should be used in favor
+	of the real hostname when you assign an entityID. You should use a name
+	like this even if you don't actually register the server in DNS using it.
+	The URL does *not* have to resolve into anything to use it as a name.
+	The point is for the name you choose to be stable, which is why including
+	hostnames is generally bad, since they tend to change.
+	-->
+		
+		<!-- A Shib IdP contains this element with protocol support as shown. -->
+		<IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0">
+			<Extensions>
+				<!-- This is a Shibboleth extension to express attribute scope rules. -->
+				<shibmd:Scope>shibtest.org</shibmd:Scope>
+			</Extensions>
+			
+			<!--
+			One or more KeyDescriptors tell SPs how the IdP will authenticate itself. A single
+			descriptor can be used for both signing and for server-TLS if its use attribute
+			is set to "signing". You can place an X.509 certificate directly in this element
+			to specify the exact public key certificate to use. This only reflects the public
+			half of the keypair used by the IdP.
+			
+			When the IdP signs XML, it uses the private key included in its Credentials
+			configuration element, and when TLS is used, the web server will use the
+			certificate and private key defined by the web server's configuration.
+			An SP will then try to match the certificates in the KeyDescriptors here
+			to the ones presented in the XML Signature or SSL session.
+			
+			When an inline certificate is used, do not assume that an expired certificate
+			will be detected and rejected. Often only the key will be extracted without
+			regard for the certificate, but at the same time, it may be risky to include
+			an expired certificate and assume it will work. Your SAML implementation
+			may provide specific guidance on this.
+			-->
+			<KeyDescriptor use="signing">
+			    <ds:KeyInfo>
+			        <ds:X509Data>
+			        	<ds:X509Certificate>
+MIICkjCCAfugAwIBAgIJAK7VCxPsh8yrMA0GCSqGSIb3DQEBBAUAMDsxCzAJBgNV
+BAYTAlVTMRIwEAYDVQQKEwlJbnRlcm5ldDIxGDAWBgNVBAMTD2lkcC5leGFtcGxl
+Lm9yZzAeFw0wNTA2MjAxNTUwNDFaFw0zMjExMDUxNTUwNDFaMDsxCzAJBgNVBAYT
+AlVTMRIwEAYDVQQKEwlJbnRlcm5ldDIxGDAWBgNVBAMTD2lkcC5leGFtcGxlLm9y
+ZzCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA2VnUvWYrNhtRUqIxAuFmV8YP
+Jhr+OMKJpc/RaEs2C8mk5N5qO+ysClg2cVfkws3O4Lc15AiNdQ0s3ZijYwJK2EEg
+4vmoTl2RrjP1b3PK2h+VbUuYny9enHwDL+Z4bjP/8nmIKlhUSq4DTGXbwdQiWjCd
+lQXvDtvHRwX/TaqtHbcCAwEAAaOBnTCBmjAdBgNVHQ4EFgQUlmI7WqzIDJzcfAyU
+v2kmk3p9sbAwawYDVR0jBGQwYoAUlmI7WqzIDJzcfAyUv2kmk3p9sbChP6Q9MDsx
+CzAJBgNVBAYTAlVTMRIwEAYDVQQKEwlJbnRlcm5ldDIxGDAWBgNVBAMTD2lkcC5l
+eGFtcGxlLm9yZ4IJAK7VCxPsh8yrMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEE
+BQADgYEAsatF5gh1ZBF1QuXxchKp2BKVOsK+23y+FqhuOuVi/PTMf+Li84Ih25Al
+Jyy3OKc0oprM6tCJaiSooy32KTW6a1xhPm2MwuXzD33SPoKItue/ndp8Bhx/PO9U
+w14fpgtAk2x8xD7cpHsZ073JHxEcjEetD8PTtrFdNu6GwIrv6Sk=
+			        	</ds:X509Certificate>
+			        </ds:X509Data>
+			    </ds:KeyInfo>
+			</KeyDescriptor>
+			
+			<!-- This tells SPs where/how to resolve SAML 1.x artifacts into SAML assertions. -->
+			<ArtifactResolutionService index="1"
+				Binding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding"
+				Location="https://idp.shibtest.org:8443/shibboleth-idp/Artifact"/>
+			
+			<!-- This tells SPs that you support only the Shib handle format. -->
+			<NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+			
+			<!-- This tells SPs how and where to request authentication. -->
+			<SingleSignOnService Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest"
+			    Location="https://idp.shibtest.org:8443/shibboleth-idp/SSO"/>
+
+		</IDPSSODescriptor>
+		
+		<!-- Most Shib IdPs also support SAML attribute queries, so this role is also included. -->
+		<AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol">
+			<Extensions>
+				<!-- This is a Shibboleth extension to express attribute scope rules. -->
+				<shibmd:Scope>shibtest.org</shibmd:Scope>
+			</Extensions>
+			
+			<!-- The certificate has to be repeated here (or a different one specified if necessary). -->
+			<KeyDescriptor use="signing">
+			    <ds:KeyInfo>
+			        <ds:X509Data>
+			        	<ds:X509Certificate>
+MIICkjCCAfugAwIBAgIJAK7VCxPsh8yrMA0GCSqGSIb3DQEBBAUAMDsxCzAJBgNV
+BAYTAlVTMRIwEAYDVQQKEwlJbnRlcm5ldDIxGDAWBgNVBAMTD2lkcC5leGFtcGxl
+Lm9yZzAeFw0wNTA2MjAxNTUwNDFaFw0zMjExMDUxNTUwNDFaMDsxCzAJBgNVBAYT
+AlVTMRIwEAYDVQQKEwlJbnRlcm5ldDIxGDAWBgNVBAMTD2lkcC5leGFtcGxlLm9y
+ZzCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA2VnUvWYrNhtRUqIxAuFmV8YP
+Jhr+OMKJpc/RaEs2C8mk5N5qO+ysClg2cVfkws3O4Lc15AiNdQ0s3ZijYwJK2EEg
+4vmoTl2RrjP1b3PK2h+VbUuYny9enHwDL+Z4bjP/8nmIKlhUSq4DTGXbwdQiWjCd
+lQXvDtvHRwX/TaqtHbcCAwEAAaOBnTCBmjAdBgNVHQ4EFgQUlmI7WqzIDJzcfAyU
+v2kmk3p9sbAwawYDVR0jBGQwYoAUlmI7WqzIDJzcfAyUv2kmk3p9sbChP6Q9MDsx
+CzAJBgNVBAYTAlVTMRIwEAYDVQQKEwlJbnRlcm5ldDIxGDAWBgNVBAMTD2lkcC5l
+eGFtcGxlLm9yZ4IJAK7VCxPsh8yrMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEE
+BQADgYEAsatF5gh1ZBF1QuXxchKp2BKVOsK+23y+FqhuOuVi/PTMf+Li84Ih25Al
+Jyy3OKc0oprM6tCJaiSooy32KTW6a1xhPm2MwuXzD33SPoKItue/ndp8Bhx/PO9U
+w14fpgtAk2x8xD7cpHsZ073JHxEcjEetD8PTtrFdNu6GwIrv6Sk=
+			        	</ds:X509Certificate>
+			        </ds:X509Data>
+			    </ds:KeyInfo>
+			</KeyDescriptor>
+			
+			<!-- This tells SPs how and where to send queries. -->
+			<AttributeService Binding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding"
+			    Location="https://idp.shibtest.org:8443/shibboleth-idp/AA"/>
+			
+			<!-- This tells SPs that you support only the Shib handle format. -->
+			<NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+		</AttributeAuthorityDescriptor>
+
+		<!-- This is just information about the entity in human terms. -->
+		<Organization>
+		    <OrganizationName xml:lang="en">Example Identity Provider</OrganizationName>
+		    <OrganizationDisplayName xml:lang="en">Identities 'R' Us</OrganizationDisplayName>
+		    <OrganizationURL xml:lang="en">https://idp.shibtest.org:8443/</OrganizationURL>
+		</Organization>
+		<ContactPerson contactType="technical">
+		    <SurName>Technical Support</SurName>
+		    <EmailAddress>support@idp.shibtest.org</EmailAddress>
+		</ContactPerson>
+
+	</EntityDescriptor>
+
+	<!-- See the comment earlier about how an entityID is chosen/created. -->
+	<EntityDescriptor entityID="https://sp.shibtest.org/shibboleth">
+	
+		<!-- A Shib SP contains this element with protocol support as shown. -->
+		<SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol">
+		
+			<!--
+			One or more KeyDescriptors tell IdPs how the SP will authenticate itself. A single
+			descriptor can be used for both signing and for client-TLS if its use attribute
+			is set to "signing". You can place an X.509 certificate directly in this element
+			to specify the exact public key certificate to use. This only reflects the public
+			half of the keypair used by the IdP.
+			
+			The SP uses the private key included in its Credentials	configuration element
+			for both XML signing and client-side TLS. An IdP will then try to match the
+			certificates in the KeyDescriptors here to the ones presented in the XML
+			Signature or SSL session.
+			
+			When an inline certificate is used, do not assume that an expired certificate
+			will be detected and rejected. Often only the key will be extracted without
+			regard for the certificate, but at the same time, it may be risky to include
+			an expired certificate and assume it will work. Your SAML implementation
+			may provide specific guidance on this.
+			-->
+			<KeyDescriptor use="signing">
+			    <ds:KeyInfo>
+			        <ds:X509Data>
+			        	<ds:X509Certificate>
+MIICjzCCAfigAwIBAgIJAKk8t1hYcMkhMA0GCSqGSIb3DQEBBAUAMDoxCzAJBgNV
+BAYTAlVTMRIwEAYDVQQKEwlJbnRlcm5ldDIxFzAVBgNVBAMTDnNwLmV4YW1wbGUu
+b3JnMB4XDTA1MDYyMDE1NDgzNFoXDTMyMTEwNTE1NDgzNFowOjELMAkGA1UEBhMC
+VVMxEjAQBgNVBAoTCUludGVybmV0MjEXMBUGA1UEAxMOc3AuZXhhbXBsZS5vcmcw
+gZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANlZ1L1mKzYbUVKiMQLhZlfGDyYa
+/jjCiaXP0WhLNgvJpOTeajvsrApYNnFX5MLNzuC3NeQIjXUNLN2Yo2MCSthBIOL5
+qE5dka4z9W9zytoflW1LmJ8vXpx8Ay/meG4z//J5iCpYVEquA0xl28HUIlownZUF
+7w7bx0cF/02qrR23AgMBAAGjgZwwgZkwHQYDVR0OBBYEFJZiO1qsyAyc3HwMlL9p
+JpN6fbGwMGoGA1UdIwRjMGGAFJZiO1qsyAyc3HwMlL9pJpN6fbGwoT6kPDA6MQsw
+CQYDVQQGEwJVUzESMBAGA1UEChMJSW50ZXJuZXQyMRcwFQYDVQQDEw5zcC5leGFt
+cGxlLm9yZ4IJAKk8t1hYcMkhMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEEBQAD
+gYEAMFq/UeSQyngE0GpZueyD2UW0M358uhseYOgGEIfm+qXIFQF6MYwNoX7WFzhC
+LJZ2E6mEvZZFHCHUtl7mGDvsRwgZ85YCtRbvleEpqfgNQToto9pLYe+X6vvH9Z6p
+gmYsTmak+kxO93JprrOd9xp8aZPMEprL7VCdrhbZEfyYER0=
+			        	</ds:X509Certificate>
+			        </ds:X509Data>
+			    </ds:KeyInfo>
+			</KeyDescriptor>
+			
+			<!-- This tells IdPs that you support only the Shib handle format. -->
+			<NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+		    
+			<!--
+			This tells IdPs where and how to send authentication assertions. Mostly
+			the SP will tell the IdP what location to use in its request, but this
+			is how the IdP validates the location and also figures out which
+			SAML profile to use. 
+			-->
+			<AssertionConsumerService index="1" isDefault="true"
+				Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post"
+				Location="https://sp.shibtest.org:8843/Shibboleth.sso/SAML/POST"/>
+			<AssertionConsumerService index="2"
+				Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01"
+				Location="https://sp.shibtest.org:8843/Shibboleth.sso/SAML/Artifact"/>
+			
+		</SPSSODescriptor>
+
+		<!-- This is just information about the entity in human terms. -->
+		<Organization>
+			<OrganizationName xml:lang="en">Example Service Provider</OrganizationName>
+			<OrganizationDisplayName xml:lang="en">Services 'R' Us</OrganizationDisplayName>
+			<OrganizationURL xml:lang="en">http://sp.shibtest.org/</OrganizationURL>
+		</Organization>
+		<ContactPerson contactType="technical">
+			<SurName>Technical Support</SurName>
+			<EmailAddress>support@sp.shibtest.org</EmailAddress>
+		</ContactPerson>
+		
+	</EntityDescriptor>
+
+</EntitiesDescriptor>

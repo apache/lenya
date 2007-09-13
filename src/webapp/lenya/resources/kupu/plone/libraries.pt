@@ -1,0 +1,155 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    lang="en"
+    metal:use-macro="here/kupu_config/macros/master"
+    i18n:domain="plone">
+
+<body>
+
+    <div class="documentContent" metal:fill-slot="kupu_content">
+<h3>Kupu Configuration</h3>
+<h4>Manage libraries</h4>
+
+<p>In the below form, you may manage the list of drawer libraries for
+the kupu editor. Each property of a library is dynamically expanded at
+execution time using TALES expressions. That way it is possible, to
+support libraries like <em>Current folder</em> or <em>My folder</em>
+very easily.</p>
+
+<form action="" method="post" tal:attributes="action here/absolute_url">
+
+<table>
+
+  <tal:loop repeat="library here/zmi_get_libraries">
+
+  <tr>
+    <td><input type="checkbox" name="indices:int:list"
+               tal:attributes="value repeat/library/index"/></td>
+    <th>ID</th>
+    <td><input type="text" name="libraries.id:records" size="60"
+               tal:attributes="value library/id" /></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <th>Title</th>
+    <td><input type="text" name="libraries.title:records" size="60"
+               tal:attributes="value library/title" /></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <th>URI</th>
+    <td><input type="text" name="libraries.uri:records" size="60"
+               tal:attributes="value library/uri" /></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <th>Source URI</th>
+    <td><input type="text" name="libraries.src:records" size="60"
+               tal:attributes="value library/src" /></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <th>Icon URI</th>
+    <td><input type="text" name="libraries.icon:records" size="60"
+               tal:attributes="value library/icon" /></td>
+ </tr>
+
+  <tr>
+    <td colspan="3">
+      <hr />
+    </td>
+  </tr>
+
+  </tal:loop>
+</table>
+
+<p>
+  <input class="context" type="submit" name="zmi_update_libraries:method" value="Save" />
+  <input class="context" type="submit" name="zmi_delete_libraries:method" value="Delete" />
+  <input class="context" type="submit" name="zmi_move_up:method" value="Move Up" />
+  <input class="context" type="submit" name="zmi_move_down:method" value="Move Down" />
+</p>
+
+</form>
+
+<form action="" tal:attributes="action string:${here/absolute_url}/zmi_add_library" method="post">
+<table>
+
+  <tr>
+    <th>ID</th>
+    <td><input type="text" name="id" size="60" /></td>
+  </tr>
+
+  <tr>
+    <th>Title</th>
+    <td><input type="text" name="title" size="60" /></td>
+  </tr>
+
+  <tr>
+    <th>URI</th>
+    <td><input type="text" name="uri" size="60" /></td>
+  </tr>
+
+  <tr>
+    <th>Source URI</th>
+    <td><input type="text" name="src" size="60" /></td>
+  </tr>
+
+  <tr>
+    <th>Icon URI</th>
+    <td><input type="text" name="icon" size="60" /></td>
+  </tr>
+
+</table>
+
+<p>
+  <input class="context" type="submit" value="Add" />
+</p>
+</form>
+
+<p>&nbsp;</p>
+
+<p>The following variables are available in the TALES expressions:</p>
+
+<table>
+  <tr>
+    <td><code>object</code></td>
+    <td>The current context object</td>
+  </tr>
+  <tr>
+    <td><code>object_url</code></td>
+    <td>The URL of the current context object</td>
+  </tr>
+  <tr>
+    <td><code>folder</code></td>
+    <td>The folder the context object is located in</td>
+  </tr>
+  <tr>
+    <td><code>folder_url</code></td>
+    <td>The URL of the folder the context object is located in</td>
+  </tr>
+  <tr>
+    <td><code>portal</code></td>
+    <td>The portal object</td>
+  </tr>
+  <tr>
+    <td><code>portal_url</code></td>
+    <td>URL of the portal</td>
+  </tr>
+  <tr>
+    <td><code>member</code></td>
+    <td>Authenticated member</td>
+  </tr>
+  <tr>
+    <td><code>request</code></td>
+    <td>Request</td>
+  </tr>
+</table>
+
+</div>
+</body>
+</html>
+

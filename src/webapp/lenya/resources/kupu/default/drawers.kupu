@@ -1,0 +1,201 @@
+<?xml version="1.0" ?>
+<kupu:feature
+    name="drawers"
+    implementation="default"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    >
+  <kupu:id>$Id: drawers.kupu 9274 2005-02-17 16:22:12Z duncan $</kupu:id>
+
+  <kupu:part name="styles">
+    <link href="kupudrawerstyles.css" rel="stylesheet" type="text/css" />
+  </kupu:part>
+
+  <kupu:part name="jsincludes">
+    <script type="text/javascript" src="kupudrawers.js"> </script>
+  </kupu:part>
+
+  <kupu:part name="buttons">
+    <span class="kupu-tb-buttongroup">
+      <button type="button" class="kupu-image" id="kupu-imagelibdrawer-button"
+              title="image" i18n:attributes="title">&#160;</button>
+      <button type="button" class="kupu-inthyperlink" id="kupu-linklibdrawer-button"
+              title="internal link" i18n:attributes="title">&#160;</button>
+      <button type="button" class="kupu-exthyperlink" id="kupu-linkdrawer-button"
+              title="external link" i18n:attributes="title">&#160;</button>
+      <button type="button" class="kupu-table" id="kupu-tabledrawer-button"
+              title="table"  i18n:attributes="title">&#160;</button>
+    </span>
+  </kupu:part>
+
+  <kupu:part name="drawers">
+    <kupu:define-slot name="drawers" />
+  </kupu:part>
+
+  <kupu:part name="librarydrawer">
+    <div style="display:block;">
+      <div id="kupu-librarydrawer" class="kupu-drawer">
+      </div>
+    </div>
+  </kupu:part>
+
+  <kupu:part name="linkdrawer">
+    <div id="kupu-linkdrawer" class="kupu-drawer">
+      <h1 i18n:translate="">External Link</h1>
+
+      <div id="kupu-linkdrawer-addlink" class="kupu-panels">
+        <table>
+        <tr><td><div class="kupu-toolbox-label">
+          <!-- Link to items matching the keyword  -->
+          <span i18n:translate="items-matching-keyword">
+            Link the highlighted text to this URL
+          </span>:
+        </div>
+
+        <input id="kupu-linkdrawer-input" class="kupu-toolbox-st" type="text" />
+        </td><td class="kupu-preview-button">
+        <button type="button" onclick="drawertool.current_drawer.preview()">Preview</button>
+        </td></tr>
+        <tr><td colspan="2" align="center">
+        <iframe frameborder="1" scrolling="auto" width="440" height="198"
+                id="kupu-linkdrawer-preview" src="kupublank.html">
+        </iframe>
+        </td></tr>
+        </table>
+
+        <div class="kupu-dialogbuttons">
+          <button type="button" onclick="drawertool.current_drawer.save()">Ok</button>
+          <button type="button" onclick="drawertool.closeDrawer()">Cancel</button>
+        </div>
+
+      </div>
+    </div>
+  </kupu:part>
+
+  <kupu:part name="tabledrawer">
+    <div id="kupu-tabledrawer" class="kupu-drawer">
+    <h1>Table</h1>
+    <div class="kupu-panels">
+      <table width="99%">
+        <tr class="kupu-panelsrow">
+          <td class="kupu-panel">
+            <table width="100%">
+              <tbody>
+                <tr>
+                  <td class="kupu-toolbox-label">Table Class</td>
+                  <td width="50%">
+                    <select id="kupu-tabledrawer-classchooser"
+                            onchange="drawertool.current_drawer.tool.setTableClass(this.options[this.selectedIndex].value)">
+                      <option value="plain">Plain</option>
+                      <option value="listing">Listing</option>
+                      <option value="grid">Grid</option>
+                      <option value="data">Data</option>
+                    </select>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2" class="">
+
+                  <!-- this gets displayed when not in a table -->
+                  <div id="kupu-tabledrawer-addtable">
+                    <table width="100%">
+                      <tr>
+                        <td class="kupu-toolbox-label" width="50%">Rows</td>
+                        <td><input type="text" id="kupu-tabledrawer-newrows" /></td>
+                      </tr>
+                      <tr>
+                        <td class="kupu-toolbox-label">Columns</td>
+                        <td><input type="text" id="kupu-tabledrawer-newcols" /></td>
+                      </tr>
+                      <tr>
+                        <td class="kupu-toolbox-label">Headings</td>
+                        <td class="kupu-toolbox-label">
+                          <input name="kupu-tabledrawer-makeheader"
+                                 id="kupu-tabledrawer-makeheader"
+                                 type="checkbox"
+                                 />
+                          <label for="kupu-tabledrawer-makeheader">Create</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="text-align: center">
+                            <button type="button" onclick="drawertool.current_drawer.createTable()">Add Table</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="text-align: center">
+                            <button type="button" onclick="drawertool.current_drawer.tool.fixAllTables()">Fix All Tables</button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <!-- this gets displayed when in a table -->
+                  <div id="kupu-tabledrawer-edittable">
+                    <table width="100%">
+                      <tr>
+                        <td width="50%">Current column alignment</td>
+                        <td>
+                          <select id="kupu-tabledrawer-alignchooser"
+                                  onchange="drawertool.current_drawer.tool.setColumnAlign(this.options[this.selectedIndex].value)">
+                            <option value="left">Left</option>
+                            <option value="center">Center</option>
+                            <option value="right">Right</option>
+                            </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Column</td>
+                        <td>
+                          <button type="button" id="kupu-tabledrawer-addcolumn-button"
+                                  onclick="drawertool.current_drawer.tool.addTableColumn()">Add</button>
+                          <button type="button" id="kupu-tabledrawer-delcolumn-button"
+                                  onclick="drawertool.current_drawer.tool.delTableColumn()">Remove</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Row</td>
+                        <td>
+                          <button type="button" id="kupu-tabledrawer-addrow-button"
+                                  onclick="drawertool.current_drawer.tool.addTableRow()">Add</button> 
+                          <button type="button" id="kupu-tabledrawer-delrow-button"
+                                  onclick="drawertool.current_drawer.tool.delTableRow()">Remove</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Fix Table</td>
+                        <td>
+                          <button type="button" id="kupu-tabledrawer-addrow-button"
+                                  onclick="drawertool.current_drawer.tool.fixTable()">Fix</button> 
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <div class="kupu-dialogbuttons">
+        <button type="button" onclick="drawertool.closeDrawer()">Close</button>
+      </div>
+    </div>
+    </div>
+
+  </kupu:part>
+
+  <kupu:part name="xmlconfig">
+    <image_xsl_uri>kupudrawers/drawer.xsl</image_xsl_uri>
+    <link_xsl_uri>kupudrawers/drawer.xsl</link_xsl_uri>
+    <image_libraries_uri>kupudrawers/imagelibrary.xml</image_libraries_uri>
+    <link_libraries_uri>kupudrawers/linklibrary.xml</link_libraries_uri>
+    <search_images_uri> </search_images_uri>
+    <search_links_uri> </search_links_uri>
+  </kupu:part>
+
+</kupu:feature>

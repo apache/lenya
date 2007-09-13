@@ -1,0 +1,79 @@
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle fontweight="bold">
+  <mi>y</mi>
+  <mo>=</mo>
+  <mroot>
+
+    <mrow>
+      <mo>-</mo>
+      <mfrac>
+        <mi>q</mi>
+        <mn>2</mn>
+      </mfrac>
+      <mo>+</mo>
+
+      <mroot>
+        <mrow>
+          <mfrac>
+            <msup>
+              <mi>q</mi>
+              <mn>2</mn>
+            </msup>
+            <mn>4</mn>
+
+          </mfrac>
+          <mo>+</mo>
+          <mfrac>
+            <msup>
+              <mi>p</mi>
+              <mn>3</mn>
+            </msup>
+
+            <mn>27</mn>
+          </mfrac>
+        </mrow>
+        <mn>2</mn>
+      </mroot>
+    </mrow>
+    <mn>3</mn>
+
+  </mroot>
+  <mo>+</mo>
+  <mroot>
+    <mrow>
+      <mo>-</mo>
+      <mfrac>
+        <mi>q</mi>
+
+        <mn>2</mn>
+      </mfrac>
+      <mo>-</mo>
+      <mroot>
+        <mrow>
+          <mfrac>
+            <msup>
+              <mi>q</mi>
+
+              <mn>2</mn>
+            </msup>
+            <mn>4</mn>
+          </mfrac>
+          <mo>+</mo>
+          <mfrac>
+            <msup>
+
+              <mi>p</mi>
+              <mn>3</mn>
+            </msup>
+            <mn>27</mn>
+          </mfrac>
+        </mrow>
+        <mn>2</mn>
+
+      </mroot>
+    </mrow>
+    <mn>3</mn>
+  </mroot>
+  <mo>.</mo>
+</mstyle>
+</math>

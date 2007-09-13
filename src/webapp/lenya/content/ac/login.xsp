@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: login.xsp 473841 2006-11-12 00:46:38Z gregor $ -->
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"  
+       xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+       >
+
+  <xsp:structure>
+    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Identity</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Message</xsp:include>
+    <xsp:include>org.apache.lenya.cms.cocoon.acting.DelegatingAuthenticatorAction</xsp:include>
+    <xsp:include>org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction</xsp:include>
+    <xsp:include>java.util.Arrays</xsp:include>
+    <xsp:include>java.util.List</xsp:include>
+    <xsp:include>java.util.ArrayList</xsp:include>
+    <xsp:include>java.util.Iterator</xsp:include>
+  </xsp:structure>
+
+<page>
+<body>
+<login>
+
+  <xsp:logic>
+      Session session = request.getSession(true);
+      
+      String authenticatorId=(String)session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
+      String authenticatorName=(String)session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.name");
+
+      if(authenticatorId != null){
+          <authenticator><xsp:attribute name="type"><xsp:expr>authenticatorId</xsp:expr></xsp:attribute>
+            <name><xsp:expr>authenticatorName</xsp:expr></name>
+          </authenticator>
+      }
+      else{
+          <no_authenticator_id_yet/>
+      }
+
+      String protected_destination=(String)session.getAttribute("protected_destination");
+      if(protected_destination != null){
+        <xsp:content><protected_destination><xsp:expr>protected_destination</xsp:expr></protected_destination></xsp:content>
+      }
+      else{
+        <xsp:content><no_protected_destination/></xsp:content>
+      }
+      
+      List errors = new ArrayList();
+      
+      String[] names = {
+          DelegatingAuthenticatorAction.ERRORS,
+          DelegatingAuthorizerAction.ERRORS
+      };
+      
+      for (int i = 0; i &lt; names.length; i++) {
+         Message[] messages = (Message[]) session.getAttribute(names[i]);
+         if (messages != null) {
+             errors.addAll(Arrays.asList(messages));
+         }
+      }
+      
+      if (!errors.isEmpty()) {
+        <errors>
+          <xsp:logic>
+            for (Iterator i = errors.iterator(); i.hasNext(); ) {
+              Message msg = (Message) i.next();
+              <error>
+                <i18n:translate>
+                  <i18n:text><xsp:expr>msg.getText()</xsp:expr></i18n:text>
+                  <xsp:logic>
+                    String[] params = msg.getParameters();
+                    for (int p = 0; p &lt; params.length; p++) {
+                      <i18n:param>params[p]</i18n:param>
+                    }
+                  </xsp:logic>
+                </i18n:translate>
+              </error>
+            }
+          </xsp:logic>
+        </errors>
+      }
+      
+  </xsp:logic>
+</login>
+</body>
+</page>
+
+</xsp:page>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<introspection xmlns="http://www.wyona.org/neutron/1.0" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"> 
+  <edit mime-type="text/xml" name="${cocoon.parameters['document-label']}">
+    <open url="${cocoon.parameters['base-url']}${cocoon.parameters['document-url']}?lenya.event=edit&#38;lenya.usecase=neutron&#38;lenya.step=open" method="GET"/>
+    <save url="${cocoon.parameters['base-url']}${cocoon.parameters['document-url']}?lenya.usecase=neutron&#38;lenya.step=save" method="PUT"/> 
+    <checkout url="${cocoon.parameters['base-url']}${cocoon.parameters['document-url']}?lenya.usecase=neutron&#38;lenya.step=checkout" method="GET"/>
+    <checkin url="${cocoon.parameters['base-url']}${cocoon.parameters['document-url']}?lenya.usecase=neutron&#38;lenya.step=checkin" method="PUT"/>
+   <styles>
+      <style href="${cocoon.parameters['base-url']}${cocoon.parameters['document-url']}?lenya.usecase=neutron&#38;lenya.step=xsl"/>  
+    </styles>  
+  </edit>
+</introspection>

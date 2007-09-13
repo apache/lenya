@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Bitflux Editor Examples</title>
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
+<style>
+</style>
+</head>
+<body>
+<div class="header">
+<img src="images/bxelogo.png" alt="Bitflux Editor"/>
+</div>
+<div class="examplescontent">
+<h2>Important</h2>
+
+You need <a href="http://mozilla.org">Mozilla</a>, otherwise it won't run.<br/>
+We recommend Mozilla 1.6 or Mozilla Firefox 1.0  (our current testing platform) .
+Mozilla 1.7 and Firebird 0.9 do not save correctly, due to a bug in the XML Serializer of Mozilla.
+<p/>
+<ul>
+<li><b>Hit F7 to get a cursor</b></li>
+<li><b>Save doesn't work in the demo</b>, since this is normally handled on the server by something like a CMS. Here it's just static file calls.
+</li>
+</ul>
+
+
+
+<h2>Examples</h2>
+<ul>
+<li><a href="./examples/inlineXHTML/index.html">Bitflux Editor Website with inline loading and XHTML Elements</a> (with image insert support)</li>
+<li><a href="./examples/inline/index.html">Bitflux Editor Website with inline loading </a></li>
+
+<li><a href="./examples/uni/index.html">University of Zurich</a> (has XHTML Schema support, quite complex)</li>
+<li><a href="./examples/echo-atom/index.html">Echo/Atom (needs a nicer CSS and a fixed RelaxNG)</a></li>
+</ul>
+
+<h2>Documentation</h2>
+Some documentation can be found at <a href="http://wiki.bitfluxeditor.org">http://wiki.bitfluxeditor.org</a><br/>
+and the <a href="./doc/index.html">JSDoc API</a> documentation.
+
+<h2>Files to be loaded</h2>
+<pre>
+example.html
+|
++-- /bxeng/css/editor.css
+|
++-- /bxeng/bxeLoader.js
+|
++-- ./config.xml
+    |
+    +-- ./example.xml
+    |
+    +-- ./example.xsl
+    |
+    +-- ./example-relaxng.xml
+    |
+    +-- ./example.css
+</pre>
+
+<h2>Misc</h2>
+<ul>
+<li>Switch to XML: Shift + Ctrl + y</li>
+</ul>
+</div>
+</body>
+</html>

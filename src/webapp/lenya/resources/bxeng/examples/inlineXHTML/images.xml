@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<collection>
+  <uri>images.xml</uri>
+  <icon></icon>
+  <title>Images</title>
+  <description></description>
+  <items>
+    <resource id="res-c">
+      <uri>images/bxelogo.png</uri>
+      <preview>images/bxelogo.png</preview>
+
+      <title>bxelogo.png</title>
+    </resource>
+
+  </items>
+</collection>

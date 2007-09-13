@@ -1,0 +1,46 @@
+<kupu:feature
+    name="head"
+    implementation="plone"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    >
+    <kupu:id>$Id: head.kupu 9274 2005-02-17 16:22:12Z duncan $</kupu:id>
+
+  <kupu:part name="styles">
+    <link href="kupustyles.css" rel="stylesheet" type="text/css"
+          tal:attributes="href string:${portal_url}/kupustyles.css" />
+    <link href="kupuplone.css" rel="stylesheet" type="text/css"
+          tal:attributes="href string:${portal_url}/kupuplone.css" />
+  </kupu:part>
+
+  <kupu:part name="jsincludes">
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/sarissa.js"> </script>
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupuhelpers.js"> </script>
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupueditor.js"> </script>
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupubasetools.js"> </script>
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupuloggers.js"> </script>
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupucontentfilters.js"> </script>
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupucontextmenu.js"> </script>
+
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupuploneeditor.js"> </script>
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/kupuploneui.js"> </script>
+
+  </kupu:part>
+
+  <!-- XXX this could be a separate feature, maybe -->
+  <kupu:part name="bootstrap-editor">
+    <script type="text/javascript" src="kupuploneinit.js"
+            tal:attributes="src string:${portal_url}/kupuploneinit.js"> </script>
+  </kupu:part>
+
+</kupu:feature>

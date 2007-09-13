@@ -1,0 +1,85 @@
+/*
+JsUnit - a JUnit port for JavaScript
+Copyright (C) 1999,2000,2001,2002 Joerg Schaible
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation in version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Test suites built with JsUnit are derivative works derived from tested 
+classes and functions in their production; they are not affected by this 
+license.
+*/
+
+h1 { text-align: center }
+caption { font-weight: bold }
+hr { border-color: rgb(198,166,70); border-style: solid }
+a.qindex {}
+a.qindexRef {}
+a.el { text-decoration: none; font-weight: bold }
+a.elRef { font-weight: bold }
+a.code { text-decoration: none; font-weight: normal; color: #4444ee }
+a.codeRef { font-weight: normal; color: #4444ee }
+a:hover { color: red }
+dl.el { margin-left: -1cm }
+div.fragment { width: 100%; border: none; background-color: #ffff88 }
+div.ah { background-color: red; margin-bottom: 3; margin-top: 3; font-weight: bold; color: yellow }
+td.md { background-color: #ffff88 }
+td.mdname1 { background-color: #ffff88; font-weight: bold; color: #602020; }
+td.mdname { background-color: #ffff88; font-weight: bold; color: #602020; width: 600px; }
+table.header { border: 0; vertical-align: middle }
+table { border: 0; -x-border-x-spacing: 0px; -y-border-y-spacing: 0px;}
+/* table.header td { margin: 6; padding-left: 12; padding-right: 12 } */
+div.header { font-size: 300%; font-weight: bold }
+div.groupHeader { margin-left: 16; margin-top: 12; margin-bottom: 6; font-weight: bold }
+div.groupText { margin-left: 16; font-style: italic; font-size: smaller }
+body { background: #ffffcc }
+td.indexkey { 
+   background-color: #ffff88; 
+   font-weight: bold; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px;
+   border-width	  : 2;
+   border-style	  : solid;
+   border-color   : rgb(198,166,70)
+}
+td.indexvalue { 
+   background-color: #ffff88; 
+   font-style: italic; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px;
+   border-width	  : 2;
+   border-style	  : solid;
+   border-color   : rgb(198,166,70)
+}
+font.keyword       { color: #008000 }
+font.keywordtype   { color: #604020 }
+font.keywordflow   { color: #e08000 }
+font.comment       { color: #800000 }
+font.preprocessor  { color: #806020 }
+font.stringliteral { color: #002080 }
+font.charliteral   { color: #008080 }
+span.J { color: #00CC00 }
+span.s { color: #0000CC }
+span.U { color: #FF0000 }

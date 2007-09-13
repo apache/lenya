@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<!-- mozileFirefox.xul
+
+/* ***** BEGIN LICENSE BLOCK *****
+ * Licensed under Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ * Full Terms at http://mozile.mozdev.org/license.html
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is Playsophy code.
+ *
+ * The Initial Developer of the Original Code is Playsophy
+ * Portions created by the Initial Developer are Copyright (C) 2002-2003
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *		James A. Overton <james@overton.ca>
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+Mozile Toolbar Overlay - Mozilla Firefox
+(Note that there is a different version of this overlay for Mozilla's main branch.)
+
+mozile version 0.60
+
+Created by James A. Overton
+Created on 2003-11-19
+
+
+ACKNOWLEDGEMENTS:
+I have adapted this file from Chris Pederick's Web Devloper 0.3 extension for Firebird, and I am very grateful to him.
+See http://chrispederick.myacen.com/work/firebird/webdeveloper/
+
+
+DESCRIPTION:
+This file overlays the normal Mozilla Firefox files (see contents.rdf for the relationship). That means
+that it is added to the DOM of the main browser window when Mozilla Firefox starts up. This file
+describes a general purpose toolbar for the Mozile editor, much like the one you'd expect in a
+wordprocessor or HTML editor. It is supposed to replace the "mozilehtmltb.js" in cases where the
+user has installed Mozile as chrome for their browser.
+
+This file loads a number of important javascript files, which do the actual work
+when a button is pressed or a menu item is selected.
+
+
+-->
+
+
+
+<!DOCTYPE overlay SYSTEM "chrome://mozile/locale/mozile.dtd" >
+<overlay id="bxehelper" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+			<!-- Main Mozile Scripts -->
+		<script src="chrome://bxehelper/content/caret.js" type="text/javascript"/>
+		
+		
+
+</overlay>

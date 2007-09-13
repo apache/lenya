@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<kupu:feature
+    name="toolboxes"
+    implementation="experimental"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    >
+
+  <kupu:part name="toolboxes">
+    <div class="kupu-toolboxes">
+      <kupu:define-slot name="toolboxes" />
+    </div>
+  </kupu:part>
+
+  <kupu:part name="inspector">
+    <div class="kupu-toolbox" id="kupu-toolbox-inspector">
+      
+      <h1>Inspector</h1>
+
+      <table id="kupu-inspector" width="100%">
+        <tbody>
+          <tr>
+            <td align="center">
+              <form method="post" action="#" onsubmit="return false;" id="kupu-inspector-form">
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+  </kupu:part>
+
+  <kupu:part name="debug">
+    <div class="kupu-toolbox" id="kupu-toolbox-debug">
+      <h1>Debug Log</h1>
+      <div id="kupu-toolbox-debuglog"
+           class="kupu-toolbox-label"
+           style="height: 150px;">
+      </div>
+    </div>
+  </kupu:part>
+
+</kupu:feature>

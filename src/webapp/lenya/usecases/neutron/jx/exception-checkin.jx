@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<exception xmlns="http://www.wyona.org/neutron/1.0" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" type="ckeckin">
+  <message>${message}</message>
+  
+  <checkin url="${url}">
+    <locked-by>${lockowner}</locked-by>
+    <lock-date format="standard">${lockdate}</lock-date>
+    <!-- Optional. Depending on server implementation -->
+    <break-lock url="${break-lockurl}"/>
+  </checkin>
+</exception>
+

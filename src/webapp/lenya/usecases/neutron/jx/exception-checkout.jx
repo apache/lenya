@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<exception xmlns="http://www.wyona.org/neutron/1.0" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" type="ckeckout">
+  <message>${message}</message>
+  <checkout url="/hello/world.html">
+    <locked-by>Jimi Hendrix</locked-by>
+    <lock-date format="standard">1969.10.03T15:34:26</lock-date>
+    <!-- Optional. Depending on server implementation -->
+    <break-lock url="/hello/world.html?yanel.resource.usecase=break-lock"/>
+  </checkout>
+</exception>
+

@@ -1,0 +1,40 @@
+<kupu:feature
+    name="toolbar"
+    implementation="plone"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    >
+<kupu:id>$Id: toolbar.kupu 10851 2005-04-19 12:14:24Z guido $</kupu:id>
+
+  <kupu:part name="logo">
+    <span class="kupu-tb-buttongroup" style="float: right" id="kupu-logo">
+      <button type="button" class="kupu-logo" title="Kupu 1.2" accesskey="k" id="kupu-logo-button"
+              onclick="window.open('http://kupu.oscom.org');"
+              tal:attributes="tabindex python:tabindex+1;">&#160;</button>
+    </span>
+  </kupu:part>
+
+  <kupu:part name="select-styles">
+    <select id="kupu-tb-styles">
+      <option value="p" i18n:translate="paragraph-normal">Normal</option>
+      <option value="h2|Heading">Heading</option>
+      <option value="h3|Subheading">Subheading</option>
+      <option value="pre">Formatted</option>
+      <tal:block condition="here/kupu_library_tool/getParagraphStyles|nothing"
+        repeat="style here/kupu_library_tool/getParagraphStyles">
+        <option tal:define="parts python:style.split('|',1)+['','']"
+                tal:attributes="value python:parts[1]" tal:content="python:parts[0]"/>
+      </tal:block>
+      <tal:block tal:condition="field/widget/parastyles|nothing">
+        <option
+            tal:condition="field/widget/parastyles"
+            tal:repeat="style field/widget/parastyles"
+            tal:attributes="value python:style[0]"
+            tal:content="python:style[1]"
+            />
+      </tal:block>
+    </select>
+  </kupu:part>
+</kupu:feature>

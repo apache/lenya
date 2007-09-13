@@ -1,0 +1,189 @@
+/*****************************************************************************
+ *
+ * Kupu drawer styles
+ *
+ * Copyright (c) 2003-2004 Kupu Contributors. See CREDITS.txt
+ *
+ * Instead of customizing this file, it is recommended to add your own
+ * CSS file.  Feel free to use whole or parts of this for your own
+ * designs, but give credit where credit is due.
+ *
+ *****************************************************************************/
+
+/* $Id: kupudrawerstyles.css 7864 2004-12-15 16:35:26Z duncan $ */
+
+.kupu-drawer {
+  position: absolute;
+  display: none;
+  border: solid 1px gray;
+  border-top: solid 10px #c0c0c0;
+  background-color: ButtonFace;
+  padding: 0 8px 8px 8px;
+  height: auto;
+  width: 520px;
+  z-index: 2;
+}
+
+.kupu-drawer h1 {
+   height: auto; width: auto;
+}
+
+div#kupu-drawerheader, div#kupu-dialogbuttons { 
+  font-family: sans-serif;
+}
+
+input#kupu-searchbox-input {
+  width: 8em;
+  margin-bottom: 6px;
+  margin-top: 12px;
+  padding: 2px;
+}
+
+input#kupu-linkdrawer-input {
+  width: 400px;
+}
+
+div#kupu-librarydrawer h1, div.kupu-drawer h1 {
+  margin-top: 12px;
+}
+
+div.kupu-dialogbuttons {
+  text-align: right;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+div.kupu-dialogbuttons button {
+  margin-left: 0.3em;
+}
+
+div.kupu-panels {
+  width: 100%;
+  background-color: ButtonFace;
+  clear:both;
+}
+
+div.kupu-panels td {
+  font-family: sans-serif;
+  font-size: 12px;
+  background-color: white;
+  vertical-align: top;
+  padding: 6px;
+}
+
+div.kupu-panels td.kupu-preview-button {
+  vertical-align: bottom;
+}
+
+div.kupu-panels table {
+ width: 100%; 
+ margin: 0; 
+ padding: 0; 
+ border: 0;
+}
+
+td.panel {
+  height: 260px;
+}
+
+td#kupu-librariespanel {
+  width: 22%;
+}
+
+td#kupu-resourcespanel {
+  width: 33%;
+}
+
+td#kupu-propertiespanel {
+  width: 45%;
+}
+
+div#kupu-resourceitems {
+  height: 100%;
+}
+
+.overflow {
+  overflow: auto;
+  height: 100%;
+}
+
+div.kupu-libsource, div.kupu-libsource-selected {
+  text-align: center;
+  padding-top: 0.2em;
+  padding-bottom: 0.6em;
+}
+
+div.response, div.collection {
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  height: 15px;
+  margin-top: 0.1em;
+  overflow: hidden;
+  padding-top: 4px;
+}
+
+div.kupu-libsource, div.kupu-libsource-selected, 
+div.kupu-resource, div.kupu-collection, div.kupu-upload {
+  cursor: pointer;
+  margin-bottom: 2px;
+  vertical-align: text-bottom;
+}
+div.kupu-upload {
+   text-align: right; font-style: italic;
+}
+
+div.kupu-libsource-selected {
+  background-repeat: no-repeat;
+}
+
+div.kupu-libsource-selected span,
+ div.kupu-libsource span{
+  margin-top: 3px;
+  display: block;
+}
+
+div.kupu-libsource-selected span {
+  background-color: ButtonFace;  
+}
+
+#kupu-tabledrawer-edittable {
+  display: none;
+}
+
+img.library-icon-collection, img.library-icon-resource {
+  margin-right: 5px;
+  height: 16px;
+  width: 16px;
+}
+
+span.drawer-item-title {
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+}
+
+/* Local image upload form */
+
+#kupu-upload-to {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  clear:both;
+}
+
+#kupu-upload-file {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  clear:both;
+}
+
+#kupu-upload-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  clear:both;
+}
+
+#kupu-upload-instructions {
+  margin-top:10px;
+  margin-bottom: 20px;
+  clear:both;
+}

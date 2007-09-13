@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<collection>
+  <uri>pictures.xml</uri>
+  <icon></icon>
+  <title>Library 2</title>
+  <description></description>
+  <items>
+    <resource id="res-a">
+      <uri>pictures/landessender.jpg</uri>
+      <preview>pictures/landessender.jpg</preview>
+      <title>landessender.jpg</title>
+    </resource>
+    <resource id="res-b">
+      <uri>pictures/goodgirl.jpg</uri>
+      <preview>pictures/goodgirl.jpg</preview>
+      <title>goodgirl.jpg</title>
+    </resource>
+  </items>
+</collection>

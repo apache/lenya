@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:echo="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" ns="http://www.w3.org/XML/1998/namespace" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="echo:entry">
+      <attribute name="version">
+        <data type="decimal"/>
+      </attribute>
+      <element name="echo:title">
+        <text/>
+      </element>
+      <element name="echo:subtitle">
+        <text/>
+      </element>
+      <element name="echo:summary">
+        <text/>
+      </element>
+      <element name="echo:author">
+        <ref name="name"/>
+        <ref name="homepage"/>
+        <ref name="weblog"/>
+      </element>
+      <element name="echo:contributor">
+        <ref name="name"/>
+        <ref name="homepage"/>
+        <ref name="weblog"/>
+      </element>
+      <element name="echo:link">
+        <data type="anyURI"/>
+      </element>
+      <element name="echo:id">
+        <text/>
+      </element>
+      <element name="echo:created">
+        <data type="NMTOKEN"/>
+      </element>
+      <element name="echo:issued">
+        <data type="NMTOKEN"/>
+      </element>
+      <element name="echo:modified">
+        <data type="NMTOKEN"/>
+      </element>
+      <oneOrMore>
+        <element name="echo:content">
+          <optional>
+            <attribute name="mode">
+              <data type="NCName"/>
+            </attribute>
+          </optional>
+          <optional>
+            <attribute name="src">
+              <data type="anyURI"/>
+            </attribute>
+          </optional>
+          <attribute name="type"/>
+          <attribute name="lang">
+            <data type="NCName"/>
+          </attribute>
+          <oneOrMore>
+            <choice>
+              <text/>
+              <element>
+                <name ns="">p</name>
+                <oneOrMore>
+                  <choice>
+                    <text/>
+                    <element>
+                      <name ns="">em</name>
+                      <data type="NCName"/>
+                    </element>
+                  </choice>
+                </oneOrMore>
+              </element>
+            </choice>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+      <element name="ent:topic">
+        <attribute name="id">
+          <data type="NCName"/>
+        </attribute>
+        <data type="NCName"/>
+      </element>
+    </element>
+  </start>
+  <define name="name">
+    <element name="echo:name">
+      <text/>
+    </element>
+  </define>
+  <define name="homepage">
+    <element name="echo:homepage">
+      <data type="anyURI"/>
+    </element>
+  </define>
+  <define name="weblog">
+    <element name="echo:weblog">
+      <data type="anyURI"/>
+    </element>
+  </define>
+</grammar>

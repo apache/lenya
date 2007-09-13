@@ -1,0 +1,368 @@
+body {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   margin: 0 ! important;
+   }
+
+section, .section {margin-bottom:30px;}   
+
+section  {display: block;}
+   
+h1 {color: #333333;
+ 	text-align:left;
+	font-style: normal;
+	font-size: 18px;}   
+   
+td, input, select, textarea {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   font-style: normal;
+   line-height: 18px;
+   font-weight: normal;
+   color: #000000;
+   text-decoration: none;
+   }
+
+select, input, textarea {
+   color:#ff6600;
+   }
+
+ul li {
+   list-style: square;
+   }
+
+p {
+   margin-bottom:10px;
+   margin-top:10px;
+   }
+
+
+.uKap, .uKap:visited, .uKap:hover, .uKap2, .uKap2:visited, .uKap2:visited, .uKap2:hover  {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   line-height: 20px;
+   font-style: normal;
+   color: #000000;
+   text-decoration: none;
+   margin-top:2px;
+   margin-bottom:4px;
+   letter-spacing: 1px;
+   }
+
+
+.uKap:hover {
+   color:#009900;
+   }
+
+
+.uKap2, .uKap2:visited, .uKap2:hover  {
+   font-weight:bold;
+   color: #3b3b3b;
+   }
+
+
+.green, .green:visited,.green:hover  {
+   color: #009900;
+   text-decoration: none;
+   }
+
+
+.titel, .subtitle, .titel2 {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-style: normal;
+   color: #333333;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+.titel {
+   letter-spacing: 1px;
+   font-size: 18px;
+   line-height: 20px;
+}
+
+.subtitle {
+   font-size: 14px;
+   line-height: 18px;
+   }
+
+.titel2 {
+   font-size: 12px;
+   /*line-height: 18px;*/
+}
+
+p.blockquote, .attribution  {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px;
+   font-style: normal;
+   font-weight: normal;
+   color: #000000;
+   text-decoration: none;
+   margin-left: 20px;
+   }
+
+.attribution {
+   font-weight: bold;
+   margin-left: 0px;
+   }
+
+.subsection{
+   margin-bottom:25px;
+   margin-top:25px;
+   }
+
+.feld, .bereich {
+   width:240px;
+   border:2px solid #CCCCCC;
+   }
+
+
+.button
+{
+   background-color:#FFFFFF;
+   color:#000000;
+   width:60px;
+   border:1px solid #CCCCCC;
+   }
+
+.inlineimage
+{
+margin-right: 13px;
+}
+
+.caption {
+   font-family: Verdana, sans-serif;
+   font-size: 9px;
+   font-style: normal;
+   font-weight: normal;
+   color: #000000;
+   text-decoration: none;
+; line-height: 11px
+}
+
+.topnavigation {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px;
+   font-style: normal;
+   font-weight: normal;
+   color: #FFFFFF;
+   text-decoration: none;
+}
+
+.topnavigationblack { 
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px; 
+   font-style: normal; 
+   font-weight: normal; 
+   color: #000000; 
+   text-decoration: none; 
+}
+
+.navigation { 
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px; 
+   font-style: normal; 
+   font-weight: normal; 
+   color: #000000; 
+   text-decoration: none; 
+}
+
+.navigationactive { 
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px; 
+   font-style: normal; 
+   font-weight: normal; 
+   color: #FFFFFF; 
+   text-decoration: none; 
+}
+
+a, ulink{ 
+   color: #FF6600;
+   text-decoration:none;
+   display: inline;
+ } 
+a:hover {
+   color: #FF6600;
+   text-decoration:underline;
+   } 
+ 
+a:visited { 
+   color: #FF6600;
+} 
+
+a.navigation {
+   color: #000000;
+   text-decoration:none;
+}
+a.navigation:hover {
+   color: #000000;
+   text-decoration:underline;
+   } 
+
+
+a.navigation:visited { 
+   color: #000000;
+} 
+
+a.navigationactive {
+   color: #000000;
+   font-style: bold;
+   text-decoration:none;
+}
+a.navigationactive:hover {
+   color: #000000;
+   font-style: bold;
+   text-decoration:underline;
+   } 
+
+
+a.navigationactive:visited { 
+   color: #000000;
+   font-style: bold;
+} 
+.examplescontent {
+	padding: 5px;
+	border: 5px;
+	margin: 5px;
+}
+
+.header {
+	background-color: #FF6600;
+	width: 100%;
+	padding: 5px;
+}
+.diff {
+  margin-top:    1ex;
+  margin-bottom: 0.5ex;
+  background: white;
+  /* Netscape 4 requires this 1px border.
+     Without it, the paper borders below cause
+     the white background to disappear. */
+  border: 1px #ccc solid;
+  color: black;
+  border-top: 1px solid #494f5d;
+  border-left:  1px solid #494f5d;
+  border-bottom:  1px solid #c6d2de;
+  border-right: 1px solid #c6d2de;
+  padding-top:    1px;
+  padding-bottom: 1px;
+  padding-left:  .125em;
+  padding-right: .125em;
+  padding: 0;
+  /* "paper" borders */
+  /*border-top: 2px #d2d2d2 solid;
+  border-left:  2px #b2b2b2 solid;
+  border-bottom:  2px #e8e6df solid;
+  border-right: 2px #e8e6df solid;*/
+/*  padding-left:  0em; 
+  padding-bottom: 0ex;*/
+/*  border-style: inset;*/
+  /*This breaks Netscape 4: (display does not go full width).
+   * width: auto;
+   */
+  /* I'm not sure what the intent of this was, but it's
+   *  not valid CSS: */
+  /* display: editarea; */
+  clear: both;
+}
+.diff .block {
+  background: #ddd;
+  padding-left: 1em;
+  /* for NS4 */
+  /*border: none;*/
+}
+
+/* individual blocks */
+.diff .context {
+  background: white;
+  /* for NS4 */
+  border: none;
+}
+/* entire difftextblock */
+.difftext {
+  margin-top:    0;
+  margin-bottom: 0;
+  background: white;
+  /* Netscape 4 requires this 1px border.
+     Without it, the paper borders below cause
+     the white background to disappear. */
+  border: 1px black solid;
+  /* "paper" borders */
+  border-top:  1px #e8e6df solid;
+  border-left: 1px #e8e6df solid;
+  border-bottom: 1px #d2d2d2 solid;
+  border-right:  1px #b2b2b2 solid;
+  padding-left:  0em; 
+  padding-right: 0em;
+  padding-top:    0ex;
+  padding-bottom: 0ex;
+  /*This breaks Netscape 4: (display does not go full width).
+   * width: auto;
+   */
+  clear: both;
+}
+/* + - line prefix */
+.diff .block tt {
+  font-weight: normal;
+  font-family: monospace;
+  color: black;
+  /* for NS4 */
+  margin-left: 0;
+  border: none;
+}
+/* changed words */
+.diff del, .diff ins {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* blocks containing deleted or added words */
+.diff .original, .diff .deleted,
+.diff .final, .diff .added {
+  background: white;
+}
+/* blocks containing deleted words */
+.diff .original, .diff .deleted {
+  background: #fcc;
+  /* for NS4 */
+  border: none;
+}
+/* blocks containing added words */
+.diff .final, .diff .added {
+  background: #cfc;
+  /* for NS4 */
+  border: none;
+}
+
+/* These don't work in NS4 -- it completely ignores <del> and <ins>. */
+/* deleted words */
+.diff del { background: #f99; }
+/* added words */
+.diff ins { background: #9f9; }
+
+
+/* about box css stuff is here, 'cause we load the editor css only later */
+.AboutBox {
+  border: outset 1px black;;
+  background-color: #ff6600;
+  background-image: url("../../images/bxelogo.png");
+  background-repeat: no-repeat;
+  background-position: 8px 5px;
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 12px;
+  padding-left: 8px;
+  padding-top: 40px;
+  -moz-opacity: 1;
+}
+
+.AboutBox div {
+
+    height: 18px;
+    overflow: hidden;
+    padding-top: 0px;
+}
+.AboutBox a {
+  color: #000000;
+}
+
+
+

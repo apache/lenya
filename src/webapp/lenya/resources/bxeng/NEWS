@@ -1,0 +1,114 @@
+xx xxx xxx, Version 1.1.0
+
+- Added paragraph insertion on copy&paste (r846)
+- Added config.xml options for registering eDOM events (r876)
+- Added config.xml option for changing the button image location (r877)
+- Added automatic popping up of dialog, if required attributes 
+    are missing (on insertion or changing of elements) (r881)
+- Added possibility to clean inline styles with the corresponding 
+    button (r889)
+- Added XMLSnippet Plugin for inserting XML fragments from a dialog (r904)
+- Added new method to plugin interface: start(). It's called when everything
+    is loaded and initialized (r912)    
+- Added config.xml option for not displaying startup splass screen (r993)
+- Added mergeDifferentBlocksOnDelete option (r1026)
+- Added validation of <choice><attribute/> construct (r1031)
+- Added method attribute for using different transportDrivers (r1039)
+- Improved source editing mode (uses native textarea fields) (r855)
+- Improved speed (minimal...) (r926)
+- Changed handling of validation error during initial loading 
+    (changing to source mode is possible for fixing the error) (r870)
+
+xx xxx xxx  Version 1.0.1
+
+- Fixed one more "Marking more than one block and then delete it" problem (r1025)
+- Fixed problem with too long clipboard entries showing up in popup (r1021)
+
+3 December 2004 Version 1.0.0
+
+- Fixed problem with changing block elements, if there's only one (r1005)
+- Fixed "disappearing image" when on last position and hitting <return> (r1002)
+- Fixed CleanInline for nested inline styles (r990)
+- Fixed horizontal scrolling on paste (r983)
+
+29 November 2004 Version 1.0.0RC2
+
+- Removed "Document Saved" popup and moved message to statusbar (r952)
+- Rewrote Inline Style applying/removing code. should work better now (r967)
+- Fixed making list in table cells (r958)
+- Fixed editing class attribute on newly inserted XHTML nodes (r950)
+- Fixed cleaning nested inline tags (r945)
+- Fixed problem with xml comments within an editable node (r942)
+- Fixed problem with <span> elements during copy&paste (r936)
+- Fixed jumping around of page during paste (r933)
+- Changed license to Apache Software License 2.0 (r939)
+
+23 November 2004, Version 1.0.0RC1
+
+- Added "Move up/Move down" for elements to context menu (r851)
+- Added possibility to insert children of a editable area root node 
+    (even if there are no elements in editable area) (r851)
+- Added valid RelaxNG attribute checking on root nodes.
+- Improved checking of attribute-values against RelaxNG (r859)
+- Fixed an issue with TextNodes in Mozilla 1.8 (r844)
+- Fixed wrong detection of empty tablecells (prevents adding unneeded 
+    spaces) (r849)
+- Fixed applying non-xhtml inline style to whole paragraphs (r857)
+- Fixed deletion code in inline elements (preventing deleting too much) (r860)
+- Fixed applying inline styles over several paragraphs (r861)
+- Fixed deletion of table cell, if it contains a paragraph (r867)
+- Fixed problem with wrongly inserting new elements on hitting enter (r884/887)
+- Fixed issue with attributes in the xmlns namespace (by Niklas Therning) (r896)
+- Fixed plugin loader code for loading more than one plugin (r909)
+- Fixed a infinite loop condition during buildXPath() (r919)
+- Fixed insertIntoHTMLDocument() to not insert more AreaPointer and Widgets 
+    after first call (prevents slowdown on undo/redo) (r920)
+
+26 October 2004, Version 0.9.6
+
+- Added missing xhtml namespace (firefox 1.0 fix)
+- Added ExternalXhtmlReplaceBodyChildren option for not replacing body children, when loading external XHTML files
+- Added more checks to throw correct warning when in source mode
+- Added Config-Options for Image-, Link- and Assetdrawer 
+- Added better handling of empty table cells
+- Improved validation on attributes
+- Fixed location of status bar, if there's a y-scrollbar 
+- Fixed issues with  elements without namespace (by patrick)
+- Fixed some redo/undo issues
+- Fixed problems with inline elements ('Bold' ersetzt td-Element durch strong-Element)
+- Fixed paste over multiple paragrpah problems
+- Fixed issue with backspace key and actually going back one in browser history
+- Removed <br> from Contextmenu
+- Improved exit function, so that it actually saves to content on request
+
+07 July 2004, Version 0.9.5
+
+- Added warning message on exit, if document was changed and not saved.
+- Added PHP example for loading/saving file.
+- Added alert message about not working Mozilla 1.7/Firefox 0.9(.1) (due to http://bugzilla.mozilla.org/show_bug.cgi?id=248172)
+- Fixed popup-dialogs with too long texts.
+
+27 Mai 2004, Version 0.9.4
+
+- Added support for Kupudrawers
+- Added Plugin support (see plugins/Drawer.js for an example)
+- Switched to Subversion (repository at http://svn.bitflux.ch/repos/bxe/)
+- Added configurable button "events" (See http://wiki.bitfluxeditor.org/index.php/ButtonDefinitions)
+- Added browsercheck on startup
+- Added configure option for OPTION_DEFAULTTABLECLASS (by Christian Egli)
+- Added more error reporting 
+- Added more validation checks
+- Added possibility to load XML documents not declared as "Content-Type: text/xml"
+- Added removing of not allowed attributes on element name change.
+- Added support for soft-breaks (<br/> in XHTML speak)
+- Fixed broken About Screen
+- Fixed format menu, when switching from source to normal view
+- Fixed insertContent issues with new tables
+- Fixed namespace handling on element name change.
+- Fixed problems with absolute path-resolution in config.xml
+- Fixed selection, insertion and copy/paste issues
+- Made popupwindows resizable
+- Updated inlineXHTML config.xml (by Michael Rolli)
+
+
+

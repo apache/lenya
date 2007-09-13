@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<kupu:include
+  xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  >
+    <kupu:id>$Id: include.kupu 9274 2005-02-17 16:22:12Z duncan $</kupu:id>
+
+  <!-- Include features -->
+  <xi:include href="wire.kupu" />
+  <xi:include href="head.kupu" />
+  <xi:include href="xmlconfig.kupu" />
+  <xi:include href="body.kupu" />
+  <xi:include href="toolbar.kupu" />
+  <xi:include href="drawers.kupu" />
+  <xi:include href="beforeunload.kupu" />
+  <xi:include href="sourceedit.kupu" />
+  <xi:include href="wysiwyg_support.kupu" />
+
+</kupu:include>

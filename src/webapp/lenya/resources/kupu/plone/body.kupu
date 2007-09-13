@@ -1,0 +1,62 @@
+<kupu:feature
+    name="body"
+    implementation="plone"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    >
+  <kupu:id>$Id: body.kupu 12978 2005-06-01 14:53:58Z gotcha $</kupu:id>
+  <kupu:part name="editorframe">
+    <iframe
+        id="kupu-editor"
+	class="kupu-editor-iframe"
+        frameborder="0"
+        src="emptypage"
+        onfocus="this.contentWindow.focus();"
+        tal:define="
+                base here/absolute_url;
+                posfactory python:base.find('/portal_factory/');
+                base python:posfactory > 0 and base[:posfactory+15] or base;"
+        tal:attributes="src string:${base}/emptypage; tabindex python:tabindex+1"
+        >
+    </iframe>
+<tal:test condition="fieldName|nothing">
+    <textarea cols="80" rows="25"
+        tabindex=""
+        class="kupu-editor-textarea"
+        name="description" id="kupu-editor-textarea"
+        tal:condition="fieldName|nothing"
+        tal:define="content python:here.convertContentForKupu(fieldName, inputvalue);"
+        tal:content="content"
+        tal:attributes="name inputname;
+                        onfocus onfocus|nothing;
+                        onblur onblur|nothing;
+                        tabindex tabindex|nothing;
+                        rows rows|default;
+                        cols cols|default;">
+    </textarea>
+</tal:test>
+    <textarea cols="80" rows="25"
+        tabindex=""
+        class="kupu-editor-textarea"
+        name="description"
+        id="kupu-editor-textarea"
+        tal:define="pss modules/Products/PythonScripts/standard;
+                text_format python: getattr(here,'text_format','html');
+                is_stx python:text_format=='structured-text';
+                is_ptx python:text_format=='plain';"
+
+        tal:condition="not:fieldName|nothing"
+        tal:content="python:(is_stx and pss.structured_text(inputvalue))
+                                    			or (is_ptx and pss.newline_to_br(inputvalue))
+                                    			or inputvalue"
+        tal:attributes="name inputname;
+                        onfocus onfocus|nothing;
+                        onblur onblur|nothing;
+                        tabindex tabindex|nothing;
+                        rows rows|default;
+                        cols cols|default;">
+    </textarea>
+  </kupu:part>
+
+</kupu:feature>

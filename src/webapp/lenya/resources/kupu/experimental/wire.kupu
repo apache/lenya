@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<kupu:wire
+    implementation="experimental"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    >
+
+  <kupu:fill-slot name="toolboxes">
+    <kupu:insert-part feature="toolboxes" part="inspector" />
+    <kupu:insert-part feature="toolboxes" part="debug" />
+  </kupu:fill-slot>
+
+</kupu:wire>

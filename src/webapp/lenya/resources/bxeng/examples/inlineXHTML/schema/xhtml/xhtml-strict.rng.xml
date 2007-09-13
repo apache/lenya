@@ -1,0 +1,39 @@
+<!-- XHTML Strict -->
+
+<grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0">
+
+<include href="modules/datatypes.rng.xml"/>
+<include href="modules/attribs.rng.xml"/>
+<include href="modules/struct.rng.xml"/>
+<include href="modules/text.rng.xml"/>
+<include href="modules/hypertext.rng.xml"/>
+<include href="modules/list.rng.xml"/>
+<include href="modules/param.rng.xml"/>
+<include href="modules/object.rng.xml"/>
+<include href="modules/pres.rng.xml"/>
+<include href="modules/form.rng.xml"/>
+<include href="modules/basic-table.rng.xml"/>
+<include href="modules/inlstyle.rng.xml"/>
+<include href="modules/target.rng.xml"/>
+<include href="modules/nameident.rng.xml"/>
+
+<!--
+<include href="modules/applet.rng.xml"/>
+<include href="modules/bdo.rng.xml"/>
+
+<include href="modules/ssismap.rng.xml"/>
+<include href="modules/base.rng.xml"/>
+<include href="modules/link.rng.xml"/>
+<include href="modules/meta.rng.xml"/>
+<include href="modules/edit.rng.xml"/>
+<include href="modules/basic-form.rng.xml"/>
+<include href="modules/style.rng.xml"/>
+<include href="modules/script.rng.xml"/>
+<include href="modules/table.rng.xml"/>
+<include href="modules/csismap.rng.xml"/>
+<include href="modules/events.rng.xml"/>
+<include href="modules/iframe.rng.xml"/>
+-->
+
+</grammar>

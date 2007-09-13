@@ -1,0 +1,129 @@
+/*****************************************************************************
+ *
+ * Kupu drawer styles
+ *
+ * Copyright (c) 2003-2004 Kupu Contributors. See CREDITS.txt
+ *
+ * Instead of customizing this file, it is recommended to add your own
+ * CSS file.  Feel free to use whole or parts of this for your own
+ * designs, but give credit where credit is due.
+ *
+ *****************************************************************************/
+
+/* $Id: kupudrawerstyles.css 4123 2004-04-22 15:19:45Z philikon $ */
+
+
+#kupu-librarydrawer {
+  top: 50px;
+  left: 0px;
+  position: fixed;
+  display: none;
+  border: 1px dotted black;
+  width: 520px;
+  background-color: white;
+  z-index:1000; 
+}
+
+
+div#kupu-drawerheader, div#kupu-dialogbuttons { 
+  background-color: #aa3300;
+  font-size: 12px;
+}
+
+div#kupu-drawerheader form {
+    margin-bottom: 0px;
+}
+
+input#kupu-searchbox {
+  margin-left: 320px;
+  width: 8em;
+  margin-bottom: 6px;
+  margin-top: 5px;
+
+}
+
+div#kupu-dialogbuttons {
+  padding-left: 300px;  
+  padding-top: 6px;
+  padding-bottom: 6px;
+  background-color:   #ff6600;
+  width: 220px;
+}
+
+div#kupu-dialogbuttons button {
+    border: dotted black 1px;
+    width: 50px;
+    margin-right: 10px;
+}
+
+div#kupu-panels {
+  width: 100%;
+  background-color: ButtonFace;
+}
+
+div#kupu-panels td {
+  font-family: sans-serif;
+  font-size: 12px;
+  vertical-align: top;
+  /*border: 1px dotted black;*/
+  background-color: #ff6600;
+}
+
+div#kupu-panel table  {
+    width: 520px;
+    background-color: blue;
+}
+
+
+td#kupu-librariespanel {
+  width: 120px;
+  height: 240px;
+}
+
+td#kupu-resourcespanel {
+  width: 160px;
+}
+
+td#kupu-propertiespanel {
+  width: 240px;
+  height: 240px;
+}
+
+div#kupu-resourceitems {
+  height: 230px;
+}
+
+.overflow {
+  overflow: auto;
+  height: 230px;
+}
+
+div.kupu-libsource,
+div.response, div.collection,
+div.selected {
+    font-size: 13px; 
+	margin-right:0px;
+	margin-bottom: 0px;
+    border-bottom: 0px;
+	border:0px solid  #555555;
+	background-color:     #ff6600;
+    padding: 0px 10px 0px 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+div.kupu-libsource:hover,
+div.response:hover,
+div.collection:hover,
+div.selected:hover {
+  cursor: pointer;
+}
+
+div.selected {
+  background-color: #aa3300;
+  color: #FFFFFF;
+}
+
+#kupu-tabledrawer-edittable {
+  display: none;
+}

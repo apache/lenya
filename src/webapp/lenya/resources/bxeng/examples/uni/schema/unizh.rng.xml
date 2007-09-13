@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:unizh="http://unizh.ch/doctypes/elements/1.0"
+         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         >
+
+<define name="lightblock.class">
+  <choice>
+    <ref name="p"/>
+    <ref name="object"/>
+    <ref name="lenya.asset"/>
+  </choice>
+</define>
+
+<define name="unizh.columns.attrib">
+  <attribute name="unizh:columns">
+    <ref name="Number.datatype"/>
+  </attribute>
+</define>
+
+<define name="unizh.highlights">
+  <optional>
+    <element name="unizh:highlights">
+      <zeroOrMore>
+        <ref name="unizh.highlight"/>
+      </zeroOrMore>
+    </element>
+  </optional>
+</define>
+
+<define name="unizh.highlight">
+  <element name="unizh:highlight">
+    <optional>
+      <element name="unizh:highlight-title"><text/></element>
+    </optional>
+    <!-- a subset of XHTML block -->
+    <ref name="lightblock.class"/>
+  </element>
+</define>
+
+<define name="unizh.toc">
+  <element name="unizh:toc"><empty/></element>
+</define>
+
+<define name="unizh.children">
+  <element name="unizh:children">
+    <optional>
+    <attribute name="abstracts">
+      <data type="boolean" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"/>
+    </attribute>
+    </optional>
+  </element>
+</define>
+
+<define name="unizh.identity">
+  <element name="unizh:identity">
+    <attribute name="data">
+      <ref name="Text.datatype"/>
+    </attribute>
+  </element>
+</define>
+
+<define name="unizh.slogan">
+  <element name="unizh:slogan"><text/></element>
+</define>
+
+<define name="unizh.logo">
+  <element name="unizh:logo">
+    <attribute name="data">
+      <ref name="Text.datatype"/>
+    </attribute>
+  </element>
+</define>
+
+<define name="unizh.attention">
+  <element name="unizh:attention">
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="unizh.important">
+  <element name="unizh:important">
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+</grammar>

@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Kupu contentarea</title>
+    <link rel="stylesheet" type="text/css" href="#" tal:attributes="href string:${here/portal_url}/kupuplone.css" />
+    <link rel="stylesheet" type="text/css" href="#" tal:attributes="href string:${here/portal_url}/plone.css" />
+    <link rel="stylesheet" type="text/css" href="#" tal:attributes="href string:${here/portal_url}/ploneCustom.css" />
+    <base href="emptypage"
+        tal:attributes="href here/absolute_url" />
+  </head>
+  <body class="kupu">
+   
+   <tal:comment replace="nothing">    
+      This template is an empty placeholder, used for loading contents
+      into the Kupu editof-iframe.
+   </tal:comment>
+   
+  </body>
+</html>

@@ -1,0 +1,273 @@
+<AttributeAcceptancePolicy xmlns="urn:mace:shibboleth:1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:mace:shibboleth:1.0 ../schemas/shibboleth.xsd">
+
+	<!--
+	An AAP is a set of AttributeRule elements, each one
+	referencing a specific attribute by URI. All attributes that
+	should be visible to an application running at the target should
+	be listed, or they will be filtered out.
+	
+	The Header and Alias attributes map an attribute to an HTTP header
+	and to an htaccess rule name respectively. Without Header, the attribute
+	will only be obtainable from the exported SAML assertion in raw XML.
+	
+	Scoped attributes are also filtered on Scope via the Domain elements
+	in the site metadata.
+	-->
+	
+	<!-- First some useful eduPerson attributes that many sites might use. -->
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation" Scoped="true" CaseSensitive="false" Header="Shib-EP-Affiliation" Alias="affiliation">
+		<!-- Filtering rule to limit values to eduPerson-defined enumeration. -->
+        <AnySite>
+          <Value Accept="true">MEMBER</Value>
+          <Value Accept="true">FACULTY</Value>
+          <Value Accept="true">STUDENT</Value>
+          <Value Accept="true">STAFF</Value>
+          <Value Accept="true">ALUM</Value>
+          <Value Accept="true">AFFILIATE</Value>
+          <Value Accept="true">EMPLOYEE</Value>
+        </AnySite>
+        
+        <!-- Example of Scope rule to override site metadata. -->
+        <SiteRule Name="urn:mace:inqueue:shibdev.edu">
+        	<Scope Accept="false">shibdev.edu</Scope>
+          <Scope Type="regexp" Accept="true">^.+\.shibdev\.edu$</Scope>
+        </SiteRule>
+	</AttributeRule>
+
+	<!--
+	This attribute is provided mostly to ease testing because an IdP out of the box only
+	sends the unscoped version. It has little use because it lacks the context needed to
+	work in a multi-domain scenario and is a subset of the scoped version anyway.
+	 -->
+	<AttributeRule Name="urn:mace:dir:attribute-def:eduPersonAffiliation" CaseSensitive="false" Header="Shib-EP-UnscopedAffiliation" Alias="unscoped-affiliation">
+        <AnySite>
+            <Value Accept="true">MEMBER</Value>
+          <Value Accept="true">FACULTY</Value>
+          <Value Accept="true">STUDENT</Value>
+          <Value Accept="true">STAFF</Value>
+          <Value Accept="true">ALUM</Value>
+          <Value Accept="true">AFFILIATE</Value>
+          <Value Accept="true">EMPLOYEE</Value>
+        </AnySite>
+	</AttributeRule>
+	
+    <AttributeRule Name="urn:mace:dir:attribute-def:eduPersonPrincipalName" Scoped="true" Header="REMOTE_USER" Alias="user">
+		<!-- Basic rule to pass through any value. -->
+        <AnySite>
+          <Value Type="regexp" Accept="true">^[^@]+$</Value>
+        </AnySite>
+    </AttributeRule>
+
+  <AttributeRule Name="urn:mace:switch.ch:attribute-def:swissEduPersonHomeOrganization" Scoped="false" Header="REMOTE_USER" Alias="homeOrganization">
+    <AnySite><Value Type="regexp" Accept="true">^[^@]+$</Value></AnySite>
+  </AttributeRule>
+  
+  <AttributeRule Name="urn:mace:dir:attribute-def:sn" Scoped="false" Header="REMOTE_USER" Alias="surname">
+    <AnySite><Value Type="regexp" Accept="true">^[^@]+$</Value></AnySite>
+  </AttributeRule>
+  
+  <AttributeRule Name="urn:mace:dir:attribute-def:givenName" Scoped="false" Header="REMOTE_USER" Alias="givenName">
+    <AnySite><Value Type="regexp" Accept="true">^[^@]+$</Value></AnySite>
+  </AttributeRule>
+  
+  <!-- Some more eduPerson attributes, uncomment these to use them... -->
+	<!--
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:eduPersonNickname">
+        <AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+
+	<AttributeRule Name="urn:mace:dir:attribute-def:eduPersonPrimaryAffiliation" CaseSensitive="false" Header="Shib-EP-PrimaryAffiliation">
+        <AnySite>
+            <Value>MEMBER</Value>
+            <Value>FACULTY</Value>
+            <Value>STUDENT</Value>
+            <Value>STAFF</Value>
+            <Value>ALUM</Value>
+            <Value>AFFILIATE</Value>
+            <Value>EMPLOYEE</Value>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:eduPersonPrimaryOrgUnitDN" Header="Shib-EP-PrimaryOrgUnitDN">
+        <AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:eduPersonOrgUnitDN" Header="Shib-EP-OrgUnitDN">
+        <AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:eduPersonOrgDN" Header="Shib-EP-OrgDN">
+        <AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+
+	-->
+
+
+	<!--Examples of common LDAP-based attributes, uncomment to use these... -->
+	<!--
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:cn" Header="Shib-Person-commonName">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:sn" Header="Shib-Person-surname">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:telephoneNumber" Header="Shib-Person-telephoneNumber">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:title" Header="Shib-OrgPerson-title">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:initials" Header="Shib-InetOrgPerson-initials">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:description" Header="Shib-Person-description">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:carLicense" Header="Shib-InetOrgPerson-carLicense">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:departmentNumber" Header="Shib-InetOrgPerson-deptNum">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:displayName" Header="Shib-InetOrgPerson-displayName">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:employeeNumber" Header="Shib-InetOrgPerson-employeeNum">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:employeeType" Header="Shib-InetOrgPerson-employeeType">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:preferredLanguage" Header="Shib-InetOrgPerson-prefLang">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:manager" Header="Shib-InetOrgPerson-manager">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:roomNumber" Header="Shib-InetOrgPerson-roomNum">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:seeAlso" Header="Shib-OrgPerson-seeAlso">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:facsimileTelephoneNumber" Header="Shib-OrgPerson-fax">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:street" Header="Shib-OrgPerson-street">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:postOfficeBox" Header="Shib-OrgPerson-POBox">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:postalCode" Header="Shib-OrgPerson-postalCode">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:st" Header="Shib-OrgPerson-state">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:givenName" Header="Shib-InetOrgPerson-givenName">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:l" Header="Shib-OrgPerson-locality">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:businessCategory" Header="Shib-InetOrgPerson-businessCat">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:ou" Header="Shib-OrgPerson-orgUnit">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	<AttributeRule Name="urn:mace:dir:attribute-def:physicalDeliveryOfficeName" Header="Shib-OrgPerson-OfficeName">
+		<AnySite>
+            <AnyValue/>
+        </AnySite>
+	</AttributeRule>
+	
+	-->
+
+</AttributeAcceptancePolicy>

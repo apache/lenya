@@ -1,0 +1,42 @@
+==============
+TODO for Plone
+==============
+
+Make the toolbar customisable from Plone control panel, possibly by
+making the kupu tool into an action provider.
+[DB: I'm not sure this will work as I think the information we need is
+rather different than the usual action provider. After all, our
+actions are all client side javascript not server-side methods.
+However the general idea is good.]
+
+Add an option to the 
+
+================
+TODO for drawers
+================
+
+These are probably core issues rather than specifically Plone.
+
+- image drawer should go straight to the correct location when opened
+  on an existing image (is this even possible?) so you can adjust
+  alignment, captioning etc. without having to reinsert the image.
+
+- add toolbox drawer to run macros which aren't deemed important
+  enough to be directly on the toolbar.
+
+- Uploading an image doesn't let you float the image. Perhaps the
+  upload handler should simply refresh the drawer with the uploaded
+  file selected, then you can set all the usual image options on an
+  uploaded image.
+
+=====================
+IE problems and fixes
+=====================
+
+o importNode(node) fails on XML Document nodes. Use
+  node.cloneNode(true) as a hack.
+
+o drawer changes height when navigating with IE. Fixed by forcing the
+  entire drawer to refresh in IE, but there must be something simpler we
+  could do to have the same effect.
+

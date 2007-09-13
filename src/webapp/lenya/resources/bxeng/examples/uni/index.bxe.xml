@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Universität Zürich -
+      Unicommunication</title>
+        <link rel="stylesheet" type="text/css" href="./css/main.css" media="screen"/>
+        <meta name="keywords" content="Keywords"/>
+        <meta name="description" content="Abstract"/>
+        <script language="javascript" type="text/javascript"><!--
+//JavaSript Universitaet Zuerich unicms_version 030703
+
+//antiframe
+//if (top.frames.length > 0) {top.location.href = self.location;}
+
+// CSS Triage
+if (navigator.platform.indexOf ('Mac') >= 0 || navigator.platform.indexOf ('X11') >= 0);
+
+	else {
+		if (navigator.platform.indexOf ('Win') >= 0) {
+		seite = '{$contextprefix}/unizh/authoring/css/win.css';
+		}
+		else seite = '{$contextprefix}/unizh/authoring/css/linux.css';
+
+//		document.write('<link rel="stylesheet" type="text/css" href="'+seite+'">');
+	}
+
+// Bilder laden
+linkx = new Image(); linkx.src = "/lenya/unicom/authoring/images/oliv_unipublic_s.gif"; linkxa = new Image();linkxa.src = "/lenya/unicom/authoring/images/oliv_unipublic_w.gif";
+
+    link1 = new Image();
+    link1.src = "/lenya/unicom/authoring/images/ro_fo_off.gif";
+    link1a = new Image();
+    link1a.src = "/lenya/unicom/authoring/images/ro_fo_on.gif";
+  
+    link2 = new Image();
+    link2.src = "/lenya/unicom/authoring/images/ro_stu_off.gif";
+    link2a = new Image();
+    link2a.src = "/lenya/unicom/authoring/images/ro_stu_on.gif";
+  
+    var currentSection = 3;
+  
+    link4 = new Image();
+    link4.src = "/lenya/unicom/authoring/images/ro_allg_off.gif";
+    link4a = new Image();
+    link4a.src = "/lenya/unicom/authoring/images/ro_allg_on.gif";
+  
+    link5 = new Image();
+    link5.src = "/lenya/unicom/authoring/images/ro_fak_off.gif";
+    link5a = new Image();
+    link5a.src = "/lenya/unicom/authoring/images/ro_fak_on.gif";
+  
+    link6 = new Image();
+    link6.src = "/lenya/unicom/authoring/images/ro_leit_off.gif";
+    link6a = new Image();
+    link6a.src = "/lenya/unicom/authoring/images/ro_leit_on.gif";
+  
+    link7 = new Image();
+    link7.src = "/lenya/unicom/authoring/images/ro_ule_off.gif";
+    link7a = new Image();
+    link7a.src = "/lenya/unicom/authoring/images/ro_ule_on.gif";
+  
+
+function bildwechsel (aa) {
+	bildreset ();
+	document.images["bild" + aa].src = eval("link" + aa + "a.src");
+}
+
+function bildreset () {
+	if(document.images["bildx"]) document.images["bildx"].src = linkx.src;
+	for (i = 1; i < 8; i++) {
+	  if (i != currentSection) {
+		  document.images["bild" + i].src = eval("link" + i + ".src");
+		}
+	}
+}
+
+--></script>
+    </head>
+    <body>
+        <div align="center">
+            <a name="top"/>
+            <table cellspacing="0" cellpadding="0" border="0" width="800">
+                <tr id="topnavbar">
+                    <td colspan="3">
+                        <form action="http://www.google.com/u/unizh" method="get" name="sa">
+                            <input type="hidden" name="domains" value="unizh.ch"/>
+                            <input type="hidden" name="sitesearch" value="unizh.ch"/>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#666699">
+                                <tr>
+                                    <td bgcolor="#f5f5f5" align="left" width="40" height="10">
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="" height="10" width="41" border="0"/>
+                                    </td>
+                                    <td rowspan="2" valign="top" bgcolor="#999966" width="150">
+                                        <a href="http://www.unipublic.unizh.ch/" onmouseover="bildwechsel('x');" onmouseout="bildreset();">
+                                            <img src="/lenya/unicom/authoring/images/oliv_unipublic_s.gif" alt="unipublic" width="150" height="28" align="top" border="0" name="bildx"/>
+                                        </a>
+                                    </td>
+                                    <td valign="middle" bgcolor="#f5f5f5" align="right" width="394" height="10">
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="" height="10" width="394" border="0"/>
+                                    </td>
+                                    <td bgcolor="#f5f5f5" height="10" width="216">
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="" height="10" width="216" border="0"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" bgcolor="#999966" align="left">
+                                        <nobr>
+                                            <img height="17" width="3" src="/lenya/unicom/authoring/images/1.gif" alt="" align="top"/>
+                                            <a href="http://www.unizh.ch/index.html">
+                                                <img src="/lenya/unicom/authoring/images/oliv_home.gif" alt="Home" align="top" border="0" height="17" width="31"/>
+                                            </a>
+                                            <img src="/lenya/unicom/authoring/images/oliv_strich.gif" alt="|" align="top"/>
+                                        </nobr>
+                                    </td>
+                                    <td bgcolor="#999966" valign="top" align="right">
+                                        <nobr>
+                                            <a href="index_en.html">
+                                                <img src="/lenya/unicom/authoring/images/oliv_en.gif" alt="English" align="top" border="0"/>
+                                            </a>
+                                            <img src="/lenya/unicom/authoring/images/oliv_strich.gif" alt="|" align="top"/>
+                                            <a href="index.print.html">
+                                                <img src="/lenya/unicom/authoring/images/oliv_print.gif" alt="Druckansicht" align="top" border="0"/>
+                                            </a>
+                                            <img src="/lenya/unicom/authoring/images/oliv_strich.gif" alt="|" align="top"/>
+                                            <a href="http://www.unizh.ch/info/adressen/kontakt.html">
+                                                <img src="/lenya/unicom/authoring/images/oliv_kontakt.gif" alt="Kontakt" align="top" border="0"/>
+                                            </a>
+                                            <img src="/lenya/unicom/authoring/images/oliv_strich.gif" alt="|" align="top"/>
+                                            <a href="http://www.search.unizh.ch/index.html">
+                                                <img src="/lenya/unicom/authoring/images/oliv_suchen.gif" alt="Suchen" align="top" border="0"/>
+                                            </a>
+                                            <img height="17" width="3" src="/lenya/unicom/authoring/images/1.gif" alt="" align="top"/>
+                                            <input type="text" name="q" size="14"/>
+                                            <img height="17" width="3" src="/lenya/unicom/authoring/images/1.gif" alt="" align="top"/>
+                                            <input src="/lenya/unicom/authoring/images/oliv_go.gif" type="image" align="top" border="0" name="sa2"/>
+                                        </nobr>
+                                    </td>
+                                    <td bgcolor="#f5f5f5">
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt=""/>
+                                    </td>
+                                    <td/>
+                                </tr>
+                                <tr>
+                                    <td height="50">
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt=""/>
+                                    </td>
+                                    <td colspan="2" align="right" valign="top">
+                                        <a href="http://www.unizh.ch/index.html">
+                                            <img height="29" width="235" src="/lenya/unicom/authoring/images/unilogoklein.gif" alt="Universität Zürich" border="0"/>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="4">
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="" width="7" height="1"/>
+                                        <a href="http://www.unizh.ch/forschung/" onmouseover="bildwechsel(1);" onmouseout="bildreset();">
+                                            <img src="/lenya/unicom/authoring/images/ro_fo_off.gif" alt="Forschung" border="0" name="bild1"/>
+                                        </a>
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="|" width="4" height="10"/>
+                                        <a href="http://www.unizh.ch/studium/" onmouseover="bildwechsel(2);" onmouseout="bildreset();">
+                                            <img src="/lenya/unicom/authoring/images/ro_stu_off.gif" alt="Studium" border="0" name="bild2"/>
+                                        </a>
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="|" width="4" height="10"/>
+                                        <a href="http://www.unizh.ch/services/">
+                                            <img src="/lenya/unicom/authoring/images/ro_dl_on.gif" alt="Dienstleistungen &amp; Produkte" border="0" name="bild3"/>
+                                        </a>
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="|" width="4" height="10"/>
+                                        <a href="http://www.unizh.ch/info/" onmouseover="bildwechsel(4);" onmouseout="bildreset();">
+                                            <img src="/lenya/unicom/authoring/images/ro_allg_off.gif" alt="Allgemeine Informationen" border="0" name="bild4"/>
+                                        </a>
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="|" width="4" height="10"/>
+                                        <a href="http://www.unizh.ch/fakultaet/" onmouseover="bildwechsel(5);" onmouseout="bildreset();">
+                                            <img src="/lenya/unicom/authoring/images/ro_fak_off.gif" alt="Fakultäten &amp; Institute" border="0" name="bild5"/>
+                                        </a>
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="|" width="4" height="10"/>
+                                        <a href="http://www.unizh.ch/admin/" onmouseover="bildwechsel(6);" onmouseout="bildreset();">
+                                            <img src="/lenya/unicom/authoring/images/ro_leit_off.gif" alt="Leitung &amp; Verwaltung" border="0" name="bild6"/>
+                                        </a>
+                                        <img src="/lenya/unicom/authoring/images/1.gif" alt="|" width="4" height="10"/>
+                                        <a href="http://www.unizh.ch/leben/" onmouseover="bildwechsel(7);" onmouseout="bildreset();">
+                                            <img src="/lenya/unicom/authoring/images/ro_ule_off.gif" alt="Universitäres Leben" border="0" name="bild7"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="navon" colspan="3" width="800">
+                        <br/>
+                        <div xmlns:lenya="http://apache.org/cocoon/lenya/document/1.0" id="breadcrumb">
+                            <a href="http://www.unizh.ch">Universität Zürich</a>
+    &gt;
+  <a href="http://www.unizh.ch/services/">Dienstleistungen &amp; Produkte</a>
+    &gt;
+  <a href="/lenya/unicom/authoring/index.html">Unicom</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="187" height="40">
+                        <img height="40" width="187" src="/lenya/unicom/authoring/images/1.gif" alt=""/>
+                    </td>
+                    <td width="413" height="40">
+                        <img height="40" width="413" src="/lenya/unicom/authoring/images/1.gif" alt=""/>
+                    </td>
+                    <td width="200" height="40">
+                        <img height="40" width="200" src="/lenya/unicom/authoring/images/1.gif" alt=""/>
+                    </td>
+                </tr>
+                <tr id="body">
+                    <td id="navigation" valign="top" width="187">
+                        <div id="menu">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td class="publtitelcel">
+                                        <a href="index.html">
+                                            <span class="publtitel">
+                                                <span class="publtitelcolor">Unicom</span>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="navoff"></td>
+                                </tr>
+                                <tr>
+                                    <td class="navoff">
+                                        <div class="nlevel1">
+                                            <a href="doctypes.html">Dokumenttypen</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="413" valign="top" align="left">
+                        <div class="content3cols">
+                            <div xmlns:index="http://apache.org/cocoon/lenya/documentindex/1.0" class="identity">
+                                <img border="0" height="80" width="100%" src="index/images/999999.gif"/>
+                            </div>
+                            <p xmlns:index="http://apache.org/cocoon/lenya/documentindex/1.0" bxe_xpath="/xhtml:homepage/unizh:slogan" class="slogan">
+                            </p>
+                            <div bxe_xpath="/xhtml:homepage/xhtml:body">
+  	
+                               
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top" width="200" align="left">
+                        <div class="highlights">
+                            <div xmlns:index="http://apache.org/cocoon/lenya/documentindex/1.0" class="logo">
+                                <img border="0" height="80" width="200" src="index/images/999999.gif"/>
+                            </div>
+                            <div bxe_xpath="/xhtml:homepage/unizh:highlights">
+                                <table xmlns:index="http://apache.org/cocoon/lenya/documentindex/1.0" width="100%">
+                                    <tr>
+                                        <td class="highlight0">
+                                            <p class="highlight-title">Title of the highlight</p>
+                                            <p>The text of the highlight.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr xmlns:lenya="http://apache.org/cocoon/lenya/document/1.0" id="footer">
+                    <td bgcolor="#f5f5f5" width="187"/>
+                    <td class="footer" colspan="2" width="813">
+                        <br/>
+                        <img alt="" height="1" src="/lenya/unicom/authoring/images/999999.gif" width="587"/>
+                        <br/> ©
+    Universität Zürich,
+    20.02.2004,
+    <a href="/impressum.html" target="_blank">Impressum</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

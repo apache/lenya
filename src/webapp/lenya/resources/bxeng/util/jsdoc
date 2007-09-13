@@ -1,0 +1,123 @@
+#!/bin/sh
+
+# JsUnit - a JUnit port for JavaScript
+# Copyright (C) 1999,2000,2001,2002 Joerg Schaible
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation in version 2 of the License.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# 
+# Test suites built with JsUnit are derivative works derived from tested 
+# classes and functions in their production; they are not affected by this 
+# license.
+
+_DOXYGEN=`type doxygen 2>&1`
+if test -z "$_DOXYGEN"; then
+	if test -d /opt/doxygen/bin; then
+		PATH=$PATH:/opt/doxygen/bin
+		_DOXYGEN=YES
+	fi
+fi
+if test -z "$_DOXYGEN"; then
+	echo "doxygen not available!"
+	exit 1
+fi
+_DOT=`type dot  2>&1`
+if test -z "$_DOT"; then
+	if test -d /opt/graphviz/bin; then
+		HAS_DOT="YES"
+		PATH=$PATH:/opt/graphviz/bin
+	elif test -d /opt/ATT/Graphviz/bin; then
+		HAS_DOT="YES"
+		PATH=$PATH:/opt/ATT/Graphviz/bin
+	else
+		HAS_DOT="NO"
+	fi
+else
+	HAS_DOT="YES"
+fi
+OUTPUT_DIRECTORY=.
+VERSION=`cat version.cfg`
+GENERATE_HTML=YES
+GENERATE_MANE=YES
+PERL_PATH=/bin/perl
+if test `uname -s | grep -ic CYGWIN` -gt 0; then
+	PERL_PATH=`cygpath -aw $PERL_PATH`
+fi
+export GENERATE_HTML GENERATE_MAN OUTPUT_DIRECTORY HAS_DOT PERL_PATH VERSION
+if test "$1" = "--keep-temp"; then
+	KEEP=1
+else
+	KEEP=0
+fi
+
+CWD=$CWD
+#cd `dirname $0`/..
+rm -rf .lib/ .doc/ .libtmp/ man/ > /dev/null 2>&1
+rm -rf .doc/  man/ > /dev/null 2>&1
+#rm -f doc/*
+mkdir .lib .doc doc man
+mkdir .libtmp
+mkdir .libtmp/td
+mkdir .libtmp/js
+mkdir .libtmp/relaxng
+mkdir .libtmp/mozile
+mkdir .libtmp/mozile/td
+mkdir .lib/td
+mkdir .lib/js
+mkdir .lib/relaxng
+mkdir .lib/mozile
+mkdir .lib/mozile/td
+
+
+PAGER=cat perldoc -t util/js2doxy.pl > .lib/.js2doxy.man
+#cd lib
+echo "*** translating ***"
+for js in `find . ! -path ".libtmp/*" ! -path "*mozile.ori*" -name "*.js"  `; do 
+	#if test $js -nt "doc/index.html"; then 
+		echo $js
+        cp $js .libtmp/$js
+		#sed -e "s/_classes.registerClass('\([^']*\)' *)/\1.prototype = new xbObject()/"  -e "s/_classes.registerClass('\([^']*\)' *, *'\([^']*\)'/\1.prototype = new \2(/" $js > .libtmp/$js
+	#fi;		
+done
+echo "*** processing ***"
+cd .libtmp
+for js in `find . -name "*.js"`; do 
+	if test $js -nt "../doc/index.html"; then 
+		echo $js
+		../util/js2doxy.pl $js > ../.lib/$js
+	fi;
+done
+cd ..
+
+#js="bitfluxeditor_load.js"
+#./util/js2doxy.pl $js > ./.lib/$js
+
+
+doxygen util/Doxyfile
+exit
+#cp util/*.bmp doc/
+
+mv doc/*.html .doc/
+cd .doc
+for html in *.html; do 
+	sed -e 's,<\([hH][1-9]\)>JsU\(nit.*\)</\1>,<\1><span class="J">J</span><span class="s">s</span><span class="U">U</span>\2</\1>,g' $html > ../doc/$html; 
+	#sed -e 's,JsUnit\([ <]\),<span class="J">J</span><span class="s">s</span><span class="U">U</span>nit\1,g' $html > ../doc/$html; 
+done
+
+cd ..
+if test $KEEP -eq 0; then 
+	#rm -rf .lib .doc .libtmp
+	rm -rf  .doc 
+fi
+cd $CWD
+

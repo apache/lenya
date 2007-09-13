@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<kupu:feature
+    name="html"
+    implementation="default"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    >
+  <kupu:id>$Id: html.kupu 9274 2005-02-17 16:22:12Z duncan $</kupu:id>
+  <kupu:part name="html">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <kupu:define-slot name="html" />
+
+</html>
+  </kupu:part>
+</kupu:feature>

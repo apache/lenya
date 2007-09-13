@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="iba">
+            <element name="tree">
+                <oneOrMore>
+                    <element name="Section">
+                        <attribute name="ID">
+                            <text/>
+                        </attribute>
+                        <ref name="title"/>
+                        <ref name="ID"/>
+                        <element name="uri">
+                            <text/>
+                        </element>
+                        <element name="foreignsectionid">
+                            <text/>
+                        </element>
+                        <oneOrMore>
+                            <choice>
+                                <element name="button">
+                                    <text/>
+                                </element>
+                                <element name="fulluri">
+                                    <text/>
+                                </element>
+                            </choice>
+                        </oneOrMore>
+                        <element name="level">
+                            <text/>
+                        </element>
+                        <element name="l">
+                            <text/>
+                        </element>
+                        <element name="r">
+                            <text/>
+                        </element>
+                    </element>
+                </oneOrMore>
+            </element>
+            <element name="page">
+                <element name="Article">
+                    <attribute name="ID">
+                        <text/>
+                    </attribute>
+                    <ref name="ID"/>
+                    <element name="main">
+                        <element name="section">
+                            <oneOrMore>
+                                <choice>
+                                    <ref name="title"/>
+                                    <element name="para">
+                                        <oneOrMore>
+                                            <choice>
+                                                <text/>
+                                                <ref name="Inline.class"/>
+                                            </choice>
+                                        </oneOrMore>
+                                    </element>
+                                </choice>
+                            </oneOrMore>
+                         
+
+                        </element>
+                    </element>
+                    <ref name="title"/>
+                    <element name="lang">
+                        <text/>
+                    </element>
+                </element>
+            </element>
+        </element>
+    </start>
+    <define name="title">
+        <element name="title">
+            <oneOrMore>
+                <choice>
+                    <text/>
+                    <element name="de">
+                        <text/>
+                    </element>
+                    <element name="en">
+                        <text/>
+                    </element>
+
+                    <ref name="Inline.class"/>
+                </choice>
+            </oneOrMore>
+        </element>
+    </define>
+    <define name="ID">
+        <element name="ID">
+            <text/>
+        </element>
+    </define>
+
+    <define name="Inline.class">
+        <choice>
+            <ref name="bold"/>
+            <ref name="emphasize"/>
+            <ref name="underline"/>
+            <ref name="ulink"/>
+            <ref name="subscript"/>
+            <ref name="superscript"/>
+
+        </choice>
+    </define>
+
+    <define name="Inline.model">
+        <zeroOrMore>
+            <choice>
+                <text/>
+                <ref name="Inline.class"/>
+            </choice>
+        </zeroOrMore>
+    </define>
+
+    <define name="emphasize">
+        <element name="emphasize">
+            <ref name="Inline.model"/>
+        </element>
+    </define>
+
+    <define name="underline">
+        <element name="underline">
+            <ref name="Inline.model"/>
+        </element>
+    </define>
+    <define name="ulink">
+        <element name="ulink">
+            <attribute name="url"/>
+            <ref name="Inline.model"/>
+        </element>
+    </define>
+
+    <define name="bold">
+        <element name="bold">
+            <ref name="Inline.model"/>
+        </element>
+    </define>
+
+    <define name="subscript">
+        <element name="subscript">
+            <ref name="Inline.model"/>
+        </element>
+    </define>
+
+    <define name="superscript">
+        <element name="superscript">
+            <ref name="Inline.model"/>
+        </element>
+    </define>
+</grammar>

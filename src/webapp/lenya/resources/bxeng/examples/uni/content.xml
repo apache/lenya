@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<homepage xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:unizh="http://unizh.ch/doctypes/elements/1.0" unizh:columns="3" dc:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace" lenya:dummy="FIXME:keepNamespace" xhtml:dummy="FIXME:keepNamespace">
+	<!-- the root element indicates the doctype -->
+  <lenya:meta>
+    <dc:title>Unicommunication</dc:title>
+    <dc:description>Abstract</dc:description>
+    <dc:creator>Autor des Dokuments</dc:creator>
+    <dc:subject>Keywords</dc:subject>
+
+    <dc:publisher>UniversitÃ?t ZÃ?rich</dc:publisher>
+    <dcterms:created>date of creation</dcterms:created>
+    <dcterms:issued>date of publication</dcterms:issued>
+    <dc:language>de</dc:language>
+    <dc:rights>UniversitÃ?t ZÃ?rich</dc:rights>
+  </lenya:meta>
+
+  <unizh:identity data="images/999999.gif"/>
+  <unizh:slogan>Der Slogan</unizh:slogan>
+  <unizh:logo data="images/999999.gif"/>
+  <unizh:highlights>
+    <unizh:highlight>
+      <unizh:highlight-title>Title of the highlight</unizh:highlight-title>
+      <p>The text of the highlight.</p>
+
+    </unizh:highlight>
+  </unizh:highlights>
+  <body>
+  	<h2>Universität und Öffentlichkeit im Dialog</h2>
+    <p>unicommunication (unicom) hat die Aufgabe, die Kommunikation mit
+der internen und externen Öffentlichkeit zu unterstützen.
+Sie sorgt durch ihre PR- und Medienarbeit für ein
+unverwechselbares Bild der Universität Zürich in der
+Öffentlichkeit.</p>
+
+<p><a href="dienstleistung/index.html">Dienstleistungen</a></p>
+
+<p><a href="publikationen/index.html">Publikationen</a></p>
+
+<p><a href="team/index.html">Team</a></p>
+
+<p><a href="events/index.html">Meldeformular für
+Veranstaltungen</a></p>
+
+<h3>Kontakt:</h3>
+
+<p>unicommunication<br/>
+ Schönberggasse 15a<br/>
+ 8001 Zürich<br/>
+
+ Tel. 01 634 44 30<br/>
+ Fax 01 634 23 46<a href="mailto:unicom@unicom.unizh.ch"><br/>
+ unicom@unicom.unizh.ch</a></p>
+  </body>
+</homepage>

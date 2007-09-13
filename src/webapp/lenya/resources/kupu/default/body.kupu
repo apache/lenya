@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<kupu:feature
+    name="body"
+    implementation="default"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    >
+    <kupu:id>$Id: body.kupu 9274 2005-02-17 16:22:12Z duncan $</kupu:id>
+
+  <kupu:part name="body">
+    <body onload="kupu = startKupu()">
+      <h1>Kupu Editor Test Page</h1>
+      <kupu:define-slot name="body" />
+    </body>
+  </kupu:part>
+
+  <kupu:part name="fulleditor">
+    <div class="kupu-fulleditor">
+      <kupu:define-slot name="fulleditor" />
+    </div>
+  </kupu:part>
+
+  <kupu:part name="editorframe">
+    <div class="kupu-editorframe">
+      <form>
+        <iframe id="kupu-editor"
+                frameborder="0"
+                src="fulldoc.html"
+                scrolling="auto">
+        </iframe>
+        <!-- XXX this should be moved to sourceedit.kupu somehow -->
+        <textarea class="kupu-editor-textarea" id="kupu-editor-textarea"> </textarea>
+      </form>
+    </div>
+  </kupu:part>
+
+</kupu:feature>

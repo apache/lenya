@@ -1,0 +1,168 @@
+<?xml version="1.0" ?>
+<kupu:feature
+    name="toolboxes"
+    implementation="default"
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    >
+  <kupu:id>$Id: toolboxes.kupu 9585 2005-03-02 15:15:08Z guido $</kupu:id>
+
+  <kupu:part name="toolboxes">
+    <div class="kupu-toolboxes">
+      <kupu:define-slot name="toolboxes" />
+    </div>
+  </kupu:part>
+
+  <kupu:part name="properties">
+    <div class="kupu-toolbox" id="kupu-toolbox-properties">
+      <h1>Properties</h1>
+
+      <div class="kupu-toolbox-label">Title:</div>
+      <input class="wide" id="kupu-properties-title" />
+      <div class="kupu-toolbox-label">Description:</div>
+      <textarea class="wide" id="kupu-properties-description"> </textarea>
+    </div>
+  </kupu:part>
+
+  <kupu:part name="links">
+    <div class="kupu-toolbox" id="kupu-toolbox-links">
+      <h1 i18n:translate="links">Links</h1>
+
+      <div id="kupu-toolbox-addlink">
+        <div class="kupu-toolbox-label">
+          <!-- Link to items matching the keyword  -->
+          <span i18n:translate="items-matching-keyword">
+            Link the highlighted text to this URL:
+          </span>
+        </div>
+
+        <input id="kupu-link-input"
+               class="wide" 
+               type="text" 
+               />
+        <div class="kupu-toolbox-buttons">
+          <button type="button" id="kupu-link-button"
+                  class="kupu-toolbox-action">Make Link</button>
+        </div>
+
+      </div>
+    </div>
+  </kupu:part>
+
+  <kupu:part name="images">
+    <div class="kupu-toolbox" id="kupu-toolbox-images">
+            <h1 i18n:translate="images">Images</h1>
+
+            <div class="kupu-toolbox-label">
+              <span i18n:translate="">
+                Insert image at the following URL:
+              </span>
+            </div>
+
+            <input id="kupu-image-input"
+                   value="kupuimages/kupu_icon.gif"
+                   class="wide" 
+                   type="text" />
+
+            <span i18n:translate="">
+              Image float:
+            </span>
+            <select class="wide" id="kupu-image-float-select">
+              <option value="none">No float</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+            <div class="kupu-toolbox-buttons">
+              <button type="button" id="kupu-image-addbutton"
+                      class="kupu-toolbox-action">Insert Image</button>
+            </div>
+    </div>
+  </kupu:part>
+
+  <kupu:part name="tables">
+    <div class="kupu-toolbox" id="kupu-toolbox-tables">
+      <h1 i18n:translate="table-inspector">Tables</h1>
+
+      <div class="kupu-toolbox-label">Table Class:
+        <select class="wide" id="kupu-table-classchooser"> </select>
+      </div>
+
+      <div id="kupu-toolbox-addtable">
+        <div class="kupu-toolbox-label">Rows:</div>
+        <input class="wide" type="text" id="kupu-table-newrows" />
+
+        <div class="kupu-toolbox-label">Columns:</div>
+        <input class="wide" type="text" id="kupu-table-newcols" />
+
+        <div class="kupu-toolbox-label">
+          Headings:
+          <input name="kupu-table-makeheader"
+                 id="kupu-table-makeheader"
+                 type="checkbox"
+                 />
+          <label for="kupu-table-makeheader">Create</label>
+        </div>
+
+        <div class="kupu-toolbox-buttons">
+          <button type="button" id="kupu-table-fixall-button">Fix Table</button> 
+          <button type="button" id="kupu-table-addtable-button">Add Table</button> 
+        </div>
+
+      </div>
+
+      <div id="kupu-toolbox-edittable">
+      
+          <div class="kupu-toolbox-label">Col Align:
+            <select class="wide" id="kupu-table-alignchooser">
+              <option value="left">Left</option>
+              <option value="center">Center</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+      
+          <div class="kupu-toolbox-buttons">
+            <br />
+            <button type="button" id="kupu-table-addcolumn-button">Add Column</button>
+            <button type="button" id="kupu-table-delcolumn-button">Remove Column</button>
+            
+            <br />
+            <button type="button" id="kupu-table-addrow-button">Add Row</button>
+            <button type="button" id="kupu-table-delrow-button">Remove Row</button>
+          
+            <button type="button" id="kupu-table-fix-button">Fix</button>
+          </div>
+          
+      </div>
+
+    </div>
+  </kupu:part>
+
+  <kupu:part name="debug">
+    <div class="kupu-toolbox" id="kupu-toolbox-debug">
+      <h1 i18n:translate="debug-log">Debug Log</h1>
+      <div id="kupu-toolbox-debuglog"
+           class="kupu-toolbox-label">
+      </div>
+    </div>
+  </kupu:part>
+
+  <kupu:part name="cleanupexpressions">
+    <div class="kupu-toolbox" id="kupu-toolbox-cleanupexpressions">
+            <h1 i18n:translate="">Cleanup expressions</h1>
+
+            <div class="kupu-toolbox-label">
+              <span i18n:translate="">
+                Select a cleanup action:
+              </span>
+            </div>
+
+            <select id="kupucleanupexpressionselect" class="kupu-toolbox-st">
+            </select>
+            <div style="text-align: center">
+              <button type="button" id="kupucleanupexpressionbutton"
+                      class="kupu-toolbox-action">Perform action</button>
+            </div>
+    </div>
+  </kupu:part>
+
+</kupu:feature>

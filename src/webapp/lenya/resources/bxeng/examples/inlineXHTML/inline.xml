@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<iba>
+    <tree>
+        <Section ID="Section43">
+            <title>
+                <de>Home</de>
+                <en>Home</en>
+            </title>
+            <ID>43</ID>
+            <uri>home</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>home</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>4</l>
+            <r>23</r>
+        </Section>
+        <Section ID="Section23">
+            <title>
+                <de>Demo</de>
+                <en>Demo</en>
+            </title>
+            <ID>23</ID>
+            <uri>demo</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>demo</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>24</l>
+            <r>27</r>
+        </Section>
+        <Section ID="Section18">
+            <title>
+                <de>Download</de>
+                <en>Download</en>
+            </title>
+            <ID>18</ID>
+            <uri>download</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>download</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>28</l>
+            <r>31</r>
+        </Section>
+        <Section ID="Section48">
+            <title>
+                <de>Documentation</de>
+                <en>Documentation</en>
+            </title>
+            <ID>48</ID>
+            <uri>documentation</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>documentation</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>32</l>
+            <r>37</r>
+        </Section>
+        <Section ID="Section53">
+            <title>
+                <de>Development</de>
+                <en>Development</en>
+            </title>
+            <ID>53</ID>
+            <uri>development</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>development</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>38</l>
+            <r>49</r>
+        </Section>
+        <Section ID="Section171">
+            <title>
+                <de>Association</de>
+                <en>Association</en>
+            </title>
+            <ID>171</ID>
+            <uri>association</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>association</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>50</l>
+            <r>53</r>
+        </Section>
+        <Section ID="Section58">
+            <title>
+                <de>News</de>
+                <en>News</en>
+            </title>
+            <ID>58</ID>
+            <uri>news</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>news</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>54</l>
+            <r>55</r>
+        </Section>
+        <Section ID="Section63">
+            <title>
+                <de>Contact</de>
+                <en>Contact</en>
+            </title>
+            <ID>63</ID>
+            <uri>kontakt</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>kontakt</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>56</l>
+            <r>57</r>
+        </Section>
+        <Section ID="Section383">
+            <title>
+                <de>Sitemap</de>
+                <en>Sitemap</en>
+            </title>
+            <ID>383</ID>
+            <uri>sitemap</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>sitemap</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>58</l>
+            <r>59</r>
+        </Section>
+        <Section ID="Section416">
+            <title>
+                <de>Search</de>
+                <en>Search</en>
+            </title>
+            <ID>416</ID>
+            <uri>search</uri>
+            <foreignsectionid>8</foreignsectionid>
+            <button>1</button>
+            <fulluri>search</fulluri>
+            <button>1</button>
+            <level>4</level>
+            <l>60</l>
+            <r>61</r>
+        </Section>
+    </tree>
+    <page>
+        <Article ID="Article46">
+            <ID>46</ID>
+            <main xmlns:xhtml="http://www.w3.org/1999/xhtml">
+               
+                    <xhtml:p>
+                        Bitflux Editor is a browser based Wysiwyg XML Editor &#x2013; and that changes everything! You can edit now your content semantically and at the same time display it to your users and editors in its final form. 
+                    </xhtml:p>
+                    <xhtml:p>
+                        If you can't wait to see it, just try our <xhtml:a href="../demo">demo</xhtml:a> and have fun.
+                    </xhtml:p>
+                    <xhtml:p>
+                        The Bitflux Editor is Open Source since September 10, 2002. 
+                        Bitflux open-sourced the fully functional Editor (with tables, lists, picture upload etc.) under the Apache License.
+                    </xhtml:p>
+                    <xhtml:p>
+                        want to take part in developement or just want to say something, do not hesitate to subscribe to our <xhtml:a href="/development/mailinglists/">mailinglists</xhtml:a>. Any comment is very appreciated.
+                    </xhtml:p>
+                    <xhtml:p>
+                        Furthermore, a very good resource for any questions and answers is the <xhtml:a href="/documentation/faq/">FAQ</xhtml:a>.
+                    </xhtml:p>
+               
+            </main>
+            <title>Bitflux Editor - The Wysiwyg XML Editor</title>
+            <lang>en</lang>
+        </Article>
+    </page>
+</iba>

@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<libraries>
+
+  <library id="library1">
+    <uri>kupudrawers/demolibrary1.xml</uri>
+    <title>Just An Example</title>
+    <src>kupudrawers/demolibrary1.xml</src>
+    
+  </library>
+  <library id="library2">
+    <uri>kupudrawers/demolibrary2.xml</uri>
+    <title>CMS Images</title>
+    <src>/admin/images/index.html</src>
+    
+  </library>
+
+</libraries>

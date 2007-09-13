@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<exception xmlns="http://www.wyona.org/neutron/1.0" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" type="authorization">
+  <message>Authorization denied for "URL" ...</message>
+
+  <authentication>
+    <login url="${cocoon.parameters['base-url']}?lenya.usecase=neutron&amp;lenya.step=authenticate">
+      <message>Login</message>
+      <form>
+        <param description="Username" name="username"/>
+        <param description="Password" name="password"/>
+      </form>
+    </login>
+    <logout url="${cocoon.parameters['base-url']}?lenya.usecase=logout"/>
+  </authentication>
+</exception>

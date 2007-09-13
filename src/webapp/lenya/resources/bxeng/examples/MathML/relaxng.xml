@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" 
+xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+ xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<include href="schema/xhtml/xhtml-strict.rng.xml">  
+  <start>
+        <element name="iba">
+            <element name="tree">
+                <oneOrMore>
+                    <element name="Section">
+                        <attribute name="ID">
+                            <text/>
+                        </attribute>
+                        <ref name="title"/>
+                        <ref name="ID"/>
+                        <element name="uri">
+                            <text/>
+                        </element>
+                        <element name="foreignsectionid">
+                            <text/>
+                        </element>
+                        <oneOrMore>
+                            <choice>
+                                <element name="button">
+                                    <text/>
+                                </element>
+                                <element name="fulluri">
+                                    <text/>
+                                </element>
+                            </choice>
+                        </oneOrMore>
+                        <element name="level">
+                            <text/>
+                        </element>
+                        <element name="l">
+                            <text/>
+                        </element>
+                        <element name="r">
+                            <text/>
+                        </element>
+                    </element>
+                </oneOrMore>
+            </element>
+            <element name="page">
+                <element name="Article">
+                    <attribute name="ID">
+                        <text/>
+                    </attribute>
+                    <ref name="ID"/>
+                    <element name="main">
+                         <ref name="Block.model"/>
+                    </element>
+                    <ref name="title"/>
+                    <element name="lang">
+                        <text/>
+                    </element>
+                </element>
+            </element>
+        </element>
+    </start>
+    
+    <define name="title">
+        <element name="title">
+            <oneOrMore>
+                <choice>
+                    <text/>
+                    <element name="de">
+                        <text/>
+                    </element>
+                    <element name="en">
+                        <text/>
+                    </element>
+                </choice>
+            </oneOrMore>
+        </element>
+    </define>
+    
+    </include>
+    
+    <define name="ID">
+        <element name="ID">
+            <text/>
+        </element>
+    </define>
+
+   
+</grammar>

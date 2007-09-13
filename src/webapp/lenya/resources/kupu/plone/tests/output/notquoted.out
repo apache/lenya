@@ -1,0 +1,13 @@
+<div>IE doesn't always quote attributes</div>
+<div class="image-left captioned">
+  <div style="width:120">
+    <img height=144 alt="picture alt text" src="resolveuid/104ede98d4c7c8eaeaa3b984f7395979" width=120/>
+  </div>
+  <div class="image-caption" style="width:120px;">Test image caption</div>
+</div>
+<div class="captioned">
+  <div style="width:120">
+    <img height=144 alt="picture alt text" src="resolveuid/104ede98d4c7c8eaeaa3b984f7395979" width=120/>
+  </div>
+  <div class="image-caption" style="width:120px;">Test image caption</div>
+</div>

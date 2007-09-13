@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://www.w3.org/1998/Math/MathML" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="math">
+      <attribute name="display">
+        <data type="NCName"/>
+      </attribute>
+      <element name="mstyle">
+        <attribute name="fontweight">
+          <data type="NCName"/>
+        </attribute>
+        <ref name="mi"/>
+        <oneOrMore>
+          <choice>
+            <ref name="mo"/>
+            <ref name="mroot"/>
+          </choice>
+        </oneOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="mi">
+    <element name="mi">
+      <data type="NCName"/>
+    </element>
+  </define>
+  <define name="mo">
+    <element name="mo">
+      <text/>
+    </element>
+  </define>
+  <define name="mroot">
+    <element name="mroot">
+      <zeroOrMore>
+        <element name="mrow">
+          <zeroOrMore>
+            <choice>
+              <ref name="mo"/>
+              <ref name="mroot"/>
+              <element name="mfrac">
+                <choice>
+                  <ref name="mi"/>
+                  <element name="msup">
+                    <ref name="mi"/>
+                    <ref name="mn"/>
+                  </element>
+                </choice>
+                <ref name="mn"/>
+              </element>
+            </choice>
+          </zeroOrMore>
+        </element>
+      </zeroOrMore>
+      <ref name="mn"/>
+    </element>
+  </define>
+  <define name="mn">
+    <element name="mn">
+      <data type="integer"/>
+    </element>
+  </define>
+</grammar>

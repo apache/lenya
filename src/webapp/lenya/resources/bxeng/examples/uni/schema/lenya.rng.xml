@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:unizh="http://unizh.ch/doctypes/elements/1.0"
+         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         >
+
+
+<include href="dublincore/dublincore.rng.xml"/>
+
+
+<define name="lenya.meta">
+  <element name="lenya:meta">
+    <ref name="dublincore"/>
+  </element>
+</define>
+
+
+<define name="lenya.asset">
+  <element name="lenya:asset">
+    <attribute name="size"><ref name="Text.datatype"/></attribute>
+    <attribute name="src"><ref name="Text.datatype"/></attribute>
+    <attribute name="type"><ref name="Text.datatype"/></attribute>
+    <text/>
+  </element>
+</define>
+
+
+<!-- namespace dummy attributes -->
+<define name="dummy.attlist">
+  <attribute name="dc:dummy"><ref name="Text.datatype"/></attribute>
+  <attribute name="dcterms:dummy"><ref name="Text.datatype"/></attribute>
+  <attribute name="lenya:dummy"><ref name="Text.datatype"/></attribute>
+  <attribute name="xhtml:dummy"><ref name="Text.datatype"/></attribute>
+</define>
+
+
+</grammar>
