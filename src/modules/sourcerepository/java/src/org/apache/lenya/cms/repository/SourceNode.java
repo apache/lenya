@@ -246,13 +246,12 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
         try {
             int currentRev = getCurrentRevisionNumber();
-            
             int contentLoadRev = getContentSource().getLoadRevision();
             int contentRev = contentLoadRev == -1 ? currentRev : contentLoadRev;
-            
+
             int metaLoadRev = getMetaSource().getLoadRevision();
             int metaRev = metaLoadRev == -1 ? currentRev : metaLoadRev;
-            
+
             int lockRev = Math.min(contentRev, metaRev);
             this.lock = getSession().createLock(this, lockRev);
         } catch (TransactionException e) {
@@ -463,8 +462,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public void copyRevisionsFrom(Node source) throws RepositoryException {
         try {
+            boolean wasLocked = isLocked();
+            if (wasLocked) {
+                unlock();
+            }
             getRcml().copyFrom(this, source);
+            if (wasLocked) {
+                // this is a hack: update the lock revision to the latest copied revision to avoid
+                // the "node has changed" error
+                this.lock = getSession().createLock(this, getCurrentRevisionNumber());
+            }
         } catch (RevisionControlException e) {
+            throw new RepositoryException(e);
+        } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
     }

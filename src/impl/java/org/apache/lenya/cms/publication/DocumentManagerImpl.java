@@ -552,10 +552,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     protected void copyRevisions(Document sourceDoc, Document targetDoc) throws PublicationException {
         try {
             Node targetNode = targetDoc.getRepositoryNode();
-            // reset the lock so that the node doesn't complain about being changed
-            targetNode.unlock();
             targetNode.copyRevisionsFrom(sourceDoc.getRepositoryNode());
-            targetNode.lock();
         } catch (Exception e) {
             throw new PublicationException(e);
         }
