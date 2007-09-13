@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -144,9 +145,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
             if (this.currentDoc != null) {
                 target = this.linkResolver.resolve(this.currentDoc, linkUri);
             } else {
-                Link link = new Link(linkUri);
-                link.setPubId(info.getPublicationId());
-                link.setArea(info.getArea());
+                Link link = getAbsoluteLink(info, linkUri);
                 target = this.linkResolver.resolve(this.factory, link.getUri());
             }
 
@@ -180,6 +179,26 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
                 }
             }
         }
+    }
+
+    /**
+     * The link is constructed from the linkUri string. If it lacks the area or publication ID
+     * information, these are obtained from the current URL information.
+     * @param info The current URL information.
+     * @param linkUri The link URI to use.
+     * @return A link.
+     * @throws MalformedURLException if the linkUri parameter is malformed.
+     */
+    protected Link getAbsoluteLink(URLInformation info, String linkUri)
+            throws MalformedURLException {
+        Link link = new Link(linkUri);
+        if (link.getPubId() == null) {
+            link.setPubId(info.getPublicationId());
+        }
+        if (link.getArea() == null) {
+            link.setArea(info.getArea());
+        }
+        return link;
     }
 
     /**
