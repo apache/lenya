@@ -30,43 +30,27 @@ public class DefaultDocument implements Document {
     private DublinCore dublincore;
     /**
      * Creates a new instance of DefaultDocument.
-     * 
-     * @param publication
-     *            The publication the document belongs to.
-     * @param id
-     *            The document ID (starting with a slash).
+     * @param publication The publication the document belongs to.
+     * @param id The document ID (starting with a slash).
      * @deprecated Use {@link DefaultDocumentBuilder} instead.
      */
     public DefaultDocument(Publication publication, String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("The document ID must not be null!");
-        }
-        if (!id.startsWith("/")) {
-            throw new IllegalArgumentException("The document ID must start with a slash!");
-        }
+        if(id == null){ throw new IllegalArgumentException("The document ID must not be null!"); }
+        if(!id.startsWith("/")){ throw new IllegalArgumentException("The document ID must start with a slash!"); }
         this.id = id;
         // assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
         this.dublincore = new DublinCoreProxy(this);
     }
     /**
-     * Creates a new instance of DefaultDocument. The language of the document
-     * is the default language of the publication.
-     * 
-     * @param publication
-     *            The publication the document belongs to.
-     * @param id
-     *            The document ID (starting with a slash).
-     * @param area
-     *            The area.
+     * Creates a new instance of DefaultDocument. The language of the document is the default language of the publication.
+     * @param publication The publication the document belongs to.
+     * @param id The document ID (starting with a slash).
+     * @param area The area.
      */
     protected DefaultDocument(Publication publication, String id, String area) {
-        if (id == null) {
-            throw new IllegalArgumentException("The document ID must not be null!");
-        }
-        if (!id.startsWith("/")) {
-            throw new IllegalArgumentException("The document ID must start with a slash!");
-        }
+        if(id == null){ throw new IllegalArgumentException("The document ID must not be null!"); }
+        if(!id.startsWith("/")){ throw new IllegalArgumentException("The document ID must start with a slash!"); }
         this.id = id;
         // assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
@@ -76,23 +60,14 @@ public class DefaultDocument implements Document {
     }
     /**
      * Creates a new instance of DefaultDocument.
-     * 
-     * @param publication
-     *            The publication the document belongs to.
-     * @param id
-     *            The document ID (starting with a slash).
-     * @param area
-     *            The area.
-     * @param language
-     *            the language
+     * @param publication The publication the document belongs to.
+     * @param id The document ID (starting with a slash).
+     * @param area The area.
+     * @param language the language
      */
     protected DefaultDocument(Publication publication, String id, String area, String language) {
-        if (id == null) {
-            throw new IllegalArgumentException("The document ID must not be null!");
-        }
-        if (!id.startsWith("/")) {
-            throw new IllegalArgumentException("The document ID must start with a slash!");
-        }
+        if(id == null){ throw new IllegalArgumentException("The document ID must not be null!"); }
+        if(!id.startsWith("/")){ throw new IllegalArgumentException("The document ID must start with a slash!"); }
         this.id = id;
         // assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
@@ -141,7 +116,6 @@ public class DefaultDocument implements Document {
     }
     /**
      * Returns the file for this document.
-     * 
      * @return A file object.
      */
     public File getFile() {
@@ -160,29 +134,27 @@ public class DefaultDocument implements Document {
     public String[] getLanguages() throws DocumentException {
         ArrayList languages = new ArrayList();
         SiteTree sitetree;
-        try {
+        try{
             sitetree = getPublication().getTree(getArea());
-            if (sitetree != null) {
+            if(sitetree != null){
                 SiteTreeNode node = sitetree.getNode(getId());
-                if (node != null) {
+                if(node != null){
                     Label[] labels = node.getLabels();
-                    for (int i = 0; i < labels.length; i++) {
+                    for(int i = 0; i < labels.length; i++){
                         languages.add(labels[i].getLanguage());
                     }
                 }
-            } else {
+            }else{
                 languages.add(getLanguage());
             }
-        } catch (SiteTreeException e) {
+        }catch(SiteTreeException e){
             throw new DocumentException(e);
         }
         return (String[]) languages.toArray(new String[languages.size()]);
     }
     /**
      * Sets the language of this document.
-     * 
-     * @param language
-     *            The language.
+     * @param language The language.
      */
     public void setLanguage(String language) {
         // /// language != null;
@@ -193,12 +165,12 @@ public class DefaultDocument implements Document {
      */
     public String getLabel() throws DocumentException {
         String label = "";
-        try {
+        try{
             SiteTree siteTree = getPublication().getTree(getArea());
-            if (siteTree != null) {
+            if(siteTree != null){
                 label = siteTree.getNode(getId()).getLabel(getLanguage()).getLabel();
             }
-        } catch (SiteTreeException e) {
+        }catch(SiteTreeException e){
             throw new DocumentException(e);
         }
         return label;
@@ -231,15 +203,13 @@ public class DefaultDocument implements Document {
     }
     /**
      * Sets the area.
-     * 
-     * @param area
-     *            A string.
+     * @param area A string.
      */
     // LENYA1.3 BEGIN - Area as Module cannot error, so assume "live".
     protected void setArea(String area) {
-        if (!AbstractPublication.isValidArea(area)) {
+        if(!AbstractPublication.isValidArea(area)){
             this.area = Publication.LIVE_AREA;
-        } else {
+        }else{
             this.area = area;
         }
     }
@@ -253,9 +223,7 @@ public class DefaultDocument implements Document {
     }
     /**
      * Sets the extension of the file in the URL.
-     * 
-     * @param extension
-     *            A string.
+     * @param extension A string.
      */
     protected void setExtension(String extension) {
         // assert extension != null;
@@ -264,9 +232,7 @@ public class DefaultDocument implements Document {
     private String documentURL;
     /**
      * Sets the document URL.
-     * 
-     * @param url
-     *            The document URL (without publication ID and area).
+     * @param url The document URL (without publication ID and area).
      */
     public void setDocumentURL(String url) {
         // assert url != null;
@@ -280,40 +246,38 @@ public class DefaultDocument implements Document {
     }
     /**
      * (non-Javadoc)
-     * 
      * @see org.apache.lenya.cms.publication.Document#exists()
      */
     public boolean exists() throws DocumentException {
         boolean exists;
-        try {
+        try{
             SiteTree sitetree = getPublication().getTree(getArea());
-            if (sitetree != null) {
+            if(sitetree != null){
                 SiteTreeNode node = sitetree.getNode(getId());
                 exists = (node != null) && (node.getLabel(getLanguage()) != null);
-            } else {
+            }else{
                 exists = getFile().exists();
             }
-        } catch (SiteTreeException e) {
+        }catch(SiteTreeException e){
             throw new DocumentException(e);
         }
         return exists;
     }
     /**
      * (non-Javadoc)
-     * 
      * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
      */
     public boolean existsInAnyLanguage() throws DocumentException {
         boolean exists = false;
-        try {
+        try{
             SiteTree sitetree = getPublication().getTree(getArea());
-            if (sitetree != null) {
+            if(sitetree != null){
                 SiteTreeNode node = sitetree.getNode(getId());
                 exists = node != null;
-            } else {
+            }else{
                 exists = getFile().exists();
             }
-        } catch (SiteTreeException e) {
+        }catch(SiteTreeException e){
             throw new DocumentException(e);
         }
         return exists;
@@ -323,7 +287,7 @@ public class DefaultDocument implements Document {
      */
     public boolean equals(Object object) {
         boolean equals = false;
-        if (getClass().isInstance(object)) {
+        if(getClass().isInstance(object)){
             Document document = (Document) object;
             equals = getPublication().equals(document.getPublication()) && getId().equals(document.getId()) && getArea().equals(document.getArea()) && getLanguage().equals(document.getLanguage());
         }
