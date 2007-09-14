@@ -95,13 +95,16 @@ $ ./ant install]]></source>
             <source xml:space="preserve"><![CDATA[Q: Do you want to install the Shibboleth Identity Provider? [Y,n]
 A: Y
 
-Q: What name do you want to use for the Identity Provider web application? [default: shibboleth-idp]
+Q: What name do you want to use for the Identity Provider web application?
+   [default: shibboleth-idp]
 A: <Return> for default value
 
-Q: Do you want to install it directly onto the filesystem or use the tomcat manager application?
+Q: Do you want to install it directly onto the filesystem or use the
+   tomcat manager application?
 A: 1
 
-Q: Select a home directory for the Shibboleth Identity Provider [default: /usr/local/shibboleth-idp]
+Q: Select a home directory for the Shibboleth Identity Provider
+   [default: /usr/local/shibboleth-idp]
 A: $SHIBTEST_HOME/shibboleth-idp
 
 Q: Enter tomcat home directory [default: /usr/local/tomcat]
@@ -125,24 +128,27 @@ A: $SHIBTEST_HOME/apache-tomcat-5.5.20
           <li>
             In the top section, replace <code>idp.example.org</code> with <code>idp.shibtest.org</code>:
             <source xml:space="preserve"><![CDATA[<IdPConfig 
-	xmlns="urn:mace:shibboleth:idp:config:1.0" 
-	xmlns:cred="urn:mace:shibboleth:credentials:1.0" 
-	xmlns:name="urn:mace:shibboleth:namemapper:1.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="urn:mace:shibboleth:idp:config:1.0 ../schemas/shibboleth-idpconfig-1.0.xsd" 
-	AAUrl="https://idp.shibtest.org:8443/shibboleth-idp/AA" 
-	resolverConfig="file:/Users/nobby/src/shibtest/shibboleth-idp/etc/resolver.xml"
-	defaultRelyingParty="urn:mace:shibboleth:examples" 
-	providerId="https://idp.shibtest.org/shibboleth">]]></source>
+  xmlns="urn:mace:shibboleth:idp:config:1.0" 
+  xmlns:cred="urn:mace:shibboleth:credentials:1.0" 
+  xmlns:name="urn:mace:shibboleth:namemapper:1.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="urn:mace:shibboleth:idp:config:1.0 \
+    ../schemas/shibboleth-idpconfig-1.0.xsd" 
+  AAUrl="https://idp.shibtest.org:8443/shibboleth-idp/AA" 
+  resolverConfig="file:/Users/nobby/src/shibtest/shibboleth-idp/etc/resolver.xml"
+  defaultRelyingParty="urn:mace:shibboleth:examples" 
+  providerId="https://idp.shibtest.org/shibboleth">]]></source>
           </li>
           <li>
             By default, the IdP's protocol handler does only support the ports 433 and 80. We'll add our test port 8443.
             In the protocol handler section, add the port 8443 to the https locations as follows:
-            <source xml:space="preserve"><![CDATA[<ProtocolHandler implementation="edu.internet2.middleware.shibboleth.idp.provider.ShibbolethV1SSOHandler">
-	<Location>https?://[^:/]+(:(8443|443|80))?/shibboleth-idp/SSO</Location>
+            <source xml:space="preserve"><![CDATA[<ProtocolHandler implementation="edu.internet2 \
+    .middleware.shibboleth.idp.provider.ShibbolethV1SSOHandler">
+  <Location>https?://[^:/]+(:(8443|443|80))?/shibboleth-idp/SSO</Location>
 </ProtocolHandler>
 ...
-<ProtocolHandler implementation="edu.internet2.middleware.shibboleth.idp.provider.Shibboleth_StatusHandler">
+<ProtocolHandler implementation="edu.internet2.middleware \
+    .shibboleth.idp.provider.Shibboleth_StatusHandler">
   <Location>https://[^:/]+(:(8443|443))?/shibboleth-idp/Status</Location>
 </ProtocolHandler>]]></source>
           </li>
@@ -155,7 +161,8 @@ A: $SHIBTEST_HOME/apache-tomcat-5.5.20
             Edit the file <code>$SHIBTEST_HOME/shibboleth-idp/etc/resolver.xml</code>,
             uncomment the <code>SimpleAttributeDefinition</code> of <code>eduPersonPrincipalName</code>
             and set the smartScope attribute to our <code>shibtest.org</code> domain:
-            <source xml:space="preserve"><![CDATA[<SimpleAttributeDefinition id="urn:mace:dir:attribute-def:eduPersonPrincipalName" smartScope="shibtest.org">
+            <source xml:space="preserve"><![CDATA[<SimpleAttributeDefinition id="urn:mace:dir:attribute-def:eduPersonPrincipalName"
+    smartScope="shibtest.org">
   <DataConnectorDependency requires="echo"/>
 </SimpleAttributeDefinition>]]></source>
           </li>
