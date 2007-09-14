@@ -448,9 +448,10 @@
         <authenticators href="authenticators.html" label="Authenticators"/>
         <authorizers href="authorizers.html" label="Authorizers"/>
         <policies href="policymanagers.html" label="Policies and Policy&#160;Managers"/>
-        <accr-mng href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
+        <accr-mng href="accreditablemanagers.html" label="Accreditable Managers"/>
         <ssl href="ssl.html" label="SSL Encryption"/>
-        <shibboleth12 href="shibboleth.html" label="Shibboleth&#160;Auth."/>
+        <attributes-authorization href="attributes.html" label="Attribute-based Authorization"/>
+        <shibboleth12 href="shibboleth.html" label="Shibboleth Authentication"/>
       </accesscontrol>
       <authoring href="authoring/" label="Authoring">
         <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
