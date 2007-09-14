@@ -28,6 +28,11 @@
         authorization decisions for individual access of protected online resources in a
         privacy-preserving manner." (quoted from the <a href="http://shibboleth.internet2.edu/"
           >Shibboleth website</a>)</p>
+      <p>
+        For more information about the integration of Shibboleth in Lenya, watch the
+        <a href="http://www.slideshare.net/nobby/lenya-and-shibboleth">Single Sign-On with Lenya
+        and Shibboleth</a> presentation on slideshare.
+      </p>
     </section>
       
       <section>
