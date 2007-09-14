@@ -29,11 +29,18 @@
       <tlp-HEAD-rev href="tlp-HEAD.svn-revision.xml" label="current revision number" />
       <tlp-HEAD-sh href="tlp-HEAD.svn-sh.xml" label="create svn log shell" />
       <tlp-HEAD href="tlp-HEAD.svn.html" label="log HEAD" />
-      <tlp-2006-07 href="tlp-2006-12.svn.html" label="log 2006-12" />
-      <tlp-2006-07 href="tlp-2006-11.svn.html" label="log 2006-11" />
-      <tlp-2006-07 href="tlp-2006-10.svn.html" label="log 2006-10" />
-      <tlp-2006-07 href="tlp-2006-09.svn.html" label="log 2006-09" />
-      <tlp-2006-07 href="tlp-2006-08.svn.html" label="log 2006-08" />
+      <tlp-2007-07 href="tlp-2007-07.svn.html" label="log 2007-07" />
+      <tlp-2007-06 href="tlp-2007-06.svn.html" label="log 2007-06" />
+      <tlp-2007-05 href="tlp-2007-05.svn.html" label="log 2007-05" />
+      <tlp-2007-04 href="tlp-2007-04.svn.html" label="log 2007-04" />
+      <tlp-2007-03 href="tlp-2007-03.svn.html" label="log 2007-03" />
+      <tlp-2007-02 href="tlp-2007-02.svn.html" label="log 2007-02" />
+      <tlp-2007-01 href="tlp-2007-01.svn.html" label="log 2007-01" />
+      <tlp-2006-12 href="tlp-2006-12.svn.html" label="log 2006-12" />
+      <tlp-2006-11 href="tlp-2006-11.svn.html" label="log 2006-11" />
+      <tlp-2006-10 href="tlp-2006-10.svn.html" label="log 2006-10" />
+      <tlp-2006-09 href="tlp-2006-09.svn.html" label="log 2006-09" />
+      <tlp-2006-08 href="tlp-2006-08.svn.html" label="log 2006-08" />
       <tlp-2006-07 href="tlp-2006-07.svn.html" label="log 2006-07" />
       <tlp-2006-06 href="tlp-2006-06.svn.html" label="log 2006-06" />
       <tlp-2006-05 href="tlp-2006-05.svn.html" label="log 2006-05" />
@@ -90,36 +97,39 @@
       <incubator-2002-01-04 href="incubator-2002-01-04.svn.html" 
         label="inc-2002-01-04" />
     </changes>
-    <charter href="charter.html" label="Charter"/>
-    <guidelines href="guidelines.html" label="Project guidelines"/>
-    <history href="history.html" label="History"/>
+    <who label="Who we are" href="who.html" description="Explain who is involved"/>
     <screenshots href="screenshots.html" label="Screenshots"/>
     <node-d href="roadmap.html" label="Roadmap"/>
     <node-i href="license.html" label="License"/>
-    <resolution href="resolution.html" label="Resolution"/>
     <node-i href="related-projects.html" label="Related Projects"/>
+    <history href="history.html" label="History"/>
   </project-information>
   
-  <docu href="docs/" label="Documentation" tab="docu">
+  <docu href="docs/" label="Developer" tab="docu">
     <index href="index.html" label="Index"/>
+    <svn href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
     <coding href="coding-guidelines.html" label="Coding Guidelines"/>
-    <unit-test href="unittests.html" label="Unit Tests"/>
     <website-update href="website-update.html" label="Website Update"/>
     <rm href="release.html" label="Release Management"/>
     <zone href="zone.html" label="Zone notes"/>
+    <resolution href="resolution.html" label="Resolution"/>
+    <charter href="charter.html" label="Charter"/>
+    <guidelines href="guidelines.html" label="Project guidelines"/>
+  </docu>
+    
     <!--+
     | Version 1.4 tab
     +-->
   
-  <docu1.4 href="1_4/" label="Version 1.4" target="1.4" tab="1_4">
+  <docu2.0 href="docs/2_0_x/" label="Version 2.0" target="2.0" tab="2_0">
     <index href="index.html" label="Index"/>
      <faq label="FAQs" href="faq.html">
           <i18n href="#i18n"/>
           <bxe-css href="#bxe-css"/>
         </faq>
     
-    <!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
-      <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
+    <!--          <whole_docu href="../documentation-1-4.pdf" label="2.0 PDF docs (all in one)" />
+      <whole_docu href="../documentation-1-4.html" label="2.0 HTML docs (all in one)" />
     -->          
     <installation14 href="installation/" label="Installation">
       <download14 href="index.html" label="Download"/>
@@ -128,88 +138,261 @@
     </installation14>
     
     <tutorials href="tutorials/" label="Tutorials">
+      <newPublication14 href="newpublication/index.html" label="Create a Publication"/>
+      <newResourceType href="resourcetype/" label="Create a Resource Type">
+        <newResourceTypePart1 href="part1.html" label="Declaration"/>
+        <newResourceTypePart2 href="part2.html" label="Creation"/>
+        <newResourceTypePart3 href="part3.html" label="Presentation"/>
+        <newResourceTypePart4 href="part4.html" label="Editing (One-Form)"/>
+        <newResourceTypePart5 href="part5.html" label="Editing (BXE)"/>
+      </newResourceType>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
-      <tests href="tests.html" label="Writing Tests"/>
+      <proxy label="Proxying">
+        <mod_proxy_14 href="proxy.html" label="mod_proxy"/>
+        <mod_proxy_ajp href="mod_proxy_ajp.html" label="mod_proxy_ajp"/>
+      </proxy>
       <bestpractises href="bestpractises.html" label="Best Practises"/>
+      <production-checklist href="production.html" label="Production Checklist"/>
+      <tests href="tests.html" label="Writing Tests"/>
     </tutorials>
     
     <concepts href="concepts/" label="Concepts">
       <publication href="publication.html" label="Publication" />
       <documents href="documents.html" label="Working with Documents"/>
-      <urlMapping href="urlMapping.html" label="URL Mapping" />
       <authoring href="authoring_live.html" label="Authoring and Live mode" />
       <wysiwyg href="wysiwyg.html" label="WYSIWYG" />
     </concepts>
     
     <reference href="reference/" label="Technical Reference"> 	 
       <sitemaps14 href="lenya-sitemaps.html" label="Overview of Lenya Sitemaps" />
+      <repository href="repository/index.html" label="Repository"/>
       <ac-restricted href="ac.html" label="Access Control Specification"/>
       <usecase-framework href="usecase-framework/" label="Usecase Framework">
         <usecase-framework-overview href="index.html" label="Overview"/>
         <abstractusecase href="abstractusecase.html" label="AbstractUsecase"/> 	 
       </usecase-framework>
-      <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
+      <publications href="publication/" label="Publications">
+        <publication-config href="configuration.html" label="Configuration"/>
+        <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
+      </publications>
       <resource-types href="resource-types.html" label="Resource Types"/> 	 
       <modules href="modules/index.html" label="Modules"/>
       <metadata href="metadata.html" label="Meta data"/> 	 
       <protocols href="protocols/" label="Protocols">
         <protocols-overview href="index.html" label="Overview"/>
-        <lenya href="lenya.html" label="lenya:"/>
-        <lenyadoc href="lenyadoc.html" label="lenyadoc:"/>
-        <siteprotocol href="site.html" label="site:"/>
+        <lenya href="lenya.html" label="lenya Protocol"/>
+        <lenya-document href="lenya-document.html" label="lenya-document Protocol"/>
+        <siteprotocol href="site.html" label="site Protocol"/>
+        <lenyadoc href="lenyadoc.html" label="lenyadoc Protocol"/>
       </protocols>
-      <link-management href="link-management.html" label="Link Management"/>
-      <repository href="repository/index.html" label="Repository"/>
+      <urls-and-links label="URLs and Links">
+        <urlMapping href="urlMapping.html" label="URL Mapping" />
+        <link-management href="link-management.html" label="Link Management"/>
+      </urls-and-links>
     </reference>
     
-    <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="Core API"/>
-    <javadoc1.4overview label="Module APIs">
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/ac-impl/index.html" label="ac-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/administration/index.html" label="administration"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/cache/index.html" label="cache"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/cforms/index.html" label="cforms"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/contacform/index.html" label="contactform"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/defaultusecases/index.html" label="defaultusecases"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/editors/index.html" label="editors"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/export/index.html" label="export"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/fckeditor/index.html" label="fckeditor"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/jackrabbit/index.html" label="jackrabbit"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/janitor/index.html" label="janitor"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/jcr/index.html" label="jcr"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/kupu/index.html" label="kupu"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/ldap/index.html" label="ldap"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/lenyadoc/index.html" label="lenyadoc"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/linkcheck/index.html" label="linkcheck"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/linking/index.html" label="linking"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/lucene/index.html" label="lucene"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/notification/index.html" label="notification"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/observation-impl/index.html" label="observation-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/opendocument/index.html" label="opendocument"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/properties/index.html" label="properties"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/repository/index.html" label="repository"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/resource/index.html" label="resource"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/sitemanagement/index.html" label="sitemanagement"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/sitetree/index.html" label="sitetree"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/sourcerepository/index.html" label="sourcerepository"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/templating-impl/index.html" label="templating-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/tinymce/index.html" label="tinymce"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecase/index.html" label="usecase"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecase-impl/index.html" label="usecase-impl"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecasedocument/index.html" label="usecasedocument"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/webdav/index.html" label="webdav"/>
-      <javadoc1.4 href="../../../../apidocs/1.4/modules/workflow-impl/index.html" label="workflow-impl"/>
-    </javadoc1.4overview>    
+    <javadoc2.0 href="../../../../apidocs/2.0/index.html" label="Core API"/>
     
-  </docu1.4>
-  <modules href="modules/" label="Modules" tab="modules">
-    <index href="index.html" label="Index"/>
-    <webdav href="webdav/" label="WebDAV">
-      <index href="index.html" label="Getting started"/>
-      <monitoring href="monitoring.html" label="Monitoring"/>
-      <server href="webdav.html" label="WebDAV Servers"/>
-    </webdav>
-    <notification href="notification.html" label="Notification"/>
-  </modules>
+    <!-- 
+    <index href="../modules/index.html" label="List of Modules"/>
+    -->
+    <!--
+      The template for this module list is generated.
+      Run "ant modules" in the documentation root directory,
+      but make sure not to include your custom modules.
+      The generated list is in build/templates/modules.xml.
+    -->
+    <core_modules label="Core Modules" href="../modules/">
+      <ac_module_section label="ac" href="ac/">
+        <ac_module_overview label="Overview" href="index.html"/>
+        <ac_module_api label="API" href="../../../../apidocs/2.0/modules/ac/index.html"/>
+      </ac_module_section>
+      <acusecases_module_section label="acusecases" href="acusecases/">
+        <acusecases_module_overview label="Overview" href="index.html"/>
+        <acusecases_module_api label="API" href="../../../../apidocs/2.0/modules/acusecases/index.html"/>
+      </acusecases_module_section>
+      <administration_module_section label="administration" href="administration/">
+        <administration_module_overview label="Overview" href="index.html"/>
+        <administration_module_api label="API" href="../../../../apidocs/2.0/modules/administration/index.html"/>
+      </administration_module_section>
+      <cache_module_section label="cache" href="cache/">
+        <cache_module_overview label="Overview" href="index.html"/>
+        <cache_module_api label="API" href="../../../../apidocs/2.0/modules/cache/index.html"/>
+      </cache_module_section>
+      <janitor_module_section label="janitor" href="janitor/">
+        <janitor_module_overview label="Overview" href="index.html"/>
+        <janitor_module_api label="API" href="../../../../apidocs/2.0/modules/janitor/index.html"/>
+      </janitor_module_section>
+      <ldap_module_section label="ldap" href="ldap/">
+        <ldap_module_overview label="Overview" href="index.html"/>
+        <ldap_module_api label="API" href="../../../../apidocs/2.0/modules/ldap/index.html"/>
+      </ldap_module_section>
+      <linking_module_section label="linking" href="linking/">
+        <linking_module_overview label="Overview" href="index.html"/>
+        <linking_module_api label="API" href="../../../../apidocs/2.0/modules/linking/index.html"/>
+      </linking_module_section>
+      <observation_module_section label="observation" href="observation/">
+        <observation_module_overview label="Overview" href="index.html"/>
+        <observation_module_api label="API" href="../../../../apidocs/2.0/modules/observation/index.html"/>
+      </observation_module_section>
+      <properties_module_section label="properties" href="properties/">
+        <properties_module_overview label="Overview" href="index.html"/>
+        <properties_module_api label="API" href="../../../../apidocs/2.0/modules/properties/index.html"/>
+      </properties_module_section>
+      <sitemanagement_module_section label="sitemanagement" href="sitemanagement/">
+        <sitemanagement_module_overview label="Overview" href="index.html"/>
+        <sitemanagement_module_api label="API" href="../../../../apidocs/2.0/modules/sitemanagement/index.html"/>
+      </sitemanagement_module_section>
+      <templating_module_section label="templating" href="templating/">
+        <templating_module_overview label="Overview" href="index.html"/>
+        <templating_module_api label="API" href="../../../../apidocs/2.0/modules/templating/index.html"/>
+      </templating_module_section>
+      <usecase_module_section label="usecase" href="usecase/">
+        <usecase_module_overview label="Overview" href="index.html"/>
+        <usecase_module_api label="API" href="../../../../apidocs/2.0/modules/usecase/index.html"/>
+      </usecase_module_section>
+      <workflow_module_section label="workflow" href="workflow/">
+        <workflow_module_overview label="Overview" href="index.html"/>
+        <workflow_module_api label="API" href="../../../../apidocs/2.0/modules/workflow/index.html"/>
+      </workflow_module_section>
+    </core_modules>
+    <standard_modules label="Standard Modules" href="../modules/">
+      <blog_module_section label="blog" href="blog/">
+        <blog_module_overview label="Overview" href="index.html"/>
+        <blog_module_api label="API" href="../../../../apidocs/2.0/modules/blog/index.html"/>
+      </blog_module_section>
+      <bxe_module_section label="bxe" href="bxe/">
+        <bxe_module_overview label="Overview" href="index.html"/>
+        <bxe_module_api label="API" href="../../../../apidocs/2.0/modules/bxe/index.html"/>
+      </bxe_module_section>
+      <cforms_module_section label="cforms" href="cforms/">
+        <cforms_module_overview label="Overview" href="index.html"/>
+        <cforms_module_api label="API" href="../../../../apidocs/2.0/modules/cforms/index.html"/>
+      </cforms_module_section>
+      <collection_module_section label="collection" href="collection/">
+        <collection_module_overview label="Overview" href="index.html"/>
+        <collection_module_api label="API" href="../../../../apidocs/2.0/modules/collection/index.html"/>
+      </collection_module_section>
+      <contactform_module_section label="contactform" href="contactform/">
+        <contactform_module_overview label="Overview" href="index.html"/>
+        <contactform_module_api label="API" href="../../../../apidocs/2.0/modules/contactform/index.html"/>
+      </contactform_module_section>
+      <development_module_section label="development" href="development/">
+        <development_module_overview label="Overview" href="index.html"/>
+        <development_module_api label="API" href="../../../../apidocs/2.0/modules/development/index.html"/>
+      </development_module_section>
+      <editors_module_section label="editors" href="editors/">
+        <editors_module_overview label="Overview" href="index.html"/>
+        <editors_module_api label="API" href="../../../../apidocs/2.0/modules/editors/index.html"/>
+      </editors_module_section>
+      <export_module_section label="export" href="export/">
+        <export_module_overview label="Overview" href="index.html"/>
+        <export_module_api label="API" href="../../../../apidocs/2.0/modules/export/index.html"/>
+      </export_module_section>
+      <fckeditor_module_section label="fckeditor" href="fckeditor/">
+        <fckeditor_module_overview label="Overview" href="index.html"/>
+        <fckeditor_module_api label="API" href="../../../../apidocs/2.0/modules/fckeditor/index.html"/>
+      </fckeditor_module_section>
+      <kupu_module_section label="kupu" href="kupu/">
+        <kupu_module_overview label="Overview" href="index.html"/>
+        <kupu_module_api label="API" href="../../../../apidocs/2.0/modules/kupu/index.html"/>
+      </kupu_module_section>
+      <languageselector_module_section label="languageselector" href="languageselector/">
+        <languageselector_module_overview label="Overview" href="index.html"/>
+        <languageselector_module_api label="API" href="../../../../apidocs/2.0/modules/languageselector/index.html"/>
+      </languageselector_module_section>
+      <lenyadoc_module_section label="lenyadoc" href="lenyadoc/">
+        <lenyadoc_module_overview label="Overview" href="index.html"/>
+        <lenyadoc_module_api label="API" href="../../../../apidocs/2.0/modules/lenyadoc/index.html"/>
+      </lenyadoc_module_section>
+      <linkcheck_module_section label="linkcheck" href="linkcheck/">
+        <linkcheck_module_overview label="Overview" href="index.html"/>
+        <linkcheck_module_api label="API" href="../../../../apidocs/2.0/modules/linkcheck/index.html"/>
+      </linkcheck_module_section>
+      <links_module_section label="links" href="links/">
+        <links_module_overview label="Overview" href="index.html"/>
+        <links_module_api label="API" href="../../../../apidocs/2.0/modules/links/index.html"/>
+      </links_module_section>
+      <lucene_module_section label="lucene" href="lucene/">
+        <lucene_module_overview label="Overview" href="index.html"/>
+        <lucene_module_api label="API" href="../../../../apidocs/2.0/modules/lucene/index.html"/>
+      </lucene_module_section>
+      <migration_module_section label="migration" href="migration/">
+        <migration_module_overview label="Overview" href="index.html"/>
+        <migration_module_api label="API" href="../../../../apidocs/2.0/modules/migration/index.html"/>
+      </migration_module_section>
+      <neutron_module_section label="neutron" href="neutron/">
+        <neutron_module_overview label="Overview" href="index.html"/>
+        <neutron_module_api label="API" href="../../../../apidocs/2.0/modules/neutron/index.html"/>
+      </neutron_module_section>
+      <news_module_section label="news" href="news/">
+        <news_module_overview label="Overview" href="index.html"/>
+        <news_module_api label="API" href="../../../../apidocs/2.0/modules/news/index.html"/>
+      </news_module_section>
+      <notification_module_section label="notification" href="notification/">
+        <notification_module_overview label="Overview" href="index.html"/>
+        <notification_module_api label="API" href="../../../../apidocs/2.0/modules/notification/index.html"/>
+      </notification_module_section>
+      <opendocument_module_section label="opendocument" href="opendocument/">
+        <opendocument_module_overview label="Overview" href="index.html"/>
+        <opendocument_module_api label="API" href="../../../../apidocs/2.0/modules/opendocument/index.html"/>
+      </opendocument_module_section>
+      <prettyprinting_module_section label="prettyprinting" href="prettyprinting/">
+        <prettyprinting_module_overview label="Overview" href="index.html"/>
+        <prettyprinting_module_api label="API" href="../../../../apidocs/2.0/modules/prettyprinting/index.html"/>
+      </prettyprinting_module_section>
+      <profiling_module_section label="profiling" href="profiling/">
+        <profiling_module_overview label="Overview" href="index.html"/>
+        <profiling_module_api label="API" href="../../../../apidocs/2.0/modules/profiling/index.html"/>
+      </profiling_module_section>
+      <resource_module_section label="resource" href="resource/">
+        <resource_module_overview label="Overview" href="index.html"/>
+        <resource_module_api label="API" href="../../../../apidocs/2.0/modules/resource/index.html"/>
+      </resource_module_section>
+      <simplesite_module_section label="simplesite" href="simplesite/">
+        <simplesite_module_overview label="Overview" href="index.html"/>
+        <simplesite_module_api label="API" href="../../../../apidocs/2.0/modules/simplesite/index.html"/>
+      </simplesite_module_section>
+      <sitetree_module_section label="sitetree" href="sitetree/">
+        <sitetree_module_overview label="Overview" href="index.html"/>
+        <sitetree_module_api label="API" href="../../../../apidocs/2.0/modules/sitetree/index.html"/>
+      </sitetree_module_section>
+      <sourcerepository_module_section label="sourcerepository" href="sourcerepository/">
+        <sourcerepository_module_overview label="Overview" href="index.html"/>
+        <sourcerepository_module_api label="API" href="../../../../apidocs/2.0/modules/sourcerepository/index.html"/>
+      </sourcerepository_module_section>
+      <svg_module_section label="svg" href="svg/">
+        <svg_module_overview label="Rounded Corners" href="roundedcorners.html"/>
+        <svg_module_resizeimages label="Resizing Images" href="resizeimages.html"/>
+        <svg_module_api label="API" href="../../../../apidocs/2.0/modules/svg/index.html"/>
+      </svg_module_section>
+      <tinymce_module_section label="tinymce" href="tinymce/">
+        <tinymce_module_overview label="Overview" href="index.html"/>
+        <tinymce_module_api label="API" href="../../../../apidocs/2.0/modules/tinymce/index.html"/>
+      </tinymce_module_section>
+      <usecasedocument_module_section label="usecasedocument" href="usecasedocument/">
+        <usecasedocument_module_overview label="Overview" href="index.html"/>
+        <usecasedocument_module_api label="API" href="../../../../apidocs/2.0/modules/usecasedocument/index.html"/>
+      </usecasedocument_module_section>
+      <webdav_module_section label="webdav" href="webdav/">
+        <webdav_index href="index.html" label="Getting started"/>
+        <monitoring href="monitoring.html" label="Monitoring"/>
+        <webdav_server href="webdav.html" label="WebDAV Servers"/>
+        <webdav_module_api label="API" href="../../../../apidocs/2.0/modules/webdav/index.html"/>
+      </webdav_module_section>
+      <xhtml_module_section label="xhtml" href="xhtml/">
+        <xhtml_module_overview label="Overview" href="index.html"/>
+        <xhtml_module_api label="API" href="../../../../apidocs/2.0/modules/xhtml/index.html"/>
+      </xhtml_module_section>
+      <xopus_module_section label="xopus" href="xopus/">
+        <xopus_module_overview label="Overview" href="index.html"/>
+        <xopus_module_api label="API" href="../../../../apidocs/2.0/modules/xopus/index.html"/>
+      </xopus_module_section>
+    </standard_modules>
+    
+  </docu2.0>
+  
+  
   <!--+
     | Version 1.2 tab
     +-->
@@ -219,7 +402,7 @@
     <index_doc href="index.html" label="Documentation" wholesite="true"/>
   -->        
   
-  <docu1.2.x href="1_2_x/" label="Version 1.2" target="1.2" tab="1_2">
+  <docu1.2.x href="docs/1_2_x/" label="Version 1.2" target="1.2" tab="1_2">
     <index href="index.html" label="Index"/>
     <!--          <whole_docu href="../documentation-1-2.pdf" label="1.2 PDF docs (all in one)" />
       <whole_docu href="../documentation-1-2.html" label="1.2 HTML docs (all in one)" />
@@ -255,6 +438,7 @@
       <cmsscreens href="cms_screens.html" label="CMS Screens"/>
       <howtosearch href="search.html" label="Search Publications"/>
       <howtoexternaldata href="external_data.html" label="External Data"/>
+      <unit-test href="unittests.html" label="Unit Tests"/>
     </howtos>
     <components href="components/" label="Components">
       <accesscontrol href="accesscontrol/" label="Access&#160;Control">
@@ -274,7 +458,7 @@
         <openoffice href="openoffice.html" label="OpenOffice"/>
       </authoring>
       <deployment href="deployment/" label="Deployment">
-        <namespaces href="proxying.html" label="Proxying"/>
+        <proxying href="proxying.html" label="Proxying"/>
       </deployment>
       <misc href="editors/" label="Editors">
         <namespaces href="htmlform.html" label="HTML Form Editor"/>
@@ -368,8 +552,6 @@
     <javadoc1.2 href="../../apidocs/1.2/index.html" label="1.2 API (Javadoc)"/>
   </docu1.2.x>
   
-  </docu>
-  
   <!--+
     | Community tab
     +-->
@@ -378,8 +560,6 @@
     <index_com href="index.html" label="Contributing"/>
     <wiki href="ext:wiki/lenya" label="Lenya Wiki" />
     <translating href="translations.html" label="Translations" />
-    <credits href="acknowledgements.html" label="Credits"/>
-    <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
     <node-g
       href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=Importance"
       label="Bug Tracker"/>
@@ -393,6 +573,13 @@
       <navigation.img href="navigation.png"/>
       <usecase-framework-architecture.img href="usecase-framework-architecture.png"/>
       <repositoryWorkspaces.img href="repositoryWorkspaces.png"/>
+      <modules-svg-roundedcorners-screenshot.img href="svgmodule/roundedcorners.png"/>
+      <resourceTypeImages href="resourcetype/">
+        <resourceTypeCreateScreen.img href="create-screen.png"/>
+        <resourceTypeNewDocument.img href="new-document.png"/>
+        <resourceTypeBxe.img href="bxe.png"/>
+        <resourceTypeFormats.img href="resourceTypeFormats.png"/>
+      </resourceTypeImages>
     </live>
   </images>
   
@@ -448,7 +635,8 @@
     <wiki href="http://wiki.apache.org/">
       <lenya href="lenya/">
         <FAQ href="FAQ"/>
-        <webdav href="HowToEditWithWebDAV"/>
+	<webdav href="HowToEditWithWebDAV"/>
+	<MetaStylesheets href="MetaStylesheets"/>
       </lenya>
       <cocoon href="cocoon/">
         <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
@@ -459,6 +647,7 @@
     </webdav>
     <oscom href="http://oscom.org"/>
     <wyona href="http://wyona.com" />
+    <wyona.org href="http://wyona.org" />
     <java href="http://java.sun.com/j2se/1.4.2/download.html"/>
     <java.endorsedmechanism href="http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html"/>
     <jetty href="http://jetty.mortbay.org/jetty/"/>

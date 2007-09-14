@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Production Checklist</title>
+  </header>
+  <body>
+    
+    <p>
+      Here's a list of points you should take care of when running Lenya
+      in a production environment. It covers only the most obvious aspects,
+      but it might prevent you from falling in the biggest traps in
+      first real-world project.
+    </p>
+    
+    <section>
+      <title>General Deployment Recommendations</title>
+      <ul>
+        <li>
+          Seperate your web application from your data. This applies to
+          the content, access control, and work data (search index, cache).
+        </li>
+        <li>
+          When creating backups of your data, make sure you'll still know
+          which version of the application they're compatible with when you
+          need them again.
+        </li>
+        <li>
+          Always have two instances of Lenya ready, and make sure you can
+          switch between them immediately (e.g., by changing a symlink to
+          a proxy configuration file).
+        </li>
+        <li>
+          Consider using vendor branches for Lenya, Cocoon etc. This helps you to
+          stay flexible when you're faced with bugs, endorsed library issues etc.
+        </li>
+        <li>
+          When you deploy a version of your application, <strong>always</strong> create
+          a branch in your code versioning system. This way, you can merge essential
+          bugfixes from the trunk and re-deploy the application. <strong>Never</strong>
+          deploy an un-tagged development version.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>During Development</title>
+      <ul>
+        <li>
+          Run sophisticated and thorough load tests early and often.
+        </li>
+        <li>
+          Run search engine crawlers on your site. Observe the performance behaviour
+          and session handling.
+        </li>
+        <li>
+          Test the site in various browsers, using various settings (disabling
+          JavaScript etc.), and preferrably using different bandwidths.
+        </li>
+        <li>
+          Make sure you don't create weak points for DoS attacks (e.g. by
+          expensive dynamic generation of non-cached pages based on request
+          parameters). 
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Preparation (Internal Pilot Phase)</title>
+      <ul>
+        <li>
+          Set the log level to <em>ERROR</em>.
+        </li>
+        <li>
+          Make sure that the logs stay clean. If exceptions occur, mercilessly
+          track them down and eliminate their causes. Even if you consider some
+          exceptions "normal" behaviour - they aren't.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Caching in Cocoon</title>
+      <p>
+        There's a <a href="http://wiki.apache.org/cocoon-data/attachments/GT2006Notes/attachments/10-caching.pdf">great
+        presentation</a> (PDF) about caching in Cocoon, held at the Cocoon Get-Together 2006.
+      </p>
+      <p>
+        Cocoon's default store implementation is an in-memory store backed by a disk
+        store (based on EHCache). You can configure this store using a file called
+        <code>ehcache.xml</code> which is located in <code>org/apache/cocoon/components/store/impl/ehcache.xml</code>.
+        The default entries of the <code>defaultCache</code> are as follows:
+      </p>
+      <source xml:space="preserve"><![CDATA[<defaultCache
+    maxElementsInMemory="10000"
+    eternal="true"
+    timeToIdleSeconds="0"
+    timeToLiveSeconds="0"
+    overflowToDisk="true"
+    diskPersistent="true"
+    diskExpiryThreadIntervalSeconds="120"
+    />]]></source>
+      <p>
+        So, when <code>overflow-to-disk</code> is set to true, <code>eternal</code> to true and
+        <code>timeToIdleSeconds=0</code>, then once a cachekey is in memory/disk, it will never
+        be removed which might lead to a cache file becoming very large
+        (see also thread: <a href="http://java2.5341.com/msg/170235.html">http://java2.5341.com/msg/170235.html</a>).
+      </p>
+      <p>
+        For production use these setting should be changed. A possible configuration might look like:
+      </p>
+      <source xml:space="preserve"><![CDATA[<defaultCache
+    maxElementsInMemory="10000"
+    eternal="false"
+    timeToIdleSeconds="1800"
+    timeToLiveSeconds="3600"
+    overflowToDisk="true"
+    diskPersistent="true"
+    diskExpiryThreadIntervalSeconds="120"
+    />]]></source>
+      <p>
+        This cache contains a maximum in memory of 10000 elements, and will expire an element
+        if it is idle for more than 30 minutes and lives for more than 60 minutes. If there are
+        more than 10000 elements it will overflow to the disk cache.
+      </p>
+    </section>
+    
+    <section>
+      <title>Performance Tuning</title>
+      <p>
+        The following hints can be considered to improve the performance of your application:
+      </p>
+      <ul>
+        <li>Set XSLT caching (use-store) to true in <code>cocoon.xconf</code>.</li>
+        <li>Turn off reloading of sub-sitemaps.</li>
+        <li>
+          Enable client-side caching by changing the <code>pipeline-expiration</code> parameter
+          in <code>global-sitemap.xmap</code>, for instance:
+          <source xml:space="preserve"><![CDATA[<global-variables>
+  <pipeline-expiration>access plus 2 hours</pipeline-expiration>
+</global-variables>]]></source>
+        </li>
+        <li>Tips about Cocoon performance tuning: <a href="http://wiki.apache.org/cocoon/CocoonPerformance">http://wiki.apache.org/cocoon/CocoonPerformance</a></li>
+        <li>Tips about Tomcat performance tuning: <a href="http://marc.theaimsgroup.com/?t=103598885300001&amp;r=1&amp;w=2">http://marc.theaimsgroup.com/?t=103598885300001&amp;r=1&amp;w=2</a></li>
+      </ul>
+      <p>
+        Doug Chestnut recommends to adapt the garbage collector to make use of all available CPU cores.
+        This can be done by adding the following to your JAVA options (for a machine with 4 cores):
+      </p>
+      <source xml:space="preserve">-XX:+UseParallelGC -XX:ParallelGCThreads=4</source>
+      <p>   
+        You can also increase stack and heap size to make better use of available memory
+        (be careful not to starve other processes on the same machine, though):
+      </p>
+      <source xml:space="preserve">-Xms512m -Xmx1024m</source>
+      <p>
+        Lenya does XML prettyprinting by default, which comes with a performance penalty.
+        You might want to disable the transformation for maximum speed:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>]]></source>
+    </section>
+    
+    <section>
+      <title>General Measures for Production</title>
+      <ul>
+        <li>
+          Double-check your access control settings.
+        </li>
+        <li>
+          Remove the example publications (default and blog). If you use them as templates,
+          don't forget to remove the example users or change their passwords.
+        </li>
+        <li>
+          Set the log level to <em>FATAL</em> or at least <em>ERROR</em>. This makes the code
+          faster and prevents the log files from growing very large while keeping them comprehensible.
+          The log level can be configured in <code>$COCOON_HOME/src/webapp/WEB-INF/log4j.xconf</code> or ultimately
+          in <code>$LENYA_HOME/build/lenya/webapp/WEB-INF/log4j.xconf</code>.
+        </li>
+        <li>
+          Set the <em>debug</em> property in <code>src/targets/properties-build.xml</code> to <em>off</em>.
+          This way, the generated byte code will run faster.
+        </li>
+        <li>
+          Disable all modules which accept request to dynamically generate images
+          to prevent DoS attacks.
+        </li>
+        <li>
+          Consider disabling image upload.
+        </li>
+        <li>
+          Set the session expiration time to the least acceptable value.
+        </li>
+        <li>
+          Prepare for maintenance (updates etc.), either by switching
+          the application or by showing a friendly information page.
+        </li>
+        <li>
+          Prepare for a worst-case scenario. For instance, have a statically
+          exported version of the site ready.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Cosmetics</title>
+      <p>
+        In order to hide the default and blog publicatons from the root index page
+        (if you're not going to rewrite it anyway), you can set
+      </p>
+      <source xml:space="preserve"><![CDATA[--- lenya/src/pubs/blog/publication.xml (revision 452350)
++++ lenya/src/pubs/blog/publication.xml (working copy)
+@@ -17,11 +17,12 @@
+-<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true">
++<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">]]></source>
+      <source xml:space="preserve"><![CDATA[--- lenya/src/pubs/default/publication.xml      (revision 452350)
++++ lenya/src/pubs/default/publication.xml      (working copy)
+@@ -17,12 +17,13 @@
+-<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true">
++<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">]]></source>
+    </section>
+
+    
+  </body>
+</document>

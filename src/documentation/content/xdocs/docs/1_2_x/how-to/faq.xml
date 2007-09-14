@@ -301,7 +301,7 @@
         complain.</p>
         
         </section><section><title id="head-4d1f66d4005aa31c18293b90c01f921d7d6378d4">I get a
-        {{{java.net.URISyntaxException}}} error:</title>
+        <code>java.net.URISyntaxException</code> error:</title>
 <source>
 java.net.URISyntaxException: Illegal character in path at index 21: 
 file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/

@@ -1,0 +1,1578 @@
+<?xml version="1.0"?>
+<log>
+<logentry
+   revision="532007">
+<author>nettings</author>
+<date>2007-04-24T16:53:44.369727Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/resources/javascript/tiny_config.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/sitemap.xmap</path>
+<path
+   action="D">/lenya/trunk/src/modules/tinymce/resources/misc/download.xhtml</path>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/resources/css/editor_content.css</path>
+<path
+   copyfrom-path="/lenya/trunk/src/modules/tinymce/resources/misc/download.xhtml"
+   copyfrom-rev="531875"
+   action="A">/lenya/trunk/src/modules/tinymce/resources/misc/download.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/README</path>
+</paths>
+<msg>improved documentation - added hints on wysiwyg-friendly css design.
+download hint page is now a page:page and provides standard lenya look
+and feel.
+updated readme to reflect testing with latest tiny release (2.1.0).
+minor functional changes:
+* display pilcrows in edit window to make paragraphs visible
+* changed configuration to more conservative auto-resize=false
+</msg>
+</logentry>
+<logentry
+   revision="532157">
+<author>thorsten</author>
+<date>2007-04-25T00:42:34.119913Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/svn-log/tlp-HEAD.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2007-02.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2007-03.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2007-04.svn.xml</path>
+</paths>
+<msg>updating svn log</msg>
+</logentry>
+<logentry
+   revision="532158">
+<author>thorsten</author>
+<date>2007-04-25T00:43:03.955638Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/SVN-HEAD-REV.txt</path>
+</paths>
+<msg>updating svn log</msg>
+</logentry>
+<logentry
+   revision="532159">
+<author>thorsten</author>
+<date>2007-04-25T00:44:09.820162Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/guidelines.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/who.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/community/acknowledgements.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/history.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Refactoring credit listing and updating the current situation</msg>
+</logentry>
+<logentry
+   revision="532161">
+<author>thorsten</author>
+<date>2007-04-25T00:53:00.566348Z</date>
+<paths>
+<path
+   action="M">/lenya/site/docs/1_4/index.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/modules/index.html</path>
+<path
+   action="M">/lenya/site/guidelines.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.html</path>
+<path
+   action="M">/lenya/site/community/mailing-lists.html</path>
+<path
+   action="M">/lenya/site/history.html</path>
+<path
+   action="M">/lenya/site/community/irc.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.html</path>
+<path
+   action="M">/lenya/site/community/translations.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.html</path>
+<path
+   action="M">/lenya/site/history.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2007-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/concepts/urlMapping.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-09.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/index.html</path>
+<path
+   action="M">/lenya/site/broken-links.xml</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.html</path>
+<path
+   action="M">/lenya/site/linkmap.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/modules/index.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.html</path>
+<path
+   action="M">/lenya/site/screenshots.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.html</path>
+<path
+   action="M">/lenya/site/related-projects.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-10.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.html</path>
+<path
+   action="A">/lenya/site/tlp-2007-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.html</path>
+<path
+   action="A">/lenya/site/tlp-2007-02.svn.pdf</path>
+<path
+   action="A">/lenya/site/tlp-2007-03.svn.pdf</path>
+<path
+   action="A">/lenya/site/tlp-2007-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/license.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.html</path>
+<path
+   action="M">/lenya/site/roadmap.html</path>
+<path
+   action="M">/lenya/site/charter.html</path>
+<path
+   action="A">/lenya/site/svn-log/tlp-2007-02.svn.xml</path>
+<path
+   action="M">/lenya/site/community/index.html</path>
+<path
+   action="A">/lenya/site/svn-log/tlp-2007-03.svn.xml</path>
+<path
+   action="A">/lenya/site/svn-log/tlp-2007-04.svn.xml</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.html</path>
+<path
+   action="M">/lenya/site/resolution.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.html</path>
+<path
+   action="M">/lenya/site/index.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/concepts/urlMapping.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-11.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.html</path>
+<path
+   action="A">/lenya/site/tlp-2007-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-07.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.html</path>
+<path
+   action="M">/lenya/site/guidelines.html</path>
+<path
+   action="A">/lenya/site/who.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.html</path>
+<path
+   action="M">/lenya/site/linkmap.pdf</path>
+<path
+   action="A">/lenya/site/who.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.html</path>
+<path
+   action="M">/lenya/site/community/live-sites.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.html</path>
+<path
+   action="A">/lenya/site/tlp-2007-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-08.svn.html</path>
+</paths>
+<msg>Automatic publish from forrestbot</msg>
+</logentry>
+<logentry
+   revision="532178">
+<author>josias</author>
+<date>2007-04-25T02:59:17.766814Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/who.xml</path>
+</paths>
+<msg>set svn:eol-style native and fixed line breaks</msg>
+</logentry>
+<logentry
+   revision="532179">
+<author>josias</author>
+<date>2007-04-25T03:01:15.457037Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/who.xml</path>
+</paths>
+<msg>added myself to list of committers</msg>
+</logentry>
+<logentry
+   revision="532242">
+<author>thorsten</author>
+<date>2007-04-25T07:57:19.205441Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/guidelines.xml</path>
+</paths>
+<msg>Fixing linking</msg>
+</logentry>
+<logentry
+   revision="532255">
+<author>nettings</author>
+<date>2007-04-25T08:38:27.342246Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/menu/menu.js</path>
+</paths>
+<msg>add variable declarations to avoid javascript warnings in firefox.
+it's good practice anyway.
+</msg>
+</logentry>
+<logentry
+   revision="532267">
+<author>nettings</author>
+<date>2007-04-25T08:53:20.758509Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/svg/config/module.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/svg/xslt/image2svg.xsl</path>
+</paths>
+<msg>added check for existing query string to avoid duplicate parameters and
+an invalid uri. this fixes bug
+http://issues.apache.org/bugzilla/show_bug.cgi?id=42229
+</msg>
+</logentry>
+<logentry
+   revision="532284">
+<author>andreas</author>
+<date>2007-04-25T09:41:52.514172Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/dev/eclipse/project</path>
+</paths>
+<msg>Eclipse project file: changed mime-type, removed 'pubconf' suffix (fixes bug 42215)</msg>
+</logentry>
+<logentry
+   revision="532349">
+<author>andreas</author>
+<date>2007-04-25T13:14:31.326547Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/test/canoo/test.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/development/test/canoo/test.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/test/canoo/test.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/acusecases/test/canoo/test.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/notification/test/canoo/test.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_it.xml</path>
+</paths>
+<msg>No SCREAMING in headings, updated web tests</msg>
+</logentry>
+<logentry
+   revision="532353">
+<author>nettings</author>
+<date>2007-04-25T13:53:24.237133Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/prettyprinting/config</path>
+<path
+   action="A">/lenya/trunk/src/modules/prettyprinting/config/module.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/prettyprinting/xslt</path>
+<path
+   action="A">/lenya/trunk/src/modules/prettyprinting</path>
+<path
+   action="A">/lenya/trunk/src/modules/prettyprinting/xslt/xml2nicexml.xsl</path>
+</paths>
+<msg>consolidated xml prettyprinting in new module. no functional changes.
+
+</msg>
+</logentry>
+<logentry
+   revision="532354">
+<author>nettings</author>
+<date>2007-04-25T13:56:14.932407Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/publication.xconf</path>
+</paths>
+<msg>register new prettyprinting module in default configuration.
+HEADSUP: you will need to do this in your own pubs as well if you want
+to use the prettyprinting stylesheet.
+</msg>
+</logentry>
+<logentry
+   revision="532357">
+<author>nettings</author>
+<date>2007-04-25T13:58:21.940454Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/profiling/xslt/xml2nicexml.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/profiling/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/profiling/config/module.xml</path>
+</paths>
+<msg>profiling module now uses prettyprinting module.
+i have added a "symbolic" build dependency, although i understand those
+are only relevant for java code. still i thought it might clear things
+up. if you find it confusing, revert module.xml
+
+</msg>
+</logentry>
+<logentry
+   revision="532359">
+<author>nettings</author>
+<date>2007-04-25T14:02:12.325311Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/sitemap.xmap</path>
+<path
+   action="D">/lenya/trunk/src/modules/editors/usecases/forms/prettyprint.xsl</path>
+</paths>
+<msg>the oneform editor now uses the prettyprinting module for the
+"reformatting" feature. it addresses the whitespace buglet, but not
+http://issues.apache.org/bugzilla/show_bug.cgi?id=42237.
+</msg>
+</logentry>
+<logentry
+   revision="532362">
+<author>andreas</author>
+<date>2007-04-25T14:18:24.807615Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/usecases/forms/oneform.jx</path>
+</paths>
+<msg>Reverted accidential commit (one-form editor title i18n), this fixes bug 42238.</msg>
+</logentry>
+<logentry
+   revision="532371">
+<author>nettings</author>
+<date>2007-04-25T14:43:41.935536Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/svg/xslt/scale.xsl</path>
+</paths>
+<msg>fixes a buglet that crops up in editors that support image resizing:
+since both height and width are accepted, that implies that the image
+proportions can be changed. svg needs the preserveAspectRatio="none"
+attribute to really allow that, otherwise the resulting image will be
+padded.
+</msg>
+</logentry>
+<logentry
+   revision="532378">
+<author>andreas</author>
+<date>2007-04-25T14:59:58.326918Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/RepositorySource.java</path>
+</paths>
+<msg>[minor change] fixed javadoc comment</msg>
+</logentry>
+<logentry
+   revision="532395">
+<author>nettings</author>
+<date>2007-04-25T15:45:49.215699Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/news/xslt/collection2xhtml.xsl</path>
+</paths>
+<msg>fix minor xhtml validation bug, reported by richard frovarp.
+</msg>
+</logentry>
+<logentry
+   revision="532397">
+<author>nettings</author>
+<date>2007-04-25T15:53:51.062382Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/usecases/forms/oneform.jx</path>
+</paths>
+<msg>this patch removes the "reformat" button from the oneform editor
+temporarily.  andreas has made a fix available at
+http://issues.apache.org/bugzilla/show_bug.cgi?id=42237,
+but it was decided to postpone it until 1.4.1 because it touches the
+core API.
+</msg>
+</logentry>
+<logentry
+   revision="532419">
+<author>nettings</author>
+<date>2007-04-25T17:44:56.860133Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg>added some security information, cf. bug
+http://issues.apache.org/bugzilla/show_bug.cgi?id=35786
+</msg>
+</logentry>
+<logentry
+   revision="532469">
+<author>thorsten</author>
+<date>2007-04-25T20:26:52.559711Z</date>
+<paths>
+<path
+   action="M">/lenya/site/who.pdf</path>
+<path
+   action="M">/lenya/site/guidelines.html</path>
+<path
+   action="M">/lenya/site/broken-links.xml</path>
+<path
+   action="M">/lenya/site/guidelines.pdf</path>
+<path
+   action="M">/lenya/site/who.html</path>
+</paths>
+<msg>Automatic publish from forrestbot</msg>
+</logentry>
+<logentry
+   revision="532494">
+<author>nettings</author>
+<date>2007-04-25T21:48:44.311860Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/README.txt</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/java/src/org/apache/lenya/defaultpub/cms/publication/templating/Instantiator.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/ac/java/src/org/apache/lenya/cms/ac/PublicationAccessControllerResolver.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/README.txt</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/publication.xconf</path>
+</paths>
+<msg>finish renaming from ac/ac.xconf to
+access-controller/access-controller.xml
+patch by richard frovarp, thanks!
+</msg>
+</logentry>
+<logentry
+   revision="532502">
+<author>nettings</author>
+<date>2007-04-25T22:08:29.505122Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/README.txt</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/java/src/org/apache/lenya/defaultpub/cms/publication/templating/Instantiator.java</path>
+<path
+   action="D">/lenya/trunk/src/pubs/default/config/search/lucene_index.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/cocoon/components/search/components/impl/IndexManagerImpl.java</path>
+<path
+   copyfrom-path="/lenya/trunk/src/pubs/default/config/search/lucene_index.xconf"
+   copyfrom-rev="532371"
+   action="A">/lenya/trunk/src/pubs/default/config/search/lucene_index.xml</path>
+</paths>
+<msg>finish rename from config/lucene_index.xconf to
+config/search/lucene_index.xml, thanks to richard for spotting this!
+committed despite the code freeze, because this change had
+been agreed on and announced to the users list well before the freeze...
+</msg>
+</logentry>
+<logentry
+   revision="532513">
+<author>nettings</author>
+<date>2007-04-25T22:38:03.030339Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>add missed files from r532359: activate source-code prettyprinting.
+mental note: there should be one single place where such stuff can be
+added...
+</msg>
+</logentry>
+<logentry
+   revision="532514">
+<author>nettings</author>
+<date>2007-04-25T22:43:54.828886Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg>add note about cocoon problems with jdk 6
+</msg>
+</logentry>
+<logentry
+   revision="532642">
+<author>andreas</author>
+<date>2007-04-26T07:51:51.015870Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Clipboard.java</path>
+</paths>
+<msg>Make clipboard method constants public. This is necessary to evaluate them when building the sitetree.</msg>
+</logentry>
+<logentry
+   revision="532644">
+<author>andreas</author>
+<date>2007-04-26T07:52:36.455871Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/sitetree.jx</path>
+</paths>
+<msg>Grey out cut documents in sitetree. See bug 34988.</msg>
+</logentry>
+<logentry
+   revision="532645">
+<author>andreas</author>
+<date>2007-04-26T07:55:20.635567Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/PageEnvelope.java</path>
+</paths>
+<msg>[minor change] removed invalid javadoc tag</msg>
+</logentry>
+<logentry
+   revision="532646">
+<author>andreas</author>
+<date>2007-04-26T08:04:08.719484Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ClipboardHelper.java</path>
+</paths>
+<msg>Removing clipboard from session after pasting. See bug 34988.</msg>
+</logentry>
+<logentry
+   revision="532656">
+<author>andreas</author>
+<date>2007-04-26T08:26:12.644330Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+</paths>
+<msg>Allow to paste documents at top level</msg>
+</logentry>
+<logentry
+   revision="532669">
+<author>andreas</author>
+<date>2007-04-26T08:51:15.398418Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/properties-build.xml</path>
+</paths>
+<msg>Don't hard-code version in build files</msg>
+</logentry>
+<logentry
+   revision="532671">
+<author>andreas</author>
+<date>2007-04-26T08:53:36.022923Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/properties-build.xml</path>
+<path
+   action="M">/lenya/trunk/build.properties</path>
+</paths>
+<msg>Removed duplicate webtest.home entry from build.properties. This fixes bug 42234.</msg>
+</logentry>
+<logentry
+   revision="532692">
+<author>andreas</author>
+<date>2007-04-26T10:05:18.650263Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/css/default.css</path>
+</paths>
+<msg>Make &lt;code&gt; bold only in headings</msg>
+</logentry>
+<logentry
+   revision="532702">
+<author>andreas</author>
+<date>2007-04-26T11:05:41.457606Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/resources/shared/css/page.xml</path>
+</paths>
+<msg>Moved font family declaration to body element. This looks better with Kupu.</msg>
+</logentry>
+<logentry
+   revision="532706">
+<author>andreas</author>
+<date>2007-04-26T11:20:04.674417Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/rc/rco-exception.xsl</path>
+</paths>
+<msg>Revision control error screen: added XHTML namespace, improved layout</msg>
+</logentry>
+<logentry
+   revision="532711">
+<author>andreas</author>
+<date>2007-04-26T11:34:29.150671Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/revisions.jx</path>
+</paths>
+<msg>Show actual version number instead of counter in revision list.</msg>
+</logentry>
+<logentry
+   revision="532712">
+<author>andreas</author>
+<date>2007-04-26T11:41:20.340362Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/content/exception/publication-does-not-exist.jx</path>
+</paths>
+<msg>Added exception handling for non-existing publications. This fixes bug 42220. Thanks to Joern Nettingsmeier for enhancing the patch.</msg>
+</logentry>
+<logentry
+   revision="532714">
+<author>andreas</author>
+<date>2007-04-26T11:43:40.260442Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/css/tabs.css</path>
+</paths>
+<msg>Show cut icons in sitetree with low opacity</msg>
+</logentry>
+<logentry
+   revision="532716">
+<author>andreas</author>
+<date>2007-04-26T11:52:13.421177Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/cocoon/source/DocumentSourceFactory.java</path>
+</paths>
+<msg>Forward revision parameter from the DocumentSourceFactory to the RepositorySourceFactory. This is a part of the fix for bug 42242.</msg>
+</logentry>
+<logentry
+   revision="532718">
+<author>andreas</author>
+<date>2007-04-26T12:02:40.678847Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/css/tabs.css</path>
+</paths>
+<msg>Removed IE-specific filter setting for opacity.</msg>
+</logentry>
+<logentry
+   revision="532727">
+<author>andreas</author>
+<date>2007-04-26T12:31:43.849984Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNodeRCML.java</path>
+</paths>
+<msg>Removed fake check-in when initializing the revision history of a document. I guess that was some legacy code, creating docs still works fine. This should fix bug 42242.</msg>
+</logentry>
+<logentry
+   revision="532743">
+<author>andreas</author>
+<date>2007-04-26T13:52:23.181909Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Added FCKeditor installation instructions</msg>
+</logentry>
+<logentry
+   revision="532745">
+<author>andreas</author>
+<date>2007-04-26T13:54:45.323879Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/README.txt</path>
+</paths>
+<msg>Added license header, added note about keeping the website in sync</msg>
+</logentry>
+<logentry
+   revision="532751">
+<author>nettings</author>
+<date>2007-04-26T14:14:03.250180Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg>removed note about jdk 1.6 not working, thanks to michael ralston and
+markus angst for the feedback!
+</msg>
+</logentry>
+<logentry
+   revision="532784">
+<author>andreas</author>
+<date>2007-04-26T15:47:43.262868Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/java/src/org/apache/lenya/cms/editors/forms/FormsEditor.java</path>
+</paths>
+<msg>Forms editor: advance before executing, otherwise the last change is not saved</msg>
+</logentry>
+<logentry
+   revision="532785">
+<author>andreas</author>
+<date>2007-04-26T15:48:19.242846Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/sitemap.xmap</path>
+</paths>
+<msg>Removed selector which didn't match anyway because of a typo</msg>
+</logentry>
+<logentry
+   revision="533002">
+<author>andreas</author>
+<date>2007-04-27T07:51:41.147807Z</date>
+<paths>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/unittests.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/unittests.xml"
+   copyfrom-rev="532742"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/how-to/unittests.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/1_4/tutorials/tests.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Moved 1.2-specific unit test docs to 1.2 section, added link list to 1.4 unit test docs</msg>
+</logentry>
+<logentry
+   revision="533010">
+<author>andreas</author>
+<date>2007-04-27T08:05:47.441558Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2patch.xsl</path>
+</paths>
+<msg>Added xsl:exclude-result-prefixes to patch generation stylesheet</msg>
+</logentry>
+<logentry
+   revision="533018">
+<author>andreas</author>
+<date>2007-04-27T08:47:26.694738Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/build.xml</path>
+<path
+   action="A">/lenya/docu/tools/generateModuleDocs.xsl</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Added tools to generate module docs, added complete module list to docs</msg>
+</logentry>
+<logentry
+   revision="533025">
+<author>andreas</author>
+<date>2007-04-27T09:04:07.918093Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/1_4/index.xml</path>
+</paths>
+<msg>Updated links to modules</msg>
+</logentry>
+<logentry
+   revision="533034">
+<author>andreas</author>
+<date>2007-04-27T09:33:57.890799Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/build.xml</path>
+<path
+   action="M">/lenya/docu/tools/generateModuleDocs.xsl</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Added core and standard modules section, improved module list generation</msg>
+</logentry>
+<logentry
+   revision="533036">
+<author>andreas</author>
+<date>2007-04-27T09:38:18.619506Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Re-added accidentially removed module docs</msg>
+</logentry>
+<logentry
+   revision="533049">
+<author>andreas</author>
+<date>2007-04-27T10:12:45.224404Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/skinconf.xml</path>
+</paths>
+<msg>Added a bit more air to the website layout</msg>
+</logentry>
+<logentry
+   revision="533066">
+<author>andreas</author>
+<date>2007-04-27T11:21:42.539209Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Added missing href attributes</msg>
+</logentry>
+<logentry
+   revision="533126">
+<author>andreas</author>
+<date>2007-04-27T14:55:07.111189Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/opendocument/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/sitemanagement/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/prettyprinting/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/tinymce</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/templating/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/workflow</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor.xml"
+   copyfrom-rev="532743"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor/index.tml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/contactform</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/links</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/ldap</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/blog</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/xopus/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/bxe/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/usecasedocument</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/ac/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/sitetree/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/administration/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/linking</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/usecase/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/migration/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/opendocument</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/prettyprinting</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/templating</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/editors</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/lucene</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/janitor/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/xopus</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/bxe</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/sitetree</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/modules/notification.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/contactform/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/usecase</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/development/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/blog/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/cforms</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/profiling</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/languageselector/index.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/modules/collection.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/linkcheck</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/modules/notification.xml"
+   copyfrom-rev="532742"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/notification/index.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/modules/usecasedocument.xml"
+   copyfrom-rev="532742"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/usecasedocument/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/linking/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/cache</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/lenyadoc/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/janitor</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/modules/news.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/editors/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/acusecases</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/export</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/lucene/index.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/modules/news.xml"
+   copyfrom-rev="532742"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/news/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/development</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/languageselector</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/simplesite/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/notification</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/resource</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/kupu/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/collection</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/observation</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/lenyadoc</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/cforms/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/profiling/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/neutron/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/sitemanagement</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/linkcheck/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/properties/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/xhtml/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/sourcerepository/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/cache/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/news</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/simplesite</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/tinymce/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/workflow/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/ac</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/kupu</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/administration</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/acusecases/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/links/index.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/modules/usecasedocument.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/ldap/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/export/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/migration</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/neutron</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/xhtml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/properties</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/resource/index.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/sourcerepository</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/observation/index.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/modules/collection.xml"
+   copyfrom-rev="532742"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/collection/index.xml</path>
+</paths>
+<msg>Added more module docs</msg>
+</logentry>
+<logentry
+   revision="533127">
+<author>andreas</author>
+<date>2007-04-27T14:55:41.678735Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/index.xml</path>
+</paths>
+<msg>Removed manually generated module list</msg>
+</logentry>
+<logentry
+   revision="533128">
+<author>andreas</author>
+<date>2007-04-27T14:56:22.947456Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/tabs.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Relocated some menu-items and tabs, see discussion on lenya-dev</msg>
+</logentry>
+<logentry
+   revision="533129">
+<author>andreas</author>
+<date>2007-04-27T14:56:50.499296Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/build.xml</path>
+<path
+   action="M">/lenya/docu/tools/generateModuleDocs.xsl</path>
+</paths>
+<msg>Simplified generation of module list</msg>
+</logentry>
+<logentry
+   revision="533132">
+<author>andreas</author>
+<date>2007-04-27T15:07:43.042136Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/languageselector/resources/images/README</path>
+</paths>
+<msg>Added note about website docs to readme file</msg>
+</logentry>
+<logentry
+   revision="533134">
+<author>andreas</author>
+<date>2007-04-27T15:15:53.817598Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/languageselector/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/lucene/index.xml</path>
+</paths>
+<msg>Added more docs about languageselector and lucene module</msg>
+</logentry>
+<logentry
+   revision="533135">
+<author>andreas</author>
+<date>2007-04-27T15:16:34.507419Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/lucene/README.txt</path>
+</paths>
+<msg>Removed outdated readme file, replaced with website documentation</msg>
+</logentry>
+<logentry
+   revision="533138">
+<author>andreas</author>
+<date>2007-04-27T15:23:54.791183Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/resource/index.xml</path>
+</paths>
+<msg>Added more documentation to resource module (copied from readme file)</msg>
+</logentry>
+<logentry
+   revision="533139">
+<author>andreas</author>
+<date>2007-04-27T15:24:35.453203Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/config/module.xml</path>
+<path
+   action="D">/lenya/trunk/src/modules/resource/README.txt</path>
+</paths>
+<msg>Removed readme file (moved to website documentation)</msg>
+</logentry>
+<logentry
+   revision="533142">
+<author>andreas</author>
+<date>2007-04-27T15:33:09.563338Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/tinymce/index.xml</path>
+</paths>
+<msg>Added more TinyMCE docs (copied from readme file)</msg>
+</logentry>
+<logentry
+   revision="533143">
+<author>andreas</author>
+<date>2007-04-27T15:35:11.200261Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/config/module.xml</path>
+</paths>
+<msg>Reverted accidential commit (publication.xconf -&gt; publication.xml)</msg>
+</logentry>
+<logentry
+   revision="533144">
+<author>andreas</author>
+<date>2007-04-27T15:36:22.655852Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/tinymce/README</path>
+</paths>
+<msg>Removed readme file (moved to website documentation)</msg>
+</logentry>
+<logentry
+   revision="533146">
+<author>andreas</author>
+<date>2007-04-27T15:47:04.189021Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/resource/index.xml</path>
+</paths>
+<msg>Added more docs to resource module (moved from module.xml)</msg>
+</logentry>
+<logentry
+   revision="533147">
+<author>andreas</author>
+<date>2007-04-27T15:47:31.888489Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/config/module.xml</path>
+</paths>
+<msg>Removed installation and headless mode info from module.xml (moved to website documentation)</msg>
+</logentry>
+<logentry
+   revision="533149">
+<author>andreas</author>
+<date>2007-04-27T15:58:45.796659Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/xopus/index.xml</path>
+</paths>
+<msg>Added docs for xopus module (copied from readme file)</msg>
+</logentry>
+<logentry
+   revision="533150">
+<author>andreas</author>
+<date>2007-04-27T15:59:20.321634Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/xopus/README.txt</path>
+</paths>
+<msg>Removed readme file (moved to website documentation)</msg>
+</logentry>
+<logentry
+   revision="533153">
+<author>andreas</author>
+<date>2007-04-27T16:04:09.758862Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/fckeditor/README.txt</path>
+</paths>
+<msg>Removed readme file (moved to website documentation)</msg>
+</logentry>
+<logentry
+   revision="533155">
+<author>andreas</author>
+<date>2007-04-27T16:12:45.113193Z</date>
+<paths>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor/index.tml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor/index.tml"
+   copyfrom-rev="533126"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules/fckeditor/index.xml</path>
+</paths>
+<msg>Renamed index.tml to index.xml</msg>
+</logentry>
+<logentry
+   revision="533157">
+<author>andreas</author>
+<date>2007-04-27T16:14:30.117536Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/index.xml</path>
+</paths>
+<msg>Removed link to modules list (doesn't exist anymore)</msg>
+</logentry>
+<logentry
+   revision="533638">
+<author>andreas</author>
+<date>2007-04-30T09:12:09.986964Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/CreateDocument.java</path>
+</paths>
+<msg>Allow to create docs from 'Authoring' sitetree node. This fixes bug 42291.</msg>
+</logentry>
+<logentry
+   revision="533682">
+<author>andreas</author>
+<date>2007-04-30T10:33:45.408182Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/example-content/doctypes/xhtml-document/index_en.meta</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/example-content/doctypes/index_en.meta</path>
+</paths>
+<msg>Replaced term 'doctype' with 'resource type'</msg>
+</logentry>
+<logentry
+   revision="533685">
+<author>andreas</author>
+<date>2007-04-30T10:43:42.746314Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/UsecaseMessage.java</path>
+</paths>
+<msg>Return empty array instead of null in UsecaseMessage.getParameters()</msg>
+</logentry>
+<logentry
+   revision="533689">
+<author>andreas</author>
+<date>2007-04-30T10:46:46.737386Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/usecases/publish.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/java/src/org/apache/lenya/cms/workflow/usecases/Publish.java</path>
+</paths>
+<msg>Use plain error messages for unpublished ancestor docs. This makes the error messages compatible with the multiWorkflow (workflow overview) usecase. See bug 42292.</msg>
+</logentry>
+<logentry
+   revision="533723">
+<author>andreas</author>
+<date>2007-04-30T12:34:26.926191Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/LenyaSourceFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/cocoon/source/DocumentSourceFactory.java</path>
+</paths>
+<msg>Move session selection from DocumentSourceFactory to LenyaSourceFactory. This fixes bugs 42237 and 42266.</msg>
+</logentry>
+<logentry
+   revision="533724">
+<author>andreas</author>
+<date>2007-04-30T12:35:20.622385Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/BaseURLModule.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/ProxyUrlModule.java</path>
+</paths>
+<msg>Javadoc: use @link instead of hard-coding config file paths</msg>
+</logentry>
+<logentry
+   revision="533732">
+<author>andreas</author>
+<date>2007-04-30T12:53:11.839558Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/migration-build.xml</path>
+<path
+   action="M">/lenya/trunk/tools/anttasks/build/classes/org/apache/lenya/cms/ant/CopyPublicationsTask.class</path>
+<path
+   action="M">/lenya/trunk/tools/anttasks/src/org/apache/lenya/cms/ant/CopyJavaSourcesTask.java</path>
+<path
+   action="M">/lenya/trunk/tools/configure/src/java/org/apache/lenya/config/impl/ConfigureCommandLine.java</path>
+<path
+   action="M">/lenya/trunk/src/targets/properties-build.xml</path>
+<path
+   action="M">/lenya/trunk/tools/anttasks/src/org/apache/lenya/cms/ant/CopyPublicationsTask.java</path>
+<path
+   action="M">/lenya/trunk/src/targets/dist-build.xml</path>
+<path
+   copyfrom-path="/lenya/trunk/src/pubs/blog/config/publication.xconf"
+   copyfrom-rev="532633"
+   action="A">/lenya/trunk/src/pubs/blog/config/publication.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/i18n.xmap</path>
+<path
+   copyfrom-path="/lenya/trunk/src/pubs/default/config/publication.xconf"
+   copyfrom-rev="532633"
+   action="A">/lenya/trunk/src/pubs/default/config/publication.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/readme.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/modules2xinclude.xsl</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/PublicationConfiguration.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/java/src/org/apache/lenya/defaultpub/cms/publication/templating/Instantiator.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/schemas/publication.rng</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/util/aggregate-publications.xsl</path>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/targets/webapp-build.xml</path>
+<path
+   action="M">/lenya/trunk/src/targets/test-build.xml</path>
+<path
+   action="D">/lenya/trunk/src/pubs/blog/config/publication.xconf</path>
+<path
+   action="D">/lenya/trunk/src/pubs/default/config/publication.xconf</path>
+<path
+   action="M">/lenya/trunk/tools/anttasks/build/classes/org/apache/lenya/cms/ant/CopyJavaSourcesTask.class</path>
+<path
+   action="M">/lenya/trunk/src/modules/xopus/sitemap.xmap</path>
+</paths>
+<msg>Rename publication.xconf to publication.xml. This fixes bug 42233.</msg>
+</logentry>
+<logentry
+   revision="533737">
+<author>andreas</author>
+<date>2007-04-30T13:04:13.851727Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/readme.xml</path>
+</paths>
+<msg>Updated date in readme file</msg>
+</logentry>
+<logentry
+   revision="533748">
+<author>andreas</author>
+<date>2007-04-30T13:50:55.300990Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/util/welcome.xsl</path>
+</paths>
+<msg>Added some i18n for publication templating</msg>
+</logentry>
+<logentry
+   revision="533749">
+<author>andreas</author>
+<date>2007-04-30T13:54:35.095157Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/java/src/org/apache/lenya/defaultpub/cms/publication/templating/Instantiator.java</path>
+</paths>
+<msg>[minor change] code formatting</msg>
+</logentry>
+<logentry
+   revision="533750">
+<author>andreas</author>
+<date>2007-04-30T13:56:17.290243Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/css/default.css</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/util/welcome.xsl</path>
+</paths>
+<msg>Minor CSS changes on welcome screen</msg>
+</logentry>
+<logentry
+   revision="533755">
+<author>andreas</author>
+<date>2007-04-30T14:24:05.548947Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/templating/java/src/org/apache/lenya/cms/publication/usecases/CreatePublicationFromTemplate.java</path>
+</paths>
+<msg>Don't use pre-set publication name.</msg>
+</logentry>
+<logentry
+   revision="533756">
+<author>andreas</author>
+<date>2007-04-30T14:24:50.160513Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/java/src/org/apache/lenya/defaultpub/cms/publication/templating/Instantiator.java</path>
+</paths>
+<msg>Remove original templates before adding new template. This fixes bug 42279.</msg>
+</logentry>
+<logentry
+   revision="533757">
+<author>andreas</author>
+<date>2007-04-30T14:25:40.538056Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/templating/usecases/createPublicationFromTemplate.jx</path>
+</paths>
+<msg>Added some i18n for publication templating.</msg>
+</logentry>
+<logentry
+   revision="533767">
+<author>andreas</author>
+<date>2007-04-30T15:04:13.054262Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/PublicationConfiguration.java</path>
+<path
+   action="D">/lenya/trunk/src/webapp/lenya/resources/schemas/publication.rng</path>
+<path
+   copyfrom-path="/lenya/trunk/src/webapp/lenya/resources/schemas/publication.rng"
+   copyfrom-rev="533732"
+   action="A">/lenya/trunk/src/resources/build/publication.rng</path>
+<path
+   action="M">/lenya/trunk/src/webapp/readme.xml</path>
+</paths>
+<msg>Moved publication.rng from webapp to resources/build</msg>
+</logentry>
+<logentry
+   revision="533768">
+<author>andreas</author>
+<date>2007-04-30T15:08:29.070828Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/publication.rng</path>
+</paths>
+<msg>Template instantiator declaration is optional (only for pubs which support templating)</msg>
+</logentry>
+<logentry
+   revision="533769">
+<author>andreas</author>
+<date>2007-04-30T15:09:08.190184Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/publication.rng</path>
+</paths>
+<msg>[minor change] code formatting</msg>
+</logentry>
+<logentry
+   revision="533774">
+<author>andreas</author>
+<date>2007-04-30T15:27:50.593904Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/publication.rng</path>
+</paths>
+<msg>Allow zero modules and resource types in publication.xml</msg>
+</logentry>
+<logentry
+   revision="533775">
+<author>andreas</author>
+<date>2007-04-30T15:28:20.991193Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/config/publication.xml</path>
+</paths>
+<msg>Cleaned up blog's publication.xml</msg>
+</logentry>
+<logentry
+   revision="533776">
+<author>andreas</author>
+<date>2007-04-30T15:29:52.166511Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/webapp-build.xml</path>
+</paths>
+<msg>Validate publication.xml during the build process. Validating after deploying is easier ATM, although invalid files are deployed.</msg>
+</logentry>
+<logentry
+   revision="533777">
+<author>andreas</author>
+<date>2007-04-30T15:46:12.736714Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>Redirect from authoring to authoring/. This fixes bug 42295.</msg>
+</logentry>
+<logentry
+   revision="533784">
+<author>andreas</author>
+<date>2007-04-30T16:03:37.785656Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/cocoon/local.build.properties</path>
+<path
+   action="M">/lenya/trunk/src/targets/init-build.xml</path>
+</paths>
+<msg>Disable cocoon.reload parameter in local.build.properties (fixes bug 37631, thanks to Joern Nettingsmeier and Josias Thoeny), updated note about version check.</msg>
+</logentry>
+</log>

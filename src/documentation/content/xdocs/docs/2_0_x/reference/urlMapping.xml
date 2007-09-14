@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Mapping URLs to Documents</title>
+  </header>
+  <body>
+    <section>
+      <title>URL Axioms</title>
+      <p>Lenya 2.0 is based on the following axioms:</p>
+      <ul>
+        <li>A URL is represented by exactly one document.</li>
+        <li>A document can be represented by an arbitrary number of URLs.</li>
+        <li>For each document, there is exactly one canonical URL.</li>
+      </ul>
+      <p>
+      This is reflected in the following methods:
+      </p>
+      <ul>
+        <li><code>DocumentBuilder.buildDocument(...)</code></li>
+        <li><code>DocumentBuilder.buildCanonicalUrl(...)</code></li>
+      </ul>
+      <p>The concept of multiple URLs per document is typically 
+        used for language versions (foo_{defaultlanguage}.html = foo.html) and 
+        to support different URL suffixes (foo, foo.htm, foo.html, foo.pdf). </p>
+      <p>The site structure is tightly connected to the URL space. 
+        Link URLs are derived directly from the site structure.
+        The <code>bar</code> node in the following example</p>
+      <source><![CDATA[<node id="foo">
+  <node id="bar"/>
+</node>]]></source>
+      <p>is accessed using an URL containing the snippet <code>/foo/bar</code>. </p>
+    </section>
+    <section>
+      <title>Language Versions</title>
+      <p>
+        The different language versions of a document can either be accessed
+        using suffixes (<code>foo_en</code>, <code>foo_de</code>), or by attaching them to
+        different nodes with the same UUID attribute in the site structure.
+        In the following example, the top-level nodes "en" and "de" are used
+        as entry points for the respective language.
+      </p>
+      <source xml:space="preserve"><![CDATA[<site>
+  <node id="en">
+    <node id="welcome" uuid="def456...">
+      <label xml:lang="en">Welcome</label>
+    </node>
+  </node>
+  <node id="de">
+    <node id="willkommen" uuid="def456...">
+      <label xml:lang="de">Willkommen</label>
+    </node>
+  </node>
+</site>]]></source>
+      <p>
+        This results in the following URLs:
+      </p>
+      <ul>
+        <li><code>/en/welcome</code> - "Welcome"</li>
+        <li><code>/de/willkommen</code> - "Willkommen"</li>
+      </ul>
+    </section>
+  </body>
+</document>

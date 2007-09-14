@@ -105,7 +105,7 @@
     <li><code>cd $lenya.apache.org; svn up</code> - change to your local checkout of the website and update it.</li>
     <li><code>cp -r $lenya.docu/build/site/* .</code> - copy the deployed site from step 2.</li>
     <li>Create and copy the Javadoc for both branches (<code>build javadocs</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code> and
-    <code>lenya/site/apidocs/1.4</code>)</li>
+    <code>lenya/site/apidocs/2.0</code>)</li>
 		<li>Commit your changes to lenya.apache.org <code>svn ci -m "my changes message"</code>.</li>
 		</ul>
 		</section>
@@ -133,10 +133,9 @@ forrest -f publish.xml deploy</source>
             Then a cronjob on the server will automatically publish it (see next section). 
           </p>
           <p>You can use a similar script we are using on the zones server in $lenya.docu.</p>
-          <source>#!/bin/sh
+          <source>#!/bin/bash
 svn up
-# the last revision number should be set automatic (first commit of this month)
-LAST=418787
+source SVN-HEAD-REV.txt
 svn log -r $LAST:HEAD -v --xml http://svn.apache.org/repos/asf/lenya > src/documentation/content/svn-log/tlp-HEAD.svn.xml
 forrest -f publish.xml build
 forrest -f publish.xml deploy</source>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>The Collection Module</title>
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      <p>
+        The collection module provides a resource type and a document wrapper class to
+        use a document as a list of references to other documents. Typical examples are
+        category pages, dossiers, etc.
+      </p>
+    </section>
+  
+    <section>
+      <title>Collection Types</title>
+      <p>
+        Collections can either be static, which means that the reference list is stored
+        in the collection document, or dynamic, which means that the reference list is
+        generated when the collection is accessed. The type is determined by the <code>type</code>
+        attribute of the document element (see examples below). At the moment, the following types
+        are supported:
+      </p>
+      <ul>
+        <li>manual</li>
+        <li>children</li>
+        <li>link</li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Static Collections (Type "manual")</title>
+      <p>
+        This is the default type which is used when no <code>type</code> attribute
+        is provided. The documents have to be explicitely specified.
+      </p>
+      <p>
+        The XML format of a static collection document looks like this:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://apache.org/cocoon/lenya/collection/1.0" type="manual">
+  <document uuid="edf..."/>
+  <document uuid="a7r..."/>
+  ...
+</collection>]]></source>
+  
+    </section>
+    
+    <section>
+      <title>Dynamic Collections (Type "children")</title>
+      <p>
+        Collections of the type <code>children</code> assemble the document list
+        from the collection document's children in the site structure. 
+      </p>
+      <p>
+        The XML format of a collection document with the type <code>children</code> looks like this:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://apache.org/cocoon/lenya/collection/1.0" type="children"/>]]></source>
+
+      <p>
+        The collection is expanded dynamically (i.e., the child document list is inserted)
+        when the <code>collection</code> format is requested.
+      </p>
+
+    </section>
+    
+    <section>
+      <title>Syndicated Collections (Type "link")</title>
+      <p>
+        You can use an external resource to provide the contents of the collection.
+        Typically, a separate module provides this content dynamically, for instance
+        by accessing a newsfeed. 
+      </p>
+      <p>
+        The link is specified using the <code>href</code> attribute of the
+        <code><![CDATA[<col:collection/>]]></code> element. Here's an example:
+      </p>
+      <source xml:space="preserve"><![CDATA[<collection xmlns="http://apache.org/cocoon/lenya/collection/1.0"
+  href="cocoon://modules/feed/atom/http://apache-lenya.blogspot.com/feeds/posts/default"
+  includeItems="3" type="link"/>]]></source>
+  
+      <p>
+        In this example, the feed module accesses the specified URL and returns
+        a valid collection document, wrapping the feed items in <code><![CDATA[<col:document>]]></code>
+        elements.
+      </p>
+    </section>
+    
+    <section>
+      <title>Resource Type Formats</title>
+      <p>
+        At the moment, only the <code>collection</code> format is supported.
+        In the case of static collections, the original XML document is returned.
+        For dynamic collections, the list of documents is inserted. Check out the
+        example below for a usage scenario.
+      </p>
+    </section>
+    
+    <section>
+      <title>Example: CInclude</title>
+      <p>
+        The collection module provides an XSLT stylesheet (<code>collection2cinclude.xsl</code>)
+        to simplify replacing the documents with their content to obtain an aggregation of all documents.
+        Additionally, the meta data of the collection document itself and of all contained
+        documents are included.
+      </p>
+      <p>
+        In the following example, the <code>collection</code> resource type is
+        explicitely specified. This allows to call the collection format from
+        a different resource type (e.g., the <code>news</code> resource type extends
+        the <code>collection</code> resource type).
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:match pattern="*.xml/*/*/*/*">
+  <map:generate src="{resource-type:collection:format-collection}/{2}/{3}/{4}/{5}"/>
+  <map:transform src="fallback://lenya/modules/collection/xslt/collection2cinclude.xsl">
+    <map:parameter name="uuid" value="{4}"/>
+    <map:parameter name="language" value="{5}"/>
+  </map:transform>
+  <map:transform type="cinclude"/>
+  ...
+</map:match>]]></source>
+    </section>
+  
+    <section>
+      <title>The <code>CollectionWrapper</code> Class</title>
+      <p>
+        The <code>CollectionWrapper</code> class allows to manipulate collections
+        via the Java API. Here's a simple usage scenario:
+      </p>
+      <source xml:space="preserve"><![CDATA[CollectionWrapper collection = new CollectionWrapper(doc, getLogger());
+collection.add(anotherDoc);
+collection.save();]]></source>
+      <p>
+        You can extend the <code>CollectionWrapper</code> class to add custom
+        functionality or implement collections with specific behaviour. 
+      </p>
+      <p>
+        For more information, please consult the API documentation.
+      </p>
+    </section>
+
+  </body>
+</document>

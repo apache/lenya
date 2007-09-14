@@ -79,13 +79,13 @@ Section handling
 <!-- ====================================================================== -->
 <xsl:template match="document">
 <xsl:text>
-+----------------------------------------------------------------+
-| NOTE:                                                          |
-| This text document is generated from the XML source            |
-| using the following stylesheet:                                |
-|                                                                |
-| lenya/pubs/docs-new/xslt/document2txt.xsl                      |
-+----------------------------------------------------------------+
++---------------------------------------------------------------------+
+| NOTE:                                                               |
+| This text document is generated from the XML source                 |
+| using the following stylesheet:                                     |
+|                                                                     |
+| https://svn.apache.org/repos/asf/lenya/docu/tools/document2txt.xsl  |
++---------------------------------------------------------------------+
 
 
 </xsl:text>

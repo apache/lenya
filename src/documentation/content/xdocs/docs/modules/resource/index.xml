@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>The resource Module</title>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>
+        The <code>resource</code> module contains the "resource" resource type,
+        it allows to store arbitrary media documents.
+      </p>
+    </section>
+    
+    <section>
+      <title>Installation</title>
+      <ol>
+        <li>
+          <p>
+            Declare the module in the <code><![CDATA[<modules/>]]></code> section of
+            <code>$PUB_HOME/config/publication.xml</code>:
+          </p>
+          <source xml:space="preserve"><![CDATA[<module name="resource"/>]]></source>
+        </li>
+        <li>
+          <p>
+            Assign a workflow schema to the resource type in <code>$PUB_HOME/config/publication.xml</code>:
+          </p>
+          <source xml:space="preserve"><![CDATA[<resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>]]></source>
+        </li>
+        <li>
+          <p>
+            Define the usecase policies in <code>$PUB_HOME/config/access-control/usecase-policies.xml</code>
+            (or use the usecase administration GUI):
+          </p>
+          <source xml:space="preserve"><![CDATA[<usecase id="resource.create">
+  <role id="admin"/>
+  <role id="edit"/>
+</usecase>  
+<usecase id="resource.upload">
+  <role id="admin"/>
+  <role id="edit"/>
+</usecase>]]></source>
+        </li>
+      </ol>
+    </section>
+    
+    <section>
+      <title>Headless Mode</title>
+      <p>
+        Options:
+      </p>
+      <ul>
+        <li><a href="http://www.idautomation.com/kb/xwindow-error.html">http://www.idautomation.com/kb/xwindow-error.html</a></li>
+        <li><a href="http://www.jguru.com/faq/view.jsp?EID=222296">http://www.jguru.com/faq/view.jsp?EID=222296</a></li>
+        <li>try <code>java.awt.headless=true</code> in the case of Java 1.4</li>
+        <li>
+          run X servere:
+          <source xml:space="preserve">Virtual framebuffer X server:
+
+Installation instructions for debian
+
+apt-get install xvfb
+apt-get install xlibs
+apt-get install xfonts-base
+
+nohup Xvfb :0 -screen 0 1024x786x16 &amp;
+export DISPLAY=:0</source>
+        </li>
+      </ul>
+      <p>
+        Also you might want to add <code>export DISPLAY=:0</code> in <code>lenya.sh</code>, such
+        that the <code>DISPLAY</code> variable is set during startup of Jetty, e.g.
+      </p>
+      <source xml:space="preserve"># ----- Verify and Set Required Environment Variables -------------------------
+        
+if [ "$DISPLAY" = "" ] ; then
+export DISPLAY=:0
+fi</source>
+    </section>
+    
+    <section>
+      <title>Resource Icons</title>
+      <p>
+        This module provides only one complete icon (the default one) out of the box.
+        The default icon (<code>default_med.gif</code>) is a question mark. An "empty" version of
+        this icon (without the question mark) can be found in the core
+        (<code>webapp/lenya/resources/images/icons/empty-icon.png</code>).
+        For all file extensions with no corresponding icon, an icon is generated
+        dynamically by adding the first three letters of the extension as a label
+        to the empty icon.
+      </p>
+      
+      <p>
+        If you can provide icons with a ASF style license we are happy 
+        to add them to the module.
+      </p>
+      <p>
+        If you want your own set of icons, then please add them 
+        to <code>$PUB_HOME/lenya/modules/resource/resources/icons/</code>.
+      </p>
+      <p>
+        You can download and extract e.g. the icon package from Wyona in your publication:
+      </p>
+      <source xml:space="preserve">https://svn.wyona.com/repos/public/lenya/modules-resource-icons.tar
+user: anonymous
+pass: anonymous</source>
+      <p>
+        Have fun!
+      </p>
+    </section>
+  </body>
+</document>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>The News Feed Module</title>
+  </header>
+  <body>
+    
+  <section>
+    <title>Introduction</title>
+    <p>
+      The news module provides a resoure type which displays a list of the document's children,
+      in descending order of the creation date. The child documents are treated as news messages.
+      The news can also be rendered as an RSS feed.
+    </p>
+  </section>
+  
+  <section>
+    <title>Formats</title>
+    <p>
+      The news resource type provides the following formats:
+    </p>
+  
+    <dl>
+      
+      <dt>xhtml</dt>
+      <dd>The usual XHTML page. It shows a list of the child documents, including the title and first paragraph.</dd>
+      
+      <dt>include</dt>
+      <dd>An XHTML snippet. The view is equal to the <code>xhtml</code> format, but the content is
+        included in an <code><![CDATA[<xhtml:div id="news"/>]]></code> element. This format can be used
+        to include the news items in other pages, typically using CInclude. The number of included items
+        is determined by the <code>includeItems</code> attribute of the <code><![CDATA[<col:collection/>]]></code> element.
+      </dd>
+      
+      <dt>rss</dt>
+      <dd>The RSS view of the news items.</dd>
+      
+      <dt>header</dt>
+      <dd>
+        The RSS header (<code><![CDATA[<link rel="alternate" type="application/rss+xml" ... />]]></code>),
+        pointing to the RSS feed. This is used, e.g., for Firefox' "live bookmark" feature.
+      </dd>
+    </dl>
+    
+  </section>
+  
+    <section>
+      <title>Aggregating Multiple Newsfeeds</title>
+      <p>
+        If you add news documents as children of a parent news document, the parent
+        automatically aggregates and merges the news items of its children, ordered
+        by time. For example:
+      </p>
+      <source xml:space="preserve">/news
+  /national
+    /n1 (2007-05-03)
+    /n2 (2007-05-01
+  /international
+    /i1 (2007-05-02)
+    /i2 (2007-04-26)
+  /sports
+    /s1 (2007-05-04)
+    /s2 (2007-04-13)
+      </source>
+      <p>
+        will result in the following list of news items displayed at the <code>/news</code> level:
+      </p>
+      <ul>
+        <li>s1</li>
+        <li>n1</li>
+        <li>i1</li>
+        <li>n2</li>
+        <li>i2</li>
+        <li>s2</li>
+      </ul>
+      <p>
+        The <code>includeItems</code> setting of the <code>collection</code> resource type
+        is applied to the result list when it is requested using the <code>include</code>
+        format.
+      </p>
+    </section>
+
+  </body>
+</document>

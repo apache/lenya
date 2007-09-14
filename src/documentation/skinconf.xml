@@ -92,7 +92,7 @@ which will be used to configure the chosen Forrest skin.
   <favicon-url>favicon.ico</favicon-url>
 
   <!-- The following are used to construct a copyright statement -->
-  <year>2002-2005</year>
+  <year>2002-2007</year>
   <vendor>The Apache Software Foundation.</vendor>
   <!-- The optional copyright-link URL will be used as a link in the copyright statement -->
   <copyright-link>http://www.apache.org/licenses/LICENSE-2.0</copyright-link>
@@ -120,7 +120,7 @@ which will be used to configure the chosen Forrest skin.
   @location ("page","menu","page,menu", "none")
    Where to show the TOC.
   -->
-  <toc max-depth="3" min-sections="2" location="menu"/>
+  <toc max-depth="3" min-sections="2" location="page"/>
 
   <!-- Heading types can be clean|underlined|boxed  -->
   <headings type="clean"/>
@@ -148,6 +148,9 @@ which will be used to configure the chosen Forrest skin.
     
     pre.code { padding: 10px; background-color: #E5E4D9; }
     h3.h4 { font-size: small; }
+    dt { font-weight: bold; margin-top: .5em; }
+    div#content { padding: 30px 30px 30px 210px; }
+    h1 { padding: 0px 0 10px 0; }
 
   </extra-css>
 
@@ -229,6 +232,13 @@ which will be used to configure the chosen Forrest skin.
       <image>images/built-with-forrest-button.png</image>
       <width>88</width>
       <height>31</height>
+    </credit>
+    <credit box-location="alt2">
+      <name>Meeting Zurich 2007</name>
+      <url>http://wiki.apache.org/lenya/MeetingZurich2007</url>
+      <image>images/apache-lenya-meeting-zurich-2007_small.png</image>
+      <width>150</width>
+      <height>39</height>
     </credit>
     <credit box-location="alt2">
       <name>ApacheCon Europe 2007</name>

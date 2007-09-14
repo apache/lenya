@@ -21,7 +21,7 @@
 
 <document>
   <header>
-    <title>Apache Lenya modules documentation</title>
+    <title>Apache Lenya Modules Documentation</title>
   </header>
   <body>
     <warning> Some of Apache Lenya modules are still under heavy development. 
@@ -29,26 +29,14 @@
       development. </warning>
        <section>
       <title>Introduction</title>
-      <p> Modules are packages providing a certain set of resources or 
-        functionality. The aim of this section in the documentation is to group 
-        the information needed to work with a certain module into one entry point. </p>
-      <p>Examples:</p>
-      <ul>
-        <li>a resource type (e.g., docbook module)</li>
-        <li>a repository implementation (e.g., jdbc module)</li>
-        <li>a collection of XSLTs (e.g., content2svg module)</li>
-      </ul>
       <p>
-        Some modules are included in the Lenya distribution:
+        Modules are packages providing a certain set of resources or 
+        functionality. The aim of this section in the documentation is to group 
+        the information needed to work with a certain module into one entry point.
       </p>
-      <ul>
-        <li><strong>lucene</strong> - search functionality</li>
-        <li><strong>sitetree</strong> - manage documents in a tree-like structure</li>
-        <li><strong>jcr</strong> - store content in a <a href="http://www.jcp.org/en/jsr/detail?id=170">JCR</a> repository</li>
-        <li><strong>xhtml</strong> - XHTML-based resource type</li>
-        <li><strong>links</strong> - resource type to manage link lists</li>
-        <li><strong>lenyadoc</strong> - adds the <code>lenyadoc://</code> protocol</li>
-      </ul>
+      <p>
+        To learn how modules are implemented, refer to the <a href="site:modules">general modules documentation</a>.
+      </p>
     </section>
   </body>
 </document>

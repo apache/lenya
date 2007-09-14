@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>The xopus Module</title>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>
+        The <code>xopus</code> module contains the integration of the
+        <a href="http://xopus.com">Xopus</a> WYSIWYG editor.
+      </p>
+    </section>
+    
+    <section>
+      <title>Installation</title>
+      <ol>
+        <li>
+          Download your preferred Xopus release (i.e. Xopus-2.1.79) from <a href="http://xopus.com">http://xopus.com</a>.
+        </li>
+        <li>
+          Follow the installation instructions to install it on your server
+          (in this case we are unzipping to the Tomcat <code>webapps/ROOT</code> directory).
+        </li>
+        <li>
+          <p>
+            Configure the Xopus context and path in <code>(local.)build.properties</code>, e.g.
+          </p>
+          <source xml:space="preserve">xopus.context=Xopus-2.1.79
+xopus.path=relative/path/to/tomcat/webapps/ROOT</source>
+        </li>
+        <li>
+          Set these same two parameters in <code>modules/xopus/config/cocoon-xconf/input-modules/xopus.xconf</code>.
+        </li>
+        <li>
+          [optional] If you wish to use a resource type other than <code>xhtml</code>,
+          create a resource type-specific XSLT file in <code>$PUB_HOME/modules/xopus/xslt/{resource-type}.xsl</code>.
+        </li>
+        <li>
+          [optional] This applies only if you do step 5. Create a resource type-specific XSD schema file
+          in <code>$PUB_HOME/modules/xopus/resources/schemas/{resource-type}.xsd</code>.
+        </li>
+        <li>
+          <p>
+            TODO: Add the xopus module call to menu.xsp
+          </p>
+          <p>
+            (Currently menu.xsp only recognizes usecases when creating the URL, we need to modify the stylesheet to
+            accept lenya.module in addition to lenya.usecase. It should look similar to what is shown below.)
+          </p>
+          <p>
+            Note by Andreas Hartmann: I don't think we should use a module URL but rather a usecase URL.
+          </p>
+          <p>
+            <code>menu.xsp</code>:
+          </p>
+          <source xml:space="preserve"><![CDATA[[...]
+<menu i18n:attr="name" name="Edit">
+  <xsp:logic>
+    String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
+    if ("xhtml".equals(doctype)) {
+    <block info="false">
+      <item wf:event="edit" uc:usecase="bxe.edit" href="?"><i18n:text>With BXE</i18n:text></item>
+      <item wf:event="edit" uc:usecase="editors.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
+      <item wf:event="edit" mod:module="xopus" href="?lenya.step=open"><i18n:text>With Xopus</i18n:text></item>
+    </block>
+    }
+  </xsp:logic>
+</menu>
+[...]]]></source>
+        </li>
+        <li>
+          Build Lenya.
+        </li>
+        <li>
+          Try to edit your document by adding <code><![CDATA[?lenya.module=xopus&lenya.step=open]]></code>
+          to the url and hitting enter. This will eventually be replaced by the menu entry in step 7.
+        </li>
+      </ol>
+    </section>
+    
+  </body>
+</document>

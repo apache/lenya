@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Who we are</title>
+  </header>
+  <body>
+    <section id="community">
+      <title>The Lenya Community</title>
+      <p>
+        The Lenya Project operates as a meritocracy: the more you do, the more
+        responsibility you will obtain. This page lists all of the people who
+        have gone the extra mile and are Committers. If you would like to get
+        involved, the first step is to join the mailing lists.
+      </p>
+      <p>
+        Of course the committers are not the only people involved in the
+        community. Thanks to the many people for their contributions of patches,
+        assistance, ideas, and email discussion. Some are mentioned at the
+        changes pages. See how we
+        <a href="site:guidelines">acknowledge</a> contributions.
+      </p>
+      <p>
+        Please do not send emails directly to individual developers asking for
+        free support - see the Important Notices at the
+        <a href="site:ml">mailing lists</a> page.
+      </p>
+    </section>
+    <section id="committers">
+      <title>List of committers</title>
+      <p>
+        List of all people who have ever been committers at Apache Lenya,
+        sorted alphabetically.
+      </p>
+      <ul>
+        <li>Doug Chestnut (chestnut at apache.org)</li>
+        <li>Edith Chevrier (edith at apache.org)</li>
+        <li>Dale Christ (bigdog at apache.org)</li>
+        <li>Christian Egli (egli at apache.org)</li>
+        <li>Paul Ernesto (solprovider at apache.org)</li>
+        <li>
+          <strong>Jann Forrer (jann at apache.org)</strong>
+        </li>
+        <li>Richard Frovarp (rfrovarp at apache.org)</li>
+        <li>
+          <strong>Antonio Gallardo (antonio at apache.org)</strong>
+        </li>
+        <li>Bob Harner (bobharner at apache.org)</li>
+        <li>
+          <strong>Andreas Hartmann (andreas at apache.org)</strong>
+        </li>
+        <li>
+          <strong>J. Wolfgang Kaltz (jwkaltz at apache.org)</strong>
+        </li>
+        <li>Andreas Kuckartz (aku at apache.org)</li>
+        <li>
+          <em>Rolf Kulemann (roku at apache.org)</em>
+        </li>
+        <li><strong>Jörn Nettingsmeier (nettings at apache.org)</strong></li>
+        <li>Renaud Richardet (renaud at apache.org)</li>
+        <li>Felix Röthenbacher (froethenbacher at apache.org)</li>
+        <li>
+          <strong>
+            <em>Gregor J. Rothfuss (gregor at apache.org)</em>
+          </strong>
+        </li>
+        <li>Torsten Schlabach (tschlabach at apache.org)</li>
+        <li>
+          <strong>Thorsten Scherler (thorsten at apache.org)</strong>
+        </li>
+        <li>Josias Thöny (josias at apache.org)</li>
+        <li>Michael Wechner (michi at apache.org)</li>
+      </ul>
+    </section>
+    <section id="notes">
+      <title>Notes</title>
+      <p>
+        Strong type denotes "Project Management Committee
+        (<a href="site:guidelines">PMC</a>) member". Emphasis type denotes
+        "emeritus PMC member". See the <a href="site:guidelines">ASF role
+        definitions</a> for detailed role information. The actual list of PMC
+        members is in the SVN "committers" repository at
+        /board/committee-info.txt
+      </p>
+      <p>
+        Some people were committers prior to Lenya becoming a top-level
+        project and so gaining a PMC. They were not around since then, so have
+        never been on the PMC. All new committers are
+        <a href="site:guidelines">encouraged</a> to be PMC
+        members.
+      </p>
+      <p>
+        Committers can be as active as they choose and there is no performance
+        pressure from the project. For those who are interested in the work that
+        each paticular committer has done, see the
+        <a href="site:guidelines">acknowledgements</a> section.
+      </p>
+      <p>
+        All <a href="http://cocoon.apache.org/community/members.html">Apache
+        Cocoon committers</a> and
+        <a href="http://forrest.apache.org/who.html">Apache
+        Forrest committers</a> also have rights to commit to Lenya.
+      </p>
+    </section>
+  </body>
+</document>

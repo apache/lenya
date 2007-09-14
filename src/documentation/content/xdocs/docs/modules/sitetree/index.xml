@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>The sitetree Module</title>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>
+        The <code>sitetree</code> module provides a tree-based site manager.
+      </p>
+    </section>
+    
+    <section>
+      <title>Generating Navigation Elements</title>
+      <p>
+        One purpose of the sitetree module is to simplify and standardize the generation of navigation
+        widgets like menubars, tabs, and breadcrumb paths. It allows to
+      </p>
+      <ul>
+        <li>
+          use pre-defined XHTML navigation components and present them
+          with a custom CSS,
+        </li>
+        <li>
+          override these components in a publication whereby the logic
+          can be reused, and
+        </li>
+        <li>
+          create and integrate new publication-specific navigation components
+          using the same scheme.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Architecture</title>
+      
+      <p>
+        The navigation element mechanism consists of the following components:
+      </p>
+      
+      <dl>
+        <dt><code>modules/sitetree/sitemap.xmap</code></dt>
+        <dd>The sitemap where the navigation components are generated.<br/><br/></dd>
+        <dt><code>modules/sitetree/xslt/navigation/*.xsl</code></dt>
+        <dd>The default navigation components that are shipped with the sitetree module.<br/><br/></dd>
+        <dt><code>{your-publication}/lenya/modules/sitetree/xslt/navigation/*.xsl</code></dt>
+        <dd>Custom navigation components of the publication.<br/><br/></dd>
+      </dl>
+      
+    </section>
+    
+    <section>
+      <title>Loading a Navigation Widget</title>
+      
+      <p>
+        You can load a navigation widget from the following URI:
+      </p>
+      <source><![CDATA[cocoon://modules/sitetree/{widget}/{pub-id}/{area}/{default-lang}/{lang}{path}.xml]]></source>
+      
+      <p>
+        The URI steps are:
+      </p>
+      <dl>
+        <dt><code>&lt;widget&gt;</code></dt>
+        <dd>
+          The type of navigation widget to load (tabs, menu, etc.).
+          This will be the name of the XSLT which generates the widget.
+        </dd>
+        <dt><code>&lt;pub-id&gt;</code></dt>
+        <dd>
+          The publicaton ID of the current documen.
+        </dd>
+        <dt><code>&lt;area&gt;</code></dt>
+        <dd>
+          The area of the current document.
+        </dd>
+        <dt><code>&lt;default-lang&gt;</code></dt>
+        <dd>
+          The default language of the publication. We pass this value instead of determining
+          it in the module sitemap so that the generated widget doesn't contain any dynamics
+          which are not coded in the URL and therefore can be cached in the publication. 
+        </dd>
+        <dt><code>&lt;lang&gt;</code></dt>
+        <dd>
+          The language of the document.
+        </dd>
+        <dt><code>&lt;path&gt;</code></dt>
+        <dd>
+          The path of the current document in the site structure, starting with a slash.
+        </dd>
+      </dl>
+      <p>
+        Here's an example navigation widget URL:
+      </p>
+      <source><![CDATA[cocoon://modules/sitetree/tabs/mypub/authoring/en/de/foo/bar.xml]]></source>
+      
+    </section>
+      
+      <section><title>Aggregating the Navigation Widgets</title>
+        
+        <p>
+          In the publication sitemap (<code>{pub-id}/sitemap.xmap</code>)
+          the navigation widgets are aggregated. Here you decide which components
+          you want to use:
+        </p>
+        <source><![CDATA[<!-- navigation/{1:widget}/{2:pub-id}/{3:area}/{4:def-lang}/{5:lang}/{6:path} -->
+<map:match pattern="navigation-element/*/*/*/*/*/**">
+  <map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml"/>
+  <map:serialize type="xml"/>
+</map:match>
+
+<!-- /lenyabody-{1:rendertype}/{2:pub-id}/{3:area}/{4:doctype}/{5:def-lang}/{6:lang}/{7:path} -->
+<map:match pattern="lenyabody-raw-*/*/*/*/*/*/**">
+  <map:aggregate element="cmsbody">
+    <map:part src="cocoon:/navigation-element/breadcrumb/{2}/{3}/{5}/{6}/{7}"/>
+    <map:part src="cocoon:/navigation-element/tabs/{2}/{3}/{5}/{6}/{7}"/>
+    <map:part src="cocoon:/navigation-element/menu/{2}/{3}/{5}/{6}/{7}"/>
+    <map:part src="cocoon:/navigation-element/search/{2}/{3}/{5}/{6}/{7}"/>
+    ...
+    <map:part src="{resource-type:format-xhtml}?rendertype={1}"/>
+  </map:aggregate>
+  <map:serialize type="xml"/>
+</map:match>]]></source>
+        
+      </section>
+      
+    <section>
+      <title>Developing Navigation Widgets</title>
+      
+      <p>
+        The following contracts define the development of navigation components:
+      </p>
+      <ul>
+        <li>A navigation widget is generated by an XSLT stylesheet which is located at<br/><br/>
+          <dl>
+            <dt><code>modules/sitetree/xslt/navigation/{widget}.xsl</code></dt>
+            <dd>for default components and<br/><br/></dd>
+            <dt><code>lenya/pubs/&lt;publication-id&gt;/lenya/modules/sitetree/xslt/navigation/{widget}.xsl</code></dt>
+            <dd>for publication-specific components, including the ones that override
+            the default components.<br/><br/></dd>
+          </dl>
+        </li>
+        <li>
+          The default widgets produce an XHTML fragment with the
+          top level element <![CDATA[<div class="{widget}"/>]]>.
+        </li>
+      </ul>
+      
+    </section>
+    
+  </body>
+</document>

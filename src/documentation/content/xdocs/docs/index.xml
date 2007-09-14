@@ -18,16 +18,15 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Version specific documentation and developer instructions</title>
+    <title>Developer instructions</title>
   </header>
   <body>
     <p>
-      Documentation is available for various version ...
+      Documentation is available for various versions:
     </p>
     <ul>
-      <li><a href="site:docu1.4/index">1.4.x</a> - the trunk version of Lenya</li>
+      <li><a href="site:docu2.0/index">2.0.x</a> - the trunk version of Lenya</li>
       <li><a href="site:docu1.2.x/index">1.2.x</a> - the stable version of Lenya</li>
-      <li><a href="site:modules/index">Modules</a> - for the different modules of Lenya</li>
     </ul>
     <p>Besides above documentation you can find as well different instructions 
       to common development topics here, like how to write tests, our coding 

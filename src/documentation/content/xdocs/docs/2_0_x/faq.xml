@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE faqs PUBLIC "-//APACHE//DTD FAQ V1.2//EN" "http://forrest.apache.org/dtd/faq-v12.dtd" [
+<!ENTITY s '<code>site.xml</code>'>
+]>
+<faqs title="Frequently Asked Questions">
+  <part id="getting_started">
+    <title>Getting Started and Building Lenya</title>
+    <faq id="TransformerFactoryImpl">
+      <question>
+        The build fails with a message like Fatal error during transformation. 
+      </question>
+      <answer>
+        <p>
+          You might want to take a look at the comments for
+          <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=40113">bug 40113</link>.
+        </p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part id="BuildingWebsites">
+    <title>Building Websites</title>
+    <faq id="resourcetypes">
+      <question>How do I add a custom type of documents?</question>
+      <answer>
+        <p>
+          See section <link href="site:resource-types">resource types</link>.
+        </p>
+      </answer>
+    </faq>
+    <faq id="interaction">
+      <question>How can I add user interaction to web pages?</question>
+      <answer>
+        <p>
+          The <link href="site:usecasedocument_module_overview">usecasedocument</link>
+          module allows to add usecases as CMS documents.
+        </p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part id="i18n_">
+    <title>Internationalisation (i18n)</title>
+    <faq id="i18n">
+      <question> How to extend the i18n catalog for Lenya 2.0? </question>
+      <answer>
+        <p> In the default publication you can find 
+          <code>pubs/default/lenya/resources/i18n</code>. That are the files 
+          you need to edit if you wish to override it on a publication base. 
+          </p>
+        <p>However you can as well extend the catalog with modules, that you 
+          can reuse in different publications. You need to add at least 
+          <code>modules/{yourModule}/lenya/resources/i18n/cmsui.xml</code>.
+          Don't forget to declare the module in <code>publication.xml</code>
+          so that the i18n catalog is detected.
+        </p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part id="editors">
+    <title>Editors</title>
+    <faq id="bxe-css">
+      <question> Is it possible to override in BXE *only* a css style definition? </question>
+      <answer>
+        <p> Yes, this is possible.<br/> Just add and edit it like you need it 
+          (have a look in the default pub): 
+          <code>{pubid}/resources/misc/bxe/{ressourcetype}-bxe.css</code> </p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part id="Deployment">
+    <title>Deployment</title>
+    <faq id="plain-cocoon">
+      <question>Can I serve my public site with Cocoon only?</question>
+      <answer>
+        <p>
+          In general, the answer is "no", because various Lenya components are necessary
+          to access the repository and generate the pages. You'd have to invest a lot
+          of effort to extract these components from Lenya, and this will hardly be worth it.
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

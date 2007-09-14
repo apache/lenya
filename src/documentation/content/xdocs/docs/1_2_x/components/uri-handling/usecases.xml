@@ -587,7 +587,7 @@
     </section>
 <section><title id="head-2e3e0110bd5e2eadb614e4e61873e220fc9a4f74">Usecases versus FlowScript</title>
 
-<p>The usecase concept in Lenya 1.2 is inferior to FlowScript. Lenya 1.4-dev contains a simple <a   href="site:usecase-framework"> Usecase Framework</a> for writing usecases based on flow, JX templates, and Java classes for business logic. </p>    </section>
+<p>The usecase concept in Lenya 1.2 is inferior to FlowScript. Lenya 2.0-dev contains a simple <a   href="site:usecase-framework"> Usecase Framework</a> for writing usecases based on flow, JX templates, and Java classes for business logic. </p>    </section>
 
   </section>
       
