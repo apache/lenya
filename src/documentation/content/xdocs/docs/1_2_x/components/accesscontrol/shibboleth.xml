@@ -17,7 +17,7 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Shibboleth Authentication</title>
+    <title>Setting up a Shibboleth Test Environment</title>
   </header>
   <body>
 
@@ -29,65 +29,20 @@
         privacy-preserving manner." (quoted from the <a href="http://shibboleth.internet2.edu/"
           >Shibboleth website</a>)</p>
     </section>
-
-    <section>
-      <title>Configuring Lenya</title>
-      <p> The configuration is done in <code>$LENYA_HOME/src/webapp/WEB-INF/cocoon-xconf.xsl</code>. </p>
-      <p> First of all, you have to tell Lenya to use the <code>ShibbolethAuthenticator</code>
-        instead of the default <code>UserAuthenticator</code>, which is commented out in the
-        following example: </p>
-      <source xml:space="preserve"><![CDATA[  <component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator"
-      role="org.apache.lenya.ac.Authenticator"/>
-<!--
-  <component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.ac.impl.UserAuthenticator"
-      role="org.apache.lenya.ac.Authenticator"/>
--->    
-      ]]></source>
-
-      <section>
-        <title>ShibbolethModule</title>
-        <p>The next section of interest is the declaration of the
-            <code>org.apache.shibboleth.ShibbolethModule</code> with the following elements:</p>
-
-        <dl>
-          <dt>
-            <code>ProviderId</code>
-          </dt>
-          <dd>The hostname of your service provider. If you use Shibboleth 1.1, you can leave this
-            empty.</dd>
-          <dt>
-            <code>Metadata</code>
-          </dt>
-          <dd>A Cocoon-readable URI which specifies the location of the meta data file. It contains
-            for instance information about your identity provider. A typical location would be
-              <code>context://WEB-INF/metadata.xml</code>.</dd>
-          <dt>AAP</dt>
-          <dd>A Cocoon-readable URI which specifies the location of the AAP (Attribute Acceptance
-            Policy) file. A typical location would be <code>context://WEB-INF/AAP.xml</code></dd>
-        </dl>
-      </section>
-
-      <section>
-        <title>CredentialsManager</title>
-        <p>In the <code>org.apache.shibboleth.util.CredentialsManager</code> declaration you
-          configure the location of your keystore and truststore.</p>
-      </section>
-
-    </section>
-
-    <section>
-      <title>Setting up a Test Environment</title>
-      <p> This section describes how to set up a complete test environment including an IdP
-        (identity provider) server with CAS authentication and a WAYF (where are you from) server in
-        Apache Tomcat. The installation might take a while, so grab the famous big mug
-        of your favourite beverage and turn on some calming music.</p>
-      <p> We install everything we need in a directory called <code>$SHIBTEST_HOME</code>, for
-        instance at <code>/home/john/shibtest</code>. </p>
+      
       <section>
         <title>Preliminaries</title>
+
+        <p> The following sections describe how to set up a complete test environment including an IdP
+          (identity provider) server with CAS authentication and a WAYF (where are you from) server in
+          Apache Tomcat. The installation might take a while, so grab the famous big mug
+          of your favourite beverage and turn on some calming music.</p>
+        
         <ul>
+          <li>
+            We install everything we need in a directory called <code>$SHIBTEST_HOME</code>, for
+            instance at <code>/home/john/shibtest</code>.
+          </li>
           <li>We assume that your <code>JAVA_HOME</code> environment variable is set.</li>
           <li> To simplify the following installation steps, export your <code>$SHIBTEST_HOME</code>
             as an environment variable:
@@ -433,13 +388,38 @@ $ cp dist/shibboleth-wayf.war ../apache-tomcat-5.5.20/webapps/]]></source>
 ]]></source>
           </li>
           <li>
-            Configure the <code>ProviderId</code> element of the <code>org.apache.shibboleth.ShibbolethModule</code>:
+            <p>
+          The next section of interest is the declaration of the
+            <code>org.apache.shibboleth.ShibbolethModule</code> with the following elements:
+            </p>
+        <dl>
+          <dt>
+            <code>ProviderId</code>
+          </dt>
+          <dd>The hostname of your service provider, for example:
             <source xml:space="preserve"><![CDATA[<ProviderId>http://sp.shibtest.org/shibboleth</ProviderId>]]></source>
-          </li>
-          <li>
-            Configure the <code>WayfServer</code> element of the <code>org.apache.shibboleth.ShibbolethModule</code>:
-            <source xml:space="preserve"><![CDATA[<WayfServer>https://localhost:8443/shibboleth-wayf/WAYF</WayfServer>]]></source>
-          </li>
+            If you use Shibboleth 1.1, you can leave this
+            empty.
+          </dd>
+          <dt>
+            <code>Metadata</code>
+          </dt>
+          <dd>A Cocoon-readable URI which specifies the location of the meta data file. It contains
+            for instance information about your identity provider. A typical location would be
+            <source xml:space="preserve"><![CDATA[<Metadata>context://WEB-INF/metadata.xml</Metadata>]]></source>
+          </dd>
+          <dt>AAP</dt>
+          <dd>A Cocoon-readable URI which specifies the location of the AAP (Attribute Acceptance
+            Policy) file. A typical location would be
+            <source xml:space="preserve"><![CDATA[<AAP>context://WEB-INF/AAP.xml</AAP>]]></source>
+          </dd>            
+          <dt><code>WayfServer</code></dt>
+          <dd>
+            The URL of your WAYF server, for example:
+            <source xml:space="preserve"><![CDATA[<WayfServer>https://localhost:8443/shibboleth-wayf/WAYF</WayfServer>]]></source>            
+          </dd>
+        </dl>
+        </li>
           <li>
             Configure the keystore and truststore locations:
             <source xml:space="preserve"><![CDATA[<component logger="lenya.ac.shibboleth"
@@ -549,7 +529,6 @@ $ ./lenya.sh]]></source>
           </li>
         </ul>
       </section>
-    </section>
     
     <section>
       <title>Common Pitfalls</title>
