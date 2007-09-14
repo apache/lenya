@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="utf-8"?>
+<log>
+<logentry
+   revision="293088">
+<author>michi</author>
+<date>2005-10-02T11:14:12.699596Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/links/index_en.xml</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index.odt</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/links/index_en.xml.meta</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/links</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument</path>
+</paths>
+<msg>links and opendocument as doctype samples added</msg>
+</logentry>
+<logentry
+   revision="293089">
+<author>michi</author>
+<date>2005-10-02T11:15:05.739821Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/sitetree.xml</path>
+</paths>
+<msg>links doctype sample to navigation added</msg>
+</logentry>
+<logentry
+   revision="293090">
+<author>michi</author>
+<date>2005-10-02T11:16:02.700518Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/index_en.xml</path>
+</paths>
+<msg>links doctype to doctypes overview added</msg>
+</logentry>
+<logentry
+   revision="293095">
+<author>michi</author>
+<date>2005-10-02T12:10:16.351707Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/xslt/page2xhtml-opendocument.xsl</path>
+</paths>
+<msg>opendocument global layout added</msg>
+</logentry>
+<logentry
+   revision="293096">
+<author>michi</author>
+<date>2005-10-02T12:11:13.947212Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index_en.xml.meta</path>
+</paths>
+<msg>meta and doctype definition added</msg>
+</logentry>
+<logentry
+   revision="293098">
+<author>michi</author>
+<date>2005-10-02T12:20:20.052265Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/sitetree.xml</path>
+</paths>
+<msg>opendocument added to navigation but commented because the opendocument module has not been finished yet</msg>
+</logentry>
+<logentry
+   revision="293099">
+<author>michi</author>
+<date>2005-10-02T12:24:08.042476Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/index_en.xml</path>
+</paths>
+<msg>link to tutorial added</msg>
+</logentry>
+<logentry
+   revision="293106">
+<author>michi</author>
+<date>2005-10-02T13:03:56.842151Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/config/module.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/config</path>
+</paths>
+<msg>module config for opendocument added</msg>
+</logentry>
+<logentry
+   revision="293114">
+<author>michi</author>
+<date>2005-10-02T13:50:47.782796Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/opendocument2xhtml.xsl</path>
+</paths>
+<msg>sitemap and XSLT to generate XHTML added</msg>
+</logentry>
+<logentry
+   revision="293115">
+<author>michi</author>
+<date>2005-10-02T13:53:12.862510Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/config/publication.xconf</path>
+</paths>
+<msg>opendocument module added</msg>
+</logentry>
+<logentry
+   revision="293119">
+<author>michi</author>
+<date>2005-10-02T14:05:35.396539Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/opendocument2xhtml.xsl</path>
+</paths>
+<msg>show content of ODT</msg>
+</logentry>
+<logentry
+   revision="293124">
+<author>michi</author>
+<date>2005-10-02T14:46:17.762076Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index_en.odt</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index_de.xml.meta</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index_de.odt</path>
+</paths>
+<msg>german added</msg>
+</logentry>
+<logentry
+   revision="293125">
+<author>michi</author>
+<date>2005-10-02T14:46:52.586768Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index.odt</path>
+</paths>
+<msg>english version added</msg>
+</logentry>
+<logentry
+   revision="293126">
+<author>michi</author>
+<date>2005-10-02T14:47:34.240483Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/sitetree.xml</path>
+</paths>
+<msg>OpenDocument added</msg>
+</logentry>
+<logentry
+   revision="293127">
+<author>michi</author>
+<date>2005-10-02T14:48:25.785951Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/sitemap.xmap</path>
+</paths>
+<msg>document id added</msg>
+</logentry>
+<logentry
+   revision="293132">
+<author>michi</author>
+<date>2005-10-02T16:05:02.005071Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index_de.odt</path>
+</paths>
+<msg>german text added</msg>
+</logentry>
+<logentry
+   revision="293277">
+<author>andreas</author>
+<date>2005-10-03T08:23:10.116306Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/1_4/reference/resource-types.xml</path>
+</paths>
+<msg>Added docs about resource type formats.</msg>
+</logentry>
+<logentry
+   revision="293281">
+<author>michi</author>
+<date>2005-10-03T09:12:32.231105Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/jcr-repository/repository.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/jcr-repository/repository/workspaces/default/workspace.xml</path>
+</paths>
+<msg>Jackrabbit config updated</msg>
+</logentry>
+<logentry
+   revision="294903">
+<author>chestnut</author>
+<date>2005-10-04T19:35:24.644426Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/search/README-lenya-search</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/xslt/lucene/homepage2index.xsl</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/xslt/lucene/search2opensearch.xsl</path>
+<path
+   action="M">/lenya/sandbox/search/src/cocoon/local.blocks.properties</path>
+<path
+   action="M">/lenya/sandbox/search/src/modules/lucene/config/index_manager.xconf</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/xslt/lucene/xhtml2index.xsl</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/usecases/lucene/usecase.xmap</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/pubs/default/java/src/org/apache/lenya/defaultpub/cms/usecases/Publish.java</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/xslt/lucene/links2index.xsl</path>
+<path
+   action="M">/lenya/sandbox/search/src/java/org/apache/lenya/lenya.roles</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/pubs/default/config/index_manager_index.xconf</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/pubs/default/java/src/org/apache/lenya/defaultpub/cms/usecases/Deactivate.java</path>
+<path
+   action="M">/lenya/sandbox/search/src/webapp/lenya/xslt/lucene/search2html.xsl</path>
+</paths>
+<msg>made some updates to get search working,
+separated index into live and authoring indexes
+</msg>
+</logentry>
+<logentry
+   revision="295023">
+<author>andreas</author>
+<date>2005-10-05T09:19:19.718418Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/usecases/Create.java</path>
+</paths>
+<msg>[minor change] code formatting</msg>
+</logentry>
+<logentry
+   revision="306548">
+<author>andreas</author>
+<date>2005-10-06T07:20:05.085084Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/java/src/org/apache/lenya/defaultpub/cms/publication/templating/Instantiator.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/workflow/DocumentWorkflowable.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/config/publication.xconf</path>
+</paths>
+<msg>Allow URIs as workflow schema locations. It is not necessary to copy workflow files when a publication is instanciated.</msg>
+</logentry>
+<logentry
+   revision="306549">
+<author>andreas</author>
+<date>2005-10-06T07:31:08.329376Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/confpatch/pipelines.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/exception/document-does-not-exist.xsl</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/xslt/exception</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/usecases/CreateDocument.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/java/src/org/apache/lenya/defaultpub/cms/publication/templating/Instantiator.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/usecases/Create.java</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/xslt/exception/document-does-not-exist.xsl</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/site/create.jx</path>
+</paths>
+<msg>Added link to create document to 404 page. It is now possible to create documents by providing the document ID to the usecase. Thus, it is not necessary to copy the content when the default publication is instanciated.</msg>
+</logentry>
+<logentry
+   revision="307108">
+<author>michi</author>
+<date>2005-10-07T12:56:28.851866Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/config/module.xconf</path>
+</paths>
+<msg>format for opendocument added</msg>
+</logentry>
+<logentry
+   revision="307109">
+<author>michi</author>
+<date>2005-10-07T12:59:01.388689Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/confpatch/selectors.xmap</path>
+</paths>
+<msg>cadaver added</msg>
+</logentry>
+<logentry
+   revision="307130">
+<author>chestnut</author>
+<date>2005-10-07T14:13:28.052935Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/webdav.js</path>
+</paths>
+<msg>cleaned up logging which was mistakenly copied from the usecase flowscript
+started working on MKCOL method</msg>
+</logentry>
+<logentry
+   revision="307136">
+<author>michi</author>
+<date>2005-10-07T14:51:47.389485Z</date>
+<paths>
+<path
+   action="A">/lenya/branches/BRANCH_1_2_X/src/webapp/samples/blocks/jcr/repotest/repository.xml</path>
+<path
+   action="A">/lenya/branches/BRANCH_1_2_X/src/webapp/samples/blocks/jcr/repotest</path>
+</paths>
+<msg>Cocoon has moved the sample</msg>
+</logentry>
+<logentry
+   revision="307137">
+<author>michi</author>
+<date>2005-10-07T14:52:13.626698Z</date>
+<paths>
+<path
+   action="D">/lenya/branches/BRANCH_1_2_X/src/webapp/samples/blocks/jcr/repository.xml</path>
+</paths>
+<msg>obsolete</msg>
+</logentry>
+<logentry
+   revision="307194">
+<author>chestnut</author>
+<date>2005-10-07T21:04:23.967337Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/confpatch/selectors.xmap</path>
+</paths>
+<msg>added Contribute as a webdav useragent</msg>
+</logentry>
+<logentry
+   revision="307287">
+<author>chestnut</author>
+<date>2005-10-08T11:46:17.686237Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/sitemap.xmap</path>
+</paths>
+<msg>Shouldn't be able to lock [LOCK webDAV method] a document that doesn't exist</msg>
+</logentry>
+<logentry
+   revision="307288">
+<author>chestnut</author>
+<date>2005-10-08T12:31:00.238539Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+</paths>
+<msg>resource exists needs to check for assets in an area</msg>
+</logentry>
+<logentry
+   revision="307384">
+<author>michi</author>
+<date>2005-10-09T10:43:13.016109Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/resources-shared.xmap</path>
+</paths>
+<msg>byte-ranges set to false</msg>
+</logentry>
+<logentry
+   revision="307385">
+<author>michi</author>
+<date>2005-10-09T10:44:04.297228Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/resources.xmap</path>
+</paths>
+<msg>byte rages set to false</msg>
+</logentry>
+<logentry
+   revision="307386">
+<author>michi</author>
+<date>2005-10-09T10:52:56.361843Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/build.properties</path>
+</paths>
+<msg>note about Cocoon-2.1.8-dev added</msg>
+</logentry>
+<logentry
+   revision="307400">
+<author>michi</author>
+<date>2005-10-09T11:24:57.348667Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/index_en.xml</path>
+</paths>
+<msg>OpenDocument added to overview description</msg>
+</logentry>
+<logentry
+   revision="307401">
+<author>michi</author>
+<date>2005-10-09T11:29:43.921948Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources-shared.xmap</path>
+</paths>
+<msg>byte range false added for PDFs</msg>
+</logentry>
+<logentry
+   revision="312684">
+<author>thorsten</author>
+<date>2005-10-10T17:00:52.373036Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/cocoon/local.blocks.properties</path>
+</paths>
+<msg>Applied patch submitted by Felix Röthenbacher. Fixes Bug 36996. Thanks Felix</msg>
+</logentry>
+<logentry
+   revision="312812">
+<author>chestnut</author>
+<date>2005-10-11T05:09:10.620016Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/webdav.js</path>
+</paths>
+<msg>checkout/checkin handled by pub usecase
+should resolve Bug 36992</msg>
+</logentry>
+<logentry
+   revision="312891">
+<author>thorsten</author>
+<date>2005-10-11T14:23:43.732186Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/xslt/cforms/strip-xhtml-namespace.xsl</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/xslt/cforms/add-xhtml-namespace.xsl</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecases/usecase.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/cforms/forms-samples-styling.xsl</path>
+</paths>
+<msg>Bugfix 37021. Fixed the inclusion of the cforms-libs. Patch submitted by Felix Röthenbacher. Thanks Felix</msg>
+</logentry>
+<logentry
+   revision="312893">
+<author>michi</author>
+<date>2005-10-11T14:30:51.295540Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index_en.odt</path>
+</paths>
+<msg>ODT updated with some link in it</msg>
+</logentry>
+<logentry
+   revision="314772">
+<author>chestnut</author>
+<date>2005-10-12T03:59:50.785198Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/java/src/org/apache/lenya/defaultpub/cms/usecases/webdav/Put.java</path>
+</paths>
+<msg>fixed bug with PUT of a new xhtml document</msg>
+</logentry>
+<logentry
+   revision="314913">
+<author>michi</author>
+<date>2005-10-12T14:10:10.693502Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Wolfgang added</msg>
+</logentry>
+<logentry
+   revision="314915">
+<author>michi</author>
+<date>2005-10-12T14:13:30.578594Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Torsten added</msg>
+</logentry>
+<logentry
+   revision="314916">
+<author>edith</author>
+<date>2005-10-12T14:14:32.895097Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>blank removed</msg>
+</logentry>
+<logentry
+   revision="314919">
+<author>edith</author>
+<date>2005-10-12T14:15:46.427232Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/java/org/apache/lenya/net/SMTP.java</path>
+</paths>
+<msg>output set to ISO because there are still some mailclients which don't seem to understand UTF</msg>
+</logentry>
+<logentry
+   revision="314943">
+<author>chestnut</author>
+<date>2005-10-12T15:21:35.612808Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/cforms/forms-samples-styling.xsl</path>
+</paths>
+<msg>Checks if the xml contains cforms elements, and fixes inclusion of ajax libs
+Thanks to a patch by Felix Röthenbacher, fixes Bug 37050 </msg>
+</logentry>
+<logentry
+   revision="314996">
+<author>chestnut</author>
+<date>2005-10-12T18:54:08.559837Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/xhtml/xslt/clean-xhtml.xsl</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/sitemap.xmap</path>
+</paths>
+<msg>Added ability to "clean" documents uploaded via webDAV PUT method.</msg>
+</logentry>
+<logentry
+   revision="320713">
+<author>thorsten</author>
+<date>2005-10-13T10:38:56.115482Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/cforms</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/samples</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/config</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/config/module.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/cforms/index_en.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/usecases</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/config/publication.xconf</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/index_en.xml</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/cforms</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/sitetree.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/usecases/dynamicrepeater_binding.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/usecases/dynamicrepeater_template.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/config/menu.xsp</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/usecases/dynamicrepeater.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/xslt/cforms2xhtml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/xslt</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/menus.xmap</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/samples/cforms.xml</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/cforms/index_en.xml.meta</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/config/usecase-edit.xconf</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/usecase/CFormsUsecase.java</path>
+</paths>
+<msg>Adds a cforms doctype to the default publication to show the possibilites of
+CForms/Ajax together with Lenya.
+
+See http://wiki.apache.org/lenya/HowToCFormsInLenya1.4 for some basic notes.
+
+There is still an issue with saving the document when Ajax is used.
+
+Cooperation work with Felix Röthenbacher who provided a patch for that.
+Solves Bug 37069. Thx Felix.
+</msg>
+</logentry>
+<logentry
+   revision="320714">
+<author>thorsten</author>
+<date>2005-10-13T10:42:30.562118Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecases/usecase.xmap</path>
+</paths>
+<msg>Add support for Ajax with CForms.
+Bugfix: Bug 37068. Submitted by Felix Röthenbacher. Thx Felix.
+</msg>
+</logentry>
+<logentry
+   revision="320729">
+<author>thorsten</author>
+<date>2005-10-13T10:59:38.211087Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/cforms/forms-samples-styling.xsl</path>
+</paths>
+<msg>Please do svn propset svn:eol-style native on all files</msg>
+</logentry>
+<logentry
+   revision="320766">
+<author>michi</author>
+<date>2005-10-13T13:35:17.362698Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/resources/menu/images/apache-lenya_logo_black.png</path>
+</paths>
+<msg>Apache Lenya logo for XUL menus added</msg>
+</logentry>
+<logentry
+   revision="320768">
+<author>michi</author>
+<date>2005-10-13T13:36:55.914137Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xsltwithxul.xsl</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/css/xulmenu.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xul.xsl</path>
+</paths>
+<msg>thanks to Ilhan Parmaksiz and Gregor Imboden the Lenya XUL menus have been greatly improved</msg>
+</logentry>
+<logentry
+   revision="320771">
+<author>michi</author>
+<date>2005-10-13T13:50:58.159754Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xul.xsl</path>
+</paths>
+<msg>debug statement removed</msg>
+</logentry>
+<logentry
+   revision="320779">
+<author>michi</author>
+<date>2005-10-13T14:25:35.404847Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xul.xsl</path>
+</paths>
+<msg>site tab fixed</msg>
+</logentry>
+<logentry
+   revision="320781">
+<author>thorsten</author>
+<date>2005-10-13T15:02:11.032233Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk/src/java/org/apache/lenya/cms/usecase/CFormsUsecase.java"
+   copyfrom-rev="320735"
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/usecase/DummyCFormsUsecase.java</path>
+<path
+   action="D">/lenya/trunk/src/java/org/apache/lenya/cms/usecase/CFormsUsecase.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/cforms/config/usecase-edit.xconf</path>
+</paths>
+<msg>Fixed the CFormsUsecase which is just an example how to work with cforms and not the specific implementation that cform usecases have to use. </msg>
+</logentry>
+<logentry
+   revision="320885">
+<author>chestnut</author>
+<date>2005-10-13T19:31:54.420494Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/resources/shared/css/page.css</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/transformation/LinkRewritingTransformer.java</path>
+</paths>
+<msg>added warning|alert for broken internal links in the authoring area so that content managers know there is something to fix
+</msg>
+</logentry>
+<logentry
+   revision="320970">
+<author>chestnut</author>
+<date>2005-10-14T01:57:28.143893Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/config/menus/generic.xsp</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/config/ac/usecase-policies.xml</path>
+</paths>
+<msg>assigned workflow events to the workflow menu items
+assigned roles to open usecases</msg>
+</logentry>
+<logentry
+   revision="321060">
+<author>chestnut</author>
+<date>2005-10-14T09:15:04.498659Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+</paths>
+<msg>fixed tyop :)</msg>
+</logentry>
+<logentry
+   revision="321097">
+<author>thorsten</author>
+<date>2005-10-14T12:54:55.883556Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/cforms/usecases/dynamicrepeater_template.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecases/usecases.js</path>
+</paths>
+<msg>Workaround bugfix for the cform example. The problem is that ajax='true' will cause on submit of the form the lost of the usecase.js flow. I wrote to the cocoon-user list regarding this issue.</msg>
+</logentry>
+<logentry
+   revision="321284">
+<author>gregor</author>
+<date>2005-10-15T03:58:38.273587Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/properties-build.xml</path>
+<path
+   action="M">/lenya/trunk/src/targets/init-build.xml</path>
+</paths>
+<msg>Improved error message and fixed a typo</msg>
+</logentry>
+<logentry
+   revision="326112">
+<author>thorsten</author>
+<date>2005-10-18T14:11:57.801517Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/css/tabs.css</path>
+</paths>
+<msg>Bugfix Bug 37139. Submitted by renaud richardet. Thx renaud.</msg>
+</logentry>
+<logentry
+   revision="327186">
+<author>thorsten</author>
+<date>2005-10-21T14:02:56.480068Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecase.xmap</path>
+</paths>
+<msg>Bugfix Bug 37193. Submitted by Josias Thoeny. Fixes that Xopus caches document and thus shows an old version. Thx Josias</msg>
+</logentry>
+<logentry
+   revision="327193">
+<author>thorsten</author>
+<date>2005-10-21T14:11:37.479880Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/usecase.xmap</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/targets/webapp-build.xml</path>
+</paths>
+<msg>Bugfix Bug 37193. Submitted by Josias Thoeny. Fixes that Xopus caches document and thus shows an old version. Thx Josias</msg>
+</logentry>
+<logentry
+   revision="327197">
+<author>thorsten</author>
+<date>2005-10-21T14:17:46.885279Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/targets/webapp-build.xml</path>
+</paths>
+<msg>reverted unreleated changes of my last commit</msg>
+</logentry>
+<logentry
+   revision="327210">
+<author>chestnut</author>
+<date>2005-10-21T15:50:21.610978Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/xslt/exception/document-does-not-exist.xsl</path>
+</paths>
+<msg>removed broken and unused xsl:include reported by Josias Thoeny</msg>
+</logentry>
+<logentry
+   revision="328012">
+<author>thorsten</author>
+<date>2005-10-24T09:32:13.357493Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/targets/webapp-build.xml</path>
+</paths>
+<msg>Forgot the closing tag. Sorry for any trouble and thx to josias to spot it.</msg>
+</logentry>
+<logentry
+   revision="328050">
+<author>andreas</author>
+<date>2005-10-24T12:44:04.279880Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lenyadoc/java/src/org/apache/lenya/cms/cocoon/source/LenyaDocSourceFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/sitemap.xmap</path>
+</paths>
+<msg>lenyadoc:/ builds document to retrieve source URL instead of hard-coding the DocumentIdToPathMapper behaviour.</msg>
+</logentry>
+<logentry
+   revision="328067">
+<author>michi</author>
+<date>2005-10-24T13:46:40.978129Z</date>
+<paths>
+<path
+   action="D">/lenya/sandbox/search/README-lenya-search</path>
+<path
+   copyfrom-path="/lenya/sandbox/search/README-lenya-search"
+   copyfrom-rev="328059"
+   action="A">/lenya/sandbox/search/README-lenya-search.txt</path>
+</paths>
+<msg>suffix txt added</msg>
+</logentry>
+<logentry
+   revision="328402">
+<author>chestnut</author>
+<date>2005-10-25T16:06:07.700437Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources-shared.xmap</path>
+</paths>
+<msg>Thanks to a patch from Felix Röthenbacher
+fixes bug Bug 37216</msg>
+</logentry>
+<logentry
+   revision="328424">
+<author>chestnut</author>
+<date>2005-10-25T17:05:07.474527Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/cforms/usecases/dynamicrepeater_binding.xml</path>
+</paths>
+<msg>adds a convertor for integers
+Thanks to Felix Röthenbacher for the patch
+fixes Bug 37221</msg>
+</logentry>
+<logentry
+   revision="328589">
+<author>edith</author>
+<date>2005-10-26T08:30:13.638368Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/table.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/table_columns.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/rss2ics.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/front.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/common.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/palm.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/ns.txt</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/routeit.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/proppatch2propwrite.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/global_document.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/unalogrss2.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/table_rows.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/collection2html.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/style_inlined.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/main_wml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/divs.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/table_wml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/style_header.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/main_html.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/table_cells.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/style_mapping.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/unalogrss.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/opendocument/xslt/collection2propfind.xsl</path>
+</paths>
+<msg>Stylesheet to transform the Oasis Opendcoument format into xhtml. Thanks to Art Rhyno</msg>
+</logentry>
+<logentry
+   revision="328675">
+<author>edith</author>
+<date>2005-10-26T16:56:23.312203Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/sitemap.xmap</path>
+</paths>
+<msg>Call the xslt of art rhyno for the transformation from odt to html</msg>
+</logentry>
+<logentry
+   revision="328676">
+<author>edith</author>
+<date>2005-10-26T16:57:40.215657Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/xslt/page2xhtml-opendocument.xsl</path>
+</paths>
+<msg>Odt doc needs a own page2xhtml xslt</msg>
+</logentry>
+<logentry
+   revision="328682">
+<author>chestnut</author>
+<date>2005-10-26T17:09:35.088788Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/serialization</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/selection</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/resources/shared/javascript</path>
+</paths>
+<msg>External Link Check usecase
+To turn on uncomment the map:transform in the default pubs sitemap.xmap file under the comment
+&lt;!-- uncomment to turn on external broken link reporting --&gt; (will implement a better switch in the near future) </msg>
+</logentry>
+<logentry
+   revision="328685">
+<author>chestnut</author>
+<date>2005-10-26T17:09:56.004682Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/resources/shared/javascript/linkreporter.js</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/xslt/authoring/addJavaScript.xsl</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/LinkStatusGenerator.java</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/pubs/default/usecase-linkreport.xmap</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/serialization/LinkSerializer.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/selection/LastModSourceSelector.java</path>
+</paths>
+<msg>External Link Check usecase
+To turn on uncomment the map:transform in the default pubs sitemap.xmap file under the comment
+&lt;!-- uncomment to turn on external broken link reporting --&gt; (will implement a better switch in the near future) </msg>
+</logentry>
+<logentry
+   revision="328897">
+<author>chestnut</author>
+<date>2005-10-27T15:38:16.195553Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/schemas/xhtml.rng</path>
+</paths>
+<msg>Fixes the following error when editing homepage doc with oneform editor:
+BaseURI is not valid, it must contain a protocol: xhtml/xhtml-basic.rng
+
+Should also help with pub templating.</msg>
+</logentry>
+<logentry
+   revision="328918">
+<author>chestnut</author>
+<date>2005-10-27T17:49:26.022858Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+</paths>
+<msg>fixes Bug 37222
+Thanks to a patch by Felix Röthenbacher</msg>
+</logentry>
+<logentry
+   revision="329826">
+<author>chestnut</author>
+<date>2005-10-31T14:40:57.990579Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>makes ...-bxe.css fallback enabled
+fixes Bug 37308
+Thanks to a patch by Felix Röthenbacher</msg>
+</logentry>
+<logentry
+   revision="329894">
+<author>michi</author>
+<date>2005-10-31T20:59:40.309038Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/search/README-lenya-search.txt</path>
+</paths>
+<msg>installation clarified</msg>
+</logentry>
+<logentry
+   revision="329909">
+<author>michi</author>
+<date>2005-10-31T21:13:11.004379Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>double entry of Reunion removed and HCI Lab of University of Udine added</msg>
+</logentry>
+<logentry
+   revision="329912">
+<author>michi</author>
+<date>2005-10-31T21:16:47.839618Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>conference website added</msg>
+</logentry>
+</log>

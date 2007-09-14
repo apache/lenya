@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Shibboleth Authentication</title>
+  </header>
+  <body>
+
+    <section>
+      <title>Introduction</title>
+      <p>"Shibboleth is standards-based, open source middleware software which provides Web Single
+        SignOn (SSO) across or within organizational boundaries. It allows sites to make informed
+        authorization decisions for individual access of protected online resources in a
+        privacy-preserving manner." (quoted from the <a href="http://shibboleth.internet2.edu/"
+          >Shibboleth website</a>)</p>
+    </section>
+
+    <section>
+      <title>Configuring Lenya</title>
+      <p> The configuration is done in <code>$LENYA_HOME/src/webapp/WEB-INF/cocoon-xconf.xsl</code>. </p>
+      <p> First of all, you have to tell Lenya to use the <code>ShibbolethAuthenticator</code>
+        instead of the default <code>UserAuthenticator</code>, which is commented out in the
+        following example: </p>
+      <source xml:space="preserve"><![CDATA[  <component logger="lenya.ac.authenticator"
+      class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator"
+      role="org.apache.lenya.ac.Authenticator"/>
+<!--
+  <component logger="lenya.ac.authenticator"
+      class="org.apache.lenya.ac.impl.UserAuthenticator"
+      role="org.apache.lenya.ac.Authenticator"/>
+-->    
+      ]]></source>
+
+      <section>
+        <title>ShibbolethModule</title>
+        <p>The next section of interest is the declaration of the
+            <code>org.apache.shibboleth.ShibbolethModule</code> with the following elements:</p>
+
+        <dl>
+          <dt>
+            <code>ProviderId</code>
+          </dt>
+          <dd>The hostname of your service provider. If you use Shibboleth 1.1, you can leave this
+            empty.</dd>
+          <dt>
+            <code>Metadata</code>
+          </dt>
+          <dd>A Cocoon-readable URI which specifies the location of the meta data file. It contains
+            for instance information about your identity provider. A typical location would be
+              <code>context://WEB-INF/metadata.xml</code>.</dd>
+          <dt>AAP</dt>
+          <dd>A Cocoon-readable URI which specifies the location of the AAP (Attribute Acceptance
+            Policy) file. A typical location would be <code>context://WEB-INF/AAP.xml</code></dd>
+        </dl>
+      </section>
+
+      <section>
+        <title>CredentialsManager</title>
+        <p>In the <code>org.apache.shibboleth.util.CredentialsManager</code> declaration you
+          configure the location of your keystore and truststore.</p>
+      </section>
+
+    </section>
+
+    <section>
+      <title>Setting up a Test Environment</title>
+      <p> This section describes how to set up a complete test environment including an IdP
+        (identity provider) server with CAS authentication and a WAYF (where are you from) server in
+        Apache Tomcat. The installation might take a while, so grab the famous big mug
+        of your favourite beverage and turn on some calming music.</p>
+      <p> We install everything we need in a directory called <code>$SHIBTEST_HOME</code>, for
+        instance at <code>/home/john/shibtest</code>. </p>
+      <section>
+        <title>Preliminaries</title>
+        <ul>
+          <li>We assume that your <code>JAVA_HOME</code> environment variable is set.</li>
+          <li> To simplify the following installation steps, export your <code>$SHIBTEST_HOME</code>
+            as an environment variable:
+              <source><![CDATA[$ export $SHIBTEST_HOME=/home/john/shibtest]]></source>
+          </li>
+          <li>
+            We'll use port 8443 for SSL so we don't have to run Tomcat as root. 
+          </li>
+          <li>
+            As host names, we use <code>idp.shibtest.org</code> for the identity provider
+            and <code>sp.shibtest.org</code> for the service provider, i.e. the Lenya web
+            application. Feel free to use these names, they are not related to the real
+            websites (if they even exist).
+          </li>
+          <li>
+            OpenSSL is required to generate the certificate.
+          </li>
+          <li>
+            You'll probably need sudo permissions to add the key to the central Java keystore
+            and to edit the <code>/etc/hosts</code> file.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Download and install Tomcat</title>
+        <ul>
+          <li>Get the latest Tomcat 5.5 distribution from the <a href="http://tomcat.apache.org"
+              >Tomcat homepage</a>. When this documentation was written, this was 5.5.20.</li>
+          <li> Extract <code>apache-tomcat-5.5.20.zip</code> in the directory
+            <code>$SHIBTEST_HOME</code>. You end up with a directory
+              <code>$SHIBTEST_HOME/apache-tomcat-5.5.20</code>. </li>
+        </ul>
+      </section>
+      <section>
+        <title>Download and install the Shibboleth identity provider</title>
+        <ul>
+          <li>You can get the Shibboleth identity provider sources from the <a
+              href="http://shibboleth.internet2.edu/latest.html">Shibboleth download page</a>.
+            Choose "Java Source with Ant-based Installer". When this documentation was written, the
+            current version was 1.3.2. </li>
+          <li>Extract the downloaded file <code>shibboleth-idp-1.3.2.tar.gz</code> in
+              <code>$SHIBTEST_HOME</code>. You end up with a directory
+              <code>$SHIBTEST_HOME/shibboleth-1.3.2-install</code>.</li>
+          <li> In this directory, start the Shibboleth IdP installation by entering
+              <source><![CDATA[$ cd $SHIBTEST_HOME/shibboleth-1.3.2-install
+$ ./ant install]]></source>
+              Be careful to execute <code>./ant</code> so that the IdP's special version of Ant is used.
+          </li>
+          <li> You're asked several questions, which you answer as follows:
+            <source xml:space="preserve"><![CDATA[Q: Do you want to install the Shibboleth Identity Provider? [Y,n]
+A: Y
+
+Q: What name do you want to use for the Identity Provider web application? [default: shibboleth-idp]
+A: <Return> for default value
+
+Q: Do you want to install it directly onto the filesystem or use the tomcat manager application?
+A: 1
+
+Q: Select a home directory for the Shibboleth Identity Provider [default: /usr/local/shibboleth-idp]
+A: $SHIBTEST_HOME/shibboleth-idp
+
+Q: Enter tomcat home directory [default: /usr/local/tomcat]
+A: $SHIBTEST_HOME/apache-tomcat-5.5.20
+]]></source>
+          </li>
+          <li> The installation process will create the Shibboleth IdP home directory at
+              <code>$SHIBTEST_HOME/shibboleth-idp</code> and a web application archive at
+              <code>$SHIBTEST_HOME/apache-tomcat-5.5.20/webapps/shibboleth-idp.war</code>. </li>
+          <li>
+            Now we can set the <code>IDP_HOME</code> environment variable which is
+            used in later installation steps:
+            <source xml:space="preserve"><![CDATA[$ export IDP_HOME=$SHIBTEST_HOME/shibboleth-idp]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Configure the IdP</title>
+        <ul>
+          <li>Edit the file <code>$SHIBTEST_HOME/shibboleth-idp/etc/idp.xml</code>.</li>
+          <li>
+            In the top section, replace <code>idp.example.org</code> with <code>idp.shibtest.org</code>:
+            <source xml:space="preserve"><![CDATA[<IdPConfig 
+	xmlns="urn:mace:shibboleth:idp:config:1.0" 
+	xmlns:cred="urn:mace:shibboleth:credentials:1.0" 
+	xmlns:name="urn:mace:shibboleth:namemapper:1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="urn:mace:shibboleth:idp:config:1.0 ../schemas/shibboleth-idpconfig-1.0.xsd" 
+	AAUrl="https://idp.shibtest.org:8443/shibboleth-idp/AA" 
+	resolverConfig="file:/Users/nobby/src/shibtest/shibboleth-idp/etc/resolver.xml"
+	defaultRelyingParty="urn:mace:shibboleth:examples" 
+	providerId="https://idp.shibtest.org/shibboleth">]]></source>
+          </li>
+          <li>
+            By default, the IdP's protocol handler does only support the ports 433 and 80. We'll add our test port 8443.
+            In the protocol handler section, add the port 8443 to the https locations as follows:
+            <source xml:space="preserve"><![CDATA[<ProtocolHandler implementation="edu.internet2.middleware.shibboleth.idp.provider.ShibbolethV1SSOHandler">
+	<Location>https?://[^:/]+(:(8443|443|80))?/shibboleth-idp/SSO</Location>
+</ProtocolHandler>
+...
+<ProtocolHandler implementation="edu.internet2.middleware.shibboleth.idp.provider.Shibboleth_StatusHandler">
+  <Location>https://[^:/]+(:(8443|443))?/shibboleth-idp/Status</Location>
+</ProtocolHandler>]]></source>
+          </li>
+          <li>
+            Now we have to define an attribute which is used by Lenya as the unique identifier
+            (see <code>cocoon-xconf.xsl</code>). First, we configure how the attribute should
+            be resolved. Then we declare the attribute in the ARP (attribute release policy). 
+          </li>
+          <li>
+            Edit the file <code>$SHIBTEST_HOME/shibboleth-idp/etc/resolver.xml</code>,
+            uncomment the <code>SimpleAttributeDefinition</code> of <code>eduPersonPrincipalName</code>
+            and set the smartScope attribute to our <code>shibtest.org</code> domain:
+            <source xml:space="preserve"><![CDATA[<SimpleAttributeDefinition id="urn:mace:dir:attribute-def:eduPersonPrincipalName" smartScope="shibtest.org">
+  <DataConnectorDependency requires="echo"/>
+</SimpleAttributeDefinition>]]></source>
+          </li>
+          <li>
+            Edit the file <code>$SHIBTEST_HOME/shibboleth-idp/etc/arps/arp.site.xml</code>
+            and add the declaration of the <code>eduPersonPrincipalName</code> attribute
+            to the <code>Rule</code> element:
+            <source xml:space="preserve"><![CDATA[<Attribute name="urn:mace:dir:attribute-def:eduPersonPrincipalName">
+  <AnyValue release="permit"/>
+</Attribute>
+]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Download and deploy the CAS (Central Authentication System) client library</title>
+        <ul>
+          <li>
+            Download the Yale CAS Java client from the
+            <a href="http://www.ja-sig.org/products/cas/">JA-SIG CAS homepage</a>.
+            When this documentation was written, the latest version was 2.1.1.
+          </li>
+          <li>
+            Copy the CAS client library to the Shibboleth web application libraries directory:
+            <source xml:space="preserve"><![CDATA[$ cd $SHIBTEST_HOME
+$ cp casclient-2.1.1.jar shibboleth-1.3.2-install/webApplication/WEB-INF/lib/]]></source>
+          </li>
+          <li>
+            Edit the file <code>shibboleth-1.3.2-install/webAppConfig/dist.idp.xml</code>
+            and add the following block to the <code>&lt;web-app&gt;</code> element:
+            <source xml:space="preserve"><![CDATA[<filter>
+   <filter-name>CASFilter</filter-name>
+   <filter-class>edu.yale.its.tp.cas.client.filter.CASFilter</filter-class>
+   <!-- URL of login page of CAS Server -->
+   <init-param>
+     <param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>
+     <param-value>https://idp.shibtest.org:8443/cas/login</param-value>
+   </init-param>
+   <!-- URL to validation URL of CAS Server -->
+   <init-param>
+     <param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>
+     <param-value>https://idp.shibtest.org:8443/cas/proxyValidate</param-value>
+   </init-param>
+   <!-- Full hostname with port number to be filtered. The port number
+   is not required for standard ports (80,443) -->
+   <init-param>
+     <param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
+     <param-value>idp.shibtest.org:8443</param-value>
+   </init-param>
+   <!-- expose REMOTE_USER (from CAS Client version 2.1.0) --> 
+   <init-param>
+     <param-name>edu.yale.its.tp.cas.client.filter.wrapRequest</param-name>
+     <param-value>true</param-value>
+   </init-param>
+ </filter>
+ 
+ <filter-mapping>
+   <filter-name>CASFilter</filter-name>
+   <url-pattern>/SSO/*</url-pattern>
+ </filter-mapping>]]></source>
+             In the same file, set the <code>load-on-startup</code> paramter of the IdP servlet to <code>1</code>:
+             <source xml:space="preserve"><![CDATA[<servlet>
+    <servlet-name>IdP</servlet-name>
+    <display-name>Shibboleth Identity Provider</display-name>
+    <servlet-class>edu.internet2.middleware.shibboleth.idp.IdPResponder</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>]]></source>
+          </li>
+          <li>
+            Now re-deploy the Shibboleth IdP web application:
+            <source xml:space="preserve"><![CDATA[$ cd $SHIBTEST_HOME/shibboleth-1.3.2-install
+$ ./ant]]></source>
+            Answer the questions in the same way as before, actually this just means to accept the pre-set values now.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Download and install the CAS (Central Authentication System) server</title>
+        <ul>
+          <li>
+            Go to the <a href="http://esup-casgeneric.sourceforge.net/">CAS Generic Handler homepage</a>
+            and download the esup-cas-server package. When this documentation was written, the latest
+            version was <code>esup-cas-server-2.0.7-3.zip</code>.
+          </li>
+          <li>
+            Extract the archive in the <code>$SHIBTEST_HOME</code> directory.
+          </li>
+          <li>
+            Edit the properties file <code>$SHIBTEST_HOME/esup-cas-server-2.0.7-3/properties/build.properties</code>
+            and, at the very end of the file, specify your Tomcat home directory:
+            <source xml:space="preserve"><![CDATA[cas-server.deploy.home=$SHIBTEST_HOME/apache-tomcat-5.5.20/webapps/cas]]></source>
+          </li>
+          <li>
+            Deploy the CAS server application:
+            <source xml:space="preserve"><![CDATA[$ cd $SHIBTEST_HOME/esup-cas-server-2.0.7-3
+$ ant]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Generate and deploy the certificates</title>
+        <p>
+          Now we'll generate a self-signed certificate and add it to the default Java truststore.
+        </p>
+        <ul>
+          <li>Create a directory <code>$SHIBTEST_HOME/pki</code> where our keys and certificates will be stored:
+          <source xml:space="preserve"><![CDATA[$ cd $SHIBTEST_HOME
+$ mkdir pki
+$ cd pki]]></source>
+          </li>
+          <li>
+            Now we generate the self-signed certificate.
+            In this example, we assume that you're living in Zurich, Switzerland.
+            <source xml:space="preserve"><![CDATA[$ openssl req -new -nodes -x509 -out cert.pem -keyout key.pem -days 365 \
+      -subj "/C=CH/L=Zurich/CN=idp.shibtest.org/emailAddress=root@localhost"]]></source>
+            The generated certificate is stored in <code>cert.pem</code> and the key in <code>key.pem</code>.
+          </li>
+          <li>
+            We use the Java keytool to generate a keystore for our identity provider,
+            containing a dummy key:
+            <source xml:space="preserve"><![CDATA[$ keytool -genkey -alias dummy -keystore idp.shibtest.org.jks]]></source>
+            When you're asked for the keystore password, enter <code>shibtest</code>.
+            Additionally, you have to enter your name and other details.
+            When asked for the key password, use the same as for the keystore.
+            This command has created a Java keystore file <code>idp.shibtest.org.jks</code>.
+          </li>
+          <li>
+            We can now delete the dummy key from our keystore
+            <source xml:space="preserve"><![CDATA[$ keytool -delete -alias dummy -keystore idp.shibtest.org.jks]]></source>
+            and end up with an empty keystore.
+          </li>
+          <li>
+            The next step is to create a pkcs8 version of our certificate key:
+            <source xml:space="preserve"><![CDATA[$ openssl pkcs8 -in key.pem -topk8 -nocrypt -outform DER -out idp.shibtest.org.key.pkcs8]]></source>
+          </li>
+          <li>
+            Now we use a quite complex command to import this key into the Java keystore:
+            <source xml:space="preserve"><![CDATA[$ ../shibboleth-1.3.2-install/bin/extkeytool -importkey \
+      -alias idp.shibtest.org \
+      -keyfile idp.shibtest.org.key.pkcs8 \
+      -certfile cert.pem \
+      -keystore idp.shibtest.org.jks \
+      -storepass shibtest \
+      -provider org.bouncycastle.jce.provider.BouncyCastleProvider]]></source>
+            You're promted for the password for this new key, we use <code>shibtest</code> again.
+          </li>
+          <li>
+            The certificate can now be exported in a Java-readable format:
+            <source xml:space="preserve"><![CDATA[keytool -export -keystore idp.shibtest.org.jks -alias idp.shibtest.org -file exported.key]]></source>
+          </li>
+          <li>
+            In the last step, we can add our exported server certificate to the Java truststore:
+            <source xml:space="preserve"><![CDATA[$ sudo keytool -import -trustcacerts \
+      -keystore $JAVA_HOME/lib/security/cacerts \
+      -file exported.key -alias idp.shibtest.org]]></source>
+            The default password for the Java truststore is <code>changeit</code>.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Add the example host names to the hosts file</title>
+        <ul>
+          <li>Edit <code>/etc/hosts</code> and add the following entries:
+          <source xml:space="preserve"><![CDATA[127.0.0.1       idp.shibtest.org
+127.0.0.1       sp.shibtest.org]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Configure SSL in Tomcat</title>
+        <ul>
+          <li>
+            Edit <code>$SHIBTEST_HOME/apache-tomcat-5.5.20/conf/server.xml</code> and
+            declare an SSL connector at port 8843 with the keystore location and password:
+            <source xml:space="preserve"><![CDATA[<Connector port="8443" maxHttpHeaderSize="8192"
+           maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+           enableLookups="false" disableUploadTimeout="true"
+           acceptCount="100" scheme="https" secure="true"
+           clientAuth="false" sslProtocol="TLS" 
+           keystoreFile="/home/john/shibtest/pki/idp.shibtest.org.jks"
+           keystorePass="shibtest"/>
+]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Setup the WAYF server</title>
+        <ul>
+          <li>
+            We will declare the location of our sites file in the WAYF
+            web application's <code>web.xml</code>. Edit the file
+            <code>$SHIBTEST_HOME/shibboleth-1.3.2-install/webAppConfig/wayf.xml</code>
+            and set the <code>SiteConfigFileLocation</code> to the <code>metadata.xml</code>
+            file of your Lenya installation:
+            <source xml:space="preserve"><![CDATA[<init-param>
+  <param-name>SiteConfigFileLocation</param-name>
+  <param-value>file:///home/john/lenya/build/lenya/webapp/WEB-INF/metadata.xml</param-value>
+</init-param>]]></source>
+          </li>
+          <li>
+            Make sure that all server references in <code>metadata.xml</code> point to
+            either <code>https://idp.shibtest.org:8443</code> or <code>https://sp.shibtest.org:8443</code>,
+            respectively.
+          </li>
+          <li>
+            Generate the WAYF web application and deploy it to Tomcat:
+            <source xml:space="preserve"><![CDATA[$ cd $SHIBTEST_HOME/shibboleth-1.3.2-install
+$ ./ant package-wayf
+$ cp dist/shibboleth-wayf.war ../apache-tomcat-5.5.20/webapps/]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Configure Lenya</title>
+        <ul>
+          <li>
+            Edit <code>$LENYA_HOME/src/webapp/WEB-INF/cocoon-xconf.xsl</code>.
+          </li>
+          <li>
+            Declare the <code>ShibbolethAuthenticator</code> instead of the default
+            <code>UserAuthenticator</code>:
+            <source xml:space="preserve"><![CDATA[<component logger="lenya.ac.authenticator"
+    class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator"
+    role="org.apache.lenya.ac.Authenticator"/>
+<!--
+<component logger="lenya.ac.authenticator"
+    class="org.apache.lenya.ac.impl.UserAuthenticator"
+    role="org.apache.lenya.ac.Authenticator"/>
+-->    
+]]></source>
+          </li>
+          <li>
+            Configure the <code>ProviderId</code> element of the <code>org.apache.shibboleth.ShibbolethModule</code>:
+            <source xml:space="preserve"><![CDATA[<ProviderId>http://sp.shibtest.org/shibboleth</ProviderId>]]></source>
+          </li>
+          <li>
+            Configure the <code>WayfServer</code> element of the <code>org.apache.shibboleth.ShibbolethModule</code>:
+            <source xml:space="preserve"><![CDATA[<WayfServer>https://localhost:8443/shibboleth-wayf/WAYF</WayfServer>]]></source>
+          </li>
+          <li>
+            Configure the keystore and truststore locations:
+            <source xml:space="preserve"><![CDATA[<component logger="lenya.ac.shibboleth"
+  role="org.apache.shibboleth.util.CredentialsManager"
+  class="org.apache.shibboleth.util.CredentialsManager">
+  <KeyStore>
+    <Location>file:///home/john/shibtest/pki/idp.shibtest.org.jks</Location>
+    <Type>JKS</Type>
+    <StorePassword>shibtest</StorePassword>
+    <KeyPassword>shibtest</KeyPassword>
+  </KeyStore>
+  <TrustStore>
+    <Location>file:///home/john/shibtest/pki/idp.shibtest.org.jks</Location>
+    <Type>JKS</Type>
+    <StorePassword>shibtest</StorePassword>
+  </TrustStore>
+</component>]]></source>
+          </li>
+          <li>
+            Configure the user fields mapping to specify which attributes should be used to
+            determine the user's first name, last name, and e-mail address:
+            <source xml:space="preserve"><![CDATA[<component logger="lenya.ac.shibboleth"
+  role="org.apache.shibboleth.util.UserFieldsMapping"
+  class="org.apache.shibboleth.util.impl.UserFieldsMappingImpl">
+  <FirstName>urn:mace:dir:attribute-def:givenName</FirstName>
+  <LastName>urn:mace:dir:attribute-def:sn</LastName>
+  <EMail>urn:mace:dir:attribute-def:mail</EMail>
+</component>]]></source>
+          </li>
+          <li>
+            To test if the authentication was successful, we'll grant the <code>edit</code>
+            role to the authoring area for a <code>shib</code> user. Edit the file
+            <code>$LENYA_HOME/src/webapp/lenya/pubs/default/config/ac/policies/authoring/subtree-policy.acml</code>
+            and add the following block:
+            <source xml:space="preserve"><![CDATA[<user id="shib">
+  <role id="edit"/>
+</user>]]></source>
+          </li>
+          <li>
+            Build Lenya:
+            <source xml:space="preserve"><![CDATA[$ cd $LENYA_HOME
+$ ./build.sh]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Start Lenya and Tomcat</title>
+        <ul>
+          <li>
+            Start Tomcat:
+            <source xml:space="preserve"><![CDATA[$ cd $SHIBTEST_HOME/apache-tomcat-5.5.20/bin
+$ ./startup.sh]]></source>
+            If you can't execute <code>startup.sh</code>, you have to make the scripts executable:
+            <source xml:space="preserve"><![CDATA[$ chmod +x *.sh]]></source>
+          </li>
+          <li>
+            Start Lenya:
+            <source xml:space="preserve"><![CDATA[$ cd $LENYA_HOME
+$ ./lenya.sh]]></source>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Test your installation</title>
+        <ul>
+          <li>Go to <a href="http://localhost:8888/default/authoring/index.html">http://localhost:8888/default/authoring/index.html</a></li>
+          <li>
+            Click the link "Login via Shibboleth".
+          </li>
+          <li>
+            The browser tells you that it is unable to verify the identity of idp.shibtest.org as a trusted site.
+            That's because we use a self-signed certificate. Click OK to accept the certificate.
+          </li>
+          <li>
+            Now the browser complains that you're trying to connect to localhost, but the certificate belongs
+            to idp.shibtest.org. Click OK.
+          </li>
+          <li>
+            You should be redirected to the URL
+            <code>https://localhost:8443/shibboleth-wayf/WAYF?shire=...</code>. A page
+            with the title "Select an identity provider" should appear.
+          </li>
+          <li>
+            Submit the form with the pre-selected IdP "Identities'R'Us".
+          </li>
+          <li>
+            You should be redirected to the URL <code>https://idp.shibtest.org:8443/shibboleth-idp/SSO?target=</code>
+            which in turn redirects to <code>https://idp.shibtest.org:8443/cas/login?service=</code>.
+          </li>
+          <li>
+            Now you should see a page with a blue background and the headline
+            "Service Central d'Authentification".
+          </li>
+          <li>
+            Enter username <code>shib</code> and password <code>shib</code>.
+            The CAS server's default configuration accepts empty passwords and
+            passwords which are the same as the user name.
+            Submit the form.
+          </li>
+          <li>
+            The browser displays a security warning about encrypted information. Click "Continue".
+          </li>
+          <li>
+            Now you should be redirected to the Lenya authoring area. The username in the status bar
+            should be "shib". If yes - congratulations! If not - please go through the installation
+            instructions again and ask your questions on the Lenya or Shibboleth mailing list.
+          </li>
+        </ul>
+      </section>
+    </section>
+    
+    <section>
+      <title>Common Pitfalls</title>
+      <ul>
+        <li>
+          After updating the Java VM to a new version, don't forget to re-add your
+          server certificate to the default Java truststore.
+        </li>
+        <li>
+          Lenya's LDAP configuration file <code>ldap.properties</code> overrides the default
+          Java keystore location. If you use this setting, make sure to add the certificate
+          to this keystore.
+        </li>
+      </ul>
+    </section>
+
+  </body>
+</document>

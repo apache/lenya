@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Authoring and Live Mode</title>
+	</header>
+	<body>
+
+		<section>
+			<title>Introduction</title>
+			
+			<p>Lenya has two modes it can run in:</p>
+			<ul>
+			<li>In Authoring mode it is a web application enabling editors
+			to interactively manipulate the structure as well as the content of a publication.</li>
+			<li>In Live mode it will render a publication as a website.</li>
+			</ul>
+			
+			<section>
+			
+				<title>Authoring Mode</title>
+				
+				<p>Authoring a publication involves a number of different tasks:</p>
+				<ul>
+				<li>Creating new documents</li>
+				<li>Moving documents around in the sitetree</li>
+				<li>Editing a document's content</li>
+				<li>Editing a document's metadata</li>
+				</ul>
+				
+				<p>but also:</p>
+				
+				<ul>
+				<li>Editing a publication's metadata</li>
+				<li>Managing the resource types and editors available</li>
+				<li>Maintaining access control policies both for editing and for the live publication</li>
+				</ul>
+				
+				<p>Transactions that manipulate the publication are implemented through usecases, using the
+				Usecase Framework. There are for example usecases that:</p>
+				
+				<ul>
+				<li>Create a new document</li>
+				<li>Delete a document</li>
+				<li>Edit a document's metadata</li>
+				<li>Call an editor to edit the document's content</li>
+				</ul>
+
+			</section>
+
+			<section>
+				
+				<title>Live Mode</title>
+				
+				<p>The Live Mode is all about presenting a publication to the viewer.</p>
+				<p>HTTP requests are passed through a Cocoon sitemap which will then
+				use the appropriate generators, transformers and serializers which will
+				return a page to the browser in reply to the request.</p>
+				
+				<section>
+					<title>Serving a Lenya publication with plain Cocoon only?</title>
+					<p>The fact that Live Mode is all about serving pages controlled by
+					a sitemap often raises the question if it was possible to serve a 
+					publication that has been edited with Lenya from a plain Cocoon instance.</p>
+					<p>Sometimes this might be a requirement if the production site offers Cocoon
+					hosting but not Lenya hosting for example. Also some architects feel better
+					if the editor portion is not at all installed on an outside facing prodction
+					server.</p>
+					<p>While it would theoretically be possible, at the time of writing a Lenya
+					publication will need Lenya even for Live mode. The reason is that the sitemaps
+					use some custom Cocoon components that are part of Lenya, such as the PageEnvelope
+					input module for example.</p>
+					<p>Again, it would be possible to extract these components from Lenya and package
+					them with a plain instance of Cocoon to achive to goal of having a "Live mode only"
+					version of Lenya that will not allow any editing. Yet this work has not yet been done.</p>
+				</section>
+				
+			</section>
+			
+		</section>	
+		
+	</body>
+</document>

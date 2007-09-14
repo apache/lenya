@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: implementation.xml 43104 2004-07-01 23:59:25Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document> 
+
+<header> 
+    <title>Workflow Implementation</title>
+</header> 
+<body>
+  
+<section><title>Important Classes</title>
+
+<p><em>org.apache.lenya.workflow</em> The actual workflow API. It defines the workflow model. </p>
+<ul>
+<li><strong>Workflow</strong> - A workflow object describes a workflow schema.</li>
+<li><strong>WorkflowInstance</strong> - A workflow instance.</li>
+<li> <strong>Situation</strong> - The environment of the workflow before the invocation of an event.</li>
+</ul>
+<p><em>org.apache.lenya.workflow.impl</em> A basic abstract implementation of the API. </p>
+<ul>
+<li> <strong>WorkflowInstanceImpl</strong> - Basic implementation of a workflow instance. </li>
+<li> <strong>History</strong> - The history of a workflow instance. Use a history object to restore</li>
+</ul>
+<p>the state of a workflow instance. </p>
+<p><em>org.apache.lenya.cms.workflow</em> Some CMS-specific workflow implementation classes. </p>
+<ul>
+<li> <strong>WorkflowFactory</strong> - A factory to build all workflow-related objects. </li>
+<li> <strong>WorkflowDocument</strong> - A workflow instance wrapper for a CMS document. </li>
+<li> <strong>CMSHistory</strong> - CMS-specific workflow instance history. </li>
+<li> <strong>CMSSituation</strong> - CMS-specific environment situation. </li>
+</ul>
+
+</section><section><title id="head-2d1540f5c092fb4a2a534c9f988b419503a58bfc">Obtaining Workflow Instance and Situation Objects</title>
+
+<p>Use the <em>WorkflowFactory</em> to obtain workflow-related objects: </p>
+
+<source>
+Document document = new DefaultDocument(
+        publication, pageEnvelope.getDocumentId());
+
+WorkflowFactory factory = WorkflowFactory.newInstance();
+
+if (factory.hasWorkflow(document)) {
+            
+    WorkflowInstance instance;
+    Situation situation;
+            
+    try {
+        instance = factory.buildInstance(document);
+        situation = factory.buildSituation(objectModel);
+    }
+    catch (WorkflowException e) {
+        ...
+    }
+      
+    ...
+}
+</source></section>
+
+</body>
+</document>

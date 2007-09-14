@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE faqs PUBLIC "-//APACHE//DTD FAQ V1.2//EN" "http://forrest.apache.org/dtd/faq-v12.dtd" [
+<!ENTITY s '<code>site.xml</code>'>
+]>
+<faqs title="Frequently Asked Questions">
+  <part id="getting_started">
+    <title>Getting Started and Building Lenya</title>
+    <faq id="i18n">
+      <question> How to extend the i18n catalog for Lenya 1.4? </question>
+      <answer>
+        <p> In the default publication you can find 
+          <code>pubs/default/lenya/resources/i18n</code>. That are the files 
+          you need to edit if you wish to override it on a publication base. 
+          </p>
+        <p>However you can as well extend the catalog with modules, that you 
+          can reuse in different publications. You need to add at least 
+          <code>modules/{yourModule}/lenya/resources/i18n/cmsui.xml</code>.</p>
+      </answer>
+    </faq>
+    <faq id="bxe-css">
+      <question> Is it possible to override in BXE *only* a css style definition? </question>
+      <answer>
+        <p> Yes, this is possible.<br/> Just add and edit it like you need it 
+          (have a look in the default pub): 
+          <code>{pubid}/resources/misc/bxe/{ressourcetype}-bxe.css</code> </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

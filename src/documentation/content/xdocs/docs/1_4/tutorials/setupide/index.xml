@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Setting up Your Development Environment</title>
+  </header>
+  <body>
+    <p>
+      To ensure a good productivity when building Lenya applications, it is essential
+      that you have a well-configured development environment.
+    </p>
+    <p>
+      The following steps guide you through the process of setting up the Eclipse IDE for Lenya.
+      The paths apply to a Unix-like operating system, for Windows you have to change
+      the paths accordingly and replace all shell script names with the names of the corresponding
+      batch files.
+    </p>
+    <ul>
+      <li>
+        <p>
+        Check out the Lenya trunk and the Cocoon branch 2.1 from the Subversion
+        repository (see <a href="site:install14">Installation Instructions</a>).
+        I suggest to use the following directory layout:
+        </p>
+<source xml:space="preserve"><![CDATA[src/
+  apache/
+    lenya/
+      trunk/             -> LENYA_HOME
+    cocoon/
+      branches/
+        BRANCH_2_1_X/    -> COCOON_HOME
+]]></source>
+        <p>
+          You don't need to set these environment variables, I only use them in
+          this tutorial.
+        </p>
+        <p>
+          Note that we don't use the Cocoon version which ships with Lenya, but
+          a separate working copy of Cocoon. This is necessary because Eclipse
+          doesn't support nested projects. 
+        </p>
+        <p>
+        The <code>apache</code> directory will come in handy when you start serious
+        development, because you're likely to peek into the source code of other
+        ASF projects like Excalibur or Xalan.
+        </p>
+      </li>
+      <li>
+        Edit <code>$LENYA_HOME/local.build.properties</code> and set the property
+        <code>cocoon.src.dir</code> to the path of your <code>$COCOON_HOME</code>
+        directory. When you use the suggested directory structure, this would be
+        <code>../../cocoon/branches/BRANCH_2_1_X</code>.
+      </li>
+      <li>
+        Go to the <code>$COCOON_HOME</code> directory and execute
+        <source>./build.sh eclipse-project</source>
+        This creates the Cocoon project files for Eclipse.
+      </li>
+      <li>
+        Go to the <code>$LENYA_HOME</code> directory and execute
+        <source>./build.sh eclipse-project</source>
+        This creates the Lenya project files for Eclipse.
+      </li>
+      <li>
+        You can now import both projects in Eclipse.
+      </li>
+      <li>
+        If your Lenya project complains that various packages are not
+        found, it is probably necessary to edit the <em>Java Build Path</em> properties
+        of your Cocoon project and select all libraries on the <em>Order and Export</em> tab.
+      </li>
+      <li>
+        In the <em>Preferences</em> pane, you have to configure the Java compiler to
+        use the 1.4 compliance level.
+      </li>
+      <li>
+        Eclipse stores the class files in <code>$LENYA_HOME/build/eclipse</code> by default.
+        Whenever you execute <code>./build.sh clean</code>, it gets confused. To avoid this,
+        set the default output folder in <em>Project properties &gt; Build path &gt; Source</em>
+        to a different directory (e.g. <code>$LENYA_HOME/eclipse</code>).
+      </li>
+      <li>
+        A decent XML and XSLT editor is recommended, you can for instance install the
+        web tools platform from the Eclipse project. 
+      </li>
+      <li>
+        Have fun!
+      </li>
+    </ul>
+  </body>
+</document>

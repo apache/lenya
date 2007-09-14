@@ -1,0 +1,3414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<log>
+
+<logentry
+   revision="38165">
+<author>egliwyona</author>
+<date>2002-07-31T12:53:11.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/PublisherAction.java</path>
+</paths>
+<msg>Changed the layout to conform to cocoon sources.
+</msg>
+</logentry>
+<logentry
+   revision="38164">
+<author>edithcms</author>
+<date>2002-07-30T07:41:05.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+</paths>
+<msg>Rollback screen with xsp
+</msg>
+</logentry>
+<logentry
+   revision="38163">
+<author>michicms</author>
+<date>2002-07-25T22:18:53.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/build.xml</path>
+</paths>
+<msg>unipublic added to javadoc
+</msg>
+</logentry>
+<logentry
+   revision="38162">
+<author>michicms</author>
+<date>2002-07-25T21:45:43.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/navigation.xml</path>
+</paths>
+<msg>Link to Wiki added
+</msg>
+</logentry>
+<logentry
+   revision="38161">
+<author>egliwyona</author>
+<date>2002-07-23T09:55:08.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/authoring/AbstractParentChildCreator.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/authoring/DefaultParentChildCreator.java</path>
+</paths>
+<msg>Changed the indenting to Apache style.
+Added comments to all methods.
+</msg>
+</logentry>
+<logentry
+   revision="38160">
+<author>michicms</author>
+<date>2002-07-21T20:38:47.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/HelloWorld.java</path>
+</paths>
+<msg>xml declaration inserted
+</msg>
+</logentry>
+<logentry
+   revision="38159">
+<author>edithcms</author>
+<date>2002-07-17T11:46:04.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+</paths>
+<msg>Sorts Articles in the section
+</msg>
+</logentry>
+<logentry
+   revision="38158">
+<author>edithcms</author>
+<date>2002-07-17T11:41:19.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/sort.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/authoring/sort.xsl</path>
+</paths>
+<msg>Articles in the section are sorted
+</msg>
+</logentry>
+<logentry
+   revision="38157">
+<author>michicms</author>
+<date>2002-07-16T16:33:31.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/HelloWorld.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/ServletProxyGenerator.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RCServlet.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+</paths>
+<msg>Rollback
+</msg>
+</logentry>
+<logentry
+   revision="38156">
+<author>edithcms</author>
+<date>2002-07-16T12:23:43.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/frontpage.html</path>
+</paths>
+<msg>Published articles
+</msg>
+</logentry>
+<logentry
+   revision="38155">
+<author>edithcms</author>
+<date>2002-07-16T12:21:18.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/article.html</path>
+</paths>
+<msg>Publishdate
+</msg>
+</logentry>
+<logentry
+   revision="38154">
+<author>edithcms</author>
+<date>2002-07-15T13:23:07.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/headlines.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/media.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/authoring/media.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/authoring/main.xsl</path>
+</paths>
+<msg>Publish Artikel without an image
+</msg>
+</logentry>
+<logentry
+   revision="38153">
+<author>michicms</author>
+<date>2002-07-15T10:35:04.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/ServletProxyGenerator.java</path>
+</paths>
+<msg>ServletProxy is now usable. Exception Handling should be improved though
+</msg>
+</logentry>
+<logentry
+   revision="38152">
+<author>michicms</author>
+<date>2002-07-13T22:17:48.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/HelloWorld.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/ServletProxyGenerator.java</path>
+</paths>
+<msg>ServletProxyGenerator nearly finished
+</msg>
+</logentry>
+<logentry
+   revision="38151">
+<author>michicms</author>
+<date>2002-07-12T22:05:55.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/HelloWorld.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/ServletProxyGenerator.java</path>
+</paths>
+<msg>ServletProxy further improved
+</msg>
+</logentry>
+<logentry
+   revision="38150">
+<author>michicms</author>
+<date>2002-07-12T15:41:59.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/build.xml</path>
+</paths>
+<msg>servlet.jar documented
+</msg>
+</logentry>
+<logentry
+   revision="38149">
+<author>michicms</author>
+<date>2002-07-12T15:39:37.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/HelloWorld.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/ServletProxyGenerator.java</path>
+</paths>
+<msg>ServletProxy nearly finished
+</msg>
+</logentry>
+<logentry
+   revision="38148">
+<author>michicms</author>
+<date>2002-07-10T22:01:02.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/html.xsl</path>
+</paths>
+<msg>garbage removed
+</msg>
+</logentry>
+<logentry
+   revision="38147">
+<author>michicms</author>
+<date>2002-07-10T21:50:45.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/oscom.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/html.xsl</path>
+</paths>
+<msg>email address to complain on spam added
+</msg>
+</logentry>
+<logentry
+   revision="38146">
+<author>michicms</author>
+<date>2002-07-10T21:33:10.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/contact.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/board.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/board.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/press-release.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/press-release.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/contact.xhtml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/contact.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/registration_fees.xhtml</path>
+</paths>
+<msg>email addresses changed to oscom.org
+</msg>
+</logentry>
+<logentry
+   revision="38145">
+<author>edithcms</author>
+<date>2002-07-10T14:39:08.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/t_publikationen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/t_portraits.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/t_lorbeeren.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/t_gesundheit.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/t_berufungen.gif</path>
+</paths>
+<msg>Rename the section's images for the headlines on the frontpage
+</msg>
+</logentry>
+<logentry
+   revision="38144">
+<author>edithcms</author>
+<date>2002-07-10T14:36:33.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/util/DateUtil.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/DOM4JUtil.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/foot.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/articles.xsl</path>
+</paths>
+<msg>Published article are inserted once at the top of the frontpage. Publisheddate and Revisiondate
+</msg>
+</logentry>
+<logentry
+   revision="38143">
+<author>michicms</author>
+<date>2002-07-09T13:14:45.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/schemas/article.xsd</path>
+</paths>
+<msg>br removed
+</msg>
+</logentry>
+<logentry
+   revision="38142">
+<author>michicms</author>
+<date>2002-07-09T07:43:30.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/HelloWorld.java</path>
+</paths>
+<msg>HelloWorld for testing ServletProxy
+</msg>
+</logentry>
+<logentry
+   revision="38141">
+<author>michicms</author>
+<date>2002-07-09T07:41:38.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Scratchpad and ServletProxyGenerator added
+</msg>
+</logentry>
+<logentry
+   revision="38140">
+<author>michicms</author>
+<date>2002-07-08T22:20:50.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+</paths>
+<msg>for history
+</msg>
+</logentry>
+<logentry
+   revision="38139">
+<author>michicms</author>
+<date>2002-07-08T22:08:57.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/overview/authoring/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/press-release.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/glossary.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/glossary/authoring</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/overview.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/overview/authoring</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/press-release.xhtml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/glossary/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/navigation.xml</path>
+</paths>
+<msg>Ready to rumble
+</msg>
+</logentry>
+<logentry
+   revision="38138">
+<author>michicms</author>
+<date>2002-07-08T22:05:36.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/authoring/tree.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/authoring/tree.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/schemas/article2.xsd</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/schemas/article.xsd</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/headlines.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles/2001/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles/2002/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/articles.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/body.xsl</path>
+</paths>
+<msg>Xopus2 integration further improved
+</msg>
+</logentry>
+<logentry
+   revision="38137">
+<author>michicms</author>
+<date>2002-07-08T20:46:59.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/press-release.xhtml</path>
+</paths>
+<msg>Press Release
+</msg>
+</logentry>
+<logentry
+   revision="38136">
+<author>michicms</author>
+<date>2002-07-08T20:37:31.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/front.xsp</path>
+</paths>
+<msg>better grouping of the menus
+</msg>
+</logentry>
+<logentry
+   revision="38135">
+<author>edithcms</author>
+<date>2002-07-08T20:29:08.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/lenya/xslt/publishing/article-main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/lenya/xslt/publishing</path>
+</paths>
+<msg>Overwrite generic publish screen
+</msg>
+</logentry>
+<logentry
+   revision="38134">
+<author>edithcms</author>
+<date>2002-07-08T18:05:37.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/headlines.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+</paths>
+<msg>Insert the published article in the headlines at the top
+</msg>
+</logentry>
+<logentry
+   revision="38133">
+<author>michicms</author>
+<date>2002-07-08T15:17:45.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/section.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/lenya/xslt/parent-child-new-article.xsl</path>
+</paths>
+<msg>some nitty gritty
+</msg>
+</logentry>
+<logentry
+   revision="38132">
+<author>michicms</author>
+<date>2002-07-08T14:49:38.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>Link to MathML changed
+</msg>
+</logentry>
+<logentry
+   revision="38131">
+<author>michicms</author>
+<date>2002-07-08T14:47:45.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/press-release.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/press-release.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/registration_fees.xhtml</path>
+</paths>
+<msg>fixed some stuff
+</msg>
+</logentry>
+<logentry
+   revision="38130">
+<author>michicms</author>
+<date>2002-07-08T14:36:59.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/schemas</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/schemas/article.xsd</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/schemas/up.xsd</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/samples/Article.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/HTMLhead.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/menus/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables_authoring.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/articles.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/page.xsl</path>
+</paths>
+<msg>Xopus2 integrated
+</msg>
+</logentry>
+<logentry
+   revision="38129">
+<author>michicms</author>
+<date>2002-07-08T08:49:39.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+</paths>
+<msg>Article Publisher added and customized
+</msg>
+</logentry>
+<logentry
+   revision="38128">
+<author>michicms</author>
+<date>2002-07-05T14:36:05.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>JPF and MathML added
+</msg>
+</logentry>
+<logentry
+   revision="38127">
+<author>michicms</author>
+<date>2002-07-05T09:42:06.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/ServletProxyGenerator.java</path>
+</paths>
+<msg>HTTP POST to arbitrary servlet
+</msg>
+</logentry>
+<logentry
+   revision="38126">
+<author>michicms</author>
+<date>2002-07-05T09:41:31.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/articles.xsl</path>
+</paths>
+<msg>one step further with Xopus1 integration
+</msg>
+</logentry>
+<logentry
+   revision="38125">
+<author>michicms</author>
+<date>2002-07-04T23:25:41.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/index.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/program.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/contact.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/registration_fees.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/navigation.xml</path>
+</paths>
+<msg>Ready for press release
+</msg>
+</logentry>
+<logentry
+   revision="38124">
+<author>michicms</author>
+<date>2002-07-04T23:25:21.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html/index.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>Title added for Weblog
+</msg>
+</logentry>
+<logentry
+   revision="38123">
+<author>edithcms</author>
+<date>2002-07-03T15:06:31.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/section.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+</paths>
+<msg>New Year
+</msg>
+</logentry>
+<logentry
+   revision="38122">
+<author>edithcms</author>
+<date>2002-07-03T15:05:42.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/page.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables_live.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables_authoring.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/articles.xsl</path>
+</paths>
+<msg>Clean up the variables for the stylesheet
+</msg>
+</logentry>
+<logentry
+   revision="38121">
+<author>edithcms</author>
+<date>2002-07-03T15:00:58.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch/unizh/unipublic/lenya/cms/authoring/NewArticleCreator.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/samples</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/samples/Article.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/tree.xml</path>
+</paths>
+<msg>Creation of a new Article
+</msg>
+</logentry>
+<logentry
+   revision="38120">
+<author>edithcms</author>
+<date>2002-07-03T14:57:07.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/section.xsp</path>
+</paths>
+<msg>parentid for the creation of the article
+</msg>
+</logentry>
+<logentry
+   revision="38119">
+<author>egliwyona</author>
+<date>2002-07-02T11:26:45.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/util/FileUtil.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/EditorAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/net/Configuration.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/ac/Identity.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/EditorMainAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/PublisherAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/AbstractAuthenticatorAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/ac/Policy.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/sitemap/Sitemap.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/DeleteDocumentAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/Configuration.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/ac/Password.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/HTMLFormWriteAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/EditorSaveAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/PMLAuthorizerAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/XopusHandlerAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/IMLAuthenticatorAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/EditorTempfileAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/util/StringUtil.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/util/Stack.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/DOMParserFactory.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/AbstractAuthorizerAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/AbstractUsernamePasswordAuthenticatorAction.java</path>
+</paths>
+<msg>Removed @created tags from the comments as they give warnings when
+building the javadocs with jdk 1.4.
+</msg>
+</logentry>
+<logentry
+   revision="38118">
+<author>egliwyona</author>
+<date>2002-07-02T10:10:05.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/authoring/AbstractParentChildCreator.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/authoring/DefaultParentChildCreator.java</path>
+</paths>
+<msg>Removed the created tags from the comments as they give warnings when
+building the javadocs with jdk 1.4.
+</msg>
+</logentry>
+<logentry
+   revision="38117">
+<author>michicms</author>
+<date>2002-07-01T23:00:18.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/program.xhtml</path>
+</paths>
+<msg>tentative program added
+</msg>
+</logentry>
+<logentry
+   revision="38116">
+<author>michicms</author>
+<date>2002-07-01T22:59:53.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/menus/front.xsp</path>
+</paths>
+<msg>nbsp added
+</msg>
+</logentry>
+<logentry
+   revision="38115">
+<author>michicms</author>
+<date>2002-07-01T22:57:38.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/ParentChildCreatorAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/authoring/AbstractParentChildCreator.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/authoring/DefaultParentChildCreator.java</path>
+</paths>
+<msg>Javadoc improved
+</msg>
+</logentry>
+<logentry
+   revision="38114">
+<author>michicms</author>
+<date>2002-07-01T22:55:12.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch/unizh/unipublic/lenya/cms/authoring/NewArticleCreator.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch/unizh/unipublic/lenya/cms</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch/unizh/unipublic/lenya/cms/authoring</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/lenya/xslt/parent-child-new-article.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch/unizh/unipublic</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch/unizh</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch/unizh/unipublic/lenya</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src/ch</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/lenya/xslt</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/doctypes/doctypes.xconf</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/tree.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/java/src</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/lenya</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/section.xsp</path>
+</paths>
+<msg>New Article Creator added
+</msg>
+</logentry>
+<logentry
+   revision="38113">
+<author>michicms</author>
+<date>2002-06-28T22:40:16.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+</paths>
+<msg>Removed Xopus Bar from Generic Pages
+</msg>
+</logentry>
+<logentry
+   revision="38112">
+<author>michicms</author>
+<date>2002-06-28T10:45:44.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/ServletProxyGenerator.java</path>
+</paths>
+<msg>Servlet Proxy
+</msg>
+</logentry>
+<logentry
+   revision="38111">
+<author>michicms</author>
+<date>2002-06-27T23:07:44.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>garbage collected
+</msg>
+</logentry>
+<logentry
+   revision="38110">
+<author>michicms</author>
+<date>2002-06-27T22:47:12.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Publication wyona.org started
+</msg>
+</logentry>
+<logentry
+   revision="38109">
+<author>edithcms</author>
+<date>2002-06-27T16:44:39.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/front.xsp</path>
+</paths>
+<msg>Publish frontpage
+</msg>
+</logentry>
+<logentry
+   revision="38108">
+<author>edithcms</author>
+<date>2002-06-27T16:43:57.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+</paths>
+<msg>Checkin, checkout and publish
+</msg>
+</logentry>
+<logentry
+   revision="38107">
+<author>edithcms</author>
+<date>2002-06-27T16:38:05.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/RevisionControllerAction.java</path>
+</paths>
+<msg>Definition of subclasses action for checkin and  checkout
+</msg>
+</logentry>
+<logentry
+   revision="38106">
+<author>edithcms</author>
+<date>2002-06-27T16:34:49.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/ReservedCheckinAction.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/ReservedCheckoutAction.java</path>
+</paths>
+<msg>Checkin, checkout
+</msg>
+</logentry>
+<logentry
+   revision="38105">
+<author>michicms</author>
+<date>2002-06-25T13:27:40.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/rdf.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/page_wyona.xsl</path>
+</paths>
+<msg>RDF added
+</msg>
+</logentry>
+<logentry
+   revision="38104">
+<author>edithcms</author>
+<date>2002-06-25T08:01:18.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RevisionController.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RCML.java</path>
+</paths>
+<msg>java docs
+</msg>
+</logentry>
+<logentry
+   revision="38103">
+<author>michicms</author>
+<date>2002-06-24T21:57:59.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles/2001/index.xml</path>
+</paths>
+<msg>article to test Xopus2
+</msg>
+</logentry>
+<logentry
+   revision="38102">
+<author>michicms</author>
+<date>2002-06-24T21:42:48.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/schemas/article2.xsd</path>
+</paths>
+<msg>Integration of Xopus2 started
+</msg>
+</logentry>
+<logentry
+   revision="38101">
+<author>michicms</author>
+<date>2002-06-24T14:29:43.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/build.xml</path>
+</paths>
+<msg>zip for snapshot added
+</msg>
+</logentry>
+<logentry
+   revision="38100">
+<author>michicms</author>
+<date>2002-06-24T14:09:25.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/authoring/main.xsl</path>
+</paths>
+<msg>page.xsl replaced by page_wyona.xsl
+</msg>
+</logentry>
+<logentry
+   revision="38099">
+<author>michicms</author>
+<date>2002-06-24T14:02:20.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html/submitStory.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html/index.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/page_wyona.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html/gettingStarted.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html/customizing.html</path>
+</paths>
+<msg>added some more empty files
+</msg>
+</logentry>
+<logentry
+   revision="38098">
+<author>michicms</author>
+<date>2002-06-24T13:20:54.000000Z</date>
+<paths>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/body.xsl</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/page.xsl</path>
+</paths>
+<msg>page and body moved to page_wyona and body_wyona
+</msg>
+</logentry>
+<logentry
+   revision="38097">
+<author>michicms</author>
+<date>2002-06-24T12:46:04.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/body_wyona.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/page_q42.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/root.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/page_wyona.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/body_q42.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/page.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html/customizing.html</path>
+</paths>
+<msg>Q42 Layout added
+</msg>
+</logentry>
+<logentry
+   revision="38096">
+<author>michicms</author>
+<date>2002-06-21T23:40:01.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/AbstractAuthorizerAction.java</path>
+</paths>
+<msg>Bug fixed: QueryString will also be copied
+</msg>
+</logentry>
+<logentry
+   revision="38095">
+<author>michicms</author>
+<date>2002-06-21T23:39:22.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/build.xml</path>
+</paths>
+<msg>packages for javadoc added: ch.ethz, org.w3c
+</msg>
+</logentry>
+<logentry
+   revision="38094">
+<author>michicms</author>
+<date>2002-06-21T23:38:13.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesundheit/2002/0465</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0465/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesellschaft/2002</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesellschaft/2002/0470/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/wirtschaft/2002/0413</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/articles.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/wirtschaft/2002/0413/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/frontpage/service.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/page.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/umwelt/2002/0385</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/umwelt/2002/0385/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/frontpage/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/umwelt/articles/2002/0385/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/policies/authoring.acml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/wirtschaft</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesellschaft/2002/0470</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/frontpage/webperls.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesundheit/2002</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/recht/2002/0413/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesundheit/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/2002/0470/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesundheit/2002/0465/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/section.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/frontpage/headlines.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/recht/articles/2002/0413/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/wirtschaft/2002/0413/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/frontpage</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesundheit</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/umwelt/2002</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/wirtschaft/2002</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/wirtschaft/articles/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesellschaft</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/umwelt/2002/0385/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/article.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/frontpage/dossier.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/umwelt</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/article.html</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/authoring/magazin/gesundheit/2002/0508</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>Authoring improved
+</msg>
+</logentry>
+<logentry
+   revision="38093">
+<author>michicms</author>
+<date>2002-06-20T08:13:57.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/bin/wget-rss.sh</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/rss-rdf/cmsinfo.rdf</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/home/body.xsl</path>
+</paths>
+<msg>CMSInfo added
+</msg>
+</logentry>
+<logentry
+   revision="38092">
+<author>edithcms</author>
+<date>2002-06-18T16:04:58.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/RevisionControllerAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+</paths>
+<msg>Check out of an article
+</msg>
+</logentry>
+<logentry
+   revision="38091">
+<author>michicms</author>
+<date>2002-06-17T19:04:24.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/program.xhtml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/program.xml</path>
+</paths>
+<msg>Tentative Program added
+</msg>
+</logentry>
+<logentry
+   revision="38090">
+<author>michicms</author>
+<date>2002-06-17T18:55:26.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/program.xhtml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/program.xml</path>
+</paths>
+<msg>Tentative program added
+</msg>
+</logentry>
+<logentry
+   revision="38089">
+<author>michicms</author>
+<date>2002-06-17T10:23:32.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/RevisionControllerAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RevisionController.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/policies/authoring.acml</path>
+</paths>
+<msg>Revision Controller incorporated into Unipublic
+</msg>
+</logentry>
+<logentry
+   revision="38088">
+<author>egliwyona</author>
+<date>2002-06-17T09:02:56.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>Changed the information on how to download. Used cvs.wyona.org instead
+of ip numbers.
+</msg>
+</logentry>
+<logentry
+   revision="38087">
+<author>michicms</author>
+<date>2002-06-17T08:38:21.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/RevisionControllerAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+</paths>
+<msg>Revision Controller action added
+</msg>
+</logentry>
+<logentry
+   revision="38086">
+<author>michicms</author>
+<date>2002-06-14T09:58:00.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/front.xsp</path>
+</paths>
+<msg>Pages to schedule
+</msg>
+</logentry>
+<logentry
+   revision="38085">
+<author>edithcms</author>
+<date>2002-06-12T09:35:38.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RevisionController.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/Configuration.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RCML.java</path>
+</paths>
+<msg>Change log messages
+</msg>
+</logentry>
+<logentry
+   revision="38084">
+<author>edithcms</author>
+<date>2002-06-11T16:41:13.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RevisionController.java</path>
+</paths>
+<msg>Change the backup file name
+</msg>
+</logentry>
+<logentry
+   revision="38083">
+<author>edithcms</author>
+<date>2002-06-11T12:31:04.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables_live.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables_authoring.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+</paths>
+<msg>Menus for the article in authoring
+</msg>
+</logentry>
+<logentry
+   revision="38082">
+<author>michicms</author>
+<date>2002-06-11T09:50:39.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/authoring/bitflux.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/javascript</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/section.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/css/style.css</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/policies/authoring.acml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/javascript/schema.js</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/css/article.css</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/javascript/article.js</path>
+</paths>
+<msg>Bitflux Editor integration
+</msg>
+</logentry>
+<logentry
+   revision="38081">
+<author>michicms</author>
+<date>2002-06-11T08:49:41.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+</paths>
+<msg>Started to connect Bitflux Editor
+</msg>
+</logentry>
+<logentry
+   revision="38080">
+<author>michicms</author>
+<date>2002-06-10T15:40:17.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RevisionController.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/FileReservedCheckInException.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/FileReservedCheckOutException.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/CheckInEntry.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/CheckOutEntry.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/Configuration.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RCML.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/util/XPSFileOutputStream.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/RCMLEntry.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/rc/conf.properties</path>
+</paths>
+<msg>Revision Controller added
+</msg>
+</logentry>
+<logentry
+   revision="38079">
+<author>michicms</author>
+<date>2002-06-10T15:38:47.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/Configuration.java</path>
+</paths>
+<msg>comments around FATAL
+</msg>
+</logentry>
+<logentry
+   revision="38078">
+<author>michicms</author>
+<date>2002-06-10T14:38:20.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/article.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/section.xsp</path>
+</paths>
+<msg>Menus modified
+</msg>
+</logentry>
+<logentry
+   revision="38077">
+<author>michicms</author>
+<date>2002-06-10T14:16:33.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/authoring/main.xsl</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/articles.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/articles.xsl</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/relatedContent.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/authoring</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/page.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/relatedContent.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/page.xsl</path>
+</paths>
+<msg>Article authorizable
+</msg>
+</logentry>
+<logentry
+   revision="38076">
+<author>michicms</author>
+<date>2002-06-10T14:08:13.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/page.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables_live.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/authoring/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables_authoring.xsl</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/articles.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/articles.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/authoring</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/page.xsl</path>
+</paths>
+<msg>Section authorizable
+</msg>
+</logentry>
+<logentry
+   revision="38075">
+<author>michicms</author>
+<date>2002-06-10T13:45:20.000000Z</date>
+<paths>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/headlines.xsl</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/page.xsl</path>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/webperls.xsl</path>
+</paths>
+<msg>Moved one directory higher
+</msg>
+</logentry>
+<logentry
+   revision="38074">
+<author>michicms</author>
+<date>2002-06-10T13:43:20.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/speakers/body.xsl</path>
+</paths>
+<msg>Email extended by subject and body
+</msg>
+</logentry>
+<logentry
+   revision="38073">
+<author>michicms</author>
+<date>2002-06-10T13:42:57.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/frontpage.html</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/passwd/lenya.iml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/authoring</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/headlines.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/passwd/roger.iml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/policies/public.acml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/passwd</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/menus/front.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/section.html</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/policies</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/index.html</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/page.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/config/ac/policies/authoring.acml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/webperls.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/policies-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/article.html</path>
+</paths>
+<msg>Authoring added to unipublic
+</msg>
+</logentry>
+<logentry
+   revision="38072">
+<author>michicms</author>
+<date>2002-06-08T21:53:08.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/speakers.xml</path>
+</paths>
+<msg>michael replaced by email
+</msg>
+</logentry>
+<logentry
+   revision="38071">
+<author>michicms</author>
+<date>2002-06-08T21:41:20.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/speakers/body.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/speakers.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/speakers/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/speakers</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/speakers/authoring</path>
+</paths>
+<msg>Speakers added
+</msg>
+</logentry>
+<logentry
+   revision="38070">
+<author>michicms</author>
+<date>2002-06-07T23:37:14.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Documentation with xdoc started
+</msg>
+</logentry>
+<logentry
+   revision="38069">
+<author>michicms</author>
+<date>2002-06-07T10:22:38.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/PublisherAction.java</path>
+</paths>
+<msg>Publisher work in progress
+</msg>
+</logentry>
+<logentry
+   revision="38068">
+<author>michicms</author>
+<date>2002-06-06T23:59:59.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/PublisherAction.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+</paths>
+<msg>Replication Queue started to implement
+</msg>
+</logentry>
+<logentry
+   revision="38067">
+<author>michicms</author>
+<date>2002-06-04T22:23:09.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+</paths>
+<msg>removed Larry Lessig
+</msg>
+</logentry>
+<logentry
+   revision="38066">
+<author>michicms</author>
+<date>2002-06-04T08:39:22.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/log4j.properties</path>
+</paths>
+<msg>Console Appender activated
+</msg>
+</logentry>
+<logentry
+   revision="38065">
+<author>michicms</author>
+<date>2002-06-04T08:38:48.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/contact.xhtml</path>
+</paths>
+<msg>Paul added
+</msg>
+</logentry>
+<logentry
+   revision="38064">
+<author>michicms</author>
+<date>2002-06-04T08:38:34.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/samples/Article.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org/apache/lenya/cms/pubs/forum/NewArticleCreator.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/pubs/forum/NewArticleCreator.java</path>
+</paths>
+<msg>Bug fixed within NewArticleCreator
+</msg>
+</logentry>
+<logentry
+   revision="38063">
+<author>michicms</author>
+<date>2002-06-03T22:31:25.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/body.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/body.xsl</path>
+</paths>
+<msg>Some XSLTs improved
+</msg>
+</logentry>
+<logentry
+   revision="38062">
+<author>michicms</author>
+<date>2002-06-03T16:10:16.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/lenya/xslt</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/lenya/xslt/authoring</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/lenya</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/lenya/xslt/authoring/parent-child-new-article.xsl</path>
+</paths>
+<msg>customized screen
+</msg>
+</logentry>
+<logentry
+   revision="38061">
+<author>michicms</author>
+<date>2002-06-03T16:07:38.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org/apache/lenya/cms/pubs</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/pubs</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org/apache/lenya</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org/apache/lenya/cms/pubs/forum/NewArticleCreator.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/pubs/forum/NewArticleCreator.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org/apache/lenya/cms</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org/apache/lenya/cms/pubs/forum</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/pubs/forum</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/java/src/org/apache</path>
+</paths>
+<msg>New Article Creator for Forum
+</msg>
+</logentry>
+<logentry
+   revision="38060">
+<author>michicms</author>
+<date>2002-06-03T16:06:03.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/ParentChildCreatorAction.java</path>
+</paths>
+<msg>error replaced by debug
+</msg>
+</logentry>
+<logentry
+   revision="38059">
+<author>michicms</author>
+<date>2002-06-03T16:02:02.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/schemas/article.xsd</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/samples</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/doctypes.xconf</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/samples/Article.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/tree.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/menus/front.xsp</path>
+</paths>
+<msg>New Article Content Creator
+</msg>
+</logentry>
+<logentry
+   revision="38058">
+<author>michicms</author>
+<date>2002-06-03T12:53:54.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/live/README</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/live</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/live/articles/README</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/live/articles</path>
+</paths>
+<msg>directories must exist
+</msg>
+</logentry>
+<logentry
+   revision="38057">
+<author>michicms</author>
+<date>2002-06-03T09:48:47.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Discussion Forum added
+</msg>
+</logentry>
+<logentry
+   revision="38056">
+<author>michicms</author>
+<date>2002-06-03T09:48:03.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/ac/passwd/lenya.iml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/root.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/body.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html/index.html</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/menus/article.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/ac/passwd</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/menus</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/ac/policies/root.acml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/images/live/roundedge.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/ac/policies</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles/2001</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/schemas/article.xsd</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles/2002</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/page.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/policies-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/live</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/images/live</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/live</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/authoring</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/doctypes/schemas</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/ac/policies/public.acml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/ac</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/config/menus/front.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/xinclude.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/authoring/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles/2001/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles/2002/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/front/authoring/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/authoring</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/html</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/images</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/xslt/article/body.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/resources/images/live/lenya-org-forum.jpg</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/forum/content/authoring/articles</path>
+</paths>
+<msg>discussion forum publication created
+</msg>
+</logentry>
+<logentry
+   revision="38055">
+<author>michicms</author>
+<date>2002-06-03T09:41:12.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/xslt/exception</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/xslt</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/xslt/exception/not_published_yet.xsl</path>
+</paths>
+<msg>Not published yet Exception created
+</msg>
+</logentry>
+<logentry
+   revision="38054">
+<author>michicms</author>
+<date>2002-06-03T09:40:29.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+</paths>
+<msg>beauty stuff
+</msg>
+</logentry>
+<logentry
+   revision="38053">
+<author>michicms</author>
+<date>2002-06-03T07:51:09.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/ac/Password.java</path>
+</paths>
+<msg>usage added
+</msg>
+</logentry>
+<logentry
+   revision="38052">
+<author>michicms</author>
+<date>2002-06-03T07:50:36.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/sitemap.xmap</path>
+</paths>
+<msg>cotext_publication fixed
+</msg>
+</logentry>
+<logentry
+   revision="38051">
+<author>michicms</author>
+<date>2002-06-03T07:50:02.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>Discussion Forum added
+</msg>
+</logentry>
+<logentry
+   revision="38050">
+<author>michicms</author>
+<date>2002-05-30T21:49:55.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>svg2png added and removed
+</msg>
+</logentry>
+<logentry
+   revision="38049">
+<author>michicms</author>
+<date>2002-05-30T21:44:45.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/lib/log4j-1.2.3.jar</path>
+<path
+   action="M">/incubator/lenya/trunk/build.xml</path>
+</paths>
+<msg>XInclude/XLink Processor migrated
+</msg>
+</logentry>
+<logentry
+   revision="38048">
+<author>michicms</author>
+<date>2002-05-30T21:27:52.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/xpsconf.properties</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/net/proxyconf.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/conf.properties</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/Normalize.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/net/ProxyManager.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/xpointer/XalanXPointer.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/net</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/parser</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/MalformedXPointerException.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/transformation/IncludeTransformer.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/xpointer/XPointer.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/XMLEncToJavaEnc.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/XLink.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/transformation</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/parser/Parser.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/xpointer</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/util/FileUtil.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/net/Configuration.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/section.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/XPointerFactory.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/XPSSourceInformation.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/parser/XercesParser.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/Configuration.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/XPSAssembler.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/page.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/log4j.properties</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/util/WildcardFilter.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/DOMWriter.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/net/ProxyConf.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/article.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/XPSInclude.java</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/foot.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/xml/DOMParserFactory.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/net/ProxyItem.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/java/org/apache/lenya/net/conf.properties</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/page.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>XInclude/XLink Processor migrated
+</msg>
+</logentry>
+<logentry
+   revision="38047">
+<author>margritcms</author>
+<date>2002-05-28T10:33:41.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/frontpage.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/index.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/section.html</path>
+</paths>
+<msg> Documantation
+</msg>
+</logentry>
+<logentry
+   revision="38046">
+<author>margritcms</author>
+<date>2002-05-28T10:13:31.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/xsltModularisation.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/xmlArchitecture.html</path>
+</paths>
+<msg>Documentation
+</msg>
+</logentry>
+<logentry
+   revision="38045">
+<author>margritcms</author>
+<date>2002-05-28T10:12:48.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/headlines.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/page.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/root.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/foot.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/articles.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/articles.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/relatedContent.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/page.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/page.xsl</path>
+</paths>
+<msg>Modularisation
+</msg>
+</logentry>
+<logentry
+   revision="38044">
+<author>margritcms</author>
+<date>2002-05-27T16:02:07.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+</paths>
+<msg>green Line after first two headlines
+</msg>
+</logentry>
+<logentry
+   revision="38043">
+<author>margritcms</author>
+<date>2002-05-27T15:40:44.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/foot.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/webperls.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+</paths>
+<msg>cosmetic and Modularisation
+</msg>
+</logentry>
+<logentry
+   revision="38042">
+<author>michicms</author>
+<date>2002-05-25T22:35:35.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/authoring/xopus.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/doctypes/schemas/generic.xsd</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/authoring/main_xopus.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/authoring</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/body.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/policies-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/generic.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/index.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/conferences/sanfrancisco2002/cfp.xml</path>
+</paths>
+<msg>Generic type is editable
+</msg>
+</logentry>
+<logentry
+   revision="38041">
+<author>margritcms</author>
+<date>2002-05-24T15:56:15.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/section.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>work in progress
+</msg>
+</logentry>
+<logentry
+   revision="38040">
+<author>margritcms</author>
+<date>2002-05-24T07:15:10.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+</paths>
+<msg>adjusted
+</msg>
+</logentry>
+<logentry
+   revision="38039">
+<author>margritcms</author>
+<date>2002-05-23T17:53:13.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/article.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables.xsl</path>
+</paths>
+<msg>Article done with xsp
+</msg>
+</logentry>
+<logentry
+   revision="38038">
+<author>egliwyona</author>
+<date>2002-05-23T14:52:22.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>Fixed a small grammatical error.
+</msg>
+</logentry>
+<logentry
+   revision="38037">
+<author>michicms</author>
+<date>2002-05-23T10:49:15.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/sections/index2002.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/index.html</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/sections/articles2002.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/sections/index2002.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/section.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/sections/articles2002.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/sections/index2002.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/sections/articles2002.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>Section modified
+</msg>
+</logentry>
+<logentry
+   revision="38036">
+<author>michicms</author>
+<date>2002-05-23T08:44:53.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/webperls.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/index.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/headlines.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/article.html</path>
+</paths>
+<msg>Sitemap modified
+</msg>
+</logentry>
+<logentry
+   revision="38035">
+<author>edithcms</author>
+<date>2002-05-22T15:38:12.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+</paths>
+<msg>Logical transformation for the navigation of the sections
+</msg>
+</logentry>
+<logentry
+   revision="38034">
+<author>edithcms</author>
+<date>2002-05-22T15:36:55.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>All channels must appear in the navigation of the section
+</msg>
+</logentry>
+<logentry
+   revision="38033">
+<author>edithcms</author>
+<date>2002-05-22T15:35:49.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+</paths>
+<msg>The button can be highlighted
+</msg>
+</logentry>
+<logentry
+   revision="38032">
+<author>edithcms</author>
+<date>2002-05-22T15:34:35.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/navigation.xml</path>
+</paths>
+<msg>Introduction of a attirbute highlighted
+</msg>
+</logentry>
+<logentry
+   revision="38031">
+<author>edithcms</author>
+<date>2002-05-22T15:28:33.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/navigationLogic.xsl</path>
+</paths>
+<msg>Logic stylesheets for the navigation in the Section. Highlighted Buttons
+</msg>
+</logentry>
+<logentry
+   revision="38030">
+<author>edithcms</author>
+<date>2002-05-22T15:26:58.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_lorbeeren.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_umwelt.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_gesundheit.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_berufungen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_publikationen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_recht.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_uni-news.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_portraits.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_light_geist.gif</path>
+</paths>
+<msg>New name for the highlighted gifs of the navigation
+</msg>
+</logentry>
+<logentry
+   revision="38029">
+<author>michicms</author>
+<date>2002-05-21T22:33:44.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/home.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+</paths>
+<msg>Publish to Home of OSCOM added
+</msg>
+</logentry>
+<logentry
+   revision="38028">
+<author>edithcms</author>
+<date>2002-05-21T15:22:16.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>Changes because of the navigation
+</msg>
+</logentry>
+<logentry
+   revision="38027">
+<author>michicms</author>
+<date>2002-05-20T21:30:17.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/home/authoring/main_xopus.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/doctypes</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/lenya/xslt/xopus</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/doctypes/schemas</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/lenya/xslt</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xopus.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/lenya/xslt/xopus/response.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/home/body.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/home/authoring/xopus.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/doctypes/schemas/home.xsd</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/lenya</path>
+</paths>
+<msg>Xopus added to OSCOM
+</msg>
+</logentry>
+<logentry
+   revision="38026">
+<author>margritcms</author>
+<date>2002-05-17T14:33:09.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+</paths>
+<msg>Modularisation
+</msg>
+</logentry>
+<logentry
+   revision="38025">
+<author>margritcms</author>
+<date>2002-05-16T15:43:29.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0465/index.xml</path>
+</paths>
+<msg>Front Modularisation
+</msg>
+</logentry>
+<logentry
+   revision="38024">
+<author>michicms</author>
+<date>2002-05-16T12:29:43.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/index.html</path>
+</paths>
+<msg>Link to design templates added
+</msg>
+</logentry>
+<logentry
+   revision="38023">
+<author>margritcms</author>
+<date>2002-05-16T12:20:56.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/recht/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/recht/articles/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/wirtschaft/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/campus/uni-news/2002/0489/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/wirtschaft/articles/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/umwelt/2002/0385/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/campus/uni-news/articles/2002/0489/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/umwelt/articles/2002/0385/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+</paths>
+<msg>Frontpage ajusted
+</msg>
+</logentry>
+<logentry
+   revision="38022">
+<author>margritcms</author>
+<date>2002-05-16T12:19:38.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/geist</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/campus/uni-news/2002/0489</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/campus/uni-news/2002/0489/bild-headline.jpg</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/geist/2002</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/gesundheit/2002/0508/bild-headline.jpg</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/recht/2002/0413</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/recht/2002/0413/bild-headline.jpg</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/gesundheit/2002/0465</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/umwelt/2002/0385/bild-headline.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/gesundheit/2002/0465/bild-headline.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/recht</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/geist/2002/0470</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/geist/2002/0470/bild-headline.jpg</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/magazin/recht/2002</path>
+</paths>
+<msg>new images
+</msg>
+</logentry>
+<logentry
+   revision="38021">
+<author>edithcms</author>
+<date>2002-05-16T12:04:39.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>Navigation for the overview
+</msg>
+</logentry>
+<logentry
+   revision="38020">
+<author>edithcms</author>
+<date>2002-05-16T12:03:14.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+</paths>
+<msg>generalization
+</msg>
+</logentry>
+<logentry
+   revision="38019">
+<author>edithcms</author>
+<date>2002-05-16T12:02:16.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/navigation.xml</path>
+</paths>
+<msg>Id ge�ndert um Link auf richtige Seite setzen
+</msg>
+</logentry>
+<logentry
+   revision="38018">
+<author>edithcms</author>
+<date>2002-05-16T12:00:41.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/r_portraits.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_publikationen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_recht.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_uni-news.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/t_campus.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/c_lorbeeren.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_geist.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/r_gesundheit.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_lorbeeren.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_umwelt.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/r_berufungen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/r_publikationen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/r_uni-news.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/c_portraits.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_portraits.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/r_lorbeeren.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/c_berufungen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_gesundheit.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/nav_berufungen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/c_publikationen.gif</path>
+</paths>
+<msg>Bilder wurden umbenonnen
+</msg>
+</logentry>
+<logentry
+   revision="38017">
+<author>michicms</author>
+<date>2002-05-15T23:32:11.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/content/menus/live.xsp</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/content</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/content/menus</path>
+</paths>
+<msg>menu live area
+</msg>
+</logentry>
+<logentry
+   revision="38016">
+<author>michicms</author>
+<date>2002-05-15T23:14:43.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/board.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/home.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/mailing-lists.xsp</path>
+</paths>
+<msg>Links to Documentation fixed
+</msg>
+</logentry>
+<logentry
+   revision="38015">
+<author>michicms</author>
+<date>2002-05-14T22:17:00.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/resources/html/index.html</path>
+</paths>
+<msg>XML Web GUI and Squishdot link added
+</msg>
+</logentry>
+<logentry
+   revision="38014">
+<author>michicms</author>
+<date>2002-05-14T15:31:44.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/home.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/mailing-lists.xsp</path>
+</paths>
+<msg>Live link fixed
+</msg>
+</logentry>
+<logentry
+   revision="38013">
+<author>margritcms</author>
+<date>2002-05-14T14:35:30.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/services.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/service.xml</path>
+</paths>
+<msg>Link for Newsletter added
+</msg>
+</logentry>
+<logentry
+   revision="38012">
+<author>margritcms</author>
+<date>2002-05-14T14:34:32.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/css/live/unipublic.mac.css</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/css/live/unipublic.css</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/css/live/unipublic.win.css</path>
+</paths>
+<msg>background color white
+</msg>
+</logentry>
+<logentry
+   revision="38011">
+<author>margritcms</author>
+<date>2002-05-14T11:32:31.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+</paths>
+<msg>files adjusted to new xml and xslt files
+</msg>
+</logentry>
+<logentry
+   revision="38010">
+<author>margritcms</author>
+<date>2002-05-14T11:30:44.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/webperls.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/services.xsl</path>
+</paths>
+<msg>new xsl files
+</msg>
+</logentry>
+<logentry
+   revision="38009">
+<author>margritcms</author>
+<date>2002-05-14T11:29:55.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/s_uni-museen.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/s_neue-produkte.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/s_weiterbildung.gif</path>
+</paths>
+<msg>renamed for consistence
+</msg>
+</logentry>
+<logentry
+   revision="38008">
+<author>margritcms</author>
+<date>2002-05-14T11:28:49.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/webperls.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/service.xml</path>
+</paths>
+<msg>new xml files
+</msg>
+</logentry>
+<logentry
+   revision="38007">
+<author>michicms</author>
+<date>2002-05-14T09:10:48.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>select section name
+</msg>
+</logentry>
+<logentry
+   revision="38006">
+<author>margritcms</author>
+<date>2002-05-13T16:24:52.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/dossier.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+</paths>
+<msg>dossier added to frontpage
+</msg>
+</logentry>
+<logentry
+   revision="38005">
+<author>michicms</author>
+<date>2002-05-13T15:46:45.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>Rubrik Navigation
+</msg>
+</logentry>
+<logentry
+   revision="38004">
+<author>michicms</author>
+<date>2002-05-13T13:18:37.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/board/authoring/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/home/authoring/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/navigation_authoring.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/mailing-lists/authoring/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/oscom.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/board.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/html.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/html_authoring.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/authoring-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/mailing-lists.xml</path>
+</paths>
+<msg>Navigation added
+</msg>
+</logentry>
+<logentry
+   revision="38003">
+<author>margritcms</author>
+<date>2002-05-13T12:27:27.000000Z</date>
+<paths>
+<path
+   action="D">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/page.xml</path>
+</paths>
+<msg>not used
+</msg>
+</logentry>
+<logentry
+   revision="38002">
+<author>margritcms</author>
+<date>2002-05-13T10:59:44.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+</paths>
+<msg>work in progres
+</msg>
+</logentry>
+<logentry
+   revision="38001">
+<author>margritcms</author>
+<date>2002-05-13T10:52:35.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/navigation.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+</paths>
+<msg>Main Navigation on Frontpage done
+</msg>
+</logentry>
+<logentry
+   revision="38000">
+<author>margritcms</author>
+<date>2002-05-13T10:51:15.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/c_uni-news.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/m_gesundheit.gif</path>
+</paths>
+<msg>renaming
+</msg>
+</logentry>
+<logentry
+   revision="37999">
+<author>michicms</author>
+<date>2002-05-12T11:08:39.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/menus/board.xsp</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/sitemap.xmap</path>
+</paths>
+<msg>login and logout
+</msg>
+</logentry>
+<logentry
+   revision="37998">
+<author>michicms</author>
+<date>2002-05-12T00:48:05.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/ac/passwd</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/policies-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/PMLAuthorizerAction.java</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/ac/policies/root.acml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/ac/policies</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/ac/passwd/lenya.iml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/ac</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/config/ac/policies/public.acml</path>
+</paths>
+<msg>Access Controller Bug
+</msg>
+</logentry>
+<logentry
+   revision="37997">
+<author>michicms</author>
+<date>2002-05-12T00:47:09.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Access Controller Bugsrc/java/org/wyona/cms/cocoon/acting/PMLAuthorizerAction.java
+</msg>
+</logentry>
+<logentry
+   revision="37996">
+<author>michicms</author>
+<date>2002-05-07T23:35:21.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xml</path>
+</paths>
+<msg>neu removed
+</msg>
+</logentry>
+<logentry
+   revision="37995">
+<author>margritcms</author>
+<date>2002-05-07T11:33:57.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/recht/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/recht/articles/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/xmlArchitecture.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/wirtschaft/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/wirtschaft/articles/2002/0413/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/campus/uni-news/2002/0489/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/umwelt/2002/0385/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/campus/uni-news/articles/2002/0489/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/umwelt/articles/2002/0385/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+</paths>
+<msg>modularisation
+</msg>
+</logentry>
+<logentry
+   revision="37994">
+<author>margritcms</author>
+<date>2002-05-07T11:31:30.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/images/live/img_unipublic/t_uni-news.gif</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/variables.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/page.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/navigation.xsl</path>
+</paths>
+<msg>new files
+</msg>
+</logentry>
+<logentry
+   revision="37993">
+<author>michicms</author>
+<date>2002-05-06T20:14:18.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/registration_fees.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/overview/live</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/overview</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/overview/body.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/contact.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/contact.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/glossary.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/overview.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/index.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/registration_fees.xhtml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/overview/live/main.xsl</path>
+</paths>
+<msg>Glossary, Overview, San Francisco
+</msg>
+</logentry>
+<logentry
+   revision="37992">
+<author>michicms</author>
+<date>2002-05-05T21:44:06.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/index.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xml</path>
+</paths>
+<msg>xml and xhtml
+</msg>
+</logentry>
+<logentry
+   revision="37991">
+<author>michicms</author>
+<date>2002-05-05T21:26:32.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/navigation.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/board.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/root.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/html.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/mailing-lists.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/navigation.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/authoring/navigation.xml</path>
+</paths>
+<msg>navigation and sanfrancisco
+</msg>
+</logentry>
+<logentry
+   revision="37990">
+<author>michicms</author>
+<date>2002-05-04T20:41:50.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/INSTALL-SRC.txt</path>
+<path
+   action="M">/incubator/lenya/trunk/INSTALL-BIN.txt</path>
+</paths>
+<msg>cocoon.xconf moved into WEB-INF
+</msg>
+</logentry>
+<logentry
+   revision="37989">
+<author>michicms</author>
+<date>2002-05-03T22:35:14.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/root.xsl</path>
+</paths>
+<msg>temporary context_prefix set
+</msg>
+</logentry>
+<logentry
+   revision="37988">
+<author>margritcms</author>
+<date>2002-05-02T08:30:33.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/articles/2002/0470/index.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/HTMLhead.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/2002/0470/index.xml</path>
+</paths>
+<msg>Xslt Modularisation
+</msg>
+</logentry>
+<logentry
+   revision="37987">
+<author>margritcms</author>
+<date>2002-05-02T06:59:44.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0508/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesundheit/articles/2002/0465/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/gesellschaft/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/xinclude.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/campus/uni-news/2002/0489/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/magazin/geist/articles/2002/0470/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/frontpage/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/article/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/content/live/campus/uni-news/articles/2002/0489/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/front/live/main.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/resources/html/documentation/article.html</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/unipublic/xslt/section/xinclude.xsl</path>
+</paths>
+<msg>Frontpage xml and xslt
+</msg>
+</logentry>
+<logentry
+   revision="37986">
+<author>michicms</author>
+<date>2002-05-02T00:43:05.000000Z</date>
+<paths>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/glossary.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/index.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/live-sitemap.xmap</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/mailing-lists.xml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/home/body.xsl</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/mailing-lists/body.xsl</path>
+</paths>
+<msg>oscom updated
+</msg>
+</logentry>
+<logentry
+   revision="37985">
+<author>michicms</author>
+<date>2002-05-01T07:30:01.000000Z</date>
+<paths>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/live/main.xsl</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xhtml</path>
+<path
+   action="M">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/live-sitemap.xmap</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/live</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/content/live/conferences/sanfrancisco2002/cfp.xml</path>
+<path
+   action="A">/incubator/lenya/trunk/src/webapp/lenya/pubs/oscom/xslt/generic/body.xsl</path>
+</paths>
+<msg>Generic XHTML and CfP
+</msg>
+</logentry>
+
+</log>

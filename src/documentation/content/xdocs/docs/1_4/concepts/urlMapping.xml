@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Mapping URLs to documents.</title>
+  </header>
+  <body>
+    <section>
+      <title>Current URLs axioms</title>
+      <p>Currently, Lenya is based on the following axioms:</p>
+      <ul>
+        <li>A URL is represented by exactly one document.</li>
+        <li>A document can be represented by an arbitrary number of URLs.</li>
+        <li>For each document, there is exactly one canonical URL.</li>
+      </ul>
+      <p> This is reflected in the following methods: </p>
+      <source> DocumentBuilder.buildDocument(...) 
+ DocumentBuilder.buildCanonicalUrl(...)</source>
+      <p> At the moment, the concept of multiple URLs per document is typically 
+        used for language versions (foo_{defaultlanguage}.html = foo.html) and 
+        to support different URL suffixes (foo, foo.htm, foo.html). </p>
+      <p> The site structure is currently tightly connected to the URL space. 
+        Link URLs are derived directly from the site structure:</p>
+      <source> <![CDATA[<node id="foo">
+    <node id="bar"/>
+ </node>]]> </source>
+      <p>is interpreted as <code>/foo/bar</code> </p>
+      <p>The language version is handled orthogonally to the site structure. 
+        The URL is determined by combining both document ID and language.</p>
+    </section>
+  </body>
+</document>

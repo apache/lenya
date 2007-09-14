@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<log>
+<logentry
+   revision="103457">
+<author>gregor</author>
+<date>2004-11-19T03:57:54.572596Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/acknowledgements.xml</path>
+</paths>
+<msg>some contributors were in bold type, making them pmc members according to the notes :)</msg>
+</logentry>
+<logentry
+   revision="87688">
+<author>antonio</author>
+<date>2004-11-18T23:57:54.726137Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Add more links to site.xml</msg>
+</logentry>
+</log>

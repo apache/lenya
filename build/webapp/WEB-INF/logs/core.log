@@ -1,0 +1,524 @@
+WARN    (2007-02-22) 13:54.31:030   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: ComponentLocator exception from parent SM during lookup.
+org.apache.avalon.framework.service.ServiceException: Component for key 'org.apache.excalibur.source.SourceResolver' not found. (Key='Cocoon')
+	at org.apache.cocoon.core.container.SingleComponentServiceManager.lookup(SingleComponentServiceManager.java:68)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.transformation.helpers.DefaultIncludeCacheManager.service(DefaultIncludeCacheManager.java:384)
+	at org.apache.avalon.framework.container.ContainerUtil.service(ContainerUtil.java:143)
+	at org.apache.cocoon.core.container.ComponentFactory.setupInstance(ComponentFactory.java:150)
+	at org.apache.cocoon.core.container.ComponentFactory.newInstance(ComponentFactory.java:133)
+	at org.apache.cocoon.core.container.handler.ThreadSafeComponentHandler.doInitialize(ThreadSafeComponentHandler.java:54)
+	at org.apache.cocoon.core.container.handler.AbstractComponentHandler.initialize(AbstractComponentHandler.java:274)
+	at org.apache.cocoon.core.container.CoreServiceManager.initialize(CoreServiceManager.java:243)
+	at org.apache.cocoon.components.container.CocoonServiceManager.initialize(CocoonServiceManager.java:81)
+	at org.apache.avalon.framework.container.ContainerUtil.initialize(ContainerUtil.java:244)
+	at org.apache.cocoon.Cocoon.initialize(Cocoon.java:257)
+	at org.apache.avalon.framework.container.ContainerUtil.initialize(ContainerUtil.java:244)
+	at org.apache.cocoon.core.CoreUtil.createProcessor(CoreUtil.java:758)
+	at org.apache.cocoon.servlet.CocoonServlet.init(CocoonServlet.java:223)
+	at org.mortbay.jetty.servlet.ServletHolder.start(ServletHolder.java:220)
+	at org.mortbay.jetty.servlet.ServletHandler.initializeServlets(ServletHandler.java:445)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.initializeServlets(WebApplicationHandler.java:150)
+	at org.mortbay.jetty.servlet.WebApplicationContext.start(WebApplicationContext.java:458)
+	at org.mortbay.http.HttpServer.start(HttpServer.java:663)
+	at org.mortbay.jetty.Server.main(Server.java:429)
+WARN    (2007-02-22) 13:54.31:916   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: ComponentLocator exception from parent SM during lookup.
+org.apache.avalon.framework.service.ServiceException: Component for key 'org.apache.cocoon.components.fam.SitemapMonitor' not found. (Key='Cocoon')
+	at org.apache.cocoon.core.container.SingleComponentServiceManager.lookup(SingleComponentServiceManager.java:68)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.service(TreeProcessor.java:198)
+	at org.apache.avalon.framework.container.ContainerUtil.service(ContainerUtil.java:143)
+	at org.apache.cocoon.core.container.ComponentFactory.setupInstance(ComponentFactory.java:150)
+	at org.apache.cocoon.core.container.ComponentFactory.newInstance(ComponentFactory.java:133)
+	at org.apache.cocoon.core.container.handler.ThreadSafeComponentHandler.doInitialize(ThreadSafeComponentHandler.java:54)
+	at org.apache.cocoon.core.container.handler.AbstractComponentHandler.initialize(AbstractComponentHandler.java:274)
+	at org.apache.cocoon.core.container.CoreServiceManager.initialize(CoreServiceManager.java:243)
+	at org.apache.cocoon.components.container.CocoonServiceManager.initialize(CocoonServiceManager.java:81)
+	at org.apache.avalon.framework.container.ContainerUtil.initialize(ContainerUtil.java:244)
+	at org.apache.cocoon.Cocoon.initialize(Cocoon.java:257)
+	at org.apache.avalon.framework.container.ContainerUtil.initialize(ContainerUtil.java:244)
+	at org.apache.cocoon.core.CoreUtil.createProcessor(CoreUtil.java:758)
+	at org.apache.cocoon.servlet.CocoonServlet.init(CocoonServlet.java:223)
+	at org.mortbay.jetty.servlet.ServletHolder.start(ServletHolder.java:220)
+	at org.mortbay.jetty.servlet.ServletHandler.initializeServlets(ServletHandler.java:445)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.initializeServlets(WebApplicationHandler.java:150)
+	at org.mortbay.jetty.servlet.WebApplicationContext.start(WebApplicationContext.java:458)
+	at org.mortbay.http.HttpServer.start(HttpServer.java:663)
+	at org.mortbay.jetty.Server.main(Server.java:429)
+WARN    (2007-02-22) 13:54.32:880   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: ComponentLocator exception from parent SM during lookup.
+org.apache.avalon.framework.service.ServiceException: Component for key 'org.apache.cocoon.components.language.generator.ServerPagesSelector' not found. (Key='Cocoon')
+	at org.apache.cocoon.core.container.SingleComponentServiceManager.lookup(SingleComponentServiceManager.java:68)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.components.language.generator.ProgramGeneratorImpl.service(ProgramGeneratorImpl.java:133)
+	at org.apache.avalon.framework.container.ContainerUtil.service(ContainerUtil.java:143)
+	at org.apache.cocoon.core.container.ComponentFactory.setupInstance(ComponentFactory.java:150)
+	at org.apache.cocoon.core.container.ComponentFactory.newInstance(ComponentFactory.java:133)
+	at org.apache.cocoon.core.container.handler.ThreadSafeComponentHandler.doInitialize(ThreadSafeComponentHandler.java:54)
+	at org.apache.cocoon.core.container.handler.AbstractComponentHandler.initialize(AbstractComponentHandler.java:274)
+	at org.apache.cocoon.core.container.CoreServiceManager.initialize(CoreServiceManager.java:243)
+	at org.apache.cocoon.components.container.CocoonServiceManager.initialize(CocoonServiceManager.java:81)
+	at org.apache.avalon.framework.container.ContainerUtil.initialize(ContainerUtil.java:244)
+	at org.apache.cocoon.Cocoon.initialize(Cocoon.java:257)
+	at org.apache.avalon.framework.container.ContainerUtil.initialize(ContainerUtil.java:244)
+	at org.apache.cocoon.core.CoreUtil.createProcessor(CoreUtil.java:758)
+	at org.apache.cocoon.servlet.CocoonServlet.init(CocoonServlet.java:223)
+	at org.mortbay.jetty.servlet.ServletHolder.start(ServletHolder.java:220)
+	at org.mortbay.jetty.servlet.ServletHandler.initializeServlets(ServletHandler.java:445)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.initializeServlets(WebApplicationHandler.java:150)
+	at org.mortbay.jetty.servlet.WebApplicationContext.start(WebApplicationContext.java:458)
+	at org.mortbay.http.HttpServer.start(HttpServer.java:663)
+	at org.mortbay.jetty.Server.main(Server.java:429)
+WARN    (2007-02-22) 13:59.28:549   [core.manager] (/docs/1_2_x/components/accesscontrol/shibboleth.html) PoolThread-4/CoreServiceManager: ComponentLocator exception from parent SM during lookup.
+org.apache.avalon.framework.service.ServiceException: Component for key 'org.apache.cocoon.components.treeprocessor.TreeBuilder/sitemap-1.0' not found. (Key='Cocoon')
+	at org.apache.cocoon.core.container.SingleComponentServiceManager.lookup(SingleComponentServiceManager.java:68)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.getTreeBuilder(TreeProcessor.java:375)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.buildConcreteProcessor(TreeProcessor.java:720)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.setupConcreteProcessor(TreeProcessor.java:394)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.process(TreeProcessor.java:288)
+	at org.apache.cocoon.Cocoon.process(Cocoon.java:557)
+	at org.apache.cocoon.servlet.CocoonServlet.service(CocoonServlet.java:364)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:853)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:354)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:294)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:567)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1808)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:525)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1758)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:879)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:790)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:952)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:807)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:197)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:289)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:501)
+WARN    (2007-02-22) 13:59.29:841   [core.manager] (/docs/1_2_x/components/accesscontrol/shibboleth.html) PoolThread-4/CoreServiceManager: ComponentLocator exception from parent SM during lookup.
+org.apache.avalon.framework.service.ServiceException: Component for key 'org.apache.cocoon.caching.Cache' not found. (Key='Cocoon')
+	at org.apache.cocoon.core.container.SingleComponentServiceManager.lookup(SingleComponentServiceManager.java:68)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.components.pipeline.impl.BaseCachingProcessingPipeline.parameterize(BaseCachingProcessingPipeline.java:61)
+	at org.apache.cocoon.components.pipeline.impl.AbstractCachingProcessingPipeline.parameterize(AbstractCachingProcessingPipeline.java:115)
+	at org.apache.avalon.framework.container.ContainerUtil.parameterize(ContainerUtil.java:228)
+	at org.apache.cocoon.core.container.ComponentFactory.setupInstance(ComponentFactory.java:157)
+	at org.apache.cocoon.core.container.ComponentFactory.newInstance(ComponentFactory.java:133)
+	at org.apache.cocoon.core.container.handler.NonThreadSafePoolableComponentHandler.getFromPool(NonThreadSafePoolableComponentHandler.java:165)
+	at org.apache.cocoon.core.container.handler.NonThreadSafePoolableComponentHandler.doGet(NonThreadSafePoolableComponentHandler.java:238)
+	at org.apache.cocoon.core.container.handler.AbstractComponentHandler.get(AbstractComponentHandler.java:181)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:427)
+	at org.apache.cocoon.core.container.DefaultServiceSelector.select(DefaultServiceSelector.java:141)
+	at org.apache.cocoon.components.treeprocessor.sitemap.ComponentsSelector.select(ComponentsSelector.java:109)
+	at org.apache.cocoon.components.treeprocessor.InvokeContext.getProcessingPipeline(InvokeContext.java:158)
+	at org.apache.cocoon.components.treeprocessor.sitemap.GenerateNode.invoke(GenerateNode.java:70)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:55)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PreparableMatchNode.invoke(PreparableMatchNode.java:116)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:55)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PreparableMatchNode.invoke(PreparableMatchNode.java:116)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:77)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PipelineNode.invoke(PipelineNode.java:155)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:77)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PipelinesNode.invoke(PipelinesNode.java:95)
+	at org.apache.cocoon.components.treeprocessor.ConcreteTreeProcessor.process(ConcreteTreeProcessor.java:292)
+	at org.apache.cocoon.components.treeprocessor.ConcreteTreeProcessor.buildPipeline(ConcreteTreeProcessor.java:239)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.buildPipeline(TreeProcessor.java:302)
+	at org.apache.cocoon.components.source.impl.SitemapSource.init(SitemapSource.java:266)
+	at org.apache.cocoon.components.source.impl.SitemapSource.<init>(SitemapSource.java:146)
+	at org.apache.cocoon.components.source.impl.SitemapSourceFactory.getSource(SitemapSourceFactory.java:65)
+	at org.apache.cocoon.components.source.CocoonSourceResolver.resolveURI(CocoonSourceResolver.java:159)
+	at org.apache.cocoon.components.source.CocoonSourceResolver.resolveURI(CocoonSourceResolver.java:189)
+	at org.apache.forrest.locationmap.LocationMapModule.getLocationMap(LocationMapModule.java:95)
+	at org.apache.forrest.locationmap.LocationMapModule.getAttribute(LocationMapModule.java:203)
+	at org.apache.cocoon.components.treeprocessor.variables.PreparedVariableResolver.processModule(PreparedVariableResolver.java:246)
+	at org.apache.cocoon.components.treeprocessor.variables.PreparedVariableResolver.resolve(PreparedVariableResolver.java:197)
+	at org.apache.cocoon.components.treeprocessor.sitemap.SelectNode.invoke(SelectNode.java:77)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:77)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PipelineNode.invoke(PipelineNode.java:155)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:77)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PipelinesNode.invoke(PipelinesNode.java:95)
+	at org.apache.cocoon.components.treeprocessor.ConcreteTreeProcessor.process(ConcreteTreeProcessor.java:292)
+	at org.apache.cocoon.components.treeprocessor.ConcreteTreeProcessor.process(ConcreteTreeProcessor.java:223)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.process(TreeProcessor.java:289)
+	at org.apache.cocoon.Cocoon.process(Cocoon.java:557)
+	at org.apache.cocoon.servlet.CocoonServlet.service(CocoonServlet.java:364)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:853)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:354)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:294)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:567)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1808)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:525)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1758)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:879)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:790)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:952)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:807)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:197)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:289)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:501)
+WARN    (2007-02-22) 13:59.31:301   [core.manager] (/docs/1_2_x/components/accesscontrol/shibboleth.html) PoolThread-4/CoreServiceManager: ComponentLocator exception from parent SM during lookup.
+org.apache.avalon.framework.service.ServiceException: Component for key 'org.apache.cocoon.generation.Generator/<aggregator>' not found. (Key='Cocoon')
+	at org.apache.cocoon.core.container.SingleComponentServiceManager.lookup(SingleComponentServiceManager.java:68)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.core.container.CoreServiceManager.lookup(CoreServiceManager.java:355)
+	at org.apache.cocoon.components.pipeline.AbstractProcessingPipeline.setGenerator(AbstractProcessingPipeline.java:211)
+	at org.apache.cocoon.components.pipeline.impl.AbstractCachingProcessingPipeline.setGenerator(AbstractCachingProcessingPipeline.java:134)
+	at org.apache.cocoon.components.treeprocessor.sitemap.AggregateNode.invoke(AggregateNode.java:89)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:55)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PreparableMatchNode.invoke(PreparableMatchNode.java:116)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:77)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PipelineNode.invoke(PipelineNode.java:155)
+	at org.apache.cocoon.components.treeprocessor.AbstractParentProcessingNode.invokeNodes(AbstractParentProcessingNode.java:77)
+	at org.apache.cocoon.components.treeprocessor.sitemap.PipelinesNode.invoke(PipelinesNode.java:95)
+	at org.apache.cocoon.components.treeprocessor.ConcreteTreeProcessor.process(ConcreteTreeProcessor.java:292)
+	at org.apache.cocoon.components.treeprocessor.ConcreteTreeProcessor.process(ConcreteTreeProcessor.java:223)
+	at org.apache.cocoon.components.treeprocessor.TreeProcessor.process(TreeProcessor.java:289)
+	at org.apache.cocoon.Cocoon.process(Cocoon.java:557)
+	at org.apache.cocoon.servlet.CocoonServlet.service(CocoonServlet.java:364)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:853)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:354)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:294)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:567)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1808)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:525)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1758)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:879)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:790)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:952)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:807)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:197)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:289)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:501)
+WARN    (2007-02-22) 13:59.46:026   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 13:59.49:871   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 13:59.49:883   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 13:59.54:282   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 13:59.54:316   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 13:59.54:594   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 13:59.54:592   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 13:59.54:869   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 13:59.54:997   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.02:639   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:02.03:358   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.03:424   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.03:591   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.03:859   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.03:974   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.04:125   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.04:805   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.04:924   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.13:136   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:02.13:500   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.13:567   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.13:740   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.14:610   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.14:642   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.14:767   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.14:797   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.14:907   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.34:436   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:02.34:800   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.35:690   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.35:825   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.36:030   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.36:156   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.36:375   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.36:436   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.36:517   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.44:891   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:02.45:203   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.45:438   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.46:322   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.46:342   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.46:543   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.46:648   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.46:706   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:02.46:859   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.06:686   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:05.07:090   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.07:274   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.07:586   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.07:626   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.07:688   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.07:800   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.08:076   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:05.08:226   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.46:443   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:08.46:945   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.47:396   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.47:425   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.47:609   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.47:685   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.47:949   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.48:040   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:08.48:201   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.40:721   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:15.41:147   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.41:529   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.41:570   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.41:829   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.41:839   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.42:006   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.42:069   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:15.42:232   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.37:539   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 14:16.37:747   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.38:029   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.38:070   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.38:369   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.38:377   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.38:616   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.38:639   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 14:16.39:232   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.30:269   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 15:44.30:853   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.30:908   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.31:199   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.31:247   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.31:907   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.31:971   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.32:253   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:44.32:463   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.51:883   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 15:49.52:261   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.52:497   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.53:523   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.53:714   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.53:749   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.53:835   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.53:873   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:49.54:003   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.39:900   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 15:57.40:324   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.40:515   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.41:421   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.41:470   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.41:543   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.41:713   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.41:800   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.41:894   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.54:608   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 15:57.54:926   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.54:989   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.55:187   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.55:201   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.55:446   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.55:612   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.55:670   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 15:57.55:879   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.03:232   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:07.03:818   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.03:833   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.04:045   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.04:133   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.04:282   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.04:396   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.04:441   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:07.04:577   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.05:792   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:10.06:221   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.06:463   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.06:610   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.06:789   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.06:846   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.07:000   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.07:015   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.07:246   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.19:642   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:10.19:956   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.20:211   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.20:332   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.20:504   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.20:582   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.20:653   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.20:724   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:10.21:942   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:12.58:727   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:12.59:284   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:12.59:401   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:12.59:741   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:12.59:869   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:12.59:972   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.00:066   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.00:104   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.00:884   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.09:135   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:13.09:442   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.09:718   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.09:828   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.11:257   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.11:323   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.11:474   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.11:519   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.11:634   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.23:450   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:13.23:915   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.23:934   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.24:869   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.24:910   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.25:016   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.25:037   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.25:118   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:13.25:188   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.19:623   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:25.20:090   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.21:062   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.21:119   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.21:465   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.21:538   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.21:812   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.21:879   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:25.22:107   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.04:941   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:34.05:295   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.05:414   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.05:702   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.05:711   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.05:883   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.06:008   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.06:182   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:34.06:331   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.45:337   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:40.45:750   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.46:004   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.46:384   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.46:510   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.46:775   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.46:777   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.47:056   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:40.47:268   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.47:929   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:46.48:250   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.48:404   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.48:729   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.48:813   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.48:972   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.49:093   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.49:821   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.49:913   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.57:130   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:46.57:352   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.57:530   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.57:659   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.58:656   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.58:753   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.58:949   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.58:969   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:46.59:121   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.56:548   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:47.56:893   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.57:829   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.57:906   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.58:002   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.58:153   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.58:205   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.58:270   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:47.58:332   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.18:470   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:48.18:694   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.18:873   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.18:880   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.19:849   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.19:923   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.20:076   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.20:160   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:48.20:237   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.38:721   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:53.39:064   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.40:090   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.40:165   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.40:344   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.40:368   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.40:583   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.40:621   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.40:763   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.47:348   [core.manager] (/skin/profile.css) PoolThread-4/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 16:53.47:551   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.47:796   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.47:830   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.47:985   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.48:141   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.48:211   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.48:361   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 16:53.48:448   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.19:791   [core.manager] (/skin/profile.css) PoolThread-3/TextSerializer: Encountered text before root element. Creating <text> wrapper element.
+WARN    (2007-02-22) 17:01.20:377   [core.manager] (/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.20:480   [core.manager] (/skin/images/rc-b-l-15-1body-2menu-3menu.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.20:604   [core.manager] (/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.20:655   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.20:811   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.20:853   [core.manager] (/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.21:009   [core.manager] (/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png) PoolThread-3/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:01.21:153   [core.manager] (/skin/images/rc-b-r-15-1body-2menu-3menu.png) PoolThread-4/SVGBuilder: setDocumentLocator was not called, will use http://localhost/ as base URI
+WARN    (2007-02-22) 17:08.20:883   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:885   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:889   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:890   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:890   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:891   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:892   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:892   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:892   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:893   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:948   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:949   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:949   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:950   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:950   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:950   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:951   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:951   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:952   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:952   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.selection.SelectorSelector]
+WARN    (2007-02-22) 17:08.20:952   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:952   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.selection.Selector/parameter]
+WARN    (2007-02-22) 17:08.20:957   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.acting.ActionSelector]
+WARN    (2007-02-22) 17:08.20:958   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.acting.Action/sourcetype]
+WARN    (2007-02-22) 17:08.20:959   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:959   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:961   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.selection.Selector/config]
+WARN    (2007-02-22) 17:08.20:962   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.20:988   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.acting.Action/locale]
+WARN    (2007-02-22) 17:08.20:988   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.acting.ActionSelector]
+WARN    (2007-02-22) 17:08.20:989   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.selection.SelectorSelector]
+ERROR   (2007-02-22) 17:08.21:201   [net.sf.ehcache.store.DiskStore] (Unknown-URI) Unknown-Thread/LogKitLogger: cocoon-ehcache-1Cache: Could not shut down disk cache. Initial cause was /private/tmp/Jetty__8888__/cache-dir/cocoon-ehcache-1.index (No such file or directory)
+java.io.FileNotFoundException: /private/tmp/Jetty__8888__/cache-dir/cocoon-ehcache-1.index (No such file or directory)
+	at java.io.FileOutputStream.open(Native Method)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:179)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:131)
+	at net.sf.ehcache.store.DiskStore.writeIndex(DiskStore.java:646)
+	at net.sf.ehcache.store.DiskStore.flush(DiskStore.java:509)
+	at net.sf.ehcache.store.DiskStore.dispose(DiskStore.java:476)
+	at net.sf.ehcache.Cache.dispose(Cache.java:943)
+	at net.sf.ehcache.Cache$1.run(Cache.java:394)
+WARN    (2007-02-22) 17:08.23:924   [core.manager] (Unknown-URI) Unknown-Thread/AbstractFactoryHandler: Error decommissioning component: org.apache.cocoon.components.store.impl.EHDefaultStore
+java.lang.IllegalStateException: The cocoon-ehcache-1 Cache is not alive.
+	at net.sf.ehcache.Cache.checkStatus(Cache.java:1062)
+	at net.sf.ehcache.Cache.dispose(Cache.java:939)
+	at net.sf.ehcache.CacheManager.shutdown(CacheManager.java:538)
+	at org.apache.cocoon.components.store.impl.EHDefaultStore.dispose(EHDefaultStore.java:281)
+	at org.apache.avalon.framework.container.ContainerUtil.dispose(ContainerUtil.java:306)
+	at org.apache.cocoon.core.container.ComponentFactory.decommission(ComponentFactory.java:184)
+	at org.apache.cocoon.core.container.handler.AbstractFactoryHandler.decommission(AbstractFactoryHandler.java:49)
+	at org.apache.cocoon.core.container.handler.ThreadSafeComponentHandler.dispose(ThreadSafeComponentHandler.java:77)
+	at org.apache.cocoon.core.container.CoreServiceManager.dispose(CoreServiceManager.java:284)
+	at org.apache.avalon.framework.container.ContainerUtil.dispose(ContainerUtil.java:306)
+	at org.apache.cocoon.Cocoon.dispose(Cocoon.java:416)
+	at org.apache.avalon.framework.container.ContainerUtil.dispose(ContainerUtil.java:306)
+	at org.apache.cocoon.core.CoreUtil.disposeProcessor(CoreUtil.java:818)
+	at org.apache.cocoon.core.CoreUtil.destroy(CoreUtil.java:920)
+	at org.apache.cocoon.servlet.CocoonServlet.destroy(CocoonServlet.java:241)
+	at org.mortbay.jetty.servlet.ServletHolder.stop(ServletHolder.java:244)
+	at org.mortbay.jetty.servlet.ServletHandler.stop(ServletHandler.java:470)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.stop(WebApplicationHandler.java:163)
+	at org.mortbay.http.HttpContext.stop(HttpContext.java:1979)
+	at org.mortbay.jetty.servlet.ServletHttpContext.stop(ServletHttpContext.java:145)
+	at org.mortbay.jetty.servlet.WebApplicationContext.stop(WebApplicationContext.java:504)
+	at org.mortbay.http.HttpContext.stop(HttpContext.java:1950)
+	at org.mortbay.http.HttpServer.stop(HttpServer.java:732)
+	at org.mortbay.http.HttpServer.stop(HttpServer.java:700)
+	at org.mortbay.jetty.Server$1.run(Server.java:455)
+WARN    (2007-02-22) 17:08.23:933   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.treeprocessor.ProcessorComponentInfo]
+WARN    (2007-02-22) 17:08.23:935   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.excalibur.source.SourceResolver]
+WARN    (2007-02-22) 17:08.23:935   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.classloader.ClassLoaderManager]
+WARN    (2007-02-22) 17:08.23:935   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.excalibur.xml.xpath.XPathProcessor]
+WARN    (2007-02-22) 17:08.23:936   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.excalibur.xml.sax.SAXParser]
+WARN    (2007-02-22) 17:08.23:936   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.excalibur.xml.EntityResolver]
+WARN    (2007-02-22) 17:08.23:937   [core.manager] (Unknown-URI) Unknown-Thread/CoreServiceManager: disposing of handler for unreleased component. role [org.apache.cocoon.components.modules.input.InputModuleSelector]

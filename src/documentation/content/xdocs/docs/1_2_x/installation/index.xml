@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 47563 2004-09-30 07:19:08Z michi $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document> 
+
+<header> 
+    <title>Downloading and Installing Apache Lenya 1.2.x</title>
+     
+     
+</header> 
+<body> 
+
+<section>
+<title>Download Apache Lenya 1.2.x</title>
+    <p>Current stable version of Apache Lenya is 1.2.4. This is the recommended version for production. You will at least need the Java 2 Platform, Standard Edition, version 1.4.2. Please follow the <a href="site:install">installation instructions</a>.</p>
+<ul>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.exe">Windows binary</a> (Windows Installer) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.exe.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.exe.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.zip">Windows binary</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.zip.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.zip">Windows source code</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.zip.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.tar.gz">Unix binary</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.tar.gz.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.tar.gz">Unix source code</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.tar.gz.md5">MD5 Checksum</a></li>
+    </ul>
+<p> 
+	While the available Windows installer is great to set up Apache Lenya quickly on Windows, some tasks such as <a href="site:deploypub">deploying your own publication</a> require you to use the source version at this time. 
+	All binary distributions come with a signed MD5 checksum to verify the file integrity.
+	You may want to download a <a href="http://www.pc-tools.net/win32/md5sums/">MD5 check program for windows</a> 
+	(this program has been recommended by the author of PuTTY). 
+    The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more information on ASC Signatures and MD5 checksums</a>.
+</p>
+<p>
+	<strong>Download with Subversion</strong><br />
+    We use <a href="ext:subversion">Subversion</a> (SVN for short) as our version control system. The following instructions explain <a href="subversion.html">how to get Apache Lenya via Subversion</a>. This is useful to get bug fixes for the stable 1.2-series, which is in maintanance mode, before they make it into the next release of that series.
+</p>
+<p>
+	<strong>Download nightly snapshots</strong><br />
+    These are automated <a href="ext:nightly.builds">nightly snapshots</a> (tar.gz archives) of the SVN repository.
+</p>
+</section>
+
+<section>
+<title>Install Apache Lenya 1.2.x</title>
+<p>    
+   Please follow our <a href="source_version.html">installation instructions</a> for the source version. Instructions on how to install the binary version are contained in the distribution packages.
+</p>
+</section>
+</body>
+</document>
