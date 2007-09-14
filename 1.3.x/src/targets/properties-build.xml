@@ -35,14 +35,14 @@
   <property file="build.properties"/>
 
   <condition property="local.properties.in.sync">
-    <equals arg1="${build.properties.version}" arg2="157864"/>
+    <equals arg1="${build.properties.version}" arg2="157866"/>
   </condition>
 
   <fail unless="local.properties.in.sync" message="It seems that your local.build.properties is NOT in sync with build.properties! The file build.properties has probably been modified by some Apache Lenya developer. Re-copy build.properties to local.build.properties and re-set your local properties to get the two files back in sync. Please apologoize the inconvenience."/>
 
 
   <!-- Project version and name -->
-  <property name="version" value="1.2.5-dev"/>
+  <property name="version" value="1.3.0-dev"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
   <property name="distname" value="apache-${ant.project.name}-${version}"/>
 

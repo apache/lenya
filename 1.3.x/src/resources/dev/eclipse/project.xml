@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Lenya 1.2</name>
+	<name>Lenya 1.3.0</name>
 	<comment></comment>
 	<projects>
-		<project>cocoon-2.1.7</project>
+		<project>cocoon-2.1.10</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
