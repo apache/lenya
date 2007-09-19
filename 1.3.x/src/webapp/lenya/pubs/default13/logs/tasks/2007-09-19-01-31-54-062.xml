@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="log.xsl"?>
+
+<build time="0 seconds">
+	<message priority="debug"><![CDATA[Detected Java version: 1.4 in: E:\j2sdk1.4.2_15\jre]]></message>
+	<message priority="debug"><![CDATA[Detected OS: Windows 2003]]></message>
+	<message priority="debug"><![CDATA[Adding reference: ant.ComponentHelper]]></message>
+	<message priority="debug"><![CDATA[Project base dir set to: F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default]]></message>
+	<message priority="debug"><![CDATA[Adding reference: ant.parsing.context]]></message>
+	<message priority="debug"><![CDATA[Adding reference: ant.targets]]></message>
+	<message priority="debug"><![CDATA[parsing buildfile F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml with URI = file:///F:/eclipse/workspace/Lenya13/build/lenya/webapp/lenya/pubs/default/config/tasks/targets.xml]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: ant.project.name -> Ant Test Project]]></message>
+	<message priority="debug"><![CDATA[Adding reference: Ant Test Project]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: ant.file.Ant Test Project -> F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml]]></message>
+	<message priority="debug"><![CDATA[Project base dir set to: F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default]]></message>
+	<message priority="debug"><![CDATA[ +Target: ]]></message>
+	<message priority="debug"><![CDATA[ +Target: test]]></message>
+	<message priority="debug"><![CDATA[ +Target: notification]]></message>
+	<message priority="debug"><![CDATA[ +Target: create]]></message>
+	<message priority="debug"><![CDATA[ +Target: create-language]]></message>
+	<message priority="debug"><![CDATA[ +Target: remove-language]]></message>
+	<message priority="debug"><![CDATA[ +Target: save-meta-data]]></message>
+	<message priority="debug"><![CDATA[ +Target: remove-asset]]></message>
+	<message priority="debug"><![CDATA[ +Target: insert-asset]]></message>
+	<message priority="debug"><![CDATA[ +Target: newcopydocumentid]]></message>
+	<message priority="debug"><![CDATA[ +Target: newnamedocumentid]]></message>
+	<message priority="debug"><![CDATA[ +Target: newarchivedocumentid]]></message>
+	<message priority="debug"><![CDATA[ +Target: firstdocumentpath]]></message>
+	<message priority="debug"><![CDATA[ +Target: secdocumentpath]]></message>
+	<message priority="debug"><![CDATA[ +Target: livedocumentpath]]></message>
+	<message priority="debug"><![CDATA[ +Target: copyDocument]]></message>
+	<message priority="debug"><![CDATA[ +Target: firstareaproperties]]></message>
+	<message priority="debug"><![CDATA[ +Target: secareaproperties]]></message>
+	<message priority="debug"><![CDATA[ +Target: move]]></message>
+	<message priority="debug"><![CDATA[ +Target: rewrite-links]]></message>
+	<message priority="debug"><![CDATA[ +Target: rename-label]]></message>
+	<message priority="debug"><![CDATA[ +Target: change-visibility]]></message>
+	<message priority="debug"><![CDATA[ +Target: moveDocument]]></message>
+	<message priority="debug"><![CDATA[ +Target: renameDocument]]></message>
+	<message priority="debug"><![CDATA[ +Target: setIdentifier]]></message>
+	<message priority="debug"><![CDATA[ +Target: archiveDocument]]></message>
+	<message priority="debug"><![CDATA[ +Target: deleteDocument]]></message>
+	<message priority="debug"><![CDATA[ +Target: restoreDocument]]></message>
+	<message priority="debug"><![CDATA[ +Target: deleteTrash]]></message>
+	<message priority="debug"><![CDATA[ +Target: movenode]]></message>
+	<message priority="debug"><![CDATA[ +Target: deletecache]]></message>
+	<message priority="debug"><![CDATA[Setting project property: text -> Hello World!]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:22: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: pub.dir -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:24: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: pub.id -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:25: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: sitetree -> sitetree.xml]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:26: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: authoring.area -> authoring]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:27: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: authoring.dir -> content/authoring]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:28: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: authoring.resource.dir -> resources/authoring]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:29: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: live.dir -> content/live]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:30: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: live.resource.dir -> resources/live]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:31: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: live.area -> live]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:32: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: archive.dir -> content/archive]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:33: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: archive.area -> archive]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:34: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: archive.resource.dir -> resources/archive]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:35: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: trash.dir -> content/trash]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:36: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: trash.area -> trash]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:37: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: trash.resource.dir -> resources/trash]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:38: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: rcml.dir -> content/rcml]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:39: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: rcbak.dir -> content/rcbak]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:40: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: policies.dir -> config/ac/policies]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:41: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: wf.history.trash.dir -> content/workflow/history/trash]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:44: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: replication.dir -> content/replication/pending]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:47: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: export.server-port -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:48: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: export.context-path -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:49: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: export.dir -> work/export/pending]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:50: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: export.expression -> /lenya/default/live/]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:51: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: export.replacement -> /]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:52: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: export.uris -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:53: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: servlet.context -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:55: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: node.firstdocumentid -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:58: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: node.secdocumentid -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:59: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: node.newdocumentid -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:60: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: file.firstdocumentdir -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:61: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: file.secdocumentdir -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:62: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: firstarea -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:63: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: secarea -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:64: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: copy.userid -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:65: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: copy.ipaddress -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:66: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: node.refdocumentid -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:67: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: firstarea.dir -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:70: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: secarea.dir -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:71: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting project property: secarea.resource.dir -> ]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:72: " name="property" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.CopyResourcesTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype copyresources org.apache.lenya.cms.ant.CopyResourcesTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:74: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.DocumentIdToFile loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype mapdocumentidtofile org.apache.lenya.cms.ant.DocumentIdToFile]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:76: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.InitWorkflowHistoryTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype init-history org.apache.lenya.cms.ant.InitWorkflowHistoryTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:106: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.ComputeCopyDocumentId loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype computesecdocumentid org.apache.lenya.cms.ant.ComputeCopyDocumentId]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:392: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.ComputeArchiveDocumentId loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype computearchivedocumentid org.apache.lenya.cms.ant.ComputeArchiveDocumentId]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:412: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.DocumentIdToPath loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype mapdocumentidtopath org.apache.lenya.cms.ant.DocumentIdToPath]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:423: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.CopyContentTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype copycontent org.apache.lenya.cms.ant.CopyContentTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:449: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.InitCopyWorkflowTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype copyworkflow org.apache.lenya.cms.ant.InitCopyWorkflowTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:450: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.InitRCTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype initrc org.apache.lenya.cms.ant.InitRCTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:451: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.SetAreaProperties loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype setareaproperties org.apache.lenya.cms.ant.SetAreaProperties]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:501: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.MoveNode loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype movenode org.apache.lenya.cms.ant.MoveNode]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:516: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.MoveWorkflowTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype moveworkflow org.apache.lenya.cms.ant.MoveWorkflowTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:517: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.CopyPoliciesTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype copypolicies org.apache.lenya.cms.ant.CopyPoliciesTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:518: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.DeleteSchedulerEntryTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype deleteschedulerentry org.apache.lenya.cms.ant.DeleteSchedulerEntryTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:519: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.DeleteContentTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype deletecontent org.apache.lenya.cms.ant.DeleteContentTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:520: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.DeleteResourcesTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype deleteresources org.apache.lenya.cms.ant.DeleteResourcesTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:521: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.DeletePoliciesTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype deletepolicies org.apache.lenya.cms.ant.DeletePoliciesTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:522: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.DeleteRCTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype deleterc org.apache.lenya.cms.ant.DeleteRCTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:523: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.RenameLabelTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype renameLabel org.apache.lenya.cms.ant.RenameLabelTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:629: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Class org.apache.lenya.cms.ant.ChangeVisibilityTask loaded from parent loader (parentFirst)]]></message>
+	<message priority="debug"><![CDATA[ +Datatype changeVisibility org.apache.lenya.cms.ant.ChangeVisibilityTask]]></message>
+	<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:646: " name="taskdef" time="0 seconds"></task>
+	<message priority="debug"><![CDATA[Setting ro project property: pub.dir -> F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: pub.id -> default]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: servlet.context -> F:\eclipse\workspace\Lenya13\build\lenya\webapp]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: context.prefix -> ]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: export.context-path -> ]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: publish.sources -> tutorial/index_en.xml]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: export.uris -> /default/live/tutorial.html]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: files2index -> ]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: export.server-port -> 8888]]></message>
+	<message priority="debug"><![CDATA[Setting ro project property: cachedir -> work/cache]]></message>
+	<message priority="debug"><![CDATA[Build sequence for target(s) `deletecache' is [deletecache]]]></message>
+	<message priority="debug"><![CDATA[Complete build sequence is [deletecache, notification, create-language, firstareaproperties, secareaproperties, newarchivedocumentid, firstdocumentpath, secdocumentpath, setIdentifier, move, archiveDocument, newnamedocumentid, rewrite-links, renameDocument, rename-label, livedocumentpath, movenode, newcopydocumentid, create, remove-asset, deleteTrash, change-visibility, restoreDocument, deleteDocument, test, insert-asset, save-meta-data, remove-language, moveDocument, , copyDocument]]]></message>
+	<target name="deletecache" time="0 seconds">
+		<task location="F:\eclipse\workspace\Lenya13\build\lenya\webapp\lenya\pubs\default\config\tasks\targets.xml:735: " name="delete" time="0 seconds"></task>
+	</target>
+</build>

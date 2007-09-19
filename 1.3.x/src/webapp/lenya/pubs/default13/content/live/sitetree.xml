@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site xmlns="http://apache.org/cocoon/lenya/sitetree/1.0" xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" i18n:attr="label" label="Live" xsi:schemaLocation="http://apache.org/cocoon/lenya/sitetree/1.0      ../../../../resources/entities/sitetree.xsd">
+    
+  <node id="index">
+    <label xml:lang="en">Home</label>
+  </node>
+  
+<node id="tutorial" visibleinnav="true">
+<label xml:lang="en">Tutorial</label>
+<node id="new_doctype" visibleinnav="true">
+<label xml:lang="en">Create new doctype</label>
+</node>
+</node>
+<node id="concepts" visibleinnav="true">
+<label xml:lang="en">Concepts (english only)</label>
+</node>
+<node id="features" visibleinnav="true">
+<label xml:lang="en">Features</label>
+</node>
+<node id="doctypes" visibleinnav="true">
+<label xml:lang="en">Document Type Examples</label>
+<node id="xhtml-document" visibleinnav="true">
+<label xml:lang="en">XHTML Doctype</label>
+</node>
+</node>
+</site>

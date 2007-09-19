@@ -137,6 +137,8 @@
           src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer"/>
     <map:transformer name="resource" logger="sitemap.transformer.resource"
           src="org.apache.lenya.cms.content.ResourceTransformer"/>
+    <map:transformer name="virtual" logger="sitemap.transformer.virtual"
+          src="org.apache.lenya.cms.cocoon.transformation.VirtualTransformer"/>
 <!-- Lenya 1.3 END -->
 
   </map:transformers>

@@ -1,0 +1,9 @@
+# 127.0.0.1
+
+User-agent: *
+Disallow: /there_seems_to_be_a_bug_within_websphinx_Robot_Exclusion.html
+#Disallow:
+
+User-agent: lenya
+Disallow: /foo/bar.html
+#Disallow: /foo/bar/

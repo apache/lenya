@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XPSRevisionControl xmlns="">
+<CheckIn>
+<Identity>alice</Identity>
+<Time>1190179913968</Time>
+</CheckIn>
+<CheckOut>
+<Identity>alice</Identity>
+<Time>1190179913921</Time>
+</CheckOut>
+<CheckIn>
+<Identity>System</Identity>
+<Time>1189740862984</Time>
+</CheckIn>
+</XPSRevisionControl>

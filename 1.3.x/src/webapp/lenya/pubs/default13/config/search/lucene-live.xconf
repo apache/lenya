@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<lucene>
+<update-index type="new"/>
+<index-dir src="../../work/search/lucene/index/live/index"/>
+<htdocs-dump-dir src="../../content/live"/>
+<indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
+<configuration src="lenyadocs.xconf"/>
+<extensions src="xml"/>
+</indexer>
+</lucene> 

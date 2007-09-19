@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index language="en" name="edit" xmlns="">
+<resource doctype="homepage" fullid="/index" id="index" title="Home" type="xml" unid="0005"/>
+<resource doctype="xhtml" fullid="/tutorial" id="tutorial" title="Tutorial" type="xml" unid="0006">
+<resource doctype="xhtml" fullid="/tutorial/new_doctype" id="new_doctype" title="Create new doctype" type="xml" unid="0007"/>
+</resource>
+<resource doctype="xhtml" fullid="/concepts" id="concepts" title="Concepts (english only)" type="xml" unid="0001"/>
+<resource doctype="xhtml" fullid="/features" id="features" title="Features" type="xml" unid="0004"/>
+<resource doctype="xhtml" fullid="/doctypes" id="doctypes" title="Document Type Examples" type="xml" unid="0002">
+<resource doctype="xhtml" fullid="/doctypes/xhtml-document" id="xhtml-document" title="XHTML Doctype" type="xml" unid="0003"/>
+</resource>
+</index>

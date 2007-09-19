@@ -1,6 +1,6 @@
 How to Upgrade to Lenya 1.3
 
-You must have a Lenya1.2 Publication.  Lenya1.3 knows nothing about Lenya1.4.  Until Lenya1.3 can edit documents in the flat datastore, you must use Lenya1.2's edit capabilities with Lenya1.2's hierarchical content.
+You must have a Lenya1.2 Publication.  Lenya1.3 knows nothing about Lenya1.4/2.0.  Until Lenya1.3 can edit documents in the flat datastore, you must use Lenya1.2's edit capabilities with Lenya1.2's hierarchical content.
 
 First, install Lenya1.3.  Follow the instructions from the Release Notes for Lenya1.2, except download the code from Lenya1.3's SVN.
 
@@ -21,7 +21,7 @@ FILE: {pub}/config/publication.xconf
 ADD the following line:
 <content type="flat">content</content>
 If you move the content directory, change the value.
-
+Lenya must be restarted for this setting to be effective.
 
 If using flat content and the "nav" Module is included, the "navigation" Module will pass control to the "nav" Module.  The "nav" Module expects PageModules (Modules that return HTML) to prefix navigation elements with the publication and module names.  Add the following lines to "page2xhtml.xsl" and similar files:
 
@@ -35,7 +35,7 @@ NEAR THE BOTTOM:
 <xsl:otherwise><xsl:copy/></xsl:otherwise>
 </xsl:choose></xsl:template>
 
-AND in the XMAP "module.xmap", add the contenttype parameter to the map:transform:
+AND in the XMAP "module.xmap" of any new modules, add the contenttype parameter to the map:transform:
 <map:transform src="module:///page2xhtml.xsl">
    <map:parameter name="contenttype" value="{publication:contenttype}"/>
    <!-- other parameters, including "root" -->

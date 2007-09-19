@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index language="de" name="editmenu" xmlns="">
+<resource doctype="xhtml" fullid="/tutorial" id="tutorial" title="Tutorial" type="xml" unid="0006"/>
+<resource doctype="xhtml" fullid="/features" id="features" title="Funktionen" type="xml" unid="0004"/>
+<resource doctype="xhtml" fullid="/doctypes" id="doctypes" title="Dokumenttyp Beispiele" type="xml" unid="0002">
+<resource doctype="xhtml" fullid="/doctypes/xhtml-document" id="xhtml-document" title="XHTML Dokumenttyp" type="xml" unid="0003"/>
+</resource>
+</index>

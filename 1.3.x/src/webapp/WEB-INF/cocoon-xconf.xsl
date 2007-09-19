@@ -116,6 +116,7 @@
 <component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.ModuleModule" name="module" logger="core.modules.input.module"/>
 <component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationModule" name="publication" logger="core.modules.input.module"/>
 <component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.Usecase2ModuleModule" name="u2m" logger="core.modules.input.usecase2module"/>
+<component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.VirtualModule" name="virtual" logger="core.modules.input.module"/>
 <!-- Lenya1.3 END -->
 
   </xsl:copy>
