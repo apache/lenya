@@ -4,22 +4,38 @@ About Lenya 1.3
 February 2006: Started a private fork of Lenya 1.2.2.  
 June 2006: The other Committers expressed interest in (or demanded) the code.  I stopped new development and integrated my code with Lenya 1.2.x (between the 1.2.4 and 1.2.5 releases.)
 September 2006 - August 2007: I had no time for this project.
-September 2007: Returned to project.  Created as Eclipse 3.2 project.  Added latest version of missing libraries and updated code.
-The next step is to merge changes from last year's work and complete the edit functionality.
+September 2007: Returned to project.  Created as Eclipse 3.2 project.  Added latest version of missing libraries and updated code.  Completed edit functionality.
 
-Lenya1.3 is not finished.  Specifically, it does not have the ability to edit documents directly in the flat datastore.  See the 13TODO.txt for everything still under development.
+The security system is next.  See the 13TODO.txt for everything still under development.
 
 Enjoy,
 Paul Ercolino (solprovider)
 
 
+=== Versions
+1.3.0.x
+Fully compatible with Lenya 1.2.2, 1.2.3, and 1.2.4 Publications.  
+Uses Java 1.4.  Upgrade should only require changing Lenya (and maybe Cocoon.)
+Includes "flat" module to upgrade 1.2 Publications to 1.3's flat storage.
+
+1.3.1+ (Exact features to be determined before release.)
+Removal of backwards compatibility with Lenya 1.2.
+Upgrade to Java 1.5 (to use Generics).
+Add JCR support.
+Module to migrate from Flat to JCR storage.
+Module to migrate from JCR to Flat storage.
+Module to migrate Lenya1.4/2.0 Publication data.  (All functionality cannot be migrated as Lenya 1.4/2.0's modules may contain compiled Java.)    
+
+
 === Features
-There were 3 major design goals for Lenya 1.3:
+The three major design goals for Lenya 1.3 were:
 1. Improved plugins with better URLs (Modules).
 2. Flat datastore for content.
 3. Sensible working security.
 
-The new Module system was easy.  Using flat content is still under development; The migration code is complete, but content maintenance is not.  The new security system is designed, but no code has been written yet; it should not require much programming, but the ability to edit resources is a higher priority.
+The new Module system was completed in early 2006 as an add-on for Lenya 1.2.
+The Flat architecture was easy once Kupu was rejected as the editor.  
+The new security system is designed and being developed.
 
 
 == Modules
