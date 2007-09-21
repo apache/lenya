@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Link Module -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:flow language="javascript">
+     <map:script src="module:///code.js"/>
+  </map:flow>
+   <map:pipelines>
+      <map:pipeline type="noncaching">
+<!-- CSS bypass -->
+         <map:match pattern="{module:module}/*.css">
+            <map:read src="module:///{1}.css" mime-type="text/css"/>
+         </map:match>
+<!-- Get POST data function -->
+         <map:match pattern="formdata">
+            <map:generate type="serverpages" src="module://form/post.xsp"/>
+            <map:serialize type="xml"/>
+         </map:match>
+<!-- Edit meta data -->
+         <map:match pattern="edit/*">
+            <map:act type="resource-exists" src="module://edit/module.xmap">
+               <map:redirect-to uri="/{publication:publication}/edit/{../1}"/>
+            </map:act>
+            <map:mount uri-prefix="" src="module:///edit.xmap"/> 
+            <map:serialize type="html"/>
+         </map:match>
+<!-- Save meta data -->
+         <map:match pattern="{module:module}/save/*">
+            <map:call function="update">
+             <map:parameter name="publication" value="{page-envelope:publication-id}"/>
+             <map:parameter name="module" value="{module:module}"/>
+             <map:parameter name="unid" value="{1}"/>
+           </map:call>
+         </map:match>
+<!-- Data for update() -->
+         <map:match pattern="{module:module}/savedata/*">
+            <map:aggregate element="save">
+               <map:part src="content:/INFO/{1}!edit"/>
+               <map:part src="cocoon:/formdata"/>
+            </map:aggregate>
+            <map:transform src="module:///save.xsl">
+               <map:parameter name="unid" value="{1}"/>
+            </map:transform>
+            <map:serialize type="xml"/>
+         </map:match>
+<!-- Edit new revision -->
+         <map:match pattern="{module:module}/newrevision/*_*!*">
+            <map:generate src="content:/{1}_{2}!{3}"/>
+            <map:transform src="module:///doc2form.xsl">
+             <map:parameter name="publication" value="{publication:publication}"/>
+             <map:parameter name="publicationname" value="{publication:name}"/>
+             <map:parameter name="module" value="{module:module}"/>
+             <map:parameter name="unid" value="{1}"/>
+             <map:parameter name="lang" value="{2}"/>
+            </map:transform>
+            <map:serialize type="html"/>
+         </map:match>
+<!-- Save new revision -->
+         <map:match pattern="{module:module}/saverevision/*">
+            <map:call function="create">
+             <map:parameter name="module" value="{module:module}"/>
+             <map:parameter name="unid" value="{1}"/>
+           </map:call>
+         </map:match>
+<!-- Data for Save new revision -->
+         <map:match pattern="{module:module}/saverevisiondata/**">
+            <map:generate src="cocoon:/formdata"/>
+            <map:transform src="module:///form2xhtml.xsl">
+               <map:parameter name="unid" value="{1}"/>
+            </map:transform>
+            <map:serialize type="xml"/>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>
