@@ -34,6 +34,10 @@
       <a href="http://www.foaf-project.org/"><acronym title="Friend of a Friend">FoaF</acronym></a>
       project.
     </p>
+    <p>
+      You can checkout the source code of this example from the Subversion repository at the URL
+      <code>http://svn.apache.org/repos/asf/lenya/sandbox/modules/person</code>.
+    </p>
     
     <section>
       <title>Prerequisites</title>
