@@ -42,9 +42,10 @@
         <li>Add a usecase handler class to provide the functionality to connect people,</li>
         <li>
           Add a <a href="http://cocoon.apache.org/2.1/userdocs/flow/jxtemplate.html">JX template</a>
-          which acts as the view for the usecase, and
+          which acts as the view for the usecase,
         </li>
-        <li>Add a menu item to trigger the usecase.</li>
+        <li>Add a menu item to trigger the usecase, and</li>
+        <li>Specify who is allowed to invoke the usecase.</li>
       </ul>
     </section>
     
@@ -144,6 +145,18 @@
         person document, e.g.:
       </p>
       <source xml:space="preserve"><![CDATA[<foaf:knows rdf:resource="lenya-document:5e13b150-6855-11dc-8b37-f5f12a4217db"/>]]></source>
+    </section>
+    
+    <section>
+      <title>Implement the Person Document Wrapper</title>
+      <p>
+        In Lenya projects, the wrapper pattern (also known as adapter pattern) has proven
+        useful to simplify the handling of XML documents. A wrapper object provides
+        access to a certain object, in our case a Lenya document, to client objects. It can
+        be used to add a layer of abstraction. In our case we use the wrapper to abstract
+        from the XML content and provide the functionality of adding "knows" relations
+        between person documents. 
+      </p>
     </section>
     
     <section>
