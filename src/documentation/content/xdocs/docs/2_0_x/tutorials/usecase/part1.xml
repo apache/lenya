@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Implementing a Usecase, Part 1: Prerequisites</title>
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      <p>
+        In this tutorial we'll implement a simple user interaction scenario using
+        the <a href="site:usecase-framework-overview">usecase framework</a>.
+        The implementation will be based on the <em>person</em> resource type module described
+        in the tutorial <a href="site:newResourceTypePart1">Creating a Resource Type</a>.
+        We'll extend the resource type to include "knows" relationships. Our usecase will
+        allow the connect a person to other people.
+      </p>
+      <p>
+        To accomplish this task, we will
+      </p>
+      <ul>
+        <li>Extend the person schema to support <code><![CDATA[<foaf:knows/>]]></code> elements,</li>
+        <li>Implement a wrapper class to manage person documents,</li>
+        <li>Add a usecase handler class to provide the functionality to connect people,</li>
+        <li>
+          Add a <a href="http://cocoon.apache.org/2.1/userdocs/flow/jxtemplate.html">JX template</a>
+          which acts as the view for the usecase, and
+        </li>
+        <li>Add a menu item to trigger the usecase.</li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Add the "Knows" Relation to the Person Resource Type</title>
+      <p>
+        First, we'll add support for the <code><![CDATA[<foaf:knows/>]]></code> element to the
+        Relax NG schema, which is located at <code>$MODULE_HOME/resources/schemas/foaf.rng</code>.
+        We allow to specify the known person using an <code>rdf:resource</code> attribute, which
+        can hold an internal <code>lenya-document:</code> URI.
+      </p>
+      <source xml:space="preserve"><![CDATA[<grammar ...>
+  <start>
+    <element name="rdf:RDF">
+      <element name="foaf:Person">
+        ...
+        
+        <zeroOrMore>
+          <element name="foaf:knows">
+            <attribute name="rdf:resource">
+              <data type="anyURI"/>
+            </attribute>
+          </element>
+        </zeroOrMore>
+        
+      </element>
+    </element>
+  </start>
+</grammar>]]></source>
+      
+      <p>
+        Now we need to extend our presentation layer to consider the "knows" relations.
+        We use CInclude to lookup the person's name based on the <code>foaf:knows</code>
+        element. This requires two steps: an XSLT preprocessing to add the CInclude element to
+        the <code>foaf:knows</code> element, and the actual CInclude transformation.
+        In the module sitemap, which is located at <code>$MODULE_HOME/sitemap.xmap</code>,
+        add these steps to the presentation pipeline:
+      </p>
+      <source xml:space="preserve"><![CDATA[<!-- {format}.xml/{pubId}/{area}/{uuid}/{language} -->
+<map:match pattern="*.*/*/*/*/*">
+  <map:generate src="lenya-document:{5},lang={6}{link:rev}"/>
+  <map:transform src="fallback://lenya/modules/person/xslt/knows2include.xsl"/>
+  <map:transform type="cinclude"/>
+  <map:transform src="fallback://lenya/modules/person/xslt/foaf2{1}.xsl">
+  ...
+</map:match>]]></source>
+      <p>
+        Now we add the XSLT which adds the CInclude statements. It is located at
+        <code>$MODULE_HOME/xslt/knows2include.xsl</code>. The <code>src</code>
+        attribute of the <code><![CDATA[<ci:include/>]]></code> element is set to the
+        <code>rdf:resource</code> attribute, which holds a <code>lenya-document:</code> URI. 
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:ci="http://apache.org/cocoon/include/1.0"
+  >
+  
+  <xsl:template match="foaf:knows">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <ci:include src="{@rdf:resource}"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="@*|node()" priority="-1">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+  
+</xsl:stylesheet>]]></source>
+      
+      <p>
+        Finally, we have to include the known people in the output. We add a table row to
+        the <code>$MODULE_HOME/xslt/foaf2xhtml.xsl</code> stylesheet:
+      </p>
+      <source xml:space="preserve"><![CDATA[<tr>
+  <th>Knows:</th>
+  <td>
+    <xsl:for-each select="foaf:knows">
+      <a href="{@rdf:resource}">
+        <xsl:value-of select="rdf:RDF/foaf:Person/foaf:givenname"/>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="rdf:RDF/foaf:Person/foaf:family_name"/>
+      </a>
+      <br/>
+    </xsl:for-each>
+  </td>
+</tr>]]></source>
+      <p>
+        To test this functionality, you can add two person documents to your
+        publication, edit one of them using the one-form editor, and add the
+        <code><![CDATA[<foaf:knows/>]]></code> element, pointing to the other
+        person document, e.g.:
+      </p>
+      <source xml:space="preserve"><![CDATA[<foaf:knows rdf:resource="lenya-document:5e13b150-6855-11dc-8b37-f5f12a4217db"/>]]></source>
+    </section>
+    
+    <section>
+      <title>Declaring the Usecase</title>
+    </section>
+    
+  </body>
+</document>
