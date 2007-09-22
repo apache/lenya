@@ -103,6 +103,13 @@
           call them from the template. Modularizing JX templates is another promising approach
           to reduce their complexity.
         </li>
+        <li>
+          Document wrapper classes have proven useful to encapsulate the functionality of
+          objects which store their properties in Lenya documents, typically as XML. The wrapper
+          class exposes only business-level functionality. You can use an advanced object-to-XML
+          binding framework to persist the data, or you can just use the helper classes in the
+          <code>org.apache.lenya.xml</code> package. 
+        </li>
       </ul>
     </section>
   </body>
