@@ -155,12 +155,213 @@
         access to a certain object, in our case a Lenya document, to client objects. It can
         be used to add a layer of abstraction. In our case we use the wrapper to abstract
         from the XML content and provide the functionality of adding "knows" relations
-        between person documents. 
+        between person documents.
+      </p>
+      <p>
+        The following code snippet contains some methods to illustrate the functionality
+        of the Person class. For the full source code, check out the person module from the
+        Subversion repository.
+      </p>
+      <p>
+        We pass an <code>org.apache.lenya.cms.publication.Document</code>
+        object to the constructor which stores the XML content describing the person.
+        The <code>getName()</code> function returns the full name, i.e. the concatenation
+        of the given name and the family name. This method will be used to show the person's
+        name on the usecase view page. The <code>load()</code> and <code>save()</code> methods
+        act as the persistence facilities of the person object.
+      </p>
+      <source xml:space="preserve"><![CDATA[public class Person extends AbstractLogEnabled {
+        
+    ...
+
+    public Person(Document doc) {
+        ...
+    }
+
+    public Person[] getKnownPeople() {
+        load();
+        Collection persons = this.knownPersons.values();
+        return (Person[]) persons.toArray(new Person[persons.size()]);
+    }
+
+    public void addKnownPerson(Person person) {
+        load();
+        this.knownPersons.put(person.getDocument().getUUID(), person);
+        save();
+    }
+    
+    public String getName() {
+        load();
+        return this.givenName + " " + this.familyName;
+    }
+
+    ...
+
+}]]></source>
+    </section>
+      
+    <section>
+      <title>Declaring the Usecase</title>
+      <p>
+        Now we're ready to start working on the actual usecase. First, we tell Lenya about
+        the usecase. The usecase declaration is a patch file for <code>cocoon.xconf</code>.
+        It is located at <code>$MODULE_HOME/config/cocoon-xconf/usecase-addKnownPerson.xconf</code>.
+        It adds the <em>person.addKnownUsecase</em> usecase component instance if it doesn't
+        exist yet (determined by the <code>unless</code> attribute):
+      </p>
+      <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases"
+  unless="/cocoon/usecases/component-instance[@name = 'person.addKnownPerson']">
+  
+  <component-instance name="person.addKnownPerson" logger="lenya.modules.person"
+      class="org.apache.lenya.modules.person.usecases.AddKnownPerson">
+    <view template="modules/person/usecases/addKnownPerson.jx"/>
+  </component-instance>
+  
+</xconf>
+]]></source>
+      <p>
+        This usecase declaration specifies the usecase handler class (in our case
+        <code>AddKnownPerson</code>) and the JX template which acts as the view for
+        the usecase (<code>addKnownPerson.jx</code>). For a complete list of the generic
+        usecase configuration options, refer to the <a href="site:abstractusecase">AbstractUsecase</a>
+        documentation.
       </p>
     </section>
     
     <section>
-      <title>Declaring the Usecase</title>
+      <title>Implementing the Usecase Handler Class</title>
+      <p>
+        The usecase handler object receives user input and manipulates the business objects,
+        in our case the <code>Person</code> objects, accordingly. It has the following
+        responsibilities:
+      </p>
+      <ul>
+        <li>Prepare data to be displayed on the view,</li>
+        <li>Validate user input and generate appropriate error messages, and</li>
+        <li>Manipulate the business objects.</li>
+      </ul>
+      <p>
+        If you want to follow a strictly object-oriented approach, the usecase handler class
+        itself shouldn't contain any knowledge about the business logic. It belongs to the
+        controller part of the <acronym title="Model-View-Controller">MVC</acronym> pattern
+        (the other parts of the controller are the usecase sitemap and the flowscript).
+      </p>
+      <p>
+        The following code snippet shows the usecase handler class.
+        At this point, we implement only the two most important methods:
+      </p>
+      <ul>
+        <li>
+          <code>initParameters()</code> initializes the usecase parameters which are
+          used to communicate between the usecase handler and the view. In our case, it
+          compiles a list of <code>Person</code> objects, one for each document with the resource type
+          <em>person</em>.
+        </li>
+        <li>
+          <code>doExecute()</code> gets the <em>uuid</em> parameter from the view and adds
+          the corresponding <code>Person</code> object to the list of known people.
+        </li>
+      </ul>
+      <source xml:space="preserve"><![CDATA[public class AddKnownPerson extends DocumentUsecase {
+
+    protected void initParameters() {
+        super.initParameters();
+
+        Document doc = getSourceDocument();
+        Document[] allDocs = doc.area().getDocuments();
+
+        try {
+            Set peopleDocs = new HashSet();
+            for (int i = 0; i < allDocs.length; i++) {
+                if (allDocs[i].getResourceType().getName().equals("person")) {
+                    Person person = new Person(allDocs[i]);
+                    peopleDocs.add(person);
+                }
+            }
+            setParameter("people", peopleDocs);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void doExecute() throws Exception {
+        super.doExecute();
+
+        String uuid = getParameterAsString("uuid");
+        Document doc = getSourceDocument();
+        Person person = new Person(doc);
+
+        Document knownDoc = doc.area().getDocument(uuid, doc.getLanguage());
+        Person knownPerson = new Person(knownDoc);
+
+        person.addKnownPerson(knownPerson);
+    }
+
+}]]></source>
+    </section>
+    
+    <section>
+      <title>Implementing the View</title>
+      <p>
+        We're using a JX template to implement the view. It allows us to generate XHTML
+        code using properties of Java objects which are passed as parameters from the usecase
+        handler object.
+      </p>
+      <p>
+        The page contains a form, passing the <em>lenya.usecase</em> and <em>lenya.continuation</em>
+        parameters as hidden input fields. We choose POST as the form method because we want
+        to manipulate data on the server, avoiding that the user submits the form multiple times.
+        We generate a drop-down list containing an option for each person,
+        using the UUID as the <code>value</code> attribute of the <code>option</code> element.
+        Remember that the <em>people</em> parameter was set in the <code>initParameters()</code>
+        method of the usecase handler class.
+      </p>
+      <source xml:space="preserve"><![CDATA[<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+
+  <page:title>
+    <i18n:text>Add Known Person</i18n:text>
+  </page:title>
+  <page:body>
+    
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+    
+    <form method="POST">
+      <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      
+      <p>
+        <i18n:text>Select a person you know:</i18n:text>
+      </p>
+      <p>
+        <select name="uuid">
+          <jx:forEach var="person" items="${usecase.getParameter('people')}">
+            <option value="${person.getDocument().getUUID()}">
+              <jx:out value="${person.getName()}"/>
+            </option>
+          </jx:forEach>
+        </select>
+      </p>
+  
+      <p>
+        <input i18n:attr="value" name="submit" type="submit" value="Submit"/>
+        <i18n:text> </i18n:text>
+        <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
+      </p>
+      
+    </form>
+  </page:body>
+</page:page>]]></source>
+    </section>
+    
+    <section>
+      <title>Adding the Menu Item</title>
+    </section>
+    
+    <section>
+      <title>What's Next?</title>
     </section>
     
   </body>
