@@ -146,6 +146,10 @@
         <newResourceTypePart4 href="part4.html" label="Editing (One-Form)"/>
         <newResourceTypePart5 href="part5.html" label="Editing (BXE)"/>
       </newResourceType>
+      <usecaseTutorial href="usecase/" label="Implement a Usecase">
+        <usecaseTutorialPart1 href="part1.html" label="Prerequisites"/>
+        <usecaseTutorialPart2 href="part2.html" label="The Usecase"/>
+      </usecaseTutorial>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
       <proxy label="Proxying">
         <mod_proxy_14 href="proxy.html" label="mod_proxy"/>
@@ -579,6 +583,9 @@
         <resourceTypeBxe.img href="bxe.png"/>
         <resourceTypeFormats.img href="resourceTypeFormats.png"/>
       </resourceTypeImages>
+      <usecaseImages href="usecase/">
+        <usecaseScreenshotAddKnownPerson.img href="screenshotAddKnownPerson.png"/>
+      </usecaseImages>
     </live>
   </images>
   
