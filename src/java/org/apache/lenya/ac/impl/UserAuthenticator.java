@@ -18,6 +18,9 @@
 package org.apache.lenya.ac.impl;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
@@ -25,12 +28,16 @@ import org.apache.lenya.ac.Authenticator;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.publication.util.OutgoingLinkRewriter;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * User authenticator.
  * @version $Id: UserAuthenticator.java 473842 2006-11-12 01:15:20Z gregor $
  */
-public class UserAuthenticator extends AbstractLogEnabled implements Authenticator {
+public class UserAuthenticator extends AbstractLogEnabled implements Authenticator, Serviceable {
+
+    protected ServiceManager manager;
 
     /**
      * @see org.apache.lenya.ac.Authenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
@@ -61,16 +68,15 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
     }
 
     /**
-     * Authenticates a user with a given username and password. When the
-     * authentication is successful, the user is added to the identity.
+     * Authenticates a user with a given username and password. When the authentication is
+     * successful, the user is added to the identity.
      * @param accreditableManager The accreditable manager.
      * @param username The username.
      * @param password The password.
      * @param identity The identity to add the user to.
      * @param handler The error handler.
      * @throws AccessControlException when something went wrong.
-     * @return <code>true</code> if the user was authenticated,
-     *         <code>false</code> otherwise.
+     * @return <code>true</code> if the user was authenticated, <code>false</code> otherwise.
      */
     protected boolean authenticate(AccreditableManager accreditableManager, String username,
             String password, Identity identity, ErrorHandler handler) throws AccessControlException {
@@ -116,7 +122,14 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
     }
 
     public String getLoginUri(Request request) {
-        return request.getRequestURI() + "?lenya.usecase=login&lenya.step=showscreen";
+        String webappUrl = ServletHelper.getWebappURI(request);
+        OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getLogger());
+        String outgoingUrl = rewriter.rewrite(webappUrl);
+        return outgoingUrl + "?lenya.usecase=login&lenya.step=showscreen";
+    }
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
 }

@@ -26,9 +26,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpEnvironment;
 import org.apache.lenya.ac.AccessControlException;
@@ -55,13 +53,12 @@ import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
 /**
  * Shibboleth-based authenticator.
  */
-public class ShibbolethAuthenticator extends UserAuthenticator implements Serviceable {
+public class ShibbolethAuthenticator extends UserAuthenticator {
 
     protected static final String ERROR_MISSING_UID_ATTRIBUTE = "Unable to get unique identifier for subject. "
                             + "Make sure you are listed in the metadata.xml "
                             + "file and your resources your are trying to access "
                             + "are available and your are allowed to see them. (Resourceregistry).";
-    private ServiceManager manager;
 
     public boolean authenticate(AccreditableManager accreditableManager, Request request,
             ErrorHandler handler) throws AccessControlException {
@@ -207,10 +204,6 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Servic
             }
         }
         return req;
-    }
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
     public String getLoginUri(Request request) {
