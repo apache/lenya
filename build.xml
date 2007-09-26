@@ -70,6 +70,8 @@
   <import file="src/targets/publication-test-build.xml" />
   <!-- Successfully Built Message       -->
   <import file="src/targets/message-build.xml" />
+  <!-- Antlr grammar compilation       -->
+  <import file="src/targets/antlr-build.xml" />
   <!-- =================================================================== -->
 
 </project>
