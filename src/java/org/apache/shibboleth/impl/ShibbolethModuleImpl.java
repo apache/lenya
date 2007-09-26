@@ -19,6 +19,7 @@ package org.apache.shibboleth.impl;
 
 import java.io.File;
 
+import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -58,7 +59,7 @@ import edu.internet2.middleware.shibboleth.metadata.provider.XMLMetadata;
  * 
  */
 public class ShibbolethModuleImpl extends AbstractLogEnabled implements ShibbolethModule,
-        Configurable, Initializable, Serviceable, ThreadSafe {
+        Configurable, Initializable, Serviceable, ThreadSafe, Disposable {
 
     private static final String WAYF_SERVER = "WayfServer";
     private static final String CONF_PROVIDER_ID = "ProviderId";
@@ -174,10 +175,7 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
         }
     }
 
-    /**
-     * @see org.olat.core.configuration.OLATModule#destroy()
-     */
-    public void destroy() {
+    public void dispose() {
         if (metadata != null && metadata.isAlive()) {
             metadata.interrupt();
         }
