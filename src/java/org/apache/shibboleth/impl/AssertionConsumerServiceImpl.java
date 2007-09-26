@@ -211,28 +211,20 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
             if (handleService == null)
                 throw new RuntimeException("Error forwarding to HS: " + idpSite.getName(), null);
             buffer.append(handleService);
+            buffer.append("?");
 
             // send language if configured
             // this parameter is passed to the login.jsp on shibboleth idP side,
             // thus must be on the same
             // parameter level as the SHIB_ATTR_TARGET parameter.
-            boolean hasLanguage = false;
             if (getShibbolethModule().useLanguageInReq()) {
                 String paramNam = getShibbolethModule().getLanguageParamName();
                 if (paramNam != null) {
-                    buffer.append("?").append(paramNam).append("=").append(locale.toString())
-                            .append("&");
-                    buffer.append(SHIB_ATTR_TARGET).append("=");
-                    hasLanguage = true;
+                    buffer.append(paramNam).append("=").append(locale.toString()).append("&");
                 }
             }
 
-            if (!hasLanguage) {
-                // no language configured -> this is first parameter
-                buffer.append("?" + SHIB_ATTR_TARGET + "=");
-            }
-            // target
-            buffer.append("olat");
+            buffer.append(SHIB_ATTR_TARGET).append("=olat");
 
             // shire
             buffer.append("&" + SHIB_ATTR_SHIRE + "=");
@@ -265,10 +257,9 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      * @throws OLATRuntimeException
      */
     /*
-     * public void forwardToHS(UserRequest ureq, String getRequestString) throws
-     * ShibbolethException { if (getLogger().isDebugEnabled()) {
-     * getLogger().debug("Forwarding to HS: " + getRequestString); }
-     * ureq.getDispatchResult().setResultingMediaResource( new
+     * public void forwardToHS(UserRequest ureq, String getRequestString) throws ShibbolethException {
+     * if (getLogger().isDebugEnabled()) { getLogger().debug("Forwarding to HS: " +
+     * getRequestString); } ureq.getDispatchResult().setResultingMediaResource( new
      * RedirectMediaResource(getRequestString)); }
      */
 
