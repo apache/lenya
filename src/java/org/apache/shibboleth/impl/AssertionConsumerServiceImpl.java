@@ -254,7 +254,6 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      * Uses an HTTP Status 307 redirect to forward the user the HS.
      * @param ureq
      * @param getRequestString parameter string for request to IdP
-     * @throws OLATRuntimeException
      */
     /*
      * public void forwardToHS(UserRequest ureq, String getRequestString) throws ShibbolethException {

@@ -30,70 +30,53 @@ import org.apache.avalon.framework.logger.Logger;
  */
 public class RedirectMediaResource extends AbstractLogEnabled implements MediaResource {
 
-    private String redirectURL;
+    private String redirectUrl;
 
     /**
-     * @param redirectURL
+     * @param redirectURL The redirect URL.
+     * @param logger The logger.
      */
     public RedirectMediaResource(String redirectURL, Logger logger) {
         ContainerUtil.enableLogging(this, logger);
-        this.redirectURL = redirectURL;
+        this.redirectUrl = redirectURL;
     }
 
-    /**
-     * @see org.olat.core.gui.media.MediaResource#getContentType()
-     */
     public String getContentType() {
         return null;
     }
 
-    /**
-     * @see org.olat.core.gui.media.MediaResource#getSize()
-     */
     public Long getSize() {
         return null;
     }
 
-    /**
-     * @see org.olat.core.gui.media.MediaResource#getInputStream()
-     */
     public InputStream getInputStream() {
         return null;
     }
 
-    /**
-     * @see org.olat.core.gui.media.MediaResource#getLastModified()
-     */
     public Long getLastModified() {
         return null;
     }
 
-    /**
-     * @see org.olat.core.gui.media.MediaResource#prepare(javax.servlet.http.HttpServletResponse)
-     */
     public void prepare(HttpServletResponse hres) {
         try {
-            hres.sendRedirect(redirectURL);
+            hres.sendRedirect(redirectUrl);
         } catch (IOException e) {
             // if redirect failed, we do nothing; the browser may have stopped
             // the
             // tcp/ip or whatever
-            getLogger().error("redirect failed: url=" + redirectURL, e);
+            getLogger().error("redirect failed: url=" + redirectUrl, e);
         } catch (IllegalStateException ise) {
             // redirect failed, to find out more about the strange null null
             // exception
             // FIXME:pb:a decide if this catch has to be removed again, after
             // finding problem.
-            getLogger().error("redirect failed: url=" + redirectURL, ise);
+            getLogger().error("redirect failed: url=" + redirectUrl, ise);
             // introduced only more debug information but behavior is still the
             // same
             throw (ise);
         }
     }
 
-    /**
-     * @see org.olat.core.gui.media.MediaResource#release()
-     */
     public void release() {
         // nothing to do
     }

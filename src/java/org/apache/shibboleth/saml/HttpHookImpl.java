@@ -72,7 +72,7 @@ public class HttpHookImpl extends AbstractLogEnabled implements HTTPHook {
      */
     public boolean incoming(HttpServletRequest r, Object globalCtx, Object callCtx)
             throws SAMLException {
-        getLogger().error("OLATHttpHook method incoming-1 should not have been called.");
+        getLogger().error("Method incoming-1 should not have been called.");
         return true;
     }
 
@@ -82,7 +82,7 @@ public class HttpHookImpl extends AbstractLogEnabled implements HTTPHook {
      */
     public boolean outgoing(HttpServletResponse r, Object globalCtx, Object callCtx)
             throws SAMLException {
-        getLogger().error("OLATHttpHook method outgoing-1 should not have been called.");
+        getLogger().error("Method outgoing-1 should not have been called.");
         return true;
     }
 
