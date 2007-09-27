@@ -27,12 +27,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.avalon.framework.component.Component;
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.http.HttpEnvironment;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.shibboleth.AssertionConsumerService;
 import org.apache.shibboleth.ShibbolethManager;
 import org.apache.shibboleth.ShibbolethModule;
@@ -51,7 +54,9 @@ import edu.internet2.middleware.shibboleth.wayf.IdPSite;
  * Assertion consumer service.
  */
 public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
-        AssertionConsumerService, Serviceable {
+        AssertionConsumerService, Serviceable, Contextualizable {
+
+    protected static final String CHARSET = "UTF-8";
 
     /**
      * Authentication Assertion requests identifier.
@@ -64,10 +69,9 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
     private static final String SHIB_ATTR_TIME = "time";
 
     private ShibbolethModule shibbolethModule;
-
     private ServiceManager manager;
-
     private ShibbolethManager shibManager;
+    private Context context;
 
     protected ShibbolethModule getShibbolethModule() {
         if (this.shibbolethModule == null) {
@@ -109,9 +113,8 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      */
     protected String getCompleteUrl(HttpServletRequest req) {
         String queryString = req.getQueryString();
-        String url = req.getRequestURL().toString()
-                + (queryString.length() == 0 ? "" : "?" + queryString);
-        return url;
+        String reqUrl = req.getRequestURL().toString();
+        return reqUrl + (queryString.length() == 0 ? "" : "?" + queryString);
     }
 
     private BrowserProfileRequest getBrowserProfileRequest(HttpServletRequest req) {
@@ -225,23 +228,23 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
                 }
             }
 
-            buffer.append(SHIB_ATTR_TARGET).append("=olat");
+            buffer.append(SHIB_ATTR_TARGET).append("=").append(
+                    URLEncoder.encode(getTarget(), CHARSET));
 
             // shire
             buffer.append("&" + SHIB_ATTR_SHIRE + "=");
-            buffer.append(URLEncoder.encode(getShireUrl(), "UTF-8"));
+            buffer.append(URLEncoder.encode(getShireUrl(), CHARSET));
 
             // providerId (if any)
             String providerId = getShibbolethModule().getProviderId();
             if (providerId != null) {
                 buffer.append("&" + SHIB_ATTR_PROVIDERID + "=");
-                buffer.append(URLEncoder.encode(providerId, "UTF-8"));
+                buffer.append(URLEncoder.encode(providerId, CHARSET));
             }
 
             // time
             buffer.append("&" + SHIB_ATTR_TIME + "=");
             buffer.append(new Long(new Date().getTime() / 1000).toString()); // Unix
-            // Time
 
             // send redirect
             return buffer.toString();
@@ -263,29 +266,27 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      * new RedirectMediaResource(getRequestString)); }
      */
 
+    protected String getTarget() {
+        return getShireUrl();
+    }
+
     /**
      * Return the URL to the SHIRE (that's us)
      * @param shibbolethPath The shibboleth path.
      * @return The complete SHIRE URL
      */
-    private String getShireUrl() {
-        ContextUtility ctxUtil = null;
-        try {
-            ctxUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-            Map objectModel = ctxUtil.getObjectModel();
-            HttpServletRequest req = (HttpServletRequest) objectModel
-                    .get(HttpEnvironment.HTTP_REQUEST_OBJECT);
-            return getCompleteUrl(req);
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (ctxUtil != null) {
-                this.manager.release(ctxUtil);
-            }
-        }
+    protected String getShireUrl() {
+        Map objectModel = ContextHelper.getObjectModel(this.context);
+        HttpServletRequest req = (HttpServletRequest) objectModel
+                .get(HttpEnvironment.HTTP_REQUEST_OBJECT);
+        return getCompleteUrl(req);
     }
 
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
     }
 }
