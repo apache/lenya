@@ -105,6 +105,14 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
+     * Checks support for changing password
+     * @return true if password change is supported
+     */
+    public boolean canChangePassword() {
+        return true;
+    }
+
+    /**
      * @return Returns the defaultDocumentLocale.
      */
     public String getDefaultDocumentLocale() {

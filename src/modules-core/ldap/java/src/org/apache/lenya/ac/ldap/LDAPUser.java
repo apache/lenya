@@ -311,6 +311,14 @@ public class LDAPUser extends FileUser {
     }
 
     /**
+     * The LDAPUser doesn't change any passwords as they are handled by LDAP
+     * @return always returns false
+     */
+    public boolean canChangePassword() {
+        return false;
+    }
+
+    /**
      * Connect to the LDAP server
      * @param principal the principal string for the LDAP connection
      * @param credentials the credentials for the LDAP connection

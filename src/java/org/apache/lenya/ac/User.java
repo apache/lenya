@@ -43,7 +43,13 @@ public interface User extends Identifiable, Item, Groupable {
      * @param plainTextPassword The plain text password.
      */
     void setPassword(String plainTextPassword);
-    
+   
+    /**
+     * Checks support for changing password
+     * @return true if password change is supported
+     */
+    public abstract boolean canChangePassword();
+ 
     /**
      * Returns the user's preferred locale for the Lenya
      * CMS menus and CMS screens.

@@ -84,18 +84,20 @@
                 </form>
               </td>
             </tr>
-            
-            <tr>
-              <td/>
-              <td>
-                <form id="form-change_user_password">
-                  <input type="hidden" name="lenya.usecase" value="admin.changePasswordAdmin"/>
-                  <input type="hidden" name="userId" value="${user.getId()}"/>
-                  <input i18n:attr="value" type="submit" value="Change Password" name="input-change_user_password"/>
-                </form>
-              </td>
-            </tr>
-            
+
+            <jx:if test="${user.canChangePassword() == 'true'}"> 
+              <tr>
+                <td/>
+                <td>
+                  <form id="form-change_user_password">
+                    <input type="hidden" name="lenya.usecase" value="admin.changePasswordAdmin"/>
+                    <input type="hidden" name="userId" value="${user.getId()}"/>
+                    <input i18n:attr="value" type="submit" value="Change Password" name="input-change_user_password"/>
+                  </form>
+                </td>
+              </tr>
+            </jx:if>
+          
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Groups</i18n:text>:</td>
               <td>
