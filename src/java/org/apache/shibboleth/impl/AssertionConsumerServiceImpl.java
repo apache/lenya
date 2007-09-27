@@ -198,7 +198,7 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
     }
 
     /**
-     * Uses an HTTP Status 307 redirect to forward the user the HS.
+     * Uses an HTTP Status 307 redirect to forward the user to the handle service.
      * @param locale The locale.
      * @param idpSite The IdP site.
      * @return A string.
@@ -209,7 +209,8 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
             // get handle service
             String handleService = getShibbolethManager().lookupIdentityProvider(idpSite.getName());
             if (handleService == null)
-                throw new RuntimeException("Error forwarding to HS: " + idpSite.getName(), null);
+                throw new RuntimeException("Error forwarding to handle service: "
+                        + idpSite.getName(), null);
             buffer.append(handleService);
             buffer.append("?");
 
@@ -246,20 +247,20 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
             return buffer.toString();
 
         } catch (IOException ioe) {
-            throw new RuntimeException("Error forwarding to HS: " + ioe.toString());
+            throw new RuntimeException("Error forwarding to handle service: " + ioe.toString());
         }
     }
 
     /**
-     * Uses an HTTP Status 307 redirect to forward the user the HS.
+     * Uses an HTTP Status 307 redirect to forward the user the handle service.
      * @param ureq
      * @param getRequestString parameter string for request to IdP
      */
     /*
-     * public void forwardToHS(UserRequest ureq, String getRequestString) throws ShibbolethException {
-     * if (getLogger().isDebugEnabled()) { getLogger().debug("Forwarding to HS: " +
-     * getRequestString); } ureq.getDispatchResult().setResultingMediaResource( new
-     * RedirectMediaResource(getRequestString)); }
+     * public void forwardToHandleService(UserRequest ureq, String getRequestString) throws
+     * ShibbolethException { if (getLogger().isDebugEnabled()) { getLogger().debug("Forwarding to
+     * handle service: " + getRequestString); } ureq.getDispatchResult().setResultingMediaResource(
+     * new RedirectMediaResource(getRequestString)); }
      */
 
     /**
