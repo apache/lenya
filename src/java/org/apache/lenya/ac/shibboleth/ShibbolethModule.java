@@ -77,6 +77,12 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
             OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getLogger());
             String outgoingUrl = rewriter.rewrite(webappUrl);
 
+            if (outgoingUrl.startsWith("/")) {
+                String serverUrl = req.getScheme() + "://" + req.getServerName() + ":"
+                        + req.getServerPort();
+                outgoingUrl = serverUrl + outgoingUrl;
+            }
+
             if (name.equals(ATTR_SHIRE)) {
                 return outgoingUrl + "?lenya.usecase=login&lenya.step=login";
             } else if (name.equals(ATTR_TARGET)) {
