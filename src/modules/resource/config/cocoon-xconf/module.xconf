@@ -34,6 +34,7 @@
     <format name="xhtml" uri="cocoon://modules/resource/xhtml.xml"/>
     <format name="downloadLink" uri="cocoon://modules/resource/downloadLink.xml"/>
     <format name="icon" uri="cocoon://modules/resource/icon"/>
+    <format name="luceneIndex" uri="cocoon://modules/resource/lucene-index"/>
   </component-instance>
 
 </xconf>

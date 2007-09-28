@@ -31,12 +31,27 @@ limitations under the License.
   </map:components>
   
   <map:pipelines>
-    <!-- Generates the lenya metadata to be aggregated for each page -->
+    
     <map:pipeline>
+      
+      <!-- Generates the lenya metadata to be aggregated for each page -->
+      <!-- {1:pubId}/{2:area}/{3:uuid}/{4:language}/{5:revision} -->
       <map:match pattern="lenyametadata.xml/*/*/*/*/*">
         <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4},rev={5}"/>
         <map:serialize type="xml"/>
       </map:match>
+      
+      <!-- {pub-id}/{area}/{uuid}/{language} -->
+      <map:match pattern="lucene-index/*/*/*/*">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon:/lenyametadata.xml/{1}/{2}/{3}/{4}/-1"/>
+        </map:aggregate>
+        <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">
+          <map:parameter name="url" value="{request:requestURI}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
     </map:pipeline>
     
     <map:pipeline>
