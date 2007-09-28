@@ -69,7 +69,10 @@
   <message key="no-rollback-in-review">Im Arbeitsschritt "Freigabe" ist
   keine Wiederherstellung möglich.</message>
   <message key="no-rollback-no-privileges">Keine ausreichenden Rechte zum Wiederherstellen.</message>
-                   
+  <message key="will-paste-in-own-subtree">
+    Ein ausgeschnittenes Dokument kann nicht im eigenen Teilbaum eingefügt werden.
+  </message>
+  
   <!-- force check-in -->
   <message key="force-checkin">Check-In erzwingen</message>
   <message key="force-checkin-question">Wollen Sie das Dokument "{0}" wirklich einchecken?</message>

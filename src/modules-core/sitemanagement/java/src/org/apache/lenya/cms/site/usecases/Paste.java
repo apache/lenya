@@ -34,6 +34,7 @@ import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -64,6 +65,25 @@ public class Paste extends AbstractUsecase {
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         if (clipboard == null) {
             addErrorMessage("clipboard-empty");
+        }
+        else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+            Document doc = getSourceDocument();
+            Document clippedDoc = clipboard.getDocument(getDocumentFactory(), doc.getPublication());
+            String uuid = clippedDoc.getUUID();
+            if (willPasteInOwnSubtree(doc.getLink().getNode(), uuid)) {
+                addErrorMessage("will-paste-in-own-subtree");
+            }
+        }
+    }
+
+    protected boolean willPasteInOwnSubtree(SiteNode node, String uuid) throws SiteException {
+        String nodeUuid = node.getUuid();
+        if (nodeUuid.equals(uuid)) {
+            return true;
+        } else if (!node.isTopLevel()) {
+            return willPasteInOwnSubtree(node.getParent(), uuid);
+        } else {
+            return false;
         }
     }
 

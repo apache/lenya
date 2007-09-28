@@ -70,6 +70,7 @@
   review state.</message>
   <message key="no-rollback-no-privileges">Rollback disabled. You do not
   have sufficient privileges.</message>
+  <message key="will-paste-in-own-subtree">Can't paste a cut document in its own subtree.</message>
   
   <!-- force check-in -->
   <message key="force-checkin">Force Check-In</message>
