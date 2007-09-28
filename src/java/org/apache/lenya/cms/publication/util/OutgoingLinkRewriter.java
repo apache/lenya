@@ -23,6 +23,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
@@ -67,7 +68,9 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
             ContextUtility contextUtil = null;
             try {
                 contextUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+                Request request = ObjectModelHelper.getRequest(contextUtil.getObjectModel());
                 Context context = ObjectModelHelper.getContext(contextUtil.getObjectModel());
+                String contextPath = request.getContextPath();
                 String servletContextPath = context.getRealPath("");
                 Publication pub = PublicationFactory.getPublication(pubId, servletContextPath);
 
@@ -77,6 +80,8 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
                     Proxy proxy = pub.getProxy(doc, isSslProtected(webappUrl));
                     if (proxy != null) {
                         proxyUrl = proxy.getURL(doc);
+                    } else {
+                    		webappUrl = contextPath + webappUrl;
                     }
                 }
 
