@@ -21,8 +21,7 @@
   </lucene:index>  
 </xsl:template>
 
-<xsl:template match="dc:rights" priority="1">
-</xsl:template>
+<xsl:template match="dc:rights" priority="1"/>
 
 <xsl:template match="xhtml:body" priority="1">
   <lucene:field name="body" boost="{$boost}">
@@ -45,7 +44,7 @@
 </xsl:template>
 
 <xsl:template match="@*|node()" priority="-1">
-    <xsl:apply-templates/>
+  <xsl:apply-templates/>
 </xsl:template>
 
 </xsl:stylesheet>
