@@ -938,7 +938,7 @@ HTMLArea.prototype._wordClean = function() {
 		D = D.replace(/\r\n/g, ' ').
 			replace(/\n/g, ' ').
 			replace(/\r/g, ' ').
-			replace(/\&nbsp\;/g,' ');
+			replace(/\&nbsp\;/g,' ').replace(/\&#160\;/g,' ');
 
 		// keep tags, strip attributes
 		D = D.replace(/ class=[^\s|>]*/gi,'').
@@ -2038,7 +2038,7 @@ HTMLArea.getHTML = function(root, outputRoot, editor) {
 	    case 3: // Node.TEXT_NODE
 		// If a text node is alone in an element and all spaces, replace it with an non breaking one
 		// This partially undoes the damage done by moz, which translates '&nbsp;'s into spaces in the data element
-		if ( !root.previousSibling && !root.nextSibling && root.data.match(/^\s*$/i) ) html = '&nbsp;';
+		if ( !root.previousSibling && !root.nextSibling && root.data.match(/^\s*$/i) ) html = '&#160;';
 		else html = HTMLArea.htmlEncode(root.data);
 		break;
 	    case 8: // Node.COMMENT_NODE

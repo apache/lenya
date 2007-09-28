@@ -198,7 +198,7 @@ TableOperations.prototype.dialogTableProperties = function() {
 //             <select name='f_unit'> \
 //               <option value='%'" + selected(f_unit == "percent") + ">" + i18n["percent"] + "</option> \
 //               <option value='px'" + selected(f_unit == "pixels") + ">" + i18n["pixels"] + "</option> \
-//             </select> &nbsp;&nbsp;" + i18n["Align"] + ": \
+//             </select> &#160;&#160;" + i18n["Align"] + ": \
 //             <select name='f_align'> \
 //               <option value='left'" + selected(f_align == "left") + ">" + i18n["Left"] + "</option> \
 //               <option value='center'" + selected(f_align == "center") + ">" + i18n["Center"] + "</option> \
@@ -208,8 +208,8 @@ TableOperations.prototype.dialogTableProperties = function() {
 //         </tr> \
 "        <tr> \
           <td class='label'>" + i18n["Spacing"] + ":</td> \
-          <td><input type='text' name='f_spacing' size='5' value='" + f_spacing + "' /> &nbsp;" + i18n["Padding"] + ":\
-            <input type='text' name='f_padding' size='5' value='" + f_padding + "' /> &nbsp;&nbsp;" + i18n["pixels"] + "\
+          <td><input type='text' name='f_spacing' size='5' value='" + f_spacing + "' /> &#160;" + i18n["Padding"] + ":\
+            <input type='text' name='f_padding' size='5' value='" + f_padding + "' /> &#160;&#160;" + i18n["pixels"] + "\
           </td> \
         </tr> \
        </table> \
@@ -222,7 +222,7 @@ TableOperations.prototype.dialogTableProperties = function() {
         <table width='100%'> \
           <tr> \
             <td class='label'>" + i18n["Borders"] + ":</td> \
-            <td><input name='f_borders' type='text' size='5' value='" + f_borders + "' /> &nbsp;&nbsp;" + i18n["pixels"] + "</td> \
+            <td><input name='f_borders' type='text' size='5' value='" + f_borders + "' /> &#160;&#160;" + i18n["pixels"] + "</td> \
           </tr> \
           <tr> \
             <td class='label'>" + i18n["Frames"] + ":</td> \
@@ -337,7 +337,7 @@ TableOperations.prototype.dialogRowCellProperties = function(cell) {
 //               <option value='right'" + selected(f_align == "right") + ">" + i18n["Right"] + "</option> \
 //               <option value='char'" + selected(f_align == "char") + ">" + i18n["Char"] + "</option> \
 //             </select> \
-//             &nbsp;&nbsp;" + i18n["Char"] + ": \
+//             &#160;&#160;" + i18n["Char"] + ": \
 //             <input type='text' style='font-family: monospace; text-align: center' name='f_char' size='1' value='" + f_char + "' /> \
 //           </td> \
 //         </tr><tr> \
@@ -637,7 +637,7 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 			// i && (HTML += "<br />");
 			var cells = rows[i];
 			for (var j = 0; j < cells.length; ++j) {
-				// j && (HTML += "&nbsp;");
+				// j && (HTML += "&#160;");
 				var cell = cells[j];
 				HTML += cell.innerHTML;
 				(i || j) && (cell.parentNode.removeChild(cell));
@@ -810,7 +810,7 @@ TableOperations.createColorButton = function(doc, editor, color, name) {
 	df.appendChild(button);
 	var span = doc.createElement("span");
 	span.className = "chooser";
-	// span.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+	// span.innerHTML = "&#160;&#160;&#160;&#160;&#160;&#160;&#160;";
 	span.style.backgroundColor = color;
 	button.appendChild(span);
 	button.onmouseover = function() { if (!this.disabled) { this.className += " buttonColor-hilite"; }};

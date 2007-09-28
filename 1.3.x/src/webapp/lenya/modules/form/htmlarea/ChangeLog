@@ -12,7 +12,7 @@
 	Code contributed by Adam Wright.
 
 	* htmlarea.js: code to call onKeyPress for plugins that define it
-	code that keeps single spaces as &nbsp;
+	code that keeps single spaces as &#160;
 	(thanks to hipikat @ IT forums (Adam Wright))
 
 	* ChangeLog:

@@ -321,7 +321,7 @@ ContextMenu.prototype.popupMenu = function(ev) {
 			var IE_IS_A_FUCKING_SHIT = '>';
 			if (HTMLArea.is_ie) {
 				td.unselectable = "on";
-				IE_IS_A_FUCKING_SHIT = " unselectable='on' style='height=1px'>&nbsp;";
+				IE_IS_A_FUCKING_SHIT = " unselectable='on' style='height=1px'>&#160;";
 			}
 			td.innerHTML = "<div" + IE_IS_A_FUCKING_SHIT + "</div>";
 			var td1 = td.cloneNode(true);
@@ -362,7 +362,7 @@ ContextMenu.prototype.popupMenu = function(ev) {
 			td2.innerHTML = label;
 			item.onmouseover = function() {
 				this.className += " hover";
-				self.editor._statusBarTree.innerHTML = this.__msh.tooltip || '&nbsp;';
+				self.editor._statusBarTree.innerHTML = this.__msh.tooltip || '&#160;';
 			};
 			item.onmouseout = function() { this.className = "item"; };
 			item.oncontextmenu = function(ev) {
