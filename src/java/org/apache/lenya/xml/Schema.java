@@ -44,7 +44,6 @@ public class Schema {
      * @param language The language, as defined by
      *            org.apache.cocoon.components.validation.Validator.
      * @param schemaUri The schema URI.
-     * @param httpUri The URI to access the schema via HTTP.
      * @see org.apache.cocoon.components.validation.Validator
      */
     public Schema(String language, String schemaUri) {
