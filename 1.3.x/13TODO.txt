@@ -1,3 +1,16 @@
+Administration navigation - Create Resource, return from edit resource.
+Add "Choose Lenya doc link" dialog to Xinha.
+Add "Create file resource" to Xinha.
+Security.
+Link rewriting (CreateRevisionTransformer and HTMLSeriralizer)
+Structure editor.
+
+CreateRevisionTransformer: Set creator and when properly.
+Dialog1 - Dialog6 fields added to new revisions.  From Xinha?
+Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
+
+
+==== ToDo List from 2006
 === 1.2.x Conversion
 Session Module: login.xsp -> NullPointerException
 
@@ -30,6 +43,12 @@ Need "live" or "homepage"?.  Rename livemenu to live?  What variations are usefu
 All = all relations, use for authoring
 Live = use for menus.  Do not include /index.
 StructureEditor should use "visible in menu" flag to build "live".  Checkboxes on Structure editor.
+
+flat/clean: move pub to ../pubs12, then copy 
+content/index|relation|resource 
+modules
+config/???
+
 
 === Indexer
 Currently indexes everything in Flat Publications every time (and only when) Lenya1.3 starts.
