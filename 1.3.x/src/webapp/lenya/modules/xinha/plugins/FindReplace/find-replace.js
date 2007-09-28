@@ -20,7 +20,7 @@ FindReplace.editor = editor;
 var sel = editor.getSelectedHTML();
   if(/\w/.test(sel)) {
   sel = sel.replace(/<[^>]*>/g,"");
-  sel = sel.replace(/&nbsp;/g,"");
+  sel = sel.replace(/&nbsp;/g,"").replace(/&$160;/g,"");
   }
 var param = /\w/.test(sel) ? {fr_pattern: sel} : null;
 editor._popupDialog("plugin://FindReplace/find_replace", null, param);

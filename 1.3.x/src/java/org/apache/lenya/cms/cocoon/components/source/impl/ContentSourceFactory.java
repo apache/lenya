@@ -107,12 +107,12 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
         int colonCount = 0;
         while(token.equals(":")){
             colonCount++;
-            token = tokens.nextToken();
+            token = (tokens.hasMoreTokens() ? tokens.nextToken() : "");
         }
         int slashCount = 0;
         while(token.equals("/")){
             slashCount++;
-            token = tokens.nextToken();
+            token = (tokens.hasMoreTokens() ? tokens.nextToken() : "");
         }
         int requestType = colonCount - 1;
         boolean isFormat2 = false;
@@ -136,28 +136,38 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
             slashCount = (slashCount > slashCount2 ? slashCount : slashCount2);
         }
         // System.out.println("SL=" + slashCount + "TOK=" + token);
-        String structure = "";
-        String unid = "";
-        String fullid = "";
-        if(slashCount == 1){
-            if(tokens.hasMoreTokens()){
-                slashCount = 0;
-            }else unid = token;
-        }
-        if((slashCount == 0) || (slashCount == 2)){
-            structure = token;
-        }
-        if((slashCount == 0) || (slashCount == 2) || (slashCount == 3)){
-            StringBuffer buffer = new StringBuffer();
-            while(tokens.hasMoreTokens())
-                buffer.append(tokens.nextToken());
-            fullid = buffer.toString();
-        }
-        // Convert fullid to unid
-        if(unid.length() < 1){
-            unid = content.getUNID(structure, fullid);
-        }
-        // Defaults
+        // ## Decide UNID
+        // String structure = "";
+        // String unid = "";
+        // String fullid = "";
+        // if(slashCount == 1){
+        // if(tokens.hasMoreTokens()){
+        // slashCount = 0;
+        // }else unid = token;
+        // }
+        // if((slashCount == 0) || (slashCount == 2)){
+        // structure = token;
+        // }
+        // if((slashCount == 0) || (slashCount == 2) || (slashCount == 3)){
+        // StringBuffer buffer = new StringBuffer();
+        // while(tokens.hasMoreTokens())
+        // buffer.append(tokens.nextToken());
+        // fullid = buffer.toString();
+        // }
+        // // Convert fullid to unid
+        // if(unid.length() < 1){
+        // unid = content.getUNID(structure, fullid);
+        // }
+        // ## 20070927 solprovider: This rewrite did not work. Simpler is good. Test later.
+        String structure = (2 < slashCount ? "" : token);
+        String unid = token;
+        StringBuffer buffer = new StringBuffer();
+        while(tokens.hasMoreTokens())
+            buffer.append(tokens.nextToken());
+        String fullid = buffer.toString();
+        if((1 < slashCount) || (0 < fullid.length())) unid = content.getUNID(structure, fullid);
+        // ASSUME: UNID
+        // ## Defaults
         if(language.length() < 1){
             Resource resource = content.getResource(unid);
             if(resource != null) language = resource.getDefaultLanguage();

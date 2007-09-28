@@ -33,7 +33,7 @@ function(html) {
 	// Remove Tags with XML namespace declarations: <o:p></o:p>
 	html = html.replace(/<\/?\w+:[^>]*>/gi, "") ;
 	// Replace the &nbsp;
-	html = html.replace(/&nbsp;/, " " );
+	html = html.replace(/&nbsp;/, " " ).replace(/&$160;/, " " );
 
 	// Transform <p><br /></p> to <br>
 	//html = html.replace(/<\s*p[^>]*>\s*<\s*br\s*\/>\s*<\/\s*p[^>]*>/gi, "<br>");

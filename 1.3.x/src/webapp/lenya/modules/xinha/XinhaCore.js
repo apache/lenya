@@ -2843,7 +2843,7 @@ str=str.toString();
 str=str.replace(/&/ig,"&amp;");
 str=str.replace(/</ig,"&lt;");
 str=str.replace(/>/ig,"&gt;");
-str=str.replace(/\xA0/g,"&nbsp;");
+str=str.replace(/\xA0/g,"&#160;");
 str=str.replace(/\x22/g,"&quot;");
 return str;
 };

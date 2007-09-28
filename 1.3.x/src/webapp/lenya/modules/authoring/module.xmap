@@ -62,8 +62,7 @@
                <map:parameter name="parameter-selector-test" value="{publication:contenttype}"/>
                <map:when test="flat">
                   <map:act type="resource-exists" src="module://edit/module.xmap">
-                     <map:generate src="cocoon://{publication:publication}/edit/module.xmap"/> 
-                     <map:serialize type="html"/>
+                     <map:redirect-to uri="/{publication:publication}/edit"/>
                   </map:act>
                </map:when>
             </map:select>

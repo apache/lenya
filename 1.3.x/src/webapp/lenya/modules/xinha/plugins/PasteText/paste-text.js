@@ -53,7 +53,7 @@ PasteText.prototype.buttonPress = function(editor) {
   		html = html.replace(/>/g, "&gt;");
   		if ( ret.insertParagraphs)
   		{
-  			html = html.replace(/\t/g,"&nbsp;&nbsp;&nbsp;&nbsp;");
+  			html = html.replace(/\t/g,"&#160;&#160;&#160;&#160;");
 			html = html.replace(/\n/g,"</p><p>");
 			html="<p>" + html + "</p>";
 			if (Xinha.is_ie)

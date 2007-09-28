@@ -96,7 +96,7 @@ nb.appendChild(s);
 df.appendChild(nb);
 }
 if(!(/\S/.test(_b.innerHTML))){
-_b.innerHTML="&nbsp;";
+_b.innerHTML="&#160;";
 }
 p=df.firstChild;
 if(!(/\S/.test(p.innerHTML))){

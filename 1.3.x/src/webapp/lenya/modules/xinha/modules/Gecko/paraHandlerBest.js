@@ -186,7 +186,7 @@ cnt.appendChild(_30._doc.createElement(_33.nodeName));
 fill=this.forEachNodeUnder(cnt,"find_fill","ltr",false);
 if(fill&&this._pifySibling.test(_33.nodeName)&&((pifyOffset==0)||(pifyOffset==1&&this._pifyForced.test(_33.nodeName)))){
 _29=_30._doc.createElement("p");
-_29.innerHTML="&nbsp;";
+_29.innerHTML="&#160;";
 if((_28=="left")&&_33.previousSibling){
 return new Array(_33.previousSibling,"AfterEnd",_29);
 }else{
@@ -203,11 +203,11 @@ fill=_30._doc.createDocumentFragment();
 }
 if((fill.nodeType==1&&!this._elemSolid.test())||fill.nodeType==11){
 var _34=_30._doc.createElement("p");
-_34.innerHTML="&nbsp;";
+_34.innerHTML="&#160;";
 fill.appendChild(_34);
 }else{
 var _34=_30._doc.createElement("p");
-_34.innerHTML="&nbsp;";
+_34.innerHTML="&#160;";
 fill.parentNode.insertBefore(parentNode,fill);
 }
 }

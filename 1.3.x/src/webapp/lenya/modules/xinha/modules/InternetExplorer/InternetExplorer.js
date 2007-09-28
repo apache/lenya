@@ -56,10 +56,12 @@ return true;
 };
 InternetExplorer.prototype.inwardHtml=function(_9){
 _9=_9.replace(/<(\/?)del(\s|>|\/)/ig,"<$1strike$2");
-_9=_9.replace(/(&nbsp;)?([\s\S]*?)(<script|<!--)/i,"$2&nbsp;$3");
+_9=_9.replace(/(&#160;)?([\s\S]*?)(<script|<!--)/i,"$2&#160;$3");
+_9=_9.replace(/(&nbsp;)?([\s\S]*?)(<script|<!--)/i,"$2&$160;$3");
 return _9;
 };
 InternetExplorer.prototype.outwardHtml=function(_a){
+_a=_a.replace(/&#160;(\s*)(<script|<!--)/i,"$1$2");
 _a=_a.replace(/&nbsp;(\s*)(<script|<!--)/i,"$1$2");
 return _a;
 };

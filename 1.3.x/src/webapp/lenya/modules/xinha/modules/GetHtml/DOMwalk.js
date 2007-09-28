@@ -126,7 +126,7 @@ _a+=" selected=\"selected\"";
 }
 if(_a!==""){
 if(_b&&_d=="p"){
-_a+=">&nbsp;</p>";
+_a+=">&#160;</p>";
 }else{
 if(_b){
 _a+=" />";

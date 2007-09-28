@@ -207,7 +207,7 @@ else if($IMConfig['allow_upload']) { ?>
 <tr>
 			<td align="right"><?php if($insertMode=='image') { ?> <label for="f_width">Width</label><?php }?></td>
 
-			<td><?php if($insertMode=='image') { ?> <input type="text" id="f_width" class="smallWidth" value="" onchange="javascript:checkConstrains('width');"/><?php } else echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";?></td>
+			<td><?php if($insertMode=='image') { ?> <input type="text" id="f_width" class="smallWidth" value="" onchange="javascript:checkConstrains('width');"/><?php } else echo "&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;";?></td>
 
 			<td rowspan="2"><?php if($insertMode=='image') { ?><img src="<?php print $IMConfig['base_url'];?>img/locked.gif" id="imgLock" width="25" height="32" alt="Constrained Proportions" />
 				<input type="hidden" id="orginal_width" />

@@ -133,6 +133,7 @@ var _1e=new RegExp("(\\S)("+_19.join("|")+")","g");
 _1b=_1b.replace(_1e,"$1"+this.closingQuotes);
 var _1f=new RegExp("(\\S)("+_1a.join("|")+")","g");
 _1b=_1b.replace(_1f,"$1"+this.closingQuote);
+// 20070927 solprovider: Did not change this while fixing "&nbsp;" -> "&#160;".
 var _20=new RegExp("( |&nbsp;)(-)( |&nbsp;)","g");
 _1b=_1b.replace(_20," "+String.fromCharCode(8211)+" ");
 this.editor.setHTML(_1b);

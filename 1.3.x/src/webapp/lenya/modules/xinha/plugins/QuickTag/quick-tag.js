@@ -23,7 +23,7 @@ function QuickTag(editor) {
 
 QuickTag.prototype.buttonPress = function(editor) { 
 var self = this;
-var sel = editor.getSelectedHTML().replace(/(<[^>]*>|&nbsp;|\n|\r)/g,""); 
+var sel = editor.getSelectedHTML().replace(/(<[^>]*>|&#160;|\n|\r)/g,""); 
 var param = new Object();
 param.editor = editor;
 

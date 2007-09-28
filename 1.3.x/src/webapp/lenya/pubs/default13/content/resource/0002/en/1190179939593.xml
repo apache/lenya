@@ -43,7 +43,7 @@
   <body>
     <h1>Document Type Examples</h1>
 
-    <p>The default publication comes with the <a href="/lenya/default/authoring/doctypes/xhtml-document.html">XHTML Doctype</a>.</p>
+    <p>The default publication comes with the <a href="/default13/live/doctypes/xhtml-document.html">XHTML Doctype</a>.</p>
     
     <p>The XHTML Doctype allows complete freedom of what information and formatting 
     can be inserted into a document. While this approach is very flexible, it also

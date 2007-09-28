@@ -41,7 +41,7 @@ while(pe.parentNode.tagName.toLowerCase()!="body"){
 pe=pe.parentNode;
 }
 var dx=_e._doc.createElement(_f);
-dx.innerHTML="&nbsp;";
+dx.innerHTML="&#160;";
 if(pe.parentNode.lastChild==pe){
 pe.parentNode.appendChild(dx);
 }else{
@@ -53,13 +53,13 @@ var pe=_e.getParentElement();
 while(pe&&(pe.nodeType==1)&&(pe.tagName.toLowerCase()!="body")){
 if(pe.tagName.toLowerCase()=="dl"){
 var dx=_e._doc.createElement(_f);
-dx.innerHTML="&nbsp;";
+dx.innerHTML="&#160;";
 pe.appendChild(dx);
 break;
 }else{
 if((pe.tagName.toLowerCase()=="dt")||(pe.tagName.toLowerCase()=="dd")){
 var dx=_e._doc.createElement(_f);
-dx.innerHTML="&nbsp;";
+dx.innerHTML="&#160;";
 if(pe.parentNode.lastChild==pe){
 pe.parentNode.appendChild(dx);
 }else{

@@ -265,7 +265,7 @@ public class FlatResource implements Resource {
         return newElement;
     }
     public Document update(Document document) {
-        System.out.println("FlatResource.update - BEGIN");
+        // System.out.println("FlatResource.update - BEGIN");
         Element root = document.getDocumentElement();
         if(root.hasAttribute("id")) setID(root.getAttribute("id"));
         if(root.hasAttribute("defaultlanguage")) setDefaultLanguage(root.getAttribute("defaultlanguage"));
@@ -285,12 +285,12 @@ public class FlatResource implements Resource {
                     exist = false;
                 }
             }
-            System.out.println("FlatResource.update - Get translation");
+            // System.out.println("FlatResource.update - Get translation");
             if(exist){
                 ft = getTranslation(language, false);
                 if(null == ft) exist = false;
             }
-            System.out.println("FlatResource.update - Update Translation");
+            // System.out.println("FlatResource.update - Update Translation");
             if(exist){
                 if(translation.hasAttribute("live")) ft.setLive(translation.getAttribute("live"));
                 if(translation.hasAttribute("edit")) ft.setEdit(translation.getAttribute("edit"));
@@ -312,7 +312,7 @@ public class FlatResource implements Resource {
                 ft.save();
             }
         }
-        System.out.println("FlatResource.update - RETURN");
+        // System.out.println("FlatResource.update - RETURN");
         return document;
     }
     private void setID(String newid) {

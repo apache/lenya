@@ -57,6 +57,7 @@ if(_9.CharCounter.showWord||_9.CharCounter.showChar){
 _a=_a.replace(/<\/?\s*!--[^-->]*-->/gi,"");
 _a=_a.replace(/<(.+?)>/g,"");
 _a=_a.replace(/&nbsp;/gi," ");
+_a=_a.replace(/&#160;/gi," ");
 _a=_a.replace(/([\n\r\t])/g," ");
 _a=_a.replace(/(  +)/g," ");
 _a=_a.replace(/&(.*);/g," ");

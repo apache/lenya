@@ -298,7 +298,7 @@ td.className="icon";
 var _3a=">";
 if(HTMLArea.is_ie){
 td.unselectable="on";
-_3a=" unselectable='on' style='height=1px'>&nbsp;";
+_3a=" unselectable='on' style='height=1px'>&#160;";
 }
 td.innerHTML="<div"+_3a+"</div>";
 var td1=td.cloneNode(true);
@@ -337,7 +337,7 @@ td2.className="label";
 td2.innerHTML=_3c;
 _37.onmouseover=function(){
 this.className+=" hover";
-_20.editor._statusBarTree.innerHTML=this.__msh.tooltip||"&nbsp;";
+_20.editor._statusBarTree.innerHTML=this.__msh.tooltip||"&#160;";
 };
 _37.onmouseout=function(){
 this.className="item";

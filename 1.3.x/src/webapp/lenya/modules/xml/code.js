@@ -29,10 +29,10 @@ function update(){
    var content = pub.getContent();
    var resource = content.getResource(unid);
    //Input
-print("####### XML RESOURCE UPDATE BEGIN #######");
+//print("####### XML RESOURCE UPDATE BEGIN #######");
    var dom = loadDocument("cocoon:/" + module + "/savedata/" + unid);
    var root = dom.getDocumentElement();
-print("ROOT=" + root.getTagName());
+//print("ROOT=" + root.getTagName());
    var child = root.getFirstChild();
    while(child != null){
       var childtag = child.getNodeName();
@@ -56,7 +56,7 @@ print("ROOT=" + root.getTagName());
 }
 
 function create(){
-   print("####### XML CREATE REVISION #######");
+//   print("####### XML CREATE REVISION #######");
    var module = cocoon.parameters.module;
    var unid = cocoon.parameters.unid;
    var dom = loadDocument("cocoon:/" + module + "/saverevisiondata/" + unid);

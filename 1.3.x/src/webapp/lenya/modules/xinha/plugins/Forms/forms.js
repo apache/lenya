@@ -96,7 +96,7 @@ if(_1b["f_target"]!=""){
 frm+=" target=\""+_1b["f_target"]+"\"";
 }
 frm+=">";
-_10.surroundHTML(frm,"&nbsp;</form>");
+_10.surroundHTML(frm,"&#160;</form>");
 }
 }
 },_15);

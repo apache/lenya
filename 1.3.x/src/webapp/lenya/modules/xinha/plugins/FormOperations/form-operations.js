@@ -29,7 +29,7 @@ var _8=null;
 if(_1.config.FormOperations.default_form_html){
 _8=pasteAndSelect(_1.config.FormOperations.default_form_html);
 }else{
-_8=pasteAndSelect("<form>&nbsp;</form>");
+_8=pasteAndSelect("<form>&#160;</form>");
 }
 if(_1.config.FormOperations.default_form_action&&!_8.action){
 _8.action=_1.config.FormOperations.default_form_action;

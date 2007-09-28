@@ -74,7 +74,7 @@ function drawDirs_Files($list, &$manager)
     		?>
             <table class="listview">
             <thead>
-            <tr><th colspan="2">Name</th><th>Size</th><th>Image Size</th><th>Date Modified</th><th>&nbsp;</th></tr></thead>
+            <tr><th colspan="2">Name</th><th>Size</th><th>Image Size</th><th>Date Modified</th><th>&#160;</th></tr></thead>
             <tbody>
             <?php
     		// start of foreach for draw listview folders .
