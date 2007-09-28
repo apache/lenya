@@ -498,21 +498,21 @@ a.brokenlink {
 }
 
 .search-result-score {
-    /* float: right; */
     font-size: 90%;
+    font-weight: normal;
 }
 
 .search-result-rank {
     float: left; 
-    font-size: 110%;
 }
 
 .search-result-title {
     margin: 0 0 0 30px;
     padding: 0;
-    font-size: 110%;
+    font-weight: bold;
 }
 
 .search-result-description {
     margin-left: 30px;
+    color: #999999;
 }
