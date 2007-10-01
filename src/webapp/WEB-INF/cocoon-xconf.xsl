@@ -300,9 +300,9 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     <LanguageParamName>YOUR_PARAM_NAME</LanguageParamName>
   </component>
   
-  <component logger="lenya.ac.shibboleth"
-    role="org.apache.shibboleth.util.AttributeTranslator"
-    class="org.apache.shibboleth.util.impl.AttributeTranslatorImpl">
+  <component logger="lenya.ac.saml"
+    role="org.apache.lenya.ac.saml.AttributeTranslator"
+    class="org.apache.lenya.ac.saml.impl.AttributeTranslatorImpl">
     <!--
       Attributes to translate for easier reading/handling within Lenya.
       Attributes will be available by their translated name (outName) within Lenya.
@@ -394,10 +394,10 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     <!-- OriginSite siteName="examplesite" uidAttribute="exampleuid" -->
   </component>
   
-  <component logger="lenya.ac.shibboleth"
-    role="org.apache.shibboleth.util.UserFieldsMapping"
-    class="org.apache.shibboleth.util.impl.UserFieldsMappingImpl">
-    <!-- Shibboleth attributes to Lenya user profile mapping. -->
+  <component logger="lenya.ac.saml"
+    role="org.apache.lenya.ac.saml.UserFieldsMapping"
+    class="org.apache.lenya.ac.saml.impl.UserFieldsMappingImpl">
+    <!-- map user attributes to Lenya user profile -->
     <FirstName>urn:mace:dir:attribute-def:givenName</FirstName>
     <LastName>urn:mace:dir:attribute-def:sn</LastName>
     <EMail>urn:mace:dir:attribute-def:mail</EMail>
