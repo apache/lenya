@@ -36,7 +36,7 @@ function groupChangeProfile() {
 		
 		var messages = new java.util.ArrayList();
 		
-		var translator = cocoon.getComponent("org.apache.shibboleth.util.AttributeTranslator");
+		var translator = cocoon.getComponent("org.apache.lenya.ac.saml.AttributeTranslator");
 		var attributeNames = translator.getSupportedResultNames();
 		
 		// at the moment the loop is executed only once (no form validation)

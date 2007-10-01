@@ -351,5 +351,9 @@
   <message key="lenya.imageupload.info.noimages">Keine Bilder verfügbar.</message>
   <message key="lenya.imageupload.links.hint">Externe Verweise müssen mit 'http://' und interne Verweise mit '/' beginnen.</message>  
   <message key="lenya.imageupload.no.image.selected">Es wurde kein Bild ausgewählt. Bitte wählen Sie eines aus.</message>
+  
+  <!-- user attributes -->
+  <message key="accesscontrol.attribute.surname">Der Nachname des Nutzers.</message>
+  <message key="accesscontrol.attribute.mail">Die E-Mail-Adresse des Nutzers.</message>
 </catalogue>
 

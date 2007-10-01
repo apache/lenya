@@ -122,11 +122,21 @@
           </code>
           <br/><br/>
           <strong><i18n:text>Available attributes</i18n:text></strong>:
-          <ul style="margin-top: 0px;">
+          <table class="lenya-table" style="margin-top: 1em;">
+            <tr>
+              <th style="border-right: none"><i18n:text>Name</i18n:text></th>
+              <th style="border-left: none"><i18n:text>Description</i18n:text></th>
+            </tr>
             <xsl:for-each select="../attributeNames/attributeName">
-              <li><xsl:value-of select="."/></li>
+              <xsl:sort select="."/>
+              <tr>
+                <td style="border-right: none"><xsl:value-of select="."/></td>
+                <td style="border-left: none">
+                  <i18n:text>accesscontrol.attribute.<xsl:value-of select="."/></i18n:text>
+                </td>
+              </tr>
             </xsl:for-each>
-          </ul>
+          </table>
           
         </form>
       </div>
