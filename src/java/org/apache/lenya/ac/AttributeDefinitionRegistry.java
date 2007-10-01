@@ -35,7 +35,8 @@ public class AttributeDefinitionRegistry {
     }
     
     /**
-     * @param def The definition to register.
+     * @param def The definition to register. If another definition was registered, the
+     * old definition will be discarded.
      */
     public static void register(AttributeDefinition def) {
         AttributeDefinitionRegistry.definition = def;
