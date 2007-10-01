@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.ac.impl.jexl;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.commons.jexl.Expression;
 import org.apache.commons.jexl.ExpressionFactory;
 import org.apache.commons.jexl.JexlContext;
@@ -30,7 +33,14 @@ import org.apache.lenya.ac.impl.ValidationResult;
 /**
  * JEXL-based attribute rule evaluator.
  */
-public class JexlEvaluator implements AttributeRuleEvaluator {
+public class JexlEvaluator extends AbstractLogEnabled implements AttributeRuleEvaluator {
+    
+    /**
+     * @param logger The logger.
+     */
+    public JexlEvaluator(Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
+    }
 
     /**
      * @param user The user.
