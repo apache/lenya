@@ -25,6 +25,9 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Request;
@@ -51,14 +54,24 @@ import org.apache.shibboleth.util.UserFieldsMapper;
 import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
 
 /**
- * Shibboleth-based authenticator.
+ * <p>Shibboleth-based authenticator.<p>
+ * <p>Configuration:</p>
+ * <ul>
+ * <li>
+ *   <code>&lt;redirect-to-wayf&gt;true|false&lt;/redirect-to-wayf&gt;</code>
+ *   - if the application should redirect to the WAYF server instead of the login screen
+ *   if a resource is protected only via group rules
+ * </li>
+ * </pre>
  */
-public class ShibbolethAuthenticator extends UserAuthenticator {
+public class ShibbolethAuthenticator extends UserAuthenticator implements Configurable {
 
     protected static final String ERROR_MISSING_UID_ATTRIBUTE = "Unable to get unique identifier for subject. "
                             + "Make sure you are listed in the metadata.xml "
                             + "file and your resources your are trying to access "
                             + "are available and your are allowed to see them. (Resourceregistry).";
+    
+    private boolean redirectToWayf = false;
 
     public boolean authenticate(AccreditableManager accreditableManager, Request request,
             ErrorHandler handler) throws AccessControlException {
@@ -207,9 +220,8 @@ public class ShibbolethAuthenticator extends UserAuthenticator {
     }
 
     public String getLoginUri(Request request) {
-        if (isOnlyShibbolethProtected(request)) {
+        if (this.redirectToWayf && isOnlyShibbolethProtected(request)) {
             return request.getRequestURI() + "?lenya.usecase=shibboleth&lenya.step=wayf";
-            
         }
         else {
             return super.getLoginUri(request);
@@ -270,6 +282,13 @@ public class ShibbolethAuthenticator extends UserAuthenticator {
                 }
                 manager.release(selector);
             }
+        }
+    }
+
+    public void configure(Configuration config) throws ConfigurationException {
+        Configuration redirectConfig = config.getChild("redirect-to-wayf", false);
+        if (redirectConfig != null) {
+            this.redirectToWayf = redirectConfig.getValueAsBoolean();
         }
     }
 

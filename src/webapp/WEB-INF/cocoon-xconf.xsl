@@ -215,7 +215,9 @@
   
   <component logger="lenya.ac.authenticator"
       class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator"
-      role="org.apache.lenya.ac.Authenticator"/>
+      role="org.apache.lenya.ac.Authenticator">
+    <redirect-to-wayf>true</redirect-to-wayf>
+  </component>
 <!--
     <component logger="lenya.ac.authenticator"
       class="org.apache.lenya.ac.impl.UserAuthenticator"
