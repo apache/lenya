@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.shibboleth.util;
+package org.apache.lenya.ac.saml;
 
 /**
  * Mapping from SAML attributes to user fields.

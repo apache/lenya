@@ -17,7 +17,6 @@
  */
 package org.apache.shibboleth;
 
-import org.apache.shibboleth.util.AttributeTranslator;
 import org.apache.shibboleth.util.CredentialsManager;
 import org.apache.shibboleth.util.UniqueIdentifierMapper;
 import org.opensaml.ReplayCache;
@@ -27,7 +26,7 @@ import edu.internet2.middleware.shibboleth.aap.AAP;
 import edu.internet2.middleware.shibboleth.metadata.Metadata;
 
 /**
- * Facade to Shibboleth funcationality.
+ * Facade to Shibboleth functionality.
  */
 public interface ShibbolethModule {
 
@@ -45,11 +44,6 @@ public interface ShibbolethModule {
      * @return The artifact mapper.
      */
     ArtifactMapper getArtifactMapper();
-
-    /**
-     * @return The attribute translator.
-     */
-    AttributeTranslator getAttributeTranslator();
 
     /**
      * @return The credentials manager.

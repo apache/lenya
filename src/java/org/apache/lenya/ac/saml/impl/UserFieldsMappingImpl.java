@@ -15,14 +15,14 @@
  *  limitations under the License.
  *
  */
-package org.apache.shibboleth.util.impl;
+package org.apache.lenya.ac.saml.impl;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.shibboleth.util.UserFieldsMapping;
+import org.apache.lenya.ac.saml.UserFieldsMapping;
 
 /**
  * User fields mapping implementation.

@@ -34,7 +34,6 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.shibboleth.ShibbolethModule;
 import org.apache.shibboleth.saml.ArtifactMapperImpl;
-import org.apache.shibboleth.util.AttributeTranslator;
 import org.apache.shibboleth.util.CredentialsManager;
 import org.apache.shibboleth.util.UniqueIdentifierMapper;
 import org.opensaml.MalformedException;
@@ -79,7 +78,6 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
     private XMLAAP aap;
     private ReplayCache replayCache;
     private ArtifactMapper artifactMapper;
-    private AttributeTranslator attributeTranslator;
     private UniqueIdentifierMapper uidMapper;
     private CredentialsManager credentialsManager;
     private String wayfServerUrl;
@@ -88,11 +86,6 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
 
     private static String languageParamName;
 
-    /**
-     * Separator for multiple values.
-     */
-    public static final String MULTIVALUE_SEPARATOR = ";";
-    
     private ServiceManager manager;
 
     public UniqueIdentifierMapper getUidMapper() {
@@ -116,18 +109,6 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
             }
         }
         return this.artifactMapper;
-    }
-
-    public AttributeTranslator getAttributeTranslator() {
-        if (this.attributeTranslator == null) {
-            try {
-                this.attributeTranslator = (AttributeTranslator) this.manager
-                        .lookup(AttributeTranslator.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.attributeTranslator;
     }
 
     public CredentialsManager getCredentialsManager() {

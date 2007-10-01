@@ -23,7 +23,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.ac.AttributeDefinition;
-import org.apache.shibboleth.util.AttributeTranslator;
+import org.apache.lenya.ac.saml.AttributeTranslator;
 
 /**
  * Shibboleth-based attribute definition. The attribute names are the possible

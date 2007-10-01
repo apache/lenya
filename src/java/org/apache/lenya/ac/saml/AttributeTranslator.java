@@ -15,14 +15,13 @@
  *  limitations under the License.
  *
  */
-package org.apache.shibboleth.util;
+package org.apache.lenya.ac.saml;
 
 import java.util.Map;
 
 /**
- * The attribute translator translates SAML attributes into a simplier form. The
- * multivalue SAML attributes can either be translated into comma-separated
- * values, or into string arrays.
+ * The attribute translator translates user attributes into a simpler form. The multi-value
+ * attributes can either be translated into comma-separated values, or into string arrays.
  */
 public interface AttributeTranslator {
 
@@ -32,22 +31,21 @@ public interface AttributeTranslator {
     String ROLE = AttributeTranslator.class.getName();
 
     /**
-     * This is the same as <code>translateSamlAttributes(map, true)</code>.
-     * @param samlAttributesMap The original SAML attributes.
-     * @return AttributesMap containing all values of a given key as a
-     *         comma-separated String.
+     * This is the same as <code>translateAttributes(map, true)</code>.
+     * @param attributes The original attributes, the values are {@link org.opensaml.SAMLAttribute}
+     *        objects.
+     * @return AttributesMap containing all values of a given key as a comma-separated String.
      */
-    Map translateSamlAttributes(Map samlAttributesMap);
+    Map translateAttributes(Map attributes);
 
     /**
-     * @param samlAttributesMap The original SAML attributes.
-     * @param joinValues If the values should be joined to a comma-separated
-     *        string.
-     * @return AttributesMap containing all values of a given key as a String
-     *         array or comma-separated String, depending on the
-     *         <code>joinValues</code> parameter.
+     * @param attributes The original attributes, the values are {@link org.opensaml.SAMLAttribute}
+     *        objects.
+     * @param joinValues If the values should be joined to a comma-separated string.
+     * @return AttributesMap containing all values of a given key as a String array or
+     *         comma-separated String, depending on the <code>joinValues</code> parameter.
      */
-    Map translateSamlAttributes(Map samlAttributesMap, boolean joinValues);
+    Map translateAttributes(Map attributes, boolean joinValues);
 
     /**
      * @return All possible result names.

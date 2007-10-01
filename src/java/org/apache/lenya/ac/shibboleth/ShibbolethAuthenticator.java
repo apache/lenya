@@ -45,12 +45,12 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.TransientUser;
 import org.apache.lenya.ac.impl.UserAuthenticator;
+import org.apache.lenya.ac.saml.AttributeTranslator;
+import org.apache.lenya.ac.saml.UserFieldsMapper;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.shibboleth.AssertionConsumerService;
 import org.apache.shibboleth.AttributeRequestService;
-import org.apache.shibboleth.util.AttributeTranslator;
-import org.apache.shibboleth.util.UserFieldsMapper;
 import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
 
 /**
@@ -175,7 +175,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
         AttributeTranslator translator = null;
         try {
             translator = (AttributeTranslator) this.manager.lookup(AttributeTranslator.ROLE);
-            translatedAttributes = translator.translateSamlAttributes(samlAttributes, false);
+            translatedAttributes = translator.translateAttributes(samlAttributes, false);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         } finally {

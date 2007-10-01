@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.shibboleth.util.impl;
+package org.apache.lenya.ac.saml.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,8 +28,7 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.shibboleth.impl.ShibbolethModuleImpl;
-import org.apache.shibboleth.util.AttributeTranslator;
+import org.apache.lenya.ac.saml.AttributeTranslator;
 import org.opensaml.SAMLAttribute;
 
 /**
@@ -42,6 +41,11 @@ public class AttributeTranslatorImpl extends AbstractLogEnabled implements Attri
     private static final String CONF_ATTRIBUTE_OUTNAME = "outName";
     private static final String CONF_ATTRIBUTE_INNAME = "inName";
 
+    /**
+     * Separator for multiple values.
+     */
+    public static final String MULTIVALUE_SEPARATOR = ";";
+    
     private Map attributeTranslations;
 
     public void configure(Configuration attrTransConfig) throws ConfigurationException {
@@ -60,8 +64,8 @@ public class AttributeTranslatorImpl extends AbstractLogEnabled implements Attri
         }
     }
 
-    public Map translateSamlAttributes(Map samlAttributesMap) {
-        return translateSamlAttributes(samlAttributesMap, true);
+    public Map translateAttributes(Map attributesMap) {
+        return translateAttributes(attributesMap, true);
     }
 
     /**
@@ -75,11 +79,11 @@ public class AttributeTranslatorImpl extends AbstractLogEnabled implements Attri
         return outName != null ? outName : inName;
     }
 
-    public Map translateSamlAttributes(Map samlAttributesMap, boolean joinValues) {
-        Map convertedMap = new HashMap(samlAttributesMap.size());
-        Iterator keys = samlAttributesMap.keySet().iterator();
+    public Map translateAttributes(Map attributesMap, boolean joinValues) {
+        Map convertedMap = new HashMap(attributesMap.size());
+        Iterator keys = attributesMap.keySet().iterator();
         while (keys.hasNext()) {
-            SAMLAttribute attribute = (SAMLAttribute) samlAttributesMap.get(keys.next());
+            SAMLAttribute attribute = (SAMLAttribute) attributesMap.get(keys.next());
             String translatedKey = translateAttribute(attribute.getName());
             Object values;
             if (joinValues) {
@@ -89,7 +93,7 @@ public class AttributeTranslatorImpl extends AbstractLogEnabled implements Attri
                     buffer.append((String) iter.next());
                 }
                 while (iter.hasNext()) {
-                    buffer.append(ShibbolethModuleImpl.MULTIVALUE_SEPARATOR);
+                    buffer.append(MULTIVALUE_SEPARATOR);
                     buffer.append((String) iter.next());
                 }
                 values = buffer.toString();
