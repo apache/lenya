@@ -30,9 +30,188 @@
       <title>Introduction</title>
       <p>
         Some identity providers, e.g. Shibboleth <acronym title="Identity Provider">IdP</acronym> or
-        LDAP servers, provide user attributes to specify their properties or permissions. In Lenya,
-        you can use these attributes to protect pages. 
+        <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> servers, provide user
+        attributes to specify their properties or permissions. In Lenya, you can use these attributes
+        to protect pages. 
       </p>
+    </section>
+    
+    <section>
+      <title>User Attributes</title>
+      <p>
+        Each user can supply multiple values for an attribute.
+        The <code>User</code> interface provides the following methods to handle attributes:
+      </p>
+      <ul>
+        <li>
+          <code>getAttributeNames()</code> - returns an array containing all supported attribute names
+        </li>
+        <li>
+          <code>getAttributeValues(String attributeName)</code> - returns an array containing all values
+          for an attribute, or <code>null</code> if no value is set for this attribute.
+        </li>
+      </ul>
+      <p>
+        When the user object is initialized by the authentication service, the attribute values are
+        obtained from the user management system, for instance the Shibboleth Identity Provider or
+        the LDAP server.
+      </p>
+      <p>
+        You might have noticed that there's no method for setting attribute values in the <code>User</code>
+        interface. That's because Lenya doesn't require the authentication service to allow manipulating user
+        attributes. Typically, attributes are only evaluated for authorization, setting them is done
+        via the administration interface of the user management system (e.g., the LDAP server).
+      </p>
+    </section>
+    
+    <section id="attributeDefinitionRegistry">
+      <title>The Attribute Definition Registry</title>
+      <p>
+        The access conrol services use the <code>AttributeDefinitionRegistry</code> to find out wich
+        user attributes are supported. You can use the static method
+        <code>AttributeDefinitionRegistry.register(AttributeDefinition definition)</code> to register the
+        attribute definition. Only one definition can be used at a time, so if you try to register a second
+        definition, the old definition is discarded.
+      </p>
+    </section>
+    
+    <section id="attributeTranslator">
+      <title>Attribute Translator</title>
+      <p>
+        The attribute translator service is the default attribute definition. It allows to define a
+        human-readable short name for each attribute which is provided by the authentication service.
+        This short name is used in <a href="#rules">attribute rules</a>, it helps to keep the rules
+        less verbose than with the original attribute names.
+      </p>
+      <p>
+        The attribute translator is declared in <code>cocoon.xconf</code>. To declare your own
+        attributes, change the configuration in <code>$LENYA_HOME/src/webapp/WEB-INF/cocoon-xconf.xsl</code>.
+        The <code>inName</code> value is the original attribute name as provided by the authentication
+        service, the <code>outName</code> value is the human-readable short name. The short name
+        may not contain any special characters or whitespace.
+      </p>
+      <source xml:space="preserve"><![CDATA[<component logger="lenya.ac.saml"
+    role="org.apache.lenya.ac.saml.AttributeTranslator"
+    class="org.apache.lenya.ac.saml.impl.AttributeTranslatorImpl">
+  <Attribute inName="urn:mace:dir:attribute-def:sn" outName="surname" />
+  <Attribute inName="urn:mace:dir:attribute-def:givenName" outName="givenName" />
+  <Attribute inName="urn:mace:dir:attribute-def:mail" outName="mail" />
+    ...
+</component>]]></source>
+    </section>
+    
+    <section id="rules">
+      <title>Using Attribute Rules to Define Groups</title>
+      <p>
+        Attribute rules are <a href="http://en.wikipedia.org/wiki/Boolean_expression">boolean expressions</a>
+        which allow to make authorization decisions based on attribute values. A simple example is 
+      </p>
+      <source xml:space="preserve">homeOrganization == "ucla" &amp;&amp; affiliation == "student"</source>
+      <p>
+        At the moment, the following operators are supported:
+      </p>
+      <ul>
+        <li><code>==</code> (string comparison - equal)</li>
+        <li><code>!=</code> (string comparison - not equal)</li>
+        <li><code>&amp;&amp;</code> (boolean and)</li>
+        <li><code>||</code> (boolean or)</li>
+      </ul>
+      <p>
+        The <code>&amp;&amp;</code> operator takes precedence over the <code>||</code> operator.
+      </p>
+      <p>
+        The <code>Group</code> interface provides the following methods to handle rules:
+      </p>
+      <ul>
+        <li>
+          <code>getRule()</code> - returns the rule of the group or <code>null</code> if no rule
+          is defined for this group
+        </li>
+        <li>
+          <code>setRule(String rule)</code> - defines a rule for a group. When the method is called,
+          the rule is validated according to the <a href="#attributeDefinitionRegistry">attribute
+          definition registry</a>. An <code>AccessControlException</code> is thrown if the string
+          is not a valid rule.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Localized Attribute Descriptions</title>
+      <p>
+        The screen which allows to edit the group profile and enter the rule shows a list of
+        all available attributes, according to the <a href="#attributeDefinitionRegistry">attribute
+        definition registry</a>. To give the user some hints about the meaning of the attributes,
+        you can use Lenya's <acronym title="internationalization">i18n</acronym> catalogue
+        (for more information on i18n, refer to the
+        <a href="http://cocoon.apache.org/2.1/userdocs/i18nTransformer.html">I18nTransformer</a>
+        documentation.
+        You find the publication-specific catalogues in <code>$PUB_HOME/lenya/resources/i18n/</code>.
+        For each attribute, add a message with the key <code>accesscontrol.attributes.{shortname}</code>
+        (shortname is the human-readable attribute name as declared in the
+        <a href="#attributeTranslator">attribute translator</a>):
+      </p>
+      <source xml:space="preserve"><![CDATA[<message key="accesscontrol.attribute.surname">The user's family name.</message>
+<message key="accesscontrol.attribute.givenName">The user's given name.</message>
+<message key="accesscontrol.attribute.mail">The user's e-mail address.</message>
+...]]></source>
+    </section>
+    
+    <section>
+      <title>Attribute Rule Evaluation</title>
+      <p>
+        The <code>AbstractGroup</code> class uses the <code>AttributeRuleEvaluator</code> service
+        to validate and evaluate rules. The instance of the service is obtained from the
+        <code>AttributeRuleEvaluatorFactory</code>. The instance of the factory is specified in
+        in <code>cocoon.xconf</code>, for instance:
+      </p>
+      <source xml:space="preserve"><![CDATA[<component logger="lenya.ac.attributeruleevaluator"
+  role="org.apache.lenya.ac.AttributeRuleEvaluatorFactory"
+  class="org.apache.lenya.ac.impl.antlr.AntlrEvaluatorFactory"/>]]></source>
+      <p>
+        Lenya ships with two attribute rule evaluator factory implementations:
+      </p>
+      <ul>
+        <li><a href="#jexl">JexlEvaluatorFactory</a></li>
+        <li><a href="#antlr">AntlrEvaluatorFactory</a></li>
+      </ul>
+    </section>
+    
+    <section id="jexl">
+      <title>The JEXL evaluator</title>
+      <p>
+        The <code>JexlEvalutator</code> uses the
+        <a href="http://commons.apache.org/jexl/">Java Expression Language</a>
+        parser from the Apache Commons Project to evaluate expressions. The advantage of this
+        implementation is its simple architecture since it doesn't require a custom grammar
+        or the generation of a parser. Furthermore, the flexibility of the JEXL language allows
+        to use Java expressions beyond the simple boolean expressions mentioned above (for instance
+        case-insensitive string comparison or string length checks).
+      </p>
+      <p>
+        But be warned that this flexibility imposes possible security risk, because the JEXL
+        evaluator evaluates arbitrary Java expressions. An attacker with access to the administration
+        interface could not only damage your Lenya application, but also execute potentially dangerous
+        code on the server. Because of this it is recommended to use the JEXL evaluator only for testing
+        purposes.
+      </p>
+    </section>
+    
+    <section id="antlr">
+      <title>The ANTLR evaluator</title>
+      <p>
+        The <code>AntlrEvaluator</code> uses a parser which is generated from a custom grammar
+        using the <a href="http://www.antlr.org/">ANTLR</a> parser generator. So if you want to
+        enhance the syntax and semantics of the expression language, you have to extend the
+        grammar and re-generate the parser. The grammar is located at
+        <code>$LENYA_HOME/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g</code>. To
+        generate the parser, execute the following command in the Lenya home directory:
+      </p>
+      <source xml:space="preserve">./build.sh antlr.compile</source>
+      <note>
+        At the time of writing, ANTLR 3.0.1 is used. Since it depends on the older version ANTLR 2,
+        the library <code>antlr-2.7.7.jar</code> is also included in the Lenya distribution.
+      </note>
     </section>
 
   </body>
