@@ -61,7 +61,7 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
         URLInformation info = new URLInformation(webappUrl);
         String pubId = info.getPublicationId();
         String area = info.getArea();
-        
+
         String proxyUrl = null;
 
         if (pubId != null && area != null) {
@@ -70,7 +70,6 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
                 contextUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
                 Request request = ObjectModelHelper.getRequest(contextUtil.getObjectModel());
                 Context context = ObjectModelHelper.getContext(contextUtil.getObjectModel());
-                String contextPath = request.getContextPath();
                 String servletContextPath = context.getRealPath("");
                 Publication pub = PublicationFactory.getPublication(pubId, servletContextPath);
 
@@ -81,7 +80,7 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
                     if (proxy != null) {
                         proxyUrl = proxy.getURL(doc);
                     } else {
-                    		webappUrl = contextPath + webappUrl;
+                        webappUrl = request.getContextPath() + webappUrl;
                     }
                 }
 
@@ -93,7 +92,7 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
                 }
             }
         }
-        
+
         return proxyUrl != null ? proxyUrl : webappUrl;
 
     }
