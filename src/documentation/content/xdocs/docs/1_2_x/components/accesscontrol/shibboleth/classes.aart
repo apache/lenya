@@ -1,0 +1,35 @@
++-----------------------------+
+|DelegatingAuthenticatorAction|
++-----------------------------+   
+|act(...):Map                 |
++--------------+--------------+
+               |
+               |delegates_to
+               |
+    +----------+----------+
+    |«interface»          |
+    |Authenticator        |
+    +---------------------+
+    |authenticate(Request)|
+    +----------+----------+
+               |                  +--------------------------+
+               |implements    uses|«interface»               |
+      +--------+--------+    +----+AttributeRequestService   |
+      |UserAuthenticator|    |    +--------------------------+
+      +--------+--------+    |    +requestAttributes(BPR):Map|
+               |             |    +--------------------------+
+               |extends      |
+   +-----------+-----------+ |    +----------------------------+
+   |                       +-+uses|«interface»                 |
+   |ShibbolethAuthenticator+------+AttributeTranslator         |
+   |                       +-+    +----------------------------+
+   +-----------------------+ |    +translateAttributes(Map):Map|
+                             |    +----------------------------+
+                             |
+                             |    +----------------+
+                             |    |UserFieldsMapper|
+                             |uses+----------------+
+                             +----+getFirstName()  |
+                                  |getLastName()   |
+                                  |getEmail()      |
+                                  +----------------+

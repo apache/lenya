@@ -20,6 +20,9 @@
     <title>Shibboleth Integration Architecture</title>
   </header>
   <body>
-    <figure alt="" src="authenticator.png"></figure>
+    <p>
+      The following class diagram illustrates the involved interfaces and classes and their relationships.
+    </p>
+    <figure alt="Shibboleth integration class diagram" src="classes.png"></figure>
   </body>
 </document>

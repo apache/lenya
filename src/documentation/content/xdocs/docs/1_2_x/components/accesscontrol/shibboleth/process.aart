@@ -1,0 +1,71 @@
++---------+ +---------+ +---------+ +---------+ +---------+
+|   User  | |  Browser| |    SP   | |   WAYF  | |    IdP  |
++----+----+ +---------+ +---------+ +---------+ +---------+
+     |            
++----+----+ 
+|Request  |The_user_requests
+|protected|the_protected_page.
+|page     |
++----+----+  
+     +-----------------------+
+                        +----+----+The_WAYF_server
+                        |Redirect |issues_a_redirect
+                        |to_WAYF  |to_the_IdP
+                        |Server   |which_is_executed
+                        +----+----+by_the_browser.
+                 +-----------+
+                 +-----------------------+
+                                    +----+----+The_WAYF_server_shows
+                                    |Show_IdP |a_form_containing_a_
+                                    |Selection|selection_list_of_available
+                                    +----+----+identity_providers.
+     +-----------------------------------+
++----+----+               
+|Select   |The_user_selects_her_home
+|IdP      |organization_and_submits_the_form.
++----+----+
+     +-----------------------------------+
+                                    +----+----+The_WAYF_server
+                                    |Redirect |redirects_to_the
+                                    |to_IdP   |selected_identity
+                                    +----+----+provider.
+            +----------------------------+            
+            +----------------------------------------+
+                                                +----+----+The_identity
+                                                |Login    |provider_displays
+                                                |Screen   |the_login_screen.
+                                                +----+----+
+     +-----------------------------------------------+
++----+----+               
+|Username,|The_user_enters_her_username
+|Password |and_password_and_submits_the_form.
++----+----+
+     +-----------------------------------------------+
+                                                +----+----+If_username_and_password
+                                                |Authenti-|are_correct,_the_identity
+                                                |cation   |provider_redirects_back
+                                                +----+----+to_the_service_provider,
+            +----------------------------------------+     passing_a_handle.
+            +----------------+                             
+                        +----+----+The_service_provider_sends
+                        |Attribute|an_attribute_request_to_the
+                        |Request  |identity_provider_to_obtain
+                        +----+----+the_user's_attribute_values.
+                             +-----------------------+
+                                                +----+----+
+                                                |Provide  |
+                                                |Attribs  |
+                                                +----+----+
+                             +-----------------------+
+                        +----+----+
+                        |Granted  |
+                        |or_denied|
+                        +----+----+
+     +-----------------------+
++----+----+               
+|...      | 
++----+----+
+     
+     
+     
+                  

@@ -32,6 +32,14 @@
     </section>
     
     <section>
+      <title>The Authentication Process</title>
+      <p>
+        The following figure illustrates the authentication process:
+      </p>
+      <figure alt="Shibboleth authentication process" src="process.png"/>
+    </section>
+    
+    <section>
       <title>Resources</title>
       <p>
         Shibboleth Project
