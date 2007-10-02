@@ -268,7 +268,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     <WayfServer>https://localhost:8443/shibboleth-wayf/WAYF</WayfServer>
     
     <!-- Please fill-in your providerId. For Shibboleth 1.1, leave providerId empty. -->
-    <ProviderId>http://sp.shibtest.org/shibboleth</ProviderId>
+    <ProviderId>http://sp.shibtest.org:8080/shibboleth</ProviderId>
     <!-- 
       Location of your list of your supported Home Organisations. May be either an absolute file,
       a file relative to the webapp root or an URI to a file on a web server.
@@ -346,15 +346,15 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     role="org.apache.shibboleth.util.CredentialsManager"
     class="org.apache.shibboleth.util.CredentialsManager">
     <KeyStore>
-      <Location>file:///Users/nobby/src/shibboleth/keys/idp.example.org.jks</Location>
+      <Location>file:///home/john/src/shibboleth/keys/idp.example.org.jks</Location>
       <Type>JKS</Type>
-      <StorePassword>f800sl</StorePassword>
-      <KeyPassword>f800sl</KeyPassword>
+      <StorePassword>shibtest</StorePassword>
+      <KeyPassword>shibtest</KeyPassword>
     </KeyStore>
     <TrustStore>
-      <Location>file:///Users/nobby/src/shibboleth/keys/idp.example.org.jks</Location>
+      <Location>file:///home/john/src/shibboleth/keys/idp.example.org.jks</Location>
       <Type>JKS</Type>
-      <StorePassword>f800sl</StorePassword>
+      <StorePassword>shibtest</StorePassword>
     </TrustStore>
   </component>
   -->
@@ -363,7 +363,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       role="org.apache.shibboleth.util.CredentialsManager"
       class="org.apache.shibboleth.util.impl.CredentialsManagerImpl">
       <KeyStore>
-        <Location>file:///Users/nobby/src/shibtest/pki/idp.shibtest.org.jks</Location>
+        <Location>file:///home/john/src/shibtest/pki/idp.shibtest.org.jks</Location>
         <Type>JKS</Type>
         <StorePassword>shibtest</StorePassword>
         <KeyPassword>shibtest</KeyPassword>
@@ -373,7 +373,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
         <TrustStore /> element.
       -->
       <TrustStore>
-        <Location>file:///Users/nobby/src/shibtest/pki/idp.shibtest.org.jks</Location>
+        <Location>file:///home/john/src/shibtest/pki/idp.shibtest.org.jks</Location>
         <Type>JKS</Type>
         <StorePassword>shibtest</StorePassword>
       </TrustStore>
