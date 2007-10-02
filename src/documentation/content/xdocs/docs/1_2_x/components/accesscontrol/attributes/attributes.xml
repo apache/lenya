@@ -213,6 +213,15 @@
         the library <code>antlr-2.7.7.jar</code> is also included in the Lenya distribution.
       </note>
     </section>
+    
+    <section>
+      <title>Class Diagram</title>
+      <p>
+        The following class diagram illustrates the relationship beween the involved classes and
+        interfaces.
+      </p>
+      <figure src="classes.png" alt="Attribute-based authorisation class diagram"/>
+    </section>
 
   </body>
 </document>

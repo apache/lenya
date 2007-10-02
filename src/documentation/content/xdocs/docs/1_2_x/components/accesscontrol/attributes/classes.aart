@@ -1,0 +1,28 @@
++-------------------+                  +---------------------------+
+|«interface»        |*   contains      |«interface»                |
+|Groupable          +------------------+Group                      |
++-------------------+                  +---------------------------+
+|getGroups[]:Group[]|                  |getMembers():Groupable[]   |
++----------+--------+                  |contains(Groupable):boolean|
+           |                           +-------+-------------------+
+           |extends                            |
++----------+------------------------+          |extends
+|«interface»                        |  +-------+-----+
+|User                               |  |AbstractGroup|
++-----------------------------------+  +-------+-----+
+|getAttributeNames():String         |          |
+|getAttributeValues(String):String[]|          |uses
++----------+------------------------+          |
+           |                           +-------+-------------------------+
+           |extends                    |«interface»                      |
++----------+------------------------+  |RuleEvaluator                    |
+|AbstractUser                       |  +---------------------------------+
++-----------------------------------+  |validate(String):ValidationResult|
+|setAttributeValues(String,String[])|  |isComplied(User,String):boolean  |
++-----------------------------------+  +---------------+-----------------+
+                                                       |
+                                              +--------+---------+
+                                              |extends           |extends
+                                       +------+------+   +-------+------+
+                                       |JexlEvaluator|   |AntlrEvaluator|
+                                       +-------------+   +--------------+

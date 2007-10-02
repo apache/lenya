@@ -450,8 +450,12 @@
         <policies href="policymanagers.html" label="Policies and Policy&#160;Managers"/>
         <accr-mng href="accreditablemanagers.html" label="Accreditable Managers"/>
         <ssl href="ssl.html" label="SSL Encryption"/>
-        <attributes-authorization href="attributes.html" label="Attribute-based Authorization"/>
-        <shibboleth12 href="shibboleth.html" label="Shibboleth Authentication"/>
+        <attributes-authorization href="attributes/attributes.html" label="Attribute-based Authorization"/>
+        <shibboleth12 href="shibboleth/" label="Shibboleth">
+          <shibboleth12Introduction href="introduction.html" label="Introduction"/>
+          <shibboleth12Setup href="setup.html" label="Setup"/>
+          <shibboleth12Architecture href="architecture.html" label="Architecture"/>
+        </shibboleth12>
       </accesscontrol>
       <authoring href="authoring/" label="Authoring">
         <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
