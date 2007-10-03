@@ -97,7 +97,8 @@ public interface ShibbolethModule {
     String getWayfServerUrl();
     
     /**
+     * @param baseUrl The URL to append the shire URL to.
      * @return The shire URL.
      */
-    String getShire();
+    String getShireUrl(String baseUrl);
 }

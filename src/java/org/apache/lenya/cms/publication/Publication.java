@@ -248,6 +248,15 @@ public interface Publication {
     Proxy getProxy(Document document, boolean isSslProtected);
     
     /**
+     * Returns the proxy which is used for a particular area. 
+     * @param document The area.
+     * @param isSslProtected A boolean value.
+     * @return A proxy or <code>null</code> if no proxy is defined
+     * for this area.
+     */
+    Proxy getProxy(String area, boolean isSslProtected);
+    
+    /**
      * Returns an array of XPaths representing attributes to be rewritten
      * when a document URL has changed.
      * @return An array of strings.

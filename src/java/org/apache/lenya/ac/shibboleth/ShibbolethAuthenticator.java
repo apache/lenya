@@ -84,12 +84,12 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
         } else {
             Identity identity = (Identity) request.getSession(false).getAttribute(
                     Identity.class.getName());
-            return authenticateShibbolethResponse(accreditableManager, identity, handler);
+            return authenticateShibbolethResponse(accreditableManager, identity, handler, request);
         }
     }
 
     protected boolean authenticateShibbolethResponse(AccreditableManager accreditableManager,
-            Identity identity, ErrorHandler handler) throws AccessControlException {
+            Identity identity, ErrorHandler handler, Request request) throws AccessControlException {
         boolean authenticated = false;
 
         HttpServletRequest req = getHttpServletRequest();
@@ -101,8 +101,10 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
                     .lookup(AssertionConsumerService.ROLE);
             attrReqService = (AttributeRequestService) this.manager
                     .lookup(AttributeRequestService.ROLE);
-
-            BrowserProfileResponse bpResponse = consumerService.processRequest(req);
+            
+            ShibbolethUtil util = new ShibbolethUtil(this.manager);
+            String host = util.getBaseUrl();
+            BrowserProfileResponse bpResponse = consumerService.processRequest(req, host);
             Map attributesMap = attrReqService.requestAttributes(bpResponse);
             logAttributesMap(attributesMap);
 

@@ -367,8 +367,8 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
         return this.wayfServerUrl;
     }
 
-	public String getShire() {
-		return this.shire;
+	public String getShireUrl(String baseUrl) {
+		return baseUrl + this.shire;
 	}
 
 }

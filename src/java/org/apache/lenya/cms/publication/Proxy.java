@@ -70,4 +70,5 @@ public class Proxy {
     public String toString() {
         return "Proxy URL=[" + getUrl() + "]";
     }
+    
 }

@@ -29,8 +29,6 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -73,15 +71,13 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
                 String servletContextPath = context.getRealPath("");
                 Publication pub = PublicationFactory.getPublication(pubId, servletContextPath);
 
-                DocumentBuilder builder = pub.getDocumentBuilder();
-                if (builder.isDocument(pub, webappUrl)) {
-                    Document doc = builder.buildDocument(pub, webappUrl);
-                    Proxy proxy = pub.getProxy(doc, isSslProtected(webappUrl));
-                    if (proxy != null) {
-                        proxyUrl = proxy.getURL(doc);
-                    } else {
-                        webappUrl = request.getContextPath() + webappUrl;
-                    }
+                Proxy proxy = pub.getProxy(area, isSslProtected(webappUrl));
+                if (proxy != null) {
+                	    String prefix = "/" + pubId + "/" + area;
+                	    String areaUrl = webappUrl.substring(prefix.length());
+                    proxyUrl = proxy.getUrl() + areaUrl;
+                } else {
+                    webappUrl = request.getContextPath() + webappUrl;
                 }
 
             } catch (Exception e) {

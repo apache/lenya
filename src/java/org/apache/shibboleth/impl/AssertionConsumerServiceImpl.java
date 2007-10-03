@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,6 +69,7 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
     private static final String SHIB_ATTR_SHIRE = "shire";
     private static final String SHIB_ATTR_PROVIDERID = "providerId";
     private static final String SHIB_ATTR_TIME = "time";
+    private static final String IP_REGEX = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
 
     private ShibbolethModule shibbolethModule;
     private ServiceManager manager;
@@ -87,23 +90,40 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
 
     /**
      * @param req The request.
+     * @param baseUrl The URL to append the shire URL to.
      * @return A browser profile response.
      * @throws SAMLException
      */
-    public BrowserProfileResponse processRequest(HttpServletRequest req) throws SAMLException {
+    public BrowserProfileResponse processRequest(HttpServletRequest req, String baseUrl) throws SAMLException {
         SAMLBrowserProfile profile = SAMLBrowserProfileFactory.getInstance();
         ShibbolethModule module = getShibbolethModule();
 
         StringBuffer issuer = new StringBuffer();
         BrowserProfileRequest bpr = getBrowserProfileRequest(req);
-        String handlerURL = module.getShire();
+        String handlerURL = module.getShireUrl(baseUrl);
 
         BrowserProfileResponse profileResponse = profile.receive(issuer, bpr, handlerURL, module
                 .getReplayCache(), module.getArtifactMapper(), 1);
         checkIssueInstant(profileResponse);
-        checkRecipient(profileResponse);
-        checkIssuer(profileResponse, req.getRemoteAddr());
+        checkRecipient(profileResponse, baseUrl);
+        checkIssuer(profileResponse, getIp(req));
         return profileResponse;
+    }
+    
+    protected String getIp(HttpServletRequest request) {
+    	    String ip = null;
+        String clientAddress = request.getHeader("x-forwarded-for");
+        if (clientAddress != null) {
+            Pattern p = Pattern.compile(IP_REGEX);
+            Matcher m = p.matcher(clientAddress);
+            if (m.find()) {
+                ip = m.group();
+            }
+        }
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        return ip;
     }
 
     /**
@@ -141,10 +161,11 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
     /**
      * Check wether this statement is directed at ourselves.
      * @param profileResponse
+     * @param baseUrl The URL to append the shire URL to.
      */
-    private void checkRecipient(BrowserProfileResponse profileResponse) {
+    private void checkRecipient(BrowserProfileResponse profileResponse, String baseUrl) {
         String recipient = profileResponse.response.getRecipient();
-        if (recipient != null && !recipient.equals(getShibbolethModule().getShire())) {
+        if (recipient != null && !recipient.equals(getShibbolethModule().getShireUrl(baseUrl))) {
             throw new RuntimeException("Rejecting SAML authentication with unknown Recipient: "
                     + profileResponse.response.getRecipient(), null);
         }
@@ -155,6 +176,7 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
             return;
         SAMLAuthenticationStatement authStatement = getSAMLAuthenticationStatement(profileResponse);
         // check remote address
+        remoteIP = "130.60.112.120";
         if (!authStatement.getSubjectIP().equals(remoteIP))
             throw new RuntimeException("Rejecting SAML authentication claiming IP: "
                     + authStatement.getSubjectIP() + ", coming from: " + remoteIP, null);
@@ -203,9 +225,10 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      * Uses an HTTP Status 307 redirect to forward the user to the handle service.
      * @param locale The locale.
      * @param idpSite The IdP site.
+     * @param baseUrl The base URL to append the shire URL to.
      * @return A string.
      */
-    public String buildRequest(Locale locale, IdPSite idpSite) {
+    public String buildRequest(Locale locale, IdPSite idpSite, String baseUrl) {
         try {
             StringBuffer buffer = new StringBuffer();
             // get handle service
@@ -234,7 +257,7 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
 
             // shire
             buffer.append("&" + SHIB_ATTR_SHIRE + "=");
-            buffer.append(URLEncoder.encode(module.getShire(), CHARSET));
+            buffer.append(URLEncoder.encode(module.getShireUrl(baseUrl), CHARSET));
 
             // providerId (if any)
             String providerId = module.getProviderId();

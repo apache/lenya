@@ -633,12 +633,16 @@ public abstract class AbstractPublication implements Publication {
      *      boolean)
      */
     public Proxy getProxy(Document document, boolean isSslProtected) {
+    	    return getProxy(document.getArea(), isSslProtected);
+    }
+    
+    public Proxy getProxy(String area, boolean isSslProtected) {
 
-        Object key = getProxyKey(document.getArea(), isSslProtected);
+        Object key = getProxyKey(area, isSslProtected);
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
 
         if (log.isDebugEnabled()) {
-            log.debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
+            log.debug("Resolving proxy for [" + area + "] SSL=[" + isSslProtected + "]");
             log.debug("Resolved proxy: [" + proxy + "]");
         }
 

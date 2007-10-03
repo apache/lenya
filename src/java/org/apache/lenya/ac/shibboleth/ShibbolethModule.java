@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
 package org.apache.lenya.ac.shibboleth;
 
 import java.util.Arrays;
@@ -38,6 +55,10 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
+    	
+        
+        ShibbolethUtil util = new ShibbolethUtil(this.manager);
+        String host = util.getBaseUrl();
 
         // attributes to get from the org.apache.shibboleth.ShibbolethModule
         String[] shibModuleAttrs = { ATTR_WAYF_SERVER, ATTR_PROVIDER_ID, ATTR_SHIRE };
@@ -52,7 +73,7 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                 } else if (name.equals(ATTR_PROVIDER_ID)) {
                     return shibModule.getProviderId();
                 } else if (name.equals(ATTR_SHIRE)) {
-                	    return shibModule.getShire();
+                	    return shibModule.getShireUrl(host);
                 } else {
                     throw new ConfigurationException("Attribute [" + name + "] not supported!");
                 }
@@ -65,19 +86,19 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                 }
             }
         } else {
-            Request req = ObjectModelHelper.getRequest(objectModel);
-            String webappUrl = ServletHelper.getWebappURI(req);
-            OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getLogger());
-            String outgoingUrl = rewriter.rewrite(webappUrl);
-
-            if (outgoingUrl.startsWith("/")) {
-                int port = req.getServerPort();
-                String portSuffix = port == 80 ? "" : ":" + port;
-                String serverUrl = req.getScheme() + "://" + req.getServerName() + portSuffix;
-                outgoingUrl = serverUrl + outgoingUrl;
-            }
 
             if (name.equals(ATTR_TARGET)) {
+                Request req = ObjectModelHelper.getRequest(objectModel);
+                String webappUrl = ServletHelper.getWebappURI(req);
+                OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getLogger());
+    	
+                String outgoingUrl = rewriter.rewrite(webappUrl);
+                if (outgoingUrl.startsWith("/")) {
+                    int port = req.getServerPort();
+                    String portSuffix = port == 80 ? "" : ":" + port;
+                    String serverUrl = req.getScheme() + "://" + req.getServerName() + portSuffix;
+                    outgoingUrl = serverUrl + outgoingUrl;
+                }
                 return outgoingUrl; // + "?lenya.usecase=login&lenya.step=login";
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");

@@ -36,7 +36,7 @@ public class ShireSelector extends AbstractLogEnabled implements Selector, Servi
             BrowserProfileResponse bpResponse = null;
             Map attributesMap = null;
             try {
-                bpResponse = consumerService.processRequest(req);
+                bpResponse = consumerService.processRequest(req, "");
                 attributesMap = attrReqService.requestAttributes(bpResponse);
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(

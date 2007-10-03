@@ -38,17 +38,19 @@ public interface AssertionConsumerService {
 
     /**
      * @param req The request.
+     * @param baseUrl The URL to append the shire URL to.
      * @return A browser profile response.
      * @throws SAMLException
      */
-    BrowserProfileResponse processRequest(HttpServletRequest req) throws SAMLException;
+    BrowserProfileResponse processRequest(HttpServletRequest req, String hostUrl) throws SAMLException;
 
     /**
      * Uses an HTTP Status 307 redirect to forward the user the HS.
      * @param locale The locale.
      * @param idpSite The IdP site.
+     * @param baseUrl The URL to append the shire URL to.
      * @return A string.
      */
-    String buildRequest(Locale locale, IdPSite idpSite);
+    String buildRequest(Locale locale, IdPSite idpSite, String baseUrl);
 
 }
