@@ -95,4 +95,9 @@ public interface ShibbolethModule {
      * @return The URL of the WAYF server (without query string).
      */
     String getWayfServerUrl();
+    
+    /**
+     * @return The shire URL.
+     */
+    String getShire();
 }

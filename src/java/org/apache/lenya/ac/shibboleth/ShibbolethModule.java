@@ -40,7 +40,7 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
             throws ConfigurationException {
 
         // attributes to get from the org.apache.shibboleth.ShibbolethModule
-        String[] shibModuleAttrs = { ATTR_WAYF_SERVER, ATTR_PROVIDER_ID };
+        String[] shibModuleAttrs = { ATTR_WAYF_SERVER, ATTR_PROVIDER_ID, ATTR_SHIRE };
         if (Arrays.asList(shibModuleAttrs).contains(name)) {
             org.apache.shibboleth.ShibbolethModule shibModule = null;
             try {
@@ -51,6 +51,8 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                     return shibModule.getWayfServerUrl();
                 } else if (name.equals(ATTR_PROVIDER_ID)) {
                     return shibModule.getProviderId();
+                } else if (name.equals(ATTR_SHIRE)) {
+                	    return shibModule.getShire();
                 } else {
                     throw new ConfigurationException("Attribute [" + name + "] not supported!");
                 }
@@ -75,10 +77,8 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                 outgoingUrl = serverUrl + outgoingUrl;
             }
 
-            if (name.equals(ATTR_SHIRE)) {
-                return outgoingUrl + "?lenya.usecase=login&lenya.step=login";
-            } else if (name.equals(ATTR_TARGET)) {
-                return outgoingUrl;
+            if (name.equals(ATTR_TARGET)) {
+                return outgoingUrl; // + "?lenya.usecase=login&lenya.step=login";
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }

@@ -62,6 +62,7 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
 
     private static final String WAYF_SERVER = "WayfServer";
     private static final String CONF_PROVIDER_ID = "ProviderId";
+	private static final String CONF_SHIRE = "Shire";
     private static final String CONF_METADATA = "Metadata";
     private static final String CONF_AAP = "AAP";
     private static final String CONF_CHECK_CERTIFICATES = "CheckCertificateValidity";
@@ -73,6 +74,7 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
     private boolean checkCertificates = false;
     private boolean checkIssuerIP = true;
     private String providerId;
+    private String shire;
 
     private XMLMetadata metadata;
     private XMLAAP aap;
@@ -189,6 +191,8 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
             getLogger().info("Using providerId: " + providerId);
         else
             getLogger().info("Not using any providerId.");
+        
+        shire = config.getChild(CONF_SHIRE).getValue();
 
         // use language parameter
         String sUseLanguageInReq = config.getChild(CONF_USELANGUAGEINREQ).getValue();
@@ -362,5 +366,9 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
     public String getWayfServerUrl() {
         return this.wayfServerUrl;
     }
+
+	public String getShire() {
+		return this.shire;
+	}
 
 }

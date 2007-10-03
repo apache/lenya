@@ -92,12 +92,11 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      */
     public BrowserProfileResponse processRequest(HttpServletRequest req) throws SAMLException {
         SAMLBrowserProfile profile = SAMLBrowserProfileFactory.getInstance();
+        ShibbolethModule module = getShibbolethModule();
 
         StringBuffer issuer = new StringBuffer();
         BrowserProfileRequest bpr = getBrowserProfileRequest(req);
-        String handlerURL = getCompleteUrl(req);
-
-        ShibbolethModule module = getShibbolethModule();
+        String handlerURL = module.getShire();
 
         BrowserProfileResponse profileResponse = profile.receive(issuer, bpr, handlerURL, module
                 .getReplayCache(), module.getArtifactMapper(), 1);
@@ -145,7 +144,7 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      */
     private void checkRecipient(BrowserProfileResponse profileResponse) {
         String recipient = profileResponse.response.getRecipient();
-        if (recipient != null && !recipient.equals(getShireUrl())) {
+        if (recipient != null && !recipient.equals(getShibbolethModule().getShire())) {
             throw new RuntimeException("Rejecting SAML authentication with unknown Recipient: "
                     + profileResponse.response.getRecipient(), null);
         }
@@ -216,13 +215,15 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
                         + idpSite.getName(), null);
             buffer.append(handleService);
             buffer.append("?");
+            
+            ShibbolethModule module = getShibbolethModule();
 
             // send language if configured
             // this parameter is passed to the login.jsp on shibboleth idP side,
             // thus must be on the same
             // parameter level as the SHIB_ATTR_TARGET parameter.
-            if (getShibbolethModule().useLanguageInReq()) {
-                String paramNam = getShibbolethModule().getLanguageParamName();
+            if (module.useLanguageInReq()) {
+                String paramNam = module.getLanguageParamName();
                 if (paramNam != null) {
                     buffer.append(paramNam).append("=").append(locale.toString()).append("&");
                 }
@@ -233,10 +234,10 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
 
             // shire
             buffer.append("&" + SHIB_ATTR_SHIRE + "=");
-            buffer.append(URLEncoder.encode(getShireUrl(), CHARSET));
+            buffer.append(URLEncoder.encode(module.getShire(), CHARSET));
 
             // providerId (if any)
-            String providerId = getShibbolethModule().getProviderId();
+            String providerId = module.getProviderId();
             if (providerId != null) {
                 buffer.append("&" + SHIB_ATTR_PROVIDERID + "=");
                 buffer.append(URLEncoder.encode(providerId, CHARSET));
@@ -267,15 +268,6 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
      */
 
     protected String getTarget() {
-        return getShireUrl();
-    }
-
-    /**
-     * Return the URL to the SHIRE (that's us)
-     * @param shibbolethPath The shibboleth path.
-     * @return The complete SHIRE URL
-     */
-    protected String getShireUrl() {
         Map objectModel = ContextHelper.getObjectModel(this.context);
         HttpServletRequest req = (HttpServletRequest) objectModel
                 .get(HttpEnvironment.HTTP_REQUEST_OBJECT);
