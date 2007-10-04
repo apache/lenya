@@ -271,7 +271,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     <ProviderId>http://sp.shibtest.org:8080/shibboleth</ProviderId>
     
     <!-- The shire or assertion consumer service URL. -->
-    <Shire>http://sp.shibtest.org/default/authoring/index.html?lenya.usecase=login&lenya.step=login</Shire>
+    <Shire>http://sp.shibtest.org/default/authoring/index.html?lenya.usecase=login&amp;lenya.step=login</Shire>
     <!-- 
       Location of your list of your supported Home Organisations. May be either an absolute file,
       a file relative to the webapp root or an URI to a file on a web server.
