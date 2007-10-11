@@ -380,6 +380,7 @@
      <rcmlDirectory href="content/rcml"/>
      <backupDirectory href="content/rcbak"/>
    </map:action>
+   <map:action logger="lenya.sitemap.action.ssl-redirect" name="ssl-redirect" src="org.apache.lenya.cms.cocoon.acting.SslRedirectAction"/>
   </map:actions>
 
    <map:pipes default="caching">
@@ -565,6 +566,10 @@
       <map:match type="usecase" pattern="shibboleth">
         <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
+
+      <map:act type="ssl-redirect">
+          <map:redirect-to session="true" uri="{redirectUri}"/>
+      </map:act>
       
       <map:match pattern="**">
         <map:act type="authorizer">
