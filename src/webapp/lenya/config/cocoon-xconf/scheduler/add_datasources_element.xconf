@@ -16,17 +16,17 @@
   limitations under the License.
 -->
 
-<xconf xpath="/cocoon/datasources"
-    unless="/cocoon/datasources/jdbc[@name = 'LenyaScheduler']"
-    if-prop="patch.webapp">
-  <jdbc logger="core.datasources.lenya.scheduler" name="LenyaScheduler">
-    <pool-controller max="10" min="5">
-      <!-- use custom keep-alive query because HSQL does not accept 'SELECT 1' -->
-      <keep-alive>SELECT 1 FROM QRTZ_LOCKS</keep-alive>
-    </pool-controller>
-    <dburl>jdbc:hsqldb:hsql://localhost:9002/cocoondb</dburl>
-    <user>sa</user>
-    <password/>
-  </jdbc>
+<!-- This file creates an empty <datasources/> element in cocoon.xconf.
+  This is necessary to enable subsequent xpatch files (like datasources.xconf)
+  to patch datasource entries into this element. See bug 43581 for a
+  discussion/explanation. 
+  The name of this file has to alphabetically sort in before "datasources.xconf".
+-->
+  
+<xconf xpath="/cocoon"
+  unless="datasources"
+  insert-before="/cocoon/hsqldb-server"
+  if-prop="patch.webapp">
+  <datasources>
+  </datasources>
 </xconf>
- 
