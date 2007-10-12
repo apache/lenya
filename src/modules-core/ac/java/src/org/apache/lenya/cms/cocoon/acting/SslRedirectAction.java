@@ -74,7 +74,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
                 PolicyManager policyManager = accessController.getPolicyManager();
                 Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
                         url);
-                if (policy.isSSLProtected()) {
+                if (policy.isSSLProtected() && !request.getScheme().equals("https")) {
                     Session session = RepositoryUtil.getSession(this.manager, request);
                     LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, url,
                             false, true, false);
