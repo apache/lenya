@@ -298,6 +298,7 @@
                       <map:otherwise>
                         <map:act type="set-header">
                           <map:parameter name="Cache-Control" value="no-cache" />
+                          <map:parameter name="Pragma" value="no-cache"/>
                         </map:act>
                       </map:otherwise> 
                     </map:select>
