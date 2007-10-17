@@ -100,8 +100,11 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
 
         StringBuffer issuer = new StringBuffer();
         BrowserProfileRequest bpr = getBrowserProfileRequest(req);
+        String targetBaseURL = module.getTargetBaseUrl(bpr.TARGET);
+        if (targetBaseURL != null) baseUrl = targetBaseURL;
+        
         String handlerURL = module.getShireUrl(baseUrl);
-
+        
         BrowserProfileResponse profileResponse = profile.receive(issuer, bpr, handlerURL, module
                 .getReplayCache(), module.getArtifactMapper(), 1);
         checkIssueInstant(profileResponse);
@@ -176,7 +179,6 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
             return;
         SAMLAuthenticationStatement authStatement = getSAMLAuthenticationStatement(profileResponse);
         // check remote address
-        remoteIP = "130.60.112.120";
         if (!authStatement.getSubjectIP().equals(remoteIP))
             throw new RuntimeException("Rejecting SAML authentication claiming IP: "
                     + authStatement.getSubjectIP() + ", coming from: " + remoteIP, null);

@@ -18,6 +18,8 @@
 package org.apache.shibboleth.impl;
 
 import java.io.File;
+import java.net.URL;
+import java.net.MalformedURLException;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.activity.Initializable;
@@ -369,6 +371,16 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
 
 	public String getShireUrl(String baseUrl) {
 		return baseUrl + this.shire;
+	}
+	
+	public String getTargetBaseUrl(String targetUrl){
+		try {
+            URL url = new URL(targetUrl);
+            return url.getProtocol() + "://" + url.getAuthority();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
 	}
 
 }

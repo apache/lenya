@@ -101,4 +101,11 @@ public interface ShibbolethModule {
      * @return The shire URL.
      */
     String getShireUrl(String baseUrl);
+    
+    /**
+     * @param targetUrl the target URL the user is send to after authentication. 
+     * @return The base Part of the targetUrl i.e. the scheme and the authority part of the URI.
+     */
+    String getTargetBaseUrl(String targetUrl);
+
 }
