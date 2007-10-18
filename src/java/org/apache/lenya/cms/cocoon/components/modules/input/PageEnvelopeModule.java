@@ -95,7 +95,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                         value = document;
                     } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
                         getLogger().warn(
-                                "This attribute is deprecated."
+                                "This attribute [ " + name + " ] is deprecated."
                                         + " Use document-path or document-uuid instead!");
                         value = document.getUUID();
                     } else if (name.equals(PageEnvelope.DOCUMENT_PARENT)) {
