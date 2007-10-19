@@ -18,7 +18,7 @@
 function fckloader(requesturi, contextPath)
 {
   var oFCKeditor = new FCKeditor( 'content' ) ;
-  oFCKeditor.BasePath	= '/modules/fckeditor/fckeditor/' ;
+  oFCKeditor.BasePath	= '/' + contextPath + '/modules/fckeditor/fckeditor/' ;
   oFCKeditor.Width="800";
   oFCKeditor.Height="700";
   oFCKeditor.Config[ "FullPage" ] = true ;

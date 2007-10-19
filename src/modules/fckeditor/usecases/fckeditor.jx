@@ -28,10 +28,10 @@
   <jx:set var="steps" value="${pathInfo.split('/')}"/>
   <jx:set var="pubId" value="${java.util.Arrays.asList(steps).get(1)}"/>
  
-  <script type="text/javascript" src="/modules/fckeditor/fckeditor/fckeditor.js">&#160;</script>
-  <script type="text/javascript" src="/modules/fckeditor/javascript/fckloader.js">&#160;</script>
-  <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js">&#160;</script>
-  <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script> 
+  <script type="text/javascript" src="/${pubId}/modules/fckeditor/fckeditor/fckeditor.js">&#160;</script>
+  <script type="text/javascript" src="/${pubId}/modules/fckeditor/javascript/fckloader.js">&#160;</script>
+  <script type="text/javascript" src="/${pubId}/modules/editors/javascript/disablebackspace.js">&#160;</script>
+  <script type="text/javascript" src="/${pubId}/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script> 
   <script type="text/javascript">
     function loadfckloader() {
       fckloader('${usecase.getParameter('requesturi')}', '${pubId}');
