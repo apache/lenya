@@ -73,7 +73,7 @@
           </map:otherwise>
         </map:select> 
         <map:transform src="fallback://lenya/modules/editors/usecases/forms/oneform.xsl">
-          <map:parameter name="docid" value="{page-envelope:document-id}"/>
+          <map:parameter name="docid" value="{page-envelope:document-uuid}"/>
           <map:parameter name="language" value="{page-envelope:document-language}"/>
         </map:transform>
         <map:serialize type="xml"/>

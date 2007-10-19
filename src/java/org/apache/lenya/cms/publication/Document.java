@@ -97,7 +97,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * Returns all the languages this document is available in.
      * A document has one associated language (@see Document#getLanguage)
      * but there are possibly a number of other languages for which a 
-     * document with the same document-id is also available in. 
+     * document with the same document-uuid is also available in. 
      * 
      * @return An array of strings denoting the languages.
      * 
@@ -138,7 +138,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     String getUUID();
     
     /**
-     * Check if a document with the given document-id, language and in the given
+     * Check if a document with the given document-uuid, language and in the given
      * area actually exists.
      * 
      * @return true if the document exists, false otherwise
@@ -148,10 +148,10 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     boolean exists() throws DocumentException;
     
     /**
-     * Check if a document exists with the given document-id and the given area
+     * Check if a document exists with the given document-uuid and the given area
      * independently of the given language.
      * 
-     * @return true if a document with the given document-id and area exists, false otherwise
+     * @return true if a document with the given document-uuid and area exists, false otherwise
      * 
      * @throws DocumentException if an error occurs
      */

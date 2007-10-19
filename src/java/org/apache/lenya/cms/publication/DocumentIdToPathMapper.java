@@ -28,7 +28,7 @@ import java.io.File;
 public interface DocumentIdToPathMapper {
 
     /**
-     * Compute the document-path for a given publication, area and document-id. The file separator
+     * Compute the document-path for a given publication, area and document-uuid. The file separator
      * is the slash (/).
      * 
      * @param uuid the UUID of the document
@@ -39,7 +39,7 @@ public interface DocumentIdToPathMapper {
     String getPath(String uuid, String language);
 
     /**
-     * Compute the document-path for a given publication, area, document-id and language
+     * Compute the document-path for a given publication, area, document-uuid and language
      * 
      * @param publication the publication of the document
      * @param area the area of the document

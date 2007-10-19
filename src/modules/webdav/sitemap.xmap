@@ -284,7 +284,7 @@
             <map:generate type="file" src="cocoon:/request/generate"/>
             <map:transform type="xslt" src="fallback://lenya/modules/webdav/xslt/lock.xsl">
               <map:parameter name="userid" value="{access-control:user-id}"/>
-              <map:parameter name="docid" value="{page-envelope:document-id}"/>
+              <map:parameter name="docid" value="{page-envelope:document-uuid}"/>
             </map:transform>
             <map:serialize type="xml" status-code="200" />
           </map:when>

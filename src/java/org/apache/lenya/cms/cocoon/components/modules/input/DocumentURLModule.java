@@ -52,7 +52,7 @@ public class DocumentURLModule extends AbstractPageEnvelopeModule {
 
         if (attributes.length < 3) {
             throw new ConfigurationException("Invalid number of parameters: " + attributes.length
-                    + ". Expected 3 (area, document-id, language)");
+                    + ". Expected 3 (area, document-uuid, language)");
         }
 
         final String area = attributes[0];

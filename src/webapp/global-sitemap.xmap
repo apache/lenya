@@ -184,7 +184,7 @@
               <map:parameter name="publicationid" value="{1}"/>
               <map:parameter name="area" value="{2}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documentid" value="{page-envelope:document-uuid}"/>
               <map:parameter name="userid" value="{access-control:user-id}"/>
               <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
               <map:parameter name="workflowstate" value="{workflow:state}"/>
@@ -199,7 +199,7 @@
               <map:parameter name="publicationid" value="{1}"/>
               <map:parameter name="area" value="{2}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documentid" value="{page-envelope:document-uuid}"/>
               <map:parameter name="userid" value="{access-control:user-id}"/>
               <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
               <map:parameter name="workflowstate" value="{workflow:state}"/>

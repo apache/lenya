@@ -29,7 +29,7 @@
 
 <usecase:publish>
 
-  <usecase:document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></usecase:document-id>
+  <usecase:document-uuid><input:get-attribute module="page-envelope" name="document-uuid" as="string"/></usecase:document-uuid>
   <usecase:uris><xsp-request:get-uri/></usecase:uris>
   <usecase:sources><input:get-attribute module="page-envelope" as="string" name="document-path"/></usecase:sources>
   <usecase:publication-id><input:get-attribute module="page-envelope" name="publication-id" as="string"/></usecase:publication-id>

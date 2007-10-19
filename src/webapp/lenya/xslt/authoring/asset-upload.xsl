@@ -71,7 +71,7 @@ Override this template to add scripts etc.
         <input type="hidden" name="task-id" value="insert-asset"/>
         <input type="hidden" name="uploadtype" value="asset"/>
         <input type="hidden" name="properties.asset.date" value="{/lenya-info:info/lenya-info:assets/lenya-info:date}"/>
-        <input type="hidden" name="properties.insert.asset.document-id" value="{/lenya-info:info/lenya-info:assets/lenya-info:document-id}"/>
+        <input type="hidden" name="properties.insert.asset.document-uuid" value="{/lenya-info:info/lenya-info:assets/lenya-info:document-uuid}"/>
         <input type="hidden" name="properties.insert.asset.language" value="{/lenya-info:info/lenya-info:assets/lenya-info:language}"/>
         <table class="lenya-table-noborder">
           <xsl:if test="$error = 'true'">

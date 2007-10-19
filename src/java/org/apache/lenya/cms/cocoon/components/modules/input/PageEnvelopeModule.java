@@ -42,7 +42,7 @@ import org.apache.lenya.util.ServletHelper;
 
 /**
  * Input module wrapping the page envelope. This module provides publication
- * related information such as document-id, area, publication-id.
+ * related information such as document-uuid, area, publication-id.
  * 
  * @see org.apache.lenya.cms.publication.PageEnvelope
  * @deprecated use DocumentInfoModule instead.

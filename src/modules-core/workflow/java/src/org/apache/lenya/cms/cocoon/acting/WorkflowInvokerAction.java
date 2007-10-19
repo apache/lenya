@@ -43,7 +43,7 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * Action to invoke a workflow transition independently from the request document URL. Parameters:
  * <ul>
  * <li><strong>area: </strong> The area.</li>
- * <li><strong>document-id: </strong> The document id.</li>
+ * <li><strong>document-uuid: </strong> The document uuid.</li>
  * <li><strong>language: </strong> The language.</li>
  * <li><strong>event: </strong> The event to invoke.</li>
  * </ul>
@@ -55,9 +55,9 @@ public class WorkflowInvokerAction extends ServiceableAction {
      */
     public static final String AREA = "area";
     /**
-     * <code>DOCUMENT_ID</code> The document id
+     * <code>DOCUMENT_UUID</code> The document id
      */
-    public static final String DOCUMENT_ID = "document-id";
+    public static final String DOCUMENT_UUID = "document-uuid";
     /**
      * <code>LANGUAGE</code> The language
      */
@@ -76,7 +76,7 @@ public class WorkflowInvokerAction extends ServiceableAction {
             Parameters parameters) throws Exception {
 
         String area = parameters.getParameter(AREA);
-        String documentId = parameters.getParameter(DOCUMENT_ID);
+        String documentId = parameters.getParameter(DOCUMENT_UUID);
         String language = parameters.getParameter(LANGUAGE);
         String eventName = parameters.getParameter(EVENT);
 

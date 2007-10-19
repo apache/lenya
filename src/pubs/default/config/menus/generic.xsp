@@ -37,7 +37,7 @@
   <menu>
 
     <xsp:logic>
-      String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
+      String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-uuid"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
       
       Object documentObject = <input:get-attribute as="object" module="page-envelope" name="document"/>;
