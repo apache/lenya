@@ -57,7 +57,7 @@
       </map:match>
 
       <map:match pattern="content">
-        <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
+        <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}"/>
         <map:transform type="uuid2url">
           <map:parameter name="urls" value="absolute"/>
         </map:transform>

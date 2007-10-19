@@ -84,7 +84,7 @@
         <map:aggregate element="edit-envelope">
           <map:part element="edited" src="cocoon:/kupu-stream"/>
           <map:part element="original" 
-              src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
+              src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}"/>
         </map:aggregate>              
         <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupusave.xsl"/>
         <map:serialize type="xml"/>
