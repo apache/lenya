@@ -91,7 +91,10 @@ var TinyMCE_SimpleBrowserPlugin = {
 
 	browserCallback : function(returnValue) {
 		if(!returnValue) return;
-		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements[TinyMCE_SimpleBrowserPlugin.options['field']].value = returnValue;
+		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements[TinyMCE_SimpleBrowserPlugin.options['field']].value = returnValue.url;
+		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.width.value = returnValue.width;
+		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.height.value = returnValue.height;
+		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.alt.value = returnValue.title;
 	}
 };
 

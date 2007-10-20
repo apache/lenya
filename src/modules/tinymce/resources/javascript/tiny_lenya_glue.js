@@ -47,7 +47,7 @@ function LenyaSaveContent(element_id, html, body) {
 /* interface to generic editor usecases */
 
 org.apache.lenya.editors.setObjectData = function(objectData) {
-  TinyMCE_SimpleBrowserPlugin.browserCallback(objectData.url);
+  TinyMCE_SimpleBrowserPlugin.browserCallback(objectData);
 }
 
 org.apache.lenya.editors.getObjectData = function() {
