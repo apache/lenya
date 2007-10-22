@@ -199,7 +199,7 @@
       <p>
         Each publication has an introduction page (<code>introduction.html</code>).
         We'll add a policy allowing everyone to visit the page. The file is located
-        at <code>data/access-control/policies/introduction.html/url-policy.acml</code>:
+        at <code>data/access-control/policies/introduction.html/subtree-policy.acml</code>:
       </p>
       <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
