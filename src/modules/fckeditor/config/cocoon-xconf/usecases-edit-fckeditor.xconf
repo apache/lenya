@@ -22,7 +22,7 @@
                       class="org.apache.lenya.cms.editors.fckeditor.Fckeditor">
     <transaction policy="pessimistic"/>
     <parameter name="tidyConfig" value="fallback://lenya/modules/fckeditor/config/jtidy.properties"/> 
-    <view uri="cocoon://modules/fckeditor/fckeditor.open" menu="false"/>
+    <view uri="/modules/fckeditor/fckeditor.open" menu="false"/>
     <event id="edit" />
     <parameter name="checkoutRestrictedToSession" value="false"/>
   </component-instance>

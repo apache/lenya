@@ -21,7 +21,7 @@
   <component-instance name="tinymce.edit" logger="lenya.publication"
                       class="org.apache.lenya.cms.editors.tinymce.TinyMce">
     <transaction policy="pessimistic"/>
-    <view uri="cocoon://modules/tinymce/tinymce.edit" menu="false"/>
+    <view uri="/modules/tinymce/tinymce.edit" menu="false"/>
   </component-instance>
     
 </xconf>

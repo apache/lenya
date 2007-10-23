@@ -22,7 +22,7 @@
 
   <component-instance name="jcr.export" logger="lenya.jcr"
     class="org.apache.lenya.cms.usecase.DummyUsecase">
-    <view uri="cocoon://modules/jcrsource/lenya-repository-content.xml" menu="false"/>
+    <view uri="/modules/jcrsource/lenya-repository-content.xml" menu="false"/>
   </component-instance>
   
 </xconf>

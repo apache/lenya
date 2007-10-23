@@ -26,6 +26,6 @@
       class="org.apache.lenya.cms.editors.SaveDocument">
       <parameter name="sourceUri" value="cocoon://modules/editors/stream.xml"/>
       <parameter name="usecaseName" value="editors.publicationEdit"/>
-      <view uri="cocoon://modules/neutron/load.xml"/>
+      <view uri="/modules/neutron/load.xml"/>
     </component-instance>
   </xconf>
