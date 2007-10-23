@@ -216,9 +216,10 @@ function submitFlow(usecase, generic) {
  */
 function defaultLoopFlow(view, proxy) {
     var viewUri = view.getViewURI();
-    // we used to allow a cocoon:/ prefix (which sendPageXXX does not handle),
+    // we used to allow a cocoon:/ and cocoon:// prefix (which sendPageXXX does not handle),
     // but it is now deprecated!
     if (viewUri.startsWith("cocoon:/")) {
+        // leave leading / in case of cocoon:// for root sitemap
         viewUri = viewUri.substring(new Packages.java.lang.String("cocoon:/").length());
         log("warn", "The use of the cocoon:/ protocol prefix in the <view uri=\"...\"> attribute is deprecated!");
     }
