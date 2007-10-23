@@ -125,8 +125,10 @@ public class TreeSiteManager extends AbstractSiteManager {
             SiteNode destNode = destinationTree.getNode(destPath);
             if (destNode == null) {
                 if (siblingPath == null) {
+                    // called for side effect of add, not return result
                     destNode = destinationTree.add(destPath);
                 } else {
+                    // called for side effect of add, not return result
                     destNode = destinationTree.add(destPath, siblingPath);
                 }
                 destinationTree.add(destPath, destDoc);

@@ -323,6 +323,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         SiteTreeNode node;
         if (!tree.contains(path)) {
+            // done for side effect of calling addNodNode, not the resulting return value
             node = tree.addNode(path, document.getUUID(), true, null, null, false);
         } else {
             node = (SiteTreeNode) tree.getNode(path);
