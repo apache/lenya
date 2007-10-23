@@ -161,4 +161,9 @@ public class MockUser implements User {
         return null;
     }
 
+    public boolean canChangePassword() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }
