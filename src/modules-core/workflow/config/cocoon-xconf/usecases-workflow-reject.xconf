@@ -27,7 +27,7 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.cms.workflow.usecases.Reject">
       <event id="reject"/>
-      <view template="modules/workflow/usecases/reject.jx"/>
+      <view uri="modules/workflow/usecases/reject.jx"/>
     </component-instance>
 
   </xconf>

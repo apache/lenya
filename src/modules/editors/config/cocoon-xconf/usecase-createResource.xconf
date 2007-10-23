@@ -22,6 +22,6 @@
       logger="lenya.site" 
       class="org.apache.lenya.cms.site.usecases.CreateResource"
   >
-    <view template="modules/resource/usecases/create-resource.jx" menu="false"/>
+    <view uri="modules/resource/usecases/create-resource.jx" menu="false"/>
   </component-instance>
 </xconf>

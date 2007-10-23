@@ -21,7 +21,7 @@
     <component-instance name="webdav.propfind"
                         logger="lenya.publication"
                         class="org.apache.lenya.cms.usecases.webdav.Propfind">
-      <view template="usecases/webdav/propfind"/>
+      <view uri="usecases/webdav/propfind"/>
     </component-instance>
 
   </xconf>

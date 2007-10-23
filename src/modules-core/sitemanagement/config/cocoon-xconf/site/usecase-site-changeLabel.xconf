@@ -23,6 +23,6 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.changeLabel']">
     <component-instance name="sitemanagement.changeLabel" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.ChangeLabel">
-      <view template="modules/sitemanagement/usecases/site/changeLabel.jx"/>
+      <view uri="modules/sitemanagement/usecases/site/changeLabel.jx"/>
     </component-instance>
   </xconf>

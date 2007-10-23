@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.workflow']">
     <component-instance name="tab.scheduler" logger="lenya.site" class="org.apache.lenya.cms.usecase.scheduling.ManageJobs">
-      <view template="modules/sitemanagement/usecases/tab/scheduler.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/scheduler.jx" menu="true">
         <tab group="site" name="scheduler"/>
       </view>
       <exit usecase="tab.scheduler"/>

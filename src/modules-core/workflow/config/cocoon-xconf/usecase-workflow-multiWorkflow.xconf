@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'workflow.multiWorkflow']">
     <component-instance name="workflow.multiWorkflow" logger="lenya.workflow" class="org.apache.lenya.cms.workflow.usecases.MultiWorkflow">
-      <view template="modules/workflow/usecases/multiWorkflow.jx" menu="true"/>
+      <view uri="modules/workflow/usecases/multiWorkflow.jx" menu="true"/>
       <exit usecase="workflow.multiWorkflow"/>
       <usecase name="workflow.submit" event="submit"/>
       <usecase name="workflow.publish" event="publish"/>

@@ -22,7 +22,7 @@
 
     <component-instance name="notification.inbox" logger="lenya.notification"
       class="org.apache.lenya.inbox.usecases.Inbox">
-      <view template="modules/notification/usecases/inbox.jx" menu="true">
+      <view uri="modules/notification/usecases/inbox.jx" menu="true">
         <tab group="admin" name="inbox"/>
       </view>
       <exit usecase="notification.inbox"/>

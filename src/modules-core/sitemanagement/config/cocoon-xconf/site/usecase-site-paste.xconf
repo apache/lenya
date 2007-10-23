@@ -23,6 +23,6 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.paste']">
     <component-instance name="sitemanagement.paste" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Paste">
-      <view template="modules/sitemanagement/usecases/site/paste.jx"/>
+      <view uri="modules/sitemanagement/usecases/site/paste.jx"/>
     </component-instance>
   </xconf>

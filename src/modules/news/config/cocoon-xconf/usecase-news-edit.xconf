@@ -23,7 +23,7 @@
     
     <component-instance name="news.edit" logger="lenya.news" 
       class="org.apache.lenya.modules.news.usecases.Edit">
-      <view template="modules/news/usecases/edit.jx" menu="false"/>
+      <view uri="modules/news/usecases/edit.jx" menu="false"/>
       <event id="edit"/>
     </component-instance>
     

@@ -25,6 +25,6 @@
     <component-instance name="editors.forms" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.forms.FormsEditor">
       <transaction policy="pessimistic"/>
-      <view template="modules/editors/usecases/forms/forms.jx" menu="false"/>
+      <view uri="modules/editors/usecases/forms/forms.jx" menu="false"/>
     </component-instance>
   </xconf>

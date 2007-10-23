@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'admin.ipRanges']">
     <component-instance name="admin.ipRanges" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRanges">
-      <view template="modules/administration/usecases/ipRanges.jx" menu="true">
+      <view uri="modules/administration/usecases/ipRanges.jx" menu="true">
         <tab group="admin" name="ipRanges"/>
       </view>
       <exit usecase="admin.ipRanges"/>

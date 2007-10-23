@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.acLive']">
     <component-instance name="tab.acLive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
-      <view template="modules/sitemanagement/usecases/tab/acLive.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/acLive.jx" menu="true">
         <tab group="site" name="acLive"/>
       </view>
       <parameter name="acArea" value="live"/>

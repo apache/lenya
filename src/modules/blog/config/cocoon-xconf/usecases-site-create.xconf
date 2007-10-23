@@ -22,6 +22,6 @@
   <component-instance name="blog.createEntry"
                       logger="lenya.site"
                       class="org.apache.lenya.cms.site.usecases.CreateBlogEntry">
-    <view template="modules/blog/usecases/site/create.jx"/>
+    <view uri="modules/blog/usecases/site/create.jx"/>
   </component-instance>
 </xconf>

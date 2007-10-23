@@ -21,7 +21,7 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'lucene.opensearch']">
 
     <component-instance name="lucene.opensearch" logger="lenya.lucene" class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view template="modules/lucene/usecases/lucene/opensearch.jx"/>
+      <view uri="modules/lucene/usecases/lucene/opensearch.jx"/>
       <exit usecase="lucene.opensearch"/>
     </component-instance>
     

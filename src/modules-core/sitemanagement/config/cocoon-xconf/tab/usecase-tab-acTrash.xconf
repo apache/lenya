@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.acTrash']">
     <component-instance name="tab.acTrash" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
-      <view template="modules/sitemanagement/usecases/tab/acTrash.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/acTrash.jx" menu="true">
         <tab group="site" name="acTrash"/>
       </view>
       <exit usecase="tab.acTrash"/>

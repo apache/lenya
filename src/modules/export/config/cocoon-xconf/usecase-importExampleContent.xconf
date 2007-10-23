@@ -24,6 +24,6 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'export.importExampleContent']">
     <component-instance name="export.importExampleContent" logger="lenya.export"
       class="org.apache.lenya.cms.export.Import">
-      <view template="modules/export/usecases/importExampleContent.jx" menu="false"/>
+      <view uri="modules/export/usecases/importExampleContent.jx" menu="false"/>
     </component-instance>
   </xconf>

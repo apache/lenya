@@ -25,7 +25,7 @@
 
     <component-instance name="contactform.sendMessage" logger="lenya.usecase"
       class="org.apache.lenya.cms.contactform.ContactForm">
-      <view template="modules/contactform/usecases/contactForm.jx"/>
+      <view uri="modules/contactform/usecases/contactForm.jx"/>
       <parameter name="sender" value="lenya"/>
       <parameter name="recipient" value="alice"/>
     </component-instance>

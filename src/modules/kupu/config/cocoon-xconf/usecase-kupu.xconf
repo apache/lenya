@@ -23,7 +23,7 @@
     
     <component-instance name="kupu.edit" logger="lenya.publication" 
       class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow">
-      <view template="modules/kupu/usecases/kupu.jx" menu="false" createContinuation="false"/>
+      <view uri="modules/kupu/usecases/kupu.jx" menu="false" createContinuation="false"/>
       <transaction policy="pessimistic"/>
       <event id="edit"/>
       <parameter name="checkoutRestrictedToSession" value="false"/>

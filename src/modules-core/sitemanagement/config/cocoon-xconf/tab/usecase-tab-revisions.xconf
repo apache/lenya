@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.revisions']">
     <component-instance name="tab.revisions" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Revisions">
-      <view template="modules/sitemanagement/usecases/tab/revisions.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/revisions.jx" menu="true">
         <tab group="site" name="revisions"/>
       </view>
       <parameter name="workflowEvent" value="edit"/>

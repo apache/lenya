@@ -19,7 +19,7 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'linkcheck.getLinks']">
 
     <component-instance name="linkcheck.getLinks" logger="lenya.linkcheck" class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view template="modules/linkcheck/usecases/linkcheck/getLinks.jx"/>
+      <view uri="modules/linkcheck/usecases/linkcheck/getLinks.jx"/>
     </component-instance>
 
 </xconf>

@@ -24,7 +24,7 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'admin.deleteUser']">
 
     <component-instance name="admin.deleteUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteUser">
-      <view template="modules/administration/usecases/deleteUser.jx" menu="true">
+      <view uri="modules/administration/usecases/deleteUser.jx" menu="true">
         <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.users"/>

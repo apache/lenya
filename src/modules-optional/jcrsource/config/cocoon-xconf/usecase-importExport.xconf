@@ -22,7 +22,7 @@
 
   <component-instance name="jcr.importExport" logger="lenya.jcr"
     class="org.apache.lenya.cms.jcr.usecases.JCRImport">
-    <view template="modules/jcrsource/usecases/importExport/importExport.jx" menu="true">
+    <view uri="modules/jcrsource/usecases/importExport/importExport.jx" menu="true">
       <tab group="admin" name="jcr"/>
     </view>
   </component-instance>

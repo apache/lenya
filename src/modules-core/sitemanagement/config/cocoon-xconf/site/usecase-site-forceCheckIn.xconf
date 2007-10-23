@@ -24,6 +24,6 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.forceCheckIn']">
   <component-instance name="sitemanagement.forceCheckIn" logger="lenya.site"
     class="org.apache.lenya.cms.site.usecases.ForceCheckIn">
-    <view template="modules/sitemanagement/usecases/site/forceCheckIn.jx"/>
+    <view uri="modules/sitemanagement/usecases/site/forceCheckIn.jx"/>
   </component-instance>
 </xconf>

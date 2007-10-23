@@ -23,6 +23,6 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'usecasedocument.create']">
     <component-instance name="usecasedocument.create" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.CreateUsecaseDocument">
-      <view template="modules/usecasedocument/usecases/createUsecaseDocument.jx"/>
+      <view uri="modules/usecasedocument/usecases/createUsecaseDocument.jx"/>
     </component-instance>
   </xconf>

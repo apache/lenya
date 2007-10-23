@@ -22,7 +22,7 @@
   
   <component-instance name="jcr.import" logger="lenya.jcr"
     class="org.apache.lenya.cms.jcr.usecases.Import">
-    <view template="modules/jcrsource/usecases/import.jx" menu="false"/>
+    <view uri="modules/jcrsource/usecases/import.jx" menu="false"/>
   </component-instance>
   
 </xconf>

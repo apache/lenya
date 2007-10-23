@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.meta']">
     <component-instance name="tab.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.usecases.Metadata">
-      <view template="modules/sitemanagement/usecases/tab/meta.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/meta.jx" menu="true">
         <tab group="site" name="meta"/>
       </view>
       <exit usecase="tab.meta" />

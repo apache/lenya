@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'admin.emptyTrash']">
     <component-instance name="admin.emptyTrash" logger="lenya.admin" class="org.apache.lenya.cms.site.usecases.EmptyTrash">
-      <view template="modules/administration/usecases/emptyTrash.jx" menu="true">
+      <view uri="modules/administration/usecases/emptyTrash.jx" menu="true">
         <tab group="admin" name="trash"/>
       </view>
       <exit usecase="admin.emptyTrash"/>

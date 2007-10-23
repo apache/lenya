@@ -27,7 +27,7 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.cms.workflow.usecases.Submit">
       <event id="submit"/>
-      <view template="modules/workflow/usecases/submit.jx"/>
+      <view uri="modules/workflow/usecases/submit.jx"/>
     </component-instance>
 
   </xconf>

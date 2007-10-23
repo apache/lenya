@@ -21,7 +21,7 @@
     <component-instance name="webdav.filePropfind"
                         logger="lenya.publication"
                         class="org.apache.lenya.cms.usecases.webdav.FilePropfind">
-      <view template="usecases/webdav/filePropfind"/>
+      <view uri="usecases/webdav/filePropfind"/>
     </component-instance>
 
   </xconf>

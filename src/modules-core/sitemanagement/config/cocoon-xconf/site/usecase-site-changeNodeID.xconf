@@ -23,6 +23,6 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.changeNodeID']">
     <component-instance name="sitemanagement.changeNodeID" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.ChangeNodeID">
-      <view template="modules/sitemanagement/usecases/site/changeNodeID.jx"/>
+      <view uri="modules/sitemanagement/usecases/site/changeNodeID.jx"/>
     </component-instance>
   </xconf>

@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.acAuthoring']">
     <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
-      <view template="modules/sitemanagement/usecases/tab/acAuthoring.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/acAuthoring.jx" menu="true">
         <tab group="site" name="acAuthoring"/>
       </view>
       <parameter name="acArea" value="authoring"/>

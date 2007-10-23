@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.cut']">
     <component-instance name="sitemanagement.cut" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Cut">
-      <view template="modules/sitemanagement/usecases/site/cut.jx"/>
+      <view uri="modules/sitemanagement/usecases/site/cut.jx"/>
       <exit usecase="tab.overview" />  
     </component-instance>
   </xconf>
