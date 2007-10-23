@@ -33,16 +33,17 @@ import org.apache.lenya.cms.usecase.gui.Tab;
  * Information about a usecase view.
  * 
  * @version $Id$
- * 
+ * <p>
  * Example configuration:
- * <code>&lt;view uri="/modules/foo/usecases/foo-mogrify.jx"
+ * <code><pre>&lt;view uri="/modules/foo/usecases/foo-mogrify.jx"
  *     customFlow="/modules/foo/flow/myflow.js"
  *     menu="false|true"
  *     createContinuation="false|true"
  * &gt;
  *   &lt;tab group="foo" name="bar"/&gt;      // optional
  *   &lt;parameter name="foo" value="bar/&gt; // optional
- * &lt;/view&gt;</code>
+ * &lt;/view&gt;</pre></code>
+ * </p>
  * <p>
  * <code>uri</code> is the relative URL of the page to be sent back to the client. If the URI
  * starts with a slash, it is resolved starting at the root sitemap, otherwise it
