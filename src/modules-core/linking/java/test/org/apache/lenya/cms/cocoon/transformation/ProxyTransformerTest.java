@@ -57,9 +57,9 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
     protected static final String NAMESPACE = XHTMLSerializer.XHTML1_NAMESPACE;
     protected static final String ELEMENT = "a";
     protected static final String ATTRIBUTE = "href";
-
+    
     protected String getWebappUrl() {
-        return "/mock/authoring/index.html";
+        return "/default/authoring/index.html";
     }
 
     public void testProxyTransformer() throws Exception {
@@ -67,11 +67,10 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         ProxyTransformer transformer = new ProxyTransformer();
         transformer.enableLogging(getLogger());
         transformer.service(getManager());
-
-        String proxyUrl = "http://www.mock.org";
         
         String pubId = "mock";
         String area = "authoring";
+        String proxyUrl = "http://www.mock.org";
 
         createMockPublication(pubId, area, proxyUrl);
 
