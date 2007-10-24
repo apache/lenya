@@ -90,6 +90,11 @@
     <event id="restore"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
   </transition>
+
+  <transition source="archive" destination="trash">
+    <event id="delete"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>
   
   <transition source="trash" destination="authoring">
     <event id="restore"/>

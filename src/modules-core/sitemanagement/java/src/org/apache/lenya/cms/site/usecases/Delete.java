@@ -31,7 +31,7 @@ public class Delete extends MoveSubsite {
      * @see org.apache.lenya.cms.site.usecases.MoveSubsite#getSourceAreas()
      */
     protected String[] getSourceAreas() {
-        return new String[] { Publication.AUTHORING_AREA };
+        return new String[] { Publication.AUTHORING_AREA, Publication.ARCHIVE_AREA };
     }
 
     /**
