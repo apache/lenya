@@ -79,11 +79,11 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
                 URLInformation info = new URLInformation(url);
                 String area = info.getCompleteArea();
 
-                if (policy.isSSLProtected() && !area.startsWith(Publication.INFO_AREA_PREFIX)) {
+                if (policy.isSSLProtected() && !area.startsWith(Publication.INFO_AREA_PREFIX) && !request.getScheme().equals("https")) {
                     Session session = request.getSession(true);
                     OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getLogger());
                     String sslUri = rewriter.rewrite(url);
-                    return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);
+                    return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);                    	
                 }
             }
 
