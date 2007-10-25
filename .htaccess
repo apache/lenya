@@ -1,6 +1,4 @@
 AddDefaultCharset UTF-8
-RedirectMatch ^/1_4/(.*) http://lenya.apache.org/docs/2_0_x/$1
-RedirectMatch ^/docs/1_4/(.*) http://lenya.apache.org/docs/2_0_x/$1
 Redirect permanent /1_2_x http://lenya.apache.org/docs/1_2_x
 Redirect permanent /1_4 http://lenya.apache.org/docs/2_0_x
 Redirect permanent /docs/1_4 http://lenya.apache.org/docs/2_0_x

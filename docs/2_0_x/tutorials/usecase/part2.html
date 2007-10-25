@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>The Lenya Content Repository</title>
+<title>Implementing a Usecase, Part 2: The Usecase</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
@@ -128,8 +128,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/installation/source_version.html">Install Instructions</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4', '../../../../skin/')" id="menu_1.1.4Title" class="menutitle">Tutorials</div>
-<div id="menu_1.1.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Tutorials</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/newpublication/index.html">Create a Publication</a>
 </div>
@@ -151,13 +151,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/tutorials/resourcetype/part5.html">Editing (BXE)</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.3', '../../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Implement a Usecase</div>
-<div id="menu_1.1.4.3" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.4.3', '../../../../skin/')" id="menu_selected_1.1.4.3Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Implement a Usecase</div>
+<div id="menu_selected_1.1.4.3" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/usecase/part1.html">Prerequisites</a>
 </div>
-<div class="menuitem">
-<a href="../../../../docs/2_0_x/tutorials/usecase/part2.html">The Usecase</a>
+<div class="menupage">
+<div class="menupagetitle">The Usecase</div>
 </div>
 </div>
 <div class="menuitem">
@@ -197,13 +197,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/concepts/wysiwyg.html">WYSIWYG</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.6', '../../../../skin/')" id="menu_selected_1.1.6Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Technical Reference</div>
-<div id="menu_selected_1.1.6" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.1.6', '../../../../skin/')" id="menu_1.1.6Title" class="menutitle">Technical Reference</div>
+<div id="menu_1.1.6" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">Repository</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/reference/repository/index.html">Repository</a>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/ac.html">Access Control Specification</a>
@@ -687,10 +687,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 </div>
-<div id="credit">
-<hr>
-<a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="../../../../images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
-</div>
+<div id="credit"></div>
 <div id="roundbottom">
 <img style="display: none" class="corner" height="15" width="15" alt="" src="../../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
 <!--+
@@ -708,121 +705,303 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="index.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="part2.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>The Lenya Content Repository</h1>
-<div id="front-matter"></div>
+<h1>Implementing a Usecase, Part 2: The Usecase</h1>
+<div id="front-matter">
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Declaring+the+Usecase">Declaring the Usecase</a>
+</li>
+<li>
+<a href="#Implementing+the+Usecase+Handler+Class">Implementing the Usecase Handler Class</a>
+</li>
+<li>
+<a href="#Implementing+the+View">Implementing the View</a>
+</li>
+<li>
+<a href="#Adding+the+Menu+Item">Adding the Menu Item</a>
+</li>
+<li>
+<a href="#Setting+the+Usecase+Permissions">Setting the Usecase Permissions</a>
+</li>
+<li>
+<a href="#What%27s+Next%3F">What's Next?</a>
+</li>
+</ul>
+</div>
+</div>
+      
     
-    
-<a name="N1000D"></a><a name="The+Lenya+Repository+API"></a>
-<h2 class="h3">The Lenya Repository API</h2>
+<a name="N1000E"></a><a name="Declaring+the+Usecase"></a>
+<h2 class="h3">Declaring the Usecase</h2>
 <div class="section">
 <p>
-        The Lenya repository API comprises the following interfaces:
+        Now we're ready to start working on the actual usecase. First, we tell Lenya about
+        the usecase. The usecase declaration is a patch file for <span class="codefrag">cocoon.xconf</span>.
+        It is located at <span class="codefrag">$MODULE_HOME/config/cocoon-xconf/usecase-addKnownPerson.xconf</span>.
+        It adds the <em>person.addKnownUsecase</em> usecase component instance if it doesn't
+        exist yet (determined by the <span class="codefrag">unless</span> attribute):
       </p>
-<dl>
-        
-<dt>
-<strong>Repository</strong>
-</dt>
-        
-<dd>The repository object is the entry point to the Lenya repository. It provides access to
-        the document type registry and allows to create sessions.</dd>
-        
-<dt>
-<strong>Session</strong>
-</dt>
-        
-<dd>A session provides access to the publications and methods for transaction handling. Pending
-        changes are not written to the repository until the session is committed.</dd>
-        
-<dt>
-<strong>Publication</strong>
-</dt>
-        
-<dd>A publication consists of an arbitrary set of areas.</dd>
-        
-<dt>
-<strong>Area</strong>
-</dt>
-        
-<dd>An area consists of a set of content nodes with a site structure associated to them.</dd>
-        
-<dt>
-<strong>Document</strong>
-</dt>
-        
-<dd>
-          A document is a language version of a content item. A document is identified
-          within the area by
-          <ul>
-            
-<li>
-              the <acronym title="Universally Unique Identifier">UUID</acronym> which is shared
-              by all translations of a document, and
-            </li>
-            
-<li>the language.</li>
-          
-</ul>
-          
+<pre class="code">&lt;xconf xpath="/cocoon/usecases"
+  unless="/cocoon/usecases/component-instance[@name = 'person.addKnownPerson']"&gt;
+  
+  &lt;component-instance name="person.addKnownPerson" logger="lenya.modules.person"
+      class="org.apache.lenya.modules.person.usecases.AddKnownPerson"&gt;
+    &lt;view template="modules/person/usecases/addKnownPerson.jx"/&gt;
+  &lt;/component-instance&gt;
+  
+&lt;/xconf&gt;
+</pre>
 <p>
-            Furthermore, documents have the following properties:
-          </p>
-          
+        This usecase declaration specifies the usecase handler class (in our case
+        <span class="codefrag">AddKnownPerson</span>) and the JX template which acts as the view for
+        the usecase (<span class="codefrag">addKnownPerson.jx</span>). For a complete list of the generic
+        usecase configuration options, refer to the <a href="../../../../docs/2_0_x/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
+        documentation.
+      </p>
+</div>
+    
+    
+<a name="N10035"></a><a name="Implementing+the+Usecase+Handler+Class"></a>
+<h2 class="h3">Implementing the Usecase Handler Class</h2>
+<div class="section">
+<p>
+        The usecase handler object receives user input and manipulates the business objects,
+        in our case the <span class="codefrag">Person</span> objects, accordingly. It has the following
+        responsibilities:
+      </p>
 <ul>
-            
-<li>the <em>resource type</em> which specifies the content model of the document,</li>
-            
-<li>the mime type,</li>
-            
-<li>the content length, and</li>
-            
-<li>the last modification date.</li>
-          
-</ul>
-          The document provides access to its content via the methods <span class="codefrag">getInputStream()</span>
-          and <span class="codefrag">getOutputStream()</span>.
-        </dd>
         
-<dt>
-<strong>Resource Type</strong>
-</dt>
+<li>Prepare data to be displayed on the view,</li>
         
-<dd>The resource type of a document denotes the type of contents which may be stored
-          in its documents. A resource type is identified by a unique name. It may provide a
-          schema, which can be used to validate XML contents upon saving.
-          For more information, refer to the <a href="../../../../docs/2_0_x/reference/resource-types.html">resource types</a>
-          documenation.
-        </dd>
+<li>Validate user input and generate appropriate error messages, and</li>
         
-<dt>
-<strong>Meta Data</strong>
-</dt>
-        
-<dd>For more information, refer to the <a href="../../../../docs/2_0_x/reference/metadata.html">meta data</a> documentation.</dd>
-        
-<dt>
-<strong>SiteStructure</strong>
-</dt>
-        
-<dd>This interface provides access to the site structure.</dd>
-        
-<dt>
-<strong>SiteNode</strong>
-</dt>
-        
-<dd>The site structure is a tree consisting of site nodes. Each site node has an ID which
-          is unique among its siblings. Thus, a site node can be located using a unique path
-          of the form <span class="codefrag">/sections/news/message003</span>. A site node can reference exactly
-          one UUID, but it is possible to have multiple site nodes point to the same UUID.
-          A site node contains a <span class="codefrag">Link</span> object for each translation.
-          This means that <span class="codefrag">/en/news</span> and <span class="codefrag">/de/nachrichten</span> can point to different
-          translations of the same document.
-        </dd>
+<li>Manipulate the business objects.</li>
       
-</dl>
+</ul>
+<p>
+        If you want to follow a strictly object-oriented approach, the usecase handler class
+        itself shouldn't contain any knowledge about the business logic. It belongs to the
+        controller part of the <acronym title="Model-View-Controller">MVC</acronym> pattern
+        (the other parts of the controller are the usecase sitemap and the flowscript).
+      </p>
+<p>
+        The following code snippet shows the usecase handler class.
+        At this point, we implement only the two most important methods:
+      </p>
+<ul>
+        
+<li>
+          
+<span class="codefrag">initParameters()</span> initializes the usecase parameters which are
+          used to communicate between the usecase handler and the view. In our case, it
+          compiles a list of <span class="codefrag">Person</span> objects, one for each document with the resource type
+          <em>person</em>.
+        </li>
+        
+<li>
+          
+<span class="codefrag">doExecute()</span> gets the <em>uuid</em> parameter from the view and adds
+          the corresponding <span class="codefrag">Person</span> object to the list of known people.
+        </li>
+      
+</ul>
+<pre class="code">public class AddKnownPerson extends DocumentUsecase {
+
+    protected void initParameters() {
+        super.initParameters();
+
+        Document doc = getSourceDocument();
+        Document[] allDocs = doc.area().getDocuments();
+
+        try {
+            Set peopleDocs = new HashSet();
+            for (int i = 0; i &lt; allDocs.length; i++) {
+                if (allDocs[i].getResourceType().getName().equals("person")) {
+                    Person person = new Person(allDocs[i]);
+                    peopleDocs.add(person);
+                }
+            }
+            setParameter("people", peopleDocs);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void doExecute() throws Exception {
+        super.doExecute();
+
+        String uuid = getParameterAsString("uuid");
+        Document doc = getSourceDocument();
+        Person person = new Person(doc);
+
+        Document knownDoc = doc.area().getDocument(uuid, doc.getLanguage());
+        Person knownPerson = new Person(knownDoc);
+
+        person.addKnownPerson(knownPerson);
+    }
+
+}</pre>
+</div>
+    
+    
+<a name="N10077"></a><a name="Implementing+the+View"></a>
+<h2 class="h3">Implementing the View</h2>
+<div class="section">
+<p>
+        We're using a JX template to implement the view. It allows us to generate XHTML
+        code using properties of Java objects which are passed as parameters from the usecase
+        handler object.
+      </p>
+<p>
+        The page contains a form, passing the <em>lenya.usecase</em> and <em>lenya.continuation</em>
+        parameters as hidden input fields. We choose POST as the form method because we want
+        to manipulate data on the server, avoiding that the user submits the form multiple times.
+        We generate a drop-down list containing an option for each person,
+        using the UUID as the <span class="codefrag">value</span> attribute of the <span class="codefrag">option</span> element.
+        Remember that the <em>people</em> parameter was set in the <span class="codefrag">initParameters()</span>
+        method of the usecase handler class.
+      </p>
+<pre class="code">&lt;page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" &gt;
+
+  &lt;page:title&gt;
+    &lt;i18n:text&gt;Add Known Person&lt;/i18n:text&gt;
+  &lt;/page:title&gt;
+  &lt;page:body&gt;
+    
+    &lt;jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/&gt;
+    
+    &lt;form method="POST"&gt;
+      &lt;input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/&gt;
+      &lt;input type="hidden" name="lenya.continuation" value="${continuation.id}"/&gt;
+      
+      &lt;p&gt;
+        &lt;i18n:text&gt;Select a person you know:&lt;/i18n:text&gt;
+      &lt;/p&gt;
+      &lt;p&gt;
+        &lt;select name="uuid"&gt;
+          &lt;jx:forEach var="person" items="${usecase.getParameter('people')}"&gt;
+            &lt;option value="${person.getDocument().getUUID()}"&gt;
+              &lt;jx:out value="${person.getName()}"/&gt;
+            &lt;/option&gt;
+          &lt;/jx:forEach&gt;
+        &lt;/select&gt;
+      &lt;/p&gt;
+  
+      &lt;p&gt;
+        &lt;input i18n:attr="value" name="submit" type="submit" value="Submit"/&gt;
+        &lt;i18n:text&gt; &lt;/i18n:text&gt;
+        &lt;input i18n:attr="value" name="cancel" type="submit" value="Cancel"/&gt;
+      &lt;/p&gt;
+      
+    &lt;/form&gt;
+  &lt;/page:body&gt;
+&lt;/page:page&gt;</pre>
+</div>
+    
+    
+<a name="N1009A"></a><a name="Adding+the+Menu+Item"></a>
+<h2 class="h3">Adding the Menu Item</h2>
+<div class="section">
+<p>
+        To be able to trigger the usecase, we have to add the corresponding menu item
+        to the menu of the person module, which is located at
+        <span class="codefrag">$MODULE_HOME/config/menu.xsp</span>. We add a menu block which shall be
+        visible only in the authoring area, right below the block containing the
+        editor menu items. The value of the <span class="codefrag">uc:usecase</span> attribute of the
+        <span class="codefrag">&lt;item/&gt;</span> element is the name of the usecase as specified
+        in the usecase declaration.
+      </p>
+<pre class="code">&lt;menu i18n:attr="name" name="Edit"&gt;
+  &lt;xsp:logic&gt;
+    try {
+        Object doc = &lt;input:get-attribute module="page-envelope"
+            as="object" name="document"/&gt;;
+        if (doc instanceof Document &amp;amp;&amp;amp; ((Document) doc).exists()) {
+            String doctype = &lt;input:get-attribute module="page-envelope"
+                as="string" name="document-type"/&gt;;
+            if ("person".equals(doctype)) {
+                &lt;block areas="authoring"&gt;
+                  &lt;item uc:usecase="bxe.edit" href="?"&gt;
+                    &lt;i18n:text&gt;With BXE&lt;/i18n:text&gt;
+                  &lt;/item&gt;
+                  &lt;item uc:usecase="editors.oneform" href="?"&gt;
+                    &lt;i18n:text&gt;With one Form&lt;/i18n:text&gt;
+                  &lt;/item&gt;
+                &lt;/block&gt;
+                &lt;block areas="authoring"&gt;
+                  &lt;item uc:usecase="person.addKnownPerson" href="?"&gt;
+                    &lt;i18n:text&gt;Add Known Person&lt;/i18n:text&gt;
+                  &lt;/item&gt;
+                &lt;/block&gt;
+            }
+        }
+    }
+    catch (Exception e) {
+        throw new ProcessingException("Error during menu generation: ", e);
+    }
+  &lt;/xsp:logic&gt;
+&lt;/menu&gt;</pre>
+</div>
+    
+    
+<a name="N100B1"></a><a name="Setting+the+Usecase+Permissions"></a>
+<h2 class="h3">Setting the Usecase Permissions</h2>
+<div class="section">
+<p>
+        Finally we have to specify who shall be able to execute the usecase.
+        To accomplish this, we have to add an entry to the usecase policies file of the
+        publication(s) which will use the person module. The file is located at
+        <span class="codefrag">$PUB_HOME/config/access-control/usecase-policies.xml</span>.
+        We allow everyone with the <em>admin</em> or <em>editor</em> role to
+        execute the usecase:
+      </p>
+<pre class="code">&lt;usecase id="person.addKnownPerson"&gt;
+  &lt;role id="admin" method="grant"/&gt;
+  &lt;role id="edit" method="grant"/&gt;
+&lt;/usecase&gt;</pre>
+<p>
+        Now you can deploy the changes by running the build process and restarting the
+        servlet engine. After that you should be able to connect people using the
+        "knows" relation.
+      </p>
+<div id="" style="text-align: center;">
+<img id="" class="figure" alt="Screenshot: Add Known Person usecase" src="../../../../images/live/usecase/screenshotAddKnownPerson.png"></div>
+</div>
+    
+    
+<a name="N100CF"></a><a name="What%27s+Next%3F"></a>
+<h2 class="h3">What's Next?</h2>
+<div class="section">
+<p>
+        There are some important steps which are missing from the example:
+      </p>
+<ul>
+        
+<li>
+          In <span class="codefrag">initParameters()</span>, you should exclude the person itself and
+          all people which she or he already knows. 
+        </li>
+        
+<li>
+          If you set the relation from person A to person B, it probably makes sense
+          to set the relation from B to A at the same time.
+        </li>
+        
+<li>
+          To avoid sending stack traces to the user, you should validate the <em>uuid</em>
+          parameter: Is it provided? Does it refer to an existing person document?
+          You can do this kind of validation in the <span class="codefrag">doCheckExecutionConditions()</span>
+          method - just call <span class="codefrag">addErrorMessage()</span> for each validation error.
+        </li>
+      
+</ul>
 </div>
     
   
@@ -845,10 +1024,9 @@ document.write("Last Published: " + document.lastModified);
         Copyright &copy;
          2002-2007 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
 </div>
-<div id="logos"></div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/2_0_x/reference/repository/index.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/2_0_x/tutorials/usecase/part2.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip

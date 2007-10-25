@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>The Lenya Content Repository</title>
+<title>Implementing a Usecase, Part 1: Prerequisites</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
@@ -128,8 +128,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/installation/source_version.html">Install Instructions</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4', '../../../../skin/')" id="menu_1.1.4Title" class="menutitle">Tutorials</div>
-<div id="menu_1.1.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Tutorials</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/newpublication/index.html">Create a Publication</a>
 </div>
@@ -151,10 +151,10 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/tutorials/resourcetype/part5.html">Editing (BXE)</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.3', '../../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Implement a Usecase</div>
-<div id="menu_1.1.4.3" class="menuitemgroup">
-<div class="menuitem">
-<a href="../../../../docs/2_0_x/tutorials/usecase/part1.html">Prerequisites</a>
+<div onclick="SwitchMenu('menu_selected_1.1.4.3', '../../../../skin/')" id="menu_selected_1.1.4.3Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Implement a Usecase</div>
+<div id="menu_selected_1.1.4.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Prerequisites</div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/usecase/part2.html">The Usecase</a>
@@ -197,13 +197,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/concepts/wysiwyg.html">WYSIWYG</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.6', '../../../../skin/')" id="menu_selected_1.1.6Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Technical Reference</div>
-<div id="menu_selected_1.1.6" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.1.6', '../../../../skin/')" id="menu_1.1.6Title" class="menutitle">Technical Reference</div>
+<div id="menu_1.1.6" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">Repository</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/reference/repository/index.html">Repository</a>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/ac.html">Access Control Specification</a>
@@ -687,10 +687,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 </div>
-<div id="credit">
-<hr>
-<a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="../../../../images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
-</div>
+<div id="credit"></div>
 <div id="roundbottom">
 <img style="display: none" class="corner" height="15" width="15" alt="" src="../../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
 <!--+
@@ -708,121 +705,215 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="index.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="part1.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>The Lenya Content Repository</h1>
-<div id="front-matter"></div>
+<h1>Implementing a Usecase, Part 1: Prerequisites</h1>
+<div id="front-matter">
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introduction">Introduction</a>
+</li>
+<li>
+<a href="#Add+the+%22Knows%22+Relation+to+the+Person+Resource+Type">Add the "Knows" Relation to the Person Resource Type</a>
+</li>
+<li>
+<a href="#Implement+the+Person+Document+Wrapper">Implement the Person Document Wrapper</a>
+</li>
+</ul>
+</div>
+</div>
     
     
-<a name="N1000D"></a><a name="The+Lenya+Repository+API"></a>
-<h2 class="h3">The Lenya Repository API</h2>
+<a name="N1000E"></a><a name="Introduction"></a>
+<h2 class="h3">Introduction</h2>
 <div class="section">
 <p>
-        The Lenya repository API comprises the following interfaces:
+        In this tutorial we'll implement a simple user interaction scenario using
+        the <a href="../../../../docs/2_0_x/reference/usecase-framework/index.html">usecase framework</a>.
+        The implementation will be based on the <em>person</em> resource type module described
+        in the tutorial <a href="../../../../docs/2_0_x/tutorials/resourcetype/part1.html">Creating a Resource Type</a>.
+        We'll extend the resource type to include "knows" relationships. Our usecase will
+        allow the connect a person to other people.
       </p>
-<dl>
-        
-<dt>
-<strong>Repository</strong>
-</dt>
-        
-<dd>The repository object is the entry point to the Lenya repository. It provides access to
-        the document type registry and allows to create sessions.</dd>
-        
-<dt>
-<strong>Session</strong>
-</dt>
-        
-<dd>A session provides access to the publications and methods for transaction handling. Pending
-        changes are not written to the repository until the session is committed.</dd>
-        
-<dt>
-<strong>Publication</strong>
-</dt>
-        
-<dd>A publication consists of an arbitrary set of areas.</dd>
-        
-<dt>
-<strong>Area</strong>
-</dt>
-        
-<dd>An area consists of a set of content nodes with a site structure associated to them.</dd>
-        
-<dt>
-<strong>Document</strong>
-</dt>
-        
-<dd>
-          A document is a language version of a content item. A document is identified
-          within the area by
-          <ul>
-            
-<li>
-              the <acronym title="Universally Unique Identifier">UUID</acronym> which is shared
-              by all translations of a document, and
-            </li>
-            
-<li>the language.</li>
-          
-</ul>
-          
 <p>
-            Furthermore, documents have the following properties:
-          </p>
-          
+        To accomplish this task, we will
+      </p>
 <ul>
-            
-<li>the <em>resource type</em> which specifies the content model of the document,</li>
-            
-<li>the mime type,</li>
-            
-<li>the content length, and</li>
-            
-<li>the last modification date.</li>
-          
-</ul>
-          The document provides access to its content via the methods <span class="codefrag">getInputStream()</span>
-          and <span class="codefrag">getOutputStream()</span>.
-        </dd>
         
-<dt>
-<strong>Resource Type</strong>
-</dt>
+<li>Extend the person schema to support <span class="codefrag">&lt;foaf:knows/&gt;</span> elements,</li>
         
-<dd>The resource type of a document denotes the type of contents which may be stored
-          in its documents. A resource type is identified by a unique name. It may provide a
-          schema, which can be used to validate XML contents upon saving.
-          For more information, refer to the <a href="../../../../docs/2_0_x/reference/resource-types.html">resource types</a>
-          documenation.
-        </dd>
+<li>Implement a wrapper class to manage person documents,</li>
         
-<dt>
-<strong>Meta Data</strong>
-</dt>
+<li>Add a usecase handler class to provide the functionality to connect people,</li>
         
-<dd>For more information, refer to the <a href="../../../../docs/2_0_x/reference/metadata.html">meta data</a> documentation.</dd>
+<li>
+          Add a <a href="http://cocoon.apache.org/2.1/userdocs/flow/jxtemplate.html">JX template</a>
+          which acts as the view for the usecase,
+        </li>
         
-<dt>
-<strong>SiteStructure</strong>
-</dt>
+<li>Add a menu item to trigger the usecase, and</li>
         
-<dd>This interface provides access to the site structure.</dd>
-        
-<dt>
-<strong>SiteNode</strong>
-</dt>
-        
-<dd>The site structure is a tree consisting of site nodes. Each site node has an ID which
-          is unique among its siblings. Thus, a site node can be located using a unique path
-          of the form <span class="codefrag">/sections/news/message003</span>. A site node can reference exactly
-          one UUID, but it is possible to have multiple site nodes point to the same UUID.
-          A site node contains a <span class="codefrag">Link</span> object for each translation.
-          This means that <span class="codefrag">/en/news</span> and <span class="codefrag">/de/nachrichten</span> can point to different
-          translations of the same document.
-        </dd>
+<li>Specify who is allowed to invoke the usecase.</li>
       
-</dl>
+</ul>
+</div>
+    
+    
+<a name="N10042"></a><a name="Add+the+%22Knows%22+Relation+to+the+Person+Resource+Type"></a>
+<h2 class="h3">Add the "Knows" Relation to the Person Resource Type</h2>
+<div class="section">
+<p>
+        First, we'll add support for the <span class="codefrag">&lt;foaf:knows/&gt;</span> element to the
+        Relax NG schema, which is located at <span class="codefrag">$MODULE_HOME/resources/schemas/foaf.rng</span>.
+        We allow to specify the known person using an <span class="codefrag">rdf:resource</span> attribute, which
+        can hold an internal <span class="codefrag">lenya-document:</span> URI.
+      </p>
+<pre class="code">&lt;grammar ...&gt;
+  &lt;start&gt;
+    &lt;element name="rdf:RDF"&gt;
+      &lt;element name="foaf:Person"&gt;
+        ...
+        
+        &lt;zeroOrMore&gt;
+          &lt;element name="foaf:knows"&gt;
+            &lt;attribute name="rdf:resource"&gt;
+              &lt;data type="anyURI"/&gt;
+            &lt;/attribute&gt;
+          &lt;/element&gt;
+        &lt;/zeroOrMore&gt;
+        
+      &lt;/element&gt;
+    &lt;/element&gt;
+  &lt;/start&gt;
+&lt;/grammar&gt;</pre>
+<p>
+        Now we need to extend our presentation layer to consider the "knows" relations.
+        We use CInclude to lookup the person's name based on the <span class="codefrag">foaf:knows</span>
+        element. This requires two steps: an XSLT preprocessing to add the CInclude element to
+        the <span class="codefrag">foaf:knows</span> element, and the actual CInclude transformation.
+        In the module sitemap, which is located at <span class="codefrag">$MODULE_HOME/sitemap.xmap</span>,
+        add these steps to the presentation pipeline:
+      </p>
+<pre class="code">&lt;!-- {format}.xml/{pubId}/{area}/{uuid}/{language} --&gt;
+&lt;map:match pattern="*.*/*/*/*/*"&gt;
+  &lt;map:generate src="lenya-document:{5},lang={6}{link:rev}"/&gt;
+  &lt;map:transform src="fallback://lenya/modules/person/xslt/knows2include.xsl"/&gt;
+  &lt;map:transform type="cinclude"/&gt;
+  &lt;map:transform src="fallback://lenya/modules/person/xslt/foaf2{1}.xsl"&gt;
+  ...
+&lt;/map:match&gt;</pre>
+<p>
+        Now we add the XSLT which adds the CInclude statements. It is located at
+        <span class="codefrag">$MODULE_HOME/xslt/knows2include.xsl</span>. The <span class="codefrag">src</span>
+        attribute of the <span class="codefrag">&lt;ci:include/&gt;</span> element is set to the
+        <span class="codefrag">rdf:resource</span> attribute, which holds a <span class="codefrag">lenya-document:</span> URI. 
+      </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:ci="http://apache.org/cocoon/include/1.0"
+  &gt;
+  
+  &lt;xsl:template match="foaf:knows"&gt;
+    &lt;xsl:copy&gt;
+      &lt;xsl:copy-of select="@*"/&gt;
+      &lt;ci:include src="{@rdf:resource}"/&gt;
+    &lt;/xsl:copy&gt;
+  &lt;/xsl:template&gt;
+  
+  &lt;xsl:template match="@*|node()" priority="-1"&gt;
+    &lt;xsl:copy&gt;
+      &lt;xsl:apply-templates select="@*|node()"/&gt;
+    &lt;/xsl:copy&gt;
+  &lt;/xsl:template&gt;
+  
+&lt;/xsl:stylesheet&gt;</pre>
+<p>
+        Finally, we have to include the known people in the output. We add a table row to
+        the <span class="codefrag">$MODULE_HOME/xslt/foaf2xhtml.xsl</span> stylesheet:
+      </p>
+<pre class="code">&lt;tr&gt;
+  &lt;th&gt;Knows:&lt;/th&gt;
+  &lt;td&gt;
+    &lt;xsl:for-each select="foaf:knows"&gt;
+      &lt;a href="{@rdf:resource}"&gt;
+        &lt;xsl:value-of select="rdf:RDF/foaf:Person/foaf:givenname"/&gt;
+        &lt;xsl:text&gt; &lt;/xsl:text&gt;
+        &lt;xsl:value-of select="rdf:RDF/foaf:Person/foaf:family_name"/&gt;
+      &lt;/a&gt;
+      &lt;br/&gt;
+    &lt;/xsl:for-each&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;</pre>
+<p>
+        To test this functionality, you can add two person documents to your
+        publication, edit one of them using the one-form editor, and add the
+        <span class="codefrag">&lt;foaf:knows/&gt;</span> element, pointing to the other
+        person document, e.g.:
+      </p>
+<pre class="code">&lt;foaf:knows rdf:resource="lenya-document:5e13b150-6855-11dc-8b37-f5f12a4217db"/&gt;</pre>
+</div>
+    
+    
+<a name="N10096"></a><a name="Implement+the+Person+Document+Wrapper"></a>
+<h2 class="h3">Implement the Person Document Wrapper</h2>
+<div class="section">
+<p>
+        In Lenya projects, the wrapper pattern (also known as adapter pattern) has proven
+        useful to simplify the handling of XML documents. A wrapper object provides
+        access to a certain object, in our case a Lenya document, to client objects. It can
+        be used to add a layer of abstraction. In our case we use the wrapper to abstract
+        from the XML content and provide the functionality of adding "knows" relations
+        between person documents.
+      </p>
+<p>
+        The following code snippet contains some methods to illustrate the functionality
+        of the Person class. For the full source code, check out the person module from the
+        Subversion repository.
+      </p>
+<p>
+        We pass an <span class="codefrag">org.apache.lenya.cms.publication.Document</span>
+        object to the constructor which stores the XML content describing the person.
+        The <span class="codefrag">getName()</span> function returns the full name, i.e. the concatenation
+        of the given name and the family name. This method will be used to show the person's
+        name on the usecase view page. The <span class="codefrag">load()</span> and <span class="codefrag">save()</span> methods
+        act as the persistence facilities of the person object.
+      </p>
+<pre class="code">public class Person extends AbstractLogEnabled {
+        
+    ...
+
+    public Person(Document doc) {
+        ...
+    }
+
+    public Person[] getKnownPeople() {
+        load();
+        Collection persons = this.knownPersons.values();
+        return (Person[]) persons.toArray(new Person[persons.size()]);
+    }
+
+    public void addKnownPerson(Person person) {
+        load();
+        this.knownPersons.put(person.getDocument().getUUID(), person);
+        save();
+    }
+    
+    public String getName() {
+        load();
+        return this.givenName + " " + this.familyName;
+    }
+
+    ...
+
+}</pre>
+<p>
+        Now we can go on with the <a href="../../../../docs/2_0_x/tutorials/usecase/part2.html">actual usecase</a>.
+      </p>
 </div>
     
   
@@ -845,10 +936,9 @@ document.write("Last Published: " + document.lastModified);
         Copyright &copy;
          2002-2007 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
 </div>
-<div id="logos"></div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/2_0_x/reference/repository/index.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/2_0_x/tutorials/usecase/part1.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip

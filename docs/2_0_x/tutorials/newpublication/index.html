@@ -151,11 +151,20 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/tutorials/resourcetype/part5.html">Editing (BXE)</a>
 </div>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.3', '../../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Implement a Usecase</div>
+<div id="menu_1.1.4.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/tutorials/usecase/part1.html">Prerequisites</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/tutorials/usecase/part2.html">The Usecase</a>
+</div>
+</div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.4', '../../../../skin/')" id="menu_1.1.4.4Title" class="menutitle">Proxying</div>
-<div id="menu_1.1.4.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.4.5', '../../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
+<div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
 </div>
@@ -759,7 +768,7 @@ document.write("Last Published: " + document.lastModified);
   src/
     lenya/                 The home directory of your Lenya-related sources.
       pubs/                Your publications.
-        mypub/             Your first publication. We'll call this directory $PUB_HOME.
+        $MYPUB/            Your first publication. We'll call this directory $MYPUB_HOME.
       modules/             Your modules.
       data/                Here you'll store your data:
         content/           Content (documents, images, ...)
@@ -805,7 +814,7 @@ document.write("Last Published: " + document.lastModified);
 <div class="section">
 <p>
         Now it's time to add the main configuration file of your publication,
-        <span class="codefrag">$PUB_HOME/config/publication.xml</span>. The language settings depend
+        <span class="codefrag">$MYPUB_HOME/config/publication.xml</span>. The language settings depend
         on your requirements, you can add whatever languages you need. But make sure
         to use the official ISO 639-1 language codes. The entry
         <span class="codefrag">&lt;template id="default"/&gt;</span> tells Lenya that your
@@ -848,7 +857,7 @@ document.write("Last Published: " + document.lastModified);
 <div class="section">
 <p>
         The access control options are configured in
-        <span class="codefrag">$PUB_HOME/config/access-control/access-control.xml</span>.
+        <span class="codefrag">$MYPUB_HOME/config/access-control/access-control.xml</span>.
         We'll change the paths where access control data are stored: 
       </p>
 <pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -914,7 +923,7 @@ document.write("Last Published: " + document.lastModified);
 <p>
         Each publication has an introduction page (<span class="codefrag">introduction.html</span>).
         We'll add a policy allowing everyone to visit the page. The file is located
-        at <span class="codefrag">data/access-control/policies/introduction.html/url-policy.acml</span>:
+        at <span class="codefrag">data/access-control/policies/introduction.html/subtree-policy.acml</span>:
       </p>
 <pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;policy xmlns="http://apache.org/cocoon/lenya/ac/1.0"&gt;
@@ -943,12 +952,15 @@ document.write("Last Published: " + document.lastModified);
 <div class="section">
 <p>
         It is necessary to configure the search indexes for each publication.
-        Add the file <span class="codefrag">$PUB_HOME/config/search/lucene_index.xml</span>:
+        Add the file
+        <span class="codefrag">$MYPUB_HOME/config/search/lucene_index.xml</span>. Here is an
+        example - be sure to replace $MYPUB with the name of your
+        publication everywhere!
       </p>
 <pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;indexes&gt;
-  &lt;index id="mypub-live" analyzer="stopword_en"
-    directory="lenya/pubs/mypub/work/lucene/index/live/index"&gt;
+  &lt;index id="$MYPUB-live" analyzer="stopword_en"
+    directory="lenya/pubs/$MYPUB/work/lucene/index/live/index"&gt;
     &lt;structure&gt;
       &lt;field id="url" type="keyword" /&gt;
       &lt;field id="title" type="text" storetext="true"/&gt;
@@ -957,8 +969,8 @@ document.write("Last Published: " + document.lastModified);
       &lt;field id="body" type="text" storetext="true"/&gt;
     &lt;/structure&gt;
   &lt;/index&gt;
-  &lt;index id="mypub-authoring" analyzer="stopword_en"
-    directory="lenya/pubs/mypub/work/lucene/index/authoring/index"&gt;
+  &lt;index id="$MYPUB-authoring" analyzer="stopword_en"
+    directory="lenya/pubs/$MYPUB/work/lucene/index/authoring/index"&gt;
     &lt;structure&gt;
       &lt;field id="url" type="keyword" /&gt;
       &lt;field id="title" type="text" storetext="true"/&gt;
@@ -967,8 +979,8 @@ document.write("Last Published: " + document.lastModified);
       &lt;field id="body" type="text" storetext="true"/&gt;
     &lt;/structure&gt;
   &lt;/index&gt;
-  &lt;index id="mypub-trash" analyzer="stopword_en"
-    directory="lenya/pubs/mypub/work/lucene/index/trash/index"&gt;
+  &lt;index id="$MYPUB-trash" analyzer="stopword_en"
+    directory="lenya/pubs/$MYPUB/work/lucene/index/trash/index"&gt;
     &lt;structure&gt;
       &lt;field id="url" type="keyword" /&gt;
       &lt;field id="title" type="text" storetext="true"/&gt;
@@ -977,8 +989,8 @@ document.write("Last Published: " + document.lastModified);
       &lt;field id="body" type="text" storetext="true"/&gt;
     &lt;/structure&gt;
   &lt;/index&gt;
-  &lt;index id="mypub-archive" analyzer="stopword_en"
-    directory="lenya/pubs/mypub/work/lucene/index/archive/index"&gt;
+  &lt;index id="$MYPUB-archive" analyzer="stopword_en"
+    directory="lenya/pubs/$MYPUB/work/lucene/index/archive/index"&gt;
     &lt;structure&gt;
       &lt;field id="url" type="keyword" /&gt;
       &lt;field id="title" type="text" storetext="true"/&gt;

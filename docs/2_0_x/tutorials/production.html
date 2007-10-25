@@ -151,11 +151,20 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/tutorials/resourcetype/part5.html">Editing (BXE)</a>
 </div>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.3', '../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Implement a Usecase</div>
+<div id="menu_1.1.4.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/usecase/part1.html">Prerequisites</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/usecase/part2.html">The Usecase</a>
+</div>
+</div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.4', '../../../skin/')" id="menu_1.1.4.4Title" class="menutitle">Proxying</div>
-<div id="menu_1.1.4.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.4.5', '../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
+<div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
 </div>
@@ -713,7 +722,7 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Preparation+%28Internal+Pilot+Phase%29">Preparation (Internal Pilot Phase)</a>
 </li>
 <li>
-<a href="#Caching">Caching</a>
+<a href="#Caching+in+Cocoon">Caching in Cocoon</a>
 </li>
 <li>
 <a href="#Performance+Tuning">Performance Tuning</a>
@@ -823,8 +832,8 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N10059"></a><a name="Caching"></a>
-<h2 class="h3">Caching</h2>
+<a name="N10059"></a><a name="Caching+in+Cocoon"></a>
+<h2 class="h3">Caching in Cocoon</h2>
 <div class="section">
 <p>
         There's a <a href="http://wiki.apache.org/cocoon-data/attachments/GT2006Notes/attachments/10-caching.pdf">great
@@ -883,6 +892,15 @@ document.write("Last Published: " + document.lastModified);
         
 <li>Turn off reloading of sub-sitemaps.</li>
         
+<li>
+          Enable client-side caching by changing the <span class="codefrag">pipeline-expiration</span> parameter
+          in <span class="codefrag">global-sitemap.xmap</span>, for instance:
+          <pre class="code">&lt;global-variables&gt;
+  &lt;pipeline-expiration&gt;access plus 2 hours&lt;/pipeline-expiration&gt;
+&lt;/global-variables&gt;</pre>
+        
+</li>
+        
 <li>Tips about Cocoon performance tuning: <a href="http://wiki.apache.org/cocoon/CocoonPerformance">http://wiki.apache.org/cocoon/CocoonPerformance</a>
 </li>
         
@@ -908,7 +926,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N100C8"></a><a name="General+Measures+for+Production"></a>
+<a name="N100D5"></a><a name="General+Measures+for+Production"></a>
 <h2 class="h3">General Measures for Production</h2>
 <div class="section">
 <ul>
@@ -961,7 +979,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N10102"></a><a name="Cosmetics"></a>
+<a name="N1010F"></a><a name="Cosmetics"></a>
 <h2 class="h3">Cosmetics</h2>
 <div class="section">
 <p>

@@ -151,11 +151,20 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/tutorials/resourcetype/part5.html">Editing (BXE)</a>
 </div>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.3', '../../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Implement a Usecase</div>
+<div id="menu_1.1.4.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/tutorials/usecase/part1.html">Prerequisites</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/tutorials/usecase/part2.html">The Usecase</a>
+</div>
+</div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.4', '../../../../skin/')" id="menu_1.1.4.4Title" class="menutitle">Proxying</div>
-<div id="menu_1.1.4.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.4.5', '../../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
+<div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
 </div>
@@ -235,10 +244,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -730,8 +742,13 @@ document.write("Last Published: " + document.lastModified);
       project.
     </p>
     
+<p>
+      You can checkout the source code of this example from the Subversion repository at the URL
+      <span class="codefrag">http://svn.apache.org/repos/asf/lenya/sandbox/modules/person</span>.
+    </p>
     
-<a name="N10021"></a><a name="Prerequisites"></a>
+    
+<a name="N10027"></a><a name="Prerequisites"></a>
 <h2 class="h3">Prerequisites</h2>
 <div class="section">
 <p>
@@ -747,7 +764,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1002F"></a><a name="Adding+a+Module"></a>
+<a name="N10035"></a><a name="Adding+a+Module"></a>
 <h2 class="h3">Adding a Module</h2>
 <div class="section">
 <p>
@@ -799,12 +816,15 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <pre class="code">&lt;module name="person"/&gt;</pre>
 <p>
-        to the <span class="codefrag">&lt;modules/&gt;</span> section.
+        to the <span class="codefrag">&lt;modules/&gt;</span> section. Additionally, you can assign a workflow
+        to the resource type in the <span class="codefrag">&lt;resource-types&gt;</span> section of
+        <span class="codefrag">publication.xml</span>:
       </p>
+<pre class="code">&lt;resource-type name="person" workflow="fallback://config/workflow/workflow.xml"/&gt;</pre>
 </div>
     
     
-<a name="N10073"></a><a name="Declaring+the+Resource+Type"></a>
+<a name="N10083"></a><a name="Declaring+the+Resource+Type"></a>
 <h2 class="h3">Declaring the Resource Type</h2>
 <div class="section">
 <p>
@@ -820,13 +840,19 @@ document.write("Last Published: " + document.lastModified);
   &lt;component-instance name="person" logger="lenya.resourcetypes"
     class="org.apache.lenya.cms.publication.ResourceTypeImpl"&gt;
     
-    &lt;schema language="http://relaxng.org/ns/structure/0.9"
-      src="fallback://lenya/modules/person/resources/schemas/foaf.rng"/&gt;
+    &lt;schema 
+       namespace="http://relaxng.org/ns/structure/0.9"
+       uri="fallback://lenya/modules/person/resources/schemas/foaf.rng"
+    /&gt;
     
-    &lt;!-- Default time in seconds until the resource-type has expired --&gt;  
+    &lt;!-- Default time cache time in seconds for this resource type --&gt;  
     &lt;expires seconds="3600" /&gt;
     
-    &lt;sample-name mime-type="application/rdf+xml"&gt;fallback://lenya/modules/person/samples/foaf.xml&lt;/sample-name&gt;
+    &lt;sample
+       name="Basic FOAF sample"
+       mime-type="application/rdf+xml"
+       uri="fallback://lenya/modules/person/samples/foaf.xml"
+    /&gt;
     
     &lt;format name="xhtml" uri="cocoon://modules/person/xhtml.xml"/&gt;
     &lt;format name="xhtml-include" uri="cocoon://modules/person/xhtml-include.xml"/&gt;
@@ -846,7 +872,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N10097"></a><a name="Adding+I18n+Messages+for+the+Resource+Type+Name"></a>
+<a name="N100A7"></a><a name="Adding+I18n+Messages+for+the+Resource+Type+Name"></a>
 <h2 class="h3">Adding I18n Messages for the Resource Type Name</h2>
 <div class="section">
 <p>

@@ -151,11 +151,20 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/tutorials/resourcetype/part5.html">Editing (BXE)</a>
 </div>
 </div>
+<div onclick="SwitchMenu('menu_1.1.4.3', '../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Implement a Usecase</div>
+<div id="menu_1.1.4.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/usecase/part1.html">Prerequisites</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/usecase/part2.html">The Usecase</a>
+</div>
+</div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/tutorials/setupide/index.html">Setting up Eclipse</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.4', '../../../skin/')" id="menu_1.1.4.4Title" class="menutitle">Proxying</div>
-<div id="menu_1.1.4.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.4.5', '../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
+<div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
 </div>
@@ -235,10 +244,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/2_0_x/reference/protocols/lenya.html">lenya Protocol</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
+<a href="../../../docs/2_0_x/reference/protocols/lenya-document.html">lenya-document Protocol</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/2_0_x/reference/protocols/site.html">site Protocol</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/reference/protocols/lenyadoc.html">lenyadoc Protocol</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6.10', '../../../skin/')" id="menu_1.1.6.10Title" class="menutitle">URLs and Links</div>
@@ -788,15 +800,19 @@ document.write("Last Published: " + document.lastModified);
 <h2 class="h3">Adding the Resource Type to a Publication</h2>
 <div class="section">
 <p>
-    The resource types used by a publication are declared in <span class="codefrag">publication.xconf</span>,
-    including the assignment of a workflow schema to a resource type:
+    The resource types used by a publication are declared in <span class="codefrag">publication.xml</span>,
+    including the assignment of a workflow schema to a resource type. You have to add your
+    resource type to the <span class="codefrag">&lt;resource-types&gt;</span> section of this file:
   </p>
 <pre class="code">&lt;publication&gt;
   ...
-  &lt;resource-type name="xhtml" workflow="workflow.xml"/&gt;
-  &lt;resource-type name="homepage" workflow="workflow.xml"/&gt;
-  &lt;resource-type name="links" workflow="workflow.xml"/&gt;
-  &lt;resource-type name="profile" workflow="workflow.xml"/&gt;
+  &lt;resource-types&gt;
+    &lt;resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    &lt;resource-type name="profile" workflow="fallback://config/workflow/workflow.xml"/&gt;
+    ...
+  &lt;/resource-types&gt;
   ...
 &lt;/publication&gt;
 </pre>
@@ -817,7 +833,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N10069"></a><a name="Providing+One+or+More+Sample+XML+Documents"></a>
+<a name="N1006C"></a><a name="Providing+One+or+More+Sample+XML+Documents"></a>
 <h2 class="h3">Providing One or More Sample XML Documents</h2>
 <div class="section">
 <p>
@@ -869,7 +885,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N10093"></a><a name="Providing+an+XML+Structure+Definition"></a>
+<a name="N10096"></a><a name="Providing+an+XML+Structure+Definition"></a>
 <h2 class="h3">Providing an XML Structure Definition</h2>
 <div class="section">
 <p>
@@ -890,7 +906,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N100B1"></a><a name="Creating+a+Workflow+Schema"></a>
+<a name="N100B4"></a><a name="Creating+a+Workflow+Schema"></a>
 <h2 class="h3">Creating a Workflow Schema</h2>
 <div class="section">
 <p>
@@ -898,13 +914,14 @@ document.write("Last Published: " + document.lastModified);
       schema for your resource type as described in
       <a href="../../../docs/1_2_x/components/workflow/configuration.html">Workflow Configuration</a>.
       A workflow schema can be shared between multiple resource types.
-      The workflow schema is assigned to a resource type in <span class="codefrag">publication.xconf</span>
+      The workflow schema is assigned to a resource type in
+      <span class="codefrag">$PUB_HOME/config/publication.xml</span>
       (see section <em>Adding Resource Types to a Publication</em>).
     </p>
 </div>
   
   
-<a name="N100C4"></a><a name="The+Resource+Type+Definition"></a>
+<a name="N100C7"></a><a name="The+Resource+Type+Definition"></a>
 <h2 class="h3">The Resource Type Definition</h2>
 <div class="section">
 <p>
@@ -943,7 +960,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N100DD"></a><a name="I18n+for+the+Resource+Type+Label"></a>
+<a name="N100E0"></a><a name="I18n+for+the+Resource+Type+Label"></a>
 <h2 class="h3">I18n for the Resource Type Label</h2>
 <div class="section">
 <p>
@@ -957,7 +974,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N100EE"></a><a name="Define+a+Custom+Menubar"></a>
+<a name="N100F1"></a><a name="Define+a+Custom+Menubar"></a>
 <h2 class="h3">Define a Custom Menubar</h2>
 <div class="section">
 <p>
@@ -980,17 +997,43 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N10105"></a><a name="Formats"></a>
+<a name="N10108"></a><a name="Formats"></a>
 <h2 class="h3">Formats</h2>
 <div class="section">
 <p>
       A resource type provides a set of <em>formats</em> to provide different ways of presenting content documents.
-      The formats are defined in the resource type declaration:
+      The formats are defined in the resource type declaration in
+      <span class="codefrag">$MODULE_HOME/config/cocoon-xconf/resourcetype-profile.xconf</span>:
     </p>
 <pre class="code">
   &lt;format name="xhtml" uri="cocoon://modules/profile/xhtml.xml"/&gt;
   &lt;format name="include" uri="cocoon://modules/profile/xhtml-inline.xml"/&gt;
 </pre>
+<p>
+      The following figure illustrates some usage examples of formats:
+    </p>
+<div id="" style="text-align: center;">
+<img id="" class="figure" alt="Resource type formats" src="../../../images/live/resourcetype/resourceTypeFormats.png"></div>
+<ul>
+      
+<li>
+        Example <strong>A</strong> shows the most typical case - a <em>msg</em> (message) document
+        is rendered using the format <em>xhtml</em> to be displayed as page content.
+      </li>
+      
+<li>
+        In example <strong>B</strong>, the format <em>teaser</em> is used to render teaser versions
+        of the <em>msg</em> documents to be displayed in the sidebar. This is usually done using
+        an include mechanism (see below).
+      </li>
+      
+<li>
+        In example <strong>C</strong>, a <em>news</em> document includes the <em>teaser</em>
+        versions of message documents. The <em>news</em> document in turn provides the format
+        <em>xhtml</em> to be rendered as page content.
+      </li>
+    
+</ul>
 <p>
       The <span class="codefrag">uri</span> attribute of the <span class="codefrag">format</span> element may refer to an arbitrary URL,
       which is typically a request into the module itself. This URI is matched inside the module
@@ -1037,7 +1080,9 @@ document.write("Last Published: " + document.lastModified);
 </pre>
 <p>
       To request a formatted document, you can use the <em>format</em> parameter of the
-      <span class="codefrag">site:</span> and <span class="codefrag">lenya-document:</span> protocols:
+      <span class="codefrag">site:</span> and <span class="codefrag">lenya-document:</span> protocols. You can issue such
+      a request from an arbitrary sitemap (e.g., from your publication sitemap or from
+      a different module sitemap).
     </p>
 <pre class="code">
   &lt;!-- aggregate navigation components and XHTML-formatted content --&gt;
@@ -1051,10 +1096,11 @@ document.write("Last Published: " + document.lastModified);
 
 </pre>
 <p>
-      Another usage scenario is to include formatted documents in other documents, e.g. as a teaser or summary:
+      Another usage scenario is to include formatted documents in other documents, e.g. as a teaser or summary
+      (see the figure above):
     </p>
-<pre class="code">&lt;ci:include src="site:/{$language}{$path}?format=xhtml-inline"/&gt;</pre>
-<pre class="code">&lt;ci:include src="lenya-document:{$uuid}?format=xhtml-inline"/&gt;</pre>
+<pre class="code">&lt;ci:include src="site:/{$language}{$path}?format=teaser"/&gt;</pre>
+<pre class="code">&lt;ci:include src="lenya-document:{$uuid}?format=teaser"/&gt;</pre>
 <p>
       Since formats allow you to select the presentation style of a document
       on demand, you can use them as layout templates. But unfortunately formats have to
@@ -1088,7 +1134,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N10177"></a><a name="Presentation"></a>
+<a name="N101B1"></a><a name="Presentation"></a>
 <h2 class="h3">Presentation</h2>
 <div class="section">
 <p>
@@ -1097,13 +1143,15 @@ document.write("Last Published: " + document.lastModified);
       restrictions.
     </p>
 <p>
-      If you derive your publication from the default publication,
-      the pipelines have to be placed in
-      <span class="codefrag">&lt;publication&gt;/doctypes.xmap</span>. The stylesheets are located in
-      <span class="codefrag">&lt;publication&gt;/xslt/</span> and are named <span class="codefrag">&lt;resource-type&gt;2xhtml.xsl</span>
-      (e.g., <span class="codefrag">profile2xhtml.xsl</span>). The stylesheet is supposed to generate
-      a valid XHTML fragment (in the XHTML namespace) with <span class="codefrag">&lt;div id="body"&gt;</span>
-      as the document element.
+      The pipelines have to be placed in
+      <span class="codefrag">$MODULE_HOME/sitemap.xmap</span>. The stylesheets are typically located in
+      <span class="codefrag">$MODULE_HOME/xslt/</span> and named <span class="codefrag">{resource-type}2{format}.xsl</span>
+      (e.g., <span class="codefrag">profile2xhtml.xsl</span>).
+    </p>
+<p>  
+      In the case of the <em>xhtml</em> format, the stylesheet is supposed to generate
+      a valid XHTML document (in the XHTML namespace). The output of other formats depends
+      on the purpose of the respective format.
     </p>
 </div>
 
