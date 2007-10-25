@@ -57,10 +57,10 @@
                                                 |Attribs  |of_the_authenticated
                                                 +----+----+user.
                              +-----------------------+
-                        +----+----+Based_on_the_attribute_values,
-                        |Granted  |the_service_provider_decides_if
-                        |or_denied|access_is_granted_or_denied.
                         +----+----+
+                        |Granted  |Based_on_the_attribute_values,
+                        |or_denied|the_service_provider_decides_if
+                        +----+----+access_is_granted_or_denied.
      +-----------------------+
 +----+----+The_user_is_redirected_to_the
 |...      |requested_page,_or_receives_an_error
