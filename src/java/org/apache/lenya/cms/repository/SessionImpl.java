@@ -122,7 +122,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         return this.unitOfWork;
     }
 
-    private boolean committed = false;
+    private boolean committing = false;
 
     /**
      * Commits the transaction.
@@ -134,6 +134,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
         savePersistables();
         
+        this.committing = true;
+
         try {
             synchronized (TransactionLock.LOCK) {
                 
@@ -146,8 +148,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
             throw new RepositoryException(e);
         }
 
-        this.committed = true;
-
         for (Iterator i = this.events.iterator(); i.hasNext();) {
             RepositoryEvent event = (RepositoryEvent) i.next();
             for (Iterator l = this.listeners.iterator(); l.hasNext();) {
@@ -156,6 +156,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
             }
         }
         this.events.clear();
+        this.committing = false;
     }
 
     /**
@@ -263,9 +264,9 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         if (!isModifiable()) {
             throw new RuntimeException("Can't enqueue event in unmodifiable session!");
         }
-        if (committed) {
+        if (committing) {
             throw new RuntimeException(
-                    "No events can be queued after the session has been committed. Event: ["
+                    "No events can be queued while the session is being committed. Event: ["
                             + event.getDescriptor() + "]");
         }
         Assert.isTrue("event belongs to session", event.getSession() == this);
