@@ -75,6 +75,9 @@
     <replace encoding="utf-8"
       file="${build.webapp}/lenya/pubs/${test.pub.id}/config/publication.xml"
       token="Default Publication" value="Test Publication"/>
+    <replace encoding="utf-8"
+      file="${build.webapp}/lenya/pubs/${test.pub.id}/config/search/lucene_index.xml"
+      token="default" value="test"/>
   </target>
   
   <!-- prepares the tests. -->
