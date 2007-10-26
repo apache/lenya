@@ -63,7 +63,7 @@ public class TransactionTest extends ContainerTestCase {
         try {
             lenyaUnit.commit();
             assertTrue("No exception thrown!", false);
-        } catch (LockException ignore) {
+        } catch (ConcurrentModificationException ignore) {
         }
         lenyaT1.unlock();
     }
