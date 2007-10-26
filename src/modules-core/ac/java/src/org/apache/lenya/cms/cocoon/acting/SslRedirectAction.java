@@ -58,40 +58,41 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
         AccessController accessController = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-
-        try {
-            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-
-            resolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
-
-            String url = ServletHelper.getWebappURI(request);
-            accessController = resolver.resolveAccessController(url);
-
-            if (accessController != null) {
-
-                PolicyManager policyManager = accessController.getPolicyManager();
-                Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
-                        url);
-                if (policy.isSSLProtected() && !request.getScheme().equals("https")) {
-                    Session session = RepositoryUtil.getSession(this.manager, request);
-                    LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, url,
-                            false, true, false);
-                    String sslUri = rewriter.rewrite(url);
-                    return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);
-                }
-            }
-
-        } finally {
-            if (selector != null) {
-                if (resolver != null) {
-                    if (accessController != null) {
-                        resolver.release(accessController);
+        
+        if (!request.isSecure()) {
+            try {
+                selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                        + "Selector");
+    
+                resolver = (AccessControllerResolver) selector
+                        .select(AccessControllerResolver.DEFAULT_RESOLVER);
+    
+                String url = ServletHelper.getWebappURI(request);
+                accessController = resolver.resolveAccessController(url);
+    
+                if (accessController != null) {
+                    PolicyManager policyManager = accessController.getPolicyManager();
+                    Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
+                            url);
+                    if (policy.isSSLProtected()) {
+                        Session session = RepositoryUtil.getSession(this.manager, request);
+                        LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, url,
+                                false, true, false);
+                        String sslUri = rewriter.rewrite(url);
+                        return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);
                     }
-                    selector.release(resolver);
                 }
-                this.manager.release(selector);
+    
+            } finally {
+                if (selector != null) {
+                    if (resolver != null) {
+                        if (accessController != null) {
+                            resolver.release(accessController);
+                        }
+                        selector.release(resolver);
+                    }
+                    this.manager.release(selector);
+                }
             }
         }
         return null;
