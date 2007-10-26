@@ -46,7 +46,7 @@
       <source xml:space="preserve"><![CDATA[NameVirtualHost *:80
 NameVirtualHost *:443
 
-# This is the non-SSL host for the authoring area.
+# This is the non-SSL host for the authoring environment.
 <VirtualHost *:80>
     ServerAdmin webmaster@cms.example.com
     ServerName cms.example.com
@@ -78,15 +78,15 @@ NameVirtualHost *:443
     </Location>
 
     <Location />
-      ProxyPass ajp://localhost:8009/default/authoring/
-      ProxyPassReverse http://cms.example.com/default/authoring/
+      ProxyPass ajp://localhost:8009/default/
+      ProxyPassReverse http://cms.example.com/default/
     </Location>
 
     ErrorLog /home/john/src/www/logs/cms.example.com-error_log
     CustomLog /home/john/src/www/logs/cms.example.com-access_log common
 </VirtualHost>
 
-# This is the SSL host for the authoring area.
+# This is the SSL host for the authoring environment.
 <VirtualHost *:443>
     ServerName cms.example.com
     ServerAlias cms
@@ -114,8 +114,8 @@ NameVirtualHost *:443
     </Location>
     
     <Location />
-      ProxyPass ajp://localhost:8009/default/authoring/
-      ProxyPassReverse https://cms.example.com/default/authoring/
+      ProxyPass ajp://localhost:8009/default/
+      ProxyPassReverse https://cms.example.com/default/
     </Location>
 
     ErrorLog /home/john/src/www/logs/ssl.cms.example.com-error_log

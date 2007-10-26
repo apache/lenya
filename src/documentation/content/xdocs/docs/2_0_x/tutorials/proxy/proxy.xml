@@ -34,7 +34,7 @@
       <source xml:space="preserve"><![CDATA[NameVirtualHost *:80
 NameVirtualHost *:443
 
-# This is the non-SSL host for the authoring area.
+# This is the non-SSL host for the authoring environment.
 <VirtualHost *:80>
     ServerAdmin webmaster@cms.example.com
     ServerName cms.example.com
@@ -47,7 +47,7 @@ NameVirtualHost *:443
     RewriteLog /home/john/src/www/logs/cms.example.com-rewrite_log
     RewriteLogLevel 4
     
-    # First we match everything which is not mapped to /default/authoring
+    # First we match everything which is not mapped to /default/{area}
     RewriteRule ^/lenya/(.*) http://cms.example.com:8888/lenya/$1 [P,L]
     RewriteRule ^/modules/(.*) http://cms.example.com.com:8888/modules/$1 [P,L]
     RewriteRule ^/default/modules/(.*) http://cms.example.com:8888/default/modules/$1 [P,L]
@@ -56,15 +56,15 @@ NameVirtualHost *:443
     RewriteCond %{QUERY_STRING} (.*)lenya\.usecase=ac\.login(.*)
     RewriteRule ^/(.*) https://%{SERVER_NAME}/$1 [R,L]
 
-    # Forward the authoring area to the proxy
-    RewriteRule ^/(.*) http://cms.example.com:8888/default/authoring/$1 [P,L]
-    ProxyPassReverse / http://cms.example.com:8888/default/authoring/
+    # Forward the areas to the proxy
+    RewriteRule ^/(.*) http://cms.example.com:8888/default/$1 [P,L]
+    ProxyPassReverse / http://cms.example.com:8888/default/
     
     ErrorLog /home/john/src/www/logs/cms.example.com-error_log
     CustomLog /home/john/src/www/logs/cms.example.com-access_log common
 </VirtualHost>
 
-# This is the SSL host for the authoring area.
+# This is the SSL host for the authoring environment.
 <VirtualHost *:443>
     ServerAdmin webmaster@cms.example.com
     ServerName cms.example.com
@@ -84,8 +84,8 @@ NameVirtualHost *:443
     RewriteRule ^/modules/(.*) http://cms.example.com.com:8888/modules/$1 [P,L]
     RewriteRule ^/default/modules/(.*) http://cms.example.com:8888/default/modules/$1 [P,L]
 
-    RewriteRule ^/(.*) http://cms.example.com:8888/default/authoring/$1 [P,L]
-    ProxyPassReverse / http://cms.example.com:8888/default/authoring/
+    RewriteRule ^/(.*) http://cms.example.com:8888/default/$1 [P,L]
+    ProxyPassReverse / http://cms.example.com:8888/default/
     
     ErrorLog /home/john/src/www/logs/cms.example.com-error_log
     CustomLog /home/john/src/www/logs/cms.example.com-access_log common

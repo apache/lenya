@@ -45,6 +45,15 @@
         login usecase. Once you have established an SSL connection, your connection will
         stay encrypted.
       </p>
+      <p>
+        The live area is mapped directly to the root of the <em>www.example.com</em> host.
+        Since the authoring environment comprises different areas (for instance authoring,
+        archive, trash), the publication root is mapped to the root of <em>cms.example.com</em>:
+      </p>
+      <source xml:space="preserve"><![CDATA[/pub/authoring <-> cms.example.com/authoring
+/pub/archive   <-> cms.example.com/archive
+/pub/trash     <-> cms.example.com/trash
+/pub/live      <-> www.example.com]]></source>
     </section>
     
     <section>
@@ -99,14 +108,18 @@
       <p>
         When you use a proxy, Lenya has to convert all internal links accordingly.
         Therefore you have to tell the publication about the proxy configuration.
-        Open the file <code>pubs/default/config/publication.xml</code> and uncomment
+        Open the file <code>$PUBLICATION_HOME/config/publication.xml</code> and uncomment
         and modify the <code><![CDATA[<proxy/>]]></code> elements:
       </p>
       <source xml:space="preserve"><![CDATA[<proxies>
-  <proxy ssl="false" area="authoring" url="http://cms.example.com"/>
-  <proxy ssl="false" area="live" url="http://www.example.com"/>
-  <proxy ssl="true" area="authoring" url="https://cms.example.com"/>
-  <proxy ssl="true" area="live" url="https://www.example.com"/>
+  <proxy area="authoring" ssl="true" url="https://cms.example.com/authoring"/>
+  <proxy area="authoring" ssl="false" url="http://cms.example.com/authoring"/>
+  <proxy area="trash" ssl="true" url="https://cms.example.com/trash"/>
+  <proxy area="trash" ssl="false" url="http://cms.example.com/trash"/>
+  <proxy area="archive" ssl="true" url="https://cms.example.com/archive"/>
+  <proxy area="archive" ssl="false" url="http://cms.example.com/archive"/>
+  <proxy area="live" ssl="true" url="https://www.example.com"/>
+  <proxy area="live" ssl="false" url="http://www.example.com"/>
 </proxies>]]></source>
     </section>
     
