@@ -57,6 +57,7 @@ import org.xml.sax.SAXException;
  */
 public class ProxyTransformer extends AbstractLinkTransformer {
 
+    protected static final String ATTRIBUTE_TYPE = "type";
     protected static final String URL_TYPE_ABSOLUTE = "absolute";
     protected static final String URL_TYPE_RELATIVE = "relative";
     protected static final String PARAMETER_URLS = "urls";
@@ -85,7 +86,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
         super.configure(config);
         Configuration urlConfig = config.getChild(PARAMETER_URLS, false);
         if (urlConfig != null) {
-            String value = urlConfig.getAttribute("type");
+            String value = urlConfig.getAttribute(ATTRIBUTE_TYPE);
             setUrlType(value);
         }
     }
