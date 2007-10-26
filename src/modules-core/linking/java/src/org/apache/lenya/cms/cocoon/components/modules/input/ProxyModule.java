@@ -36,19 +36,30 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
+ * <p>
  * Input module for getting the base URL which may be prepended to internal URLs
  * to construct links. The functionality corresponds to the
  * {@link org.apache.lenya.cms.cocoon.transformation.ProxyTransformer} with one
  * exception: If the <em>webappUrl</em> parameter is an empty string, the root
  * proxy URL (or the context prefix, resp.) is returned.
- * 
+ * </p>
  * <p>
  * Usage: <code>{proxy:{webappUrl}}</code>
+ * </p>
+ * <p>
+ * The module can be configured to use absolute or relative URLs in the same way
+ * as the {@link org.apache.lenya.cms.cocoon.transformation.ProxyTransformer}.
  * </p>
  */
 public class ProxyModule extends AbstractInputModule implements Serviceable {
 
+    protected static final String ATTRIBUTE_TYPE = "type";
+    protected static final String URL_TYPE_ABSOLUTE = "absolute";
+    protected static final String URL_TYPE_RELATIVE = "relative";
+    protected static final String PARAMETER_URLS = "urls";
+
     private ServiceManager manager;
+    private boolean relativeUrls;
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -83,7 +94,7 @@ public class ProxyModule extends AbstractInputModule implements Serviceable {
             ConfigurationException {
         Session session = RepositoryUtil.getSession(this.manager, request);
         LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, request
-                .getRequestURI(), request.isSecure(), false, false);
+                .getRequestURI(), request.isSecure(), false, this.relativeUrls);
         if (!rewriter.matches(url)) {
             throw new ConfigurationException("The URL [" + url + "] can't be rewritten!");
         }
@@ -116,4 +127,25 @@ public class ProxyModule extends AbstractInputModule implements Serviceable {
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
+
+    public void configure(Configuration conf) throws ConfigurationException {
+        super.configure(conf);
+        Configuration urlConfig = conf.getChild(PARAMETER_URLS, false);
+        if (urlConfig != null) {
+            String value = urlConfig.getAttribute(ATTRIBUTE_TYPE);
+            setUrlType(value);
+        }
+    }
+    
+    protected void setUrlType(String value) throws ConfigurationException {
+        if (value.equals(URL_TYPE_RELATIVE)) {
+            this.relativeUrls = true;
+        } else if (value.equals(URL_TYPE_ABSOLUTE)) {
+            this.relativeUrls = false;
+        } else {
+            throw new ConfigurationException("Invalid URL type [" + value
+                    + "], must be relative or absolute.");
+        }
+    }
+
 }
