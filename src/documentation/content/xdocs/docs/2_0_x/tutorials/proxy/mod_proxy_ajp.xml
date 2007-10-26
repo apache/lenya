@@ -22,42 +22,7 @@
     <title>Running Lenya Behind Apache with mod_proxy_ajp</title>
   </header>
   <body>
-    
-    <section>
-      <title>Introduction</title>
 
-      <p>
-        This tutorial aims at getting you started with a proxy environment.
-        We're using Apache HTTPD 2.2 with the <em>mod_proxy_ajp</em> module, which is
-        included in the Apache distribution. You'll find a lot of documentation on the 
-        eb how to set up the web server on your machine.
-      </p>
-      <p>
-        Our goal is to run two virtual servers on your local machine:
-      </p>
-      <ul>
-        <li><em>cms.example.com</em> - the authoring environment of your publication</li>
-        <li><em>www.example.com</em> - the actual live site</li>
-      </ul>
-      <p>
-        Your administrators, editors etc. will use the URL <em>http://cms.example.com</em>
-        to connect to the authoring environment. We'll require an SSL connection for the
-        login usecase. Once you have established an SSL connection, your connection will
-        stay encrypted.
-      </p>
-    </section>
-    
-    <section>
-      <title>Declaring the Hosts</title>
-      <p>
-        To tell your system that the <em>example.com</em> domains run on your local machine,
-        open your <code>hosts</code> file, usually located at <code>/etc/hosts</code>,
-        and add the following lines:
-      </p>
-      <source xml:space="preserve"><![CDATA[127.0.0.1       cms.example.com
-127.0.0.1       www.example.com]]></source>
-    </section>
-    
     <section>
       <title>Configuring the AJP Connector in Tomcat</title>
       <p>
@@ -174,26 +139,6 @@ NameVirtualHost *:443
     ErrorLog /home/john/src/www/logs/www.example.com-error_log
     CustomLog /home/john/src/www/logs/www.example.com-access_log common
 </VirtualHost>]]></source>
-
-      <note>
-        You'll certainly run into cookie problems when using a non-empty context path
-        instead of running Lenya in the root context.
-        This causes errors like "The session doesn't contain the identity.".
-        You'll have to add some code to manipulate the cookies. If you need this functionality,
-        please send a mail to the developers list or file an enhancement bug.
-      </note>
-      <p>
-        The Apache web server can now be restarted using
-      </p>
-      <source xml:space="preserve">$ sudo apachectl restart</source>
-    </section>
-    
-    <section>
-      <title>Configuring Lenya for Proxying</title>
-      <p>
-        Now follow the steps described in the final sections of the
-        <a href="site:mod_proxy_14">mod_proxy tutorial</a>.
-      </p>
     </section>
     
   </body>

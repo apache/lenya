@@ -151,7 +151,8 @@
         <usecaseTutorialPart2 href="part2.html" label="The Usecase"/>
       </usecaseTutorial>
       <setupide href="setupide/index.html" label="Setting up Eclipse"/>
-      <proxy label="Proxying">
+      <proxy label="Proxying" href="proxy/">
+        <proxying href="proxying.html" label="Proxying"/>
         <mod_proxy_14 href="proxy.html" label="mod_proxy"/>
         <mod_proxy_ajp href="mod_proxy_ajp.html" label="mod_proxy_ajp"/>
       </proxy>
