@@ -155,8 +155,10 @@ NameVirtualHost *:443
         You'll certainly run into cookie problems when using a non-empty context path
         (like <em>lenya14</em> in the example above) instead of running Lenya in the root context.
         This causes errors like "The session doesn't contain the identity.".
-        You'll have to add some code to manipulate the cookies. If you need this functionality,
-        please send a mail to the developers list or file an enhancement bug.
+        To avoid these problems, edit <code>$TOMCAT_HOME/conf/server.xml</code> and set the
+        <em>emptySessionPath</em> attribute of the Tomcat connector configuration to <em>true</em>.
+        You find more information in the <a href="http://tomcat.apache.org/tomcat-6.0-doc/config/ajp.html">Apache
+        Tomcat configuration reference</a>.
       </note>
       <note>
         With this setup, your browser might show error messages like "You have requested an
