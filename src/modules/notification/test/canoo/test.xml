@@ -16,22 +16,17 @@
   limitations under the License.
 -->
 
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
 <project name="Notification test" basedir="." default="main">
   
-  <import file="${webtest.home}/lib/taskdef.xml"/>
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
   
   <target name="main">
-    <webtest name="myTest">
-      <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
-        <header name="Accept-Language" value="en"/>
-      </config>
+    <webtest name="notification">
+      &doConfig;
       <steps>
-        <!-- login page -->
-        <invoke url="index.html" />
-        <verifyTitle text="Login to the Default Publication" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
+        <doLogin username="lenya" password="levi"/>
         
         <!-- inbox usecase -->
         <invoke url="index.html?lenya.usecase=notification.inbox"/>
@@ -44,7 +39,6 @@
         <setInputField name="subject" value="NotificationTestSubject"/>
         <setInputField name="body" value="NotificationTestBody"/>
         <clickButton name="submit"/>
-        
         <verifyElementText type="h1" text="Inbox of User lenya"/>
         <verifyText text="NotificationTestSubject"/>
         
@@ -59,10 +53,8 @@
         <not>
           <verifyText text="NotificationTestSubject"/>
         </not>
-        
-        <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
+
+       <doLogout/>
       </steps>
     </webtest>
   </target>

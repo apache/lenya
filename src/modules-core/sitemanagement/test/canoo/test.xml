@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-  
+
   http://www.apache.org/licenses/LICENSE-2.0
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,34 +16,27 @@
   limitations under the License.
 -->
 
-<project name="Site management test" basedir="." default="main">
-  
-  <import file="${webtest.home}/lib/taskdef.xml"/>
-  
-  <target name="main" depends="delete"/>
-  
-    
-  <target name="delete">
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
 
+<project name="sitemanagement" basedir="." default="main">
+
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
+
+  <target name="main">
+    <antcall target="sitemanagement.delete">
+      <param name="webtest.config.basepath" value="default"/>
+    </antcall>
+  </target>
+
+  <target name="sitemanagement.delete">
     <property name="number" value="1"/>
-    
-    <webtest name="Delete">
-      <config host="localhost" port="8888" protocol="http" basepath="default">
-        <header name="Accept-Language" value="en"/>
-        <option name="JavaScriptEnabled" value="false"/>
-      </config>
+    <webtest name="sitemanagement.delete">
+      &doConfig;
       <steps>
-        <!-- login as lenya -->
-        <invoke url="authoring/index.html" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
-        <verifyElementText type="span" name="workflow-state" text="authoring"/>
-
+        <doLogin username="lenya" password="levi" url="authoring/index.html"/>
         <repeat count="${number}">
-          
           <echo>Delete/Restore/Archive/Restore: Test #{count} of ${number}</echo>
-          
+
           <!-- delete -->
           <invoke url="authoring/tutorial.html?lenya.usecase=sitemanagement.delete"/>
           <verifyElementText type="h1" text="Delete Document"/>
@@ -52,7 +45,7 @@
           <verifyText text="No overview available."/>
           <invoke url="trash/tutorial.html?lenya.usecase=tab.overview"/>
           <verifyElementText type="span" name="workflow-state" text="trash"/>
-          
+
           <!-- restore -->
           <invoke url="trash/tutorial.html?lenya.usecase=sitemanagement.restore"/>
           <verifyElementText type="h1" text="Restore Document"/>
@@ -60,7 +53,7 @@
           <verifyElementText type="h1" text="Overview"/>
           <verifyText text="A short tutorial on using Apache Lenya"/>
           <verifyElementText type="span" name="workflow-state" text="authoring"/>
-        
+
           <!-- archive -->
           <invoke url="authoring/tutorial.html?lenya.usecase=sitemanagement.archive"/>
           <verifyElementText type="h1" text="Archive Document"/>
@@ -69,7 +62,7 @@
           <verifyText text="No overview available."/>
           <invoke url="archive/tutorial.html?lenya.usecase=tab.overview"/>
           <verifyElementText type="span" name="workflow-state" text="archive"/>
-          
+
           <!-- restore -->
           <invoke url="archive/tutorial.html?lenya.usecase=sitemanagement.restore"/>
           <verifyElementText type="h1" text="Restore Document"/>
@@ -77,15 +70,10 @@
           <verifyElementText type="h1" text="Overview"/>
           <verifyText text="A short tutorial on using Apache Lenya"/>
           <verifyElementText type="span" name="workflow-state" text="authoring"/>
-          
+
         </repeat>
-        
-        <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
-        
+        <doLogout/>
       </steps>
     </webtest>
   </target>
-  
 </project>

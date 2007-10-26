@@ -16,25 +16,17 @@
   limitations under the License.
 -->
 
-<project name="Administration test" basedir="." default="main">
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
+<project name="sitetree" basedir="." default="main">
   
-  <import file="${webtest.home}/lib/taskdef.xml"/>
-  
-  <target name="main" depends="nudge"/>
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
     
-    
-  <target name="nudge">
-    <webtest name="NudgeTest">
-      <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
-        <header name="Accept-Language" value="en"/>
-      </config>
+  <target name="main">
+    <webtest name="sitetree.nudge">
+      &doConfig;
       <steps>
-        <!-- login page -->
-        <invoke url="index.html"/>
-        <verifyTitle text="Login to the Default Publication" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
+        <doLogin username="lenya" password="levi"/>
         
         <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='/default/authoring/links.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='/default/authoring/features.html']]]"/>
         
@@ -46,9 +38,7 @@
         <invoke url="index.html"/>
         <verifyXPath xpath="//div[@class = 'menublock-1' and ./div/a[@href='/default/authoring/links.html'] and following-sibling::div[@class='menublock-1' and ./div/a[@href='/default/authoring/features.html']]]"/>
         
-        <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
+        <doLogout/>
       </steps>
     </webtest>
   </target>

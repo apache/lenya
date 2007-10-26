@@ -16,25 +16,19 @@
   limitations under the License.
 -->
 
-<project name="Administration test" basedir="." default="main">
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
+<project name="administration" basedir="." default="main">
   
-  <import file="${webtest.home}/lib/taskdef.xml"/>
-  
-  <target name="main" depends="users"/>
-    
-    
-  <target name="users">
-    <webtest name="myTest">
-      <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
-        <header name="Accept-Language" value="en"/>
-      </config>
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
+
+  <target name="main" depends="admin.users, groupaffiliation"/>
+
+  <target name="admin.users">
+    <webtest name="admin.users">
+      &doConfig;
       <steps>
-        <!-- login page -->
-        <invoke url="index.html"/>
-        <verifyTitle text="Login to the Default Publication" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
+        <doLogin username="lenya" password="levi"/>
         
         <!-- add user -->
         <invoke url="index.html?lenya.usecase=admin.users"/>
@@ -45,7 +39,7 @@
         <setInputField name="fullName" value="WebTest User"/>
         <setInputField name="description" value="WebTest User description"/>
         <setInputField name="email" value="webTestUser@apache.org"/>
-        <setInputField name="password" value="webTest123"/>
+        <setInputField name="newPassword" value="webTest123"/>
         <setInputField name="confirmPassword" value="webTest123"/>
         <clickButton name="submit"/>
 
@@ -66,10 +60,81 @@
           <verifyXPath xpath="//a[normalize-space(.) = 'webTestUser']"/>
         </not>
         
-        <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
+        <doLogout/>
       </steps>
     </webtest>
   </target>
+
+  <macrodef name="checkGroup"
+           description="check if item 'group' is in listbox 'list-in' and not in 'list-not'">
+    <attribute name="group"/>
+    <attribute name="list-in"/>
+    <attribute name="list-not"/>
+    <sequential>
+      <verifyXPath xpath="//select[@name = '@{list-in}']/option[@value = '@{group}']"/>
+      <not>
+        <verifyXPath xpath="//select[@name = '@{list-not}']/option[@value = '@{group}']"/>
+      </not>
+    </sequential>
+  </macrodef>
+  <macrodef name="checkUserProfile"
+            description="check if user profile looks right">
+    <attribute name="admin"/>
+    <sequential>
+      <verifyText text="User Profile"/>
+      <verifyText text="alice@lenya.org"/>
+      <ifStep test="@{admin}" description="admin affiliation">
+        <verifyText text="groupId=admin"/>
+      </ifStep>
+      <ifStep unless="@{admin}" description="no admin affiliation">
+        <not><verifyText text="groupId=admin"/></not>
+      </ifStep>
+    </sequential>
+  </macrodef>
+
+  <target name="groupaffiliation">
+    <webtest name="groupaffiliation">
+      &doConfig;
+      <steps>
+        <doLogin username="lenya" password="levi"/>
+
+        <!-- request user profile of user alice -->
+        <invoke url="index.html?lenya.usecase=admin.user&amp;userId=alice"/>
+       <checkUserProfile admin="false"/>
+
+        <!-- request group affiliation page -->
+        <clickButton name="input-edit_group_affiliation"/>
+        <verifyElementText type="h1" text="Group Affiliation"/>
+       <checkGroup group="admin" list-in="otherGroup" list-not="userGroup"/>
+
+        <!-- add user alice to group admin -->
+       <clickElement xpath="//select[@name = 'otherGroup']/option[@value = 'admin']"/>
+       <clickButton name="add"/>
+       <verifyElementText type="h1" text="Group Affiliation"/>
+        <checkGroup group="admin" list-in="userGroup" list-not="otherGroup"/>
+
+       <!-- save and back to user profile -->
+       <clickButton name="submit"/>
+        <checkUserProfile admin="true"/>
+
+       <!-- request group affiliation page -->
+        <clickButton name="input-edit_group_affiliation"/>
+        <verifyElementText type="h1" text="Group Affiliation"/>
+        <checkGroup group="admin" list-in="userGroup" list-not="otherGroup"/>
+
+       <!-- remove user alice from group admin -->
+       <clickElement xpath="//select[@name = 'userGroup']/option[@value = 'admin']"/>
+        <clickButton name="remove"/>
+        <verifyElementText type="h1" text="Group Affiliation"/>
+        <checkGroup group="admin" list-in="otherGroup" list-not="userGroup"/>
+
+        <!-- save and back to user profile -->
+        <clickButton name="submit"/>
+        <checkUserProfile admin="false"/>
+
+        <doLogout/>
+      </steps>
+    </webtest>
+  </target>
+
 </project>

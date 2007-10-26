@@ -16,22 +16,21 @@
   limitations under the License.
 -->
 
-<project name="Workflow test" basedir="." default="main">
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
+<project name="workflow" basedir="." default="main">
   
-  <import file="${webtest.home}/lib/taskdef.xml"/>
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
   
   <target name="main" depends="sequence, published-footer, overview"/>
-  
     
   <target name="sequence">
-    <webtest name="Workflow sequence">
-      <config host="localhost" port="8888" protocol="http" basepath="default/authoring" />
+    <webtest name="workflow-sequence">
+      &doConfig;
       <steps>
+
         <!-- login as lenya -->
-        <invoke url="index.html" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
+        <doLogin username="lenya" password="levi"/>
         <verifyElementText type="span" name="workflow-state" text="authoring"/>
 
         <!-- publish not allowed -->
@@ -47,15 +46,10 @@
         <verifyElementText type="span" name="workflow-state" text="review"/>
         
         <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
-        
+        <doLogout/>
         
         <!-- login as alice -->
-        <invoke url="index.html" />
-        <setInputField name="username" value="alice"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
+        <doLogin username="alice" password="levi"/>
         <verifyElementText type="span" name="workflow-state" text="review"/>
         
         <!-- reject -->
@@ -65,15 +59,11 @@
         <verifyElementText type="span" name="workflow-state" text="authoring"/>
         
         <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
+        <doLogout/>
         
         <!-- login as lenya -->
-        <invoke url="index.html" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
-        <verifyElementText type="span" name="workflow-state" text="authoring"/>
+        <doLogin username="lenya" password="levi"/>
+       <verifyElementText type="span" name="workflow-state" text="authoring"/>
         
         <!-- submit -->
         <invoke url="index.html?lenya.usecase=workflow.submit"/>
@@ -82,19 +72,13 @@
         <verifyElementText type="span" name="workflow-state" text="review"/>
         
         <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
-        
-        
+        <doLogout/>
+
         <!-- login as alice -->
-        <invoke url="index.html" />
-        <setInputField name="username" value="alice"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
-        <verifyElementText type="span" name="workflow-state" text="review"/>
+       <doLogin username="alice" password="levi"/>
+       <verifyElementText type="span" name="workflow-state" text="review"/>
         
         <!-- publish -->
-        
         <invoke url="index.html?lenya.usecase=workflow.publish"/>
         <clickButton name="submit"/>
         <verifyElementText type="span" name="workflow-state" text="live"/>
@@ -105,25 +89,23 @@
         <verifyElementText type="span" name="workflow-state" text="authoring"/>
         
         <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
+        <doLogout/>
         
       </steps>
     </webtest>
   </target>
-  
-  
+
+
   <target name="published-footer">
     <webtest name="Workflow sequence">
-      <config host="localhost" port="8888" protocol="http" basepath="default">
+      <config host="${webtest.config.host}" port="${webtest.config.port}"
+             protocol="http" basepath="default">
         <option name="ThrowExceptionOnFailingStatusCode" value="false"/>
       </config>
       <steps>
+
         <!-- login as alice -->
-        <invoke url="authoring/tutorial.html" />
-        <setInputField name="username" value="alice"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
+       <doLogin username="alice" password="levi" url="authoring/tutorial.html"/>
         <verifyElementText type="span" name="workflow-state" text="authoring"/>
         
         <!-- submit -->
@@ -149,29 +131,29 @@
         <verifyText text="This page was last published at"/>
         
         <!-- logout -->
-        <invoke url="authoring/tutorial.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
+        <doLogout url="authoring/tutorial.html"/>
         
       </steps>
     </webtest>
   </target>
-  
-  
+
+
   <target name="overview">
-    <webtest name="myTest">
-      <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
-        <header name="Accept-Language" value="en"/>
-      </config>
+    <webtest name="workflow.multiWorkflow">
+      &doConfig;
       <steps>
+
         <!-- login as lenya -->
-        <invoke url="index.html" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
+        <doLogin username="lenya" password="levi"/>
         <verifyElementText type="span" name="workflow-state" text="authoring"/>
-        
+
+       <!-- request workflow overview -->
         <invoke url="index.html?lenya.usecase=workflow.multiWorkflow"/>
         <verifyElementText type="h1" text="Workflow Overview"/>
+
+       <!-- logout -->
+        <doLogout/>
+
       </steps>
     </webtest>
   </target>

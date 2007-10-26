@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-  
+
   http://www.apache.org/licenses/LICENSE-2.0
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,27 +16,19 @@
   limitations under the License.
 -->
 
-<project name="Stress test" basedir="." default="main">
-  
-  <import file="${webtest.home}/lib/taskdef.xml"/>
-  
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
+<project name="stresstest" basedir="." default="main">
+
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
+
   <target name="main">
-    
     <property name="number" value="1"/>
-    
-    <webtest name="Stress test">
-      <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
-        <header name="Accept-Language" value="en"/>
-        <option name="JavaScriptEnabled" value="false"/>
-      </config>
+    <webtest name="stresstest">
+      &doConfig;
       <steps>
-        <!-- login page -->
-        <invoke url="index.html" />
-        <verifyTitle text="Login to the Default Publication" />
-        <setInputField name="username" value="lenya"/>
-        <setInputField name="password" value="levi"/>
-        <clickButton name="submit"/>
-        
+        <doLogin username="lenya" password="levi"/>
+
         <!-- create -->
         <repeat count="${number}">
           <echo>Creating document #{count} of ${number}</echo>
@@ -48,19 +40,17 @@
           <clickButton name="submit"/>
           <verifyText text="Welcome"/>
         </repeat>
-        
+
         <!-- delete -->
         <repeat count="${number}">
           <echo>Deleting document #{count} of ${number}</echo>
           <invoke url="index/stresstest#{count}.html?lenya.usecase=sitemanagement.delete"/>
           <verifyElementText type="h1" text="Delete Document"/>
           <clickButton name="submit"/>
-          <verifyText text="Welcome"/>
+          <verifyElementText type="h1" text="Overview"/>
         </repeat>
-        
-        <!-- logout -->
-        <invoke url="index.html?lenya.usecase=ac.logout"/>
-        <clickButton name="submit"/>
+
+        <doLogout/>
       </steps>
     </webtest>
   </target>

@@ -16,17 +16,15 @@
   limitations under the License.
 -->
 
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
 <project name="AC usecases test" basedir="." default="main">
   
-  <import file="${webtest.home}/lib/taskdef.xml"/>
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
   
   <target name="main">
-    <webtest name="myTest">
-      <config
-        host="localhost"
-        port="8888"
-        protocol="http"
-        basepath="default/authoring" />
+    <webtest name="acusecases">
+      &doConfig;
       <steps>
         <!-- login page -->
         <invoke url="index.html" />
