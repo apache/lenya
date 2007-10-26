@@ -145,38 +145,82 @@
     
     <section>
       <title>Converting Web Application Links to Servlet Container or Proxy Links</title>
-      <p>
-        The <code>ProxyTransformer</code> converts all web application links to final links
-        by adding the servlet context path or the proxy URL. For instance, if you run your
-        Lenya servlet in Tomcat under the context path <em>lenya14</em>, transforming
-      </p>
-      <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
-      <p>
-        with the ProxyTransformer
-      </p>
-      <source xml:space="preserve"><![CDATA[<map:transform type="proxy"/>]]></source>
-      <p>
-        will result in
-      </p>
-      <source xml:space="preserve">&lt;a href="/lenya14/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
-      <p>
-        If you have declared a proxy for the authoring area, the resulting link might look like this:
-      </p>
-      <source xml:space="preserve">&lt;a href="http://cms.mysite.com/news.html"&gt;News&lt;/a&gt;</source>
-      <p>
-        If you have configured the proxy transformer to use relative URLs, the link will be converted to
-        something like this:
-      </p>
-      <source xml:space="preserve">&lt;a href="../../news.html"&gt;News&lt;/a&gt;</source>
-      <p>
-        Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
-        For more information on the ProxyTransformer, consult the API documentation.
-      </p>
-      <p>
-        The <code>ProxyModule</code> provides the same functionality in sitemaps.
-        It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
-      </p>
-      <source xml:space="preserve"><![CDATA[<map:parameter name="url" value="{proxy:/default/authoring/news.html}"/>]]></source>
+      
+      <section>
+        <title>The Proxy Transformer</title>
+        <p>
+          The <code>ProxyTransformer</code> converts all web application links to final links
+          by adding the servlet context path or the proxy URL. For instance, if you run your
+          Lenya servlet in Tomcat under the context path <em>lenya14</em>, transforming
+        </p>
+        <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          with the ProxyTransformer
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transform type="proxy"/>]]></source>
+        <p>
+          will result in
+        </p>
+        <source xml:space="preserve">&lt;a href="/lenya14/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          If you have declared a proxy for the authoring area, the resulting link might look like this:
+        </p>
+        <source xml:space="preserve">&lt;a href="http://cms.mysite.com/news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
+        </p>
+        <p>
+          The ProxyTransformer can be used to transform attribute values of elements in arbitrary namespaces.
+          For each namespace and element combination, you have to add a <code><![CDATA[<transform/>]]></code> element
+          to the configuration. The following snippet shows the configuration to convert XHTML links. Beware
+          that the XHTML document format supports various elements and attributes which can contain URLs, so
+          the configuration below won't be sufficient in most cases.
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transformer name="proxy" logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+  <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+  ...
+</map:transformer>]]></source>
+      </section>
+      <section>
+        <title>The Proxy Input Module</title>
+        <p>
+          The <code>ProxyModule</code> provides the same functionality in sitemaps.
+          It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:parameter name="url" value="{proxy:/default/authoring/news.html}"/>]]></source>
+      </section>
+      
+      <section>
+        <title>Generating Relative URLs</title>
+        <p>
+          In some cases it is convenient to use relative URLs in HTML links. This is especially
+          useful if you want to export the website statically and open it directly from the
+          filesystem or transfer it to a different root path on the web server. In the example
+          above, the relative URL would look like this:
+        </p>
+        <source xml:space="preserve">&lt;a href="../../news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          Both proxy transformer and proxy module can be configured to generate relative URLs.
+          For the proxy transformer, the configuration looks like this:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transformer name="proxy"
+    logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+  <urls type="relative"/>
+  ...
+</map:transformer>]]></source>
+        <p>
+          Alternatively, you can pass the URL type as a parameter when calling the transformer:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transform type="proxy">
+  <map:parameter name="urls" value="relative"/>
+</map:transform>]]></source>
+        <p>
+          The configuration of the proxy input module is equivalent, but it doesn't provide
+          an option to pass a parameter yet.
+        </p>
+      </section>
     </section>
     
     <section>
@@ -194,7 +238,7 @@
       <source xml:space="preserve">div.news { background: url('../images/news.png') left top no-repeat }</source>
       <p>
         This operation cannot be performed by our standard XSLT transformer,
-      because a CSS file is not well-formed XML. The <a
+        because a CSS file is not well-formed XML. The <a
         href="http://chaperon.sourceforge.net">Chaperon</a> transformer is
       used instead.
       </p>
