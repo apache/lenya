@@ -112,7 +112,7 @@
     </ant>
   </target>
   
-  <target name="modules.test.canoo" depends="init">
+  <target name="modules.test.canoo" depends="init" description="Run Canoo web tests for modules">
     <ant antfile="${build.dir}/temp/modules-build.xml">
       <property name="webtest.home" value="${webtest.home}"/>
       <target name="test-modules-canoo"/>
