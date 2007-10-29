@@ -365,7 +365,7 @@
     </map:pipeline>
       
     <map:pipeline>
-      <map:match pattern="*/**.*">
+      <map:match pattern="*/**">
         <!-- TODO: http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 -->
         <map:act type="language-exists">
           <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
@@ -381,7 +381,7 @@
           <map:parameter name="parameter-selector-test" value="{1}"/>
           <map:when test="live"/>
           <map:otherwise>
-            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/{2}.xml?doctype={page-envelope:document-type}"/>
+            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/{2}?doctype={page-envelope:document-type}"/>
           </map:otherwise>
         </map:select>
         <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
