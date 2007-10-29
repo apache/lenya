@@ -109,7 +109,7 @@
 
     <!-- this is the default error handler -->
     <map:handle-errors>
-      <map:mount src="fallback://lenya/error.xmap" check-reload="true" reload-method="synchron" uri-prefix=""/>
+      <map:mount src="{fallback:error.xmap}" check-reload="true" reload-method="synchron" uri-prefix=""/>
     </map:handle-errors>    
     
   </map:pipelines></xmap>
