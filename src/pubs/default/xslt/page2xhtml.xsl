@@ -41,7 +41,6 @@
   <!-- The request url i.e. /lenya/doctypes/xhtml-document_en.html -->
   <xsl:param name="url"/>
   <xsl:param name="language"/>
-  <xsl:param name="title"/>
   
   <xsl:param name="lastPublishedUser"/>
   <xsl:param name="lastPublishedDate"/>
@@ -70,7 +69,10 @@
           </xsl:otherwise>
         </xsl:choose>
         <meta content="Apache Lenya" name="generator"/>
-        <title><xsl:value-of select="$title"/></title>
+        
+        <!-- The title will be overwritten by addXhtmlTitle.xsl if the document exists. -->
+        <title><i18n:text>error-404</i18n:text></title>
+        
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
       </head>
       <body>
@@ -109,6 +111,15 @@
         </div>
       </body>
     </html>
+  </xsl:template>
+  
+  
+  <xsl:template match="xhtml:div[@id = 'breadcrumb']">
+    <xsl:if test="*">
+      <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+    </xsl:if>
   </xsl:template>
   
   

@@ -20,7 +20,6 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://www.w3.org/1999/xhtml"
   >
@@ -36,65 +35,63 @@
   
   <xsl:template match="/">
     
-    <page:page>
-      <page:title>
-        <xsl:choose>
-          <xsl:when test="missing-language/available-languages/available-language">
-            <i18n:text>Document not available for this language</i18n:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <i18n:text>error-404</i18n:text>
-          </xsl:otherwise>
-        </xsl:choose>
-      </page:title>
-      <page:body>
-        <div class="lenya-box">
+    <html>
+      <head>
+        <title>
           <xsl:choose>
             <xsl:when test="missing-language/available-languages/available-language">
-              <div class="lenya-box-title">
+              <i18n:text>Document not available for this language</i18n:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <i18n:text>error-404</i18n:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </title>
+      </head>
+      <body>
+        <div id="body">
+          <xsl:choose>
+            <xsl:when test="missing-language/available-languages/available-language">
+              <h1>
                 <i18n:translate>
                   <i18n:text i18n:key="error-missing-language" />
                   <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
                 </i18n:translate>
-              </div>
-              <div class="lenya-box-body">
-                <p>
-                  <i18n:translate>
-                    <i18n:text i18n:key="error-missing-language" />
-                    <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
-                  </i18n:translate>
-                </p>
-                <p>
-                  <i18n:text>The following languages are available:</i18n:text>
-                </p>
-                <ul>
-                  <xsl:apply-templates select="missing-language/available-languages/available-language"/>
-                </ul>
-              </div>
+              </h1>
+              <p>
+                <i18n:translate>
+                  <i18n:text i18n:key="error-missing-language" />
+                  <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
+                </i18n:translate>
+              </p>
+              <p>
+                <i18n:text>The following languages are available:</i18n:text>
+              </p>
+              <ul>
+                <xsl:apply-templates select="missing-language/available-languages/available-language"/>
+              </ul>
             </xsl:when>
             <xsl:otherwise>
-              <div class="lenya-box-title"><i18n:text>error-document-existance-short</i18n:text></div>
-              <div class="lenya-box-body">
+              <h1><i18n:text>error-document-existance-short</i18n:text></h1>
+              <p>
+                <i18n:translate>
+                  <i18n:text i18n:key="error-document-existance" />
+                  <i18n:param>'<xsl:value-of select="$documenturl"/>'</i18n:param>
+                </i18n:translate>
+              </p>
+              <xsl:if test="$area = 'authoring'">
                 <p>
-                  <i18n:translate>
-                    <i18n:text i18n:key="error-document-existance" />
-                    <i18n:param>'<xsl:value-of select="$documenturl"/>'</i18n:param>
-                  </i18n:translate>
+                  <a href="?lenya.usecase=sitemanagement.create&amp;path={$path}"><i18n:text>create-document</i18n:text></a>
                 </p>
-                <xsl:if test="$area = 'authoring'">
-                  <p>
-                    <a href="?lenya.usecase=sitemanagement.create&amp;path={$path}"><i18n:text>create-document</i18n:text></a>
-                  </p>
-                  <p>
-                    <i18n:text>configure-content-repository</i18n:text>
-                  </p>
-                </xsl:if>
-              </div>
+                <p>
+                  <i18n:text>configure-content-repository</i18n:text>
+                </p>
+              </xsl:if>
             </xsl:otherwise>
           </xsl:choose>
         </div>
-      </page:body>
-    </page:page>
+      </body>
+    </html>
   </xsl:template>
   
   <xsl:template match="available-languages/available-language">
