@@ -50,18 +50,18 @@
       <page:body>
         <xsl:apply-templates select="." mode="onload"/>
         <xsl:call-template name="toggle-script"/>
-	<div class="lenya-box">
-	  <div class="lenya-box-title"><i18n:text i18n:key="error-generic" /></div>
-	  <div class="lenya-box-body">
-	    <p>
-          <xsl:value-of select="error:message"/>
-	    </p>
-	    <p>
-          <xsl:value-of select="error:description"/>
-	    </p>
-        <xsl:apply-templates select="error:extra"/>
-	  </div>
-	</div>
+        <div class="lenya-box">
+          <div class="lenya-box-title"><i18n:text i18n:key="error-generic" /></div>
+          <div class="lenya-box-body">
+            <p>
+                <xsl:value-of select="error:message"/>
+            </p>
+            <p>
+                <xsl:value-of select="error:description"/>
+            </p>
+              <xsl:apply-templates select="error:extra"/>
+          </div>
+        </div>
       </page:body>
     </page:page>
   </xsl:template>
