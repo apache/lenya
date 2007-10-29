@@ -109,15 +109,7 @@
 
     <!-- this is the default error handler -->
     <map:handle-errors>
-      <map:generate type="notifying"/>
-      <map:transform src="fallback://lenya/xslt/exception/generic.xsl">
-        <map:parameter name="documentid" value="{page-envelope:document-uuid}"/>
-        <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-      </map:transform>
-      <map:call resource="style-cms-page" />
-      <map:serialize status-code="500" />
-      <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="xhtml"/>
+      <map:mount src="fallback://lenya/error.xmap" check-reload="true" reload-method="synchron" uri-prefix=""/>
     </map:handle-errors>    
     
   </map:pipelines></xmap>

@@ -25,12 +25,8 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
-  <xsl:import href="../util/page-util.xsl"/>
-  <xsl:import href="../util/toggle.xsl"/>
-  
-  <xsl:param name="documentid"/>
-  <xsl:param name="documenturl"/>
-  <xsl:param name="contextPath"/>
+  <xsl:import href="fallback://lenya/xslt/util/page-util.xsl"/>
+  <xsl:import href="fallback://lenya/xslt/util/toggle.xsl"/>
 
   <xsl:template match="error:notify">
     
