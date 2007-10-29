@@ -98,12 +98,12 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
                     this.policyManager = accessController.getPolicyManager();
                 }
             }
-            
+
             Publication[] pubs = this.factory.getPublications();
             for (int i = 0; i < pubs.length; i++) {
                 this.publicationCache.put(pubs[i].getId(), pubs[i]);
             }
-            
+
         } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -182,17 +182,16 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         String normalizedUrl;
         if (url.indexOf("..") > -1) {
             normalizedUrl = new URI(url).normalize().toString();
-        }
-        else {
+        } else {
             normalizedUrl = url;
         }
         return normalizedUrl;
     }
 
     private String requestUrl;
-    
+
     private Map pubId2areaList = new HashMap();
-    
+
     /**
      * Checks if a publication has an area by using a cache for performance reasons.
      * @param pub The publication.
@@ -235,27 +234,44 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     }
 
     protected String getRelativeUrlTo(String webappUrl) {
-        List sourceSteps = toList(this.requestUrl);
-        List targetSteps = toList(webappUrl);
-
-        while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
-                && sourceSteps.get(0).equals(targetSteps.get(0))) {
-            sourceSteps.remove(0);
-            targetSteps.remove(0);
+        String relativeUrl;
+        if (this.requestUrl.equals(webappUrl)) {
+            relativeUrl = webappUrl.substring(webappUrl.lastIndexOf("/") + 1);
         }
+        else {
+            List sourceSteps = toList(this.requestUrl);
+            List targetSteps = toList(webappUrl);
 
-        String upDots = "";
-        if (sourceSteps.size() > 1) {
-            String[] upDotsArray = new String[sourceSteps.size() - 1];
-            Arrays.fill(upDotsArray, "..");
-            upDots = StringUtil.join(upDotsArray, "/") + "/";
+            while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
+                    && sourceSteps.get(0).equals(targetSteps.get(0))) {
+                sourceSteps.remove(0);
+                targetSteps.remove(0);
+            }
+
+            String prefix = "";
+            if (targetSteps.isEmpty()) {
+                prefix = generateUpDots(sourceSteps.size());
+            }
+            else if (sourceSteps.isEmpty()) {
+                prefix = "./";
+            }
+            else if (sourceSteps.size() > 1) {
+                prefix = generateUpDots(sourceSteps.size()) + "/";
+            }
+
+            String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);
+            String targetPath = StringUtil.join(targetArray, "/");
+            relativeUrl = prefix + targetPath;
         }
-
-        String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);
-        String targetPath = StringUtil.join(targetArray, "/");
-
-        String relativeUrl = upDots + targetPath;
         return relativeUrl;
+    }
+
+    protected String generateUpDots(int length) {
+        String upDots;
+        String[] upDotsArray = new String[length];
+        Arrays.fill(upDotsArray, "..");
+        upDots = StringUtil.join(upDotsArray, "/");
+        return upDots;
     }
 
     protected List toList(String url) {
