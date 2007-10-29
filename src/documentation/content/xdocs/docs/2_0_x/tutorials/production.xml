@@ -157,6 +157,10 @@
   <pipeline-expiration>access plus 2 hours</pipeline-expiration>
 </global-variables>]]></source>
         </li>
+        <li>
+          Configure the expiration time of your resource types. For more information, consult the
+          <a href="site:resource-types">resource types reference</a>.
+        </li>
         <li>Tips about Cocoon performance tuning: <a href="http://wiki.apache.org/cocoon/CocoonPerformance">http://wiki.apache.org/cocoon/CocoonPerformance</a></li>
         <li>Tips about Tomcat performance tuning: <a href="http://marc.theaimsgroup.com/?t=103598885300001&amp;r=1&amp;w=2">http://marc.theaimsgroup.com/?t=103598885300001&amp;r=1&amp;w=2</a></li>
       </ul>

@@ -170,6 +170,24 @@
       (see section <em>Adding Resource Types to a Publication</em>).
     </p>
   </section>
+	  
+	  <section id="expiration">
+	    <title>Cache Expiration Time</title>
+	    <p>
+	      For each resource type, you can configure how long the documents shall be cached by
+	      the client, for instance:
+	    </p>
+	    <source xml:space="preserve"><![CDATA[<expires seconds="3600" />]]></source>
+	    <p>
+	      This value can be accessed via the <code>getExpires()</code> methods of the
+	      <code>ResourceType</code> and <code>Document</code> interfaces. You can use the
+	      header action to set the corresponding HTTP response header in your publication:
+	    </p>
+	    <source xml:space="preserve"><![CDATA[<map:act type="set-header">
+  <map:parameter name="Expires"
+    value="{date-iso8601-rfc822:{doc-info:{pubId}:{area}:{uuid}:{language}:expires}}"/>
+</map:act>]]></source>
+	  </section>
   
   <section><title>The Resource Type Definition</title>
     <p>
@@ -196,6 +214,8 @@
     <link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/>
     
     <format name="xhtml" uri="cocoon://modules/profile/profile.xml"/>
+    
+    <expires seconds="3600" />
     
   </component-instance>
 
