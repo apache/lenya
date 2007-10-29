@@ -50,7 +50,7 @@ import org.apache.lenya.util.ServletHelper;
 public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 
     protected static final String URI_PARAMETER_DOCTYPE = "doctype";
-
+    
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
      *      org.apache.avalon.framework.configuration.Configuration,
@@ -84,6 +84,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 value = StringUtils.join(envelope.getPublication().getLanguages(), ',');
             } else if (name.equals(PageEnvelope.DEFAULT_LANGUAGE)) {
                 value = envelope.getPublication().getDefaultLanguage();
+            } else if (name.equals(PageEnvelope.LANGUAGE)) {
+                value = envelope.getLanguage();
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
             } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {

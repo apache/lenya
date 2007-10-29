@@ -44,7 +44,7 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_UUID, PageEnvelope.DOCUMENT_TYPE, PageEnvelope.DEFAULT_LANGUAGE,
             PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
             PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
-            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX };
+            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX, PageEnvelope.LANGUAGE };
     /**
      * <code>PUBLICATION_ID</code> The publication id
      */
@@ -131,6 +131,11 @@ public class PageEnvelope {
      * <code>DOCUMENT_LANGUAGE</code> The language of the current document
      */
     public static final String DOCUMENT_LANGUAGE = "document-language";
+    /**
+     * This attribute returns the document language if the document exists, or the
+     * default language otherwise. This makes it suitable for 404 pages.
+     */
+    public static final String LANGUAGE = "language";
     /**
      * <code>DOCUMENT_LANGUAGES</code> The languages the current document is available in
      */
@@ -303,6 +308,23 @@ public class PageEnvelope {
      */
     public void setDocument(Document _document) {
         this.document = _document;
+    }
+    
+    /**
+     * @return The document language or the default language if the document doesn't exist.
+     * @see #LANGUAGE
+     */
+    public String getLanguage() {
+        Document document = getDocument();
+        if (document == null) {
+            Publication pub = getPublication();
+            if (pub == null) {
+                throw new RuntimeException("The language attribute can't be used outside a publication.");
+            }
+            return pub.getDefaultLanguage();
+        } else {
+            return document.getLanguage();
+        }
     }
 
 }
