@@ -26,12 +26,15 @@
   
   <xsl:import href="../util/page-util.xsl"/>
   
+  <xsl:param name="pub"/>
   <xsl:param name="area"/>
   <xsl:param name="path"/>
-  <xsl:param name="documenturl"/>
-  <xsl:param name="baseUrl"/>
+  <xsl:param name="requestUrl"/>
+  <xsl:param name="contextPath"/>
   
   <xsl:variable name="language"><xsl:value-of select="/missing-language/current-language"/></xsl:variable>
+  <xsl:variable name="prefix" select="concat($contextPath, '/', $pub, '/', $area)"/>
+  <xsl:variable name="documentUrl" select="substring($requestUrl, string-length($prefix) + 1)"/>
   
   <xsl:template match="/">
     
@@ -76,7 +79,7 @@
               <p>
                 <i18n:translate>
                   <i18n:text i18n:key="error-document-existance" />
-                  <i18n:param>'<xsl:value-of select="$documenturl"/>'</i18n:param>
+                  <i18n:param>'<xsl:value-of select="$documentUrl"/>'</i18n:param>
                 </i18n:translate>
               </p>
               <xsl:if test="$area = 'authoring'">
