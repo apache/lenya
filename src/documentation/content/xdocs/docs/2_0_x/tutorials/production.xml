@@ -84,16 +84,31 @@
     
     <section>
       <title>Preparation (Internal Pilot Phase)</title>
-      <ul>
-        <li>
-          Set the log level to <em>ERROR</em>.
-        </li>
-        <li>
-          Make sure that the logs stay clean. If exceptions occur, mercilessly
-          track them down and eliminate their causes. Even if you consider some
-          exceptions "normal" behaviour - they aren't.
-        </li>
-      </ul>
+      <p>
+        Set the log level to <em>ERROR</em> in
+        <code>externals/cocoon_2_1_x/src/webapp/WEB-INF/log4j.xconf</code> 
+        (source, needs rebuild to become active) or 
+        <code>build/lenya/webapp/WEB-INF/log4j.xconf</code> (deployed file):
+      </p>
+      <source xml:space="preserve"><![CDATA[
+        <root>
+          <priority value="error" />
+          <appender-ref ref="COCOON_DEFAULT" />
+        </root>
+]]></source>
+      <p>
+        Make sure that the logs stay clean. If exceptions occur, mercilessly
+        track them down and eliminate their causes. Even if you consider some
+        exceptions "normal" behaviour - they aren't.
+      </p>
+      <p>
+        At a later point in your testing process, disable the "DEBUG" setting for the Java compiler in
+        <code>src/targets/properties-build</code> to speed up your bytecode:
+      </p>
+      <source xml:space="preserve"><![CDATA[
+        <property name="debug" value="off"/>
+]]></source>
+      
     </section>
     
     <section>
@@ -221,25 +236,17 @@
         </li>
       </ul>
     </section>
-    
+
     <section>
       <title>Cosmetics</title>
       <p>
-        In order to hide the default and blog publicatons from the root index page
-        (if you're not going to rewrite it anyway), you can set
+        In order to hide the default publication from the welcome page
+        (if you're not going to delete it anyway), change <code>src/pubs/default/publication.xml</code> as follows:
       </p>
-      <source xml:space="preserve"><![CDATA[--- lenya/src/pubs/blog/publication.xml (revision 452350)
-+++ lenya/src/pubs/blog/publication.xml (working copy)
-@@ -17,11 +17,12 @@
--<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true">
-+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">]]></source>
-      <source xml:space="preserve"><![CDATA[--- lenya/src/pubs/default/publication.xml      (revision 452350)
-+++ lenya/src/pubs/default/publication.xml      (working copy)
-@@ -17,12 +17,13 @@
--<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true">
-+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">]]></source>
+      <source xml:space="preserve"><![CDATA[--- lenya/      (revision 452350)
+         <publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" lenya:show="false">
+]]></source>
     </section>
 
-    
   </body>
 </document>
