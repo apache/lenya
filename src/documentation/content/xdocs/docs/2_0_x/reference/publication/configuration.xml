@@ -128,7 +128,7 @@
       <p> In short the idea of the following proxy snippet in the configuration is a rewrite of links.
         Using proxies will prefix all absolute links (starting with
         <strong>"/"</strong>) to absoult urls (the proxy host). </p>
-      <source xml:space="preserve"><![CDATA[  <proxies ssl="false" root="http://www.host.com/non-ssl/">
+      <source xml:space="preserve"><![CDATA[  <proxies>
     <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
     <proxy area="live" ssl="false" url="http://www.host.com/default"/>
     <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
@@ -139,14 +139,27 @@
         live area and this document is ssl protected then it will be rewritten to
         <code>"https://www.host.com/ssl/default{$link}"</code>. Where {$link} is the linked
         document.</p>
-      <p>For all links that are not pointing to a document the global proxy rule
-        <code>ssl="false" root="http://www.host.com/no-ssl/</code> is applied. For
+      <p>For all links that are not pointing to a document the global proxy rule in <code>cocoon.xconf/cocoon/component[@role = 'org.apache.lenya.cms.linking.GlobalProxies']</code> is applied (see <code>$LENYA_HOME/src/modules-core/linking/config/cocoon-xconf/globalproxies.xconf</code>):
+      </p>
+      <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.linking.GlobalProxies']">
+          <component logger="lenya.proxy"
+                     role="org.apache.lenya.cms.linking.GlobalProxies"
+                     class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl">
+            <!--
+                <proxy ssl="false" url="http://cms.host.com/foo"/>
+                <proxy ssl="true" url="https://cms.host.com/foo"/>
+            -->
+          </component>
+        </xconf>]]></source>
+      <p>
+        For
         example a link such as
         <code>/modules/myModule/somePath/some.thing</code> will be rewritten to
         <code>
-          http://www.host.com/no-ssl/modules/myModule/somePath/some.thing</code>
+          http://cms.host.com/foo/modules/myModule/somePath/some.thing</code>
         . In short
-        <code>"/"</code> will be replaced with {proxies/@root}. </p>
+        <code>"/"</code> will be replaced with {proxies/@root}. 
+      </p>
       <source xml:space="preserve"><![CDATA[</publication>]]></source>
     </section>
     
