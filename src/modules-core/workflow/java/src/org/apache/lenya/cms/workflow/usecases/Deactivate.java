@@ -84,7 +84,8 @@ public class Deactivate extends InvokeWorkflow {
             List nodes = new ArrayList();
 
             Document doc = getSourceDocument();
-            if(doc != null) {
+            if (doc != null) {
+                nodes.add(doc.getRepositoryNode());
                 Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
                 nodes.add(liveDoc.getRepositoryNode());
                 nodes.add(liveDoc.area().getSite().getRepositoryNode());
