@@ -48,16 +48,18 @@
         
         <!-- back to users list -->
         <invoke url="index.html?lenya.usecase=admin.users"/>
-        <verifyXPath xpath="//a[normalize-space(.) = 'webTestUser']"/>
+        
+        <!-- user IDs are automatically converted to lowercase -->
+        <verifyXPath xpath="//a[normalize-space(.) = 'webtestuser']"/>
         
         <!-- delete user -->
-        <clickButton xpath="//form[input[@value = 'webTestUser']]/input[@type = 'submit']"/>
+        <clickButton xpath="//form[input[@value = 'webtestuser']]/input[@type = 'submit']"/>
         <verifyText text="Delete User"/>
-        <verifyText text="webTestUser"/>
+        <verifyText text="webtestuser"/>
         <clickButton name="submit"/>
         <verifyText text="Add User:"/>
         <not>
-          <verifyXPath xpath="//a[normalize-space(.) = 'webTestUser']"/>
+          <verifyXPath xpath="//a[normalize-space(.) = 'webtestuser']"/>
         </not>
         
         <doLogout/>
