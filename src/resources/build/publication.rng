@@ -64,6 +64,8 @@
     <choice>
       <value>live</value>
       <value>authoring</value>
+      <value>archive</value>
+      <value>trash</value>
     </choice>
   </define>
   
