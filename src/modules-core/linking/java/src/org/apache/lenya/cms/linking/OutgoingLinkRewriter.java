@@ -236,7 +236,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     protected String getRelativeUrlTo(String webappUrl) {
         String relativeUrl;
         if (this.requestUrl.equals(webappUrl)) {
-            relativeUrl = webappUrl.substring(webappUrl.lastIndexOf("/") + 1);
+            relativeUrl = getLastStep(webappUrl);
         }
         else {
             List sourceSteps = toList(this.requestUrl);
@@ -253,10 +253,10 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
                 prefix = generateUpDots(sourceSteps.size());
             }
             else if (sourceSteps.isEmpty()) {
-                prefix = "./";
+                prefix = getLastStep(this.requestUrl) + "/";
             }
             else if (sourceSteps.size() > 1) {
-                prefix = generateUpDots(sourceSteps.size()) + "/";
+                prefix = generateUpDots(sourceSteps.size() - 1) + "/";
             }
 
             String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);
@@ -264,6 +264,10 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
             relativeUrl = prefix + targetPath;
         }
         return relativeUrl;
+    }
+
+    protected String getLastStep(String url) {
+        return url.substring(url.lastIndexOf("/") + 1);
     }
 
     protected String generateUpDots(int length) {

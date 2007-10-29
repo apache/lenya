@@ -29,10 +29,11 @@ public class OutgoingLinkRewriterTest extends AbstractAccessControlTest {
         
         assertEquals(rewriter.rewrite("/aaa/bbb/foo"), "foo");
         assertEquals(rewriter.rewrite("/aaa/bbb"), "..");
-        assertEquals(rewriter.rewrite("/aaa/bbb/ccc/ddd"), "./ddd");
-        assertEquals(rewriter.rewrite("/aaa/foo"), "../../foo");
-        assertEquals(rewriter.rewrite("/aaa/foo/bar"), "../../foo/bar");
-        assertEquals(rewriter.rewrite("/foo/bar"), "../../../foo/bar");
+        assertEquals(rewriter.rewrite("/aaa/bbb/ccc/ddd"), "ccc/ddd");
+        assertEquals(rewriter.rewrite("/aaa/foo"), "../foo");
+        assertEquals(rewriter.rewrite("/aaa/foo/bar"), "../foo/bar");
+        assertEquals(rewriter.rewrite("/foo/bar"), "../../foo/bar");
+        assertEquals(rewriter.rewrite("/aaa/foo/bar/baz"), "../foo/bar/baz");
     }
     
 }
