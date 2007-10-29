@@ -36,17 +36,17 @@
       <ol>
         <li>
           <p>
-            Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a> and 
-            unpack the archive in the resources directory of the tinymce module
-            (<code>$LENYA_HOME/src/modules/tinymce/resources/</code>)
+            Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a>
+          </p>
+          <p>
+            Unpack the archive in the resources directory of the tinymce module
+            (<code>$LENYA_HOME/src/modules/tinymce/resources/</code>) to make it globally available, <br />
+            <strong>or</strong>, if you don't want to change stuff in your source tree,<br />
+            in your publication under <code>$PUB_HOME/lenya/modules/tinymce/resource/</code>.
+          </p>
+          <p>
             That should give you a subdirectory named <code>tinymce</code>.
-          </p>
-          <p>
-            <strong>or</strong>
-          </p>
-          <p>
-            Download TinyMCE and unpack the archive in <code>$PUB_HOME/lenya/modules/tinymce/resource/</code>.
-          </p>
+          </p> 
         </li>
         <li>
           Optionally download additional language packs and unpack them
@@ -71,11 +71,6 @@
           <source xml:space="preserve"><![CDATA[<usecase id="tinymce.edit">
   <role id="admin" method="grant"/>
   <role id="edit" method="grant"/>
-</usecase>
-
-<usecase id="tinymce.insertImage">
-  <role id="admin" method="grant"/>
-  <role id="edit" method="grant"/>
 </usecase>]]></source>
           <p>
             This will allow the "admin" and "edit" roles to access the 
@@ -93,12 +88,12 @@
       </ol>
     </section>
     <section>
-      <title>Make your site plays well with TinyMCE</title>
+      <title>Make sure your site plays well with TinyMCE</title>
       <p>
         You will find that TinyMCE does not look good with certain layout styles.
-        Specifically, floating objects inside your editable area will result in 
-        sub-optimal layout when the editor is active. To achive true WYSIWYG, try 
-        to design your page so that editable areas have a fixed size and no floats 
+        Specifically, floating objects inside or next to your editable area might result in 
+        wrecked layout when the editor is active. To achive true WYSIWYG, try 
+        to design your page so that editable areas have a fixed size and be careful with floats 
         (you can still have accessible design by using "em" instead of "px").
       </p>
       <p>
@@ -109,7 +104,7 @@
         Use ids instead.
       </p>
       <p>
-        This module has been tested with TinyMCE 2.1.1.1.
+        This module has been tested with TinyMCE 2.1.2.
       </p>
     </section>
     
