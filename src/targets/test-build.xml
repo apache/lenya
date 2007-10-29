@@ -221,25 +221,6 @@
     </java>
   </target>
 
-
-  <!-- ================================================ -->
-  <!-- Canoo Webtest tests -->
-  <!-- ================================================ -->
-  <target name="tests.webtest">
-    <property name="webtest.home" value=""/>
-    <property name="webtest.buildfile" value="src/test/webtest/tests.xml"/>
-    <java classname="org.apache.tools.ant.Main" fork="true">
-      <classpath>
-        <fileset dir="${webtest.home}">
-          <include name="lib/**/*.jar"/>
-        </fileset>
-        <pathelement location="${webtest.home}/lib"/>
-      </classpath>
-      <jvmarg value="-Dwebtest.home=${webtest.home}" />
-      <arg line="-f ${webtest.buildfile}"/>
-    </java>
-  </target>
-
 <!-- The XSP compilation target -->
   <target name="compile-xsp" depends="tests.prepare"
           description="Compile the XSP sources">
