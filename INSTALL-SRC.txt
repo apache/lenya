@@ -1,3 +1,9 @@
+# FIXME: this file duplicates the contents of
+# docu/src/documentation/content/xdocs/docs/2_0_x/installation/ (which is
+# currently out of date)
+# It would make a lot of sense to only maintain the xdocs and generate this
+# file with an xslt.
+
 Installation of the Source Version
 
     * Prerequisites
