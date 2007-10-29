@@ -247,6 +247,9 @@ LenyaTree.prototype.getIcon = function(item) {
             if (steps.length < 4) {
                 href = AREA_BASE_PATH + "/folder";
             }
+            else if(item.href == "") {
+                href = AREA_BASE_PATH + "/default";
+            }
             else {
                 href = item.href;
             }
