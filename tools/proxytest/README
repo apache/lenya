@@ -1,0 +1,45 @@
+If you want to play with Lenya in Jetty 6.1.6, please take a look at jetty6.xml
+and follow the instructions in the comment header.
+
+
+*.*
+
+
+If you want to put the proxying code to test, start Jetty6. Next get an Apache httpd server
+installed. Then apply the following tweaks:
+
+1. Install the bogus SSL keys:
+
+   cp *.pem /tmp
+
+2. Install an apache configuration for virtual hosts:
+
+   cp apache_vhosts.conf /etc/apache2/vhosts.d 
+
+   (That's probably distro-specific. Just make sure that the file is being 
+   included from your master config file)
+
+3. Append some fake host entries to your local resolver:
+
+   cat hosts_fake >> /etc/hosts
+
+4. Make sure apache2 is configured to run SSL by passing it the -DSSL flag.
+
+5. Restart apache2:
+
+   /etc/init.da/apache2 restart
+
+6. Uncomment the proxy settings in the default publication config:
+   (src/pubs/default/config/publication.xml)
+
+7. Uncomment the global proxy settings.
+   (src/modules-core/linking/config/cocoon-xconf/global-proxies.xconf)
+
+8. ./build.sh clean && ./build.sh
+
+9. Surf to http://localhost:8888 to check what the proxy does. Then try
+   http://www.example.com/lenya/default/authoring/ and 
+   http://customer.example.com.
+
+It doesn't quite work as it should, but you get the idea.
+
