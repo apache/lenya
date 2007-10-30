@@ -166,10 +166,13 @@ document.write("Last Published: " + document.lastModified);
 <div onclick="SwitchMenu('menu_1.1.4.5', '../../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
 <div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
-<a href="../../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
+<a href="../../../../docs/2_0_x/tutorials/proxy/proxying.html">Proxying</a>
 </div>
 <div class="menuitem">
-<a href="../../../../docs/2_0_x/tutorials/mod_proxy_ajp.html">mod_proxy_ajp</a>
+<a href="../../../../docs/2_0_x/tutorials/proxy/proxy.html">mod_proxy</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/2_0_x/tutorials/proxy/mod_proxy_ajp.html">mod_proxy_ajp</a>
 </div>
 </div>
 <div class="menuitem">
@@ -816,12 +819,12 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">  &lt;content-dir src="/home/USERNAME/data/default"/&gt;</pre>
 <p>
         The optional <span class="codefrag">proxies</span> section contains the proxy configuration
-        of this publication. For more information see <a href="../../../../docs/1_2_x/components/deployment/proxying.html">Proxying</a> and the <a href="../../../../docs/1_2_x/tutorial/mod_proxy_and_lenya.html">turorial</a>.
+        of this publication. For more information see <a href="../../../../docs/2_0_x/tutorials/proxy/proxying.html">Proxying</a> and the <a href="../../../../docs/1_2_x/tutorial/mod_proxy_and_lenya.html">turorial</a>.
       </p>
 <p> In short the idea of the following proxy snippet in the configuration is a rewrite of links.
         Using proxies will prefix all absolute links (starting with
         <strong>"/"</strong>) to absoult urls (the proxy host). </p>
-<pre class="code">  &lt;proxies ssl="false" root="http://www.host.com/non-ssl/"&gt;
+<pre class="code">  &lt;proxies&gt;
     &lt;proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/&gt;
     &lt;proxy area="live" ssl="false" url="http://www.host.com/default"/&gt;
     &lt;proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/&gt;
@@ -832,14 +835,27 @@ document.write("Last Published: " + document.lastModified);
         live area and this document is ssl protected then it will be rewritten to
         <span class="codefrag">"https://www.host.com/ssl/default{$link}"</span>. Where {$link} is the linked
         document.</p>
-<p>For all links that are not pointing to a document the global proxy rule
-        <span class="codefrag">ssl="false" root="http://www.host.com/no-ssl/</span> is applied. For
+<p>For all links that are not pointing to a document the global proxy rule in <span class="codefrag">cocoon.xconf/cocoon/component[@role = 'org.apache.lenya.cms.linking.GlobalProxies']</span> is applied (see <span class="codefrag">$LENYA_HOME/src/modules-core/linking/config/cocoon-xconf/globalproxies.xconf</span>):
+      </p>
+<pre class="code">&lt;xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.linking.GlobalProxies']"&gt;
+          &lt;component logger="lenya.proxy"
+                     role="org.apache.lenya.cms.linking.GlobalProxies"
+                     class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl"&gt;
+            &lt;!--
+                &lt;proxy ssl="false" url="http://cms.host.com/foo"/&gt;
+                &lt;proxy ssl="true" url="https://cms.host.com/foo"/&gt;
+            --&gt;
+          &lt;/component&gt;
+        &lt;/xconf&gt;</pre>
+<p>
+        For
         example a link such as
         <span class="codefrag">/modules/myModule/somePath/some.thing</span> will be rewritten to
         <span class="codefrag">
-          http://www.host.com/no-ssl/modules/myModule/somePath/some.thing</span>
+          http://cms.host.com/foo/modules/myModule/somePath/some.thing</span>
         . In short
-        <span class="codefrag">"/"</span> will be replaced with {proxies/@root}. </p>
+        <span class="codefrag">"/"</span> will be replaced with {proxies/@root}. 
+      </p>
 <pre class="code">&lt;/publication&gt;</pre>
 </div>
     

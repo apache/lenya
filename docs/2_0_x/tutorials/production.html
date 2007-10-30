@@ -166,10 +166,13 @@ document.write("Last Published: " + document.lastModified);
 <div onclick="SwitchMenu('menu_1.1.4.5', '../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
 <div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxying.html">Proxying</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/mod_proxy_ajp.html">mod_proxy_ajp</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxy.html">mod_proxy</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/proxy/mod_proxy_ajp.html">mod_proxy_ajp</a>
 </div>
 </div>
 <div class="menuitem">
@@ -816,23 +819,34 @@ document.write("Last Published: " + document.lastModified);
 <a name="N10046"></a><a name="Preparation+%28Internal+Pilot+Phase%29"></a>
 <h2 class="h3">Preparation (Internal Pilot Phase)</h2>
 <div class="section">
-<ul>
-        
-<li>
-          Set the log level to <em>ERROR</em>.
-        </li>
-        
-<li>
-          Make sure that the logs stay clean. If exceptions occur, mercilessly
-          track them down and eliminate their causes. Even if you consider some
-          exceptions "normal" behaviour - they aren't.
-        </li>
-      
-</ul>
+<p>
+        Set the log level to <em>ERROR</em> in
+        <span class="codefrag">externals/cocoon_2_1_x/src/webapp/WEB-INF/log4j.xconf</span> 
+        (source, needs rebuild to become active) or 
+        <span class="codefrag">build/lenya/webapp/WEB-INF/log4j.xconf</span> (deployed file):
+      </p>
+<pre class="code">
+        &lt;root&gt;
+          &lt;priority value="error" /&gt;
+          &lt;appender-ref ref="COCOON_DEFAULT" /&gt;
+        &lt;/root&gt;
+</pre>
+<p>
+        Make sure that the logs stay clean. If exceptions occur, mercilessly
+        track them down and eliminate their causes. Even if you consider some
+        exceptions "normal" behaviour - they aren't.
+      </p>
+<p>
+        At a later point in your testing process, disable the "DEBUG" setting for the Java compiler in
+        <span class="codefrag">src/targets/properties-build</span> to speed up your bytecode:
+      </p>
+<pre class="code">
+        &lt;property name="debug" value="off"/&gt;
+</pre>
 </div>
     
     
-<a name="N10059"></a><a name="Caching+in+Cocoon"></a>
+<a name="N1006A"></a><a name="Caching+in+Cocoon"></a>
 <h2 class="h3">Caching in Cocoon</h2>
 <div class="section">
 <p>
@@ -880,7 +894,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N10091"></a><a name="Performance+Tuning"></a>
+<a name="N100A2"></a><a name="Performance+Tuning"></a>
 <h2 class="h3">Performance Tuning</h2>
 <div class="section">
 <p>
@@ -900,6 +914,11 @@ document.write("Last Published: " + document.lastModified);
 &lt;/global-variables&gt;</pre>
         
 </li>
+        
+<li>
+          Configure the expiration time of your resource types. For more information, consult the
+          <a href="../../../docs/2_0_x/reference/resource-types.html">resource types reference</a>.
+        </li>
         
 <li>Tips about Cocoon performance tuning: <a href="http://wiki.apache.org/cocoon/CocoonPerformance">http://wiki.apache.org/cocoon/CocoonPerformance</a>
 </li>
@@ -926,7 +945,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N100D5"></a><a name="General+Measures+for+Production"></a>
+<a name="N100ED"></a><a name="General+Measures+for+Production"></a>
 <h2 class="h3">General Measures for Production</h2>
 <div class="section">
 <ul>
@@ -977,28 +996,20 @@ document.write("Last Published: " + document.lastModified);
       
 </ul>
 </div>
+
     
-    
-<a name="N1010F"></a><a name="Cosmetics"></a>
+<a name="N10127"></a><a name="Cosmetics"></a>
 <h2 class="h3">Cosmetics</h2>
 <div class="section">
 <p>
-        In order to hide the default and blog publicatons from the root index page
-        (if you're not going to rewrite it anyway), you can set
+        In order to hide the default publication from the welcome page
+        (if you're not going to delete it anyway), change <span class="codefrag">src/pubs/default/publication.xml</span> as follows:
       </p>
-<pre class="code">--- lenya/src/pubs/blog/publication.xml (revision 452350)
-+++ lenya/src/pubs/blog/publication.xml (working copy)
-@@ -17,11 +17,12 @@
--&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true"&gt;
-+&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false"&gt;</pre>
-<pre class="code">--- lenya/src/pubs/default/publication.xml      (revision 452350)
-+++ lenya/src/pubs/default/publication.xml      (working copy)
-@@ -17,12 +17,13 @@
--&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true"&gt;
-+&lt;lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false"&gt;</pre>
+<pre class="code">--- lenya/      (revision 452350)
+         &lt;publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" lenya:show="false"&gt;
+</pre>
 </div>
 
-    
   
 </div>
 <!--+

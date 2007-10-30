@@ -166,10 +166,13 @@ document.write("Last Published: " + document.lastModified);
 <div onclick="SwitchMenu('menu_1.1.4.5', '../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
 <div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxying.html">Proxying</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/mod_proxy_ajp.html">mod_proxy_ajp</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxy.html">mod_proxy</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/proxy/mod_proxy_ajp.html">mod_proxy_ajp</a>
 </div>
 </div>
 <div class="menuitem">
@@ -722,7 +725,7 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Installation">Installation</a>
 </li>
 <li>
-<a href="#Make+your+site+plays+well+with+TinyMCE">Make your site plays well with TinyMCE</a>
+<a href="#Make+sure+your+site+plays+well+with+TinyMCE">Make sure your site plays well with TinyMCE</a>
 </li>
 </ul>
 </div>
@@ -745,21 +748,21 @@ document.write("Last Published: " + document.lastModified);
 <li>
           
 <p>
-            Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a> and 
-            unpack the archive in the resources directory of the tinymce module
-            (<span class="codefrag">$LENYA_HOME/src/modules/tinymce/resources/</span>)
-            That should give you a subdirectory named <span class="codefrag">tinymce</span>.
-          </p>
-          
-<p>
-            
-<strong>or</strong>
+            Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a>
           
 </p>
           
 <p>
-            Download TinyMCE and unpack the archive in <span class="codefrag">$PUB_HOME/lenya/modules/tinymce/resource/</span>.
+            Unpack the archive in the resources directory of the tinymce module
+            (<span class="codefrag">$LENYA_HOME/src/modules/tinymce/resources/</span>) to make it globally available, <br>
+            
+<strong>or</strong>, if you don't want to change stuff in your source tree,<br>
+            in your publication under <span class="codefrag">$PUB_HOME/lenya/modules/tinymce/resource/</span>.
           </p>
+          
+<p>
+            That should give you a subdirectory named <span class="codefrag">tinymce</span>.
+          </p> 
         
 </li>
         
@@ -791,11 +794,6 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">&lt;usecase id="tinymce.edit"&gt;
   &lt;role id="admin" method="grant"/&gt;
   &lt;role id="edit" method="grant"/&gt;
-&lt;/usecase&gt;
-
-&lt;usecase id="tinymce.insertImage"&gt;
-  &lt;role id="admin" method="grant"/&gt;
-  &lt;role id="edit" method="grant"/&gt;
 &lt;/usecase&gt;</pre>
           
 <p>
@@ -817,14 +815,14 @@ document.write("Last Published: " + document.lastModified);
 </ol>
 </div>
     
-<a name="N1006E"></a><a name="Make+your+site+plays+well+with+TinyMCE"></a>
-<h2 class="h3">Make your site plays well with TinyMCE</h2>
+<a name="N10072"></a><a name="Make+sure+your+site+plays+well+with+TinyMCE"></a>
+<h2 class="h3">Make sure your site plays well with TinyMCE</h2>
 <div class="section">
 <p>
         You will find that TinyMCE does not look good with certain layout styles.
-        Specifically, floating objects inside your editable area will result in 
-        sub-optimal layout when the editor is active. To achive true WYSIWYG, try 
-        to design your page so that editable areas have a fixed size and no floats 
+        Specifically, floating objects inside or next to your editable area might result in 
+        wrecked layout when the editor is active. To achive true WYSIWYG, try 
+        to design your page so that editable areas have a fixed size and be careful with floats 
         (you can still have accessible design by using "em" instead of "px").
       </p>
 <p>
@@ -835,7 +833,7 @@ document.write("Last Published: " + document.lastModified);
         Use ids instead.
       </p>
 <p>
-        This module has been tested with TinyMCE 2.1.1.1.
+        This module has been tested with TinyMCE 2.1.2.
       </p>
 </div>
     

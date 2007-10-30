@@ -1,0 +1,894 @@
+<?xml version="1.0"?>
+<log>
+<logentry
+   revision="580913">
+<author>andreas</author>
+<date>2007-10-01T10:11:28.396022Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+</paths>
+<msg>Make redirect to WAYF server configurable</msg>
+</logentry>
+<logentry
+   revision="580947">
+<author>andreas</author>
+<date>2007-10-01T13:31:50.752198Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AttributeDefinitionRegistry.java</path>
+</paths>
+<msg>[minor change] improved javadocs</msg>
+</logentry>
+<logentry
+   revision="580948">
+<author>andreas</author>
+<date>2007-10-01T13:32:14.139195Z</date>
+<paths>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/jexl/JexlEvaluatorFactory.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/jexl/JexlEvaluator.java</path>
+</paths>
+<msg>Added factory for JEXL attribute rule evaluator</msg>
+</logentry>
+<logentry
+   revision="580978">
+<author>andreas</author>
+<date>2007-10-01T14:48:33.124360Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/targets/antlr-build.xml</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/lib/stringtemplate-3.0.jar</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/lib/antlr3-task.jar</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/lib/antlr-2.7.7.jar</path>
+</paths>
+<msg>Adding missing libraries for ANTLR grammar compilation, updated antlr build file</msg>
+</logentry>
+<logentry
+   revision="580989">
+<author>andreas</author>
+<date>2007-10-01T15:17:19.249271Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
+<path
+   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/AttributeTranslator.java</path>
+<path
+   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapping.java</path>
+<path
+   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/AttributeTranslatorImpl.java"
+   copyfrom-rev="580896"
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/impl/AttributeTranslatorImpl.java</path>
+<path
+   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/UserFieldsMappingImpl.java"
+   copyfrom-rev="580896"
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/impl/UserFieldsMappingImpl.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAttributeDefinition.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
+<path
+   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/AttributeTranslatorImpl.java</path>
+<path
+   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapper.java"
+   copyfrom-rev="580896"
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/UserFieldsMapper.java</path>
+<path
+   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/UserFieldsMappingImpl.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/AttributeTranslator.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml</path>
+<path
+   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapping.java"
+   copyfrom-rev="580896"
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/UserFieldsMapping.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/impl</path>
+<path
+   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapper.java</path>
+</paths>
+<msg>[Refactoring] move attribute translation from shibboleth packages to Lenya packages</msg>
+</logentry>
+<logentry
+   revision="580996">
+<author>andreas</author>
+<date>2007-10-01T15:48:03.851406Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+</paths>
+<msg>Updated xconf file to package changes</msg>
+</logentry>
+<logentry
+   revision="581007">
+<author>andreas</author>
+<date>2007-10-01T16:27:21.256538Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/xslt/admin/groups/profile.xsl</path>
+</paths>
+<msg>Use table + i18n to display attribute list on group profile page</msg>
+</logentry>
+<logentry
+   revision="581156">
+<author>andreas</author>
+<date>2007-10-02T08:34:50.171571Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes.xml</path>
+</paths>
+<msg>Added more docs about attribute-based authorization</msg>
+</logentry>
+<logentry
+   revision="581196">
+<author>andreas</author>
+<date>2007-10-02T11:41:21.989893Z</date>
+<paths>
+<path
+   action="D">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes.xml</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes/classes.aart</path>
+<path
+   copyfrom-path="/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes.xml"
+   copyfrom-rev="581156"
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes/attributes.xml</path>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/site.xml</path>
+<path
+   action="D">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth.xml</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/setup.xml</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/authenticator.aart</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/introduction.xml</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/architecture.xml</path>
+</paths>
+<msg>Adding diagrams to shibboleth docs</msg>
+</logentry>
+<logentry
+   revision="581244">
+<author>andreas</author>
+<date>2007-10-02T14:01:49.187037Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/util/OutgoingLinkRewriter.java</path>
+</paths>
+<msg>Obtain context path only if necessary</msg>
+</logentry>
+<logentry
+   revision="581245">
+<author>andreas</author>
+<date>2007-10-02T14:02:23.246055Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethModule.java</path>
+</paths>
+<msg>Don't attach port string if port is 80</msg>
+</logentry>
+<logentry
+   revision="581252">
+<author>andreas</author>
+<date>2007-10-02T14:15:13.674586Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+</paths>
+<msg>Setting default values in cocoon-xconf.xsl</msg>
+</logentry>
+<logentry
+   revision="581379">
+<author>andreas</author>
+<date>2007-10-02T20:49:53.758101Z</date>
+<paths>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/classes.aart</path>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/process.aart</path>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes/classes.aart</path>
+<path
+   action="D">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/authenticator.aart</path>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/introduction.xml</path>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/architecture.xml</path>
+</paths>
+<msg>Added some ascii art diagrams for attribute and shibboleth auth</msg>
+</logentry>
+<logentry
+   revision="581556">
+<author>jann</author>
+<date>2007-10-03T10:19:54.661726Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethModule.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/AssertionConsumerServiceImpl.java</path>
+</paths>
+<msg>Configure shire in cocoon.xconf</msg>
+</logentry>
+<logentry
+   revision="581645">
+<author>jann</author>
+<date>2007-10-03T16:19:06.615957Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/Publication.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/util/OutgoingLinkRewriter.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethUtil.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/AbstractPublication.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/Proxy.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethModule.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/AssertionConsumerService.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShireSelector.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/AssertionConsumerServiceImpl.java</path>
+</paths>
+<msg>Fixed URL handling (based on proxy settings) and IP address handling for shibboleth authentication</msg>
+</logentry>
+<logentry
+   revision="582009">
+<author>jann</author>
+<date>2007-10-04T20:56:45.062259Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+</paths>
+<msg>Wrong classpath to AttriubteTranslator</msg>
+</logentry>
+<logentry
+   revision="582011">
+<author>jann</author>
+<date>2007-10-04T20:58:05.652316Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+</paths>
+<msg>build does not work with &amp; in xsl File</msg>
+</logentry>
+<logentry
+   revision="582946">
+<author>rfrovarp</author>
+<date>2007-10-08T19:20:11.853828Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+</paths>
+<msg>Fixed bug 43573 and 43505
+</msg>
+</logentry>
+<logentry
+   revision="583759">
+<author>jann</author>
+<date>2007-10-11T09:53:51.697656Z</date>
+<paths>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/SslRedirectAction.java</path>
+</paths>
+<msg>Adding SslRedirectAction adapted from lenya 2.0</msg>
+</logentry>
+<logentry
+   revision="583761">
+<author>jann</author>
+<date>2007-10-11T09:57:38.099999Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Ups forgot to add sitemap changes in the last commit for the ssl redirect action</msg>
+</logentry>
+<logentry
+   revision="584193">
+<author>jann</author>
+<date>2007-10-12T15:51:33.938311Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/ac/java/src/org/apache/lenya/cms/cocoon/acting/SslRedirectAction.java</path>
+</paths>
+<msg>Prevent redirect loop if a site is ssl protected see also http://issues.apache.org/bugzilla/show_bug.cgi?id=43613</msg>
+</logentry>
+<logentry
+   revision="584200">
+<author>rfrovarp</author>
+<date>2007-10-12T17:00:58.111216Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>IE6 caches authoring under HTTPS without this line.
+</msg>
+</logentry>
+<logentry
+   revision="584272">
+<author>nettings</author>
+<date>2007-10-12T21:07:12.490450Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/scheduler/add_datasources_element.xconf</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/scheduler/datasources.xconf</path>
+</paths>
+<msg>fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=43581
+(custom datasources in cocoon.xconf were being nuked by an unspecific
+lenya patchfile)
+the approach is now to add to the &lt;datasources/&gt; element instead of
+overwriting it, which mandates another patchfile that will make sure an
+empty &lt;datasources/&gt; element is created first.
+
+thanks to markus angst for this patch.
+
+please test, i don't use custom datasources...
+
+</msg>
+</logentry>
+<logentry
+   revision="584818">
+<author>ragaller</author>
+<date>2007-10-15T16:39:01.554102Z</date>
+<paths>
+<path
+   action="A">/lenya/sandbox/temp-eol-testfile.txt</path>
+</paths>
+<msg>temporary test file for eol settings (I will remove the file as soon as I know that things are working as expected)</msg>
+</logentry>
+<logentry
+   revision="585437">
+<author>jann</author>
+<date>2007-10-17T10:29:22.853268Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/AssertionConsumerServiceImpl.java</path>
+</paths>
+<msg>We need to get the baseURL from the target. Otherwise it might not correspond to the AssertionCosumerURL and we did not get any attributes</msg>
+</logentry>
+<logentry
+   revision="586109">
+<author>rfrovarp</author>
+<date>2007-10-18T20:06:27.948352Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
+</paths>
+<msg>Clean up deprecation message.
+</msg>
+</logentry>
+<logentry
+   revision="586486">
+<author>rfrovarp</author>
+<date>2007-10-19T14:46:33.317326Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/resources/javascript/fckloader.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/usecases/fckeditor.jx</path>
+</paths>
+<msg>Load FCK from under the publication. Helps with customizing features of the editor.
+</msg>
+</logentry>
+<logentry
+   revision="586495">
+<author>rfrovarp</author>
+<date>2007-10-19T15:13:36.726968Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/menubar/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/linkcheck/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/svg/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/menus/generic.xsp</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/lenya/content/publishing/publish-screen.xsp</path>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecase.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentURLModule.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/authoring/asset-upload.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/editors/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/sitemap/pipelines.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentIdToPathMapper.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/xopus/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/java/src/org/apache/lenya/cms/cocoon/acting/WorkflowInvokerAction.java</path>
+</paths>
+<msg>Substitute document-uuid for document-id as document-id is deprecated. See bug 43038.
+</msg>
+</logentry>
+<logentry
+   revision="586507">
+<author>rfrovarp</author>
+<date>2007-10-19T15:49:32.739819Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/news/config/menu.xsp</path>
+</paths>
+<msg>Children is not a valid sample type for news. Was logging warnings every time creating a news document was in the file menu under authoring.
+</msg>
+</logentry>
+<logentry
+   revision="586523">
+<author>rfrovarp</author>
+<date>2007-10-19T16:35:52.922208Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>Prevent the browser test from logging warnings by just commenting out code to be disabled.
+</msg>
+</logentry>
+<logentry
+   revision="586525">
+<author>rfrovarp</author>
+<date>2007-10-19T16:42:04.526726Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/webapp/lenya/config/sitemap/selectors.xmap</path>
+</paths>
+<msg>Not used. Only contained a subset of what cocoon provides under the browser name anyway.
+</msg>
+</logentry>
+<logentry
+   revision="586529">
+<author>rfrovarp</author>
+<date>2007-10-19T16:47:23.608867Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/webapp/lenya/resources/css/xulmenu.xml</path>
+<path
+   copyfrom-path="/lenya/trunk/src/webapp/lenya/resources/css/xulmenu.xml"
+   copyfrom-rev="586509"
+   action="A">/lenya/trunk/src/webapp/lenya/resources/css/xulmenu.css</path>
+</paths>
+<msg>Replacing CSS XMLs by plain CSS - not needed anymore thanks to proxy transformer
+</msg>
+</logentry>
+<logentry
+   revision="586532">
+<author>rfrovarp</author>
+<date>2007-10-19T16:51:08.351310Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>minor fix - cleaned up comment code
+</msg>
+</logentry>
+<logentry
+   revision="586549">
+<author>rfrovarp</author>
+<date>2007-10-19T17:21:42.997149Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/kupu/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/svg/sitemap.xmap</path>
+</paths>
+<msg>Convert remaining lenyadoc:/ to lenya-document:
+</msg>
+</logentry>
+<logentry
+   revision="586758">
+<author>ragaller</author>
+<date>2007-10-20T16:57:27.098323Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/resources/javascript/tiny_lenya_glue.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/resources/tinymce/jscripts/tiny_mce/plugins/simplebrowser/editor_plugin.js</path>
+</paths>
+<msg>tinyMCE: transfer image width, height and title to the simplebrowser window. Fixes Bug 43203</msg>
+</logentry>
+<logentry
+   revision="587262">
+<author>nettings</author>
+<date>2007-10-22T21:14:43.111237Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/newpublication/index.xml</path>
+</paths>
+<msg>fixed acl-related documentation error, thanks to markus angst for
+spotting this one.
+</msg>
+</logentry>
+<logentry
+   revision="587267">
+<author>nettings</author>
+<date>2007-10-22T21:23:49.236485Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/newpublication/index.xml</path>
+</paths>
+<msg>clarifications to search configuration docs suggested by markus angst.
+</msg>
+</logentry>
+<logentry
+   revision="587460">
+<author>nettings</author>
+<date>2007-10-23T11:23:51.306228Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/tinymce/resources/i18n/cmsui_de.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/tinymce/resources/i18n/cmsui.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/tinymce/resources/i18n</path>
+</paths>
+<msg>i18n for tinymce menu entry
+</msg>
+</logentry>
+<logentry
+   revision="587463">
+<author>nettings</author>
+<date>2007-10-23T11:58:57.695307Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/UsecaseView.java</path>
+</paths>
+<msg>cosmetic changes to javadocs
+</msg>
+</logentry>
+<logentry
+   revision="587512">
+<author>andreas</author>
+<date>2007-10-23T14:11:03.671443Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/transaction/MockUser.java</path>
+</paths>
+<msg>Added missing method to MockUser class</msg>
+</logentry>
+<logentry
+   revision="587547">
+<author>andreas</author>
+<date>2007-10-23T16:05:34.012623Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/linking/java/test/org/apache/lenya/cms/cocoon/transformation/ProxyTransformerTest.java</path>
+</paths>
+<msg>Use default publication URL in proxy transformer test to avoid failing of UsecaseAuthorizer for non-existent publication</msg>
+</logentry>
+<logentry
+   revision="587598">
+<author>rfrovarp</author>
+<date>2007-10-23T18:41:44.947441Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/config/cocoon-xconf/usecases-edit-fckeditor.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/neutron/config/cocoon-xconf/usecase-checkin.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe-close.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/config/cocoon-xconf/usecase-tinymce-edit.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-optional/jcrsource/config/cocoon-xconf/usecase-export.xconf</path>
+</paths>
+<msg>view uri=cocoon:// is deprecated, removed cocoon:/ and left the leading /
+</msg>
+</logentry>
+<logentry
+   revision="587601">
+<author>rfrovarp</author>
+<date>2007-10-23T18:47:14.615982Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/usecases.js</path>
+</paths>
+<msg>[minor change] clean up comment to make it hopefully a little more clear
+</msg>
+</logentry>
+<logentry
+   revision="587614">
+<author>rfrovarp</author>
+<date>2007-10-23T19:04:03.702261Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree2/TreeSiteManager.java</path>
+</paths>
+<msg>Comment added to clear up my confusion as to the return results.
+</msg>
+</logentry>
+<logentry
+   revision="587622">
+<author>rfrovarp</author>
+<date>2007-10-23T19:16:24.928197Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/sitetree/config/sitemap/transformer-index.xmap</path>
+<path
+   action="D">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/cocoon/transformation/DocumentIndexTransformer.java</path>
+</paths>
+<msg>dead code
+</msg>
+</logentry>
+<logentry
+   revision="587659">
+<author>rfrovarp</author>
+<date>2007-10-23T21:27:58.178905Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acArchive.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/config/cocoon-xconf/usecase-create-odt.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-optional/jcrsource/config/cocoon-xconf/usecase-import.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/acusecases/config/cocoon-xconf/usecase-ac-login.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-submit.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-delete.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-userProfile.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-create.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-edit-oneform.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-changeNodeID.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/notification/config/cocoon-xconf/usecase-inbox.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-addGroup.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRanges.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-paste.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-serverStatus.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-groupProfile.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-scheduler.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-userGroups.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-user.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-deleteGroup.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-forceCheckIn.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-revisions.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acTrash.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRange.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-addUser.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-siteOverview.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-optional/jcrsource/config/cocoon-xconf/usecase-importExport.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/neutron/config/cocoon-xconf/usecase-checkout.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/config/cocoon-xconf/usecase-upload-resource.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-publish.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/usecasedocument/config/cocoon-xconf/usecase-createUsecaseDocument.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-users.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/export/config/cocoon-xconf/usecase-importExampleContent.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-assets.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-deleteLanguage.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-deactivate.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-createLanguage.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-sessions.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRangeProfile.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-changePassword.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecases-site-create.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-usecases.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/config/cocoon-xconf/usecase-create-resource.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-restore.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-groups.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-changeLabel.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-edit-forms.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-createResource.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecases-workflow-publish.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/notification/config/cocoon-xconf/usecase-sendMessage.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-cut.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/export/config/cocoon-xconf/usecase-import.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecase-workflow-delete.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecase-workflow-multiWorkflow.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/contactform/config/cocoon-xconf/usecase-contactForm.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acLive.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acAuthoring.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/templating/config/cocoon-xconf/usecase-createPulicationFromTemplate.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-reject.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/config/cocoon-xconf/usecase-upload-odt.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-workflow.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/linkcheck/config/cocoon-xconf/usecase-getLinks.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-changePasswordAdmin.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRangeGroups.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecases-workflow-deactivate.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-meta.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-group.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/acusecases/config/cocoon-xconf/usecase-ac-logout.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-addIPRange.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-emptyTrash.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/usecase-opensearch.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-deleteUser.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-aboutLenya.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/usecase-externalOpensearch.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-copy.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-overview.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-groupMembers.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/kupu/config/cocoon-xconf/usecase-kupu.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-deleteIPRange.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/config/cocoon-xconf/usecase-news-edit.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-archive.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/usecase-search.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/config/cocoon-xconf/usecases-webdav-filePropfind.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/config/cocoon-xconf/usecases-webdav-propfind.xconf</path>
+</paths>
+<msg>Switch all &lt;view template=""&gt; to &lt;view uri=""&gt; as template is a subset of uri and we want to encourage the use of uri according to Joern.
+</msg>
+</logentry>
+<logentry
+   revision="587898">
+<author>rfrovarp</author>
+<date>2007-10-24T14:36:34.474223Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/workflow/workflow.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Delete.java</path>
+</paths>
+<msg>Allow for deleting of files directly from archive. Fixes bug 43691.
+</msg>
+</logentry>
+<logentry
+   revision="587902">
+<author>jann</author>
+<date>2007-10-24T14:57:46.915661Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/SslRedirectAction.java</path>
+</paths>
+<msg>If the request scheme is already https do not redirect again. This prevents a redirect loop. If you use mod_proxy than you have to ensure that requests are redirect to https://. Found no better solution for that redirect problem at the moment</msg>
+</logentry>
+<logentry
+   revision="588197">
+<author>andreas</author>
+<date>2007-10-25T10:58:35.017139Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/process.aart</path>
+</paths>
+<msg>Updated shibboleth authentication process diagram</msg>
+</logentry>
+<logentry
+   revision="588198">
+<author>andreas</author>
+<date>2007-10-25T11:01:03.591557Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/process.aart</path>
+</paths>
+<msg>[minor change] improved layout</msg>
+</logentry>
+</log>

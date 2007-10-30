@@ -166,10 +166,13 @@ document.write("Last Published: " + document.lastModified);
 <div onclick="SwitchMenu('menu_1.1.4.5', '../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
 <div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxying.html">Proxying</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/mod_proxy_ajp.html">mod_proxy_ajp</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxy.html">mod_proxy</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/proxy/mod_proxy_ajp.html">mod_proxy_ajp</a>
 </div>
 </div>
 <div class="menuitem">
@@ -726,6 +729,17 @@ document.write("Last Published: " + document.lastModified);
 </li>
 <li>
 <a href="#Converting+Web+Application+Links+to+Servlet+Container+or+Proxy+Links">Converting Web Application Links to Servlet Container or Proxy Links</a>
+<ul class="minitoc">
+<li>
+<a href="#The+Proxy+Transformer">The Proxy Transformer</a>
+</li>
+<li>
+<a href="#The+Proxy+Input+Module">The Proxy Input Module</a>
+</li>
+<li>
+<a href="#Generating+Relative+URLs">Generating Relative URLs</a>
+</li>
+</ul>
 </li>
 <li>
 <a href="#URLs+in+CSS+Files">URLs in CSS Files</a>
@@ -878,42 +892,81 @@ document.write("Last Published: " + document.lastModified);
 <a name="N100D2"></a><a name="Converting+Web+Application+Links+to+Servlet+Container+or+Proxy+Links"></a>
 <h2 class="h3">Converting Web Application Links to Servlet Container or Proxy Links</h2>
 <div class="section">
+<a name="N100D8"></a><a name="The+Proxy+Transformer"></a>
+<h3 class="h4">The Proxy Transformer</h3>
 <p>
-        The <span class="codefrag">ProxyTransformer</span> converts all web application links to final links
-        by adding the servlet context path or the proxy URL. For instance, if you run your
-        Lenya servlet in Tomcat under the context path <em>lenya14</em>, transforming
-      </p>
+          The <span class="codefrag">ProxyTransformer</span> converts all web application links to final links
+          by adding the servlet context path or the proxy URL. For instance, if you run your
+          Lenya servlet in Tomcat under the context path <em>lenya14</em>, transforming
+        </p>
 <pre class="code">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
 <p>
-        with the ProxyTransformer
-      </p>
+          with the ProxyTransformer
+        </p>
 <pre class="code">&lt;map:transform type="proxy"/&gt;</pre>
 <p>
-        will result in
-      </p>
+          will result in
+        </p>
 <pre class="code">&lt;a href="/lenya14/default/authoring/news.html"&gt;News&lt;/a&gt;</pre>
 <p>
-        If you have declared a proxy for the authoring area, the resulting link might look like this:
-      </p>
+          If you have declared a proxy for the authoring area, the resulting link might look like this:
+        </p>
 <pre class="code">&lt;a href="http://cms.mysite.com/news.html"&gt;News&lt;/a&gt;</pre>
 <p>
-        If you have configured the proxy transformer to use relative URLs, the link will be converted to
-        something like this:
-      </p>
+          Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
+        </p>
+<p>
+          The ProxyTransformer can be used to transform attribute values of elements in arbitrary namespaces.
+          For each namespace and element combination, you have to add a <span class="codefrag">&lt;transform/&gt;</span> element
+          to the configuration. The following snippet shows the configuration to convert XHTML links. Beware
+          that the XHTML document format supports various elements and attributes which can contain URLs, so
+          the configuration below won't be sufficient in most cases.
+        </p>
+<pre class="code">&lt;map:transformer name="proxy" logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer"&gt;
+  &lt;transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/&gt;
+  ...
+&lt;/map:transformer&gt;</pre>
+<a name="N1010E"></a><a name="The+Proxy+Input+Module"></a>
+<h3 class="h4">The Proxy Input Module</h3>
+<p>
+          The <span class="codefrag">ProxyModule</span> provides the same functionality in sitemaps.
+          It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
+        </p>
+<pre class="code">&lt;map:parameter name="url" value="{proxy:/default/authoring/news.html}"/&gt;</pre>
+<a name="N1011F"></a><a name="Generating+Relative+URLs"></a>
+<h3 class="h4">Generating Relative URLs</h3>
+<p>
+          In some cases it is convenient to use relative URLs in HTML links. This is especially
+          useful if you want to export the website statically and open it directly from the
+          filesystem or transfer it to a different root path on the web server. In the example
+          above, the relative URL would look like this:
+        </p>
 <pre class="code">&lt;a href="../../news.html"&gt;News&lt;/a&gt;</pre>
 <p>
-        Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
-        For more information on the ProxyTransformer, consult the API documentation.
-      </p>
+          Both proxy transformer and proxy module can be configured to generate relative URLs.
+          For the proxy transformer, the configuration looks like this:
+        </p>
+<pre class="code">&lt;map:transformer name="proxy"
+    logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer"&gt;
+  &lt;urls type="relative"/&gt;
+  ...
+&lt;/map:transformer&gt;</pre>
 <p>
-        The <span class="codefrag">ProxyModule</span> provides the same functionality in sitemaps.
-        It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
-      </p>
-<pre class="code">&lt;map:parameter name="url" value="{proxy:/default/authoring/news.html}"/&gt;</pre>
+          Alternatively, you can pass the URL type as a parameter when calling the transformer:
+        </p>
+<pre class="code">&lt;map:transform type="proxy"&gt;
+  &lt;map:parameter name="urls" value="relative"/&gt;
+&lt;/map:transform&gt;</pre>
+<p>
+          The configuration of the proxy input module is equivalent, but it doesn't provide
+          an option to pass a parameter yet.
+        </p>
 </div>
     
     
-<a name="N1010F"></a><a name="URLs+in+CSS+Files"></a>
+<a name="N1013F"></a><a name="URLs+in+CSS+Files"></a>
 <h2 class="h3">URLs in CSS Files</h2>
 <div class="section">
 <p>
@@ -929,7 +982,7 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">div.news { background: url('../images/news.png') left top no-repeat }</pre>
 <p>
         This operation cannot be performed by our standard XSLT transformer,
-      because a CSS file is not well-formed XML. The <a href="http://chaperon.sourceforge.net">Chaperon</a> transformer is
+        because a CSS file is not well-formed XML. The <a href="http://chaperon.sourceforge.net">Chaperon</a> transformer is
       used instead.
       </p>
 </div>

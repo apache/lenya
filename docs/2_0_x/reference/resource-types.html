@@ -166,10 +166,13 @@ document.write("Last Published: " + document.lastModified);
 <div onclick="SwitchMenu('menu_1.1.4.5', '../../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Proxying</div>
 <div id="menu_1.1.4.5" class="menuitemgroup">
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/proxy.html">mod_proxy</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxying.html">Proxying</a>
 </div>
 <div class="menuitem">
-<a href="../../../docs/2_0_x/tutorials/mod_proxy_ajp.html">mod_proxy_ajp</a>
+<a href="../../../docs/2_0_x/tutorials/proxy/proxy.html">mod_proxy</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/2_0_x/tutorials/proxy/mod_proxy_ajp.html">mod_proxy_ajp</a>
 </div>
 </div>
 <div class="menuitem">
@@ -731,6 +734,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Creating+a+Workflow+Schema">Creating a Workflow Schema</a>
 </li>
 <li>
+<a href="#expiration">Cache Expiration Time</a>
+</li>
+<li>
 <a href="#The+Resource+Type+Definition">The Resource Type Definition</a>
 </li>
 <li>
@@ -919,9 +925,29 @@ document.write("Last Published: " + document.lastModified);
       (see section <em>Adding Resource Types to a Publication</em>).
     </p>
 </div>
+	  
+	  
+<a name="N100C7"></a><a name="expiration"></a>
+<h2 class="h3">Cache Expiration Time</h2>
+<div class="section">
+<p>
+	      For each resource type, you can configure how long the documents shall be cached by
+	      the client, for instance:
+	    </p>
+<pre class="code">&lt;expires seconds="3600" /&gt;</pre>
+<p>
+	      This value can be accessed via the <span class="codefrag">getExpires()</span> methods of the
+	      <span class="codefrag">ResourceType</span> and <span class="codefrag">Document</span> interfaces. You can use the
+	      header action to set the corresponding HTTP response header in your publication:
+	    </p>
+<pre class="code">&lt;map:act type="set-header"&gt;
+  &lt;map:parameter name="Expires"
+    value="{date-iso8601-rfc822:{doc-info:{pubId}:{area}:{uuid}:{language}:expires}}"/&gt;
+&lt;/map:act&gt;</pre>
+</div>
   
   
-<a name="N100C7"></a><a name="The+Resource+Type+Definition"></a>
+<a name="N100E5"></a><a name="The+Resource+Type+Definition"></a>
 <h2 class="h3">The Resource Type Definition</h2>
 <div class="section">
 <p>
@@ -949,6 +975,8 @@ document.write("Last Published: " + document.lastModified);
     
     &lt;format name="xhtml" uri="cocoon://modules/profile/profile.xml"/&gt;
     
+    &lt;expires seconds="3600" /&gt;
+    
   &lt;/component-instance&gt;
 
 &lt;/xconf&gt;</pre>
@@ -960,7 +988,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N100E0"></a><a name="I18n+for+the+Resource+Type+Label"></a>
+<a name="N100FE"></a><a name="I18n+for+the+Resource+Type+Label"></a>
 <h2 class="h3">I18n for the Resource Type Label</h2>
 <div class="section">
 <p>
@@ -974,7 +1002,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N100F1"></a><a name="Define+a+Custom+Menubar"></a>
+<a name="N1010F"></a><a name="Define+a+Custom+Menubar"></a>
 <h2 class="h3">Define a Custom Menubar</h2>
 <div class="section">
 <p>
@@ -997,7 +1025,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N10108"></a><a name="Formats"></a>
+<a name="N10126"></a><a name="Formats"></a>
 <h2 class="h3">Formats</h2>
 <div class="section">
 <p>
@@ -1134,7 +1162,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
   
   
-<a name="N101B1"></a><a name="Presentation"></a>
+<a name="N101CF"></a><a name="Presentation"></a>
 <h2 class="h3">Presentation</h2>
 <div class="section">
 <p>
