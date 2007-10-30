@@ -99,9 +99,9 @@
     </changes>
     <who label="Who we are" href="who.html" description="Explain who is involved"/>
     <screenshots href="screenshots.html" label="Screenshots"/>
-    <node-d href="roadmap.html" label="Roadmap"/>
-    <node-i href="license.html" label="License"/>
-    <node-i href="related-projects.html" label="Related Projects"/>
+    <roadmap href="roadmap.html" label="Roadmap"/>
+    <license href="license.html" label="License"/>
+    <related-projects href="related-projects.html" label="Related Projects"/>
     <history href="history.html" label="History"/>
   </project-information>
   
