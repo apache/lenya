@@ -31,10 +31,10 @@
   <component logger="lenya.proxy"
     role="org.apache.lenya.cms.linking.GlobalProxies"
     class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl">
-    <!--
+<!--
     <proxy ssl="false" url="http://www.example.com/lenya"/>
     <proxy ssl="true" url="https://www.example.com/lenya"/>
-    -->
+-->
   </component>
   
 </xconf>

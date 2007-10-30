@@ -126,12 +126,12 @@
        
        -->
   <proxies>
-    <!--
+<!--
     <proxy area="live" ssl="true" url="https://www.example.com/lenya/customer"/>
-    <proxy area="live" ssl="false" url="http://customer..example.com"/>
+    <proxy area="live" ssl="false" url="http://customer.example.com"/>
     <proxy area="authoring" ssl="true" url="https://www.example.com/lenya/customer"/>
     <proxy area="authoring" ssl="false" url="http://www.example.com/lenya/customer"/>
-    -->
+-->
   </proxies>
   
 </publication>

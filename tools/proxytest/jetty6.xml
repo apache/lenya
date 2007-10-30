@@ -19,8 +19,14 @@
   
   $LENYA_HOME:> cd tools/jetty-6.1.6 
   $LENYA_HOME:> java -Djava.endorsed.dirs="../../externals/cocoon_2_1_x/lib/endorsed/" \
-                     -jar start.jar ../../jetty6+ajp.xml
-
+                     -jar start.jar ../proxytest/jetty6.xml
+  
+  The Lenya webapp is now available at http://localhost:8888/webapp/.
+  There are jetty example webapps and some Leny garbarge in the root context which
+  should be fixable by being more specific under "webapp deployer" below, but it's quite 
+  desirable to have Lenya in a non-root context for testing, to make sure we always use
+  correct paths and don't wrongly assume "/".
+  
 -->
 
 
