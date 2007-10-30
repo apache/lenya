@@ -25,17 +25,17 @@
   </header>
   <body>
     <warning>
-      Apache Lenya 2.0 is still under development and should not be used for production yet.
+      Apache Lenya 2.0 is still under development and should not be used for production
+    yet. A code freeze has been announced, and the release should be
+      imminent.
     </warning>
-    <p>
-      This is the documentation for the 2.0.x releases. The documentation is not as fleshed out as 1.2 yet, so
-      we suggest you also check there for more information while we build up this documentation. 
-    </p>
     <note label="Help wanted!"> Since 2.0 is new and provides many 
       enhancements and new features, please help to document them with us. 
       Send documentation patches and use the Wiki. Thanks in advance :)</note>
     <p>
-      More documentation (work in progress) can be found at the <a href="site:wiki/lenya/">Apache Lenya Wiki</a>.
+      More documentation (work in progress) can be found at the <a href="site:wiki/lenya/">Apache Lenya
+    Wiki</a>. Please treat the Wiki with care for now, as much of the
+      information there is outdated.
     </p>
     
     <section>
