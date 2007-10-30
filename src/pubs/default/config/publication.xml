@@ -104,15 +104,33 @@
   <!-- Lenya can rewrite the links to cater to special proxy setups.
        Make sure to update the GlobalProxies configuration in cocoon.xconf as well.
        For information about these settings, read
-       http://lenya.zones.apache.org/docu/docs/1_4/tutorials/proxy.html
-       FIXME: Update to lenya.apache.org page as soon as the website is updated
+       http://lenya.apache.org/docu/docs/2_0_x/tutorials/proxy.html
+      
+       This example setting simulates the following situation:
+       * A customer wants a company hostname and URLs without Lenya-specific
+         path components.
+       * The server uses name-based virtual hosting with just one IP, i.e.
+         there can only be one SSL vhost, which is shared among several
+         customers. This implies the need for sub-directories in the proxy
+         URL.
+       * "authoring" should be ssl-protected. There is no need for a
+         customer hostname here, since it's not publicly visible.
+       * Any SSL-protected documents in "live" can be handled by the SSL
+         vhost (not using the company hostname is ok in this case).
+         
+       The desired customer hostname is customer.example.com.
+       The SSL vhost is called www.example.com.
+       The Lenya CMS for our customer is reachable as https://www.example.com/lenya/customer/
+       The global proxy for non-publication-specific resources shall be
+       http://www.example.com/lenya.
+       
        -->
   <proxies>
     <!--
-    <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
-    <proxy area="live" ssl="false" url="http://www.host.com/default"/>
-    <proxy area="authoring" ssl="true" url="https://cms.host.com/default"/>
-    <proxy area="authoring" ssl="false" url="http://cms.host.com/default"/>
+    <proxy area="live" ssl="true" url="https://www.example.com/lenya/customer"/>
+    <proxy area="live" ssl="false" url="http://customer..example.com"/>
+    <proxy area="authoring" ssl="true" url="https://www.example.com/lenya/customer"/>
+    <proxy area="authoring" ssl="false" url="http://www.example.com/lenya/customer"/>
     -->
   </proxies>
   
