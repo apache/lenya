@@ -576,6 +576,20 @@
   </community>
   
   <images href="images/">
+    <cmsPositioning.img href="cms-positioning.png"/>
+    <lenyaPageProcessing.img href="lenya-page-processing.png"/>
+    <uriParametrizer.img href="URIParametrizer.png"/>
+    <screenshots href="screenshots/">
+      <screenshotSiteAssets.img href="apache-lenya-site-assets.gif"/>
+      <screenshotSiteMeta.img href="apache-lenya-site-meta.gif"/>
+      <screenshotSiteWorkflow.img href="apache-lenya-site-workflow.gif"/>
+      <screenshotEditorBxe.img href="apache-lenya-editor-bxe.gif"/>
+      <screenshotEditorBxe2.img href="bxet.gif"/>
+      <screenshotEditorKupu.img href="apache-lenya-editor-kupu.gif"/>
+      <screenshotEditorKupu2.img href="kuput.gif"/>
+      <screenshotEditorInsertLink.img href="apache-lenya-editor-insertlink.gif"/>
+      <screenshotMenubar.img href="menubar.png"/>
+    </screenshots>
     <live href="live/">
       <navigation.img href="navigation.png"/>
       <usecase-framework-architecture.img href="usecase-framework-architecture.png"/>

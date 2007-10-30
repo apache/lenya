@@ -154,7 +154,7 @@ in the Cocoon wiki.
 <section><title>The Big Picture (literally)</title>
 
 <p>
-<img src="images/live/lenya-page-processing.png" alt="Lenya page processing"/>
+<img src="site:lenyaPageProcessing.img" alt="Lenya page processing"/>
 </p>
 <p>
 In the left column you see the XML flow within the publication sitemaps,

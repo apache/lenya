@@ -33,7 +33,7 @@
             into Lenya. The editor is quite simple to use, and has an aggressive timeline for
             future improvements. You can see a screenshot of Kupu in action below:</p>
         
-        <p><img src="images/kuput.gif" alt="kupu"/></p>
+        <p><img src="site:screenshotEditorKupu2.img" alt="kupu"/></p>
         
         <p>When you
             <a href="installing_lenya.html">install Lenya</a>, you'll
@@ -123,7 +123,7 @@
             understand for the faculty and staff that were using it. Below is a screenshot of
             BXE at work:</p>
         
-        <p><img alt="bxe" src="images/bxet.gif"/></p>
+        <p><img alt="bxe" src="site:screenshotEditorBxe2.img"/></p>
         
         <p>In version 1.2.4, BXE is already installed and ready to go, so there's no need
             for any added configuration.</p>

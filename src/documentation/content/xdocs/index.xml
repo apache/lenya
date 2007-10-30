@@ -23,7 +23,7 @@
 		<title>Apache Lenya - Open Source Content Management (Java/XML)</title>
 	</header>
 	<body>
-<p><img src="images/menubar.png" alt="Screenshot of the Apache Lenya menu bar"/></p><p>
+<p><img src="site:screenshotMenubar.img" alt="Screenshot of the Apache Lenya menu bar"/></p><p>
 Apache Lenya is an Open Source Java/XML Content Management System and comes with revision control, multi-site management, scheduling, search, WYSIWYG editors, and workflow.
 Please see some <a href="screenshots.html">screenshots</a> or try the <a href="ext:lenya.demo">Demo</a>.</p>
 

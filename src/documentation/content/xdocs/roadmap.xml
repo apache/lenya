@@ -31,7 +31,7 @@ The Lenya roadmap is determined by the Lenya positioning diagram. It specifies t
 and orientation, and shows areas for futher development. The 1.0 release marks the point
 where Lenya was donated to the Apache foundation. Subsequent releases have been under the Apache
 umbrella. Items in bold type mark completed items. <br /><br />
-<img src="images/live/cms-positioning.png" alt=""/><br /><br />
+<img src="site:cmsPositioning.img" alt=""/><br /><br />
 
 The positioning diagram defines 8 areas, with a relative weight of 1-7. The current Lenya code base is
 represented by the dark blue area, while the light blue area indicates focus areas for future versions.
