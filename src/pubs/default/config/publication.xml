@@ -120,17 +120,22 @@
          
        The desired customer hostname is customer.example.com.
        The SSL vhost is called www.example.com.
-       The Lenya CMS for our customer is reachable as https://www.example.com/lenya/customer/
+       The Lenya CMS for our customer is reachable as
+       https://www.example.com/lenya/customer/authoring
        The global proxy for non-publication-specific resources shall be
        http://www.example.com/lenya.
        
        -->
   <proxies>
 <!--
-    <proxy area="live" ssl="true" url="https://www.example.com/lenya/customer"/>
-    <proxy area="live" ssl="false" url="http://customer.example.com"/>
-    <proxy area="authoring" ssl="true" url="https://www.example.com/lenya/customer"/>
-    <proxy area="authoring" ssl="false" url="http://www.example.com/lenya/customer"/>
+    <proxy area="live" ssl="true" 
+      url="https://www.example.com/lenya/customer/live"/>
+    <proxy area="live" ssl="false" 
+      url="http://customer.example.com"/>
+    <proxy area="authoring" ssl="true" 
+      url="https://www.example.com/lenya/customer/authoring"/>
+    <proxy area="authoring" ssl="false"
+      url="http://www.example.com/lenya/customer/authoring"/>
 -->
   </proxies>
   
