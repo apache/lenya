@@ -56,6 +56,9 @@ this view's from-label does not exist.
 
 <!-- =========================== Resources ================================= -->
 
+<!--
+  FIXME: This seems to be unused...
+
   <map:resources>
     <map:resource name="style-cms-page">
       <map:transform type="i18n">      
@@ -66,6 +69,7 @@ this view's from-label does not exist.
       <map:transform type="proxy"/>
     </map:resource>
   </map:resources>
+-->
   
   <map:pipelines>
 
