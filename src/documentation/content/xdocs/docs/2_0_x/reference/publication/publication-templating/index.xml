@@ -127,11 +127,17 @@
       </p>
       <source xml:space="preserve"><![CDATA[<xsl:include href="fallback://header.xsl"/>]]></source>
       <p>
-        To simplify overriding of XSLT stylesheets, it would be useful to import the template
-        stylesheet. For this purpose, an additional template source factory could be used, which
-        skips the current publication when resolving the file:
+        To simplify overriding of XSLT stylesheets, it is very useful to import the template
+        stylesheet. The template-fallback source factory skips the current publication when
+        resolving the file, i.e. it resolves the first existing ancestor file:
       </p>
-      <source xml:space="preserve"><![CDATA[<xsl:import href="template://template/xslt/common/header.xsl"/>]]></source>
+      <source xml:space="preserve"><![CDATA[<xsl:import href="template-fallback:mypub://template/xslt/common/header.xsl"/>]]></source>
+      <p>
+        It is necessary to pass the ID of the publication which contains the importing file
+        after the protocol string because otherwise the template-fallback resolving mechanism
+        will fail. For more information, see
+        <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=40564">bug 40564</a>. 
+      </p>
     </section>
     
     <section>
