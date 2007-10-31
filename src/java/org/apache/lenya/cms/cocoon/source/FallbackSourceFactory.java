@@ -20,6 +20,7 @@ package org.apache.lenya.cms.cocoon.source;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
@@ -44,7 +45,13 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
 
 /**
+ * <p>
  * Source factory following the fallback principle.
+ * </p>
+ * <p>
+ * The ID of the current publication can be passed in the URL (<code>fallback:pub://path</code),
+ * this is necessary as a workaround for bug 40564.
+ * </p>
  * 
  * @version $Id$
  */
@@ -73,16 +80,23 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         }
         
         String path = location.substring(pos + 3);
+        
         String publicationId = null;
         
-        //allow for template-fallback://{pubid}//{path} for the sake of the
-        //cocoon use-store
-        if (path.indexOf("//") > 1) {
-            pos = path.indexOf("//");
-            publicationId = path.substring(0, pos);
-            path = path.substring(pos + 2, path.length());
+        // extract publication ID
+        String prefix = location.substring(0, pos);
+        StringTokenizer tokens = new StringTokenizer(prefix, ":");
+        if (tokens.countTokens() > 1) {
+            tokens.nextToken();
+            publicationId = tokens.nextToken();
         }
-
+        
+        // remove query string
+        int questionMarkIndex = path.indexOf("?");
+        if (questionMarkIndex > -1) {
+            path = path.substring(0, questionMarkIndex);
+        }
+        
         if (path.length() == 0) {
             throw new RuntimeException("The path after the protocol must not be empty!");
         }
@@ -100,7 +114,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
             templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
 
-            
             Request request = ContextHelper.getRequest(this.context);
             
             if (publicationId == null) {
