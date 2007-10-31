@@ -22,17 +22,11 @@ import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
 
 /**
  * Source factory following the fallback principle, resolving the existing ancestor of the existing resource.
+ * For more information about the URL syntax, see {@link FallbackSourceFactory}.
  * 
  * @version $Id: FallbackSourceFactory.java 264153 2005-08-29 15:11:14Z andreas $
  */
 public class TemplateFallbackSourceFactory extends FallbackSourceFactory {
-
-    /**
-     * Ctor.
-     */
-    public TemplateFallbackSourceFactory() {
-        super();
-    }
 
     protected VisitingSourceResolver getSourceVisitor() {
         return new ExistingAncestorSourceResolver();
