@@ -38,14 +38,24 @@
    <xsl:param name="select" />
 
    <!-- CSS Stylesheet -->
-   <xsl:param name="css-stylesheet" select="'xmlverbatim.css'" />
+   <xsl:param name="css-stylesheet" select="profiling.ERROR" />
 
    <!-- root -->
    <xsl:template match="/">
       <xsl:apply-templates select="/" mode="xmlverbwrapper" />
    </xsl:template>
 
+
+
    <xsl:template match="/" mode="xmlverbwrapper">
+     <!--
+       check sitemap parameters.
+     -->
+     <xsl:if test="$css-stylesheet='profiling.ERROR'">
+       <xsl:message terminate="yes">
+         Missing css-stylesheet parameter! Check your profiling sitemap.
+       </xsl:message>
+     </xsl:if>
       <html>
          <head>
             <title>XML source view</title>
