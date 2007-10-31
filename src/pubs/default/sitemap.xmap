@@ -21,7 +21,9 @@
 
 <!-- ============ cruft removal project: ================
 
-   lenyabody-**  and navigation-element-** are only used internally in this sitemap and can be refactored without side effects.
+   lenyabody-**  is only used internally in this sitemap and could be refactored without side effects.
+   currently we use lenyabody-raw-[edit|view], lenyabody-[edit|view], and now also document-content.
+   i'm sure this can be simplified.
 
 -->
 
@@ -486,7 +488,7 @@ this view's from-label does not exist.
         <map:serialize type="xhtml" status-code="404"/>
 
       </map:match>
-      
+
     </map:pipeline>
 
 
