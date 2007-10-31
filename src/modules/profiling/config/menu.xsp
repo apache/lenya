@@ -18,15 +18,18 @@
          <menu i18n:attr="name" name="Development">
             <block>
                <!-- 
-                    This is a semi-nasty kind of hack. The goal is to open 
+                    This is a nasty kind of hack. The goal is to open 
                     the profiler output in a separate window with Javascript.
                     The UsecaseMenuTransformer will only accept a href="" 
-                    attribute, i.e. we can't use onclick="" here. 
-                    to make sure the window always pops up in front,
+                    attribute, i.e. we can't use onclick="" or target="" here. 
+                    To make sure the window always pops up in front,
                     we focus() it.
                     At the same time, we want the original window to remain 
                     unchanged, so we use the "void" operator to suppress the
                     return value of the whole expression. 
+                    Unfortunately, we need to take care of the webapp context
+                    prefix manually, because Lenya's ProxyTransformer can't 
+                    reach into this javascript: link.
                 -->
                <item>
                  <xsp:attribute> 
