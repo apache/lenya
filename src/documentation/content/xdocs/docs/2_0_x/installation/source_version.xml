@@ -325,8 +325,8 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
           <li><code>jakarta-bcel-20040329.jar</code></li>
           <li><code>jakarta-regexp-1.5.jar</code></li>
           <li><code>xalan-2.7.0.jar</code></li>
-          <li><code>xercesImpl-2.6.2.jar</code></li>
-          <li><code>xml-apis.jar</code></li>
+          <li><code>xercesImpl-2.9.0.jar</code></li>
+          <li><code>xml-apis-1.3.04.jar</code></li>
         </ul>
     
         <p>
