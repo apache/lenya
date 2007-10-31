@@ -132,7 +132,7 @@
       <!-- {1:rendertype}/{2:pub}/{3:area}/{4:path} -->
       <map:match pattern="document-content/*/*/*/**">
         <map:act type="language-exists">
-          <map:generate src="{resource-type:format-xhtml}?rendertype={1}"/>
+          <map:generate src="{resource-type:format-xhtml}?rendertype={../1}"/>
           <map:serialize type="xml"/>
         </map:act>
         <map:generate type="serverpages" src="fallback://lenya/content/exception/document-does-not-exist.xsp"/>
