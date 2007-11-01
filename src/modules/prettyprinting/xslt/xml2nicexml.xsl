@@ -7,7 +7,9 @@
 -->
 
 <xsl:stylesheet version="1.0"
-      xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
 <xsl:output method="xml"/>
 
 <xsl:param name="indent-increment" select="'  '" />
@@ -79,6 +81,13 @@
 -->
   <xsl:template match="text()">
     <xsl:value-of select="normalize-space(.)"/>
+  </xsl:template>
+
+<!--
+  leave the contents of the xhtml pre tag alone to preserve intended formatting
+-->
+  <xsl:template match="xhtml:pre/node()">
+    <xsl:copy-of select="."/>
   </xsl:template>
 
 </xsl:stylesheet>
