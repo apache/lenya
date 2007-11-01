@@ -35,8 +35,12 @@
                  <xsp:attribute> 
                    <xsp:param name="name">href</xsp:param>
                    <xsp:expr>"javascript:void window.open('"
-                    + <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> 
-                    + "/modules/profiling/profile.html',"
+                    + <input:get-attribute 
+                         module="proxy" 
+                         as="string" 
+                         name="/modules/profiling/profile.html"
+                      /> 
+                    + "',"
                     + "'Cocoon Profiler',"
                     + "'location=yes,scrollbars=yes,menubar=no,"
                     + "toolbar=no,status=yes,top=100,left=100,"
