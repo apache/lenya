@@ -50,7 +50,7 @@ public class ForceCheckIn extends DocumentUsecase {
         
         Node node = doc.getRepositoryNode();
         if (!node.isCheckedOut()) {
-            String[] params = { DublinCoreHelper.getTitle(doc) };
+            String[] params = { DublinCoreHelper.getTitle(doc, true) };
             addErrorMessage("not-checked-out", params);
         }
     }

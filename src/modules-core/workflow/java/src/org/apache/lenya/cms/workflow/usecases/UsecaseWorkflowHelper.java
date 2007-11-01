@@ -46,7 +46,7 @@ public class UsecaseWorkflowHelper {
      */
     protected static final void addWorkflowError(AbstractUsecase usecase, String event, Document doc) {
         try {
-            String title = DublinCoreHelper.getTitle(doc);
+            String title = DublinCoreHelper.getTitle(doc, true);
             if (title == null) {
                 title = "";
             }

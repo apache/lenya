@@ -221,7 +221,7 @@ public class Publish extends InvokeWorkflow {
                      * doc.getPath() + " (" + doc.getLanguage() + ")" };
                      */
                     String[] params = { doc.getPath() + ":" + doc.getLanguage(),
-                            DublinCoreHelper.getTitle(doc) };
+                            DublinCoreHelper.getTitle(doc, true) };
                     addErrorMessage("missing-document", params);
                 }
             }
