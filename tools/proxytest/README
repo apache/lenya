@@ -1,6 +1,13 @@
 If you want to play with Lenya in Jetty 6.1.6, please take a look at jetty6.xml
 and follow the instructions in the comment header.
 
+Running Jetty 6.1.6 is orthogonal to proxy testing; the server configuration
+includes both ajp://localhost:8009 and http://localhost:8888, so you can
+just drop it in, replacing the old version, without bothering about the
+proxy stuff. Please follow up on bug
+http://issues.apache.org/bugzilla/show_bug.cgi?id=43729 with success and
+problem reports.
+
 
 *.*
 
@@ -41,5 +48,26 @@ installed. Then apply the following tweaks:
    http://www.example.com/lenya/default/authoring/ and 
    http://customer.example.com.
 
-It doesn't quite work as it should, but you get the idea.
+It doesn't quite work as it should (redirects from the Lenya servlet are
+wrong), but you get the idea.
+
+The proxy example setting simulates the following situation:
+* A customer wants a company hostname and URLs without Lenya-specific
+  path components for the live site.
+* The server uses name-based virtual hosting with just one IP, i.e.
+  there can only be one SSL vhost, which is shared among several
+  customers. This implies the need for sub-directories in the proxy
+  URL.
+* "authoring" should be ssl-protected. There is no need for a
+  customer hostname here, since it's not publicly visible.
+* Any SSL-protected documents in "live" can be handled by the SSL
+  vhost (not using the company hostname is ok in this case).
+
+The desired customer hostname is customer.example.com.
+The SSL vhost is called www.example.com.
+The Lenya CMS for our customer is reachable as
+https://www.example.com/lenya/customer/authoring
+The global proxy for non-publication-specific resources shall be
+http://www.example.com/lenya.
+
 
