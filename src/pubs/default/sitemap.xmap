@@ -338,71 +338,71 @@
               </map:otherwise>
             </map:select>
 
-                <!-- Menu generation -->
-                <map:select type="parameter">
-                  <!-- you remember that {1} is the area, right? -->
-                  <map:parameter name="parameter-selector-test" value="{1}"/>
-                  <map:when test="live">
-                    <!-- do nothing for live -->
-                  </map:when>
-                  <map:otherwise>
-                    <!-- for all other areas, we want a GUI menu (handled by global-sitemap.xmap -->
-                    <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/{2}.xml"/>
-                    <!-- 
-                       external broken link reporting (pretty much untested) 
-                       TODO: External Links checking should be optional on a document by document basis.
-                    -->
-                    <!--
-                    <map:transform src="fallback://lenya/xslt/authoring/addJavaScript.xsl">
-                      <map:parameter name="scriptSRC" value="/modules/linkcheck/linkreporter.js"/>
-                    </map:transform>
-                    -->
-                  </map:otherwise>
-                </map:select>
-
+            <!-- Menu generation -->
+            <map:select type="parameter">
+              <!-- you remember that {1} is the area, right? -->
+              <map:parameter name="parameter-selector-test" value="{1}"/>
+              <map:when test="live">
+                <!-- do nothing for live -->
+              </map:when>
+              <map:otherwise>
+                <!-- for all other areas, we want a GUI menu (handled by global-sitemap.xmap -->
+                <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/{2}.xml"/>
                 <!-- 
-                   strip xhtml namespace prefix to ensure compatibility with non-XML conformant browsers
-                   workaround to avoid empty script, style and textarea tags (firefox chokes on those)
+                    external broken link reporting (pretty much untested) 
+                    TODO: External Links checking should be optional on a document by document basis.
                 -->
-                <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+                <!--
+                <map:transform src="fallback://lenya/xslt/authoring/addJavaScript.xsl">
+                  <map:parameter name="scriptSRC" value="/modules/linkcheck/linkreporter.js"/>
+                </map:transform>
+                -->
+              </map:otherwise>
+            </map:select>
 
-                <!-- Cache writing -->
-                <map:select type="parameter">
-                  <map:parameter name="parameter-selector-test" value="{1}"/>
-                  <!-- for live area: -->
-                  <map:when test="live">
-                    <!-- prepare content for source writing transformer -->
-                    <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
-                      <map:parameter name="source" value="context:/lenya/pubs/{page-envelope:publication-id}/{global:cache-dir}/{1}/{2}.html"/>
-                    </map:transform>
-                    <map:transform type="write-source">
-                      <map:parameter name="serializer" value="xhtml"/>
-                    </map:transform>
-                    <!-- remove the source writing transformer cruft again before serving the page -->
-                    <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
-                    <!-- set cache expiration header according to resource type configuration (<expires/>) -->
-                    <map:act type="set-header">
-                      <map:parameter name="Expires" value="{date-iso8601-rfc822:{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}}"/>
-                    </map:act>
-                  </map:when>
-                  <!-- for other areas -->
-                  <map:otherwise>
-                    <!-- tell the browser not to cache stuff so that the user always sees up-to-date content -->
-                    <map:act type="set-header">
-                      <map:parameter name="Cache-Control" value="no-cache" />
-                      <map:parameter name="Pragma" value="no-cache"/>
-                    </map:act>
-                  </map:otherwise> 
-                </map:select>
+            <!-- 
+                strip xhtml namespace prefix to ensure compatibility with non-XML conformant browsers
+                workaround to avoid empty script, style and textarea tags (firefox chokes on those)
+            -->
+            <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
 
-                <!-- pretty-print output for easier debugging and for the benefit of new users 
-                     NOTE: you may want to disable this in production for performance reasons,
-                     but it's on by default in the default publication to make the generated code 
-                     easier to work with for new users. -->
-                <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
+            <!-- Cache writing -->
+            <map:select type="parameter">
+              <map:parameter name="parameter-selector-test" value="{1}"/>
+              <!-- for live area: -->
+              <map:when test="live">
+                <!-- prepare content for source writing transformer -->
+                <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
+                  <map:parameter name="source" value="context:/lenya/pubs/{page-envelope:publication-id}/{global:cache-dir}/{1}/{2}.html"/>
+                </map:transform>
+                <map:transform type="write-source">
+                  <map:parameter name="serializer" value="xhtml"/>
+                </map:transform>
+                <!-- remove the source writing transformer cruft again before serving the page -->
+                <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
+                <!-- set cache expiration header according to resource type configuration (<expires/>) -->
+                <map:act type="set-header">
+                  <map:parameter name="Expires" value="{date-iso8601-rfc822:{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}}"/>
+                </map:act>
+              </map:when>
+              <!-- for other areas -->
+              <map:otherwise>
+                <!-- tell the browser not to cache stuff so that the user always sees up-to-date content -->
+                <map:act type="set-header">
+                  <map:parameter name="Cache-Control" value="no-cache" />
+                  <map:parameter name="Pragma" value="no-cache"/>
+                </map:act>
+              </map:otherwise> 
+            </map:select>
 
-                <!-- the proxy transformer handles proxy-related URL rewriting -->
-                <map:transform type="proxy"/>
+            <!-- pretty-print output for easier debugging and for the benefit of new users 
+                  NOTE: you may want to disable this in production for performance reasons,
+                  but it's on by default in the default publication to make the generated code 
+                  easier to work with for new users. -->
+            <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
+
+            <!-- the proxy transformer handles proxy-related URL rewriting -->
+            <map:transform type="proxy"/>
 
             <map:act type="language-exists">
               <map:serialize type="xhtml"/>
