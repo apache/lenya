@@ -93,8 +93,8 @@
       </map:match>
     </map:pipeline>
 
-    <!-- FIXME: this is currently unused. -->
-<!--
+    <!-- FIXME: this should go into a cforms support module -->
+
     <map:pipeline>
       <map:match pattern="cforms/ajax/**">
         <map:read src="resource://org/apache/cocoon/ajax/resources/{1}"/>
@@ -110,7 +110,7 @@
         <map:read src="resource://org/apache/cocoon/forms/resources/{1}"/>
       </map:match>
     </map:pipeline>
--->
+
 
     <map:pipeline>
       <!-- serve "lenya/" resources (GUI and utilities) -->
