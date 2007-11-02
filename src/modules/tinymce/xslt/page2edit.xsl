@@ -12,10 +12,10 @@
   textarea into the div#body tag.
 -->
 
-<xsl:param name="contextPath" select="'tinymce.ERROR'"/>
+<xsl:param name="proxyPath" select="'tinymce.ERROR'"/>
 <xsl:param name="continuationId" select="'tinymce.ERROR'"/>
 <xsl:param name="usecaseName" select="'tinymce.ERROR'"/>
-<xsl:param name="publicationid" />
+<xsl:param name="publicationId" select="'tinymce.ERROR'" />
 <xsl:param name="locale" select="'tinymce.ERROR'"/>
 
 
@@ -24,9 +24,9 @@
   the <tinymceWrapper/> is the document element set by the aggregator.
 -->
 <xsl:template match="tinymceWrapper">
-  <xsl:if test="$contextPath='tinymce.ERROR'">
+  <xsl:if test="$proxyPath='tinymce.ERROR'">
     <xsl:message terminate="yes">
-      <i18n:text>Missing contextPath parameter!</i18n:text>
+      <i18n:text>Missing proxyPath parameter!</i18n:text>
       <i18n:text>Check your tinymce sitemap.</i18n:text>
     </xsl:message>
   </xsl:if>
@@ -39,6 +39,12 @@
   <xsl:if test="$usecaseName='tinymce.ERROR'">
     <xsl:message terminate="yes">
       <i18n:text>Missing usecaseName parameter!</i18n:text>
+      <i18n:text>Check your tinymce sitemap.</i18n:text>
+    </xsl:message>
+  </xsl:if>
+  <xsl:if test="$publicationId='tinymce.ERROR'">
+    <xsl:message terminate="yes">
+      <i18n:text>Missing publicationId parameter!</i18n:text>
       <i18n:text>Check your tinymce sitemap.</i18n:text>
     </xsl:message>
   </xsl:if>
@@ -74,7 +80,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="/{$publicationid}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"
+          src="{$proxyPath}/{$publicationId}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -86,7 +92,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="/{$publicationid}/modules/tinymce/javascript/tiny_config.js"
+          src="{$proxyPath}/{$publicationId}/modules/tinymce/javascript/tiny_config.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -95,13 +101,13 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="/{$publicationid}/modules/tinymce/javascript/tiny_valid_elements.js"
+          src="{$proxyPath}/{$publicationId}/modules/tinymce/javascript/tiny_valid_elements.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="/{$publicationid}/modules/editors/javascript/org.apache.lenya.editors.js"
+          src="{$proxyPath}/{$publicationId}/modules/editors/javascript/org.apache.lenya.editors.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -111,13 +117,13 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="/{$publicationid}/modules/editors/javascript/disablebackspace.js"
+          src="{$proxyPath}/{$publicationId}/modules/editors/javascript/disablebackspace.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="/{$publicationid}/modules/tinymce/javascript/tiny_lenya_glue.js"
+          src="{$proxyPath}/{$publicationId}/modules/tinymce/javascript/tiny_lenya_glue.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -145,7 +151,7 @@
        to the Lenya authoring GUI) to TinyMCE for true WYSIWYG editing */
 
     config['content_css'] = "</xsl:text>
-    <xsl:value-of select="$contextPath"/>
+    <xsl:value-of select="$proxyPath"/>
     <xsl:text>/modules/tinymce/css/editor_content.css</xsl:text>
     <xsl:for-each select="../xhtml:link[@rel='stylesheet' and not(contains(@href, '/lenya/css/'))]">
         <xsl:text>,</xsl:text>

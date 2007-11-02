@@ -21,19 +21,6 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:resources>
-    <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
-        <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-      </map:transform>
-      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:transform type="proxy"/>
-    </map:resource>
-  </map:resources>
-
   <map:pipelines>
 
     <map:pipeline internal-only="yes">
@@ -78,19 +65,22 @@
             <map:select type="resource-exists">
               <map:when test="fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/langs/{request:locale}.js">
                 <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
-                  <map:parameter name="contextPath" value=""/>
+                  <!-- the proxy path is set manually, since the document has already been
+                       though the proxy transformer in the publication sitemap, and we can't
+                       use it again, as that would yield duplicate proxy paths. -->
+                  <map:parameter name="proxyPath" value="{proxy:}"/>
                   <map:parameter name="continuationId" value="{flow-continuation:id}"/>
                   <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
-                  <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+                  <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
                   <map:parameter name="locale" value="{request:locale}"/>
                 </map:transform>
               </map:when>
               <map:otherwise>
                 <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
-                  <map:parameter name="contextPath" value=""/>
+                  <map:parameter name="proxyPath" value="{proxy:}"/>
                   <map:parameter name="continuationId" value="{flow-continuation:id}"/>
                   <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
-                  <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+                  <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
                   <map:parameter name="locale" value="en"/>
                 </map:transform>
               </map:otherwise>
@@ -101,7 +91,7 @@
             <map:generate src="fallback://lenya/modules/tinymce/resources/misc/download.xml"/>
           </map:otherwise>
         </map:select>
-        <map:call resource="style-cms-page"/>
+
         <map:serialize type="xhtml"/>
       </map:match>
 
