@@ -20,16 +20,8 @@
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-<!-- =========================== Resources ================================= -->
-
-  <!--+
-      | Resources are pipeline fragments that may be used from different
-      | pipeline fragments. For our needs, they behave exactly like
-      | pipelines, only that they are not accessible from outside.
-      | Hence I will explain what's inside below for pipelines.
-      +-->
-
   <map:resources>
+
     <map:resource name="style-cms-page">
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
@@ -39,11 +31,14 @@
       <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
       <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
     </map:resource>  
+
     <map:resource name="i18n">
       <map:transform type="i18n">
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>
     </map:resource>
+
+    <!-- do proxy transformation on css files for url('') links -->
     <map:resource name="proxy-css">
       <map:act type="resource-exists"
         src="{url}.xml">
@@ -56,6 +51,11 @@
       <map:generate type="text" src="{url}.css"/>
       <map:call resource="prepare-proxy-css"/>
     </map:resource>
+
+    <!-- 
+      chaperon magic: parse css files, convert url('') links into xml snippets, feed them
+      to the standard proxy transformer, then convert the intermediate xml back to valid css.
+    -->
     <map:resource name="prepare-proxy-css">
       <map:transform type="pattern"
         src="fallback://lenya/chaperon/grammars/link.xlex"/>
@@ -66,56 +66,24 @@
         src="fallback://lenya/chaperon/stylesheets/a-to-txt.xsl"/>
       <map:serialize type="text" mime-type="text/css"/>
     </map:resource>
- </map:resources>
 
-<!-- =========================== Pipelines ================================= -->
+  </map:resources>
 
- <!--+
-     | Pipelines. The beef. Pipelines specify how the processing of your
-     | content is done. Usually, a pipeline consists of several fragments
-     | that specify the generation, transformation, and serialization of
-     | SAX events.
-     |
-     | Processing is done in two steps:
-     |
-     | 1) The top level elements are executed in order of appearance until
-     |    one signals success. These top level elements are usually
-     |    matchers.
-     |
-     |    Other components are called depth-first to determine what
-     |    fragments make up the processing pipeline. When a component
-     |    fails, no nested components are called but the next component on
-     |    the same level.
-     |
-     | 2) Once it is determined which generator, which transformers and
-     |    wich serializer is used, these components are executed. During
-     |    this, the pipeline may not be changed.
-     |
-     | You may have as many pipelines in your sitemap as you like.
-     +-->
-<map:pipelines>
 
-  <map:component-configurations>
-    <global-variables>
-       <!--+
-           | Define global parameters here:
-           |   <skin>my_skin</skin>
-           |   ...
-           | You can access them by {global:*name*}, e.g. {global:skin}.
-           | These values are inherited into sub-sitemaps and can
-           | be extended there.
-           +-->
-      
-      <!-- pipeline expiration, see http://httpd.apache.org/docs/2.0/mod/mod_expires.html for syntax documentation -->
-      <pipeline-expiration>now</pipeline-expiration>
-      <!--
-        <pipeline-expiration>access plus 2 hours</pipeline-expiration>
-      -->
-    </global-variables>
-  </map:component-configurations>
 
-<!-- =========================== Pipelines ================================= -->
-
+  <map:pipelines>
+  
+    <map:component-configurations>
+      <global-variables>
+        <!-- 
+          pipeline expiration time (governs the setting of "expires" headers for browser-side
+          caching), see http://cocoon.apache.org/2.1/userdocs/concepts/caching.html
+        -->
+        <pipeline-expiration>now</pipeline-expiration>
+      </global-variables>
+    </map:component-configurations>
+  
+    <!-- create a list of publications for the global welcome page: -->  
     <map:pipeline>
       <map:match pattern="aggregate-publications">
         <map:generate type="directory" src="lenya/pubs"/>
@@ -125,129 +93,79 @@
       </map:match>
     </map:pipeline>
 
-    <!-- ajax -->
+    <!-- FIXME: this is currently unused. -->
+<!--
     <map:pipeline>
       <map:match pattern="cforms/ajax/**">
         <map:read src="resource://org/apache/cocoon/ajax/resources/{1}"/>
       </map:match>
     </map:pipeline>   
-    
-    <!-- dojo -->
     <map:pipeline>
       <map:match pattern="cforms/dojo/**">
         <map:read src="resource://org/apache/cocoon/dojo/resources/{1}"/>
       </map:match>
     </map:pipeline> 
-
-    <!-- cforms -->
     <map:pipeline>
       <map:match pattern="cforms/forms/**">
         <map:read src="resource://org/apache/cocoon/forms/resources/{1}"/>
       </map:match>
     </map:pipeline>
+-->
 
     <map:pipeline>
-      <!-- Lenya GUI -->
+      <!-- serve "lenya/" resources (GUI and utilities) -->
       <map:match pattern="lenya/**">
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
       </map:match>
-      
+    </map:pipeline>
 
-      <!-- Lenya page transformation for adding a Lenya menu -->
+    <!-- Menu generation: -->
+    <map:pipeline internal-only="true">
+
+      <!-- Generate a meta-stylesheet that adds the Lenya GUI menu to pages -->
       <!-- lenya-page/{publication-id}/{area}/... -->
       <map:match pattern="lenya-page/*/*/**">
-        
         <!-- no menu for revisions -->
         <map:match type="request-parameter" pattern="lenya.revision">
           <map:generate src="lenya/xslt/util/identity.xsl"/>
           <map:serialize type="xml"/>
         </map:match>
-        
+        <!-- for everything else: --> 
         <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
           <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
           <map:part src="cocoon:/menu-xml/modules/{1}/{2}.xml" strip-root="true"/>
         </map:aggregate>
-
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
-        
         <map:transform src="lenya/xslt/menu/filter-menu.xsl">
           <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
         </map:transform>
-        
         <!-- Disable menu items according to usecase policies -->
         <map:transform type="usecasemenu"/>
-
-<!--
-   XUL is untested and unsupported.
-
-        <map:select type="request-parameter">
-          <map:parameter name="parameter-name" value="uiml"/>
-          <map:when test="xul">
-            <map:transform src="fallback://lenya/xslt/menu/menu2xul.xsl">
-              <map:parameter name="publicationid" value="{1}"/>
-              <map:parameter name="area" value="{2}"/>
-              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-              <map:parameter name="documentid" value="{page-envelope:document-uuid}"/>
-              <map:parameter name="userid" value="{access-control:user-id}"/>
-              <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
-              <map:parameter name="workflowstate" value="{workflow:state}"/>
-              <map:parameter name="islive" value="{workflow:variable.is_live}"/>
-              <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
-              <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
-              <map:parameter name="newMessages" value="{inbox:newMessageCount}"/>
-            </map:transform>
-          </map:when>
-          <map:otherwise>
--->
-            <map:transform src="fallback://lenya/xslt/menu/menubar2xhtml.xsl">
-              <map:parameter name="publicationid" value="{1}"/>
-              <map:parameter name="area" value="{2}"/>
-              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-              <map:parameter name="documentid" value="{page-envelope:document-uuid}"/>
-              <map:parameter name="userid" value="{access-control:user-id}"/>
-              <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
-              <map:parameter name="workflowstate" value="{workflow:state}"/>
-              <map:parameter name="islive" value="{workflow:variable.is_live}"/>
-              <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
-              <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
-              <map:parameter name="newMessages" value="{inbox:newMessageCount}"/>
-            </map:transform>
-<!--
-          </map:otherwise>
-        </map:select>
--->
+        <map:transform src="fallback://lenya/xslt/menu/menubar2xhtml.xsl">
+          <map:parameter name="publicationid" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+          <map:parameter name="documentid" value="{page-envelope:document-uuid}"/>
+          <map:parameter name="userid" value="{access-control:user-id}"/>
+          <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
+          <map:parameter name="workflowstate" value="{workflow:state}"/>
+          <map:parameter name="islive" value="{workflow:variable.is_live}"/>
+          <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
+          <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
+          <map:parameter name="newMessages" value="{inbox:newMessageCount}"/>
+        </map:transform>
         <map:call resource="i18n"/>
-        
         <!-- Generate the meta-stylesheet -->
-<!--
-  XUL is untested and unsupported
-        <map:select type="request-parameter">
-          <map:parameter name="parameter-name" value="uiml"/>
-          <map:when test="xul">
-            <map:transform src="fallback://lenya/xslt/menu/menu2xsltwithxul.xsl">
-              <map:parameter name="publicationid" value="{1}"/>
-              <map:parameter name="area" value="{2}"/>
-              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-            </map:transform>
-          </map:when>
-          <map:otherwise>
--->
-            <map:transform src="fallback://lenya/xslt/menu/menu2xslt.xsl">
-              <map:parameter name="publicationid" value="{1}"/>
-              <map:parameter name="area" value="{2}"/>
-              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-            </map:transform>
-<!-- 
-          </map:otherwise>
-        </map:select>
--->
+        <map:transform src="fallback://lenya/xslt/menu/menu2xslt.xsl">
+          <map:parameter name="publicationid" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
-      
-    </map:pipeline>
-      <!-- menus -->
-    <map:pipeline>  
-      <!-- menu-xml/modules -->
+
+
+      <!-- collect the menu items for all modules used in the publication -->
       <!-- menu-xml/modules/{pub-id}/{area}.xml -->
       <map:match pattern="menu-xml/modules/*/*.xml">
         <map:generate src="aggregate-fallback://config/publication.xml"/>
@@ -257,9 +175,8 @@
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
-    </map:pipeline>
-
-    <map:pipeline>
+  
+      <!-- query menu items from modules (used by the xinclude above) -->
       <!-- menu-xml/module/{area}/{module-id}.xml -->
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
@@ -272,28 +189,40 @@
           </map:otherwise>
         </map:select>
       </map:match>
-      
+
+      <!-- global admin menu items -->
+      <!-- FIXME: this is actually independent from the publication-id! -->
       <!-- menu-xml/{publication-id}/admin/... -->
       <map:match pattern="menu-xml/*/admin/**" internal-only="true">
         <map:generate type="serverpages" src="lenya/content/menus/admin.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
-      
+
+      <!-- include publication-specific menus -->
       <!-- menu-xml/{publication-id}/... -->
       <map:match pattern="menu-xml/*/**" internal-only="true">
         <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
       </map:match>
-      
+
+      <!-- FIXME: this is currently unused -->
       <!-- Access Control Policies -->
+<!--
       <map:match pattern="*/policies/**">
         <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
       </map:match>
-      
+-->
     </map:pipeline>
 
+
     <!-- Module requests -->
-   
-    <!-- preliminary handler for internal module requests to avoid the resource-exists check -->
+    
+    <!-- an extra handler for internal module requests to avoid the resource-exists check 
+         in the external requests matcher
+         FIXME: is the overhead reduction worth the extra complication?
+         FIXME: doesn't this mean that internal requests aren't served statically (see below) and
+         resources might not even be available to internal requests if the module sitemap doesn't
+         handle them?
+    -->
     <map:pipeline internal-only="true">
       <map:match pattern="modules/*/**">
         <map:mount uri-prefix="modules/{1}/" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
@@ -302,62 +231,67 @@
         <map:mount uri-prefix="{1}/modules/{2}/" src="fallback://lenya/modules/{2}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
-    
+
+
     <map:pipeline>
-      
+
       <map:match pattern="modules/*/**">
-        
         <map:select type="resource-exists">
           <!-- resource exists - serve statically -->
           <map:when test="fallback://lenya/modules/{1}/resources/{2}">
             <map:mount uri-prefix="modules/" src="fallback://lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
         </map:select>
-        
-        <!-- resource doesn't exist or not handled by lenya/module-resources.xmap - delegate to module -->
+        <!-- resource doesn't exist or not handled by lenya/module-resources.xmap 
+             - delegate to module -->
         <map:mount uri-prefix="modules/{1}/" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-        
       </map:match>
-      
+
       <!-- Publication specific Module requests -->
+      <!-- NOTE: the use of publication-specific modules is discouraged, since all modules are actually in one global scope.. -->
       <!-- {publication-id}/modules/{module-id}/... -->
       <map:match pattern="*/modules/*/**">
-        
         <map:select type="resource-exists">
           <!-- resource exists - serve statically -->
           <map:when test="fallback://lenya/modules/{2}/resources/{3}">
             <map:mount uri-prefix="{1}/modules/" src="fallback://lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
         </map:select>
-        
-        <!-- resource doesn't exist or not handled by lenya/module-resources.xmap - delegate to module -->
+        <!-- resource doesn't exist or not handled by lenya/module-resources.xmap 
+             - delegate to module -->
         <map:mount uri-prefix="{1}/modules/{2}/" src="fallback://lenya/modules/{2}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-        
-      </map:match>      
+      </map:match>
+
     </map:pipeline>
-    
-   <!-- Internal usecases -->
+
+    <!-- Internal usecases -->
+    <!-- 
+       FIXME: this apparently delegates arbitrary internal requests to the module sitemap. 
+       What is it supposed to do? Please comment.
+    -->
     <map:pipeline internal-only="true">
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
 
-   <map:pipeline>
-     
-     <!-- Enter a module -->
-     <map:match type="request-parameter" pattern="lenya.module">
-       <map:mount uri-prefix="" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-     
-     <!-- Usecases -->
-     <map:match type="usecase" pattern="*">
-       <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-     
-   </map:pipeline>
-   
-   <map:pipeline>
+    <map:pipeline>
+
+      <!-- enter a module via request parameter -->
+      <map:match type="request-parameter" pattern="lenya.module">
+        <map:mount uri-prefix="" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+
+      <!-- delegate usecases to the usecase sitemap -->
+      <map:match type="usecase" pattern="*">
+        <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+
+    </map:pipeline>
+
+    <map:pipeline>
+
+      <!-- the Lenya welcome page with a list of available publications -->
       <map:match pattern="index.html">
         <map:aggregate element="aggregation-wrapper" label="aggregate">
           <map:part src="cocoon:/aggregate-publications"/>
@@ -369,11 +303,12 @@
         <map:serialize />
       </map:match>
 
+      <!-- any root-level request is directed to the welcome page -->
       <map:match pattern="*">
         <map:redirect-to uri="index.html"/>
       </map:match>
 
-      <!-- Publications -->
+      <!-- FIXME: this is apparently WebDAV-related. Does it have to be here, and what does it do? -->
       <map:match pattern="*">
         <map:select type="request-method">
           <map:when test="PROPFIND">
@@ -389,7 +324,6 @@
           </map:when>
         </map:select>
       </map:match> 
-
       <map:match pattern="{page-envelope:publication-id}/">
         <map:select type="request-method">
           <map:when test="PROPFIND">
@@ -406,6 +340,7 @@
         </map:select>
       </map:match>
 
+      <!-- redirect publication root requests to the publication's welcome page -->
       <map:match pattern="*/">
         <map:redirect-to uri="introduction.html"/>
       </map:match>
@@ -413,7 +348,7 @@
         <map:redirect-to uri="introduction.html"/>
       </map:match>
 
-      <!-- About Publication -->
+      <!-- generate welcome pages for each publication with an aggregation of relevant READMEs -->
       <map:match pattern="*/introduction.html">
         <map:aggregate element="aggregation-wrapper">
           <map:part src="aggregate-fallback://readme.xml"/>
@@ -426,17 +361,19 @@
      
     </map:pipeline>
   
-    <!-- preliminary handler for internal publication requests to avoid the resource-exists check -->
+    <!-- an extra handler for internal publication requests to avoid the resource-exists check 
+         in the external requests matcher -->
+    <!-- FIXME: see comments for internal module request matcher above. -->
     <map:pipeline internal-only="true">
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
-    
+
     <map:pipeline>
-      
+
       <!-- Resources -->
-      
+      <!-- FIXME: doesn't this create a hefty overhead for all publication documents? -->
       <!-- {publication-id}/{area}/{file} -->
       <map:match pattern="*/*/**">
         <map:act type="resource-exists-enhanced">
@@ -444,6 +381,7 @@
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="{fallback:lenya/resources.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
+        <!-- FIXME: please document the "shared" resources concept. Or maybe we can ditch it? -->
         <map:act type="resource-exists-enhanced">
           <map:parameter name="url" value="fallback://resources/shared/{3}"/>
           <map:parameter name="type" value="file"/>
@@ -451,6 +389,7 @@
         </map:act>
         <!-- Ancestors resources, css, js, etc... -->
         <!-- {publication-id}/{area}/{filename}.inherited.{extention} -->
+        <!-- FIXME: what is this mechanism used for? please document or provide a pointer to existing docs -->
         <map:match pattern="*/*/**.inherited.*">
           <map:act type="resource-exists-enhanced">
             <map:parameter name="url" value="template-fallback://resources/shared/{3}.{4}"/>
@@ -459,8 +398,8 @@
           </map:act>
         </map:match>
       </map:match>
-      
-     <!-- Enter the actual publication -->
+
+     <!-- delegate publication requests to the publication sitemap -->
      <map:match pattern="*/**">
        <map:select type="parameter">
          <map:parameter name="parameter-selector-test" value="{page-envelope:publication-id}"/>
