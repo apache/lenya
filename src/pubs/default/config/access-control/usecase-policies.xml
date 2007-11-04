@@ -65,6 +65,10 @@
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
+  <usecase id="lucene.indexSite">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
   <usecase id="lucene.opensearch">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
