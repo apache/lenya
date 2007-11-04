@@ -126,12 +126,14 @@ public class AreaImpl implements Area {
         SiteNode[] nodes = getSite().getNodes();
         List docs = new ArrayList();
         for (int i = 0; i < nodes.length; i++) {
-            String[] langs = nodes[i].getLanguages();
-            for (int l = 0; l < langs.length; l++) {
-                try {
-                    docs.add(nodes[i].getLink(langs[l]).getDocument());
-                } catch (SiteException e) {
-                    throw new RuntimeException(e);
+            if (nodes[i].getUuid() != null) {
+                String[] langs = nodes[i].getLanguages();
+                for (int l = 0; l < langs.length; l++) {
+                    try {
+                        docs.add(nodes[i].getLink(langs[l]).getDocument());
+                    } catch (SiteException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
