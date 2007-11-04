@@ -26,6 +26,11 @@ import org.apache.lenya.cms.repository.Session;
  * Index updater which updates the index when a document changes.
  */
 public interface IndexUpdater extends RepositoryListener {
+    
+    /**
+     * The service role.
+     */
+    String ROLE = IndexUpdater.class.getName();
 
     /**
      * Adds a document to the index.
