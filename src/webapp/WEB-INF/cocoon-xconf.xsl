@@ -265,13 +265,13 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     role="org.apache.shibboleth.ShibbolethModule"
     class="org.apache.shibboleth.impl.ShibbolethModuleImpl">
     
-    <WayfServer>https://localhost:8443/shibboleth-wayf/WAYF</WayfServer>
+    <WayfServer>https://sp.shibtest.org/shibboleth-wayf/WAYF</WayfServer>
     
     <!-- Please fill-in your providerId. For Shibboleth 1.1, leave providerId empty. -->
-    <ProviderId>http://sp.shibtest.org:8080/shibboleth</ProviderId>
+    <ProviderId>https://sp.shibtest.org/shibboleth</ProviderId>
     
-    <!-- The shire or assertion consumer service URL. -->
-    <Shire>http://sp.shibtest.org/default/authoring/index.html?lenya.usecase=login&amp;lenya.step=login</Shire>
+    <!-- The shire or assertion consumer service URL, relative to the proxy or servlet URL. -->
+    <Shire>/default/authoring/index.html?lenya.usecase=login&amp;lenya.step=login</Shire>
     <!-- 
       Location of your list of your supported Home Organisations. May be either an absolute file,
       a file relative to the webapp root or an URI to a file on a web server.
