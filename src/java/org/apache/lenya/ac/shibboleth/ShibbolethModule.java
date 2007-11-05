@@ -95,7 +95,7 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                 String outgoingUrl = rewriter.rewrite(webappUrl);
                 if (outgoingUrl.startsWith("/")) {
                     int port = req.getServerPort();
-                    String portSuffix = port == 80 ? "" : ":" + port;
+                    String portSuffix = ShibbolethUtil.getPortSuffix(port);
                     String serverUrl = req.getScheme() + "://" + req.getServerName() + portSuffix;
                     outgoingUrl = serverUrl + outgoingUrl;
                 }

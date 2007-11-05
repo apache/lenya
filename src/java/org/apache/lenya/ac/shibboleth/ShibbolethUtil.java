@@ -74,7 +74,7 @@ public class ShibbolethUtil {
 
 			if (baseUrl == null) {
 				int port = request.getServerPort();
-				String portSuffix = port == 80 ? "" : ":" + port;
+				String portSuffix = getPortSuffix(port);
 				baseUrl = request.getScheme() + "://" + request.getServerName()
 						+ portSuffix;
 			}
@@ -89,6 +89,10 @@ public class ShibbolethUtil {
 
 		return baseUrl;
 	}
+
+    protected static String getPortSuffix(int port) {
+        return (port == 80 || port == 443) ? "" : ":" + port;
+    }
 
 	protected boolean isSslProtected(String webappUrl) {
 		DefaultAccessController accessController = null;
