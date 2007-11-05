@@ -28,7 +28,7 @@
       <figure alt="Shibboleth integration class diagram" src="classes.png"></figure>
     </section>
     <section>
-      <title>ShibbolethAuthenticator</title>
+      <title>org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator</title>
       <p>
         The entry point from the Lenya application's point of view is the <code>ShibbolethAuthenticator</code>
         class. It is an implementation the <code>Authenticator</code> service, providing the functionality
@@ -46,8 +46,37 @@
         If the attribute request was successful, a <code>TransientUser</code> object is created by calling
         <code>UserManager.getUser(String)</code> with a non-existing ID, initialized
         with the attributes provided by the IdP, and attached to the Identity object which is stored
-        in the session.
+        in the session. The IdP attributes are mapped to Lenya user attributes (e-mail, first name,
+        last name) using the <code>UserFieldsMapping</code> service
+        (see section <a href="site:attributes-authorization">attribute-based authorization</a> for more information).
       </p>
+    </section>
+    
+    <section>
+      <title>org.apache.lenya.ac.shibboleth.ShibbolethModule</title>
+      <p>
+        The <code>ShibbolethModule</code> is an input module which provides access
+        to Shibboleth attributes in sitemaps.
+        It is used to obtain the WAYF server URL and the request parameters which
+        have to be attatched when the Login usecase redirects to the WAYF server.
+      </p>
+      <p>
+        The attributes are
+      </p>
+      <dl>
+        <dt>wayfServer</dt>
+        <dd>The URL of the WAYF server</dd>
+        <dt>shire</dt>
+        <dd>The value of the <em>shire</em> request parameter for the WAYF server.</dd>
+        <dt>target</dt>
+        <dd>The value of the <em>target</em> request parameter for the WAYF server.</dd>
+        <dt>providerId</dt>
+        <dd>The value of the <em>providerId</em> request parameter for the WAYF server.</dd>
+      </dl>
+    </section>
+    
+    <section>
+      <title></title>
     </section>
   </body>
 </document>

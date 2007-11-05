@@ -78,10 +78,11 @@
     <section id="attributeTranslator">
       <title>Attribute Translator</title>
       <p>
-        The attribute translator service is the default attribute definition. It allows to define a
-        human-readable short name for each attribute which is provided by the authentication service.
-        This short name is used in <a href="#rules">attribute rules</a>, it helps to keep the rules
-        less verbose than with the original attribute names.
+        The attribute translator service is used by the default attribute definition service, the
+        <code>SamlAttributeDefinition</code>, to obtain the list of available attributes.
+        It allows to define a human-readable short name for each attribute which is provided by the
+        authentication service. This short name is used in <a href="#rules">attribute rules</a>,
+        it helps to keep the rules less verbose than with the original attribute names.
       </p>
       <p>
         The attribute translator is declared in <code>cocoon.xconf</code>. To declare your own
