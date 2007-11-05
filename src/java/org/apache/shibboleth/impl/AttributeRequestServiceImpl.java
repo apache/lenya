@@ -75,9 +75,8 @@ public class AttributeRequestServiceImpl extends AbstractLogEnabled implements
             throw new SAMLException(
                     "Entity(Site) deleted from Metadata since authentication POST received.");
 
-        // Find the Shibboleth protocol AA Role configured in the Metadat for
-        // this
-        // Entity. (throws MetadataException)
+        // Find the Shibboleth protocol AA Role configured in the Metadata for
+        // this Entity. (throws MetadataException)
         AttributeAuthorityDescriptor aa = entity
                 .getAttributeAuthorityDescriptor(XML.SAML11_PROTOCOL_ENUM);
         if (aa == null) {
