@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac.shibboleth;
+package org.apache.lenya.ac.saml.impl;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
@@ -29,7 +29,7 @@ import org.apache.lenya.ac.saml.AttributeTranslator;
  * Shibboleth-based attribute definition. The attribute names are the possible
  * result names of the Shibboleth attribute translator.
  */
-public class ShibbolethAttributeDefinition extends AbstractLogEnabled implements
+public class SamlAttributeDefinition extends AbstractLogEnabled implements
         AttributeDefinition, Serviceable, ThreadSafe {
 
     private AttributeTranslator translator;

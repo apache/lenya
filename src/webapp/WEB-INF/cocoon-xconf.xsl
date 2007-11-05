@@ -412,7 +412,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
   
   <component logger="lenya.ac.shibboleth"
     role="org.apache.lenya.ac.AttributeDefinition"
-    class="org.apache.lenya.ac.shibboleth.ShibbolethAttributeDefinition"/>
+    class="org.apache.lenya.ac.saml.impl.SamlAttributeDefinition"/>
     
   </xsl:copy>
   
