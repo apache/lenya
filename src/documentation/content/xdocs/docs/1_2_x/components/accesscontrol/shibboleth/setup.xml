@@ -36,12 +36,16 @@
     </section>
       
       <section>
-        <title>Preliminaries</title>
+        <title>Prerequisites</title>
 
-        <p> The following sections describe how to set up a complete test environment including an IdP
-          (identity provider) server with CAS authentication and a WAYF (where are you from) server in
-          Apache Tomcat. The installation might take a while, so grab the famous big mug
-          of your favourite beverage and turn on some calming music.</p>
+        <p> The following sections describe how to set up a complete test environment including an
+          <acronym title="Identity Provider">IdP</acronym> server with
+          <acronym title="Central Authentication System">CAS</acronym> authentication and a
+          <acronym title="Where are you from">WAYF</acronym> server in Apache Tomcat.
+          We use Apache httpd as proxy server and for <acronym title="Secure Socket Layer">SSL</acronym>
+          offloading.
+          The installation might take a while, so grab the famous big mug of your favourite beverage
+          and turn on some calming music.</p>
         
         <ul>
           <li>
@@ -54,13 +58,22 @@
               <source><![CDATA[$ export $SHIBTEST_HOME=/home/john/shibtest]]></source>
           </li>
           <li>
-            We'll use port 8443 for SSL so we don't have to run Tomcat as root. 
-          </li>
-          <li>
-            As host names, we use <code>idp.shibtest.org</code> for the identity provider
-            and <code>sp.shibtest.org</code> for the service provider, i.e. the Lenya web
-            application. Feel free to use these names, they are not related to the real
-            websites (if they even exist).
+            As host names, we use
+            <ul>
+              <li>
+                <code>idp.shibtest.org</code> for the identity provider,
+              </li>
+              <li>
+                <code>sp.shibtest.org</code> for the service provider, i.e. the Lenya web
+                application, and
+              </li>
+              <li>
+                <code>wayf.shibtest.org</code> for the <acronym title="Where are you from">WAYF</acronym>
+                server, i.e. the web application which lets you choose your identity provider
+                (home organization).
+              </li>
+            </ul>
+            Feel free to use these names, they are not related to the real websites (if they even exist).
           </li>
           <li>
             OpenSSL is required to generate the certificate.
@@ -70,22 +83,32 @@
             and to edit the <code>/etc/hosts</code> file.
           </li>
         </ul>
+        <p>
+          The following figure illustrates the setup:
+        </p>
+        <figure src="setup.png" alt="Setup"/>
       </section>
       <section>
         <title>Download and install Tomcat</title>
         <ul>
-          <li>Get the latest Tomcat 5.5 distribution from the <a href="http://tomcat.apache.org"
-              >Tomcat homepage</a>. When this documentation was written, this was 5.5.20.</li>
+          <li>
+            Get the latest Tomcat 5.5 distribution from the <a href="http://tomcat.apache.org"
+            >Tomcat homepage</a>. When this documentation was written, this was 5.5.20.
+            The setup should work with Tomcat 6.x as well.
+          </li>
           <li> Extract <code>apache-tomcat-5.5.20.zip</code> in the directory
             <code>$SHIBTEST_HOME</code>. You end up with a directory
               <code>$SHIBTEST_HOME/apache-tomcat-5.5.20</code>. </li>
         </ul>
       </section>
+    
+    
       <section>
         <title>Download and install the Shibboleth identity provider</title>
         <ul>
-          <li>You can get the Shibboleth identity provider sources from the <a
-              href="http://shibboleth.internet2.edu/latest.html">Shibboleth download page</a>.
+          <li>
+            You can get the Shibboleth identity provider sources from the <a
+            href="http://shibboleth.internet2.edu/latest.html">Shibboleth download page</a>.
             Choose "Java Source with Ant-based Installer". When this documentation was written, the
             current version was 1.3.2. </li>
           <li>Extract the downloaded file <code>shibboleth-idp-1.3.2.tar.gz</code> in
@@ -94,7 +117,8 @@
           <li> In this directory, start the Shibboleth IdP installation by entering
               <source><![CDATA[$ cd $SHIBTEST_HOME/shibboleth-1.3.2-install
 $ ./ant install]]></source>
-              Be careful to execute <code>./ant</code> so that the IdP's special version of Ant is used.
+            Be careful to execute <code>./ant</code> instead of <code>ant</code> so that
+            the IdP's special version of Ant is used.
           </li>
           <li> You're asked several questions, which you answer as follows:
             <source xml:space="preserve"><![CDATA[Q: Do you want to install the Shibboleth Identity Provider? [Y,n]
@@ -126,6 +150,26 @@ A: $SHIBTEST_HOME/apache-tomcat-5.5.20
           </li>
         </ul>
       </section>
+    <section>
+      <title>Configure the metadata file</title>
+      <p>
+        The metadata file contains information about our identity and service providers.
+        Copy the file <code>$SHIBTEST_HOME/shibboleth-idp/etc/example-metadata.xml</code> to 
+        <code>$SHIBTEST_HOME/shibboleth-idp/etc/metadata.xml</code>. In this file, you'll find
+        two <code>EntityDescriptor</code> sections, one for the identity provider and one for the
+        service provider.
+      </p>
+      <p>
+        For the entity provider section, use <code>https://idp.shibtest.org/shibboleth</code>
+        as the entityID attribute value. Use <code>idp.shibtest.org</code> in all places where
+        the hostname is required. If you don't use a proxy but an SSL connector in Tomcat,
+        set the respective ports to 8443.   
+      </p>
+      <p>
+        Do the same for the service provider section, using <code>sp.shibtest.org</code> as
+        the hostname.
+      </p>
+    </section>
       <section>
         <title>Configure the IdP</title>
         <ul>
@@ -140,13 +184,14 @@ A: $SHIBTEST_HOME/apache-tomcat-5.5.20
   xsi:schemaLocation="urn:mace:shibboleth:idp:config:1.0 \
     ../schemas/shibboleth-idpconfig-1.0.xsd" 
   AAUrl="https://idp.shibtest.org:8443/shibboleth-idp/AA" 
-  resolverConfig="file:/Users/nobby/src/shibtest/shibboleth-idp/etc/resolver.xml"
+  resolverConfig="file:/home/john/src/shibtest/shibboleth-idp/etc/resolver.xml"
   defaultRelyingParty="urn:mace:shibboleth:examples" 
   providerId="https://idp.shibtest.org/shibboleth">]]></source>
           </li>
           <li>
-            By default, the IdP's protocol handler does only support the ports 433 and 80. We'll add our test port 8443.
-            In the protocol handler section, add the port 8443 to the https locations as follows:
+            By default, the IdP's protocol handler does only support the ports 433 and 80.
+            If you use the SSL connector at port 8443, you have to add this port to the regular
+            expression as follows:
             <source xml:space="preserve"><![CDATA[<ProtocolHandler implementation="edu.internet2 \
     .middleware.shibboleth.idp.provider.ShibbolethV1SSOHandler">
   <Location>https?://[^:/]+(:(8443|443|80))?/shibboleth-idp/SSO</Location>
@@ -161,6 +206,10 @@ A: $SHIBTEST_HOME/apache-tomcat-5.5.20
             Now we have to define an attribute which is used by Lenya as the unique identifier
             (see <code>cocoon-xconf.xsl</code>). First, we configure how the attribute should
             be resolved. Then we declare the attribute in the ARP (attribute release policy). 
+          </li>
+          <li>
+            In the bottom of the <code>idp.xml</code> file, change the location of the metadata file
+            to <code>file:/home/john/src/shibtest/shibboleth-idp/etc/metadata.xml</code>.
           </li>
           <li>
             Edit the file <code>$SHIBTEST_HOME/shibboleth-idp/etc/resolver.xml</code>,
@@ -197,7 +246,9 @@ $ cp casclient-2.1.1.jar shibboleth-1.3.2-install/webApplication/WEB-INF/lib/]]>
           </li>
           <li>
             Edit the file <code>shibboleth-1.3.2-install/webAppConfig/dist.idp.xml</code>
-            and add the following block to the <code>&lt;web-app&gt;</code> element:
+            and add the following block to the <code>&lt;web-app&gt;</code> element.
+            The declaration of port 8443 is only necessary if you use the SSL connector
+            in Tomcat instead of the proxy. 
             <source xml:space="preserve"><![CDATA[<filter>
    <filter-name>CASFilter</filter-name>
    <filter-class>edu.yale.its.tp.cas.client.filter.CASFilter</filter-class>
@@ -332,27 +383,13 @@ $ cd pki]]></source>
         <ul>
           <li>Edit <code>/etc/hosts</code> and add the following entries:
           <source xml:space="preserve"><![CDATA[127.0.0.1       idp.shibtest.org
-127.0.0.1       sp.shibtest.org]]></source>
+127.0.0.1       sp.shibtest.org
+127.0.0.1       wayf.shibtest.org]]></source>
           </li>
         </ul>
       </section>
-      <section>
-        <title>Configure SSL in Tomcat</title>
-        <ul>
-          <li>
-            Edit <code>$SHIBTEST_HOME/apache-tomcat-5.5.20/conf/server.xml</code> and
-            declare an SSL connector at port 8843 with the keystore location and password:
-            <source xml:space="preserve"><![CDATA[<Connector port="8443" maxHttpHeaderSize="8192"
-           maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
-           enableLookups="false" disableUploadTimeout="true"
-           acceptCount="100" scheme="https" secure="true"
-           clientAuth="false" sslProtocol="TLS" 
-           keystoreFile="/home/john/shibtest/pki/idp.shibtest.org.jks"
-           keystorePass="shibtest"/>
-]]></source>
-          </li>
-        </ul>
-      </section>
+    
+    
       <section>
         <title>Setup the WAYF server</title>
         <ul>
@@ -361,16 +398,11 @@ $ cd pki]]></source>
             web application's <code>web.xml</code>. Edit the file
             <code>$SHIBTEST_HOME/shibboleth-1.3.2-install/webAppConfig/wayf.xml</code>
             and set the <code>SiteConfigFileLocation</code> to the <code>metadata.xml</code>
-            file of your Lenya installation:
+            file:
             <source xml:space="preserve"><![CDATA[<init-param>
   <param-name>SiteConfigFileLocation</param-name>
-  <param-value>file:///home/john/lenya/build/lenya/webapp/WEB-INF/metadata.xml</param-value>
+  <param-value>file:///home/john/src/shibtest/shibboleth-idp/etc/metadata.xml</param-value>
 </init-param>]]></source>
-          </li>
-          <li>
-            Make sure that all server references in <code>metadata.xml</code> point to
-            either <code>https://idp.shibtest.org:8443</code> or <code>https://sp.shibtest.org:8443</code>,
-            respectively.
           </li>
           <li>
             Generate the WAYF web application and deploy it to Tomcat:
@@ -380,6 +412,83 @@ $ cp dist/shibboleth-wayf.war ../apache-tomcat-5.5.20/webapps/]]></source>
           </li>
         </ul>
       </section>
+    
+    
+    <section>
+      <title>Setup the proxy server</title>
+      <p>
+        We'll use Apache http with mod_proxy_ajp as proxy server, with the following virtual host
+        configuration:
+      </p>
+      <source xml:space="preserve"><![CDATA[NameVirtualHost *:80
+NameVirtualHost *:443
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@cms.example.com
+    ServerName sp.shibtest.org
+    ServerAlias cms
+
+    ProxyRequests Off
+
+    RewriteEngine On
+    RewriteLog /home/john/src/www/logs/sp.example.org-rewrite_log
+    RewriteLogLevel 9
+    RewriteCond %{QUERY_STRING} (.*)lenya\.usecase=login(.*)
+    RewriteRule ^/(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+    <Location />
+      ProxyPass ajp://localhost:8009/
+      ProxyPassReverse http://cms.example.com/
+    </Location>
+
+    LogLevel debug
+    ErrorLog /home/john/src/www/logs/cms.example.com-error_log
+    CustomLog /home/john/src/www/logs/cms.example.com-access_log common
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName sp.shibtest.org 
+    ServerAlias sp
+
+    ProxyRequests Off
+
+    SSLEngine On
+    SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+    SSLCertificateFile /home/john/src/shibtest/pki/cert.pem
+    SSLCertificateKeyFile /home/john/src/shibtest/pki/key.pem
+
+    <Location />
+      ProxyPass ajp://localhost:8009/
+      ProxyPassReverse https://cms.example.com/
+    </Location>
+
+    ErrorLog /home/john/src/www/logs/ssl.sp.shibtest.org-error_log
+    CustomLog /home/john/src/www/logs/ssl.sp.shibtest.org-access_log common
+
+</VirtualHost>
+]]></source>
+      <p>
+        Usually, the Tomcat configuration already contains an AJP connector at port 8009.
+        If not, add the following connector declaration to <code>$TOMCAT_HOME/conf/server.xml</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<Connector enableLookups="false"
+  port="8009" protocol="AJP/1.3" redirectPort="8443"/>]]></source>
+      <p>
+        If you don't use a proxy, you have to add an SSL connector instead.
+        We'll use port 8443 for SSL so we don't have to run Tomcat as root. 
+        Edit <code>$SHIBTEST_HOME/apache-tomcat-5.5.20/conf/server.xml</code> and
+        declare an SSL connector at port 8443 with the keystore location and password:
+      </p>
+      <source xml:space="preserve"><![CDATA[<Connector port="8443" maxHttpHeaderSize="8192"
+  maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+  enableLookups="false" disableUploadTimeout="true"
+  acceptCount="100" scheme="https" secure="true"
+  clientAuth="false" sslProtocol="TLS" 
+  keystoreFile="/home/john/shibtest/pki/idp.shibtest.org.jks"
+  keystorePass="shibtest"/>]]></source>
+    </section>
+    
+    
       <section>
         <title>Configure Lenya</title>
         <ul>
@@ -405,30 +514,60 @@ $ cp dist/shibboleth-wayf.war ../apache-tomcat-5.5.20/webapps/]]></source>
             <code>org.apache.shibboleth.ShibbolethModule</code> with the following elements:
             </p>
         <dl>
-          <dt>
-            <code>ProviderId</code>
-          </dt>
-          <dd>The hostname of your service provider, for example:
-            <source xml:space="preserve"><![CDATA[<ProviderId>http://sp.shibtest.org/shibboleth</ProviderId>]]></source>
-            If you use Shibboleth 1.1, you can leave this
-            empty.
+          <dt>ProviderId</dt>
+          <dd>
+            <p>
+            A unique string to identify your service provider, for example:
+            </p>
+            <source xml:space="preserve"><![CDATA[<ProviderId>https://sp.shibtest.org/shibboleth</ProviderId>]]></source>
           </dd>
-          <dt>
-            <code>Metadata</code>
-          </dt>
-          <dd>A Cocoon-readable URI which specifies the location of the meta data file. It contains
-            for instance information about your identity provider. A typical location would be
+          <dt>Metadata</dt>
+          <dd>
+            <p>
+              A Cocoon-readable URI which specifies the location of the metadata file. It contains
+              for information about your identity and service providers.
+            </p>
+            <p>
+              In a production environment, you'll get this file from your Shibboleth infrastructure authority,
+              and place it for instance at
+            </p>
             <source xml:space="preserve"><![CDATA[<Metadata>context://WEB-INF/metadata.xml</Metadata>]]></source>
+            <p>
+              In our test environment, we'll just reference the IdP's metadata file:
+            </p>
+            <source xml:space="preserve"><![CDATA[<Metadata>file:///home/john/src/shibtest/shibboleth-idp/etc/metadata.xml</Metadata>]]></source>
+          </dd>
+          <dt>Shire</dt>
+          <dd>
+            <p>
+              The shire or assertion consumer service URL is used by the identity provider to send the
+              authentication information to. The configuration is a path relative to the servlet URL or
+              proxy URL, respectively. This allows you to serve different virtual hosts using a single
+              Lenya instance, for instance:
+            </p>
+            <ul>
+              <li>http://www.science.uni.edu -> http://cms.uni.edu:8080/science/live</li>
+              <li>http://www.law.uni.edu -> http://cms.uni.edu:8080/law/live</li>
+            </ul>
+            <p>
+              The virtual hosts are configured in the proxy settings of the publications.
+              In this example, you would use the following shire configuration:
+            </p>
+            <source xml:space="preserve"><![CDATA[<Shire>/index.html?lenya.usecase=login&amp;lenya.step=login</Shire>]]></source>
+            <p>
+              The complete shire URL is generated by the application.
+            </p>
           </dd>
           <dt>AAP</dt>
           <dd>A Cocoon-readable URI which specifies the location of the AAP (Attribute Acceptance
             Policy) file. A typical location would be
             <source xml:space="preserve"><![CDATA[<AAP>context://WEB-INF/AAP.xml</AAP>]]></source>
           </dd>            
-          <dt><code>WayfServer</code></dt>
+          <dt>WayfServer</dt>
           <dd>
             The URL of your WAYF server, for example:
-            <source xml:space="preserve"><![CDATA[<WayfServer>https://localhost:8443/shibboleth-wayf/WAYF</WayfServer>]]></source>            
+            <source xml:space="preserve"><![CDATA[<WayfServer>https://wayf.shibtest.org/shibboleth-wayf/WAYF</WayfServer>]]></source>
+            Don't forget to include the port 8443 if you use the SSL connector in Tomcat.            
           </dd>
         </dl>
         </li>
@@ -511,15 +650,15 @@ $ ./lenya.sh]]></source>
           </li>
           <li>
             You should be redirected to the URL
-            <code>https://localhost:8443/shibboleth-wayf/WAYF?shire=...</code>. A page
+            <code>https://wayf.shibtest.ort/shibboleth-wayf/WAYF?shire=...</code>. A page
             with the title "Select an identity provider" should appear.
           </li>
           <li>
             Submit the form with the pre-selected IdP "Identities'R'Us".
           </li>
           <li>
-            You should be redirected to the URL <code>https://idp.shibtest.org:8443/shibboleth-idp/SSO?target=</code>
-            which in turn redirects to <code>https://idp.shibtest.org:8443/cas/login?service=</code>.
+            You should be redirected to the URL <code>https://idp.shibtest.org/shibboleth-idp/SSO?target=</code>
+            which in turn redirects to <code>https://idp.shibtest.org/cas/login?service=</code>.
           </li>
           <li>
             Now you should see a page with a blue background and the headline
@@ -553,6 +692,16 @@ $ ./lenya.sh]]></source>
           Lenya's LDAP configuration file <code>ldap.properties</code> overrides the default
           Java keystore location. If you use this setting, make sure to add the certificate
           to this keystore.
+        </li>
+        <li>
+          <p><strong>Login fails</strong></p>
+          <p>
+            If you don't run the Lenya web application in the Tomcat root context, you'll have
+            to set the <em>emptySessionPath</em> attribute of the connector to <em>true</em>.
+            For more information, refer to the
+            <a href="http://tomcat.apache.org/tomcat-5.5-doc/config/http.html">Apache
+              Tomcat Configuration Reference</a>
+          </p>
         </li>
       </ul>
     </section>

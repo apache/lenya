@@ -20,9 +20,34 @@
     <title>Shibboleth Integration Architecture</title>
   </header>
   <body>
-    <p>
-      The following class diagram illustrates the involved interfaces and classes and their relationships.
-    </p>
-    <figure alt="Shibboleth integration class diagram" src="classes.png"></figure>
+    <section>
+      <title>Class Diagram</title>
+      <p>
+        The following class diagram illustrates the involved interfaces and classes and their relationships.
+      </p>
+      <figure alt="Shibboleth integration class diagram" src="classes.png"></figure>
+    </section>
+    <section>
+      <title>ShibbolethAuthenticator</title>
+      <p>
+        The entry point from the Lenya application's point of view is the <code>ShibbolethAuthenticator</code>
+        class. It is an implementation the <code>Authenticator</code> service, providing the functionality
+        to check if a request contains valid authentication information. 
+      </p>
+      <p>
+        Since the <code>ShibbolethAuthenticator</code> extends the <code>UserAuthenticator</code> class, it has to provide the
+        same functionality (Liskov subsitution principle). So it checks if the request parameters
+        <em>username</em> and <em>password</em> exist, and delegates the password-based authentication
+        to the superclass. If these request parameters don't exist, the <code>ShibbolethAuthenticator</code> assumes
+        that the request was issued by the <acronym title="Identity Provider">IdP</acronym> and uses
+        the <code>AttributeRequestService</code> to send the corresponding attribute request.
+      </p>
+      <p>
+        If the attribute request was successful, a <code>TransientUser</code> object is created by calling
+        <code>UserManager.getUser(String)</code> with a non-existing ID, initialized
+        with the attributes provided by the IdP, and attached to the Identity object which is stored
+        in the session.
+      </p>
+    </section>
   </body>
 </document>
