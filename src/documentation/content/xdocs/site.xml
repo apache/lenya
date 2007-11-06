@@ -106,6 +106,10 @@
     <license href="license.html" label="License"/>
     <related-projects href="related-projects.html" label="Related Projects"/>
     <history href="history.html" label="History"/>
+    <sponsoring href="http://www.apache.org/foundation/sponsorship.html"
+    label="Sponsoring Apache"/>
+    <thanks href="http://www.apache.org/foundation/thanks.html"
+    label="Sponsors Thanks"/>
   </project-information>
   
   <docu href="docs/" label="Developer" tab="docu">
