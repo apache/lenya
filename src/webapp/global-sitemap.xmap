@@ -305,7 +305,7 @@
 
       <!-- any root-level request is directed to the welcome page -->
       <map:match pattern="*">
-        <map:redirect-to uri="index.html"/>
+        <map:redirect-to uri="{proxy:/index.html}"/>
       </map:match>
 
       <!-- FIXME: this is apparently WebDAV-related. Does it have to be here, and what does it do? -->
@@ -342,10 +342,10 @@
 
       <!-- redirect publication root requests to the publication's welcome page -->
       <map:match pattern="*/">
-        <map:redirect-to uri="introduction.html"/>
+        <map:redirect-to uri="{proxy:/introduction.html}"/>
       </map:match>
       <map:match pattern="*/index.html">
-        <map:redirect-to uri="introduction.html"/>
+        <map:redirect-to uri="{proxy:/introduction.html}"/>
       </map:match>
 
       <!-- generate welcome pages for each publication with an aggregation of relevant READMEs -->

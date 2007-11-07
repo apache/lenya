@@ -101,14 +101,16 @@
           <content-dir src="D:/tmp/default"/>
   -->
   
-  <!-- Lenya can rewrite the links to cater to special proxy setups.
+  <proxies>
+    <!-- 
+       Lenya can rewrite the links to cater to special proxy setups.
        Make sure to update the GlobalProxies configuration in cocoon.xconf as well.
        For information about these settings, read
        http://lenya.apache.org/docu/docs/2_0_x/tutorials/proxy.html
       
        This example setting simulates the following situation:
        * A customer wants a company hostname and URLs without Lenya-specific
-         path components.
+         path components for his live site.
        * The server uses name-based virtual hosting with just one IP, i.e.
          there can only be one SSL vhost, which is shared among several
          customers. This implies the need for sub-directories in the proxy
@@ -116,26 +118,25 @@
        * "authoring" should be ssl-protected. There is no need for a
          customer hostname here, since it's not publicly visible.
        * Any SSL-protected documents in "live" can be handled by the SSL
-         vhost (not using the company hostname is ok in this case).
+         vhost (not using the company hostname is ok in this case, because
+         the customer does not want to pay for an additional IP address).
          
        The desired customer hostname is customer.example.com.
-       The SSL vhost is called www.example.com.
+       The SSL vhost is called https://www.example.com.
        The Lenya CMS for our customer is reachable as
-       https://www.example.com/lenya/customer/authoring
+       http[s]://www.example.com/lenya/customer/authoring.
        The global proxy for non-publication-specific resources shall be
        http://www.example.com/lenya.
-       
-       -->
-  <proxies>
+     -->
 <!--
-    <proxy area="live" ssl="true" 
-      url="https://www.example.com/lenya/customer/live"/>
-    <proxy area="live" ssl="false" 
-      url="http://customer.example.com"/>
-    <proxy area="authoring" ssl="true" 
-      url="https://www.example.com/lenya/customer/authoring"/>
-    <proxy area="authoring" ssl="false"
-      url="http://www.example.com/lenya/customer/authoring"/>
+    <proxy area="live" ssl="true" url="https://www.example.com/lenya/customer/live"/>
+    <proxy area="live" ssl="false" url="http://customer.example.com"/>
+    <proxy area="authoring" ssl="true" url="https://www.example.com/lenya/customer/authoring"/>
+    <proxy area="authoring" ssl="false" url="http://www.example.com/lenya/customer/authoring"/>
+    <proxy area="archive" ssl="true" url="https://www.example.com/lenya/customer/archive"/>
+    <proxy area="archive" ssl="false" url="http://www.example.com/lenya/customer/archive"/>
+    <proxy area="trash" ssl="true" url="https://www.example.com/lenya/customer/trash"/>
+    <proxy area="trash" ssl="false" url="http://www.example.com/lenya/customer/trash"/>
 -->
   </proxies>
   

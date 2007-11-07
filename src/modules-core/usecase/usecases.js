@@ -18,6 +18,7 @@
 /* $Id$ */
  
 cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
+importPackage(Packages.org.apache.lenya.cms.linking)
 
 //placeholders for custom flow code:
 var customLoopFlow = undefined;
@@ -287,15 +288,40 @@ function executeFlow(usecase) {
 }
 
 /**
- * Redirect to target URL after finishing the usecase.
+ * Redirect to target URL after finishing the usecase, 
+ * taking proxy settings into account.
  *
- * @param the target URL
+ * @param the webapp-internal target URL
  */
 function redirect(targetUrl) {
-    var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
-    var contextPath = flowHelper.getRequest(cocoon).getContextPath();
-    cocoon.releaseComponent(flowHelper);
-    cocoon.redirectTo(contextPath + targetUrl, true);
+    var flowHelper;  // needed to obtain the current objectModel 
+    var objectModel; // needed to provide context to the proxyModule 
+    var inputModuleSelector; // needed to obtain a proxyModule
+    var proxyModule; // used to rewrite the targetUrl according to the publication's proxy settings
+    var proxyUrl;    // the rewritten target Url
+
+    flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
+    try {
+        objectModel = flowHelper.getObjectModel(cocoon);
+    } finally {
+        cocoon.releaseComponent(flowHelper);
+    }
+
+    inputModuleSelector = cocoon.getComponent(org.apache.cocoon.components.modules.input.InputModule.ROLE + "Selector");
+    try {
+        proxyModule = inputModuleSelector.select("proxy");
+        try {
+            proxyUrl = proxyModule.getAttribute(targetUrl, null, objectModel);
+        } finally {
+            cocoon.releaseComponent(proxyModule);
+        }
+    } finally {
+        cocoon.releaseComponent(inputModuleSelector);
+    }
+
+    log("debug", "Redirecting to {proxy:" + targetUrl + "} = " + proxyUrl + ".");
+
+    cocoon.redirectTo(proxyUrl, true);
 }
 
 
@@ -407,7 +433,7 @@ function executeUsecase() {
     }
     //getTargetURL takes a boolean that is true on success:
     targetUrl = usecase.getTargetURL(state == "success");
-    log("debug", "Completed, redirecting to url = [context:/" + targetUrl + "]", usecaseName);
+    log("debug", "Completed, redirecting to url = [" + targetUrl + "]", usecaseName);
     // jump to the appropriate URL:
     redirect(targetUrl);
 }

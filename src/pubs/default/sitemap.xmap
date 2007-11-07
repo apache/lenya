@@ -96,7 +96,7 @@
            a cocoon:/ URI? An apache httpd server will not send a HTTP redirect when a directory is requested, but
            serve the index.html file implicitly IIRC. -->
       <map:match pattern="**/">
-        <map:redirect-to uri="index.html"/>
+        <map:redirect-to uri="{proxy:/{page-envelope:publication-id}/{1}/index.html}"/>
       </map:match>
 
     </map:pipeline>
@@ -271,13 +271,14 @@
           This check provides the user with a dialog to import example content. 
           It should be removed in production systems.
         --> 
+
         <map:select type="resource-exists">
           <map:when test="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
           <map:otherwise>
-            <map:redirect-to uri="{request:requestUri}?lenya.usecase=export.importExampleContent"/>
+            <map:redirect-to uri="{proxy:/{page-envelope:publication-id}/{1}/{2}.html}?lenya.usecase=export.importExampleContent"/>
           </map:otherwise>
         </map:select>
-      
+
         <!-- If the requested language version of the document exists, we set a last-modified header. -->
         <map:act type="language-exists">
           <map:act type="set-header">
