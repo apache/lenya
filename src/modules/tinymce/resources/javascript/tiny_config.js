@@ -75,7 +75,7 @@ config = {
     fix_table_elements: true,
     
     /* force all stray text nodes into a <p/> element. */
-    forced_root_element: "p",
+    forced_root_block: "p",
     
     /* let tinymce do the layout by itself */
     theme_advanced_layout_manager : "SimpleLayout",
