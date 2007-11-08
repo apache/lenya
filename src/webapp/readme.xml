@@ -25,6 +25,7 @@
   <page:head/>
   <page:body>
     <h1>README: Apache Lenya</h1>
+<!--
     <h2>Note to developers</h2>
     <p>
       Please use this new README to inform users
@@ -33,9 +34,24 @@
       <code>src/webapp/readme.xml</code>. Its contents will be shown on the global 
       welcome page, and also on the introduction page of every publication.
     </p>
+-->
     
     <h2>Important notes for beta testers of Lenya 2.0</h2>
 
+    <h3>2007-11-08: Redirection changes</h3>
+    <p>
+      Most of our sitemap redirects have been changed to make them work with
+      proxy environments. If you notice any regressions, please complain to
+      the dev list immediately.
+    </p>
+    <h3>2007-11-08: New Proxy test scaffold</h3>
+    <p>
+      If you are a developer or a user interested in proxying, please take a
+      look at the proxy test scaffold in tools/proxytest and read the
+      README. It's important to regularly test new code in proxied
+      environments and non-root contexts.
+    </p>
+    
     <h3>2007-08-22: User names are now case insensitive</h3>
     <p>
       User names are now case insensitive to better support Windows, user assumptions, auto form 
