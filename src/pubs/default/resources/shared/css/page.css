@@ -486,6 +486,8 @@ a.brokenlink {
 }
 
 /* Search Results */
+.search-results-form {
+    margin-bottom: 20px; }
 
 .search-results {
     list-style-type: none;

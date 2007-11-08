@@ -57,7 +57,7 @@
     </h1>
     -->
     <h1><i18n:text>Search</i18n:text></h1>
-    <form action="" method="get" style="margin-bottom: 20px">
+    <form class="search-results-form" action="" method="get">
       <input name="queryString" type="text" style="width: 400px" value="{$queryString}"
       />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
     </form>
