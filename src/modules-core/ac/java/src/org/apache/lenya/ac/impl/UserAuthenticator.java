@@ -34,9 +34,9 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
 
     /**
      * @see org.apache.lenya.ac.Authenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
-     *      org.apache.cocoon.environment.Request)
-     *      Note that this implementation first checks if the user has authenticated over basic
-     *      HTTP authentication. If yes, it uses these credentials.
+     *      org.apache.cocoon.environment.Request) Note that this implementation first checks if the
+     *      user has authenticated over basic HTTP authentication. If yes, it uses these
+     *      credentials.
      */
     public boolean authenticate(AccreditableManager accreditableManager, Request request)
             throws AccessControlException {
@@ -46,21 +46,21 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
         String username = "";
         String password = "";
         if (request.getHeader("Authorization") != null) {
-          encoded = request.getHeader("Authorization");
+            encoded = request.getHeader("Authorization");
         }
-        if(encoded.indexOf("Basic") > -1) {
-          encoded = encoded.trim();
-          encoded = encoded.substring(encoded.indexOf(' ')+1);
+        if (encoded.indexOf("Basic") > -1) {
+            encoded = encoded.trim();
+            encoded = encoded.substring(encoded.indexOf(' ') + 1);
             unencoded = new String(Base64.decodeBase64(encoded.getBytes()));
         }
-        if (unencoded.indexOf(":")-1 > -1 ) {
-          username = unencoded.substring(0,unencoded.indexOf(":"));
-          password = unencoded.substring(unencoded.indexOf(":")+1);
+        if (unencoded.indexOf(":") - 1 > -1) {
+            username = unencoded.substring(0, unencoded.indexOf(":"));
+            password = unencoded.substring(unencoded.indexOf(":") + 1);
         }
 
         if (encoded.length() == 0 && request.getParameter("username") != null) {
-                username = request.getParameter("username").toLowerCase();
-                password = request.getParameter("password");
+            username = request.getParameter("username").toLowerCase();
+            password = request.getParameter("password");
         }
 
         if (getLogger().isDebugEnabled()) {
