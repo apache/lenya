@@ -91,7 +91,9 @@
             <map:generate src="fallback://lenya/modules/tinymce/resources/misc/download.xml"/>
           </map:otherwise>
         </map:select>
-
+        <map:transform type="i18n">      
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
         <map:serialize type="xhtml"/>
       </map:match>
 
