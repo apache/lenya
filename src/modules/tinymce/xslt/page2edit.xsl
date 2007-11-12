@@ -221,7 +221,7 @@
           </textarea>
           <xsl:text>
           </xsl:text>
-          <input i18n:attr="value" type="submit" name="submit" value="Submit"/>		
+          <input i18n:attr="value" type="submit" name="submit" value="Save"/>		
           <xsl:text>
           </xsl:text>
           <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>		
