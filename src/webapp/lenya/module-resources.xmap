@@ -71,8 +71,8 @@
           <map:generate src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}"/>
           <map:transform src="fallback://lenya/xslt/resources/translate-rng-includes.xsl">
             <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-            <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
+          <map:transform type="proxy"/>
           <map:serialize type="xml"/>
         </map:match>
         <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
