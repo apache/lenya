@@ -266,8 +266,9 @@
 
     <!-- Internal usecases -->
     <!-- 
-       FIXME: this apparently delegates arbitrary internal requests to the module sitemap. 
-       What is it supposed to do? Please comment.
+       We match internal requests to the publication sitemap early to avoid the
+       time-consuming resource-exists operations in the subsequent pipelines
+       before the final publication matcher is reached.
     -->
     <map:pipeline internal-only="true">
       <map:match pattern="*/**">
