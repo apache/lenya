@@ -59,7 +59,7 @@ import org.apache.lenya.util.ServletHelper;
  * {@link org.apache.lenya.cms.publication.ResourceType#getExpires()}</li>
  * <li><strong><code>schemaUri</code></strong> - see
  * {@link org.apache.lenya.xml.Schema#getURI()}</li>
- * <li><strong><code>httpSchemaUri</code></strong> - the URI to request the schema over HTTP</li>
+ * <li><strong><code>httpSchemaUri</code></strong> - the URI to request the schema over HTTP, without Proxy and context (use {proxy:} around it).</li>
  * <li><strong><code>supportsFormat:{format}</code></strong> - true if the resource type
  * supports this format, false otherwise</li>
  * </ul>
@@ -115,8 +115,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 value = resourceType.getSchema().getURI();
             } else if (attribute.equals(HTTP_SCHEMA_URI)) {
                 String uri = resourceType.getSchema().getURI();
-                String prefix = request.getContextPath();
-                value = transformFallbackUriToHttp(pub.getId(), prefix, uri);
+                value = transformFallbackUriToHttp(pub.getId(), uri);
             } else if (attribute.equals(EXPIRES)) {
                 Date expires = resourceType.getExpires();
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
@@ -152,13 +151,13 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
      * @return A string.
      * @throws ConfigurationException
      */
-    protected String transformFallbackUriToHttp(String pubid, String prefix, String uri)
+    protected String transformFallbackUriToHttp(String pubid, String uri)
             throws ConfigurationException {
         if (uri.startsWith("fallback://lenya/modules/")) {
             String path = StringUtils.substringAfter(uri, "fallback://lenya/modules/");
             String module = StringUtils.substringBefore(path, "/");
             path = StringUtils.substringAfter(path, module + "/resources");
-            return prefix + "/" + pubid + "/modules/" + module + path;
+            return "/" + pubid + "/modules/" + module + path;
         } else {
             throw new ConfigurationException("Don't know how to create HTTP URL from : " + uri);
         }

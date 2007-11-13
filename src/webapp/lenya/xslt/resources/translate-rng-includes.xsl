@@ -16,17 +16,22 @@
   limitations under the License.
 -->
 
+
+<!-- FIXME: this file should be killed the sooner the better.
+     There is really no excuse to re-invent a fallback source resolver with substring guessing.
+-->
+
+
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
 
   <xsl:param name="publicationid" />
-  <xsl:param name="contextprefix"/>
   
   <xsl:template match="@href[starts-with(.,'fallback://lenya/resources/')]" priority="10">
     <xsl:attribute name="href">
       <xsl:variable name="resource" select="substring-after(., 'fallback://lenya/resources/')"/>
-      <xsl:value-of select="concat($contextprefix, '/lenya/', $resource )"/>
+      <xsl:value-of select="concat('/lenya/', $resource )"/>
     </xsl:attribute>
   </xsl:template>
 
@@ -35,7 +40,7 @@
     <xsl:variable name="restype" select="substring-before($nofallback,'/resources')"/>
     <xsl:variable name="resource" select="substring-after($nofallback,'resources/')"/>
     <xsl:attribute name="href">
-      <xsl:value-of select="concat($contextprefix, '/' , $publicationid, '/modules/' , $restype, '/', $resource)"/>
+      <xsl:value-of select="concat('/' , $publicationid, '/modules/' , $restype, '/', $resource)"/>
     </xsl:attribute>
   </xsl:template>
   
