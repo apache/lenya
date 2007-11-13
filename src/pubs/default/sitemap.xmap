@@ -211,7 +211,12 @@
           <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
         </map:transform>
 
-       <!-- FIXME: why is the title handling inside a language-exists action? please document! -->  
+       <!--
+         The stylesheet above has no chance to check if the document exists, so it
+         inserts the title "404 (Page not found)" into the page.
+         If the document exists in the requested language, the title is now replaced by
+         the actual dublin core title.
+       -->  
         <map:act type="language-exists">
           <map:transform src="fallback://xslt/addXhtmlTitle.xsl">
             <map:parameter name="title" value="{dublincore:title}"/>
