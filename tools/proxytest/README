@@ -3,6 +3,7 @@ How to use Jetty 6.x with Lenya
 
 If you want to play with Lenya in Jetty 6.1.6, please take a look at jetty6.xml
 and follow the instructions in the comment header. In a nutshell:
+
   $LENYA_HOME:> cd tools/jetty-6.1.6
   $LENYA_HOME:> java -Djava.endorsed.dirs="../../externals/cocoon_2_1_x/lib/endorsed/" \
                      -jar start.jar ../proxytest/jetty6.xml
@@ -26,14 +27,18 @@ How to build a proxy test scaffold
 ==================================
 
 The proxy example setting simulates the following situation:
+
 * A customer wants a company hostname and URLs without Lenya-specific
   path components for the live site.
+
 * The server uses name-based virtual hosting with just one IP, i.e.
   there can only be one SSL vhost, which is shared among several
   customers. This implies the need for sub-directories in the proxy
   URL.
+
 * "authoring" should be ssl-protected. There is no need for a
   customer hostname here, since it's not publicly visible.
+
 * Any SSL-protected documents in "live" can be handled by the SSL
   vhost (not using the company hostname is ok in this case).
 
@@ -49,8 +54,10 @@ The global proxy for non-publication-specific resources shall be
 http://www.example.com/lenya/.
 
 
+
 FIXME: The instructions below are currently Linux-specific. 
 Please contribute Windows and MacOS instructions!
+
 
 
 First of all, start Jetty6 as described above.
@@ -59,40 +66,45 @@ packages should be fine). Then apply the following tweaks:
 
 1. Install the bogus SSL keys:
 
-   cp *.pem /tmp (yes, /tmp. it's just for testing, no need to clutter up
-                  your apache ssl directory)
+      $LENYA_HOME/tools/proxytest:> cp *.pem /tmp 
+
+   (yes, /tmp. it's just for testing, no need to clutter up your apache ssl 
+   directory)
 
 2. Install an apache configuration for virtual hosts:
 
-   cp apache_vhosts.conf /etc/apache2/vhosts.d (or link it there)
+      $LENYA_HOME/tools/proxytest:> cp apache_vhosts.conf /etc/apache2/vhosts.d 
 
-   (That's probably distro-specific. Just make sure that the file is being 
-   included from your master config file)
+   (That's probably distro-specific. Just make sure that the file is being included
+   from your master config file)
 
 3. Append some fake host entries to your local resolver:
 
-   cat hosts_fake >> /etc/hosts
+      $LENYA_HOME/tools/proxytest:> cat hosts_fake >> /etc/hosts
 
 4. Make sure apache2 is configured to run SSL by passing it the -DSSL flag.
 
 5. Restart apache2:
 
-   /etc/init.da/apache2 restart
+      $LENYA_HOME:> /etc/init.d/apache2 restart
 
-6. Uncomment the proxy settings in the default publication config:
-   (src/pubs/default/config/publication.xml)
+6. Uncomment the proxy settings in the default publication config
+   (src/pubs/default/config/publication.xml) and the global proxy settings
+   (src/modules-core/linking/config/cocoon-xconf/global-proxies.xconf).
+   You can use the patch provided in this directory:
 
-7. Uncomment the global proxy settings.
-   (src/modules-core/linking/config/cocoon-xconf/global-proxies.xconf)
+      $LENYA_HOME:> patch -p0 < tools/proxytest/activate_proxy.diff
 
-8. ./build.sh clean && ./build.sh
+7. Build Lenya:
 
-9. Surf to http://localhost:8888/webapp to check what the proxy does (look
+      $LENYA_HOME:> ./build.sh clean && ./build.sh
+
+8. Surf to http://localhost:8888/webapp to check what the proxy does (look
    at the page source frequently). Then try
    http://www.example.com/lenya/default/authoring/ (authoring) and 
    http://customer.example.com (live).
 
-10. Watch the logs in /tmp/LenyaTest_*.
+9. Watch the logs in /tmp/LenyaTest_*.
 
 This should give you a working proxy setup.
 
