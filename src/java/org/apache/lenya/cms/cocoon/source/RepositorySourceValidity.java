@@ -44,9 +44,11 @@ public class RepositorySourceValidity implements SourceValidity {
     public int isValid(SourceValidity validity) {
         if (validity instanceof RepositorySourceValidity) {
             RepositorySourceValidity repoValidity = (RepositorySourceValidity) validity;
+            String repoValidityUri = repoValidity.getSourceURI();
 
-            if (!repoValidity.getSourceURI().equals(this.sourceUri)) {
-                throw new RuntimeException("Wrong source URI!");
+            if (!repoValidityUri.equals(this.sourceUri)) {
+                throw new RuntimeException("Wrong source URI: [" + repoValidityUri
+                        + "] instead of [" + this.sourceUri + "]!");
             }
             if (this.lastModified >= repoValidity.getLastModified()) {
                 return SourceValidity.VALID;
