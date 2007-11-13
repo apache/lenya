@@ -220,15 +220,16 @@
       <tr bgcolor="#FFC0C0">
         <th></th>
         <th>Component</th>
-        <th colspan="3">Results</th>
+        <th colspan="3">Elapsed time in ms</th>
+        <th>View source</th>
       </tr>
       <tr bgcolor="#C0C0FF">
         <td colspan="2">
           <font face="verdana"><strong><xsl:value-of select="profile:environmentinfo/profile:uri"/></strong></font>
         </td>
-        <td>Total Time</td>
-        <td>Setup Time</td>
-        <td>Processing Time</td>
+        <td>Total</td>
+        <td>Setup</td>
+        <td>Processing</td>
         <td/>
       </tr>
 

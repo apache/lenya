@@ -14,7 +14,7 @@
     <map:transform src="xslt/xmlverbatimwrapper.xsl">
       <map:parameter 
           name="css-stylesheet" 
-          value="/modules/profiling/css/xmlverbatim.css"
+          value="{proxy:/modules/profiling/css/xmlverbatim.css}"
       />
     </map:transform>
     <map:transform type="proxy"/>
