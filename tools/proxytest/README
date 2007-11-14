@@ -4,9 +4,13 @@ How to use Jetty 6.x with Lenya
 If you want to play with Lenya in Jetty 6.1.6, please take a look at jetty6.xml
 and follow the instructions in the comment header. In a nutshell:
 
-  $LENYA_HOME:> cd tools/jetty-6.1.6
-  $LENYA_HOME:> java -Djava.endorsed.dirs="../../externals/cocoon_2_1_x/lib/endorsed/" \
-                     -jar start.jar ../proxytest/jetty6.xml
+  $LENYA_HOME:> wget http://dist.codehaus.org/jetty/jetty-6.1.6/jetty-6.1.6rc0.zip
+  $LENYA_HOME:> cd tools/
+  $LENYA_HOME/tools:> unzip ../jetty-6.1.6rc0.zip
+  $LENYA_HOME/tools:> cd jetty-6.1.6
+  $LENYA_HOME/tools/jetty-6.1.6:> java \
+         -Djava.endorsed.dirs="../../externals/cocoon_2_1_x/lib/endorsed/" \
+         -jar start.jar ../proxytest/jetty6.xml
 
 It would be nice to upgrade our included Jetty to 6.x real soon now, since
 the current version has a broken AJP connector that makes effective proxy
