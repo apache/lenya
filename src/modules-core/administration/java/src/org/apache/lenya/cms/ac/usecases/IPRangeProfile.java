@@ -133,8 +133,8 @@ public class IPRangeProfile extends AccessControlUsecase {
                 Part part = new Part(i);
                 part.setValue(usecase.getParameterAsString(paramName));
                 if (!part.isValid()) {
-                    usecase.addErrorMessage("Part " + (i + 1) + " of the " + names[type]
-                            + " is not valid.");
+                	String[] parameters = { Integer.toString(i + 1), names[type] };
+                    usecase.addErrorMessage("invalid-ip-address-part", parameters);
                 }
                 usecase.setParameter(paramName, part);
             }

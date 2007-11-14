@@ -38,5 +38,7 @@
   <message key="This is not a valid group ID.">This is not a valid group ID.</message>
   <message key="Group Users">Group Users</message>
   <message key="All Users">All Users</message>
+  <message key="This is not a valid IP range ID.">This is not a valid IP range ID.</message>
+  <message key="invalid-ip-address-part">Part {0} of the {1} is not valid.</message>
   
 </catalogue>

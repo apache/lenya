@@ -32,12 +32,14 @@
   
   <message key="Local User">Lokalen Benutzer</message>
   <message key="add-user">{0} hinzufügen</message>
-  <message key="This is not a valid user ID.">Die Benutzer-ID ist nicht gültig.</message>
+  <message key="This is not a valid user ID.">Die Benutzer-ID ist ungültig.</message>
   <message key="Please enter a valid e-mail address.">Bitte geben Sie eine gültige E-Mail-Adresse ein.</message>
   <message key="Password and confirmed password are not equal.">Passwort und Passwortbestätigung stimmen nicht überein.</message>
-  <message key="This is not a valid group ID.">Die Gruppen-ID ist nicht gültig.</message>
+  <message key="This is not a valid group ID.">Die Gruppen-ID ist ungültig.</message>
   <message key="Group Users">Gruppen-Benutzer</message>
   <message key="All Users">Alle Benutzer</message>
+  <message key="This is not a valid IP range ID.">Die IP-Bereichs-ID ist ungültig.</message>
+  <message key="invalid-ip-address-part">Abschnitt {0} des Feldes "{1}" ist ungültig.</message>
   
 </catalogue>
 
