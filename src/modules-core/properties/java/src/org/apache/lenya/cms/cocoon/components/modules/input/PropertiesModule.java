@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -32,12 +33,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.modules.input.DefaultsModule;
 import org.apache.cocoon.components.modules.input.InputModule;
+import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -45,6 +51,10 @@ import org.apache.forrest.conf.AntProperties;
 import org.apache.lenya.cms.publication.Publication;	
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.module.ModuleManager;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -56,7 +66,7 @@ import org.xml.sax.SAXException;
  * directories.
  */
 public class PropertiesModule extends DefaultsModule implements InputModule,
-        Initializable, ThreadSafe, Serviceable {
+        Initializable, ThreadSafe, Serviceable, Contextualizable {
     
     private HashSet pubInit;
     
@@ -67,6 +77,14 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
     private ModuleManager moduleManager;
     
     private ServiceManager serviceManager;
+
+    private ServiceManager manager;
+
+    private PublicationManager publicationManager;
+
+    private DocumentFactory factory;
+
+    private Context context;
 
     private final static String lenyaHome = "context:/";
 
@@ -133,7 +151,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
     }
 
     public void initialize() throws Exception {
-
+        Request request = ContextHelper.getRequest(context);
+        factory = DocumentUtil.getDocumentFactory(manager, request);
+        Publication[] pubs = publicationManager.getPublications(factory);
+        System.out.println("pubs:"+pubs.length);
         pubInit = new HashSet();
         
         // add all homes important to Lenya to the properties
@@ -231,6 +252,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
             ParserConfigurationException, SAXException {
 
         Source source = null;
+        InputStream in = null;
         try {
 
             source = m_resolver.resolveURI(propertiesStringURI);
@@ -265,6 +287,12 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
         } finally {
             if (source != null) {
                 m_resolver.release(source);
+            }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                }
             }
         }
 
@@ -301,8 +329,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
     public void service(ServiceManager manager) throws ServiceException {        
         this.serviceManager = manager;
+        this.manager=manager;
         m_resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
         moduleManager = (ModuleManager) manager.lookup(ModuleManager.ROLE);
+        publicationManager = (PublicationManager) manager.lookup(PublicationManager.ROLE);
     }
 
     /**
@@ -319,6 +349,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
      */
     private final void debug(String debugString) {
         getLogger().debug(debugString);
+    }
+
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
     }
 
 }
