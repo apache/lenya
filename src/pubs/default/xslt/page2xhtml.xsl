@@ -57,6 +57,7 @@
         <link rel="neutron-introspection" type="application/neutron+xml"
           href="{$root}{$document-path}.xml?lenya.module=neutron&amp;lenya.action=introspect"/>
         <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
+        <link rel="SHORTCUT ICON" type="image/ico" href="/lenya/images/lenya.ico"/>
         <!-- Load doctype-specific CSS -->
         <xsl:choose>
           <xsl:when test="$document-type">
