@@ -36,5 +36,7 @@
   <message key="Please enter a valid e-mail address.">Please enter a valid e-mail address.</message>
   <message key="Password and confirmed password are not equal.">Password and confirmed password are not equal.</message>
   <message key="This is not a valid group ID.">This is not a valid group ID.</message>
+  <message key="Group Users">Group Users</message>
+  <message key="All Users">All Users</message>
   
 </catalogue>
