@@ -75,18 +75,20 @@ packages should be fine). Then apply the following tweaks:
    (yes, /tmp. it's just for testing, no need to clutter up your apache ssl 
    directory)
 
-2. Install an apache configuration for virtual hosts:
+2. Configure some virtual hosts in your Apache HTTPD server:
+   Locate an active configuration file (distribution-dependent), and add the line
 
-      $LENYA_HOME/tools/proxytest:> cp apache_vhosts.conf /etc/apache2/vhosts.d 
+      "Include $LENYA_HOME/tools/proxytest/apache_vhosts.conf"
 
-   (That's probably distro-specific. Just make sure that the file is being included
-   from your master config file)
+   to it.
 
 3. Append some fake host entries to your local resolver:
 
       $LENYA_HOME/tools/proxytest:> cat hosts_fake >> /etc/hosts
 
 4. Make sure apache2 is configured to run SSL by passing it the -DSSL flag.
+   The best way to do it depends on your distribution. If in doubt, omit SSL
+   for now and try to add it later.
 
 5. Restart apache2:
 
