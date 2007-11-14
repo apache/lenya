@@ -81,6 +81,7 @@
     <module name="profiling"/>
     <module name="languageselector"/>
     <module name="administration"/>
+    <module name="acusecases"/>
     <module name="news"/>
     <module name="prettyprinting"/>
     <module name="usecasedocument"/>
