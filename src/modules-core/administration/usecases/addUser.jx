@@ -28,7 +28,12 @@
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
     
-    <h1><i18n:text>Add <jx:out value="${request.getParameter('userType')}"/></i18n:text></h1>
+    <h1>
+      <i18n:translate>
+        <i18n:text>add-user</i18n:text>
+        <i18n:param><i18n:text><jx:out value="${request.getParameter('userType')}"/></i18n:text></i18n:param>
+      </i18n:translate>
+    </h1>
     
     <form id="form-add_user" method="POST">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
@@ -53,7 +58,7 @@
         </jx:if>
         
         <tr>
-          <td class="lenya-entry-caption"><label for="fullName"><i18n:text>Name</i18n:text> *</label></td>
+          <td class="lenya-entry-caption"><label for="fullName"><i18n:text>Name</i18n:text></label></td>
           <td><input type="text" name="fullName" class="lenya-form-element" value="${request.getParameter('fullName')}"/></td>
         </tr>
         <tr>
