@@ -19,6 +19,16 @@
 <!-- $Id: resources-shared.xmap 349588 2005-11-29 02:07:44Z chestnut $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <map:components>
+    <map:transformers default="xslt">
+      <!-- temporary fix for bxe. should be reconsidered -->
+      <map:transformer name="proxy-rng" logger="lenya.sitemap.transformer.proxy"
+        src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+        <transform namespace="http://relaxng.org/ns/structure/1.0" element="include" attribute="href"/>
+      </map:transformer>
+    </map:transformers>
+  </map:components>
 
   <map:resources>
     <map:resource name="proxy-css">
@@ -72,7 +82,7 @@
           <map:transform src="fallback://lenya/xslt/resources/translate-rng-includes.xsl">
             <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           </map:transform>
-          <map:transform type="proxy"/>
+          <map:transform type="proxy-rng"/>
           <map:serialize type="xml"/>
         </map:match>
         <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
