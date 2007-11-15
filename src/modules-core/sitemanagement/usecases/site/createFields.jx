@@ -127,7 +127,14 @@
         <td>
           <select class="lenya-form-element" name="language">
             <jx:forEach var="language" items="${usecase.getParameter('languages')}">
-              <option value="${language}">${language}</option>
+              <jx:choose>
+                <jx:when test="${language.equals(usecase.getParameter('language'))}">
+                  <option value="${language}" selected="selected">${language} (<i18n:text>${language}</i18n:text>)</option>
+                </jx:when>
+                <jx:otherwise>
+                  <option value="${language}">${language} (<i18n:text>${language}</i18n:text>)</option>
+                </jx:otherwise>
+              </jx:choose>
             </jx:forEach>
           </select>
         </td>
@@ -140,7 +147,7 @@
         <td>
           <jx:set var="language" value="${languages[0]}"/>
           <input type="hidden" name="language" value="${language}"/>
-          <jx:out value="${language}"></jx:out>
+          <jx:out value="${language}"/>
         </td>
       </tr>
     </jx:otherwise>
