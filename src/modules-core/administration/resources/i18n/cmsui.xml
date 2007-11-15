@@ -40,5 +40,8 @@
   <message key="All Users">All Users</message>
   <message key="This is not a valid IP range ID.">This is not a valid IP range ID.</message>
   <message key="invalid-ip-address-part">Part {0} of the {1} is not valid.</message>
+  <message key="The old password is not correct.">The old password is not correct.</message>
+  <message key="The password must be at least six characters long.">The password must be at least six characters long.</message>
+  <message key="The password must contain at least one number.">The password must contain at least one number.</message>
   
 </catalogue>

@@ -40,6 +40,9 @@
   <message key="All Users">Alle Benutzer</message>
   <message key="This is not a valid IP range ID.">Die IP-Bereichs-ID ist ungültig.</message>
   <message key="invalid-ip-address-part">Abschnitt {0} des Feldes "{1}" ist ungültig.</message>
+  <message key="The old password is not correct.">Das bestehende Passwort wurde nicht korrekt eingegeben.</message>
+  <message key="The password must be at least six characters long.">Das Passwort muss mindestens 6 Zeichen lang sein.</message>
+  <message key="The password must contain at least one number.">Das Passwort muss mindestens eine Ziffer enthalten.</message>
   
 </catalogue>
 
