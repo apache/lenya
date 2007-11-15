@@ -72,6 +72,9 @@
   <message key="will-paste-in-own-subtree">
     Ein ausgeschnittenes Dokument kann nicht im eigenen Teilbaum eingefügt werden.
   </message>
+  <message key="Change Document URL">URL des Dokuments ändern</message>
+  <message key="change-document-url">URL des Dokuments <q>{0}</q> ändern</message>
+  <message key="New URL Fragment">Neues URL-Fragment</message>
   
   <!-- force check-in -->
   <message key="force-checkin">Check-In erzwingen</message>

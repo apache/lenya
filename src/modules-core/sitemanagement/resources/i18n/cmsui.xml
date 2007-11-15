@@ -71,6 +71,9 @@
   <message key="no-rollback-no-privileges">Rollback disabled. You do not
   have sufficient privileges.</message>
   <message key="will-paste-in-own-subtree">Can't paste a cut document in its own subtree.</message>
+  <message key="Change Document URL">Change Document URL</message>
+  <message key="change-document-url">Change the URL of document <q>{0}</q></message>
+  <message key="New URL Fragment">New URL Fragment</message>
   
   <!-- force check-in -->
   <message key="force-checkin">Force Check-In</message>
