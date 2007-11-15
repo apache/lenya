@@ -169,6 +169,8 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
         Area authoring = pub.getArea("authoring");
 
         SiteNode sourceNode = authoring.getSite().getNode(sourcePath);
+        String[] sourceNames = getChildNames(sourceNode);
+
         NodeSet nodes = SiteUtil.getSubSite(getManager(), sourceNode);
         Document[] docs = nodes.getDocuments();
         Map doc2path = new HashMap();
@@ -187,5 +189,10 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
             String newPath = docs[i].getPath();
             assertEquals(targetBase + oldPath, newPath);
         }
+        
+        SiteNode targetNode = authoring.getSite().getNode(targetPath);
+        String[] targetNames = getChildNames(targetNode);
+        assertEquals(StringUtil.join(sourceNames, ","), StringUtil.join(targetNames, ","));
+        
     }
 }
