@@ -33,7 +33,7 @@
       <jx:otherwise>
         <i18n:translate>
           <i18n:text>New ... Document</i18n:text>
-          <i18n:param><jx:out value="${usecase.getParameter('doctype')}"/></i18n:param>
+          <i18n:param><i18n:text>resourceType-<jx:out value="${usecase.getParameter('doctype')}"/></i18n:text></i18n:param>
         </i18n:translate>
       </jx:otherwise>
     </jx:choose>
