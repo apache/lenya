@@ -171,6 +171,8 @@
         </p>
         <p>
           The ProxyTransformer can be used to transform attribute values of elements in arbitrary namespaces.
+          It is recommended to declare a dedicated proxy transformer instance for each type of transformation,
+          for instance <em>proxy-xhtml</em> for XHTML documents and <em>proxy-rng</em> for Relax NG documents.
           For each namespace and element combination, you have to add a <code><![CDATA[<transform/>]]></code> element
           to the configuration. The following snippet shows the configuration to convert XHTML links. Beware
           that the XHTML document format supports various elements and attributes which can contain URLs, so
@@ -180,6 +182,13 @@
     src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
   <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
   ...
+</map:transformer>]]></source>
+        <p>
+          The next example declares a proxy transformer for Relax NG include statements:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transformer name="proxy-rng" logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+  <transform namespace="http://relaxng.org/ns/structure/1.0" element="include" attribute="href"/>
 </map:transformer>]]></source>
       </section>
       <section>
