@@ -27,7 +27,7 @@
   exclude-result-prefixes="menu"
   >
  
-  <xsl:param name="contextPrefix"/> 
+  <xsl:param name="areaPrefix"/> 
   <xsl:param name="publicationid"/>
   <xsl:param name="area"/>
   <xsl:param name="documenturl"/>
@@ -71,9 +71,9 @@
             <script type="text/javascript">
               djConfig = { isDebug: false };
             </script>
-            <script type="text/javascript" src="/cforms/dojo/dojo.js">&#160;</script>
+            <script type="text/javascript" src="/modules/menubar/dojo/dojo.js">&#160;</script>
             <script type="text/javascript">
-              MENU_URL = "<xsl:value-of select="concat($contextPrefix,'/', $publicationid, '/', $area, $documenturl, '?', $queryString)"/>";
+              MENU_URL = "<xsl:value-of select="concat($areaPrefix, $documenturl, '?', $queryString)"/>";
             </script>
             <script type="text/javascript" src="/modules/menubar/javascript/loadmenu.js">&#160;</script>
           </head>
