@@ -20,9 +20,13 @@ package org.apache.lenya.cms.publication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -506,19 +510,30 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         SiteStructure site = sourceArea.getSite();
 
         SiteNode root = site.getNode(sourcePath);
-        NodeSet subsite = SiteUtil.getSubSite(this.manager, root);
+        List subsite = preOrder(root);
 
-        for (NodeIterator n = subsite.ascending(); n.hasNext();) {
-            SiteNode node = n.next();
+        for (Iterator n = subsite.iterator(); n.hasNext();) {
+            SiteNode node = (SiteNode) n.next();
             String subPath = node.getPath().substring(sourcePath.length());
             targetArea.getSite().add(targetPath + subPath);
         }
-        for (NodeIterator n = subsite.descending(); n.hasNext();) {
-            SiteNode node = n.next();
+        Collections.reverse(subsite);
+        for (Iterator n = subsite.iterator(); n.hasNext();) {
+            SiteNode node = (SiteNode) n.next();
             String subPath = node.getPath().substring(sourcePath.length());
             moveAllLanguageVersions(sourceArea, sourcePath + subPath, targetArea, targetPath
                     + subPath);
         }
+    }
+    
+    protected List preOrder(SiteNode node) {
+    	List list = new ArrayList();
+    	list.add(node);
+    	SiteNode[] children = node.getChildren();
+    	for (int i = 0; i < children.length; i++) {
+    		list.addAll(preOrder(children[i]));
+    	}
+    	return list;
     }
 
     public void moveAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
@@ -563,14 +578,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         SiteStructure site = sourceArea.getSite();
 
-        SiteNode root = site.getNode(sourcePath);
-        NodeSet subsite = SiteUtil.getSubSite(this.manager, root);
-
-        for (NodeIterator i = subsite.ascending(); i.hasNext();) {
-            SiteNode node = i.next();
-            String subPath = node.getPath().substring(sourcePath.length());
-            copyAllLanguageVersions(sourceArea, sourcePath + subPath, targetArea, targetPath
-                    + subPath);
+        copyAllLanguageVersions(sourceArea, sourcePath, targetArea, targetPath);
+        
+        SiteNode node = site.getNode(sourcePath);
+        SiteNode[] children = node.getChildren();
+        for (int i = 0; i < children.length; i++) {
+        	String childTargetPath = targetPath + "/" + children[i].getName();
+        	copyAll(sourceArea, children[i].getPath(), targetArea, childTargetPath);
         }
     }
 
