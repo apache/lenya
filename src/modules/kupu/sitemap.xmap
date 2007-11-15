@@ -99,7 +99,7 @@
           <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupumacros.xsl">
             <map:parameter name="contentfile" 
               value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-path}}?lenya.module=kupu&amp;lenya.step=content"/>
-            <map:parameter name="context-prefix" value="{proxy:/{page-envelope:publication-id}}/modules/kupu"/>
+            <map:parameter name="context-prefix" value="/{page-envelope:publication-id}/modules/kupu"/>
             <!-- Only used to display the document path of the edited doc  -->
             <map:parameter name="document-path" value="&quot;{dublincore:title}&quot;"/>
             <map:parameter name="save-destination" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-path}}?lenya.event=edit"/>
@@ -124,7 +124,7 @@
             <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}"/>
             <map:transform 
               src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/content2edit.xsl">
-              <map:parameter name="css" value="{proxy:/{1}/authoring/css/page.css}"/>
+              <map:parameter name="css" value="/{1}/authoring/css/page.css"/>
               <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
             </map:transform>
             <map:transform type="uuid2url"/>
