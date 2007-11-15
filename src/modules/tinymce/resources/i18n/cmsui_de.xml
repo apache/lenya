@@ -18,4 +18,5 @@
 
 <catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <message key="tinymce.edit">Mit TinyMCE bearbeiten</message>
+  <message key="With TinyMCE">Mit TinyMCE</message>
 </catalogue>
