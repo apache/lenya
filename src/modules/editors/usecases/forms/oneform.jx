@@ -65,7 +65,7 @@
             </div>
           </div>
           
-          <div class="lenya-box-toggled" style="margin-right: 10px;">
+          <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
             <div class="lenya-box-title">
               <a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>
             </div>
