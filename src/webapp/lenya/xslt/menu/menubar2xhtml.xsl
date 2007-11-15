@@ -215,7 +215,16 @@
   -->
   
   <xsl:template match="menu:menu" mode="nav">
-    <li id="nav{position()}"><i18n:text><xsl:value-of select="@name"/></i18n:text>
+    <li>
+      <xsl:choose>
+        <xsl:when test="*">
+          <xsl:attribute name="id">nav<xsl:value-of select="position()"/></xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="class">disabled</xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+      <i18n:text><xsl:value-of select="@name"/></i18n:text>
       <xsl:if test="*">
         <ul id="menu{position()}">
           <xsl:apply-templates select="menu:block"/>
