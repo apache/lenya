@@ -124,9 +124,10 @@
   </xsl:template>
   
 
-  <xsl:template match="xhtml:li[starts-with(@id, 'nav')]">
+  <xsl:template match="xhtml:div[@id = 'lenya-options']/xhtml:ul/xhtml:li">
     <xsl:copy>
-      <xsl:copy-of select="@*|node()"/>
+      <xsl:attribute name="id">nav<xsl:value-of select="position()"/></xsl:attribute>
+      <xsl:copy-of select="node()"/>
       <ul id="menu{position()}">
         <li id="menuPlaceholder{position()}"><img src="/modules/menubar/images/indicator.gif"/></li>
       </ul>

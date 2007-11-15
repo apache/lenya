@@ -24,6 +24,8 @@
 
     <map:pipeline internal-only="true">  
       
+      <!-- AJAX menubar -->
+      <!-- ajaxmenu/{1:pubId}/{2:area}/{3:...} -->
       <map:match pattern="ajaxmenu/*/*/**">
         <map:generate src="xslt/emptyMenu.xml"/>
         <map:transform src="fallback://lenya/xslt/menu/menubar2xhtml.xsl">
@@ -92,8 +94,8 @@
     
    <map:pipeline>
      
-     <!-- Lenya menubar -->
-     <!-- {publication-id}/{area}/... -->
+     <!-- Default Lenya menubar -->
+     <!-- {1:pubId}/{2:area}/{3:...} -->
      <map:match pattern="*/*/**">
        
        <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
