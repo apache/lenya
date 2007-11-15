@@ -28,6 +28,7 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.util.StringUtil;
 
 /**
  * Document manager test.
@@ -122,6 +123,7 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
         Area authoring = pub.getArea("authoring");
 
         SiteNode sourceNode = authoring.getSite().getNode(sourcePath);
+        
         NodeSet nodes = SiteUtil.getSubSite(getManager(), sourceNode);
         Document[] docs = nodes.getDocuments();
         Map doc2path = new HashMap();
@@ -144,7 +146,21 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
             assertEquals(newDoc.getContentLength(), docs[i].getContentLength());
             assertFalse(newDoc.getUUID().equals(docs[i].getUUID()));
         }
+        
+        String[] sourceNames = getChildNames(sourceNode);
+        SiteNode targetNode = authoring.getSite().getNode(targetPath);
+        String[] targetNames = getChildNames(targetNode);
+        assertEquals(StringUtil.join(sourceNames, ","), StringUtil.join(targetNames, ","));
     }
+
+	protected String[] getChildNames(SiteNode node) {
+		SiteNode[] sourceChildren = node.getChildren();
+        String[] names = new String[sourceChildren.length];
+        for (int i = 0; i < names.length; i++) {
+        	names[i] = sourceChildren[i].getName();
+        }
+		return names;
+	}
 
     protected void doTestMoveAll(DocumentManager docManager, String sourcePath, String targetPath)
             throws SiteException, DocumentException, PublicationException {
