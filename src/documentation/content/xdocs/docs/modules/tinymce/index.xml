@@ -42,7 +42,7 @@
             Unpack the archive in the resources directory of the tinymce module
             (<code>$LENYA_HOME/src/modules/tinymce/resources/</code>) to make it globally available, <br />
             <strong>or</strong>, if you don't want to change stuff in your source tree,<br />
-            in your publication under <code>$PUB_HOME/lenya/modules/tinymce/resource/</code>.
+            in your publication under <code>$PUB_HOME/lenya/modules/tinymce/resources/</code>.
           </p>
           <p>
             That should give you a subdirectory named <code>tinymce</code>.
