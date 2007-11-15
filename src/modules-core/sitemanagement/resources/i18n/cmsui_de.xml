@@ -79,6 +79,8 @@
   <message key="The document can't be deleted if a live version exists.">
     Das Dokument kann nicht gelöscht werden, wenn eine Live-Version existiert.
   </message>
+  <message key="child">Kind-Dokument</message>
+  <message key="sibling after">Folgendes Geschwister-Dokument</message>
   
   <!-- force check-in -->
   <message key="force-checkin">Check-In erzwingen</message>

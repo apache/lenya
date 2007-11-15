@@ -35,7 +35,7 @@
     
     <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
     
-    <form method="get" action="" id="form-force_checkin">
+    <form method="post" action="" id="form-force_checkin">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       

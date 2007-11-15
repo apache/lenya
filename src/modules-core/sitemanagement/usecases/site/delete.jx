@@ -41,7 +41,7 @@
         </i18n:translate>
       </div>
       <div class="lenya-box-body">
-        <form method="get" id="form-delete">
+        <form method="post" id="form-delete">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">

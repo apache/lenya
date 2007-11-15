@@ -78,6 +78,8 @@
   <message key="The document can't be deleted if a live version exists.">
     The document can't be deleted if a live version exists.
   </message>
+  <message key="child">Child</message>
+  <message key="sibling after">Following sibling</message>
   
   <!-- force check-in -->
   <message key="force-checkin">Force Check-In</message>
