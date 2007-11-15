@@ -84,7 +84,7 @@
         <jx:forEach var="entry" items="${usecase.getParameter('documents')}">
           <tr>
             <jx:forEach var="key" items="${usecase.getParameter('keys')}">
-              <td>
+              <td style="white-space: nowrap">
                 <jx:choose>
                   <jx:when test="${key.equals('keyPath')}">
                     <a href="${entry.getValue('keyUrl')}">
