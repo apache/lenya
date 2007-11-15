@@ -44,22 +44,22 @@
           <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
             <div class="lenya-box-title">Information</div>
             <div class="lenya-box-body">
+              <jx:set var="doc" value="${usecase.getParameter('document')}"/>
               <table class="lenya-table-noborder">
                 <tr>
-                  <td class="lenya-entry-caption">Document:</td>
-                  <td><jx:out value="${usecase.getParameter('document').getId()}"/></td>
+                  <td class="lenya-entry-caption"><i18n:text>Titel</i18n:text>:</td>
+                  <td><jx:out value="${doc.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></td>
                 </tr>
                 <tr>
-                  <td class="lenya-entry-caption">Workflow Event:</td>
-                  <jx:set var="event" value="${request.getParameter('lenya.event')}"/>
-                  <jx:choose>
-                    <jx:when test="${event.equals('') || event.equals('null')}">
-                      <td>No workflow event specified</td>
-                    </jx:when>
-                    <jx:otherwise>
-                      <td><jx:out value="${event}"/></td>
-                    </jx:otherwise>
-                  </jx:choose>
+                  <td class="lenya-entry-caption"><i18n:text>UUID</i18n:text>:</td>
+                  <td><jx:out value="${doc.getUUID()}"/></td>
+                </tr>
+                <tr>
+                  <td class="lenya-entry-caption"><i18n:text>Language</i18n:text>:</td>
+                  <td>
+                    <jx:out value="${doc.getLanguage()}"/>
+                    (<i18n:text><jx:out value="${doc.getLanguage()}"/></i18n:text>)
+                  </td>
                 </tr>
               </table>
             </div>
