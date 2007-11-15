@@ -86,10 +86,9 @@
       <div class="lenya-box-title">
         <i18n:text>Login</i18n:text>
       </div>
-      
-      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
 
       <div class="lenya-box-body">
+        <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
         <form name="login" id="login" method="post" action="?lenya.continuation=${continuation.id}&amp;lenya.usecase=${request.getParameter('lenya.usecase')}">
           <table class="lenya-table-noborder">
             <tr>
