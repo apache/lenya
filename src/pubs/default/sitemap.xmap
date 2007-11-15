@@ -348,8 +348,10 @@
           <!-- for live area: -->
           <map:when test="live">
             <!-- set cache expiration header according to resource type configuration (<expires/>) -->
-            <map:act type="set-header">
-              <map:parameter name="Expires" value="{date-iso8601-rfc822:{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}}"/>
+            <map:act type="language-exists">
+              <map:act type="set-header">
+                <map:parameter name="Expires" value="{date-iso8601-rfc822:{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}}"/>
+              </map:act>
             </map:act>
           </map:when>
           <!-- for other areas -->
