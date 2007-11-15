@@ -43,6 +43,7 @@
   <message key="The old password is not correct.">Das bestehende Passwort wurde nicht korrekt eingegeben.</message>
   <message key="The password must be at least six characters long.">Das Passwort muss mindestens 6 Zeichen lang sein.</message>
   <message key="The password must contain at least one number.">Das Passwort muss mindestens eine Ziffer enthalten.</message>
+  <message key="IP Range Groups">Gruppen des<br/>IP-Bereichs</message>
   
 </catalogue>
 
