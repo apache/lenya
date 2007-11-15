@@ -76,6 +76,9 @@
   <message key="change-document-url">URL des Dokuments <q>{0}</q> ändern</message>
   <message key="New URL Fragment">Neues URL-Fragment</message>
   <message key="The document ID is not valid.">Das URL-Fragment ist ungültig.</message>
+  <message key="The document can't be deleted if a live version exists.">
+    Das Dokument kann nicht gelöscht werden, wenn eine Live-Version existiert.
+  </message>
   
   <!-- force check-in -->
   <message key="force-checkin">Check-In erzwingen</message>
