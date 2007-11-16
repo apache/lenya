@@ -196,7 +196,7 @@
       <xsl:comment>special code for the tinymce.edit usecase view</xsl:comment>
       <xsl:text>
       </xsl:text>
-      <form method="post">
+      <form method="post" enctype="multipart/form-data">
           <xsl:text>
           </xsl:text>
           <input type="hidden" name="lenya.continuation" value="{$continuationId}"/>

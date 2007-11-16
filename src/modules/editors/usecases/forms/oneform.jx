@@ -35,7 +35,7 @@
 
     <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
     
-    <form method="post" name="oneform">
+    <form method="post" name="oneform" enctype="multipart/form-data">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <jx:choose>
