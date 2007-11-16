@@ -188,7 +188,6 @@ public class Publish extends InvokeWorkflow {
                     DocumentLocator[] requiredNodes = siteManager
                             .getRequiredResources(map, liveLoc);
                     for (int i = 0; i < requiredNodes.length; i++) {
-
                         String path = requiredNodes[i].getPath();
                         if (!liveSite.contains(path)) {
                             Link link = getExistingLink(path, document);
@@ -233,7 +232,7 @@ public class Publish extends InvokeWorkflow {
     }
 
     /**
-     * Returns a link of a certain node, preferrably in the document's language,
+     * Returns a link of a certain node, preferably in the document's language,
      * or <code>null</code> if the node has no links.
      * @param path The path of the node.
      * @param document The document.
@@ -243,10 +242,13 @@ public class Publish extends InvokeWorkflow {
     protected Link getExistingLink(String path, Document document) throws SiteException {
         SiteNode node = document.area().getSite().getNode(path);
         Link link = null;
-        if (node.hasLink(document.getLanguage())) {
-            link = node.getLink(document.getLanguage());
-        } else if (node.getLanguages().length > 0) {
-            link = node.getLink(node.getLanguages()[0]);
+        String uuid = node.getUuid();
+        if (uuid != null && uuid.equals(document.getUUID())) {
+            if (node.hasLink(document.getLanguage())) {
+                link = node.getLink(document.getLanguage());
+            } else if (node.getLanguages().length > 0) {
+                link = node.getLink(node.getLanguages()[0]);
+            }
         }
         return link;
     }
