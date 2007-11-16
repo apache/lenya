@@ -101,10 +101,15 @@ public abstract class AbstractLink implements Link {
     private DocumentFactory factory;
 
     public Document getDocument() {
-        Publication pub = getNode().getStructure().getPublication();
-        String area = getNode().getStructure().getArea();
+        SiteNode node = getNode();
+        String uuid = node.getUuid();
+        if (uuid == null) {
+            throw new UnsupportedOperationException("The node [" + node + "] has no UUID.");
+        }
+        Publication pub = node.getStructure().getPublication();
+        String area = node.getStructure().getArea();
         try {
-            return this.factory.get(pub, area, getNode().getUuid(), getLanguage());
+            return this.factory.get(pub, area, uuid, getLanguage());
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }
