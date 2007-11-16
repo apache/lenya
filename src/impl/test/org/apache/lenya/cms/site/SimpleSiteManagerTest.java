@@ -29,7 +29,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -99,9 +98,6 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
                 SiteNode node = structure.getNode(nodes[i].getPath());
                 assertNotNull(node);
-                if (node.getLanguages().length > 0) {
-                    assertNotNull(node.getUuid());
-                }
                 assertEquals(nodes[i], node);
 
                 checkLinks(siteManager, node);
@@ -144,21 +140,24 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             Link link = node.getLink(languages[i]);
             assertEquals(link.getLanguage(), languages[i]);
             assertNotNull(link.getLabel());
-            Document doc = link.getDocument();
-            assertNotNull(doc);
-
-            String docUuid = doc.getUUID();
-            String nodeUuid = node.getUuid();
-
-            assertNotNull(doc.getUUID());
-            assertEquals(docUuid, nodeUuid);
-            assertEquals(doc.getLanguage(), link.getLanguage());
-
-            // it may not be allowed to insert the doc twice
-            try {
-                siteManager.add("/sidebar", doc);
-                assertTrue("No exception thrown", false);
-            } catch (Exception expected) {
+            
+            if (node.getUuid() != null) {
+                Document doc = link.getDocument();
+                assertNotNull(doc);
+    
+                String docUuid = doc.getUUID();
+                String nodeUuid = node.getUuid();
+    
+                assertNotNull(doc.getUUID());
+                assertEquals(docUuid, nodeUuid);
+                assertEquals(doc.getLanguage(), link.getLanguage());
+    
+                // it may not be allowed to insert the doc twice
+                try {
+                    siteManager.add("/sidebar", doc);
+                    assertTrue("No exception thrown", false);
+                } catch (Exception expected) {
+                }
             }
         }
     }
