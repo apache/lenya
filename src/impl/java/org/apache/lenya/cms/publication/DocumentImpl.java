@@ -105,12 +105,12 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                             + "], language [" + identifier.getLanguage() + "]");
         }
 
+        if (identifier.getUUID() == null) {
+            throw new IllegalArgumentException("The UUID must not be null!");
+        }
+        
         this.manager = manager;
         this.identifier = identifier;
-        if (identifier.getUUID() == null) {
-            throw new IllegalArgumentException("The document ID must not be null!");
-        }
-
         this.factory = map;
         this.revision = revision;
 
