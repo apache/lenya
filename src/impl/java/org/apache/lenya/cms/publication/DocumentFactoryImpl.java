@@ -29,6 +29,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.util.Assert;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
@@ -178,7 +179,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @throws DocumentBuildException if an error occurs.
      */
     public boolean isDocument(String webappUrl) throws DocumentBuildException {
-
+    	Assert.notNull("webapp URL", webappUrl);
         PublicationManager pubMgr = getPubManager();
         try {
             URLInformation info = new URLInformation(webappUrl);
@@ -205,6 +206,10 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @return A key.
      */
     public String getKey(Publication publication, String area, String uuid, String language, int revision) {
+    	Assert.notNull("publication", publication);
+    	Assert.notNull("area", area);
+    	Assert.notNull("uuid", uuid);
+    	Assert.notNull("language", language);
         return publication.getId() + ":" + area + ":" + uuid + ":" + language + ":" + revision;
     }
 
@@ -214,6 +219,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @return A key.
      */
     public String getKey(String webappUrl) {
+    	Assert.notNull("webapp URL", webappUrl);
         try {
             if (!isDocument(webappUrl)) {
                 throw new RuntimeException("No document for URL [" + webappUrl + "] found.");
