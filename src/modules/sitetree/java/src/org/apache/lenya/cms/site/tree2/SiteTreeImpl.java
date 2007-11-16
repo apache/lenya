@@ -297,7 +297,9 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     protected void linkAdded(Link link) {
-        this.uuidLanguage2link.put(getKey(link), link);
+        if (link.getNode().getUuid() != null) {
+            this.uuidLanguage2link.put(getKey(link), link);
+        }
     }
 
     protected String getKey(Link link) {
