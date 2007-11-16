@@ -46,6 +46,9 @@
   
   <message key="notify-reviewers">Prüfer benachrichtigen</message>
   <message key="scheduler-date-format-invalid">Das Zeitsteuerungs-Datum muss der Form 'yyyy-MM-dd HH:mm:ss' entsprechen.</message>
+  <message key="This usecase can only be invoked when the live version exists.">
+    Dieser Usecase kann nur ausgeführt werden, wenn die Live-Version existiert.
+  </message>
   
 </catalogue>
 

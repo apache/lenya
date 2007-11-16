@@ -81,6 +81,7 @@
   <message key="child">Child</message>
   <message key="sibling after">Following sibling</message>
   <message key="The last language version cannot be removed.">The last language version cannot be removed.</message>
+  <message key="All language versions already exist.">All language versions already exist.</message>
   
   <!-- force check-in -->
   <message key="force-checkin">Force Check-In</message>

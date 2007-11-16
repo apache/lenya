@@ -82,6 +82,7 @@
   <message key="child">Kind-Dokument</message>
   <message key="sibling after">Folgendes Geschwister-Dokument</message>
   <message key="The last language version cannot be removed.">Die letzte Sprachversion kann nicht gelöscht werden.</message>
+  <message key="All language versions already exist.">Es existieren bereits alle Sprachversionen.</message>
   
   <!-- force check-in -->
   <message key="force-checkin">Check-In erzwingen</message>

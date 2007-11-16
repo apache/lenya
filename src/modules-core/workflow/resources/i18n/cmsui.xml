@@ -46,5 +46,8 @@
   
   <message key="notify-reviewers">Notify reviewers</message>
   <message key="scheduler-date-format-invalid">The scheduler date must be of the form 'yyyy-MM-dd HH:mm:ss'.</message>
+  <message key="This usecase can only be invoked when the live version exists.">
+    This usecase can only be invoked when the live version exists.
+  </message>
   
 </catalogue>
