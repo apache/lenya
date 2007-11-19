@@ -60,8 +60,9 @@
         </dd>
         <dt><a href="site:resource_module_overview">Assets Are Treated as Documents</a></dt>
         <dd>
-          There is no distinction between XML and binary (image, PDF etc.) documents anymore.
-          This simplifies both API and user interface.
+          There is no distinction between XML and binary documents anymore.
+          Images, PDFs and other non-XML documents are now managed using the <em>resource</em>
+          resource type. This simplifies both API and user interface.
         </dd>
         <dt><a href="site:ac-restricted">Improved Access Control</a></dt>
         <dd>
