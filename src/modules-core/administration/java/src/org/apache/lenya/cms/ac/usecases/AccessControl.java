@@ -55,8 +55,6 @@ public class AccessControl extends AccessControlUsecase {
 
     protected static final String AC_AREA = "acArea";
 
-    private Item[] items = null;
-
     protected static final String ADD = "add";
 
     protected static final String DELETE = "delete";
@@ -227,13 +225,6 @@ public class AccessControl extends AccessControlUsecase {
                 }
             }
         }
-    }
-
-    /**
-     * @return Item the item
-     */
-    public Item[] getItems() {
-        return this.items;
     }
 
     /**

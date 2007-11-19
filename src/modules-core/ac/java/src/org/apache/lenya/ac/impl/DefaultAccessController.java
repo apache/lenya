@@ -71,7 +71,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     private static final String VALID_IP = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
     private ServiceManager manager;
-    private ServiceSelector accreditableManagerSelector;
     private ServiceSelector authorizerSelector;
     private ServiceSelector policyManagerSelector;
     private AccreditableManager accreditableManager;
@@ -338,12 +337,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      */
     public void dispose() {
 
-        if (this.accreditableManagerSelector != null) {
-            if (this.accreditableManager != null) {
-                this.accreditableManager.removeItemManagerListener(this);
-                this.accreditableManagerSelector.release(this.accreditableManager);
-            }
-            getManager().release(this.accreditableManagerSelector);
+       if (this.accreditableManager != null) {
+            this.accreditableManager.removeItemManagerListener(this);
         }
 
         if (this.policyManagerSelector != null) {
