@@ -45,8 +45,7 @@
         <dd>
           The monolithic architecture has been replaced by a small generic core and
           various modules for specific purposes. This makes the codebase easier to understand
-          and makes it easier to make custom functionality available in multiple
-          publications.
+          and simplifies making custom functionality available in multiple publications.
         </dd>
         <dt><a href="site:repository">Improved Repository Access</a></dt>
         <dd>
