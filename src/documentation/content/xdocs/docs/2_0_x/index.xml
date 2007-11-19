@@ -59,6 +59,11 @@
           <acronym title="Universally Unique Identifier">UUID</acronym>s.
           Static link rewriting is not necessary anymore.
         </dd>
+        <dt>Assets Are Treated as Documents</dt>
+        <dd>
+          There is no distinction between XML and binary (image, PDF etc.) documents anymore.
+          This simplifies both API and user interface.
+        </dd>
         <dt><a href="site:ac-restricted">Improved Access Control</a></dt>
         <dd>
           It is now possible to explicitly deny permissions on specific pages.
