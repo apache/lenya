@@ -59,7 +59,7 @@
           <acronym title="Universally Unique Identifier">UUID</acronym>s.
           Static link rewriting is not necessary anymore.
         </dd>
-        <dt>Assets Are Treated as Documents</dt>
+        <dt><a href="site:resource_module_overview">Assets Are Treated as Documents</a></dt>
         <dd>
           There is no distinction between XML and binary (image, PDF etc.) documents anymore.
           This simplifies both API and user interface.
