@@ -20,18 +20,19 @@ package org.apache.lenya.cms.cocoon.source;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceValidity;
+import org.apache.excalibur.source.impl.validity.TimeStampValidity;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -40,8 +41,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -53,7 +54,7 @@ public class SiteSource extends AbstractLogEnabled implements Source {
     private Source delegate;
     private String scheme;
     private String uri;
-    
+
     /**
      * @param manager The service manager.
      * @param request The cocoon request.
@@ -62,36 +63,33 @@ public class SiteSource extends AbstractLogEnabled implements Source {
      */
     public SiteSource(ServiceManager manager, Request request, String location, Logger logger) {
         ContainerUtil.enableLogging(this, logger);
-        
+
         this.manager = manager;
         this.uri = location;
-        
-        String area = null;
+
+        String areaName = null;
         String pubId;
 
-        String completePath = location.split("\\?")[0];
-        String queryString = null;
-        if (location.indexOf("?") > -1) {
-            queryString = location.split("\\?")[1];
-        }
+        StringTokenizer locationSteps = new StringTokenizer(location, "?");
+        String completePath = locationSteps.nextToken();
 
         String relativePath;
         try {
 
-            this.scheme = completePath.split(":")[0] + ":";
+            this.scheme = completePath.substring(0, completePath.indexOf(":") + 1);
             final String absolutePath = completePath.substring(scheme.length());
             if (absolutePath.startsWith("//")) {
                 final String fullPath = absolutePath.substring(2);
-                String[] steps = fullPath.split("/");
-                pubId = steps[0];
-                area = steps[1];
-                String prefix = pubId + "/" + area;
+                StringTokenizer steps = new StringTokenizer(fullPath, "/");
+                pubId = steps.nextToken();
+                areaName = steps.nextToken();
+                String prefix = pubId + "/" + areaName;
                 relativePath = fullPath.substring(prefix.length());
             } else if (absolutePath.startsWith("/")) {
                 String webappUrl = ServletHelper.getWebappURI(request);
                 URLInformation info = new URLInformation(webappUrl);
                 pubId = info.getPublicationId();
-                area = info.getArea();
+                areaName = info.getArea();
                 relativePath = absolutePath;
             } else {
                 throw new MalformedURLException("The path [" + absolutePath
@@ -100,40 +98,29 @@ public class SiteSource extends AbstractLogEnabled implements Source {
 
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
             Publication pub = factory.getPublication(pubId);
+            SiteStructure site = pub.getArea(areaName).getSite();
+
             String[] steps = relativePath.substring(1).split("/");
 
             String language = steps[0];
             String prefix = "/" + language;
             String path = relativePath.substring(prefix.length());
 
-            ServiceSelector selector = null;
-            SiteManager siteManager = null;
-
-            try {
-                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-                siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
-                SiteStructure structure = siteManager.getSiteStructure(factory, pub, area);
-                
-                if (structure.contains(path, language)) {
-                    Document doc = structure.getNode(path).getLink(language).getDocument();
-                    if (queryString != null && queryString.length() > 0) {
-                        this.delegate = getFormatSource(doc, queryString);
-                    } else {
-                        String lenyaURL = doc.getSourceURI();
-                        Session session = RepositoryUtil.getSession(this.manager, request);
-                        this.delegate = new RepositorySource(manager, lenyaURL, session, getLogger());
+            if (site.contains(path, language)) {
+                Document doc = site.getNode(path).getLink(language).getDocument();
+                if (locationSteps.hasMoreTokens()) {
+                    Query query = new Query(locationSteps.nextToken());
+                    String format = query.getValue("format");
+                    if (format != null) {
+                        this.delegate = getFormatSource(doc, format);
                     }
                 }
-                
-            } finally {
-                if (selector != null) {
-                    if (siteManager != null) {
-                        selector.release(siteManager);
-                    }
-                    this.manager.release(selector);
+                if (this.delegate == null) {
+                    String lenyaURL = doc.getSourceURI();
+                    Session session = RepositoryUtil.getSession(this.manager, request);
+                    this.delegate = new RepositorySource(manager, lenyaURL, session, getLogger());
                 }
             }
-
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -178,30 +165,20 @@ public class SiteSource extends AbstractLogEnabled implements Source {
         }
     }
 
-    protected Source getFormatSource(Document doc, String queryString) throws DocumentException, ServiceException, MalformedURLException, IOException {
-        String name = queryString.split("=")[0];
-        String value = queryString.split("=")[1];
+    protected Source getFormatSource(Document doc, String format) throws DocumentException,
+            ServiceException, MalformedURLException, IOException {
+        String formatBaseUri = doc.getResourceType().getFormatURI(format);
+        String formatUri = formatBaseUri + "/" + doc.getPublication().getId() + "/" + doc.getArea()
+                + "/" + doc.getUUID() + "/" + doc.getLanguage();
 
-        if (name.equals("format")) {
-            String format = value;
-            String formatBaseUri = doc.getResourceType().getFormatURI(format);
-            String formatUri = formatBaseUri + "/" + doc.getPublication().getId() + "/"
-                    + doc.getArea() + "/" + doc.getUUID() + "/" + doc.getLanguage();
-            
-            SourceResolver resolver = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                return resolver.resolveURI(formatUri);
+        SourceResolver resolver = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            return resolver.resolveURI(formatUri);
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
             }
-            finally {
-                if (resolver != null) {
-                    this.manager.release(resolver);
-                }
-            }
-            
-        } else {
-            throw new MalformedURLException("The parameter [" + name
-                    + "] is not supported.");
         }
     }
 
