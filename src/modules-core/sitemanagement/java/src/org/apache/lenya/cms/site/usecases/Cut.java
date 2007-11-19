@@ -33,13 +33,17 @@ public class Cut extends DocumentUsecase {
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+        if (hasErrors()) {
+            return;
+        }
+
         Document doc = getSourceDocument();
-        if (doc != null) {
-            SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
-            if (liveSite.contains(doc.getPath())) {
-                addErrorMessage(MESSAGE_ISLIVE);
-            }
+        if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("only-in-authoring-area");
+        }
+        SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
+        if (liveSite.contains(doc.getPath())) {
+            addErrorMessage(MESSAGE_ISLIVE);
         }
     }
 

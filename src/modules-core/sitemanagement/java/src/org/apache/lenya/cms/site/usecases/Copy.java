@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
@@ -25,6 +26,16 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
  * @version $Id$
  */
 public class Copy extends DocumentUsecase {
+
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (hasErrors()) {
+            return;
+        }
+        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("only-in-authoring-area");
+        }
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
