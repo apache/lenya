@@ -52,6 +52,12 @@
               <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
               <link rel="icon" href="{$contextprefix}/favicon.ico" type="image/ico"/>
               <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
+               <!-- internet explorer 6 switches to quirks mode with the xml declaration
+                   the quirks layout inconsistencies are fixed in a ie6 only stylesheet -->
+              <xso:variable name="contextprefix">
+                <xsl:value-of select="$contextprefix"/>
+              </xso:variable>
+              <xso:comment>[if IE 6]<![CDATA[>]]>&lt;link rel="stylesheet" type="text/css" href="<xso:value-of select="$contextprefix"/>/lenya/css/ie6hacksonly.css" /><![CDATA[<![endif]]]></xso:comment>
             </head>
             <body>
               <xso:apply-templates select="xhtml:html/xhtml:body/@*"/>

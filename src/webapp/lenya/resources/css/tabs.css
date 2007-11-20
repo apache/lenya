@@ -22,9 +22,9 @@
   background-color: #F5F4E9; 
   color: black;
   border: solid 1px #CCCCCC;
-  display: table-cell;
   vertical-align: top;
   padding: 0 20px 20px 20px;
+  width: inherit;
   min-height: 400px;
 }
 
@@ -38,11 +38,31 @@
 .lenya-tab h2, .lenya-tab-sitetree h2 {
   font-size: medium;
 }
+  
+#contentblock1.lenya-tab-sitetree {
+  position: absolute;
+  left: 30px;
+  margin-left: 410px; 
+}
+  
+#contentblock1.lenya-tab {
+  position: absolute;
+  left: 30px;
+  margin-left: 140px; 
+}
+
+#contentblock1 .lenya-box {
+  display: relative;
+}
 
 .lenya-tabs {
-  display: table-cell;
+  float: left;
   vertical-align: top;
-  /* margin-top: 40px; */
+  width: 140px;
+}
+
+#lenya-info-treecanvas .lenya-tabs {
+  width: 200px; 
 }
 
 #lenya-info-treecanvas .lenya-tablink,
@@ -103,10 +123,10 @@
 }
 
 #lenya-info-treecanvas {
-  font-size: 8pt;
+  font-size: 11px;
   float: left;
   padding-right: 20px;
-  width: 20%;
+  width: 250px;
 }
   
 #lenya-info-tree {
@@ -120,8 +140,6 @@
 }
 
 #lenya-info-tree span {
-  font-family: verdana, helvetica, sans-serif;
-  font-size: small;
   color: #333333;
   text-decoration: none;
   cursor: pointer;
