@@ -98,9 +98,6 @@
   <message key="Live View">Live&#160;View</message>
   <message key="Other Publications">Other&#160;Publications</message>
   
-  <!-- submit screen -->
-  <message key="submit-for-approval">Submit "{0}" for approval</message>  
-  <message key="submit-for-approval?">Do you want to submit <xhtml:em>"{0}"</xhtml:em> for approval?</message>
 
   <!-- publish screen -->     
   <message key="Publish">Publish</message>  
@@ -123,11 +120,6 @@
   <message key="Your History">Your History</message>
   <message key="Login to Authoring Area">Login to Authoring Area</message>
 
-  <!-- reject screen -->
-  <message key="Reject">Reject</message>
-  <message key="reject-doc">Reject document "{0}"</message>
-  <message key="reject-doc?">Do you want to reject the document <xhtml:em>"{0}"</xhtml:em>?</message>
-  
   <!-- cms menu -->
   <message key="New Document">New Document</message>
   <message key="New ... Document">New {0} Document</message>
@@ -270,9 +262,6 @@
 
       <!-- Deactivate and delete -->
   <message key="docs-have-links-to-doc">The following documents have links to this document</message>
-  <message key="Deactivate Document">Deactivate Document</message>
-  <message key="deactivate-doc">Deactivate document {0}</message>
-  <message key="deactivate-doc?">Do you really want to deactivate the document {0}?</message>
   <message key="Delete Document">Delete Document</message>
   <message key="delete-doc">Delete document {0}</message>
   <message key="cannot-deactivate-unless-children-deactivated">This document cannot be deactivated unless the following child documents are deactivated</message>
@@ -329,7 +318,6 @@
   
   <!-- Notification -->
   <message key="notification-message">Lenya Notification</message>
-  <message key="notify-submitter">notify the submitter</message>
   <message key="document-published">A document you submitted was published: {0}</message>
   <message key="document-submitted">A document has been submitted for you to review: {0}</message>
   <message key="document-rejected">A document you submitted was rejected for the following reason: {0}, {1}</message>

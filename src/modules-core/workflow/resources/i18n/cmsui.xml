@@ -22,7 +22,6 @@
 
   <message key="workflow.multiWorkflow">Workflow Overview</message>
   <message key="back-to-document">Back to document</message>
-  <message key="workflow.submit">Submit</message>
   <message key="workflow.reject">Reject</message>
   <message key="workflow.publish">Publish</message>
   <message key="workflow.deactivate">Deactivate</message>
@@ -40,14 +39,30 @@
     {0} ("{1}")
   </message>
   
+  <!-- submit usecase -->
+  <message key="workflow.submit">Submit</message>
+  <message key="notify-reviewers">Notify reviewers</message>
+  <message key="submit-for-approval?">
+    Do you want to submit the document <xhtml:q>{0}</xhtml:q> for approval?
+  </message>
+  
+  <!-- reject usecae -->
+  <message key="Reject">Reject</message>
+  <message key="reject-doc?">Do you want to reject the document <xhtml:q>{0}</xhtml:q>?</message>
+  <message key="notify-submitter">Notify the submitter</message>
+  
   <message key="unpublished-links">Links to unpublished documents:</message>
   <message key="links-to-document">Links from other documents:</message>
   <message key="publish-broken-links">The document contains broken links.</message>
   
-  <message key="notify-reviewers">Notify reviewers</message>
   <message key="scheduler-date-format-invalid">The scheduler date must be of the form 'yyyy-MM-dd HH:mm:ss'.</message>
   <message key="This usecase can only be invoked when the live version exists.">
     This usecase can only be invoked when the live version exists.
   </message>
+  
+  <!-- deactivate usecase -->
+  <message key="Deactivate Document">Deactivate Document</message>
+  <message key="deactivate-doc?">Do you want to deactivate the document <xhtml:q>{0}</xhtml:q>?</message>
+  
   
 </catalogue>
