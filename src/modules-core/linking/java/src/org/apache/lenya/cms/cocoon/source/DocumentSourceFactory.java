@@ -39,12 +39,14 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 
@@ -130,7 +132,9 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
                 target = resolver.resolve(currentDoc, linkUri);
             }
             else {
-                target = resolver.resolve(factory, linkUri);
+                Link link = new Link(linkUri);
+                contextualize(link, webappUrl);
+                target = resolver.resolve(factory, link.getUri());
             }
 
             Document doc = target.getDocument();
@@ -161,6 +165,21 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             throw new RuntimeException(e);
         }
 
+    }
+
+    /**
+     * If the link doesn't contain context information (publication ID, area), provide it.
+     * @param link The link.
+     * @param webappUrl The web application URL to extract the context information from..
+     */
+    protected void contextualize(Link link, String webappUrl) {
+        URLInformation url = new URLInformation(webappUrl);
+        if (link.getPubId() == null) {
+            link.setPubId(url.getPublicationId());
+        }
+        if (link.getArea() == null) {
+            link.setArea(url.getArea());
+        }
     }
 
     protected Source getFormatSource(Document doc, String format) throws DocumentException,
