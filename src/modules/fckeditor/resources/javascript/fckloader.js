@@ -18,13 +18,13 @@
 function fckloader(requesturi, contextPath)
 {
   var oFCKeditor = new FCKeditor( 'content' ) ;
-  oFCKeditor.BasePath	= '/' + contextPath + '/modules/fckeditor/fckeditor/' ;
+  oFCKeditor.BasePath	= contextPath + '/modules/fckeditor/fckeditor/' ;
   oFCKeditor.Width="800";
   oFCKeditor.Height="700";
   oFCKeditor.Config[ "FullPage" ] = true ;
   oFCKeditor.Config[ "ProcessHTMLEntities" ] = true ;
   oFCKeditor.Config[ "ProcessNumericEntities" ] = true ;
-  oFCKeditor.Config["CustomConfigurationsPath"] = "/" + contextPath + "/modules/fckeditor/javascript/fckconfig.js"  ;
+  oFCKeditor.Config["CustomConfigurationsPath"] = contextPath + "/modules/fckeditor/javascript/fckconfig.js"  ;
   oFCKeditor.ToolbarSet = 'Lenya' ;
 // the current API does not support this anymore. there is a plugin for that job now.
 // with an extra html page, this function could probably be restored easily, which would be

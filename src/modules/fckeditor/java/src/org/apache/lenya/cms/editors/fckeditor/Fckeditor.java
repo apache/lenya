@@ -41,7 +41,10 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.linking.LinkConverter;
+import org.apache.lenya.cms.linking.LinkRewriter;
+import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
@@ -79,9 +82,13 @@ public class Fckeditor extends DocumentUsecase {
 
         Request request = ContextHelper.getRequest(this.context);
         String requesturi = request.getRequestURI();
-        String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-        setParameter("host", host);
         setParameter("requesturi", requesturi);
+        URLInformation info = new URLInformation(getSourceURL());
+        String pubId = info.getPublicationId();
+        LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getSession(),
+                    getSourceURL(), request.isSecure(), false, false);
+        
+        setParameter("proxyUrl",rewriter.rewrite("/" + pubId));
     }
 
     /**

@@ -34,7 +34,7 @@
   <script type="text/javascript" src="/${pubId}/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script> 
   <script type="text/javascript">
     function loadfckloader() {
-      fckloader('${usecase.getParameter('requesturi')}', '${pubId}');
+      fckloader('${usecase.getParameter('requesturi')}', '${usecase.getParameter('proxyUrl')}');
     }
 
     if(typeof window.addEventListener != 'undefined') {
