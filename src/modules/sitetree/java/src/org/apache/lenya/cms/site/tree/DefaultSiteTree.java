@@ -463,7 +463,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         Node insertNode = parentNode.removeChild(node);
 
         if (nextNode == null) {
-            getLogger().warn("Couldn't found the second following sibling");
+            getLogger().debug("Couldn't found the second following sibling");
             parentNode.appendChild(insertNode);
         } else {
             parentNode.insertBefore(insertNode, nextNode);
