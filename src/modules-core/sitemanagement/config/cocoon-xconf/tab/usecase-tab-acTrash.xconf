@@ -26,6 +26,7 @@
       <view uri="modules/sitemanagement/usecases/tab/acTrash.jx" menu="true">
         <tab group="site" name="acTrash"/>
       </view>
+      <parameter name="acArea" value="trash"/>
       <exit usecase="tab.acTrash"/>
     </component-instance>
   </xconf>

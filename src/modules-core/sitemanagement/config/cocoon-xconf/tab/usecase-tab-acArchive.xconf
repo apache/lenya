@@ -26,6 +26,7 @@
       <view uri="modules/sitemanagement/usecases/tab/acArchive.jx" menu="true">
         <tab group="site" name="acArchive"/>
       </view>
+      <parameter name="acArea" value="archive"/>
       <exit usecase="tab.acArchive"/>
     </component-instance>
   </xconf>
