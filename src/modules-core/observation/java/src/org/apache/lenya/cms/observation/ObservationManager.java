@@ -82,24 +82,11 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         return allListeners;
     }
 
-    protected abstract class Notifier implements Runnable {
-
-        private Set listeners;
-        private RepositoryEvent event;
-
-        protected Notifier(Set listeners, RepositoryEvent event) {
-            this.listeners = listeners;
-            this.event = event;
-        }
-
-        public void run() {
+    protected void notify(Set listeners, RepositoryEvent event) {
             for (Iterator i = listeners.iterator(); i.hasNext();) {
                 RepositoryListener listener = (RepositoryListener) i.next();
-                notify(listener, event);
+                listener.eventFired(event);
             }
-        }
-
-        protected abstract void notify(RepositoryListener listener, RepositoryEvent event);
     }
 
     public void eventFired(RepositoryEvent event) {
@@ -111,12 +98,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         } else {
             listeners = this.listeners;
         }
-        Notifier notifier = new Notifier(listeners, event) {
-            public void notify(RepositoryListener listener, RepositoryEvent event) {
-                listener.eventFired(event);
-            }
-        };
-        new Thread(notifier).run();
+        notify(listeners, event);
     }
 
 }
