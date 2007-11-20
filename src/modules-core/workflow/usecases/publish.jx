@@ -23,11 +23,11 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
   
-  <page:title><i18n:text>Publish</i18n:text></page:title>
+  <page:title><i18n:text>workflow.publish</i18n:text></page:title>
   <page:body>
     <div class="lenya-box">
       <div class="lenya-box-title">
-        <i18n:text>Publish</i18n:text>
+        <i18n:text>workflow.publish</i18n:text>
       </div>
       <div class="lenya-box-body">
         

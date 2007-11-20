@@ -108,10 +108,6 @@
   <message key="Other Publications">Andere&#160;Publikationen</message>
   
 
-  <!-- submit screen -->
-  <message key="submit-for-approval">Dokument "{0}" einreichen</message>
-  <message key="submit-for-approval?">Möchten Sie "{0}" zur Durchsicht einreichen?</message>  
-  
   <!-- publish screen --> 
   <message key="Publish">Veröffentlichen</message>    
   <message key="Source File(s)">Quelldatei(en)</message>
@@ -133,11 +129,6 @@
   <message key="logout-from-pub">Abmelden von der {0} Publikation</message>
   <message key="Your History">Ihr Verlauf</message>
   <message key="Login to Authoring Area">An Autorenbereich anmelden</message>
-
-  <!-- reject screen -->
-  <message key="Reject">Ablehnen</message>
-  <message key="reject-doc">Dokument "{0}" ablehnen</message>
-  <message key="reject-doc?">Wollen Sie das Dokument <xhtml:em>"{0}"</xhtml:em> ablehnen?</message>
 
   <!-- cms menu -->
   <message key="New Document">Neues Dokument</message>
@@ -279,10 +270,6 @@
   <message key="Time">Zeit</message>
       <!-- Deactivate and delete -->
   <message key="docs-have-links-to-doc">Folgende Dokumente verweisen auf dieses Dokument</message>
-  <message key="Deactivate Document">Dokument deaktivieren</message>
-  <message key="deactivate-doc">Dokument {0} deaktivieren</message>
-  <message key="deactivate-doc?">Wollen Sie das Dokument {0} wirklich deaktivieren?</message>
-  <message key="deactivate complete subtree">den gesamten Teilbaum deaktivieren</message>
   <message key="Delete Document">Dokument löschen</message>
   <message key="cannot-deactivate-unless-children-deactivated">Dieses Dokument kann erst deaktiviert werden, wenn alle untergeordneten Dokumente deaktiviert worden sind.</message>
   <message key="delete-language-versions?">Wollen Sie wirklich alle Sprachversionen des Dokuments {0} löschen?</message>

@@ -43,9 +43,12 @@
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">
             <tr>
-              <td class="lenya-entry-caption" valign="top"><i18n:text>Document</i18n:text>:</td>
-              <td valign="top">
-                "<jx:out value="${title}"/>"
+              <td colspan="2" class="lenya-entry-caption">
+                <i18n:translate>
+                  <i18n:text i18n:key="deactivate-doc?"/>
+                  <i18n:param><jx:out value="${title}"/></i18n:param>
+                </i18n:translate>
+                <br/><br/>
               </td>
             </tr>
             <jx:set var="linksToDocument" value="${usecase.getParameter('linksToDocument').getDocuments()}"/>

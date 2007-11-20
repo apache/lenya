@@ -22,10 +22,7 @@
 
   <message key="workflow.multiWorkflow">Workflow-Übersicht</message>
   <message key="back-to-document">Zurück zum Dokument</message>
-  <message key="workflow.submit">Einreichen</message>
-  <message key="workflow.reject">Zurückweisen</message>
   <message key="workflow.publish">Publizieren</message>
-  <message key="workflow.deactivate">Deaktivieren</message>
   <message key="Path">Pfad</message>
   <message key="Actions">Aktionen</message>
   <message key="state-as-text">Zustand als Text</message>
@@ -49,6 +46,24 @@
   <message key="This usecase can only be invoked when the live version exists.">
     Dieser Usecase kann nur ausgeführt werden, wenn die Live-Version existiert.
   </message>
+  
+  <!-- submit usecase -->
+  <message key="workflow.submit">Einreichen</message>
+  <message key="submit-for-approval?">
+    Möchten Sie das Dokument <xhtml:q>{0}</xhtml:q> zur Durchsicht einreichen?
+  </message>  
+  
+  <!-- reject usecase -->
+  <message key="workflow.reject">Zurückweisen</message>
+  <message key="Reject">Ablehnen</message>
+  <message key="reject-doc?">
+    Möchten Sie das Dokument <xhtml:q>{0}</xhtml:q> zurückweisen?
+  </message>
+  
+  <!-- deactivate usecase -->
+  <message key="workflow.deactivate">Deaktivieren</message>
+  <message key="deactivate-doc?">Möchten Sie das Dokument <xhtml:q>{0}</xhtml:q> deaktivieren?</message>
+  
   
 </catalogue>
 
