@@ -73,8 +73,12 @@
             </td>
             <td>
               <jx:set var="groups" value="${user.getGroups()}"/>
-              <jx:forEach var="group" items="${groups}"><jx:if test="${group != groups[0]}">, </jx:if>
-                <a href="${usecase.getSourceURL()}?lenya.usecase=admin.group&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a></jx:forEach>
+              <jx:set var="groupIds" value="${java.util.TreeSet()}"/>
+              <jx:forEach var="group" items="${groups}">
+                <jx:set var="ignore" value="${groupIds.add(group.getId())}"/>
+              </jx:forEach>
+              <jx:forEach var="group" items="${groupIds}"><jx:if test="${group != groupIds.first()}">, </jx:if>
+                <a href="${usecase.getSourceURL()}?lenya.usecase=admin.group&amp;groupId=${group}"><jx:out value="${group}"/></a></jx:forEach>
             </td>
             <td style="vertical-align: middle">
               <form method="GET" id="form-delete_user">
