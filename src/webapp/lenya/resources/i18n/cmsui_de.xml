@@ -341,7 +341,6 @@
   <message key="Rollback to this revision">Zu dieser Version zurücksetzen</message>
 
   <!-- Info AC  --> 
-  <message key="SSL Encryption">SSL&#160;Verschlüsselung</message>
   <message key="Access Object">Zugriffsobjekt</message>
   <message key="Inherited Rights">Geerbte&#160;Rechte</message>
   <message key="visit">besuchen</message>
