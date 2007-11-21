@@ -60,7 +60,7 @@
         <jx:forEach var="group" items="${usecase.getParameter('groups')}">
           <tr>
             <td style="vertical-align: middle">
-              <a href="${request.requestURI}?lenya.usecase=admin.group&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
+              <a href="${request.pathInfo}?lenya.usecase=admin.group&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
             </td>
             <td style="vertical-align: middle">
               <jx:if test="${group.getName().equals('')}"><span style="color: #999999">--</span></jx:if>
