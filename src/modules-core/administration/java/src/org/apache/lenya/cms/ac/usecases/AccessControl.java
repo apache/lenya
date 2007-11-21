@@ -185,6 +185,42 @@ public class AccessControl extends AccessControlUsecase {
         }
     }
 
+    protected void doCheckExecutionConditions() throws Exception {
+        super.doCheckExecutionConditions();
+        for (int i = 0; i < types.length; i++) {
+            for (int j = 0; j < operations.length; j++) {
+                String type = types[i];
+                String paramName = operations[j] + "Credential_" + type;
+                if (getParameterAsString(paramName) != null) {
+                    String roleId = getParameterAsString(ROLE);
+                    String id = getParameterAsString(type);
+                    Accreditable item = getAccreditable(type, id);
+                    if (item == null) {
+                        addErrorMessage("no_such_accreditable", new String[] { type, id });
+                    } else {
+                        Role role = getRoleManager().getRole(roleId);
+                        if (role == null) {
+                            addErrorMessage("role_no_such_role", new String[] { roleId });
+                        }
+                        if (!role.isAssignable()) {
+                            addErrorMessage("cannot-assign-role", new String[] { roleId });
+                        }
+                        if (operations[j].equals(ADD)) {
+                            ModifiablePolicy policy = getPolicy();
+                            if (containsCredential(policy, item, role)) {
+                                addErrorMessage("credential-already-contained",
+                                        new String[] { ((Item) item).getId(), role.getId() });
+                            }
+                        }
+                    }
+                    if (hasErrors()) {
+                        deleteParameter(paramName);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -202,35 +238,29 @@ public class AccessControl extends AccessControlUsecase {
                 if (getParameterAsString(paramName) != null) {
                     String roleId = getParameterAsString(ROLE);
                     String method = getParameterAsString(METHOD);
-
                     String id = getParameterAsString(type);
-                    Accreditable item = null;
-                    if (type.equals(USER)) {
-                        item = getUserManager().getUser(id);
-                    } else if (type.equals(GROUP)) {
-                        item = getGroupManager().getGroup(id);
-                    } else if (type.equals(IPRANGE)) {
-                        item = getIpRangeManager().getIPRange(id);
-                    } else if (type.equals(WORLD)) {
-                        item = World.getInstance();
-                    }
-                    if (item == null) {
-                        addErrorMessage("no_such_accreditable", new String[] { type, id });
-                    } else {
-                        Role role = getRoleManager().getRole(roleId);
-                        if (role == null) {
-                            addErrorMessage("role_no_such_role", new String[] { roleId });
-                        }
-                        if (!role.isAssignable()) {
-                            addErrorMessage("cannot-assign-role", new String[] { roleId });
-                        }
-                        manipulateCredential(item, role, operations[j], method);
-                        setParameter(SUB_CREDENTIALS, getSubtreeCredentials());
-                    }
+                    Accreditable item = getAccreditable(type, id);
+                    Role role = getRoleManager().getRole(roleId);
+                    manipulateCredential(item, role, operations[j], method);
+                    setParameter(SUB_CREDENTIALS, getSubtreeCredentials());
                     deleteParameter(paramName);
                 }
             }
         }
+    }
+
+    protected Accreditable getAccreditable(String type, String id) {
+        Accreditable item = null;
+        if (type.equals(USER)) {
+            item = getUserManager().getUser(id);
+        } else if (type.equals(GROUP)) {
+            item = getGroupManager().getGroup(id);
+        } else if (type.equals(IPRANGE)) {
+            item = getIpRangeManager().getIPRange(id);
+        } else if (type.equals(WORLD)) {
+            item = World.getInstance();
+        }
+        return item;
     }
 
     /**
@@ -281,8 +311,7 @@ public class AccessControl extends AccessControlUsecase {
      */
     protected void setSSLProtected(boolean ssl) throws ProcessingException {
         try {
-            ModifiablePolicy policy = (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(
-                    getAccreditableManager(), getPolicyURL());
+            ModifiablePolicy policy = getPolicy();
             policy.setSSL(ssl);
             getPolicyManager().saveSubtreePolicy(getPolicyURL(), policy);
         } catch (AccessControlException e) {
@@ -309,19 +338,11 @@ public class AccessControl extends AccessControlUsecase {
      */
     protected void manipulateCredential(Accreditable accreditable, Role role, String operation,
             String method) throws ProcessingException {
-        ModifiablePolicy policy = null;
         try {
-            policy = (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(
-                    getAccreditableManager(), getPolicyURL());
+            ModifiablePolicy policy = getPolicy();
             
             if (operation.equals(ADD)) {
-                if (containsCredential(policy, accreditable, role)) {
-                    addErrorMessage("credential-already-contained",
-                            new String[] { ((Item) accreditable).getId(), role.getId() });
-                }
-                else {
-                    policy.addRole(accreditable, role, method);
-                }
+                policy.addRole(accreditable, role, method);
             } else if (operation.equals(DELETE)) {
                 policy.removeRole(accreditable, role);
             } else if (operation.equals(UP)) {
@@ -334,6 +355,11 @@ public class AccessControl extends AccessControlUsecase {
         } catch (Exception e) {
             throw new ProcessingException("Manipulating credential failed: ", e);
         }
+    }
+
+    protected ModifiablePolicy getPolicy() throws AccessControlException {
+        return (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(
+                getAccreditableManager(), getPolicyURL());
     }
 
     protected boolean containsCredential(ModifiablePolicy policy, Accreditable accreditable, Role role)
