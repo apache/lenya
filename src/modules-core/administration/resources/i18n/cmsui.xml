@@ -45,4 +45,9 @@
   <message key="The password must contain at least one number.">The password must contain at least one number.</message>
   <message key="IP Range Groups">IP Range Groups</message>
   
+  <message key="cannot-assign-role">The role <xhtml:q>{0}</xhtml:q> cannot be assigned.</message>
+  <message key="credential-already-contained">
+    The role <xhtml:q>{1}</xhtml:q> is already assigned to the object <xhtml:q>{0}</xhtml:q>.
+  </message>
+  
 </catalogue>

@@ -35,6 +35,7 @@ import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.IPRange;
+import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
@@ -220,6 +221,9 @@ public class AccessControl extends AccessControlUsecase {
                         if (role == null) {
                             addErrorMessage("role_no_such_role", new String[] { roleId });
                         }
+                        if (!role.isAssignable()) {
+                            addErrorMessage("cannot-assign-role", new String[] { roleId });
+                        }
                         manipulateCredential(item, role, operations[j], method);
                         setParameter(SUB_CREDENTIALS, getSubtreeCredentials());
                     }
@@ -309,9 +313,15 @@ public class AccessControl extends AccessControlUsecase {
         try {
             policy = (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(
                     getAccreditableManager(), getPolicyURL());
-
+            
             if (operation.equals(ADD)) {
-                policy.addRole(accreditable, role, method);
+                if (containsCredential(policy, accreditable, role)) {
+                    addErrorMessage("credential-already-contained",
+                            new String[] { ((Item) accreditable).getId(), role.getId() });
+                }
+                else {
+                    policy.addRole(accreditable, role, method);
+                }
             } else if (operation.equals(DELETE)) {
                 policy.removeRole(accreditable, role);
             } else if (operation.equals(UP)) {
@@ -324,6 +334,20 @@ public class AccessControl extends AccessControlUsecase {
         } catch (Exception e) {
             throw new ProcessingException("Manipulating credential failed: ", e);
         }
+    }
+
+    protected boolean containsCredential(ModifiablePolicy policy, Accreditable accreditable, Role role)
+            throws AccessControlException {
+        Credential[] credentials = policy.getCredentials();
+        boolean contains = false;
+        int i = 0;
+        while (!contains && i < credentials.length) {
+            Accreditable credAccr = credentials[i].getAccreditable();
+            Role credRole = credentials[i].getRole();
+            contains = credAccr.equals(accreditable) && credRole.equals(role);
+            i++;
+        }
+        return contains;
     }
 
     /**
