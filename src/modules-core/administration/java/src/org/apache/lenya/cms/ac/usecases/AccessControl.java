@@ -56,55 +56,29 @@ import org.apache.lenya.ac.World;
 public class AccessControl extends AccessControlUsecase {
 
     protected static final String AC_AREA = "acArea";
-
     protected static final String ADD = "add";
-
     protected static final String DELETE = "delete";
-
     protected static final String UP = "up";
-
     protected static final String DOWN = "down";
-
     protected static final String USER = "user";
-
     protected static final String GROUP = "group";
-
     protected static final String IPRANGE = "ipRange";
-
     protected static final String WORLD = "world";
-
     protected static final String ROLE = "role";
-
     protected static final String SUB_USER = "subuser";
-
     protected static final String SUB_GROUP = "subgroup";
-
     protected static final String SUB_IPRANGE = "subipRange";
 
     private static String[] types = { USER, GROUP, IPRANGE, SUB_USER, SUB_GROUP, SUB_IPRANGE, WORLD };
-
     private static String[] operations = { ADD, DELETE, DOWN, UP };
 
     protected static final String SSL = "ssl";
-
     protected static final String ANCESTOR_SSL = "ancestorSsl";
-
     protected static final String DOCUMENT = "document";
-
     protected static final String SUB_CREDENTIALS = "subCredentials";
-
     protected static final String PARENT_CREDENTIALS = "parentCredentials";
-
     private static final String METHOD = "method";
-
     private String COMPLETE_AREA = "private.completeArea";
-
-    /**
-     * Ctor.
-     */
-    public AccessControl() {
-        super();
-    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -208,8 +182,8 @@ public class AccessControl extends AccessControlUsecase {
                         if (operations[j].equals(ADD)) {
                             ModifiablePolicy policy = getPolicy();
                             if (containsCredential(policy, item, role)) {
-                                addErrorMessage("credential-already-contained",
-                                        new String[] { ((Item) item).getId(), role.getId() });
+                                addErrorMessage("credential-already-contained", new String[] {
+                                        ((Item) item).getId(), role.getId() });
                             }
                         }
                     }
@@ -340,7 +314,7 @@ public class AccessControl extends AccessControlUsecase {
             String method) throws ProcessingException {
         try {
             ModifiablePolicy policy = getPolicy();
-            
+
             if (operation.equals(ADD)) {
                 policy.addRole(accreditable, role, method);
             } else if (operation.equals(DELETE)) {
@@ -358,12 +332,12 @@ public class AccessControl extends AccessControlUsecase {
     }
 
     protected ModifiablePolicy getPolicy() throws AccessControlException {
-        return (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(
-                getAccreditableManager(), getPolicyURL());
+        return (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(getAccreditableManager(),
+                getPolicyURL());
     }
 
-    protected boolean containsCredential(ModifiablePolicy policy, Accreditable accreditable, Role role)
-            throws AccessControlException {
+    protected boolean containsCredential(ModifiablePolicy policy, Accreditable accreditable,
+            Role role) throws AccessControlException {
         Credential[] credentials = policy.getCredentials();
         boolean contains = false;
         int i = 0;
@@ -435,7 +409,7 @@ public class AccessControl extends AccessControlUsecase {
      * Returns the policies for a certain URL.
      * 
      * @param inherit If true, all ancestor policies are returned. Otherwise,
-     *        only the URL policies are returned.
+     *            only the URL policies are returned.
      * @return An array of DefaultPolicy objects.
      * @throws ProcessingException when something went wrong.
      */
