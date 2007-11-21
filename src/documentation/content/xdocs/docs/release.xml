@@ -50,12 +50,14 @@
       </section>
       <section>
         <title>Create a Tagged Version</title>
+        <p>There are many ways to create a new tag, we will show the quick one and a more detailed one. The quick way is:</p>
+        <source><![CDATA[svn copy https://svn.apache.org/repos/asf/lenya/trunk\
+       https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0_RC_2/\
+      -m "Tagging the 2.0 RC2."]]></source>
         <p>
-          Browse to <a href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</a>
+          Alternatively browse to <a href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</a>
         </p>
         <source><![CDATA[
-FIXME: this does not apply to releases from trunk!
-
 svn co -r $REVISION https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
 cd branches/BRANCH_1_2_X
 svn copy branches/BRANCH_1_2_X tags/RELEASE_1_2_5
