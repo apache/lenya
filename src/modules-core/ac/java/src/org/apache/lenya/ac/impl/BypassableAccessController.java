@@ -28,6 +28,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.sitemap.PatternException;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Role;
 import org.apache.regexp.RE;
 import org.apache.regexp.RECompiler;
 import org.apache.regexp.REProgram;
@@ -143,6 +144,8 @@ public class BypassableAccessController extends DefaultAccessController {
         throws AccessControlException {
         
         assert request != null;
+        
+        resolveRoles(request);
         
         boolean authorized = false;
         
