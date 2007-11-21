@@ -32,4 +32,8 @@
     <role id="admin"  method="grant"/>
   </group>
 
+  <group id="sitemanager">
+    <role id="sitemanager"  method="grant"/>
+  </group>
+
 </policy> 

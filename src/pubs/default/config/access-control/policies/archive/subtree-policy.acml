@@ -29,7 +29,11 @@
   </group>
 
   <group id="admin">
-    <role id="admin" method="grant" />
+    <role id="admin"  method="grant"/>
+  </group>
+ 
+  <group id="sitemanager">
+    <role id="sitemanager" method="grant" />
   </group>
 
   <!-- the "session" role grants access to login, logout and aboutLenya -->

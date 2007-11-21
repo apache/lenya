@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -16,29 +16,6 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: admin.rml 473861 2006-11-12 03:51:14Z gregor $ -->
 
-<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
-
-  <group id="editor">
-    <role id="edit"  method="grant"/>
-  </group>
-
-  <group id="reviewer">
-    <role id="review"  method="grant"/>
-  </group>
-
-  <group id="admin">
-    <role id="admin"  method="grant"/>
-  </group>
- 
-  <group id="sitemanager">
-    <role id="sitemanager" method="grant"/>
-  </group>
- 
-  <!-- the "session" role grants access to login, logout and aboutLenya -->
-  <world>
-    <role id="session" method="grant"/>
-  </world>
-
-</policy> 
+<role class="org.apache.lenya.ac.file.FileRole" id="sitemanager"/>

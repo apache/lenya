@@ -37,6 +37,8 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  */
 public class FileRole extends AbstractRole implements Item {
 
+    protected static final String ATTR_ASSIGNABLE = "assignable";
+
     /**
      * Creates a new file role.
      * @param itemManager The item manager.
@@ -69,6 +71,7 @@ public class FileRole extends AbstractRole implements Item {
      */
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
+        this.isAssignable = config.getAttributeAsBoolean(ATTR_ASSIGNABLE, true);
     }
 
     /**
@@ -99,6 +102,7 @@ public class FileRole extends AbstractRole implements Item {
     }
 
     private File configurationDirectory;
+    private boolean isAssignable;
 
     /**
      * Returns the configuration directory.
@@ -110,5 +114,9 @@ public class FileRole extends AbstractRole implements Item {
 
     protected void setConfigurationDirectory(File file) {
         this.configurationDirectory = file;
+    }
+
+    public boolean isAssignable() {
+        return this.isAssignable;
     }
 }

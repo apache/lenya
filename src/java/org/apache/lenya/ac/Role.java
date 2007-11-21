@@ -25,5 +25,10 @@ package org.apache.lenya.ac;
  * @version $Id$
  */
 public interface Role extends Item {
-    // do nothing
+    
+    /**
+     * @return if the role may be assigned to accreditables in policies.
+     */
+    boolean isAssignable();
+    
 }

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
@@ -33,7 +35,6 @@ import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.IPRange;
-import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
@@ -149,15 +150,16 @@ public class AccessControl extends AccessControlUsecase {
 
             Role[] roles = getRoleManager().getRoles();
             String visitorRole = "";
-            String[] roleIds = new String[roles.length];
+            Set roleIds = new TreeSet();
             for (int i = 0; i < roles.length; i++) {
-                roleIds[i] = roles[i].getId();
-                if (roles[i].getId().equals("visit")) {
-                    visitorRole = roles[i].getId();
+                if (roles[i].isAssignable()) {
+                    roleIds.add(roles[i].getId());
+                    if (roles[i].getId().equals("visit")) {
+                        visitorRole = roles[i].getId();
+                    }
                 }
             }
-            Arrays.sort(roleIds);
-            setParameter("roles", roleIds);
+            setParameter("roles", roleIds.toArray(new String[roleIds.size()]));
             setParameter("visitorRole", visitorRole);
 
             setParameter(SUB_CREDENTIALS, getSubtreeCredentials());

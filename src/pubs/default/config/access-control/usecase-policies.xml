@@ -25,6 +25,7 @@
     <role id="visit" method="grant"/>
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
   <usecase id="ac.logout">
@@ -38,174 +39,174 @@
   </usecase>
 
   <usecase id="bxe.edit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="bxe.close">
-    <role id="admin"/>
+    <role id="sitemanager"/>
     <role id="edit"/>
   </usecase>  
   <usecase id="cforms.edit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="fckeditor.edit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="linkcheck.getLinks">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="lucene.externalOpensearch">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="lucene.index">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="lucene.indexSite">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="lucene.opensearch">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="lucene.search">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="visit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.archive">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.changeLabel">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.changeNodeID">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.changeVisibility">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.copy">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.create">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.createLanguage">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.cut">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.delete">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.deleteLanguage">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.paste">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.restore">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.rollback">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>  
   <usecase id="sitemanagement.forceCheckIn">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>  
   <usecase id="tab.acArchive">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tab.acAuthoring">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="tab.acLive">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="tab.acTrash">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="tab.assets">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tab.meta">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tab.overview">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
     <role id="visit" method="grant"/>
   </usecase>
   <usecase id="tab.revisions">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tab.scheduler">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tab.workflow">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="opendocument.create">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="opendocument.upload">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitetree.nudge">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="contactForm.sendMessage">
     <role id="visit" method="grant"/>
   </usecase>
   <usecase id="usecasedocument.create">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="webdav.delete">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="webdav.filePropfind">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="webdav.mkcol">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="webdav.propfind">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="webdav.put">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="admin.usecases">
@@ -225,6 +226,7 @@
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
     <role id="visit" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="admin.changePasswordAdmin">
     <role id="admin" method="grant"/>
@@ -287,84 +289,79 @@
     <role id="admin" method="grant"/>
   </usecase>
   <usecase id="editors.forms">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="editors.oneform">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="editors.publicationEdit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="templating.createPublicationFromTemplate">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="workflow.delete">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
   </usecase>
   <usecase id="workflow.publish">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
   <usecase id="workflow.deactivate">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
   <usecase id="workflow.reject">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
   <usecase id="workflow.submit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="workflow.multiWorkflow">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="review" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="workflow.multiWorkflowInvoke">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="review" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="kupu.edit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="resource.upload">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
-    <role id="review" method="grant"/>
   </usecase>
   <usecase id="resource.create">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
-    <role id="review" method="grant"/>
   </usecase>
   <usecase id="entry.create">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
-    <role id="review" method="grant"/>
   </usecase>
   <usecase id="export.import">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
-    <role id="review" method="grant"/>
   </usecase>
   <usecase id="export.importExampleContent">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
-    <role id="review" method="grant"/>
   </usecase>
   <usecase id="notification.inbox">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
   <usecase id="notification.sendMessage">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
@@ -378,31 +375,31 @@
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="editors.insertLink">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="editors.insertImage">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="editors.insertAsset">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="editors.createResource">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tinymce.edit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="fckeditor.edit">
-    <role id="admin" method="grant"/>
+    <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
 </usecases>

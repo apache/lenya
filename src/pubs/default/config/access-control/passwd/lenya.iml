@@ -26,5 +26,6 @@
   <groups>
     <group>editor</group>
     <group>admin</group>
+    <group>sitemanager</group>
   </groups>
 </identity>
