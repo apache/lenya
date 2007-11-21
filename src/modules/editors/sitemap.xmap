@@ -54,7 +54,7 @@
           <map:parameter name="form" value="{1}"/>
         </map:transform>
         <map:transform src="fallback://lenya/modules/editors/usecases/forms/form-layout.xsl">
-          <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
+          <map:parameter name="contextPrefix" value="{proxy:}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
           <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
 <!--          <map:parameter name="edit" value="{flow-attribute:usecase/parameter[@name = 'editSelect']}"/> -->
