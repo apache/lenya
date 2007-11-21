@@ -71,11 +71,11 @@
         <tr>
           <jx:forEach var="key" items="${usecase.getParameter('keys')}">
             <th style="white-space: nowrap"> <i18n:text><jx:out value="${key}"/></i18n:text> 
-              <a href="${request.getRequestURI()}?order=desc&amp;sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
-                <i18n:text><img src="/cforms/forms/img/move_down.gif" class="lenya-no-border"/></i18n:text>
+              <a class="sortArrow" href="${request.pathInfo}?order=asc&amp;sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
+                &#x25BC;
               </a>
-              <a href="${request.getRequestURI()}?order=asc&amp;sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
-                <i18n:text><img src="/cforms/forms/img/move_up.gif" class="lenya-no-border"/></i18n:text>
+              <a class="sortArrow" href="${request.pathInfo}?order=desc&amp;sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
+                &#x25B2;
               </a>
             </th>
           </jx:forEach>
