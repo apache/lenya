@@ -31,7 +31,7 @@
   <message key="EXCEPTION">AUSNAHME</message>  
   <message key="User">Benutzer</message>
   <message key="live">live</message>
-  <message key="not">nicht</message>
+  <message key="not live">nicht live</message>
   <message key="authoring">Bearbeitung</message>
   <message key="Authoring">Bearbeitung</message>
   <message key="review">Freigabe</message>

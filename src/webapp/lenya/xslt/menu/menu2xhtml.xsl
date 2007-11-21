@@ -27,17 +27,7 @@
   >
   
 <xsl:param name="contextprefix"/>
-<xsl:param name="publicationid"/>
-<xsl:param name="area"/>
-<xsl:param name="documenturl"/>
-<xsl:param name="documentid"/>
-<xsl:param name="userid"/>
-<xsl:param name="servertime"/>
-<xsl:param name="workflowstate"/>
-<xsl:param name="islive"/>
 <xsl:param name="usecase"/>
-<xsl:param name="tabGroup"/>
-<xsl:param name="newMessages"/>
   
   <xsl:param name="position"></xsl:param>
   
