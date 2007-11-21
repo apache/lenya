@@ -193,7 +193,7 @@
          /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:path} 
       -->
       <map:match pattern="lenyabody-*/*/*/*/**">
-        <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{4}/{page-envelope:default-language}/{page-envelope:document-language}/{5}"/>
+        <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{4}/{page-envelope:default-language}/{page-envelope:language}/{5}"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:transform src="cocoon:/getDoctypeXSLT/{4}">
           <map:parameter name="root" value="/{2}/{3}"/>
