@@ -718,35 +718,6 @@ public class FormsEditor extends DocumentUsecase {
     }
 
     /**
-     * Add namespaces to xupdate statement
-     * @param namespaces The namespaces to add
-     * @param xupdateModifications The Xupdate statement to add namespaces to
-     * @return The Xupdate statement with the added namespaces
-     */
-    private String addHiddenNamespaces(String namespaces, String xupdateModifications) {
-        getLogger().debug("Namespaces: " + namespaces);
-
-        if (namespaces == null) {
-            getLogger().debug("No additional namespaces");
-            return xupdateModifications;
-        }
-
-        String[] namespace = namespaces.split(" ");
-        String ns = "";
-        for (int i = 0; i < namespace.length; i++) {
-            if ((ns.indexOf(namespace[i]) < 0) && (xupdateModifications.indexOf(namespace[i]) < 0)) {
-                ns = ns + " " + namespace[i];
-            } else {
-                getLogger().debug("Redundant namespace: " + namespace[i]);
-            }
-        }
-
-        int endOfFirstNode = xupdateModifications.indexOf(">");
-        return xupdateModifications.substring(0, endOfFirstNode) + " " + ns
-                + xupdateModifications.substring(endOfFirstNode);
-    }
-
-    /**
      * Prefix resolver which uses the usecase parameters like
      * "namespace.xhtml=http://www.w3.org/1999/xhtml" to resolve prefixes.
      */
