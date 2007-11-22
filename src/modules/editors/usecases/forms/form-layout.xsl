@@ -37,7 +37,16 @@
 <div>
 <div class="lenya-box">
   <div class="lenya-box-title" style="text-align: right">
-    <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates select="//*" mode="namespaces" /></xsl:attribute></input>
+    <input type="hidden" name="namespaces">
+      <xsl:attribute name="value">
+        <xsl:for-each select="//namespace">
+          <xsl:text>xmlns:</xsl:text>
+          <xsl:value-of select="@prefix"/>="<xsl:value-of select="@uri"/>"
+          <xsl:text> </xsl:text>
+        </xsl:for-each>
+        <xsl:apply-templates select="//*" mode="namespaces" />
+      </xsl:attribute>
+    </input>
     <input type="submit" value="SAVE" name="submit"/>&#160;<input type="submit" value="CANCEL" name="cancel"/>
   </div>
   <div class="lenya-box-body">

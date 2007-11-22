@@ -58,6 +58,9 @@ import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.ValidationUtil;
 import org.apache.lenya.xml.XPath;
+import org.apache.xindice.core.xupdate.XPathQueryFactoryImpl;
+import org.apache.xindice.core.xupdate.XUpdateImpl;
+import org.apache.xindice.xml.NamespaceMap;
 import org.apache.xml.utils.PrefixResolver;
 import org.apache.xml.utils.PrefixResolverDefault;
 import org.apache.xpath.XPathAPI;
@@ -67,11 +70,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xmldb.common.xml.queries.XPathQueryConfigurationException;
 import org.xmldb.common.xml.queries.XPathQueryFactory;
-import org.xmldb.common.xml.queries.XUpdateQuery;
-import org.xmldb.common.xml.queries.xalan2.XPathQueryFactoryImpl;
-import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * Multiple forms editor usecase.
@@ -217,10 +216,7 @@ public class FormsEditor extends DocumentUsecase {
      * @throws TransformerException
      */
     private void save(SourceResolver resolver, org.apache.lenya.cms.publication.Document lenyaDocument,
-            Source unnumberTagsXslSource, Source numberTagsXslSource,String encoding) throws ProcessingException,
-            FactoryConfigurationError, ParserConfigurationException, IOException, SAXException,
-            XPathQueryConfigurationException, Exception, MalformedURLException,
-            TransformerConfigurationException, TransformerException {
+            Source unnumberTagsXslSource, Source numberTagsXslSource,String encoding) throws Exception {
         if (!lenyaDocument.exists()) {
             throw new ProcessingException("The document [" + lenyaDocument + "] does not exist.");
         }
@@ -242,9 +238,9 @@ public class FormsEditor extends DocumentUsecase {
         
         System.setProperty(XPathQueryFactory.class.getName(), XPathQueryFactoryImpl.class.getName());
 
-        XUpdateQuery xUpdateQuery = new XUpdateQueryImpl();
+        XUpdateImpl xUpdate = new XUpdateImpl();
 
-        String editSelect = processElements(renumberedDocument, xUpdateQuery);
+        String editSelect = processElements(renumberedDocument, xUpdate);
         setParameter("editSelect", editSelect);
 
         Source validationSource = null;
@@ -296,7 +292,7 @@ public class FormsEditor extends DocumentUsecase {
      * @return A string.
      * @throws Exception
      */
-    private String processElements(Document document, XUpdateQuery xq) throws Exception {
+    private String processElements(Document document, XUpdateImpl xq) throws Exception {
         String editSelect = null;
         String[] paramNames = getParameterNames();
         for (int paramIndex = 0; paramIndex < paramNames.length; paramIndex++) {
@@ -386,14 +382,14 @@ public class FormsEditor extends DocumentUsecase {
                     // NOTE: select/option is generating parameter
                     // which should be considered as null
                     if (xupdateModifications != null) {
-                        xupdateModifications = "<?xml version=\"1.0\"?>"
-                                + addHiddenNamespaces(namespaces, xupdateModifications);
+                        xupdateModifications = "<?xml version=\"1.0\"?>" + xupdateModifications;
                     }
 
                     // now run the assembled xupdate query
                     if (xupdateModifications != null) {
                         getLogger().info("Execute XUpdate Modifications: " + xupdateModifications);
                         xq.setQString(xupdateModifications);
+                        xq.setNamespaceMap(getNamespaceMap(namespaces));
                         xq.execute(document);
                     } else {
                         getLogger().debug("Parameter did not match any xupdate command: " + pname);
@@ -403,6 +399,27 @@ public class FormsEditor extends DocumentUsecase {
             }
         }
         return editSelect;
+    }
+
+    protected NamespaceMap getNamespaceMap(String namespaces) {
+        NamespaceMap nsMap = new NamespaceMap();
+        String[] namespace = namespaces.split("[\\s]+");
+        for (int i = 0; i < namespace.length; i++) {
+            String[] prefixAndUri = namespace[i].split("=");
+            String prefix = prefixAndUri[0];
+            String uri = prefixAndUri[1].replaceAll("\"", "");
+            
+            int colonIndex = prefix.indexOf(":");
+            if (colonIndex == -1) {
+                nsMap.setDefaultNamespace(uri);
+            } else {
+                prefix = prefix.substring(colonIndex + 1);
+                if (!nsMap.containsKey(prefix)) {
+                    nsMap.setNamespace(prefix, uri);
+                }
+            }
+        }
+        return nsMap;
     }
 
     /**
