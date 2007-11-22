@@ -26,7 +26,6 @@
 >
 
 <xsl:template match="xhtml:body">
-<node name="Body" />
 <xsl:apply-templates mode="body"/>
 </xsl:template>
 
