@@ -55,8 +55,8 @@
     
     <map:component-configurations>
       <global-variables>
-        <resourceIconUrl>{proxy:/modules/kupu/kupu/apache-lenya/lenya/images/right_arrow.png}</resourceIconUrl>
-        <imageBase>{proxy:/modules/kupu/kupu/apache-lenya/lenya/images}</imageBase>
+        <resourceIconUrl>/modules/kupu/kupu/apache-lenya/lenya/images/right_arrow.png</resourceIconUrl>
+        <imageBase>/modules/kupu/kupu/apache-lenya/lenya/images</imageBase>
       </global-variables>
     </map:component-configurations>
 
@@ -70,13 +70,13 @@
       <!-- Flow callbacks -->
       <map:match pattern="sitetree_link_library_template">
         <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/sitetree_link_library.xml.jx" type="jx">
-          <map:parameter name="resource-icon-url" value="{global:resourceIconUrl}"/>
+          <map:parameter name="resource-icon-url" value="{proxy:{global:resourceIconUrl}}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>      
       <map:match pattern="publication_image_library_template">
         <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/publication_image_library.xml.jx" type="jx">
-          <map:parameter name="resource-icon-url" value="{global:resourceIconUrl}"/>
+          <map:parameter name="resource-icon-url" value="{proxy:{global:resourceIconUrl}}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>      
@@ -153,7 +153,7 @@
           <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/imagelibraries.xml.jx" type="jx">
             <map:parameter name="pubLibUrl" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-path}}?lenya.module=kupu&amp;lenya.step=publication_image_library"/>
             <map:parameter name="pageLibUrl" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-path}}?lenya.module=kupu&amp;lenya.step=page_image_library"/>
-            <map:parameter name="imageBaseUrl" value="{global:imageBase}"/>
+            <map:parameter name="imageBaseUrl" value="{proxy:{global:imageBase}}"/>
           </map:generate>
           <map:serialize type="xml"/>
         </map:match>
@@ -161,7 +161,7 @@
           <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/linklibraries.xml.jx" type="jx">
             <map:parameter name="pubLibUrl" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-path}}?lenya.module=kupu&amp;lenya.step=sitetree_link_library"/>
             <map:parameter name="pageLibUrl" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-path}}?lenya.module=kupu&amp;lenya.step=other_link_library"/>
-            <map:parameter name="imageBaseUrl" value="{global:imageBase}"/>
+            <map:parameter name="imageBaseUrl" value="{proxy:{global:imageBase}}"/>
           </map:generate>
           <map:serialize type="xml"/>
         </map:match>
@@ -169,7 +169,7 @@
         <map:match pattern="page_image_library" type="step">
           <map:call function="publication_image_library">
             <map:parameter name="template" value="publication_image_library_template"/>
-            <map:parameter name="iconUrl" value="{global:resourceIconUrl}"/>
+            <map:parameter name="iconUrl" value="{proxy:{global:resourceIconUrl}}"/>
             <map:parameter name="rootPath" value=""/>
             <map:parameter name="baseUrl" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}}"/>
           </map:call>
@@ -180,7 +180,7 @@
         <map:match pattern="publication_image_library" type="step">
           <map:call function="publication_image_library">
             <map:parameter name="template" value="publication_image_library_template"/>
-            <map:parameter name="iconUrl" value="{global:resourceIconUrl}"/>
+            <map:parameter name="iconUrl" value="{proxy:{global:resourceIconUrl}}"/>
             <map:parameter name="rootPath" value="{page-envelope:document-path}"/>
             <map:parameter name="baseUrl" value="{proxy:/{page-envelope:publication-id}/{page-envelope:area}}"/>
           </map:call>
