@@ -89,11 +89,9 @@
         
         <map:generate src="dummy.xml"/>
         <map:act type="resource-exists">
-          <map:parameter name="url" value="site://{1}/{2}/{page-envelope:default-language}/{3}"/>
+          <map:parameter name="url" value="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language},pub={1},area={2}"/>
           <map:transform src="xslt/scale.xsl">
-            <map:parameter name="nonProxyBaseUrl" value="http://localhost:{request:serverPort}{request:contextPath}"/>
-            <map:parameter name="url" value="/{../1}/{../2}/{../3}.{../4}"/>
-            <map:parameter name="revision" value="{request-param:lenya.revision}"/>
+            <map:parameter name="url" value="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language},pub={../1},area={../2}{link:rev}"/>
             <map:parameter name="width" value="{request-param:width}"/>
             <map:parameter name="height" value="{request-param:height}"/>
           </map:transform>
