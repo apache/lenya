@@ -15,16 +15,4 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<xweb xpath="/web-app/servlet[servlet-name = 'Cocoon']"
-      unless="init-param[param-name = 'logger-class' and
-                         normalize-space(param-value) = 'org.apache.avalon.excalibur.logger.Log4JLoggerManager']"
-      insert-after="init-param[position() = last()]">
-    <init-param>
-      <param-name>logger-class</param-name>
-      <param-value>org.apache.avalon.excalibur.logger.Log4JLoggerManager</param-value>
-    </init-param>
-    <init-param>
-      <param-name>log4j-config</param-name>
-      <param-value>/WEB-INF/log4j.xconf</param-value>
-    </init-param>
-</xweb>
+<xweb xpath="/web-app" remove="/web-app/servlet[servlet-name = 'Xindice']"/>
