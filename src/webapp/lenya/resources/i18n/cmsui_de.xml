@@ -422,6 +422,14 @@
     <xhtml:strong>Hinweis:</xhtml:strong> Überprüfen Sie, ob das Content-Repository
     in <xhtml:code>$PUB_HOME/config/(local.)publication.xml</xhtml:code> richtig konfiguriert ist.
   </message>
+
+  <!-- Document meta data -->
+  <message key="http://apache.org/lenya/metadata/document/1.0">Dokument</message>
+  <message key="contentType">Inhaltstyp</message>
+  <message key="expires">Läuft ab nach</message>
+  <message key="extension">Endung</message>
+  <message key="mimeType">MIME-Type</message>
+  <message key="resourceType">Ressourcen-Typ</message>
   
 </catalogue>
 

@@ -412,4 +412,12 @@
     is configured correctly within <xhtml:code>$PUB_HOME/config/(local.)publication.xml</xhtml:code>.
   </message>
   
+  <!-- Document meta data -->
+  <message key="http://apache.org/lenya/metadata/document/1.0">Document</message>
+  <message key="contentType">Content type</message>
+  <message key="expires">Expires after</message>
+  <message key="extension">Extension</message>
+  <message key="mimeType">MIME type</message>
+  <message key="resourceType">Resource type</message>
+  
 </catalogue>
