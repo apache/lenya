@@ -38,37 +38,13 @@
       <jx:choose>
         <jx:when test="${! usecase.hasErrors()}">
           
-          <div class="lenya-box">
-            <div class="lenya-box-title">Information</div>
-            <div class="lenya-box-body">
-              <table class="lenya-table-noborder">
-                <tr>
-                  <td class="lenya-entry-caption">Document:</td>
-                  <td><jx:out value="${usecase.getParameter('document').getId()}"/></td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption">Form:</td>
-                  <td><jx:out value="${usecase.getParameter('form')}"/></td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption">Node:</td>
-                  <td><jx:out value="${usecase.getParameter('editSelect')}"/></td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption">Workflow Event:</td>
-                  <jx:set var="event" value="${request.getParameter('lenya.event')}"/>
-                  <jx:choose>
-                    <jx:when test="${event.equals('') || event.equals('null')}">
-                      <td>No workflow event specified</td>
-                    </jx:when>
-                    <jx:otherwise>
-                      <td><jx:out value="${event}"/></td>
-                    </jx:otherwise>
-                  </jx:choose>
-                </tr>
-              </table>
-            </div>
-          </div>
+          <p>
+            <jx:set var="title"
+              value="${usecase.getParameter('document')
+              .getMetaData('http://purl.org/dc/elements/1.1/')
+              .getFirstValue('title')}"/>
+            <i18n:text>Document</i18n:text>: <q><jx:out value="${title}"/></q>
+          </p>
           
           <cinclude:includexml>
             <cinclude:src>cocoon://modules/editors/form/<jx:out value="${usecase.getParameter('form')}"/>/<jx:out value="${usecase.getParameter('editSelect')}"/></cinclude:src>

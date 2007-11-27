@@ -48,4 +48,6 @@
   <message key="insertAsset.insertAsset">Insert asset</message>
   <message key="insertAsset.insertImage">Insert image</message>
   <message key="insertAsset.createResource">Upload new resource</message>
+  
+  <message key="Choose element ...">Choose element ...</message>
 </catalogue>

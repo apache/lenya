@@ -20,6 +20,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://www.w3.org/1999/xhtml"
 >
 
@@ -32,6 +33,14 @@
 <xsl:variable name="imagesPath"><xsl:value-of select="$contextPrefix"/>/lenya/images/editor</xsl:variable>
 
 <xsl:include href="copy-mixed-content.xsl"/>
+  
+  
+  <xsl:template name="buttons">
+    <input type="submit" value="Save" name="submit" i18n:attr="value"/>
+    <xsl:text> </xsl:text>
+    <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
+  </xsl:template>
+
 
 <xsl:template match="form">
 <div>
@@ -47,7 +56,7 @@
         <xsl:apply-templates select="//*" mode="namespaces" />
       </xsl:attribute>
     </input>
-    <input type="submit" value="SAVE" name="submit"/>&#160;<input type="submit" value="CANCEL" name="cancel"/>
+    <xsl:call-template name="buttons"/>
   </div>
   <div class="lenya-box-body">
   
@@ -57,7 +66,7 @@
 
   </div>
   <div class="lenya-box-title" style="text-align: right">
-    <input type="submit" value="SAVE" name="submit"/>&#160;<input type="submit" value="CANCEL" name="cancel"/>
+    <xsl:call-template name="buttons"/>
   </div>
 </div>
 
@@ -125,7 +134,7 @@
 
 <xsl:template match="insert-before" mode="nodes">
     <tr>
-      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT BEFORE" name="insert-before"/></td>
+      <td style="background-color: #BFBFA2"><input type="submit" value="Insert before" name="insert-before" i18n:attr="value"/></td>
       <td colspan="2" style="background-color: #DCDBBF">
         <select name="&lt;xupdate:insert-before select=&quot;{@select}&quot;/&gt;" size="1">
             <option value="null">Choose element ...</option>
@@ -139,10 +148,10 @@
 
 <xsl:template match="insert-after" mode="nodes">
     <tr>
-      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT" name="insert-after"/></td>
+      <td style="background-color: #BFBFA2"><input type="submit" value="Insert" name="insert-after" i18n:attr="value"/></td>
       <td colspan="2" style="background-color: #DCDBBF">
         <select name="&lt;xupdate:insert-after select=&quot;{@select}&quot;/&gt;" size="1">
-            <option value="null">Choose element ...</option>
+          <option value="null"><i18n:text>Choose element ...</i18n:text></option>
           <xsl:for-each select="element">
             <option value="{@xupdate}"><xsl:value-of select="@name"/></option>
           </xsl:for-each>
