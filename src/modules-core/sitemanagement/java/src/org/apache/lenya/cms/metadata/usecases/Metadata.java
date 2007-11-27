@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.publication.Document;
@@ -51,6 +52,26 @@ public class Metadata extends SiteUsecase {
         }
         return objects;
     }
+    
+    public static class MetaDataWrapper {
+        
+        private String[] values;
+        private Element element;
+        
+        public MetaDataWrapper(Element element, String[] values) {
+            this.values = values;
+            this.element = element;
+        }
+        
+        public String[] getValues() {
+            return this.values;
+        }
+        
+        public Element getElement() {
+            return this.element;
+        }
+        
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -74,23 +95,16 @@ public class Metadata extends SiteUsecase {
 
             for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
                 MetaData meta = getSourceDocument().getMetaData(namespaces[nsIndex]);
-                boolean matched = false;
                 String[] keys = meta.getPossibleKeys();
                 for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
-                    if (meta.getElementSet().getElement(keys[keyIndex]).isEditable()) {
-                        String key = "ns" + nsIndex + "." + keys[keyIndex];
-                        String value = meta.getFirstValue(keys[keyIndex]);
-                        if (value != null) {
-                            setParameter(key, value);
-                        }
-                        keyList.add(key);
-                        matched = true;
-                    }
+                    String key = "ns" + nsIndex + "." + keys[keyIndex];
+                    String[] values = meta.getValues(keys[keyIndex]);
+                    Element element = meta.getElementSet().getElement(keys[keyIndex]);
+                    setParameter(key, new MetaDataWrapper(element, values));
+                    keyList.add(key);
                 }
-                if (matched) {
-                    numbers.add("" + nsIndex);
-                    num2namespace.put("" + nsIndex, namespaces[nsIndex]);
-                }
+                numbers.add("" + nsIndex);
+                num2namespace.put("" + nsIndex, namespaces[nsIndex]);
             }
 
             setParameter("numbers", numbers);
@@ -149,9 +163,13 @@ public class Metadata extends SiteUsecase {
 
             String[] keys = meta.getPossibleKeys();
             for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
-                String value = getParameterAsString("ns" + orgNsIndex + "." + keys[keyIndex]);
-                if (value != null) {
-                    meta.setValue(keys[keyIndex], value);
+                String key = keys[keyIndex];
+                Element element = meta.getElementSet().getElement(key);
+                if (element.isEditable()) {
+                    Object value = getParameter("ns" + orgNsIndex + "." + key);
+                    if (value != null && value instanceof String) {
+                        meta.setValue(key, (String) value);
+                    }
                 }
             }
         }

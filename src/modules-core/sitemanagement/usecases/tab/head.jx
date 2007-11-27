@@ -32,5 +32,6 @@
     <script src="/modules/sitetree/javascript/tree.js"/>
     <script src="/modules/sitetree/javascript/lenyatree.js"/>
     <script src="/modules/sitetree/javascript/navtree.js"/>
+    <script src="/modules/sitemanagement/javascript/lenyaTabs.js"/>
   </page:head>
 </jx:template>

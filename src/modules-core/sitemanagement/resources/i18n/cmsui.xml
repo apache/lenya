@@ -39,6 +39,7 @@
   <message key="Namespace">Namespace</message>
   <message key="http://purl.org/dc/terms/">Dublin Core Terms</message>
   <message key="http://purl.org/dc/elements/1.1/">Dublin Core Elements</message>
+  <message key="value-not-set">not set</message>
   <message key="Inherited credentials">Inherited credentials</message>
   <message key="Subtree credentials">Subtree credentials</message>
   <message key="New subtree credential">New subtree credential</message>
