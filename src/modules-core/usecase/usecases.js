@@ -359,8 +359,8 @@ function executeUsecase() {
             usecase.lockInvolvedObjects();
         }
         // create proxy object to save usecase state
-        proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
         view = usecase.getView();
+        proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
         log("debug", "Successfully prepared usecase.", usecaseName);
     } catch (exception) {
         log("error", "Could not prepare usecase: " + exception, usecaseName);
