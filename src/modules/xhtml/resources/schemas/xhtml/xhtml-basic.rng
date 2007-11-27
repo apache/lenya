@@ -37,5 +37,6 @@
 <include href="fallback://lenya/modules/xhtml/resources/schemas/xhtml/modules/meta.rng"/>
 <include href="fallback://lenya/modules/xhtml/resources/schemas/xhtml/modules/link.rng"/>
 <include href="fallback://lenya/modules/xhtml/resources/schemas/xhtml/modules/base.rng"/>
+<include href="fallback://lenya/modules/xhtml/resources/schemas/xhtml/modules/pres.rng"/>
 
 </grammar>
