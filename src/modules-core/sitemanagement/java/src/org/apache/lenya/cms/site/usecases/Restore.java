@@ -17,8 +17,11 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Workflowable;
 
@@ -50,6 +53,25 @@ public class Restore extends MoveSubsite {
         return "restore";
     }
 
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+
+        String targetAreaName = getTargetArea(); 
+        Document doc = getSourceDocument();
+        if(doc == null) {
+            return;
+        }
+        // Check to see if parent node exists in target to prevent ghost nodes
+        Area targetArea = doc.getPublication().getArea(targetAreaName);
+        DocumentLocator targetLoc = doc.getLocator().getAreaVersion(targetAreaName);
+        targetLoc = SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), targetLoc);
+        String targetPath = targetLoc.getPath();
+        targetPath = targetPath.substring(0,targetPath.lastIndexOf('/'));
+        if(!targetArea.getSite().contains(targetPath)) {
+            addErrorMessage("The authoring path [" + targetPath + "] does not exist.");
+        }
+    }
+  
     protected void doCheckPostconditions() throws Exception {
         super.doCheckPostconditions();
 
