@@ -20,6 +20,8 @@
 
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
+  <message key="http://apache.org/lenya/metadata/workflow/1.0">Workflow</message>
+  <message key="workflowVersion">Workflow versions</message>
   <message key="workflow.multiWorkflow">Workflow Overview</message>
   <message key="back-to-document">Back to document</message>
   <message key="workflow.reject">Reject</message>
