@@ -205,6 +205,11 @@ function upload () {
   var rights = cocoon.request.get("rights");
   var mimeType = cocoon.request.get("mimeType");
 
+  var width = cocoon.request.get("width");
+  var height = cocoon.request.get("height");  
+
+  cocoon.log.error("Width, height: " + width + ", " + height);   
+
   if (!uploadFile) {
     cocoon.sendStatus(403);
     return;
@@ -216,6 +221,7 @@ function upload () {
   var document = flowHelper.getPageEnvelope(cocoon).getDocument();
   var file = uploadHelper.save(cocoon.request, "upload-file"); 
   var fileName = file.getName();
+  var extent = file.length(); 
 
   var resolver = cocoon.getComponent(Packages.org.apache.excalibur.source.SourceResolver.ROLE);
   var resourcesManager = new ResourcesManager(document);
@@ -240,14 +246,25 @@ function upload () {
     os.close();
   }
 
+  // remove tmp file 
+  try {
+    file["delete"](); 
+  } catch(e) {}
+
 
   var metaFilePath = resolver.resolveURI(assetPath + ".meta");
   var metaOs = metaFilePath.getOutputStream();
 
-  cocoon.processPipelineTo("createmetadata", {"mimeType" : mimeType, "title" : title, "creator": creator}, metaOs);
+  if (width && height) {
+    var dimensions = new Object(); 
+    dimensions.width = width; 
+    dimensions.height = height; 
+    cocoon.processPipelineTo("createmetadata", {"mimeType" : mimeType, "extent" : extent, "title" : title, "creator": creator, "dimensions": dimensions }, metaOs);
+  } else {
+    cocoon.processPipelineTo("createmetadata", {"mimeType" : mimeType, "extent" : extent, "title" : title, "creator": creator }, metaOs);
+  }
 
   metaOs.close();
-
 
   var assetFile = new File(assetPath);
 
