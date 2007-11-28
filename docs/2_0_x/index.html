@@ -751,7 +751,8 @@ document.write("Last Published: " + document.lastModified);
         
 <dd>
           The monolithic architecture has been replaced by a small generic core and
-          various modules for specific purposes.
+          various modules for specific purposes. This makes the codebase easier to understand
+          and simplifies making custom functionality available in multiple publications.
         </dd>
         
 <dt>
@@ -774,17 +775,31 @@ document.write("Last Published: " + document.lastModified);
         </dd>
         
 <dt>
+<a href="../../docs/2_0_x/../modules/resource/index.html">Assets Are Treated as Documents</a>
+</dt>
+        
+<dd>
+          There is no distinction between XML and binary documents anymore.
+          Images, PDFs and other non-XML documents are now managed using the <em>resource</em>
+          resource type. This simplifies both API and user interface.
+        </dd>
+        
+<dt>
 <a href="../../docs/2_0_x/reference/ac.html">Improved Access Control</a>
 </dt>
         
-<dd>It is now possible to explicitly deny permissions on specific pages.</dd>
+<dd>
+          It is now possible to explicitly deny permissions on specific pages.
+        </dd>
         
 <dt>
 <a href="../../docs/2_0_x/reference/metadata.html">Configurable Meta Data</a>
 </dt>
         
 <dd>
-          It is now possible to declare custom sets of meta data.
+          Additionally to the default <a href="http://dublincore.org">Dublin Core</a> meta data,
+          you can now declare your own custom meta data element sets. For each meta data element,
+          you can specify if it can be edited using the GUI or if it is used for internal purposes only.
         </dd>
         
 <dt>
@@ -793,6 +808,8 @@ document.write("Last Published: " + document.lastModified);
         
 <dd>
           Publication templating allows to re-use common functionality in multiple publications.
+          All resources, like layout images, CSS, XSLT and Cocoon sitemap files, are inherited to
+          child publications unless you explicitely override them.
         </dd>
         
 <dt>
@@ -801,6 +818,7 @@ document.write("Last Published: " + document.lastModified);
         
 <dd>
           The usecase framework simplifies the implementation of user interaction functionality.
+          It is not necessary to implement Cocoon sitemaps for each usecase anymore.
         </dd>
         
 <dt>

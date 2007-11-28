@@ -883,15 +883,21 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <pre class="code">&lt;xsl:include href="fallback://header.xsl"/&gt;</pre>
 <p>
-        To simplify overriding of XSLT stylesheets, it would be useful to import the template
-        stylesheet. For this purpose, an additional template source factory could be used, which
-        skips the current publication when resolving the file:
+        To simplify overriding of XSLT stylesheets, it is very useful to import the template
+        stylesheet. The template-fallback source factory skips the current publication when
+        resolving the file, i.e. it resolves the first existing ancestor file:
       </p>
-<pre class="code">&lt;xsl:import href="template://template/xslt/common/header.xsl"/&gt;</pre>
+<pre class="code">&lt;xsl:import href="template-fallback:mypub://template/xslt/common/header.xsl"/&gt;</pre>
+<p>
+        It is necessary to pass the ID of the publication which contains the importing file
+        after the protocol string because otherwise the template-fallback resolving mechanism
+        will fail. For more information, see
+        <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=40564">bug 40564</a>. 
+      </p>
 </div>
     
     
-<a name="N100A3"></a><a name="Sitemaps"></a>
+<a name="N100AA"></a><a name="Sitemaps"></a>
 <h2 class="h3">Sitemaps</h2>
 <div class="section">
 <p>
@@ -910,7 +916,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N100B7"></a><a name="Usecases"></a>
+<a name="N100BE"></a><a name="Usecases"></a>
 <h2 class="h3">Usecases</h2>
 <div class="section">
 <p>
@@ -963,7 +969,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N100F5"></a><a name="Setting+Up+a+Publication+To+Support+Templating"></a>
+<a name="N100FC"></a><a name="Setting+Up+a+Publication+To+Support+Templating"></a>
 <h2 class="h3">Setting Up a Publication To Support Templating</h2>
 <div class="section">
 <p>
@@ -971,7 +977,7 @@ document.write("Last Published: " + document.lastModified);
         creating instances of publications which support templating. If your publication shall support
         templating, you have to follow these steps:
       </p>
-<a name="N10101"></a><a name="Implement+an"></a>
+<a name="N10108"></a><a name="Implement+an"></a>
 <h3 class="h4">Implement an Instantiator Class</h3>
 <pre class="code">package org.myproject.lenya;
 
@@ -983,7 +989,7 @@ public class MyInstantiator extends AbstractLogEnabled implements Instantiator {
     }
 
 }</pre>
-<a name="N1010F"></a><a name="Add+it+to"></a>
+<a name="N10116"></a><a name="Add+it+to"></a>
 <h3 class="h4">Add it to cocoon.xconf Using a Patch File</h3>
 <p>
           For instance <span class="codefrag">my-pub/config/cocoon-xconf/instantiator.xconf</span>:
@@ -996,7 +1002,7 @@ public class MyInstantiator extends AbstractLogEnabled implements Instantiator {
                         class="org.myproject.lenya.MyInstantiator"/&gt;
 
 &lt;/xconf&gt;</pre>
-<a name="N10123"></a><a name="Declare+the+Instantiator+in"></a>
+<a name="N1012A"></a><a name="Declare+the+Instantiator+in"></a>
 <h3 class="h4">Declare the Instantiator in publication.xml</h3>
 <pre class="code">&lt;publication&gt;
   ...

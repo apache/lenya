@@ -256,13 +256,15 @@ document.write("Last Published: " + document.lastModified);
         </p>
 <a name="N10053"></a><a name="Create+a+Tagged+Version"></a>
 <h3 class="h4">Create a Tagged Version</h3>
+<p>There are many ways to create a new tag, we will show the quick one and a more detailed one. The quick way is:</p>
+<pre class="code">svn copy https://svn.apache.org/repos/asf/lenya/trunk\
+       https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0_RC_2/\
+      -m "Tagging the 2.0 RC2."</pre>
 <p>
-          Browse to <a href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</a>
+          Alternatively browse to <a href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</a>
         
 </p>
 <pre class="code">
-FIXME: this does not apply to releases from trunk!
-
 svn co -r $REVISION https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
 cd branches/BRANCH_1_2_X
 svn copy branches/BRANCH_1_2_X tags/RELEASE_1_2_5
@@ -271,7 +273,7 @@ svn ci -m "Release 1_2_5 added" tags/RELEASE_1_2_5
 <p>
           More info: <a href="http://svnbook.red-bean.com/en/1.1/ch04s06.html">http://svnbook.red-bean.com/en/1.1/ch04s06.html</a>.
         </p>
-<a name="N1006C"></a><a name="Update+the+svn%3Aexternals+properties"></a>
+<a name="N10073"></a><a name="Update+the+svn%3Aexternals+properties"></a>
 <h3 class="h4">Update the svn:externals properties</h3>
 <p>
           Set the <span class="codefrag">svn:externals</span> properties for Cocoon and all other included repositories to the respective release tags.
@@ -287,7 +289,7 @@ svn propset cocoon_2_1_10 https://svn.apache.org/repos/asf/cocoon/tags/cocoon-2.
 <pre class="code">
 cocoon.src.dir=externals/cocoon_2_1_10
 </pre>
-<a name="N10084"></a><a name="Testing"></a>
+<a name="N1008B"></a><a name="Testing"></a>
 <h3 class="h4">Testing</h3>
 <ul>
           
@@ -304,7 +306,7 @@ cocoon.src.dir=externals/cocoon_2_1_10
 <li>If <em>critical</em> or <em>blocker</em> bugs have been found, the release process is canceled.</li>
         
 </ul>
-<a name="N100B3"></a><a name="%28If+necessary%3A%29+Cancelling+the+Freeze"></a>
+<a name="N100BA"></a><a name="%28If+necessary%3A%29+Cancelling+the+Freeze"></a>
 <h3 class="h4">(If necessary:) Cancelling the Freeze</h3>
 <p>
           The freeze can be canceled via a vote on the <em>dev@lenya.apache.org</em> mailing list under certain circumstance (very rare):
@@ -316,7 +318,7 @@ cocoon.src.dir=externals/cocoon_2_1_10
 <li>Critical architectural changes</li>
         
 </ul>
-<a name="N100C9"></a><a name="Add+the+Release+Notes"></a>
+<a name="N100D0"></a><a name="Add+the+Release+Notes"></a>
 <h3 class="h4">Add the Release Notes</h3>
 <p>
           Add the release notes (SVN URL, SVN Revision, What's new, Cocoon version 2.1.8, etc.) to the tagged version:
@@ -325,12 +327,12 @@ cocoon.src.dir=externals/cocoon_2_1_10
 svn add RELEASE-NOTES.txt
 svn ci -m "release notes added" RELEASE-NOTES.txt
 </pre>
-<a name="N100D7"></a><a name="Lock+the+Tagged+Version+%28Optional%29"></a>
+<a name="N100DE"></a><a name="Lock+the+Tagged+Version+%28Optional%29"></a>
 <h3 class="h4">Lock the Tagged Version (Optional)</h3>
 <pre class="code">
 svn lock tags/RELEASE_1_2_5
 </pre>
-<a name="N100E2"></a><a name="Release+the+Tarballs"></a>
+<a name="N100E9"></a><a name="Release+the+Tarballs"></a>
 <h3 class="h4">Release the Tarballs</h3>
 <ul>
           
@@ -339,7 +341,7 @@ svn lock tags/RELEASE_1_2_5
 <li>Edit the <em>Downloads</em> links on the web site with links to the new release files. Currently that's <a href="http://svn.apache.org/repos/asf/lenya/docu/src/documentation/content/xdocs/index.xml"> index.xml</a> and <a href="http://svn.apache.org/repos/asf/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/index.xml">docs/2_0_x/installation/index.xml</a>.</li>
         
 </ul>
-<a name="N100FD"></a><a name="Create+the+Binary+Packages"></a>
+<a name="N10104"></a><a name="Create+the+Binary+Packages"></a>
 <h3 class="h4">Create the Binary Packages</h3>
 <ul>
           
@@ -380,22 +382,22 @@ svn lock tags/RELEASE_1_2_5
           </li>
         
 </ul>
-<a name="N10141"></a><a name="Publish+a+Release+Announcement"></a>
+<a name="N10148"></a><a name="Publish+a+Release+Announcement"></a>
 <h3 class="h4">Publish a Release Announcement</h3>
 <p>
           Publish a <em>Project Release Announcement</em> to appropriate places (see section <em>Release Announcement</em> below).
         </p>
-<a name="N10151"></a><a name="Update+the+DOAP+file"></a>
+<a name="N10158"></a><a name="Update+the+DOAP+file"></a>
 <h3 class="h4">Update the DOAP file</h3>
 <p>
           Update the Lenya DOAP file (<a href="http://svn.apache.org/repos/asf/lenya/site/doap_Lenya.rdf">http://svn.apache.org/repos/asf/lenya/site/doap_Lenya.rdf</a>) with the version and date of this new release.
         </p>
 </div>
     
-<a name="N10160"></a><a name="Signing"></a>
+<a name="N10167"></a><a name="Signing"></a>
 <h2 class="h3">Signing</h2>
 <div class="section">
-<a name="N10166"></a><a name="PGP%2FGPG+signatures+on+releases"></a>
+<a name="N1016D"></a><a name="PGP%2FGPG+signatures+on+releases"></a>
 <h3 class="h4">PGP/GPG signatures on releases</h3>
 <ul>
           
@@ -412,7 +414,7 @@ svn lock tags/RELEASE_1_2_5
           </li>
         
 </ul>
-<a name="N1018D"></a><a name="ASF+signing+Resources"></a>
+<a name="N10194"></a><a name="ASF+signing+Resources"></a>
 <h3 class="h4">ASF signing Resources</h3>
 <ul>
           
@@ -439,7 +441,7 @@ svn lock tags/RELEASE_1_2_5
 </ul>
 </div>
     
-<a name="N101B1"></a><a name="Release+Announcement"></a>
+<a name="N101B8"></a><a name="Release+Announcement"></a>
 <h2 class="h3">Release Announcement</h2>
 <div class="section">
 <p>

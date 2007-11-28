@@ -917,6 +917,8 @@ document.write("Last Published: " + document.lastModified);
         </p>
 <p>
           The ProxyTransformer can be used to transform attribute values of elements in arbitrary namespaces.
+          It is recommended to declare a dedicated proxy transformer instance for each type of transformation,
+          for instance <em>proxy-xhtml</em> for XHTML documents and <em>proxy-rng</em> for Relax NG documents.
           For each namespace and element combination, you have to add a <span class="codefrag">&lt;transform/&gt;</span> element
           to the configuration. The following snippet shows the configuration to convert XHTML links. Beware
           that the XHTML document format supports various elements and attributes which can contain URLs, so
@@ -927,14 +929,21 @@ document.write("Last Published: " + document.lastModified);
   &lt;transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/&gt;
   ...
 &lt;/map:transformer&gt;</pre>
-<a name="N1010E"></a><a name="The+Proxy+Input+Module"></a>
+<p>
+          The next example declares a proxy transformer for Relax NG include statements:
+        </p>
+<pre class="code">&lt;map:transformer name="proxy-rng" logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer"&gt;
+  &lt;transform namespace="http://relaxng.org/ns/structure/1.0" element="include" attribute="href"/&gt;
+&lt;/map:transformer&gt;</pre>
+<a name="N1011B"></a><a name="The+Proxy+Input+Module"></a>
 <h3 class="h4">The Proxy Input Module</h3>
 <p>
           The <span class="codefrag">ProxyModule</span> provides the same functionality in sitemaps.
           It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
         </p>
 <pre class="code">&lt;map:parameter name="url" value="{proxy:/default/authoring/news.html}"/&gt;</pre>
-<a name="N1011F"></a><a name="Generating+Relative+URLs"></a>
+<a name="N1012C"></a><a name="Generating+Relative+URLs"></a>
 <h3 class="h4">Generating Relative URLs</h3>
 <p>
           In some cases it is convenient to use relative URLs in HTML links. This is especially
@@ -966,7 +975,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1013F"></a><a name="URLs+in+CSS+Files"></a>
+<a name="N1014C"></a><a name="URLs+in+CSS+Files"></a>
 <h2 class="h3">URLs in CSS Files</h2>
 <div class="section">
 <p>
