@@ -40,7 +40,6 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.notification.Message;
@@ -317,7 +316,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                     processing = DELETE_PROCESS;
                     super.startElement(namespaceURI, localName, qName, attrs);
                 } else {
-                    handleError("element " + localName + " unknown ");
+                    handleError("element " + localName + " unknown");
                 }
                 break;
 
@@ -336,7 +335,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                     processing = IN_DOCUMENT_PROCESS;
                 } else {
                     handleError("element " + localName + " is not allowed in  <" + LUCENE_PREXIF
-                            + ":" + LUCENE_DOCUMENT_ELEMENT + "> element ");
+                            + ":" + LUCENE_DOCUMENT_ELEMENT + "> element");
                 }
                 break;
 
@@ -351,7 +350,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                     }
                     processing = DELETING_PROCESS;
                 } else {
-                    handleError("element " + localName + " is not a <lucene:document> element ");
+                    handleError("element " + localName + " is not a <lucene:document> element");
                 }
                 break;
 
@@ -480,7 +479,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                 break;
 
             default:
-                handleError("unknow element " + LUCENE_FIELD_ELEMENT + " !");
+                handleError("unknow element '" + LUCENE_FIELD_ELEMENT + "'!");
             }
         } else {
             super.endElement(namespaceURI, localName, qName);
@@ -522,15 +521,15 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
             IndexManager indexM = (IndexManager) manager.lookup(IndexManager.ROLE);
             index = indexM.getIndex(id);
             if (index == null) {
-                handleError("index id: " + id + " no found in the index definition");
+                handleError("index [" + id + "] no found in the index definition");
             }
             indexer = index.getIndexer();
             manager.release(indexM);
         } catch (ServiceException ex1) {
-            handleError("service Exception", ex1);
+            handleError(ex1);
 
         } catch (IndexException ex3) {
-            handleError(" get Indexer error for index " + id, ex3);
+            handleError("get Indexer error for index [" + id + "]", ex3);
         }
 
         // set a custum analyzer (default: the analyzer of the index)
@@ -542,9 +541,9 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                 indexer.setAnalyzer(analyzer);
                 manager.release(analyzerM);
             } catch (ServiceException ex1) {
-                handleError("service Exception", ex1);
+                handleError(ex1);
             } catch (ConfigurationException ex2) {
-                this.handleError("set analyzer error for index" + id, ex2);
+                handleError("error setting analyzer for index [" + id + "]", ex2);
             }
         } else {
 
@@ -560,7 +559,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                 try {
                     indexer.clearIndex();
                 } catch (IndexException ex3) {
-                    handleError(" clear index error ", ex3);
+                    handleError("error clearing index", ex3);
                 }
             }
 
@@ -577,13 +576,19 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
             }
         }
     }
-
-    void handleError(String msg) throws SAXException {
-        this.handleError(msg, new Exception());
+    
+    void handleError(String message, Exception ex) throws SAXException {
+        handleError(message + ": " + getExceptionMessage(ex));
     }
 
     void handleError(Exception ex) throws SAXException {
-        this.handleError("", ex);
+        handleError(getExceptionMessage(ex));
+    }
+
+    protected String getExceptionMessage(Exception ex) throws SAXException {
+        String exMsg = ex.getMessage();
+        String msg = exMsg == null ? "" : " (" + exMsg + ")";
+        return ex.getClass().getName() + msg;
     }
 
     /**
@@ -593,7 +598,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
      * @param ex
      * @throws SAXException
      */
-    void handleError(String msg, Exception ex) throws SAXException {
+    void handleError(String msg) throws SAXException {
         closeIndexer();
 
         try {
@@ -606,8 +611,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
             String subject = "indexing-failed-subject";
             String[] subjectParams = new String[0];
             String body = "indexing-failed-body";
-            String[] bodyParams = { this.pubId, this.area, this.uuid, this.language,
-                    ex.getMessage() };
+            String[] bodyParams = { this.pubId, this.area, this.uuid, this.language, msg };
 
             Message message = new Message(subject, subjectParams, body, bodyParams, sender,
                     recipients);
