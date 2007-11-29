@@ -91,8 +91,7 @@ if [ "$JAVA_OPTIONS" = "" ] ; then
 fi
 
 # Set Lenya home to directory containing this script
-ENDSLASH=`expr match "$0" '.*/'`
-LENYA_HOME=`expr substr "$0" 1 $ENDSLASH`
+LENYA_HOME=${0%/*}
 cd $LENYA_HOME
 LENYA_HOME=`pwd -P`
 
