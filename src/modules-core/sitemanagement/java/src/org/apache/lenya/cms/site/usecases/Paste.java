@@ -66,13 +66,21 @@ public class Paste extends AbstractUsecase {
         if (clipboard == null) {
             addErrorMessage("clipboard-empty");
         }
-        else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+        else {
             Document doc = getSourceDocument();
             if(doc != null) {
                 Document clippedDoc = clipboard.getDocument(getDocumentFactory(), doc.getPublication());
                 String uuid = clippedDoc.getUUID();
-                if (willPasteInOwnSubtree(doc.getLink().getNode(), uuid)) {
-                    addErrorMessage("will-paste-in-own-subtree");
+                SiteNode node = doc.getLink().getNode();
+                if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+                    if (willPasteInOwnSubtree(node, uuid)) {
+                        addErrorMessage("will-paste-in-own-subtree");
+                    }
+                }
+                else if(clipboard.getMethod() == Clipboard.METHOD_COPY) {
+                    if(uuid.equals(node.getUuid())) {
+                        addErrorMessage("will-copy-to-self");
+                    }
                 }
             }
         }
