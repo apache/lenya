@@ -74,6 +74,7 @@
          Message[] messages = (Message[]) session.getAttribute(names[i]);
          if (messages != null) {
              errors.addAll(Arrays.asList(messages));
+             session.removeAttribute(names[i]);
          }
       }
       
