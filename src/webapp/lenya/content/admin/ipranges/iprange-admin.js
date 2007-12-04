@@ -138,26 +138,26 @@ function iprangeChangeProfile(newRange) {
 		   	}
 		   	message = "";
 		
-		    if (cocoon.request.get("cancel")) {
+		    if (cocoon.request.getParameter("cancel")) {
 		    	break;
 		    }
 		    
-		    if (cocoon.request.get("submit")) {
+		    if (cocoon.request.getParameter("submit")) {
 	
 		        var ok = true;
 		        
 	            // get values from request
-			    name = cocoon.request.get("name");
-		       	description = cocoon.request.get("description");
+			    name = cocoon.request.getParameter("name");
+		       	description = cocoon.request.getParameter("description");
 		       	for (i = 0; i < 4; i++) {
-		       	    net[i] = cocoon.request.get("net-" + (i+1));
+		       	    net[i] = cocoon.request.getParameter("net-" + (i+1));
 		       	    if (!checkIPNumber(net[i])) {
 		       	        netErrors[i] = "true";
 		       	        ok = false;
 		       	        message = "Please correct the errors.";
 		       	    }
 		       	    
-		       	    mask[i] = cocoon.request.get("mask-" + (i+1));
+		       	    mask[i] = cocoon.request.getParameter("mask-" + (i+1));
 		       	    if (!checkIPNumber(mask[i])) {
 		       	        maskErrors[i] = "true";
 		       	        ok = false;
@@ -167,7 +167,7 @@ function iprangeChangeProfile(newRange) {
 		       	
 		       	// initialize new IP range
 		        if (newRange == true) {
-				    iprangeId = cocoon.request.get("iprange-id");
+				    iprangeId = cocoon.request.getParameter("iprange-id");
 			        if (ok) {
 		                var existingIPRange = ipRangeManager.getIPRange(iprangeId);
 		                if (existingIPRange != null) {
@@ -222,7 +222,7 @@ function iprangeDeleteIPRange() {
 	try {
 		var redirectUri = getRequestUri();
 	    var ipRangeManager = getAccreditableManager().getIPRangeManager();
-		var ipRangeId = cocoon.request.get("iprange-id");
+		var ipRangeId = cocoon.request.getParameter("iprange-id");
 		var range = ipRangeManager.getIPRange(ipRangeId);
 		var name = range.getName();
 		var showPage = true;
@@ -234,11 +234,11 @@ function iprangeDeleteIPRange() {
 				"name" : name
 			});
 			
-			if (cocoon.request.get("cancel")) {
+			if (cocoon.request.getParameter("cancel")) {
 				break;
 			}
 			
-			if (cocoon.request.get("submit")) {
+			if (cocoon.request.getParameter("submit")) {
 				ipRangeManager.remove(range);
 				range['delete']();
 				showPage = false;
@@ -279,8 +279,8 @@ function iprangeChangeGroups() {
 	    	"iprange-groups" : rangeGroups
 	    });
 	    
-		var groupId = cocoon.request.get("group");
-		if (cocoon.request.get("add_group") && groupId != "") {
+		var groupId = cocoon.request.getParameter("group");
+		if (cocoon.request.getParameter("add_group") && groupId != "") {
 			var group = getAccreditableManager().getGroupManager().getGroup(groupId);
 			if (!rangeGroups.contains(group)) {
 				rangeGroups.add(group);
@@ -288,8 +288,8 @@ function iprangeChangeGroups() {
 			}
 		}
 	    
-		var rangeGroupId = cocoon.request.get("iprange_group");
-		if (cocoon.request.get("remove_group") && rangeGroupId != "") {
+		var rangeGroupId = cocoon.request.getParameter("iprange_group");
+		if (cocoon.request.getParameter("remove_group") && rangeGroupId != "") {
 			var group = getAccreditableManager().getGroupManager().getGroup(rangeGroupId);
 			if (rangeGroups.contains(group)) {
 				rangeGroups.remove(group);
@@ -297,11 +297,11 @@ function iprangeChangeGroups() {
 			}
 		}
 
-	    if (cocoon.request.get("cancel")) {
+	    if (cocoon.request.getParameter("cancel")) {
 	    	break;
 	    }
 	    
-		if (cocoon.request.get("submit")) {
+		if (cocoon.request.getParameter("submit")) {
 			range.removeFromAllGroups();
 			var iterator = rangeGroups.iterator();
 			while (iterator.hasNext()) {
