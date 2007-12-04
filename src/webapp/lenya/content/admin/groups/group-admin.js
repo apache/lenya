@@ -61,7 +61,7 @@ function groupChangeProfile() {
 		    if (cocoon.request.getParameter("submit")) {
 			    name = cocoon.request.getParameter("name");
 		       	description = cocoon.request.getParameter("description");
-		       	rule = cocoon.request.get("rule");
+		       	rule = cocoon.request.getParameter("rule");
 		       	
 		       	var evaluator = groupManager.getAttributeRuleEvaluator();
 		       	var result = evaluator.validate(rule);
@@ -228,7 +228,7 @@ function groupAddGroup() {
 	          	messages.add(new Packages.org.apache.lenya.ac.Message("This is not a valid group ID."));
 			}
 			else {
-		       	rule = cocoon.request.get("rule");
+		       	rule = cocoon.request.getParameter("rule");
 		       	var evaluator = groupManager.getAttributeRuleEvaluator();
 		       	var result = evaluator.validate(rule);
 		       	if (!result.succeeded()) {
