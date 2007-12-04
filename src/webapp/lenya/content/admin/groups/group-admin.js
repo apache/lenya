@@ -62,7 +62,7 @@ function groupChangeProfile() {
                 name = cocoon.request.getParameter("name");
                    description = cocoon.request.getParameter("description");
                    rule = cocoon.request.getParameter("rule").trim();
-                   
+
                    var evaluator = groupManager.getAttributeRuleEvaluator();
                    var result = evaluator.validate(rule);
                    if (!result.succeeded()) {
@@ -80,14 +80,12 @@ function groupChangeProfile() {
                     break;
                 }
             }
-            
         }
-        
-           cocoon.redirectTo(redirectUri);
-       }
-       finally {
-           release();
-       }
+        cocoon.redirectTo(redirectUri);
+    }
+    finally {
+       release();
+    }
 }
 
 
@@ -174,11 +172,11 @@ function groupChangeMembers() {
                 break;
             }
         }
-           cocoon.redirectTo(redirectUri);
-       }
-       finally {
-           release();
-       }
+        cocoon.redirectTo(redirectUri);
+    }
+    finally {
+       release();
+    }
 }
 
 //
@@ -250,11 +248,11 @@ function groupAddGroup() {
                 }
             }
         }
-           cocoon.redirectTo(redirectUri);
-       }
-       finally {
-           release();
-       }
+        cocoon.redirectTo(redirectUri);
+    }
+    finally {
+       release();
+    }
 }
 
 //
@@ -295,10 +293,10 @@ function groupDeleteGroup() {
             }
         }
     
-           cocoon.redirectTo(redirectUri);
-       }
-       finally {
-           release();
-       }
+        cocoon.redirectTo(redirectUri);
+    }
+    finally {
+       release();
+    }
 }
 
