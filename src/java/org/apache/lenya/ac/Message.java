@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.ac;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +25,9 @@ import java.util.List;
 /**
  * A message for i18n-ized user feedback.
  */
-public class Message {
+public class Message implements Serializable {
     
+    private static final long serialVersionUID = 1L;
     private String text;
     private List parameters = new ArrayList();
     
