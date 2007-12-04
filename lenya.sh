@@ -18,11 +18,12 @@
 # -----------------------------------------------------------------------------
 # Lenya Unix Shell Script
 #
-# $Id: lenya.sh 473841 2006-11-12 00:46:38Z gregor $
+# $Id: lenya.sh 599401 2007-11-29 12:08:11Z solprovider $
 # -----------------------------------------------------------------------------
 
 # Configuration variables
-#
+JETTY_PORT="8888"
+
 # LENYA_HOME
 #   The root of the Lenya distribution
 #
@@ -61,6 +62,7 @@ usage()
     echo "  servlet-admin     Run Lenya in a servlet container and turn on container web administration"
     echo "  servlet-debug     Run Lenya in a servlet container and turn on JVM remote debug"
     echo "  servlet-profile   Run Lenya in a servlet container and turn on JVM profiling"
+    echo "  stop              Stop Lenya in a servlet container"
     exit 1
 }
 
@@ -88,9 +90,10 @@ if [ "$JAVA_OPTIONS" = "" ] ; then
   JAVA_OPTIONS='-Xms32M -Xmx512M'
 fi
 
-if [ "$LENYA_HOME" = "" ] ; then
-  LENYA_HOME='.'
-fi
+# Set Lenya home to directory containing this script
+LENYA_HOME=${0%/*}
+cd $LENYA_HOME
+LENYA_HOME=`pwd -P`
 
 if [ "$LENYA_WEBAPP_HOME" = "" ] ; then
   STANDALONE_WEBAPP=../webapp
@@ -154,6 +157,22 @@ JETTY_PORT_ARGS="-Djetty.port=$JETTY_PORT"
 JETTY_ADMIN_ARGS="-Djetty.admin.port=$JETTY_ADMIN_PORT"
 JETTY_LIBRARIES="-Dloader.jar.repositories=$LENYA_HOME/tools/jetty/lib${PATHSEP}${ENDORSED_LIBS}"
 
+# ---- Stop Lenya ------------------------------------------------------------- 
+    if [ -f $LENYA_HOME/lenya.pid ] ; then
+       echo -n $"Stopping $prog: "
+       kill -9 `cat lenya.pid`
+       rm -f $LENYA_HOME/lenya.pid
+       if [ "stop" = $ACTION ]; then  
+         exit 0
+       fi
+       sleep 10
+    else
+       if [ "stop" = $ACTION ]; then
+         echo "Cannot stop Lenya.  No lenya.pid."
+         exit 1
+       fi
+    fi
+
 # ----- Do the action ----------------------------------------------------------
 
 if [ -d build ]; then
@@ -177,22 +196,26 @@ fi
 case "$ACTION" in
   cli)
         $JAVA $JAVA_OPTIONS -cp $LOADER_LIB $ENDORSED $CLI_LIBRARIES $CLI $LOADER $ARGS
-        ;;
+	;;
 
   servlet)
-        $JAVA $JAVA_OPTIONS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_PORT_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN
+        $JAVA $JAVA_OPTIONS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_PORT_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN &
+        echo $! >lenya.pid
         ;;
 
   servlet-admin)
-        $JAVA $JAVA_OPTIONS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_PORT_ARGS $JETTY_ADMIN_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN $JETTY_ADMIN
+        $JAVA $JAVA_OPTIONS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_PORT_ARGS $JETTY_ADMIN_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN $JETTY_ADMIN &
+        echo $! >lenya.pid
         ;;
 
   servlet-debug)
-        $JAVA $JAVA_OPTIONS $JAVA_DEBUG_ARGS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_PORT_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN
+        $JAVA $JAVA_OPTIONS $JAVA_DEBUG_ARGS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_PORT_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN &
+        echo $! >lenya.pid
         ;;
 
   servlet-profile)
-        $JAVA $JAVA_OPTIONS $JAVA_PROFILE_ARGS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN
+        $JAVA $JAVA_OPTIONS $JAVA_PROFILE_ARGS -cp $LOADER_LIB $ENDORSED $PARSER $JETTY_ARGS $JETTY_LIBRARIES $JETTY_WEBAPP $JETTY_HOME $JETTY $LOADER $JETTY_MAIN &
+        echo $! >lenya.pid
         ;;
 
   *)

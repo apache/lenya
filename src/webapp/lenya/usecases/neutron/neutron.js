@@ -22,6 +22,11 @@ importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
 importClass(Packages.org.apache.lenya.ac.Identity);
 importClass(Packages.org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper);
 importClass(Packages.org.apache.lenya.ac.AccreditableManager);
+importClass(Packages.org.apache.lenya.cms.authoring.UploadHelper);
+importClass(Packages.org.apache.lenya.cms.publication.ResourcesManager);
+importClass(Packages.java.io.File);
+importClass(Packages.java.io.FileInputStream);
+
 
 /**
  * Provides flow functions for Neutron protocol support.
@@ -39,7 +44,7 @@ function open() {
    var document = flowHelper.getPageEnvelope(cocoon).getDocument();
 
    var path = "/" + document.getId() + "/index_" + document.getLanguage() + ".xml";
-   cocoon.sendPage("xml/" + path);
+   cocoon.sendPage("xmlsource/" + path);
   
 }
 
@@ -96,10 +101,13 @@ function checkout () {
     
   } catch (e) {
     cocoon.response.setStatus(500);
-    cocoon.sendPage("exception-checkout.jx", {"message": e});
+
+    var user = e.getCheckOutUsername();
+    var date = e.getCheckOutDate(); 
+    cocoon.sendPage("exception-checkout.jx", {"user": user, "date": date });
     return;
   }
-  cocoon.sendPage("xml/" + path);
+  cocoon.sendPage("xmlsource/" + path);
 }
 
 
@@ -153,7 +161,7 @@ function lock() {
     cocoon.sendPage("exception-checkout.jx", {"message" : e});
     return;
   }
-  cocoon.sendPage("xml/" + path);
+  cocoon.sendPage("xmlsource/" + path);
  
 }
 
@@ -179,6 +187,95 @@ function unlock () {
     return;
   }
 }
+
+
+/**
+ * Upload
+ */
+
+
+function upload () {
+
+  var flowHelper = new FlowHelper();
+  var uploadHelper = new UploadHelper("/tmp");
+
+  var uploadFile = cocoon.request.get("upload-file");
+  var title = cocoon.request.get("title");
+  var creator = cocoon.request.get("creator");
+  var rights = cocoon.request.get("rights");
+  var mimeType = cocoon.request.get("mimeType");
+
+  var width = cocoon.request.get("width");
+  var height = cocoon.request.get("height");  
+
+  cocoon.log.error("Width, height: " + width + ", " + height);   
+
+  if (!uploadFile) {
+    cocoon.sendStatus(403);
+    return;
+  }
+
+
+  cocoon.log.error("Upload File: " + uploadFile + "\n");
+
+  var document = flowHelper.getPageEnvelope(cocoon).getDocument();
+  var file = uploadHelper.save(cocoon.request, "upload-file"); 
+  var fileName = file.getName();
+  var extent = file.length(); 
+
+  var resolver = cocoon.getComponent(Packages.org.apache.excalibur.source.SourceResolver.ROLE);
+  var resourcesManager = new ResourcesManager(document);
+    
+  var assetDirectoryPath = resourcesManager.getPath();
+  var assetPath = assetDirectoryPath +  File.separator + fileName;
+  var targetSource = resolver.resolveURI(assetPath);
+
+  var is = new FileInputStream(file);
+  var os = targetSource.getOutputStream();
+
+  var buffer = new java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
+  var len;
+
+  try {
+    while((len = is.read(buffer)) >= 0)
+      os.write(buffer, 0, len);
+  } catch (e) {
+
+  } finally {
+    is.close();
+    os.close();
+  }
+
+  // remove tmp file 
+  try {
+    file["delete"](); 
+  } catch(e) {}
+
+
+  var metaFilePath = resolver.resolveURI(assetPath + ".meta");
+  var metaOs = metaFilePath.getOutputStream();
+
+  if (width && height) {
+    var dimensions = new Object(); 
+    dimensions.width = width; 
+    dimensions.height = height; 
+    cocoon.processPipelineTo("createmetadata", {"mimeType" : mimeType, "extent" : extent, "title" : title, "creator": creator, "dimensions": dimensions }, metaOs);
+  } else {
+    cocoon.processPipelineTo("createmetadata", {"mimeType" : mimeType, "extent" : extent, "title" : title, "creator": creator }, metaOs);
+  }
+
+  metaOs.close();
+
+  var assetFile = new File(assetPath);
+
+  if (assetFile.exists()) {
+    cocoon.sendPage("upload-success.jx", {"filename" : fileName});  
+  } else {
+    cocoon.sendStatus(403);
+  }  
+
+}
+
 
 
 /**

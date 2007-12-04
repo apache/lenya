@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<dc:metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  <dc:title>${title}</dc:title>
+  <dc:type></dc:type>
+  <dc:rights>All rights reserved.</dc:rights>
+  <dc:publisher></dc:publisher>
+  <dc:date></dc:date>
+  <dc:language></dc:language>
+  <dc:creator>${creator}</dc:creator>
+  <dc:coverage></dc:coverage>
+  <dc:description></dc:description>
+  <dc:extent></dc:extent>
+  <dc:identifier></dc:identifier>
+  <dc:subject></dc:subject>
+  <dc:relation></dc:relation>
+  <dc:contributor></dc:contributor>
+  <dc:source></dc:source>
+  <dc:format>${mimeType}</dc:format>
+  <jx:if test="${dimensions}">
+    <lenya:meta xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+      <lenya:width>${dimensions.width}</lenya:width>
+      <lenya:height>${dimensions.height}</lenya:height>
+    </lenya:meta>
+  </jx:if>
+</dc:metadata>
