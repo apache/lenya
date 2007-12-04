@@ -51,12 +51,12 @@ function userChangeProfile(userId) {
 		    	"ldap" : ldap
 		    });
 		    
-		    if (cocoon.request.get("submit")) {
-			    fullName = cocoon.request.get("fullname");
+		    if (cocoon.request.getParameter("submit")) {
+			    fullName = cocoon.request.getParameter("fullname");
 		       	user.setName(fullName);
-			    email = cocoon.request.get("email");
+			    email = cocoon.request.getParameter("email");
 		       	user.setEmail(email);
-		       	description = cocoon.request.get("description");
+		       	description = cocoon.request.getParameter("description");
 		       	user.setDescription(description);
 		   		user.save();
 		    	ready = true;
@@ -122,11 +122,11 @@ function userChangePassword(checkPassword) {
 		    	"enabled" : enabled
 		    });
 		    
-			if (cocoon.request.get("submit")) {	    
-			    oldPassword = cocoon.request.get("old-password");
-			    newPassword = cocoon.request.get("new-password");
+			if (cocoon.request.getParameter("submit")) {	    
+			    oldPassword = cocoon.request.getParameter("old-password");
+			    newPassword = cocoon.request.getParameter("new-password");
             	var password = new Packages.java.lang.String(newPassword);
-			    confirmPassword = cocoon.request.get("confirm-password");
+			    confirmPassword = cocoon.request.getParameter("confirm-password");
 			    
 			    if (checkPassword && !user.authenticate(oldPassword)) {
 			    	message = "You entered a wrong password.";
@@ -188,8 +188,8 @@ function userChangeGroups() {
 		    	"user-groups" : userGroups
 		    });
 		    
-			var groupId = cocoon.request.get("group");
-			if (cocoon.request.get("add_group") && groupId != null) {
+			var groupId = cocoon.request.getParameter("group");
+			if (cocoon.request.getParameter("add_group") && groupId != null) {
 				var group = groupManager.getGroup(groupId);
 				if (!userGroups.contains(group)) {
 					userGroups.add(group);
@@ -197,8 +197,8 @@ function userChangeGroups() {
 				}
 			}
 		    
-			var userGroupId = cocoon.request.get("user_group");
-			if (cocoon.request.get("remove_group") && userGroupId != null) {
+			var userGroupId = cocoon.request.getParameter("user_group");
+			if (cocoon.request.getParameter("remove_group") && userGroupId != null) {
 				var group = groupManager.getGroup(userGroupId);
 				if (userGroups.contains(group)) {
 					userGroups.remove(group);
@@ -206,7 +206,7 @@ function userChangeGroups() {
 				}
 			}
 	
-			if (cocoon.request.get("submit")) {
+			if (cocoon.request.getParameter("submit")) {
 				user.removeFromAllGroups();
 
 		var testGroups = groupManager.getGroups();
@@ -226,7 +226,7 @@ function userChangeGroups() {
 				user.save();
 				ready = true;
 			}
-			else if (cocoon.request.get("cancel")) {
+			else if (cocoon.request.getParameter("cancel")) {
 			    ready = true;
 			}
 		}
@@ -334,14 +334,14 @@ function addUser(ldap) {
 	    		"ldap" : ldap
 			});
 			
-		    if (cocoon.request.get("submit")) {
-				userId = cocoon.request.get("userid");
-				email = cocoon.request.get("email");
-				fullName = cocoon.request.get("fullname");
-				description = cocoon.request.get("description");
-				ldapId = cocoon.request.get("ldapid");
-				password = cocoon.request.get("new-password");
-				confirmPassword = cocoon.request.get("confirm-password");
+		    if (cocoon.request.getParameter("submit")) {
+				userId = cocoon.request.getParameter("userid");
+				email = cocoon.request.getParameter("email");
+				fullName = cocoon.request.getParameter("fullname");
+				description = cocoon.request.getParameter("description");
+				ldapId = cocoon.request.getParameter("ldapid");
+				password = cocoon.request.getParameter("new-password");
+				confirmPassword = cocoon.request.getParameter("confirm-password");
 				
 			    var configDir = userManager.getConfigurationDirectory();
 	
@@ -383,7 +383,7 @@ function userDeleteUser() {
 	resolve();
     var redirectUri = getRequestUri();
 	
-	var userId = cocoon.request.get("user-id");
+	var userId = cocoon.request.getParameter("user-id");
 	var user;
 	
 	try {
@@ -400,7 +400,7 @@ function userDeleteUser() {
 				"type" : "user"
 			});
 				
-			if (cocoon.request.get("submit")) {
+			if (cocoon.request.getParameter("submit")) {
 				try {
 					var userManager = getAccreditableManager().getUserManager();
 					userManager.remove(user);

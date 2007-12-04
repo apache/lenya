@@ -41,14 +41,14 @@ function groupChangeProfile() {
 		    	"page-title" : "Edit Group"
 		    });
 		    
-		    if (cocoon.request.get("cancel")) {
+		    if (cocoon.request.getParameter("cancel")) {
 		    	break;
 		    }
 		    
-		    if (cocoon.request.get("submit")) {
-			    name = cocoon.request.get("name");
+		    if (cocoon.request.getParameter("submit")) {
+			    name = cocoon.request.getParameter("name");
 		       	group.setName(name);
-		       	description = cocoon.request.get("description");
+		       	description = cocoon.request.getParameter("description");
 		       	group.setDescription(description);
 		   		group.save();
 		    	break;
@@ -112,8 +112,8 @@ function groupChangeMembers() {
 		    	"group-machines" : groupMachines,
 		    });
 		    
-			var otherUserId = cocoon.request.get("user");
-			if (cocoon.request.get("add_user") && otherUserId != null) {
+			var otherUserId = cocoon.request.getParameter("user");
+			if (cocoon.request.getParameter("add_user") && otherUserId != null) {
 				var user = userManager.getUser(otherUserId);
 				if (!groupUsers.contains(user)) {
 					groupUsers.add(user);
@@ -121,8 +121,8 @@ function groupChangeMembers() {
 				}
 			}
 		    
-			var groupUserId = cocoon.request.get("group_user");
-			if (cocoon.request.get("remove_user") && groupUserId != null) {
+			var groupUserId = cocoon.request.getParameter("group_user");
+			if (cocoon.request.getParameter("remove_user") && groupUserId != null) {
 				var user = userManager.getUser(groupUserId);
 				if (groupUsers.contains(user)) {
 					groupUsers.remove(user);
@@ -130,11 +130,11 @@ function groupChangeMembers() {
 				}
 			}
 	
-		    if (cocoon.request.get("cancel")) {
+		    if (cocoon.request.getParameter("cancel")) {
 		    	break;
 		    }
 		    
-			if (cocoon.request.get("submit")) {
+			if (cocoon.request.getParameter("submit")) {
 				group.removeAllMembers();
 				
 				var userIterator = groupUsers.iterator();
@@ -179,14 +179,14 @@ function groupAddGroup() {
 		    	"new-group" : true
 			});
 			
-		    if (cocoon.request.get("cancel")) {
+		    if (cocoon.request.getParameter("cancel")) {
 		    	break;
 		    }
 		    
 			message = "";
-			groupId = cocoon.request.get("group-id");
-			name = cocoon.request.get("name");
-			description = cocoon.request.get("description");
+			groupId = cocoon.request.getParameter("group-id");
+			name = cocoon.request.getParameter("name");
+			description = cocoon.request.getParameter("description");
 			
 			var existingGroup = groupManager.getGroup(groupId);
 			if (existingGroup != null) {
@@ -223,7 +223,7 @@ function groupDeleteGroup() {
 	    var redirectUri = getRequestUri();
         
 	    var groupManager = getAccreditableManager().getGroupManager();
-		var groupId = cocoon.request.get("group-id");
+		var groupId = cocoon.request.getParameter("group-id");
 		var group = groupManager.getGroup(groupId);
 		var name = group.getName();
 		var showPage = true;
@@ -235,11 +235,11 @@ function groupDeleteGroup() {
 				"name" : name
 			});
 			
-			if (cocoon.request.get("cancel")) {
+			if (cocoon.request.getParameter("cancel")) {
 				break;
 			}
 			
-			if (cocoon.request.get("submit")) {
+			if (cocoon.request.getParameter("submit")) {
 				groupManager.remove(group);
 				var members = group.getMembers();
 				group['delete']();
