@@ -50,4 +50,11 @@ public interface Authenticator extends Component {
      * @return A string.
      */
     String getLoginUri(Request request);
+    
+    /**
+     * The target URI, i.e. the URI to redirect to after a successful authentication.
+     * @param request The request containing the authentication data.
+     * @return A string.
+     */
+    String getTargetUri(Request request);
 }

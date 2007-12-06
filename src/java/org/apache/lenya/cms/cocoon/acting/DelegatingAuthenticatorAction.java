@@ -31,43 +31,53 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.SimpleErrorHandler;
+import org.apache.lenya.ac.impl.DefaultAccessController;
 
 /**
- * Authenticator action that delegates the authentication to an access controller.
+ * Authenticator action that delegates the authentication to an access
+ * controller.
  */
 public class DelegatingAuthenticatorAction extends AccessControlAction {
-    
+
     /**
      * Session attribute name for authentication errors.
      */
     public static final String ERRORS = DelegatingAuthenticatorAction.class.getName() + ".Errors";
 
     /**
-     * @see org.apache.lenya.cms.cocoon.acting.AccessControlAction#doAct(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     * @see org.apache.lenya.ac.Authenticator#getTargetUri(Request);
      */
-    protected Map doAct(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String source,
-        Parameters parameters)
-        throws Exception {
+    public static final String TARGET_URI = "targetUri";
 
-        getLogger().debug("Authenticating request");
+    /**
+     * @see org.apache.lenya.cms.cocoon.acting.AccessControlAction#doAct(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map,
+     *      java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     */
+    protected Map doAct(Redirector redirector, SourceResolver resolver, Map objectModel,
+            String source, Parameters parameters) throws Exception {
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Authenticating request");
+        }
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         Map result = null;
         ErrorHandler handler = new SimpleErrorHandler();
         if (getAccessController().authenticate(request, handler)) {
-            getLogger().debug("Authentication successful.");
-            result = Collections.EMPTY_MAP;
-        }
-        else {
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Authentication successful.");
+            }
+            String targetUri = ((DefaultAccessController) getAccessController()).getAuthenticator()
+                    .getTargetUri(request);
+            result = Collections.singletonMap(TARGET_URI, targetUri);
+        } else {
             Session session = request.getSession(true);
             session.setAttribute(ERRORS, handler.getErrors());
-            getLogger().debug("Authentication failed.");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Authentication failed.");
+            }
         }
         return result;
     }
-
 }

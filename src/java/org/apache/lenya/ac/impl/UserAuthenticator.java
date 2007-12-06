@@ -132,4 +132,8 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
         this.manager = manager;
     }
 
+    public String getTargetUri(Request request) {
+        return request.getRequestURI();
+    }
+
 }

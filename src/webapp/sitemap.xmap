@@ -492,7 +492,7 @@
 
         <map:match type="step" pattern="login">
           <map:act type="authenticator">
-            <map:redirect-to uri="{request:requestURI}" session="true"/>
+            <map:redirect-to uri="{targetUri}" session="true"/>
           </map:act>
           <map:redirect-to uri="{request:requestURI}?lenya.usecase=login&amp;lenya.step=showscreen&amp;status=failed" session="true"/>
         </map:match>
