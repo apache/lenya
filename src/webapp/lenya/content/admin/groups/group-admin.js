@@ -39,8 +39,6 @@ function groupChangeProfile() {
         var translator = cocoon.getComponent("org.apache.lenya.ac.saml.AttributeTranslator");
         var attributeNames = translator.getSupportedResultNames();
         
-        // at the moment the loop is executed only once (no form validation)
-        
         while (!valid) {
             cocoon.sendPageAndWait("groups/profile.xml", {
                 "group-id" : groupId,
@@ -52,32 +50,36 @@ function groupChangeProfile() {
                 "messages" : messages
             });
 
-             messages.clear();
+            messages.clear();
             
             if (cocoon.request.getParameter("cancel")) {
                 break;
             }
             
+            valid = true;
             if (cocoon.request.getParameter("submit")) {
-                name = cocoon.request.getParameter("name");
-                   description = cocoon.request.getParameter("description");
-                   rule = cocoon.request.getParameter("rule").trim();
-
-                   var evaluator = groupManager.getAttributeRuleEvaluator();
-                   var result = evaluator.validate(rule);
-                   if (!result.succeeded()) {
-                       var validationMessages = result.getMessages();
-                       for (var i = 0; i < validationMessages.length; i++) {
-                           messages.add(validationMessages[i]);
-                       }
-                   }
-                   else {
-                       group.setName(name);
-                       group.setDescription(description);
-                       group.setRule(rule);
-                       group.save();
-                       valid = true;
-                    break;
+                rule = cocoon.request.getParameter("rule").trim();
+                if (rule == "") {
+                    rule = null;
+                }
+                if (rule != null) {
+                    var evaluator = groupManager.getAttributeRuleEvaluator();
+                    var result = evaluator.validate(rule);
+                    valid = result.succeeded();
+                    if (!valid) {
+                        var validationMessages = result.getMessages();
+                        for (var i = 0; i < validationMessages.length; i++) {
+                            messages.add(validationMessages[i]);
+                        }
+                    }
+                }
+                if (valid) {
+                    group.setRule(rule);
+                    name = cocoon.request.getParameter("name");
+                    description = cocoon.request.getParameter("description");
+                    group.setName(name);
+                    group.setDescription(description);
+                    group.save();
                 }
             }
         }
