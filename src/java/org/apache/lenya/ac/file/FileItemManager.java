@@ -279,7 +279,6 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
                 item = createItem(getTransientItemClass());
                 TransientItemConfiguration config = new TransientItemConfiguration(id);
                 config.configure((AbstractItem) item);
-                add(item);
             } catch (AccessControlException e) {
                 throw new RuntimeException(e);
             }
