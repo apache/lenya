@@ -67,7 +67,7 @@ public interface Group extends Identifiable, Item {
     void save() throws AccessControlException;
     
     /**
-     * @param rule The rule.
+     * @param rule The rule. A <code>null</code> value means that no rule should be used.
      * @throws AccessControlException if the rule is not valid.
      */
     void setRule(String rule) throws AccessControlException;
