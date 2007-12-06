@@ -58,6 +58,10 @@ import edu.internet2.middleware.shibboleth.wayf.IdPSite;
 public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
         AssertionConsumerService, Serviceable, Contextualizable {
 
+    public static final String REQ_PARAM_TARGET = "TARGET";
+    public static final String REQ_PARAM_SAMLART = "SAMLart";
+    public static final String REQ_PARAM_SAMLRESPONSE = "SAMLResponse";
+
     protected static final String CHARSET = "UTF-8";
 
     /**
@@ -141,11 +145,11 @@ public class AssertionConsumerServiceImpl extends AbstractLogEnabled implements
 
     private BrowserProfileRequest getBrowserProfileRequest(HttpServletRequest req) {
         BrowserProfileRequest bpr = new BrowserProfileRequest();
-        bpr.SAMLResponse = req.getParameter("SAMLResponse");
-        bpr.TARGET = req.getParameter("TARGET");
+        bpr.SAMLResponse = req.getParameter(REQ_PARAM_SAMLRESPONSE);
+        bpr.TARGET = req.getParameter(REQ_PARAM_TARGET);
         String[] samlArt = null;
         if (bpr.SAMLResponse == null)
-            samlArt = req.getParameterValues("SAMLart");
+            samlArt = req.getParameterValues(REQ_PARAM_SAMLART);
         bpr.SAMLArt = samlArt;
         return bpr;
     }
