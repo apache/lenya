@@ -56,7 +56,27 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @return An array of {@link Groupable}s.
      */
     public Groupable[] getMembers() {
+        Set members = members();
         return (Groupable[]) members.toArray(new Groupable[members.size()]);
+    }
+    
+    private boolean initializing = false;
+    
+    protected Set members() {
+        // First we must make sure that the user and IP range managers
+        // are initialized because otherwise the group won't contain their members
+        if (!initializing) {
+            // avoid race condition
+            initializing = true;
+            try {
+                getItemManager().getAccreditableManager().getUserManager();
+                getItemManager().getAccreditableManager().getIPRangeManager();
+            } catch (AccessControlException e) {
+                throw new RuntimeException(e);
+            }
+            initializing = false;
+        }
+        return this.members;
     }
 
     /**
@@ -64,6 +84,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param member The member to add.
      */
     public void add(Groupable member) {
+        Set members = members();
         assert (member != null) && !members.contains(member);
         members.add(member);
         member.addedToGroup(this);
@@ -74,6 +95,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param member The member to remove.
      */
     public void remove(Groupable member) {
+        Set members = members();
         assert (member != null) && members.contains(member);
         members.remove(member);
         member.removedFromGroup(this);
@@ -95,7 +117,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @return A boolean value.
      */
     public boolean contains(Groupable member) {
-        boolean contains = members.contains(member);
+        boolean contains = members().contains(member);
 
         if (!contains && member instanceof User && getRule() != null) {
             User user = (User) member;
@@ -132,19 +154,21 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
     private String rule;
 
     public void setRule(String rule) throws AccessControlException {
-        AttributeRuleEvaluator evaluator = getAttributeRuleEvaluator();
-        ValidationResult result = evaluator.validate(rule);
-        if (!result.succeeded()) {
-            StringBuffer msg = new StringBuffer();
-            Message[] messages = result.getMessages();
-            for (int i = 0; i < messages.length; i++) {
-                if (i > 0) {
-                    msg.append("; ");
+        if (rule != null) {
+            AttributeRuleEvaluator evaluator = getAttributeRuleEvaluator();
+            ValidationResult result = evaluator.validate(rule);
+            if (!result.succeeded()) {
+                StringBuffer msg = new StringBuffer();
+                Message[] messages = result.getMessages();
+                for (int i = 0; i < messages.length; i++) {
+                    if (i > 0) {
+                        msg.append("; ");
+                    }
+                    msg.append(messages[i].getText());
                 }
-                msg.append(messages[i].getText());
+                throw new AccessControlException("The rule for group [" + getId() + "] is not valid: "
+                        + msg.toString());
             }
-            throw new AccessControlException("The rule for group [" + getId() + "] is not valid: "
-                    + msg.toString());
         }
         this.rule = rule;
     }
