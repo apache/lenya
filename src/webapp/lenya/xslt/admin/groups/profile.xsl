@@ -102,7 +102,7 @@
             <tr>
               <td class="lenya-entry-caption" valign="top"><i18n:text>Rule</i18n:text></td>
               <td>
-                <textarea class="lenya-form-element" name="rule" rows="5"><xsl:value-of select="rule"/>&#160;</textarea>
+                <textarea class="lenya-form-element" name="rule" rows="5"><xsl:value-of select="rule"/> </textarea>
               </td>
             </tr>
             <tr>
