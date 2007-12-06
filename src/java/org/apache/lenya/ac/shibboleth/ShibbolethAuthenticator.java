@@ -51,6 +51,7 @@ import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.shibboleth.AssertionConsumerService;
 import org.apache.shibboleth.AttributeRequestService;
+import org.apache.shibboleth.impl.AssertionConsumerServiceImpl;
 import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
 
 /**
@@ -292,6 +293,11 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
         if (redirectConfig != null) {
             this.redirectToWayf = redirectConfig.getValueAsBoolean();
         }
+    }
+
+    public String getTargetUri(Request request) {
+        String target = request.getParameter(AssertionConsumerServiceImpl.REQ_PARAM_TARGET);
+        return target != null ? target : request.getRequestURI();
     }
 
 }
