@@ -94,6 +94,7 @@
         <map:transform type="i18n">      
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
+        <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xhtml"/>
       </map:match>
 
