@@ -92,9 +92,18 @@ var TinyMCE_SimpleBrowserPlugin = {
 	browserCallback : function(returnValue) {
 		if(!returnValue) return;
 		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements[TinyMCE_SimpleBrowserPlugin.options['field']].value = returnValue.url;
-		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.width.value = returnValue.width;
-		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.height.value = returnValue.height;
-		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.alt.value = returnValue.title;
+		
+		// the following checks are necessary because this script is used
+		// for image insertion AND link insertion (where the returnValue.width (height and title)  are null)
+		if (returnValue.width != null) {
+		    TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.width.value = returnValue.width;
+		}
+		if (returnValue.height != null) {
+		    TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.height.value = returnValue.height;
+		}
+		if ((returnValue.title != null) && (TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.alt != null)) {    		
+    		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.alt.value = returnValue.title;
+		}
 	}
 };
 
