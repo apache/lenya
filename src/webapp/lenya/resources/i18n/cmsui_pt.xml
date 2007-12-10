@@ -247,12 +247,10 @@
   <message key="rename-doc">Renomear Documento {0}</message>
       <!-- Copy document -->
   <message key="Copy Document">Copiar Documento</message>
-  <message key="copy-doc">Copiar documento {0}</message>
-  <message key="copy-doc-to-clip?">Deseja realmente copiar o documento {0} para o clipboard? Mais tarde poderá colar o documento numa localização escolhida por si.</message>
+  <message key="copy-doc-to-clip?">Deseja realmente copiar o documento <xhtml:q>{0}</xhtml:q> para o clipboard? Mais tarde poderá colar o documento numa localização escolhida por si.</message>
       <!-- Paste document -->
   <message key="Paste Document">Colar Documento</message>
-  <message key="paste-doc">Colar documento {0}</message>
-  <message key="paste-doc-from-clip?">Deseja realmente colar o documento {0} do clipboard?</message>
+  <message key="paste-doc-from-clip?">Deseja realmente colar o documento <xhtml:q>{0}</xhtml:q> do clipboard?</message>
       <!-- Cut document -->
   <message key="Cut Document">Cortar Documento</message>
   <message key="cut-doc">Cortar documento {0}</message>

@@ -282,13 +282,11 @@
   <message key="rename-doc">Hernoem document {0}</message>
       <!-- Copy document -->
   <message key="Copy Document">Kopieer Document</message>
-  <message key="copy-doc">Kopieer document {0}</message>
-  <message key="copy-doc-to-clip?">Wilt u het document {0} kopieren naar het clipboard? U kan het document later plakken op een lokatie naar keuze.</message>
+  <message key="copy-doc-to-clip?">Wilt u het document <xhtml:q>{0}</xhtml:q> kopieren naar het clipboard? U kan het document later plakken op een lokatie naar keuze.</message>
       <!-- Paste document -->
   <message key="Paste Document">Document Plakken</message>
 
-  <message key="paste-doc">Document {0} Plakken</message>
-  <message key="paste-doc-from-clip?">Wilt u het document {0} plakken vanaf het clipboard?</message>
+  <message key="paste-doc-from-clip?">Wilt u het document <xhtml:q>{0}</xhtml:q> plakken vanaf het clipboard?</message>
       <!-- Cut document -->
   <message key="Cut Document">Document Knippen</message>
   <message key="cut-doc">Document {0} Knippen</message>

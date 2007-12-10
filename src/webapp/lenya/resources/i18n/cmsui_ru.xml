@@ -266,13 +266,11 @@
 <message key="rename-doc">Переименовать документ {0}</message>
 <!-- Copy document -->
 <message key="Copy Document">Копировать документ</message>
-<message key="copy-doc">Копировать документ {0}</message>
-<message key="copy-doc-to-clip?">Хотите скопировать документ {0} В буфер обмена? Скопированный документ можно будет вставить после в выбранное место.</message>
+<message key="copy-doc-to-clip?">Хотите скопировать документ <xhtml:q>{0}</xhtml:q> В буфер обмена? Скопированный документ можно будет вставить после в выбранное место.</message>
 <!-- Paste document -->
 
 <message key="Paste Document">Вставить документ</message>
-<message key="paste-doc">Вставить документ {0}</message>
-<message key="paste-doc-from-clip?">Хотите вставить документ {0} из буфера обмена?</message>
+<message key="paste-doc-from-clip?">Хотите вставить документ <xhtml:q>{0}</xhtml:q> из буфера обмена?</message>
 <!-- Cut document -->
 <message key="Cut Document">Вырезать документ</message>
 <message key="cut-doc">Вырезать документ {0}</message>

@@ -245,11 +245,9 @@
   <message key="rename-doc">ドキュメント {0} の名前変更</message>
       <!-- Copy document -->
   <message key="Copy Document">ドキュメントのコピー</message>
-  <message key="copy-doc">ドキュメント {0} のコピー</message>
   <message key="copy-doc-to-clip?">ドキュメント {0} をコピーしクリップボードに移動させますか？ お好みの場所に後で貼り付けをすることが出来ます</message>
       <!-- Paste document -->
   <message key="Paste Document">ドキュメントの貼り付け</message>
-  <message key="paste-doc">ドキュメント {0} の貼り付け</message>
   <message key="paste-doc-from-clip?">クリップボードからドキュメント {0} を貼り付けしますか？</message>
       <!-- Cut document -->
   <message key="Cut Document">ドキュメントの切り取り</message>

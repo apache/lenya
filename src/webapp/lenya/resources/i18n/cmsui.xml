@@ -282,15 +282,13 @@
   <message key="rename-label-doc">Change navigation title of document {0}</message>
       <!-- Copy document -->
   <message key="Copy Document">Copy Document</message>
-  <message key="copy-doc">Copy document {0}</message>
   <message key="copy-doc-to-clip?">
-    Do you want to copy the document {0} and its descendants to the clipboard?
+    Do you want to copy the document <xhtml:q>{0}</xhtml:q> and its descendants to the clipboard?
     You can paste the subtree later at the location of your choosing.
   </message>
       <!-- Paste document -->
   <message key="Paste Document">Paste Document</message>
-  <message key="paste-doc">Paste document {0}</message>
-  <message key="paste-doc-from-clip?">Do you want to paste the document {0} from the clipboard?</message>
+  <message key="paste-doc-from-clip?">Do you want to paste the document <xhtml:q>{0}</xhtml:q> from the clipboard?</message>
 
       <!-- Cut document -->
   <message key="Cut Document">Cut Document</message>

@@ -267,12 +267,10 @@
   <message key="rename-label-doc">Changer le titre de navigation du document {0}</message>
       <!-- Copy document -->
   <message key="Copy Document">Copier le document</message>
-  <message key="copy-doc">Copier le document {0}</message>
-  <message key="copy-doc-to-clip?">Voulez-vous copier le document {0} vers le presse-papiers? Vous pourrez le coller ultérieurement à l'endroit de votre choix.</message>
+  <message key="copy-doc-to-clip?">Voulez-vous copier le document <xhtml:q>{0}</xhtml:q> vers le presse-papiers? Vous pourrez le coller ultérieurement à l'endroit de votre choix.</message>
       <!-- Paste document -->
   <message key="Paste Document">Coller le document</message>
-  <message key="paste-doc">Coller le document {0}</message>
-  <message key="paste-doc-from-clip?">Voulez-vous coller le document {0} à partir du presse-papiers?</message>
+  <message key="paste-doc-from-clip?">Voulez-vous coller le document <xhtml:q>{0}</xhtml:q> à partir du presse-papiers?</message>
       <!-- Cut document -->
   <message key="Cut Document">Couper le document</message>
   <message key="cut-doc">Couper le document {0}</message>

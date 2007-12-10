@@ -288,15 +288,14 @@
   <message key="rename-label-doc">Navigationstitel des Dokuments {0} ändern</message>
       <!-- Copy document -->
   <message key="Copy Document">Dokument kopieren</message>
-  <message key="copy-doc">Kopieren von Dokument {0}</message>
+  <message key="copy-doc">Dokument kopieren</message>
   <message key="copy-doc-to-clip?">
-    Wollen Sie das Dokument {0} und die untergeordneten Dokumente in die Zwischenablage kopieren?
+    Wollen Sie das Dokument <xhtml:q>{0}</xhtml:q> und die untergeordneten Dokumente in die Zwischenablage kopieren?
     Sie können den Teilbaum später an gewünschter Stelle einfügen.
   </message>
       <!-- Paste document -->
   <message key="Paste Document">Dokument einfügen</message>
-  <message key="paste-doc">Dokument {0} einfügen</message>
-  <message key="paste-doc-from-clip?">Wollen Sie das Dokument {0} aus der Zwischenablage einfügen?</message>
+  <message key="paste-doc-from-clip?">Wollen Sie das Dokument <xhtml:q>{0}</xhtml:q> aus der Zwischenablage einfügen?</message>
       <!-- Cut document -->
   <message key="Cut Document">Dokument ausschneiden</message>
   <message key="cut-doc">Ausschneiden von Dokument {0}</message>

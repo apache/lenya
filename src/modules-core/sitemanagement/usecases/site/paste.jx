@@ -29,14 +29,7 @@
   <page:body>
     <div class="lenya-box">
       <div class="lenya-box-title">
-        <i18n:translate>
-          <i18n:text key="paste-doc"/>
-          <i18n:param>
-            <q>
-              <jx:out value="${usecase.getParameter('clipboardLabel')}"/>
-            </q>
-          </i18n:param>
-        </i18n:translate>
+        <i18n:text>Paste Document</i18n:text>
       </div>
       <div class="lenya-box-body">
         <form method="post" action="" id="form-paste">
@@ -53,11 +46,7 @@
                 <br/>
                 <i18n:translate>
                   <i18n:text key="paste-doc-from-clip?"/>
-                  <i18n:param>
-                    <strong>
-                      <jx:out value="${usecase.getParameter('clipboardLabel')}"/>
-                    </strong>
-                  </i18n:param>
+                  <i18n:param>${usecase.getParameter('clipboardLabel')}</i18n:param>
                 </i18n:translate>
               </td>
             </tr>

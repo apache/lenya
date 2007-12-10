@@ -290,12 +290,10 @@
   <message key="rename-label-doc">Cambiar el título de navegación del documento {0}</message>
       <!-- Copy document -->
   <message key="Copy Document">Copiar Documento</message>
-  <message key="copy-doc">Copiar documento {0}</message>
-  <message key="copy-doc-to-clip?">¿Seguro que desea copiar el documento {0} al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
+  <message key="copy-doc-to-clip?">¿Seguro que desea copiar el documento <xhtml:q>{0}</xhtml:q> al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
       <!-- Paste document -->
   <message key="Paste Document">Pegar Documento</message>
-  <message key="paste-doc">Pegar documento {0}</message>
-  <message key="paste-doc-from-clip?">¿Seguro que desea pegar el documento {0} desde el portapapeles?</message>
+  <message key="paste-doc-from-clip?">¿Seguro que desea pegar el documento <xhtml:q>{0}</xhtml:q> desde el portapapeles?</message>
 
       <!-- Cut document -->
   <message key="Cut Document">Cortar Documento</message>

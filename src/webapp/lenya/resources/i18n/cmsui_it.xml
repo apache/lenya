@@ -221,12 +221,10 @@
 	<message key="rename-doc">Rinomina documento {0}</message>
 	<!-- Copy document -->
 	<message key="Copy Document">Copia Documento</message>
-	<message key="copy-doc">Copia documento {0}</message>
-	<message key="copy-doc-to-clip?">Vuoi copiare il documento {0} negli appunti? Puoi incollare successivamente il documento in un'altra posizione.</message>
+  <message key="copy-doc-to-clip?">Vuoi copiare il documento <xhtml:q>{0}</xhtml:q> negli appunti? Puoi incollare successivamente il documento in un'altra posizione.</message>
 	<!-- Paste document -->
 	<message key="Paste Document">Incolla Documento</message>
-	<message key="paste-doc">Incolla documento {0}</message>
-	<message key="paste-doc-from-clip?">Vuoi incollare il documento {0} dagli appunti?</message>
+  <message key="paste-doc-from-clip?">Vuoi incollare il documento </xhtml:q>{0}</message> dagli appunti?</message>
 	<!-- Cut document -->
 	<message key="Cut Document">Taglia Documento</message>
 	<message key="cut-doc">Taglia documento {0}</message>
