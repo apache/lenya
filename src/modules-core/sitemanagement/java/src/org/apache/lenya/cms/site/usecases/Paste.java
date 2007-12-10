@@ -77,11 +77,6 @@ public class Paste extends AbstractUsecase {
                         addErrorMessage("will-paste-in-own-subtree");
                     }
                 }
-                else if(clipboard.getMethod() == Clipboard.METHOD_COPY) {
-                    if(uuid.equals(node.getUuid())) {
-                        addErrorMessage("will-copy-to-self");
-                    }
-                }
             }
         }
     }

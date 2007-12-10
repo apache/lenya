@@ -577,14 +577,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throws PublicationException {
 
         SiteStructure site = sourceArea.getSite();
-
-        copyAllLanguageVersions(sourceArea, sourcePath, targetArea, targetPath);
+        SiteNode root = site.getNode(sourcePath);
         
-        SiteNode node = site.getNode(sourcePath);
-        SiteNode[] children = node.getChildren();
-        for (int i = 0; i < children.length; i++) {
-        	String childTargetPath = targetPath + "/" + children[i].getName();
-        	copyAll(sourceArea, children[i].getPath(), targetArea, childTargetPath);
+        List preOrder = preOrder(root);
+        for (Iterator i = preOrder.iterator(); i.hasNext(); ) {
+            SiteNode node = (SiteNode) i.next();
+            String nodeSourcePath = node.getPath();
+            String nodeTargetPath = targetPath + nodeSourcePath.substring(sourcePath.length());
+            copyAllLanguageVersions(sourceArea, nodeSourcePath, targetArea, nodeTargetPath);
         }
     }
 

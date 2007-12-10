@@ -54,9 +54,7 @@
                 <i18n:translate>
                   <i18n:text key="copy-doc-to-clip?"/>
                   <i18n:param>
-                    <strong>
-                      <jx:out value="${usecase.getParameter('document').getLink().getLabel()}"/>
-                    </strong>
+                    <jx:out value="${usecase.getParameter('document').getLink().getLabel()}"/>
                   </i18n:param>
                 </i18n:translate>
               </td>
