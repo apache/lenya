@@ -19,7 +19,7 @@
   @translators Giampaolo Trapasso  <trapo at trapo dot it>
 -->
 
-<catalogue xml:lang="it">
+<catalogue xml:lang="it" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	<!-- common used words -->
 	<message key="Save">Salva</message>
 	<message key="Submit">Sottoponi</message>
@@ -227,8 +227,7 @@
   <message key="paste-doc-from-clip?">Vuoi incollare il documento </xhtml:q>{0}</message> dagli appunti?</message>
 	<!-- Cut document -->
 	<message key="Cut Document">Taglia Documento</message>
-	<message key="cut-doc">Taglia documento {0}</message>
-	<message key="cut-doc-to-clip?">Vuoi tagliare il documento {0} and muoverlo negli appunti? Puoi incollare successivamente il documento in un'altra posizione.</message>
+  <message key="cut-doc-to-clip?">Vuoi tagliare il documento <xhtml:q>{0}</xhtml:q> and muoverlo negli appunti? Puoi incollare successivamente il documento in un'altra posizione.</message>
 	<!-- Info Asset -->
 	<message key="Insert Image">Inserisci Immagine</message>
 	<message key="Insert Asset">Inserisci Risorsa</message>

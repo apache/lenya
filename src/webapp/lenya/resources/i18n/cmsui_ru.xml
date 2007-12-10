@@ -273,8 +273,7 @@
 <message key="paste-doc-from-clip?">Хотите вставить документ <xhtml:q>{0}</xhtml:q> из буфера обмена?</message>
 <!-- Cut document -->
 <message key="Cut Document">Вырезать документ</message>
-<message key="cut-doc">Вырезать документ {0}</message>
-<message key="cut-doc-to-clip?">Хотите вырезать документ {0} и переместить его в буфер обмена? Вырезанный документ можно будет вставить после в выбранное место.</message>
+<message key="cut-doc-to-clip?">Хотите вырезать документ <xhtml:q>{0}</xhtml:q> и переместить его в буфер обмена? Вырезанный документ можно будет вставить после в выбранное место.</message>
 <!--Change visibility in navigation -->
 <message key="Change">Изменить</message>
 <message key="Change Document visiblity in navigation">Выберите видимость документа в навигации</message>

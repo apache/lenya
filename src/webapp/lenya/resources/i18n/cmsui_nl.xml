@@ -289,8 +289,7 @@
   <message key="paste-doc-from-clip?">Wilt u het document <xhtml:q>{0}</xhtml:q> plakken vanaf het clipboard?</message>
       <!-- Cut document -->
   <message key="Cut Document">Document Knippen</message>
-  <message key="cut-doc">Document {0} Knippen</message>
-  <message key="cut-doc-to-clip?">Wilt u het document {0} knippen en verplaatsen naar het clipboard? U kunt het document later plakken op een lokatie naar keuze.</message>
+  <message key="cut-doc-to-clip?">Wilt u het document <xhtml:q>{0}</xhtml:q> knippen en verplaatsen naar het clipboard? U kunt het document later plakken op een lokatie naar keuze.</message>
 
     <!--Change visibility in navigation -->
   <message key="Change">Aanpassen</message>

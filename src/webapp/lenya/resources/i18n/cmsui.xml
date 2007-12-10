@@ -292,9 +292,8 @@
 
       <!-- Cut document -->
   <message key="Cut Document">Cut Document</message>
-  <message key="cut-doc">Cut document {0}</message>
   <message key="cut-doc-to-clip?">
-    Do you want to cut the document {0} and its descendants and move it to the clipboard?
+    Do you want to cut the document <xhtml:q>{0}</xhtml:q> and its descendants and move it to the clipboard?
     You can paste the subtree later at the location of your choosing.
   </message>
 

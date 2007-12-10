@@ -251,7 +251,6 @@
   <message key="paste-doc-from-clip?">クリップボードからドキュメント {0} を貼り付けしますか？</message>
       <!-- Cut document -->
   <message key="Cut Document">ドキュメントの切り取り</message>
-  <message key="cut-doc">ドキュメント {0} の切り取り</message>
   <message key="cut-doc-to-clip?">ドキュメント {0} を切り取りクリップボードに移動させますか？ お好みの場所に後で貼り付けをすることが出来ます</message>
     <!--Change visibility in navigation -->
   <message key="Change">変更</message>

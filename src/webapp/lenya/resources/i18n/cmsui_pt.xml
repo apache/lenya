@@ -253,8 +253,7 @@
   <message key="paste-doc-from-clip?">Deseja realmente colar o documento <xhtml:q>{0}</xhtml:q> do clipboard?</message>
       <!-- Cut document -->
   <message key="Cut Document">Cortar Documento</message>
-  <message key="cut-doc">Cortar documento {0}</message>
-  <message key="cut-doc-to-clip?">Deseja realmente cortar o documento {0} e movê-lo para o clipboard? Mais tarde poderá colar o documento numa localização escolhida por si.</message>
+  <message key="cut-doc-to-clip?">Deseja realmente cortar o documento <xhtml:q>{0}</xhtml:q> e movê-lo para o clipboard? Mais tarde poderá colar o documento numa localização escolhida por si.</message>
     <!--Change visibility in navigation -->
   <message key="Change">Alterar</message>
   <message key="Change Document visiblity in navigation">Alterar a visibilidade do documento na navegação</message>

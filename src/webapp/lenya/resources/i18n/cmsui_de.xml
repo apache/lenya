@@ -298,9 +298,8 @@
   <message key="paste-doc-from-clip?">Wollen Sie das Dokument <xhtml:q>{0}</xhtml:q> aus der Zwischenablage einfügen?</message>
       <!-- Cut document -->
   <message key="Cut Document">Dokument ausschneiden</message>
-  <message key="cut-doc">Ausschneiden von Dokument {0}</message>
   <message key="cut-doc-to-clip?">
-    Wollen Sie das Dokument {0} und die untergeordneten Dokumente ausschneiden und in die Zwischenablage verschieben?
+    Wollen Sie das Dokument <xhtml:q>{0}</xhtml:q> und die untergeordneten Dokumente ausschneiden und in die Zwischenablage verschieben?
     Sie können den Teilbaum später an gewünschter Stelle einfügen.
   </message>
 
