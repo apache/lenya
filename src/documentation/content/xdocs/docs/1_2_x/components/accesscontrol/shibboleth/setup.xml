@@ -681,30 +681,5 @@ $ ./lenya.sh]]></source>
         </ul>
       </section>
     
-    <section>
-      <title>Common Pitfalls</title>
-      <ul>
-        <li>
-          After updating the Java VM to a new version, don't forget to re-add your
-          server certificate to the default Java truststore.
-        </li>
-        <li>
-          Lenya's LDAP configuration file <code>ldap.properties</code> overrides the default
-          Java keystore location. If you use this setting, make sure to add the certificate
-          to this keystore.
-        </li>
-        <li>
-          <p><strong>Login fails</strong></p>
-          <p>
-            If you don't run the Lenya web application in the Tomcat root context, you'll have
-            to set the <em>emptySessionPath</em> attribute of the connector to <em>true</em>.
-            For more information, refer to the
-            <a href="http://tomcat.apache.org/tomcat-5.5-doc/config/http.html">Apache
-              Tomcat Configuration Reference</a>
-          </p>
-        </li>
-      </ul>
-    </section>
-
   </body>
 </document>

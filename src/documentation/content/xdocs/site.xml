@@ -455,6 +455,7 @@
           <shibboleth12Introduction href="introduction.html" label="Introduction"/>
           <shibboleth12Setup href="setup.html" label="Setup"/>
           <shibboleth12Architecture href="architecture.html" label="Architecture"/>
+          <shibboleth12Problems href="problems.html" label="Troubleshooting"/>
         </shibboleth12>
       </accesscontrol>
       <authoring href="authoring/" label="Authoring">
