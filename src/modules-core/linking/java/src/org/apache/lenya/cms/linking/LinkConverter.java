@@ -24,7 +24,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.xml.DocumentHelper;
@@ -70,7 +69,6 @@ public class LinkConverter extends AbstractLogEnabled {
     public void convertUrlsToUuids(Publication srcPub, Document examinedDocument,
             boolean useContextPath) {
         boolean linksRewritten = false;
-        LinkResolver linkResolver = null;
         try {
 
             String prefix = "";
@@ -87,10 +85,9 @@ public class LinkConverter extends AbstractLogEnabled {
                             "Convert links: No XPaths for resource type [" + type.getName() + "]");
                 }
             } else {
-                linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
-                DocumentFactory factory = examinedDocument.getFactory();
+                LinkRewriter rewriter = new UrlToUuidRewriter(examinedDocument.area());
 
-                org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(examinedDocument
+                org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
                         .getInputStream());
 
                 for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
@@ -98,7 +95,7 @@ public class LinkConverter extends AbstractLogEnabled {
                         getLogger()
                                 .debug("Convert links: Check XPath [" + xPaths[xPathIndex] + "]");
                     }
-                    NodeList nodes = XPathAPI.selectNodeList(xmlDocument, xPaths[xPathIndex]);
+                    NodeList nodes = XPathAPI.selectNodeList(xml, xPaths[xPathIndex]);
                     for (int nodeIndex = 0; nodeIndex < nodes.getLength(); nodeIndex++) {
                         Node node = nodes.item(nodeIndex);
                         if (node.getNodeType() != Node.ATTRIBUTE_NODE) {
@@ -110,39 +107,21 @@ public class LinkConverter extends AbstractLogEnabled {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Convert links: Check URL [" + url + "]");
                         }
-
-                        if (url.startsWith(prefix + "/" + srcPub.getId() + "/"
-                                + examinedDocument.getArea() + "/")) {
-                            String targetPubId = examinedDocument.getPublication().getId();
-                            final String webappUrl = "/" + targetPubId
-                                    + url.substring((prefix + "/" + srcPub.getId()).length());
-                            if (factory.isDocument(webappUrl)) {
-                                Document targetDocument = factory.getFromURL(webappUrl);
-
-                                if (getLogger().isDebugEnabled()) {
-                                    getLogger().debug(
-                                            "Convert links: Check webapp URL [" + webappUrl + "]");
-                                }
-
-                                Link link = new Link();
-                                link.setUuid(targetDocument.getUUID());
-                                attribute.setValue(link.getUri());
-                                linksRewritten = true;
-                            }
+                        final String originalUrl = url.startsWith(prefix) ? url.substring(prefix.length()) : url;
+                        if (rewriter.matches(originalUrl)) {
+                            String rewrittenUrl = rewriter.rewrite(originalUrl);
+                            attribute.setValue(rewrittenUrl);
+                            linksRewritten = true;
                         }
                     }
                 }
 
                 if (linksRewritten) {
-                    DocumentHelper.writeDocument(xmlDocument, examinedDocument.getOutputStream());
+                    DocumentHelper.writeDocument(xml, examinedDocument.getOutputStream());
                 }
             }
         } catch (Exception e) {
             throw new RuntimeException("Error rewriting document: [" + examinedDocument + "]", e);
-        } finally {
-            if (linkResolver != null) {
-                this.manager.release(linkResolver);
-            }
         }
     }
 
