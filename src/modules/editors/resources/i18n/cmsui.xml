@@ -44,7 +44,7 @@
   <message key="insertAsset.captionImage">Image description</message>
   <message key="insertAsset.captionAsset">Asset text</message>
   <message key="insertAsset.width">Width</message>
-  <message key="insertAsset.height">height</message>
+  <message key="insertAsset.height">Height</message>
   <message key="insertAsset.insertAsset">Insert asset</message>
   <message key="insertAsset.insertImage">Insert image</message>
   <message key="insertAsset.createResource">Upload new resource</message>
