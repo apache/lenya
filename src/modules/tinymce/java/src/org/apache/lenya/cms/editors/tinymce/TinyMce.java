@@ -29,6 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -171,10 +172,12 @@ public class TinyMce extends DocumentUsecase {
      * @throws Exception if an error occurs.
      */
     protected void saveDocument(String encoding, String content) throws Exception {
-        saveXMLFile(encoding, content, getSourceDocument());
+        org.apache.lenya.cms.publication.Document doc = getSourceDocument();
+        saveXMLFile(encoding, content, doc);
+        LinkConverter converter = new LinkConverter(this.manager, getLogger());
+        converter.convertUrlsToUuids(doc, false);
 
-        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
-                getEvent());
+        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), doc, getEvent());
     }
 
     /**
