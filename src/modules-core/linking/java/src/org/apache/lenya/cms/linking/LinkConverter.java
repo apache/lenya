@@ -71,10 +71,7 @@ public class LinkConverter extends AbstractLogEnabled {
         boolean linksRewritten = false;
         try {
 
-            String prefix = "";
-            if (useContextPath) {
-                prefix = getContextPath();
-            }
+            String prefix = useContextPath ? getContextPath() : "";
 
             ResourceType type = examinedDocument.getResourceType();
             String[] xPaths = type.getLinkAttributeXPaths();
@@ -85,7 +82,8 @@ public class LinkConverter extends AbstractLogEnabled {
                             "Convert links: No XPaths for resource type [" + type.getName() + "]");
                 }
             } else {
-                LinkRewriter rewriter = new UrlToUuidRewriter(examinedDocument.area());
+                LinkRewriter incomingRewriter = new IncomingLinkRewriter(examinedDocument.getPublication());
+                LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument.area());
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
                         .getInputStream());
@@ -108,8 +106,15 @@ public class LinkConverter extends AbstractLogEnabled {
                             getLogger().debug("Convert links: Check URL [" + url + "]");
                         }
                         final String originalUrl = url.startsWith(prefix) ? url.substring(prefix.length()) : url;
-                        if (rewriter.matches(originalUrl)) {
-                            String rewrittenUrl = rewriter.rewrite(originalUrl);
+                        final String webappUrl;
+                        if (incomingRewriter.matches(originalUrl)) {
+                            webappUrl = incomingRewriter.rewrite(originalUrl);
+                        } else {
+                            webappUrl = originalUrl;
+                        }
+                        
+                        if (urlToUuidRewriter.matches(webappUrl)) {
+                            String rewrittenUrl = urlToUuidRewriter.rewrite(webappUrl);
                             attribute.setValue(rewrittenUrl);
                             linksRewritten = true;
                         }
