@@ -45,7 +45,7 @@ function scaleHeight(width) {
   */
 function scaleWidth(height) {
   var ratio = document.forms['insertAsset'].ratio.value;
-  document.forms['insertAsset'].width.value = height * ratio;
+  document.forms['insertAsset'].width.value = height * 1.0 / ratio;
   focus(); 
 } 
 
