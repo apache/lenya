@@ -33,7 +33,7 @@
     <menus>
       <menu i18n:attr="name" name="Development">
         <block areas="site authoring">
-          <item href="?lenya.module=development&amp;lenya.action=showLog">
+          <item>
             <xsp:attribute name="href">/modules/development/log4j.log</xsp:attribute>
             <i18n:text>Show Log</i18n:text>
           </item>
