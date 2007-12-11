@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: cmsui_de.xml 446542 2006-09-15 08:14:39Z andreas $ -->
+
+<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <message key="resourceType-resource">Media</message>
+  <message key="http://apache.org/lenya/metadata/media/1.0">Media</message>
+  <message key="filename">Dateiname</message>
+  <message key="Insert Image">Bild einfügen</message>
+  <message key="Insert Asset">Anlage einfügen</message>
+  <message key="Asset Upload">Anlage hochladen</message>
+  <message key="Insert a new Image">Neues Bild einfügen</message>
+  <message key="Upload an Asset">Anlage hochladen</message>
+  <message key="upload-size-exceeded">Die Datei ist zu groß ({0}).</message>
+  <message key="upload-enter-title">Bitte geben Sie einen Titel ein.</message>
+  <message key="upload-choose-file">Bitte wählen Sie eine Datei.</message>
+  <message key="upload-missing-extension">Bitte wählen Sie eine Datei mit einer Endung.</message>
+  <message key="upload-disabled">
+    Das Hochladen von Dateien ist nicht erlaubt.
+    Bitte prüfen Sie die Einstellungen in local.build.properties!
+  </message>
+  <message key="upload-reset">
+    Der Browser darf aus Sicherheitsgründen den Wert des Datei-Upload-Felds nicht setzen.
+    Bitte wählen Sie die Datei erneut.
+  </message>
+  <message key="width">Breite</message>
+  <message key="height">Höhe</message>
+  <message key="Preview">Vorschau</message>
+  <message key="Available Assets">Verfügbare Anlagen</message>
+  <message key="Upload Asset">Anlage hochladen</message>
+  <message key="Media Document">Medien-Dokument</message>
+  <message key="Title">Titel</message>
+  <message key="Description">Beschreibung</message>
+  <message key="Content">Inhalt</message>
+  <message key="Size">Größe</message>
+  <message key="MimeType">Mime-Type</message>
+  <message key="Dimension (w x h)">Abmessungen (Breite&#160;&#215;&#160;Höhe)</message>
+  <message key="Width">Breite</message>
+  <message key="Height">Höhe</message>
+  <message key="Upload File">Datei hochladen</message>
+  <message key="Warning">Warnung</message>
+  <message key="document-will-be-overwritten">Das existierende Dokument wird überschrieben!</message>
+  <message key="no-preview-available">Für diese Ressource ist keine Vorschau verfügbar.</message>
+  
+</catalogue>
+

@@ -1,0 +1,15 @@
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'editors.insertLink']">
+
+  <component-instance 
+      name="editors.insertLink" 
+      logger="lenya.publication"
+      class="org.apache.lenya.cms.usecase.DummyUsecase"
+  >
+    <view 
+      uri="cocoon://modules/editors/editors.insertLink" 
+      menu="false"
+      createContinuation="false"
+    />
+  </component-instance>
+
+</xconf>

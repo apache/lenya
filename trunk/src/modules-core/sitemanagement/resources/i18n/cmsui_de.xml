@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: cmsui_de.xml 446564 2006-09-15 10:13:16Z andreas $ -->
+
+<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <message key="sitemanagement.delete">Löschen</message>
+  <message key="sitemanagement.archive">Archivieren</message>
+  <message key="sitemanagement.restore">Wiederherstellen</message>
+  <message key="cut-error-islive">Der Knoten kann nicht ausgeschnitten werden wenn eine Sprachversion publiziert ist.</message>
+  <message key="Parent Path">Übergeordneter Pfad</message>
+  <message key="Node Name">Knoten-Name</message>
+  <message key="missing-node-name">Bitte geben Sie einen Knoten-Namen ein.</message>
+  <message key="node-name-special-characters">Der Knoten-Name darf keine Sonderzeichen enthalten.</message>
+  <message key="Document visible in Navigation">Sichtbar in Navigation</message>
+  <message key="Relation">Relation</message>
+  <message key="Page Layout">Seitenlayout</message>
+  <message key="Document Path">Pfad</message>
+  <message key="Meta Data">Meta-Daten</message>
+  <message key="no-assets">Es wurden noch keine Anlagen hochgeladen.</message>
+  <message key="Editor">Bearbeiter</message>
+  <message key="missing-languages">Fehlende Sprachen<br/> (Klicken zum Erstellen)</message>
+  <message key="Namespace">Namensraum</message>
+  <message key="http://purl.org/dc/terms/">Dublin-Core-Terme</message>
+  <message key="http://purl.org/dc/elements/1.1/">Dublin-Core-Elemente</message>
+  <message key="value-not-set">nicht gesetzt</message>
+  <message key="Inherited credentials">Vererbte Berechtigungen</message>
+  <message key="Subtree credentials">Berechtigungen für diesen Teilbaum</message>
+  <message key="New subtree credential">Neue Berechtigung für diesen Teilbaum</message>
+  <message key="no-jobs-scheduled">Es wurden keine zeitgesteuerten Aktionen gestartet.</message>
+  <message key="No overview available.">Es ist keine Übersicht verfügbar.</message>
+  <message key="missing-navigation-title">Bitte geben Sie einen Navigationstitel ein.</message>
+  <message key="missing-page-layout">Bitte wählen Sie ein Seiten-Layout.</message>
+  <message key="path-already-exists">Der Pfad {0} existiert bereits.</message>
+  <message key="yes">ja</message>
+  <message key="no">nein</message>
+  <message key="Type">Typ</message>
+  <message key="Method">Methode</message>
+  <message key="grant">erlauben</message>
+  <message key="deny">verbieten</message>
+  <message key="world">Welt</message>
+  <message key="only-in-authoring-area">Dieser Usecase kann nur im Authoring-Bereich ausgeführt werden.</message>
+  <message key="clipboard-empty">Die Zwischenablage ist leer.</message>
+  <message key="Resource Type">Ressourcen-Typ</message>
+  <message key="Mime Type">Mime-Type</message>
+  <message key="Document Size">Größe des Dokuments</message>
+  <message key="no-rollback">Rollback ist deaktiviert.</message>
+  <message key="workflow-state">Das Dokument ist im Arbeitsschritt "{0}".</message>
+  <message key="view-revision-in-new-window">Version in neuem Fenster ansehen</message>
+  <message key="view-revision">Version ansehen</message>
+  <message key="is-current-version">(aktuell)</message>
+  <message key="rollback">Wiederherstellen</message>
+  <message key="rollback-ok">diese Version wiederherstellen</message>
+  <message key="no-rollback-in-review">Im Arbeitsschritt "Freigabe" ist
+  keine Wiederherstellung möglich.</message>
+  <message key="no-rollback-no-privileges">Keine ausreichenden Rechte zum Wiederherstellen.</message>
+  <message key="will-paste-in-own-subtree">
+    Ein ausgeschnittenes Dokument kann nicht im eigenen Teilbaum eingefügt werden.
+  </message>
+  <message key="Change Document URL">URL des Dokuments ändern</message>
+  <message key="change-document-url">URL des Dokuments <q>{0}</q> ändern</message>
+  <message key="New URL Fragment">Neues URL-Fragment</message>
+  <message key="The document ID is not valid.">Das URL-Fragment ist ungültig.</message>
+  <message key="The document can't be deleted if a live version exists.">
+    Das Dokument kann nicht gelöscht werden, wenn eine Live-Version existiert.
+  </message>
+  <message key="child">Kind-Dokument</message>
+  <message key="sibling after">Folgendes Geschwister-Dokument</message>
+  <message key="The last language version cannot be removed.">Die letzte Sprachversion kann nicht gelöscht werden.</message>
+  <message key="All language versions already exist.">Es existieren bereits alle Sprachversionen.</message>
+  
+  <!-- force check-in -->
+  <message key="force-checkin">Check-In erzwingen</message>
+  <message key="force-checkin-question">Wollen Sie das Dokument "{0}" wirklich einchecken?</message>
+  <message key="user-logged-in">Der Nutzer "{0}" ist noch eingeloggt.</message>
+  <message key="user-not-logged-in">Der Nutzer "{0}" ist nicht mehr eingeloggt.</message>
+  <message key="not-checked-out">Das Dokument "{0}" ist nicht ausgecheckt.</message>
+</catalogue>
+

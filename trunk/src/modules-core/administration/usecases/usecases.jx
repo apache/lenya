@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: user.jx 473861 2006-11-12 03:51:14Z gregor $ -->
+
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:body>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+      <h1><i18n:text>Usecases</i18n:text></h1>
+      
+      <form method="post" id="form-usecases">
+        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        <p><i18n:text>usecase-policies-message</i18n:text></p>
+        <jx:if test="${usecase.getParameter('templates').size() &gt; 0}">
+          <p><strong>Note:</strong><br/>
+            If you submit this form, all usecase permissions
+            are stored for the publication "<jx:out value="${usecase.getParameter('publicationId')}"/>".
+            If you want to change the inherited usecase permissions of a template publication, please go
+            to the administration GUI of one of the templates
+            (<jx:forEach var="template" items="${usecase.getParameter('templates')}">
+              <a href="${'/' + template + '/authoring/index.html?lenya.usecase=admin.usecases'}"><jx:out value="${template}"/></a>
+            </jx:forEach>).
+          </p>
+        </jx:if>
+        <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+        <table class="lenya-table-list-noborder">
+          <jx:set var="i" value="0"/>
+          <jx:forEach var="usecaseName" items="${usecase.getParameter('usecases')}">
+            <jx:if test="${i % 10 == 0}">
+              <tr>
+                <td colspan="${1 + usecase.getParameter('roles').size()}" style="border-left: 0; border-right: 0;">
+                  <p>
+                    <input type="submit" name="submit" value="Submit" i18n:attr="value"/>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th><i18n:text>Usecase</i18n:text></th>
+                <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                  <th><i18n:text><jx:out value="${role}"/></i18n:text></th>
+                </jx:forEach>
+              </tr>
+            </jx:if>
+            <jx:set var="i" value="${i + 1}"/>
+            <tr>
+              <td><jx:out value="${usecaseName}"/></td>
+              <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                <td>
+                  <jx:set var="name" value="${usecaseName + ':' + role}"/>
+                  <jx:set var="value" value="${usecase.getParameter(name)}"/>
+                  <jx:choose>
+                    <jx:when test="${value == java.lang.Boolean.TRUE}">
+                      <input name="${name}" type="checkbox" checked="checked"/>
+                    </jx:when>
+                    <jx:otherwise>
+                      <input name="${name}" type="checkbox"/>
+                    </jx:otherwise>
+                  </jx:choose>
+                </td>
+              </jx:forEach>
+            </tr>
+          </jx:forEach>
+        </table>
+        <p style="width: 50%">
+          <input type="submit" name="submit" value="Submit" i18n:attr="value"/>
+        </p>
+      </form>
+    </div>
+  </page:body>
+</page:page>

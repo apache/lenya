@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: webapp-build.xml 177920 2005-05-23 04:59:37Z gregor $ -->
+
+<project name="modules">
+
+  <description>
+    Modules Targets
+  </description>
+  
+  <property name="modules.root.dirs" value=""/>
+  <property name="build.modules" value="${build.webapp}/lenya/modules"/>
+  <property name="modules.copy" value="false"/>
+
+  <target name="prepare-modules" depends="init-tasks">
+    
+    <property name="cocoon.xconf" value="${build.webapp}/WEB-INF/cocoon.xconf"/>
+    
+    <generateModuleList
+      moduleDirs="${modules.root.dirs}"
+      moduleFile="${build.dir}/temp/modules.xml"/>
+    
+    <!-- aggregate all module config files to one file: -->
+    <xslt
+      in="${build.dir}/temp/modules.xml"
+      out="${build.dir}/temp/modules-config.xml"
+      style="${src.resource.dir}/build/modules2config.xsl">
+    </xslt>
+    
+    <xslt
+      in="${build.dir}/temp/modules-config.xml"
+      out="${build.dir}/temp/modules-build.xml"
+      style="${src.resource.dir}/build/modules2build.xsl">
+      <param name="cocoon-xconf" expression="${cocoon.xconf}" />
+      <param name="module-schema" expression="${src.resource.dir}/build/module.rng"/>
+      <param name="copy-modules" expression="${modules.copy}"/>
+    </xslt>
+    
+    <xslt
+      in="${build.dir}/temp/modules.xml"
+      out="${build.dir}/temp/modules.xconf"
+      style="${src.resource.dir}/build/modules2patch.xsl">
+      <param name="copy-modules" expression="${modules.copy}"/>
+    </xslt>
+    
+    <xpatch addComments="false"
+      includes="modules.xconf"
+      srcdir="${build.dir}/temp/"
+      file="${cocoon.xconf}"/>
+
+  </target>
+  
+  
+  <target name="deploy-modules" depends="prepare-modules">
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="compile-modules"/>
+  </target>
+  
+  
+  <!-- ================================================ -->
+  <!-- Javadocs -->
+  <!-- ================================================ -->
+  
+  <target name="javadocs-modules" depends="prepare-modules">
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="javadocs-modules"/>
+  </target>
+  
+  
+  <!-- ================================================ -->
+  <!-- Module tests -->
+  <!-- ================================================ -->
+  
+  <target name="prepare-module-test">
+    <xslt basedir="${build.dir}/temp"
+      includes="*.xconf"
+      destdir="${build.dir}/temp"
+      style="${src.resource.dir}/test/xpatch2testpatch.xsl"
+      extension=".xtest"/>
+    <xpatch addComments="false"
+      includes="modules.xtest"
+      srcdir="${build.dir}/temp"
+      file="${build.test}/org/apache/lenya/cms/LenyaTestCase.xtest"/>
+  </target>
+  
+  <target name="modules.test" depends="patch-modules-test">
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true">
+      <target name="test-module-org.apache.lenya.modules.export"/>
+      <target name="test-modules"/>
+    </ant>
+  </target>
+  
+  <target name="modules.test.canoo" depends="init" description="Run Canoo web tests for modules">
+    <ant antfile="${build.dir}/temp/modules-build.xml">
+      <property name="webtest.home" value="${webtest.home}"/>
+      <target name="test-modules-canoo"/>
+    </ant>
+  </target>
+  
+  <target name="patch-modules-test" depends="set-test-patch-property, tests.prepare, prepare-module-test">
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="patch-modules-test"/>
+  </target>
+  
+  <target name="module.test" depends="patch-modules-test">
+    <property name="module" value=""/>
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="test-module-${module}"/>
+  </target>
+  
+  <target name="module.compile">
+    <property name="module" value=""/>
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="compile-module-${module}"/>
+  </target>
+  
+</project>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+  <head>
+    <title>Funktionen</title>
+  </head>
+  <body>
+    <h1>Funktionen</h1>
+    
+    <p>
+      Apache Lenya bietet die Features, die Sie von einem modernen
+      Content-Management-System erwarten, z.B. Versionierung, Zeitsteuerung,
+      eine eingebaute Suchmaschine, Staging und Workflow.
+      Da es durchgängig auf XML basiert, können mehr Funktionalitäten
+      realisiert werden als mit CMS, die XML nur ansatzweise verwenden.
+      Einige erwähnenswerte Funktionalitäten sind:
+    </p>
+
+    <h2>Browser-basiertes Editieren im WYSIWYG-Modus</h2>
+    
+    <p>
+      Apache Lenya verfügt über Browser-basierte WYSIWYG-Editoren die
+      gegen W3C XML Schemas bzw. Relax-NG-Schemas validieren. Dadurch wird
+      das nicht-konforme Markup, das andere Editoren produzieren, vermieden.
+      Schema-basierte Editoren erlauben es außerdem, Website-Style-Guidelines
+      durchzusetzen.
+    </p>
+    
+    <h2>XML-Publishing</h2>
+    
+    <p>
+      Da Apache Lenya auf Apache Cocoon basiert, kann es auf alle Vorteile
+      eines mächtigen XML-Publishing-Frameworks zurückgreifen, darunter
+      Multi-Channel- / Cross-Platform-Publishing und Content-Aggregation
+      von externen Quellen wie RSS-Feeds. 
+    </p>
+
+    <h2>Das Publikationskonzept</h2>
+    
+    <p>
+      Das Publikationskonzept erlaubt es, Informations-Architekturen von
+      Websites wiederzuverwenden und die Informationen auf der Ebene des
+      Inhalts zu modularisieren.
+    </p>
+    
+    <h2>Eine zukunftssichere Lösung</h2>
+    
+    <p>
+      Der Apache Software-Stack ist eine der bewährtesten Plattformen zur
+      Erstellung von Internet-Applikationen. Auf dieser Basis bietet Apache
+      Lenya eine robuste, zukunfts- und investitionssichere Lösung.
+    </p>
+
+  </body>
+</html>

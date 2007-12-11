@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<echo:entry xmlns:echo="http://purl.org/atom/ns#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/">
+  <echo:title>My Sample Entry</echo:title>
+  <echo:summary>Summary</echo:summary>
+  <echo:author>
+    <echo:name>Bob B. Bobbington</echo:name>
+  </echo:author>
+  <echo:link rel="alternate" href="" type="text/xml"/>
+  <echo:id>tag:bob.blog.net,2004:04:15:taxes</echo:id>
+  <echo:created>2003-02-05T12:29:29-04:00</echo:created>
+  <echo:issued>2003-02-05T08:29:29-04:00</echo:issued>
+  <echo:modified>2003-02-05T12:29:29-04:00</echo:modified>
+  <echo:content type="application/xhtml+xml">
+    <p><em>Hello</em>, <strong>weblog</strong> <a href="http://www.apache.org">world</a>!</p>
+  </echo:content>
+</echo:entry>

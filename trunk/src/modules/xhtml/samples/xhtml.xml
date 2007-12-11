@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+      xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+>
+  <head>
+    <title>New XHTML document</title>
+  </head>
+  <body>
+    <h1>New XHTML document</h1>
+    <p>Here comes the text of your new document...</p>
+    <p>
+      To add real content, use one of the editors listed in the
+      <strong>Edit</strong> menu.
+    </p>
+  </body>
+</html>

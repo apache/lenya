@@ -1,0 +1,123 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one or more
+* contributor license agreements.  See the NOTICE file distributed with
+* this work for additional information regarding copyright ownership.
+* The ASF licenses this file to You under the Apache License, Version 2.0
+* (the "License"); you may not use this file except in compliance with
+* the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+table.lenya-table {
+	color: Black;
+	background-color: White;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+table.lenya-table-noborder {
+	border: 0px;
+	border-spacing: 0px;
+}
+
+table.lenya-table th {
+  background-color: #DDDCCF;
+	border: solid 1px #CCCCCC;
+	color: Black;
+	font-weight: bold;
+	padding: 3px 10px;
+	text-align: left;
+	vertical-align: top;
+	font-size: small;
+}
+
+table.lenya-table td {
+  background-color: #F5F4E9;
+	border: solid 1px #CCCCCC;
+	padding: 3px 10px;
+	font-size: small;
+	color: Black;
+}
+
+table.lenya-table-noborder td, table.lenya-table-noborder th {
+	border: 0px;
+	padding: 3px 10px;
+	font-size: small;
+}
+
+table.lenya-table-noborder th {
+  vertical-align: top;
+  text-align: left;
+}
+
+table.lenya-table-noborder-nopadding td {
+	border: 0px;
+	padding: 0px;
+	font-size: small;
+}
+
+table.lenya-table-noborder-nopadding th {
+	font-size: small;
+}
+
+table.lenya-table-list {
+  border: 2px solid #CCCCCC;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+table.lenya-table-list th,
+table.lenya-table-list td,
+table.lenya-table-list-noborder th,
+table.lenya-table-list-noborder td {
+  text-align: left;
+  vertical-align: top;
+  padding: 2px 2em 2px 5px;
+  border-bottom: solid 1px #CCCCCC;
+	font-size: small;
+}
+
+table.lenya-table-list th {
+  background-color: #DDDCCF;
+  color: Black;
+}
+
+table.lenya-table-list tr.highlight {
+  background-color: #DDDCCF;
+  color: Black;
+}
+
+table.lenya-table-list a,
+table.lenya-table-list-noborder a {
+  text-decoration: none;
+}
+
+table.lenya-table-list-noborder {
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+table.lenya-table-list-noborder th {
+  font-weight: normal;
+  color: #999999;
+}
+
+table.lenya-table-list-noborder td {
+  border-bottom: none;
+}
+
+table.lenya-table-list-noborder td.border {
+  border-bottom: solid 1px #CCCCCC;
+}
+
+table.lenya-table-list-noborder th,
+table.lenya-table-list-noborder td {
+  padding-left: 0px;
+}

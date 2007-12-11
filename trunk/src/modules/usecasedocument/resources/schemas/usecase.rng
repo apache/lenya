@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<element name="usecase" ns="http://apache.org/lenya/usecase/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+
+  <attribute name="name">
+    <text/>
+  </attribute>
+
+</element>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
+<project name="administration" basedir="." default="main">
+  
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
+
+  <target name="main" depends="admin.users, groupaffiliation"/>
+
+  <target name="admin.users">
+    <webtest name="admin.users">
+      &doConfig;
+      <steps>
+        <doLogin username="lenya" password="levi"/>
+        
+        <!-- add user -->
+        <invoke url="index.html?lenya.usecase=admin.users"/>
+        <verifyText text="Add User:"/>
+        <clickButton name="input-add_user"/>
+        <verifyElementText type="h1" text="Add Local User"/>
+        <setInputField name="userId" value="webTestUser"/>
+        <setInputField name="fullName" value="WebTest User"/>
+        <setInputField name="description" value="WebTest User description"/>
+        <setInputField name="email" value="webTestUser@apache.org"/>
+        <setInputField name="newPassword" value="webTest123"/>
+        <setInputField name="confirmPassword" value="webTest123"/>
+        <clickButton name="submit"/>
+
+        <verifyText text="User Profile"/>
+        <verifyText text="webTestUser@apache.org"/>
+        
+        <!-- back to users list -->
+        <invoke url="index.html?lenya.usecase=admin.users"/>
+        
+        <!-- user IDs are automatically converted to lowercase -->
+        <verifyXPath xpath="//a[normalize-space(.) = 'webtestuser']"/>
+        
+        <!-- delete user -->
+        <clickButton xpath="//form[input[@value = 'webtestuser']]/input[@type = 'submit']"/>
+        <verifyText text="Delete User"/>
+        <verifyText text="webtestuser"/>
+        <clickButton name="submit"/>
+        <verifyText text="Add User:"/>
+        <not>
+          <verifyXPath xpath="//a[normalize-space(.) = 'webtestuser']"/>
+        </not>
+        
+        <doLogout/>
+      </steps>
+    </webtest>
+  </target>
+
+  <macrodef name="checkGroup"
+           description="check if item 'group' is in listbox 'list-in' and not in 'list-not'">
+    <attribute name="group"/>
+    <attribute name="list-in"/>
+    <attribute name="list-not"/>
+    <sequential>
+      <verifyXPath xpath="//select[@name = '@{list-in}']/option[@value = '@{group}']"/>
+      <not>
+        <verifyXPath xpath="//select[@name = '@{list-not}']/option[@value = '@{group}']"/>
+      </not>
+    </sequential>
+  </macrodef>
+  <macrodef name="checkUserProfile"
+            description="check if user profile looks right">
+    <attribute name="admin"/>
+    <sequential>
+      <verifyText text="User Profile"/>
+      <verifyText text="alice@lenya.org"/>
+      <ifStep test="@{admin}" description="admin affiliation">
+        <verifyText text="groupId=admin"/>
+      </ifStep>
+      <ifStep unless="@{admin}" description="no admin affiliation">
+        <not><verifyText text="groupId=admin"/></not>
+      </ifStep>
+    </sequential>
+  </macrodef>
+
+  <target name="groupaffiliation">
+    <webtest name="groupaffiliation">
+      &doConfig;
+      <steps>
+        <doLogin username="lenya" password="levi"/>
+
+        <!-- request user profile of user alice -->
+        <invoke url="index.html?lenya.usecase=admin.user&amp;userId=alice"/>
+       <checkUserProfile admin="false"/>
+
+        <!-- request group affiliation page -->
+        <clickButton name="input-edit_group_affiliation"/>
+        <verifyElementText type="h1" text="Group Affiliation"/>
+       <checkGroup group="admin" list-in="otherGroup" list-not="userGroup"/>
+
+        <!-- add user alice to group admin -->
+       <clickElement xpath="//select[@name = 'otherGroup']/option[@value = 'admin']"/>
+       <clickButton name="add"/>
+       <verifyElementText type="h1" text="Group Affiliation"/>
+        <checkGroup group="admin" list-in="userGroup" list-not="otherGroup"/>
+
+       <!-- save and back to user profile -->
+       <clickButton name="submit"/>
+        <checkUserProfile admin="true"/>
+
+       <!-- request group affiliation page -->
+        <clickButton name="input-edit_group_affiliation"/>
+        <verifyElementText type="h1" text="Group Affiliation"/>
+        <checkGroup group="admin" list-in="userGroup" list-not="otherGroup"/>
+
+       <!-- remove user alice from group admin -->
+       <clickElement xpath="//select[@name = 'userGroup']/option[@value = 'admin']"/>
+        <clickButton name="remove"/>
+        <verifyElementText type="h1" text="Group Affiliation"/>
+        <checkGroup group="admin" list-in="otherGroup" list-not="userGroup"/>
+
+        <!-- save and back to user profile -->
+        <clickButton name="submit"/>
+        <checkUserProfile admin="false"/>
+
+        <doLogout/>
+      </steps>
+    </webtest>
+  </target>
+
+</project>

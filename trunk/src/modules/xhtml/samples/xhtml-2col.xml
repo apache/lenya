@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+      xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+>
+  <head>
+    <title>New 2-column XHTML document</title>
+  </head>
+  <body>  
+  
+    <h2>New 2-column XHTML document</h2>
+    
+    <p>Here comes the text of your new document...</p>
+    <p>
+     To add real content, use one of the editors listed in the
+     <strong>Edit</strong> menu.
+    </p>
+
+    <div class="column1of2"> 
+      <h3>Column 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+      Fusce volutpat aliquam risus. Proin in dui nec arcu sagittis placerat. 
+      </p>
+   </div>
+
+   <div class="column2of2">
+      <h3>Column 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+      Fusce volutpat aliquam risus. Proin in dui nec arcu sagittis placerat. 
+      </p>
+    </div>
+
+    <div>
+      <br class="clear" />
+      <br /><br />
+      <br /><br />
+      <br /><br />
+      <br /><br />
+    </div>
+  </body>
+</html>

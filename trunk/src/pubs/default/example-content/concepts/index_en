@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+  <head>
+    <title>Concepts</title>
+  </head>
+  <body>
+    <h1>Concepts</h1>
+    
+    <h2>Publications</h2>
+    
+    <p>In Apache Lenya, a website is called a
+    <strong>publication</strong>.</p>
+    
+    <h2>Areas: Authoring, Live, ...</h2>
+
+    <p>Apache Lenya separates between different areas:</p>
+    <ul>
+      <li>The authoring area is for creating and editing of
+      content. All CMS functions are available here.</li>
+
+      <li>Once the content has been published it is moved to the live
+      area. The live area can be served by a web server directly or
+      you can add another intermediate step where the content is
+      replicated from the live area to the actual web server. In any
+      case the live area simply serves as a preview to the content
+      that will be served by the web server.</li>
+      <li>
+        Other standard areas are and archive. If necessary, further
+        areas can be declared.
+      </li>
+    </ul>
+    
+    <h2>Resource Types</h2>
+
+    <p>As Apache Lenya is based on Apache Cocoon, it has strong XML and
+    XSLT foundations. It is possible to ensure that a document
+    conforms to an XML schema. Typically you define different types of
+    documents, like an news article or an opinion piece, conforming to
+    different XML schemas. These different types are referred to as
+    document types. They are used to ensure the XML schema conformance
+    when editing and typically also when preparing a presentation of
+    the document, where an opinion piece has a different layout than a
+    news article.</p>
+
+  </body>
+</html>

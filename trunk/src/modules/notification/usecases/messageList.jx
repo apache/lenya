@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: groups.jx 473861 2006-11-12 03:51:14Z gregor $ -->
+
+<jx:template
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <table class="lenya-table-list">
+    <tr>
+      <th style="text-align: left; padding-right: 20px;"><i18n:text>Subject</i18n:text></th>
+      <th style="text-align: left; padding-right: 20px;"><i18n:text>Sender</i18n:text></th>
+      <th style="text-align: left; padding-right: 20px;"><i18n:text>Date</i18n:text></th>
+      <th style="text-align: left; padding-right: 20px;"><i18n:text>Read</i18n:text></th>
+      <th>&#160;</th>
+    </tr>
+    <jx:forEach var="message" items="${inbox.getMessages()}">
+      
+      <jx:set var="class" value="normal"/>
+      <jx:if test="${messageId.equals(message.getId())}">
+        <jx:set var="class" value="highlight"/>
+      </jx:if>
+      
+      <tr class="${class}">
+        <td>
+          <a href="?lenya.usecase=notification.inbox&amp;messageId=${message.getId()}">
+            <i18n:translate>
+              <i18n:text><jx:out value="${message.getMessage().getSubject()}"/></i18n:text>
+              <jx:forEach var="param" items="${message.getMessage().getSubjectParameters()}">
+                <i18n:param><jx:out value="${param}"/></i18n:param>
+              </jx:forEach>
+            </i18n:translate>
+          </a>
+        </td>
+        <td>
+          <a href="?lenya.usecase=admin.user&amp;userId=${message.getMessage().getSender().getId()}"><jx:out value="${message.getMessage().getSender().getId()}"/></a>
+        </td>
+        <td>
+          <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${message.getMessage().getTime()}"/>
+        </td>
+        <td style="text-align: center;">
+          <jx:if test="${message.isMarkedAsRead()}">&#10004;</jx:if>
+        </td>
+        <td style="text-align: center;">
+          <form method="POST">
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="deleteMessageId" value="${message.getId()}"/>
+            <input type="submit" name="submit" value="Delete" i18n:attr="value"/>
+          </form>
+        </td>
+      </tr>
+    </jx:forEach>
+  </table>
+  
+</jx:template>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<project name="lenya_webtest_macros">
+
+  <import file="${webtest.home}/lib/taskdef.xml"/>
+
+  <macrodef name="doLogin" description="perform a login to Lenya">
+    <attribute name="username"/>
+    <attribute name="password"/>
+    <attribute name="url" default="index.html"/>
+    <sequential>
+
+      <!-- login -->
+      <invoke url="@{url}"/>
+      <ifStep description="login if we are asked for">
+        <condition>
+          <verifyTitle text="Login to the Default Publication" />
+        </condition>
+        <setInputField name="username" value="@{username}"/>
+        <setInputField name="password" value="@{password}"/>
+        <clickButton name="submit"/>
+      </ifStep>
+
+      <!-- import example content -->
+      <ifStep description="import example content">
+        <condition>
+          <verifyText text="export.importExampleContent" />
+        </condition>
+        <selectForm name="import"/>
+        <clickButton name="submit"/>
+      </ifStep>
+
+      <verifyText text="Welcome"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="doLogout" description="logout from Lenya">
+    <attribute name="url" default=""/>
+    <sequential>
+
+      <!-- logout -->
+      <invoke url="@{url}?lenya.usecase=ac.logout"/>
+      <clickButton name="submit"/>
+
+    </sequential>
+  </macrodef>
+
+</project>
