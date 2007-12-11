@@ -17,11 +17,7 @@
  */
 package org.apache.lenya.cms.editors.forms;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +26,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -58,8 +55,8 @@ public class OneFormEditor extends DocumentUsecase {
         if (doc != null) {
             nodes.add(doc.getRepositoryNode());
         }
-        return (org.apache.lenya.cms.repository.Node[])
-            nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+        return (org.apache.lenya.cms.repository.Node[]) nodes
+                .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
     }
 
     /**
@@ -68,8 +65,8 @@ public class OneFormEditor extends DocumentUsecase {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         if (!hasErrors()) {
-            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
-                getLogger());
+            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(),
+                    getSourceDocument(), getLogger());
         }
         setParameter("executable", Boolean.valueOf(!hasErrors()));
     }
@@ -79,10 +76,8 @@ public class OneFormEditor extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-
-        String encoding = getEncoding();
-        String content = getXmlString(encoding);
-        saveDocument(encoding, content);
+        Document xml = getXml();
+        saveDocument(xml);
     }
 
     protected String getEncoding() {
@@ -155,12 +150,12 @@ public class OneFormEditor extends DocumentUsecase {
      * validated. If validation errors occur, the usecase transaction is rolled
      * back, so the changes are not persistent. If the validation succeeded, the
      * workflow event is invoked.
-     * @param encoding The encoding to use.
+     * 
      * @param content The content to save.
      * @throws Exception if an error occurs.
      */
-    protected void saveDocument(String encoding, String content) throws Exception {
-        saveXMLFile(encoding, content, getSourceDocument());
+    protected void saveDocument(Document content) throws Exception {
+        saveXMLFile(content, getSourceDocument());
 
         WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
                 getEvent());
@@ -168,31 +163,16 @@ public class OneFormEditor extends DocumentUsecase {
 
     /**
      * Save the XML file
-     * @param encoding The encoding
      * @param content The content
      * @param document The source
-     * @throws FileNotFoundException if the file was not found
-     * @throws UnsupportedEncodingException if the encoding is not supported
-     * @throws IOException if an IO error occurs
      */
-    private void saveXMLFile(String encoding, String content,
-            org.apache.lenya.cms.publication.Document document) throws FileNotFoundException,
-            UnsupportedEncodingException, IOException {
-        Writer writer = null;
-
+    protected void saveXMLFile(Document content, org.apache.lenya.cms.publication.Document document) {
         try {
-            writer = new OutputStreamWriter(document.getOutputStream(), encoding);
-            writer.write(content, 0, content.length());
-        } catch (FileNotFoundException e) {
-            getLogger().error("File not found " + e.toString());
-        } catch (UnsupportedEncodingException e) {
-            getLogger().error("Encoding not supported " + e.toString());
-        } catch (IOException e) {
-            getLogger().error("IO error " + e.toString());
-        } finally {
-            // close all streams
-            if (writer != null)
-                writer.close();
+            SourceUtil.writeDOM(content, document.getOutputStream());
+            LinkConverter converter = new LinkConverter(this.manager, getLogger());
+            converter.convertUrlsToUuids(document, false);
+        } catch (Exception e) {
+            addErrorMessage(e.getMessage());
         }
     }
 
