@@ -50,6 +50,12 @@
         last name) using the <code>UserFieldsMapping</code> service
         (see section <a href="site:attributes-authorization">attribute-based authorization</a> for more information).
       </p>
+      <p>
+        The method <code>ShibbolethAuthenticator.getTargetUri(Request)</code> returns the URL of the
+        protected page, as passed from the identity provider as the value of the <em>TARGET</em>
+        request parameter. If the request parameter is missing, the current URL, i.e. the assertion consumer URL,
+        is returned.
+      </p>
     </section>
     
     <section>
