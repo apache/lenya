@@ -33,6 +33,9 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.ServletHelper;
 
+/**
+ * Utility class for Shibboleth-related operations.
+ */
 public class ShibbolethUtil {
 
 	private ServiceManager manager;
@@ -42,8 +45,19 @@ public class ShibbolethUtil {
 	}
 
 	/**
-	 * @return The base URL, either from the proxy or from the current request
-	 *         if no proxy is declared for this area.
+	 * <p>
+	 * This method computes the base URL of the web application:
+	 * </p>
+	 * <ul>
+	 * <li>
+	 *   If a proxy is declared for the current area, the URL of the proxy is returned.
+	 * </li>
+	 * <li>
+	 *   If no proxy is declared, <code>http://{host}[:{port}]</code> is returned. The port suffix is omitted
+	 *   for the ports 80 and 443.
+	 * </li>
+	 * </ul>
+	 * @return A string.
 	 */
 	public String getBaseUrl() {
 
@@ -90,10 +104,18 @@ public class ShibbolethUtil {
 		return baseUrl;
 	}
 
+    /**
+     * @param port The port.
+     * @return An empty string for the ports 80 and 443 and the string ":{port}" otherwise.
+     */
     protected static String getPortSuffix(int port) {
         return (port == 80 || port == 443) ? "" : ":" + port;
     }
 
+	/**
+	 * @param webappUrl A web application URL.
+	 * @return If the URL is required to be requested using an SSL connection.
+	 */
 	protected boolean isSslProtected(String webappUrl) {
 		DefaultAccessController accessController = null;
 		ServiceSelector selector = null;

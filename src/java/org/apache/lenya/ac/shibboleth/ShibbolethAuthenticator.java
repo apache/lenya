@@ -55,25 +55,37 @@ import org.apache.shibboleth.impl.AssertionConsumerServiceImpl;
 import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
 
 /**
- * <p>Shibboleth-based authenticator.<p>
- * <p>Configuration:</p>
+ * <p>
+ * Shibboleth-based authenticator.
+ * <p>
+ * <p>
+ * Configuration:
+ * </p>
  * <ul>
- * <li>
- *   <code>&lt;redirect-to-wayf&gt;true|false&lt;/redirect-to-wayf&gt;</code>
- *   - if the application should redirect to the WAYF server instead of the login screen
- *   if a resource is protected only via group rules
- * </li>
+ * <li> <code>&lt;redirect-to-wayf&gt;true|false&lt;/redirect-to-wayf&gt;</code> - if the
+ * application should redirect to the WAYF server instead of the login screen if a resource is
+ * protected only via group rules </li>
+ * 
  * </pre>
  */
 public class ShibbolethAuthenticator extends UserAuthenticator implements Configurable {
 
+    protected static final String REDIRECT_TO_WAYF = "redirect-to-wayf";
+
     protected static final String ERROR_MISSING_UID_ATTRIBUTE = "Unable to get unique identifier for subject. "
-                            + "Make sure you are listed in the metadata.xml "
-                            + "file and your resources your are trying to access "
-                            + "are available and your are allowed to see them. (Resourceregistry).";
-    
+            + "Make sure you are listed in the metadata.xml "
+            + "file and your resources your are trying to access "
+            + "are available and your are allowed to see them. (Resourceregistry).";
+
     private boolean redirectToWayf = false;
 
+    /**
+     * Authenticates the request. If the request contains the parameters <em>username</em> and
+     * <em>password</em>, the authentication is delegated to the super class
+     * {@link UserAuthenticator}. Otherwise, the Shibboleth browser profile request is evaluated.
+     * @see org.apache.lenya.ac.impl.UserAuthenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
+     *      org.apache.cocoon.environment.Request, org.apache.lenya.ac.ErrorHandler)
+     */
     public boolean authenticate(AccreditableManager accreditableManager, Request request,
             ErrorHandler handler) throws AccessControlException {
 
@@ -102,7 +114,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
                     .lookup(AssertionConsumerService.ROLE);
             attrReqService = (AttributeRequestService) this.manager
                     .lookup(AttributeRequestService.ROLE);
-            
+
             ShibbolethUtil util = new ShibbolethUtil(this.manager);
             String host = util.getBaseUrl();
             BrowserProfileResponse bpResponse = consumerService.processRequest(req, host);
@@ -205,6 +217,11 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
         }
     }
 
+    /**
+     * Extracts the <code>HttpServletRequest</code> object from the current Cocoon context.
+     * @return An <code>HttpServletRequest</code> object.
+     * @throws AccessControlException
+     */
     protected HttpServletRequest getHttpServletRequest() throws AccessControlException {
         HttpServletRequest req;
         ContextUtility contextUtil = null;
@@ -222,44 +239,68 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
         return req;
     }
 
+    /**
+     * <p>
+     * This method returns the URI which displays the login screen:
+     * </p>
+     * <ul>
+     * <li>If the configuration option {@link #REDIRECT_TO_WAYF}Êis set to <code>true</code> and
+     * the request points to a page which is only protected by rules, we assume that the Shibboleth
+     * authentication shall be used and return the URL which redirects to the WAYF server.</li>
+     * <li>Otherwise, the Lenya login usecase URL is returned.</li>
+     * </ul>
+     * @return A string.
+     * @see org.apache.lenya.ac.impl.UserAuthenticator#getLoginUri(org.apache.cocoon.environment.Request)
+     */
     public String getLoginUri(Request request) {
-        if (this.redirectToWayf && isOnlyShibbolethProtected(request)) {
+        if (this.redirectToWayf && isOnlyRuleProtected(request)) {
             return request.getRequestURI() + "?lenya.usecase=shibboleth&lenya.step=wayf";
-        }
-        else {
+        } else {
             return super.getLoginUri(request);
         }
     }
 
-    protected boolean isOnlyShibbolethProtected(Request request) {
+    /**
+     * <p>
+     * Checks if a page is protected only with rules:
+     * </p>
+     * <ul>
+     * <li> If the aggregated policy for the current page contains credentials which assign a role
+     * to a particular user or IP range, or to a group which contains explicitly assigned members,
+     * the method returns <code>false</code>. </li>
+     * <li> Otherwise, the method returns <code>true</code>.
+     * </ul>
+     * @param request The request referring to the page.
+     * @return A boolean value.
+     */
+    protected boolean isOnlyRuleProtected(Request request) {
         DefaultAccessController accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
 
         try {
             selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             String url = ServletHelper.getWebappURI(request);
             accessController = (DefaultAccessController) resolver.resolveAccessController(url);
-            
+
             AccreditableManager accMgr = accessController.getAccreditableManager();
             Policy policy = accessController.getPolicyManager().getPolicy(accMgr, url);
-            
+
             Role[] roles = accMgr.getRoleManager().getRoles();
             Set accreditables = new HashSet();
             for (int i = 0; i < roles.length; i++) {
                 Accreditable[] accrs = policy.getAccreditables(roles[i]);
                 accreditables.addAll(Arrays.asList(accrs));
             }
-            
+
             if (accreditables.isEmpty()) {
                 return false;
             }
-            
-            for (Iterator i = accreditables.iterator(); i.hasNext(); ) {
+
+            for (Iterator i = accreditables.iterator(); i.hasNext();) {
                 Accreditable accr = (Accreditable) i.next();
                 if (!(accr instanceof Group)) {
                     return false;
@@ -270,7 +311,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
                     return false;
                 }
             }
-            
+
             return true;
 
         } catch (Exception e) {
@@ -289,17 +330,27 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
     }
 
     public void configure(Configuration config) throws ConfigurationException {
-        Configuration redirectConfig = config.getChild("redirect-to-wayf", false);
+        Configuration redirectConfig = config.getChild(REDIRECT_TO_WAYF, false);
         if (redirectConfig != null) {
             this.redirectToWayf = redirectConfig.getValueAsBoolean();
         }
     }
 
+    /**
+     * <p>
+     * This method returns the URL of the protected page, as passed from the identity provider as
+     * the value of the {@link AssertionConsumerServiceImpl#REQ_PARAM_TARGET} request parameter. If
+     * the request parameter is missing, the current URL, i.e. the assertion consumer URL, is
+     * returned.
+     * </p>
+     * @see org.apache.lenya.ac.impl.UserAuthenticator#getTargetUri(org.apache.cocoon.environment.Request)
+     */
     public String getTargetUri(Request request) {
         String paramName = AssertionConsumerServiceImpl.REQ_PARAM_TARGET;
         String target = request.getParameter(paramName);
         if (target == null) {
-            getLogger().warn("Request parameter " + paramName + " is missing, using current URI as target.");
+            getLogger().warn(
+                    "Request parameter " + paramName + " is missing, using current URI as target.");
             return request.getRequestURI();
         } else {
             return target;
