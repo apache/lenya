@@ -98,6 +98,12 @@ public class ProtocolHandler extends AbstractLogEnabled implements ParsedURLProt
             }
         }
 
+        // Batik uses toString for caching.
+        // Use URL and last modified time for proper caching of source images.
+        public String toString() {
+            return url + source.getLastModified();
+        }
+
     }
 
     public void start() throws Exception {
