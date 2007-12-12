@@ -82,7 +82,8 @@ public class LinkConverter extends AbstractLogEnabled {
                             "Convert links: No XPaths for resource type [" + type.getName() + "]");
                 }
             } else {
-                LinkRewriter incomingRewriter = new IncomingLinkRewriter(examinedDocument.getPublication());
+                Publication pub = examinedDocument.getPublication();
+                LinkRewriter incomingRewriter = new IncomingLinkRewriter(pub);
                 LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument.area());
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
@@ -106,17 +107,20 @@ public class LinkConverter extends AbstractLogEnabled {
                             getLogger().debug("Convert links: Check URL [" + url + "]");
                         }
                         final String originalUrl = url.startsWith(prefix) ? url.substring(prefix.length()) : url;
-                        final String webappUrl;
+                        final String srcPubUrl;
                         if (incomingRewriter.matches(originalUrl)) {
-                            webappUrl = incomingRewriter.rewrite(originalUrl);
+                            srcPubUrl = incomingRewriter.rewrite(originalUrl);
                         } else {
-                            webappUrl = originalUrl;
+                            srcPubUrl = originalUrl;
                         }
-                        
-                        if (urlToUuidRewriter.matches(webappUrl)) {
-                            String rewrittenUrl = urlToUuidRewriter.rewrite(webappUrl);
-                            attribute.setValue(rewrittenUrl);
-                            linksRewritten = true;
+                        final String srcPubPrefix = "/" + srcPub.getId() + "/";
+                        if (srcPubUrl.startsWith(srcPubPrefix)) {
+                            final String destPubUrl = "/" + pub.getId() + "/" + srcPubUrl.substring(srcPubPrefix.length());
+                            if (urlToUuidRewriter.matches(destPubUrl)) {
+                                String rewrittenUrl = urlToUuidRewriter.rewrite(destPubUrl);
+                                attribute.setValue(rewrittenUrl);
+                                linksRewritten = true;
+                            }
                         }
                     }
                 }
