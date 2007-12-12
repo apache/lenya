@@ -157,7 +157,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
 
     protected void logAttributesMap(Map attributesMap) {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Shib attribute Map: \n\n" + attributesMap.toString() + "\n\n");
+            getLogger().debug("Shibboleth attribute map: \n\n" + attributesMap.toString() + "\n\n");
         }
     }
 
@@ -166,6 +166,11 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
         handler.error(message);
     }
 
+    /**
+     * Replaces the identity's user with a new user.
+     * @param identity The identity.
+     * @param user The new user.
+     */
     protected void updateIdentity(Identity identity, User user) {
         if (!identity.contains(user)) {
             User oldUser = identity.getUser();
@@ -182,6 +187,14 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
         }
     }
 
+    /**
+     * Passes the attributes from the <em>samlAttributes</em> parameter to the <em>user</em>
+     * object. The {@link AttributeTranslator}Êservice is used to translate the attributes. The
+     * name and e-mail attributes are extracted using the {@link UserFieldsMapper}.
+     * @param user
+     * @param samlAttributes
+     * @throws AccessControlException
+     */
     protected void passAttributes(TransientUser user, Map samlAttributes)
             throws AccessControlException {
 
