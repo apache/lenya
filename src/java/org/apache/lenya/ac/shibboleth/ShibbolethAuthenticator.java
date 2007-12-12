@@ -296,8 +296,14 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
     }
 
     public String getTargetUri(Request request) {
-        String target = request.getParameter(AssertionConsumerServiceImpl.REQ_PARAM_TARGET);
-        return target != null ? target : request.getRequestURI();
+        String paramName = AssertionConsumerServiceImpl.REQ_PARAM_TARGET;
+        String target = request.getParameter(paramName);
+        if (target == null) {
+            getLogger().warn("Request parameter " + paramName + " is missing, using current URI as target.");
+            return request.getRequestURI();
+        } else {
+            return target;
+        }
     }
 
 }
