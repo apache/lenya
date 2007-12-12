@@ -70,6 +70,10 @@ import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
  */
 public class ShibbolethAuthenticator extends UserAuthenticator implements Configurable {
 
+    /**
+     * Configuration option to determine if the WAYF server should be used for logging in to
+     * rule-only protected pages.
+     */
     protected static final String REDIRECT_TO_WAYF = "redirect-to-wayf";
 
     protected static final String ERROR_MISSING_UID_ATTRIBUTE = "Unable to get unique identifier for subject. "
