@@ -25,7 +25,7 @@
 JETTY_PORT="8888"
 
 # LENYA_HOME
-#   The root of the Lenya distribution
+#   The root of the Lenya distribution automatically set to directory containing this file.
 #
 # LENYA_WEBAPP_HOME
 #   The root of the Lenya web application
@@ -91,8 +91,7 @@ if [ "$JAVA_OPTIONS" = "" ] ; then
 fi
 
 # Set Lenya home to directory containing this script
-LENYA_HOME=${0%/*}
-cd $LENYA_HOME
+cd `dirname $0`
 LENYA_HOME=`pwd -P`
 
 if [ "$LENYA_WEBAPP_HOME" = "" ] ; then
