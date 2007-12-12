@@ -99,7 +99,7 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                     String serverUrl = req.getScheme() + "://" + req.getServerName() + portSuffix;
                     outgoingUrl = serverUrl + outgoingUrl;
                 }
-                return outgoingUrl; // + "?lenya.usecase=login&lenya.step=login";
+                return outgoingUrl;
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }
