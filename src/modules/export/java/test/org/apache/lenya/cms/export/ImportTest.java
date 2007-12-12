@@ -52,11 +52,12 @@ public class ImportTest extends AbstractAccessControlTest {
             String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
             Importer importer = new Importer(getManager(), getLogger());
             importer.importContent(defaultPub, area, path);
+            
+            assertTrue(area.getSite().contains("/tutorial"));
+            checkLinks(area);
+            
             session.commit();
         }
-        
-        assertTrue(area.getSite().contains("/tutorial"));
-        checkLinks(area);
         
         Session aliceSession = login("alice");
         Publication alicePub = getPublication(aliceSession, "test");
