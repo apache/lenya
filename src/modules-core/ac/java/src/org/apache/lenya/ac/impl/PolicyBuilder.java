@@ -127,7 +127,7 @@ public class PolicyBuilder implements InputStreamBuilder {
                 String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
                 Role role = getAccreditableManager().getRoleManager().getRole(roleId);
                 if (role == null) {
-                    throw new AccessControlException("The role '" + roleId + "'Êdoes not exist.");
+                    throw new AccessControlException("The role '" + roleId + "' does not exist.");
                 }
                 CredentialImpl credential = new CredentialImpl(accreditable, role);
                 String method = roleElements[j].getAttribute(METHOD_ATTRIBUTE);
