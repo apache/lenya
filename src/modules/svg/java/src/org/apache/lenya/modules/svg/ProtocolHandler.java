@@ -70,6 +70,7 @@ public class ProtocolHandler extends AbstractLogEnabled implements ParsedURLProt
         private Source source;
         private SourceResolver resolver;
         private String url;
+        private long lastModified;
 
         public ParsedUrlData(String protocol, SourceResolver resolver, String url) {
             this.url = url;
@@ -80,6 +81,7 @@ public class ProtocolHandler extends AbstractLogEnabled implements ParsedURLProt
             this.resolver = resolver;
             try {
                 this.source = resolver.resolveURI(url);
+                this.lastModified = this.source.getLastModified();
                 this.contentType = this.source.getMimeType();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -106,6 +108,30 @@ public class ProtocolHandler extends AbstractLogEnabled implements ParsedURLProt
             return url + source.getLastModified();
         }
 
+        /**
+         * Object.equals 
+         */
+        public boolean equals(Object obj) {
+            if(obj == null) {
+                return false;
+            }
+            if( ! (obj instanceof ParsedUrlData)) {
+                return false;
+            }
+            // super.equals() doesn't take lastModified into account
+            ParsedUrlData pud = (ParsedUrlData)obj;
+            if(pud.url.equals(this.url) && pud.lastModified == this.lastModified ) {
+                return true;
+            }
+            return false;
+        }
+ 
+        /**
+         * Returns hashCode for object
+         */
+        public int hashCode() {
+            return (url + lastModified).hashCode();
+        }
     }
 
     public void start() throws Exception {
