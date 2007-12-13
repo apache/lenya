@@ -84,7 +84,7 @@
         </xsl:variable>
         <a href="{$href}" style="text-decoration: none"><xsl:value-of select="$title"/></a>
       </h2>
-      <xsl:apply-templates select="xhtml:html/xhtml:body/xhtml:p[1]" mode="excerpt"/>
+      <xsl:apply-templates select="xhtml:html/xhtml:body//xhtml:p[1]" mode="excerpt"/>
     </div>
   </xsl:template>
   
