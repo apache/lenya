@@ -162,7 +162,13 @@ function groupChangeMembers() {
             }
             
             if (cocoon.request.getParameter("submit")) {
-                group.removeAllMembers();
+                var oldMembers = group.getMembers();
+                for (var i = 0; i < oldMembers.length; i++) {
+                    if (java.lang.Class.forName("org.apache.lenya.ac.User").isInstance(oldMembers[i])
+                        && !groupUsers.contains(oldMembers[i])) {
+                        group.remove(oldMembers[i]);
+                    }
+                }
                 
                 var userIterator = groupUsers.iterator();
                 while (userIterator.hasNext()) {
