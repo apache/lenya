@@ -88,8 +88,10 @@
                   <i18n:text><xsp:expr>msg.getText()</xsp:expr></i18n:text>
                   <xsp:logic>
                     String[] params = msg.getParameters();
-                    for (int p = 0; p &lt; params.length; p++) {
-                      <i18n:param>params[p]</i18n:param>
+                    if (params != null) {
+                        for (int p = 0; p &lt; params.length; p++) {
+                          <i18n:param>params[p]</i18n:param>
+                        }
                     }
                   </xsp:logic>
                 </i18n:translate>
