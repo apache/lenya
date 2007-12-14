@@ -249,14 +249,10 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, l
     
 	var messages = new Packages.java.util.ArrayList();
 	
-    var userid = new Packages.java.lang.String(email);
     var email = new Packages.java.lang.String(email);
     
-    var existingUser = userManager.getUser(userId);
-			
-	if (existingUser != null &&
-	    !existingUser.getClass().getName().equals("org.apache.lenya.ac.impl.TransientUser")) {
-		messages.add("This user already exists.");
+	if (userManager.contains(userId)) {
+        messages.add("This user already exists.");
 	}
 			
 	if (!Packages.org.apache.lenya.ac.impl.AbstractItem.isValidId(userId)) {
