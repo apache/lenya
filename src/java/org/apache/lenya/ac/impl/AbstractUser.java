@@ -191,23 +191,29 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     public Group[] getGroups() {
-        Group[] groups = getExplicitlyAssignedGroups();
+        Set groups = new HashSet();
+        groups.addAll(Arrays.asList(getExplicitlyAssignedGroups()));
+        groups.addAll(Arrays.asList(getRuleGroups()));
+        return (Group[]) groups.toArray(new Group[groups.size()]);
+    }
+    
+    
+    protected Group[] getRuleGroups() {
+        Set ruleGroups = new HashSet();
         if (hasAttributes()) {
-            Set set = new HashSet(Arrays.asList(groups));
             try {
-                Group[] allGroups = getItemManager().getAccreditableManager().getGroupManager()
+                Group[] groups = getItemManager().getAccreditableManager().getGroupManager()
                         .getGroups();
-                for (int i = 0; i < allGroups.length; i++) {
-                    if (!set.contains(allGroups[i]) && allGroups[i].matches(this)) {
-                        set.add(allGroups[i]);
+                for (int i = 0; i < groups.length; i++) {
+                    if (groups[i].matches(this)) {
+                        ruleGroups.add(groups[i]);
                     }
                 }
-                groups = (Group[]) set.toArray(new Group[set.size()]);
             } catch (AccessControlException e) {
                 throw new RuntimeException(e);
             }
         }
-        return groups;
+        return (Group[]) ruleGroups.toArray(new Group[ruleGroups.size()]);
     }
 
 }

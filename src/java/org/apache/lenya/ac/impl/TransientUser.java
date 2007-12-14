@@ -18,10 +18,14 @@
 package org.apache.lenya.ac.impl;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.ItemManager;
 
@@ -86,6 +90,19 @@ public class TransientUser extends AbstractUser {
 
     public void removedFromGroup(Group group) {
         throw new UnsupportedOperationException();
+    }
+
+    public Accreditable[] getAccreditables() {
+        Set accrs = new HashSet();
+        accrs.add(this);
+
+        Group[] groups = getRuleGroups();
+        for (int i = 0; i < groups.length; i++) {
+            Accreditable[] groupAccreditables = groups[i].getAccreditables();
+            accrs.addAll(Arrays.asList(groupAccreditables));
+        }
+
+        return (Accreditable[]) accrs.toArray(new Accreditable[accrs.size()]);
     }
 
 }

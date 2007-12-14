@@ -130,7 +130,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
             if (uniqueId == null) {
                 issueError(handler, ERROR_MISSING_UID_ATTRIBUTE);
             } else {
-                if (accreditableManager.getUserManager().getUser(uniqueId) != null) {
+                if (accreditableManager.getUserManager().contains(uniqueId)) {
                     getLogger().error(
                             "Persistent user with ID [" + uniqueId
                                     + "] exists, can't create transient user.");
