@@ -41,8 +41,6 @@ public class FileUser extends AbstractUser implements Serializable {
     public static final String ID = "identity";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
-    public static final String GROUPS = "groups";
-    public static final String GROUP = "group";
     public static final String PASSWORD_ATTRIBUTE = "type";
 
     /**
@@ -70,8 +68,7 @@ public class FileUser extends AbstractUser implements Serializable {
      * Configure this FileUser.
      * 
      * @param config where the user details are specified
-     * @throws ConfigurationException if the necessary details aren't specified
-     *         in the config
+     * @throws ConfigurationException if the necessary details aren't specified in the config
      */
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
@@ -87,7 +84,8 @@ public class FileUser extends AbstractUser implements Serializable {
             FileGroupManager manager = null;
 
             try {
-                manager = (FileGroupManager) getItemManager().getAccreditableManager().getGroupManager();
+                manager = (FileGroupManager) getItemManager().getAccreditableManager()
+                        .getGroupManager();
             } catch (AccessControlException e) {
                 throw new ConfigurationException(
                         "Exception when trying to fetch GroupManager for directory: ["
@@ -97,16 +95,10 @@ public class FileUser extends AbstractUser implements Serializable {
             for (int i = 0; i < groups.length; i++) {
                 String groupId = groups[i].getValue();
                 Group group = manager.getGroup(groupId);
-
                 if (group == null) {
-                    throw new ConfigurationException("Couldn't find Group for group name ["
-                            + groupId + "]");
+                    throw new ConfigurationException("Group [" + groupId + "] does not exist.");
                 }
-
-                if (!group.contains(this)) {
-                    group.add(this);
-                }
-
+                group.add(this);
             }
         } else {
             // strange, it should have groups
@@ -115,8 +107,7 @@ public class FileUser extends AbstractUser implements Serializable {
     }
 
     /**
-     * Create a configuration from the current user details. Can be used for
-     * saving.
+     * Create a configuration from the current user details. Can be used for saving.
      * 
      * @return a <code>Configuration</code>
      */
@@ -200,10 +191,6 @@ public class FileUser extends AbstractUser implements Serializable {
     public void setConfigurationDirectory(File configurationDirectory) {
         assert (configurationDirectory != null) && configurationDirectory.isDirectory();
         this.configurationDirectory = configurationDirectory;
-    }
-
-    public boolean isPersistent() {
-        return true;
     }
 
 }

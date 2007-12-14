@@ -33,7 +33,6 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserType;
-import org.apache.lenya.ac.impl.TransientUser;
 
 /**
  * File-based user manager implementation.
@@ -59,7 +58,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
      * @return an <code>UserManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileUserManager instance(ServiceManager manager, FileAccreditableManager accrMgr,
+    public static synchronized FileUserManager instance(ServiceManager manager, FileAccreditableManager accrMgr,
             UserType[] userTypes, Logger logger) throws AccessControlException {
 
         File configDir = accrMgr.getConfigurationDirectory();
@@ -122,14 +121,6 @@ public class FileUserManager extends FileItemManager implements UserManager {
      */
     protected String getSuffix() {
         return SUFFIX;
-    }
-
-    protected boolean allowTransientItems() {
-        return true;
-    }
-
-    protected String getTransientItemClass() {
-        return TransientUser.class.getName();
     }
 
     public boolean contains(String userId) {

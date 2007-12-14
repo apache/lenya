@@ -55,7 +55,7 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
      * @return a <code>GroupManager</code>
      * @throws AccessControlException if no GroupManager could be instanciated
      */
-    public static FileGroupManager instance(ServiceManager manager, FileAccreditableManager accrMgr,
+    public static synchronized FileGroupManager instance(ServiceManager manager, FileAccreditableManager accrMgr,
             Logger logger) throws AccessControlException {
         File configDir = accrMgr.getConfigurationDirectory();
 

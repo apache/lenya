@@ -48,7 +48,7 @@ public interface Group extends Identifiable, Item {
     void removeAllMembers();
     
     /**
-     * Returns if this group contains this member.
+     * Returns if this group explicitly contains this member. The rule is not considered.
      * @param member The member to check.
      * @return A boolean value.
      */
@@ -76,5 +76,11 @@ public interface Group extends Identifiable, Item {
      * @return The rule or <code>null</code> if no rule is set.
      */
     String getRule();
+    
+    /**
+     * @param user The user.
+     * @return if the group's rule matches this user.
+     */
+    boolean matches(User user);
     
 }

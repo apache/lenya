@@ -80,10 +80,4 @@ public interface User extends Identifiable, Item, Groupable {
      */
     String[] getAttributeValues(String name) throws AccessControlException;
 
-    /**
-     * @return If this user object is persistent, i.e. stored in the Lenya user
-     *         database (not transient).
-     */
-    boolean isPersistent();
-
 }

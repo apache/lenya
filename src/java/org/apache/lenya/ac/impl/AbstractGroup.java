@@ -20,16 +20,20 @@
 
 package org.apache.lenya.ac.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.AttributeRuleEvaluator;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Message;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.util.Assert;
 
 /**
  * A group is a set of {@link Groupable}s.
@@ -48,45 +52,37 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
     public AbstractGroup(String id) {
         setId(id);
     }
-
-    private Set members = new HashSet();
-
+    
     /**
      * Returns the members of this group.
      * @return An array of {@link Groupable}s.
      */
     public Groupable[] getMembers() {
-        Set members = members();
+        Set members = new HashSet();
+        Set groupables = new HashSet();
+        AccreditableManager accrMgr = getItemManager().getAccreditableManager();
+        try {
+            groupables.addAll(Arrays.asList(accrMgr.getUserManager().getUsers()));
+            groupables.addAll(Arrays.asList(accrMgr.getIPRangeManager().getIPRanges()));
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        for (Iterator i = groupables.iterator(); i.hasNext(); ) {
+            Groupable groupable = (Groupable) i.next();
+            if (Arrays.asList(groupable.getGroups()).contains(this)) {
+                members.add(groupable);
+            }
+        }
         return (Groupable[]) members.toArray(new Groupable[members.size()]);
     }
     
-    private boolean initializing = false;
-    
-    protected Set members() {
-        // First we must make sure that the user and IP range managers
-        // are initialized because otherwise the group won't contain their members
-        if (!initializing) {
-            // avoid race condition
-            initializing = true;
-            try {
-                getItemManager().getAccreditableManager().getUserManager();
-                getItemManager().getAccreditableManager().getIPRangeManager();
-            } catch (AccessControlException e) {
-                throw new RuntimeException(e);
-            }
-            initializing = false;
-        }
-        return this.members;
-    }
-
     /**
      * Adds a member to this group.
      * @param member The member to add.
      */
     public void add(Groupable member) {
-        Set members = members();
-        assert (member != null) && !members.contains(member);
-        members.add(member);
+        Assert.notNull("member", member);
         member.addedToGroup(this);
     }
 
@@ -95,9 +91,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param member The member to remove.
      */
     public void remove(Groupable member) {
-        Set members = members();
-        assert (member != null) && members.contains(member);
-        members.remove(member);
+        Assert.notNull("member", member);
         member.removedFromGroup(this);
     }
 
@@ -111,20 +105,13 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
         }
     }
 
-    /**
-     * Returns if this group contains this member.
-     * @param member The member to check.
-     * @return A boolean value.
-     */
     public boolean contains(Groupable member) {
-        boolean contains = members().contains(member);
-
-        if (!contains && member instanceof User && getRule() != null) {
-            User user = (User) member;
-            AttributeRuleEvaluator evaluator = getAttributeRuleEvaluator();
-            contains = evaluator.isComplied(user, getRule());
-        }
-        return contains;
+        return Arrays.asList(getMembers()).contains(member);
+    }
+    
+    public boolean matches(User user) {
+        AttributeRuleEvaluator evaluator = getAttributeRuleEvaluator();
+        return evaluator.isComplied(user, getRule());
     }
 
     protected AttributeRuleEvaluator getAttributeRuleEvaluator() {

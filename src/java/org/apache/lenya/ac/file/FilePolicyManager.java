@@ -440,7 +440,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
         removeAccreditable(manager, accreditable, getPoliciesDirectory());
 
-        if (accreditable instanceof User && ((User) accreditable).isPersistent()) {
+        if (accreditable instanceof User) {
             Role role = URLPolicy.getAuthorRole(manager);
             if (role != null) {
                 String url = USER_ADMIN_URL + ((User) accreditable).getId() + ".html";
@@ -471,7 +471,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      */
     public void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
             throws AccessControlException {
-        if (accreditable instanceof User && ((User) accreditable).isPersistent()) {
+        if (accreditable instanceof User) {
             Role role = URLPolicy.getAuthorRole(manager);
             if (role != null) {
                 String url = USER_ADMIN_URL + ((User) accreditable).getId() + ".html";

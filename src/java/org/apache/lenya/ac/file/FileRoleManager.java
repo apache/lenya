@@ -53,7 +53,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
      * @return A role manager.
      * @throws AccessControlException when something went wrong.
      */
-    public static FileRoleManager instance(ServiceManager manager, FileAccreditableManager accrMgr,
+    public static synchronized FileRoleManager instance(ServiceManager manager, FileAccreditableManager accrMgr,
             Logger logger) throws AccessControlException {
         File configDir = accrMgr.getConfigurationDirectory();
         if (!instances.containsKey(configDir)) {

@@ -126,17 +126,18 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
             logAttributesMap(attributesMap);
 
             // fetch unique identifier from attributes
-            String uniqueID = attrReqService.getUniqueID(attributesMap, bpResponse);
-            if (uniqueID == null) {
+            String uniqueId = attrReqService.getUniqueID(attributesMap, bpResponse);
+            if (uniqueId == null) {
                 issueError(handler, ERROR_MISSING_UID_ATTRIBUTE);
             } else {
-                User user = accreditableManager.getUserManager().getUser(uniqueID);
-                if (user.isPersistent()) {
+                if (accreditableManager.getUserManager().getUser(uniqueId) != null) {
                     getLogger().error(
-                            "Persistent user with ID [" + user.getId()
+                            "Persistent user with ID [" + uniqueId
                                     + "] exists, can't create transient user.");
                     handler.error("Shibboleth authentication error (see logfile for details).");
                 } else {
+                    TransientUser user = new TransientUser();
+                    user.setId(uniqueId);
                     passAttributes((TransientUser) user, attributesMap);
                     updateIdentity(identity, user);
                     authenticated = true;

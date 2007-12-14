@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.cocoon.environment.Session;
+import org.apache.lenya.ac.impl.TransientUser;
 import org.apache.log4j.Logger;
 
 /**
@@ -127,6 +128,9 @@ public class Identity implements Identifiable, java.io.Serializable {
     public boolean belongsTo(AccreditableManager manager) throws AccessControlException {
         User user = getUser();
         if (user == null) {
+            return true;
+        }
+        else if (user instanceof TransientUser) {
             return true;
         }
         else {

@@ -108,9 +108,8 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-     * This method can be used for subclasses to set the password without it
-     * being encrypted again. Some subclass might have knowledge of the
-     * encrypted password and needs to be able to set it.
+     * This method can be used for subclasses to set the password without it being encrypted again.
+     * Some subclass might have knowledge of the encrypted password and needs to be able to set it.
      * 
      * @param encryptedPassword the encrypted password
      */
@@ -144,8 +143,8 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-     * Authenticate a user. This is done by encrypting the given password and
-     * comparing this to the encryptedPassword.
+     * Authenticate a user. This is done by encrypting the given password and comparing this to the
+     * encryptedPassword.
      * 
      * @param password to authenticate with
      * @return true if the given password matches the password for this user
@@ -178,19 +177,28 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     public void setAttributeValues(String name, String[] values) throws AccessControlException {
         this.attributes.put(name, values);
     }
-    
+
     protected boolean hasAttributes() {
         return !this.attributes.isEmpty();
     }
 
+    /**
+     * @return The explicitly assigned groups, which excludes groups that contain this user because
+     *         it matches the group's rule.
+     */
+    protected Group[] getExplicitlyAssignedGroups() {
+        return super.getGroups();
+    }
+
     public Group[] getGroups() {
-        Group[] groups = super.getGroups();
+        Group[] groups = getExplicitlyAssignedGroups();
         if (hasAttributes()) {
             Set set = new HashSet(Arrays.asList(groups));
             try {
-                Group[] allGroups = getItemManager().getAccreditableManager().getGroupManager().getGroups();
+                Group[] allGroups = getItemManager().getAccreditableManager().getGroupManager()
+                        .getGroups();
                 for (int i = 0; i < allGroups.length; i++) {
-                    if (!set.contains(allGroups[i]) && allGroups[i].contains(this)) {
+                    if (!set.contains(allGroups[i]) && allGroups[i].matches(this)) {
                         set.add(allGroups[i]);
                     }
                 }

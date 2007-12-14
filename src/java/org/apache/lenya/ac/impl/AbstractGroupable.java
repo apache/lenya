@@ -31,6 +31,10 @@ import org.apache.lenya.ac.Groupable;
  * @version $Id: AbstractGroupable.java 473841 2006-11-12 00:46:38Z gregor $
  */
 public abstract class AbstractGroupable extends AbstractItem implements Groupable, Accreditable {
+    
+    public static final String GROUPS = "groups";
+    public static final String GROUP = "group";
+
     private Set groups = new HashSet();
 
     /**

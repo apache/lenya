@@ -83,4 +83,8 @@ public class AnonymousAuthenticator extends AbstractLogEnabled implements Authen
     public String getLoginUri(Request request) {
         return request.getRequestURI() + "?lenya.usecase=login&lenya.step=showscreen";
     }
+
+    public String getTargetUri(Request request) {
+        return request.getRequestURI();
+    }
 }

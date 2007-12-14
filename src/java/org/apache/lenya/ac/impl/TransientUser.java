@@ -22,6 +22,8 @@ import java.io.File;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.ItemManager;
 
 /**
  * Class for users which are not stored in the CMS, but in an external directory
@@ -56,6 +58,34 @@ public class TransientUser extends AbstractUser {
 
     public boolean isPersistent() {
         return false;
+    }
+
+    public void delete() throws AccessControlException {
+        throw new UnsupportedOperationException();
+    }
+
+    public ItemManager getItemManager() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setItemManager(ItemManager manager) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void addedToGroup(Group group) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Group[] getGroups() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void removeFromAllGroups() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void removedFromGroup(Group group) {
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -47,9 +47,7 @@ import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.ItemManagerListener;
-import org.apache.lenya.ac.impl.AbstractItem;
 import org.apache.lenya.ac.impl.ItemConfiguration;
-import org.apache.lenya.ac.impl.TransientItemConfiguration;
 
 /**
  * Abstract superclass for classes that manage items loaded from configuration
@@ -274,33 +272,11 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         Item item;
         if (items.containsKey(id)) {
             item = (Item) items.get(id);
-        } else if (allowTransientItems()) {
-            try {
-                item = createItem(getTransientItemClass());
-                TransientItemConfiguration config = new TransientItemConfiguration(id);
-                config.configure((AbstractItem) item);
-            } catch (AccessControlException e) {
-                throw new RuntimeException(e);
-            }
         } else {
             throw new RuntimeException("Item [" + id + "] not found.");
         }
 
         return item;
-    }
-
-    /**
-     * @return Override this if you want to allow transient items.
-     */
-    protected String getTransientItemClass() {
-        return null;
-    }
-
-    /**
-     * @return if items should be created on demand.
-     */
-    protected boolean allowTransientItems() {
-        return false;
     }
 
     /**

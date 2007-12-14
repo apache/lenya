@@ -61,7 +61,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
      * @return an <code>IPRangeManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileIPRangeManager instance(ServiceManager manager,
+    public static synchronized FileIPRangeManager instance(ServiceManager manager,
             FileAccreditableManager accrMgr, Logger logger) throws AccessControlException {
 
         File configDir = accrMgr.getConfigurationDirectory();
