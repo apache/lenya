@@ -41,7 +41,6 @@ import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.impl.DefaultAccessController;
@@ -140,8 +139,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
                                     + "] exists, can't create transient user.");
                     handler.error("Shibboleth authentication error (see logfile for details).");
                 } else {
-                    TransientUser user = new TransientUser();
-                    user.setId(uniqueId);
+                    TransientUser user = new TransientUser(uniqueId);
                     passAttributes(user, attributesMap);
                     updateIdentity(identity, user, userManager);
                     authenticated = true;

@@ -17,42 +17,30 @@
  */
 package org.apache.lenya.ac.impl;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Accreditable;
-import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.AttributeOwner;
-import org.apache.lenya.ac.Group;
-import org.apache.lenya.ac.Identifiable;
-import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.User;
 
 /**
  * Class for users which are not stored in the CMS, but in an external directory
- * like LDAP.
+ * like LDAP or a Shibboleth identity provider.
  */
 public class TransientUser implements User {
 
-    private String id;
+    /**
+     * @param id The user ID.
+     */
+    public TransientUser(String id) {
+        this.id = id;
+    }
 
+    private String id;
+    
     public String getId() {
         return this.id;
-    }
-
-    public void setId(String string) {
-        this.id = string;
-    }
-
-    public boolean isPersistent() {
-        return false;
     }
 
     private Map attributes = new HashMap();
@@ -92,20 +80,12 @@ public class TransientUser implements User {
         this.email = email;
     }
 
-    public void configure(Configuration configuration) throws ConfigurationException {
-        throw new UnsupportedOperationException();
-    }
-
     public String getDescription() {
         return this.description;
     }
 
     public String getName() {
         return this.name;
-    }
-
-    public void setConfigurationDirectory(File configurationDirectory) {
-        throw new UnsupportedOperationException();
     }
 
     public void setDescription(String description) {
