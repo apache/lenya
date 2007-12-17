@@ -21,7 +21,6 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
-import java.io.Serializable;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -36,14 +35,14 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
 /**
  * IP range that is stored in a file.
  */
-public class FileIPRange extends AbstractIPRange implements Serializable {
+public class FileIPRange extends AbstractIPRange implements FileItem {
 
 	/**
 	 * Main method.
 	 * 
 	 * @param args
 	 *            The command-line arguments.
-	 * @deprecated This should bemoved to a JUnit test.
+	 * @deprecated This should be moved to a JUnit test.
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

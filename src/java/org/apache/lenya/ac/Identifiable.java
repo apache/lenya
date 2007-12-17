@@ -26,7 +26,17 @@ import java.io.Serializable;
  * An identifiable object which can be put into the session.
  */
 public interface Identifiable extends Serializable {
-    
+
+    /**
+     * <p>
+     * Returns an array of all {@link Accreditable}s belonging to this identifiable. The
+     * credentials of all of these {@link Accreditable}s have to be considered when making an
+     * authorization decision about the identifiable.
+     * </p>
+     * 
+     * @param manager The accreditable manager.
+     * @return An array of {@link Accreditable}s.
+     */
     Accreditable[] getAccreditables(AccreditableManager manager);
-    
+
 }

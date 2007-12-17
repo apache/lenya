@@ -21,44 +21,28 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * An identifiable which represents a user.
+ */
+public abstract class UserReference implements Identifiable {
 
-public class UserReference implements Identifiable {
+    private static final long serialVersionUID = 1L;
 
     private String id;
-    private String managerId;
-    
-    public UserReference(String id, String managerId) {
+
+    /**
+     * @param id The ID of the user.
+     * @see Item#getId()
+     */
+    public UserReference(String id) {
         this.id = id;
-        this.managerId = managerId;
     }
-    
+
+    /**
+     * @return The ID of the referenced user.
+     */
     public String getId() {
         return this.id;
-    }
-    
-    protected String getManagerId() {
-        return this.managerId;
-    }
-
-    public User getUser(AccreditableManager accrMgr) {
-        try {
-            if (canGetUserFrom(accrMgr)) {
-                return accrMgr.getUserManager().getUser(getId());
-            } else {
-                throw new RuntimeException("Invalid accreditable manager.");
-            }
-        } catch (AccessControlException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public boolean canGetUserFrom(AccreditableManager accrMgr) {
-        try {
-            UserManager userMgr = accrMgr.getUserManager();
-            return userMgr.getId().equals(getManagerId());
-        } catch (AccessControlException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Accreditable[] getAccreditables(AccreditableManager accrMgr) {
@@ -74,12 +58,32 @@ public class UserReference implements Identifiable {
         return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
     }
 
+    /**
+     * @param accrMgr The accreditable manager.
+     * @return The user of the accreditable's user manager which is represented by this user
+     *         reference.
+     * @throws RuntimeException if the accreditable manager doesn't contain a user which is
+     *             represented by this user reference.
+     */
+    public abstract User getUser(AccreditableManager accrMgr);
+
+    /**
+     * @param accrMgr The accreditable manager.
+     * @return If the accreditable manager contains a user which is represented by this user
+     *         reference.
+     */
+    public abstract boolean canGetUserFrom(AccreditableManager accrMgr);
+
+    /**
+     * @param accrMgr The accreditable manager.
+     * @param user The user.
+     * @return All groups of the accreditable manager which have a rule matching the user.
+     */
     protected Set getMatchingGroups(AccreditableManager accrMgr, AttributeOwner user) {
         Set matchingGroups = new HashSet();
         if (user.getAttributeNames().length > 0) {
             try {
-                Group[] groups = accrMgr.getGroupManager()
-                        .getGroups();
+                Group[] groups = accrMgr.getGroupManager().getGroups();
                 for (int i = 0; i < groups.length; i++) {
                     if (groups[i].matches(user)) {
                         matchingGroups.add(groups[i]);

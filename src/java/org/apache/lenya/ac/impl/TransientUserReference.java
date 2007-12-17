@@ -26,12 +26,20 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.util.Assert;
 
+/**
+ * A reference to a transient user.
+ */
 public class TransientUserReference extends UserReference {
+    
+    private static final long serialVersionUID = 1L;
     
     private TransientUser user;
     
+    /**
+     * @param user The user which this reference represents.
+     */
     public TransientUserReference(TransientUser user) {
-        super(user.getId(), "");
+        super(user.getId());
         Assert.notNull(user);
         this.user = user;
     }

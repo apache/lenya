@@ -17,48 +17,30 @@
  */
 
 /* $Id: Item.java 473841 2006-11-12 00:46:38Z gregor $  */
-
-package org.apache.lenya.ac;
+package org.apache.lenya.ac.file;
 
 import java.io.File;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-
+import org.apache.lenya.ac.Item;
 
 /**
- * An item can be initialized from a configuration.
+ * An item which is stored in a file.
  */
-public interface Item {
-    
-    /**
-     * Returns the ID.
-     * @return A string.
-     */
-    String getId();
-    
-    /**
-     * Returns the name.
-     * @return A string.
-     */
-    String getName();
-    
-    /**
-     * Sets the name.
-     * @param name A string.
-     */
-    void setName(String name);
-    
-    /**
-     * Returns the description.
-     * @return A string.
-     */
-    String getDescription();
+public interface FileItem extends Item {
 
     /**
-     * Sets the description.
-     * @param description A string.
+     * Sets the configuration directory of this item.
+     * @param configurationDirectory The configuration directory.
      */
-    void setDescription(String description);
+    void setConfigurationDirectory(File configurationDirectory);
+
+    /**
+     * Configures this item.
+     * @param configuration The configuration.
+     * @throws ConfigurationException when something went wrong.
+     */
+    void configure(Configuration configuration) throws ConfigurationException;
     
 }

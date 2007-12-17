@@ -24,10 +24,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A machine (representing an IP address).
+ * A machine, representing an IP address.
  * @version $Id: Machine.java 473841 2006-11-12 00:46:38Z gregor $
  */
 public class Machine implements Identifiable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates a new machine object. This method accepts
@@ -74,6 +76,11 @@ public class Machine implements Identifiable {
         return getAddress().hashCode();
     }
 
+    /**
+     * This method returns all IP ranges which contain the machine's IP address.
+     * @see org.apache.lenya.ac.Identifiable#getAccreditables(org.apache.lenya.ac.AccreditableManager)
+     * @see #getIpRanges(AccreditableManager)
+     */
     public Accreditable[] getAccreditables(AccreditableManager manager) {
         IPRange[] ranges = getIpRanges(manager);
         Set accrs = new HashSet();
@@ -148,7 +155,7 @@ public class Machine implements Identifiable {
     }
     
     /**
-     * Returns the IP ranges this machine belongs to.
+     * Returns the IP ranges which contain the IP address of this machine.
      * @param manager The accreditable manager to obtain the IP ranges from.
      * @return An array of IP ranges.
      */

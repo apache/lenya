@@ -32,7 +32,7 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  * File-based role implementation.
  * @version $Id: FileRole.java 473841 2006-11-12 00:46:38Z gregor $
  */
-public class FileRole extends AbstractRole {
+public class FileRole extends AbstractRole implements FileItem {
     
     /**
     * Creates a new file role.

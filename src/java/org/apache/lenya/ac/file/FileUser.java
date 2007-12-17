@@ -19,7 +19,6 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
-import java.io.Serializable;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -35,7 +34,8 @@ import org.apache.log4j.Logger;
  * File-based user implementation.
  * @version $Id: FileUser.java 473841 2006-11-12 00:46:38Z gregor $
  */
-public class FileUser extends AbstractUser implements Serializable {
+public class FileUser extends AbstractUser implements FileItem {
+    
     private static final Logger log = Logger.getLogger(FileUser.class);
 
     public static final String ID = "identity";

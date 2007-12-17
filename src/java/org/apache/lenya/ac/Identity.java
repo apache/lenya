@@ -96,7 +96,16 @@ public class Identity implements Identifiable, java.io.Serializable {
     }
 
     /**
-     * @return all {@link Accreditable}s which belong to this identity.
+     * <p>
+     * Returns an array of all {@link Accreditable}s belonging to the identifiables of this
+     * identity. The credentials of all of these {@link Accreditable}s have to be considered when
+     * making an authorization decision about the identity, i.e. the credential set of the identity
+     * is the union of all credential sets of all accreditables.
+     * </p>
+     * 
+     * @see Identifiable#getAccreditables(AccreditableManager)
+     * @param manager The accreditable manager.
+     * @return An array of {@link Accreditable}s.
      */
     public Accreditable[] getAccreditables(AccreditableManager manager) {
         Set accreditables = new HashSet();

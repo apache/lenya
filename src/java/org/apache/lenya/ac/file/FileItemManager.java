@@ -131,8 +131,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
             File[] addedFiles = notifier.getAddedFiles();
 
             for (int i = 0; i < addedFiles.length; i++) {
-                Item item = loadItem(addedFiles[i]);
-                add(item);
+                add(loadItem(addedFiles[i]));
             }
 
             File[] removedFiles = notifier.getRemovedFiles();
@@ -171,12 +170,12 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
      * @return An item.
      * @throws AccessControlException when something went wrong.
      */
-    protected Item loadItem(File file) throws AccessControlException {
+    protected FileItem loadItem(File file) throws AccessControlException {
         Configuration config = getItemConfiguration(file);
 
         String fileName = file.getName();
         String id = fileName.substring(0, fileName.length() - getSuffix().length());
-        Item item = (Item) items.get(id);
+        FileItem item = (FileItem) items.get(id);
 
         String klass = getItemClass(config);
         if (item == null) {
@@ -193,10 +192,10 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         return item;
     }
 
-    protected Item createItem(String klass) throws AccessControlException {
-        Item item;
+    protected FileItem createItem(String klass) throws AccessControlException {
+        FileItem item;
         try {
-            item = (Item) Class.forName(klass).newInstance();
+            item = (FileItem) Class.forName(klass).newInstance();
             ((AbstractItem) item).setItemManager(this);
         } catch (Exception e) {
             String errorMsg = "Exception when trying to instanciate: " + klass

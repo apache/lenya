@@ -28,6 +28,7 @@ import org.apache.lenya.ac.Authenticator;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.ManagedUser;
+import org.apache.lenya.ac.ManagedUserReference;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserReference;
@@ -108,7 +109,7 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
                     }
                     identity.removeIdentifiable(oldUser);
                 }
-                identity.addIdentifiable(new UserReference(username, userManager.getId()));
+                identity.addIdentifiable(new ManagedUserReference(username, userManager.getId()));
                 authenticated = true;
             } else {
                 if (getLogger().isDebugEnabled()) {

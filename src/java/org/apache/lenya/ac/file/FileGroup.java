@@ -33,7 +33,7 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
 /**
  * File-based group implementation.
  */
-public class FileGroup extends AbstractGroup {
+public class FileGroup extends AbstractGroup implements FileItem {
 
     protected static final String RULE = "rule";
 
