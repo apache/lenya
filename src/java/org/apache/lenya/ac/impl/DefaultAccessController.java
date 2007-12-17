@@ -49,7 +49,6 @@ import org.apache.lenya.ac.AttributeDefinitionRegistry;
 import org.apache.lenya.ac.Authenticator;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.ErrorHandler;
-import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManagerListener;

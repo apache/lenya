@@ -40,6 +40,9 @@ public class ShibbolethUtil {
 
 	private ServiceManager manager;
 
+	/**
+	 * @param manager The service manager.
+	 */
 	public ShibbolethUtil(ServiceManager manager) {
 		this.manager = manager;
 	}

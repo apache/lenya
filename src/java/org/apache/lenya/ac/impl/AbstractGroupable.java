@@ -18,7 +18,6 @@
 
 package org.apache.lenya.ac.impl;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
