@@ -26,6 +26,8 @@ import java.io.Serializable;
  */
 public final class World implements Identifiable, Accreditable, Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     private static final String NAME = "everyone";
 
     /**
