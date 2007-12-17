@@ -27,9 +27,19 @@ import org.apache.cocoon.environment.Request;
  */
 public interface AccessController extends Component {
 
+    /**
+     * The namespace for access control releated XML documents.
+     */
     String NAMESPACE = "http://apache.org/cocoon/lenya/ac/1.0";
+    
+    /**
+     * The default namespace prefix for access control releated XML documents.
+     */
     String DEFAULT_PREFIX = "ac";
     
+    /**
+     * The service role.
+     */
     String ROLE = AccessController.class.getName();
 
     /**

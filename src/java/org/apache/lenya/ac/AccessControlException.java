@@ -23,6 +23,9 @@ package org.apache.lenya.ac;
  * @version $Id: AccessControlException.java 473841 2006-11-12 00:46:38Z gregor $
  */
 public class AccessControlException extends Exception {
+    
+    private static final long serialVersionUID = 1L;
+
     /**
      * Create an AccessControlException
      *

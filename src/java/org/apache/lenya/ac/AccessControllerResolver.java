@@ -28,7 +28,15 @@ import org.apache.avalon.framework.component.Component;
  */
 public interface AccessControllerResolver extends Component {
     
+    /**
+     * The service role.
+     */
     String ROLE = AccessControllerResolver.class.getName();
+    
+    /**
+     * The type of the default resolver.
+     * @see org.apache.avalon.framework.service.ServiceSelector
+     */
     String DEFAULT_RESOLVER = "publication";
 
     /**

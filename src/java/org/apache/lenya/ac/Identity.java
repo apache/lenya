@@ -25,14 +25,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.cocoon.environment.Session;
+import org.apache.lenya.util.Assert;
 import org.apache.log4j.Logger;
 
 /**
- * Identity object. Used to store the authenticated accreditables in the session.
+ * Identity object. Used to store the authenticated {@link Identifiable}s in the session.
  */
 public class Identity implements Identifiable, java.io.Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private Set identifiables = new HashSet();
-    
     private static final Logger log = Logger.getLogger(Identity.class);
 
     /**
@@ -43,54 +46,57 @@ public class Identity implements Identifiable, java.io.Serializable {
     }
 
     /**
-     * In the case of Tomcat the object will be serialized to TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * In the case of Tomcat the object will be serialized to
+     * $TOMCAT_HOME/work/Standalone/localhost/lenya/SESSIONS.ser
      */
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
         if (log.isDebugEnabled()) {
-        	log.debug("Serializing identity which is attached to session: " + this.toString());
+            log.debug("Serializing identity which is attached to session: " + this.toString());
         }
         out.defaultWriteObject();
         out.writeObject(identifiables);
     }
 
     /**
-     * In case of Tomcat the object will be restored from TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * In case of Tomcat the object will be restored from
+     * $TOMCAT_HOME/work/Standalone/localhost/lenya/SESSIONS.ser
      */
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException,
+            ClassNotFoundException {
         in.defaultReadObject();
         identifiables = (Set) in.readObject();
 
         if (log.isDebugEnabled()) {
-        	log.debug("Identity loaded from serialized object: " + this.toString());
+            log.debug("Identity loaded from serialized object: " + this.toString());
         }
     }
 
     /**
-     * Returns the identifiables of this identity.
-     * @return An array of identifiables.
+     * Returns the {@link Identifiable}s which are contained in this identity.
+     * @return An array of {@link Identifiable}s.
      */
     public Identifiable[] getIdentifiables() {
         return (Identifiable[]) identifiables.toArray(new Identifiable[identifiables.size()]);
     }
 
     /**
-     * Adds a new identifiable to this identity.
-     * @param identifiable The identifiable to add.
+     * Adds a new {@link Identifiable} to this identity.
+     * @param identifiable The {@link Identifiable} to add.
      */
     public void addIdentifiable(Identifiable identifiable) {
-        assert identifiable != null;
-        assert identifiable != this;
-        assert !identifiables.contains(identifiable);
-        
+        Assert.notNull("identifiable", identifiable);
+        Assert.isTrue("identifiable not same as identity", identifiable != this);
+        Assert.isTrue("identifiable not contained", !identifiables.contains(identifiable));
+
         if (log.isDebugEnabled()) {
             log.debug("Adding identifiable: [" + identifiable + "]");
         }
-        
+
         identifiables.add(identifiable);
     }
 
     /**
-     * @return all accreditables which belong to this identity.
+     * @return all {@link Accreditable}s which belong to this identity.
      */
     public Accreditable[] getAccreditables(AccreditableManager manager) {
         Set accreditables = new HashSet();
@@ -116,10 +122,11 @@ public class Identity implements Identifiable, java.io.Serializable {
         buf.append("]");
         return buf.toString();
     }
-    
+
     /**
-     * Returns the user of this identity.
-     * @return A user.
+     * Returns the user reference of this identity or <code>null</code> if no user reference is
+     * contained.
+     * @return A user reference.
      */
     public UserReference getUserReference() {
         UserReference user = null;
@@ -132,10 +139,10 @@ public class Identity implements Identifiable, java.io.Serializable {
             i++;
         }
         return user;
-     }
+    }
 
     /**
-     * Returns the machine of this identity.
+     * Returns the machine of this identity or <code>null</code> if no machine is contained.
      * @return A machine.
      */
     public Machine getMachine() {
@@ -149,34 +156,34 @@ public class Identity implements Identifiable, java.io.Serializable {
             i++;
         }
         return machine;
-     }
-     
-     /**
-      * Checks if this identity contains a certain identifiable.
-      * @param identifiable The identifiable to look for.
-      * @return A boolean value.
-      */
-     public boolean contains(Identifiable identifiable) {
-         return identifiables.contains(identifiable);
-     }
-     
-     /**
-      * Fetches the identity from a session.
-      * @param session The session.
-      * @return An identity.
-      */
-     public static Identity getIdentity(Session session) {
-         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-         return identity;
-     }
-     
-     /**
-      * Removes a certain identifiable from the idenity.
-      * @param identifiable An identifiable.
-      */
-     public void removeIdentifiable(Identifiable identifiable) {
-         assert identifiables.contains(identifiable);
-         identifiables.remove(identifiable);
-     }
+    }
+
+    /**
+     * Checks if this identity contains a certain identifiable.
+     * @param identifiable The identifiable to look for.
+     * @return A boolean value.
+     */
+    public boolean contains(Identifiable identifiable) {
+        return identifiables.contains(identifiable);
+    }
+
+    /**
+     * Fetches the identity from a session.
+     * @param session The session.
+     * @return An identity or <code>null</code> if no identity is attached to the session.
+     */
+    public static Identity getIdentity(Session session) {
+        return (Identity) session.getAttribute(Identity.class.getName());
+    }
+
+    /**
+     * Removes a certain identifiable from the identity.
+     * @param identifiable An identifiable.
+     */
+    public void removeIdentifiable(Identifiable identifiable) {
+        Assert.isTrue("identifiable '" + identifiable + "' contained", identifiables
+                .contains(identifiable));
+        identifiables.remove(identifiable);
+    }
 
 }
