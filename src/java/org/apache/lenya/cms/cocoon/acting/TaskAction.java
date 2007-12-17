@@ -23,6 +23,9 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.component.ComponentException;
+import org.apache.avalon.framework.component.ComponentManager;
+import org.apache.avalon.framework.component.Composable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -36,55 +39,41 @@ import org.apache.lenya.cms.task.TaskWrapper;
 /**
  * An action that executes a task.
  */
-public class TaskAction extends AbstractAction {
-    
-    /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param sourceResolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param str DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws java.lang.Exception DOCUMENT ME!
-     */
-    public java.util.Map act(
-        Redirector redirector,
-        SourceResolver sourceResolver,
-        Map objectModel,
-        String str,
-        Parameters parameters)
-        throws java.lang.Exception {
+public class TaskAction extends AbstractAction implements Composable {
 
-        TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
+    private ComponentManager manager;
+
+    public java.util.Map act(Redirector redirector, SourceResolver sourceResolver, Map objectModel,
+            String str, Parameters parameters) throws java.lang.Exception {
+
+        TaskWrapper wrapper = new CocoonTaskWrapper(this.manager, objectModel, parameters);
         wrapper.execute();
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        //------------------------------------------------------------
+        // ------------------------------------------------------------
         // get session
-        //------------------------------------------------------------
+        // ------------------------------------------------------------
         Session session = request.getSession(true);
 
         if (session == null) {
             getLogger().error("No session object");
-
             return null;
         }
 
-        //------------------------------------------------------------
+        // ------------------------------------------------------------
         // Return referer
-        //------------------------------------------------------------
-        String parent_uri =
-            (String) session.getAttribute(
-                "org.apache.lenya.cms.cocoon.acting.TaskAction.parent_uri");
+        // ------------------------------------------------------------
+        String parent_uri = (String) session
+                .getAttribute("org.apache.lenya.cms.cocoon.acting.TaskAction.parent_uri");
         HashMap actionMap = new HashMap();
         actionMap.put("parent_uri", parent_uri);
         session.removeAttribute("org.apache.lenya.cms.cocoon.acting.TaskAction.parent_uri");
 
         return actionMap;
+    }
+
+    public void compose(ComponentManager manager) throws ComponentException {
+        this.manager = manager;
     }
 }

@@ -23,6 +23,7 @@ package org.apache.lenya.cms.cocoon.scheduler;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.component.ComponentManager;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
@@ -38,11 +39,13 @@ public class SchedulerHelper {
 
     /**
      * Ctor.
+     * @param manager The service manager.
      * @param objectModel The Cocoon component object model.
      * @param parameters The Cocoon component parameters.
      * @param logger The logger to use.
      */
-    public SchedulerHelper(Map objectModel, Parameters parameters, Logger logger) {
+    public SchedulerHelper(ComponentManager manager, Map objectModel, Parameters parameters, Logger logger) {
+        this.manager = manager;
         this.objectModel = objectModel;
         this.parameters = parameters;
         this.logger = logger;
@@ -51,6 +54,7 @@ public class SchedulerHelper {
     private Logger logger;
     private Parameters parameters;
     private Map objectModel;
+    private ComponentManager manager;
 
     /**
      * Creates the scheduler parameters.
@@ -62,7 +66,7 @@ public class SchedulerHelper {
         Map map = new HashMap();
 
         try {
-            TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
+            TaskWrapper wrapper = new CocoonTaskWrapper(manager, objectModel, parameters);
 
             logger.debug("Adding task wrapper parameters");
             Map wrapperParameters = wrapper.getParameters();

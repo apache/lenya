@@ -44,7 +44,7 @@
 				<sch:second><xsp:expr>calendar.get(java.util.Calendar.SECOND)</xsp:expr></sch:second>
     
     	org.apache.lenya.cms.cocoon.scheduler.SchedulerHelper helper = 
-    		new org.apache.lenya.cms.cocoon.scheduler.SchedulerHelper(objectModel, parameters, getLogger());
+    		new org.apache.lenya.cms.cocoon.scheduler.SchedulerHelper(this.manager, objectModel, parameters, getLogger());
     	java.util.Map parameters = helper.createParameters();
     	for (java.util.Iterator i = parameters.keySet().iterator(); i.hasNext(); ) {
     			String key = (String) i.next();
