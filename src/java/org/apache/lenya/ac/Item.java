@@ -21,7 +21,7 @@
 package org.apache.lenya.ac;
 
 /**
- * An item can be initialized from a configuration.
+ * Interface for basic properties of access control items.
  */
 public interface Item {
     
