@@ -21,17 +21,19 @@ package org.apache.lenya.ac;
 import java.io.Serializable;
 
 /**
- * The world.
+ * The world. This class uses the Singleton pattern.
  * @version $Id: World.java 473841 2006-11-12 00:46:38Z gregor $
  */
 public final class World implements Identifiable, Accreditable, Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private static final String NAME = "everyone";
 
     /**
-     * Creates a new World object.
+     * Creates a new World object. The constructor is private to ensure that only one instance can
+     * be created.
+     * @see #getInstance()
      */
     private World() {
     }
