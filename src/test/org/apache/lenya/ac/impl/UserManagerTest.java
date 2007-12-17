@@ -103,7 +103,7 @@ public class UserManagerTest extends AccessControlTest {
         FileRole editorRole = new FileRole(configDir, editorRoleId);
         FileRole adminRole = new FileRole(configDir, adminRoleId);
 
-        User user = new FileUser(configDir, userName, "Alice in Wonderland", "alice@test.com",
+        FileUser user = new FileUser(configDir, userName, "Alice in Wonderland", "alice@test.com",
                 "secret");
 
         editorRole.save();

@@ -29,7 +29,7 @@ public interface AttributeRuleEvaluator {
      * @param rule The rule.
      * @return if the rule is complied.
      */
-    public boolean isComplied(User user, String rule);
+    public boolean isComplied(AttributeOwner user, String rule);
 
     /**
      * @param rule The rule to validate.

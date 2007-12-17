@@ -38,7 +38,7 @@ public interface Groupable {
 
     /**
      * Returns all groups that contain this Groupable.
-     * @return A {@link Group} array.
+     * @return An array of {@link Group}s.
      */
     Group[] getGroups();
     

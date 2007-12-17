@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.cocoon.environment.Session;
-import org.apache.lenya.ac.impl.TransientUser;
 import org.apache.log4j.Logger;
 
 /**
@@ -91,15 +90,15 @@ public class Identity implements Identifiable, java.io.Serializable {
     }
 
     /**
-     * @see Accreditable#getAccreditables()
+     * @return all accreditables which belong to this identity.
      */
-    public Accreditable[] getAccreditables() {
+    public Accreditable[] getAccreditables(AccreditableManager manager) {
         Set accreditables = new HashSet();
         Identifiable[] identifiables = getIdentifiables();
 
         for (int i = 0; i < identifiables.length; i++) {
-            Accreditable[] groupAccreditables = identifiables[i].getAccreditables();
-            accreditables.addAll(Arrays.asList(groupAccreditables));
+            Accreditable[] accrs = identifiables[i].getAccreditables(manager);
+            accreditables.addAll(Arrays.asList(accrs));
         }
 
         return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
@@ -109,48 +108,26 @@ public class Identity implements Identifiable, java.io.Serializable {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        Accreditable[] accreditables = getAccreditables();
+        Identifiable[] identifiables = getIdentifiables();
         StringBuffer buf = new StringBuffer("[identity:");
-        for (int i = 0; i < accreditables.length; i++) {
-            buf.append(" ").append(accreditables[i]);
+        for (int i = 0; i < identifiables.length; i++) {
+            buf.append(" ").append(identifiables[i]);
         }
         buf.append("]");
         return buf.toString();
     }
     
     /**
-     * Checks if this identity belongs to a certain accreditable manager.
-     * @param manager The accreditable manager to check for.
-     * @return A boolean value.
-     * 
-     * @throws AccessControlException if an error occurs
-     */
-    public boolean belongsTo(AccreditableManager manager) throws AccessControlException {
-        User user = getUser();
-        if (user == null) {
-            return true;
-        }
-        else if (user instanceof TransientUser) {
-            return true;
-        }
-        else {
-            String thisId = user.getItemManager().getId();
-            String otherId = manager.getUserManager().getId();
-            return thisId.equals(otherId);
-        }
-    }
-
-    /**
      * Returns the user of this identity.
      * @return A user.
      */
-    public User getUser() {
-        User user = null;
+    public UserReference getUserReference() {
+        UserReference user = null;
         Identifiable[] identifiables = getIdentifiables();
         int i = 0;
         while (user == null && i < identifiables.length) {
-            if (identifiables[i] instanceof User) {
-                user = (User) identifiables[i];
+            if (identifiables[i] instanceof UserReference) {
+                user = (UserReference) identifiables[i];
             }
             i++;
         }
@@ -201,9 +178,5 @@ public class Identity implements Identifiable, java.io.Serializable {
          assert identifiables.contains(identifiable);
          identifiables.remove(identifiable);
      }
-
-    public String getName() {
-        return null;
-    }
 
 }

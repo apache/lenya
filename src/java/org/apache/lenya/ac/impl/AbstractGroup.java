@@ -28,11 +28,11 @@ import java.util.Set;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.AttributeOwner;
 import org.apache.lenya.ac.AttributeRuleEvaluator;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Message;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.util.Assert;
 
 /**
@@ -52,7 +52,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
     public AbstractGroup(String id) {
         setId(id);
     }
-    
+
     /**
      * Returns the members of this group.
      * @return An array of {@link Groupable}s.
@@ -64,11 +64,10 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
         try {
             groupables.addAll(Arrays.asList(accrMgr.getUserManager().getUsers()));
             groupables.addAll(Arrays.asList(accrMgr.getIPRangeManager().getIPRanges()));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        for (Iterator i = groupables.iterator(); i.hasNext(); ) {
+        for (Iterator i = groupables.iterator(); i.hasNext();) {
             Groupable groupable = (Groupable) i.next();
             if (Arrays.asList(groupable.getGroups()).contains(this)) {
                 members.add(groupable);
@@ -76,7 +75,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
         }
         return (Groupable[]) members.toArray(new Groupable[members.size()]);
     }
-    
+
     /**
      * Adds a member to this group.
      * @param member The member to add.
@@ -108,22 +107,14 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
     public boolean contains(Groupable member) {
         return Arrays.asList(getMembers()).contains(member);
     }
-    
-    public boolean matches(User user) {
-        AttributeRuleEvaluator evaluator = getAttributeRuleEvaluator();
-        return evaluator.isComplied(user, getRule());
+
+    public boolean matches(AttributeOwner user) {
+        String rule = getRule();
+        return rule == null ? false : getAttributeRuleEvaluator().isComplied(user, rule);
     }
 
     protected AttributeRuleEvaluator getAttributeRuleEvaluator() {
         return getItemManager().getAttributeRuleEvaluator();
-    }
-
-    /**
-     * @see org.apache.lenya.ac.Accreditable#getAccreditables()
-     */
-    public Accreditable[] getAccreditables() {
-        Accreditable[] accreditables = { this };
-        return accreditables;
     }
 
     /**
@@ -153,8 +144,8 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
                     }
                     msg.append(messages[i].getText());
                 }
-                throw new AccessControlException("The rule for group [" + getId() + "] is not valid: "
-                        + msg.toString());
+                throw new AccessControlException("The rule for group [" + getId()
+                        + "] is not valid: " + msg.toString());
             }
         }
         this.rule = rule;

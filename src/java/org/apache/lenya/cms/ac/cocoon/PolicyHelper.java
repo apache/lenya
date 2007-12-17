@@ -38,6 +38,7 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.impl.Credential;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.DefaultPolicy;
@@ -323,7 +324,8 @@ public class PolicyHelper {
             User[] userArray = userManager.getUsers();
             for (int i = 0; i < userArray.length; i++) {
                 Identity identity = new Identity();
-                identity.addIdentifiable(userArray[i]);
+                User user = userArray[i];
+                identity.addIdentifiable(new UserReference(user.getId(), userManager.getId()));
                 Role[] roles = policy.getRoles(identity);
                 for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
                     if (roles[roleIndex].getId().equals(roleId)) {

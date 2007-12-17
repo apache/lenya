@@ -26,15 +26,16 @@ import java.util.Set;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.Groupable;
+import org.apache.lenya.ac.ManagedUser;
 import org.apache.lenya.ac.Password;
-import org.apache.lenya.ac.User;
 import org.apache.log4j.Logger;
 
 /**
  * Abstract user implementation.
  * @version $Id: AbstractUser.java 473841 2006-11-12 00:46:38Z gregor $
  */
-public abstract class AbstractUser extends AbstractGroupable implements User {
+public abstract class AbstractUser extends AbstractGroupable implements ManagedUser, Groupable {
 
     private static Logger log = Logger.getLogger(AbstractUser.class);
     private String email;

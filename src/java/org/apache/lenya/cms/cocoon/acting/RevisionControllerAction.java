@@ -31,7 +31,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -160,7 +160,7 @@ public class RevisionControllerAction extends AbstractAction {
         username = null;
 
         if (identity != null) {
-            User user = identity.getUser();
+            UserReference user = identity.getUserReference();
             if (user != null) {
                 username = user.getId();
             }

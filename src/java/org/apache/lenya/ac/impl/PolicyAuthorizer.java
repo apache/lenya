@@ -106,17 +106,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
             getLogger().debug("Trying to authorize identity: " + identity);
         }
 
-        boolean authorized;
-
-        if (identity.belongsTo(getAccreditableManager())) {
-            authorized = authorizePolicy(identity, request, handler);
-        } else {
-            getLogger().debug(
-                    "Identity [" + identity
-                            + "] not authorized - belongs to wrong accreditable manager.");
-            authorized = false;
-        }
-
+        boolean authorized = authorizePolicy(identity, request, handler);
         getLogger().debug("Authorized: " + authorized);
 
         return authorized;
@@ -156,7 +146,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
                 Accreditable[] accrs = policy.getAccreditables(allRoles[i]);
                 accreditables.addAll(Arrays.asList(accrs));
             }
-            if (identity.getUser() != null && !accreditables.isEmpty()) {
+            if (identity.getUserReference() != null && !accreditables.isEmpty()) {
                 handler.error("page-can-only-accessed-by");
                 for (Iterator i = accreditables.iterator(); i.hasNext(); ) {
                     Accreditable accreditable = (Accreditable) i.next();

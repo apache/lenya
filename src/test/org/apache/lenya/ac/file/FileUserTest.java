@@ -229,7 +229,7 @@ public class FileUserTest extends AccessControlTest {
         FileUserManager manager = getUserManager();
         assertNotNull(manager);
 
-        User lenya = manager.getUser("lenya");
+        FileUser lenya = (FileUser) manager.getUser("lenya");
         assertNotNull(lenya);
         assertTrue(lenya.authenticate("levi"));
     }

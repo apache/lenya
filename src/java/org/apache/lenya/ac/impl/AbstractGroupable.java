@@ -73,21 +73,4 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
         }
     }
 
-    /**
-     * @see org.apache.lenya.ac.Accreditable#getAccreditables()
-     */
-    public Accreditable[] getAccreditables() {
-        Set accreditables = new HashSet();
-        accreditables.add(this);
-
-        Group[] groups = getGroups();
-
-        for (int i = 0; i < groups.length; i++) {
-            Accreditable[] groupAccreditables = groups[i].getAccreditables();
-            accreditables.addAll(Arrays.asList(groupAccreditables));
-        }
-
-        return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
-    }
-
 }

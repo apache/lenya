@@ -20,8 +20,13 @@
 
 package org.apache.lenya.ac;
 
+import java.io.Serializable;
+
 /**
- * A marker interface to mark an {@link Accreditable} as identifiable.
+ * An identifiable object which can be put into the session.
  */
-public interface Identifiable extends Accreditable {
+public interface Identifiable extends Serializable {
+    
+    Accreditable[] getAccreditables(AccreditableManager manager);
+    
 }

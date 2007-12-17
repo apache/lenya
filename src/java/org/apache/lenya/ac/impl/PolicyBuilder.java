@@ -99,7 +99,7 @@ public class PolicyBuilder implements InputStreamBuilder {
     public DefaultPolicy buildPolicy(Document document)
         throws AccessControlException {
 
-        DefaultPolicy policy = new DefaultPolicy();
+        DefaultPolicy policy = new DefaultPolicy(getAccreditableManager());
         Element policyElement = document.getDocumentElement();
         assert policyElement.getLocalName().equals(POLICY_ELEMENT);
 
@@ -154,9 +154,9 @@ public class PolicyBuilder implements InputStreamBuilder {
         Accreditable accreditable = null;
 
         if (elementName.equals(USER_ELEMENT)) {
-            accreditable = getAccreditableManager().getUserManager().getUser(id);
+            accreditable = (Accreditable) getAccreditableManager().getUserManager().getUser(id);
         } else if (elementName.equals(GROUP_ELEMENT)) {
-            accreditable = getAccreditableManager().getGroupManager().getGroup(id);
+            accreditable = (Accreditable) getAccreditableManager().getGroupManager().getGroup(id);
         } else if (elementName.equals(WORLD_ELEMENT)) {
             accreditable = World.getInstance();
         } else if (elementName.equals(IP_RANGE_ELEMENT)) {

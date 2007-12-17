@@ -31,6 +31,8 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.file.FileItemManager;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
@@ -124,10 +126,9 @@ public class WorkflowTest extends AccessControlTest {
             System.out.println("Current state: " + instance.getCurrentState());
 
             Identity identity = new Identity();
-            User user =
-                getAccreditableManager().getUserManager().getUser(
-                    situations[situationIndex].getUser());
-            identity.addIdentifiable(user);
+            UserManager userManager = getAccreditableManager().getUserManager();
+            User user = userManager.getUser(situations[situationIndex].getUser());
+            identity.addIdentifiable(new UserReference(user.getId(), userManager.getId()));
 
             Role[] roles = policy.getRoles(identity);
             System.out.print("Roles:");

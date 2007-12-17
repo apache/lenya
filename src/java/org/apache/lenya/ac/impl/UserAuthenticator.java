@@ -27,7 +27,10 @@ import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Authenticator;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.ManagedUser;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.cms.publication.util.OutgoingLinkRewriter;
 import org.apache.lenya.util.ServletHelper;
 
@@ -87,26 +90,25 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
             handler.error("Please enter a username.");
         } else {
 
-            User user = accreditableManager.getUserManager().getUser(username);
+            UserManager userManager = accreditableManager.getUserManager();
+            User user = userManager.getUser(username);
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Authenticating user: [" + user + "]");
             }
 
-            if (user != null && user.authenticate(password)) {
+            if (user != null && ((ManagedUser) user).authenticate(password)) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("User [" + user + "] authenticated.");
                 }
 
-                if (!identity.contains(user)) {
-                    User oldUser = identity.getUser();
-                    if (oldUser != null) {
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("Removing user [" + oldUser + "] from identity.");
-                        }
-                        identity.removeIdentifiable(oldUser);
+                UserReference oldUser = identity.getUserReference();
+                if (oldUser != null) {
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("Removing user [" + oldUser + "] from identity.");
                     }
-                    identity.addIdentifiable(user);
+                    identity.removeIdentifiable(oldUser);
                 }
+                identity.addIdentifiable(new UserReference(username, userManager.getId()));
                 authenticated = true;
             } else {
                 if (getLogger().isDebugEnabled()) {

@@ -42,8 +42,11 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.TransientUser;
+import org.apache.lenya.ac.impl.TransientUserReference;
 import org.apache.lenya.ac.impl.UserAuthenticator;
 import org.apache.lenya.ac.saml.AttributeTranslator;
 import org.apache.lenya.ac.saml.UserFieldsMapper;
@@ -130,7 +133,8 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
             if (uniqueId == null) {
                 issueError(handler, ERROR_MISSING_UID_ATTRIBUTE);
             } else {
-                if (accreditableManager.getUserManager().contains(uniqueId)) {
+                UserManager userManager = accreditableManager.getUserManager();
+                if (userManager.contains(uniqueId)) {
                     getLogger().error(
                             "Persistent user with ID [" + uniqueId
                                     + "] exists, can't create transient user.");
@@ -138,8 +142,8 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
                 } else {
                     TransientUser user = new TransientUser();
                     user.setId(uniqueId);
-                    passAttributes((TransientUser) user, attributesMap);
-                    updateIdentity(identity, user);
+                    passAttributes(user, attributesMap);
+                    updateIdentity(identity, user, userManager);
                     authenticated = true;
                 }
             }
@@ -176,19 +180,17 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
      * @param identity The identity.
      * @param user The new user.
      */
-    protected void updateIdentity(Identity identity, User user) {
-        if (!identity.contains(user)) {
-            User oldUser = identity.getUser();
-            if (oldUser != null) {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Removing user [" + oldUser + "] from identity.");
-                }
-                identity.removeIdentifiable(oldUser);
-            }
-            identity.addIdentifiable(user);
+    protected void updateIdentity(Identity identity, TransientUser user, UserManager userMgr) {
+        UserReference oldUser = identity.getUserReference();
+        if (oldUser != null) {
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Adding user [" + user + "] to identity.");
+                getLogger().debug("Removing user [" + oldUser + "] from identity.");
             }
+            identity.removeIdentifiable(oldUser);
+        }
+        identity.addIdentifiable(new TransientUserReference(user));
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Adding user [" + user + "] to identity.");
         }
     }
 

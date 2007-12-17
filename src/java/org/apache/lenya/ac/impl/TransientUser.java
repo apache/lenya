@@ -19,37 +19,28 @@ package org.apache.lenya.ac.impl;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.AttributeOwner;
 import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.ItemManager;
+import org.apache.lenya.ac.User;
 
 /**
  * Class for users which are not stored in the CMS, but in an external directory
  * like LDAP.
  */
-public class TransientUser extends AbstractUser {
+public class TransientUser implements User {
 
-    public void save() throws AccessControlException {
-        throw new UnsupportedOperationException();
-    }
-
-    public void configure(Configuration configuration) throws ConfigurationException {
-        throw new UnsupportedOperationException();
-    }
-
-    public void setConfigurationDirectory(File configurationDirectory) {
-    }
-
-    public boolean authenticate(String password) {
-        return false;
-    }
-    
     private String id;
 
     public String getId() {
@@ -64,45 +55,65 @@ public class TransientUser extends AbstractUser {
         return false;
     }
 
-    public void delete() throws AccessControlException {
+    private Map attributes = new HashMap();
+
+    public String[] getAttributeValues(String name) throws AccessControlException {
+        return (String[]) this.attributes.get(name);
+    }
+
+    public String[] getAttributeNames() {
+        Set names = this.attributes.keySet();
+        return (String[]) names.toArray(new String[names.size()]);
+    }
+
+    /**
+     * Sets an attribute.
+     * @param name The name.
+     * @param values The values.
+     * @throws AccessControlException if the attribute name is not supported.
+     */
+    public void setAttributeValues(String name, String[] values) throws AccessControlException {
+        this.attributes.put(name, values);
+    }
+
+    protected boolean hasAttributes() {
+        return !this.attributes.isEmpty();
+    }
+    
+    private String email;
+    private String description;
+    private String name;
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void configure(Configuration configuration) throws ConfigurationException {
         throw new UnsupportedOperationException();
     }
 
-    public ItemManager getItemManager() {
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setConfigurationDirectory(File configurationDirectory) {
         throw new UnsupportedOperationException();
     }
 
-    public void setItemManager(ItemManager manager) {
-        throw new UnsupportedOperationException();
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void addedToGroup(Group group) {
-        throw new UnsupportedOperationException();
-    }
-
-    public Group[] getGroups() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void removeFromAllGroups() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void removedFromGroup(Group group) {
-        throw new UnsupportedOperationException();
-    }
-
-    public Accreditable[] getAccreditables() {
-        Set accrs = new HashSet();
-        accrs.add(this);
-
-        Group[] groups = getRuleGroups();
-        for (int i = 0; i < groups.length; i++) {
-            Accreditable[] groupAccreditables = groups[i].getAccreditables();
-            accrs.addAll(Arrays.asList(groupAccreditables));
-        }
-
-        return (Accreditable[]) accrs.toArray(new Accreditable[accrs.size()]);
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

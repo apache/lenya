@@ -19,8 +19,11 @@ package org.apache.lenya.ac.impl;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.cms.PublicationHelper;
 
 public class IdentityTest extends AccessControlTest {
@@ -51,11 +54,13 @@ public class IdentityTest extends AccessControlTest {
      */
     public void testIdentity() throws AccessControlException {
         Identity identity = new Identity();
-        User user = getAccessController().getAccreditableManager().getUserManager().getUser(USER_ID);
+        AccreditableManager accreditableManager = getAccessController().getAccreditableManager();
+        UserManager userManager = accreditableManager.getUserManager();
+        User user = userManager.getUser(USER_ID);
         System.out.println("Adding user to identity: [" + user + "]");
-        identity.addIdentifiable(user);
+        identity.addIdentifiable(new UserReference(user.getId(), userManager.getId()));
         
-        assertSame(user, identity.getUser());
+        assertSame(user, identity.getUserReference().getUser(accreditableManager));
     }
 
 }

@@ -43,6 +43,8 @@ import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.util.ServletHelper;
@@ -102,17 +104,17 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {
                 if (name.equals(USER_ID)) {
-                    User user = identity.getUser();
+                    User user = getUser(request, identity);
                     if (user != null) {
                         value = user.getId();
                     }
                 } else if (name.equals(USER_NAME)) {
-                    User user = identity.getUser();
+                    User user = getUser(request, identity);
                     if (user != null) {
                         value = user.getName();
                     }
                 } else if (name.equals(USER_EMAIL)) {
-                    User user = identity.getUser();
+                    User user = getUser(request, identity);
                     if (user != null) {
                         value = user.getEmail();
                     }
@@ -150,6 +152,19 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             value = getLoginUri(request);
         }
         return value;
+    }
+
+    protected User getUser(Request request, Identity identity) throws ConfigurationException {
+        User user = null;
+        UserReference userRef = identity.getUserReference();
+        if (userRef != null) {
+            UserManager userMgr = (UserManager) getItemManager(request, USER_MANAGER);
+            AccreditableManager accrMgr = userMgr.getAccreditableManager();
+            if (userRef.canGetUserFrom(accrMgr)) {
+                user = userRef.getUser(accrMgr);
+            }
+        }
+        return user;
     }
 
     protected String getLoginUri(Request request) throws ConfigurationException {

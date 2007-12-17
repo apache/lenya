@@ -150,7 +150,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         }
 
         if (policy == null) {
-            policy = new DefaultPolicy();
+            policy = new DefaultPolicy(controller);
         }
         return policy;
     }

@@ -43,7 +43,7 @@ import org.apache.cocoon.util.PostInputStream;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMWriter;
@@ -273,12 +273,12 @@ public class XopusHandlerAction extends ConfigurableServiceableAction {
                     (org.apache.lenya.ac.Identity) session.getAttribute(Identity.class.getName());
                 String username = null;
                 if (identity != null) {
-                    User user = identity.getUser();
+                    UserReference user = identity.getUserReference();
                     if (user != null) {
                         username = user.getId();
                     }
                 } else if (identityTwo != null) {
-                    username = identityTwo.getUser().getId();
+                    username = identityTwo.getUserReference().getId();
                 } else {
                     getLogger().error(".act(): No identity!");
                 }

@@ -26,8 +26,8 @@ import org.apache.commons.jexl.JexlContext;
 import org.apache.commons.jexl.JexlHelper;
 import org.apache.lenya.ac.AttributeDefinition;
 import org.apache.lenya.ac.AttributeDefinitionRegistry;
+import org.apache.lenya.ac.AttributeOwner;
 import org.apache.lenya.ac.AttributeRuleEvaluator;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.ValidationResult;
 
 /**
@@ -47,7 +47,7 @@ public class JexlEvaluator extends AbstractLogEnabled implements AttributeRuleEv
      * @param rule The rule.
      * @return if the rule is complied.
      */
-    public boolean isComplied(User user, String rule) {
+    public boolean isComplied(AttributeOwner user, String rule) {
         if (user.getAttributeNames().length == 0) {
             return false;
         } else {

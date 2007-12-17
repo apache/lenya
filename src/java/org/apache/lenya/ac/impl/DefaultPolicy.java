@@ -29,9 +29,11 @@ import java.util.Set;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.util.Assert;
 
 /**
  * A DefaultPolicy is the own policy of a certain URL (not merged).
@@ -39,6 +41,15 @@ import org.apache.lenya.ac.Role;
 public class DefaultPolicy implements Policy {
 
     private Map accreditableToCredential = new HashMap();
+    private AccreditableManager accrManager;
+    
+    /**
+     * @param accrMgr The accreditable manager.
+     */
+    public DefaultPolicy(AccreditableManager accrMgr) {
+        Assert.notNull(accrMgr);
+        this.accrManager = accrMgr;
+    }
 
     /**
 	 * Adds a credential to this policy.
@@ -117,11 +128,8 @@ public class DefaultPolicy implements Policy {
         return (Credential[]) values.toArray(new Credential[values.size()]);
     }
 
-    /**
-	 * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
-	 */
     public Role[] getRoles(Identity identity) {
-        Accreditable[] accreditables = identity.getAccreditables();
+        Accreditable[] accreditables = identity.getAccreditables(this.accrManager);
         Credential[] credentials = getCredentials();
 
         Set roles = new HashSet();

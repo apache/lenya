@@ -28,6 +28,8 @@ import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FilePolicyManager;
 import org.apache.lenya.cms.ExcaliburTest;
@@ -141,11 +143,12 @@ public class AccessControlTest extends ExcaliburTest {
      */
     protected Identity getIdentity() throws AccessControlException {
         DefaultAccessController controller = getAccessController();
-        User user = controller.getAccreditableManager().getUserManager().getUser(USERNAME);
+        UserManager userMgr = controller.getAccreditableManager().getUserManager();
+        User user = userMgr.getUser(USERNAME);
         assertNotNull(user);
 
         Identity identity = new Identity();
-        identity.addIdentifiable(user);
+        identity.addIdentifiable(new UserReference(user.getId(), userMgr.getId()));
 
         return identity;
     }

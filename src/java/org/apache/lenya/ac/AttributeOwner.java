@@ -15,20 +15,24 @@
  *  limitations under the License.
  *
  */
-
-/* $Id: Accreditable.java 473841 2006-11-12 00:46:38Z gregor $  */
-
 package org.apache.lenya.ac;
 
-
 /**
- * An Accreditable can be accredited with roles on a certain URI
- * using a {@link org.apache.lenya.ac.impl.Credential}.
+ * Attribute owner.
  */
-public interface Accreditable {
-    
+public interface AttributeOwner {
+
     /**
-     * @return The name of this accreditable.
+     * @return The names of all possible attributes.
      */
-    String getName();
+    String[] getAttributeNames();
+
+    /**
+     * @param name The attribute name.
+     * @return The attribute values or <code>null</code> if no value is
+     *         available for the attribute.
+     * @throws AccessControlException if the attribute is not supported.
+     */
+    String[] getAttributeValues(String name) throws AccessControlException;
+
 }

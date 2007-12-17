@@ -18,17 +18,16 @@
 
 package org.apache.lenya.ac;
 
-import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A machine (representing an IP address).
  * @version $Id: Machine.java 473841 2006-11-12 00:46:38Z gregor $
  */
-public class Machine implements Identifiable, Serializable {
+public class Machine implements Identifiable {
 
     /**
      * Creates a new machine object. This method accepts
@@ -75,17 +74,13 @@ public class Machine implements Identifiable, Serializable {
         return getAddress().hashCode();
     }
 
-    /**
-     * @see org.apache.lenya.ac.Accreditable#getAccreditables()
-     */
-    public Accreditable[] getAccreditables() {
-        Accreditable[] ranges = getIPRanges();
-        Accreditable[] accreditables = new Accreditable[ranges.length + 1];
-        accreditables[0] = this;
+    public Accreditable[] getAccreditables(AccreditableManager manager) {
+        IPRange[] ranges = getIpRanges(manager);
+        Set accrs = new HashSet();
         for (int i = 0; i < ranges.length; i++) {
-            accreditables[i+1] = ranges[i];
+            accrs.add(ranges[i]);
         }
-        return accreditables;
+        return (Accreditable[]) accrs.toArray(new Accreditable[accrs.size()]);
     }
 
     /**
@@ -97,7 +92,7 @@ public class Machine implements Identifiable, Serializable {
     }
 
     /**
-     * Converts a string to an IP addres.
+     * Converts a string to an IP address.
      * @param string The IP address, represented by a string.
      * @return An InetAddress object.
      * @throws AccessControlException when something went wrong.
@@ -151,38 +146,26 @@ public class Machine implements Identifiable, Serializable {
     public void setAddress(InetAddress address) {
         this.address = address;
     }
-
-    private transient List ipRanges;
-    
-    protected List ipRanges() {
-        if (this.ipRanges == null) {
-            this.ipRanges = new ArrayList();
-        }
-        return this.ipRanges;
-    }
-    
-    /**
-     * Adds an IP range to this machine.
-     * @param range An IP range this machine belongs to.
-     */
-    public void addIPRange(IPRange range) {
-        assert range != null;
-        List ipRanges = ipRanges();
-        assert !ipRanges.contains(range);
-        ipRanges.add(range);
-    }
     
     /**
      * Returns the IP ranges this machine belongs to.
+     * @param manager The accreditable manager to obtain the IP ranges from.
      * @return An array of IP ranges.
      */
-    public IPRange[] getIPRanges() {
-        List ipRanges = ipRanges();
-        return (IPRange[]) ipRanges.toArray(new IPRange[ipRanges.size()]);
+    public IPRange[] getIpRanges(AccreditableManager manager) {
+        Set ranges = new HashSet();
+        try {
+            IPRange[] allRanges = manager.getIPRangeManager().getIPRanges();
+            for (int i = 0; i < allRanges.length; i++) {
+                if (allRanges[i].contains(this)) {
+                    ranges.add(allRanges[i]);
+                }
+            }
+        } catch (AccessControlException e) {
+            throw new RuntimeException(e);
+        }
+        
+        return (IPRange[]) ranges.toArray(new IPRange[ranges.size()]);
     }
 
-    public String getName() {
-        return getIp();
-    }
-    
 }

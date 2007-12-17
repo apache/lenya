@@ -87,7 +87,7 @@ public class ForceCheckInAction extends RevisionControllerAction {
             return actionMap;
         }
 
-        rcml.checkOutIn(RCML.ci, identity.getUser().getId(), new Date().getTime(),
+        rcml.checkOutIn(RCML.ci, identity.getUserReference().getId(), new Date().getTime(),
                 false);
 
         return null;

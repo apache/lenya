@@ -47,6 +47,7 @@ import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.ItemManagerListener;
+import org.apache.lenya.ac.impl.AbstractItem;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
 /**
@@ -196,7 +197,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         Item item;
         try {
             item = (Item) Class.forName(klass).newInstance();
-            item.setItemManager(this);
+            ((AbstractItem) item).setItemManager(this);
         } catch (Exception e) {
             String errorMsg = "Exception when trying to instanciate: " + klass
                     + " with exception: " + e.fillInStackTrace();

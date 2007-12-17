@@ -33,7 +33,7 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -79,7 +79,7 @@ public class FlowHelper {
         String userId = "";
         String ipAddress = "";
 
-        User user = identity.getUser();
+        UserReference user = identity.getUserReference();
         if (user != null) {
             userId = user.getId();
         }
@@ -232,6 +232,6 @@ public class FlowHelper {
         final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
         final Publication publication = getPageEnvelope(cocoon).getPublication();
         final String filename = pageEnvelope.getDocument().getFile().getAbsolutePath().substring(publication.getDirectory().getAbsolutePath().length());   
-        getRevisionController(cocoon).reservedCheckIn(filename, identity.getUser().getId(), backup);
+        getRevisionController(cocoon).reservedCheckIn(filename, identity.getUserReference().getId(), backup);
     }
 }

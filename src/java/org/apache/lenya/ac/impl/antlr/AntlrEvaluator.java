@@ -25,12 +25,13 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AttributeDefinition;
 import org.apache.lenya.ac.AttributeDefinitionRegistry;
+import org.apache.lenya.ac.AttributeOwner;
 import org.apache.lenya.ac.AttributeRuleEvaluator;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.Message;
 import org.apache.lenya.ac.SimpleErrorHandler;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.ValidationResult;
+import org.apache.lenya.util.Assert;
 
 /**
  * ANTLR-based attribute rule evaluator.
@@ -46,7 +47,7 @@ public class AntlrEvaluator extends AbstractLogEnabled implements AttributeRuleE
 
     protected static final String UNDEFINED_VALUE = "undefined";
 
-    public boolean isComplied(User user, String rule) {
+    public boolean isComplied(AttributeOwner user, String rule) {
         ErrorHandler handler = new SimpleErrorHandler();
         ExpressionsParser parser = getParser(rule, handler);
         try {
@@ -106,6 +107,7 @@ public class AntlrEvaluator extends AbstractLogEnabled implements AttributeRuleE
     }
 
     protected ExpressionsParser getParser(String rule, ErrorHandler handler) {
+        Assert.notNull("rule", rule);
         CharStream stream = new ANTLRStringStream(rule);
         ExpressionsLexer lexer = new ExpressionsLexer(stream);
         lexer.setErrorHandler(handler);

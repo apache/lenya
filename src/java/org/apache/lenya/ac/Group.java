@@ -22,7 +22,7 @@ package org.apache.lenya.ac;
  * A group.
  * @version $Id: Group.java 473841 2006-11-12 00:46:38Z gregor $
  */
-public interface Group extends Identifiable, Item {
+public interface Group extends Accreditable, Item {
     
     /**
      * Returns the members of this group.
@@ -81,6 +81,6 @@ public interface Group extends Identifiable, Item {
      * @param user The user.
      * @return if the group's rule matches this user.
      */
-    boolean matches(User user);
+    boolean matches(AttributeOwner user);
     
 }

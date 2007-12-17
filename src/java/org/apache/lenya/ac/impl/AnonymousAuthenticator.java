@@ -24,52 +24,49 @@ import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Authenticator;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.User;
-
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserReference;
 
 /**
- * The anonymous authenticator authenticates to an anonymous user with no password 
- * (you just have to add a user named 'anonymous' with an arbitrary password and the permissions
- * you'd like via the admin screen). This is useful in conjunction with client certificates.
+ * The anonymous authenticator authenticates to an anonymous user with no password (you just have to
+ * add a user named 'anonymous' with an arbitrary password and the permissions you'd like via the
+ * admin screen). This is useful in conjunction with client certificates.
  * @version $Id: UserAuthenticator.java 43241 2004-08-16 16:36:57Z andreas $
  */
 public class AnonymousAuthenticator extends AbstractLogEnabled implements Authenticator {
 
-    
     /**
      * @see org.apache.lenya.ac.Authenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
      *      org.apache.cocoon.environment.Request, ErrorHandler)
      */
-    public boolean authenticate(AccreditableManager accreditableManager, Request request, ErrorHandler handler)
-            throws AccessControlException {
+    public boolean authenticate(AccreditableManager accreditableManager, Request request,
+            ErrorHandler handler) throws AccessControlException {
 
-	String username = "anonymous";
+        String username = "anonymous";
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    "Authenticating username [" + username + "]");
+            getLogger().debug("Authenticating username [" + username + "]");
         }
 
-        Identity identity = (Identity) request.getSession(false).getAttribute(Identity.class.getName());
+        Identity identity = (Identity) request.getSession(false).getAttribute(
+                Identity.class.getName());
 
-        User user = accreditableManager.getUserManager().getUser(username);
+        UserManager userManager = accreditableManager.getUserManager();
 
         boolean authenticated = false;
-        if (user != null) {
+        if (userManager.contains(username)) {
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("User [" + user + "] authenticated.");
+                getLogger().debug("User [" + username + "] authenticated.");
             }
 
-            if (!identity.contains(user)) {
-                User oldUser = identity.getUser();
-                if (oldUser != null) {
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("Removing user [" + oldUser + "] from identity.");
-                    }
-                    identity.removeIdentifiable(oldUser);
+            UserReference oldUser = identity.getUserReference();
+            if (oldUser != null) {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Removing user [" + oldUser + "] from identity.");
                 }
-                identity.addIdentifiable(user);
+                identity.removeIdentifiable(oldUser);
             }
+            identity.addIdentifiable(new UserReference(username, userManager.getId()));
             authenticated = true;
         } else {
             if (getLogger().isDebugEnabled()) {

@@ -27,6 +27,7 @@ import java.util.Set;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.PublicationHelper;
@@ -91,9 +92,9 @@ public class PolicyTest extends AccessControlTest {
      * @throws AccessControlException when something went wrong.
      */
     public void testSavePolicy() throws AccessControlException {
-        DefaultPolicy urlPolicy =
-            getPolicyManager().buildURLPolicy(getAccessController().getAccreditableManager(), URL);
-        DefaultPolicy newPolicy = new DefaultPolicy();
+        AccreditableManager accreditableManager = getAccessController().getAccreditableManager();
+        DefaultPolicy urlPolicy = getPolicyManager().buildURLPolicy(accreditableManager, URL);
+        DefaultPolicy newPolicy = new DefaultPolicy(accreditableManager);
 
         Credential[] credentials = urlPolicy.getCredentials();
 
@@ -114,7 +115,7 @@ public class PolicyTest extends AccessControlTest {
 
         newPolicy =
             getPolicyManager().buildURLPolicy(
-                getAccessController().getAccreditableManager(),
+                accreditableManager,
                 SAVE_URL);
         assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 

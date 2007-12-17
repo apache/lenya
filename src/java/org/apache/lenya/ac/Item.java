@@ -74,14 +74,4 @@ public interface Item {
      */
     void configure(Configuration configuration) throws ConfigurationException;
 
-    /**
-     * @param manager The manager which manages this item.
-     */
-    void setItemManager(ItemManager manager);
-    
-    /**
-     * @return The manager which manages this item.
-     */
-    ItemManager getItemManager();
-
 }

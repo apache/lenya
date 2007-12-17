@@ -23,14 +23,22 @@ package org.apache.lenya.cms.cocoon.task;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserReference;
+import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -153,14 +161,49 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
             }
         }
 
-		if (notificationMap.getMap().isEmpty()) {
+        if (notificationMap.getMap().isEmpty()) {
 			log.debug("    No notification parameters found.");
 		} else {
 			log.debug("    Initializing notification");
             
             Identity identity = Identity.getIdentity(request.getSession());
-            User user = identity.getUser();
-            String eMail = user.getEmail();
+            /*
+            
+            AccessController accessController = null;
+            ServiceSelector selector = null;
+            AccessControllerResolver resolver = null;
+            ItemManager itemManager = null;
+
+            try {
+                selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+                resolver =
+                    (AccessControllerResolver) selector.select(
+                        AccessControllerResolver.DEFAULT_RESOLVER);
+
+                String url = ServletHelper.getWebappURI(request);
+                accessController = resolver.resolveAccessController(url);
+
+                AccreditableManager accreditableManager =
+                    ((DefaultAccessController) accessController).getAccreditableManager();
+
+
+            } catch (Exception e) {
+                throw new ConfigurationException("Obtaining item manager failed: ", e);
+            } finally {
+                if (selector != null) {
+                    if (resolver != null) {
+                        if (accessController != null) {
+                            resolver.release(accessController);
+                        }
+                        selector.release(resolver);
+                    }
+                    manager.release(selector);
+                }
+            }
+            
+            */
+            UserReference user = identity.getUserReference();
+            String eMail = ""; // user.getEmail();
             notificationMap.put(Notifier.PARAMETER_FROM, eMail);
             log.debug("    Setting from address [" + Notifier.PARAMETER_FROM + "] = [" + eMail + "]");
 

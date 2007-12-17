@@ -379,17 +379,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     }
 
     /**
-     * Checks if this identity was initialized by this access controller.
-     * 
-     * @param identity An identity.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
-     */
-    public boolean ownsIdenity(Identity identity) throws AccessControlException {
-        return identity.belongsTo(getAccreditableManager());
-    }
-
-    /**
      * @see org.apache.lenya.ac.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
      */
     public void setupIdentity(Request request) throws AccessControlException {
@@ -411,13 +400,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getLogger().info("Remote Address to use: [" + remoteAddress + "]");
 
             Machine machine = new Machine(remoteAddress);
-            IPRange[] ranges = accreditableManager.getIPRangeManager().getIPRanges();
-            for (int i = 0; i < ranges.length; i++) {
-                if (ranges[i].contains(machine)) {
-                    machine.addIPRange(ranges[i]);
-                }
-            }
-
             identity.addIdentifiable(machine);
             session.setAttribute(Identity.class.getName(), identity);
         }
@@ -432,12 +414,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * @throws AccessControlException when something went wrong.
      */
     protected boolean hasValidIdentity(Session session) throws AccessControlException {
-        boolean valid = true;
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        if (identity == null || !ownsIdenity(identity)) {
-            valid = false;
-        }
-        return valid;
+        return identity != null;
     }
 
     /**

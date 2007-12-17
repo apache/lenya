@@ -19,13 +19,12 @@
 package org.apache.lenya.ac;
 
 import java.io.Serializable;
-import java.util.Collections;
 
 /**
  * The world.
  * @version $Id: World.java 473841 2006-11-12 00:46:38Z gregor $
  */
-public final class World implements Identifiable, Serializable {
+public final class World implements Identifiable, Accreditable, Serializable {
     
     private static final String NAME = "everyone";
 
@@ -49,14 +48,12 @@ public final class World implements Identifiable, Serializable {
         return instance;
     }
 
-    /**
-     * @see org.apache.lenya.ac.Accreditable#getAccreditables()
-     */
-    public Accreditable[] getAccreditables() {
-        return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
-    }
-
     public String getName() {
         return NAME;
+    }
+
+    public Accreditable[] getAccreditables(AccreditableManager manager) {
+        Accreditable[] accrs = { this };
+        return accrs;
     }
 }

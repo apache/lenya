@@ -25,7 +25,7 @@ import java.io.File;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.LanguageVersions;
@@ -147,7 +147,7 @@ public class WorkflowFactory {
             throw new WorkflowException("Session does not contain identity!");
         }
         String userId = null;
-        User user = identity.getUser();
+        UserReference user = identity.getUserReference();
         if (user != null) {
             userId = user.getId();
         }

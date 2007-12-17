@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
@@ -125,7 +125,7 @@ public class WorkflowInvoker extends ParameterWrapper {
 	public static void setIdentity(NamespaceMap parameters, Identity identity) {
 
 		String userId = "";
-		User user = identity.getUser();
+		UserReference user = identity.getUserReference();
 		if (user != null) {
 			userId = user.getId();
 		}
