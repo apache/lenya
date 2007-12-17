@@ -18,7 +18,11 @@
 package org.apache.lenya.ac;
 
 /**
- * Attribute owner.
+ * An attribute owner provides a map of key-value pairs which are used for authorization decisions.
+ * The values are string arrays, i.e. the AttributeOwner can provide multiple values for each key.
+ * 
+ * @see Group#matches(AttributeOwner)
+ * @see AttributeRuleEvaluator
  */
 public interface AttributeOwner {
 
@@ -29,8 +33,8 @@ public interface AttributeOwner {
 
     /**
      * @param name The attribute name.
-     * @return The attribute values or <code>null</code> if no value is
-     *         available for the attribute.
+     * @return The attribute values or <code>null</code> if no value is available for the
+     *         attribute.
      * @throws AccessControlException if the attribute is not supported.
      */
     String[] getAttributeValues(String name) throws AccessControlException;

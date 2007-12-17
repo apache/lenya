@@ -27,13 +27,15 @@ public interface AttributeRuleEvaluator {
     /**
      * @param user The user.
      * @param rule The rule.
-     * @return if the rule is complied.
+     * @return if the rule is complied by the user's attributes.
      */
     public boolean isComplied(AttributeOwner user, String rule);
 
     /**
      * @param rule The rule to validate.
-     * @return If the rule is valid.
+     * @return If the rule is valid, i.e. if it is syntactically correct and doesn't reference any
+     *         attributes which are not supported by the {@link AttributeDefinition} that is
+     *         provided by the {@link AttributeDefinitionRegistry}.
      */
     public ValidationResult validate(String rule);
 
