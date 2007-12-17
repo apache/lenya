@@ -20,12 +20,6 @@
 
 package org.apache.lenya.ac;
 
-import java.io.File;
-
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-
-
 /**
  * An item can be initialized from a configuration.
  */
