@@ -36,7 +36,7 @@ function updateData(url, title, height, width, type) {
   */
 function scaleHeight(width) {
   var ratio = document.forms['insertAsset'].ratio.value;
-  document.forms['insertAsset'].height.value = width * ratio;
+  document.forms['insertAsset'].height.value = Math.round(width * ratio);
   focus(); 
 } 
 
@@ -45,7 +45,7 @@ function scaleHeight(width) {
   */
 function scaleWidth(height) {
   var ratio = document.forms['insertAsset'].ratio.value;
-  document.forms['insertAsset'].width.value = height * 1.0 / ratio;
+  document.forms['insertAsset'].width.value = Math.round(height * 1.0 / ratio);
   focus(); 
 } 
 
