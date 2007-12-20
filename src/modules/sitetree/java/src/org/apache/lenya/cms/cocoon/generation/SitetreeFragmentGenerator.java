@@ -30,14 +30,19 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -76,6 +81,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      */
     protected AttributesImpl attributes;
 
+    protected static final String PARAM_PUB = "pub";
     protected static final String PARAM_AREA = "area";
     protected static final String PARAM_PATH = "path";
     protected static final String PARAM_INITIAL = "initial";
@@ -156,12 +162,24 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             }
             this.getLogger().debug("Parameter areas: " + areasStr.toString());
         }
-
+        
         try {
-            this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            String pubId = null;
+            if (par.isParameter(PARAM_PUB)) {
+                pubId = par.getParameter(PARAM_PUB);
+            }
+            else {
+                String webappUrl = ServletHelper.getWebappURI(request);
+                URLInformation info = new URLInformation(webappUrl);
+                pubId = info.getPublicationId();
+            }
+            this.publication = factory.getPublication(pubId);
         } catch (Exception e) {
             throw new ProcessingException("Could not create publication: ", e);
         }
+
         this.attributes = new AttributesImpl();
 
     }
