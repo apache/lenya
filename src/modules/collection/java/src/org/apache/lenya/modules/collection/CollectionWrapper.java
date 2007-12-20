@@ -48,6 +48,9 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
     private Document delegate;
 
     protected static final String[] TYPES = { TYPE_CHILDREN, TYPE_MANUAL, TYPE_LINK };
+    protected static final String ATTRIBUTE_ALL_LANGUAGES = "allLanguages";
+
+    private boolean allLanguages = false;
 
     /**
      * Ctor.
@@ -149,6 +152,11 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
             if (collectionElement.hasAttribute(ATTRIBUTE_HREF)) {
                 this.href = collectionElement.getAttribute(ATTRIBUTE_HREF);
             }
+            
+            if (collectionElement.hasAttribute(ATTRIBUTE_ALL_LANGUAGES)) {
+                String value = collectionElement.getAttribute(ATTRIBUTE_ALL_LANGUAGES);
+                this.allLanguages = Boolean.parseBoolean(value);
+            }
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -200,8 +208,9 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
         }
 
         collectionElement.setAttribute(ATTRIBUTE_TYPE, getType());
-        
         collectionElement.setAttribute(ATTRIBUTE_HREF, getHref());
+        collectionElement.setAttribute(ATTRIBUTE_ALL_LANGUAGES, Boolean.toString(showAllLanguages()));
+
 
         collectionElement.normalize();
 
@@ -332,6 +341,24 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
     public void setHref(String href) {
         load();
         this.href = href;
+    }
+
+    /**
+     * @return If the rendered page should show children in all languages (<code>true</code>) or
+     *         only in the currently requested language (<code>false</code>).
+     */
+    public boolean showAllLanguages() {
+        load();
+        return this.allLanguages;
+    }
+
+    /**
+     * @param all If the rendered page should show children in all languages.
+     * @see #includeAllLanguages()
+     */
+    public void setShowAllLanguages(boolean all) {
+        load();
+        this.allLanguages = all;
     }
 
 }

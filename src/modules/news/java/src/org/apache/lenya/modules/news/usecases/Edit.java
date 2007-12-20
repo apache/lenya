@@ -30,6 +30,7 @@ import org.apache.lenya.modules.news.NewsWrapper;
 public class Edit extends InvokeWorkflow {
 
     protected static final String INCLUDE_ITEM_NUMBER = "includeItems";
+    protected static final String SHOW_ALL_LANGUAGES = "showAllLanguages";
     protected static final String NEWS_WRAPPER = "newsWrapper";
     protected static final String NUMBERS = "numbers";
     protected static final String TYPE = "type";
@@ -41,6 +42,7 @@ public class Edit extends InvokeWorkflow {
         setParameter(NEWS_WRAPPER, news);
         
         setParameter(INCLUDE_ITEM_NUMBER, new Short(news.getIncludeItemNumber()));
+        setParameter(SHOW_ALL_LANGUAGES, new Boolean(news.showAllLanguages()));
         setParameter(TYPE, news.getType());
         setParameter(HREF, news.getHref());
         
@@ -57,9 +59,13 @@ public class Edit extends InvokeWorkflow {
         String numberString = getParameterAsString(INCLUDE_ITEM_NUMBER);
         short number = Short.parseShort(numberString);
         
+        String allLanguagesString = getBooleanCheckboxParameter(SHOW_ALL_LANGUAGES);
+        boolean allLanguages = Boolean.parseBoolean(allLanguagesString);
+        
         // we must create a new wrapper, because a new (modifiable) session is used
         NewsWrapper news = new NewsWrapper(getSourceDocument(), getLogger());
         news.setIncludeItemNumber(number);
+        news.setShowAllLanguages(allLanguages);
         String type = getParameterAsString(TYPE);
         news.setType(type);
         if (type.equals(CollectionWrapper.TYPE_LINK)) {

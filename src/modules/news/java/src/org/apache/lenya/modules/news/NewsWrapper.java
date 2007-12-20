@@ -33,7 +33,7 @@ public class NewsWrapper extends CollectionWrapper {
 
     protected static final int DEFAULT_INCLUDE_ITEMS = 3;
     protected static final String ATTRIBUTE_INCLUDE_ITEMS = "includeItems";
-    
+
     private short includeItemNumber = DEFAULT_INCLUDE_ITEMS;
 
     /**
@@ -60,8 +60,8 @@ public class NewsWrapper extends CollectionWrapper {
     }
 
     /**
-     * @return The number of items to appear on overviews which are generated
-     *         using the "include" format.
+     * @return The number of items to appear on overviews which are generated using the "include"
+     *         format.
      */
     public short getIncludeItemNumber() {
         load();
@@ -69,19 +69,12 @@ public class NewsWrapper extends CollectionWrapper {
     }
 
     /**
-     * @param number The number of items to appear on overviews which are
-     *        generated using the "include" format.
+     * @param number The number of items to appear on overviews which are generated using the
+     *            "include" format.
      */
     public void setIncludeItemNumber(short number) {
         load();
         this.includeItemNumber = number;
     }
-
-    protected NamespaceHelper initializeNamespaceHelper() {
-        NamespaceHelper helper = super.initializeNamespaceHelper();
-        Element docElement = helper.getDocument().getDocumentElement();
-        docElement.setAttribute(ATTRIBUTE_INCLUDE_ITEMS, Short.toString(getIncludeItemNumber()));
-        return helper;
-    }
-
+    
 }

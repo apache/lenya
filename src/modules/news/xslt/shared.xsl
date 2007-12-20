@@ -3,7 +3,7 @@
   
   <xsl:template name="getHref">
     <xsl:choose>
-      <xsl:when test="@uuid">lenya-document:<xsl:value-of select="@uuid"/></xsl:when>
+      <xsl:when test="@uuid">lenya-document:<xsl:value-of select="@uuid"/>,lang=<xsl:value-of select="@xml:lang"/></xsl:when>
       <xsl:when test="@href"><xsl:value-of select="@href"/></xsl:when>
     </xsl:choose>
   </xsl:template>

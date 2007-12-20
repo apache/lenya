@@ -31,5 +31,6 @@
     Acquiring messages from a link requires the <em>feeds</em> module which
     is currently in the sandbox (not stable yet).
   </message>
+  <message key="show-all-languages">Show news from all languages</message>
   
 </catalogue>

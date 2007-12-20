@@ -66,7 +66,7 @@
         <input type="text" name="href" size="50" value="${usecase.getParameter('href')}"/>
       </p>
       
-      <p style="margin: 3em 0;">
+      <p style="margin: 2em 0 0 0;">
         <label for="includeItems"><i18n:text>include-items</i18n:text>:</label>
         <select name="includeItems">
           <jx:forEach var="number" items="${usecase.getParameter('numbers')}">
@@ -81,7 +81,18 @@
           </jx:forEach>
         </select>
       </p>
-      
+      <p style="margin: 0 0 2em 0;">
+        <label for="showAllLanguages"><i18n:text>show-all-languages</i18n:text>:</label>
+        <jx:choose>
+          <jx:when test="${usecase.getBooleanCheckboxParameter('showAllLanguages').equals('true')}">
+            <input type="checkbox" name="showAllLanguages" checked="checked"/>
+          </jx:when>
+          <jx:otherwise>
+            <input type="checkbox" name="showAllLanguages"/>
+          </jx:otherwise>
+        </jx:choose>
+      </p>
+        
       <p>
         <input type="submit" value="Save" name="submit" i18n:attr="value"/>
         <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>

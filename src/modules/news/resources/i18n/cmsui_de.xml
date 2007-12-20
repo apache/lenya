@@ -34,5 +34,6 @@
     Um Meldungen von einer externen Quelle beziehen zu können, ist das <em>feeds</em>-Modul erforderlich,
     das sich derzeit in der Sandbox befindet (noch nicht stabil).
   </message>
+  <message key="show-all-languages">News aus allen Sprachen anzeigen</message>
   
 </catalogue>
