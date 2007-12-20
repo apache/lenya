@@ -9,7 +9,7 @@
   <dc:creator>${creator}</dc:creator>
   <dc:coverage></dc:coverage>
   <dc:description></dc:description>
-  <dc:extent></dc:extent>
+  <dc:extent>${extent}</dc:extent>
   <dc:identifier></dc:identifier>
   <dc:subject></dc:subject>
   <dc:relation></dc:relation>
