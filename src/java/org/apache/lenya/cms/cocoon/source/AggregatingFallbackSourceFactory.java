@@ -41,10 +41,10 @@ import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.AllExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Aggregate all existing fallback URIs by merging their XML content under
@@ -92,9 +92,7 @@ public class AggregatingFallbackSourceFactory extends AbstractLogEnabled impleme
             Request request = ContextHelper.getRequest(this.context);
 
             if (publicationId == null) {
-                String webappUrl = request.getRequestURI().substring(
-                        request.getContextPath().length());
-
+                String webappUrl = ServletHelper.getWebappURI(request);
                 URLInformation info = new URLInformation(webappUrl);
                 publicationId = info.getPublicationId();
             }
