@@ -76,6 +76,7 @@ public class Publish extends InvokeWorkflow {
     protected static final String MESSAGE_DOCUMENT_PUBLISHED = "document-published";
     protected static final String SCHEDULE = "schedule";
     protected static final String SCHEDULE_TIME = "schedule.time";
+    protected static final String CAN_SEND_NOTIFICATION = "canSendNotification";
     protected static final String SEND_NOTIFICATION = "sendNotification";
     protected static final String UNPUBLISHED_LINKS = "unpublishedLinks";
 
@@ -93,10 +94,31 @@ public class Publish extends InvokeWorkflow {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         setParameter(SCHEDULE_TIME, format.format(now));
 
-        setParameter(SEND_NOTIFICATION, Boolean.TRUE);
+        Boolean canSendNotification = Boolean.valueOf(canNotifySubmitter());
+        setParameter(CAN_SEND_NOTIFICATION, canSendNotification);
+        setParameter(SEND_NOTIFICATION, canSendNotification);
         
         setParameter(UNPUBLISHED_LINKS, new LinkList(this.manager, getSourceDocument()));
         
+    }
+    
+    protected boolean canNotifySubmitter() {
+        
+        boolean shallNotifySubmitter = false;
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
+                getLogger(), getSourceDocument());
+        Version versions[] = workflowable.getVersions();
+        
+        // consider the case that there was no submit transition
+        if (versions.length > 0) {
+            Version version = versions[versions.length - 1];
+    
+            // we check if the document has been submitted, otherwise we do nothing
+            if (version.getEvent().equals("submit")) {
+                shallNotifySubmitter = true;
+            }
+        }
+        return shallNotifySubmitter;
     }
     
     protected boolean hasBrokenLinks() {
@@ -323,45 +345,58 @@ public class Publish extends InvokeWorkflow {
 
     protected void sendNotification(Document authoringDocument) throws NotificationException,
             DocumentException, AccessControlException {
-        User sender = getSession().getIdentity().getUser();
+        
+        if (!getParameterAsBoolean(CAN_SEND_NOTIFICATION, false)) {
+            getLogger().error("Can't notify submitter of document [" + authoringDocument +
+                    "] because it hasn't been submitted.");
+            return;
+        }
 
         Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
                 getLogger(), authoringDocument);
         Version versions[] = workflowable.getVersions();
+        
+        // obtain submitted version
         Version version = versions[versions.length - 2];
+        
+        String userId = version.getUserId();
+        User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
+                userId, getLogger());
 
-        // we assume that the document has been submitted, otherwise we do
-        // nothing
-        if (version.getEvent().equals("submit")) {
+        Identifiable[] recipients = { user };
 
-            String userId = version.getUserId();
-            User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
-                    userId, getLogger());
+        Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
+        String url;
 
-            Identifiable[] recipients = { user };
+        url = getWebUrl(liveVersion);
+        User sender = getSession().getIdentity().getUser();
+        String[] params = { url };
+        Message message = new Message(MESSAGE_SUBJECT, new String[0],
+                MESSAGE_DOCUMENT_PUBLISHED, params, sender, recipients);
 
-            Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
-            String url;
+        NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
+                getLogger(), descriptor);
+        getSession().enqueueEvent(event);
+    }
 
-            Proxy proxy = liveVersion.getPublication().getProxy(liveVersion, false);
-            if (proxy != null) {
-                url = proxy.getURL(liveVersion);
-            } else {
-                Request request = ContextHelper.getRequest(this.context);
-                final String serverUrl = "http://" + request.getServerName() + ":"
-                        + request.getServerPort();
-                final String webappUrl = liveVersion.getCanonicalWebappURL();
-                url = serverUrl + request.getContextPath() + webappUrl;
-            }
-            String[] params = { url };
-            Message message = new Message(MESSAGE_SUBJECT, new String[0],
-                    MESSAGE_DOCUMENT_PUBLISHED, params, sender, recipients);
-
-            NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-            RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
-                    getLogger(), descriptor);
-            getSession().enqueueEvent(event);
+    /**
+     * @param document A document.
+     * @return The complete HTTP URL of the document when requested via the web.
+     */
+    protected String getWebUrl(Document document) {
+        String url;
+        Proxy proxy = document.getPublication().getProxy(document, false);
+        if (proxy != null) {
+            url = proxy.getURL(document);
+        } else {
+            Request request = ContextHelper.getRequest(this.context);
+            final String serverUrl = "http://" + request.getServerName() + ":"
+                    + request.getServerPort();
+            final String webappUrl = document.getCanonicalWebappURL();
+            url = serverUrl + request.getContextPath() + webappUrl;
         }
+        return url;
     }
 
     protected void createAncestorNodes(Document document) throws PublicationException,

@@ -102,21 +102,23 @@
                 </td>
               </tr>
             </jx:if>
-            <tr>
-              <td class="lenya-entry-caption">
-                <i18n:text>notify-submitter</i18n:text>:
-              </td>
-              <td>
-                <jx:choose>
-                  <jx:when test="${usecase.getBooleanCheckboxParameter('sendNotification').equals('true')}">
-                    <input name="sendNotification" type="checkbox" checked="checked"/>
-                  </jx:when>
-                  <jx:otherwise>
-                    <input name="sendNotification" type="checkbox"/>
-                  </jx:otherwise>
-                </jx:choose>
-              </td>
-            </tr>
+            <jx:if test="${usecase.getParameter('canSendNotification').booleanValue()}">
+              <tr>
+                <td class="lenya-entry-caption">
+                  <i18n:text>notify-submitter</i18n:text>:
+                </td>
+                <td>
+                  <jx:choose>
+                    <jx:when test="${usecase.getBooleanCheckboxParameter('sendNotification').equals('true')}">
+                      <input name="sendNotification" type="checkbox" checked="checked"/>
+                    </jx:when>
+                    <jx:otherwise>
+                      <input name="sendNotification" type="checkbox"/>
+                    </jx:otherwise>
+                  </jx:choose>
+                </td>
+              </tr>
+            </jx:if>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Schedule</i18n:text>:</td>
               <td>
