@@ -90,4 +90,10 @@
     <xsl:copy-of select="."/>
   </xsl:template>
 
+<!--
+  leave the contents of script tags alone, since we don't know about script whitespace semantics
+-->
+  <xsl:template match="xhtml:script/node()">
+    <xsl:copy-of select="."/>
+  </xsl:template>
 </xsl:stylesheet>
