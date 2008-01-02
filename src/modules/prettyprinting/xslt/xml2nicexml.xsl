@@ -96,4 +96,11 @@
   <xsl:template match="xhtml:script/node()">
     <xsl:copy-of select="."/>
   </xsl:template>
+  
+<!-- 
+  prevent collapsing of <textarea> </textarea> to <textarea /> 
+-->
+  <xsl:template match="xhtml:textarea/node()">
+    <xsl:copy-of select="."/>
+  </xsl:template>
 </xsl:stylesheet>
