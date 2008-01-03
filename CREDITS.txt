@@ -21,6 +21,7 @@ the ways the Lenya community pays back.
 * Andreas Hartmann (andreas at apache.org)
 * J. Wolfgang Kaltz (jwkaltz at apache.org)
 * Rolf Kulemann (roku at apache.org)
+* Jürgen Ragaller (ragaller at apache.org)
 * Felix Röthenbacher (froethenbacher at apache.org)
 * Gregor J. Rothfuss (gregor at apache.org)
 * Thorsten Scherler (thorsten at apache.org)
