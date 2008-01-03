@@ -31,6 +31,36 @@
         XHTML widget to switch languages on a website.
       </p>
     </section>
+    
+    <section>
+      <title>Call Syntax</title>
+      <p>
+        To generate a language selector widget, you use the following URL syntax:
+      </p>
+      <source xml:space="preserve">cocoon://modules/languageselector/text-{text}/flagsize-{flagsize}</source>
+      <p>
+        The URL contains the following parameters:
+      </p>
+      <dl>
+        <dt>text</dt>
+        <dd>
+          <p>The <em>text</em> parameter can take the following values:</p>
+          <ul>
+            <li><em>abbr</em>: abbreviated language</li>
+            <li><em>long</em>: full i18nized name of the language</li>
+          </ul>
+        </dd>
+        <dt>flagsize</dt>
+        <dd>
+          <p>The <em>flagsize</em> parameter can take the following values:</p>
+          <ul>
+            <li>any number: the width of the flag image in pixels</li>
+            <li><em>none</em>: don't show the flag image</li>
+          </ul>
+        </dd>
+      </dl>
+    </section>
+    
     <section>
       <title>Adding Custom Flags</title>
       <p>
