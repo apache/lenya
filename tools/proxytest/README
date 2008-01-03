@@ -9,7 +9,8 @@ and follow the instructions in the comment header. In a nutshell:
   $LENYA_HOME/tools:> unzip ../jetty-6.1.6rc0.zip
   $LENYA_HOME/tools:> cd jetty-6.1.6
   $LENYA_HOME/tools/jetty-6.1.6:> java \
-         -Djava.endorsed.dirs="../../externals/cocoon_2_1_x/lib/endorsed/" \
+         -Xms32M -Xmx512M -Djava.awt.headless=true
+         -Djava.endorsed.dirs="../../build/lenya/webapp/WEB_INF/lib/endorsed/" \
          -jar start.jar ../proxytest/jetty6.xml
 
 It would be nice to upgrade our included Jetty to 6.x real soon now, since
