@@ -13,30 +13,32 @@ the ways the Lenya community pays back.
  Active Committers:
  ------------------
 
-* Doug Chestnut
-* Edith Chevrier
-* Dale Christ
-* Christian Egli
-* Jann Forrer
-* Antonio Gallardo
-* Andreas Hartmann   Andreas runs the cocooncenter.org site.
-* Andreas Kuckartz   Tester, Bugzilla reporter
-* Rolf Kulemann
-* Gregor J. Rothfuss 
-* Thorsten Scherler
-* Torsten Schlabach
-* J. Wolfgang Kaltz
-* Michael Wechner    
+* Edith Chevrier (edith at apache.org)
+* Dale Christ (bigdog at apache.org)
+* Christian Egli (egli at apache.org)
+* Jann Forrer (jann at apache.org)
+* Antonio Gallardo (antonio at apache.org)
+* Andreas Hartmann (andreas at apache.org)
+* J. Wolfgang Kaltz (jwkaltz at apache.org)
+* Rolf Kulemann (roku at apache.org)
+* Felix Röthenbacher (froethenbacher at apache.org)
+* Gregor J. Rothfuss (gregor at apache.org)
+* Thorsten Scherler (thorsten at apache.org)
+* Torsten Schlabach (tschlabach at apache.org)
+* Michael Wechner (michi at apache.org)
+
 
  Inactive Committers:
  --------------------
 
-* Juergen Bigalke      wrote some creators.
+* Jürgen Bigalke wrote some creators.
 * Memo Birgi
-* Marc Liyanage       wrote the first Lenya build system way back.
-* Felix Maeder
 * Rene Niedermowe
-* Giacomo Pati        helped to port the predecessor of Lenya to Cocoon.
+* Giacomo Pati (giacomo at apache.org) helped to port the predecessor of Lenya to Cocoon.
+* Marc Liyanage wrote the first Lenya build system way back.
+* Alexander McLintock
+* Felix Mäder (felix at apache.org)
+
 
  Other Contributors:
  -------------------
@@ -52,15 +54,18 @@ the ways the Lenya community pays back.
 * Margrit John
 * Olivier Lange        French translation.
 * Jean Pierre LeJacq   Build system improvements.
+* Jonathan Linczak     Tutorial articles, new Lenya menubar
 * Martin Lüthi         Mail class.
 * Christian Stocker    Christian is the original creator of the 
                        Bitflux Editor and helped a lot to integrate 
                        it into Lenya.
 * Urs Stöckli
+* Josias Thöny         JavaScript for the sitetree presentation.
 * Giampaolo Trapasso   Italian translation, entertainer on #lenya
 * Markus Vaterlaus
 * Kars Veiling
 * Marc von Wattenwyl
+* Guido Wesdorp        Releasing tree javascript under BSD license.
 * Thomas Werschlein
 
 
