@@ -83,6 +83,13 @@ svn propset cocoon_2_1_10 https://svn.apache.org/repos/asf/cocoon/tags/cocoon-2.
         <source><![CDATA[
 cocoon.src.dir=externals/cocoon_2_1_10
 ]]></source>
+        <p>
+          If it has been decided that a development version of Cocoon shall be used, add the revision
+          number to the <code>svn:externals</code> declaration:
+        </p>
+        <source><![CDATA[
+svn propset cocoon_2_1_x -r 608663 https://svn.apache.org/repos/asf/cocoon/branches/BRANCH_2_1_X .
+]]></source>
       </section>
       <section>
         <title>Testing</title>
