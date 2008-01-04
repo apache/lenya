@@ -33,7 +33,7 @@
         <repeat count="${number}">
           <echo>Creating document #{count} of ${number}</echo>
           <invoke url="index.html?lenya.usecase=sitemanagement.create&amp;doctype=xhtml"/>
-          <verifyElementText type="h1" text="New xhtml Document"/>
+          <verifyElementText type="h1" text="New XHTML Document"/>
           <setInputField name="nodeName" value="stresstest#{count}"/>
           <setInputField name="dublincore.title" value="Stress Test #{count}"/>
           <setSelectField name="language" value="en"/>
