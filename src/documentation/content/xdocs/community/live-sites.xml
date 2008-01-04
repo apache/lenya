@@ -27,14 +27,17 @@
  
 <p>
 The Lenya community is aware of the following sites that are running on Apache Lenya. 
-If you want to suggest additional sites for inclusion, please send an email to the 
-<a href="mailto:user@lenya.apache.org?Subject=New Lenya Live Site">Lenya User mailing list</a>.
+If you want to suggest additional sites for inclusion or update the
+information of your site, please send an email to the 
+<a href="mailto:user@lenya.apache.org?Subject=Lenya Live Sites">Lenya User mailing list</a>.
+Thanks!
 </p>
+
 <table>
   <tr>
-    <th>URL</th>
-    <th>Lenya (version)</th>
-    <th>Info</th>
+    <th>Site</th>
+    <th>Version</th>
+    <th>Technical information</th>
     <th>Last verified</th>
   </tr>
 <!--
