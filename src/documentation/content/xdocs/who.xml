@@ -57,6 +57,7 @@
           <em>Rolf Kulemann (roku at apache.org)</em>
         </li>
         <li><strong>Jörn Nettingsmeier (nettings at apache.org)</strong></li>
+        <li>Jürgen Ragaller (ragaller at apache.org)</li>
         <li>Renaud Richardet (renaud at apache.org)</li>
         <li>Felix Röthenbacher (froethenbacher at apache.org)</li>
         <li>
@@ -101,6 +102,35 @@
         <a href="http://forrest.apache.org/who.html">Apache
         Forrest committers</a> also have rights to commit to Lenya.
       </p>
+    </section>
+    
+    <section>
+      <title>Other Contributors</title>
+      <ul>
+        <li>
+          Lon Boonen is the original creator of Xopus and helped a 
+          lot to integrate it into Lenya. Recently he 
+          rewrote the JavaScript of the Lenya menubar.
+        </li>
+        <li>Jose Chaso: Spanish translation</li>
+        <li>Stephen England: Design of the Lenya logo, design of the Lenya UI</li>
+        <li>Jorge Gutierrez: Spanish translation</li>
+        <li>Martin Hitz</li>
+        <li>Margrit John</li>
+        <li>Olivier Lange: French translation</li>
+        <li>Jean Pierre LeJacq: Build system improvements</li>
+        <li>Martin Lüthi: Mail class</li>
+        <li>
+          Christian Stocker is the original creator of the Bitflux Editor and helped
+          a lot to integrate it into Lenya.
+        </li>
+        <li>Urs Stöckli</li>
+        <li>Giampaolo Trapasso: Italian translation, entertainer on #lenya</li>
+        <li>Markus Vaterlaus</li>
+        <li>Kars Veiling</li>
+        <li>Marc von Wattenwyl</li>
+        <li>Thomas Werschlein</li>
+      </ul>
     </section>
   </body>
 </document>
