@@ -1,74 +1,8 @@
 
-                                C R E D I T S
+Credits
+=======
                                  
-This is the file where major donations to the Lenya project are listed and it
-should be used to give appropriate visibility to those inviduals, organizations
-or companies that donated resources to the effort. This file wants to be one of
-the ways the Lenya community pays back.
+All active and inactive committers and contributers of
+the Apache Lenya project are listed on the page
 
-
- Community Credits
- =================
-                                   
- Active Committers:
- ------------------
-
-* Edith Chevrier (edith at apache.org)
-* Dale Christ (bigdog at apache.org)
-* Christian Egli (egli at apache.org)
-* Jann Forrer (jann at apache.org)
-* Antonio Gallardo (antonio at apache.org)
-* Andreas Hartmann (andreas at apache.org)
-* J. Wolfgang Kaltz (jwkaltz at apache.org)
-* Rolf Kulemann (roku at apache.org)
-* Jürgen Ragaller (ragaller at apache.org)
-* Felix Röthenbacher (froethenbacher at apache.org)
-* Gregor J. Rothfuss (gregor at apache.org)
-* Thorsten Scherler (thorsten at apache.org)
-* Torsten Schlabach (tschlabach at apache.org)
-* Michael Wechner (michi at apache.org)
-
-
- Inactive Committers:
- --------------------
-
-* Jürgen Bigalke wrote some creators.
-* Memo Birgi
-* Rene Niedermowe
-* Giacomo Pati (giacomo at apache.org) helped to port the predecessor of Lenya to Cocoon.
-* Marc Liyanage wrote the first Lenya build system way back.
-* Alexander McLintock
-* Felix Mäder (felix at apache.org)
-
-
- Other Contributors:
- -------------------
-
-* Lon Boonen           Lon is the original creator of Xopus and helped a 
-                       lot to integrate it into Lenya. Recently he 
-                       rewrote the JavaScript of the Lenya menubar.
-* Jose Chaso           Spanish translation.
-* Paul Ercolino (solprovider)  Refactored search, various small fixes
-* Stephen England      Design of the Lenya logo, design of the Lenya UI.
-* Jorge Gutierrez      Spanish translation.
-* Martin Hitz
-* Margrit John
-* Olivier Lange        French translation.
-* Jean Pierre LeJacq   Build system improvements.
-* Jonathan Linczak     Tutorial articles, new Lenya menubar
-* Martin Lüthi         Mail class.
-* Christian Stocker    Christian is the original creator of the 
-                       Bitflux Editor and helped a lot to integrate 
-                       it into Lenya.
-* Urs Stöckli
-* Josias Thöny         JavaScript for the sitetree presentation.
-* Giampaolo Trapasso   Italian translation, entertainer on #lenya
-* Markus Vaterlaus
-* Kars Veiling
-* Marc von Wattenwyl
-* Guido Wesdorp        Releasing tree javascript under BSD license.
-* Thomas Werschlein
-
-
-                                                 The Apache Lenya Community
-                                                 http://lenya.apache.org
+    http://lenya.apache.org/who.html
