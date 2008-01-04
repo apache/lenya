@@ -1,0 +1,51 @@
+
+About Apache Lenya 2.0
+======================
+
+Subversion repository URL: https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0
+Cocoon version: 2.11-dev, last changed revision: 603664
+
+
+New Features in Apache Lenya 2.0
+================================
+
+Architecture
+- Modularization
+- Separation of API and implementation
+
+Storage and Content Model
+- Documents are referenced using UUIDs
+- Improved management of internal links
+- Configurable meta data element sets
+- New protocols simplify repository access 
+
+Website Management
+- Publication templating for re-using common functionality in multiple publications
+- Create new publication instances via the GUI
+- Support for configurable publication properties
+
+Access Control
+- Explicitly deny permissions on particular pages
+
+Assets and Images
+- Assets and images are treated as documents
+- Image upload in source editor
+- SVG-based server-side image resizing
+
+Workflow and Versioning
+- Quickly manipulate multiple documents
+- Personal user inboxes
+- Function to override other users' check-out
+
+Miscellaneous Features
+- Various usability improvements
+- News / weblog module with RSS generation
+- Language selection widget
+- Dynamically generated layout images, e.g. round corners
+- Better and more flexible editor integration (work in progress)
+
+Development
+- Usecase framework to simplify the implementation of user interaction functionality
+- Improved repository API
+- Cleanup of the code base
+
