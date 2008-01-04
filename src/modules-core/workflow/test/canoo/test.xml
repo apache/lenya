@@ -101,7 +101,7 @@
       <config host="${webtest.config.host}"
         port="${webtest.config.port}"
         protocol="http"
-        basepath="${webtest.config.basepath}">
+        basepath="default">
         <header name="Accept-Language" value="en"/>
         <option name="JavaScriptEnabled" value="false"/>
         <option name="ThrowExceptionOnFailingStatusCode" value="false"/>
