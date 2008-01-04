@@ -41,7 +41,7 @@
         
         <!-- submit -->
         <invoke url="index.html?lenya.usecase=workflow.submit"/>
-        <verifyText text="Submit &quot;Welcome to the Lenya default publication&quot; for approval"/>
+        <verifyText text="Do you want to submit the document"/>
         <clickButton name="submit"/>
         <verifyElementText type="span" name="workflow-state" text="review"/>
         
@@ -54,7 +54,7 @@
         
         <!-- reject -->
         <invoke url="index.html?lenya.usecase=workflow.reject"/>
-        <verifyText text="Reject document &quot;Welcome to the Lenya default publication&quot;"/>
+        <verifyText text="Do you want to reject the document"/>
         <clickButton name="submit"/>
         <verifyElementText type="span" name="workflow-state" text="authoring"/>
         
@@ -67,7 +67,7 @@
         
         <!-- submit -->
         <invoke url="index.html?lenya.usecase=workflow.submit"/>
-        <verifyText text="Submit &quot;Welcome to the Lenya default publication&quot; for approval"/>
+        <verifyText text="Do you want to submit the document"/>
         <clickButton name="submit"/>
         <verifyElementText type="span" name="workflow-state" text="review"/>
         
@@ -98,8 +98,12 @@
 
   <target name="published-footer">
     <webtest name="Workflow sequence">
-      <config host="${webtest.config.host}" port="${webtest.config.port}"
-             protocol="http" basepath="default">
+      <config host="${webtest.config.host}"
+        port="${webtest.config.port}"
+        protocol="http"
+        basepath="${webtest.config.basepath}">
+        <header name="Accept-Language" value="en"/>
+        <option name="JavaScriptEnabled" value="false"/>
         <option name="ThrowExceptionOnFailingStatusCode" value="false"/>
       </config>
       <steps>
