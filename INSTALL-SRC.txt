@@ -33,11 +33,11 @@ Prerequisites
       Apache Cocoon is included in the Lenya distribution. In the SVN version of Lenya, Cocoon is
       included using svn:externals. You do not have to download it separately.
       Note that Cocoon is needed when building the source version of Lenya, but the 
-      resulting Lenya webapp is completely self contained and therefore it does not need 
+      resulting Lenya webapp is completely self-contained and therefore it does not need 
       the Cocoon webapp to be installed. See the FAQ for details of configuration changes 
       required when running multiple Cocoon based applications.
 
-    * A SVN client
+    * (optional) An SVN client
       SVN (or subversion) is a software revision control system that is used by the Lenya community to 
       manage the development tree. If you want to use the latest development version, you will need to
       install a client in order to check out your local copy of Lenya.
@@ -61,8 +61,15 @@ Standalone Installation (using the built-in Jetty)
       (Windows: start -> Control Panel -> System -> Advanced -> Environment Variables -> User variables
       ...)
 
-   2. Check out Apache Lenya from SVN:
-      Change into the directory where you want your Lenya sources to be, and do
+   2. Change into the directory where you want your Lenya sources to be, and either
+      * download the release tarball, and unpack it:
+ 
+        cd /your/build/directory
+        tar xvzf lenya-2.0-src.tar.gz
+
+      OR
+      
+      * Check out Apache Lenya from SVN:
   
         svn checkout http://svn.apache.org/repos/asf/lenya/trunk lenya-2.0.x
 
