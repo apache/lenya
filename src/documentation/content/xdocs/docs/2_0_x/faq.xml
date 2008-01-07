@@ -37,8 +37,10 @@
         When I request the web application, I get the error message "Failure occured during job recovery".
       </question>
       <answer>
-        Please verify that the user which runs the application server has write permissions in the
-        directory <code>$WEBAPP_HOME/WEB-INF/db/</code>.
+        <p>
+          Please verify that the user which runs the application server has write permissions in the
+          directory <code>$WEBAPP_HOME/WEB-INF/db/</code>.
+        </p>
       </answer>
     </faq>
   </part>
