@@ -33,11 +33,11 @@ Prerequisites
       Apache Cocoon is included in the Lenya distribution. In the SVN version of Lenya, Cocoon is
       included using svn:externals. You do not have to download it separately.
       Note that Cocoon is needed when building the source version of Lenya, but the 
-      resulting Lenya webapp is completely self contained and therefore it does not need 
+      resulting Lenya webapp is completely self-contained and therefore it does not need 
       the Cocoon webapp to be installed. See the FAQ for details of configuration changes 
       required when running multiple Cocoon based applications.
 
-    * A SVN client
+    * (optional) An SVN client
       SVN (or subversion) is a software revision control system that is used by the Lenya community to 
       manage the development tree. If you want to use the latest development version, you will need to
       install a client in order to check out your local copy of Lenya.
@@ -61,8 +61,22 @@ Standalone Installation (using the built-in Jetty)
       (Windows: start -> Control Panel -> System -> Advanced -> Environment Variables -> User variables
       ...)
 
-   2. Check out Apache Lenya from SVN:
-      Change into the directory where you want your Lenya sources to be, and do
+   2. Download Lenya (in case you don't have it already), and compute the
+      MD5 checksum of the Lenya distribution file:
+
+        md5sum <apache-lenya file>
+
+      Then visit http://people.apache.org/~henkp/cgi-bin/md5.cgi and follow the instructions
+      to verify the integrity of the file you have downloaded.
+
+      Change into the directory where you want your Lenya sources to be, and unpack the source:
+ 
+        tar xvzf <apache-lenya>.tar.gz (for the tarball)
+        unzip <apache-lenya>.zip (for the zip archive)
+
+      OR
+      
+      * Check out Apache Lenya from SVN:
   
         svn checkout http://svn.apache.org/repos/asf/lenya/trunk lenya-2.0.x
 
@@ -164,6 +178,13 @@ Installation with Apache Tomcat
 
 
 Security Considerations
+
+   Prior to compilation, you should verify the integrity of the file you
+   just downloaded, by following the instructions at
+     
+     http://people.apache.org/~henkp/cgi-bin/md5.cgi
+ 
+   In case of doubt, please ask on the mailing lists before proceeding.  
 
    It is advisable to run Lenya's servlet container with limited privileges,
    to reduce the impact of a possible exploit.
