@@ -138,11 +138,11 @@
     <!--          <whole_docu href="../documentation-1-4.pdf" label="2.0 PDF docs (all in one)" />
       <whole_docu href="../documentation-1-4.html" label="2.0 HTML docs (all in one)" />
     -->          
-    <installation14 href="installation/" label="Installation">
-      <download14 href="index.html" label="Download"/>
-      <subversion14 href="subversion.html" label="Subversion Access"/>
-      <install14 href="source_version.html" label="Install Instructions"/>
-    </installation14>
+    <installation20 href="installation/" label="Installation">
+      <download20 href="index.html" label="Download"/>
+      <subversion20 href="subversion.html" label="Subversion Access"/>
+      <install20 href="source_version.html" label="Install Instructions"/>
+    </installation20>
     
     <tutorials href="tutorials/" label="Tutorials">
       <newPublication14 href="newpublication/index.html" label="Create a Publication"/>

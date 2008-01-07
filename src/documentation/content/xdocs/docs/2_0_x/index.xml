@@ -24,11 +24,6 @@
     <title>Apache Lenya 2.0 Documentation</title>
   </header>
   <body>
-    <warning>
-      Apache Lenya 2.0 is still under development and should not be used for production
-    yet. A code freeze has been announced, and the release should be
-      imminent.
-    </warning>
     <note label="Help wanted!"> Since 2.0 is new and provides many 
       enhancements and new features, please help to document them with us. 
       Send documentation patches and use the Wiki. Thanks in advance :)</note>
@@ -37,6 +32,13 @@
     Wiki</a>. Please treat the Wiki with care for now, as much of the
       information there is outdated.
     </p>
+    
+    <section>
+      <title>Download</title>
+      <p>
+        You find different download options on the <a href="site:download20">download page</a>.
+      </p>
+    </section>
     
     <section>
       <title>What's New in Lenya 2.0</title>

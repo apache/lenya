@@ -21,16 +21,13 @@
 
 <document>
   <header>
-    <title>Apache Lenya 2.0 install instructions</title>
+    <title>Apache Lenya 2.0 Installation Instructions</title>
   </header>
 
   <body>
   	<section id="introduction">
   		<title>Introduction</title>
   	
-          <warning>
-            Apache Lenya 2.0 is still under heavy development and should not be used for production yet.
-          </warning>
   		<p>
   			This document explains how to install Lenya 2.0 from source.
   			There are different ways to install and run Lenya:
@@ -38,8 +35,8 @@
   			Choose between
   		</p>
         <ol>
-            <li>running Lenya standalone using the built-in Jetty servlet container</li>
-            <li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
+            <li>Running Lenya standalone using the built-in Jetty servlet container</li>
+            <li>Using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
         </ol>
 
   		<p>
@@ -64,7 +61,7 @@
             <br/>
             version 1.4.2 or newer, <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.6.x works with limitations</a>.
             <br/>
-            Get it from <a href="site:java">http://java.sun.com/j2se/1.4.2/download.html</a>
+            Get it from <a href="site:java">http://java.sun.com/j2se/1.4.2/download.html</a>.
           </p>
         </li>
         
@@ -102,9 +99,9 @@
           <p>
             <strong>Get Apache Lenya</strong>
             <br/>
-            (see <a href="site:download14">Download Lenya</a>)
+            (see <a href="site:download20">Download Lenya</a>)
             <br/>
-            Using <a href="site:subversion14">Subversion</a>, checkout Lenya inside the
+            Using <a href="site:subversion20">Subversion</a>, checkout Lenya inside the
             <code>src/</code> directory. 
           </p>
         </li>
@@ -126,18 +123,15 @@
 
           <p>
             You need to edit your build properties and write
-            local.build.properties. To do this execute configure.sh 
-            or configure.bat.
+            <code>local.build.properties</code>. To do this, execute <code>configure.sh</code>
+            (Unix) or <code>configure.bat</code> (Windows).
           </p>
-          <note>Cocoon 2.1.x is now placed in Lenya as a svn:external
-            you'll find cocoon in $LENYA_HOME/externals/cocoon_2_1_x.
-            If you want to use cocoon from another location you can change
-            the $COCOON_HOME point to your cocoon src directory.
-            </note>
-          <p>
-              Copy $LENYA_HOME/src/cocoon/local.blocks.properties and 
-              local.build.properties to $COCOON_HOME.
-          </p>
+          <note>Cocoon 2.1.x is now included in the Lenya source tree using an
+            <code>svn:externals</code> property; you'll find it in the directory
+            <code>$LENYA_HOME/externals/cocoon_2_1_x</code>.
+            If you want to use Cocoon from another location, you can change
+            the <code>$COCOON_HOME</code> point to your Cocoon source directory.
+          </note>
        </li>
 
         <li>
@@ -146,34 +140,31 @@
           </p>
 
           <p>
-            Execute <code>build.bat</code> or <code>build.sh</code> in
+            Execute <code>build.sh</code> (Unix) or <code>build.bat</code> (Windows) in
             your Lenya source directory, depending on your platform.
           </p>
-          <note>Cocoon will be built when you build lenya. You can manually build or clean
-          cocoon in $COCOON_HOME with ./build.sh or ./build.sh clean</note>
+          <note>Cocoon will be built when you build Lenya. You can manually build or clean
+            Cocoon in <code>$COCOON_HOME</code> with <code>./build.sh</code> or <code>./build.sh clean</code>.
+          </note>
 
           <p>
             <strong>MS Windows</strong>
           </p>
 
-          <source>
-            $LENYA_HOME > build.bat
-          </source>
+          <source>$LENYA_HOME > build.bat</source>
 
           <p>
             <strong>Unix</strong>
           </p>
 
-          <source>
-            $LENYA_HOME > ./build.sh
-          </source>
+          <source>$LENYA_HOME > ./build.sh</source>
           <p>
-             <br/><br/>
-             If your build fails, because it cant delete cocoon.xconf.ant_patch try:
-             in $LENYA_HOME/src/targets/webapp-build.xml LINE 69 add
-             verbose="true" failonerror="false" to the delete tag.
-             In $LENYA_HOME/src/targets/publets-build.xml LINE 53 add
-             verbose="true" failonerror="false" to the delete tag.
+            If your build fails, because it cant delete the file <code>cocoon.xconf.ant_patch</code>,
+            try the following:
+            In <code>$LENYA_HOME/src/targets/webapp-build.xml</code>, line 69, add
+            <code>verbose="true" failonerror="false"</code> to the <code>&lt;delete&gt;</code> tag.
+            In <code>$LENYA_HOME/src/targets/publets-build.xml</code>, line 53, add
+            <code>verbose="true" failonerror="false"</code> to the <code>&lt;delete&gt;</code> tag.
           </p>
         </li>
 
@@ -183,8 +174,8 @@
           </p>
 
           <p>
-            Execute <code>lenya.bat</code> or <code>lenya.sh
-            servlet</code> in your Lenya source directory, depending on
+            Execute <code>lenya.sh</code> (Unix) or <code>lenya.bat</code> (Windows)
+            in your Lenya source directory, depending on
             your platform.  Make sure that you have the environment
             variable <code>JAVA_HOME</code> defined to point to the
             location of the Java SDK you installed (see <a
@@ -195,17 +186,13 @@
             <strong>MS Windows</strong>
           </p>
 
-          <source>
-            $LENYA_HOME > lenya.bat
-          </source>
+          <source>$LENYA_HOME > lenya.bat</source>
 
           <p>
             <strong>Unix</strong>
           </p>
 
-          <source>
-            $LENYA_HOME > ./lenya.sh servlet
-          </source>
+          <source>$LENYA_HOME > ./lenya.sh</source>
         </li>
 
         <li>
@@ -231,9 +218,12 @@
           <p>
             <strong>Get Apache Tomcat</strong> for JDK 1.4
             <br/>
-Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+, 5.0.18+ and 5.5.0+ should work too.            <br/>
-            <br/>
-            Get it from  <a href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
+            Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the
+            following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+,
+            5.0.18+ and 5.5.0+ should work too.
+          </p>
+    		  <p>
+            Get it from  <a href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>.
           </p>
 
         </li>
@@ -271,7 +261,8 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
             <code>$LENYA_HOME/build.properties</code> to
             <code>$LENYA_HOME/local.build.properties</code>.
           </p>
-          <note>You can use the configure.sh or configure.bat to configure your local.build.properties.</note>
+          <note>You can use the <code>configure.sh</code> or <code>configure.bat</code> to configure your
+            <code>local.build.properties</code>.</note>
 
           <p>
             Edit <code>local.build.properties</code>. For the described

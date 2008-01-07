@@ -38,7 +38,7 @@
       <li>
         <p>
         Check out the Lenya trunk and the Cocoon branch 2.1 from the Subversion
-        repository (see <a href="site:install14">Installation Instructions</a>).
+        repository (see <a href="site:install20">Installation Instructions</a>).
         I suggest to use the following directory layout:
         </p>
 <source xml:space="preserve"><![CDATA[src/

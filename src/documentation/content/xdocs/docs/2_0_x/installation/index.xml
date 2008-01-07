@@ -22,16 +22,28 @@
     <title>Downloading and Installing Apache Lenya 2.0</title>
   </header>
   <body>
-    <warning> Apache Lenya 2.0 is still under heavy development and should not 
-      be used for production yet. </warning>
-    <ul>
-      <li> Download Apache Lenya 2.0 <ul> <li><a 
-        href="subversion.html">Subversion</a></li> </ul> <p> During the 
-        development of Apache Lenya 2.0, only source versions will be released. 
-        </p> <!--The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more information on ASC Signatures and MD5 checksums</a>.-->
-         </li>
-      <li> Install Apache Lenya 2.0 <ul> <li><a 
-        href="source_version.html">Source Version</a></li> </ul> </li>
-    </ul>
+    <section>
+      <title>Download</title>
+      <ul>
+        <li>
+          Lenya 2.0
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.zip">Windows source code</a> (ZIP archive),
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.zip.asc">ASC Signature</a>,
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.zip.md5">MD5 Checksum</a>
+        </li>
+        <li>
+          Lenya 2.0
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz">Unix source code</a> (tar.gz archive),
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.asc">ASC Signature</a>,
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.md5">MD5 Checksum</a>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <title>Installation</title>
+      <p>
+        After the download, proceed with the <a href="site:install20">installation instructions</a>.
+      </p>
+    </section>
   </body>
 </document>
