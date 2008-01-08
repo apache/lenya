@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.9-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>Apache Lenya 2.0 install instructions</title>
+<title>Apache Lenya 2.0 Installation Instructions</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
@@ -711,7 +711,7 @@ document.write("Last Published: " + document.lastModified);
 <a class="dida" href="source_version.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Apache Lenya 2.0 install instructions</h1>
+<h1>Apache Lenya 2.0 Installation Instructions</h1>
 <div id="front-matter">
 <div id="minitoc-area">
 <ul class="minitoc">
@@ -730,44 +730,38 @@ document.write("Last Published: " + document.lastModified);
 </ul>
 </div>
 </div>
-  	
+    
 <a name="N1000E"></a><a name="introduction"></a>
 <h2 class="h3">Introduction</h2>
 <div class="section">
-<div class="warning">
-<div class="label">Warning</div>
-<div class="content">
-            Apache Lenya 2.0 is still under heavy development and should not be used for production yet.
-          </div>
-</div>
 <p>
-  			This document explains how to install Lenya 2.0 from source.
-  			There are different ways to install and run Lenya:
-  			<br>
-  			Choose between
-  		</p>
+        This document explains how to install Lenya 2.0 from source.
+        There are different ways to install and run Lenya:
+        <br>
+        Choose between
+      </p>
 <ol>
-            
-<li>running Lenya standalone using the built-in Jetty servlet container</li>
-            
-<li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
         
+<li>Running Lenya standalone using the built-in Jetty servlet container</li>
+        
+<li>Using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
+      
 </ol>
 <p>
-  			Please note that you can use other servlet
-        	containers as well, but Jetty and Tomcat are the tested ones.
-        </p>
+        Please note that you can use other servlet
+        containers as well, but Jetty and Tomcat are the tested ones.
+      </p>
 <p>
-  			In all cases, you will need to meet the following prerequisites,
-  			that describe the setup that is tested and recommended. 
-  		</p>
+        In all cases, you will need to meet the following prerequisites,
+        that describe the setup that is tested and recommended. 
+      </p>
 </div>
     
-<a name="N1002C"></a><a name="prerequisites"></a>
+<a name="N10029"></a><a name="prerequisites"></a>
 <h2 class="h3">Prerequisites</h2>
 <div class="section">
 <ul>
-      	      	
+        
         
 <li>
           
@@ -778,50 +772,51 @@ document.write("Last Published: " + document.lastModified);
 <br>
             version 1.4.2 or newer, <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.6.x works with limitations</a>.
             <br>
-            Get it from <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>
-          
-</p>
+            Get it from <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>.
+          </p>
         
 </li>
         
         
 <li>
-      		
+          
 <p>
-      		
+            
 <strong>Recommended: Create a directory</strong> to better organise the various source files
-      		<br>
-      		In this document, we will assume the name <span class="codefrag">src/</span> for that directory.
-      		This directory will contain the Lenya distribution as well as Cocoon.
-      		</p>
-      		
-      		
+            <br>
+            In this document, we will assume the name <span class="codefrag">src/</span> for that directory.
+            This directory will contain the Lenya distribution as well as Cocoon.
+          </p>
+          
+          
 <p>
-      		After expanding the	downloaded archives or after a <a href="http://subversion.tigris.org/">svn checkout</a>,
-      		the directory structure should look like this:
-      		</p>
-      		
-      		
+            After expanding the	downloaded archives or after a <a href="http://subversion.tigris.org/">svn checkout</a>,
+            the directory structure should look like this:
+          </p>
+                    
+          
 <pre class="code">
-            your_home/ (or c:\ on Windows, NOT My Documents)
-              `-- src/
-                   |-- lenya-2.0.x/            $LENYA_HOME
-                     `-- externals/
-                       `-- cocoon_2_1_x/       $COCOON_HOME
-                         `-- build/
-                           `-- webapp/         $COCOON_WEBAPP
-     		</pre>
-     		
-     		
+your_home/                  (or C:\ on Windows, not the "My Documents" folder)
+  src/
+    lenya-2.0.x/            $LENYA_HOME
+      externals/
+        cocoon_2_1_x/       $COCOON_HOME
+          build/
+            webapp/         $COCOON_WEBAPP
+          </pre>
+          
+          
 <p>
-     		The directories inside cocoon_2_1_x/ will be created when you build Cocoon, cocoon will be built when you build lenya. 
-     		The variables will later be used in the local.build.properties file that configures the Lenya build process.
-      		</p>
-      		
-      	
+            The directories inside <span class="codefrag">cocoon_2_1_x/</span> will be created when you build Cocoon,
+            Cocoon will be built when you build Lenya. 
+            The variables will later be used in the <span class="codefrag">local.build.properties</span> file
+            that configures the Lenya build process.
+          </p>
+          
+        
 </li>
-      	
-      	
+        
+        
 <li>
           
 <p>
@@ -839,14 +834,14 @@ document.write("Last Published: " + document.lastModified);
       
 </ul>
 </div>
-
-
     
-<a name="N1007F"></a><a name="1%3A+Standalone+Installation+%28using+the+built-in+Jetty%29"></a>
+    
+    
+<a name="N10082"></a><a name="1%3A+Standalone+Installation+%28using+the+built-in+Jetty%29"></a>
 <h2 class="h3">1: Standalone Installation (using the built-in Jetty)</h2>
 <div class="section">
 <ol>
-
+        
         
 <li>
           
@@ -855,30 +850,26 @@ document.write("Last Published: " + document.lastModified);
 <strong>Configure Lenya</strong>
           
 </p>
-
+          
           
 <p>
             You need to edit your build properties and write
-            local.build.properties. To do this execute configure.sh 
-            or configure.bat.
+            <span class="codefrag">local.build.properties</span>. To do this, execute <span class="codefrag">configure.sh</span>
+            (Unix) or <span class="codefrag">configure.bat</span> (Windows).
           </p>
           
 <div class="note">
 <div class="label">Note</div>
-<div class="content">Cocoon 2.1.x is now placed in Lenya as a svn:external
-            you'll find cocoon in $LENYA_HOME/externals/cocoon_2_1_x.
-            If you want to use cocoon from another location you can change
-            the $COCOON_HOME point to your cocoon src directory.
-            </div>
+<div class="content">Cocoon 2.1.x is now included in the Lenya source tree using an
+            <span class="codefrag">svn:externals</span> property; you'll find it in the directory
+            <span class="codefrag">$LENYA_HOME/externals/cocoon_2_1_x</span>.
+            If you want to use Cocoon from another location, you can change
+            the <span class="codefrag">$COCOON_HOME</span> point to your Cocoon source directory.
+          </div>
 </div>
-          
-<p>
-              Copy $LENYA_HOME/src/cocoon/local.blocks.properties and 
-              local.build.properties to $COCOON_HOME.
-          </p>
-       
+        
 </li>
-
+        
         
 <li>
           
@@ -887,56 +878,51 @@ document.write("Last Published: " + document.lastModified);
 <strong>Build Lenya</strong>
           
 </p>
-
+          
           
 <p>
-            Execute <span class="codefrag">build.bat</span> or <span class="codefrag">build.sh</span> in
+            Execute <span class="codefrag">build.sh</span> (Unix) or <span class="codefrag">build.bat</span> (Windows) in
             your Lenya source directory, depending on your platform.
           </p>
           
 <div class="note">
 <div class="label">Note</div>
-<div class="content">Cocoon will be built when you build lenya. You can manually build or clean
-          cocoon in $COCOON_HOME with ./build.sh or ./build.sh clean</div>
+<div class="content">Cocoon will be built when you build Lenya. You can manually build or clean
+            Cocoon in <span class="codefrag">$COCOON_HOME</span> with <span class="codefrag">./build.sh</span> or <span class="codefrag">./build.sh clean</span>.
+          </div>
 </div>
-
+          
           
 <p>
             
 <strong>MS Windows</strong>
           
 </p>
-
           
-<pre class="code">
-            $LENYA_HOME &gt; build.bat
-          </pre>
-
+          
+<pre class="code">$LENYA_HOME &gt; build.bat</pre>
+          
           
 <p>
             
 <strong>Unix</strong>
           
 </p>
-
           
-<pre class="code">
-            $LENYA_HOME &gt; ./build.sh
-          </pre>
+          
+<pre class="code">$LENYA_HOME &gt; ./build.sh</pre>
           
 <p>
-             
-<br>
-<br>
-             If your build fails, because it cant delete cocoon.xconf.ant_patch try:
-             in $LENYA_HOME/src/targets/webapp-build.xml LINE 69 add
-             verbose="true" failonerror="false" to the delete tag.
-             In $LENYA_HOME/src/targets/publets-build.xml LINE 53 add
-             verbose="true" failonerror="false" to the delete tag.
+            If your build fails, because it cant delete the file <span class="codefrag">cocoon.xconf.ant_patch</span>,
+            try the following:
+            In <span class="codefrag">$LENYA_HOME/src/targets/webapp-build.xml</span>, line 69, add
+            <span class="codefrag">verbose="true" failonerror="false"</span> to the <span class="codefrag">&lt;delete&gt;</span> tag.
+            In <span class="codefrag">$LENYA_HOME/src/targets/publets-build.xml</span>, line 53, add
+            <span class="codefrag">verbose="true" failonerror="false"</span> to the <span class="codefrag">&lt;delete&gt;</span> tag.
           </p>
         
 </li>
-
+        
         
 <li>
           
@@ -945,42 +931,38 @@ document.write("Last Published: " + document.lastModified);
 <strong>Start Lenya</strong>
           
 </p>
-
+          
           
 <p>
-            Execute <span class="codefrag">lenya.bat</span> or <span class="codefrag">lenya.sh
-            servlet</span> in your Lenya source directory, depending on
+            Execute <span class="codefrag">lenya.sh</span> (Unix) or <span class="codefrag">lenya.bat</span> (Windows)
+            in your Lenya source directory, depending on
             your platform.  Make sure that you have the environment
             variable <span class="codefrag">JAVA_HOME</span> defined to point to the
             location of the Java SDK you installed (see <a href="#prerequisites">Prerequisites</a>).
           </p>
-
+          
           
 <p>
             
 <strong>MS Windows</strong>
           
 </p>
-
           
-<pre class="code">
-            $LENYA_HOME &gt; lenya.bat
-          </pre>
-
+          
+<pre class="code">$LENYA_HOME &gt; lenya.bat</pre>
+          
           
 <p>
             
 <strong>Unix</strong>
           
 </p>
-
           
-<pre class="code">
-            $LENYA_HOME &gt; ./lenya.sh servlet
-          </pre>
+          
+<pre class="code">$LENYA_HOME &gt; ./lenya.sh</pre>
         
 </li>
-
+        
         
 <li>
           
@@ -989,7 +971,7 @@ document.write("Last Published: " + document.lastModified);
 <strong>Test the installation</strong>
           
 </p>
-
+          
           
 <p>
             
@@ -1001,9 +983,9 @@ document.write("Last Published: " + document.lastModified);
       
 </ol>
 </div>
-
     
-<a name="N10107"></a><a name="2%3A+Installation+with+Apache+Tomcat"></a>
+    
+<a name="N10134"></a><a name="2%3A+Installation+with+Apache+Tomcat"></a>
 <h2 class="h3">2: Installation with Apache Tomcat</h2>
 <div class="section">
 <div class="warning">
@@ -1012,21 +994,23 @@ document.write("Last Published: " + document.lastModified);
         <span class="codefrag">java.net.URISyntaxException</span> error.</div>
 </div>
 <ol>
-
-		
+        
+        
 <li>
           
 <p>
             
 <strong>Get Apache Tomcat</strong> for JDK 1.4
             <br>
-Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+, 5.0.18+ and 5.5.0+ should work too.            <br>
-            
-<br>
-            Get it from  <a href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
+            Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the
+            following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+,
+            5.0.18+ and 5.5.0+ should work too.
+          </p>
           
-</p>
-
+<p>
+            Get it from  <a href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>.
+          </p>
+          
         
 </li>
         
@@ -1038,21 +1022,21 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
 <strong>Install Apache Tomcat</strong>
           
 </p>
-
+          
           
 <p>
             See <a href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/setup.html">Tomcat 5.0 Setup</a>
           
 </p>
-
+          
           
 <p>
             
 <strong>MS Windows:</strong>
-
+            
             
 <br>
-
+            
             Basically you only need to set the <span class="codefrag">JAVA_HOME</span>
             environment variable and run the Tomcat
             installer. Decide to run Tomcat as a Windows
@@ -1060,7 +1044,7 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
           </p>
         
 </li>
-
+        
         
 <li>
           
@@ -1069,7 +1053,7 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
 <strong>Configure Lenya</strong>
           
 </p>
-
+          
           
 <p>
             To install Lenya with Tomcat, you need to edit your build
@@ -1080,14 +1064,15 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
           
 <div class="note">
 <div class="label">Note</div>
-<div class="content">You can use the configure.sh or configure.bat to configure your local.build.properties.</div>
+<div class="content">You can use the <span class="codefrag">configure.sh</span> or <span class="codefrag">configure.bat</span> to configure your
+            <span class="codefrag">local.build.properties</span>.</div>
 </div>
-
+          
           
 <p>
             Edit <span class="codefrag">local.build.properties</span>. For the described
             configuration the following settings will work (<strong>MS
-            Windows:</strong> Don't use backslashes "<span class="codefrag">\</span>" for
+              Windows:</strong> Don't use backslashes "<span class="codefrag">\</span>" for
             directory separation.) It is important that
             <span class="codefrag">tomcat.home.dir</span> is an absolute path. Replace
             <span class="codefrag">$TOMCAT_HOME</span> by your Tomcat installation
@@ -1096,7 +1081,7 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
             the <span class="codefrag">cocoon.webapp.dir</span>, <span class="codefrag">web.app.server</span> and
             <span class="codefrag">cocoon.src.dir</span> properties.
           </p>
-
+          
           
 <ul>
             
@@ -1115,7 +1100,7 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
 </ul>
         
 </li>
-
+        
         
 <li>
           
@@ -1124,141 +1109,141 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
 <strong>Build Lenya</strong>
           
 </p>
-
+          
           
 <p>
             Execute <span class="codefrag">build</span> in your Lenya source directory.
           </p>
         
 </li>
-
-      
+        
+        
 <li>
-        
-<p>
           
+<p>
+            
 <strong>Checked versions of endorsed libraries</strong>
-        
-</p>
-    
-        
-<p>
-          Lenya and Tomcat will inter-operate correctly only if the proper
-          versions of the Xalan and Xerces libraries are used consistently
-          throughout the deployment.  Unfortunately this can be difficult
-          to get to work correctly since both of these libraries are
-          shipped with Java 2 SDK, Tomcat, Cocoon and Lenya.
-        </p>
-    
-        
-<p>
-          The following libraries must be placed in the endorsed library
-          directory for your deployment.
-        </p>
-    
-        
-<ul>
           
+</p>
+          
+          
+<p>
+            Lenya and Tomcat will inter-operate correctly only if the proper
+            versions of the Xalan and Xerces libraries are used consistently
+            throughout the deployment.  Unfortunately this can be difficult
+            to get to work correctly since both of these libraries are
+            shipped with Java 2 SDK, Tomcat, Cocoon and Lenya.
+          </p>
+          
+          
+<p>
+            The following libraries must be placed in the endorsed library
+            directory for your deployment.
+          </p>
+          
+          
+<ul>
+            
 <li>
 <span class="codefrag">jakarta-bcel-20040329.jar</span>
 </li>
-          
+            
 <li>
 <span class="codefrag">jakarta-regexp-1.5.jar</span>
 </li>
-          
+            
 <li>
 <span class="codefrag">xalan-2.7.0.jar</span>
 </li>
-          
+            
 <li>
 <span class="codefrag">xercesImpl-2.9.0.jar</span>
 </li>
-          
+            
 <li>
 <span class="codefrag">xml-apis-1.3.04.jar</span>
 </li>
-        
+          
 </ul>
-    
-        
+          
+          
 <p>
-          They are placed by the build process in the directory specified
-          by <span class="codefrag">tomcat.endorsed.dir</span> in
-          <span class="codefrag">build.properties</span>.  You should validate that these
-          files are indeed in the proper location for your deployment.
-          You must then validate that no other instances of these
-          libraries exist in any of the following directories:
-        </p>
-    
-        
+            They are placed by the build process in the directory specified
+            by <span class="codefrag">tomcat.endorsed.dir</span> in
+            <span class="codefrag">build.properties</span>.  You should validate that these
+            files are indeed in the proper location for your deployment.
+            You must then validate that no other instances of these
+            libraries exist in any of the following directories:
+          </p>
+          
+          
 <ul>
-          
-<li>
-            The Java 2 SDK endorsed standards directories.  This is
-            usually <span class="codefrag">${JAVA_HOME}/lib/endorsed/</span>.
-          </li>
-    
-          
-<li>
-            Any other location in your Tomcat deployment.  Specifically,
-            check <span class="codefrag">shared/lib/</span>, <span class="codefrag">common/lib/</span> and
-            <span class="codefrag">server/lib/</span>.
-          </li>
-    
-          
-<li>
-            Any other location in your Lenya deployment.  Specifically,
-            check <span class="codefrag">webapps/lenya/WEB-INF/lib/</span>.
-          </li>
-        
-</ul>
-    
-        
-<p>
-          A common symptom of incorrect library version are blank pages
-          after starting Lenya.  Try carefully checking the location and
-          version numbers of each of the libraries.
-        </p>
-    
-        
-<p>
-          References:
-        </p>
-    
-        
-<ul>
-          
-<li>
             
+<li>
+              The Java 2 SDK endorsed standards directories.  This is
+              usually <span class="codefrag">${JAVA_HOME}/lib/endorsed/</span>.
+            </li>
+            
+            
+<li>
+              Any other location in your Tomcat deployment.  Specifically,
+              check <span class="codefrag">shared/lib/</span>, <span class="codefrag">common/lib/</span> and
+              <span class="codefrag">server/lib/</span>.
+            </li>
+            
+            
+<li>
+              Any other location in your Lenya deployment.  Specifically,
+              check <span class="codefrag">webapps/lenya/WEB-INF/lib/</span>.
+            </li>
+          
+</ul>
+          
+          
+<p>
+            A common symptom of incorrect library version are blank pages
+            after starting Lenya.  Try carefully checking the location and
+            version numbers of each of the libraries.
+          </p>
+          
+          
+<p>
+            References:
+          </p>
+          
+          
+<ul>
+            
+<li>
+              
 <a href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html">
-              Tomcat Class Loader HOWTO (http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html)
-            </a>
-          
-</li>
-    
-          
-<li>
+                Tomcat Class Loader HOWTO (http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html)
+              </a>
             
+</li>
+            
+            
+<li>
+              
 <a href="http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html">
-              Java 2 Endorsed Standards Override Mechanism
-              (http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html)
-            </a>
+                Java 2 Endorsed Standards Override Mechanism
+                (http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html)
+              </a>
+            
+</li>
           
+</ul>
+        
 </li>
         
-</ul>
-      
-</li>
-         
 <li>
-           
+          
 <p>
             
 <strong>Clear Tomcat work directory</strong>
           
 </p>
-
+          
           
 <p>
             Tomcat's work cache may not be consistent with your newly installed
@@ -1267,30 +1252,26 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
             <span class="codefrag">build.bat</span> or <span class="codefrag">build.sh</span> in your Lenya source
             directory, depending on your platform.
           </p>
-
+          
           
 <p>
             
 <strong>MS Windows</strong>
           
 </p>
-
           
-<pre class="code">
-            $LENYA_HOME &gt; build.bat clean 
-          </pre>
-
+          
+<pre class="code">$LENYA_HOME &gt; build.bat clean</pre>
+          
           
 <p>
             
 <strong>Unix</strong>
           
 </p>
-
           
-<pre class="code">
-            $LENYA_HOME &gt; ./build.sh clean
-          </pre>
+          
+<pre class="code">$LENYA_HOME &gt; ./build.sh clean</pre>
         
 </li>
         
@@ -1301,14 +1282,14 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
 <strong>Restart Tomcat</strong>
           
 </p>
-
+          
           
 <p>
             Restart Tomcat to load the Lenya webapp.
           </p>
         
 </li>
-
+        
         
 <li>
           
@@ -1317,7 +1298,7 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
 <strong>Test the installation</strong>
           
 </p>
-
+          
           
 <p>
             

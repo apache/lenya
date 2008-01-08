@@ -125,6 +125,12 @@ document.write("Last Published: " + document.lastModified);
 <a href="tlp-HEAD.svn.html">log HEAD</a>
 </div>
 <div class="menuitem">
+<a href="tlp-2007-12.svn.html">log 2007-12</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2007-11.svn.html">log 2007-11</a>
+</div>
+<div class="menuitem">
 <a href="tlp-2007-10.svn.html">log 2007-10</a>
 </div>
 <div class="menuitem">
@@ -341,7 +347,7 @@ document.write("Last Published: " + document.lastModified);
 <a href="#version_2006-10">Version 2006-10 ()</a>
 <ul class="minitoc">
 <li>
-<a href="#1.4">1.4</a>
+<a href="#2.0">2.0</a>
 </li>
 <li>
 <a href="#">Contributors to this release</a>
@@ -354,33 +360,33 @@ document.write("Last Published: " + document.lastModified);
 <p>
 <a href="changes.rss"><img alt="RSS" src="images/rss.png"></a>
 </p>
-<a name="N10010"></a><a name="introduction"></a>
+<a name="N10011"></a><a name="introduction"></a>
 <h2 class="h3">Introduction and explanation of symbols</h2>
 <div class="section">
 <p>Changes are sorted <translate>by "{0}" and then<param>type</param>
 </translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="remove" src="images/remove.jpg">=remove, <img class="icon" alt="update" src="images/update.jpg">=update</p>
 </div>
-<a name="N10041"></a><a name="version_2006-10"></a>
+<a name="N10047"></a><a name="version_2006-10"></a>
 <h2 class="h3">Version 2006-10 ()</h2>
 <div class="section">
-<a name="N10048"></a><a name="1.4"></a>
-<h3 class="h4">1.4</h3>
+<a name="N1004F"></a><a name="2.0"></a>
+<h3 class="h4">2.0</h3>
 <ul>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] remove menu blocks/items which will not be displayed in the current view ('area') before the UsecaseMenuTransformer step. this is a performance optimization, it reduces the number of usecase precondition checks in the menu generation. <a href="http://svn.apache.org/viewcvs.cgi?rev=452340&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] remove menu blocks/items which will not be displayed in the current view ('area') before the UsecaseMenuTransformer step. this is a performance optimization, it reduces the number of usecase precondition checks in the menu generation. <a href="http://svn.apache.org/viewcvs.cgi?rev=452340&view=rev">Diff</a> 
        Committed by josias.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] new profiling module (uses cocoon profiler).
+<img class="icon" alt="add" src="images/add.jpg">[2.0] new profiling module (uses cocoon profiler).
 adds a menu item to the "file" menu and provides
 xslts for sourcecode prettyprinting and xml source
 to xhtml rendering (very naive implementation atm).
  <a href="http://svn.apache.org/viewcvs.cgi?rev=453206&view=rev">Diff</a> 
        Committed by nettings.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] add policy for webDAV <a href="http://svn.apache.org/viewcvs.cgi?rev=462532&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] add policy for webDAV <a href="http://svn.apache.org/viewcvs.cgi?rev=462532&view=rev">Diff</a> 
        Committed by chestnut.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] usecase handler cleanup.
+<img class="icon" alt="add" src="images/add.jpg">[2.0] usecase handler cleanup.
 
 [1] remove all cforms-specific code from usecases.js and
 UsecaseView.java
@@ -401,10 +407,10 @@ code left in modules/cforms/flow/customFlow.js.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=468474&view=rev">Diff</a> 
        Committed by nettings.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] renamed Label to AbstractLink to make the naming more consistent. now we have 'SiteTreeLink extends AbstractLink implements Link'. <a href="http://svn.apache.org/viewcvs.cgi?rev=452400&view=rev">Diff</a> 
+<img class="icon" alt="remove" src="images/remove.jpg">[2.0] renamed Label to AbstractLink to make the naming more consistent. now we have 'SiteTreeLink extends AbstractLink implements Link'. <a href="http://svn.apache.org/viewcvs.cgi?rev=452400&view=rev">Diff</a> 
        Committed by josias.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] added xmlverbatim xml-to-html syntax highlighter. thanks to oliver
+<img class="icon" alt="remove" src="images/remove.jpg">[2.0] added xmlverbatim xml-to-html syntax highlighter. thanks to oliver
 becker for the contribution. i have slightly amended the license lingo
 to follow the examples i found in the cocoon code.
 oliver's original contribution statement can be found at 
@@ -414,58 +420,58 @@ http://mail-archives.apache.org/mod_mbox/lenya-dev/200610.mbox/browser
  <a href="http://svn.apache.org/viewcvs.cgi?rev=467996&view=rev">Diff</a> 
        Committed by nettings.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] invoke workflow event 'edit' when a new file is uploaded. should fix bug #40648 <a href="http://svn.apache.org/viewcvs.cgi?rev=451921&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] invoke workflow event 'edit' when a new file is uploaded. should fix bug #40648 <a href="http://svn.apache.org/viewcvs.cgi?rev=451921&view=rev">Diff</a> 
        Committed by josias.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] It was a little more complicated than I thought.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] It was a little more complicated than I thought.
 Ok, now the styles management is Ok (em, sub, sup and strong at least...)
 I am going to work on the boxes (Warnings, Notes...) <a href="http://svn.apache.org/viewcvs.cgi?rev=452024&view=rev">Diff</a> 
        Committed by cdupoirieux.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] fixed meta data moving/copying: when a document is moved from one area to another, the metadata has to be moved completely, including workflow etc. fixes bug #40627 <a href="http://svn.apache.org/viewcvs.cgi?rev=452337&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] fixed meta data moving/copying: when a document is moved from one area to another, the metadata has to be moved completely, including workflow etc. fixes bug #40627 <a href="http://svn.apache.org/viewcvs.cgi?rev=452337&view=rev">Diff</a> 
        Committed by josias.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] fixes mismatch in usecasedocument module between view and model (causing
+<img class="icon" alt="update" src="images/update.jpg">[2.0] fixes mismatch in usecasedocument module between view and model (causing
 npe). thanks to richard frovarp for the report and the fix.
 http://issues.apache.org/bugzilla/show_bug.cgi?id=40664
 
  <a href="http://svn.apache.org/viewcvs.cgi?rev=452347&view=rev">Diff</a> 
        Committed by nettings.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] fixed i18n and layout of restore confirmation screen <a href="http://svn.apache.org/viewcvs.cgi?rev=452359&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] fixed i18n and layout of restore confirmation screen <a href="http://svn.apache.org/viewcvs.cgi?rev=452359&view=rev">Diff</a> 
        Committed by josias.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Ordered List management.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Ordered List management.
 I have change the key management. (But I think it was not working at all !)
  <a href="http://svn.apache.org/viewcvs.cgi?rev=452456&view=rev">Diff</a> 
        Committed by cdupoirieux.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Suppress a $ that should not be there in the list management,
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Suppress a $ that should not be there in the list management,
 Add a sample of a two level list,
 Add a simple Boxes management (Fixme, Warning, Notes) which is not XHTML yet... <a href="http://svn.apache.org/viewcvs.cgi?rev=452873&view=rev">Diff</a> 
        Committed by cdupoirieux.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Images management.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Images management.
 (inspired by the OOo plugin.) <a href="http://svn.apache.org/viewcvs.cgi?rev=453159&view=rev">Diff</a> 
        Committed by cdupoirieux.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] reload content during fckeditor save after xslt/before validation
+<img class="icon" alt="update" src="images/update.jpg">[2.0] reload content during fckeditor save after xslt/before validation
 Thanks to Richard Frovarp for catching this bug.
 This should fix bug 40689 <a href="http://svn.apache.org/viewcvs.cgi?rev=453316&view=rev">Diff</a> 
        Committed by chestnut.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] text:line-break should just be transfomed into &lt;br/&gt; <a href="http://svn.apache.org/viewcvs.cgi?rev=453639&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] text:line-break should just be transfomed into &lt;br/&gt; <a href="http://svn.apache.org/viewcvs.cgi?rev=453639&view=rev">Diff</a> 
        Committed by cdupoirieux.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] add missing context path to profiler URL
+<img class="icon" alt="update" src="images/update.jpg">[2.0] add missing context path to profiler URL
 
  <a href="http://svn.apache.org/viewcvs.cgi?rev=454171&view=rev">Diff</a> 
        Committed by nettings.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] use path instead of id for webDAV propfind listing <a href="http://svn.apache.org/viewcvs.cgi?rev=462611&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] use path instead of id for webDAV propfind listing <a href="http://svn.apache.org/viewcvs.cgi?rev=462611&view=rev">Diff</a> 
        Committed by chestnut.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] adds a textarea-based cut-and-paste dialog to bxe (needed because the
+<img class="icon" alt="update" src="images/update.jpg">[2.0] adds a textarea-based cut-and-paste dialog to bxe (needed because the
 normal mechanism does not work in firefox due to javascript security
 restrictions). thanks to chregu for the code and to renaud for preparing
 the patch.
@@ -473,58 +479,58 @@ the patch.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=463143&view=rev">Diff</a> 
        Committed by nettings.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] RollBack of modifications which should be applied in Forrest... <a href="http://svn.apache.org/viewcvs.cgi?rev=463265&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] RollBack of modifications which should be applied in Forrest... <a href="http://svn.apache.org/viewcvs.cgi?rev=463265&view=rev">Diff</a> 
        Committed by cdupoirieux.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Added a page:title to FCKEditor insertAsset usecase.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Added a page:title to FCKEditor insertAsset usecase.
 This prevents IE from collapsing the title tag and choking on the page.
 Thanks to Richard Frovarp for the fix.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=464702&view=rev">Diff</a> 
        Committed by nettings.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] LanguageExistsAction: Replaced call to SiteUtil by direct API calls <a href="http://svn.apache.org/viewcvs.cgi?rev=467288&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] LanguageExistsAction: Replaced call to SiteUtil by direct API calls <a href="http://svn.apache.org/viewcvs.cgi?rev=467288&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] SiteUtil: consider language in contains() method <a href="http://svn.apache.org/viewcvs.cgi?rev=467289&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] SiteUtil: consider language in contains() method <a href="http://svn.apache.org/viewcvs.cgi?rev=467289&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Added failing test for bug 40666 (navigation title does not stick) <a href="http://svn.apache.org/viewcvs.cgi?rev=467908&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Added failing test for bug 40666 (navigation title does not stick) <a href="http://svn.apache.org/viewcvs.cgi?rev=467908&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Save sitetree link after changing the label. This fixes bug #40666. <a href="http://svn.apache.org/viewcvs.cgi?rev=467920&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Save sitetree link after changing the label. This fixes bug #40666. <a href="http://svn.apache.org/viewcvs.cgi?rev=467920&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Set title of XHTML document. This fixes bug #40709. Thanks to Richard Frovarp for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=467921&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Set title of XHTML document. This fixes bug #40709. Thanks to Richard Frovarp for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=467921&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Set userId exit parameter for ChangePasswordAdmin usecase. This fixes bug 40779. Thanks to Richard Frovarp for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=467922&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Set userId exit parameter for ChangePasswordAdmin usecase. This fixes bug 40779. Thanks to Richard Frovarp for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=467922&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Setting titles of several usecases, see bug 40767. Thanks to Richard Frovarp for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=467923&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Setting titles of several usecases, see bug 40767. Thanks to Richard Frovarp for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=467923&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use resource in i18n.xmap to avoid setting a transformer without a generator. This fixes bug 40675. <a href="http://svn.apache.org/viewcvs.cgi?rev=467930&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use resource in i18n.xmap to avoid setting a transformer without a generator. This fixes bug 40675. <a href="http://svn.apache.org/viewcvs.cgi?rev=467930&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Using extra &lt;div&gt; for lenya box bottoms. Looks good on Mac OS with Firefox 2.0. <a href="http://svn.apache.org/viewcvs.cgi?rev=467936&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Using extra &lt;div&gt; for lenya box bottoms. Looks good on Mac OS with Firefox 2.0. <a href="http://svn.apache.org/viewcvs.cgi?rev=467936&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=467943&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=467943&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't treat the 'insert asset' button as usecase submit button. This avoids the NPE in Create.checkPreConditions(), see bug 40558. <a href="http://svn.apache.org/viewcvs.cgi?rev=467948&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't treat the 'insert asset' button as usecase submit button. This avoids the NPE in Create.checkPreConditions(), see bug 40558. <a href="http://svn.apache.org/viewcvs.cgi?rev=467948&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Invoke workflow event when changing meta data. This fixes bug 40568. <a href="http://svn.apache.org/viewcvs.cgi?rev=467952&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Invoke workflow event when changing meta data. This fixes bug 40568. <a href="http://svn.apache.org/viewcvs.cgi?rev=467952&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Update test after changing API. This fixes bug 40821. Thanks to Renaud Richardet for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=468060&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Update test after changing API. This fixes bug 40821. Thanks to Renaud Richardet for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=468060&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed some offending lines from SiteTreeNodeImplTest. This funcationality is now tested by the core SiteManagerTest. <a href="http://svn.apache.org/viewcvs.cgi?rev=468661&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Removed some offending lines from SiteTreeNodeImplTest. This funcationality is now tested by the core SiteManagerTest. <a href="http://svn.apache.org/viewcvs.cgi?rev=468661&view=rev">Diff</a> 
        Committed by andreas.</li>
 </ul>
-<a name="N10214"></a>
+<a name="N1023E"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
 <p>This is a list of all people who participated as committers:<br> (andreas),  (cdupoirieux),  (chestnut),  (josias),  (nettings).</p>

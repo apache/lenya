@@ -16,7 +16,7 @@
   limitations under the License.
 -->
 <paths>
-  <path context="1.4">/lenya/trunk</path>
+  <path context="2.0">/lenya/trunk</path>
   <path context="1.2">/lenya/branches/BRANCH_1_2_X</path>
   <path context="Site">/lenya/site</path>
   <path context="Zone">/lenya/zone</path>

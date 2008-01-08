@@ -3,9 +3,9 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>Apache Lenya Modules Documentation</title>
+<title>Apache Lenya modules documentation</title>
 <link type="text/css" href="../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
@@ -94,7 +94,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-
+             
              &nbsp;
            </div>
 <!--+
@@ -107,48 +107,10 @@ document.write("Last Published: " + document.lastModified);
 <div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Modules</div>
 <div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menupage">
-<div class="menupagetitle">Overview</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#Introduction">Introduction</a>
+<div class="menupagetitle">Index</div>
 </div>
-<div class="menupageitem">
-<a href="#Modules">Modules</a>
-</div>
-</div>
-</div>
-<div onclick="SwitchMenu('menu_1.1.2', '../../skin/')" id="menu_1.1.2Title" class="menutitle">collection</div>
+<div onclick="SwitchMenu('menu_1.1.2', '../../skin/')" id="menu_1.1.2Title" class="menutitle">WebDAV</div>
 <div id="menu_1.1.2" class="menuitemgroup">
-<div class="menuitem">
-<a href="../../docs/modules/collection.html">Overview</a>
-</div>
-</div>
-<div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">news</div>
-<div id="menu_1.1.3" class="menuitemgroup">
-<div class="menuitem">
-<a href="../../docs/modules/news.html">Overview</a>
-</div>
-</div>
-<div onclick="SwitchMenu('menu_1.1.4', '../../skin/')" id="menu_1.1.4Title" class="menutitle">notification</div>
-<div id="menu_1.1.4" class="menuitemgroup">
-<div class="menuitem">
-<a href="../../docs/modules/notification.html">Overview</a>
-</div>
-</div>
-<div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">svg</div>
-<div id="menu_1.1.5" class="menuitemgroup">
-<div class="menuitem">
-<a href="../../docs/modules/svg/roundedcorners.html">Rounded Corners</a>
-</div>
-</div>
-<div onclick="SwitchMenu('menu_1.1.6', '../../skin/')" id="menu_1.1.6Title" class="menutitle">usecasedocument</div>
-<div id="menu_1.1.6" class="menuitemgroup">
-<div class="menuitem">
-<a href="../../docs/modules/usecasedocument.html">Overview</a>
-</div>
-</div>
-<div onclick="SwitchMenu('menu_1.1.7', '../../skin/')" id="menu_1.1.7Title" class="menutitle">webdav</div>
-<div id="menu_1.1.7" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../docs/modules/webdav/index.html">Getting started</a>
 </div>
@@ -170,7 +132,7 @@ document.write("Last Published: " + document.lastModified);
   |alternative credits
   +-->
 <div id="credit2">
-<a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
 </div>
 </div>
 <!--+
@@ -184,7 +146,7 @@ document.write("Last Published: " + document.lastModified);
 <a class="dida" href="index.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Apache Lenya Modules Documentation</h1>
+<h1>Apache Lenya modules documentation</h1>
     
 <div class="warning">
 <div class="label">Warning</div>
@@ -196,160 +158,43 @@ document.write("Last Published: " + document.lastModified);
 <a name="N10011"></a><a name="Introduction"></a>
 <h2 class="h3">Introduction</h2>
 <div class="section">
-<p>
-        Modules are packages providing a certain set of resources or 
+<p> Modules are packages providing a certain set of resources or 
         functionality. The aim of this section in the documentation is to group 
-        the information needed to work with a certain module into one entry point.
-      </p>
-<p>
-        To learn how modules are implemented, refer to the <a href="../../docs/1_4/reference/modules/index.html">general modules documentation</a>.
-      </p>
-</div>
-    
-<a name="N10022"></a><a name="Modules"></a>
-<h2 class="h3">Modules</h2>
-<div class="section">
-<dl>
+        the information needed to work with a certain module into one entry point. </p>
+<p>Examples:</p>
+<ul>
         
-<dt>blog</dt>
+<li>a resource type (e.g., docbook module)</li>
         
-<dd>
-          Resource types and Java classes used by the blog publication. They are not yet ready
-          to be used separately.
-        </dd>
+<li>a repository implementation (e.g., jdbc module)</li>
         
-<dt>bxe</dt>
-        
-<dd>
-          Integration of the Bitflux WYSIWYG editor.
-        </dd>
-        
-<dt>cforms</dt>
-        
-<dd>
-          A resource type which can be edited using Cocoon Forms.
-        </dd>
-        
-<dt>
-<a href="../../docs/modules/collection.html">collection</a>
-</dt>
-        
-<dd>A resource type to store collections of documents.</dd>
-        
-<dt>contactform</dt>
-        
-<dd>A simple contact form. This is a usage example for the usecasedocument module.</dd>
-        
-<dt>development</dt>
-        
-<dd>Rresources to simplify development of Lenya applications.</dd>
-        
-<dt>editors</dt>
-        
-<dd>Form-based editors.</dd>
-        
-<dt>fckeditor</dt>
-        
-<dd>Integration of the FCK WYSIWYG editor.</dd>
-        
-<dt>kupu</dt>
-        
-<dd>Integration of the Kupu WYSIWYG editor.</dd>
-        
-<dt>languageselector</dt>
-        
-<dd>XHTML widget to switch languages on a website.</dd>
-        
-<dt>lenyadoc</dt>
-        
-<dd>Support for the <span class="codefrag">lenyadoc:/</span> protocol.</dd>
-        
-<dt>linkcheck</dt>
-        
-<dd>Link checking functionality.</dd>
-        
-<dt>links</dt>
-        
-<dd>A resource type to maintain lists of links.</dd>
-        
-<dt>lucene</dt>
-        
-<dd>Integration of the Lucene search engine.</dd>
-        
-<dt>migration</dt>
-        
-<dd>Resources to simplify the migration between different Lenya versions.</dd>
-        
-<dt>neutron</dt>
-        
-<dd>
-          Server-side implementation of the <a href="http://neutron.wyona.org/">Neutron</a>
-          protocol to support browser-based editors.
-        </dd>
-        
-<dt>
-<a href="../../docs/modules/news.html">news</a>
-</dt>
-        
-<dd>A resource type to display lists of news messages, can be used as a simple weblog.</dd>
-        
-<dt>
-<a href="../../docs/modules/notification.html">notification</a>
-</dt>
-        
-<dd>Support for user notification and inboxes.</dd>
-        
-<dt>opendocument</dt>
-        
-<dd>OpenDocument (ODF) resource type.</dd>
-        
-<dt>profiling</dt>
-        
-<dd>Resources to simplify profiling (performance optimization).</dd>
-        
-<dt>resource</dt>
-        
-<dd>The "resource" resource type, it allows to store arbitrary media documents.</dd>
-        
-<dt>simplesite</dt>
-        
-<dd>A simple site manager based on collections.</dd>
-        
-<dt>sitetree</dt>
-        
-<dd>Tree-based site manager.</dd>
-        
-<dt>sourcerepository</dt>
-        
-<dd>Repository implementation based on Avalon sources.</dd>
-        
-<dt>svg</dt>
-        
-<dd>Resources to support the rendering of SVG-based images, e.g. for boxes with rounded corners.</dd>
-        
-<dt>tinymce</dt>
-        
-<dd>Integration of the TinyMCE WYSIWYG editor.</dd>
-        
-<dt>usecasedocument</dt>
-        
-<dd>Resource type which allows to include a usecase as a document in the site structure.</dd>
-        
-<dt>
-<a href="../../docs/modules/webdav/index.html">webdav</a>
-</dt>
-        
-<dd>WebDAV support.</dd>
-        
-<dt>xhtml</dt>
-        
-<dd>Resource type which allows to store XHTML documents.</dd>
-        
-<dt>xopus</dt>
-        
-<dd>Integration of the Xopus WYSIWYG editor.</dd>
+<li>a collection of XSLTs (e.g., content2svg module)</li>
       
-</dl>
+</ul>
+<p>
+        Some modules are included in the Lenya distribution:
+      </p>
+<ul>
+        
+<li>
+<strong>lucene</strong> - search functionality</li>
+        
+<li>
+<strong>sitetree</strong> - manage documents in a tree-like structure</li>
+        
+<li>
+<strong>jcr</strong> - store content in a <a href="http://www.jcp.org/en/jsr/detail?id=170">JCR</a> repository</li>
+        
+<li>
+<strong>xhtml</strong> - XHTML-based resource type</li>
+        
+<li>
+<strong>links</strong> - resource type to manage link lists</li>
+        
+<li>
+<strong>lenyadoc</strong> - adds the <span class="codefrag">lenyadoc://</span> protocol</li>
+      
+</ul>
 </div>
   
 </div>

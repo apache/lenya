@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.9-dev">
+<meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Apache Lenya project guidelines</title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
@@ -98,7 +98,7 @@ document.write("Last Published: " + document.lastModified);
     |breadtrail
     +-->
 <div class="breadtrail">
-
+             
              &nbsp;
            </div>
 <!--+
@@ -123,9 +123,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="tlp-HEAD.svn.html">log HEAD</a>
-</div>
-<div class="menuitem">
-<a href="tlp-2007-05.svn.html">log 2007-05</a>
 </div>
 <div class="menuitem">
 <a href="tlp-2007-04.svn.html">log 2007-04</a>
@@ -274,6 +271,35 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menupage">
 <div class="menupagetitle">Project guidelines</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="The mission of Apache Lenya" href="#mission">The mission of Apac...</a>
+</div>
+<div class="menupageitem">
+<a title="Open development" href="#way">Open development...</a>
+</div>
+<div class="menupageitem">
+<a title="Roles and responsibilities" href="#roles">Roles and responsib...</a>
+</div>
+<div class="menupageitem">
+<a title="Project Management Committee (PMC)" href="#pmc">Project Management ...</a>
+</div>
+<div class="menupageitem">
+<a href="#decision">Decision making</a>
+</div>
+<div class="menupageitem">
+<a title="Communication channels" href="#communication">Communication chann...</a>
+</div>
+<div class="menupageitem">
+<a href="#code">Code management</a>
+</div>
+<div class="menupageitem">
+<a title="Contribution and acknowledgement" href="#contribution">Contribution and ac...</a>
+</div>
+<div class="menupageitem">
+<a title="Development procedure" href="#develop">Development procedu...</a>
+</div>
+</div>
 </div>
 <div class="menuitem">
 <a href="who.html" title="Explain who is involved">Who we are</a>
@@ -318,69 +344,7 @@ document.write("Last Published: " + document.lastModified);
 <a class="dida" href="guidelines.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Apache Lenya project guidelines</h1>
-<div id="minitoc-area">
-<ul class="minitoc">
-<li>
-<a href="#mission">The mission of Apache Lenya</a>
-</li>
-<li>
-<a href="#way">Open development</a>
-</li>
-<li>
-<a href="#roles">Roles and responsibilities</a>
-</li>
-<li>
-<a href="#pmc">Project Management Committee (PMC)</a>
-<ul class="minitoc">
-<li>
-<a href="#report">Quarterly reports to ASF Board</a>
-</li>
-<li>
-<a href="#elect">Electing new committers and PMC members</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#decision">Decision making</a>
-<ul class="minitoc">
-<li>
-<a href="#voting">Voting</a>
-</li>
-<li>
-<a href="#approvals">Types of approval</a>
-</li>
-<li>
-<a href="#veto">Vetoes</a>
-</li>
-<li>
-<a href="#actions">Actions</a>
-</li>
-<li>
-<a href="#timeframe">Voting timeframes</a>
-</li>
-<li>
-<a href="#procedure">Voting procedure</a>
-</li>
-<li>
-<a href="#ultimatum">Ultimatum and breakdown</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#communication">Communication channels</a>
-</li>
-<li>
-<a href="#code">Code management</a>
-</li>
-<li>
-<a href="#contribution">Contribution and acknowledgement</a>
-</li>
-<li>
-<a href="#develop">Development procedure</a>
-</li>
-</ul>
-</div> 
+<h1>Apache Lenya project guidelines</h1> 
   
 <p>
    This document provides the guidelines under which the Apache Lenya
@@ -566,12 +530,17 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <a name="N100E0"></a><a name="elect"></a>
 <h3 class="h4">Electing new committers and PMC members</h3>
-<p> We conduct committer/PMC member proposals on the private PMC mailing list to enable
-        a frank discussion. The vote for committership will be conducted on the lenya dev
-        list, if no concerns are aired prior on the private PMC list. This is out of for
-        historical reasons. We inherited that from cocoon: it shows people that we
-        appreciate them in a ceremonial way. The vote for a new PMC member however will be
-        conducted on the private list and later announced on the dev list. </p>
+<p>
+        We conduct the vote on the private PMC mailing list to enable a frank
+        discussion.
+        In most cases we will be inviting people to go straight from developer
+        to PMC member, i.e. they simultaneously become committer and PMC
+        member. However, there may be extraordinary cases where we want
+        limited work-related commit access (not also a PMC member).
+        This will be resolved during the discussion and vote.
+        Notes about this process are in the "committers" svn in the
+        pmc/lenya/ directory.
+      </p>
 </div>
 
   
@@ -1210,7 +1179,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="copyright">
         Copyright &copy;
-         2002-2007 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
 </div>
 <div id="feedback">
     Send feedback about the website to:

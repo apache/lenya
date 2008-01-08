@@ -722,6 +722,9 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Introduction">Introduction</a>
 </li>
 <li>
+<a href="#Call+Syntax">Call Syntax</a>
+</li>
+<li>
 <a href="#Adding+Custom+Flags">Adding Custom Flags</a>
 </li>
 </ul>
@@ -737,7 +740,59 @@ document.write("Last Published: " + document.lastModified);
       </p>
 </div>
     
-<a name="N1001B"></a><a name="Adding+Custom+Flags"></a>
+    
+<a name="N1001B"></a><a name="Call+Syntax"></a>
+<h2 class="h3">Call Syntax</h2>
+<div class="section">
+<p>
+        To generate a language selector widget, you use the following URL syntax:
+      </p>
+<pre class="code">cocoon://modules/languageselector/text-{text}/flagsize-{flagsize}</pre>
+<p>
+        The URL contains the following parameters:
+      </p>
+<dl>
+        
+<dt>text</dt>
+        
+<dd>
+          
+<p>The <em>text</em> parameter can take the following values:</p>
+          
+<ul>
+            
+<li>
+<em>abbr</em>: abbreviated language</li>
+            
+<li>
+<em>long</em>: full i18nized name of the language</li>
+          
+</ul>
+        
+</dd>
+        
+<dt>flagsize</dt>
+        
+<dd>
+          
+<p>The <em>flagsize</em> parameter can take the following values:</p>
+          
+<ul>
+            
+<li>any number: the width of the flag image in pixels</li>
+            
+<li>
+<em>none</em>: don't show the flag image</li>
+          
+</ul>
+        
+</dd>
+      
+</dl>
+</div>
+    
+    
+<a name="N1005F"></a><a name="Adding+Custom+Flags"></a>
 <h2 class="h3">Adding Custom Flags</h2>
 <div class="section">
 <p>

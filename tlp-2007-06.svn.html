@@ -125,6 +125,12 @@ document.write("Last Published: " + document.lastModified);
 <a href="tlp-HEAD.svn.html">log HEAD</a>
 </div>
 <div class="menuitem">
+<a href="tlp-2007-12.svn.html">log 2007-12</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2007-11.svn.html">log 2007-11</a>
+</div>
+<div class="menuitem">
 <a href="tlp-2007-10.svn.html">log 2007-10</a>
 </div>
 <div class="menuitem">
@@ -341,7 +347,7 @@ document.write("Last Published: " + document.lastModified);
 <a href="#version_2007-06">Version 2007-06 ()</a>
 <ul class="minitoc">
 <li>
-<a href="#1.4">1.4</a>
+<a href="#2.0">2.0</a>
 </li>
 <li>
 <a href="#Documentation">Documentation</a>
@@ -363,300 +369,300 @@ document.write("Last Published: " + document.lastModified);
 <p>
 <a href="changes.rss"><img alt="RSS" src="images/rss.png"></a>
 </p>
-<a name="N10010"></a><a name="introduction"></a>
+<a name="N10011"></a><a name="introduction"></a>
 <h2 class="h3">Introduction and explanation of symbols</h2>
 <div class="section">
 <p>Changes are sorted <translate>by "{0}" and then<param>type</param>
 </translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="remove" src="images/remove.jpg">=remove, <img class="icon" alt="update" src="images/update.jpg">=update</p>
 </div>
-<a name="N10041"></a><a name="version_2007-06"></a>
+<a name="N10047"></a><a name="version_2007-06"></a>
 <h2 class="h3">Version 2007-06 ()</h2>
 <div class="section">
-<a name="N10048"></a><a name="1.4"></a>
-<h3 class="h4">1.4</h3>
+<a name="N1004F"></a><a name="2.0"></a>
+<h3 class="h4">2.0</h3>
 <ul>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Transforms object tags into img tags so that FCKEditor can correctly identify images for modification. XSL modified from Kupu.
+<img class="icon" alt="add" src="images/add.jpg">[2.0] Transforms object tags into img tags so that FCKEditor can correctly identify images for modification. XSL modified from Kupu.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=543517&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Added failing test case for bug 42602 <a href="http://svn.apache.org/viewcvs.cgi?rev=544784&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] Added failing test case for bug 42602 <a href="http://svn.apache.org/viewcvs.cgi?rev=544784&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Bug 42050 - proxying does not work. 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] Bug 42050 - proxying does not work. 
 Adding proxyTransformer that is doing the proxy rewritte as last step of the transformation for html documents.
 Adding chaperon pattern resolver and using it for css proxing. Can scan any file for pattern and transform them to links, see the way I implemented in css to extend it to e.g. js.
 Extending PublicationConfiguration.java and publication.rng to read and allow the new attributes in the proxies element. <a href="http://svn.apache.org/viewcvs.cgi?rev=545437&view=rev">Diff</a> 
        Committed by thorsten.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Added test case for proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546536&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] Added test case for proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546536&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] [refactoring] Moved proxy link rewriting functionality to separate class. Introduced LinkRewriter interface (will be used for multiple purposes) <a href="http://svn.apache.org/viewcvs.cgi?rev=547681&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] [refactoring] Moved proxy link rewriting functionality to separate class. Introduced LinkRewriter interface (will be used for multiple purposes) <a href="http://svn.apache.org/viewcvs.cgi?rev=547681&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Link module refactoring, added transformer to convert proxy-based URLs to web application URLs (see bug 42672) <a href="http://svn.apache.org/viewcvs.cgi?rev=547720&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] Link module refactoring, added transformer to convert proxy-based URLs to web application URLs (see bug 42672) <a href="http://svn.apache.org/viewcvs.cgi?rev=547720&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="add" src="images/add.jpg">[1.4] Improved sitetree behaviour for proxying <a href="http://svn.apache.org/viewcvs.cgi?rev=550463&view=rev">Diff</a> 
+<img class="icon" alt="add" src="images/add.jpg">[2.0] Improved sitetree behaviour for proxying <a href="http://svn.apache.org/viewcvs.cgi?rev=550463&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Removing until licensing is cleared up.
+<img class="icon" alt="remove" src="images/remove.jpg">[2.0] Removing until licensing is cleared up.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=543595&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Replacing CSS XMLs by plain CSS - not needed anymore thanks to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546940&view=rev">Diff</a> 
+<img class="icon" alt="remove" src="images/remove.jpg">[2.0] Replacing CSS XMLs by plain CSS - not needed anymore thanks to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546940&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Moved base URL module to linking module, improved handling of empty params, use OutgoingLinkRewriter to avoid code duplication <a href="http://svn.apache.org/viewcvs.cgi?rev=550470&view=rev">Diff</a> 
+<img class="icon" alt="remove" src="images/remove.jpg">[2.0] Moved base URL module to linking module, improved handling of empty params, use OutgoingLinkRewriter to avoid code duplication <a href="http://svn.apache.org/viewcvs.cgi?rev=550470&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Consolidated BaseURLModule and ProxyUrlModule to ProxyModule <a href="http://svn.apache.org/viewcvs.cgi?rev=550480&view=rev">Diff</a> 
+<img class="icon" alt="remove" src="images/remove.jpg">[2.0] Consolidated BaseURLModule and ProxyUrlModule to ProxyModule <a href="http://svn.apache.org/viewcvs.cgi?rev=550480&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="remove" src="images/remove.jpg">[1.4] TinyMCE, FCKeditor, and BXE now all share a single common jx template for inserting assets or images.
+<img class="icon" alt="remove" src="images/remove.jpg">[2.0] TinyMCE, FCKeditor, and BXE now all share a single common jx template for inserting assets or images.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=551948&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Minor: fixed comments
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Minor: fixed comments
  <a href="http://svn.apache.org/viewcvs.cgi?rev=543530&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed typo so that ip ranges can now be deleted and moved in AC tabs
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed typo so that ip ranges can now be deleted and moved in AC tabs
  <a href="http://svn.apache.org/viewcvs.cgi?rev=544630&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use only .html URLs in sitetree on the site tab. This should improve the situation described in bug 42567. <a href="http://svn.apache.org/viewcvs.cgi?rev=544766&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use only .html URLs in sitetree on the site tab. This should improve the situation described in bug 42567. <a href="http://svn.apache.org/viewcvs.cgi?rev=544766&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Check for modifications when lazy-loading source node RCML data. This fixes bug 42602. <a href="http://svn.apache.org/viewcvs.cgi?rev=544822&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Check for modifications when lazy-loading source node RCML data. This fixes bug 42602. <a href="http://svn.apache.org/viewcvs.cgi?rev=544822&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't reload source node RCML data if RCML object has been modified <a href="http://svn.apache.org/viewcvs.cgi?rev=545141&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't reload source node RCML data if RCML object has been modified <a href="http://svn.apache.org/viewcvs.cgi?rev=545141&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Sorts the list that is displayed when choosing a template.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Sorts the list that is displayed when choosing a template.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=546165&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546433&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546433&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546438&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546438&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Refactoring: common base class for link transformers <a href="http://svn.apache.org/viewcvs.cgi?rev=546459&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Refactoring: common base class for link transformers <a href="http://svn.apache.org/viewcvs.cgi?rev=546459&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] removed unused field <a href="http://svn.apache.org/viewcvs.cgi?rev=546460&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] removed unused field <a href="http://svn.apache.org/viewcvs.cgi?rev=546460&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Refactoring: using AbstractLinkTransformer as base class for ProxyTransformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546462&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Refactoring: using AbstractLinkTransformer as base class for ProxyTransformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546462&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] removed unused fields <a href="http://svn.apache.org/viewcvs.cgi?rev=546463&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] removed unused fields <a href="http://svn.apache.org/viewcvs.cgi?rev=546463&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed debug log (covered by superclass) and unnecessary try block <a href="http://svn.apache.org/viewcvs.cgi?rev=546464&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Removed debug log (covered by superclass) and unnecessary try block <a href="http://svn.apache.org/viewcvs.cgi?rev=546464&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] added license header <a href="http://svn.apache.org/viewcvs.cgi?rev=546465&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] added license header <a href="http://svn.apache.org/viewcvs.cgi?rev=546465&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Allow empty pubId and area in BaseUrlModule (see http://issues.apache.org/bugzilla/show_bug.cgi?id=42050#c32) <a href="http://svn.apache.org/viewcvs.cgi?rev=546496&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Allow empty pubId and area in BaseUrlModule (see http://issues.apache.org/bugzilla/show_bug.cgi?id=42050#c32) <a href="http://svn.apache.org/viewcvs.cgi?rev=546496&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] lenya.xmap: no pubId and area in core <a href="http://svn.apache.org/viewcvs.cgi?rev=546497&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] lenya.xmap: no pubId and area in core <a href="http://svn.apache.org/viewcvs.cgi?rev=546497&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Make ProxyTransformer more restrictive regarding existence of publications and areas <a href="http://svn.apache.org/viewcvs.cgi?rev=546498&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Make ProxyTransformer more restrictive regarding existence of publications and areas <a href="http://svn.apache.org/viewcvs.cgi?rev=546498&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546504&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546504&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546505&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546505&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Wrap CSS text in chaperon text elements, see http://issues.apache.org/bugzilla/show_bug.cgi?id=42050#c37 <a href="http://svn.apache.org/viewcvs.cgi?rev=546516&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Wrap CSS text in chaperon text elements, see http://issues.apache.org/bugzilla/show_bug.cgi?id=42050#c37 <a href="http://svn.apache.org/viewcvs.cgi?rev=546516&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546551&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=546551&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Consider source publication in proxy transformer, update test accordingly <a href="http://svn.apache.org/viewcvs.cgi?rev=546561&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Consider source publication in proxy transformer, update test accordingly <a href="http://svn.apache.org/viewcvs.cgi?rev=546561&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Made proxy transformer test more robust re. SSL / non SSL <a href="http://svn.apache.org/viewcvs.cgi?rev=546777&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Made proxy transformer test more robust re. SSL / non SSL <a href="http://svn.apache.org/viewcvs.cgi?rev=546777&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use XHTML namespace for chaperon XML to trigger the ProxyTransformer correctly <a href="http://svn.apache.org/viewcvs.cgi?rev=546828&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use XHTML namespace for chaperon XML to trigger the ProxyTransformer correctly <a href="http://svn.apache.org/viewcvs.cgi?rev=546828&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Apply proxy transformation to usecase XHTML <a href="http://svn.apache.org/viewcvs.cgi?rev=546829&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Apply proxy transformation to usecase XHTML <a href="http://svn.apache.org/viewcvs.cgi?rev=546829&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed proxy and context path handling from UuidToUrlTransformer. This is now handled either by the ProxyTransformer, or by the BaseUrlModule (if no transformation can be applied). All references to the BaseUrlModule have been removed to avoid duplicate application of the context path. <a href="http://svn.apache.org/viewcvs.cgi?rev=546840&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Removed proxy and context path handling from UuidToUrlTransformer. This is now handled either by the ProxyTransformer, or by the BaseUrlModule (if no transformation can be applied). All references to the BaseUrlModule have been removed to avoid duplicate application of the context path. <a href="http://svn.apache.org/viewcvs.cgi?rev=546840&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed context prefix handling and uuid2url transformer configuration in sitetree module <a href="http://svn.apache.org/viewcvs.cgi?rev=546845&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed context prefix handling and uuid2url transformer configuration in sitetree module <a href="http://svn.apache.org/viewcvs.cgi?rev=546845&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't add context path to usecase exit URL (will be added by usecase framework) <a href="http://svn.apache.org/viewcvs.cgi?rev=546848&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't add context path to usecase exit URL (will be added by usecase framework) <a href="http://svn.apache.org/viewcvs.cgi?rev=546848&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't add context path to image URLs, will be handled by proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546852&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't add context path to image URLs, will be handled by proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546852&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't add context path to image URLs, will be handled by proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546854&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't add context path to image URLs, will be handled by proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546854&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't add context path to image URLs, will be handled by proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546855&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't add context path to image URLs, will be handled by proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546855&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy transformer to build FCKEditor URLs <a href="http://svn.apache.org/viewcvs.cgi?rev=546864&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy transformer to build FCKEditor URLs <a href="http://svn.apache.org/viewcvs.cgi?rev=546864&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy-based URL for RSS feed link in news module <a href="http://svn.apache.org/viewcvs.cgi?rev=546869&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy-based URL for RSS feed link in news module <a href="http://svn.apache.org/viewcvs.cgi?rev=546869&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy-based URL for RSS feed link in news module (cleaner solution) <a href="http://svn.apache.org/viewcvs.cgi?rev=546870&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy-based URL for RSS feed link in news module (cleaner solution) <a href="http://svn.apache.org/viewcvs.cgi?rev=546870&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed lenya-document URL in RSS feed in news module <a href="http://svn.apache.org/viewcvs.cgi?rev=546871&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed lenya-document URL in RSS feed in news module <a href="http://svn.apache.org/viewcvs.cgi?rev=546871&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed context path from FCKeditor and TinyMCE usecases <a href="http://svn.apache.org/viewcvs.cgi?rev=546877&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Removed context path from FCKeditor and TinyMCE usecases <a href="http://svn.apache.org/viewcvs.cgi?rev=546877&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed URLs in administration module <a href="http://svn.apache.org/viewcvs.cgi?rev=546885&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed URLs in administration module <a href="http://svn.apache.org/viewcvs.cgi?rev=546885&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] layout fix for IP range list <a href="http://svn.apache.org/viewcvs.cgi?rev=546886&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] layout fix for IP range list <a href="http://svn.apache.org/viewcvs.cgi?rev=546886&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed URLs in administration module <a href="http://svn.apache.org/viewcvs.cgi?rev=546887&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed URLs in administration module <a href="http://svn.apache.org/viewcvs.cgi?rev=546887&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Made source URL available in UsecaseProxy for JX templates, updated href and action attributes accordingly <a href="http://svn.apache.org/viewcvs.cgi?rev=546890&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Made source URL available in UsecaseProxy for JX templates, updated href and action attributes accordingly <a href="http://svn.apache.org/viewcvs.cgi?rev=546890&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed link URLs according to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546891&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed link URLs according to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546891&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed link URLs according to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546894&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed link URLs according to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546894&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Added note about proxy transformer to readme file <a href="http://svn.apache.org/viewcvs.cgi?rev=546932&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Added note about proxy transformer to readme file <a href="http://svn.apache.org/viewcvs.cgi?rev=546932&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Replacing CSS XMLs by plain CSS - not needed anymore thanks to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546935&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Replacing CSS XMLs by plain CSS - not needed anymore thanks to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546935&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed support for XML-based CSS - not needed anymore thanks to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546947&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Removed support for XML-based CSS - not needed anymore thanks to proxy transformer <a href="http://svn.apache.org/viewcvs.cgi?rev=546947&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fix relative URL handling in proxy transformer for URLs ending with a slash <a href="http://svn.apache.org/viewcvs.cgi?rev=547166&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fix relative URL handling in proxy transformer for URLs ending with a slash <a href="http://svn.apache.org/viewcvs.cgi?rev=547166&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed invalid JX expression in tinymce module <a href="http://svn.apache.org/viewcvs.cgi?rev=547170&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed invalid JX expression in tinymce module <a href="http://svn.apache.org/viewcvs.cgi?rev=547170&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Return default proxy if no proxy is defined. This makes the null checks obsolete. <a href="http://svn.apache.org/viewcvs.cgi?rev=547660&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Return default proxy if no proxy is defined. This makes the null checks obsolete. <a href="http://svn.apache.org/viewcvs.cgi?rev=547660&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Improve proxying behaviour of BXE (needs more testing, though) <a href="http://svn.apache.org/viewcvs.cgi?rev=547717&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Improve proxying behaviour of BXE (needs more testing, though) <a href="http://svn.apache.org/viewcvs.cgi?rev=547717&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed context path from TinyMCE usecase page (handled by proxy transformer) <a href="http://svn.apache.org/viewcvs.cgi?rev=547718&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Removed context path from TinyMCE usecase page (handled by proxy transformer) <a href="http://svn.apache.org/viewcvs.cgi?rev=547718&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Changed to insertImage usecase. Now has width and height fields and is consistent with BXE and FCK.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Changed to insertImage usecase. Now has width and height fields and is consistent with BXE and FCK.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=548451&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Visually cleaned up the insertAsset portion of the page. Also, all code for this usecase is now identical between BXE, FCK, and TinyMCE with the exception editor names in the file.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Visually cleaned up the insertAsset portion of the page. Also, all code for this usecase is now identical between BXE, FCK, and TinyMCE with the exception editor names in the file.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=548457&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed code passing values back to TinyMCE image popup. Now passes back title, width, and height information along with URL.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed code passing values back to TinyMCE image popup. Now passes back title, width, and height information along with URL.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=548462&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] added license header <a href="http://svn.apache.org/viewcvs.cgi?rev=550452&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] added license header <a href="http://svn.apache.org/viewcvs.cgi?rev=550452&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] URLInformation: avoid NPE for '/' URLs <a href="http://svn.apache.org/viewcvs.cgi?rev=550461&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] URLInformation: avoid NPE for '/' URLs <a href="http://svn.apache.org/viewcvs.cgi?rev=550461&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Improved sitetree behaviour for proxying <a href="http://svn.apache.org/viewcvs.cgi?rev=550462&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Improved sitetree behaviour for proxying <a href="http://svn.apache.org/viewcvs.cgi?rev=550462&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed tab URLs (proxying) <a href="http://svn.apache.org/viewcvs.cgi?rev=550479&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed tab URLs (proxying) <a href="http://svn.apache.org/viewcvs.cgi?rev=550479&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Consolidated BaseURLModule and ProxyUrlModule to ProxyModule <a href="http://svn.apache.org/viewcvs.cgi?rev=550481&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Consolidated BaseURLModule and ProxyUrlModule to ProxyModule <a href="http://svn.apache.org/viewcvs.cgi?rev=550481&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Include area in WebDAV GET requests in default publication (fixes proxying issue) <a href="http://svn.apache.org/viewcvs.cgi?rev=550483&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Include area in WebDAV GET requests in default publication (fixes proxying issue) <a href="http://svn.apache.org/viewcvs.cgi?rev=550483&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] AccessControlUsecase: throw reasonable exception instead of NPE if access controller could not be resolved <a href="http://svn.apache.org/viewcvs.cgi?rev=550517&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] AccessControlUsecase: throw reasonable exception instead of NPE if access controller could not be resolved <a href="http://svn.apache.org/viewcvs.cgi?rev=550517&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy URL for login redirect. This avoids problems with mod_jk and mod_rewrite <a href="http://svn.apache.org/viewcvs.cgi?rev=550845&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy URL for login redirect. This avoids problems with mod_jk and mod_rewrite <a href="http://svn.apache.org/viewcvs.cgi?rev=550845&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy URL for login redirect. This avoids problems with mod_jk and mod_rewrite <a href="http://svn.apache.org/viewcvs.cgi?rev=550847&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy URL for login redirect. This avoids problems with mod_jk and mod_rewrite <a href="http://svn.apache.org/viewcvs.cgi?rev=550847&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Consider current request security (SSL or not) when building links. All items on an SSL-encrypted page will be requested using SSL. <a href="http://svn.apache.org/viewcvs.cgi?rev=550851&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Consider current request security (SSL or not) when building links. All items on an SSL-encrypted page will be requested using SSL. <a href="http://svn.apache.org/viewcvs.cgi?rev=550851&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use request.isSecure() instead of request.getScheme() to check for SSL connection <a href="http://svn.apache.org/viewcvs.cgi?rev=551216&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use request.isSecure() instead of request.getScheme() to check for SSL connection <a href="http://svn.apache.org/viewcvs.cgi?rev=551216&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Added note about proxy module to readme file <a href="http://svn.apache.org/viewcvs.cgi?rev=551221&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Added note about proxy module to readme file <a href="http://svn.apache.org/viewcvs.cgi?rev=551221&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy URL to retrieve original images for SVG scaling, convert https URLs to http URLs (Batik doesn't seem to like https URLs) <a href="http://svn.apache.org/viewcvs.cgi?rev=551223&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy URL to retrieve original images for SVG scaling, convert https URLs to http URLs (Batik doesn't seem to like https URLs) <a href="http://svn.apache.org/viewcvs.cgi?rev=551223&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Reverted accidential commit (noncaching pipelines in SVG module) <a href="http://svn.apache.org/viewcvs.cgi?rev=551224&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Reverted accidential commit (noncaching pipelines in SVG module) <a href="http://svn.apache.org/viewcvs.cgi?rev=551224&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Reverted changes re. proxy-based redirects. They are obsolete with a correct reverse proxy setup. <a href="http://svn.apache.org/viewcvs.cgi?rev=551501&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Reverted changes re. proxy-based redirects. They are obsolete with a correct reverse proxy setup. <a href="http://svn.apache.org/viewcvs.cgi?rev=551501&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] removed invalid javadoc comment <a href="http://svn.apache.org/viewcvs.cgi?rev=551522&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] removed invalid javadoc comment <a href="http://svn.apache.org/viewcvs.cgi?rev=551522&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Using proxy-based path for insertAsset usecase in BXE. This fixes bug 42761. <a href="http://svn.apache.org/viewcvs.cgi?rev=551545&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Using proxy-based path for insertAsset usecase in BXE. This fixes bug 42761. <a href="http://svn.apache.org/viewcvs.cgi?rev=551545&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy-based URLs for Kupu resources. See bug 42762. <a href="http://svn.apache.org/viewcvs.cgi?rev=551550&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy-based URLs for Kupu resources. See bug 42762. <a href="http://svn.apache.org/viewcvs.cgi?rev=551550&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use proxy-based URLs for Kupu image preview. See bug 42762. <a href="http://svn.apache.org/viewcvs.cgi?rev=551553&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use proxy-based URLs for Kupu image preview. See bug 42762. <a href="http://svn.apache.org/viewcvs.cgi?rev=551553&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Apply Proxy fixes for TinyMCE and FCKeditor insertAsset functionality - updates from r551545
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Apply Proxy fixes for TinyMCE and FCKeditor insertAsset functionality - updates from r551545
  <a href="http://svn.apache.org/viewcvs.cgi?rev=551554&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=551557&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=551557&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't strip the protocol from image URLs, see http://issues.apache.org/bugzilla/show_bug.cgi?id=42762#c10 <a href="http://svn.apache.org/viewcvs.cgi?rev=551560&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't strip the protocol from image URLs, see http://issues.apache.org/bugzilla/show_bug.cgi?id=42762#c10 <a href="http://svn.apache.org/viewcvs.cgi?rev=551560&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Use request settings for SVG image scaling if no proxy is configured. This fixes bug 42765. <a href="http://svn.apache.org/viewcvs.cgi?rev=551569&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Use request settings for SVG image scaling if no proxy is configured. This fixes bug 42765. <a href="http://svn.apache.org/viewcvs.cgi?rev=551569&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Add area base path to area node in sitetree. This fixes bug 42764. <a href="http://svn.apache.org/viewcvs.cgi?rev=551580&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Add area base path to area node in sitetree. This fixes bug 42764. <a href="http://svn.apache.org/viewcvs.cgi?rev=551580&view=rev">Diff</a> 
        Committed by andreas.</li>
 </ul>
-<a name="N104D2"></a><a name="Documentation"></a>
+<a name="N10532"></a><a name="Documentation"></a>
 <h3 class="h4">Documentation</h3>
 <ul>
 <li>
@@ -714,7 +720,7 @@ Adding documentation about the proxies element and their usage. <a href="http://
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Added note about context path/cookie issues <a href="http://svn.apache.org/viewcvs.cgi?rev=550495&view=rev">Diff</a> 
        Committed by andreas.</li>
 </ul>
-<a name="N105B4"></a><a name="Sandbox"></a>
+<a name="N10625"></a><a name="Sandbox"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -727,7 +733,7 @@ Adding documentation about the proxies element and their usage. <a href="http://
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] Improved module name and description <a href="http://svn.apache.org/viewcvs.cgi?rev=550730&view=rev">Diff</a> 
        Committed by andreas.</li>
 </ul>
-<a name="N105E0"></a><a name="Site"></a>
+<a name="N10654"></a><a name="Site"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -740,7 +746,7 @@ Adding documentation about the proxies element and their usage. <a href="http://
 <img class="icon" alt="update" src="images/update.jpg">[Site] Nervously committing huge diff just to remove the reference to the non-existent binary exe version of 1.2.5 from index page <a href="http://svn.apache.org/viewcvs.cgi?rev=546666&view=rev">Diff</a> 
        Committed by gmcdonald.</li>
 </ul>
-<a name="N1060C"></a>
+<a name="N10683"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
 <p>This is a list of all people who participated as committers:<br> (andreas),  (bobharner),  (gmcdonald),  (rfrovarp),  (thorsten).</p>

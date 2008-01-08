@@ -125,6 +125,12 @@ document.write("Last Published: " + document.lastModified);
 <a href="tlp-HEAD.svn.html">log HEAD</a>
 </div>
 <div class="menuitem">
+<a href="tlp-2007-12.svn.html">log 2007-12</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2007-11.svn.html">log 2007-11</a>
+</div>
+<div class="menuitem">
 <a href="tlp-2007-10.svn.html">log 2007-10</a>
 </div>
 <div class="menupage">
@@ -344,7 +350,7 @@ document.write("Last Published: " + document.lastModified);
 <a href="#1.2">1.2</a>
 </li>
 <li>
-<a href="#1.4">1.4</a>
+<a href="#2.0">2.0</a>
 </li>
 <li>
 <a href="#Documentation">Documentation</a>
@@ -369,64 +375,64 @@ document.write("Last Published: " + document.lastModified);
 <p>
 <a href="changes.rss"><img alt="RSS" src="images/rss.png"></a>
 </p>
-<a name="N10010"></a><a name="introduction"></a>
+<a name="N10011"></a><a name="introduction"></a>
 <h2 class="h3">Introduction and explanation of symbols</h2>
 <div class="section">
 <p>Changes are sorted <translate>by "{0}" and then<param>type</param>
 </translate> chronologically with the most recent at the top. These symbols denote the various action types:<img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="update" src="images/update.jpg">=update</p>
 </div>
-<a name="N10039"></a><a name="version_2007-09"></a>
+<a name="N1003F"></a><a name="version_2007-09"></a>
 <h2 class="h3">Version 2007-09 ()</h2>
 <div class="section">
-<a name="N10040"></a><a name="1.2"></a>
+<a name="N10047"></a><a name="1.2"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.2] set WWW-Authenticate header for neutron 401 response as required by the http 1.1 spec <a href="http://svn.apache.org/viewcvs.cgi?rev=574158&view=rev">Diff</a> 
        Committed by josias.</li>
 </ul>
-<a name="N10052"></a><a name="1.4"></a>
-<h3 class="h4">1.4</h3>
+<a name="N1005A"></a><a name="2.0"></a>
+<h3 class="h4">2.0</h3>
 <ul>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Publish usecase: Lock live sitetree; SourceNode: re-date lock to loading revision; fixes bug 43290. <a href="http://svn.apache.org/viewcvs.cgi?rev=574602&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Publish usecase: Lock live sitetree; SourceNode: re-date lock to loading revision; fixes bug 43290. <a href="http://svn.apache.org/viewcvs.cgi?rev=574602&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] UnitOfWorkImpl.isDirty() does also check for new and removed objects <a href="http://svn.apache.org/viewcvs.cgi?rev=574827&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] UnitOfWorkImpl.isDirty() does also check for new and removed objects <a href="http://svn.apache.org/viewcvs.cgi?rev=574827&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] fixed javadoc typo <a href="http://svn.apache.org/viewcvs.cgi?rev=574828&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] fixed javadoc typo <a href="http://svn.apache.org/viewcvs.cgi?rev=574828&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Introduced Persistable.isModified() to check if a persistable should be saved. SiteTreeImpl.changed() won't be called during loading anymore. This fixes bug 43291. <a href="http://svn.apache.org/viewcvs.cgi?rev=574842&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Introduced Persistable.isModified() to check if a persistable should be saved. SiteTreeImpl.changed() won't be called during loading anymore. This fixes bug 43291. <a href="http://svn.apache.org/viewcvs.cgi?rev=574842&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] UuidToUrlTransformer: Don't override area and pubId of absolute links. This fixes bug 43378. <a href="http://svn.apache.org/viewcvs.cgi?rev=575296&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] UuidToUrlTransformer: Don't override area and pubId of absolute links. This fixes bug 43378. <a href="http://svn.apache.org/viewcvs.cgi?rev=575296&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed lock update when copying revisions. This fixes bug 43297. <a href="http://svn.apache.org/viewcvs.cgi?rev=575297&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Fixed lock update when copying revisions. This fixes bug 43297. <a href="http://svn.apache.org/viewcvs.cgi?rev=575297&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] No sense in displaying change password button if it won't do anything as it will only confuse users.
+<img class="icon" alt="update" src="images/update.jpg">[2.0] No sense in displaying change password button if it won't do anything as it will only confuse users.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=580116&view=rev">Diff</a> 
        Committed by rfrovarp.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Updated search page styling <a href="http://svn.apache.org/viewcvs.cgi?rev=580354&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Updated search page styling <a href="http://svn.apache.org/viewcvs.cgi?rev=580354&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=580355&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] [minor change] formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=580355&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed unused javadoc parameter <a href="http://svn.apache.org/viewcvs.cgi?rev=580357&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Removed unused javadoc parameter <a href="http://svn.apache.org/viewcvs.cgi?rev=580357&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Index resource meta data (fixes bug 43456), search in meta data fiels <a href="http://svn.apache.org/viewcvs.cgi?rev=580358&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Index resource meta data (fixes bug 43456), search in meta data fiels <a href="http://svn.apache.org/viewcvs.cgi?rev=580358&view=rev">Diff</a> 
        Committed by andreas.</li>
 <li>
-<img class="icon" alt="update" src="images/update.jpg">[1.4] Don't allow to paste a cut doc in its own subtree. This fixes bug 43459. <a href="http://svn.apache.org/viewcvs.cgi?rev=580365&view=rev">Diff</a> 
+<img class="icon" alt="update" src="images/update.jpg">[2.0] Don't allow to paste a cut doc in its own subtree. This fixes bug 43459. <a href="http://svn.apache.org/viewcvs.cgi?rev=580365&view=rev">Diff</a> 
        Committed by andreas.</li>
 </ul>
-<a name="N100F3"></a><a name="Documentation"></a>
+<a name="N10107"></a><a name="Documentation"></a>
 <h3 class="h4">Documentation</h3>
 <ul>
 <li>
@@ -451,7 +457,7 @@ document.write("Last Published: " + document.lastModified);
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Adding screenshot to usecase tutorial <a href="http://svn.apache.org/viewcvs.cgi?rev=578565&view=rev">Diff</a> 
        Committed by andreas.</li>
 </ul>
-<a name="N10153"></a><a name="No+context+matched"></a>
+<a name="N1016E"></a><a name="No+context+matched"></a>
 <h3 class="h4">No context matched</h3>
 <ul>
 <li>
@@ -512,7 +518,7 @@ document.write("Last Published: " + document.lastModified);
 <img class="icon" alt="update" src="images/update.jpg">[No context matched] the context prefix is needed. Otherwise this only works within the ROOT context <a href="http://svn.apache.org/viewcvs.cgi?rev=580311&view=rev">Diff</a> 
        Committed by jann.</li>
 </ul>
-<a name="N1024F"></a><a name="Revolution"></a>
+<a name="N1027D"></a><a name="Revolution"></a>
 <h3 class="h4">Revolution</h3>
 <ul>
 <li>
@@ -543,7 +549,7 @@ document.write("Last Published: " + document.lastModified);
 <img class="icon" alt="update" src="images/update.jpg">[Revolution] More commit.  Changes to obsolete code updated as part of fixing HTML spaces. <a href="http://svn.apache.org/viewcvs.cgi?rev=580212&view=rev">Diff</a> 
        Committed by solprovider.</li>
 </ul>
-<a name="N102C9"></a><a name="Sandbox"></a>
+<a name="N10300"></a><a name="Sandbox"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -559,7 +565,7 @@ document.write("Last Published: " + document.lastModified);
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] Adding foaf:knows to person module <a href="http://svn.apache.org/viewcvs.cgi?rev=578193&view=rev">Diff</a> 
        Committed by andreas.</li>
 </ul>
-<a name="N10302"></a>
+<a name="N1033D"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
 <p>This is a list of all people who participated as committers:<br> (andreas),  (jann),  (josias),  (rfrovarp),  (solprovider).</p>
