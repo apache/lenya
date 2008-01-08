@@ -1,1757 +1,1096 @@
 <?xml version="1.0"?>
 <log>
 <logentry
-   revision="580913">
+   revision="606783">
 <author>andreas</author>
-<date>2007-10-01T10:11:28.396022Z</date>
+<date>2007-12-25T10:54:11.335284Z</date>
 <paths>
 <path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+   action="M">/lenya/tags/RELEASE_2_0/src/targets/properties-build.xml</path>
 </paths>
-<msg>Make redirect to WAYF server configurable</msg>
+<msg>Updated version in properties-build.xml</msg>
 </logentry>
 <logentry
-   revision="580947">
-<author>andreas</author>
-<date>2007-10-01T13:31:50.752198Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AttributeDefinitionRegistry.java</path>
-</paths>
-<msg>[minor change] improved javadocs</msg>
-</logentry>
-<logentry
-   revision="580948">
-<author>andreas</author>
-<date>2007-10-01T13:32:14.139195Z</date>
-<paths>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/jexl/JexlEvaluatorFactory.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/jexl/JexlEvaluator.java</path>
-</paths>
-<msg>Added factory for JEXL attribute rule evaluator</msg>
-</logentry>
-<logentry
-   revision="580978">
-<author>andreas</author>
-<date>2007-10-01T14:48:33.124360Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/targets/antlr-build.xml</path>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/lib/stringtemplate-3.0.jar</path>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/lib/antlr3-task.jar</path>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/lib/antlr-2.7.7.jar</path>
-</paths>
-<msg>Adding missing libraries for ANTLR grammar compilation, updated antlr build file</msg>
-</logentry>
-<logentry
-   revision="580989">
-<author>andreas</author>
-<date>2007-10-01T15:17:19.249271Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
-<path
-   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/AttributeTranslator.java</path>
-<path
-   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapping.java</path>
-<path
-   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/AttributeTranslatorImpl.java"
-   copyfrom-rev="580896"
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/impl/AttributeTranslatorImpl.java</path>
-<path
-   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/UserFieldsMappingImpl.java"
-   copyfrom-rev="580896"
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/impl/UserFieldsMappingImpl.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAttributeDefinition.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
-<path
-   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/AttributeTranslatorImpl.java</path>
-<path
-   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapper.java"
-   copyfrom-rev="580896"
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/UserFieldsMapper.java</path>
-<path
-   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/impl/UserFieldsMappingImpl.java</path>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/AttributeTranslator.java</path>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml</path>
-<path
-   copyfrom-path="/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapping.java"
-   copyfrom-rev="580896"
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/UserFieldsMapping.java</path>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/saml/impl</path>
-<path
-   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/util/UserFieldsMapper.java</path>
-</paths>
-<msg>[Refactoring] move attribute translation from shibboleth packages to Lenya packages</msg>
-</logentry>
-<logentry
-   revision="580996">
-<author>andreas</author>
-<date>2007-10-01T15:48:03.851406Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
-</paths>
-<msg>Updated xconf file to package changes</msg>
-</logentry>
-<logentry
-   revision="581007">
-<author>andreas</author>
-<date>2007-10-01T16:27:21.256538Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/xslt/admin/groups/profile.xsl</path>
-</paths>
-<msg>Use table + i18n to display attribute list on group profile page</msg>
-</logentry>
-<logentry
-   revision="581156">
-<author>andreas</author>
-<date>2007-10-02T08:34:50.171571Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes.xml</path>
-</paths>
-<msg>Added more docs about attribute-based authorization</msg>
-</logentry>
-<logentry
-   revision="581196">
-<author>andreas</author>
-<date>2007-10-02T11:41:21.989893Z</date>
-<paths>
-<path
-   action="D">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes.xml</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes/classes.aart</path>
-<path
-   copyfrom-path="/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes.xml"
-   copyfrom-rev="581156"
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes/attributes.xml</path>
-<path
-   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/site.xml</path>
-<path
-   action="D">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth.xml</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/setup.xml</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/authenticator.aart</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/introduction.xml</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/architecture.xml</path>
-</paths>
-<msg>Adding diagrams to shibboleth docs</msg>
-</logentry>
-<logentry
-   revision="581244">
-<author>andreas</author>
-<date>2007-10-02T14:01:49.187037Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/util/OutgoingLinkRewriter.java</path>
-</paths>
-<msg>Obtain context path only if necessary</msg>
-</logentry>
-<logentry
-   revision="581245">
-<author>andreas</author>
-<date>2007-10-02T14:02:23.246055Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethModule.java</path>
-</paths>
-<msg>Don't attach port string if port is 80</msg>
-</logentry>
-<logentry
-   revision="581252">
-<author>andreas</author>
-<date>2007-10-02T14:15:13.674586Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
-</paths>
-<msg>Setting default values in cocoon-xconf.xsl</msg>
-</logentry>
-<logentry
-   revision="581379">
-<author>andreas</author>
-<date>2007-10-02T20:49:53.758101Z</date>
-<paths>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/classes.aart</path>
-<path
-   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/process.aart</path>
-<path
-   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/attributes/classes.aart</path>
-<path
-   action="D">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/authenticator.aart</path>
-<path
-   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/introduction.xml</path>
-<path
-   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/architecture.xml</path>
-</paths>
-<msg>Added some ascii art diagrams for attribute and shibboleth auth</msg>
-</logentry>
-<logentry
-   revision="581556">
-<author>jann</author>
-<date>2007-10-03T10:19:54.661726Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethModule.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/AssertionConsumerServiceImpl.java</path>
-</paths>
-<msg>Configure shire in cocoon.xconf</msg>
-</logentry>
-<logentry
-   revision="581645">
-<author>jann</author>
-<date>2007-10-03T16:19:06.615957Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/Publication.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/util/OutgoingLinkRewriter.java</path>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethUtil.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/AbstractPublication.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/publication/Proxy.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethModule.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/AssertionConsumerService.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShireSelector.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/AssertionConsumerServiceImpl.java</path>
-</paths>
-<msg>Fixed URL handling (based on proxy settings) and IP address handling for shibboleth authentication</msg>
-</logentry>
-<logentry
-   revision="582009">
-<author>jann</author>
-<date>2007-10-04T20:56:45.062259Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
-</paths>
-<msg>Wrong classpath to AttriubteTranslator</msg>
-</logentry>
-<logentry
-   revision="582011">
-<author>jann</author>
-<date>2007-10-04T20:58:05.652316Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
-</paths>
-<msg>build does not work with &amp; in xsl File</msg>
-</logentry>
-<logentry
-   revision="582946">
-<author>rfrovarp</author>
-<date>2007-10-08T19:20:11.853828Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
-</paths>
-<msg>Fixed bug 43573 and 43505
-</msg>
-</logentry>
-<logentry
-   revision="583759">
-<author>jann</author>
-<date>2007-10-11T09:53:51.697656Z</date>
-<paths>
-<path
-   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/SslRedirectAction.java</path>
-</paths>
-<msg>Adding SslRedirectAction adapted from lenya 2.0</msg>
-</logentry>
-<logentry
-   revision="583761">
-<author>jann</author>
-<date>2007-10-11T09:57:38.099999Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/sitemap.xmap</path>
-</paths>
-<msg>Ups forgot to add sitemap changes in the last commit for the ssl redirect action</msg>
-</logentry>
-<logentry
-   revision="584193">
-<author>jann</author>
-<date>2007-10-12T15:51:33.938311Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/ac/java/src/org/apache/lenya/cms/cocoon/acting/SslRedirectAction.java</path>
-</paths>
-<msg>Prevent redirect loop if a site is ssl protected see also http://issues.apache.org/bugzilla/show_bug.cgi?id=43613</msg>
-</logentry>
-<logentry
-   revision="584200">
-<author>rfrovarp</author>
-<date>2007-10-12T17:00:58.111216Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
-</paths>
-<msg>IE6 caches authoring under HTTPS without this line.
-</msg>
-</logentry>
-<logentry
-   revision="584272">
+   revision="607924">
 <author>nettings</author>
-<date>2007-10-12T21:07:12.490450Z</date>
+<date>2008-01-01T21:40:39.538958Z</date>
 <paths>
 <path
-   action="A">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/scheduler/add_datasources_element.xconf</path>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/scheduler/datasources.xconf</path>
+   action="M">/lenya/trunk/src/modules/prettyprinting/xslt/xml2nicexml.xsl</path>
 </paths>
-<msg>fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=43581
-(custom datasources in cocoon.xconf were being nuked by an unspecific
-lenya patchfile)
-the approach is now to add to the &lt;datasources/&gt; element instead of
-overwriting it, which mandates another patchfile that will make sure an
-empty &lt;datasources/&gt; element is created first.
-
-thanks to markus angst for this patch.
-
-please test, i don't use custom datasources...
-
+<msg>don't prettyprint &lt;script/&gt; elements.
 </msg>
 </logentry>
 <logentry
-   revision="584818">
+   revision="608151">
 <author>ragaller</author>
-<date>2007-10-15T16:39:01.554102Z</date>
+<date>2008-01-02T17:16:21.843855Z</date>
 <paths>
 <path
-   action="A">/lenya/sandbox/temp-eol-testfile.txt</path>
+   action="M">/lenya/trunk/src/modules/prettyprinting/xslt/xml2nicexml.xsl</path>
 </paths>
-<msg>temporary test file for eol settings (I will remove the file as soon as I know that things are working as expected)</msg>
+<msg>prettyprinting: leave textarea alone to avoid &lt;textarea /&gt;</msg>
 </logentry>
 <logentry
-   revision="585437">
-<author>jann</author>
-<date>2007-10-17T10:29:22.853268Z</date>
+   revision="608458">
+<author>andreas</author>
+<date>2008-01-03T11:47:26.351627Z</date>
 <paths>
 <path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/ShibbolethModule.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/ShibbolethModuleImpl.java</path>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/AssertionConsumerServiceImpl.java</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/languageselector/index.xml</path>
 </paths>
-<msg>We need to get the baseURL from the target. Otherwise it might not correspond to the AssertionCosumerURL and we did not get any attributes</msg>
+<msg>Added docs about languageselector URL syntax</msg>
 </logentry>
 <logentry
-   revision="586109">
-<author>rfrovarp</author>
-<date>2007-10-18T20:06:27.948352Z</date>
+   revision="608531">
+<author>andreas</author>
+<date>2008-01-03T15:36:53.310160Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
+   action="A">/lenya/trunk/src/confpatch/log4j-loglevel.xconf</path>
 </paths>
-<msg>Clean up deprecation message.
-</msg>
+<msg>Set log4j log level to error by default. This fixes bug 43987.</msg>
 </logentry>
 <logentry
-   revision="586486">
-<author>rfrovarp</author>
-<date>2007-10-19T14:46:33.317326Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/fckeditor/resources/javascript/fckloader.js</path>
-<path
-   action="M">/lenya/trunk/src/modules/fckeditor/usecases/fckeditor.jx</path>
-</paths>
-<msg>Load FCK from under the publication. Helps with customizing features of the editor.
-</msg>
-</logentry>
-<logentry
-   revision="586495">
-<author>rfrovarp</author>
-<date>2007-10-19T15:13:36.726968Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
-<path
-   action="M">/lenya/trunk/src/modules/menubar/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/linkcheck/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/svg/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/opendocument/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/config/menus/generic.xsp</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/lenya/content/publishing/publish-screen.xsp</path>
-<path
-   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/usecase.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/webdav/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentURLModule.java</path>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/xslt/authoring/asset-upload.xsl</path>
-<path
-   action="M">/lenya/trunk/src/modules/editors/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/config/sitemap/pipelines.xmap</path>
-<path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
-<path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentIdToPathMapper.java</path>
-<path
-   action="M">/lenya/trunk/src/modules/xopus/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/java/src/org/apache/lenya/cms/cocoon/acting/WorkflowInvokerAction.java</path>
-</paths>
-<msg>Substitute document-uuid for document-id as document-id is deprecated. See bug 43038.
-</msg>
-</logentry>
-<logentry
-   revision="586507">
-<author>rfrovarp</author>
-<date>2007-10-19T15:49:32.739819Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/news/config/menu.xsp</path>
-</paths>
-<msg>Children is not a valid sample type for news. Was logging warnings every time creating a news document was in the file menu under authoring.
-</msg>
-</logentry>
-<logentry
-   revision="586523">
-<author>rfrovarp</author>
-<date>2007-10-19T16:35:52.922208Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
-</paths>
-<msg>Prevent the browser test from logging warnings by just commenting out code to be disabled.
-</msg>
-</logentry>
-<logentry
-   revision="586525">
-<author>rfrovarp</author>
-<date>2007-10-19T16:42:04.526726Z</date>
-<paths>
-<path
-   action="D">/lenya/trunk/src/webapp/lenya/config/sitemap/selectors.xmap</path>
-</paths>
-<msg>Not used. Only contained a subset of what cocoon provides under the browser name anyway.
-</msg>
-</logentry>
-<logentry
-   revision="586529">
-<author>rfrovarp</author>
-<date>2007-10-19T16:47:23.608867Z</date>
-<paths>
-<path
-   action="D">/lenya/trunk/src/webapp/lenya/resources/css/xulmenu.xml</path>
-<path
-   copyfrom-path="/lenya/trunk/src/webapp/lenya/resources/css/xulmenu.xml"
-   copyfrom-rev="586509"
-   action="A">/lenya/trunk/src/webapp/lenya/resources/css/xulmenu.css</path>
-</paths>
-<msg>Replacing CSS XMLs by plain CSS - not needed anymore thanks to proxy transformer
-</msg>
-</logentry>
-<logentry
-   revision="586532">
-<author>rfrovarp</author>
-<date>2007-10-19T16:51:08.351310Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
-</paths>
-<msg>minor fix - cleaned up comment code
-</msg>
-</logentry>
-<logentry
-   revision="586549">
-<author>rfrovarp</author>
-<date>2007-10-19T17:21:42.997149Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/opendocument/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/kupu/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/fckeditor/sitemap.xmap</path>
-<path
-   action="M">/lenya/trunk/src/modules/svg/sitemap.xmap</path>
-</paths>
-<msg>Convert remaining lenyadoc:/ to lenya-document:
-</msg>
-</logentry>
-<logentry
-   revision="586758">
-<author>ragaller</author>
-<date>2007-10-20T16:57:27.098323Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/tinymce/resources/javascript/tiny_lenya_glue.js</path>
-<path
-   action="M">/lenya/trunk/src/modules/tinymce/resources/tinymce/jscripts/tiny_mce/plugins/simplebrowser/editor_plugin.js</path>
-</paths>
-<msg>tinyMCE: transfer image width, height and title to the simplebrowser window. Fixes Bug 43203</msg>
-</logentry>
-<logentry
-   revision="587262">
+   revision="608543">
 <author>nettings</author>
-<date>2007-10-22T21:14:43.111237Z</date>
+<date>2008-01-03T16:17:07.209015Z</date>
 <paths>
 <path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/newpublication/index.xml</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
 </paths>
-<msg>fixed acl-related documentation error, thanks to markus angst for
-spotting this one.
+<msg>purge lenya live sites list.
 </msg>
 </logentry>
 <logentry
-   revision="587267">
+   revision="608546">
 <author>nettings</author>
-<date>2007-10-22T21:23:49.236485Z</date>
+<date>2008-01-03T16:25:39.459066Z</date>
 <paths>
 <path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/newpublication/index.xml</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
 </paths>
-<msg>clarifications to search configuration docs suggested by markus angst.
+<msg>add 2.0 live site
 </msg>
 </logentry>
 <logentry
-   revision="587460">
+   revision="608548">
+<author>andreas</author>
+<date>2008-01-03T16:27:37.081845Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Updated credits from website</msg>
+</logentry>
+<logentry
+   revision="608551">
+<author>andreas</author>
+<date>2008-01-03T16:33:17.439243Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Added Juergen Ragaller to committer list</msg>
+</logentry>
+<logentry
+   revision="608569">
+<author>solprovider</author>
+<date>2008-01-03T17:22:53.966299Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/who.xml</path>
+</paths>
+<msg>Corrected my last name.</msg>
+</logentry>
+<logentry
+   revision="608632">
+<author>andreas</author>
+<date>2008-01-03T21:23:58.670604Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/lenya.sh</path>
+</paths>
+<msg>Set endorsed libs directory to WEB-INF/lib/endorsed instead of the endorsed lib directory in the Cocoon sources. This avoids hard-coding the name of the Cocoon source directory which might be different in different Lenya distributions.</msg>
+</logentry>
+<logentry
+   revision="608663">
 <author>nettings</author>
-<date>2007-10-23T11:23:51.306228Z</date>
+<date>2008-01-03T22:34:01.162477Z</date>
 <paths>
 <path
-   action="A">/lenya/trunk/src/modules/tinymce/resources/i18n/cmsui_de.xml</path>
-<path
-   action="A">/lenya/trunk/src/modules/tinymce/resources/i18n/cmsui.xml</path>
-<path
-   action="A">/lenya/trunk/src/modules/tinymce/resources/i18n</path>
+   action="M">/lenya/trunk/tools/proxytest/README</path>
 </paths>
-<msg>i18n for tinymce menu entry
+<msg>use endorsed libs from webapp directory in jetty6 commandline, not from
+the cocoon_2_1/ dir, because cocoon dir might change its name at some
+point (tracking andreas' change in r608632)
 </msg>
 </logentry>
 <logentry
-   revision="587463">
+   revision="608780">
+<author>andreas</author>
+<date>2008-01-04T09:38:59.369935Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/release.xml</path>
+</paths>
+<msg>Added note about setting the revision number when releasing with a development version of Cocoon.</msg>
+</logentry>
+<logentry
+   revision="608783">
+<author>andreas</author>
+<date>2008-01-04T09:50:51.535584Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
+</paths>
+<msg>[minor change] changed line wrapping</msg>
+</logentry>
+<logentry
+   revision="608786">
+<author>andreas</author>
+<date>2008-01-04T10:02:02.461680Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
+</paths>
+<msg>[minor change] changed formatting</msg>
+</logentry>
+<logentry
+   revision="608788">
+<author>andreas</author>
+<date>2008-01-04T10:07:41.604095Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/externals</path>
+</paths>
+<msg>Setting svn:externals to a specific Cocoon revision from before the critical changes to the build process.</msg>
+</logentry>
+<logentry
+   revision="608791">
+<author>andreas</author>
+<date>2008-01-04T10:12:33.149552Z</date>
+<paths>
+<path
+   action="A">/lenya/tags/RELEASE_2_0/RELEASE-NOTES.txt</path>
+</paths>
+<msg>Adding release notes</msg>
+</logentry>
+<logentry
+   revision="608802">
+<author>andreas</author>
+<date>2008-01-04T11:21:13.563882Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/development/test/canoo/test.xml</path>
+</paths>
+<msg>Updating web test to GUI change</msg>
+</logentry>
+<logentry
+   revision="608803">
+<author>andreas</author>
+<date>2008-01-04T11:21:52.563624Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/test/canoo/test.xml</path>
+</paths>
+<msg>Updating web test to GUI change, adding accept-language header to configuration</msg>
+</logentry>
+<logentry
+   revision="608804">
+<author>andreas</author>
+<date>2008-01-04T11:28:28.824187Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/test/canoo/test.xml</path>
+</paths>
+<msg>Reverting accidential change to canoo web test base path.</msg>
+</logentry>
+<logentry
+   revision="608809">
+<author>andreas</author>
+<date>2008-01-04T11:45:34.466077Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/lib/xercesImpl-2.9.0.jar</path>
+</paths>
+<msg>Removing Xerces 2.9.0, Cocoon ships with a newer version.</msg>
+</logentry>
+<logentry
+   revision="608844">
+<author>andreas</author>
+<date>2008-01-04T14:13:53.946842Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/tools/svn2changes.xsl</path>
+</paths>
+<msg>[minor change] fixed indentation</msg>
+</logentry>
+<logentry
+   revision="608855">
+<author>andreas</author>
+<date>2008-01-04T14:29:43.798489Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/who.xml</path>
+</paths>
+<msg>Added list of 'other contributions' to who.html page</msg>
+</logentry>
+<logentry
+   revision="608861">
+<author>andreas</author>
+<date>2008-01-04T14:33:54.333431Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Replaced list of committers and contributors in CREDITS.txt with link to who.html on our website.</msg>
+</logentry>
+<logentry
+   revision="608863">
+<author>andreas</author>
+<date>2008-01-04T14:34:41.371156Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/CREDITS.txt</path>
+</paths>
+<msg>Replaced list of committers and contributors in CREDITS.txt with link to who.html on our website.</msg>
+</logentry>
+<logentry
+   revision="608925">
 <author>nettings</author>
-<date>2007-10-23T11:58:57.695307Z</date>
+<date>2008-01-04T17:11:23.755922Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/UsecaseView.java</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
 </paths>
-<msg>cosmetic changes to javadocs
+<msg>add info column, add harvard medical school library
 </msg>
 </logentry>
 <logentry
-   revision="587512">
-<author>andreas</author>
-<date>2007-10-23T14:11:03.671443Z</date>
+   revision="608926">
+<author>nettings</author>
+<date>2008-01-04T17:17:40.160653Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/transaction/MockUser.java</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
 </paths>
-<msg>Added missing method to MockUser class</msg>
-</logentry>
-<logentry
-   revision="587547">
-<author>andreas</author>
-<date>2007-10-23T16:05:34.012623Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/java/test/org/apache/lenya/cms/cocoon/transformation/ProxyTransformerTest.java</path>
-</paths>
-<msg>Use default publication URL in proxy transformer test to avoid failing of UsecaseAuthorizer for non-existent publication</msg>
-</logentry>
-<logentry
-   revision="587598">
-<author>rfrovarp</author>
-<date>2007-10-23T18:41:44.947441Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/fckeditor/config/cocoon-xconf/usecases-edit-fckeditor.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/neutron/config/cocoon-xconf/usecase-checkin.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe-close.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/tinymce/config/cocoon-xconf/usecase-tinymce-edit.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-optional/jcrsource/config/cocoon-xconf/usecase-export.xconf</path>
-</paths>
-<msg>view uri=cocoon:// is deprecated, removed cocoon:/ and left the leading /
+<msg>minor corrections
 </msg>
 </logentry>
 <logentry
-   revision="587601">
-<author>rfrovarp</author>
-<date>2007-10-23T18:47:14.615982Z</date>
+   revision="608929">
+<author>nettings</author>
+<date>2008-01-04T17:22:25.129848Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/modules-core/usecase/usecases.js</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
 </paths>
-<msg>[minor change] clean up comment to make it hopefully a little more clear
+<msg>saner table headers
 </msg>
 </logentry>
 <logentry
-   revision="587614">
-<author>rfrovarp</author>
-<date>2007-10-23T19:04:03.702261Z</date>
+   revision="609032">
+<author>andreas</author>
+<date>2008-01-04T22:19:56.491761Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+   action="A">/lenya/sandbox/modules/forrest/resources/samples/svnLog.xml</path>
 <path
-   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree2/TreeSiteManager.java</path>
+   action="A">/lenya/sandbox/modules/forrest/xslt/svnLog2document.xsl</path>
+<path
+   action="A">/lenya/sandbox/modules/forrest/config/cocoon-xconf/resourcetype-svnLog.xconf</path>
 </paths>
-<msg>Comment added to clear up my confusion as to the return results.
+<msg>Added svnLog resource type for forrest module</msg>
+</logentry>
+<logentry
+   revision="609033">
+<author>andreas</author>
+<date>2008-01-04T22:23:45.075657Z</date>
+<paths>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67329360-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/657c57e0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67b557f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67f01700-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66dc5d10-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65fdbce0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6592c610-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65d35180-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/660780e0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/680b6730-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/674be7c0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66e3b010-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66c3f310-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66225be0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65ee7aa0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/678dabb0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66ace8a0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66bb8ea0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67257400-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66317710-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66653140-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6715bc90-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65e1a960-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65a870f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66842af0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65ca02b0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67e4f370-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6611e120-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6677a7d0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66479720-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66597170-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66956900-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/668c8f60-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/670800f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67cf4890-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67ad1a90-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66d29910-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6759a360-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67725b80-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/667cd7f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6794feb0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/671dabd0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/68015510-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66eb5130-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/662b83a0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/676a1e20-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67a440f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67da4510-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65af4ec0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67bea6c0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67810180-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67f65890-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66f5b170-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/666ea720-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/664e9c00-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6818d4b0-8730-11dc-ae46-9e7b5d14892d</path>
+</paths>
+<msg>Removing old changes documents</msg>
+</logentry>
+<logentry
+   revision="609045">
+<author>andreas</author>
+<date>2008-01-04T22:56:25.293391Z</date>
+<paths>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.1199485732572.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732695.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.1199485733913.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.1199485733066.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.1199485733769.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733209.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.1199485733272.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.meta.1199485732572.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.1199485733785.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732727.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732910.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733187.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733332.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.1199485733532.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733879.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/svn-commit.sh</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.1199485733896.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732469.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732504.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733628.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.1199485732393.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733749.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733272.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.1199485733332.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733589.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.1199485733822.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.1199485732695.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.1199485733589.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733723.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733143.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733769.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733501.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.1199485733565.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732866.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732608.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.1199485732910.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.1199485733501.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.1199485732335.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733805.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.1199485733932.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733050.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733913.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.1199485732504.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.1199485733187.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733669.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.1199485732803.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733932.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.1199485732608.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.1199485733749.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.1199485733647.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.1199485732991.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733473.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732803.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.1199485733050.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732335.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.1199485733105.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732991.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732393.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733532.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.1199485733669.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml.1199485733709.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733066.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733684.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.1199485733805.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.1199485732727.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.1199485733143.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733858.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.1199485733879.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733647.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733565.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.1199485733209.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.1199485732469.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733822.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733105.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.1199485733628.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.1199485733723.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733896.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.1199485733473.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733785.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.1199485733684.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.1199485732866.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.1199485733858.bak</path>
+</paths>
+<msg>Adding new generated changes documents</msg>
+</logentry>
+<logentry
+   revision="609054">
+<author>andreas</author>
+<date>2008-01-04T23:38:45.345030Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/modules/docustyle/resources/css/page.css</path>
+</paths>
+<msg>Changed table layout for docu publication</msg>
+</logentry>
+<logentry
+   revision="609553">
+<author>andreas</author>
+<date>2008-01-07T10:22:26.062862Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg>Clarified installation instructions</msg>
+</logentry>
+<logentry
+   revision="609562">
+<author>andreas</author>
+<date>2008-01-07T10:36:03.230415Z</date>
+<paths>
+<path
+   action="D">/lenya/tags/RELEASE_2_0/INSTALL-BIN.txt</path>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/INSTALL-SRC.txt</path>
+</paths>
+<msg>Updating source installation instructions, removing binary release instructions</msg>
+</logentry>
+<logentry
+   revision="609585">
+<author>andreas</author>
+<date>2008-01-07T12:38:42.605147Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/KEYS</path>
+</paths>
+<msg>Adding my public key to the KEYS file</msg>
+</logentry>
+<logentry
+   revision="609586">
+<author>andreas</author>
+<date>2008-01-07T12:40:19.055085Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/KEYS</path>
+</paths>
+<msg>Adding my public key to the KEYS file</msg>
+</logentry>
+<logentry
+   revision="609671">
+<author>nettings</author>
+<date>2008-01-07T16:26:44.929253Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg></msg>
+</logentry>
+<logentry
+   revision="609684">
+<author>andreas</author>
+<date>2008-01-07T16:52:37.203815Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/faq.xml</path>
+</paths>
+<msg>Adding FAQ about 'failure during job recovery'.</msg>
+</logentry>
+<logentry
+   revision="609687">
+<author>andreas</author>
+<date>2008-01-07T16:59:17.091018Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/config/module.xml</path>
+</paths>
+<msg>Added dependency from fckeditor module to workflow module</msg>
+</logentry>
+<logentry
+   revision="609690">
+<author>andreas</author>
+<date>2008-01-07T17:06:44.616241Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/src/modules/fckeditor/config/module.xml</path>
+</paths>
+<msg>Added dependency from fckeditor module to workflow module</msg>
+</logentry>
+<logentry
+   revision="609694">
+<author>nettings</author>
+<date>2008-01-07T17:12:36.882557Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg>added md5 sum verification instructions, minor other fixes.
+
 </msg>
 </logentry>
 <logentry
-   revision="587622">
-<author>rfrovarp</author>
-<date>2007-10-23T19:16:24.928197Z</date>
-<paths>
-<path
-   action="D">/lenya/trunk/src/modules/sitetree/config/sitemap/transformer-index.xmap</path>
-<path
-   action="D">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/cocoon/transformation/DocumentIndexTransformer.java</path>
-</paths>
-<msg>dead code
-</msg>
-</logentry>
-<logentry
-   revision="587659">
-<author>rfrovarp</author>
-<date>2007-10-23T21:27:58.178905Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acArchive.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/opendocument/config/cocoon-xconf/usecase-create-odt.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-optional/jcrsource/config/cocoon-xconf/usecase-import.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/acusecases/config/cocoon-xconf/usecase-ac-login.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-submit.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-delete.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-userProfile.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-create.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-edit-oneform.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-changeNodeID.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/notification/config/cocoon-xconf/usecase-inbox.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-addGroup.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRanges.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-paste.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-serverStatus.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-groupProfile.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-scheduler.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-userGroups.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-user.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-deleteGroup.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-forceCheckIn.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-revisions.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acTrash.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRange.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-addUser.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-siteOverview.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-optional/jcrsource/config/cocoon-xconf/usecase-importExport.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/neutron/config/cocoon-xconf/usecase-checkout.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/resource/config/cocoon-xconf/usecase-upload-resource.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-publish.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/usecasedocument/config/cocoon-xconf/usecase-createUsecaseDocument.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-users.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/export/config/cocoon-xconf/usecase-importExampleContent.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-assets.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-deleteLanguage.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-deactivate.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-createLanguage.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-sessions.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRangeProfile.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-changePassword.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecases-site-create.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-usecases.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/resource/config/cocoon-xconf/usecase-create-resource.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-restore.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-groups.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-changeLabel.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-edit-forms.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-createResource.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecases-workflow-publish.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/notification/config/cocoon-xconf/usecase-sendMessage.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-cut.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/export/config/cocoon-xconf/usecase-import.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecase-workflow-delete.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecase-workflow-multiWorkflow.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/contactform/config/cocoon-xconf/usecase-contactForm.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acLive.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-acAuthoring.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/templating/config/cocoon-xconf/usecase-createPulicationFromTemplate.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/config/cocoon-xconf/usecases-workflow-reject.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/opendocument/config/cocoon-xconf/usecase-upload-odt.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-workflow.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/linkcheck/config/cocoon-xconf/usecase-getLinks.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-changePasswordAdmin.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-ipRangeGroups.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/blog/config/cocoon-xconf/usecases-workflow-deactivate.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-meta.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-group.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/acusecases/config/cocoon-xconf/usecase-ac-logout.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-addIPRange.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-emptyTrash.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/usecase-opensearch.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-deleteUser.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-aboutLenya.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/usecase-externalOpensearch.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-copy.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-overview.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-groupMembers.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/kupu/config/cocoon-xconf/usecase-kupu.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/config/cocoon-xconf/usecase-admin-deleteIPRange.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/news/config/cocoon-xconf/usecase-news-edit.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-archive.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/usecase-search.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/webdav/config/cocoon-xconf/usecases-webdav-filePropfind.xconf</path>
-<path
-   action="M">/lenya/trunk/src/modules/webdav/config/cocoon-xconf/usecases-webdav-propfind.xconf</path>
-</paths>
-<msg>Switch all &lt;view template=""&gt; to &lt;view uri=""&gt; as template is a subset of uri and we want to encourage the use of uri according to Joern.
-</msg>
-</logentry>
-<logentry
-   revision="587898">
-<author>rfrovarp</author>
-<date>2007-10-24T14:36:34.474223Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/pubs/default/config/workflow/workflow.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Delete.java</path>
-</paths>
-<msg>Allow for deleting of files directly from archive. Fixes bug 43691.
-</msg>
-</logentry>
-<logentry
-   revision="587902">
-<author>jann</author>
-<date>2007-10-24T14:57:46.915661Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/SslRedirectAction.java</path>
-</paths>
-<msg>If the request scheme is already https do not redirect again. This prevents a redirect loop. If you use mod_proxy than you have to ensure that requests are redirect to https://. Found no better solution for that redirect problem at the moment</msg>
-</logentry>
-<logentry
-   revision="588197">
+   revision="609705">
 <author>andreas</author>
-<date>2007-10-25T10:58:35.017139Z</date>
+<date>2008-01-07T17:21:40.120817Z</date>
 <paths>
 <path
-   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/process.aart</path>
-</paths>
-<msg>Updated shibboleth authentication process diagram</msg>
-</logentry>
-<logentry
-   revision="588198">
-<author>andreas</author>
-<date>2007-10-25T11:01:03.591557Z</date>
-<paths>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/source_version.xml</path>
 <path
-   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/process.aart</path>
-</paths>
-<msg>[minor change] improved layout</msg>
-</logentry>
-<logentry
-   revision="588368">
-<author>thorsten</author>
-<date>2007-10-25T21:46:15.725890Z</date>
-<paths>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/index.xml</path>
 <path
-   action="M">/lenya/site/docs/modules/fckeditor/index.html</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/index.xml</path>
 <path
-   action="M">/lenya/site/docs/modules/news/index.html</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
 <path
-   action="M">/lenya/site/docs/modules/xopus/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/bxe/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/concepts/publication.html</path>
-<path
-   action="M">/lenya/site/docs/modules/acusecases/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/svg/resizeimages.html</path>
-<path
-   action="M">/lenya/site/docs/modules/kupu/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/usecase-framework/abstractusecase.html</path>
-<path
-   action="M">/lenya/site/docs/modules/resource/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/installation/subversion.html</path>
-<path
-   action="M">/lenya/site/docs/modules/observation/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/collection/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/xhtml/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/properties/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/protocols/lenya-document.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/installation/source_version.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/resourcetype/part2.html</path>
-<path
-   action="M">/lenya/site/docs/modules/sourcerepository/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/urlMapping.html</path>
-<path
-   action="M">/lenya/site/docs/modules/janitor/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/protocols/lenyadoc.html</path>
-<path
-   action="M">/lenya/site/docs/modules/tinymce/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/editors/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/webdav/webdav.html</path>
-<path
-   action="M">/lenya/site/svn-log/tlp-HEAD.svn.xml</path>
-<path
-   action="M">/lenya/site/docs/modules/links/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/ldap/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/tests.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/protocols/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/development/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/ac/index.html</path>
-<path
-   action="M">/lenya/site/linkmap.html</path>
-<path
-   action="M">/lenya/site/tlp-HEAD.svn-revision.xml</path>
-<path
-   action="M">/lenya/site/docs/modules/webdav/monitoring.html</path>
-<path
-   action="M">/lenya/site/docs/modules/notification/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/bestpractises.html</path>
-<path
-   action="M">/lenya/site/docs/modules/cforms/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/profiling/index.html</path>
-<path
-   action="M">/lenya/site/tlp-HEAD.svn.html</path>
-<path
-   action="M">/lenya/site/docs/modules/lenyadoc/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/opendocument/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/resourcetype/part3.html</path>
-<path
-   action="A">/lenya/site/docs/2_0_x/tutorials/usecase</path>
-<path
-   action="M">/lenya/site/docs/modules/templating/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/concepts/documents.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/production.pdf</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/repository/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/newpublication/index.pdf</path>
-<path
-   action="M">/lenya/site/docs/modules/simplesite/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/contactform/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/publication/publication-templating/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/export/index.html</path>
-<path
-   action="A">/lenya/site/images/live/usecase</path>
-<path
-   action="M">/lenya/site/docs/modules/blog/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/resource-types.pdf</path>
-<path
-   action="M">/lenya/site/docs/modules/sitetree/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/svg/roundedcorners.html</path>
-<path
-   action="M">/lenya/site/docs/modules/usecasedocument/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/usecase/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/neutron/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/linking/index.html</path>
-<path
-   action="A">/lenya/site/docs/2_0_x/tutorials/usecase/part1.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/bestpractises.pdf</path>
-<path
-   action="A">/lenya/site/images/live/usecase/screenshotAddKnownPerson.png</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/installation/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/resourcetype/part4.html</path>
-<path
-   action="M">/lenya/site/.htaccess</path>
-<path
-   action="M">/lenya/site/docs/modules/sitemanagement/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/metadata.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/publication/configuration.html</path>
-<path
-   action="M">/lenya/site/docs/modules/webdav/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/workflow/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/lucene/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/protocols/site.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/resource-types.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/usecase-framework/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/lenya-sitemaps.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/protocols/lenya.html</path>
-<path
-   action="M">/lenya/site/docs/modules/languageselector/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/concepts/authoring_live.html</path>
-<path
-   action="M">/lenya/site/docs/modules/administration/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/mod_proxy_ajp.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/concepts/wysiwyg.html</path>
-<path
-   action="M">/lenya/site/linkmap.pdf</path>
-<path
-   action="M">/lenya/site/docs/modules/migration/index.html</path>
-<path
-   action="M">/lenya/site/docs/modules/linkcheck/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/link-management.html</path>
-<path
-   action="A">/lenya/site/docs/2_0_x/tutorials/usecase/part2.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/resourcetype/part1.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/faq.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/proxy.html</path>
-<path
-   action="M">/lenya/site/tlp-HEAD.svn-sh.xml</path>
-<path
-   action="M">/lenya/site/tlp-HEAD.svn.pdf</path>
-<path
-   action="A">/lenya/site/docs/2_0_x/tutorials/usecase/part1.pdf</path>
-<path
-   action="M">/lenya/site/docs/modules/prettyprinting/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/resourcetype/part5.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/resourcetype/part1.pdf</path>
-<path
-   action="A">/lenya/site/docs/2_0_x/tutorials/usecase/part2.pdf</path>
-<path
-   action="M">/lenya/site/docs/modules/cache/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/production.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/modules/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/setupide/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/tutorials/newpublication/index.html</path>
-<path
-   action="M">/lenya/site/docs/2_0_x/reference/ac.html</path>
-</paths>
-<msg>Publish from forrestbot</msg>
-</logentry>
-<logentry
-   revision="588560">
-<author>andreas</author>
-<date>2007-10-26T08:41:59.379000Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/lucene/java/test/org/apache/lenya/cms/lucene/SearchTest.java</path>
-</paths>
-<msg>Disable search test because indexing doesn't work in the test environment</msg>
-</logentry>
-<logentry
-   revision="588562">
-<author>andreas</author>
-<date>2007-10-26T08:43:18.236859Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/targets/test-build.xml</path>
-</paths>
-<msg>Change search index configuration in test publication</msg>
-</logentry>
-<logentry
-   revision="588596">
-<author>andreas</author>
-<date>2007-10-26T10:16:46.095258Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repository/SessionImpl.java</path>
-</paths>
-<msg>Avoid event queuing only while session is being committed. This fixes the ObservationTest.</msg>
-</logentry>
-<logentry
-   revision="588617">
-<author>andreas</author>
-<date>2007-10-26T12:10:05.090276Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/transaction/TransactionTest.java</path>
-</paths>
-<msg>Updated exception type in TransactionTest</msg>
-</logentry>
-<logentry
-   revision="588618">
-<author>andreas</author>
-<date>2007-10-26T12:10:30.289074Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/rc/RevisionControllerTest.java</path>
-</paths>
-<msg>Commented out invalid checks to avoid NPE in RevisionControllerTest</msg>
-</logentry>
-<logentry
-   revision="588629">
-<author>andreas</author>
-<date>2007-10-26T12:41:18.889260Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy.xml</path>
-</paths>
-<msg>Adding hint about Tomcat's emptySessionPath attribute to proxy docs</msg>
-</logentry>
-<logentry
-   revision="588631">
-<author>andreas</author>
-<date>2007-10-26T13:04:48.857077Z</date>
-<paths>
-<path
-   action="A">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy/proxying.xml</path>
-<path
-   action="D">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy.xml</path>
-<path
-   action="A">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy</path>
-<path
-   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy.xml"
-   copyfrom-rev="588629"
-   action="A">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy/proxy.xml</path>
-<path
-   action="D">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/mod_proxy_ajp.xml</path>
-<path
-   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/mod_proxy_ajp.xml"
-   copyfrom-rev="588627"
-   action="A">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy/mod_proxy_ajp.xml</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/setupide/index.xml</path>
 <path
    action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
 </paths>
-<msg>Consolidated proxy docs</msg>
+<msg>Updating website: Reference 2.0 on download page, updated installation instrucations, removed 2.0 warning messages.</msg>
 </logentry>
 <logentry
-   revision="588641">
+   revision="609706">
 <author>andreas</author>
-<date>2007-10-26T13:40:07.304745Z</date>
+<date>2008-01-07T17:23:17.201080Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/modules-core/ac/java/src/org/apache/lenya/cms/cocoon/acting/SslRedirectAction.java</path>
+   action="M">/lenya/tags/RELEASE_2_0/INSTALL-SRC.txt</path>
 </paths>
-<msg>Use request.isSecure() instead of protocol string comparison. Moved check out of try block for better performance. Tested with mod_proxy_ajp.</msg>
+<msg>Updating installation instructions (merged from trunk)</msg>
 </logentry>
 <logentry
-   revision="588647">
-<author>rfrovarp</author>
-<date>2007-10-26T13:57:39.589963Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/test/canoo/test.xml</path>
-<path
-   action="M">/lenya/trunk/build.properties</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/test/canoo/test.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules/export/usecases/importExampleContent.jx</path>
-<path
-   action="M">/lenya/trunk/src/modules/development/test/canoo/test.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules/sitetree/test/canoo/test.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/acusecases/test/canoo/test.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules/notification/test/canoo/test.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/sitemanagement/test/canoo/test.xml</path>
-</paths>
-<msg>Rework webtests from bug 43134. Thanks to Markus Angst for the patch.
-</msg>
-</logentry>
-<logentry
-   revision="588652">
+   revision="609711">
 <author>andreas</author>
-<date>2007-10-26T14:05:01.956147Z</date>
+<date>2008-01-07T17:33:51.513721Z</date>
 <paths>
 <path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy/proxying.xml</path>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy/proxy.xml</path>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/proxy/mod_proxy_ajp.xml</path>
-</paths>
-<msg>Updated proxy docs, don't include /authoring/ in the URL</msg>
-</logentry>
-<logentry
-   revision="588654">
-<author>andreas</author>
-<date>2007-10-26T14:11:41.186257Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/sitetree/sitemap.xmap</path>
-</paths>
-<msg>Added site element to sitetree proxy transformer configuration. This way, the area nodes also get the correct URL in proxy environments. See bug 43429.</msg>
-</logentry>
-<logentry
-   revision="588670">
-<author>andreas</author>
-<date>2007-10-26T14:49:04.444354Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/cocoon/transformation/ProxyTransformer.java</path>
-</paths>
-<msg>[refactoring] extracted constant</msg>
-</logentry>
-<logentry
-   revision="588672">
-<author>andreas</author>
-<date>2007-10-26T14:49:51.410138Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/cocoon/components/modules/input/ProxyModule.java</path>
-</paths>
-<msg>Added configuration option to use relative URLs in ProxyModule</msg>
-</logentry>
-<logentry
-   revision="588690">
-<author>andreas</author>
-<date>2007-10-26T15:41:30.842768Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/reference/link-management.xml</path>
-</paths>
-<msg>Added more docs about proxy transformer and input module</msg>
-</logentry>
-<logentry
-   revision="588753">
-<author>rfrovarp</author>
-<date>2007-10-26T19:14:35.455058Z</date>
-<paths>
-<path
-   action="A">/lenya/trunk/src/modules/development/test/canoo/doconfig.xml</path>
-<path
-   action="A">/lenya/trunk/src/modules/development/test/canoo/lenya_webtest.dtd</path>
-<path
-   action="A">/lenya/trunk/src/modules/development/test/canoo/macros.xml</path>
-</paths>
-<msg>I missed the added files. Sorry.
-</msg>
-</logentry>
-<logentry
-   revision="589061">
-<author>ragaller</author>
-<date>2007-10-27T08:25:39.303351Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/development/test/canoo/doconfig.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules/development/test/canoo/lenya_webtest.dtd</path>
-<path
-   action="M">/lenya/trunk/src/modules/development/test/canoo/macros.xml</path>
-</paths>
-<msg>I removed the (somehow) doubled part of the content</msg>
-</logentry>
-<logentry
-   revision="589563">
-<author>andreas</author>
-<date>2007-10-29T09:53:46.121251Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/targets/modules-build.xml</path>
-</paths>
-<msg>Added target description</msg>
-</logentry>
-<logentry
-   revision="589564">
-<author>andreas</author>
-<date>2007-10-29T09:54:00.865604Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/targets/test-build.xml</path>
-</paths>
-<msg>Removed obsolete and non-functional web test target</msg>
-</logentry>
-<logentry
-   revision="589565">
-<author>andreas</author>
-<date>2007-10-29T09:55:37.770337Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/resources/build/publication.rng</path>
-</paths>
-<msg>Added trash and archive areas to publication.xml grammar</msg>
-</logentry>
-<logentry
-   revision="589566">
-<author>andreas</author>
-<date>2007-10-29T09:56:28.506979Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/administration/test/canoo/test.xml</path>
-</paths>
-<msg>Updated web test: user IDs are converted to lowercase</msg>
-</logentry>
-<logentry
-   revision="589580">
-<author>andreas</author>
-<date>2007-10-29T11:05:54.121636Z</date>
-<paths>
-<path
-   action="A">/lenya/trunk/src/modules-core/linking/java/test/org/apache/lenya/cms/linking/OutgoingLinkRewriterTest.java</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/linking/OutgoingLinkRewriter.java</path>
-</paths>
-<msg>Fixed relative URl generation, added test for relative URLs with OutgoingLinkRewriter, see bug 43681.</msg>
-</logentry>
-<logentry
-   revision="589639">
-<author>nettings</author>
-<date>2007-10-29T14:34:46.744540Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
-</paths>
-<msg>updated jdk version requirements, tomcat version, endorsed libs.
-added blah about automated testing.
-
-</msg>
-</logentry>
-<logentry
-   revision="589640">
-<author>andreas</author>
-<date>2007-10-29T14:38:32.272998Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/java/test/org/apache/lenya/cms/linking/OutgoingLinkRewriterTest.java</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/linking/OutgoingLinkRewriter.java</path>
-</paths>
-<msg>Fixed generation of relative URLs, updated test accordingly</msg>
-</logentry>
-<logentry
-   revision="589642">
-<author>nettings</author>
-<date>2007-10-29T14:44:58.014408Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
-</paths>
-<msg>blurb about web docs being out of sync, will fix later.
-</msg>
-</logentry>
-<logentry
-   revision="589663">
-<author>andreas</author>
-<date>2007-10-29T15:02:36.507624Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/reference/resource-types.xml</path>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/production.xml</path>
-</paths>
-<msg>Added docs about resource type expiration. This fixes bug 43097.</msg>
-</logentry>
-<logentry
-   revision="589672">
-<author>nettings</author>
-<date>2007-10-29T15:25:32.544249Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/production.xml</path>
-</paths>
-<msg>updated from wiki, wiki page emptied.
-
-</msg>
-</logentry>
-<logentry
-   revision="589677">
-<author>andreas</author>
-<date>2007-10-29T15:33:17.952610Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/workflow/java/src/org/apache/lenya/cms/workflow/usecases/Deactivate.java</path>
-</paths>
-<msg>Lock authoring document in deactivate usecase. This fixes bug #43460.</msg>
-</logentry>
-<logentry
-   revision="589679">
-<author>nettings</author>
-<date>2007-10-29T15:35:27.323440Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/tinymce/index.xml</path>
-</paths>
-<msg>minor updates for tinymce module docs
-
-</msg>
-</logentry>
-<logentry
-   revision="589680">
-<author>nettings</author>
-<date>2007-10-29T15:35:43.486352Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/tinymce/TODO</path>
-</paths>
-<msg>
-updated todo list
-</msg>
-</logentry>
-<logentry
-   revision="589705">
-<author>rfrovarp</author>
-<date>2007-10-29T16:05:42.941515Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/sitetree/resources/javascript/lenyatree.js</path>
-<path
-   action="M">/lenya/trunk/src/modules/sitetree/sitemap.xmap</path>
-</paths>
-<msg>Prevents stacktrace for icons for placeholder entries in trash or archive. Fixes bug 43662.
-</msg>
-</logentry>
-<logentry
-   revision="589735">
-<author>solprovider</author>
-<date>2007-10-29T16:52:09.640595Z</date>
-<paths>
-<path
-   action="M">/lenya/branches/BRANCH_1_2_X/lenya.sh</path>
-</paths>
-<msg>Modified lenya.sh to allow multiple instances of Lenya and add stop command.  Stops this instance before start attempts.  Reduced dependence on environment variables: LENYA_HOME is set to current directory, and JETTY_PORT is set here.  </msg>
-</logentry>
-<logentry
-   revision="589738">
-<author>andreas</author>
-<date>2007-10-29T16:55:12.391060Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/sitetree/xslt/navigation/sitetree2nav.xsl</path>
-</paths>
-<msg>Use existing instead of chosen language for sitetree links, works with 404 pages as well.</msg>
-</logentry>
-<logentry
-   revision="589748">
-<author>nettings</author>
-<date>2007-10-29T17:08:20.369596Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/reference/publication/configuration.xml</path>
-</paths>
-<msg>updated proxy configuration docs.
-</msg>
-</logentry>
-<logentry
-   revision="589764">
-<author>andreas</author>
-<date>2007-10-29T17:42:11.392708Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules/sitetree/xslt/navigation/breadcrumb.xsl</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/source_version.xml</path>
 </paths>
 <msg>[minor change] formatting</msg>
 </logentry>
 <logentry
-   revision="589768">
+   revision="609797">
 <author>andreas</author>
-<date>2007-10-29T17:45:43.918666Z</date>
+<date>2008-01-07T22:30:38.790736Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
-<path
-   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/PageEnvelope.java</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/faq.xml</path>
 </paths>
-<msg>Added method PageEnvelope.getLanguage() and attribute 'language' to page envelope module which falls back to the default language if the document does not exist (useful for 404 pages).</msg>
+<msg>Use &lt;p&gt; in &lt;answer&gt; to avoid validation problems.</msg>
 </logentry>
 <logentry
-   revision="589770">
+   revision="609931">
 <author>andreas</author>
-<date>2007-10-29T17:46:58.119790Z</date>
+<date>2008-01-08T11:08:34.880585Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/webapp/lenya/xslt/exception/document-does-not-exist.xsl</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/index.xml</path>
 <path
-   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
-<path
-   action="A">/lenya/trunk/src/pubs/default/xslt/addXhtmlTitle.xsl</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/xslt/page2xhtml.xsl</path>
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
 </paths>
-<msg>Show 404 page using the normal default publication layout.</msg>
+<msg>Added note about missing binary versions in 2.0 release.</msg>
 </logentry>
 <logentry
-   revision="589779">
+   revision="609993">
 <author>andreas</author>
-<date>2007-10-29T18:13:40.023717Z</date>
+<date>2008-01-08T14:08:05.310515Z</date>
 <paths>
 <path
-   action="M">/lenya/trunk/src/webapp/lenya/xslt/exception/document-does-not-exist.xsl</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+   action="M">/lenya/docu/tools/svn2changes.xsl</path>
 </paths>
-<msg>Display layouted 404 page also for non-XHTML documents</msg>
-</logentry>
-<logentry
-   revision="589787">
-<author>andreas</author>
-<date>2007-10-29T18:25:31.355451Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
-</paths>
-<msg>Allow to request documents without extension</msg>
-</logentry>
-<logentry
-   revision="589861">
-<author>andreas</author>
-<date>2007-10-29T21:22:30.542512Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/xslt/exception/generic.xsl</path>
-</paths>
-<msg>[minor change] code formatting</msg>
-</logentry>
-<logentry
-   revision="589872">
-<author>andreas</author>
-<date>2007-10-29T21:47:39.837599Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/xslt/exception/generic.xsl</path>
-<path
-   action="A">/lenya/trunk/src/webapp/lenya/error.xmap</path>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/config/sitemap/pipelines.xmap</path>
-</paths>
-<msg>Using separate sitemap for error handling, cleaned up exception XSLT</msg>
-</logentry>
-<logentry
-   revision="589887">
-<author>andreas</author>
-<date>2007-10-29T22:21:58.210013Z</date>
-<paths>
-<path
-   action="A">/lenya/trunk/src/pubs/default/lenya/xslt/exception/generic.xsl</path>
-<path
-   action="A">/lenya/trunk/src/pubs/default/lenya/xslt</path>
-<path
-   action="D">/lenya/trunk/src/webapp/lenya/error.xmap</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/lenya/resources/i18n/cmsui_de.xml</path>
-<path
-   action="M">/lenya/trunk/src/webapp/lenya/config/sitemap/pipelines.xmap</path>
-<path
-   action="A">/lenya/trunk/src/pubs/default/error.xmap</path>
-<path
-   copyfrom-path="/lenya/trunk/src/webapp/lenya/error.xmap"
-   copyfrom-rev="589872"
-   action="A">/lenya/trunk/src/webapp/error.xmap</path>
-<path
-   action="A">/lenya/trunk/src/pubs/default/lenya/xslt/exception</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/lenya/resources/i18n/cmsui.xml</path>
-</paths>
-<msg>Overriding error handler in default publication</msg>
-</logentry>
-<logentry
-   revision="590068">
-<author>nettings</author>
-<date>2007-10-30T13:42:33.419400Z</date>
-<paths>
-<path
-   action="A">/lenya/trunk/jetty6+ajp.xml</path>
-</paths>
-<msg>added a configuration file for jetty6 (needs to be downloaded
-separately), in order to ease testing with proxied environments.
-see comment header of this file for usage details.
-
-our included jetty should eventually be updated, since it has a bug that
-prevents ajp proxy connections from working - this is kind of testing
-the waters...
-
-</msg>
-</logentry>
-<logentry
-   revision="590077">
-<author>nettings</author>
-<date>2007-10-30T14:02:25.456702Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/config/cocoon-xconf/globalproxies.xconf</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/config/publication.xml</path>
-</paths>
-<msg>added example proxy settings to create a known proxy test environment.
-no functional changes, since all proxy-related settings are commented
-out by default. web docs should eventually be changed to match the new
-example values once they have proven useful.
-
-</msg>
-</logentry>
-<logentry
-   revision="590102">
-<author>andreas</author>
-<date>2007-10-30T14:54:22.752659Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
-</paths>
-<msg>Renamed node-* in docu to human-readable element names</msg>
-</logentry>
-<logentry
-   revision="590105">
-<author>andreas</author>
-<date>2007-10-30T15:02:44.811576Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
-</paths>
-<msg>Renamed node-* in docu to human-readable element names</msg>
-</logentry>
-<logentry
-   revision="590121">
-<author>nettings</author>
-<date>2007-10-30T15:43:36.193097Z</date>
-<paths>
-<path
-   copyfrom-path="/lenya/trunk/jetty6+ajp.xml"
-   copyfrom-rev="590068"
-   action="A">/lenya/trunk/tools/proxytest/jetty6.xml</path>
-<path
-   action="M">/lenya/trunk/src/modules-core/linking/config/cocoon-xconf/globalproxies.xconf</path>
-<path
-   action="A">/lenya/trunk/tools/proxytest/hosts_fake</path>
-<path
-   action="A">/lenya/trunk/tools/proxytest/proxy-ssl-key.pem</path>
-<path
-   action="D">/lenya/trunk/jetty6+ajp.xml</path>
-<path
-   action="A">/lenya/trunk/tools/proxytest/apache_vhosts.conf</path>
-<path
-   action="A">/lenya/trunk/tools/proxytest/proxy-ssl-cert.pem</path>
-<path
-   action="A">/lenya/trunk/tools/proxytest</path>
-<path
-   action="M">/lenya/trunk/src/pubs/default/config/publication.xml</path>
-</paths>
-<msg>added proxy test environment. no functional changes, everything is
-inactive by default. needs docs (see header of jetty6.xml for a rough
-outline), and proxy settings are somewhat broken atm...
-
-</msg>
-</logentry>
-<logentry
-   revision="590166">
-<author>nettings</author>
-<date>2007-10-30T17:29:38.743235Z</date>
-<paths>
-<path
-   action="M">/lenya/trunk/tools/proxytest/apache_vhosts.conf</path>
-</paths>
-<msg>some tweaks to the proxy test scaffold. it still falls apart the moment
-the servlet issues a redirect - seems it does not honor the proxy
-settings.
-
-</msg>
-</logentry>
-<logentry
-   revision="590176">
-<author>nettings</author>
-<date>2007-10-30T17:42:04.791045Z</date>
-<paths>
-<path
-   action="A">/lenya/trunk/tools/proxytest/README</path>
-</paths>
-<msg>added some q&amp;d docs for Jetty6 and proxy testing. work in need of
-progress.
-
-</msg>
-</logentry>
-<logentry
-   revision="590198">
-<author>nettings</author>
-<date>2007-10-30T17:56:20.782079Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/index.xml</path>
-</paths>
-<msg>docs update.
-</msg>
-</logentry>
-<logentry
-   revision="590250">
-<author>thorsten</author>
-<date>2007-10-30T18:45:49.133703Z</date>
-<paths>
-<path
-   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
-</paths>
-<msg>fixing bad links by renaming node</msg>
+<msg>Replace 1.4 with 2.0, added years 2007 and 2008 to version selection</msg>
 </logentry>
 </log>

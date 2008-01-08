@@ -1,0 +1,1202 @@
+<?xml version="1.0"?>
+<log>
+<logentry
+   revision="599615">
+<author>nettings</author>
+<date>2007-11-29T22:50:43.919313Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/resources/images/apache-lenya-light-1.svg</path>
+</paths>
+<msg>did a quick and dirty vector conversion of lenya bitmap logo.
+i basically opened it in gimp, scaled it tenfold, applied gaussian blur
+with 12 px radius and then used potrace for the conversion, -a 0.5 and
+-u 30 iirc. has lost considerable detail in the feather, which could be
+improved by selective blur. will try again later, but this shows roughly what
+can be done without re-drawing it.
+
+</msg>
+</logentry>
+<logentry
+   revision="600323">
+<author>andreas</author>
+<date>2007-12-02T16:14:27.849614Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/resources/images/vector</path>
+<path
+   action="A">/lenya/docu/src/documentation/resources/images/vector/apache-lenya.svg</path>
+<path
+   action="A">/lenya/docu/src/documentation/resources/images/vector/lenya_logo_redrawn_outline.svg</path>
+</paths>
+<msg>Adding Lenya vector graphics by Juergen Ragaller (thanks a lot) and an updated version with a different feather.</msg>
+</logentry>
+<logentry
+   revision="600585">
+<author>rfrovarp</author>
+<date>2007-12-03T16:21:32.252318Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/resources/i18n/cmsui.xml</path>
+</paths>
+<msg>Prevents copied documents from being pasted to itself. Fixes 44005. Needs German version of error message.
+</msg>
+</logentry>
+<logentry
+   revision="600590">
+<author>andreas</author>
+<date>2007-12-03T16:38:52.209988Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/resources/i18n/cmsui_de.xml</path>
+</paths>
+<msg>Added German i18n for will-copy-to-self message. Thanks to Richard Frovarp for the hint.</msg>
+</logentry>
+<logentry
+   revision="600871">
+<author>andreas</author>
+<date>2007-12-04T10:38:24.113129Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/ac/login.xsp</path>
+</paths>
+<msg>Clear access control error messages after displaying them</msg>
+</logentry>
+<logentry
+   revision="600912">
+<author>andreas</author>
+<date>2007-12-04T12:41:21.547977Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/lenya.sh</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/usecases/neutron/neutron.js</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/usecases/neutron/jx/meta.jx</path>
+</paths>
+<msg>Merging changes from BRANCH_2_1_X (r5754354:600871)</msg>
+</logentry>
+<logentry
+   revision="600928">
+<author>andreas</author>
+<date>2007-12-04T13:19:40.464175Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/content/admin/users/overview.xsp</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/content/admin/users/user-admin.js</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/content/admin/users/profile.xsp</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/content/admin/users/users.xsp</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/content/admin/ipranges/iprange-admin.js</path>
+</paths>
+<msg>Change admin area XSPs to UTF-8, use request.getParameter() instead of request.get() in admin area flowscripts to get the string in the correct encoding. This fixes bug 42704.</msg>
+</logentry>
+<logentry
+   revision="600929">
+<author>andreas</author>
+<date>2007-12-04T13:23:09.067088Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/ipranges/iprange-admin.js</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/users/overview.xsp</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/users/user-admin.js</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/users/profile.xsp</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/users/users.xsp</path>
+</paths>
+<msg>Merging changes from BRANCH_2_1_X (r600927:600928)</msg>
+</logentry>
+<logentry
+   revision="600933">
+<author>andreas</author>
+<date>2007-12-04T13:32:59.086447Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Message.java</path>
+</paths>
+<msg>Making message class serializable to avoid errors when the session is restored</msg>
+</logentry>
+<logentry
+   revision="600956">
+<author>andreas</author>
+<date>2007-12-04T14:00:57.643765Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+</paths>
+<msg>Fixed encoding problems with group rules (use request.getParameter() instead or request.get())</msg>
+</logentry>
+<logentry
+   revision="600968">
+<author>andreas</author>
+<date>2007-12-04T14:35:02.379086Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+</paths>
+<msg>Trim rule parameter before evaluating to avoid 'no viable alternative at character' errors</msg>
+</logentry>
+<logentry
+   revision="600970">
+<author>andreas</author>
+<date>2007-12-04T14:54:03.755471Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+</paths>
+<msg>[minor change] replaced tabs with spaces</msg>
+</logentry>
+<logentry
+   revision="600972">
+<author>andreas</author>
+<date>2007-12-04T14:56:17.284545Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+</paths>
+<msg>[minor change] improved indentation</msg>
+</logentry>
+<logentry
+   revision="601734">
+<author>andreas</author>
+<date>2007-12-06T13:55:34.525908Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+</paths>
+<msg>[Refactoring] extracted constants</msg>
+</logentry>
+<logentry
+   revision="601735">
+<author>andreas</author>
+<date>2007-12-06T13:56:59.227619Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileItemManager.java</path>
+</paths>
+<msg>Don't add transient users to user list. This avoids unnecessary memory consumtion and unpredictable behaviour.</msg>
+</logentry>
+<logentry
+   revision="601736">
+<author>andreas</author>
+<date>2007-12-06T13:58:27.879941Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/impl/AssertionConsumerServiceImpl.java</path>
+</paths>
+<msg>[Refactoring] extracted constants</msg>
+</logentry>
+<logentry
+   revision="601737">
+<author>andreas</author>
+<date>2007-12-06T13:59:34.656773Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/DelegatingAuthenticatorAction.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/sitemap.xmap</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Authenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/UserAuthenticator.java</path>
+</paths>
+<msg>Introduce target URI to allow redirecting to a protected resource after the authentication. This is necessary because the Shibboleth authentication URL has to be the same for all resources.</msg>
+</logentry>
+<logentry
+   revision="601775">
+<author>andreas</author>
+<date>2007-12-06T16:18:15.997239Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/sitemap.xmap</path>
+</paths>
+<msg>Switch to serializer from serializers block to avoid collapsing of &lt;textarea&gt;, this fixes display problems in Safari.</msg>
+</logentry>
+<logentry
+   revision="601776">
+<author>andreas</author>
+<date>2007-12-06T16:19:07.872226Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/xslt/admin/groups/profile.xsl</path>
+</paths>
+<msg>Remove non-breaking space from textarea, since this caused problems when submitting the form in Safari.</msg>
+</logentry>
+<logentry
+   revision="601777">
+<author>andreas</author>
+<date>2007-12-06T16:22:33.364720Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Group.java</path>
+</paths>
+<msg>Refined javadoc comment</msg>
+</logentry>
+<logentry
+   revision="601778">
+<author>andreas</author>
+<date>2007-12-06T16:23:09.386011Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+</paths>
+<msg>Fixed group rule validation, works now also for empty rules.</msg>
+</logentry>
+<logentry
+   revision="601779">
+<author>andreas</author>
+<date>2007-12-06T16:26:13.343743Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractGroup.java</path>
+</paths>
+<msg>Initialize user and IP range managers when Group.getMembers() is called. This fixes bug 44035.</msg>
+</logentry>
+<logentry
+   revision="602012">
+<author>thorsten</author>
+<date>2007-12-07T07:45:30.732753Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk"
+   copyfrom-rev="602011"
+   action="A">/lenya/tags/RELEASE_2_0_RC_3</path>
+</paths>
+<msg>Tagging the 2.0 RC3.</msg>
+</logentry>
+<logentry
+   revision="602015">
+<author>ragaller</author>
+<date>2007-12-07T08:04:31.639539Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/sitemap.xmap</path>
+</paths>
+<msg>tinyMCE: re-added the strip namespaces transformation step to the tinymce sitemap (otherwise it's difficult to impossible to ensure survival of xi:include constructs in the editor).</msg>
+</logentry>
+<logentry
+   revision="602073">
+<author>thorsten</author>
+<date>2007-12-07T11:38:14.109784Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0_RC_3/externals</path>
+</paths>
+<msg>Pin down cocoon version to r600217 http://markmail.org/message/dibf7ys7dsmdzi6r?q=list:org%2Eapache%2Elenya%2Edev</msg>
+</logentry>
+<logentry
+   revision="602596">
+<author>ragaller</author>
+<date>2007-12-09T00:47:24.592599Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/resources/tinymce/jscripts/tiny_mce/plugins/simplebrowser/editor_plugin.js</path>
+</paths>
+<msg>tinymce: fix javascript error in internal link insertion (sorry for breaking it with an earlier commit) - if someone finds the time to doublecheck this, my thanks in advance.</msg>
+</logentry>
+<logentry
+   revision="602869">
+<author>andreas</author>
+<date>2007-12-10T11:41:12.824680Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org/apache/lenya/cms/site/usecases/CopyPasteTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/copy.jx</path>
+</paths>
+<msg>Use iteration instead of recursion for deep copies. This fixes bug 44005.</msg>
+</logentry>
+<logentry
+   revision="602874">
+<author>andreas</author>
+<date>2007-12-10T11:57:14.659186Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_pt.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_ru.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_es.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_fr.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_nl.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/copy.jx</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_ja.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/paste.jx</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_it.xml</path>
+</paths>
+<msg>Simplified i18n for copy+paste and updated styling</msg>
+</logentry>
+<logentry
+   revision="602876">
+<author>andreas</author>
+<date>2007-12-10T12:02:52.496562Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_pt.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_ru.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_nl.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_ja.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/cut.jx</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_it.xml</path>
+</paths>
+<msg>Simplified i18n for cut usecase and updated styling</msg>
+</logentry>
+<logentry
+   revision="602877">
+<author>andreas</author>
+<date>2007-12-10T12:04:18.341469Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/resources/i18n/cmsui.xml</path>
+</paths>
+<msg>Removed i18n for obsolete error message for copy usecase.</msg>
+</logentry>
+<logentry
+   revision="602930">
+<author>thorsten</author>
+<date>2007-12-10T15:30:17.800379Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk"
+   copyfrom-rev="602929"
+   action="A">/lenya/tags/RELEASE_2_0_RC_4</path>
+</paths>
+<msg>Tagging the 2.0 RC4.</msg>
+</logentry>
+<logentry
+   revision="602960">
+<author>andreas</author>
+<date>2007-12-10T16:21:08.187914Z</date>
+<paths>
+<path
+   action="A">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/problems.xml</path>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/site.xml</path>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/setup.xml</path>
+</paths>
+<msg>Use separate document for shibboleth troubeshooting</msg>
+</logentry>
+<logentry
+   revision="603186">
+<author>thorsten</author>
+<date>2007-12-11T09:32:59.540036Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk"
+   copyfrom-rev="603185"
+   action="A">/lenya/tags/RELEASE_2_0_RC_4/trunk</path>
+</paths>
+<msg>Tagging the 2.0 RC4.</msg>
+</logentry>
+<logentry
+   revision="603226">
+<author>thorsten</author>
+<date>2007-12-11T12:46:26.910017Z</date>
+<paths>
+<path
+   action="D">/lenya/tags/RELEASE_2_0_RC_4/trunk</path>
+</paths>
+<msg>Remoing trunk dir</msg>
+</logentry>
+<logentry
+   revision="603335">
+<author>rfrovarp</author>
+<date>2007-12-11T19:08:45.865427Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/resources/i18n/cmsui.xml</path>
+</paths>
+<msg>Fix capitalization to be consistent
+</msg>
+</logentry>
+<logentry
+   revision="603336">
+<author>rfrovarp</author>
+<date>2007-12-11T19:09:22.025834Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/resources/javascript/insertAsset.js</path>
+</paths>
+<msg>Fix scaling problem from bug 44057
+</msg>
+</logentry>
+<logentry
+   revision="603379">
+<author>andreas</author>
+<date>2007-12-11T22:08:18.342630Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/linking/LinkConverter.java</path>
+</paths>
+<msg>Use UrlToUuidRewriter in LinkConverter to avoid code duplication. No semantic or API changes.</msg>
+</logentry>
+<logentry
+   revision="603380">
+<author>andreas</author>
+<date>2007-12-11T22:10:28.950762Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/java/src/org/apache/lenya/cms/editors/forms/OneFormEditor.java</path>
+</paths>
+<msg>OneFormEditor: convert URLs to UUIDs after saving the document. See bug 43990.</msg>
+</logentry>
+<logentry
+   revision="603395">
+<author>andreas</author>
+<date>2007-12-11T22:38:26.071046Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/linking/LinkConverter.java</path>
+</paths>
+<msg>Consider proxy URLs in LinkConverter.</msg>
+</logentry>
+<logentry
+   revision="603396">
+<author>andreas</author>
+<date>2007-12-11T22:44:08.087479Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/java/src/org/apache/lenya/cms/editors/tinymce/TinyMce.java</path>
+</paths>
+<msg>Converting links to UUID-based URIs in TinyMCE.</msg>
+</logentry>
+<logentry
+   revision="603405">
+<author>andreas</author>
+<date>2007-12-11T23:13:02.578910Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/development/config/menu.xsp</path>
+</paths>
+<msg>Don't add context path to logfile URL (done by proxy transformer)</msg>
+</logentry>
+<logentry
+   revision="603407">
+<author>andreas</author>
+<date>2007-12-11T23:14:42.696784Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/development/config/menu.xsp</path>
+</paths>
+<msg>Removed unused menu item attribute</msg>
+</logentry>
+<logentry
+   revision="603527">
+<author>andreas</author>
+<date>2007-12-12T10:01:19.120285Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/export/java/test/org/apache/lenya/cms/export/ImportTest.java</path>
+</paths>
+<msg>ImportTest: don't commit session if link check failed.</msg>
+</logentry>
+<logentry
+   revision="603529">
+<author>andreas</author>
+<date>2007-12-12T10:01:58.916466Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/linking/java/src/org/apache/lenya/cms/linking/LinkConverter.java</path>
+</paths>
+<msg>LinkConverter: if srcPub != destPub, convert URLs to destPub URLs before url2uuid conversion.</msg>
+</logentry>
+<logentry
+   revision="603545">
+<author>andreas</author>
+<date>2007-12-12T10:38:34.238559Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+</paths>
+<msg>ShibbolethAuthenticator.getTargetUri(): log warning if TARGET request parameter is missing.</msg>
+</logentry>
+<logentry
+   revision="603546">
+<author>andreas</author>
+<date>2007-12-12T10:40:49.260677Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/docu_shibboleth/src/documentation/content/xdocs/docs/1_2_x/components/accesscontrol/shibboleth/architecture.xml</path>
+</paths>
+<msg>Updated Shibboleth architecture docs</msg>
+</logentry>
+<logentry
+   revision="603581">
+<author>andreas</author>
+<date>2007-12-12T12:02:06.649037Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethUtil.java</path>
+</paths>
+<msg>Added some javadoc comments</msg>
+</logentry>
+<logentry
+   revision="603582">
+<author>andreas</author>
+<date>2007-12-12T12:06:31.629794Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+</paths>
+<msg>Added some javadoc comments</msg>
+</logentry>
+<logentry
+   revision="603583">
+<author>andreas</author>
+<date>2007-12-12T12:08:24.170686Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+</paths>
+<msg>Added some javadoc comments</msg>
+</logentry>
+<logentry
+   revision="603584">
+<author>andreas</author>
+<date>2007-12-12T12:09:25.563973Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethModule.java</path>
+</paths>
+<msg>Removed dead code</msg>
+</logentry>
+<logentry
+   revision="603585">
+<author>andreas</author>
+<date>2007-12-12T12:10:33.550066Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/shibboleth/AssertionConsumerService.java</path>
+</paths>
+<msg>Fixed javadoc comments</msg>
+</logentry>
+<logentry
+   revision="603746">
+<author>solprovider</author>
+<date>2007-12-12T21:20:30.742466Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/lenya.sh</path>
+</paths>
+<msg>LENYA_HOME set using dirname and pwd.</msg>
+</logentry>
+<logentry
+   revision="603748">
+<author>solprovider</author>
+<date>2007-12-12T21:30:42.467604Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/revolution/1.3.x/lenya.sh</path>
+</paths>
+<msg>Replaced lenya.sh with revised version from Lenya 1.2 to add "stop" command line option and set LENYA_HOME properly.</msg>
+</logentry>
+<logentry
+   revision="603752">
+<author>rfrovarp</author>
+<date>2007-12-12T21:58:05.885811Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/svg/java/src/org/apache/lenya/modules/svg/ProtocolHandler.java</path>
+</paths>
+<msg>Fixes 42385. Batik uses toString for caching of source images. This fixes issues with the cache.
+</msg>
+</logentry>
+<logentry
+   revision="603850">
+<author>thorsten</author>
+<date>2007-12-13T08:00:17.434872Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk"
+   copyfrom-rev="603849"
+   action="A">/lenya/tags/RELEASE_2_0_RC_5</path>
+</paths>
+<msg>Tagging the 2.0 RC5.</msg>
+</logentry>
+<logentry
+   revision="603882">
+<author>andreas</author>
+<date>2007-12-13T11:00:50.453660Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/ac/java/src/org/apache/lenya/ac/impl/PolicyBuilder.java</path>
+</paths>
+<msg>Throw reasonable error message if non-existent roles are assigned in policies.</msg>
+</logentry>
+<logentry
+   revision="603883">
+<author>andreas</author>
+<date>2007-12-13T11:01:32.577608Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/ac/java/src/org/apache/lenya/ac/impl/PolicyBuilder.java</path>
+</paths>
+<msg>[minor change] removed invalid character</msg>
+</logentry>
+<logentry
+   revision="603887">
+<author>andreas</author>
+<date>2007-12-13T11:18:46.194548Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/news/xslt/collection2xhtml.xsl</path>
+</paths>
+<msg>News XSLT: handle XHTML documents where the first paragraph is included in other elements, e.g. &lt;div id=body/&gt;</msg>
+</logentry>
+<logentry
+   revision="603960">
+<author>andreas</author>
+<date>2007-12-13T17:24:20.976575Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/svg/java/src/org/apache/lenya/modules/svg/ProtocolHandler.java</path>
+</paths>
+<msg>Fixed javadoc comment, set path field in ProtocolHandler to avoid that all images contain the same source, see bug 42385. Thanks to Juergen Ragaller for the hint.</msg>
+</logentry>
+<logentry
+   revision="603984">
+<author>rfrovarp</author>
+<date>2007-12-13T19:03:32.364880Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/svg/java/src/org/apache/lenya/modules/svg/ProtocolHandler.java</path>
+</paths>
+<msg>Override equals() so that it takes lastModified into account to allow for the updating of images. This is for bug 42385.
+</msg>
+</logentry>
+<logentry
+   revision="604175">
+<author>thorsten</author>
+<date>2007-12-14T11:49:56.551112Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk"
+   copyfrom-rev="604174"
+   action="A">/lenya/tags/RELEASE_2_0_RC_6</path>
+</paths>
+<msg>Tagging the 2.0 RC6.</msg>
+</logentry>
+<logentry
+   revision="604184">
+<author>andreas</author>
+<date>2007-12-14T13:05:30.410258Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/ac/login.xsp</path>
+</paths>
+<msg>Avoid NPE when login screen error message params are null</msg>
+</logentry>
+<logentry
+   revision="604189">
+<author>andreas</author>
+<date>2007-12-14T13:34:13.900755Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/access-control/passwd/alice.iml</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/access-control/passwd/lenya.iml</path>
+</paths>
+<msg>Use lenya.apache.org for user e-mail addresses.</msg>
+</logentry>
+<logentry
+   revision="604218">
+<author>andreas</author>
+<date>2007-12-14T16:35:52.558782Z</date>
+<paths>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/util/Assert.java</path>
+</paths>
+<msg>Adding Assert utility class</msg>
+</logentry>
+<logentry
+   revision="604219">
+<author>andreas</author>
+<date>2007-12-14T16:36:17.863460Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/users/user-admin.js</path>
+</paths>
+<msg>Use UserManager.contains() to verify user existence instead of null check.</msg>
+</logentry>
+<logentry
+   revision="604220">
+<author>andreas</author>
+<date>2007-12-14T16:36:55.088188Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/groups/group-admin.js</path>
+</paths>
+<msg>Don't remove all members when changing the group affililation, but only the users which aren't assigned anymore.</msg>
+</logentry>
+<logentry
+   revision="604221">
+<author>andreas</author>
+<date>2007-12-14T16:40:56.688338Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractGroup.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AnonymousAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileUserManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Identity.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Group.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileIPRangeManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractGroupable.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileGroupManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/TransientUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileItemManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileRoleManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/User.java</path>
+<path
+   action="D">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/TransientItemConfiguration.java</path>
+</paths>
+<msg>Minor re-design of group affiliation and transient item handling: The groups don't store their member list anymore, but determine it dynamically (expensive, but only used for administration usecases). The transient items aren't attached to the item managers anymore. These changes simplify the code a lot.</msg>
+</logentry>
+<logentry
+   revision="604231">
+<author>andreas</author>
+<date>2007-12-14T17:04:02.637815Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/TransientUser.java</path>
+</paths>
+<msg>Updating transient user and shibboleth authenticator to previous changes. The Shibboleth login doesn't work yet, though.</msg>
+</logentry>
+<logentry
+   revision="604875">
+<author>andreas</author>
+<date>2007-12-17T14:11:52.884507Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Groupable.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractGroup.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/task/CocoonTaskWrapper.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/TransientUserReference.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/jexl/JexlEvaluator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Group.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/UserReference.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Item.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/ac/impl/AccessControlTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Accreditable.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/PolicyBuilder.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/DefaultAccessController.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/User.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/cms/workflow/WorkflowTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/components/modules/input/AccessControlModule.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/RevisionControllerAction.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/AntlrEvaluator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AnonymousAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/World.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/ac/impl/IdentityTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Identity.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/ManagedUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/ac/file/FileUserTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/flow/FlowHelper.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/ac/impl/PolicyTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/XopusHandlerAction.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/users/users.xsp</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/ac/cocoon/PolicyHelper.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Machine.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/webapp/lenya/content/admin/users/overview.xsp</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractGroupable.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/ForceCheckInAction.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/TransientUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/ac/impl/UserManagerTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileItemManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/task/WorkflowInvoker.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/UserAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/workflow/WorkflowFactory.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/PolicyAuthorizer.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AttributeRuleEvaluator.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AttributeOwner.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Identifiable.java</path>
+</paths>
+<msg>Decouple user management from session. The accreditables are now only referenced by the session and not stored in the session itself. This allows to restore the session by the servlet container, and it allows to transfer a session from one access controller to another (i.e., from one publication to another).</msg>
+</logentry>
+<logentry
+   revision="604890">
+<author>andreas</author>
+<date>2007-12-17T15:08:47.730792Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AccessControlException.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AccessController.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AccessControllerResolver.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Identity.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/ManagedUser.java</path>
+</paths>
+<msg>Added javadoc comments and serial version UIDs</msg>
+</logentry>
+<logentry
+   revision="604891">
+<author>andreas</author>
+<date>2007-12-17T15:16:39.645907Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AttributeOwner.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/AttributeRuleEvaluator.java</path>
+</paths>
+<msg>Added some javadoc comments.</msg>
+</logentry>
+<logentry
+   revision="604909">
+<author>andreas</author>
+<date>2007-12-17T16:20:58.267473Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileRole.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AnonymousAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/TransientUserReference.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Identity.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileUser.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/UserReference.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Item.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/ac/cocoon/PolicyHelper.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileIPRange.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Machine.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileItemManager.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/UserAuthenticator.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/ManagedUserReference.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileGroup.java</path>
+<path
+   action="A">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/file/FileItem.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Identifiable.java</path>
+</paths>
+<msg>Access control refactoring: Added dedicated FileItem interface because not all items are configurable anymore. Added ManagedUserReference because otherwise the TransientUserReference would violate Liskov's substitution principle.</msg>
+</logentry>
+<logentry
+   revision="604910">
+<author>andreas</author>
+<date>2007-12-17T16:21:34.908006Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Item.java</path>
+</paths>
+<msg>[minor change] removed unused imports</msg>
+</logentry>
+<logentry
+   revision="604911">
+<author>andreas</author>
+<date>2007-12-17T16:23:26.783807Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/Item.java</path>
+</paths>
+<msg>Updated javadoc comment</msg>
+</logentry>
+<logentry
+   revision="604913">
+<author>andreas</author>
+<date>2007-12-17T16:24:19.706424Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/World.java</path>
+</paths>
+<msg>Added serial version UID to World class</msg>
+</logentry>
+<logentry
+   revision="604914">
+<author>andreas</author>
+<date>2007-12-17T16:25:38.556565Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/World.java</path>
+</paths>
+<msg>Updated javadoc comment</msg>
+</logentry>
+<logentry
+   revision="604915">
+<author>andreas</author>
+<date>2007-12-17T16:28:25.382053Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethAuthenticator.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/TransientUser.java</path>
+</paths>
+<msg>Cleaned up TransientUser class.</msg>
+</logentry>
+<logentry
+   revision="604917">
+<author>andreas</author>
+<date>2007-12-17T16:29:40.409593Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/shibboleth/ShibbolethUtil.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/AbstractGroupable.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/DefaultAccessController.java</path>
+</paths>
+<msg>Updated imports and javadocs.</msg>
+</logentry>
+<logentry
+   revision="604938">
+<author>andreas</author>
+<date>2007-12-17T17:36:36.442575Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/ac/impl/AccessControlTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/cms/workflow/WorkflowTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/acting/TaskAction.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/task/CocoonTaskWrapper.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/test/org/apache/lenya/ac/impl/IdentityTest.java</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/logicsheets/scheduler.xsl</path>
+<path
+   action="M">/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/cms/cocoon/scheduler/SchedulerHelper.java</path>
+</paths>
+<msg>Updating tests, scheduler and task handling to access control changes</msg>
+</logentry>
+<logentry
+   revision="605623">
+<author>rfrovarp</author>
+<date>2007-12-19T17:12:47.483891Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/resources/javascript/insertAsset.js</path>
+</paths>
+<msg>Round to nearest integer for scaling. Thanks to Jörn for the suggestion.
+</msg>
+</logentry>
+<logentry
+   revision="605842">
+<author>andreas</author>
+<date>2007-12-20T09:22:27.593935Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/usecases/publish.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/java/src/org/apache/lenya/cms/workflow/usecases/Publish.java</path>
+</paths>
+<msg>Don't notify the submitter if a document is published directly from authoring. This fixes bug #44101.</msg>
+</logentry>
+<logentry
+   revision="605844">
+<author>andreas</author>
+<date>2007-12-20T09:27:34.361520Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/AggregatingFallbackSourceFactory.java</path>
+</paths>
+<msg>Use servlet helper to obtain webapp URL from request. This should fix bug 44111.</msg>
+</logentry>
+<logentry
+   revision="605933">
+<author>andreas</author>
+<date>2007-12-20T14:07:16.754546Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/modules/feed/sitemap.xmap</path>
+<path
+   action="M">/lenya/sandbox/modules/feed/xslt/atom2collection.xsl</path>
+</paths>
+<msg>Add language attributes to documents which are generated by the feed module.</msg>
+</logentry>
+<logentry
+   revision="605934">
+<author>andreas</author>
+<date>2007-12-20T14:07:58.926039Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/cocoon/generation/SitetreeFragmentGenerator.java</path>
+</paths>
+<msg>Allow to pass the publication ID as a parameter to the sitetree fragment generator.</msg>
+</logentry>
+<logentry
+   revision="605935">
+<author>andreas</author>
+<date>2007-12-20T14:10:44.737143Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/news/java/src/org/apache/lenya/modules/news/usecases/Edit.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/collection/xslt/sitetree2children.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/resources/i18n/cmsui_de.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/usecases/edit.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/collection/xslt/collection2cinclude.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/collection/xslt/prepareCinclude.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/collection/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/xslt/shared.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/collection/java/src/org/apache/lenya/modules/collection/CollectionWrapper.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/news/java/src/org/apache/lenya/modules/news/NewsWrapper.java</path>
+</paths>
+<msg>Added option to show all or only the current language in the news overview.</msg>
+</logentry>
+<logentry
+   revision="605946">
+<author>jann</author>
+<date>2007-12-20T14:50:37.633116Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/webapp/lenya/usecases/neutron/jx/meta.jx</path>
+</paths>
+<msg>Minor fix for meta data handling. See http://issues.apache.org/bugzilla/show_bug.cgi?id=43961. Thanks to Thomas Comiotto for the patch</msg>
+</logentry>
+<logentry
+   revision="606779">
+<author>andreas</author>
+<date>2007-12-25T10:23:06.867571Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/tags/RELEASE_2_0_RC_6"
+   copyfrom-rev="606778"
+   action="A">/lenya/tags/RELEASE_2_0</path>
+</paths>
+<msg>Copying 2.0 RC6 to 2.0</msg>
+</logentry>
+<logentry
+   revision="606783">
+<author>andreas</author>
+<date>2007-12-25T10:54:11.335284Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/src/targets/properties-build.xml</path>
+</paths>
+<msg>Updated version in properties-build.xml</msg>
+</logentry>
+</log>
