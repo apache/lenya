@@ -54,15 +54,16 @@
         </li>
       </ul>
       <p>
+        At the moment we don't provide binary versions, you'll find more information on the
+        <a href="site:download20">download page</a>.
+      </p>
+      <p>
         Previous releases can be obtained from the
         <a href="http://www.apache.org/dyn/closer.cgi/lenya/">distribution page</a>.
       </p>
       <p>
         The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more
-          information on ASC Signatures and MD5 checksums</a>.</p>
-      <p>
-        Please go to the <a href="site:download20">download section</a> of version 2.0 for more download
-        options such as Subversion.
+        information on ASC Signatures and MD5 checksums</a>.
       </p>
     </section>
     

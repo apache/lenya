@@ -38,6 +38,11 @@
           <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.md5">MD5 Checksum</a>
         </li>
       </ul>
+      <p>
+        At the moment we don't provide binary versions, since the deployment of publications and
+        modules requires the source version. We are planning a redesign of the deployment process
+        which will allow us to provide binary versions in a subsequent release.
+      </p>
     </section>
     <section>
       <title>Installation</title>
