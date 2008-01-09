@@ -634,6 +634,7 @@
     <lenya href="http://lenya.apache.org"/>
     <lenya-zone href="http://lenya.zones.apache.org"/>
     <lenya.demo href="http://lenya.zones.apache.org:8888/"/>
+    <lenya.demo.20 href="http://lenya.zones.apache.org:9999/"/>
     <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
     <lenya.archive.user href="http://mail-archives.apache.org/mod_mbox/lenya-user/"/>
     <lenya.archive.devel href="http://mail-archives.apache.org/mod_mbox/lenya-dev/"/>

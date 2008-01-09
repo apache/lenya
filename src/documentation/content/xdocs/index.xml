@@ -29,7 +29,7 @@
     <p>
       Apache Lenya is an Open Source Java/XML Content Management System and comes with revision
       control, multi-site management, scheduling, search, WYSIWYG editors, and workflow.
-      Please see some <a href="screenshots.html">screenshots</a> or try the <a href="ext:lenya.demo">Demo</a>.
+      Please see some <a href="screenshots.html">screenshots</a> or try the <a href="ext:lenya.demo.20">Demo</a>.
     </p>
     
     <section id="download">
@@ -218,6 +218,8 @@
         <ul>
           <li>
             A Windows Installer makes installation on Windows a 3-click process.
+            <em>(The binary version and installer are not available in the release 2.0.
+              You find more information on the <a href="site:download20">download page</a>.)</em>
           </li>
           <li>
             Apache Lucene is integrated for full-text and fielded searching.

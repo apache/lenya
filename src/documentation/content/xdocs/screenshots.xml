@@ -20,11 +20,11 @@
     <title>Apache Lenya Screenshots</title> 
   </header> 
   <body> 
-<p>
-The following screenshots are meant for the evaluator in a hurry. For a much more complete impression
-, <a href="ext:lenya.dist">download</a> the latest release and try it out yourself. You may also want
-to try out the <a href="ext:lenya.demo">online demo</a>.
-</p>
+    <p>
+      The following screenshots are meant for the evaluator in a hurry. For a much more complete impression,
+      <a href="ext:lenya.dist">download</a> the latest release and try it out yourself. You may also want
+      to try out the <a href="ext:lenya.demo.20">online demo</a>.
+    </p>
         <section id="site-assets">
       <title>Site management</title><p>
     The Apache Lenya site area is used to perform operations that concern multiple pages, like moving pages
