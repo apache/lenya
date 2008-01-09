@@ -50,8 +50,9 @@ organisation)</a></td>
 -->
   <tr>
     <td><a href="http://www.becompany.ch">BeCompany GmbH</a></td>
-    <td>unknown</td>
-    <td>&#160;</td><td>2008/01</td>
+    <td>2.0-trunk</td>
+    <td>Static export using wget</td>
+    <td>2008/01</td>
   </tr>
 <!--
   <tr>
@@ -77,8 +78,9 @@ organisation)</a></td>
 -->
   <tr>
     <td><a href="http://cocooncenter.org">cocooncenter</a></td>
-    <td>unknown</td>
-    <td>&#160;</td><td>2008/01</td>
+    <td>1.2.x</td>
+    <td>Static export using Cocoon CLI</td>
+    <td>2008/01</td>
   </tr>
 <!--
   <tr>
@@ -321,7 +323,9 @@ organisation)</a></td>
     <td><a href="http://www.uniklinik-freiburg.de">Universitätsklinikum Freiburg</a></td>
     <td>1.2.4</td>
     <td>
-      ~ 6000 pages in 120 publications as of April 2004
+      Site was launched in April 2006,<br/>
+      ~ 8300 pages in 130 publications,<br/>
+      ~ 240 editors
     </td>
     <td>2008/01</td>
   </tr>
@@ -350,8 +354,8 @@ organisation)</a></td>
   </tr>
   <tr>
     <td><a href="http://www.vorlesungen.unizh.ch">University of Zurich Course List</a></td>
-    <td>1.2.x-unizh</td>
-    <td>&#160;</td>
+    <td>1.2.x</td>
+    <td>DB backend, XSP+XSLT for presentation</td>
     <td>2008/01</td>
   </tr>
   <tr>
