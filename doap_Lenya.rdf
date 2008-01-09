@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+#<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl"?>
 <rdf:RDF xml:lang="en"
          xmlns="http://usefulinc.com/ns/doap#" 
@@ -23,15 +23,15 @@
     <description>Apache Lenya is an Open Source Java/XML Content Management Framework and comes with revision control, site management, scheduling, search, WYSIWYG editors, and workflow.</description>
     <bug-database rdf:resource="http://issues.apache.org/bugzilla/buglist.cgi?product=Lenya" />
     <mailing-list rdf:resource="http://lenya.apache.org/community/mailing-lists.html" />
-    <download-page rdf:resource="http://lenya.apache.org/1_2_x/installation/index.html" />
+    <download-page rdf:resource="http://lenya.apache.org/docs/2_0_x/installation/index.html" />
     <programming-language>Java</programming-language>
     <category rdf:resource="http://projects.apache.org/category/web-framework" />
     <category rdf:resource="http://projects.apache.org/category/xml"/>
     <release>
       <Version>
         <name>Latest release</name>
-        <created>2007-02-28</created>
-        <revision>1.2.5</revision>
+        <created>2008-01-08</created>
+        <revision>2.0</revision>
       </Version>
     </release>
     <repository>
