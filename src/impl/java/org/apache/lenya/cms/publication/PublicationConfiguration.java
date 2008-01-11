@@ -136,7 +136,15 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         try {
             config = builder.buildFromFile(configFile);
 
-            this.name = config.getChild(ELEMENT_NAME).getValue();
+            String pubName = config.getChild(ELEMENT_NAME).getValue(null);
+            if (pubName == null) {
+                getLogger().warn("No publication name set for publication [" + getId() +
+                        "], using default name.");
+                this.name = "New Publication";
+            }
+            else {
+                this.name = pubName;
+            }
 
             try {
                 // one sanity check for the proper namespace. we should really
