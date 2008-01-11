@@ -98,7 +98,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
             instantiator = (Instantiator) selector.select(template.getInstantiatorHint());
 
             instantiator.instantiate(template, getParameterAsString(PUBLICATION_ID), name);
-
+            
         } finally {
             if (selector != null) {
                 if (instantiator != null) {
@@ -108,6 +108,13 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
             }
         }
 
+    }
+
+    public String getTargetURL(boolean success) {
+        if (success) {
+            return "/" + getParameterAsString(PUBLICATION_ID) + "/introduction.html";
+        }
+        return super.getTargetURL(success);
     }
 
 }
