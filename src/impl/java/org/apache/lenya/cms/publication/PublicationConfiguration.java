@@ -140,7 +140,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
             if (pubName == null) {
                 getLogger().warn("No publication name set for publication [" + getId() +
                         "], using default name.");
-                this.name = "New Publication";
+                this.name = getId();
             }
             else {
                 this.name = pubName;

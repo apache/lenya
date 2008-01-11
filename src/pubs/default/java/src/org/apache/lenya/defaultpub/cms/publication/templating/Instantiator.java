@@ -101,7 +101,7 @@ public class Instantiator extends AbstractLogEnabled implements
         Assert.notNull("name", name);
         
         if (name.equals("")) {
-            name = "New Publication";
+            name = newPublicationId;
         }
 
         SourceResolver resolver = null;
