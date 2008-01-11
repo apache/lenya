@@ -47,6 +47,7 @@ import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationManager;
 // import org.apache.lenya.cms.publication.PublicationConfiguration;
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -94,6 +95,14 @@ public class Instantiator extends AbstractLogEnabled implements
      */
     public void instantiate(Publication template, String newPublicationId, String name)
             throws Exception {
+        
+        Assert.notNull("template", template);
+        Assert.notNull("publication ID", newPublicationId);
+        Assert.notNull("name", name);
+        
+        if (name.equals("")) {
+            name = "New Publication";
+        }
 
         SourceResolver resolver = null;
         Source publicationsSource = null;
@@ -114,7 +123,7 @@ public class Instantiator extends AbstractLogEnabled implements
                     copySource(template, newPublicationId, resolver, publicationsUri, source);
                 }
             }
-
+            
             updateMetaData(resolver, newPublicationId, name, publicationsUri);
 
             configureSearchIndex(resolver, template, newPublicationId, publicationsUri);
