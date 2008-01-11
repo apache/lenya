@@ -70,11 +70,15 @@
     <copy todir="${test.pub.dir}">
       <fileset dir="${build.webapp}/lenya/pubs/${test.pub.source.id}">
         <exclude name="content/**"/>
+        <exclude name="config/publication.xml"/>
       </fileset>
     </copy>
-    <replace encoding="utf-8"
-      file="${build.webapp}/lenya/pubs/${test.pub.id}/config/publication.xml"
-      token="Default Publication" value="Test Publication"/>
+  	<xslt
+  	  in="${build.webapp}/lenya/pubs/${test.pub.source.id}/config/publication.xml"
+      out="${build.webapp}/lenya/pubs/${test.pub.id}/config/publication.xml"
+  	  style="${src.resource.dir}/test/changePublicationConfig.xsl">
+  	  <param name="pubName" expression="Test Publication"/>
+    </xslt>
     <replace encoding="utf-8"
       file="${build.webapp}/lenya/pubs/${test.pub.id}/config/search/lucene_index.xml"
       token="default" value="test"/>
