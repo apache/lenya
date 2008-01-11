@@ -24,6 +24,8 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.site.SiteStructure;
 
 /**
  * Usecase to create a document.
@@ -79,6 +81,40 @@ public class CreateDocument extends Create {
         setParameter(PATH_PROVIDED, Boolean.valueOf(provided));
     }
 
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (getParameterAsBoolean(PATH_PROVIDED, false)) {
+            validateProvidedPath();
+        }
+    }
+
+    protected void validateProvidedPath() throws PublicationException {
+        String path = getParameterAsString(PATH);
+        Publication pub = getPublication();
+        SiteStructure site = pub.getArea(getArea()).getSite();
+        if (site.contains(path)) {
+            addErrorMessage("path-already-exists");
+        }
+        else if (path.length() <= 2 || !path.startsWith("/") || path.endsWith("/")) {
+            addErrorMessage("invalid-path");
+        }
+        else {
+            String[] steps = path.substring(1).split("/");
+            DocumentBuilder builder = pub.getDocumentBuilder();
+            for (int i = 0; i < steps.length; i++) {
+                if (!builder.isValidDocumentName(steps[i])) {
+                    addErrorMessage("node-name-special-characters");
+                }
+            }
+            if (steps.length > 1) {
+                String parentPath = path.substring(0, path.lastIndexOf("/"));
+                if (!site.contains(parentPath)) {
+                    addErrorMessage("parent-does-not-exist");
+                }
+            }
+        }
+    }
+
     /**
      * Override this method to support other relations.
      * @return The supported relations.
@@ -99,22 +135,13 @@ public class CreateDocument extends Create {
             addErrorMessage("The relation '" + relation + "' is not supported.");
         }
 
-        Publication pub = getPublication();
-
-        DocumentBuilder builder = pub.getDocumentBuilder();
-        boolean provided = getParameterAsBoolean(PATH_PROVIDED, false);
-
-        if (provided) {
-            String newPath = getNewDocumentPath();
-            if (pub.getArea(getArea()).getSite().contains(newPath)) {
-                String[] params = { newPath };
-                addErrorMessage("path-already-exists", params);
-            }
+        if (getParameterAsBoolean(PATH_PROVIDED, false)) {
+            validateProvidedPath();
         } else {
             String nodeName = getNodeName();
             if (nodeName.equals("")) {
                 addErrorMessage("missing-node-name");
-            } else if (!builder.isValidDocumentName(nodeName)) {
+            } else if (!getPublication().getDocumentBuilder().isValidDocumentName(nodeName)) {
                 addErrorMessage("node-name-special-characters");
             }
         }

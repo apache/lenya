@@ -28,6 +28,8 @@
   <message key="Node Name">Knoten-Name</message>
   <message key="missing-node-name">Bitte geben Sie einen Knoten-Namen ein.</message>
   <message key="node-name-special-characters">Der Knoten-Name darf keine Sonderzeichen enthalten.</message>
+  <message key="invalid-path">Der Pfad ist ungültig.</message>
+  <message key="parent-does-not-exist">Das Eltern-Dokument dieses Dokuments existiert nicht.</message>
   <message key="Document visible in Navigation">Sichtbar in Navigation</message>
   <message key="Relation">Relation</message>
   <message key="Page Layout">Seitenlayout</message>
