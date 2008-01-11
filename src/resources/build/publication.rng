@@ -60,6 +60,7 @@
     </data>
   </define>
   
+  <!-- Please keep in sync with PublicationUtil.isValidPublicationID(). -->
   <define name="publicationId">
     <data type="string">
       <param name="pattern">[a-z0-9]+</param>
