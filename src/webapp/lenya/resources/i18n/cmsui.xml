@@ -391,6 +391,9 @@
   <message key="Publication ID">Publication ID</message>
   <message key="Publication Name">Publication Name</message>
   <message key="Template">Template</message>
+  <message key="invalid-publication-id">Please enter a valid publication ID!</message>
+  <message key="publication-already-exists">A publication with this ID already exists.</message>
+  <message key="invalid-publication-name">Please enter a publication name!</message>
   
   <!-- Error messages of a general nature -->
   <message key="error-document-form">Document is not well-formed: {0}</message>

@@ -65,12 +65,17 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
         String publicationId = getParameterAsString(PUBLICATION_ID).trim();
 
         if (!PublicationUtil.isValidPublicationID(publicationId)) {
-            addErrorMessage("Please enter a valid publication ID!");
+            addErrorMessage("invalid-publication-id");
         } else {
             if (getDocumentFactory().existsPublication(publicationId)) {
-                addErrorMessage("A publication with this ID already exists.");
+                addErrorMessage("publication-already-exists");
             }
         }
+        String name = getParameterAsString(PUBLICATION_NAME);
+        if (name == null || name.trim().equals("")) {
+            addErrorMessage("invalid-publication-name");
+        }
+
     }
 
     /**
