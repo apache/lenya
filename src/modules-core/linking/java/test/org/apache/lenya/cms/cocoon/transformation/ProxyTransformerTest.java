@@ -38,9 +38,6 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.linking.GlobalProxies;
-import org.apache.lenya.cms.linking.impl.GlobalProxiesImpl;
-import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.templating.Instantiator;
@@ -144,11 +141,17 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         String configUri = "context://lenya/pubs/mock/config/publication.xml";
         Document dom = SourceUtil.readDOM(configUri, getManager());
         NamespaceHelper helper = new NamespaceHelper(PUBCONF_NAMESPACE, "", dom);
+        
+        Element docElem = dom.getDocumentElement();
+        Element instantiatorElem = helper.getFirstChild(docElem, "template-instantiator");
+        if (instantiatorElem != null) {
+            docElem.removeChild(instantiatorElem);
+        }
 
-        Element proxies = helper.getFirstChild(dom.getDocumentElement(), "proxies");
+        Element proxies = helper.getFirstChild(docElem, "proxies");
         if (proxies == null) {
             proxies = helper.createElement("proxies");
-            dom.getDocumentElement().appendChild(proxies);
+            docElem.appendChild(proxies);
         }
 
         addProxyElement(helper, proxies, area, proxyUrl, false);
