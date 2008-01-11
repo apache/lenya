@@ -51,15 +51,17 @@
   </div>
   <!-- do not list publications with @show="false" 
      (can be used to hide template publications -->
-  <xsl:for-each select="lenya:publication[not(@show) or @show != 'false']">
-    <div class="lenya-publication-item">
-      <a>
-        <xsl:attribute name="href"><xsl:value-of select="@dirname"/><xsl:text>/introduction.html</xsl:text></xsl:attribute>
-        <xsl:attribute name="title"><xsl:value-of select="lenya:description"/></xsl:attribute>
-        <xsl:value-of select="lenya:name"/>
-      </a>
-    </div>
-  </xsl:for-each>
+  <ul class="lenyaPubs">
+    <xsl:for-each select="lenya:publication[not(@show) or @show != 'false']">
+      <li>
+        <a>
+          <xsl:attribute name="href"><xsl:value-of select="@dirname"/><xsl:text>/introduction.html</xsl:text></xsl:attribute>
+          <xsl:attribute name="title"><xsl:value-of select="lenya:description"/></xsl:attribute>
+          <xsl:value-of select="lenya:name"/>
+        </a>
+      </li>
+    </xsl:for-each>
+  </ul>
   </div>
 </xsl:template>
 
