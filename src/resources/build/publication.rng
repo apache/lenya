@@ -60,6 +60,12 @@
     </data>
   </define>
   
+  <define name="publicationId">
+    <data type="string">
+      <param name="pattern">[a-z0-9]+</param>
+    </data>
+  </define>
+  
   <define name="lenyaAreaName">
     <choice>
       <value>live</value>
@@ -152,7 +158,7 @@
         <optional>
           <element name="template">
             <attribute name="id">
-              <ref name="simpleNameToken"/>
+              <ref name="publicationId"/>
             </attribute>
           </element>
         </optional>
