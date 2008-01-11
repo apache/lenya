@@ -70,7 +70,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         
         String pubId = "mock";
         String area = "authoring";
-        String proxyUrl = "http://www.mock.org";
+        String proxyUrl = "http://www.apache-lenya-proxy-test.org";
 
         createMockPublication(pubId, area, proxyUrl);
 
