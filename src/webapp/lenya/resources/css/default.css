@@ -125,17 +125,10 @@ div.lenya-error {
     color: black;
 }
 
-.lenya-publication-item, .lenya-publication-item-createpublication {
+.lenya-publication-item {
     padding: 0px 10px;
     margin: 20px 0px;
-}
-
-.lenya-publication-item {
     border-bottom: solid 1px #DDDCCF;
-}
-
-.lenya-publication-item-createpublication {
-    margin-bottom: 2em;
 }
 
 .lenya-sidebar a {
@@ -143,15 +136,26 @@ div.lenya-error {
 }
 
 .lenya-sidebar ul {
-    margin: 10px 0px;
-    padding: 10px 0px 10px 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
     list-style: none;
 }
 
 .lenya-sidebar li {
-    padding: 0px;
-    margin: 3px 0px;
-    border-bottom: solid 1px #DDDCCF;
+    padding: 0;
+    margin: 3px 0;
+}
+
+.lenya-sidebar h2, .lenya-sidebar h3, .lenya-sidebar p, .lenya-sidebar table, .lenya-sidebar ul {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.lenya-sidebar h2 {
+    font-size: medium;
+    margin-top: 2em;
+    margin-bottom: .5em;
 }
 
 .lenya-sidebar-heading {
