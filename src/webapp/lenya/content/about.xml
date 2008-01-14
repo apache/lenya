@@ -30,18 +30,13 @@
       on behalf of the <br /><a href="http://www.apache.org/">Apache Software Foundation</a>.
     </p>
     <p>
-      Apache Lenya includes software developed by the 
-      <a href="http://www.apache.org/">Apache Software Foundation</a>, 
-      <a href="http://w3c.org">W3C</a>, and 
-      <a href="http://sf.net/projects/websphinx">WebSPHINX</a>.
+      Apache Lenya is based on <a href="cocoon.apache.org">Apache Cocoon</a>
+      and includes other free software developed by the 
+      <a href="http://www.apache.org/">Apache Software Foundation</a> and
+      many others.
     </p>
     <p>
-      Copyright (C) 2006 The Apache Software Foundation. All rights reserved.
+      Copyright (C) 2008 The Apache Software Foundation. All rights reserved.
     </p>
-    <form id="form-about-back">
-      <p>
-        <input type="button" value="Back" onClick="history.go(-1)" name="input-back" i18n:attr="value"/>
-      </p>
-    </form>		
   </page:body>
 </page:page>

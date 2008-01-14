@@ -24,7 +24,7 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'admin.groups']">
 
   <component-instance name="admin.aboutLenya" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase">
-    <view uri="modules/administration/usecases/aboutLenya.jx" menu="true"/>
+    <view uri="modules/administration/usecases/aboutLenya.jx" menu="true" createContinuation="false"/>
   </component-instance>
   
 </xconf>
