@@ -109,12 +109,13 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
         }
 
     }
-
+    /* TODO: enable once we can change configuration options in publication
+             via web interface
     public String getTargetURL(boolean success) {
         if (success) {
             return "/" + getParameterAsString(PUBLICATION_ID) + "/introduction.html";
         }
         return super.getTargetURL(success);
     }
-
+    */
 }
