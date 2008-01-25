@@ -50,4 +50,20 @@
     The role <xhtml:q>{1}</xhtml:q> is already assigned to the object <xhtml:q>{0}</xhtml:q>.
   </message>
   
+  <!-- publication configuration -->
+  <message key="show-pub-conf">Properties of this Publication</message>
+  <message key="id">ID</message>
+  <message key="name">Name</message>
+  <message key="templates">Templates</message>
+  <message key="languages">Languages</message>
+  <message key="default-language">default language</message>
+  <message key="content-directory">Content directory</message>
+  <message key="content-dir-does-not-exist">The content directory does not exist.</message>
+  <message key="proxies">Proxy URLs</message>
+  <message key="warning-change-proxy-settings">
+    Caution: If you set invalid proxy URLs, you might not be able to access the publication anymore.
+  </message>
+  <message key="modules">Modules</message>
+  <message key="resource-types">Resource types</message>
+  
 </catalogue>

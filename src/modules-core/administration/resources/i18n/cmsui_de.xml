@@ -50,5 +50,21 @@
     Die Rolle <xhtml:q>{1}</xhtml:q> wurde dem Objekt <xhtml:q>{0}</xhtml:q> bereits zugeordnet.
   </message>
   
+  <!-- publication configuration -->
+  <message key="show-pub-conf">Eigenschaften der Publikation</message>
+  <message key="id">ID</message>
+  <message key="name">Name</message>
+  <message key="templates">Templates</message>
+  <message key="languages">Sprachen</message>
+  <message key="default-language">Default-Sprache</message>
+  <message key="content-directory">Inhalts-Ordner</message>
+  <message key="content-dir-does-not-exist">Der Inhalts-Ordner existiert nicht.</message>
+  <message key="proxies">Proxy-URLs</message>
+  <message key="warning-change-proxy-settings">
+    Vorsicht: Falls Sie ungültige Proxy-URLs eintragen, können Sie evtl. nicht mehr auf die Publikation zugreifen.
+  </message>
+  <message key="modules">Module</message>
+  <message key="resource-types">Ressource-Typen</message>
+  
 </catalogue>
 
