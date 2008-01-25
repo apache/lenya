@@ -75,7 +75,9 @@
                 -->
                <jx:choose>
                   <jx:when test="${mode.equals('Image')}">
+                    <jx:set var="height" value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height') + ''}"/>
                     <jx:set var="url" value="${asset2proxyUrl.get(asset)}"/>
+                    <jx:set var="width" value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width') + ''}"/>
                   </jx:when>
                   <jx:otherwise>
                     <jx:set var="url" value="${('lenya-document:' + asset.getUUID() + ',lang=' + asset.getLanguage())}"/>
@@ -90,8 +92,8 @@
                       onClick="updateData(
                           '${url}',
                           '${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title') + ''}',
-                          '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height') + ''}',
-                          '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width') + ''}',
+                          '${height}',
+                          '${width}',
                           '${asset.getMimeType() + ''}'
                       )"
                     /> 
@@ -102,8 +104,9 @@
                   <td>
                     <jx:choose>
                       <jx:when test="${mimeType.startsWith('image/')}">
-                        <!-- ??? --><jx:set var="doc" value="${usecase.getParameter('document')}"/>
-                        <img src="${url}" style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160;
+                        <!-- Add one to avoid dividing by 0 -->
+                        <jx:set var="scaledWidth" value="${width / ( height + 1 ) * 32.0}"/>
+                        <img src="${url}?lenya.module=svg&amp;height=32&amp;width=${scaledWidth}" style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160; 
                       </jx:when>
                       <jx:otherwise>
                         <jx:out value="${mimeType}"/>
@@ -118,7 +121,7 @@
                   </td>
                   <td align="right">
                     <jx:if test="${mimeType.startsWith('image/')}">
-                      <jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}"/> x <jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}"/></jx:if>
+                      <jx:out value="${width}"/> x <jx:out value="${height}"/></jx:if>
                   </td>
                   <td align="right">
                     <jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/>
