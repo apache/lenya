@@ -43,7 +43,7 @@
 
   <xsl:param name="error"/>
 
-  <xsl:param name="extensions" select="'doc dot rtf txt asc ascii xls xlw xlt ppt pot gif jpg png tif eps pct m3u kar mid smf mp3 swa mpg mpv mp4 mov bin sea hqx sit zip jmx jcl qz jbc jmt cfg pdf'"/>
+  <xsl:param name="extensions" select="'doc dot rtf txt asc ascii xls xlw xlt ppt pot gif jpg png tif eps pct m3u kar mid smf mp3 swa mpg mpv mp4 mov bin sea hqx sit zip jmx jcl qz jbc jmt cfg pdf xml'"/>
 
   <xsl:template match="/lenya-info:info">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">

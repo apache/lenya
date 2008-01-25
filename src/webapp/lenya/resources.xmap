@@ -240,6 +240,10 @@
           <map:match pattern="*/*/**.cfg">
             <map:read src="pubs/{1}/resources/{2}/{3}.cfg" mime-type="application/x-ms-word" />
           </map:match>
+      
+          <map:match pattern="*/*/**.xml">
+            <map:read src="pubs/{1}/resources/{2}/{3}.xml" mime-type="application/xml"/>
+          </map:match>
 
 <!-- matches pub-id/area/**.* this fallback may not work very well, but better than a 404
           <map:match pattern="*/*/**.*">
