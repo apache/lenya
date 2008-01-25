@@ -52,6 +52,14 @@
 </xsl:if>
 </xsl:template>
 
+<!--  Remove Xinha fields -->
+<xsl:template match="field[@name = 'Dialog1']" mode="rest" priority="2"/>
+<xsl:template match="field[@name = 'Dialog2']" mode="rest" priority="2"/>
+<xsl:template match="field[@name = 'Dialog3']" mode="rest" priority="2"/>
+<xsl:template match="field[@name = 'Dialog4']" mode="rest" priority="2"/>
+<xsl:template match="field[@name = 'Dialog5']" mode="rest" priority="2"/>
+<xsl:template match="field[@name = 'Dialog6']" mode="rest" priority="2"/>
+
 <!-- Unescape HTML entities -->
 <xsl:template match="text()" mode="rest">
     <xsl:value-of disable-output-escaping="yes" select="."/>

@@ -1,5 +1,13 @@
 <module id="navigation" name="Navigation">
-<version>1.3</version>
-<content>Hierarchical</content>
-<description>Handles backwards-compatible navigation framework for hierarchical storage.  Passes to "nav" Module if flat content.</description>
+   <version>
+      <minimum>1.3</minimum>
+      <created>1.3</created>
+      <content>hierarchical</content>
+   </version>
+   <dependencies>
+      <recommended id="nav">Handles flat content</recommended>
+   </dependencies>
+   <description>Handles backwards-compatible navigation framework for hierarchical storage.  Passes to "nav" Module if flat content.</description>
+   <usage>
+   </usage>
 </module>

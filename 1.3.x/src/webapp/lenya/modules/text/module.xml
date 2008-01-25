@@ -1,0 +1,14 @@
+<module id="text" name="Text">
+   <version>
+      <minimum>1.2</minimum>
+      <created>1.3</created>
+<maximum>0<maximum>
+   </version>
+   <dependencies>
+      <resourcePath>/</resourcePath>
+   </dependencies>
+   <description>Text Resource Type</description>
+   <usage>
+This will be the base resource type for non-XML text resources such as CSS and JavaScript files.
+   </usage>
+</module>

@@ -1,0 +1,23 @@
+<module
+   id="moduleId"
+   name="EnglishName" rem="id and name default to directory name"
+   internal="true|false"
+   minimum="1.3"   rem="Filter to not use below certain version of Lenya."
+   maximum=""      rem="Filter to not use above certain version of Lenya."
+   created="1.3"   rem="Unused. Comment."
+   content="hierarchical|flat|all" <!-- Filter for content type if multiple modules with same id. Default=all"
+   modified="1.3" rem="Filter for latest if multiple modules with same id and content type."
+   resource="/xml/xhtml" rem="Empty for non-resource modules.  / for top-level resources: xml, file, link.  /xml or /xml/xhtml for most custom resources.  All modules on resource path are automatically inherited and required.  Current id is not needed but is obviously needed in resource type."
+>
+   <inherit priority="1" publication="parentPublicationId" id="parentId"/>
+   <inherit priority="2" publication="parentPublicationId2" id="parentId2"/>
+      <required id="parentModuleId">Note why</required>  <!-- All required modules will be loaded.  Modules on resource path should not specified.  -->
+      <required id="parentModuleId2"/>  
+      <recommended id="recommendedModuleId">Suggestion to publication configurators.</recommended> <!-- Modules not required but increase functionality. -->
+      <optional id="otherModuleID">Explanation for other developers about when other module may be used.</optional>  <!-- Any modules not listed in another category that may be used by this module. -->
+      <parameter name="parametername">parametervalue</parameter>
+   <description>Short description of the module. This is an element to allow XHTML in future.</description>
+   <usage>
+      XHTML help documentation
+   </usage>
+</module>

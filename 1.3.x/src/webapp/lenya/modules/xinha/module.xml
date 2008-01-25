@@ -1,0 +1,9 @@
+<module id="xinha" name="Xinha" internal="true">
+   <version>
+      <minimum>1.3</minimum>
+      <created>1.3</created>
+   </version>
+   <description>Xinha Javascript XHTML Editor</description>
+   <usage>
+   </usage>
+</module>

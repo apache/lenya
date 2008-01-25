@@ -1,6 +1,13 @@
 <module id="edit" name="Edit">
-<version>Flat</version>
+   <version>
+      <minimum>1.3</minimum>
+      <created>1.3</created>
+      <content>flat</content>
+   </version>
+   <dependencies>
+      <recommended id="authoring">Failover for hierarchical content publications.</recommended>
+   </dependencies>
 <description>PageModule for editing Resources.</description>
-<usage>
-</usage>
+   <usage>
+   </usage>
 </module>

@@ -15,7 +15,9 @@ Paul Ercolino (solprovider)
 === Versions
 1.3.0.x
 Fully compatible with Lenya 1.2.2, 1.2.3, and 1.2.4 Publications.  
-Uses Java 1.4.  Upgrade should only require changing Lenya (and maybe Cocoon.)
+Uses Java 1.4.  
+Upgrade should only require changing Lenya and Cocoon.
+Cocoon should be upgraded to Cocoon-2.1.11 to include bug fix for http status codes.
 Includes "flat" module to upgrade 1.2 Publications to 1.3's flat storage.
 
 1.3.1+ (Exact features to be determined before release.)

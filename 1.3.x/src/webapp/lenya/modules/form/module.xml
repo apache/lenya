@@ -1,6 +1,8 @@
 <module id="form" name="Form">
-<version>1.3</version>
-<content>All</content>
+   <version>
+      <minimum>1.2</minimum>
+      <created>1.3</created>
+   </version>
 <description>Handles forms.</description>
 <usage>
 === post.xsp

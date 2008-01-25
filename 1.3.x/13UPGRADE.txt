@@ -1,10 +1,14 @@
 How to Upgrade to Lenya 1.3
 
-You must have a Lenya1.2 Publication.  Lenya1.3 knows nothing about Lenya1.4/2.0.  Until Lenya1.3 can edit documents in the flat datastore, you must use Lenya1.2's edit capabilities with Lenya1.2's hierarchical content.
+Lenya 1.3 is usable as an intial install or an upgrade from Lenya 1.2.  Lenya 1.3 knows nothing about Lenya 1.4 or 2.0 so upgrading publications from those releases may be difficult.  
 
 First, install Lenya1.3.  Follow the instructions from the Release Notes for Lenya1.2, except download the code from Lenya1.3's SVN.
 
-=== Converting Publications
+NOTE: If you encounter any errors running Lenya 1.3, check for duplicate libraries in directory:
+   build/lenya/webapp/WEB-INF/lib
+Keep the latest version of each duplicate.
+
+=== Converting Publications from Lenya 1.2
 The only required conversion is to change XSL references in page2xhtml.xsl and similar files:
 CHANGE:
 select="xhtml:div[@id = 'body']"
@@ -42,7 +46,9 @@ AND in the XMAP "module.xmap" of any new modules, add the contenttype parameter 
 </map:transform
 
 
-=== Converting Usecases to Modules
+=== Converting Lenya 1.2 Usecases to Lenya 1.3 Modules
+This is optional.  Lenya 1.3 understands Lenya 1.2 Usecases. Once the Modules are created, Lenya1.3 will automatically use them, even when the request uses the "?lenya.usecase=" format.
+
 In your {pub} directory, create a directory names "modules".
 
 In the {pub}/modules directory, create one directory for each Usecase.  The Usecase directories should have the name from the Usecase XMAPs.  So if you have {pub}/usecase-search.xmap, create a directory {pub}/modules/search.
@@ -52,16 +58,15 @@ COPY each of the Usecase XMAPs to the appropriate directory.
 RENAME the copied files (in {pub}/modules/{moduleID} to "module.xmap".
 
 Open each of those files and fix the filepaths.  No changes are necessary for "cocoon:",  "fallback:" and "http:", but every "file:" src parameter must be fixed, including entries without a protocol.  For now, just add "module:///../../" to the beginning of each src parameter.
-EXAMPLE:
+EXAMPLES:
 src="xxx"
-src="file:/xxx
-BECOMES:
+src="file:/xxx"
+BECOME:
 src="module:///../../xxx"
 
 When accessing the content directory, use the content: protocol.
 
-Once the Modules are created, Lenya1.3 will automatically use them, even when the request uses the "?lenya.usecase=" format.
-
+--
 If you may revert the Publication to Lenya1.2, make the following changes.  Otherwise, delete all the {pub}/usecase-{usecaseID}.xmap files.
 
 MODIFY FILES: {pub}/usecase-{usecaseID}.xmap

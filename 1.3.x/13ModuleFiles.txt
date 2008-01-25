@@ -7,17 +7,17 @@ module.xml - Description of Module.
 
 
 === Specific Module Files ===
-navigation.xmap - Overrides Navigation Module.
+navigation.xmap - Overrides Navigation Module (used for hierarchical content.)
 navigation.xsl - Overrides XSL in Navigation Module.
 
-nav.xmap - Overrides Nav Module.
+nav.xmap - Overrides Nav Module (used for flat content.)
 nav.xsl - Overrides XSL in Nav Module.
 
 edit.xmap - For additional fields in Edit Module. (Still in development)
 
 
 === Common Naming Standards ===
-code.js - JavaScript Flow functions.
+code.js - JavaScript Flow functions.  Modules descending from a module that contains a code.js file should either copy the ancestor's code.js file or use a different name such as "code1.js" with the number indicating the depth of inheritance.
 
 page2xhtml.xsl - Transforms aggregated DIVs to HTML.
 

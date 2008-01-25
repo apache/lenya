@@ -1,3 +1,6 @@
+Fix Publication Module loading and inheritance.  Each Publication should build structure once per restart.  See Modules.java below.
+Add reloadModules to publication. 
+
 Administration navigation - Create Resource, return from edit resource.
 Add "Choose Lenya doc link" dialog to Xinha.
 Add "Create file resource" to Xinha.
@@ -5,10 +8,10 @@ Security.
 Link rewriting (CreateRevisionTransformer and HTMLSeriralizer)
 Structure editor.
 
-CreateRevisionTransformer: Set creator and when properly.
-Dialog1 - Dialog6 fields added to new revisions.  From Xinha?
 Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
 
+FIXED?: CreateRevisionTransformer: Set creator and when properly.
+FIXED 20080120: Xinha adds extra fields. Dialog1 - Dialog6 fields added to new revisions.
 
 ==== ToDo List from 2006
 === 1.2.x Conversion
@@ -26,7 +29,7 @@ Use for both File and Variable inheritance.
 
 
 === CreateRevisionTransformer
-Create new Resource if none specified or does not exist.  Allow a Title parameter, and default to "NEW" + datetime.
+Create new Resource if none specified or does not exist.  Allow a Title parameter, and default to "NEW " + datetime.
 
 TEST If request has file upload, save uploaded file with newrevision.
 Save upload Part.  Do not depend on field name.
@@ -201,3 +204,7 @@ If exists and needs updating, check update freq.  If cache-and-update (assume tr
 Match identical indexconfs, same filters.  ?superset include unless different value for same name.  Could cause issues if poor code copies extra attributes.
 
 
+=== 1.3.1
+build/lenya directory should be self-contained runnable.
+Separate Cocoon building from Lenya build process so Cocoon download and build is optional.    
+Correct ant target files.  (Eclipse dislikes undeclared dependencies.)

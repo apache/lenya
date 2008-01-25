@@ -1,0 +1,16 @@
+<module id="live" name="Live">
+   <version>
+      <minimum>1.2</minimum>
+      <created>1.3</created>
+      <content>all</content>
+   </version>
+   <dependencies>
+      <required id="navigation">Creates nevigation elements</required>
+      <required id="xhtml">For document</required>  
+      <recommended id="cache">Use file cache for anonymous.</recommended>
+      <optional id="homepage">Redirects index* if available.</optional>
+   </dependencies>
+   <description>Main entry point as in Lenya 1.2.</description>
+   <usage>
+   </usage>
+</module>

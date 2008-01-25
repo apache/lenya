@@ -1,0 +1,15 @@
+<module id="homepage" name="Homepage">
+   <version>
+      <minimum>1.3</minimum>
+      <created>1.3</created>
+   </version>
+   <dependencies>
+      <resourcePath>/xml</resourcePath>
+      <required id="navigation">For menus.</required>
+      <recommended id="cache">Improve performance by storing homepage for anonymous people.</recommended>
+   </dependencies>
+   <description>Alternate layout for homepage.</description>
+   <usage>
+   </usage>
+   <!-- Concept was originally xml/homepage Resource type.  This should be child of /xml/xhtml and inherit xmap from live/xml/xhtml allowing removal of special case in live/module.xmap. Will require change to migration (flat) module.  -->
+</module>
