@@ -39,6 +39,7 @@ import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.util.Assert;
 
@@ -152,10 +153,21 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
         if (id2config.containsKey(pubId)) {
             throw new PublicationException("The publication [" + pubId + "] already exists.");
         }
-        PublicationConfiguration config = new PublicationConfiguration(pubId,
-                this.servletContextPath);
-        ContainerUtil.enableLogging(config, getLogger());
-        id2config.put(pubId, config);
+        ContextUtility context = null;
+        try {
+            context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            PublicationConfiguration config = new PublicationConfiguration(pubId,
+                    this.servletContextPath, context.getRequest().getContextPath());
+            ContainerUtil.enableLogging(config, getLogger());
+            id2config.put(pubId, config);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        }
+        finally {
+            if (context != null) {
+                this.manager.release(context);
+            }
+        }
     }
 
     protected String getServletContextPath() {

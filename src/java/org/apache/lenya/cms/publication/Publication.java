@@ -93,6 +93,11 @@ public interface Publication extends RepositoryItem {
      * @return The name of the publication as specified in the configuration file.
      */
     String getName();
+    
+    /**
+     * @param name The name of the publication.
+     */
+    void setName(String name);
 
     /**
      * Returns the servlet context this publication belongs to (usually, the
@@ -139,7 +144,8 @@ public interface Publication extends RepositoryItem {
 
     /**
      * Set the default language
-     * @param language the default language
+     * @param language The default language.
+     * @throws IllegalArgumentException if the publication doesn't contain this language.
      */
     void setDefaultLanguage(String language);
 
@@ -148,6 +154,19 @@ public interface Publication extends RepositoryItem {
      * @return an <code>Array</code> of languages
      */
     String[] getLanguages();
+    
+    /**
+     * @param language The language to add.
+     * @throws IllegalArgumentException if the language is invalid or already contained.
+     */
+    void addLanguage(String language);
+    
+    /**
+     * @param language The language to remove.
+     * @throws IllegalArgumentException if the language is not contained or if the language
+     * is the default language.
+     */
+    void removeLanguage(String language);
 
     /**
      * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger
@@ -254,5 +273,15 @@ public interface Publication extends RepositoryItem {
      * @return The document factory.
      */
     public DocumentFactory getFactory();
+    
+    /**
+     * Saves the configuration of this publication.
+     */
+    void saveConfiguration();
+    
+    /**
+     * @return The names of all modules which are used by this publication.
+     */
+    String[] getModuleNames();
 
 }

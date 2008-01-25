@@ -23,12 +23,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.Assert;
 
 /**
  * A publication's configuration. Keep in sync with
@@ -38,13 +43,21 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
     private String id;
     private String name;
+    private String description;
+    private String version;
+    private String lenyaVersion;
+    private String lenyaRevision;
+    private String cocoonVersion;
+    
     private File servletContext;
     private DocumentIdToPathMapper mapper = null;
-    private ArrayList languages = new ArrayList();
+    private SortedSet languages = new TreeSet();
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
     private String instantiatorHint = null;
     private String contentDir = null;
+    private SortedSet modules = new TreeSet();
+    private String contextPath;
 
     private boolean isConfigLoaded = false;
 
@@ -59,7 +72,6 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     // properties marked with "*" are currently not parsed by this class.
     private static final String ELEMENT_NAME = "name";
     private static final String ELEMENT_DESCRIPTION = "description"; // *
-    private static final String ELEMENT_LONGDESC = "longdesc"; // *
     private static final String ELEMENT_VERSION = "version"; // *
     private static final String ELEMENT_LENYA_VERSION = "lenya-version"; // *
     private static final String ELEMENT_LENYA_REVISION = "lenya-revision"; // *
@@ -87,18 +99,23 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_SSL = "ssl";
+    
+    protected static final String NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
+    protected static final String NS_PREFIX = "";
 
     /**
      * Creates a new instance of Publication
      * @param _id the publication id
-     * @param servletContextPath the servlet context of this publication
+     * @param servletContextPath the servlet context directory of this publication
+     * @param servletContextUrlPath The servlet context path (URL snippet).
      * @throws PublicationException if there was a problem reading the config
      *         file
      */
-    protected PublicationConfiguration(String _id, String servletContextPath)
+    protected PublicationConfiguration(String _id, String servletContextPath, String servletContextUrlPath)
             throws PublicationException {
         this.id = _id;
         this.servletContext = new File(servletContextPath);
+        this.contextPath = servletContextUrlPath;
     }
 
     /**
@@ -145,6 +162,12 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
             else {
                 this.name = pubName;
             }
+            
+            this.description = config.getChild(ELEMENT_DESCRIPTION).getValue("");
+            this.version = config.getChild(ELEMENT_VERSION).getValue("");
+            this.lenyaVersion = config.getChild(ELEMENT_LENYA_VERSION).getValue("");
+            this.lenyaRevision = config.getChild(ELEMENT_LENYA_REVISION).getValue("");
+            this.cocoonVersion = config.getChild(ELEMENT_COCOON_VERSION).getValue("");
 
             try {
                 // one sanity check for the proper namespace. we should really
@@ -196,14 +219,13 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
                 String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
 
-                Proxy proxy = new Proxy();
-                proxy.setUrl(url);
-
                 Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
+                Proxy proxy = new Proxy(getDefaultProxyUrl(area));
+                proxy.setUrl(url);
                 this.areaSsl2proxy.put(key, proxy);
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
-                            "Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
+                            "Adding proxy URL: [" + url + "] for area=[" + area + "] SSL=[" + ssl
                                     + "]");
                 }
             }
@@ -255,6 +277,15 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 }
             }
 
+            Configuration modulesConf = config.getChild(ELEMENT_MODULES);
+            if (modulesConf != null) {
+                Configuration[] modulesConfigs = modulesConf.getChildren(ELEMENT_MODULE);
+                for (int i = 0; i < modulesConfigs.length; i++) {
+                    String name = modulesConfigs[i].getAttribute(ATTRIBUTE_NAME);
+                    this.modules.add(name);
+                }
+            }
+
         } catch (final Exception e) {
             throw new RuntimeException("Problem with config file: " + configFile.getAbsolutePath(),
                     e);
@@ -263,6 +294,10 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         this.breadcrumbprefix = config.getChild(ELEMENT_BREADCRUMB_PREFIX).getValue("");
 
         isConfigLoaded = true;
+    }
+    
+    protected String getDefaultProxyUrl(String area) {
+        return this.contextPath + "/" + this.id + "/" + area;
     }
 
     /**
@@ -341,6 +376,11 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * @param language the default language
      */
     public void setDefaultLanguage(String language) {
+        Assert.notNull(language);
+        if (!Arrays.asList(getLanguages()).contains(language)) {
+            throw new IllegalArgumentException("The publication [" + this +
+                    "] doesn't contain the language [" + language + "]!");
+        }
         this.defaultLanguage = language;
     }
 
@@ -405,47 +445,31 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * @param isSslProtected If the proxy is assigned for SSL-protected pages.
      * @return An object.
      */
-    protected Object getProxyKey(String area, boolean isSslProtected) {
+    protected String getProxyKey(String area, boolean isSslProtected) {
         return area + ":" + isSslProtected;
     }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#getProxy(org.apache.lenya.cms.publication.Document,
-     *      boolean)
-     */
-    public Proxy getProxy(Document document, boolean isSslProtected) {
-        Proxy proxy = getProxy(document.getArea(), isSslProtected);
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger()
-                    .debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
-            getLogger().debug("Resolved proxy: [" + proxy + "]");
-        }
-
-        return proxy;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#getProxy(java.lang.String,
-     *      boolean)
-     */
-    public Proxy getProxy(String area, boolean isSslProtected) {
+    
+    protected String getProxyUrl(String area, boolean isSslProtected) {
         loadConfiguration();
         Object key = getProxyKey(area, isSslProtected);
+        return (String) this.areaSsl2proxy.get(key);
+    }
+
+    
+    public Proxy getProxy(Document document, boolean isSslProtected) {
+        return getProxy(document.getArea(), isSslProtected);
+    }
+
+    public Proxy getProxy(String area, boolean isSslProtected) {
+        String key = getProxyKey(area, isSslProtected);
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
+        if (proxy == null) {
+            proxy = new Proxy(getDefaultProxyUrl(area));
+            this.areaSsl2proxy.put(key, proxy);
+        }
         return proxy;
     }
-
-    /**
-     * @param area The area.
-     * @param isSslProtected If the proxy is for SSL-protected URLs.
-     * @param proxy The proxy to set.
-     */
-    protected void setProxy(String area, boolean isSslProtected, Proxy proxy) {
-        Object key = getProxyKey(area, isSslProtected);
-        this.areaSsl2proxy.put(key, proxy);
-    }
-
+    
     private String siteManagerName;
 
     /**
@@ -488,9 +512,13 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     public String getContentDir() {
         loadConfiguration();
         if (this.contentDir == null) {
-            this.contentDir = new File(getDirectory(), CONTENT_PATH).getAbsolutePath();
+            this.contentDir = getDefaultContentDir();
         }
         return this.contentDir;
+    }
+
+    protected String getDefaultContentDir() {
+        return new File(getDirectory(), CONTENT_PATH).getAbsolutePath();
     }
 
     /**
@@ -513,11 +541,10 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * @see org.apache.lenya.cms.publication.Publication#getWorkflowSchema(org.apache.lenya.cms.publication.ResourceType)
      */
     public String getWorkflowSchema(ResourceType resourceType) {
-        String workflow = (String) this.resourceType2workflow.get(resourceType.getName());
-        return workflow;
+        return (String) this.resourceType2workflow.get(resourceType.getName());
     }
 
-    private List resourceTypes = new ArrayList();
+    private SortedSet resourceTypes = new TreeSet();
 
     /**
      * @see org.apache.lenya.cms.publication.Publication#getResourceTypeNames()
@@ -566,6 +593,153 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
     public Session getSession() {
         throw new UnsupportedOperationException();
+    }
+
+    public void addLanguage(String language) {
+        Assert.notNull("language", language);
+        this.languages.add(language);
+    }
+
+    public void removeLanguage(String language) {
+        Assert.notNull("language", language);
+        if (!Arrays.asList(getLanguages()).contains(language)) {
+            throw new IllegalArgumentException("The publication [" + this +
+                    "] doesn't contain the language [" + language + "]!");
+        }
+        if (language.equals(getDefaultLanguage())) {
+            throw new IllegalArgumentException("Can't remove the language [" + language +
+                    "] because it is the default language.");
+        }
+        this.languages.remove(language);
+    }
+
+    public void setName(String name) {
+        Assert.notNull("name", name);
+        Assert.isTrue("name not empty", name.length() > 0);
+        this.name = name;
+    }
+    
+    protected DefaultConfiguration createConfig(String name) {
+        return new DefaultConfiguration(name, "", NAMESPACE, NS_PREFIX);
+    }
+
+    protected DefaultConfiguration createConfig(String name, String value) {
+        DefaultConfiguration config = createConfig(name);
+        config.setValue(value);
+        return config;
+    }
+
+    protected DefaultConfiguration createConfig(String name, String attrName, String attrValue) {
+        DefaultConfiguration config = createConfig(name);
+        config.setAttribute(attrName, attrValue);
+        return config;
+    }
+
+    public void saveConfiguration() {
+        File configFile = getConfigurationFile();
+
+        DefaultConfiguration config = new DefaultConfiguration("publication", "", NAMESPACE, NS_PREFIX);
+
+        try {
+
+            config.addChild(createConfig(ELEMENT_NAME, getName()));
+            config.addChild(createConfig(ELEMENT_DESCRIPTION, this.description));
+            config.addChild(createConfig(ELEMENT_VERSION, this.version));
+            config.addChild(createConfig(ELEMENT_LENYA_VERSION, this.lenyaVersion));
+            config.addChild(createConfig(ELEMENT_LENYA_REVISION, this.lenyaRevision));
+            config.addChild(createConfig(ELEMENT_COCOON_VERSION, this.cocoonVersion));
+
+            config.addChild(createConfig(ELEMENT_PATH_MAPPER, getPathMapper().getClass().getName()));
+            config.addChild(createConfig(ELEMENT_DOCUMENT_BUILDER, ATTRIBUTE_NAME, getDocumentBuilderHint()));
+            
+            String[] languages = getLanguages();
+            String defaultLanguage = getDefaultLanguage();
+            
+            DefaultConfiguration languagesConfig = createConfig(ELEMENT_LANGUAGES);
+            for (int i = 0; i < languages.length; i++) {
+                DefaultConfiguration languageConfig = createConfig(ELEMENT_LANGUAGE);
+                languageConfig.setValue(languages[i]);
+                if (languages[i].equals(defaultLanguage)) {
+                    languageConfig.setAttribute(ATTRIBUTE_DEFAULT_LANGUAGE, true);
+                }
+                languagesConfig.addChild(languageConfig);
+            }
+            config.addChild(languagesConfig);
+            
+            config.addChild(createConfig(ELEMENT_SITE_MANAGER, ATTRIBUTE_NAME, getSiteManagerHint()));
+            
+            DefaultConfiguration proxiesConfig = createConfig(ELEMENT_PROXIES);
+            config.addChild(proxiesConfig);
+            Boolean[] booleans = { Boolean.FALSE, Boolean.TRUE };
+            String[] areas = getAreaNames();
+            for (int b = 0; b < booleans.length; b++) {
+                for (int a = 0; a < areas.length; a++) {
+                    boolean ssl = booleans[b].booleanValue();
+                    
+                    Proxy proxy = getProxy(areas[a], ssl);
+                    
+                    // add only proxy URLs for non-default proxies
+                    if (!proxy.getUrl().equals(proxy.getDefaultUrl())) {
+                        DefaultConfiguration proxyConf = createConfig(ELEMENT_PROXY);
+                        proxyConf.setAttribute(ATTRIBUTE_AREA, areas[a]);
+                        proxyConf.setAttribute(ATTRIBUTE_SSL, ssl);
+                        proxyConf.setAttribute(ATTRIBUTE_URL, proxy.getUrl());
+                        proxiesConfig.addChild(proxyConf);
+                    }
+                    
+                }
+            }
+            
+            String[] templates = getTemplateIds();
+            if (templates.length > 0) {
+                config.addChild(createConfig(ELEMENT_TEMPLATE, ATTRIBUTE_ID, templates[0]));
+            }
+
+            String instantiatorHint = getInstantiatorHint();
+            if (instantiatorHint != null) {
+                config.addChild(createConfig(ELEMENT_TEMPLATE_INSTANTIATOR, ATTRIBUTE_NAME, instantiatorHint));
+            }
+            
+            String contentDir = getContentDir();
+            if (!contentDir.equals(getDefaultContentDir())) {
+                config.addChild(createConfig(ELEMENT_CONTENT_DIR, ATTRIBUTE_SRC, this.contentDir));
+            }
+            
+            DefaultConfiguration resourceTypesConf = createConfig(ELEMENT_RESOURCE_TYPES);
+            config.addChild(resourceTypesConf);
+            String[] resourceTypes = getResourceTypeNames();
+            for (int i = 0; i < resourceTypes.length; i++) {
+                String type = resourceTypes[i];
+                DefaultConfiguration resourceTypeConf = createConfig(ELEMENT_RESOURCE_TYPE, ATTRIBUTE_NAME, type);
+                if (this.resourceType2workflow.containsKey(type)) {
+                    resourceTypeConf.setAttribute(ATTRIBUTE_WORKFLOW, (String)
+                            this.resourceType2workflow.get(type));
+                }
+                resourceTypesConf.addChild(resourceTypeConf);
+            }
+            
+            DefaultConfiguration modulesConf = createConfig(ELEMENT_MODULES);
+            config.addChild(modulesConf);
+            String[] modules = getModuleNames();
+            for (int i = 0; i < modules.length; i++) {
+                DefaultConfiguration moduleConf = createConfig(ELEMENT_MODULE, ATTRIBUTE_NAME, modules[i]);
+                modulesConf.addChild(moduleConf);
+            }
+            
+            config.addChild(createConfig(ELEMENT_BREADCRUMB_PREFIX, getBreadcrumbPrefix()));
+            
+            DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
+            serializer.setIndent(true);
+            serializer.serializeToFile(getConfigurationFile(), config);
+
+        } catch (final Exception e) {
+            throw new RuntimeException("Problem with config file: " + configFile.getAbsolutePath(),
+                    e);
+        }
+    }
+
+    public String[] getModuleNames() {
+        return (String[]) this.modules.toArray(new String[this.modules.size()]);
     }
 
 }

@@ -113,14 +113,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     public Proxy getProxy(String area, boolean isSslProtected) {
-        Proxy proxy = delegate.getProxy(area, isSslProtected);
-        if (proxy == null) {
-            String url = getDefaultProxyUrl(area);
-            proxy = new Proxy();
-            proxy.setUrl(url);
-            this.delegate.setProxy(area, isSslProtected, proxy);
-        }
-        return proxy;
+        return delegate.getProxy(area, isSslProtected);
     }
     
     private String contextPath;
@@ -141,14 +134,6 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
             }
         }
         return this.contextPath;
-    }
-
-    /**
-     * @param area The area.
-     * @return The proxy URL if no proxy is declared in {@link PublicationConfiguration#CONFIGURATION_FILE}.
-     */
-    protected String getDefaultProxyUrl(String area) {
-        return getContextPath() + "/" + getId() + "/" + area;
     }
 
     private List allResourceTypes;
@@ -257,6 +242,26 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     public Session getSession() {
         return getFactory().getSession();
+    }
+
+    public void addLanguage(String language) {
+        this.delegate.addLanguage(language);
+    }
+
+    public String[] getModuleNames() {
+        return this.delegate.getModuleNames();
+    }
+
+    public void removeLanguage(String language) {
+        this.delegate.removeLanguage(language);
+    }
+
+    public void saveConfiguration() {
+        this.delegate.saveConfiguration();
+    }
+
+    public void setName(String name) {
+        this.delegate.setName(name);
     }
 
 }

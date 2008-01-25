@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.util.Assert;
+
 /**
  * <p>
  * An object of this class represents a proxy configuration.
@@ -36,8 +38,30 @@ package org.apache.lenya.cms.publication;
  * @version $Id$
  */
 public class Proxy {
-
+    
+    private String defaultUrl;
     private String url;
+
+    /**
+     * @param defaultUrl The default proxy URL.
+     */
+    public Proxy(String defaultUrl) {
+        Assert.notNull("default URL", defaultUrl);
+        this.defaultUrl = defaultUrl;
+    }
+
+    /**
+     */
+    public Proxy() {
+    }
+
+    /**
+     * @param area The area.
+     * @return The proxy URL if no proxy is declared in {@link PublicationConfiguration#CONFIGURATION_FILE}.
+     */
+    public String getDefaultUrl() {
+        return this.defaultUrl;
+    }
 
     /**
      * Returns the absolute URL of a particular document.
@@ -53,7 +77,15 @@ public class Proxy {
      * @return A string.
      */
     public String getUrl() {
-        return this.url;
+        if (this.url != null) {
+            return this.url;
+        }
+        else if (this.defaultUrl != null) {
+            return this.defaultUrl;
+        }
+        else {
+            throw new IllegalStateException("This proxy has no URL.");
+        }
     }
 
     /**
@@ -61,6 +93,7 @@ public class Proxy {
      * @param _url The url to set.
      */
     public void setUrl(String _url) {
+        Assert.notNull("url", _url);
         this.url = _url;
     }
 
@@ -70,4 +103,5 @@ public class Proxy {
     public String toString() {
         return "Proxy URL=[" + getUrl() + "]";
     }
+    
 }
