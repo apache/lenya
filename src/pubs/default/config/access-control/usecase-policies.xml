@@ -209,6 +209,12 @@
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
+  <usecase id="admin.showPubConf">
+    <role id="admin" method="grant"/>
+  </usecase>
+  <usecase id="admin.editPubConf">
+    <role id="admin" method="grant"/>
+  </usecase>
   <usecase id="admin.usecases">
     <role id="admin" method="grant"/>
   </usecase>
