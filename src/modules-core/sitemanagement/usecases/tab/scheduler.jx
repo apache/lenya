@@ -26,6 +26,11 @@
   <page:body>
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+
+    <jx:set var="url" value="${usecase.getParameter('private.sourceUrl')}"/>
+    <jx:set var="steps" value="${url.split('/')}"/>
+    <jx:set var="currentPublicationId" value="${steps[1]}"/>
+
     <div id="contentblock1" class="lenya-tab-sitetree">
       
       <h1><i18n:text>Scheduler</i18n:text></h1>
@@ -47,19 +52,22 @@
               <jx:set var="parts" value="${name.split(':')}"/>
               <jx:set var="usecaseName" value="${parts[0]}"/>
               <jx:set var="userId" value="${parts[1]}"/>
-              <tr>
-                <td>
-                  <jx:out value="${usecaseName}"/>
-                </td>
-                <td>
-                  <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${userId}"><jx:out value="${userId}"/></a>
-                </td>
-                <td>
-                  <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss Z">
-                    <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss Z" value="${job.getNextTime()}"/>
-                  </i18n:date-time>
-                </td>
-              </tr>
+              <jx:set var="pubId" value="${parts[2]}"/>
+              <jx:if test="${pubId == currentPublicationId}">
+                <tr>
+                  <td>
+                    <jx:out value="${usecaseName}"/>
+                  </td>
+                  <td>
+                    <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${userId}"><jx:out value="${userId}"/></a>
+                  </td>
+                  <td>
+                    <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss Z">
+                      <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss Z" value="${job.getNextTime()}"/>
+                    </i18n:date-time>
+                  </td>
+                </tr>
+              </jx:if>
             </jx:forEach>
           </table>
         </jx:otherwise>

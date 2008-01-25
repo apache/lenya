@@ -38,6 +38,7 @@ import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 
@@ -47,7 +48,7 @@ import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
  * </p>
  * <p>
  * The names of the scheduled jobs have the syntax
- * <code>{usecaseName}:{userId}</code>.
+ * <code>{usecaseName}:{userId}:{pubId}</code>.
  * 
  * @version $Id$
  */
@@ -114,7 +115,8 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
     }
 
     protected String getJobName(Usecase usecase, String userId) {
-        return usecase.getName() + ":" + userId;
+        return usecase.getName() + ":" + userId + ":" + 
+                   getPublicationName(usecase);
     }
 
     protected ServiceManager manager;
@@ -163,4 +165,8 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
         return entries;
     }
 
+    protected String getPublicationName(Usecase usecase) {
+        URLInformation info = new URLInformation(usecase.getSourceURL());
+        return info.getPublicationId();
+    }
 }
