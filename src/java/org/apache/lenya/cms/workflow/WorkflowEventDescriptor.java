@@ -34,12 +34,16 @@ public class WorkflowEventDescriptor {
         Assert.notNull("version", version);
         this.version = version;
     }
-    
+
     /**
      * @return The version.
      */
     public Version getVersion() {
         return this.version;
     }
-    
+
+    public String toString() {
+        return "workflow:" + this.version.getEvent() + "->" + this.version.getState();
+    }
+
 }

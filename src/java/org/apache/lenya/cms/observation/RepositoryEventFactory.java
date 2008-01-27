@@ -56,9 +56,11 @@ public class RepositoryEventFactory {
     public static final RepositoryEvent createEvent(ServiceManager manager, Document doc,
             Logger logger, Object descriptor) {
         try {
-            return new DocumentEvent(doc.getRepositoryNode().getSession(), doc.getPublication()
+            RepositoryEvent event = new DocumentEvent(doc.getRepositoryNode().getSession(), doc.getPublication()
                     .getId(), doc.getArea(), doc.getUUID(), doc.getLanguage(), doc
                     .getResourceType(), descriptor);
+            event.setNodeUri(doc.getRepositoryNode().getSourceURI());
+            return event;
         } catch (DocumentException e) {
             throw new RuntimeException(e);
         }
@@ -84,6 +86,7 @@ public class RepositoryEventFactory {
             event = createEvent(manager, doc, logger, descriptor);
         } else {
             event = new RepositoryEvent(node.getSession(), descriptor);
+            event.setNodeUri(node.getSourceURI());
         }
         return event;
     }

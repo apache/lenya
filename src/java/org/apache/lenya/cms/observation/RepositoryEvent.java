@@ -55,5 +55,25 @@ public class RepositoryEvent {
     public Object getDescriptor() {
         return this.descriptor;
     }
+    
+    public String toString() {
+        return "user:" + getSession().getIdentity().getUser() + " " + getNodeUri() + " " + getDescriptor();
+    }
+    
+    private String nodeUri;
+    
+    /**
+     * @param nodeUri The source URI of the affected node.
+     */
+    public void setNodeUri(String nodeUri) {
+        this.nodeUri = nodeUri;
+    }
+    
+    /**
+     * @return The source URI of the affected node.
+     */
+    public String getNodeUri() {
+        return this.nodeUri;
+    }
 
 }
