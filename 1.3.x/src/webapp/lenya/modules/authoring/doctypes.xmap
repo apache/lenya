@@ -14,9 +14,9 @@
     <map:pipeline>
       <map:match pattern="*/*/*/**.xml">
         <map:match type="step" pattern="view-revision">
-          <map:generate type="serverpages" src="module:///../../../../content/rc/view.xsp">
+          <map:generate type="serverpages" src="module://lenya/rc/view.xsp">
           </map:generate>
-          <map:transform src="module:///../../../../xslt/rc/toDoc.xsl"/>
+          <map:transform src="module://lenya/rc/toDoc.xsl"/>
         <map:transform src="module:///../../xslt/{../3}2xhtml.xsl">
           <map:parameter name="rendertype" value="{1}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
@@ -29,8 +29,12 @@
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
       <map:match pattern="*/*/*/**.xml">
-        <map:generate src="module:///../../content/{2}/{4}.xml"/>
-        <map:transform src="module:///../../xslt/{3}2xhtml.xsl">
+<!-- WARNING: Different path needed by Global and Publication Modules. -->
+        <map:generate src="module:///../../pubs/{publication:publication}/content/{2}/{4}.xml"/>
+<!--        <map:generate src="module:///../../content/{2}/{4}.xml"/> -->
+<!-- WARNING: Different path needed by Global and Publication Modules. -->
+        <map:transform src="module:///../../pubs/{publication:publication}/xslt/{3}2xhtml.xsl">
+<!--        <map:transform src="module:///../../xslt/{3}2xhtml.xsl"> -->
           <map:parameter name="rendertype" value="{1}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
           <map:parameter name="language" value="{page-envelope:document-language}"/>

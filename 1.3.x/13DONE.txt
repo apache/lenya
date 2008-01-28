@@ -1,0 +1,23 @@
+This file contains completed entries from the TODO file with the most recent entries at the top.  Separate Commits with "---".
+======
+
+
+
+---
+DONE 20080127: Fix Publication Module loading and inheritance.  Each Publication should build structure once per restart.  
+[Modules.java]
+synchronize setting of static variables.
+Move inherit to static (publication.module.name=publication.module.name).
+Module variable inheritance must follow name changes (inherit="differentModuleName").
+Fix getVariable() to use inherit.
+New "inherit": publication.module -> list(array) of publication.module
+There may be more than one publication.  Each Module inherits from only one Module name.
+Use for both File and Variable inheritance.
+[ModuleModule.java]
+module variables: publication.xconf (implemented), then get defaults from module.xconf, follow inheritance until found.
+DONE 20080127: Add reloadModules to publication. => Files are cached by filename so changes fo not require reset.  Filename cache cleared by reset using double-colon.
+
+---
+FIXED?: CreateRevisionTransformer: Set creator and when properly.
+DONE 20080120: Xinha adds extra fields. Dialog1 - Dialog6 fields added to new revisions.
+

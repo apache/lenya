@@ -61,8 +61,10 @@
       </map:match>
 <!-- Sitetree -->
        <map:match pattern="sitetree/**">
-         <map:generate src="module:///../../content/{page-envelope:area}/sitetree.xml"/>
-         <map:transform type="i18n">      
+<!-- WARNING: Need different Paths for Global and Publication Modules. -->
+             <map:generate src="module:///../../pubs/{publication:publication}/content/{page-envelope:area}/sitetree.xml"/>
+<!--         <map:generate src="module:///../../content/{page-envelope:area}/sitetree.xml"/> -->
+         <map:transform type="i18n">
             <map:parameter name="locale" value="{page-envelope:document-language}"/>
          </map:transform>
          <map:call resource="finish">

@@ -40,13 +40,13 @@
             </map:select>
             <!-- Else Cache -->
                <map:generate src="cocoon://{page-envelope:publication-id}/{1}/cocoon/{1}/{2}"/>
-               <map:transform src="module:///../../../../xslt/authoring/edit/addSourceTags.xsl">
+               <map:transform src="module://lenya/edit/addSourceTags.xsl">
                   <map:parameter name="source" value="{module:cache-dir}/{1}/{2}"/>
                </map:transform>
                <map:transform type="write-source">
                   <map:parameter name="serializer" value="html-no-dtd"/>
                </map:transform>
-               <map:transform src="module:///../../../../xslt/authoring/edit/removeSourceTags.xsl"/>
+               <map:transform src="module://lenya/edit/removeSourceTags.xsl"/>
                <map:serialize type="html"/>
          </map:match>
       </map:pipeline>

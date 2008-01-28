@@ -34,6 +34,8 @@ import org.w3c.dom.Document;
  * <BR>== Content Impls == <BR>
  * ContentHierarchical (Lenya 1.2) <BR>
  * ContentFlat (Lenya 1.3)
+ * @author solprovider
+ * @deprecated Use org.apache.lenya.cms.content.ContentSourceFactory;
  */
 public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsolutizer, Contextualizable {
     private static final int REQUEST_DATA = 0;

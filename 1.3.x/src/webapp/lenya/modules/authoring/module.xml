@@ -1,14 +1,6 @@
-<module id="authoring" name="Authoring">
-   <version>
-      <minimum>1.2</minimum>
-      <created>1.3</created>
-      <content>hierarchical</content>
-   </version>
-   <dependencies>
-      <required id="navigation">Used to build pages</required>
-      <recommended id="edit">Failover if called by a flat content publication.</recommended>
-   </dependencies>
-<description>This is the Lenya 1.2 authoring code moved to a Module.  It only supports Hierarchical Content.</description>
-   <usage>
-   </usage>
+<module id="authoring" name="Authoring" minimum="1.2" created="1.3" content="hierarchical">
+   <required id="lenya">Required files.</required>
+   <required id="navigation">Used to build pages</required>
+   <recommended id="edit">Failover if called by a flat content publication.</recommended>
+   <description>This is the Lenya 1.2 authoring code moved to a Module.  It only supports Hierarchical Content.</description>
 </module>

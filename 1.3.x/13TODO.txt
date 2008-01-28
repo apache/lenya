@@ -1,5 +1,18 @@
-Fix Publication Module loading and inheritance.  Each Publication should build structure once per restart.  See Modules.java below.
-Add reloadModules to publication. 
+
+BUG: Lenya-1.2-style authoring.  ERROR:
+F:\F:\lenya13\build\lenya\webapp\lenya\pubs\default12\xslt\page2xhtml.xsl (The filename, directory name, or volume label syntax is incorrect)
+rg.apache.cocoon.ProcessingException: Unable to get transformer handler for F:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/../../pubs/default12/xslt/page2xhtml-homepage.xsl
+	at [TransformerException] - file:///F:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/../../pubs/default12/xslt/page2xhtml-homepage.xsl:22:36
+	at <map:serialize type="xml"> - file:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/module.xmap:145:36
+	at <map:transform type="link-rewrite"> - file:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/module.xmap:142:44
+
+default12/xslt/page2xhtml-homepage.xsl cannot open page2xhtml.xsl because drive letter is duplicated:
+file:///F:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/../../pubs/default12/xslt/page2xhtml-homepage.xsl
+---
+
+Create New Resource: Publication has Resource Types.  Use Generator. Choose Type.  Create required languages. Use Transformer. Pass to Edit Module.
+
+Edit-Save must clear Cache.
 
 Administration navigation - Create Resource, return from edit resource.
 Add "Choose Lenya doc link" dialog to Xinha.
@@ -10,23 +23,10 @@ Structure editor.
 
 Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
 
-FIXED?: CreateRevisionTransformer: Set creator and when properly.
-FIXED 20080120: Xinha adds extra fields. Dialog1 - Dialog6 fields added to new revisions.
 
 ==== ToDo List from 2006
 === 1.2.x Conversion
 Session Module: login.xsp -> NullPointerException
-
-=== Modules.java
-synchronize setting of static variables.
-
-Move inherit to static (publication.module.name=publication.module.name).
-Module variable inheritance must follow name changes (inherit="differentModuleName").
-Fix getVariable() to use inherit.
-New "inherit": publication.module -> list(array) of publication.module
-There may be more than one publication.  Each Module inherits from only one Module name.
-Use for both File and Variable inheritance.
-
 
 === CreateRevisionTransformer
 Create new Resource if none specified or does not exist.  Allow a Title parameter, and default to "NEW " + datetime.
@@ -64,8 +64,6 @@ content:type|doctype|...:docid
 Return specified variable from current Resource/Translation.
 Use FlatIndexPart for retrieval?
 
-=== ModuleModule.java
-module variables: publication.xconf (implemented), then get defaults from module.xconf, follow inheritance until found.
 
 === XML Serializer
 Automatically pass through i18n Transformer using current module and current language.

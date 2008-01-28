@@ -1,10 +1,10 @@
 package org.apache.lenya.cms.content;
 
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceNotFoundException;
-import org.apache.lenya.cms.publication.Publication;
 
 public interface Content{
+   public static final String TYPE_FLAT = "flat";
+   public static final String TYPE_HIERARCHICAL = "hierarchical";
+
    public String getURI(String unid, String language, String revision);
    public String getMetaURI(String unid, String language, String revision);
    public String getNewURI(String unid, String language);

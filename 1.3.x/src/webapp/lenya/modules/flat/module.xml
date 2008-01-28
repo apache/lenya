@@ -1,10 +1,5 @@
-<module id="flat" name="MigrateHierarchicalToFlat">
-   <version>
-      <minimum>1.3</minimum>
-      <maximum>1.3.1</maximum>
-      <created>1.3</created>
-      <content>hierarchical</content>
-   </version>
+<module id="flat" name="MigrateHierarchicalToFlat" minimum="1.2" created="1.3" content="hierarchical" maximum="1.3.1">
+   <required id="lenya">Required files.</required>
    <description>Migrates hierarchical content to flat content.  Does not change the publication content type.</description>
    <usage>
 See 13UPGRADE.txt

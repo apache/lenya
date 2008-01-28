@@ -1,6 +1,8 @@
 package org.apache.lenya.cms.modules;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -9,20 +11,18 @@ import java.util.TreeMap;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.lenya.cms.content.Content;
 import org.xml.sax.SAXException;
-abstract class Module {
-   public static final String TYPE_FLAT = "flat";
-   public static final String TYPE_HIERARCHICAL = "hierarchical";
+public abstract class Module {
    public static final String MODULE_XML = "module.xml";
    Map inheritList; // String names of other Modules in this publication.
    Map requiredList; // required Modules: id = reason
    Map recommendedList; // recommended Modules: id = reason
    Map optionalList; // optional Modules: id = reason
-   Map variables; // String
-   Map files; // filename -> actual location as String (Better as File or
-   // Source?)
+   Map variables = new HashMap(); // nameString = valueString
+   Map files; // filename -> actual location as String (Better as File or Source?)
    File moduleDirectory;
-   String type = TYPE_HIERARCHICAL;
+   String type = Content.TYPE_HIERARCHICAL;
    String id;
    String name;
    String minimum = "1.3";
@@ -34,6 +34,7 @@ abstract class Module {
    String description = "";
    String usage = "";
    public Module(File moduleDirectory, String publicationId) {
+      resetFiles();
       String pubIdError = (publicationId.length() > 1 ? publicationId + " - " : "");
       this.moduleDirectory = moduleDirectory;
       id = moduleDirectory.getName();
@@ -90,6 +91,16 @@ abstract class Module {
                String reason = optional.getValue("");
                optionalList.put(id, reason);
             }
+            // Parameters
+            Configuration[] parameters = config.getChildren("parameter");
+            int numparameters = parameters.length;
+            for(int vR = 0; vR < numparameters; vR++){
+               Configuration optional = parameters[vR];
+               // Get attributes
+               String name = optional.getAttribute("name", "");
+               String value = optional.getValue("");
+               variables.put(name, value);
+            }
             // Inherits
             Configuration[] inherits = config.getChildren("inherit");
             inheritList = new TreeMap();
@@ -104,7 +115,7 @@ abstract class Module {
                // TODO: Cheap shortcuts. Rewrite inheritList storage later.
                int priorityLength = priority.length();
                String priorityPrefix = priorityLength > 3 ? priority : "000" + priority.substring(priorityLength);
-               String publicationPrefix = publication.length() > 0 ? publication + "." : "";
+               String publicationPrefix = publication.length() > 0 ? publication + "." : publicationId + ".";
                inheritList.put(priorityPrefix + "." + publicationPrefix + id, publicationPrefix + id);
             }
          }catch(ConfigurationException e){
@@ -134,5 +145,68 @@ abstract class Module {
          set.add(tokens.nextToken());
       return set;
    }
-   abstract public String getFile(String filename);
+   public void resetFiles() {
+      files = new HashMap();
+   }
+   /**
+    * Retrieves the absolute path to the first file found following inheritance. Does not check Global for Publication Modules. Used by publication.PublicationModules.
+    * 
+    * @param filename
+    * @return
+    */
+   public String getFile(String filename) {
+      String ret = "";
+      // Check cache
+      if(files.containsKey(filename)){
+         ret = (String) files.get(filename);
+         // Check if cached filename still exists?
+         File file = new File(ret);
+         if(!file.exists()){
+            ret = "";
+         }
+      }
+      if(ret.length() < 1){
+         // Check this Module.
+         File file = new File(moduleDirectory, filename);
+         if(file.exists()){
+            ret = file.getAbsolutePath();
+         }
+      }
+      if(ret.length() < 1){
+         // Check Module Inheritance
+         Iterator inherit = inheritList.entrySet().iterator();
+         while(inherit.hasNext() && (ret.length() < 1)){
+            ret = Modules.getModule((String) inherit.next(), type).getFile(filename);
+         }
+      }
+      if(ret.length() > 0){
+         files.put(filename, ret);
+      }
+      return ret;
+   }
+   /**
+    * Retrieves parameter set in this module and specified inheritance. Does not check Global for Publication Modules. Used by publication.PublicationModules.
+    * 
+    * @param parameterName
+    * @return
+    */
+   public String getVariable(String parameterName) {
+      String ret = "";
+      // Check cache
+      if(variables.containsKey(parameterName)){
+         ret = (String) variables.get(parameterName);
+      }else{
+         Module module;
+         // Check Module Inheritance
+         Iterator inherit = inheritList.entrySet().iterator();
+         while(inherit.hasNext() && (ret.length() < 1)){
+            module = Modules.getModule((String) inherit.next(), type);
+            if(null != module)
+               ret = module.getVariable(parameterName);
+         }
+      }
+      if(ret.length() > 0)
+         variables.put(parameterName, ret);
+      return ret;
+   }
 }

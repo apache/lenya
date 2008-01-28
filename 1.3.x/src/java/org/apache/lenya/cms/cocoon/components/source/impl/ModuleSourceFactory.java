@@ -22,12 +22,16 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.excalibur.source.impl.FileSource;
-import org.apache.lenya.cms.publication.Modules;
+import org.apache.lenya.cms.publication.PublicationModules;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-
+/**
+ * 
+ * @author solprovider
+ * @deprecated Use org.apache.lenya.cms.modules.ModuleSourceFactory.
+ */
 public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolutizer, Contextualizable {
     protected org.apache.avalon.framework.context.Context context;
     private String servletContextPath;
@@ -68,7 +72,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
         globalPrefix = tmpPrefix + "modules" + File.separator;
         pubsPrefix = tmpPrefix + "pubs" + File.separator;
         String publication;
-        Modules modules;
+        PublicationModules modules;
         publications.clear();
         try{
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(ContextHelper.getObjectModel(context));
@@ -160,13 +164,13 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
         }
         publications.add(publication);
         // Check inherited publication(s)
-        if(null != modules){
-            Source ret = getInheritedSource(publication, module, filepath, modules.getTemplates(module), parameters, resolver);
-            if(null != ret){
-                if(resolver != null) manager.release((Component) resolver);
-                return ret;
-            }
-        }
+//        if(null != modules){
+//            Source ret = getInheritedSource(publication, module, filepath, modules.getTemplates(module), parameters, resolver);
+//            if(null != ret){
+//                if(resolver != null) manager.release((Component) resolver);
+//                return ret;
+//            }
+//        }
         // Check global
         newlocation = globalPrefix + module + File.separator + filepath;
         try{
@@ -203,7 +207,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
         String module = modulex;
         int i = 0;
         boolean found = false;
-        Modules modules = (Modules) null;
+        PublicationModules modules = (PublicationModules) null;
         String key = publication + "~" + module;
         String newpublication = "";
         if(moduleInheritance.containsKey(key)){
@@ -217,7 +221,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
                 newpublication = templates[i];
                 // Do not repeat publication
                 if(!publications.contains(newpublication)){
-                    modules = (Modules) null;
+                    modules = (PublicationModules) null;
                     Publication pub = getPublication(newpublication);
                     if(null != pub){
                         modules = pub.getModules();
@@ -237,12 +241,12 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
             }catch(java.net.MalformedURLException mue2){
             }catch(java.io.IOException ioe1){
             }
-            if(null != modules){
-                // First check if module name was overridden
-                Source ret = getInheritedSource(newpublication, modules.getInheritedModule(module), filepath, modules.getTemplates(module), parameters, resolver);
-                if(null != ret) return ret;
-                return getInheritedSource(newpublication, module, filepath, modules.getTemplates(module), parameters, resolver);
-            }
+//            if(null != modules){
+//                // First check if module name was overridden
+//                Source ret = getInheritedSource(newpublication, modules.getInheritedModule(module), filepath, modules.getTemplates(module), parameters, resolver);
+//                if(null != ret) return ret;
+//                return getInheritedSource(newpublication, module, filepath, modules.getTemplates(module), parameters, resolver);
+//            }
         }
         return (Source) null;
     }

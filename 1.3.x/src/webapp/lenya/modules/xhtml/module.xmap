@@ -11,8 +11,8 @@
             </map:match>
             <!-- Step: View Revision from Lenya 1.2 -->
             <map:match type="step" pattern="view-revision">
-               <map:generate type="serverpages" src="module:///../../../../content/rc/view.xsp"/>
-               <map:transform src="module:///../../../../xslt/rc/toDoc.xsl"/>
+               <map:generate type="serverpages" src="module://lenya/rc/view.xsp"/>
+               <map:transform src="module://lenya/rc/toDoc.xsl"/>
                <map:transform src="module:///xhtml.xsl">
                   <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
                </map:transform>

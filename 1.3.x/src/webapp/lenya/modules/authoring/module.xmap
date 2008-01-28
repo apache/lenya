@@ -28,18 +28,14 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="module:///../../../../xslt/util/page2xhtml.xsl">
+      <map:transform src="module://lenya/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="module:///../../../../xslt/util/strip_namespaces.xsl"/>
+      <map:transform src="module://lenya/util/strip_namespaces.xsl"/>
       <map:select type="parameter">
         <map:parameter name="parameter-selector-test" value="{statusCode}"/>
         <map:when test="">
           <map:serialize/>
-        </map:when>
-        <!-- FIXME workaround for http://issues.apache.org/bugzilla/show_bug.cgi?id=32336 -->
-        <map:when test="404">
-          <map:serialize status-code="404"/>
         </map:when>
         <map:otherwise>
           <map:serialize status-code="{statusCode}"/>
@@ -49,7 +45,6 @@
   </map:resources>
 
   <map:pipelines>
-
     <map:component-configurations>
       <global-variables>
         <cache-dir>work/cache</cache-dir>
@@ -95,8 +90,8 @@
       <map:handle-errors>
         <map:select type="exception">
            <map:when test="resourcenotfound">
-             <map:generate src="module:///../../../../content/util/empty.xml" />
-            <map:transform src="module:///../../../../xslt/exception/document-does-not-exist.xsl">
+             <map:generate src="module://lenya/util/empty.xml" />
+            <map:transform src="module://lenya/exception/document-does-not-exist.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
             </map:transform>
@@ -106,7 +101,7 @@
           </map:when>
       <map:otherwise>
         <map:generate type="notifying"/>
-        <map:transform src="module:///../../../../../stylesheets/system/error2html.xslt">
+        <map:transform src="module://lenya/system/error2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
       </map:otherwise>
@@ -129,7 +124,9 @@
           <map:part src="cocoon://navigation/{2}/{3}/search/{5}.xml"/>
           <map:part src="cocoon:/lenya-document-{1}/{3}/{4}/{page-envelope:document-path}" label="xdebug"/>
         </map:aggregate>
-        <map:transform src="module:///../../xslt/page2xhtml-{4}.xsl">
+<!-- WARNING: Different path needed by Global and Publication Modules. -->
+        <map:transform src="module:///../../pubs/{publication:publication}/xslt/page2xhtml-{4}.xsl">
+<!--        <map:transform src="module:///../../xslt/page2xhtml-{4}.xsl"> -->
           <map:parameter name="root" value="{page-envelope:context-prefix}/{2}/{3}"/>
           <map:parameter name="url" value="{5}"/>
           <map:parameter name="document-id" value="{page-envelope:document-id}"/>
@@ -165,14 +162,14 @@
               <map:match pattern="authoring/**.html">
                 <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}.xml?doctype={page-envelope:document-type}"/>
               </map:match>
-              <map:transform src="module:///../../../../xslt/util/strip_namespaces.xsl"/>
+              <map:transform src="module://lenya/util/strip_namespaces.xsl"/>
               <map:serialize type="xhtml"/>
         </map:act>
 
         <!-- There is no version of the requested document-id for the
              requested language. -->
-        <map:generate type="serverpages" src="module:///../../../../content/exception/missing-language.xsp"/>
-        <map:transform src="module:///../../../../xslt/exception/missing-language.xsl"/>
+        <map:generate type="serverpages" src="module://lenya/exception/missing-language.xsp"/>
+        <map:transform src="module://lenya/exception/missing-language.xsl"/>
         <map:call resource="style-cms-page"/>
 
       </map:match>
@@ -180,8 +177,8 @@
       <map:handle-errors>
         <map:select type="exception">
           <map:when test="document-does-not-exist">
-            <map:generate src="module:///../../../../content/util/empty.xml"/>
-            <map:transform src="module:///../../../../xslt/exception/document-does-not-exist.xsl">
+            <map:generate src="module://lenya/util/empty.xml"/>
+            <map:transform src="module://lenya/exception/document-does-not-exist.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
             </map:transform>
@@ -190,8 +187,8 @@
             </map:call>
           </map:when>
            <map:when test="resourcenotfound">
-             <map:generate src="module:///../../../../content/util/empty.xml" />
-            <map:transform src="module:///../../../../xslt/exception/document-does-not-exist.xsl">
+             <map:generate src="module://lenya/util/empty.xml" />
+            <map:transform src="module://lenya/exception/document-does-not-exist.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
             </map:transform>
@@ -201,7 +198,7 @@
           </map:when>
       <map:otherwise>
         <map:generate type="notifying"/>
-        <map:transform src="module:///../../../../../stylesheets/system/error2html.xslt">
+        <map:transform src="module://lenya/system/error2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
       </map:otherwise>

@@ -61,7 +61,7 @@
              </map:transform>
              <map:serialize type="xml"/>
              </map:act>
-            <map:generate src="module:///../../../../content/util/empty.xml"/>
+            <map:generate src="module://lenya/util/empty.xml"/>
             <map:serialize type="xml"/>
         </map:match>
         <map:match pattern="rinfo">

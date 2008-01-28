@@ -1,4 +1,5 @@
 package org.apache.lenya.cms.modules;
+import org.apache.lenya.cms.content.Content;
 public class ModuleSet {
    Module flat = null;
    Module hierarchical = null;
@@ -11,18 +12,18 @@ public class ModuleSet {
       return hierarchical;
    }
    public void add(Module module) {
-      if(Module.TYPE_FLAT.equalsIgnoreCase(module.getType())){
+      if(Content.TYPE_FLAT.equalsIgnoreCase(module.getType())){
          if(null == flat){
             flat = module;
-         }else if(Module.TYPE_FLAT.equalsIgnoreCase(flat.getType())){
+         }else if(Content.TYPE_FLAT.equalsIgnoreCase(flat.getType())){
             flat = compareModules(flat, module);
          }else{
             flat = module;
          }
-      }else if(Module.TYPE_HIERARCHICAL.equalsIgnoreCase(module.getType())){
+      }else if(Content.TYPE_HIERARCHICAL.equalsIgnoreCase(module.getType())){
          if(null == hierarchical){
             hierarchical = module;
-         }else if(Module.TYPE_HIERARCHICAL.equalsIgnoreCase(hierarchical.getType())){
+         }else if(Content.TYPE_HIERARCHICAL.equalsIgnoreCase(hierarchical.getType())){
             hierarchical = compareModules(hierarchical, module);
          }else{
             hierarchical = module;

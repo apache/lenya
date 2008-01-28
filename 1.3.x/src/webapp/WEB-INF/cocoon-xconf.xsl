@@ -112,8 +112,8 @@
     </component-instance>
 
 <!-- Lenya1.3 BEGIN -->
-<component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.ContentModule" name="content" logger="core.modules.input.module"/>
-<component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.ModuleModule" name="module" logger="core.modules.input.module"/>
+<component-instance class="org.apache.lenya.cms.content.ContentInputModule" name="content" logger="core.modules.input.module"/>
+<component-instance class="org.apache.lenya.cms.modules.ModuleInputModule" name="module" logger="core.modules.input.module"/>
 <component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationModule" name="publication" logger="core.modules.input.module"/>
 <component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.Usecase2ModuleModule" name="u2m" logger="core.modules.input.usecase2module"/>
 <component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.VirtualModule" name="virtual" logger="core.modules.input.module"/>
@@ -127,8 +127,8 @@
   <xsl:copy>
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
-    <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.ModuleSourceFactory" name="module"/>
-    <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.ContentSourceFactory" name="content"/>
+    <component-instance class="org.apache.lenya.cms.modules.ModuleSourceFactory" name="module"/>
+    <component-instance class="org.apache.lenya.cms.content.ContentSourceFactory" name="content"/>
     <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.VirtualSourceFactory" name="virtual"/>
   </xsl:copy>
 </xsl:template>

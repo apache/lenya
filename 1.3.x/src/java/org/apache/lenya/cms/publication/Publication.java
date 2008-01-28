@@ -258,7 +258,7 @@ public interface Publication {
     String[] getRewriteAttributeXPaths();
 
 //Lenya1.3 - BEGIN
-    Modules getModules();
+    PublicationModules getModules();
     Content getContent();
     File getContentDirectory();
     String getContentType();

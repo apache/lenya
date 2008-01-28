@@ -56,12 +56,13 @@ public abstract class AbstractPublication implements Publication {
    private static final String ATTRIBUTE_XPATH = "xpath";
    private static final String ELEMENT_CONTENT_DIR = "content-dir";
    // Lenya1.3 - BEGIN
-   private Modules modules;
+   private PublicationModules modules;
    private Content content;
    private File publicationDirectory;
    private File contentDirectory;
-   private String contentType = "hierarchical";
+   private String contentType = Content.TYPE_HIERARCHICAL;
    // Lenya1.3 - END
+   //TODO: Reload Publication
    /**
     * Creates a new instance of Publication
     * 
@@ -153,17 +154,18 @@ public abstract class AbstractPublication implements Publication {
          // Lenya1.3 - BEGIN
          // Content
          Configuration contentConfig = config.getChild("content");
-         contentType = contentConfig.getAttribute("type", "hierarchical");
+         contentType = contentConfig.getAttribute("type", Content.TYPE_HIERARCHICAL);
          String contentConfigValue = contentConfig.getValue(CONTENT_PATH);
          publicationDirectory = new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
          contentDirectory = new File(publicationDirectory, contentConfigValue);
-         if(contentType.equalsIgnoreCase("flat")){
+         // TODO: Move code based on ContentType to Content package.
+         if(contentType.equalsIgnoreCase(Content.TYPE_FLAT)){
             content = (Content) new FlatContent(contentDirectory, getLanguages());
          }else{
             content = (Content) new HierarchicalContent(contentDirectory, getLanguages());
          }
          // Modules
-         modules = new Modules(id, servletContextPath, config.getChild("modules"));
+         modules = new PublicationModules(id, contentType, servletContextPath, config.getChild("modules"));
          // Lenya1.3 - END
       }catch(PublicationException e){
          throw e;
@@ -176,7 +178,7 @@ public abstract class AbstractPublication implements Publication {
       livemountpoint = config.getChild(LIVE_MOUNT_POINT).getValue("");
    }
    // Lenya1.3 - BEGIN
-   public Modules getModules() {
+   public PublicationModules getModules() {
       return modules;
    }
    public Content getContent() {
@@ -201,15 +203,13 @@ public abstract class AbstractPublication implements Publication {
     * Returns the publishing environment of this publication.
     * 
     * @return A {@link PublishingEnvironment}object.
-    * @deprecated It is planned to decouple the environments from the
-    *             publication.
+    * @deprecated It is planned to decouple the environments from the publication.
     */
    public PublishingEnvironment getEnvironment() {
       return environment;
    }
    /**
-    * Returns the servlet context this publication belongs to (usually, the
-    * <code>webapps/lenya</code> directory).
+    * Returns the servlet context this publication belongs to (usually, the <code>webapps/lenya</code> directory).
     * 
     * @return A <code>File</code> object.
     */
@@ -232,8 +232,7 @@ public abstract class AbstractPublication implements Publication {
     * Return the directory of a specific area.
     * 
     * @param area
-    *           a <code>File</code> representing the root of the area content
-    *           directory.
+    *           a <code>File</code> representing the root of the area content directory.
     * @return the directory of the given content area.
     * @deprecated Areas are bad. Do not use them.
     */
@@ -301,8 +300,7 @@ public abstract class AbstractPublication implements Publication {
       return (String[]) languages.toArray(new String[languages.size()]);
    }
    /**
-    * Get the breadcrumb prefix. It can be used as a prefix if a publication is
-    * part of a larger site
+    * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger site
     * 
     * @return the breadcrumb prefix
     */
@@ -310,9 +308,7 @@ public abstract class AbstractPublication implements Publication {
       return breadcrumbprefix;
    }
    /**
-    * Get the SSL prefix. If you want to serve SSL-protected pages through a
-    * special site, use this prefix. This can come in handy if you have multiple
-    * sites that need SSL protection and you want to share one SSL certificate.
+    * Get the SSL prefix. If you want to serve SSL-protected pages through a special site, use this prefix. This can come in handy if you have multiple sites that need SSL protection and you want to share one SSL certificate.
     * 
     * @return the SSL prefix
     */
@@ -320,11 +316,7 @@ public abstract class AbstractPublication implements Publication {
       return sslprefix;
    }
    /**
-    * Get the Live mount point. The live mount point is used to rewrite links
-    * that are of the form /contextprefix/publication/area/documentid to
-    * /livemountpoint/documentid This is useful if you serve your live area
-    * through mod_proxy. to enable this functionality, set the Live mount point
-    * to / or something else. An empty mount point disables the feature.
+    * Get the Live mount point. The live mount point is used to rewrite links that are of the form /contextprefix/publication/area/documentid to /livemountpoint/documentid This is useful if you serve your live area through mod_proxy. to enable this functionality, set the Live mount point to / or something else. An empty mount point disables the feature.
     * 
     * @return the Live mount point
     */
@@ -332,8 +324,7 @@ public abstract class AbstractPublication implements Publication {
       return livemountpoint;
    }
    /**
-    * Get the sitetree for a specific area of this publication. Sitetrees are
-    * created on demand and are cached.
+    * Get the sitetree for a specific area of this publication. Sitetrees are created on demand and are cached.
     * 
     * @param area
     *           the area
@@ -354,11 +345,9 @@ public abstract class AbstractPublication implements Publication {
       return sitetree;
    }
    /**
-    * Get the sitetree for a specific area of this publication. Sitetrees are
-    * created on demand and are cached.
+    * Get the sitetree for a specific area of this publication. Sitetrees are created on demand and are cached.
     * 
-    * @deprecated Please use getTree() because this method returns the interface
-    *             and not a specific implementation
+    * @deprecated Please use getTree() because this method returns the interface and not a specific implementation
     * @see getTree()
     * @param area
     *           the area
@@ -426,12 +415,9 @@ public abstract class AbstractPublication implements Publication {
       return key.hashCode();
    }
    /**
-    * Template method to copy a document. Override
-    * {@link #copyDocumentSource(Document, Document)} to implement access to a
-    * custom repository.
+    * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)} to implement access to a custom repository.
     * 
-    * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document,
-    *      org.apache.lenya.cms.publication.Document)
+    * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
     */
    public void copyDocument(Document sourceDocument, Document destinationDocument) throws PublicationException {
       copyDocumentSource(sourceDocument, destinationDocument);
@@ -577,8 +563,7 @@ public abstract class AbstractPublication implements Publication {
     */
    protected abstract void deleteDocumentSource(Document document) throws PublicationException;
    /**
-    * @see org.apache.lenya.cms.publication.Publication#moveDocument(org.apache.lenya.cms.publication.Document,
-    *      org.apache.lenya.cms.publication.Document)
+    * @see org.apache.lenya.cms.publication.Publication#moveDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
     */
    public void moveDocument(Document sourceDocument, Document destinationDocument) throws PublicationException {
       copyDocument(sourceDocument, destinationDocument);
@@ -598,8 +583,7 @@ public abstract class AbstractPublication implements Publication {
       return area + ":" + isSslProtected;
    }
    /**
-    * @see org.apache.lenya.cms.publication.Publication#getProxy(org.apache.lenya.cms.publication.Document,
-    *      boolean)
+    * @see org.apache.lenya.cms.publication.Publication#getProxy(org.apache.lenya.cms.publication.Document, boolean)
     */
    public Proxy getProxy(Document document, boolean isSslProtected) {
       Object key = getProxyKey(document.getArea(), isSslProtected);
