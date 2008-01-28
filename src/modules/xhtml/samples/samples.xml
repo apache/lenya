@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <samples>
-  <sample 
+  <sample name="Default Sample"
     mime-type="application/xhtml+xml"
     uri="fallback://lenya/modules/xhtml/samples/xhtml.xml"
   />

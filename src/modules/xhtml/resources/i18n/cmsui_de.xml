@@ -21,5 +21,7 @@
 <catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <message key="resourceType-xhtml">XHTML</message>
+  <message key="Default Sample">Standard-Layout</message>
+  <message key="Two Column Layout">Zweispaltiges Layout</message>
   
 </catalogue>
