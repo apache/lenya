@@ -24,6 +24,7 @@ limitations under the License.
       <map:generator label="content" logger="sitemap.generator.directory"
         name="lenyaMetaData" pool-max="16"
         src="org.apache.lenya.cms.cocoon.generation.LenyaMetaDataGenerator"/>
+      <map:generator name="pdf" pool-max="16" src="org.apache.lenya.modules.resource.PdfToTextGenerator"/>
     </map:generators>
     <map:serializers default="xhtml">
       <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
@@ -41,10 +42,22 @@ limitations under the License.
         <map:serialize type="xml"/>
       </map:match>
       
+      <!-- {1:pubId}/{2:area}/{3:uuid}/{4:language}/{5:extension} -->
+      <map:match pattern="lucene-index-content/*/*/*/*.pdf">
+        <map:generate type="pdf" src="lenya-document:{3},pub={1},area={2},lang={4}"/>
+        <map:transform src="fallback://lenya/modules/resource/xslt/pdf2xhtml.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="lucene-index-content/*/*/*/*.*">
+        <map:generate src="fallback://lenya/modules/resource/resources/xml/emptyLuceneIndex.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
       <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/lenyametadata.xml/{1}/{2}/{3}/{4}/-1"/>
+          <map:part src="cocoon:/lucene-index-content/{1}/{2}/{3}/{4}.{doc-info:{1}:{2}:{3}:{4}:sourceExtension}"/>
         </map:aggregate>
         <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">
           <map:parameter name="url" value="{request:requestURI}"/>
