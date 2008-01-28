@@ -31,10 +31,25 @@ import org.pdfbox.util.PDFTextStripper;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+/**
+ * <p>
+ * Generate an XML document from a PDF document. The XMl document is of the form
+ * </p>
+ * <pre>
+ *   &lt;pdf:document xmlns:pdf="http://apache.org/lenya/pdf/1.0"&gt;
+ *     (text of the PDF document)
+ *   &lt;/pdf:document&gt;
+ * </pre>
+ * <p>Parameters:</p>
+ * <ul>
+ * <li><em>src</em>: The URI to read the PDF document from.</li>
+ * </ul>
+ */
 public class PdfToTextGenerator extends AbstractGenerator {
 
-    private static final String PREFIX = "pdf";
-    private static final String NAMESPACE = "http://apache.org/lenya/pdf/1.0";
+    protected static final String PREFIX = "pdf";
+    protected static final String NAMESPACE = "http://apache.org/lenya/pdf/1.0";
+    
     private ContentHolder content;
 
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
