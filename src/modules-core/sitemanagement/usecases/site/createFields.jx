@@ -217,10 +217,10 @@
         <jx:forEach var="item" items="${samples}">
           <jx:choose>
             <jx:when test="${usecase.getParameter('sample').equals(item)}">
-              <input type="radio" name="sample" value="${item}" checked="checked"/>${item}<br />
+              <input type="radio" name="sample" value="${item}" checked="checked"/><i18n:text>${item}</i18n:text><br />
             </jx:when>
             <jx:otherwise>
-              <input type="radio" name="sample" value="${item}"/>${item}<br />
+              <input type="radio" name="sample" value="${item}"/><i18n:text>${item}</i18n:text><br />
             </jx:otherwise>
           </jx:choose>
         </jx:forEach>
