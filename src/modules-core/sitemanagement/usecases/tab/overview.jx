@@ -29,7 +29,7 @@
     <div id="contentblock1" class="lenya-tab-sitetree">
       <h1><i18n:text>Overview</i18n:text></h1>
       <jx:choose>
-        <jx:when test="${not(empty(usecase.getParameter('title')))}">
+        <jx:when test="${usecase.getParameter('document') != null}">
           <jx:set var="document" value="${usecase.getParameter('document')}"/>
           <table class="lenya-table-noborder">
             <tr>
