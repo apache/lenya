@@ -107,6 +107,7 @@ public class CredentialImpl implements Credential {
     }
 
     public int hashCode() {
-        return Integer.valueOf(getAccreditable().hashCode() + getRole().hashCode()).hashCode();
+        Integer integer = new Integer(getAccreditable().hashCode() + getRole().hashCode());
+        return integer.hashCode();
     }
 }
