@@ -38,7 +38,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.xml.sax.Attributes;
 
 /**
- * Default mplementation of the {@link URIParameterizer}.
+ * Default implementation of the {@link URIParameterizer}.
  */
 public class URIParameterizerImpl
     extends AbstractLogEnabled
