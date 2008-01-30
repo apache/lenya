@@ -77,6 +77,8 @@
               <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-id}"/>
                 <map:parameter name="language" value="{page-envelope:document-language}"/>
+                <map:parameter name="pubId" value="{1}"/>
+                <map:parameter name="doctype" value="{page-envelope:document-type}"/>
               </map:transform>
               <map:act type="set-header">
                 <!-- prevent caching in the browser -->
@@ -93,7 +95,7 @@
                 <map:parameter name="parameters" value="save"/>
                 <map:act type="oneformeditorsave">
                   <map:parameter name="file" value="{global:basedir}/pubs/{../1}/work/oneformeditor/authoring/{page-envelope:document-id}.xml"/>
-                  <map:parameter name="schema" value="{global:basedir}/pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+                  <map:parameter name="schema" value="{global:basedir}/pubs/{../1}/config/doctypes/schemas/{request-param:doctype}.rng"/>
                   <map:generate src="{global:basedir}/pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
                   <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
                     <map:parameter name="docid" value="{page-envelope:document-id}"/>

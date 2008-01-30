@@ -166,7 +166,10 @@
   <message key="Switch User">Switch User</message>
   <message key="Delete Trash">Delete Trash</message>
   <message key="Cocoon and Server Status">Cocoon and Server Status</message>
-
+  <message key="clear-uriparameterizer-cache">Clear URI parameterizer cache</message>
+  <message key="uriparameterizer-cache-cleared">The URI parameterizer cache was cleared.</message>
+  <message key="clear-uriparameterizer-cache?">Do you want to clear the URI paramterizer cache?</message>
+  
     <!-- Group Administration -->
   <message key="Profile">Profile</message>
   <message key="Members">Members</message>
@@ -348,4 +351,8 @@
   <message key="lenya.rc.nocheckin">Resource could not be checked in</message>
   <message key="Generic Exception">Generic Exception</message>
   <message key="Check the log files.">Check the log files.</message>
+  
+  <!-- Source Editor -->
+  <message key="Edit Document">Edit Document</message>
+  <message key="document-type">Document type</message>
 </catalogue>

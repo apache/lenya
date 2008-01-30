@@ -28,6 +28,7 @@
     <map:script src="content/admin/users/user-admin.js"/>
     <map:script src="content/admin/groups/group-admin.js"/>
     <map:script src="content/admin/ipranges/iprange-admin.js"/>
+    <map:script src="content/admin/cache/cache.js"/>
   </map:flow>
   
     <map:resources>

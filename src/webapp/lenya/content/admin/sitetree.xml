@@ -46,6 +46,10 @@
     <label><i18n:text>Delete Trash</i18n:text></label>
   </node>
 
+  <node id="cache" href="cache.html">
+    <label><i18n:text>Cache</i18n:text></label>
+  </node>
+  
   <node id="lucene">
     <label><i18n:text>Search</i18n:text></label>
   </node>

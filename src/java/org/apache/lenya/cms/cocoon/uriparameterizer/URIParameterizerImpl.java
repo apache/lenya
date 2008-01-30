@@ -73,10 +73,7 @@ public class URIParameterizerImpl
             }
         }
 
-        /**
-         * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
-         */
-        public void endElement(String uri, String loc, String raw, Attributes a) {
+        public void endElement(String uri, String loc, String raw) {
             if (loc.equals("parameter")) {
                 if (logger.isDebugEnabled()) {
                     logger.debug("stop Element " + uri + ":" + loc + ":" + raw);
@@ -132,7 +129,6 @@ public class URIParameterizerImpl
         SourceResolver resolver = null;
 
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
             URIParametrizerConsumer xmlConsumer = new URIParametrizerConsumer(getLogger());
 
             String[] parameterNames = parameters.getNames();
@@ -148,6 +144,9 @@ public class URIParameterizerImpl
 
                     Source inputSource = null;
                     try {
+                        if (resolver == null) {
+                            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+                        }
                         inputSource = resolver.resolveURI(parameterSrc);
 
                         if (getLogger().isDebugEnabled()) {
@@ -188,5 +187,9 @@ public class URIParameterizerImpl
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    public void clearCache() {
+        cache.clear();
     }
 }

@@ -167,6 +167,9 @@
   <message key="Switch User">Benutzer wechseln</message>
   <message key="Delete Trash">Papierkorb leeren</message>
   <message key="Cocoon and Server Status">Cocoon- und Serverstatus</message>
+  <message key="clear-uriparameterizer-cache">URI-Parameterizer-Cache löschen</message>
+  <message key="uriparameterizer-cache-cleared">Der URI-Parameterizer-Cache wurde gelöscht.</message>
+  <message key="clear-uriparameterizer-cache?">Wollen Sie den URI-Parameterizer-Cache löschen?</message>
   
     <!-- Group Administration -->
   <message key="Profile">Profil</message>  
@@ -345,5 +348,10 @@
   <message key="lenya.imageupload.info.noimages">Keine Bilder verfügbar.</message>
   <message key="lenya.imageupload.links.hint">Externe Verweise müssen mit 'http://' und interne Verweise mit '/' beginnen.</message>  
   <message key="lenya.imageupload.no.image.selected">Es wurde kein Bild ausgewählt. Bitte wählen Sie eines aus.</message>
+  
+  <!-- Source Editor -->
+  <message key="Edit Document">Dokument bearbeiten</message>
+  <message key="document-type">Dokumenttyp</message>
 </catalogue>
+
 

@@ -28,7 +28,10 @@
   <xsl:param name="docid" />
   <xsl:param name="language" />
   <xsl:param name="message" />
+  <xsl:param name="pubId"/>
+  <xsl:param name="doctype"/>
   
+  <xsl:variable name="doctypesConfig">context://lenya/pubs/<xsl:value-of select="$pubId"/>/config/doctypes/doctypes.xconf</xsl:variable>
   
   <xsl:include href="copy-mixed-content.xsl" />
   
@@ -36,7 +39,7 @@
   
   <xsl:template match="/">
     <page:page>
-      <page:title>Edit Document</page:title>
+      <page:title><i18n:text>Edit Document</i18n:text></page:title>
       <page:body>
         
         <div class="lenya-box">
@@ -93,6 +96,11 @@
               <table border="0">
                 <tr>
                   <td align="right">
+                    <i18n:text>document-type</i18n:text>:
+                    <select name="doctype">
+                      <xsl:apply-templates select="document($doctypesConfig)/*" mode="doctypes"/>
+                    </select>
+                    &#160;
                     <input type="submit" value="Save" name="save" />
                     <input type="submit" value="Cancel" name="cancel" />
                   </td>
@@ -117,4 +125,18 @@
       </page:body>
     </page:page>
   </xsl:template>
+  
+  
+  <xsl:template match="doctypes" mode="doctypes">
+    <xsl:for-each select="doc">
+      <xsl:sort select="@type"/>
+      <option value="{@type}">
+        <xsl:if test="@type = $doctype">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        <xsl:value-of select="@type"/>
+      </option>
+    </xsl:for-each>
+  </xsl:template>
+  
 </xsl:stylesheet>

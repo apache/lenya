@@ -39,4 +39,9 @@ public interface URIParameterizer extends Component {
      */
     Map parameterize(String uri, String src, Parameters parameters)
         throws URIParameterizerException;
+    
+    /**
+     * Clears the parameter cache.
+     */
+    void clearCache();
 }
