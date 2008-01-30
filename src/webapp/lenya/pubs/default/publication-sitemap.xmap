@@ -141,7 +141,7 @@
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test" value="{1}"/>
           <map:when test="view">
-	      <map:transform type="link-rewrite"/>
+            <map:transform type="link-rewrite"/>
           </map:when>
         </map:select>
         <map:serialize type="xml"/>
@@ -160,7 +160,7 @@
       
       <map:match pattern="**.html">
         <map:act type="language-exists">
-	  <map:select type="resource-exists">
+          <map:select type="resource-exists">
             <map:when test="{global:cache-dir}/{../1}.htmlDISABLED">
               <map:read src="{global:cache-dir}/{../1}.html" mime-type="text/html; charset=utf-8"/>
             </map:when>
@@ -181,7 +181,7 @@
               </map:match>
               <map:serialize type="xhtml"/>
             </map:otherwise>
-	  </map:select>
+          </map:select>
         </map:act>
 
         <!-- There is no version of the requested document-id for the
