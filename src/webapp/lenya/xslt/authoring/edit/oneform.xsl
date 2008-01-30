@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,55 +23,55 @@
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   >
-
+  
   <xsl:output indent="no" />
   <xsl:param name="docid" />
   <xsl:param name="language" />
   <xsl:param name="message" />
-
-
+  
+  
   <xsl:include href="copy-mixed-content.xsl" />
   
-
-
+  
+  
   <xsl:template match="/">
     <page:page>
       <page:title>Edit Document</page:title>
       <page:body>
-
-	<div class="lenya-box">
-	  <div class="lenya-box-title">Information</div>
-	  <div class="lenya-box-body">
-	    
-	    <table class="lenya-table-noborder">
-	      <tr>
-		<td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td>
-		<td><xsl:value-of select="$docid"/></td>
-	      </tr>
-	      <tr>
-		<td class="lenya-entry-caption"><i18n:text>Language</i18n:text>:</td>
-		<td><xsl:value-of select="$language"/></td>
-	      </tr>
-
-	      <xsl:if test="$message">
-		<tr>
-		  <td valign="top" class="lenya-entry-caption">
-		    <span class="lenya-error"><i18n:text>Message</i18n:text>:</span>
-		  </td>
-		  <td>
-		    <font color="red">
-		      <xsl:value-of select="$message" />
-		    </font>
-		    <br /><br />
-		    (Check log files for more details: lenya/WEB-INF/logs/*)</td>
-		</tr>
-	      </xsl:if>
-	    </table>
-	    
-	  </div>
-	</div>
-	
-	
+        
+        <div class="lenya-box">
+          <div class="lenya-box-title">Information</div>
+          <div class="lenya-box-body">
+            
+            <table class="lenya-table-noborder">
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td>
+                <td><xsl:value-of select="$docid"/></td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>Language</i18n:text>:</td>
+                <td><xsl:value-of select="$language"/></td>
+              </tr>
+              
+              <xsl:if test="$message">
+                <tr>
+                  <td valign="top" class="lenya-entry-caption">
+                    <span class="lenya-error"><i18n:text>Message</i18n:text>:</span>
+                  </td>
+                  <td>
+                    <font color="red">
+                      <xsl:value-of select="$message" />
+                    </font>
+                    <br /><br />
+                    (Check log files for more details: lenya/WEB-INF/logs/*)</td>
+                </tr>
+              </xsl:if>
+            </table>
+            
+          </div>
+        </div>
+        
+        
         <div class="lenya-box">
           <div class="lenya-box-title">
             <a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>
@@ -89,7 +89,7 @@
         <div class="lenya-box">
           <div class="lenya-box-body">
             <form method="post" action="?lenya.usecase=1formedit&amp;lenya.step=close" name="oneform-editor-form">
-	      <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates mode="namespaces" /></xsl:attribute></input>
+              <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates mode="namespaces" /></xsl:attribute></input>
               <table border="0">
                 <tr>
                   <td align="right">
