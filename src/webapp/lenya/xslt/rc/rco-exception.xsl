@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,29 +29,27 @@
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
-
+  
   <xsl:template match="rc:exception">
-          <xsl:apply-templates/>
+    <xsl:apply-templates/>
   </xsl:template>
-
+  
   <xsl:template match="rc:file-reserved-checkout-exception">
     <page:page>
       <page:title><i18n:text>lenya.rc.nocheckout</i18n:text></page:title>
       <page:body>
- 	    <div class="lenya-box">
-    	  <div class="lenya-box-title"><i18n:text>lenya.rc.nocheckout</i18n:text></div>
-	      <div class="lenya-box-body">
-	        <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
-            <table>
-              <tr><td><i18n:text>User</i18n:text>:</td><td><xsl:value-of select="rc:user"/></td></tr>
-              <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
-              <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
-            </table>
+        <div class="lenya-box">
+          <div class="lenya-box-title"><i18n:text>lenya.rc.nocheckout</i18n:text></div>
+          <div class="lenya-box-body">
+            <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
+            <xsl:call-template name="info"/>
             <form>
-              <input type="button" value="OK" onClick="history.go(-1)"/>
-            </form>		
-  	      </div>
-  	    </div>
+              <p>
+                <input type="button" value="OK" onClick="history.go(-1)"/>
+              </p>
+            </form>    
+          </div>
+        </div>
       </page:body>
     </page:page>
   </xsl:template>
@@ -60,45 +58,58 @@
     <page:page>
       <page:title><i18n:text>lenya.rc.nocheckin</i18n:text></page:title>
       <page:body>
- 	    <div class="lenya-box">
+        <div class="lenya-box">
           <div class="lenya-box-title"><i18n:text>lenya.rc.nocheckin</i18n:text></div>
-    	  <div class="lenya-box-body">
-	        <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
-            <table>
-              <tr><td><i18n:text>User</i18n:text>:</td><td><xsl:value-of select="rc:user"/></td></tr>
-              <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
-              <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
-            </table>
+          <div class="lenya-box-body">
+            <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
+            <xsl:call-template name="info"/>
             <form>
-              <input type="button" value="OK" onClick="history.go(-1)"/>
-            </form>		
-  	      </div>
-  	    </div>
+              <p>
+                <input type="button" value="OK" onClick="history.go(-1)"/>
+              </p>
+            </form>    
+          </div>
+        </div>
       </page:body>
     </page:page>
   </xsl:template>
-
-
+  
+  
+  <xsl:template name="info">
+    <table>
+      <tr>
+        <td><i18n:text>User</i18n:text>:</td>
+        <td>
+          <strong><xsl:value-of select="rc:user/@id"/></strong>
+          <xsl:if test="rc:user/@fullName != ''"> (<xsl:value-of select="rc:user/@fullName"/>)</xsl:if>
+        </td>
+      </tr>
+      <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
+      <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
+    </table>
+  </xsl:template>
+  
+  
   <xsl:template match="rc:generic-exception">
     <page:page>
       <page:title><i18n:text>Generic Exception</i18n:text></page:title>
       <page:body>
- 	    <div class="lenya-box">
-	    <div class="lenya-box-title"><i18n:text>Generic Exception</i18n:text></div>
-	      <div class="lenya-box-body">
+        <div class="lenya-box">
+          <div class="lenya-box-title"><i18n:text>Generic Exception</i18n:text></div>
+          <div class="lenya-box-body">
             <p><i18n:text>Reason</i18n:text>: <xsl:value-of select="rc:message"/><br />
-            <i18n:text>Check the log files.</i18n:text>
+              <i18n:text>Check the log files.</i18n:text>
             </p>
             <table>
               <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
             <form>
               <input type="button" value="OK" onClick="history.go(-1)"/>
-            </form>		
-       	  </div>
-  	    </div>
+            </form>    
+          </div>
+        </div>
       </page:body>
     </page:page>
   </xsl:template>
-
+  
 </xsl:stylesheet>

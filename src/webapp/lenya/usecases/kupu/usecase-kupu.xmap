@@ -104,6 +104,7 @@
                 <map:generate type="serverpages" 
                   src="{global:basedir}/content/rc/{exception}.xsp">
                   <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="userFullName" value="{userFullName}"/>
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="date" value="{date}"/>
                   <map:parameter name="message" value="{message}"/>
@@ -214,6 +215,7 @@
           <map:act type="reserved-checkin">
             <map:generate src="{global:basedir}/content/rc/{exception}.xsp" type="serverpages">
               <map:parameter name="user" value="{user}"/>
+              <map:parameter name="userFullName" value="{userFullName}"/>
               <map:parameter name="filename" value="{filename}"/>
               <map:parameter name="checkType" value="{checkType}"/>
               <map:parameter name="date" value="{date}"/>
@@ -238,6 +240,7 @@
                 <map:generate type="serverpages" 
                   src="{global:basedir}/../../content/rc/{exception}.xsp">
                   <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="userFullName" value="{userFullName}"/>
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="date" value="{date}"/>
                   <map:parameter name="message" value="{message}"/>

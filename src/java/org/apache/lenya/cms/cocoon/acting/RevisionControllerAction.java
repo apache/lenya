@@ -24,14 +24,21 @@ import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -39,9 +46,10 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Logger;
 
-public class RevisionControllerAction extends AbstractAction {
+public class RevisionControllerAction extends AbstractAction implements Serviceable {
     Logger log = Logger.getLogger(RevisionControllerAction.class);
 
     private String rcmlDirectory = null;
@@ -50,7 +58,8 @@ public class RevisionControllerAction extends AbstractAction {
     private String username = null;
     private String filename = null;
     private Document document = null;
-    
+    private ServiceManager manager;
+
     /**
      * DOCUMENT ME!
      *
@@ -210,4 +219,45 @@ public class RevisionControllerAction extends AbstractAction {
         return username;
     }
 
+    protected User getUser(Map objectModel, String userId) throws Exception {
+        ServiceSelector selector = null;
+        AccessControllerResolver resolver = null;
+        DefaultAccessController accessController = null;
+
+        Request request = ObjectModelHelper.getRequest(objectModel);
+
+        Map result = null;
+
+        try {
+            selector =
+                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+                
+            getLogger().debug("Resolving AC resolver for type [" + AccessControllerResolver.DEFAULT_RESOLVER + "]");
+            resolver =
+                (AccessControllerResolver) selector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
+            getLogger().debug("Resolved AC resolver [" + resolver + "]");
+
+            String webappUrl = ServletHelper.getWebappURI(request);
+            accessController = (DefaultAccessController) resolver.resolveAccessController(webappUrl);
+            UserManager userMgr = accessController.getAccreditableManager().getUserManager();
+            User user = userMgr.getUser(userId);
+            if (user == null) {
+                getLogger().warn("User [" + userId + "] does not exist.");
+            }
+            return user;
+
+        } finally {
+            if (selector != null) {
+                if (resolver != null) {
+                    selector.release(resolver);
+                }
+                manager.release(selector);
+            }
+        }
+    }
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
 }

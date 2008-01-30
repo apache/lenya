@@ -97,6 +97,7 @@
         <map:act type="reserved-checkout">
           <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
+            <map:parameter name="userFullName" value="{userFullName}"/>
             <map:parameter name="filename" value="{filename}"/>
             <map:parameter name="date" value="{date}"/>
             <map:parameter name="message" value="{message}"/>

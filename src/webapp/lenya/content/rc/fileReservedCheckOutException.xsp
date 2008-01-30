@@ -23,12 +23,16 @@
 <rc:exception xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0">
   <xsp:logic>
     String user=parameters.getParameter("user","null");
+    String userFullName = parameters.getParameter("userFullName","null");
     String filename=parameters.getParameter("filename","null");
     String date=parameters.getParameter("date","null");
   </xsp:logic>
   <rc:file-reserved-checkout-exception>
     <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
-    <rc:user><xsp:expr>user</xsp:expr></rc:user>
+    <rc:user>
+      <xsp:attribute name="id"><xsp:expr>user</xsp:expr></xsp:attribute>
+      <xsp:attribute name="fullName"><xsp:expr>userFullName</xsp:expr></xsp:attribute>
+    </rc:user>
     <rc:date><xsp:expr>date</xsp:expr></rc:date>
   </rc:file-reserved-checkout-exception>
 </rc:exception>

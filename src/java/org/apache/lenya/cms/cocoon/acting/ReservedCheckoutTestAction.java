@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
@@ -57,7 +58,16 @@ public class ReservedCheckoutTestAction extends RevisionControllerAction {
 		} catch (FileReservedCheckOutException e) {
 			actionMap.put("exception", "fileReservedCheckOutException");
 			actionMap.put("filename", getFilename());
-			actionMap.put("user", e.getCheckOutUsername());
+			
+            String userId = e.getCheckOutUsername();
+            if (userId != null && !userId.equals("")) {
+                User user = getUser(objectModel, userId);
+                if (user != null) {
+                    actionMap.put("userFullName", user.getName());
+                }
+                actionMap.put("user", userId);
+            }
+            
 			actionMap.put("date", e.getCheckOutDate());
 			getLogger().warn("Document " + getFilename() + " already checked-out by " + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
 

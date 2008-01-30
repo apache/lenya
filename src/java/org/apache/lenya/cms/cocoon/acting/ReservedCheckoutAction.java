@@ -24,30 +24,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Logger;
 
 /**
  * Action doing reserved checkout
  */
-public class ReservedCheckoutAction extends RevisionControllerAction {
+public class ReservedCheckoutAction extends RevisionControllerAction  {
     Logger log = Logger.getLogger(ReservedCheckoutAction.class);
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
     public Map act(
         Redirector redirector,
         SourceResolver resolver,
@@ -76,7 +74,16 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
         } catch (FileReservedCheckOutException e) {
             actionMap.put("exception", "fileReservedCheckOutException");
             actionMap.put("filename", getFilename());
-            actionMap.put("user", e.getCheckOutUsername());
+            
+            String userId = e.getCheckOutUsername();
+            if (userId != null && !userId.equals("")) {
+                User user = getUser(objectModel, userId);
+                if (user != null) {
+                    actionMap.put("userFullName", user.getName());
+                }
+                actionMap.put("user", userId);
+            }
+            
             actionMap.put("date", e.getCheckOutDate());
             getLogger().warn(
                 "Document "
@@ -98,4 +105,5 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
 
         return null;
     }
+    
 }

@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 
 
@@ -61,7 +62,16 @@ public class ReservedCheckinAction extends RevisionControllerAction {
             actionMap.put("exception", "fileReservedCheckInException");
             actionMap.put("filename", getFilename());
             actionMap.put("checkType", e.getTypeString());
-            actionMap.put("user", e.getUsername());
+            
+            String userId = e.getUsername();
+            if (userId != null && !userId.equals("")) {
+                User user = getUser(objectModel, userId);
+                if (user != null) {
+                    actionMap.put("userFullName", user.getName());
+                }
+                actionMap.put("user", userId);
+            }
+            
             actionMap.put("date", e.getDate());
             getLogger().warn(e.getMessage());
 
