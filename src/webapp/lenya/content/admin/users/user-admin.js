@@ -18,7 +18,7 @@
 //
 // Modify a user.
 //
-function userChangeProfile(userId) {
+function userChangeProfile() {
 	resolve();
 	try {
 	    var redirectUri = getRequestUri();
