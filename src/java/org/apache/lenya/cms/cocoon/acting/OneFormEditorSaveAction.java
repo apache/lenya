@@ -112,7 +112,7 @@ public class OneFormEditorSaveAction
                 DocumentHelper.readDocument(file);
             }
             catch (SAXException e) {
-                log.error("Wellformedness check failed: " + e.getMessage());
+                log.info("Wellformedness check failed: " + e.getMessage());
                 Map hmap = new HashMap();
                 hmap.put("message", "Document is not well-formed: " + e.getMessage());
                 return hmap;
@@ -120,7 +120,7 @@ public class OneFormEditorSaveAction
             
             String message = RelaxNG.validate(schema, file);
             if (message != null) {
-                log.error("RELAX NG Validation failed: " + message);
+                log.info("RELAX NG Validation failed: " + message);
                 Map hmap = new HashMap();
                 hmap.put("message", "RELAX NG Validation failed: " + message);
                 return hmap;
