@@ -58,15 +58,6 @@
         </map:when>
       </map:select>
       
-      <!-- FIXME: this should be merged with the getDoctypeXSLT/* matcher below. currently, it is necessary
-           so that "getDoctypeXSLT/" requests do not get eaten by the **/ matcher below. 
-           Plus it should be moved to an internal-only pipeline.
-      -->
-      <map:match pattern="getDoctypeXSLT/">
-        <map:generate src="fallback://xslt/page2xhtml.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
       <!-- Requests ending in a slash are redirected to the corresponding index.html page to mimic
            standard web browser behaviour. -->
       <!-- FIXME: this will trigger a HTTP redirect. Maybe it's more effective to do an internal redirect using
@@ -143,9 +134,9 @@
         This match provides the XSLT to render a given doctype to XHTML
         It checks for the existence of a doctype-specific one, and if none
         exists, falls back to the default one.
-        /getDoctypeXSLT/{1:doctype}
+        /getDoctypeXSLT-{1:doctype}
       -->
-      <map:match pattern="getDoctypeXSLT/*">
+      <map:match pattern="getDoctypeXSLT-*">
         <map:select type="resource-exists">
           <map:parameter name="prefix" value="fallback://"/>
           <map:when test="xslt/page2xhtml-{1}.xsl">
@@ -172,7 +163,7 @@
       <map:match pattern="lenyabody-*/*/*/*/**">
         <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{4}/{page-envelope:default-language}/{page-envelope:language}/{5}"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
-        <map:transform src="cocoon:/getDoctypeXSLT/{4}">
+        <map:transform src="cocoon:/getDoctypeXSLT-{4}">
           <map:parameter name="root" value="/{2}/{3}"/>
           <map:parameter name="publication-id" value="{2}"/>
           <map:parameter name="area" value="{3}"/>
