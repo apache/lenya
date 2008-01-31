@@ -42,29 +42,6 @@
     <!-- This pipeline handles helper requests and metadata, not the actual publication documents -->
     <map:pipeline>
 
-      <!-- Neutron introspection
-           The location of the introspection file is defined in <link rel="neutron-introspection"/>
-           (see xslt/page2xhtml.xsl).
-      -->
-      <map:match pattern="*/**/introspection.xml">
-        <map:select type="resource-exists">
-          <map:when test="fallback://lenya/modules/neutron/sitemap.xmap">
-            <!-- NB: there are problems with the fallback:// source factory when mounting sitemaps, 
-                 that's why the corresponding input module {fallback:} is used. -->
-            <map:mount 
-              uri-prefix="" 
-              src="{fallback:lenya/modules/neutron/sitemap.xmap}" 
-              check-reload="true" 
-              reload-method="synchron"
-            />
-          </map:when>
-          <map:otherwise>
-            <map:generate src="context:/lenya/content/util/empty.xml"/>
-            <map:serialize type="xml"/>
-          </map:otherwise>
-        </map:select>
-      </map:match>
- 
       <!--
          FIXME: the whole webdav shebang should be handled by the webdav module sitemap.
       -->
