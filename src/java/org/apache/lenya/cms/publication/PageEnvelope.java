@@ -84,6 +84,7 @@ public class PageEnvelope {
     public static final String DEFAULT_PREFIX = "lenya";
 
     private String context;
+    private Publication pub;
 
     /**
      * Constructor.
@@ -182,6 +183,9 @@ public class PageEnvelope {
     throws PageEnvelopeException {
         assert publication != null;
         assert request != null;
+        
+        this.pub = publication;
+        
         String webappURI;
         try {
 
@@ -191,10 +195,13 @@ public class PageEnvelope {
             }
 
             webappURI = ServletHelper.getWebappURI(request);
-            Document document =
-                publication.getDocumentBuilder().buildDocument(publication, webappURI);
-            setDocument(document);
-
+            URLInformation info = new URLInformation(webappURI);
+            String area = info.getArea();
+            if (area != null && AbstractPublication.isValidArea(area) && info.getDocumentUrl() != null) {
+                Document document =
+                    publication.getDocumentBuilder().buildDocument(publication, webappURI);
+                setDocument(document);
+            }
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }
@@ -233,7 +240,7 @@ public class PageEnvelope {
      * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
-        return getDocument().getPublication();
+        return this.pub;
     }
 
     /**
