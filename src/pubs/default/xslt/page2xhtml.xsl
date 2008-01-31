@@ -22,11 +22,10 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-  exclude-result-prefixes="page xhtml dc lenya"
+  xmlns:meta="http://apache.org/lenya/meta/1.0/"
+  exclude-result-prefixes="xhtml lenya"
   >
   
   <!-- {context-prefix}/{publication-id}/{area} -->
@@ -40,6 +39,7 @@
   
   <!-- The request url i.e. /lenya/doctypes/xhtml-document_en.html -->
   <xsl:param name="url"/>
+  <xsl:param name="uuid"/>
   <xsl:param name="language"/>
   
   <xsl:param name="lastPublishedUser"/>
@@ -71,8 +71,8 @@
         </xsl:choose>
         <meta content="Apache Lenya" name="generator"/>
         
-        <!-- The title will be overwritten by addXhtmlTitle.xsl if the document exists. -->
-        <title><i18n:text>error-404</i18n:text></title>
+        <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" default="error-404"
+          i18n:attr="default" uuid="{$uuid}" lang="{$language}"/></title>
         
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
       </head>

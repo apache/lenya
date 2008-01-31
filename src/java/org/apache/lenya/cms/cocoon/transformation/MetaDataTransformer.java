@@ -1,6 +1,10 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
@@ -11,7 +15,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -22,7 +26,18 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * Meta data transformer.
+ * <p>Meta data transformer.</p>
+ * <p>Usage example:</p>
+ * <pre>
+ * &lt;meta:value xmlns:meta="http://apache.org/lenya/meta/1.0/"
+ *   element="title"
+ *   ns="http://purl.org/dc/elements/1.1/"
+ *   uuid="{$uuid}"
+ *   lang="{$language}"
+ *   default="default-title"
+ *   i18n:attr="default" /&gt;
+ * </pre>
+ * <p>The attribute <em>default</em> is optional.</p>
  */
 public class MetaDataTransformer extends AbstractSAXTransformer implements Disposable {
     /**
@@ -60,6 +75,11 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
      * LANG_ATT - in which language this is optional (when not found use publication default)
      */
     static public final String LANG_ATT = "lang";
+
+    /**
+     * Use this attribute to provide a default value to be used if the document doesn't exist.
+     */
+    static public final String DEFAULT_ATT = "default";
 
     /** Helper for lenya document retrival */
     protected String publicationId = null;
@@ -105,7 +125,7 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
             throws SAXException {
         if (NAMESPACE_URI.equals(uri)) {
             if (VALUE_ELEMENT.equals(name)) {
-                String lang = null, uuid = null, ns = null, key = null;
+                String lang = null, uuid = null, ns = null, key = null, defaultValue = null;
                 for (int i = 0; i < attr.getLength(); i++) {
                     String localName = attr.getLocalName(i);
                     String value = attr.getValue(i);
@@ -117,37 +137,46 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
                         uuid = value;
                     else if (LANG_ATT.equals(localName))
                         lang = value;
+                    else if (DEFAULT_ATT.equals(localName))
+                        defaultValue = value;
                 }// end for
                 if (uuid == null || ns == null || key == null)
                     throw new SAXException(
                             "Error by setting up the transformation. Please fix the calling code.");
                 if (lang == null)
                     lang = pub.getDefaultLanguage();
+                List returnValues = new ArrayList();
                 try {
-                    Document document = pub.getArea(area).getDocument(uuid, lang);
-                    MetaData metaData = document.getMetaData(ns);
-                    String[] returnValue = metaData.getValues(key);
-                    if (returnValue.length > 1) {
-                        for (int i = 0; i < returnValue.length; i++) {
-                            AttributesImpl attributes = new AttributesImpl();
-                            attributes.addAttribute("", VALUE_ELEMENT, VALUE_ELEMENT, "CDATA",
-                                    returnValue[i]);
-                            attributes.addAttribute("", ELEMENT_ATT, ELEMENT_ATT, "CDATA", key);
-                            this.contentHandler.startElement(ns, VALUE_ELEMENT, PREFIX + ":"
-                                    + VALUE_ELEMENT, attributes);
-                            this.contentHandler.endElement(ns, VALUE_ELEMENT, PREFIX + ":"
-                                    + VALUE_ELEMENT);
-                        }
-                    } else if (returnValue.length == 1) {
-                        this.contentHandler.characters(returnValue[0].toCharArray(), 0,
-                                returnValue[0].toCharArray().length);
+                    Area areaObj = pub.getArea(this.area);
+                    if (areaObj.contains(uuid, lang)) {
+                        Document document = areaObj.getDocument(uuid, lang);
+                        MetaData metaData = document.getMetaData(ns);
+                        returnValues.addAll(Arrays.asList(metaData.getValues(key)));
+                    } else if (defaultValue != null) {
+                        returnValues.add(defaultValue);
+                    } else {
+                        String doc = this.publicationId + ":" + this.area + ":" + uuid + ":" + lang;
+                        throw new SAXException("The document [" + doc
+                                + "] does not exist and no default value is provided.");
                     }
-                } catch (PublicationException e) {
-                    throw new SAXException("Error by getting document for [ " + lang + "/" + uuid
-                            + " ]");
-                } catch (MetaDataException e) {
-                    throw new SAXException("Error by getting meta data with ns [ " + ns
-                            + " ] for document for [ " + lang + "/" + uuid + " ]");
+                } catch (Exception e) {
+                    throw new SAXException(e);
+                }
+                if (returnValues.size() > 1) {
+                    for (Iterator i = returnValues.iterator(); i.hasNext();) {
+                        String value = (String) i.next();
+                        AttributesImpl attributes = new AttributesImpl();
+                        attributes.addAttribute("", VALUE_ELEMENT, VALUE_ELEMENT, "CDATA", value);
+                        attributes.addAttribute("", ELEMENT_ATT, ELEMENT_ATT, "CDATA", key);
+                        this.contentHandler.startElement(ns, VALUE_ELEMENT, PREFIX + ":"
+                                + VALUE_ELEMENT, attributes);
+                        this.contentHandler.endElement(ns, VALUE_ELEMENT, PREFIX + ":"
+                                + VALUE_ELEMENT);
+                    }
+                } else if (returnValues.size() == 1) {
+                    String value = (String) returnValues.get(0);
+                    this.contentHandler.characters(value.toCharArray(), 0,
+                            value.toCharArray().length);
                 }
 
             } else {
