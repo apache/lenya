@@ -14,41 +14,43 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
-
 public class DocumentBuildException extends PublicationException {
-    /**
-     * Constructor.
-     */
-    public DocumentBuildException() {
-        super();
-    }
-
-    /**
-     * Constructor.
-     * @param message A message.
-     */
-    public DocumentBuildException(String message) {
-        super(message);
-    }
-
-    /**
-     * Constructor.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Constructor.
-     * @param message A message.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(String message, Throwable cause) {
-        super(message, cause);
-    }
+   private static final long serialVersionUID = 1L;
+   /**
+    * Constructor.
+    */
+   public DocumentBuildException() {
+      super();
+   }
+   /**
+    * Constructor.
+    * 
+    * @param message
+    *           A message.
+    */
+   public DocumentBuildException(String message) {
+      super(message);
+   }
+   /**
+    * Constructor.
+    * 
+    * @param cause
+    *           The cause of the exception.
+    */
+   public DocumentBuildException(Throwable cause) {
+      super(cause);
+   }
+   /**
+    * Constructor.
+    * 
+    * @param message
+    *           A message.
+    * @param cause
+    *           The cause of the exception.
+    */
+   public DocumentBuildException(String message, Throwable cause) {
+      super(message, cause);
+   }
 }

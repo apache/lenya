@@ -8,6 +8,7 @@ import org.apache.lenya.cms.content.Content;
  * Singleton class containing all Modules.
  * 
  * @author solprovider
+ * @since 1.3
  */
 public class Modules {
    static Map modules;

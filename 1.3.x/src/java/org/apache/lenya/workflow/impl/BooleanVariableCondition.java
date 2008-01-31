@@ -14,72 +14,60 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.workflow.impl;
-
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 /**
  * Implementation of a boolean variable condition.
  */
 public class BooleanVariableCondition extends AbstractCondition {
-    
-    private static final Category log = Category.getInstance(BooleanVariableCondition.class);
-
-    private String variableName;
-    private boolean value;
-
-    /**
-     * Returns the variable value to check.
-     * @return A boolean value.
-     */
-    protected boolean getValue() {
-        return value;
-    }
-
-    /**
-     * Returns the variable name to check.
-     * @return A string.
-     */
-    protected String getVariableName() {
-        return variableName;
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.Condition#setExpression(java.lang.String)
-     */
-    public void setExpression(String expression) throws WorkflowException {
-        super.setExpression(expression);
-        String[] sides = expression.split("=");
-        if (sides.length != 2) {
-            throw new WorkflowException(
-                "The expression '" + expression + "' must be of the form 'name = [true|false]'");
-        }
-        
-        variableName = sides[0].trim();
-        value = Boolean.valueOf(sides[1].trim()).booleanValue();
-        
-        if (log.isDebugEnabled()) {
-            log.debug("Expression:    [" + sides[1].trim() + "]");
-            log.debug("Setting value: [" + value + "]");
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.WorkflowInstance)
-     */
-    public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
-        if (log.isDebugEnabled()) {
-            log.debug("Checking boolean variable condition");
-            log.debug("    Condition value: [" + getValue() + "]");
-            log.debug("    Variable value:  [" + instance.getValue(getVariableName()) + "]");
-        }
-        return instance.getValue(getVariableName()) == getValue();
-    }
-
+   private static Logger log = Logger.getLogger(BooleanVariableCondition.class);
+   private String variableName;
+   private boolean value;
+   /**
+    * Returns the variable value to check.
+    * 
+    * @return A boolean value.
+    */
+   protected boolean getValue() {
+      return value;
+   }
+   /**
+    * Returns the variable name to check.
+    * 
+    * @return A string.
+    */
+   protected String getVariableName() {
+      return variableName;
+   }
+   /**
+    * @see org.apache.lenya.workflow.Condition#setExpression(java.lang.String)
+    */
+   public void setExpression(String expression) throws WorkflowException {
+      super.setExpression(expression);
+      String[] sides = expression.split("=");
+      if(sides.length != 2){
+         throw new WorkflowException("The expression '" + expression + "' must be of the form 'name = [true|false]'");
+      }
+      variableName = sides[0].trim();
+      value = Boolean.valueOf(sides[1].trim()).booleanValue();
+      if(log.isDebugEnabled()){
+         log.debug("Expression:    [" + sides[1].trim() + "]");
+         log.debug("Setting value: [" + value + "]");
+      }
+   }
+   /**
+    * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.WorkflowInstance)
+    */
+   public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
+      if(log.isDebugEnabled()){
+         log.debug("Checking boolean variable condition");
+         log.debug("    Condition value: [" + getValue() + "]");
+         log.debug("    Variable value:  [" + instance.getValue(getVariableName()) + "]");
+      }
+      return instance.getValue(getVariableName()) == getValue();
+   }
 }

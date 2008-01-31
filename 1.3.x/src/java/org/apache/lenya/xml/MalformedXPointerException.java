@@ -23,7 +23,9 @@ package org.apache.lenya.xml;
  * DOCUMENT ME!
  */
 public class MalformedXPointerException extends Exception {
-    /**
+    private static final long serialVersionUID = 1L;
+
+   /**
      * Creates a new MalformedXPointerException object.
      */
     public MalformedXPointerException() {

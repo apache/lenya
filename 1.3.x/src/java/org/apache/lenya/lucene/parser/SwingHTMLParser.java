@@ -14,11 +14,8 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.lucene.parser;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,73 +24,56 @@ import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URLConnection;
-
 import javax.swing.text.html.parser.ParserDelegator;
-
 public class SwingHTMLParser extends AbstractHTMLParser {
-    /** Creates a new instance of SwingHTMLParser */
-    public SwingHTMLParser() {
-    }
-
-    /**
-     * Parses a URI.
-     */
-    public void parse(URI uri) throws ParseException {
-        try {
-            ParserDelegator delagator = new ParserDelegator();
-            handler = new SwingHTMLHandler();
-
-            Reader reader = new PreParser().parse(getReader(uri));
-            delagator.parse(reader, handler, true);
-        } catch (IOException e) {
-            throw new ParseException(e);
-        }
-    }
-
-    private SwingHTMLHandler handler;
-
-    protected SwingHTMLHandler getHandler() {
-        return handler;
-    }
-
-    /**
-     * Get title
-     *
-     * @return DOCUMENT ME!
-     */
-    public String getTitle() {
-        return getHandler().getTitle();
-    }
-
-    /**
-     * Get keywords
-     *
-     * @return DOCUMENT ME!
-     */
-    public String getKeywords() {
-        return getHandler().getKeywords();
-    }
-
-    private Reader reader;
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public Reader getReader() {
-        return getHandler().getReader();
-    }
-
-    protected Reader getReader(URI uri) throws IOException, MalformedURLException {
-        if (uri.toString().startsWith("http:")) {
-            // uri is url
-            URLConnection connection = uri.toURL().openConnection();
-
-            return new InputStreamReader(connection.getInputStream());
-        } else {
-            // uri is file
-            return new FileReader(new File(uri));
-        }
-    }
+   /** Creates a new instance of SwingHTMLParser */
+   public SwingHTMLParser() {
+   }
+   /**
+    * Parses a URI.
+    */
+   public void parse(URI uri) throws ParseException {
+      try{
+         ParserDelegator delagator = new ParserDelegator();
+         handler = new SwingHTMLHandler();
+         Reader reader = new PreParser().parse(getReader(uri));
+         delagator.parse(reader, handler, true);
+      }catch(IOException e){
+         throw new ParseException(e);
+      }
+   }
+   private SwingHTMLHandler handler;
+   protected SwingHTMLHandler getHandler() {
+      return handler;
+   }
+   /**
+    * Get title
+    * 
+    * @return DOCUMENT ME!
+    */
+   public String getTitle() {
+      return getHandler().getTitle();
+   }
+   /**
+    * Get keywords
+    * 
+    * @return DOCUMENT ME!
+    */
+   public String getKeywords() {
+      return getHandler().getKeywords();
+   }
+   // private Reader reader;
+   public Reader getReader() {
+      return getHandler().getReader();
+   }
+   protected Reader getReader(URI uri) throws IOException, MalformedURLException {
+      if(uri.toString().startsWith("http:")){
+         // uri is url
+         URLConnection connection = uri.toURL().openConnection();
+         return new InputStreamReader(connection.getInputStream());
+      }else{
+         // uri is file
+         return new FileReader(new File(uri));
+      }
+   }
 }

@@ -1,6 +1,10 @@
 package org.apache.lenya.cms.content;
 
-
+/**
+ * 
+ * @author solprovider
+ * @since 1.3
+ */
 public interface Content{
    public static final String TYPE_FLAT = "flat";
    public static final String TYPE_HIERARCHICAL = "hierarchical";

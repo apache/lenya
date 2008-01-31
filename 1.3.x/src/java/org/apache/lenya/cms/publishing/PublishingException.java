@@ -14,43 +14,42 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publishing;
-
 public class PublishingException extends Exception {
-    /**
-     * Creates a new PublishingException.
-     */
-    public PublishingException() {
-    }
-
-    /**
-     * Creates a new PublishingException.
-     * 
-     * @param message the exception message
-     */
-    public PublishingException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new PublishingException.
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public PublishingException(String message, Throwable cause) {
-        super(message + " " + cause.getMessage());
-    }
-
-    /**
-     * Creates a new PublishingException.
-     * 
-     * @param cause  the cause of the exception
-     */
-    public PublishingException(Throwable cause) {
-        super(cause.getMessage());
-    }
+   private static final long serialVersionUID = 1L;
+   /**
+    * Creates a new PublishingException.
+    */
+   public PublishingException() {
+   }
+   /**
+    * Creates a new PublishingException.
+    * 
+    * @param message
+    *           the exception message
+    */
+   public PublishingException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new PublishingException.
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public PublishingException(String message, Throwable cause) {
+      super(message + " " + cause.getMessage());
+   }
+   /**
+    * Creates a new PublishingException.
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public PublishingException(Throwable cause) {
+      super(cause.getMessage());
+   }
 }

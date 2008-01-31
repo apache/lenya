@@ -1,5 +1,4 @@
 package org.apache.lenya.cms.modules;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -23,7 +22,7 @@ import org.apache.lenya.cms.publication.Publication;
  * 2000125: Integrated with org.apache.lenya.cms.modules
  * 
  * @author solprovider
- * 
+ * @since 1.3
  */
 public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolutizer, Contextualizable {
    protected org.apache.avalon.framework.context.Context context;
@@ -119,19 +118,11 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
       // BUG ALERT: See description above about no default
       if(filepath.length() < 1)
          filepath = "module.xmap";
-      // ## Get Module - BEGIN
-      // System.out.println("GetFile P=" + publication + " M=" + moduleId + " R=" + filepath);
       String newlocation = pub.getModules().getFile(moduleId, filepath, needsReset);
-      // System.out.println("GetModule F=" + newlocation);
       if(newlocation.length() < 1)
          throw new SourceNotFoundException("Not found: " + location + " -> " + newlocation);
-      System.out.println("ModuleSource: " + newlocation);
-      FileSource source = new FileSource("file://" + newlocation);
-      System.out.println("FileSource: " + source.getURI());
-      File file = source.getFile();
-      System.out.println("File: " + file.getAbsolutePath());
-      return source;
-      // return new FileSource(newlocation);
+      // System.out.println("ModuleSource: " + newlocation);
+      return new FileSource("file://" + newlocation);
    }
    public void release(Source source1) {
    }

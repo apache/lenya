@@ -1,5 +1,10 @@
 package org.apache.lenya.cms.modules;
 import org.apache.lenya.cms.content.Content;
+/**
+ * 
+ * @author solprovider
+ * @since 1.3
+ */
 public class ModuleSet {
    Module flat = null;
    Module hierarchical = null;

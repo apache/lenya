@@ -62,7 +62,7 @@ public abstract class AbstractPublication implements Publication {
    private File contentDirectory;
    private String contentType = Content.TYPE_HIERARCHICAL;
    // Lenya1.3 - END
-   //TODO: Reload Publication
+   // TODO: Reload Publication
    /**
     * Creates a new instance of Publication
     * 
@@ -165,7 +165,7 @@ public abstract class AbstractPublication implements Publication {
             content = (Content) new HierarchicalContent(contentDirectory, getLanguages());
          }
          // Modules
-         modules = new PublicationModules(id, contentType, servletContextPath, config.getChild("modules"));
+         modules = new PublicationModules(id, contentType, config.getChild("modules"));
          // Lenya1.3 - END
       }catch(PublicationException e){
          throw e;

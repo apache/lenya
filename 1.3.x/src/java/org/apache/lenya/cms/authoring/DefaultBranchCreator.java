@@ -14,59 +14,40 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.authoring;
-
-import org.apache.log4j.Category;
-
-import org.apache.lenya.cms.publication.Publication;
-
 import java.io.File;
-
+import org.apache.lenya.cms.publication.Publication;
 public class DefaultBranchCreator extends DefaultCreator {
-    private Category log = Category.getInstance(DefaultBranchCreator.class);
-
-    /**
-     * Return the child type.
-     *
-     * @param childType a <code>short</code> value
-     *
-     * @return a <code>short</code> value
-     *
-     * @exception Exception if an error occurs
-     */
-    public short getChildType(short childType) throws Exception {
-        return BRANCH_NODE;
-    }
-
-    /** (non-Javadoc)
-     * @depracted because it does not the DocumentIdToPathMapper
-     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
-     */
-    protected String getChildFileName(
-        Publication publication,
-        String area,
-        String parentId,
-        String childId,
-        String language) {
-	return publication.getPathMapper().getFile(publication, area, parentId + "/" + childId, language).getAbsolutePath();
-    }
-
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String)
-     */
-    protected String getChildMetaFileName(
-        File parentDir,
-        String childId,
-        String language) {
-        return parentDir
-            + File.separator
-            + childId
-            + File.separator
-            + "indexmeta"
-            + getLanguageSuffix(language)
-            + ".xml";
-    }
+   /**
+    * Return the child type.
+    * 
+    * @param childType
+    *           a <code>short</code> value
+    * 
+    * @return a <code>short</code> value
+    * 
+    * @exception Exception
+    *               if an error occurs
+    */
+   public short getChildType(short childType) throws Exception {
+      return BRANCH_NODE;
+   }
+   /**
+    * (non-Javadoc)
+    * 
+    * @depracted because it does not the DocumentIdToPathMapper
+    * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
+    */
+   protected String getChildFileName(Publication publication, String area, String parentId, String childId, String language) {
+      return publication.getPathMapper().getFile(publication, area, parentId + "/" + childId, language).getAbsolutePath();
+   }
+   /**
+    * (non-Javadoc)
+    * 
+    * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String)
+    */
+   protected String getChildMetaFileName(File parentDir, String childId, String language) {
+      return parentDir + File.separator + childId + File.separator + "indexmeta" + getLanguageSuffix(language) + ".xml";
+   }
 }

@@ -14,49 +14,43 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.util;
-
 import java.util.Vector;
-
-
 /**
  * DOCUMENT ME!
  */
-
 // FIXME: this class seems pretty useless. Why not remove it?
 public class Stack extends Vector {
-    int maxsize = 0;
-
-    /**
-     * Creates a new Stack object.
-     *
-     * @param maxsize DOCUMENT ME!
-     */
-    public Stack(int maxsize) {
-        this.maxsize = maxsize;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param object DOCUMENT ME!
-     */
-    public void push(Object object) {
-        insertElementAt(object, 0);
-
-        if (size() == (maxsize + 1)) {
-            removeElementAt(maxsize);
-        }
-    }
+   private static final long serialVersionUID = 1L;
+   int maxsize = 0;
+   /**
+    * Creates a new Stack object.
+    * 
+    * @param maxsize
+    *           DOCUMENT ME!
+    */
+   public Stack(int maxsize) {
+      this.maxsize = maxsize;
+   }
+   /**
+    * DOCUMENT ME!
+    * 
+    * @param args
+    *           DOCUMENT ME!
+    */
+   public static void main(String[] args) {
+   }
+   /**
+    * DOCUMENT ME!
+    * 
+    * @param object
+    *           DOCUMENT ME!
+    */
+   public void push(Object object) {
+      insertElementAt(object, 0);
+      if(size() == (maxsize + 1)){
+         removeElementAt(maxsize);
+      }
+   }
 }

@@ -14,47 +14,48 @@
  *  limitations under the License.
  *
  */
-
 package org.apache.lenya.ac;
-
 /**
  * Access control exception.
+ * 
  * @version $Id$
  */
 public class AccessControlException extends Exception {
-    /**
-     * Create an AccessControlException
-     *
-     */
-    public AccessControlException() {
-        super();
-    }
-
-    /**
-     * Create an AccessControlException
-     *
-     * @param message The message.
-     */
-    public AccessControlException(String message) {
-        super(message);
-    }
-
-    /**
-     * Create an AccessControlException
-     *
-     * @param message The message.
-     * @param cause The cause.
-     */
-    public AccessControlException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Create an AccessControlException.
-     *
-     * @param cause The cause.
-     */
-    public AccessControlException(Throwable cause) {
-        super(cause);
-    }
+   private static final long serialVersionUID = 1L;
+   /**
+    * Create an AccessControlException
+    * 
+    */
+   public AccessControlException() {
+      super();
+   }
+   /**
+    * Create an AccessControlException
+    * 
+    * @param message
+    *           The message.
+    */
+   public AccessControlException(String message) {
+      super(message);
+   }
+   /**
+    * Create an AccessControlException
+    * 
+    * @param message
+    *           The message.
+    * @param cause
+    *           The cause.
+    */
+   public AccessControlException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Create an AccessControlException.
+    * 
+    * @param cause
+    *           The cause.
+    */
+   public AccessControlException(Throwable cause) {
+      super(cause);
+   }
 }

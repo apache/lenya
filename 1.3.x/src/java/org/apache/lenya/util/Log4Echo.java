@@ -14,45 +14,39 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.util;
-
-import org.apache.log4j.Category;
-
-
+import org.apache.log4j.Logger;
 /**
  * Can be used within shell scripts resp. batch files
  */
 public class Log4Echo {
-    private static Category log = Category.getInstance(Log4Echo.class);
-    
-    /**
-     * main
-     *
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-        if (args.length != 2) {
-            System.err.println("Usage: java " + new Log4Echo().getClass().getName() + "log-level log-message");
-            return;
-        }
-
-        String level = args[0].toLowerCase();
-        String message = args[1];
-        if (level.equals("debug")) {
-            log.debug(message);
-        } else if (level.equals("info")) {
-            log.info(message);
-        } else if (level.equals("warn")) {
-            log.warn(message);
-        } else if (level.equals("error")) {
-            log.error(message);
-        } else if (level.equals("fatal")) {
-            log.fatal(message);
-        } else {
-            log.error("No such log level: " + level + " " + message);
-        }
-    }
+   private static Logger log = Logger.getLogger(Log4Echo.class);
+   /**
+    * main
+    * 
+    * @param args
+    *           DOCUMENT ME!
+    */
+   public static void main(String[] args) {
+      if(args.length != 2){
+         System.err.println("Usage: java " + new Log4Echo().getClass().getName() + "log-level log-message");
+         return;
+      }
+      String level = args[0].toLowerCase();
+      String message = args[1];
+      if(level.equals("debug")){
+         log.debug(message);
+      }else if(level.equals("info")){
+         log.info(message);
+      }else if(level.equals("warn")){
+         log.warn(message);
+      }else if(level.equals("error")){
+         log.error(message);
+      }else if(level.equals("fatal")){
+         log.fatal(message);
+      }else{
+         log.error("No such log level: " + level + " " + message);
+      }
+   }
 }

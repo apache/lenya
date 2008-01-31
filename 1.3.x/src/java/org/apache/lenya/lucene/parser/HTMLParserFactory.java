@@ -14,42 +14,32 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.lucene.parser;
-
 import java.io.File;
-
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 /**
  * Factory to create HTML parsers that are used for indexing HTML.
  */
 public class HTMLParserFactory {
-    
-    public static Category log = Category.getInstance(HTMLParserFactory.class);
-    
-    /**
-     * Returns an HTMLParser.
-     */
-    public static HTMLParser newInstance(File file) {
-        HTMLParser parser = null;
-
-        // HTML files
-        if (file.getName().endsWith(".html")) {
-            parser = new SwingHTMLParser();
-        }
-        // PDF files
-        else if (file.getName().endsWith(".txt")) {
-            parser = new PDFParserWrapper();
-        } else {
-            parser = new SwingHTMLParser();
-            log.debug(".newInstance(): WARNING: Suffix did no match (" + file.getName()  + "). SwingHTMLParser as default parser selected!");
-        }
-
-        log.debug("returning a " + parser.getClass().getName() + " for " + file.getName());
-
-        return parser;
-    }
+   private static Logger log = Logger.getLogger(HTMLParserFactory.class);
+   /**
+    * Returns an HTMLParser.
+    */
+   public static HTMLParser newInstance(File file) {
+      HTMLParser parser = null;
+      // HTML files
+      if(file.getName().endsWith(".html")){
+         parser = new SwingHTMLParser();
+      }
+      // PDF files
+      else if(file.getName().endsWith(".txt")){
+         parser = new PDFParserWrapper();
+      }else{
+         parser = new SwingHTMLParser();
+         log.debug(".newInstance(): WARNING: Suffix did no match (" + file.getName() + "). SwingHTMLParser as default parser selected!");
+      }
+      log.debug("returning a " + parser.getClass().getName() + " for " + file.getName());
+      return parser;
+   }
 }

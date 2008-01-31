@@ -14,56 +14,50 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.workflow.impl;
-
 import org.apache.lenya.workflow.BooleanVariableAssignment;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-
-
 /**
  * Implementation of a boolean variable assignment.
  */
 public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment {
-    
-    /**
-     * Ctor.
-     * @param variable The variable.
-     * @param value The value.
-     */
-    protected BooleanVariableAssignmentImpl(BooleanVariableImpl variable, boolean value) {
-        this.variable = variable;
-
-        this.value = value;
-    }
-
-    private BooleanVariableImpl variable;
-    private boolean value;
-
-    /**
-     * @see org.apache.lenya.workflow.BooleanVariableAssignment#execute(org.apache.lenya.workflow.WorkflowInstance instance)
-     */
-    public void execute(WorkflowInstance instance) throws WorkflowException {
-        WorkflowInstanceImpl impl = (WorkflowInstanceImpl) instance;
-        impl.getVariableInstance(getVariable()).setValue(getValue());
-    }
-
-    /**
-     * Returns the value of this assignment.
-     * @return A boolean value.
-     */
-    public boolean getValue() {
-        return value;
-    }
-
-    /**
-     * Returns the variable of this assignment.
-     * @return A variable.
-     */
-    public BooleanVariableImpl getVariable() {
-        return variable;
-    }
+   /**
+    * Ctor.
+    * 
+    * @param variable
+    *           The variable.
+    * @param value
+    *           The value.
+    */
+   protected BooleanVariableAssignmentImpl(BooleanVariableImpl variable, boolean value) {
+      this.variable = variable;
+      this.value = value;
+   }
+   private BooleanVariableImpl variable;
+   private boolean value;
+   /**
+    * @see org.apache.lenya.workflow.BooleanVariableAssignment#execute(org.apache.lenya.workflow.WorkflowInstance instance)
+    */
+   public void execute(WorkflowInstance instance) throws WorkflowException {
+      WorkflowInstanceImpl impl = (WorkflowInstanceImpl) instance;
+      impl.getVariableInstance(getVariable()).setValue(getValue());
+   }
+   /**
+    * Returns the value of this assignment.
+    * 
+    * @return A boolean value.
+    */
+   public boolean getValue() {
+      return value;
+   }
+   /**
+    * Returns the variable of this assignment.
+    * 
+    * @return A variable.
+    */
+   public BooleanVariableImpl getVariable() {
+      return variable;
+   }
 }

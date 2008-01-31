@@ -14,42 +14,37 @@
  *  limitations under the License.
  *
  */
-
 package org.apache.lenya.ac;
-
 import java.io.Serializable;
 import java.util.Collections;
-
 /**
  * The world.
+ * 
  * @version $Id$
  */
 public final class World implements Identifiable, Serializable {
-    
-    /**
-     * Creates a new World object.
-     */
-    private World() {
-    }
-
-    private static World instance;
-
-    /**
-     * Returns the singleton world object.
-     * @return A world object.
-     */
-    public static World getInstance() {
-        if (instance == null) {
-            instance = new World();
-        }
-
-        return instance;
-    }
-
-    /**
-     * @see org.apache.lenya.ac.Accreditable#getAccreditables()
-     */
-    public Accreditable[] getAccreditables() {
-        return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
-    }
+   private static final long serialVersionUID = -7545661341416328516L;
+   /**
+    * Creates a new World object.
+    */
+   private World() {
+   }
+   private static World instance;
+   /**
+    * Returns the singleton world object.
+    * 
+    * @return A world object.
+    */
+   public static World getInstance() {
+      if(instance == null){
+         instance = new World();
+      }
+      return instance;
+   }
+   /**
+    * @see org.apache.lenya.ac.Accreditable#getAccreditables()
+    */
+   public Accreditable[] getAccreditables() {
+      return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
+   }
 }

@@ -13,6 +13,10 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.content.Content;
 import org.xml.sax.SAXException;
+/**
+ * @author solprovider
+ * @since 1.3
+ */
 public abstract class Module {
    public static final String MODULE_XML = "module.xml";
    Map inheritList; // String names of other Modules in this publication.

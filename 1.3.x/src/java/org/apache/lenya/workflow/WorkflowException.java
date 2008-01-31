@@ -14,48 +14,43 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.workflow;
-
-
 /**
  * Workflow exception.
  */
 public class WorkflowException extends Exception {
-    /**
-     *
-     */
-    public WorkflowException() {
-        super();
-    }
-
-    /**
-     * Create a WorkflowException.
-     * 
-     * @param message The message.
-     */
-    public WorkflowException(String message) {
-        super(message);
-    }
-
-    /**
-     * Create a WorkflowException.
-     * 
-     * @param message The message.
-     * @param cause The cause.
-     */
-    public WorkflowException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Create a WorkflowException.
-     * 
-     * @param cause The cause.
-     */
-    public WorkflowException(Throwable cause) {
-        super(cause);
-    }
+   private static final long serialVersionUID = 1L;
+   public WorkflowException() {
+      super();
+   }
+   /**
+    * Create a WorkflowException.
+    * 
+    * @param message
+    *           The message.
+    */
+   public WorkflowException(String message) {
+      super(message);
+   }
+   /**
+    * Create a WorkflowException.
+    * 
+    * @param message
+    *           The message.
+    * @param cause
+    *           The cause.
+    */
+   public WorkflowException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Create a WorkflowException.
+    * 
+    * @param cause
+    *           The cause.
+    */
+   public WorkflowException(Throwable cause) {
+      super(cause);
+   }
 }

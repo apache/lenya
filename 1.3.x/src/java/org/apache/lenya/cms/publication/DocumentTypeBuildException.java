@@ -14,44 +14,40 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
-
 public class DocumentTypeBuildException extends Exception {
-    /**
-     *
-     */
-    public DocumentTypeBuildException() {
-        super();
-    }
-
-    /**
-     * Creates a new DocumentTypeBuildException.
-     * 
-     * @param message the exception message
-     */
-    public DocumentTypeBuildException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new DocumentTypeBuildException.
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public DocumentTypeBuildException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Creates a new DocumentTypeBuildException.
-     * 
-     * @param cause the cause of the exception
-     */
-    public DocumentTypeBuildException(Throwable cause) {
-        super(cause);
-    }
+   private static final long serialVersionUID = 1L;
+   public DocumentTypeBuildException() {
+      super();
+   }
+   /**
+    * Creates a new DocumentTypeBuildException.
+    * 
+    * @param message
+    *           the exception message
+    */
+   public DocumentTypeBuildException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new DocumentTypeBuildException.
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public DocumentTypeBuildException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new DocumentTypeBuildException.
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public DocumentTypeBuildException(Throwable cause) {
+      super(cause);
+   }
 }

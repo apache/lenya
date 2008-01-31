@@ -14,47 +14,44 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
-
 public class DocumentException extends PublicationException {
-
-    /**
-     * Creates a new DocumentException
-     * 
-     */
-    public DocumentException() {
-        super();
-    }
-
-    /**
-     * Creates a new DocumentException
-     * 
-     * @param message the exception message
-     */
-    public DocumentException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new DocumentException
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public DocumentException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Creates a new DocumentException
-     * 
-     * @param cause the cause of the exception
-     */
-    public DocumentException(Throwable cause) {
-        super(cause);
-    }
-
+   private static final long serialVersionUID = 1L;
+   /**
+    * Creates a new DocumentException
+    * 
+    */
+   public DocumentException() {
+      super();
+   }
+   /**
+    * Creates a new DocumentException
+    * 
+    * @param message
+    *           the exception message
+    */
+   public DocumentException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new DocumentException
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public DocumentException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new DocumentException
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public DocumentException(Throwable cause) {
+      super(cause);
+   }
 }

@@ -14,42 +14,43 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.task;
-
-
 /**
  * An Exception that is thrown when an error occurs during a task execution.
  */
 public class ExecutionException extends Exception {
-    /** Creates a new instance of ExecutionException */
-    public ExecutionException() {
-    }
-
-    /** Creates a new instance of ExecutionException 
-     * 
-     * @param message the exception message 
-     */
-    public ExecutionException(String message) {
-        super(message);
-    }
-
-    /** Creates a new instance of ExecutionException 
-     * 
-     * @param message the exception message
-     * @param cause the exception cause
-     */
-    public ExecutionException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /** Creates a new instance of ExecutionException
-     * 
-     * @param cause the exception cause
-     */
-    public ExecutionException(Throwable cause) {
-        super(cause);
-    }
+   private static final long serialVersionUID = 3535919691584859281L;
+   /** Creates a new instance of ExecutionException */
+   public ExecutionException() {
+   }
+   /**
+    * Creates a new instance of ExecutionException
+    * 
+    * @param message
+    *           the exception message
+    */
+   public ExecutionException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new instance of ExecutionException
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the exception cause
+    */
+   public ExecutionException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new instance of ExecutionException
+    * 
+    * @param cause
+    *           the exception cause
+    */
+   public ExecutionException(Throwable cause) {
+      super(cause);
+   }
 }

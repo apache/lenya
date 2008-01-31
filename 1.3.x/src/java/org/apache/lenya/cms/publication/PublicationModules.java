@@ -9,8 +9,13 @@ import java.util.Set;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.lenya.cms.modules.Module;
 import org.apache.lenya.cms.modules.Modules;
-//TODO: Rearchitect so can reset all without restarting Lenya?
+/**
+ * 
+ * @author solprovider
+ * @since 1.3
+ */
 public class PublicationModules {
+   // TODO: Rearchitect class so can reset all without restarting Lenya?
    private List templates = new ArrayList(); // Default list of Publications for inherit.
    // TODO: external and exclude should have defaults in module.xml.
    // Current algorithm needs replacing.
@@ -28,16 +33,17 @@ public class PublicationModules {
    // static Map globalvariables = new HashMap(); // module.variable = value from global module.xml
    // static boolean isGlobalvariablesSet = false;
    private String publicationId;
-   private String servletContextPath;
+   // private String servletContextPath;
    private String contentType;
    // Dev testing
    Configuration config;
-   public PublicationModules(String publicationId, String contentType, String servletContextPath, Configuration config) {
+   public PublicationModules(String publicationId, String contentType, Configuration config) {
+      // public PublicationModules(String publicationId, String contentType, String servletContextPath, Configuration config) {
       if(null == config)
          return;
       int i;
       this.publicationId = publicationId;
-      this.servletContextPath = servletContextPath;
+      // this.servletContextPath = servletContextPath;
       this.contentType = contentType;
       this.config = config; // TESTING
       String[] attrnames = config.getAttributeNames();

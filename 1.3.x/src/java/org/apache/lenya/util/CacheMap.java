@@ -14,69 +14,57 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.util;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 /**
  * A map with a maximum capacity. When the map is full, the oldest entry is removed.
  */
 public class CacheMap extends HashMap {
-    
-    private static final Category log = Category.getInstance(CacheMap.class);
-    
-    /**
-     * Ctor.
-     * @param capacity The maximum number of entries.
-     */
-    public CacheMap(int capacity) {
-//        assert capacity > -1;
-        this.capacity = capacity;
-    }
-    
-    private int capacity;
-    private SortedMap timeToKey = new TreeMap();
-    
-    /**
-     * @see java.util.Map#put(Object, Object)
-     */
-    public Object put(Object key, Object value) {
-        
-        if (size() == capacity) {
-            Object oldestKey = timeToKey.get(timeToKey.firstKey());
-            remove(oldestKey);
-            if (log.isDebugEnabled()) {
-                log.debug("Clearing cache");
-            }
-        }
-        timeToKey.put(new Date(), key);
-        return super.put(key, value);
-    }
-    
-    
-    
-    /**
-     * @see java.util.Map#get(java.lang.Object)
-     */
-    public Object get(Object key) {
-        Object result = super.get(key);
-        if (log.isDebugEnabled()) {
-            if (result != null) {
-                log.debug("Using cached object for key [" + key + "]");
-            }
-            else {
-                log.debug("No cached object for key [" + key + "]");
-            }
-        }
-        return result;
-    }
-
+   private static final long serialVersionUID = 1L;
+   private static Logger log = Logger.getLogger(CacheMap.class);
+   /**
+    * Ctor.
+    * 
+    * @param capacity
+    *           The maximum number of entries.
+    */
+   public CacheMap(int capacity) {
+      // assert capacity > -1;
+      this.capacity = capacity;
+   }
+   private int capacity;
+   private SortedMap timeToKey = new TreeMap();
+   /**
+    * @see java.util.Map#put(Object, Object)
+    */
+   public Object put(Object key, Object value) {
+      if(size() == capacity){
+         Object oldestKey = timeToKey.get(timeToKey.firstKey());
+         remove(oldestKey);
+         if(log.isDebugEnabled()){
+            log.debug("Clearing cache");
+         }
+      }
+      timeToKey.put(new Date(), key);
+      return super.put(key, value);
+   }
+   /**
+    * @see java.util.Map#get(java.lang.Object)
+    */
+   public Object get(Object key) {
+      Object result = super.get(key);
+      if(log.isDebugEnabled()){
+         if(result != null){
+            log.debug("Using cached object for key [" + key + "]");
+         }else{
+            log.debug("No cached object for key [" + key + "]");
+         }
+      }
+      return result;
+   }
 }

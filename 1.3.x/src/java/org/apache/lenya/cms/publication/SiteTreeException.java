@@ -14,47 +14,45 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
-
 /**
  * Exceptions for site tree handling.
  */
 public class SiteTreeException extends Exception {
-	
-    /**
-     * Creates a new SiteTreeException.
-     */
-    public SiteTreeException() {
-    }
-
-    /**
-     * Creates a new SiteTreeException.
-     * 
-     * @param message the exception message
-     */
-    public SiteTreeException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new SiteTreeException.
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public SiteTreeException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Creates a new SiteTreeException.
-     * 
-     * @param cause  the cause of the exception
-     */
-    public SiteTreeException(Throwable cause) {
-        super(cause);
-    }
+   private static final long serialVersionUID = 1L;
+   /**
+    * Creates a new SiteTreeException.
+    */
+   public SiteTreeException() {
+   }
+   /**
+    * Creates a new SiteTreeException.
+    * 
+    * @param message
+    *           the exception message
+    */
+   public SiteTreeException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new SiteTreeException.
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public SiteTreeException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new SiteTreeException.
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public SiteTreeException(Throwable cause) {
+      super(cause);
+   }
 }

@@ -14,43 +14,43 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.cocoon.uriparameterizer;
-
 public class URIParameterizerException extends Exception {
-
-    /**
-     * Ctor.
-     */
-    public URIParameterizerException() {
-        super();
-    }
-
-    /**
-     * Ctor.
-     * @param message The message.
-     */
-    public URIParameterizerException(String message) {
-        super(message);
-    }
-
-    /**
-     * Ctor.
-     * @param message The message.
-     * @param cause The cause.
-     */
-    public URIParameterizerException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Ctor.
-     * @param cause The cause.
-     */
-    public URIParameterizerException(Throwable cause) {
-        super(cause);
-    }
-
+   private static final long serialVersionUID = 1L;
+   /**
+    * Ctor.
+    */
+   public URIParameterizerException() {
+      super();
+   }
+   /**
+    * Ctor.
+    * 
+    * @param message
+    *           The message.
+    */
+   public URIParameterizerException(String message) {
+      super(message);
+   }
+   /**
+    * Ctor.
+    * 
+    * @param message
+    *           The message.
+    * @param cause
+    *           The cause.
+    */
+   public URIParameterizerException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Ctor.
+    * 
+    * @param cause
+    *           The cause.
+    */
+   public URIParameterizerException(Throwable cause) {
+      super(cause);
+   }
 }

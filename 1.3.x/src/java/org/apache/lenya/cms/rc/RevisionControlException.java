@@ -14,46 +14,46 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.rc;
-
 /**
  * A revision control exception.
  */
 public class RevisionControlException extends Exception {
-
-    /**
-     * Ctor.
-     */
-    public RevisionControlException() {
-        super();
-    }
-
-    /**
-     * Ctor.
-     * @param message The message.
-     */
-    public RevisionControlException(String message) {
-        super(message);
-    }
-
-    /**
-     * Ctor.
-     * @param cause The cause.
-     */
-    public RevisionControlException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Ctor.
-     * @param message The message.
-     * @param cause The cause.
-     */
-    public RevisionControlException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
+   private static final long serialVersionUID = 1L;
+   /**
+    * Ctor.
+    */
+   public RevisionControlException() {
+      super();
+   }
+   /**
+    * Ctor.
+    * 
+    * @param message
+    *           The message.
+    */
+   public RevisionControlException(String message) {
+      super(message);
+   }
+   /**
+    * Ctor.
+    * 
+    * @param cause
+    *           The cause.
+    */
+   public RevisionControlException(Throwable cause) {
+      super(cause);
+   }
+   /**
+    * Ctor.
+    * 
+    * @param message
+    *           The message.
+    * @param cause
+    *           The cause.
+    */
+   public RevisionControlException(String message, Throwable cause) {
+      super(message, cause);
+   }
 }

@@ -14,45 +14,47 @@
  *  limitations under the License.
  *
  */
-
 package org.apache.lenya.ac.cache;
-
 /**
  * Caching exception.
+ * 
  * @version $Id$
  */
 public class CachingException extends Exception {
-
-    /**
-     * Ctor.
-     */
-    public CachingException() {
-        super();
-    }
-
-    /**
-     * Ctor.
-     * @param message The message.
-     */
-    public CachingException(String message) {
-        super(message);
-    }
-
-    /**
-     * Ctor.
-     * @param message The message.
-     * @param cause The cause.
-     */
-    public CachingException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Ctor.
-     * @param cause The cause.
-     */
-    public CachingException(Throwable cause) {
-        super(cause);
-    }
-
+   private static final long serialVersionUID = 1L;
+   /**
+    * Ctor.
+    */
+   public CachingException() {
+      super();
+   }
+   /**
+    * Ctor.
+    * 
+    * @param message
+    *           The message.
+    */
+   public CachingException(String message) {
+      super(message);
+   }
+   /**
+    * Ctor.
+    * 
+    * @param message
+    *           The message.
+    * @param cause
+    *           The cause.
+    */
+   public CachingException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Ctor.
+    * 
+    * @param cause
+    *           The cause.
+    */
+   public CachingException(Throwable cause) {
+      super(cause);
+   }
 }

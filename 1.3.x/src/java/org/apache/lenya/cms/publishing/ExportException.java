@@ -14,43 +14,42 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publishing;
-
 public class ExportException extends Exception {
-    /**
-     * Creates a new ExportException.
-     */
-    public ExportException() {
-    }
-
-    /**
-     * Creates a new ExportException.
-     * 
-     * @param message the exception message
-     */
-    public ExportException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new ExportException.
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public ExportException(String message, Throwable cause) {
-        super(message + " " + cause.getMessage());
-    }
-
-    /**
-     * Creates a new ExportException.
-     * 
-     * @param cause  the cause of the exception
-     */
-    public ExportException(Throwable cause) {
-        super(cause.getMessage());
-    }
+   private static final long serialVersionUID = 5082241538088335542L;
+   /**
+    * Creates a new ExportException.
+    */
+   public ExportException() {
+   }
+   /**
+    * Creates a new ExportException.
+    * 
+    * @param message
+    *           the exception message
+    */
+   public ExportException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new ExportException.
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public ExportException(String message, Throwable cause) {
+      super(message + " " + cause.getMessage());
+   }
+   /**
+    * Creates a new ExportException.
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public ExportException(Throwable cause) {
+      super(cause.getMessage());
+   }
 }

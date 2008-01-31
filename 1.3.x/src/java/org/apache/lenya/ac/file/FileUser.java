@@ -35,7 +35,8 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public class FileUser extends AbstractUser implements Item, Serializable {
-    private static final Logger log = Logger.getLogger(FileUser.class);
+    private static final long serialVersionUID = 1L;
+   private static final Logger log = Logger.getLogger(FileUser.class);
     public static final String ID = "identity";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";

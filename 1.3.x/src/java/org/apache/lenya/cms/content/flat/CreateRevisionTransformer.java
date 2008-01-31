@@ -21,7 +21,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 /**
  * @cocoon.sitemap.component.documentation This transformer creates a new Revision. It takes the UNID as the src parameter, uses the current language, and create a new Revision It will be enhanced to take "/structure/path/docid" as the src. That will be easy. If there is a slash, then convert using Content.getUNID().
- * @author <a href="mailto:solprovider@apache.org">Paul Ercolino</a>
+ * @author solprovider
+ * @since 1.3
  */
 public class CreateRevisionTransformer extends AbstractDOMTransformer {
    public static final String UPLOADASSET_PARAM_PREFIX = "dc.";
@@ -46,7 +47,7 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
     * @param doc
     *           The data to be inserted.
     */
-   static private void createRevision(Request request, String punid, org.w3c.dom.Document doc, boolean setLive) {
+   static private void createRevision(Request request, String unid, org.w3c.dom.Document doc, boolean setLive) {
       if(doc == null){
          System.out.println("CreateRevision: Document is required.");
          // throw new ProcessingException("CreateRevision: document is required.");
@@ -54,16 +55,16 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
       PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
       Publication pub = envelope.getPublication();
       Content content = pub.getContent();
-      String unid = punid;
+      String workUnid = unid;
       String language = envelope.getDocument().getLanguage(); // default
       // check if unid contains language
-      int pos = unid.indexOf("_");
+      int pos = workUnid.indexOf("_");
       if(pos > 0){
-         unid = unid.substring(0, pos);
-         language = unid.substring(pos);
+         workUnid = workUnid.substring(0, pos);
+         language = workUnid.substring(pos);
       }
       // System.out.println("CreateRevision TEST: u=" + unid + " l=" + language);
-      String newFilename = content.getNewURI(unid, language);
+      String newFilename = content.getNewURI(workUnid, language);
       if(newFilename == null){
          System.out.println("CreateRevision: Could not get new filename.");
          // throw new ProcessingException("CreateRevision: Could not get new filename.");
@@ -134,7 +135,7 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
          System.out.println("CreateRevision: IOException writing XML file.");
       }
       // Update Translation
-      FlatResource resource = (FlatResource) ((FlatContent) content).getResource(unid, language, "edit");
+      FlatResource resource = (FlatResource) ((FlatContent) content).getResource(workUnid, language, "edit");
       FlatTranslation translation = resource.getTranslation();
       translation.setEdit(revision);
       if(setLive)

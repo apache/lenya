@@ -14,47 +14,44 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
-
 public class DocumentDoesNotExistException extends DocumentException {
-
-    /**
-     * Creates a new DocumentDoesNotExistException
-     * 
-     */
-    public DocumentDoesNotExistException() {
-        super();
-    }
-
-    /**
-     * Creates a new DocumentDoesNotExistException
-     * 
-     * @param message the exception message
-     */
-    public DocumentDoesNotExistException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new DocumentDoesNotExistException
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public DocumentDoesNotExistException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Creates a new DocumentDoesNotExistException
-     * 
-     * @param cause the cause of the exception
-     */
-    public DocumentDoesNotExistException(Throwable cause) {
-        super(cause);
-    }
-
+   private static final long serialVersionUID = 1L;
+   /**
+    * Creates a new DocumentDoesNotExistException
+    * 
+    */
+   public DocumentDoesNotExistException() {
+      super();
+   }
+   /**
+    * Creates a new DocumentDoesNotExistException
+    * 
+    * @param message
+    *           the exception message
+    */
+   public DocumentDoesNotExistException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new DocumentDoesNotExistException
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public DocumentDoesNotExistException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new DocumentDoesNotExistException
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public DocumentDoesNotExistException(Throwable cause) {
+      super(cause);
+   }
 }

@@ -14,47 +14,45 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
-
-
 /**
  * This exception is thrown when the creation of a {@link PageEnvelope} object fails.
  */
 public class PageEnvelopeException extends Exception {
-    /**
-     * Creates a new PageEnvelopeException.
-     */
-    public PageEnvelopeException() {
-    }
-
-    /**
-     * Creates a new PageEnvelopeException.
-     * 
-     * @param message the exception message
-     */
-    public PageEnvelopeException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new PageEnvelopeException.
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public PageEnvelopeException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Creates a new PageEnvelopeException.
-     * 
-     * @param cause  the cause of the exception
-     */
-    public PageEnvelopeException(Throwable cause) {
-        super(cause);
-    }
+   private static final long serialVersionUID = 1L;
+   /**
+    * Creates a new PageEnvelopeException.
+    */
+   public PageEnvelopeException() {
+   }
+   /**
+    * Creates a new PageEnvelopeException.
+    * 
+    * @param message
+    *           the exception message
+    */
+   public PageEnvelopeException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new PageEnvelopeException.
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public PageEnvelopeException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new PageEnvelopeException.
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public PageEnvelopeException(Throwable cause) {
+      super(cause);
+   }
 }

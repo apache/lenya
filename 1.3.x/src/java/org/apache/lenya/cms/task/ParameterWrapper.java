@@ -14,119 +14,116 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.task;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 public abstract class ParameterWrapper {
-    
-    private static Category log = Category.getInstance(ParameterWrapper.class);
-    private NamespaceMap parameters;
-    
-    /**
-     * Returns the un-prefixed parameters.
-     * @return A map.
-     */
-    public Map getMap() {
-        return parameters.getMap();
-    }
-
-    /**
-     * Ctor.
-     * @param prefixedParameters The prefixed parameters to wrap.
-     */
-    public ParameterWrapper(Map prefixedParameters) {
-        parameters = new NamespaceMap(prefixedParameters, getPrefix());
-    }
-    
-    /**
-     * Returns the namespace prefix.
-     * @return A string.
-     */
-    public abstract String getPrefix();
-    
-    /**
-     * Adds a key-value pair. If the value is null, no pair is added.
-     * @param key The key.
-     * @param value The value.
-     */
-    public void put(String key, String value) {
-        if (value != null) {
-            log.debug("Setting parameter: [" + key + "] = [" + value + "]");
-            parameters.put(key, value);
-        }
-        else {
-            log.debug("Not setting parameter: [" + key + "] = [" + value + "]");
-        }
-    }
-    
-    /**
-     * Returns the value for a key.
-     * @param key The key.
-     * @return The value.
-     */
-    public String get(String key) {
-        return (String) parameters.get(key);
-    }
-    
-    /**
-     * Returns the required keys.
-     * @return A string array.
-     */
-    protected abstract String[] getRequiredKeys();
-    
-    /**
-     * Checks if this parameters object contains all necessary parameters.
-     * @return A boolean value.
-     */
-    public boolean isComplete() {
-        boolean complete = true;
-        Map parameterMap = getMap();
-        String[] requiredKeys = getRequiredKeys();
-        int i = 0;
-        while (complete && i < requiredKeys.length) {
-            log.debug("Checking parameter: [" + requiredKeys[i] + "]");
-            complete = complete && parameterMap.containsKey(requiredKeys[i]);
-            log.debug("OK: [" + complete + "]");
-            i++;
-        }
-        return complete;
-    }
-
-    /**
-     * Returns the missing parameters parameters.
-     * @return A string array.
-     */
-    public String[] getMissingKeys() {
-        String[] requiredKeys = getRequiredKeys();
-        Map parameterMap = getMap();
-        List keyList = new ArrayList();
-        for (int i = 0; i < requiredKeys.length; i++) {
-            if (!parameterMap.containsKey(requiredKeys[i])) {
-                keyList.add(requiredKeys[i]);
-            }
-        }
-        return (String[]) keyList.toArray(new String[keyList.size()]);
-    }
-    
-    /**
-     * Parameterizes this wrapper with un-prefixed parameters.
-     * @param parameters A parameters object.
-     */
-    public void parameterize(Parameters parameters) {
-        String[] keys = parameters.getNames();
-        for (int i = 0; i < keys.length; i++) {
-            put(keys[i], parameters.getParameter(keys[i], null));
-        }
-    }
-    
+   private static Logger log = Logger.getLogger(ParameterWrapper.class);
+   private NamespaceMap parameters;
+   /**
+    * Returns the un-prefixed parameters.
+    * 
+    * @return A map.
+    */
+   public Map getMap() {
+      return parameters.getMap();
+   }
+   /**
+    * Ctor.
+    * 
+    * @param prefixedParameters
+    *           The prefixed parameters to wrap.
+    */
+   public ParameterWrapper(Map prefixedParameters) {
+      parameters = new NamespaceMap(prefixedParameters, getPrefix());
+   }
+   /**
+    * Returns the namespace prefix.
+    * 
+    * @return A string.
+    */
+   public abstract String getPrefix();
+   /**
+    * Adds a key-value pair. If the value is null, no pair is added.
+    * 
+    * @param key
+    *           The key.
+    * @param value
+    *           The value.
+    */
+   public void put(String key, String value) {
+      if(value != null){
+         log.debug("Setting parameter: [" + key + "] = [" + value + "]");
+         parameters.put(key, value);
+      }else{
+         log.debug("Not setting parameter: [" + key + "] = [" + value + "]");
+      }
+   }
+   /**
+    * Returns the value for a key.
+    * 
+    * @param key
+    *           The key.
+    * @return The value.
+    */
+   public String get(String key) {
+      return (String) parameters.get(key);
+   }
+   /**
+    * Returns the required keys.
+    * 
+    * @return A string array.
+    */
+   protected abstract String[] getRequiredKeys();
+   /**
+    * Checks if this parameters object contains all necessary parameters.
+    * 
+    * @return A boolean value.
+    */
+   public boolean isComplete() {
+      boolean complete = true;
+      Map parameterMap = getMap();
+      String[] requiredKeys = getRequiredKeys();
+      int i = 0;
+      while(complete && i < requiredKeys.length){
+         log.debug("Checking parameter: [" + requiredKeys[i] + "]");
+         complete = complete && parameterMap.containsKey(requiredKeys[i]);
+         log.debug("OK: [" + complete + "]");
+         i++;
+      }
+      return complete;
+   }
+   /**
+    * Returns the missing parameters parameters.
+    * 
+    * @return A string array.
+    */
+   public String[] getMissingKeys() {
+      String[] requiredKeys = getRequiredKeys();
+      Map parameterMap = getMap();
+      List keyList = new ArrayList();
+      for(int i = 0; i < requiredKeys.length; i++){
+         if(!parameterMap.containsKey(requiredKeys[i])){
+            keyList.add(requiredKeys[i]);
+         }
+      }
+      return (String[]) keyList.toArray(new String[keyList.size()]);
+   }
+   /**
+    * Parameterizes this wrapper with un-prefixed parameters.
+    * 
+    * @param parameters
+    *           A parameters object.
+    */
+   public void parameterize(Parameters parameters) {
+      String[] keys = parameters.getNames();
+      for(int i = 0; i < keys.length; i++){
+         put(keys[i], parameters.getParameter(keys[i], null));
+      }
+   }
 }

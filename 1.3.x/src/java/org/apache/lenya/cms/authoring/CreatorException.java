@@ -14,44 +14,40 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.authoring;
-
 public class CreatorException extends Exception {
-    /**
-     *
-     */
-    public CreatorException() {
-        super();
-    }
-
-    /**
-     * Create an instance of <code>CreatorException</code>
-     * 
-     * @param message the exception message
-     */
-    public CreatorException(String message) {
-        super(message);
-    }
-
-    /**
-     * Create an instance of <code>CreatorException</code>
-     * 
-     * @param cause the cause of the exception
-     */
-    public CreatorException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Create an instance of <code>CreatorException</code>
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public CreatorException(String message, Throwable cause) {
-        super(message, cause);
-    }
+   private static final long serialVersionUID = 1L;
+   public CreatorException() {
+      super();
+   }
+   /**
+    * Create an instance of <code>CreatorException</code>
+    * 
+    * @param message
+    *           the exception message
+    */
+   public CreatorException(String message) {
+      super(message);
+   }
+   /**
+    * Create an instance of <code>CreatorException</code>
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public CreatorException(Throwable cause) {
+      super(cause);
+   }
+   /**
+    * Create an instance of <code>CreatorException</code>
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public CreatorException(String message, Throwable cause) {
+      super(message, cause);
+   }
 }

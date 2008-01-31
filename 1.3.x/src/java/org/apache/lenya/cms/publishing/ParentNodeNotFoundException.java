@@ -14,47 +14,45 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publishing;
-
 /**
- * Exception to indicate an error when publishing a node where its parent 
- * node has not been published yet.
+ * Exception to indicate an error when publishing a node where its parent node has not been published yet.
  */
-public class ParentNodeNotFoundException extends PublishingException{
-    /**
-     * Creates a new ParentNodeNotFoundException.
-     */
-    public ParentNodeNotFoundException() {
-    }
-
-    /**
-     * Creates a new ParentNodeNotFoundException.
-     * 
-     * @param message the exception message
-     */
-    public ParentNodeNotFoundException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new ParentNodeNotFoundException.
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public ParentNodeNotFoundException(String message, Throwable cause) {
-        super(message + " " + cause.getMessage());
-    }
-
-    /**
-     * Creates a new ParentNodeNotFoundException.
-     * 
-     * @param cause  the cause of the exception
-     */
-    public ParentNodeNotFoundException(Throwable cause) {
-        super(cause.getMessage());
-    }
+public class ParentNodeNotFoundException extends PublishingException {
+   private static final long serialVersionUID = 1L;
+   /**
+    * Creates a new ParentNodeNotFoundException.
+    */
+   public ParentNodeNotFoundException() {
+   }
+   /**
+    * Creates a new ParentNodeNotFoundException.
+    * 
+    * @param message
+    *           the exception message
+    */
+   public ParentNodeNotFoundException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new ParentNodeNotFoundException.
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public ParentNodeNotFoundException(String message, Throwable cause) {
+      super(message + " " + cause.getMessage());
+   }
+   /**
+    * Creates a new ParentNodeNotFoundException.
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public ParentNodeNotFoundException(Throwable cause) {
+      super(cause.getMessage());
+   }
 }

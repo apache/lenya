@@ -14,49 +14,35 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.lucene.parser;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 /**
- * The Java HTML parser cannot handle self-closing text.
- * This class converts all "/>" strings to ">" to avoid this problem.
+ * The Java HTML parser cannot handle self-closing text. This class converts all "/>" strings to ">" to avoid this problem.
  */
 public class PreParser {
-    
-    private static Category log = Category.getInstance(PreParser.class);
-    
-    /** Creates a new instance of PreParser */
-    public PreParser() {
-        log.debug("creating new object");
-    }
-
-    /**
-     * Parses HTML from a reader.
-     */
-    public Reader parse(Reader reader) throws IOException {
-        StringBuffer buffer = new StringBuffer();
-        boolean pending = false;
-
-        char[] chars = new char[1];
-
-        while (reader.read(chars) != -1) {
-            int lastPosition = buffer.length() - 1;
-
-            if ((chars[0] == '>') && (buffer.charAt(lastPosition) == '/')) {
-                buffer.deleteCharAt(lastPosition);
-            }
-
-            buffer.append(chars[0]);
-        }
-
-        return new StringReader(buffer.toString());
-    }
+   private static Logger log = Logger.getLogger(PreParser.class);
+   /** Creates a new instance of PreParser */
+   public PreParser() {
+      log.debug("creating new object");
+   }
+   /**
+    * Parses HTML from a reader.
+    */
+   public Reader parse(Reader reader) throws IOException {
+      StringBuffer buffer = new StringBuffer();
+      // boolean pending = false;
+      char[] chars = new char[1];
+      while(reader.read(chars) != -1){
+         int lastPosition = buffer.length() - 1;
+         if((chars[0] == '>') && (buffer.charAt(lastPosition) == '/')){
+            buffer.deleteCharAt(lastPosition);
+         }
+         buffer.append(chars[0]);
+      }
+      return new StringReader(buffer.toString());
+   }
 }

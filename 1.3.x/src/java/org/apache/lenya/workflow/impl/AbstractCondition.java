@@ -14,41 +14,33 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.workflow.impl;
-
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.WorkflowException;
-
 /**
  * Abstract base class for workflow conditions.
  */
 public abstract class AbstractCondition implements Condition {
-
-    private String expression;
-
-    /**
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#setExpression(java.lang.String)
-     */
-    public void setExpression(String expression) throws WorkflowException {
-        this.expression = expression.trim();
-    }
-
-    /**
-     * Returns the expression of this condition.
-     * @return A string.
-     */
-    public String getExpression() {
-        return expression;
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-        return getExpression();
-    }
-    
+   private String expression;
+   /**
+    * @see org.apache.lenya.workflow.impl.AbstractCondition#setExpression(java.lang.String)
+    */
+   public void setExpression(String expression) throws WorkflowException {
+      this.expression = expression.trim();
+   }
+   /**
+    * Returns the expression of this condition.
+    * 
+    * @return A string.
+    */
+   public String getExpression() {
+      return expression;
+   }
+   /**
+    * @see java.lang.Object#toString()
+    */
+   public String toString() {
+      return getExpression();
+   }
 }

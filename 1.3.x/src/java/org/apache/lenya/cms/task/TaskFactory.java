@@ -14,67 +14,53 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.task;
-
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 public class TaskFactory {
-	
-	/**
-	 * Create a new instance of <code>TaskFactory</code>
-	 *
-	 */
-    protected TaskFactory() {
-    }
-
-    private static TaskFactory factory;
-    private static Category log = Category.getInstance(TaskFactory.class);
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public static TaskFactory getInstance() {
-        if (factory == null) {
-            factory = new TaskFactory();
-        }
-
-        return factory;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public Task createTask(Configuration configuration) {
-        try {
-            String className = configuration.getAttribute("class",
-                    "org.apache.lenya.cms.task.TaskSequence");
-            Class cl = Class.forName(className);
-            Task task = (Task) cl.newInstance();
-
-            task.setLabel(configuration.getChild("label").getValue("default task"));
-
-            task.parameterize(Parameters.fromConfiguration(configuration));
-
-            if (task instanceof TaskSequence) {
-                ((TaskSequence) task).init(configuration);
-            }
-
-            return task;
-        } catch (Exception e) {
-            log.error("Cannot create Task: ", e);
-
-            return null;
-        }
-    }
+   private static Logger log = Logger.getLogger(TaskFactory.class);
+   /**
+    * Create a new instance of <code>TaskFactory</code>
+    * 
+    */
+   protected TaskFactory() {
+   }
+   private static TaskFactory factory;
+   /**
+    * DOCUMENT ME!
+    * 
+    * @return DOCUMENT ME!
+    */
+   public static TaskFactory getInstance() {
+      if(factory == null){
+         factory = new TaskFactory();
+      }
+      return factory;
+   }
+   /**
+    * DOCUMENT ME!
+    * 
+    * @param configuration
+    *           DOCUMENT ME!
+    * 
+    * @return DOCUMENT ME!
+    */
+   public Task createTask(Configuration configuration) {
+      try{
+         String className = configuration.getAttribute("class", "org.apache.lenya.cms.task.TaskSequence");
+         Class cl = Class.forName(className);
+         Task task = (Task) cl.newInstance();
+         task.setLabel(configuration.getChild("label").getValue("default task"));
+         task.parameterize(Parameters.fromConfiguration(configuration));
+         if(task instanceof TaskSequence){
+            ((TaskSequence) task).init(configuration);
+         }
+         return task;
+      }catch(Exception e){
+         log.error("Cannot create Task: ", e);
+         return null;
+      }
+   }
 }

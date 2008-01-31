@@ -14,35 +14,27 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.workflow.impl;
-
 import org.apache.lenya.workflow.BooleanVariableInstance;
-
-
 /**
  * Implementation of a boolean variable instance.
  */
 public class BooleanVariableInstanceImpl implements BooleanVariableInstance {
-    private boolean value;
-
-    /** Creates a new instance of BooleanVariableInstanceImpl */
-    protected BooleanVariableInstanceImpl() {
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.BooleanVariableInstance#getValue()
-     */
-    public boolean getValue() {
-        return value;
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.BooleanVariableInstance#setValue(boolean)
-     */
-    public void setValue(boolean variableValue) {
-        value = variableValue;
-    }
+   private boolean value;
+   /** Creates a new instance of BooleanVariableInstanceImpl */
+   protected BooleanVariableInstanceImpl() {
+   }
+   /**
+    * @see org.apache.lenya.workflow.BooleanVariableInstance#getValue()
+    */
+   public boolean getValue() {
+      return value;
+   }
+   /**
+    * @see org.apache.lenya.workflow.BooleanVariableInstance#setValue(boolean)
+    */
+   public void setValue(boolean variableValue) {
+      value = variableValue;
+   }
 }

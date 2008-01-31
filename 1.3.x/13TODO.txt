@@ -1,15 +1,3 @@
-
-BUG: Lenya-1.2-style authoring.  ERROR:
-F:\F:\lenya13\build\lenya\webapp\lenya\pubs\default12\xslt\page2xhtml.xsl (The filename, directory name, or volume label syntax is incorrect)
-rg.apache.cocoon.ProcessingException: Unable to get transformer handler for F:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/../../pubs/default12/xslt/page2xhtml-homepage.xsl
-	at [TransformerException] - file:///F:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/../../pubs/default12/xslt/page2xhtml-homepage.xsl:22:36
-	at <map:serialize type="xml"> - file:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/module.xmap:145:36
-	at <map:transform type="link-rewrite"> - file:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/module.xmap:142:44
-
-default12/xslt/page2xhtml-homepage.xsl cannot open page2xhtml.xsl because drive letter is duplicated:
-file:///F:///F:/lenya13/build/lenya/webapp/lenya/modules/authoring/../../pubs/default12/xslt/page2xhtml-homepage.xsl
----
-
 Create New Resource: Publication has Resource Types.  Use Generator. Choose Type.  Create required languages. Use Transformer. Pass to Edit Module.
 
 Edit-Save must clear Cache.

@@ -14,11 +14,10 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.workflow.impl;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
@@ -26,175 +25,161 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.log4j.Category;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
+import org.apache.log4j.Logger;
 /**
  * Implementation of a transition.
  */
 public class TransitionImpl implements Transition {
-    
-    private static final Category log = Category.getInstance(TransitionImpl.class);
-    
-    /**
-     * Ctor.
-     * @param sourceState The source state.
-     * @param destinationState The destination state.
-     */
-    protected TransitionImpl(StateImpl sourceState, StateImpl destinationState) {
-        source = sourceState;
-        destination = destinationState;
-    }
-
-    private List actions = new ArrayList();
-    private boolean isSynchronized = false;
-
-    /**
-     * Returns the actions which are assigned tothis transition.
-     * @return An array of actions.
-     */
-    public Action[] getActions() {
-        return (Action[]) actions.toArray(new Action[actions.size()]);
-    }
-
-    /**
-     * Assigns an action to this transition.
-     * @param action The action.
-     */
-    public void addAction(Action action) {
-        actions.add(action);
-    }
-
-    private List conditions = new ArrayList();
-
-    /**
-     * Returns the conditions which are assigned to this transition.
-     * @return An array of conditions.
-     */
-    public Condition[] getConditions() {
-        return (Condition[]) conditions.toArray(new Condition[conditions.size()]);
-    }
-
-    /**
-     * Assigns a condition to this transition.
-     * @param condition The condition.
-     */
-    public void addCondition(Condition condition) {
-        conditions.add(condition);
-    }
-
-    private Event event;
-
-    /**
-     * Returns the event which invokes this transition.
-     * @return An event.
-     */
-    public Event getEvent() {
-        return event;
-    }
-
-    /**
-     * Sets the event to invoke this transition.
-     * @param anEvent An event.
-     */
-    public void setEvent(Event anEvent) {
-        event = anEvent;
-    }
-
-    private StateImpl source;
-
-    /**
-     * Returns the source state of this transition.
-     * @return A state.
-     */
-    public StateImpl getSource() {
-        return source;
-    }
-
-    private StateImpl destination;
-
-    /**
-     * Returns the destination state of this transition.
-     * @return A state.
-     */
-    public StateImpl getDestination() {
-        return destination;
-    }
-
-    /** 
-     * Returns if the transition can fire in a certain situation.
-     * @param situation The situation.
-     * @param instance The workflow instance.
-     * @throws WorkflowException when an error occurs.
-     * @return A boolean value.
-     */
-    public boolean canFire(Situation situation, WorkflowInstance instance) throws WorkflowException {
-        Condition[] conditions = getConditions();
-        boolean canFire = true;
-
-        int i = 0;
-        while (canFire && i < conditions.length) {
-            canFire = canFire && conditions[i].isComplied(situation, instance);
-            if (log.isDebugEnabled()) {
-                log.debug("Condition [" + conditions[i] + "] returns [" + canFire + "]");
+   private static Logger log = Logger.getLogger(TransitionImpl.class);
+   /**
+    * Ctor.
+    * 
+    * @param sourceState
+    *           The source state.
+    * @param destinationState
+    *           The destination state.
+    */
+   protected TransitionImpl(StateImpl sourceState, StateImpl destinationState) {
+      source = sourceState;
+      destination = destinationState;
+   }
+   private List actions = new ArrayList();
+   private boolean isSynchronized = false;
+   /**
+    * Returns the actions which are assigned tothis transition.
+    * 
+    * @return An array of actions.
+    */
+   public Action[] getActions() {
+      return (Action[]) actions.toArray(new Action[actions.size()]);
+   }
+   /**
+    * Assigns an action to this transition.
+    * 
+    * @param action
+    *           The action.
+    */
+   public void addAction(Action action) {
+      actions.add(action);
+   }
+   private List conditions = new ArrayList();
+   /**
+    * Returns the conditions which are assigned to this transition.
+    * 
+    * @return An array of conditions.
+    */
+   public Condition[] getConditions() {
+      return (Condition[]) conditions.toArray(new Condition[conditions.size()]);
+   }
+   /**
+    * Assigns a condition to this transition.
+    * 
+    * @param condition
+    *           The condition.
+    */
+   public void addCondition(Condition condition) {
+      conditions.add(condition);
+   }
+   private Event event;
+   /**
+    * Returns the event which invokes this transition.
+    * 
+    * @return An event.
+    */
+   public Event getEvent() {
+      return event;
+   }
+   /**
+    * Sets the event to invoke this transition.
+    * 
+    * @param anEvent
+    *           An event.
+    */
+   public void setEvent(Event anEvent) {
+      event = anEvent;
+   }
+   private StateImpl source;
+   /**
+    * Returns the source state of this transition.
+    * 
+    * @return A state.
+    */
+   public StateImpl getSource() {
+      return source;
+   }
+   private StateImpl destination;
+   /**
+    * Returns the destination state of this transition.
+    * 
+    * @return A state.
+    */
+   public StateImpl getDestination() {
+      return destination;
+   }
+   /**
+    * Returns if the transition can fire in a certain situation.
+    * 
+    * @param situation
+    *           The situation.
+    * @param instance
+    *           The workflow instance.
+    * @throws WorkflowException
+    *            when an error occurs.
+    * @return A boolean value.
+    */
+   public boolean canFire(Situation situation, WorkflowInstance instance) throws WorkflowException {
+      Condition[] conditions = getConditions();
+      boolean canFire = true;
+      int i = 0;
+      while(canFire && i < conditions.length){
+         canFire = canFire && conditions[i].isComplied(situation, instance);
+         if(log.isDebugEnabled()){
+            log.debug("Condition [" + conditions[i] + "] returns [" + canFire + "]");
+         }
+         i++;
+      }
+      return canFire;
+   }
+   /**
+    * @see java.lang.Object#toString()
+    */
+   public String toString() {
+      String string = getEvent().getName() + " [";
+      Condition[] conditions = getConditions();
+      for(int i = 0; i < conditions.length; i++){
+         if(i > 0){
+            string += ", ";
+         }
+         string += conditions[i].toString();
+      }
+      string += "]";
+      Action[] actions = getActions();
+      if(actions.length > 0){
+         string += " / ";
+         for(int i = 0; i < actions.length; i++){
+            if(i > 0){
+               string += ", ";
             }
-            i++;
-        }
-
-        return canFire;
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-        String string = getEvent().getName() + " [";
-        Condition[] conditions = getConditions();
-
-        for (int i = 0; i < conditions.length; i++) {
-            if (i > 0) {
-                string += ", ";
-            }
-
-            string += conditions[i].toString();
-        }
-
-        string += "]";
-
-        Action[] actions = getActions();
-
-        if (actions.length > 0) {
-            string += " / ";
-
-            for (int i = 0; i < actions.length; i++) {
-                if (i > 0) {
-                    string += ", ";
-                }
-
-                string += actions[i].toString();
-            }
-        }
-
-        return string;
-    }
-
-    /**
-     * Returns if this transition is synchronized.
-     * @return A boolean value.
-     */
-    public boolean isSynchronized() {
-        return isSynchronized;
-    }
-
-    /**
-     * Sets if this transition is synchronized.
-     * @param isSynchronized A boolean value.
-     */
-    protected void setSynchronized(boolean isSynchronized) {
-        this.isSynchronized = isSynchronized;
-    }
-
+            string += actions[i].toString();
+         }
+      }
+      return string;
+   }
+   /**
+    * Returns if this transition is synchronized.
+    * 
+    * @return A boolean value.
+    */
+   public boolean isSynchronized() {
+      return isSynchronized;
+   }
+   /**
+    * Sets if this transition is synchronized.
+    * 
+    * @param isSynchronized
+    *           A boolean value.
+    */
+   protected void setSynchronized(boolean isSynchronized) {
+      this.isSynchronized = isSynchronized;
+   }
 }

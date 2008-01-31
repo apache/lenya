@@ -14,45 +14,37 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.workflow.impl;
-
 import org.apache.lenya.workflow.BooleanVariable;
-
-
 /**
  * Implementation of a boolean variable.
  */
 public class BooleanVariableImpl implements BooleanVariable {
-    
-    /**
-     * Creates a new instance of BooleanVariableImpl.
-     * @param variableName The variable name.
-     * @param initialValue The initial value of the corresponding variable instances.
-     */
-    protected BooleanVariableImpl(String variableName, boolean initialValue) {
-        name = variableName;
-
-        this.initialValue = initialValue;
-    }
-
-    private String name;
-
-    /**
-     * @see org.apache.lenya.workflow.BooleanVariable#getName()
-     */
-    public String getName() {
-        return name;
-    }
-
-    private boolean initialValue;
-
-    /**
-     * @see org.apache.lenya.workflow.BooleanVariable#getInitialValue()
-     */
-    public boolean getInitialValue() {
-        return initialValue;
-    }
+   /**
+    * Creates a new instance of BooleanVariableImpl.
+    * 
+    * @param variableName
+    *           The variable name.
+    * @param initialValue
+    *           The initial value of the corresponding variable instances.
+    */
+   protected BooleanVariableImpl(String variableName, boolean initialValue) {
+      name = variableName;
+      this.initialValue = initialValue;
+   }
+   private String name;
+   /**
+    * @see org.apache.lenya.workflow.BooleanVariable#getName()
+    */
+   public String getName() {
+      return name;
+   }
+   private boolean initialValue;
+   /**
+    * @see org.apache.lenya.workflow.BooleanVariable#getInitialValue()
+    */
+   public boolean getInitialValue() {
+      return initialValue;
+   }
 }

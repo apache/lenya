@@ -14,57 +14,45 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.rc;
-
 import java.util.Properties;
-
-import org.apache.log4j.Category;
-
-
+import org.apache.log4j.Logger;
 /**
  * Reads conf.properties
  */
 public class Configuration {
-    private static Category log = Category.getInstance(Configuration.class);
-    
-    private String rcmlDirectory = null;
-    private String backupDirectory = null;
-
-    /**
-     * Creates a new Configuration object.
-     */
-    public Configuration() {
-        String propertiesFileName = "conf.properties";
-        Properties properties = new Properties();
-
-        try {
-            properties.load(Configuration.class.getResourceAsStream(propertiesFileName));
-        } catch (Exception e) {
-            log.fatal(": Failed to load properties from resource: " + propertiesFileName);
-        }
-
-        rcmlDirectory = properties.getProperty("rcmlDirectory");
-        backupDirectory = properties.getProperty("backupDirectory");
-    }
-
-    /**
-     * Get the backup directory
-     * 
-     * @return the backup directory
-     */
-    public String getBackupDirectory() {
-        return backupDirectory;
-    }
-
-    /**
-     * Get the rcml directory
-     * 
-     * @return the rcml directory
-     */
-    public String getRcmlDirectory() {
-        return rcmlDirectory;
-    }
+   private static Logger log = Logger.getLogger(Configuration.class);
+   private String rcmlDirectory = null;
+   private String backupDirectory = null;
+   /**
+    * Creates a new Configuration object.
+    */
+   public Configuration() {
+      String propertiesFileName = "conf.properties";
+      Properties properties = new Properties();
+      try{
+         properties.load(Configuration.class.getResourceAsStream(propertiesFileName));
+      }catch(Exception e){
+         log.fatal(": Failed to load properties from resource: " + propertiesFileName);
+      }
+      rcmlDirectory = properties.getProperty("rcmlDirectory");
+      backupDirectory = properties.getProperty("backupDirectory");
+   }
+   /**
+    * Get the backup directory
+    * 
+    * @return the backup directory
+    */
+   public String getBackupDirectory() {
+      return backupDirectory;
+   }
+   /**
+    * Get the rcml directory
+    * 
+    * @return the rcml directory
+    */
+   public String getRcmlDirectory() {
+      return rcmlDirectory;
+   }
 }

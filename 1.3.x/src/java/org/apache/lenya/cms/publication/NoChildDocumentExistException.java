@@ -14,47 +14,44 @@
  *  limitations under the License.
  *
  */
-
 /* $Id: DocumentDoesNotExistException.java 42598 2004-03-01 16:18:28Z gregor $  */
-
 package org.apache.lenya.cms.publication;
-
 public class NoChildDocumentExistException extends DocumentException {
-
-    /**
-     * Creates a new NoChildDocumentExistException
-     * 
-     */
-    public NoChildDocumentExistException() {
-        super();
-    }
-
-    /**
-     * Creates a new NoChildDocumentExistException
-     * 
-     * @param message the exception message
-     */
-    public NoChildDocumentExistException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new NoChildDocumentExistException
-     * 
-     * @param message the exception message
-     * @param cause the cause of the exception
-     */
-    public NoChildDocumentExistException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Creates a new NoChildDocumentExistException
-     * 
-     * @param cause the cause of the exception
-     */
-    public NoChildDocumentExistException(Throwable cause) {
-        super(cause);
-    }
-
+   private static final long serialVersionUID = 1L;
+   /**
+    * Creates a new NoChildDocumentExistException
+    * 
+    */
+   public NoChildDocumentExistException() {
+      super();
+   }
+   /**
+    * Creates a new NoChildDocumentExistException
+    * 
+    * @param message
+    *           the exception message
+    */
+   public NoChildDocumentExistException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new NoChildDocumentExistException
+    * 
+    * @param message
+    *           the exception message
+    * @param cause
+    *           the cause of the exception
+    */
+   public NoChildDocumentExistException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new NoChildDocumentExistException
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public NoChildDocumentExistException(Throwable cause) {
+      super(cause);
+   }
 }

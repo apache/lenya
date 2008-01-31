@@ -14,57 +14,49 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.rc;
-
 import java.util.Date;
-
-
 public class FileReservedCheckOutException extends Exception {
-    private String source = null;
-    private Date checkOutDate = null;
-    private String checkOutUsername = null;
-
-    /**
-     * Creates a new FileReservedCheckOutException object.
-     *
-     * @param source DOCUMENT ME!
-     * @param rcml DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public FileReservedCheckOutException(String source, RCML rcml)
-        throws Exception {
-        this.source = source;
-
-        try {
-            CheckOutEntry coe = rcml.getLatestCheckOutEntry();
-
-            checkOutUsername = coe.getIdentity();
-            checkOutDate = new Date(coe.getTime());
-        } catch (Exception exception) {
-            throw new Exception("Unable to create FileReservedCheckOutException object!");
-        }
-    }
-    
-    /**
-     * Get the date of the checkout.
-     * 
-     * @return the date of the checkout
-     */
-    public Date getCheckOutDate() {
-        return checkOutDate;
-    }
-
-    /**
-     * Get the user name who did this checkout.
-     * 
-     * @return the user name of this checkout
-     */
-    public String getCheckOutUsername() {
-        return checkOutUsername;
-    }
-
+   private static final long serialVersionUID = 1L;
+   // private String source = null;
+   private Date checkOutDate = null;
+   private String checkOutUsername = null;
+   /**
+    * Creates a new FileReservedCheckOutException object.
+    * 
+    * @param source
+    *           DOCUMENT ME!
+    * @param rcml
+    *           DOCUMENT ME!
+    * 
+    * @throws Exception
+    *            DOCUMENT ME!
+    */
+   public FileReservedCheckOutException(String source, RCML rcml) throws Exception {
+      // this.source = source;
+      try{
+         CheckOutEntry coe = rcml.getLatestCheckOutEntry();
+         checkOutUsername = coe.getIdentity();
+         checkOutDate = new Date(coe.getTime());
+      }catch(Exception exception){
+         throw new Exception("Unable to create FileReservedCheckOutException object!");
+      }
+   }
+   /**
+    * Get the date of the checkout.
+    * 
+    * @return the date of the checkout
+    */
+   public Date getCheckOutDate() {
+      return checkOutDate;
+   }
+   /**
+    * Get the user name who did this checkout.
+    * 
+    * @return the user name of this checkout
+    */
+   public String getCheckOutUsername() {
+      return checkOutUsername;
+   }
 }

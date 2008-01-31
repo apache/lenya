@@ -14,41 +14,40 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.lucene.parser;
-
 public class ParseException extends Exception {
-    /** Creates a new instance of ParseException */
-    public ParseException() {
-    }
-
-    /**
-     * Creates a new ParseException object.
-     *
-     * @param message the error message
-     * @param cause the cause of the exception
-     */
-    public ParseException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Creates a new ParseException object.
-     *
-     * @param message the error message
-     */
-    public ParseException(String message) {
-        super(message);
-    }
-
-    /**
-     * Creates a new ParseException object.
-     *
-     * @param cause the cause of the exception
-     */
-    public ParseException(Throwable cause) {
-        super(cause);
-    }
+   private static final long serialVersionUID = 1L;
+   /** Creates a new instance of ParseException */
+   public ParseException() {
+   }
+   /**
+    * Creates a new ParseException object.
+    * 
+    * @param message
+    *           the error message
+    * @param cause
+    *           the cause of the exception
+    */
+   public ParseException(String message, Throwable cause) {
+      super(message, cause);
+   }
+   /**
+    * Creates a new ParseException object.
+    * 
+    * @param message
+    *           the error message
+    */
+   public ParseException(String message) {
+      super(message);
+   }
+   /**
+    * Creates a new ParseException object.
+    * 
+    * @param cause
+    *           the cause of the exception
+    */
+   public ParseException(Throwable cause) {
+      super(cause);
+   }
 }
