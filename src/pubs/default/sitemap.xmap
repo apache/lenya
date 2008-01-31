@@ -22,9 +22,6 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
-    <map:transformers default="xslt">
-      <map:transformer name="metaData" logger="lenya.sitemap.transformer.metaData" src="org.apache.lenya.cms.cocoon.transformation.MetaDataTransformer"/>
-    </map:transformers>
     <map:serializers default="xhtml">
       <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
     </map:serializers>
