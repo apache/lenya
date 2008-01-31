@@ -24,8 +24,7 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * Meta data transformer.
  */
-public class MetaDataTransformer extends AbstractSAXTransformer implements
-        Disposable {
+public class MetaDataTransformer extends AbstractSAXTransformer implements Disposable {
     /**
      * The namespace for the meta data is http://apache.org/lenya/meta/1.0
      */
@@ -37,8 +36,8 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
     static public final String PREFIX = "meta";
 
     /**
-     * The value element is getting the value for a specific ns and key. It is
-     * the only method implemented so far.
+     * The value element is getting the value for a specific ns and key. It is the only method
+     * implemented so far.
      */
     static public final String VALUE_ELEMENT = "value";
 
@@ -58,8 +57,7 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
     static public final String UUID_ATT = "uuid";
 
     /**
-     * LANG_ATT - in which language this is optional (when not found use
-     * publication default)
+     * LANG_ATT - in which language this is optional (when not found use publication default)
      */
     static public final String LANG_ATT = "lang";
 
@@ -79,9 +77,8 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
     /**
      * Setup the MetaDataTransformer.
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src,
-            Parameters par) throws ProcessingException, SAXException,
-            IOException {
+    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
+            throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, par);
         this.publicationId = par.getParameter("pubid", null);
         if (this.publicationId == null) {
@@ -99,13 +96,13 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
         try {
             pub = factory.getPublication(this.publicationId);
         } catch (PublicationException e) {
-            throw new ProcessingException(
-                    "Error geting publication id / area from page envelope", e);
+            throw new ProcessingException("Error geting publication id / area from page envelope",
+                    e);
         }
     }
 
-    public void startElement(String uri, String name, String raw,
-            Attributes attr) throws SAXException {
+    public void startElement(String uri, String name, String raw, Attributes attr)
+            throws SAXException {
         if (NAMESPACE_URI.equals(uri)) {
             if (VALUE_ELEMENT.equals(name)) {
                 String lang = null, uuid = null, ns = null, key = null;
@@ -120,35 +117,41 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
                         uuid = value;
                     else if (LANG_ATT.equals(localName))
                         lang = value;
-                }//end for
-                if(uuid==null||ns==null||key==null)
-                    throw new SAXException("Error by setting up the transformation. Please fix the calling code.");
-                if (lang==null)
-                    lang=pub.getDefaultLanguage();
+                }// end for
+                if (uuid == null || ns == null || key == null)
+                    throw new SAXException(
+                            "Error by setting up the transformation. Please fix the calling code.");
+                if (lang == null)
+                    lang = pub.getDefaultLanguage();
                 try {
                     Document document = pub.getArea(area).getDocument(uuid, lang);
                     MetaData metaData = document.getMetaData(ns);
-                    String [] returnValue=metaData.getValues(key);
-                    if (returnValue.length>1){
+                    String[] returnValue = metaData.getValues(key);
+                    if (returnValue.length > 1) {
                         for (int i = 0; i < returnValue.length; i++) {
                             AttributesImpl attributes = new AttributesImpl();
-                            attributes.addAttribute("", VALUE_ELEMENT, VALUE_ELEMENT, "CDATA", returnValue[i]);
+                            attributes.addAttribute("", VALUE_ELEMENT, VALUE_ELEMENT, "CDATA",
+                                    returnValue[i]);
                             attributes.addAttribute("", ELEMENT_ATT, ELEMENT_ATT, "CDATA", key);
-                            this.contentHandler.startElement(ns, VALUE_ELEMENT, PREFIX+":"+VALUE_ELEMENT, attributes);
-                            this.contentHandler.endElement(ns, VALUE_ELEMENT, PREFIX+":"+VALUE_ELEMENT);
+                            this.contentHandler.startElement(ns, VALUE_ELEMENT, PREFIX + ":"
+                                    + VALUE_ELEMENT, attributes);
+                            this.contentHandler.endElement(ns, VALUE_ELEMENT, PREFIX + ":"
+                                    + VALUE_ELEMENT);
                         }
-                    }else if (returnValue.length==1){
-                        this.contentHandler.characters(returnValue[0].toCharArray(), 0, returnValue[0].toCharArray().length);
+                    } else if (returnValue.length == 1) {
+                        this.contentHandler.characters(returnValue[0].toCharArray(), 0,
+                                returnValue[0].toCharArray().length);
                     }
                 } catch (PublicationException e) {
-                    throw new SAXException("Error by getting document for [ "+lang+"/"+uuid+" ]");
+                    throw new SAXException("Error by getting document for [ " + lang + "/" + uuid
+                            + " ]");
                 } catch (MetaDataException e) {
-                    throw new SAXException("Error by getting meta data with ns [ "+ns+" ] for document for [ "+lang+"/"+uuid+" ]");
+                    throw new SAXException("Error by getting meta data with ns [ " + ns
+                            + " ] for document for [ " + lang + "/" + uuid + " ]");
                 }
-                
+
             } else {
-                String warn = "Could not find method for " + name
-                        + ". Ignoring.";
+                String warn = "Could not find method for " + name + ". Ignoring.";
                 getLogger().warn(warn);
             }
         } else {
@@ -156,8 +159,7 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
         }
     }
 
-    public void endElement(String uri, String name, String raw)
-            throws SAXException {
+    public void endElement(String uri, String name, String raw) throws SAXException {
         if (!NAMESPACE_URI.equals(uri)) {
             super.endElement(uri, name, raw);
         }
