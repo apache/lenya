@@ -28,25 +28,23 @@
   exclude-result-prefixes="xhtml lenya"
   >
   
-  <!-- {context-prefix}/{publication-id}/{area} -->
-  <xsl:param name="root"/>
-  <xsl:param name="context-prefix"/>
+  <xsl:param name="publication-id"/>
+  <xsl:param name="area"/>
+  <xsl:param name="uuid"/>
+  <xsl:param name="language"/>
   
   <!-- i.e. doctypes/xhtml-document -->
   <xsl:param name="document-type"/>
   
   <xsl:param name="document-path"/>
   
-  <!-- The request url i.e. /lenya/doctypes/xhtml-document_en.html -->
-  <xsl:param name="url"/>
-  <xsl:param name="uuid"/>
-  <xsl:param name="language"/>
-  
   <xsl:param name="lastPublishedUser"/>
   <xsl:param name="lastPublishedDate"/>
   
   <!--Following is a show off to explain lenya.properties.xml -->
   <xsl:param name="author"/>
+  
+  <xsl:variable name="root" select="concat('/', $publication-id, '/', $area)"/>
   
   <xsl:template match="cmsbody">
     <html>
@@ -56,16 +54,11 @@
         <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
         <link rel="SHORTCUT ICON" type="image/ico" href="/lenya/images/lenya.ico"/>
         <!-- Load doctype-specific CSS -->
-        <xsl:choose>
-          <xsl:when test="$document-type">
-            <!-- Looking into the pub e.g. {$yourPub}/resources/shared/css/{$document-type}.css -->
-            <link rel="stylesheet" href="{$root}/css/{$document-type}.css" type="text/css"/>
-            <xsl:copy-of select="xhtml:html/xhtml:head/*"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <!-- do nothing -->
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:if test="$document-type">
+          <!-- Looking into the pub e.g. {$yourPub}/resources/shared/css/{$document-type}.css -->
+          <link rel="stylesheet" href="{$root}/css/{$document-type}.css" type="text/css"/>
+          <xsl:copy-of select="xhtml:html/xhtml:head/*"/>
+        </xsl:if>
         <meta content="Apache Lenya" name="generator"/>
         
         <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" default="error-404"

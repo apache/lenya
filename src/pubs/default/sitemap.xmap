@@ -161,15 +161,13 @@
         <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{4}/{page-envelope:default-language}/{page-envelope:language}/{5}"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:transform src="cocoon:/getDoctypeXSLT-{4}">
-          <map:parameter name="root" value="/{2}/{3}"/>
           <map:parameter name="publication-id" value="{2}"/>
           <map:parameter name="area" value="{3}"/>
+          <map:parameter name="uuid" value="{page-envelope:document-uuid}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
           <map:parameter name="url" value="{page-envelope:document-url}"/>
           <map:parameter name="document-path" value="{page-envelope:document-path}"/>
           <map:parameter name="document-type" value="{4}"/>
-          <map:parameter name="uuid" value="{page-envelope:document-uuid}"/>
-          <map:parameter name="language" value="{page-envelope:document-language}"/>
-          <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="lastPublishedUser" value="{access-control:user-name:{workflow:lastUser.publish}}"/>
           <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
           <!-- Following is a show off to explain lenya.properties.xml -->
