@@ -79,7 +79,7 @@ public class RelaxNG {
                 log.debug("" + error);
                 return null;
             } else {
-                log.error("" + error);
+                log.info("" + error);
                 return "" + error;
             }
         } else {
