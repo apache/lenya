@@ -30,6 +30,7 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.util.Assert;
 
 /**
  * Area implementation.
@@ -56,6 +57,11 @@ public class AreaImpl implements Area {
     }
 
     public boolean contains(String uuid, String language) {
+        Assert.notNull("uuid", uuid);
+        Assert.notNull("language", language);
+        if (uuid.equals("") || language.equals("")) {
+            return false;
+        }
         // check site structure first (performance)
         if (getSite().containsByUuid(uuid, language)) {
             return true;
