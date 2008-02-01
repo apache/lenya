@@ -1,0 +1,7 @@
+<module id="publication" name="Publication" minimum="1.3" created="1.3">
+   <required id="form">?Because.</required>
+   <recommended id="edit">For editing</recommended>
+   <description>Configuring Publications</description>
+   <usage>
+   </usage>
+</module>
