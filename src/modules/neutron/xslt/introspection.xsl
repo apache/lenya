@@ -36,7 +36,7 @@
     TODO: In order to get the WYSIWYG view one needs to change the mime-type
     to xhtml+xml, but somehow this causes problems re saving ...
     See missing mime-type within
-    cocoon_2_1_x/src/java/org/apache/cocoon/generation/StreamGenerator.java
+    cocoon_2_1_11/src/java/org/apache/cocoon/generation/StreamGenerator.java
     -->
     <edit mime-type="application/xhtml+xml" name="Body Content">
 
