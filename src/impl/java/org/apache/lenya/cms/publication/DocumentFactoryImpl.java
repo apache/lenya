@@ -335,17 +335,17 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         return getPubManager().getPublications(this);
     }
 
-    private PublicationManager pubManager;
+    private static PublicationManager pubManager;
 
     protected PublicationManager getPubManager() {
-        if (this.pubManager == null) {
+        if (pubManager == null) {
             try {
-                this.pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
+                pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             } catch (ServiceException e) {
                 throw new RuntimeException(e);
             }
         }
-        return this.pubManager;
+        return pubManager;
     }
 
     public boolean existsPublication(String id) {
