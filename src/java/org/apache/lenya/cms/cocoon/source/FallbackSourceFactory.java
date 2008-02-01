@@ -35,6 +35,7 @@ import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
+import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -43,6 +44,9 @@ import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * <p>
@@ -58,17 +62,84 @@ import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
 public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
         Serviceable, Contextualizable, URIAbsolutizer {
 
-    /**
-     * Ctor.
-     */
-    public FallbackSourceFactory() {
-        super();
+    private static MRUMemoryStore store;
+    private boolean useCache = false;
+    
+    protected static final String STORE_ROLE = FallbackSourceFactory.class.getName() + "Store";
+    
+    protected MRUMemoryStore getStore() {
+        if (store == null) {
+            try {
+                store = (MRUMemoryStore) this.manager.lookup(STORE_ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return store;
     }
-
+    
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(final String location, Map parameters) throws IOException,
+            MalformedURLException {
+
+        MRUMemoryStore store = getStore();
+        Source source;
+        final String cacheKey = getCacheKey(location);
+        final String cachedSourceUri = (String) store.get(cacheKey);
+
+        if (!useCache || cachedSourceUri == null) {
+            source = findSource(location, parameters);
+            final String resolvedSourceUri = source.getURI();
+            store.hold(cacheKey, resolvedSourceUri);
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("No cached source URI for key " + cacheKey + ", caching URI " + resolvedSourceUri);
+            }
+        } else {
+            SourceResolver resolver = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                source = resolver.resolveURI(cachedSourceUri);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (resolver != null) {
+                    this.manager.release(resolver);
+                }
+            }
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Using cached source URI " + cachedSourceUri + " for key " + cacheKey);
+            }
+        }
+        return source;
+    }
+
+    protected String getCacheKey(final String location) {
+        String pubId = getPublicationId();
+        String cacheKey = pubId == null ? location : pubId + ":" + location;
+        return cacheKey;
+    }
+
+    protected String getPublicationId() {
+        Request request = ContextHelper.getRequest(this.context);
+        String webappUri = ServletHelper.getWebappURI(request);
+        URLInformation info = new URLInformation(webappUri);
+        String pubId = null;
+        try {
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            String pubIdCandidate = info.getPublicationId();
+            if (pubIdCandidate != null && factory.existsPublication(pubIdCandidate)) {
+                pubId = pubIdCandidate;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return pubId;
+    }
+
+    protected Source findSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
 
         // Remove the protocol and the first '//'
@@ -78,11 +149,11 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             throw new RuntimeException("The location [" + location
                     + "] does not contain the string '://'");
         }
-        
+
         String path = location.substring(pos + 3);
-        
+
         String publicationId = null;
-        
+
         // extract publication ID
         String prefix = location.substring(0, pos);
         StringTokenizer tokens = new StringTokenizer(prefix, ":");
@@ -90,13 +161,13 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             tokens.nextToken();
             publicationId = tokens.nextToken();
         }
-        
+
         // remove query string
         int questionMarkIndex = path.indexOf("?");
         if (questionMarkIndex > -1) {
             path = path.substring(0, questionMarkIndex);
         }
-        
+
         if (path.length() == 0) {
             throw new RuntimeException("The path after the protocol must not be empty!");
         }
@@ -112,12 +183,14 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
-            templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
+            templateManager = (PublicationTemplateManager) this.manager
+                    .lookup(PublicationTemplateManager.ROLE);
 
             Request request = ContextHelper.getRequest(this.context);
-            
+
             if (publicationId == null) {
-                String webappUrl = request.getRequestURI().substring(request.getContextPath().length());
+                String webappUrl = request.getRequestURI().substring(
+                        request.getContextPath().length());
 
                 URLInformation info = new URLInformation(webappUrl);
                 publicationId = info.getPublicationId();
@@ -138,7 +211,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                         moduleMgr = (ModuleManager) this.manager.lookup(ModuleManager.ROLE);
                         final String moduleShortcut = path.split("/")[2];
                         String baseUri = moduleMgr.getBaseURI(moduleShortcut);
-                        final String modulePath = path.substring(("lenya/modules/" + moduleShortcut).length());
+                        final String modulePath = path
+                                .substring(("lenya/modules/" + moduleShortcut).length());
                         source = sourceResolver.resolveURI(baseUri + modulePath);
                     } finally {
                         if (moduleMgr != null) {
@@ -177,7 +251,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
     /** The ServiceManager */
     private ServiceManager manager;
-
+    
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
@@ -223,4 +297,5 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     public String absolutize(String baseURI, String location) {
         return SourceUtil.absolutize(baseURI, location, true);
     }
+
 }
