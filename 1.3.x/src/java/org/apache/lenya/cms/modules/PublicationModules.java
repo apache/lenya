@@ -1,4 +1,4 @@
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.modules;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.lenya.cms.modules.Module;
-import org.apache.lenya.cms.modules.Modules;
 /**
  * 
  * @author solprovider
  * @since 1.3
  */
 public class PublicationModules {
+   // Moved from publication package to modules for access to Modules.modules
    // TODO: Rearchitect class so can reset all without restarting Lenya?
    private List templates = new ArrayList(); // Default list of Publications for inherit.
    // TODO: external and exclude should have defaults in module.xml.
@@ -29,11 +28,7 @@ public class PublicationModules {
    boolean allAllowed = true;
    boolean allExternal = true;
    static Map variables = new HashMap(); // publication.module.variablename = value from publication.xconf
-   // static Map defaultvariables = new HashMap(); // publication.module.variablename = value from module.xml
-   // static Map globalvariables = new HashMap(); // module.variable = value from global module.xml
-   // static boolean isGlobalvariablesSet = false;
    private String publicationId;
-   // private String servletContextPath;
    private String contentType;
    // Dev testing
    Configuration config;
@@ -265,11 +260,4 @@ public class PublicationModules {
       } // for
       return map;
    }
-   // private Publication getPublication() {
-   // try{
-   // return PublicationFactory.getPublication(publicationId, servletContextPath);
-   // }catch(org.apache.lenya.cms.publication.PublicationException pe){
-   // return (Publication) null;
-   // }
-   // }
 }

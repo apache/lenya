@@ -26,14 +26,13 @@ public abstract class Module {
    Map variables = new HashMap(); // nameString = valueString
    Map files; // filename -> actual location as String (Better as File or Source?)
    File moduleDirectory;
-   String type = Content.TYPE_HIERARCHICAL;
+   private String type = Content.TYPE_DEFAULT;
    String id;
    String name;
    String minimum = "1.3";
    String maximum = "";
    String created = "1.3";
-   String content = "all";
-   String modified = "1.3";
+   long modified = 1;
    String resource = "";
    String description = "";
    String usage = "";
@@ -53,9 +52,20 @@ public abstract class Module {
             minimum = config.getAttribute("minimum", minimum);
             maximum = config.getAttribute("maximum", maximum);
             created = config.getAttribute("created", created);
-            content = config.getAttribute("content", content);
-            modified = config.getAttribute("modified", modified);
+            type = config.getAttribute("content", type);
+            try{
+               modified = Long.parseLong(config.getAttribute("modified", "" + modified));
+            }catch(NumberFormatException nfe){
+               modified = 1;
+            }
             resource = config.getAttribute("resource", "");
+            if((resource.length() > 0) && !resource.endsWith("/" + id)){
+               if(resource.endsWith("/")){
+                  resource += id;
+               }else{
+                  resource += "/" + id;
+               }
+            }
             // Description
             Configuration descriptionConf = config.getChild("description");
             description = descriptionConf.getValue("");
@@ -131,7 +141,7 @@ public abstract class Module {
          }
       }
    }
-   public String getType() {
+   public String getContentType() {
       return type;
    }
    public int getModified() {

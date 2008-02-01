@@ -14,50 +14,43 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.cocoon.components.modules.input;
-
 import java.util.Map;
-
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-
 /**
  * Abstract superclass for classes which need access to the page envelope.
+ * 
+ * @deprecated Useless. Extend AbstractInputModule and use PageEnvelope.getCurrent() for access to the page envelope.
  */
 public abstract class AbstractPageEnvelopeModule extends AbstractInputModule {
-
-    /**
-     * Get the the page envelope for the given objectModel.
-     * 
-     * @param objectModel the objectModel for which the page enevelope is requested.
-     * 
-     * @return a <code>PageEnvelope</code>
-     * 
-     * @throws ConfigurationException if the page envelope could not be instantiated.
-     */
-    protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {
-        
-        PageEnvelope envelope = null;
-
-        if (getLogger().isDebugEnabled()) {
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
-        }
-
-        try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-        } catch (Exception e) {
-            throw new ConfigurationException("Resolving page envelope failed: ", e);
-        }
-
-        return envelope;
-    }
-
+   /**
+    * Get the the page envelope for the given objectModel.
+    * 
+    * @param objectModel
+    *           the objectModel for which the page enevelope is requested.
+    * 
+    * @return a <code>PageEnvelope</code>
+    * 
+    * @throws ConfigurationException
+    *            if the page envelope could not be instantiated.
+    * @deprecated Use PageEnvelope.getCurrent() and throw new ConfigurationException("Resolving page envelope failed: ", e);
+    */
+   protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {
+      PageEnvelope envelope = null;
+      if(getLogger().isDebugEnabled()){
+         Request request = ObjectModelHelper.getRequest(objectModel);
+         getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
+      }
+      try{
+         envelope = PageEnvelope.getCurrent();
+      }catch(Exception e){
+         throw new ConfigurationException("Resolving page envelope failed: ", e);
+      }
+      return envelope;
+   }
 }

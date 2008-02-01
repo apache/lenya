@@ -21,6 +21,7 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+import org.apache.lenya.cms.modules.PublicationModules;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 // LENYA1.3 - BEGIN
 import org.apache.lenya.cms.content.Content;

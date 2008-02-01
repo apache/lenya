@@ -3,7 +3,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.util.IOUtils;
-import org.apache.lenya.cms.content.Content;
 /**
  * Singleton class containing all Modules.
  * 
@@ -38,8 +37,7 @@ public class Modules {
                   Object o = modules.get(id);
                   if(Module.class.isAssignableFrom(o.getClass())){
                      Module oldModule = (Module) o;
-                     ModuleSet moduleSet = new ModuleSet();
-                     moduleSet.add(oldModule);
+                     ModuleSet moduleSet = new ModuleSet(oldModule);
                      moduleSet.add(newModule);
                      modules.put(id, moduleSet);
                   }else if(ModuleSet.class.isAssignableFrom(o.getClass())){
@@ -77,8 +75,7 @@ public class Modules {
                         Object o = modules.get(id);
                         if(Module.class.isAssignableFrom(o.getClass())){
                            Module oldModule = (Module) o;
-                           ModuleSet moduleSet = new ModuleSet();
-                           moduleSet.add(oldModule);
+                           ModuleSet moduleSet = new ModuleSet(oldModule);
                            moduleSet.add(newModule);
                            modules.put(id, moduleSet);
                         }else if(ModuleSet.class.isAssignableFrom(o.getClass())){
@@ -130,18 +127,11 @@ public class Modules {
    }
    static private Module getModuleByType(Object o, String type) {
       if(Module.class.isAssignableFrom(o.getClass())){
-         // System.out.println("GetModuleByType Module");
          return (Module) o;
       }else if(ModuleSet.class.isAssignableFrom(o.getClass())){
-         if(Content.TYPE_HIERARCHICAL.equals(type)){
-            // System.out.println("GetModuleByType Hierarchical");
-            return (Module) ((ModuleSet) o).getHierarchical();
-         }else{
-            // System.out.println("GetModuleByType Flat");
-            return (Module) ((ModuleSet) o).getFlat();
-         }
+         return (Module) ((ModuleSet) o).getModule(type);
       }
-      // System.out.println("GetModuleByType Null");
+      System.out.println("Modules.GetModuleByType found Class " + o.getClass().getName());
       return null;
    }
 }

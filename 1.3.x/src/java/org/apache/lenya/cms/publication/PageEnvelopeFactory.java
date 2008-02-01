@@ -14,55 +14,48 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.publication;
-
 import java.util.Map;
-
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-
-
 /**
  * Common entry point for creating page envelopes.
+ * 
+ * @deprecated Use PageEnvelope.getCurrent()
  */
 public class PageEnvelopeFactory {
-    /**
-     * Creates a new PageEnvelopeFactory.
-     */
-    protected PageEnvelopeFactory() {
-    }
-
-    private static PageEnvelopeFactory instance;
-
-    /**
-     * Returns the singleton PageEnvelopeFactory.
-     * @return The factory.
-     */
-    public static PageEnvelopeFactory getInstance() {
-        if (instance == null) {
-            instance = new PageEnvelopeFactory();
-        }
-        return instance;
-    }
-
-    /**
-     * Returns the page envelope for the object model of a Cocoon component.
-     * @param objectModel The object model.
-     * @return A page envelope.
-     * @throws PageEnvelopeException if something went wrong.
-     */
-    public PageEnvelope getPageEnvelope(Map objectModel)
-        throws PageEnvelopeException {
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
-
-        envelope = new PageEnvelope(objectModel, true);
-        request.setAttribute(PageEnvelope.class.getName(), envelope);
-
-        return envelope;
-    }
-    
+   /**
+    * Creates a new PageEnvelopeFactory.
+    */
+   protected PageEnvelopeFactory() {
+   }
+   private static PageEnvelopeFactory instance;
+   /**
+    * Returns the singleton PageEnvelopeFactory.
+    * 
+    * @return The factory.
+    */
+   public static PageEnvelopeFactory getInstance() {
+      if(instance == null){
+         instance = new PageEnvelopeFactory();
+      }
+      return instance;
+   }
+   /**
+    * Returns the page envelope for the object model of a Cocoon component.
+    * 
+    * @param objectModel
+    *           The object model.
+    * @return A page envelope.
+    * @throws PageEnvelopeException
+    *            if something went wrong.
+    */
+   public PageEnvelope getPageEnvelope(Map objectModel) throws PageEnvelopeException {
+      Request request = ObjectModelHelper.getRequest(objectModel);
+      PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
+      envelope = new PageEnvelope(objectModel, true);
+      request.setAttribute(PageEnvelope.class.getName(), envelope);
+      return envelope;
+   }
 }

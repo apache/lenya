@@ -27,6 +27,7 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.content.Content;
 import org.apache.lenya.cms.content.flat.FlatContent;
 import org.apache.lenya.cms.content.hierarchical.HierarchicalContent;
+import org.apache.lenya.cms.modules.PublicationModules;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.log4j.Logger;
 // Lenya1.3 - END

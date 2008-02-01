@@ -7,7 +7,6 @@ import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.CocoonComponentManager;
-import org.apache.cocoon.components.ContextHelper;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -16,7 +15,6 @@ import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 /**
  * 2000125: Integrated with org.apache.lenya.cms.modules
@@ -46,7 +44,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
       String publication;
       Publication pub;
       try{
-         PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(ContextHelper.getObjectModel(context));
+         PageEnvelope envelope = PageEnvelope.getCurrent();
          pub = envelope.getPublication();
          publication = pub.getId();
       }catch(org.apache.lenya.cms.publication.PageEnvelopeException pee){

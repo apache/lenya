@@ -1,14 +1,6 @@
-<module id="link" name="Link">
-   <version>
-      <minimum>1.3</minimum>
-      <created>1.3</created>
-      <content>flat</content>
-   </version>
-   <dependencies>
-      <resourcePath>/</resourcePath>
-      <required id="form">?Because.</required>
-      <recommended id="edit">For editing</recommended>
-   </dependencies>
+<module id="link" name="Link" minimum="1.3" created="1.3" content="flat" resourcePath="/">
+   <required id="form">?Because.</required>
+   <recommended id="edit">For editing</recommended>
    <description>Link Resource Type</description>
    <usage>
    </usage>

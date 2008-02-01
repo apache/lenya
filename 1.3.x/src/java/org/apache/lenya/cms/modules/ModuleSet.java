@@ -1,4 +1,6 @@
 package org.apache.lenya.cms.modules;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.lenya.cms.content.Content;
 /**
  * 
@@ -6,38 +8,31 @@ import org.apache.lenya.cms.content.Content;
  * @since 1.3
  */
 public class ModuleSet {
-   Module flat = null;
-   Module hierarchical = null;
-   public ModuleSet() {
+   // TODO: Rewrite to use Map(type) = Module. Needs to handle >2 Types.
+   Map modules = new HashMap();
+   String defaultType;
+   // Module flat = null;
+   // Module hierarchical = null;
+   public ModuleSet(Module module) {
+      String type = module.getContentType();
+      modules.put(type, module);
+      defaultType = type;
    }
-   public Module getFlat() {
-      return flat;
-   }
-   public Module getHierarchical() {
-      return hierarchical;
+   public Module getModule(String type) {
+      if(modules.containsKey(type)){
+         return (Module) modules.get(type);
+      }
+      return (Module) modules.get(defaultType);
    }
    public void add(Module module) {
-      if(Content.TYPE_FLAT.equalsIgnoreCase(module.getType())){
-         if(null == flat){
-            flat = module;
-         }else if(Content.TYPE_FLAT.equalsIgnoreCase(flat.getType())){
-            flat = compareModules(flat, module);
-         }else{
-            flat = module;
-         }
-      }else if(Content.TYPE_HIERARCHICAL.equalsIgnoreCase(module.getType())){
-         if(null == hierarchical){
-            hierarchical = module;
-         }else if(Content.TYPE_HIERARCHICAL.equalsIgnoreCase(hierarchical.getType())){
-            hierarchical = compareModules(hierarchical, module);
-         }else{
-            hierarchical = module;
-         }
+      String type = module.getContentType();
+      if(modules.containsKey(type)){
+         modules.put(type, compareModules((Module) modules.get(type), module));
       }else{
-         if(null == flat)
-            flat = module;
-         if(null == hierarchical)
-            hierarchical = module;
+         modules.put(type, module);
+         if(Content.TYPE_DEFAULT.equalsIgnoreCase(type)){
+            defaultType = Content.TYPE_DEFAULT;
+         }
       }
    }
    private Module compareModules(Module m1, Module m2) {
