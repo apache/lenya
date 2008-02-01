@@ -118,6 +118,8 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
                     this.uri2workflow.put(uri, workflow);
                 }
             }
+        } catch (final WorkflowException e) {
+            throw e;
         } catch (final Exception e) {
             throw new WorkflowException(e);
         }
