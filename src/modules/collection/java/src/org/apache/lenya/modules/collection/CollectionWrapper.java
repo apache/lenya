@@ -155,7 +155,7 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
             
             if (collectionElement.hasAttribute(ATTRIBUTE_ALL_LANGUAGES)) {
                 String value = collectionElement.getAttribute(ATTRIBUTE_ALL_LANGUAGES);
-                this.allLanguages = Boolean.parseBoolean(value);
+                this.allLanguages = Boolean.valueOf(value).booleanValue();
             }
         } catch (RuntimeException e) {
             throw e;
