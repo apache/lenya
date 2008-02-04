@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.generation.ServiceableGenerator;
@@ -84,12 +85,13 @@ public class ModulesGenerator extends ServiceableGenerator implements CacheableP
    private void handleModule(ContentHandler handler, Module module) throws SAXException {
       AttributesImpl attributes = new AttributesImpl();
       attributes.addAttribute(URI, ATTR_MODULE_TYPE, ATTR_MODULE_TYPE, "CDATA", module.getContentType());
-      attributes.addAttribute(URI, ATTR_MODULE_NAME, ATTR_MODULE_NAME, "CDATA", module.name);
-      if(module.resource.length() > 0){
-         attributes.addAttribute(URI, ATTR_MODULE_TYPE, ATTR_MODULE_TYPE, "CDATA", module.resource);
+      attributes.addAttribute(URI, ATTR_MODULE_NAME, ATTR_MODULE_NAME, "CDATA", module.getName());
+      String resource = module.getResource();
+      if(resource.length() > 0){
+         attributes.addAttribute(URI, ATTR_MODULE_TYPE, ATTR_MODULE_TYPE, "CDATA", resource);
       }
       handler.startElement(URI, ELEMENT_MODULE, ELEMENT_MODULE, attributes);
-      String description = module.description;
+      String description = module.getDescription();
       int length = description.length();
       if(length > 0){
          handler.startElement(URI, ELEMENT_DESCRIPTION, ELEMENT_DESCRIPTION, null);
@@ -111,6 +113,16 @@ public class ModulesGenerator extends ServiceableGenerator implements CacheableP
          attributes.addAttribute(URI, ATTR_MODULE_ID, ATTR_MODULE_ID, "CDATA", (String) entry.getKey());
          handler.startElement(URI, element, element, attributes);
          handler.characters(description.toCharArray(), 0, description.length());
+         handler.endElement(URI, element, element);
+      }
+   }
+   private void handleList(ContentHandler handler, Set set, String element) throws SAXException {
+      Iterator iterator = set.iterator();
+      while(iterator.hasNext()){
+         String entry = (String) iterator.next();
+         AttributesImpl attributes = new AttributesImpl();
+         attributes.addAttribute(URI, ATTR_MODULE_ID, ATTR_MODULE_ID, "CDATA", entry);
+         handler.startElement(URI, element, element, attributes);
          handler.endElement(URI, element, element);
       }
    }

@@ -51,12 +51,44 @@ public final class Globals {
    public static final Long getExpires() {
       return (Long) getObjectModel().get(ObjectModelHelper.EXPIRES_OBJECT);
    }
-   static public String getModule() {
+   static public String getModuleId() {
       Source source = getSource();
       if(null == source)
          return "";
+      return getModuleId(source.getURI());
+   }
+   /**
+    * Retrieves ModuleId parsing after "modules". Works with filepath and URIs. Empty string returns empty string.
+    * 
+    * @param filepath
+    * @return
+    */
+   static public String getModuleId(String filepath) {
+      if(filepath.length() < 1){
+         return "";
+      }
       String ret = "";
-      String[] strings = source.getURI().split("^(.*)modules");
+      String[] strings = filepath.split("^(.*)modules");
+      if(1 < strings.length){
+         strings = strings[1].split("[/\\\\]");
+         if(1 < strings.length){
+            ret = strings[1];
+         }
+      }
+      return ret;
+   }
+   /**
+    * Retrieves PublicationId parsing after "pubs". Works with filepath and URIs. Empty string returns empty string.
+    * 
+    * @param filepath
+    * @return
+    */
+   static public String getPublicationId(String filepath) {
+      if(filepath.length() < 1){
+         return "";
+      }
+      String ret = "";
+      String[] strings = filepath.split("^(.*)pubs");
       if(1 < strings.length){
          strings = strings[1].split("[/\\\\]");
          if(1 < strings.length){

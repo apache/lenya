@@ -1,3 +1,5 @@
+DESIGN: Does Module differentiation by ContentType cause confusion with inheritance?  A module overriding one type will intercept calls to all types.
+
 Create New Resource: Publication has Resource Types.  Use Generator. Choose Type.  Create required languages. Use Transformer. Pass to Edit Module.
 
 Edit-Save must clear Cache.

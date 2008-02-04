@@ -1,7 +1,8 @@
-<module id="homepage" name="Homepage" inherit="xhtml" minimum="1.3" created="1.3" resourcePath="/xml/xhtml">
+<module id="home" name="Home" inherit="xhtml" minimum="1.3" created="1.3" resource="/xml/xhtml">
    <!-- Homepage Concept was originally xml/homepage Resource type.  This should be child of /xml/xhtml and inherit xmap from live/xml/xhtml.
         Allows removal of special case in live/module.xmap once 1.2 backwards-compatibility is not needed.
         Change migration (flat) module.  -->
+        <inherit id="xhtml">For processing as an XHTML Resource.</inherit>
    <description>Alternate XSL for home resource type.</description>
    <usage>
    </usage>

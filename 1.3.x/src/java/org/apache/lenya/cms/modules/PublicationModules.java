@@ -6,7 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.lenya.util.Globals;
 /**
  * 
  * @author solprovider
@@ -30,6 +32,8 @@ public class PublicationModules {
    static Map variables = new HashMap(); // publication.module.variablename = value from publication.xconf
    private String publicationId;
    private String contentType;
+   private Map sourceModules = null;
+   private Map resources = null;
    // Dev testing
    Configuration config;
    public PublicationModules(String publicationId, String contentType, Configuration config) {
@@ -123,7 +127,14 @@ public class PublicationModules {
             } // Has name
          } // element tag
       } // for each child
+      // TODO: Templates should append all templates of inherited publications. Need to verify template has finished loading. Careful about locking loops -- this pub inherits from that pub inherits from another pub that inherits from this pub.
    } // function
+   /**
+    * AllExternal overrides External.
+    * 
+    * @param moduleId
+    * @return
+    */
    public boolean isExternal(String moduleId) {
       if(exclude.contains(moduleId))
          return false;
@@ -157,6 +168,66 @@ public class PublicationModules {
    // return (String) modules.get(moduleId);
    // return moduleId;
    // }
+   /**
+    * Returns Map("moduleId") = "inheritedFromPublication" Expected to be used only for Publication creation and modification (using the PublicationModulesGenerator) so performance (e.g. using a cache) is unimportant.
+    */
+   public Map getSourceModules() {
+      if(null != sourceModules){
+         return sourceModules;
+      }
+      Map modules = new HashMap();
+      Set modulesList = new HashSet();
+      if(allAllowed){ // Every module from local, global, and inherited publications.
+         Iterator iterator = Modules.modules.keySet().iterator();
+         while(iterator.hasNext()){
+            String key = (String) iterator.next();
+            String[] parts = key.split("\\.", 2);
+            String publication = parts[0];
+            // TODO: Add inherited pubs' inheritance.
+            if((publication.length() < 1) || publication.equalsIgnoreCase(publicationId) || templates.contains(publication)){
+               String module = parts[1];
+               if(!exclude.contains(module)){
+                  // System.out.println("KEY=" + key + " P=" + publication + " M=" + module);
+                  modulesList.add(module);
+               }
+            }
+         }
+      }else{ // Only included
+         modulesList = external.keySet();
+      }
+      // Get current
+      resources = new TreeMap();
+      Iterator iterator = modulesList.iterator();
+      while(iterator.hasNext()){
+         String moduleId = (String) iterator.next();
+         String filepath = getFile(moduleId, ".", false);
+         String inheritedModuleId = Globals.getModuleId(filepath);
+         String inheritedPublication = Globals.getPublicationId(filepath);
+         Module inheritedModule = Modules.getModule(inheritedPublication, inheritedModuleId, contentType);
+         if(null == inheritedModule){
+            System.out.println(moduleId + "Module found at " + filepath + " could not be opened as Publication " + inheritedPublication + " Module " + inheritedModuleId);
+         }else{
+            String resource = inheritedModule.getResource();
+            if(resource.length() > 0){
+               resources.put(resource, inheritedModule);
+            }
+            // System.out.println("FP=" + filepath + " MI=" + moduleId + " P=" + inheritedPublication + " M=" + inheritedModuleId + " R=" + resource);
+            modules.put(moduleId, inheritedModule);
+         }
+      }
+      // TODO: Add required modules?
+      return modules;
+   }
+   /**
+    * 
+    * @return Alphabetically sorted Set of resource name Strings.
+    */
+   public Map getResources() {
+      if(null == resources){
+         getSourceModules();
+      }
+      return resources;
+   }
    public String getVariable(String moduleId, String varname) {
       // TODO: Add reset. Do InputModules support double colon syntax?
       if(exclude.contains(moduleId))

@@ -19,26 +19,27 @@ import org.xml.sax.SAXException;
  */
 public abstract class Module {
    public static final String MODULE_XML = "module.xml";
-   Map inheritList; // String names of other Modules in this publication.
-   Map requiredList; // required Modules: id = reason
-   Map recommendedList; // recommended Modules: id = reason
-   Map optionalList; // optional Modules: id = reason
+   Set inheritList = new LinkedHashSet(); // String names of other Modules in this publication.
+   Map requiredList = new TreeMap(); // required Modules: id = reason
+   Map recommendedList = new TreeMap(); // recommended Modules: id = reason
+   Map optionalList = new TreeMap(); // optional Modules: id = reason
    Map variables = new HashMap(); // nameString = valueString
    Map files; // filename -> actual location as String (Better as File or Source?)
    File moduleDirectory;
    private String type = Content.TYPE_DEFAULT;
-   String id;
-   String name;
-   String minimum = "1.3";
-   String maximum = "";
-   String created = "1.3";
-   long modified = 1;
-   String resource = "";
-   String description = "";
-   String usage = "";
+   private String id;
+   private String name = "";
+   private String minimum = "1.3";
+   private String maximum = "";
+   private String created = "1.3";
+   private long modified = 1;
+   private String resource = "";
+   private String description = "";
+   private String usage = "";
+   private String publicationId = "";
    public Module(File moduleDirectory, String publicationId) {
       resetFiles();
-      String pubIdError = (publicationId.length() > 1 ? publicationId + " - " : "");
+      this.publicationId = publicationId;
       this.moduleDirectory = moduleDirectory;
       id = moduleDirectory.getName();
       File configFile = new File(moduleDirectory, MODULE_XML);
@@ -58,6 +59,7 @@ public abstract class Module {
             }catch(NumberFormatException nfe){
                modified = 1;
             }
+            // Resource
             resource = config.getAttribute("resource", "");
             if((resource.length() > 0) && !resource.endsWith("/" + id)){
                if(resource.endsWith("/")){
@@ -74,7 +76,6 @@ public abstract class Module {
             usage = usageConf.getValue("");
             // Required
             Configuration[] requireds = config.getChildren("required");
-            requiredList = new TreeMap();
             int numRequireds = requireds.length;
             for(int vR = 0; vR < numRequireds; vR++){
                Configuration required = requireds[vR];
@@ -85,7 +86,6 @@ public abstract class Module {
             }
             // Recommended
             Configuration[] recommendeds = config.getChildren("recommended");
-            recommendedList = new TreeMap();
             int numrecommendeds = recommendeds.length;
             for(int vR = 0; vR < numrecommendeds; vR++){
                Configuration recommended = recommendeds[vR];
@@ -96,7 +96,6 @@ public abstract class Module {
             }
             // Optional
             Configuration[] optionals = config.getChildren("optional");
-            optionalList = new TreeMap();
             int numoptionals = optionals.length;
             for(int vR = 0; vR < numoptionals; vR++){
                Configuration optional = optionals[vR];
@@ -117,27 +116,33 @@ public abstract class Module {
             }
             // Inherits
             Configuration[] inherits = config.getChildren("inherit");
-            inheritList = new TreeMap();
             int numInherits = inherits.length;
             for(int vI = 0; vI < numInherits; vI++){
                Configuration inherit = inherits[vI];
                // Get attributes
-               String priority = inherit.getAttribute("priority", "");
-               String publication = inherit.getAttribute("publication", "");
-               String id = inherit.getAttribute("id", "");
-               // Massage
-               // TODO: Cheap shortcuts. Rewrite inheritList storage later.
-               int priorityLength = priority.length();
-               String priorityPrefix = priorityLength > 3 ? priority : "000" + priority.substring(priorityLength);
-               String publicationPrefix = publication.length() > 0 ? publication + "." : publicationId + ".";
-               inheritList.put(priorityPrefix + "." + publicationPrefix + id, publicationPrefix + id);
+               String publication = inherit.getAttribute("publication", publicationId);
+               String module = inherit.getAttribute("id", id);
+               String key = publication + "." + module;
+               inheritList.add(key);
+            }
+            // Resource parents inherit after specified inheritance.
+            // Added from bottom to top: xml/xhtml/home inherits from xhtml then xml.
+            if(resource.length() > 0){
+               // System.out.println("RESOURCE " + resource + "=" + id);
+               String[] parents = resource.split("/");
+               for(int p = parents.length - 1; p > -1; p--){
+                  String parent = parents[p];
+                  if((parent.length() > 0) && (!parent.equalsIgnoreCase(id)) && (!inheritList.contains(parent))){
+                     inheritList.add(parents[p]);
+                  }
+               }
             }
          }catch(ConfigurationException e){
-            System.out.println("Module " + pubIdError + id + " has a ConfigurationException.\n" + e.getLocalizedMessage());
+            System.out.println("Module " + publicationId + "." + id + " has a ConfigurationException.\n" + e.getLocalizedMessage());
          }catch(SAXException e){
-            System.out.println("Module " + pubIdError + id + " has a SAXException.\n" + e.getLocalizedMessage());
+            System.out.println("Module " + publicationId + "." + id + " has a SAXException.\n" + e.getLocalizedMessage());
          }catch(IOException e){
-            System.out.println("Module " + pubIdError + id + " has an IOException.\n" + e.getLocalizedMessage());
+            System.out.println("Module " + publicationId + "." + id + " has an IOException.\n" + e.getLocalizedMessage());
          }
       }
    }
@@ -188,7 +193,7 @@ public abstract class Module {
       }
       if(ret.length() < 1){
          // Check Module Inheritance
-         Iterator inherit = inheritList.entrySet().iterator();
+         Iterator inherit = inheritList.iterator();
          while(inherit.hasNext() && (ret.length() < 1)){
             ret = Modules.getModule((String) inherit.next(), type).getFile(filename);
          }
@@ -212,7 +217,7 @@ public abstract class Module {
       }else{
          Module module;
          // Check Module Inheritance
-         Iterator inherit = inheritList.entrySet().iterator();
+         Iterator inherit = inheritList.iterator();
          while(inherit.hasNext() && (ret.length() < 1)){
             module = Modules.getModule((String) inherit.next(), type);
             if(null != module)
@@ -222,5 +227,28 @@ public abstract class Module {
       if(ret.length() > 0)
          variables.put(parameterName, ret);
       return ret;
+   }
+   /**
+    * Package only. Do not allow Modules implementation to escape package.
+    * 
+    * @return publicationId.moduleId
+    */
+   String getKey() {
+      return publicationId + "." + id;
+   }
+   public String getResource() {
+      return resource;
+   }
+   public String getName() {
+      return name;
+   }
+   public String getDescription() {
+      return description;
+   }
+   public String getUsage() {
+      return usage;
+   }
+   public String getPublicationId() {
+      return publicationId;
    }
 }

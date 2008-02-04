@@ -1,4 +1,4 @@
-<module id="xhtml" name="XHTML" minimum="1.3" created="1.3" content="hierarchical">
+<module id="xhtml" name="XHTML" minimum="1.3" created="1.3" content="hierarchical" resource="/xml">
    <required id="lenya">Required files.</required>
    <description>XHTML Resource Type</description>
 </module>

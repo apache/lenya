@@ -1,4 +1,4 @@
-<module id="link" name="Link" minimum="1.3" created="1.3" content="flat" resourcePath="/">
+<module id="link" name="Link" minimum="1.3" created="1.3" content="flat" resource="/">
    <required id="form">?Because.</required>
    <recommended id="edit">For editing</recommended>
    <description>Link Resource Type</description>

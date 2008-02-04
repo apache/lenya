@@ -1,12 +1,5 @@
-<module id="xml" name="XML">
-   <version>
-      <minimum>1.2</minimum>
-      <created>1.3</created>
-   </version>
-   <dependencies>
-      <resourcePath>/</resourcePath>
-      <required id="form">Because.</required>
-   </dependencies>
+<module id="xml" name="XML" minimum="1.2" created="1.3" resource="/">
+   <required id="form">Because.</required>
    <description>XML Resource Type</description>
    <usage>
    </usage>

@@ -1,5 +1,4 @@
-<module id="homepage" name="Homepage" minimum="1.3" created="1.3">
-   <resourcePath>/xml</resourcePath>
+<module id="homepage" name="Homepage" minimum="1.3" created="1.3" resource="/xml/xhtml">
    <required id="navigation">For menus.</required>
    <recommended id="cache">Improve performance by storing homepage for anonymous people.</recommended>
    <description>Alternate layout for homepage.</description>

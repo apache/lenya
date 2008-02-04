@@ -24,11 +24,10 @@ public class ModuleInputModule extends AbstractInputModule implements ThreadSafe
     */
    private String moduleId = "";
    public Object getAttribute(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
-      System.out.println(Globals.getObjectModel());
       if(getLogger().isDebugEnabled()){
          getLogger().debug("Resolving [" + name + "]");
       }
-      moduleId = Globals.getModule();
+      moduleId = Globals.getModuleId();
       // Standard Variables
       if(name.equalsIgnoreCase("module")){
          return moduleId;

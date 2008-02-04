@@ -1,14 +1,6 @@
-<module id="file" name="File">
-   <version>
-      <minimum>1.3</minimum>
-      <created>1.3</created>
-      <content>flat</content>
-   </version>
-   <dependencies>
-      <resourcePath>/</resourcePath>
+<module id="file" name="File" resource="/" minimum="1.3" created="1.3" content="flat">
       <required id="form">Required.</required>
       <recommended id="edit">Because.</recommended>
-   </dependencies>
    <description>Handles binary file Resources.</description>
    <usage>
    </usage>
