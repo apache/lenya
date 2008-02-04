@@ -32,7 +32,7 @@ public class AggregatingSource implements Source {
      */
     public AggregatingSource(String uri, String[] uris, ServiceManager manager) {
         this.manager = manager;
-        this.sourceUris = (String[])uris.clone();
+        this.sourceUris = (String[]) uris.clone();
         this.uri = uri;
     }
 
@@ -151,7 +151,8 @@ public class AggregatingSource implements Source {
             SourceResolver resolver = null;
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                MultiSourceValidity aggregatedValidity = new MultiSourceValidity(resolver, 0);
+                MultiSourceValidity aggregatedValidity = new MultiSourceValidity(resolver,
+                        MultiSourceValidity.CHECK_ALWAYS);
                 for (int i = 0; i < this.sourceUris.length; i++) {
                     Source source = null;
                     try {
