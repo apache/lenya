@@ -62,8 +62,8 @@ import org.apache.lenya.util.ServletHelper;
 public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
         Serviceable, Contextualizable, URIAbsolutizer {
 
-    private static MRUMemoryStore store;
-    private boolean useCache = false;
+    protected static MRUMemoryStore store;
+    private boolean useCache = true;
     
     protected static final String STORE_ROLE = FallbackSourceFactory.class.getName() + "Store";
     
@@ -247,10 +247,10 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         return new ExistingSourceResolver();
     }
 
-    private org.apache.avalon.framework.context.Context context;
+    protected org.apache.avalon.framework.context.Context context;
 
     /** The ServiceManager */
-    private ServiceManager manager;
+    protected ServiceManager manager;
     
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)

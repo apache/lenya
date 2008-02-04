@@ -24,19 +24,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceFactory;
-import org.apache.excalibur.source.SourceUtil;
-import org.apache.excalibur.source.URIAbsolutizer;
+import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -50,10 +41,37 @@ import org.apache.lenya.util.ServletHelper;
  * Aggregate all existing fallback URIs by merging their XML content under
  * the document element of the first encountered source.
  */
-public class AggregatingFallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
-        Serviceable, Contextualizable, URIAbsolutizer {
-
+public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
+    
+    private boolean useCache = true;
+    
+    /**
+     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
+     */
     public Source getSource(final String location, Map parameters) throws IOException,
+            MalformedURLException {
+
+        MRUMemoryStore store = getStore();
+        String[] uris;
+        final String cacheKey = getCacheKey(location);
+        final String[] cachedUris = (String[]) store.get(cacheKey);
+
+        if (!useCache || cachedUris == null) {
+            uris = findUris(location, parameters);
+            store.hold(cacheKey, uris);
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("No cached source URI for key " + cacheKey + ", caching resolved URIs.");
+            }
+        } else {
+            uris = cachedUris;
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Using cached source URIs for key " + cacheKey);
+            }
+        }
+        return new AggregatingSource(location, uris, this.manager);
+    }
+
+    protected String[] findUris(final String location, Map parameters) throws IOException,
             MalformedURLException {
 
         // Remove the protocol and the first '//'
@@ -134,8 +152,7 @@ public class AggregatingFallbackSourceFactory extends AbstractLogEnabled impleme
                 allUris.add(contextSourceUri);
             }
 
-            String[] aggregateUris = (String[]) allUris.toArray(new String[allUris.size()]); 
-            return new AggregatingSource(location, aggregateUris, this.manager);
+            return (String[]) allUris.toArray(new String[allUris.size()]); 
 
         } catch (Exception e) {
             throw new RuntimeException("Resolving path [" + location + "] failed: ", e);
@@ -144,25 +161,6 @@ public class AggregatingFallbackSourceFactory extends AbstractLogEnabled impleme
                 this.manager.release(templateManager);
             }
         }
-    }
-
-    public void release(Source source) {
-    }
-
-    private ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
-    private Context context;
-
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
-    }
-
-    public String absolutize(String baseURI, String location) {
-        return SourceUtil.absolutize(baseURI, location, true);
     }
 
 }
