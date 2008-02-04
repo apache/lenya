@@ -21,15 +21,18 @@
 package org.apache.lenya.cms.cocoon.generation;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -39,7 +42,6 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.ServletHelper;
@@ -48,26 +50,19 @@ import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * Generates a fragment of the navigation XML from the sitetree, corresponding to a given node. The
- * node is specified by the sitemap parameters area/path. If the sitemap parameter initialTree
- * is true, the top nodes of the tree will be generated and the node given by the sitemap parameters
- * area/path will be unfolded. If initialTree is false, only the children of the selected node
- * will be generated.
+ * node is specified by the sitemap parameters area/path. If the sitemap parameter initialTree is
+ * true, the top nodes of the tree will be generated and the node given by the sitemap parameters
+ * area/path will be unfolded. If initialTree is false, only the children of the selected node will
+ * be generated.
  */
-public class SitetreeFragmentGenerator extends ServiceableGenerator {
-
-    protected Publication publication;
-
-    /** Parameter which denotes the path of the clicked node */
-    protected String path;
-
-    /** Parameter which denotes the area of the clicked node */
-    protected String area;
+public class SitetreeFragmentGenerator extends ServiceableGenerator implements
+        CacheableProcessingComponent {
 
     /**
      * Parameter which decides if the initial tree with the root nodes is generated
      */
     protected boolean initialTree;
-    
+
     /**
      * Parameter which decides if the node mime types should be reported
      */
@@ -81,9 +76,17 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      */
     protected AttributesImpl attributes;
 
+    private SiteStructure site;
+
+    private String path;
+
+    private SourceValidity validity;
+
     protected static final String PARAM_PUB = "pub";
     protected static final String PARAM_AREA = "area";
     protected static final String PARAM_PATH = "path";
+    protected static final String PARAM_UUID = "uuid";
+    protected static final String PARAM_LANGUAGE = "language";
     protected static final String PARAM_INITIAL = "initial";
     protected static final String PARAM_TYPE = "mimetype";
     protected static final String PARAM_AREAS = "areas";
@@ -119,8 +122,8 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
      *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters par)
-            throws ProcessingException, SAXException, IOException {
+    public void setup(org.apache.cocoon.environment.SourceResolver _resolver, Map _objectModel,
+            String src, Parameters par) throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, src, par);
 
         Request request = ObjectModelHelper.getRequest(_objectModel);
@@ -128,8 +131,10 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
         }
 
-        this.area = par.getParameter(PARAM_AREA, null);
+        String area = par.getParameter(PARAM_AREA, null);
         this.path = par.getParameter(PARAM_PATH, null);
+        String uuid = par.getParameter(PARAM_UUID, null);
+        String language = par.getParameter(PARAM_LANGUAGE, null);
 
         if (par.isParameter(PARAM_INITIAL)) {
             this.initialTree = Boolean.valueOf(par.getParameter(PARAM_INITIAL, null))
@@ -137,7 +142,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         } else {
             this.initialTree = false;
         }
-        
+
         if (par.isParameter(PARAM_TYPE)) {
             this.showType = Boolean.valueOf(par.getParameter(PARAM_TYPE, null)).booleanValue();
         } else {
@@ -153,8 +158,9 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         if (this.getLogger().isDebugEnabled()) {
-            this.getLogger().debug("Parameter area: " + this.area);
-            this.getLogger().debug("Parameter path: " + this.path);
+            this.getLogger().debug("Parameter area: " + area);
+            this.getLogger().debug("Parameter path: " + path);
+            this.getLogger().debug("Parameter uuid: " + uuid);
             this.getLogger().debug("Parameter initialTree: " + this.initialTree);
             StringBuffer areasStr = new StringBuffer();
             for (int i = 0; i < this.areas.length; i++) {
@@ -162,20 +168,32 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             }
             this.getLogger().debug("Parameter areas: " + areasStr.toString());
         }
-        
+
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             String pubId = null;
             if (par.isParameter(PARAM_PUB)) {
                 pubId = par.getParameter(PARAM_PUB);
-            }
-            else {
+            } else {
                 String webappUrl = ServletHelper.getWebappURI(request);
                 URLInformation info = new URLInformation(webappUrl);
                 pubId = info.getPublicationId();
             }
-            this.publication = factory.getPublication(pubId);
+            Publication pub = factory.getPublication(pubId);
+            this.site = pub.getArea(area).getSite();
+
+            if (this.path == null) {
+                if (site.containsByUuid(uuid, language)) {
+                    Link link = site.getByUuid(uuid, language);
+                    this.path = link.getNode().getPath();
+                } else {
+                    throw new ProcessingException(
+                            "Path parameter not provided, no node for UUID and language found.");
+                }
+            }
+        } catch (ProcessingException e) {
+            throw e;
         } catch (Exception e) {
             throw new ProcessingException("Could not create publication: ", e);
         }
@@ -195,17 +213,16 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.contentHandler.startPrefixMapping(PREFIX, URI);
 
             this.attributes.clear();
-            this.attributes.addAttribute("", ATTR_PUBLICATION, ATTR_PUBLICATION, "CDATA",
-                    this.publication.getId());
-            
+            this.attributes.addAttribute("", ATTR_PUBLICATION, ATTR_PUBLICATION, "CDATA", this.site
+                    .getPublication().getId());
+
             if (!this.initialTree) {
-                this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", this.area);
+                this.attributes
+                        .addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", this.site.getArea());
                 this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.path);
             }
 
-            this.contentHandler.startElement(URI,
-                    NODE_FRAGMENT,
-                    PREFIX + ':' + NODE_FRAGMENT,
+            this.contentHandler.startElement(URI, NODE_FRAGMENT, PREFIX + ':' + NODE_FRAGMENT,
                     this.attributes);
 
             if (this.initialTree) {
@@ -236,26 +253,13 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @throws ProcessingException
      */
     protected void generateFragment() throws SiteException, SAXException, ProcessingException {
-
-        if (!this.area.equals(Publication.AUTHORING_AREA)
-                && !this.area.equals(Publication.ARCHIVE_AREA)
-                && !this.area.equals(Publication.TRASH_AREA)
-                && !this.area.equals(Publication.LIVE_AREA)
-                && !this.area.equals(Publication.STAGING_AREA)) {
-            throw new ProcessingException("Invalid area: " + this.area);
-        }
-
         try {
-            
-            SiteStructure site = this.publication.getArea(this.area).getSite();
-
             SiteNode[] children;
-            
+
             if (this.path.equals("/")) {
-                children = site.getTopLevelNodes();
-            }
-            else {
-                SiteNode node = site.getNode(this.path);
+                children = this.site.getTopLevelNodes();
+            } else {
+                SiteNode node = this.site.getNode(this.path);
                 children = node.getChildren();
             }
 
@@ -269,7 +273,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * Adds the given nodes (not recursive).
      * @param children
      * @throws SAXException
-     * @throws SiteException 
+     * @throws SiteException
      */
     protected void addNodes(SiteNode[] children) throws SAXException, SiteException {
         for (int i = 0; i < children.length; i++) {
@@ -289,68 +293,51 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      */
     protected void generateFragmentInitial(String siteArea) throws SiteException, SAXException,
             ProcessingException {
-        
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(this.publication.getSiteManagerHint());
-            SiteStructure siteTree = this.publication.getArea(siteArea).getSite();
 
-            String label = "";
-            String isFolder = "";
+        String label = "";
+        String isFolder = "";
 
-            // FIXME: don't hardcode area label
-            if (siteArea.equals(Publication.AUTHORING_AREA))
-                label = "Authoring";
-            if (siteArea.equals(Publication.ARCHIVE_AREA))
-                label = "Archive";
-            if (siteArea.equals(Publication.TRASH_AREA))
-                label = "Trash";
-            if (siteArea.equals(Publication.LIVE_AREA))
-                label = "Live";
-            if (siteArea.equals(Publication.STAGING_AREA))
-                label = "Staging";
+        // FIXME: don't hardcode area label
+        if (siteArea.equals(Publication.AUTHORING_AREA))
+            label = "Authoring";
+        if (siteArea.equals(Publication.ARCHIVE_AREA))
+            label = "Archive";
+        if (siteArea.equals(Publication.TRASH_AREA))
+            label = "Trash";
+        if (siteArea.equals(Publication.LIVE_AREA))
+            label = "Live";
+        if (siteArea.equals(Publication.STAGING_AREA))
+            label = "Staging";
 
-            if (siteTree.getTopLevelNodes().length > 0)
-                isFolder = "true";
-            else
-                isFolder = "false";
+        if (this.site.getTopLevelNodes().length > 0)
+            isFolder = "true";
+        else
+            isFolder = "false";
 
-            this.attributes.clear();
-            this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", siteArea);
-            this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
-            this.attributes.addAttribute("", ATTR_LABEL, ATTR_LABEL, "CDATA", label);
+        this.attributes.clear();
+        this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", siteArea);
+        this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
+        this.attributes.addAttribute("", ATTR_LABEL, ATTR_LABEL, "CDATA", label);
 
-            startNode(NODE_SITE);
+        startNode(NODE_SITE);
 
-            if (this.area.equals(siteArea)) {
-                generateFragmentRecursive(siteTree.getTopLevelNodes(), this.path);
-            }
-
-            endNode(NODE_SITE);
-        } catch (Exception e) {
-            throw new ProcessingException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
+        if (this.site.getArea().equals(siteArea)) {
+            generateFragmentRecursive(this.site.getTopLevelNodes(), this.path);
         }
+
+        endNode(NODE_SITE);
     }
 
     /**
-     * Follows the path to find the way in the sitetree to the specified node and opens all
-     * folders on its way.
+     * Follows the path to find the way in the sitetree to the specified node and opens all folders
+     * on its way.
      * @param nodes
      * @param path
      * @throws SiteException
      * @throws SAXException
      */
-    protected void generateFragmentRecursive(SiteNode[] nodes, String path)
-            throws SiteException, SAXException {
+    protected void generateFragmentRecursive(SiteNode[] nodes, String path) throws SiteException,
+            SAXException {
         String nodeid;
         String childid;
 
@@ -403,7 +390,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param nodeName the name of the new node
      * @param node The attributes are taken from this node
      * @throws SAXException if an error occurs while creating the node
-     * @throws SiteException 
+     * @throws SiteException
      */
     protected void startNode(String nodeName, SiteNode node) throws SAXException, SiteException {
         setNodeAttributes(node);
@@ -415,7 +402,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * language-suffix.
      * @param node
      * @throws SAXException if an error occurs while setting the attributes
-     * @throws SiteException 
+     * @throws SiteException
      */
     protected void setNodeAttributes(SiteNode node) throws SAXException, SiteException {
         this.attributes.clear();
@@ -450,18 +437,19 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         if (uuid != null)
             this.attributes.addAttribute("", ATTR_UUID, ATTR_UUID, "CDATA", uuid);
         this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
-        
+
         if (this.showType) {
             try {
-                String type = this.publication.getArea(this.area)
-                    .getDocument(node.getUuid(),this.publication.getDefaultLanguage())
-                    .getMimeType();
-                this.attributes.addAttribute("",ATTR_TYPE, ATTR_TYPE, "CDATA", type);
+                Publication pub = this.site.getPublication();
+                String area = this.site.getArea();
+                String type = pub.getArea(area).getDocument(node.getUuid(),
+                        pub.getDefaultLanguage()).getMimeType();
+                this.attributes.addAttribute("", ATTR_TYPE, ATTR_TYPE, "CDATA", type);
             } catch (PublicationException e) {
                 throw new SiteException(e);
             }
         }
-            
+
     }
 
     /**
@@ -513,19 +501,44 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      */
     protected void addLabel(String label, String language) throws SAXException {
         this.attributes.clear();
-        this.attributes.addAttribute(XML_URI,
-                ATTR_LANG,
-                XML_PREFIX + ":" + ATTR_LANG,
-                "CDATA",
+        this.attributes.addAttribute(XML_URI, ATTR_LANG, XML_PREFIX + ":" + ATTR_LANG, "CDATA",
                 language);
 
-        this.contentHandler.startElement(URI,
-                NODE_LABEL,
-                PREFIX + ':' + NODE_LABEL,
+        this.contentHandler.startElement(URI, NODE_LABEL, PREFIX + ':' + NODE_LABEL,
                 this.attributes);
         char[] labelArray = label.toCharArray();
         this.contentHandler.characters(labelArray, 0, labelArray.length);
         this.contentHandler.endElement(URI, NODE_LABEL, PREFIX + ':' + NODE_LABEL);
+    }
+
+    public Serializable getKey() {
+        String s = ":";
+        String pubId = this.site.getPublication().getId();
+        String area = this.site.getArea();
+        return pubId + s + area + this.path;
+    }
+
+    public SourceValidity getValidity() {
+        if (this.validity == null) {
+            String sourceUri = this.site.getRepositoryNode().getSourceURI();
+            SourceResolver resolver = null;
+            Source source = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                source = resolver.resolveURI(sourceUri);
+                this.validity = source.getValidity();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (resolver != null) {
+                    if (source != null) {
+                        resolver.release(source);
+                    }
+                    this.manager.release(resolver);
+                }
+            }
+        }
+        return this.validity;
     }
 
 }
