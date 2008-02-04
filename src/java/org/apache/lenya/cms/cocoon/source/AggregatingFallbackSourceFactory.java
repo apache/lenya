@@ -43,30 +43,33 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
     
-    private boolean useCache = true;
-    
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
 
-        MRUMemoryStore store = getStore();
         String[] uris;
-        final String cacheKey = getCacheKey(location);
-        final String[] cachedUris = (String[]) store.get(cacheKey);
 
-        if (!useCache || cachedUris == null) {
+        if (useCache()) {
+            MRUMemoryStore store = getStore();
+            final String cacheKey = getCacheKey(location);
+            final String[] cachedUris = (String[]) store.get(cacheKey);
+            if (cachedUris == null) {
+                uris = findUris(location, parameters);
+                store.hold(cacheKey, uris);
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("No cached source URI for key " + cacheKey + ", caching resolved URIs.");
+                }
+            } else {
+                uris = cachedUris;
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Using cached source URIs for key " + cacheKey);
+                }
+            }
+        }
+        else {
             uris = findUris(location, parameters);
-            store.hold(cacheKey, uris);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("No cached source URI for key " + cacheKey + ", caching resolved URIs.");
-            }
-        } else {
-            uris = cachedUris;
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Using cached source URIs for key " + cacheKey);
-            }
         }
         return new AggregatingSource(location, uris, this.manager);
     }

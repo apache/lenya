@@ -63,10 +63,17 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         Serviceable, Contextualizable, URIAbsolutizer {
 
     protected static MRUMemoryStore store;
-    private boolean useCache = true;
-    
+    private static Boolean useCache = null;
+
     protected static final String STORE_ROLE = FallbackSourceFactory.class.getName() + "Store";
-    
+
+    protected boolean useCache() {
+        if (useCache == null) {
+            useCache = Boolean.valueOf(this.manager.hasService(STORE_ROLE));
+        }
+        return useCache.booleanValue();
+    }
+
     protected MRUMemoryStore getStore() {
         if (store == null) {
             try {
@@ -77,41 +84,51 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         }
         return store;
     }
-    
+
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
 
-        MRUMemoryStore store = getStore();
         Source source;
-        final String cacheKey = getCacheKey(location);
-        final String cachedSourceUri = (String) store.get(cacheKey);
 
-        if (!useCache || cachedSourceUri == null) {
-            source = findSource(location, parameters);
-            final String resolvedSourceUri = source.getURI();
-            store.hold(cacheKey, resolvedSourceUri);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("No cached source URI for key " + cacheKey + ", caching URI " + resolvedSourceUri);
-            }
-        } else {
-            SourceResolver resolver = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                source = resolver.resolveURI(cachedSourceUri);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (resolver != null) {
-                    this.manager.release(resolver);
+        if (useCache()) {
+            MRUMemoryStore store = getStore();
+            final String cacheKey = getCacheKey(location);
+            final String cachedSourceUri = (String) store.get(cacheKey);
+
+            if (cachedSourceUri == null) {
+                source = findSource(location, parameters);
+                final String resolvedSourceUri = source.getURI();
+                store.hold(cacheKey, resolvedSourceUri);
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(
+                            "No cached source URI for key " + cacheKey + ", caching URI "
+                                    + resolvedSourceUri);
+                }
+            } else {
+                SourceResolver resolver = null;
+                try {
+                    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                    source = resolver.resolveURI(cachedSourceUri);
+                } catch (ServiceException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    if (resolver != null) {
+                        this.manager.release(resolver);
+                    }
+                }
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(
+                            "Using cached source URI " + cachedSourceUri + " for key " + cacheKey);
                 }
             }
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Using cached source URI " + cachedSourceUri + " for key " + cacheKey);
-            }
+
+        } else {
+            source = findSource(location, parameters);
         }
+
         return source;
     }
 
@@ -251,7 +268,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
     /** The ServiceManager */
     protected ServiceManager manager;
-    
+
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
