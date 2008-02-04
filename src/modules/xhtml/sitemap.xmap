@@ -84,13 +84,13 @@
       
       <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} -->
       <map:match pattern="*.xml/*/*/*/*">
-        <map:generate src="lenya-document:{4},lang={5}{link:rev}"/>
+        <map:generate src="lenya-document:{4},pub={2},area={3},lang={5}{link:rev}"/>
         <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl">
           <map:parameter name="rendertype" value="{request-param:rendertype}"/>
           <map:parameter name="nodeid" value="{doc-info:{2}:{3}:{4}:{5}:nodeName}"/>
           <map:parameter name="language" value="{4}"/>
         </map:transform>
-        <map:transform type="cinclude"/>
+        <map:transform type="include"/>
         <map:serialize type="xml"/>
       </map:match>
 
