@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
@@ -62,7 +59,7 @@ import org.apache.excalibur.source.SourceFactory;
  * </ul>
  */
 public class SiteSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
-        Contextualizable, Serviceable, Configurable {
+        Contextualizable, Serviceable {
 
     protected static final String SCHEME = "site";
 
@@ -82,12 +79,6 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration) throws ConfigurationException {
     }
 
     /**
