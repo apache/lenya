@@ -35,7 +35,7 @@
 Start the shell of your choice and enter:
 </p>
 <source>
-svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-2.0.x
+svn co http://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0 lenya-2.0.x
 </source>
 </section>
 
