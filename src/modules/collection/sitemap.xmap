@@ -24,18 +24,14 @@
 
     <map:pipeline>
       
-      <map:match pattern="collectionWithChildren/*/*/*.xml">
-        <map:generate src="cocoon:/collectionWithChildren/{1}/{page-envelope:publication-id}/{page-envelope:area}/{2}/{3}.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
       <!-- collectionWithChildren/{1:allLanguages(true|false)}/{2:pub}/{3:area}/{4:uuid}/{5:language}.xml -->
       <map:match pattern="collectionWithChildren/*/*/*/*/*.xml">
         <map:generate type="sitetree-fragment">
           <map:parameter name="pub" value="{2}"/>
           <map:parameter name="areas" value="{3}"/>
           <map:parameter name="area" value="{3}"/>
-          <map:parameter name="path" value="{doc-info:{2}:{3}:{4}:{5}:path}"/>
+          <map:parameter name="uuid" value="{4}"/>
+          <map:parameter name="language" value="{5}"/>
           <map:parameter name="initial" value="false"/>
           <map:parameter name="mimetype" value=""/>
         </map:generate>
@@ -47,20 +43,22 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- metadata/{uuid}/{language}.xml -->
-      <map:match pattern="metadata/*/*.xml">
-        <map:generate type="lenyaMetaData" src="lenya-document:{1},lang={2}"/>
+      <!-- metadata/{1:pub}/{2:area}{3:uuid}/{4:language}.xml -->
+      <map:match pattern="metadata/*/*/*/*.xml">
+        <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4}"/>
         <map:serialize type="xml"/>
       </map:match>
       
       <!-- collection format -->
       <map:match pattern="collection.xml/*/*/*/*">
         <map:generate src="lenya-document:{3},pub={1},area={2},lang={4}{link:rev}"/>
-        <map:transform src="fallback://lenya/modules/collection/xslt/prepareCinclude.xsl">
+        <map:transform src="fallback://lenya/modules/collection/xslt/prepareInclude.xsl">
+          <map:parameter name="pub" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
           <map:parameter name="uuid" value="{3}"/>
           <map:parameter name="language" value="{4}"/>
         </map:transform>
-        <map:transform type="cinclude"/>
+        <map:transform type="include"/>
         <map:serialize type="xml"/>
       </map:match>        
       

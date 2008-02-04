@@ -4,16 +4,23 @@
   xmlns:ci="http://apache.org/cocoon/include/1.0">
   
   
+  <xsl:param name="pub"/>
+  <xsl:param name="area"/>
   <xsl:param name="uuid"/>
   <xsl:param name="language"/>
   
   
-  <xsl:template match="col:collection">
+  <xsl:template match="/col:collection">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <ci:include src="cocoon://modules/collection/metadata/{$uuid}/{$language}.xml"/>
-      <xsl:apply-templates select="col:document"/>
+      <ci:include src="cocoon://modules/collection/metadata/{$pub}/{$area}/{$uuid}/{$language}.xml"/>
+      <xsl:apply-templates select="*"/>
     </xsl:copy>
+  </xsl:template>
+  
+  
+  <xsl:template match="*/col:collection">
+    <xsl:apply-templates select="*"/>
   </xsl:template>
   
   
@@ -21,8 +28,8 @@
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:if test="not(*)">
-        <ci:include src="cocoon://modules/collection/metadata/{@uuid}/{@xml:lang}.xml"/>
-        <ci:include src="lenya-document:{@uuid},lang={@xml:lang}?format=xhtml"/>
+        <ci:include src="cocoon://modules/collection/metadata/{$pub}/{$area}/{@uuid}/{@xml:lang}.xml"/>
+        <ci:include src="lenya-document:{@uuid},pub={$pub},area={$area},lang={@xml:lang}?format=xhtml"/>
       </xsl:if>
       <xsl:copy-of select="*"/>
     </xsl:copy>

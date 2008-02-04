@@ -35,6 +35,7 @@
   
   <xsl:param name="nodeid"/>
   <xsl:param name="language"/>
+  <xsl:param name="pub"/>
   <xsl:param name="area"/>
   
   <xsl:variable name="maxChars">100</xsl:variable>

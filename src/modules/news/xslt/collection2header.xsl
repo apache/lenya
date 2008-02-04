@@ -30,11 +30,14 @@
     exclude-result-prefixes="xhtml lenya col meta dc i18n"
     >
     
+  <xsl:param name="pub"/>
+  <xsl:param name="area"/>
   <xsl:param name="uuid"/>
+  <xsl:param name="language"/>
   
   <xsl:template match="/col:collection">
     <link rel="alternate" type="application/rss+xml"
-      title="RSS" href="lenya-document:{$uuid}?uuid2url.extension=rss" />
+      title="RSS" href="lenya-document:{$uuid},pub={$pub},area={$area},lang={$language}?uuid2url.extension=rss" />
   </xsl:template>
 
 </xsl:stylesheet> 

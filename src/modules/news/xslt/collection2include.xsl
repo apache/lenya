@@ -33,6 +33,8 @@
   <xsl:import href="fallback://lenya/modules/news/xslt/collection2xhtml.xsl"/>
   
   <xsl:param name="nodeid"/>
+  <xsl:param name="pub"/>
+  <xsl:param name="area"/>
   <xsl:param name="language"/>
   <xsl:param name="uuid"/>
   
@@ -42,7 +44,7 @@
     <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
     <div id="news">
       <div class="rsslink">
-        <a type="application/rss+xml" href="lenya-document:{$uuid}?uuid2url.extension=rss">RSS 2.0</a>
+        <a type="application/rss+xml" href="lenya-document:{$uuid},pub={$pub},area={$area},lang={$language}?uuid2url.extension=rss">RSS 2.0</a>
       </div>
       <h1><xsl:value-of select="$title"/></h1>
       <xsl:choose>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
-  xmlns:ci="http://apache.org/cocoon/include/1.0">
+  xmlns:i="http://apache.org/cocoon/include/1.0">
   
+  <xsl:param name="pub"/>
+  <xsl:param name="area"/>
   <xsl:param name="uuid"/>
   <xsl:param name="language"/>
   
@@ -17,10 +19,10 @@
               <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-          <ci:include src="cocoon://modules/collection/collectionWithChildren/{$allLanguages}/{$uuid}/{$language}.xml" select="*/*"/>
+          <i:include src="cocoon://modules/collection/collectionWithChildren/{$allLanguages}/{$pub}/{$area}/{$uuid}/{$language}.xml" select="*/*"/>
         </xsl:when>
         <xsl:when test="@type = 'link'">
-          <ci:include src="{@href}" select="*/*"/>
+          <i:include src="{@href}" select="*/*"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy-of select="col:document"/>
