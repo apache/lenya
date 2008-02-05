@@ -53,7 +53,7 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
 
         if (useCache()) {
             MRUMemoryStore store = getStore();
-            final String cacheKey = getCacheKey(location);
+            final String cacheKey = getCacheKey(getPublicationId(), location);
             final String[] cachedUris = (String[]) store.get(cacheKey);
             if (cachedUris == null) {
                 uris = findUris(location, parameters);

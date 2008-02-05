@@ -65,7 +65,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     protected static MRUMemoryStore store;
     private static Boolean useCache = null;
 
-    protected static final String STORE_ROLE = FallbackSourceFactory.class.getName() + "Store";
+    public static final String STORE_ROLE = FallbackSourceFactory.class.getName() + "Store";
 
     protected boolean useCache() {
         if (useCache == null) {
@@ -95,7 +95,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
         if (useCache()) {
             MRUMemoryStore store = getStore();
-            final String cacheKey = getCacheKey(location);
+            final String pubId = getPublicationId();
+            final String cacheKey = getCacheKey(pubId, location);
             final String cachedSourceUri = (String) store.get(cacheKey);
 
             if (cachedSourceUri == null) {
@@ -132,9 +133,13 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         return source;
     }
 
-    protected String getCacheKey(final String location) {
-        String pubId = getPublicationId();
-        String cacheKey = pubId == null ? location : pubId + ":" + location;
+    /**
+     * @param pubId The publication ID.
+     * @param fallbackUri The fallback:// (or template-fallback:// etc.) URI.
+     * @return A string.
+     */
+    public static String getCacheKey(final String pubId, final String fallbackUri) {
+        String cacheKey = pubId == null ? fallbackUri : pubId + ":" + fallbackUri;
         return cacheKey;
     }
 
