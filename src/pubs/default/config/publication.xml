@@ -107,7 +107,7 @@
        Lenya can rewrite the links to cater to special proxy setups.
        Make sure to update the GlobalProxies configuration in cocoon.xconf as well.
        For information about these settings, read
-       http://lenya.apache.org/docu/docs/2_0_x/tutorials/proxy.html
+       http://lenya.apache.org/docs/2_0_x/tutorials/proxy.html
       
        This example setting simulates the following situation:
        * A customer wants a company hostname and URLs without Lenya-specific
