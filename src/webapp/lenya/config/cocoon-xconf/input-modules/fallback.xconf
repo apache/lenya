@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'fallback']">
     <component-instance logger="core.modules.input.fallback" name="fallback"
-      class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationTemplateFallbackModule">
-      <directory src="context:///lenya"/>
+      class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule">
+      <parameter name="protocol" value="fallback"/>
     </component-instance>
   </xconf>
