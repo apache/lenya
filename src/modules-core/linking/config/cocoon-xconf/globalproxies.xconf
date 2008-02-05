@@ -23,7 +23,7 @@
   <!-- Lenya can rewrite the links to cater to special proxy setups.
     Make sure to update the proxy configuration in publication.xml as well.
     For information about these settings, read
-    http://lenya.apache.org/docu/docs/2_0_x/tutorials/proxy.html
+    http://lenya.apache.org/docs/2_0_x/tutorials/proxy.html
 
     The example setting below describes a test setup that corresponds to the example 
     in src/pubs/default/config/publication.xml.
