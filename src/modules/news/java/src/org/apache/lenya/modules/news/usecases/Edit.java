@@ -60,7 +60,7 @@ public class Edit extends InvokeWorkflow {
         short number = Short.parseShort(numberString);
         
         String allLanguagesString = getBooleanCheckboxParameter(SHOW_ALL_LANGUAGES);
-        boolean allLanguages = Boolean.parseBoolean(allLanguagesString);
+        boolean allLanguages = Boolean.valueOf(allLanguagesString).booleanValue();
         
         // we must create a new wrapper, because a new (modifiable) session is used
         NewsWrapper news = new NewsWrapper(getSourceDocument(), getLogger());
