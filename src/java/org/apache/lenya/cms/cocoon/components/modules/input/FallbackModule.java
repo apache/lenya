@@ -18,208 +18,145 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.avalon.framework.parameters.Parameterizable;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
+import org.apache.excalibur.store.impl.MRUMemoryStore;
+import org.apache.lenya.cms.cocoon.source.FallbackSourceFactory;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * <p>
- * This module checks if a file exists in a publiation, and if not, it chooses the core file. The
- * attribute name must a path relatively to the <code>webapps/lenya/lenya</code> directory.
+ * This module returns the actual source URI of a fallback:// source. The protocol (fallback,
+ * template-fallback, ...) is configurable via the <em>protocol</em> parameter.
  * </p>
- * <p>
- * Example: <code>{fallback:xslt/style.xsl}</code> looks if
- * <code>lenya/pubs/(publication-id)/lenya/xslt/style.xsl</code> exists, and if not, it uses
- * <code>lenya/xslt/style.xsl</code>.
- * 
- * @version $Id$
  */
-public class FallbackModule extends AbstractPageEnvelopeModule {
+public class FallbackModule extends AbstractInputModule implements Serviceable, Parameterizable {
 
-    private String[] baseUris;
+    protected static final String PARAM_PROTOCOL = "protocol";
+    protected ServiceManager manager;
+    private String protocol;
+    protected static MRUMemoryStore store;
+    private static Boolean useCache = null;
 
-    /**
-     * <code>PATH_PREFIX</code> The path prefix from the webapp
-     */
-    public static final String PATH_PREFIX = "lenya/";
-
-    protected static final String ELEMENT_PATH = "directory";
-
-    protected static final String ATTRIBUTE_SRC = "src";
-
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-
-        Configuration[] pathConfigs = conf.getChildren(ELEMENT_PATH);
-        List baseUriList = new ArrayList();
-
-        SourceResolver resolver = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            Source source = null;
-            for (int i = 0; i < pathConfigs.length; i++) {
-                String uri = pathConfigs[i].getAttribute(ATTRIBUTE_SRC);
-                try {
-                    source = resolver.resolveURI(uri);
-                    if (source.exists()) {
-                        File file = SourceUtil.getFile(source);
-                        if (file.isDirectory()) {
-                            baseUriList.add(uri);
-                        } else {
-                            getLogger().warn("Omitting path [" + uri + "] (not a directory).");
-                        }
-                    } else {
-                        getLogger().warn("Omitting path [" + uri + "] (does not exist).");
-                    }
-                } catch (Exception e) {
-                    getLogger().error("Could not resolve path [" + uri + "]: ", e);
-                    throw e;
-                } finally {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new ConfigurationException("Configuring failed: ", e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
+    protected boolean useCache() {
+        if (useCache == null) {
+            useCache = Boolean.valueOf(this.manager.hasService(FallbackSourceFactory.STORE_ROLE));
         }
-
-        this.baseUris = (String[]) baseUriList.toArray(new String[baseUriList.size()]);
+        return useCache.booleanValue();
     }
 
-    /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
-     */
+    protected MRUMemoryStore getStore() {
+        if (store == null) {
+            try {
+                store = (MRUMemoryStore) this.manager.lookup(FallbackSourceFactory.STORE_ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return store;
+    }
+
+    protected String getPublicationId(Map objectModel) {
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        String webappUri = ServletHelper.getWebappURI(request);
+        URLInformation info = new URLInformation(webappUri);
+        String pubId = null;
+        try {
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            String pubIdCandidate = info.getPublicationId();
+            if (pubIdCandidate != null && factory.existsPublication(pubIdCandidate)) {
+                pubId = pubIdCandidate;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return pubId;
+    }
+
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Resolving file for path [" + name + "]");
-        }
-
-        String resolvedUri = resolveURI(name, objectModel);
-        return resolvedUri;
-    }
-
-    /**
-     * Resolves the URI for a certain path.
-     * @param path The path.
-     * @param objectModel The object model.
-     * @return A string.
-     * @throws ConfigurationException if an error occurs.
-     */
-    protected String resolveURI(final String path, Map objectModel) throws ConfigurationException {
-        String resolvedUri = null;
-        String checkedUris = "\n";
-
-        SourceResolver resolver = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-
-            String[] _baseUris = getBaseURIs(objectModel, path);
-            Source source = null;
-            int i = 0;
-            while (resolvedUri == null && i < _baseUris.length) {
-                String uri = _baseUris[i] + "/" + path;
-
-                checkedUris += uri + "\n";
-
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Trying to resolve URI [" + uri + "]");
-                }
-
-                try {
-                    source = resolver.resolveURI(uri);
-                    if (source.exists()) {
-                        resolvedUri = uri;
-                    } else {
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("Skipping URI [" + uri + "] (does not exist).");
-                        }
-                    }
-                } catch (Exception e) {
-                    getLogger().error("Could not resolve URI [" + uri + "]: ", e);
-                    throw e;
-                } finally {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                }
-                i++;
+        String uri;
+        String fallbackUri = getFallbackUri(name);
+        if (useCache()) {
+            final String pubId = getPublicationId(objectModel);
+            String cacheKey = FallbackSourceFactory.getCacheKey(pubId, fallbackUri);
+            MRUMemoryStore store = getStore();
+            if (store.containsKey(cacheKey)) {
+                uri = (String) store.get(cacheKey);
             }
-
-        } catch (Exception e) {
-            throw new ConfigurationException("Resolving attribute [" + path + "] failed: ", e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
-        }
-
-        if (resolvedUri == null) {
-            /*
-            throw new ConfigurationException("Could not resolve file for path [" + path + "]."
-                    + "\nChecked URIs:" + checkedUris);
-            */
-            resolvedUri = this.baseUris[this.baseUris.length - 1] + "/" + path;
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("No URI resolved, choosing last defined URI: [" + resolvedUri + "]");
+            else {
+                uri = resolveSourceUri(name);
             }
         }
         else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Resolved URI: [" + resolvedUri + "]");
+            uri = resolveSourceUri(name);
+        }
+        return uri;
+    }
+
+    protected String resolveSourceUri(String name) throws ConfigurationException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getFallbackUri(name));
+            return source.getURI();
+        } catch (Exception e) {
+            throw new ConfigurationException("Resolving fallback source [" + name + "] failed: ", e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
             }
         }
-        return resolvedUri;
     }
 
-    /**
-     * Returns the base directory URIs in the order they should be traversed.
-     * @param objectModel The object model.
-     * @param attributeName The name of the module attribute.
-     * @return An array of strings.
-     * @throws ConfigurationException if an error occurs.
-     */
-    protected String[] getBaseURIs(Map objectModel, String attributeName) throws ConfigurationException {
-        return this.baseUris;
+    protected String getFallbackUri(String name) {
+        return this.protocol + "://" + name;
     }
 
-    /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
-     */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         return Collections.EMPTY_SET.iterator();
     }
 
-    /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
-     */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel) };
-
         return objects;
+    }
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+        
+    }
+
+    public void parameterize(Parameters params) throws ParameterException {
+        this.protocol = params.getParameter(PARAM_PROTOCOL);
+        
     }
 
 }
