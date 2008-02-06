@@ -17,7 +17,6 @@
 -->
 
 <menu xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
-  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns="http://apache.org/cocoon/lenya/menubar/1.0">
   
@@ -35,7 +34,7 @@
     
     <menu i18n:attr="name" name="Edit">
       <block areas="authoring" resourceTypes="cforms">
-        <item wf:event="edit" uc:usecase="cforms.edit" href="?"><i18n:text>With CForms</i18n:text></item>
+        <item uc:usecase="cforms.edit" href="?"><i18n:text>With CForms</i18n:text></item>
         <!-- TODO: add RelaxNG schemas for cforms doctype.
           <item wf:event="edit" uc:usecase="editors.forms"><xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
           <item wf:event="edit" uc:usecase="editors.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
