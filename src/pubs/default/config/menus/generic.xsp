@@ -24,7 +24,6 @@
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
-    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
     xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
 >
@@ -82,8 +81,8 @@
       <menu i18n:attr="name" name="Edit">
         
         <block areas="authoring">
-          <item wf:event="edit" uc:usecase="tab.meta" href="?"><i18n:text>Edit Metadata</i18n:text></item>
-          <item wf:event="edit" uc:usecase="sitemanagement.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
+          <item uc:usecase="tab.meta" href="?"><i18n:text>Edit Metadata</i18n:text></item>
+          <item uc:usecase="sitemanagement.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
         </block>
 
         <block areas="site">
@@ -115,10 +114,10 @@
       
       <menu i18n:attr="name" name="Workflow">
         <block areas="authoring site">
-          <item uc:usecase="workflow.submit" wf:event="submit" href="?"><i18n:text>workflow.submit</i18n:text></item>
-          <item uc:usecase="workflow.reject" wf:event="reject" href="?"><i18n:text>workflow.reject</i18n:text></item>
-          <item uc:usecase="workflow.publish" wf:event="publish" href="?"><i18n:text>workflow.publish</i18n:text></item>
-          <item uc:usecase="workflow.deactivate" wf:event="deactivate" href="?"><i18n:text>workflow.deactivate</i18n:text></item>
+          <item uc:usecase="workflow.submit" href="?"><i18n:text>workflow.submit</i18n:text></item>
+          <item uc:usecase="workflow.reject" href="?"><i18n:text>workflow.reject</i18n:text></item>
+          <item uc:usecase="workflow.publish" href="?"><i18n:text>workflow.publish</i18n:text></item>
+          <item uc:usecase="workflow.deactivate" href="?"><i18n:text>workflow.deactivate</i18n:text></item>
        </block>
         <block areas="authoring site">
           <item uc:usecase="workflow.multiWorkflow" href="?"><i18n:text>workflow.multiWorkflow</i18n:text></item>
