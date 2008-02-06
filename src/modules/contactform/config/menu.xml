@@ -18,22 +18,14 @@
 
 <!-- $Id: generic.xsp 155806 2005-03-01 17:55:42Z andreas $ -->
 
-<xsp:page 
-    language="java" 
-    xmlns:xsp="http://apache.org/xsp"
-    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
-    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
-    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
->
-
-  <menu>
-    <menus>
-      <menu i18n:attr="name" name="File">
-        <block admin="false">
-          <item uc:usecase="usecasedocument.create" href="?usecase=contactform.sendMessage"><i18n:text>New Contact Form</i18n:text></item>
-        </block>
-      </menu>
-    </menus>
-  </menu>
-  
-</xsp:page>
+<menu xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0">
+  <menus>
+    <menu i18n:attr="name" name="File">
+      <block admin="false">
+        <item uc:usecase="usecasedocument.create" href="?usecase=contactform.sendMessage"><i18n:text>New Contact Form</i18n:text></item>
+      </block>
+    </menu>
+  </menus>
+</menu>
