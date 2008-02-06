@@ -138,7 +138,7 @@
         <!-- for everything else: --> 
         <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
           <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
-          <map:part src="cocoon:/menu-xml/modules/{1}/{2}.xml" strip-root="true"/>
+          <map:part src="cocoon:/menu-xml/modules.xml" strip-root="true"/>
         </map:aggregate>
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
         <map:transform type="menufilter"/>
@@ -169,30 +169,32 @@
 
 
       <!-- collect the menu items for all modules used in the publication -->
-      <!-- menu-xml/modules/{pub-id}/{area}.xml -->
-      <map:match pattern="menu-xml/modules/*/*.xml">
+      <!-- menu-xml/modules.xml -->
+      <map:match pattern="menu-xml/modules.xml">
         <map:generate src="aggregate-fallback://config/publication.xml"/>
-        <map:transform src="lenya/xslt/modules/modules2xinclude.xsl">
-          <map:parameter name="area" value="{2}"/>
-        </map:transform>
+        <map:transform src="lenya/xslt/modules/modules2xinclude.xsl"/>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
   
       <!-- query menu items from modules (used by the xinclude above) -->
+      <!--
+        FIXME: This pipeline should be replaced by a direct inclusion of the module menu XML.
+        Unfortunately this is not possible yet because we have to support dynamic menus for backwards compatibility.
+      -->
       <!-- menu-xml/module/{area}/{module-id}.xml -->
-      <map:match pattern="menu-xml/module/*/*.xml">
+      <map:match pattern="menu-xml/module/*.xml">
         <map:select type="resource-exists">
-          <map:when test="fallback://lenya/modules/{2}/config/menu.xml">
-            <map:generate src="fallback://lenya/modules/{2}/config/menu.xml"/>
+          <map:when test="fallback://lenya/modules/{1}/config/menu.xml">
+            <map:generate src="fallback://lenya/modules/{1}/config/menu.xml"/>
             <map:serialize type="xml"/>
           </map:when>
-          <map:when test="fallback://lenya/modules/{2}/config/menu.xsp">
-            <map:generate src="fallback://lenya/modules/{2}/config/menu.xsp" type="serverpages"/>
+          <map:when test="fallback://lenya/modules/{1}/config/menu.xsp">
+            <map:generate src="fallback://lenya/modules/{1}/config/menu.xsp" type="serverpages"/>
             <map:serialize type="xml"/>
           </map:when>
-          <map:when test="fallback://lenya/modules/{2}/menus.xmap">
-            <map:mount uri-prefix="menu-xml/module/{1}/" src="{fallback:lenya/modules/{2}/menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
+          <map:when test="fallback://lenya/modules/{1}/menus.xmap">
+            <map:mount uri-prefix="menu-xml/module/" src="{fallback:lenya/modules/{1}/menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
           <map:otherwise>
             <map:generate src="lenya/content/menus/emptyMenu.xml"/>
