@@ -12,6 +12,7 @@ Bugfixes
 * Editing documents in non-default languages with Kupu is now possible
 * Creating publications with empty name is now prohibited
 * Overview tab works for documents with empty DublinCore titles
+* Insert Asset scales images via svg instead of via the browser
 
 New Features
 ============
