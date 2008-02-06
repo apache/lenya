@@ -1,0 +1,20 @@
+
+About Apache Lenya 2.0.1
+========================
+
+Subversion repository URL: https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0_1
+Cocoon version: 2.11
+
+Bugfixes
+========
+
+* Restored compatibility with Java 1.4
+* Editing documents in non-default languages with Kupu is now possible
+* Creating publications with empty name is now prohibited
+* Overview tab works for documents with empty DublinCore titles
+
+New Features
+============
+
+* Internationalization for resource type sample names
+
