@@ -127,8 +127,9 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                         usecase = usecaseResolver.resolve(this.sourceUrl, usecaseName);
                         usecase.setSourceURL(this.sourceUrl);
                         usecase.setName(usecaseName);
-                        if (attr.getValue(HREF_ATTRIBUTE) != null) {
-                            passRequestParameters(usecase, attr.getValue(HREF_ATTRIBUTE));
+                        String hrefAttribute = attr.getValue(HREF_ATTRIBUTE);
+                        if (hrefAttribute != null) {
+                            passRequestParameters(usecase, hrefAttribute);
                         }
                         usecase.checkPreconditions();
                         if (usecase.hasErrors()) {
@@ -138,11 +139,10 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                             removeHrefAttribute(attributes);
                             messages = usecase.getErrorMessages();
                         }
-                        Object itemState = usecase.getParameter(Usecase.PARAMETER_ITEM_STATE);
-                        if (itemState != null && itemState instanceof Boolean) {
-                            Boolean state = (Boolean) itemState;
-                            attributes.addAttribute("", CHECKED_ATTRIBUTE, CHECKED_ATTRIBUTE, "CDATA", state.toString());
+                        else if (hrefAttribute == null) {
+                            attributes.addAttribute("", HREF_ATTRIBUTE, HREF_ATTRIBUTE, "CDATA", this.sourceUrl);
                         }
+                        setItemState(attributes, usecase);
                     } finally {
                         if (usecase != null) {
                             usecaseResolver.release(usecase);
@@ -164,6 +164,14 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             addMessages(messages);
         }
 
+    }
+
+    protected void setItemState(AttributesImpl attributes, Usecase usecase) {
+        Object itemState = usecase.getParameter(Usecase.PARAMETER_ITEM_STATE);
+        if (itemState != null && itemState instanceof Boolean) {
+            Boolean state = (Boolean) itemState;
+            attributes.addAttribute("", CHECKED_ATTRIBUTE, CHECKED_ATTRIBUTE, "CDATA", state.toString());
+        }
     }
 
     /**
