@@ -84,6 +84,7 @@
         <li>
           <xsl:call-template name="checkItem"/>
           <a>
+            <xsl:copy-of select="@target"/>
           <xsl:attribute name="href">
             <xsl:value-of select="@href"/>
             <xsl:apply-templates select="@*[local-name() != 'href']"/>
@@ -108,6 +109,7 @@
         <li class="disabled">
           <xsl:call-template name="checkItem"/>
           <a>
+            <xsl:copy-of select="@target"/>
             <xsl:for-each select="menu:message">
               <xsl:copy>
                 <i18n:translate>
