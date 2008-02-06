@@ -32,11 +32,8 @@
   <menu>
     <menus>
       <menu i18n:attr="name" name="Development">
-        <block areas="site authoring">
-          <item>
-            <xsp:attribute name="href">/modules/development/log4j.log</xsp:attribute>
-            <i18n:text>Show Log</i18n:text>
-          </item>
+        <block areas="admin site authoring">
+          <item href="/modules/development/log4j.log"><i18n:text>Show Log</i18n:text></item>
         </block>
       </menu>
     </menus>
