@@ -136,9 +136,7 @@
           <map:part src="cocoon:/menu-xml/modules/{1}/{2}.xml" strip-root="true"/>
         </map:aggregate>
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
-        <map:transform src="lenya/xslt/menu/filter-menu.xsl">
-          <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
-        </map:transform>
+        <map:transform type="menufilter"/>
         <!-- Disable menu items according to usecase policies -->
         <map:transform type="usecasemenu"/>
         <map:transform src="fallback://lenya/xslt/menu/menubar2xhtml.xsl">
@@ -192,7 +190,7 @@
             <map:mount uri-prefix="menu-xml/module/{1}/" src="{fallback:lenya/modules/{2}/menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="lenya/content/menus/live.xml"/>
+            <map:generate src="lenya/content/menus/emptyMenu.xml"/>
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
