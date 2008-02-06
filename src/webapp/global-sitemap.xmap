@@ -201,14 +201,6 @@
         </map:select>
       </map:match>
 
-      <!-- global admin menu items -->
-      <!-- FIXME: this is actually independent from the publication-id! -->
-      <!-- menu-xml/{publication-id}/admin/... -->
-      <map:match pattern="menu-xml/*/admin/**" internal-only="true">
-        <map:generate type="serverpages" src="lenya/content/menus/admin.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
       <!-- include publication-specific menus -->
       <!-- menu-xml/{publication-id}/... -->
       <map:match pattern="menu-xml/*/**" internal-only="true">
