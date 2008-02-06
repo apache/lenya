@@ -25,13 +25,13 @@
     <map:pipeline>
     	
       <map:match pattern="live/**">
-        <map:generate type="serverpages" src="fallback://lenya/content/menus/live.xsp"/>
+        <map:generate src="fallback://lenya/content/menus/emptyMenu.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       
       <!-- all document types -->
       <map:match pattern="**">
-        <map:generate type="serverpages" src="fallback://config/menus/generic.xsp"/>
+        <map:generate src="fallback://config/menus/menu.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       
