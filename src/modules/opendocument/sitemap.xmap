@@ -48,6 +48,12 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+      
+      <map:match type="request-parameter" pattern="download">
+        <map:match pattern="**/*.html">
+          <map:redirect-to uri="{2}.odt?lenya.module=opendocument"/>
+        </map:match>
+      </map:match>
 
       <map:match pattern="**.odt">
         <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}" mime-type="application/vnd.oasis.opendocument.text"/>
