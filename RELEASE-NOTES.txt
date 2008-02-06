@@ -3,7 +3,7 @@ About Apache Lenya 2.0.1
 ========================
 
 Subversion repository URL: https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0_1
-Cocoon version: 2.11
+Cocoon version: 2.1.11
 
 Bugfixes
 ========
