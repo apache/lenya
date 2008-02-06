@@ -84,12 +84,15 @@
   </usecase>
   <usecase id="sitemanagement.changeLabel">
     <role id="sitemanager" method="grant"/>
+    <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.changeNodeID">
     <role id="sitemanager" method="grant"/>
+    <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.changeVisibility">
     <role id="sitemanager" method="grant"/>
+    <role id="edit" method="grant"/>
   </usecase>
   <usecase id="sitemanagement.copy">
     <role id="sitemanager" method="grant"/>
@@ -133,7 +136,6 @@
   </usecase>  
   <usecase id="tab.acArchive">
     <role id="sitemanager" method="grant"/>
-    <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tab.acAuthoring">
     <role id="sitemanager" method="grant"/>
