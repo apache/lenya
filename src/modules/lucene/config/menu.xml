@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,25 +16,16 @@
   limitations under the License.
 -->
 
-<!-- $Id: generic.xsp 155806 2005-03-01 17:55:42Z andreas $ -->
+<menu xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+  xmlns="http://apache.org/cocoon/lenya/menubar/1.0">
+  <menus>
+    <menu i18n:attr="name" name="File">
+      <block areas="site authoring">
+        <item uc:usecase="usecasedocument.create" href="?usecase=lucene.search"><i18n:text>New Search Page</i18n:text></item>
+        <item uc:usecase="lucene.indexSite" href=""><i18n:text>Re-Index Site</i18n:text></item>
+      </block>
+    </menu>
+  </menus>
+</menu>
 
-<xsp:page 
-    language="java" 
-    xmlns:xsp="http://apache.org/xsp"
-    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
-    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
-    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
->
-
-  <menu>
-    <menus>
-      <menu i18n:attr="name" name="File">
-        <block areas="site authoring">
-          <item uc:usecase="usecasedocument.create" href="?usecase=lucene.search"><i18n:text>New Search Page</i18n:text></item>
-          <item uc:usecase="lucene.indexSite" href=""><i18n:text>Re-Index Site</i18n:text></item>
-        </block>
-      </menu>
-    </menus>
-  </menu>
-  
-</xsp:page>
