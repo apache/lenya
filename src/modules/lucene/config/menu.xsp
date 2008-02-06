@@ -29,7 +29,7 @@
   <menu>
     <menus>
       <menu i18n:attr="name" name="File">
-        <block admin="false">
+        <block areas="site authoring">
           <item uc:usecase="usecasedocument.create" href="?usecase=lucene.search"><i18n:text>New Search Page</i18n:text></item>
           <item uc:usecase="lucene.indexSite" href=""><i18n:text>Re-Index Site</i18n:text></item>
         </block>
