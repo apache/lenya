@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,19 +29,19 @@
   <xsl:param name="contextprefix"/>
   <xsl:param name="usecase"/>
   <xsl:param name="position"/>
-
-    
+  
+  
   <xsl:template match="/menu:menu">
     <ul id="menu{$position}">
       <xsl:apply-templates select="menu:menus/menu:menu/menu:block"/>
     </ul>
   </xsl:template>
   
-
+  
   <xsl:template match="menu:block">
     <xsl:apply-templates select="menu:title"/>
     <xsl:apply-templates select="menu:menu | menu:item"/>
-		
+    
     <xsl:if test="position() != last()">
       <li class="lenya-menu-separator"></li>
     </xsl:if>
@@ -76,7 +76,7 @@
     </xsl:if>
   </xsl:template>
   
-  	
+  
   <xsl:template match="menu:item">
     <xsl:choose>
       <xsl:when test="@href">
@@ -84,13 +84,13 @@
           <xsl:call-template name="checkItem"/>
           <a>
             <xsl:copy-of select="@target"/>
-          <xsl:attribute name="href">
-            <xsl:value-of select="@href"/>
-            <xsl:apply-templates select="@*[local-name() != 'href']"/>
-            <xsl:text/>
-          </xsl:attribute>
-          <span><xsl:apply-templates select="i18n:*|text()"/></span>
-        </a></li>
+            <xsl:attribute name="href">
+              <xsl:value-of select="@href"/>
+              <xsl:apply-templates select="@*[local-name() != 'href']"/>
+              <xsl:text/>
+            </xsl:attribute>
+            <span><xsl:apply-templates select="i18n:*|text()"/></span>
+          </a></li>
       </xsl:when>
       <xsl:otherwise>
         <li class="disabled">
