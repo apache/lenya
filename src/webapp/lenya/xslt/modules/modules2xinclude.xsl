@@ -25,8 +25,6 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
-  <xsl:param name="area"/>
-
   <xsl:template match="lenya:publication">
     <menu:menu>
       <xsl:apply-templates select="lenya:modules/lenya:module"/>
@@ -35,7 +33,7 @@
 
   <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
-      <xi:include href="cocoon:/menu-xml/module/{$area}/{@name}.xml" xpointer="xpointer(/*/*)"/>
+      <xi:include href="cocoon:/menu-xml/module/{@name}.xml" xpointer="xpointer(/*/*)"/>
     </xsl:if>
   </xsl:template>
 
