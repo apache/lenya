@@ -21,11 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
@@ -37,6 +39,20 @@ public class ChangeVisibility extends DocumentUsecase {
 
     protected String getEvent() {
         return "edit";
+    }
+
+    public Object getParameter(String name) {
+        if (name.equals(Usecase.PARAMETER_ITEM_STATE)) {
+            Document doc = getSourceDocument();
+            try {
+                return doc != null ? Boolean.valueOf(doc.getLink().getNode().isVisible()) : null;
+            } catch (DocumentException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            return super.getParameter(name);
+        }
     }
 
     /**

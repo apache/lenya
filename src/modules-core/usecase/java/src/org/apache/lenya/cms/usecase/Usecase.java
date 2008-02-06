@@ -35,6 +35,13 @@ public interface Usecase {
     String ROLE = Usecase.class.getName();
     
     /**
+     * The <em>itemState</em> parameter is used to ask the usecase if the corresponding menu item
+     * is checked. The parameter value is supposed to be a {@link java.lang.Boolean} object. If the
+     * value is null, the <em>checked</em> attribute is not added.
+     */
+    public static final String PARAMETER_ITEM_STATE = "itemState";
+    
+    /**
      * @param url The URL the usecase is invoked on.
      */
     void setSourceURL(String url);

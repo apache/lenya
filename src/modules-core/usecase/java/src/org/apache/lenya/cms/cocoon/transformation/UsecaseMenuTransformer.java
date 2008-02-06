@@ -70,6 +70,12 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
      * <code>USECASE_ATTRIBUTE</code> The usecase attribute
      */
     public static final String USECASE_ATTRIBUTE = "usecase";
+    
+    /**
+     * The value of the <em>checked</em> attribute can either be <em>true</em> or <em>false</em>.
+     */
+    public static final String CHECKED_ATTRIBUTE = "checked";
+    
     /**
      * Comment for <code>HREF_ATTRIBUTE</code> The href attribute
      */
@@ -88,7 +94,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     public void startElement(String uri, String localName, String raw, Attributes attr)
             throws SAXException {
 
-        Attributes attributes = attr;
+        AttributesImpl attributes = new AttributesImpl(attr);
         List messages = null;
 
         UsecaseResolver usecaseResolver = null;
@@ -109,7 +115,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Usecase not authorized");
                         }
-                        attributes = removeHrefAttribute(attr);
+                        removeHrefAttribute(attributes);
                         UsecaseMessage message = new UsecaseMessage("Access denied");
                         messages = Collections.singletonList(message);
                     }
@@ -129,9 +135,13 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                             if (getLogger().isDebugEnabled()) {
                                 getLogger().debug("Usecase preconditions not complied");
                             }
-
-                            attributes = removeHrefAttribute(attr);
+                            removeHrefAttribute(attributes);
                             messages = usecase.getErrorMessages();
+                        }
+                        Object itemState = usecase.getParameter(Usecase.PARAMETER_ITEM_STATE);
+                        if (itemState != null && itemState instanceof Boolean) {
+                            Boolean state = (Boolean) itemState;
+                            attributes.addAttribute("", CHECKED_ATTRIBUTE, CHECKED_ATTRIBUTE, "CDATA", state.toString());
                         }
                     } finally {
                         if (usecase != null) {
@@ -159,17 +169,13 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     /**
      * Removes the <code>href</code> attribute.
      * 
-     * @param attr The original attributes.
-     * @return An attributes object.
+     * @param attributes The attributes.
      */
-    protected Attributes removeHrefAttribute(Attributes attr) {
-        Attributes attributes = attr;
+    protected void removeHrefAttribute(AttributesImpl attributes) {
         int hrefIndex = attributes.getIndex(HREF_ATTRIBUTE);
         if (hrefIndex > -1) {
-            attributes = new AttributesImpl(attr);
-            ((AttributesImpl) attributes).removeAttribute(hrefIndex);
+            attributes.removeAttribute(hrefIndex);
         }
-        return attributes;
     }
 
     protected void addMessages(List messages) throws SAXException {
