@@ -35,10 +35,10 @@
     
     <menu i18n:attr="name" name="Edit">
         <block areas="authoring" resourceTypes="xhtml">
-          <item uc:usecase="kupu.edit" href="?"><i18n:text>With Kupu</i18n:text></item>
-          <item uc:usecase="bxe.edit" href="?"><i18n:text>With BXE</i18n:text></item>
+          <item uc:usecase="kupu.edit"><i18n:text>With Kupu</i18n:text></item>
+          <item uc:usecase="bxe.edit"><i18n:text>With BXE</i18n:text></item>
           <item uc:usecase="editors.forms" href="?form=xhtml"><i18n:text>With Forms</i18n:text></item>
-          <item uc:usecase="editors.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
+          <item uc:usecase="editors.oneform"><i18n:text>With one Form</i18n:text></item>
         </block>
     </menu>
     

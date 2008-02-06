@@ -34,7 +34,7 @@
     
     <menu i18n:attr="name" name="Edit">
       <block areas="authoring" resourceTypes="news">
-        <item uc:usecase="news.edit" href="?"><i18n:text>news-settings</i18n:text></item>
+        <item uc:usecase="news.edit"><i18n:text>news-settings</i18n:text></item>
       </block>
     </menu>
     

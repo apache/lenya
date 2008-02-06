@@ -34,10 +34,10 @@
     
     <menu i18n:attr="name" name="Edit">
       <block areas="authoring" resourceTypes="cforms">
-        <item uc:usecase="cforms.edit" href="?"><i18n:text>With CForms</i18n:text></item>
+        <item uc:usecase="cforms.edit"><i18n:text>With CForms</i18n:text></item>
         <!-- TODO: add RelaxNG schemas for cforms doctype.
           <item wf:event="edit" uc:usecase="editors.forms"><xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
-          <item wf:event="edit" uc:usecase="editors.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
+          <item wf:event="edit" uc:usecase="editors.oneform"><i18n:text>With one Form</i18n:text></item>
         -->
       </block>
     </menu>

@@ -32,7 +32,7 @@
     </menu>
     <menu i18n:attr="name" name="Edit">
       <block areas="authoring" resourceTypes="resource">
-        <item uc:usecase="resource.upload" href="?"><i18n:text>Upload File</i18n:text></item>
+        <item uc:usecase="resource.upload"><i18n:text>Upload File</i18n:text></item>
       </block>
     </menu>
   </menus>

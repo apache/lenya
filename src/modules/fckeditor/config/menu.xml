@@ -22,7 +22,7 @@
   <menus>
     <menu i18n:attr="name" name="Edit">
       <block info="false" resourceTypes="xhtml homepage">
-        <item uc:usecase="fckeditor.edit" href="?"><i18n:text>With FCKEditor</i18n:text></item>
+        <item uc:usecase="fckeditor.edit"><i18n:text>With FCKEditor</i18n:text></item>
       </block>
     </menu>
   </menus>

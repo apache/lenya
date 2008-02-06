@@ -16,7 +16,7 @@
   limitations under the License.
 -->
 
-<!-- $Id:$ -->
+<!-- $Id: generic.xsp 155806 2005-03-01 17:55:42Z andreas $ -->
 
 <menu xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
@@ -25,20 +25,21 @@
   <menus>
     <menu i18n:attr="name" name="File">
       <block areas="site authoring" id="create">
-        <item uc:usecase="opendocument.create" href="?doctype=opendocument">
+        <item uc:usecase="sitemanagement.create" href="?doctype=links">
           <i18n:translate>
             <i18n:text>New ... Document</i18n:text>
-            <i18n:param><i18n:text>resourceType-opendocument</i18n:text></i18n:param>
+            <i18n:param><i18n:text>resourceType-links</i18n:text></i18n:param>
           </i18n:translate>
         </item>
       </block>
     </menu>
+    
     <menu i18n:attr="name" name="Edit">
-      <block areas="authoring" resourceTypes="opendocument">
-        <item href="?lenya.module=opendocument&amp;download"><i18n:text>Download ODT</i18n:text></item>
-        <item uc:usecase="opendocument.upload"><i18n:text>Upload ODT</i18n:text></item>
+      <block areas="authoring" resourceTypes="links">
+        <item uc:usecase="editors.oneform"><i18n:text>With one Form</i18n:text></item>
       </block>
     </menu>
+    
   </menus>
   
 </menu>
