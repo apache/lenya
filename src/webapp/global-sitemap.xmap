@@ -180,11 +180,19 @@
       <!-- menu-xml/module/{area}/{module-id}.xml -->
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
+          <map:when test="fallback://lenya/modules/{2}/config/menu.xml">
+            <map:generate src="fallback://lenya/modules/{2}/config/menu.xml"></map:generate>
+            <map:serialize type="xml"/>
+          </map:when>
+          <map:when test="fallback://lenya/modules/{2}/config/menu.xsp">
+            <map:generate src="fallback://lenya/modules/{2}/config/menu.xsp" type="serverpages"/>
+            <map:serialize type="xml"/>
+          </map:when>
           <map:when test="fallback://lenya/modules/{2}/menus.xmap">
-            <map:mount uri-prefix="menu-xml/module/{1}/" src="fallback://lenya/modules/{2}/menus.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
+            <map:mount uri-prefix="menu-xml/module/{1}/" src="{fallback:lenya/modules/{2}/menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
           <map:otherwise>
-            <map:generate type="serverpages" src="lenya/content/menus/live.xsp"/>
+            <map:generate src="lenya/content/menus/live.xml"/>
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
@@ -225,10 +233,10 @@
     -->
     <map:pipeline internal-only="true">
       <map:match pattern="modules/*/**">
-        <map:mount uri-prefix="modules/{1}/" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="modules/{1}/" src="{fallback:lenya/modules/{1}/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
       <map:match pattern="*/modules/*/**">
-        <map:mount uri-prefix="{1}/modules/{2}/" src="fallback://lenya/modules/{2}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="{1}/modules/{2}/" src="{fallback:lenya/modules/{2}/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
 
@@ -239,12 +247,12 @@
         <map:select type="resource-exists">
           <!-- resource exists - serve statically -->
           <map:when test="fallback://lenya/modules/{1}/resources/{2}">
-            <map:mount uri-prefix="modules/" src="fallback://lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
+            <map:mount uri-prefix="modules/" src="{fallback:lenya/module-resources.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
         </map:select>
         <!-- resource doesn't exist or not handled by lenya/module-resources.xmap 
              - delegate to module -->
-        <map:mount uri-prefix="modules/{1}/" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="modules/{1}/" src="{fallback:lenya/modules/{1}/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
 
       <!-- Publication specific Module requests -->
@@ -254,12 +262,12 @@
         <map:select type="resource-exists">
           <!-- resource exists - serve statically -->
           <map:when test="fallback://lenya/modules/{2}/resources/{3}">
-            <map:mount uri-prefix="{1}/modules/" src="fallback://lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
+            <map:mount uri-prefix="{1}/modules/" src="{fallback:lenya/module-resources.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
         </map:select>
         <!-- resource doesn't exist or not handled by lenya/module-resources.xmap 
              - delegate to module -->
-        <map:mount uri-prefix="{1}/modules/{2}/" src="fallback://lenya/modules/{2}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="{1}/modules/{2}/" src="{fallback:lenya/modules/{2}/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
 
     </map:pipeline>
@@ -272,7 +280,7 @@
     -->
     <map:pipeline internal-only="true">
       <map:match pattern="*/**">
-        <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
 
@@ -280,7 +288,7 @@
 
       <!-- enter a module via request parameter -->
       <map:match type="request-parameter" pattern="lenya.module">
-        <map:mount uri-prefix="" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="" src="{fallback:lenya/modules/{1}/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
 
       <!-- delegate usecases to the usecase sitemap -->
@@ -321,7 +329,7 @@
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:when test="OPTIONS">
-            <map:mount uri-prefix="" src="{fallback://lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
           </map:when>
         </map:select>
       </map:match> 
@@ -336,7 +344,7 @@
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:when test="OPTIONS">
-            <map:mount uri-prefix="" src="{fallback://lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
           </map:when>
         </map:select>
       </map:match>

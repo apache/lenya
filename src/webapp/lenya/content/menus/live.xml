@@ -16,15 +16,4 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
-
-<xsp:page 
-  language="java" 
-  xmlns:xsp="http://apache.org/xsp"
->
-
-<menu>
-
-</menu>
-
-</xsp:page>
+<menu xmlns="http://apache.org/cocoon/lenya/menubar/1.0"/>
