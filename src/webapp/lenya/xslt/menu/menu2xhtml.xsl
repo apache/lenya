@@ -26,12 +26,11 @@
   xmlns="http://www.w3.org/1999/xhtml"
   >
   
-<xsl:param name="contextprefix"/>
-<xsl:param name="usecase"/>
-  
-  <xsl:param name="position"></xsl:param>
-  
-  
+  <xsl:param name="contextprefix"/>
+  <xsl:param name="usecase"/>
+  <xsl:param name="position"/>
+
+    
   <xsl:template match="/menu:menu">
     <ul id="menu{$position}">
       <xsl:apply-templates select="menu:menus/menu:menu/menu:block"/>
@@ -89,18 +88,6 @@
             <xsl:value-of select="@href"/>
             <xsl:apply-templates select="@*[local-name() != 'href']"/>
             <xsl:text/>
-            <!--
-            <xsl:if test="$currentTab = 'site'">
-              <xsl:choose>
-                <xsl:when test="contains(@href, '?')">
-                  <xsl:text>&amp;</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:text>?</xsl:text>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:if>
-            -->
           </xsl:attribute>
           <span><xsl:apply-templates select="i18n:*|text()"/></span>
         </a></li>
