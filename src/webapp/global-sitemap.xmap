@@ -179,7 +179,7 @@
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
           <map:when test="fallback://lenya/modules/{2}/config/menu.xml">
-            <map:generate src="fallback://lenya/modules/{2}/config/menu.xml"></map:generate>
+            <map:generate src="fallback://lenya/modules/{2}/config/menu.xml"/>
             <map:serialize type="xml"/>
           </map:when>
           <map:when test="fallback://lenya/modules/{2}/config/menu.xsp">
