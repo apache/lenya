@@ -130,6 +130,11 @@
           <map:generate src="lenya/xslt/util/identity.xsl"/>
           <map:serialize type="xml"/>
         </map:match>
+        <!-- no menu for live area -->
+        <map:match pattern="lenya-page/*/live/**">
+          <map:generate src="lenya/xslt/util/identity.xsl"/>
+          <map:serialize type="xml"/>
+        </map:match>
         <!-- for everything else: --> 
         <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
           <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
@@ -207,7 +212,16 @@
       <!-- include publication-specific menus -->
       <!-- menu-xml/{publication-id}/... -->
       <map:match pattern="menu-xml/*/**" internal-only="true">
-        <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
+        <map:select type="resource-exists">
+          <map:when test="fallback://lenya/pubs/{1}/config/menu.xml">
+            <map:generate src="fallback://lenya/pubs/{1}/config/menu.xml"/>
+            <map:serialize type="xml"/>
+          </map:when>
+          <!-- @deprecated: Mount menus.xmap for backwards-compatibility reasons -->
+          <map:otherwise>
+            <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
+          </map:otherwise>
+        </map:select>
       </map:match>
 
       <!-- FIXME: this is currently unused -->
