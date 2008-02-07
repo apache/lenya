@@ -170,12 +170,14 @@
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
-  
-      <!-- query menu items from modules (used by the xinclude above) -->
+
       <!--
-        FIXME: This pipeline should be replaced by a direct inclusion of the module menu XML.
-        Unfortunately this is not possible yet because we have to support dynamic menus for backwards compatibility.
+        FIXME: The following pipelines should be replaced by a direct inclusion of the menu XML,
+        so that the XML can be cached. This is not possible yet because we support dynamic menus
+        for backwards compatibility.
       -->
+      
+      <!-- query menu items from modules (used by the xinclude above) -->
       <!-- menu-xml/module/{area}/{module-id}.xml -->
       <map:match pattern="menu-xml/module/*.xml">
         <map:select type="resource-exists">
