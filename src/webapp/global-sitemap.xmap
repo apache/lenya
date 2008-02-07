@@ -167,7 +167,6 @@
           <map:parameter name="pub" value="{1}"/>
         </map:transform>
         <map:transform type="include"/>
-        <map:transform src="lenya/xslt/menu/stripMenuRoots.xsl"/>
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
         <map:serialize type="xml"/>
       </map:match>

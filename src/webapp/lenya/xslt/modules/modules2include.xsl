@@ -27,14 +27,14 @@
 
   <xsl:template match="lenya:publication">
     <menu:menu>
-      <i:include src="cocoon:/menu-xml/pub/{$pub}.xml"/>
+      <i:include src="cocoon:/menu-xml/pub/{$pub}.xml" strip-root="true"/>
       <xsl:apply-templates select="lenya:modules/lenya:module"/>
     </menu:menu>
   </xsl:template>
 
   <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
-      <i:include src="cocoon:/menu-xml/module/{@name}.xml">
+      <i:include src="cocoon:/menu-xml/module/{@name}.xml" strip-root="true">
         <i:fallback/>
       </i:include>
     </xsl:if>
