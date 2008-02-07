@@ -17,7 +17,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * 
+ * @see AggregatingFallbackSourceFactory
  */
 public class AggregatingSource implements Source {
 
