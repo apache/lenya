@@ -17,7 +17,7 @@
 -->
 
 <xmap xpath="/sitemap/components/transformers" 
-  unless="/sitemap/components/transformers/transformer[@name = 'link-rewrite']"
+  unless="/sitemap/components/transformers/transformer[@name = 'metaData']"
   xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
     <map:transformer name="metaData" logger="lenya.sitemap.transformer.metaData" src="org.apache.lenya.cms.cocoon.transformation.MetaDataTransformer"/>
