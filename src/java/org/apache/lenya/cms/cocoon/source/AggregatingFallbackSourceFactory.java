@@ -38,8 +38,23 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * Aggregate all existing fallback URIs by merging their XML content under
- * the document element of the first encountered source.
+ * <p>
+ * Aggregate all existing fallback sources by adding their XML content under the document element of
+ * the first encountered source. The document element of all subsequent sources is stripped.
+ * </p>
+ * <p>
+ * The fallback sources are resolved in bottom-up order, i.e.
+ * </p>
+ * <ul>
+ * <li>current publication</li>
+ * <li>template of the current publication</li>
+ * <li>template of the template publication</li>
+ * <li>...</li>
+ * <li>core</li>
+ * </ul>
+ * <p>
+ * If one of the fallback sources is not a well-formed XML document, a RuntimeException is thrown.
+ * </p>
  */
 public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
     
