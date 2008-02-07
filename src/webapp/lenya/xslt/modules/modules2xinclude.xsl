@@ -24,9 +24,12 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
+  
+  <xsl:param name="pub"/>
 
   <xsl:template match="lenya:publication">
     <menu:menu>
+      <xi:include href="cocoon:/menu-xml/pub/{$pub}.xml" xpointer="xpointer(/*/*)"/>
       <xsl:apply-templates select="lenya:modules/lenya:module"/>
     </menu:menu>
   </xsl:template>
