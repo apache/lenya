@@ -114,7 +114,7 @@ public class AggregatingSource implements Source {
 
     public InputStream getInputStream() throws IOException, SourceNotFoundException {
         if (!exists()) {
-            throw new RuntimeException(this + " does not exist!");
+            throw new SourceNotFoundException(this + " does not exist!");
         }
         return new ByteArrayInputStream(getData());
     }
