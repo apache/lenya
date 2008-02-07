@@ -24,6 +24,7 @@ public class PublicationModulesGenerator extends ServiceableGenerator implements
    private static final String ATTR_RESOURCE = "resource";
    private static final String ATTR_MODULE_NAME = "name";
    private static final String ATTR_PUB_ID = "publication";
+   private static final String ATTR_PUB_CONTENT = "content";
    public Serializable getKey() {
       // TODO Auto-generated method stub
       return null;
@@ -43,6 +44,7 @@ public class PublicationModulesGenerator extends ServiceableGenerator implements
       AttributesImpl attributes = new AttributesImpl();
       // attributes.addAttribute("", "xmlns", "xmlns", "CDATA", URI);
       attributes.addAttribute(URI, ATTR_PUB_ID, ATTR_PUB_ID, "CDATA", publication.getId());
+      attributes.addAttribute(URI, ATTR_PUB_CONTENT, ATTR_PUB_CONTENT, "CDATA", publication.getContentType());
       // attributes.addAttribute("xmlns", PREFIX, "xmlns:" + PREFIX, "CDATA", URI);
       handler.startElement(URI, ELEMENT_TOP, ELEMENT_TOP, attributes);
       handleResources(handler, resources);

@@ -1,0 +1,11 @@
+<module id="new" name="New Resource" minimum="1.2" created="1.3" content="all">
+   <recommended id="file">Resource Type</recommended>
+   <recommended id="home">Resource Type</recommended>
+   <recommended id="link">Resource Type</recommended>
+   <recommended id="xhtml">Resource Type</recommended>
+   <recommended id="text">Resource Type</recommended>
+   <recommended id="xml">Resource Type</recommended>
+   <description>Create new Resource depending on Resource Modules available to Publication.</description>
+   <usage>
+   </usage>
+</module>

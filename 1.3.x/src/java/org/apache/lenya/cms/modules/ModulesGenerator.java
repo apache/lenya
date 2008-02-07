@@ -47,18 +47,18 @@ public class ModulesGenerator extends ServiceableGenerator implements CacheableP
          Map.Entry entry = (Map.Entry) moduleI.next();
          String moduleKey = (String) entry.getKey();
          Object o = entry.getValue();
-         String[] moduleKeyParts = moduleKey.split(".", 2);
+         String[] moduleKeyParts = moduleKey.split("\\.", 2);
          String publicationId = moduleKeyParts[0];
          String moduleId = "";
          AttributesImpl attributes = new AttributesImpl();
          if(moduleKeyParts.length > 1){
             moduleId = moduleKeyParts[1];
          }
+         attributes.addAttribute(URI, ATTR_MODULE_PUBLICATION, ATTR_MODULE_PUBLICATION, "CDATA", publicationId);
          if(publicationId.length() < 1){
             attributes.addAttribute(URI, ATTR_MODULE_TYPE, ATTR_MODULE_TYPE, "CDATA", "global");
          }else{
             attributes.addAttribute(URI, ATTR_MODULE_TYPE, ATTR_MODULE_TYPE, "CDATA", "publication");
-            attributes.addAttribute(URI, ATTR_MODULE_PUBLICATION, ATTR_MODULE_PUBLICATION, "CDATA", publicationId);
          }
          attributes.addAttribute(URI, ATTR_MODULE_ID, ATTR_MODULE_ID, "CDATA", moduleId);
          handler.startElement(URI, ELEMENT_MODULE, ELEMENT_MODULE, attributes);
@@ -94,7 +94,7 @@ public class ModulesGenerator extends ServiceableGenerator implements CacheableP
       String description = module.getDescription();
       int length = description.length();
       if(length > 0){
-         handler.startElement(URI, ELEMENT_DESCRIPTION, ELEMENT_DESCRIPTION, null);
+         handler.startElement(URI, ELEMENT_DESCRIPTION, ELEMENT_DESCRIPTION, new AttributesImpl());
          handler.characters(description.toCharArray(), 0, length);
          handler.endElement(URI, ELEMENT_DESCRIPTION, ELEMENT_DESCRIPTION);
       }

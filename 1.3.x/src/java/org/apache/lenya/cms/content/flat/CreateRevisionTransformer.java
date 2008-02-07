@@ -59,11 +59,11 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
       String language = envelope.getDocument().getLanguage(); // default
       // check if unid contains language
       int pos = workUnid.indexOf("_");
-      if(pos > 0){
-         workUnid = workUnid.substring(0, pos);
-         language = workUnid.substring(pos);
+      if(pos > 0){ // Use unid to avoid using the variable that is changing.
+         language = unid.substring(pos + 1);
+         workUnid = unid.substring(0, pos);
       }
-      // System.out.println("CreateRevision TEST: u=" + unid + " l=" + language);
+      // System.out.println("CreateRevision TEST: u=" + unid + " w=" + workUnid + " l=" + language + " p=" + pos);
       String newFilename = content.getNewURI(workUnid, language);
       if(newFilename == null){
          System.out.println("CreateRevision: Could not get new filename.");

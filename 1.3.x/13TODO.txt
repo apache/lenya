@@ -11,8 +11,13 @@ Security.
 Link rewriting (CreateRevisionTransformer and HTMLSeriralizer)
 Structure editor.
 
-Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
+Replace all ResourceExists Actions with the ResourceExists Selector.
+Replace uses of post.xsp with RequestGenerator.
 
+Modules - Add Resource description distinguished from Module description.
+
+
+Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
 
 ==== ToDo List from 2006
 === 1.2.x Conversion

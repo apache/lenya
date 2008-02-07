@@ -132,8 +132,11 @@ public abstract class Module {
                String[] parents = resource.split("/");
                for(int p = parents.length - 1; p > -1; p--){
                   String parent = parents[p];
-                  if((parent.length() > 0) && (!parent.equalsIgnoreCase(id)) && (!inheritList.contains(parent))){
-                     inheritList.add(parents[p]);
+                  if((parent.length() > 0) && (!parent.equalsIgnoreCase(id))){
+                     String key = publicationId + "." + parent;
+                     if(!inheritList.contains(key)){
+                        inheritList.add(key);
+                     }
                   }
                }
             }

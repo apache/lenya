@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- New Resource Module -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+   <map:pipelines>
+      <map:pipeline>
+         <map:match pattern="**">
+<!-- CSS bypass -->
+         <map:match pattern="{module:module}/*.css">
+            <map:read src="module:///{1}.css" mime-type="text/css"/>
+         </map:match>
+<!-- Parts -->
+            <map:match pattern="modules">
+                  <map:generate type="modules"/>
+                  <map:serialize type="xml"/>
+            </map:match>
+            <map:match pattern="publication-modules">
+                  <map:generate type="publication-modules"/>
+                  <map:serialize type="xml"/>
+            </map:match>
+<!-- Actions -->
+   <!-- Create Resource from POST data -->
+            <map:match pattern="{module:module}/save*">
+<!-- TODO: Create Resource from POST data -->
+               <map:generate type="request"/>
+               <map:serialize type="xml"/>
+            </map:match>
+   <!-- Development -->
+            <map:match pattern="{module:module}/data">
+               <map:aggregate element="data">
+                  <map:part src="cocoon:/publication-modules"/>
+                  <map:part src="cocoon:/modules"/>
+               </map:aggregate>
+               <map:serialize type="xml"/>
+            </map:match>
+<!-- Default: Show form -->
+            <map:aggregate element="data">
+               <map:part src="cocoon:/publication-modules"/>
+               <map:part src="cocoon:/modules"/>
+            </map:aggregate>
+<!-- TODO: Finish and remove unneeded variables -->
+            <map:transform src="module::///resource.xsl">
+               <map:parameter name="module" value="{module:module}"/>
+               <map:parameter name="publication" value="{publication:publication}"/>
+               <map:parameter name="publicationname" value="{publication:name}"/>
+               <map:parameter name="languages" value="{publication:languages}"/>
+            </map:transform>
+          <map:serialize type="xml"/>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>
