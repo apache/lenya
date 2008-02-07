@@ -16,12 +16,10 @@
   limitations under the License.
 -->
 
-<!-- $Id: xinclude.xsl 123414 2004-12-27 14:52:24Z gregor $ -->
-
 <xsl:stylesheet version="1.0"
     xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.1"
     xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:i="http://apache.org/cocoon/include/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
   
@@ -29,14 +27,16 @@
 
   <xsl:template match="lenya:publication">
     <menu:menu>
-      <xi:include href="cocoon:/menu-xml/pub/{$pub}.xml" xpointer="xpointer(/*/*)"/>
+      <i:include src="cocoon:/menu-xml/pub/{$pub}.xml"/>
       <xsl:apply-templates select="lenya:modules/lenya:module"/>
     </menu:menu>
   </xsl:template>
 
   <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
-      <xi:include href="cocoon:/menu-xml/module/{@name}.xml" xpointer="xpointer(/*/*)"/>
+      <i:include src="cocoon:/menu-xml/module/{@name}.xml">
+        <i:fallback/>
+      </i:include>
     </xsl:if>
   </xsl:template>
 

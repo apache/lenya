@@ -131,7 +131,7 @@
           <map:serialize type="xml"/>
         </map:match>
         <!-- for everything else: --> 
-        <map:generate src="cocoon:/menu-xml/{1}.xml"/>
+        <map:generate src="cocoon:/{1}/lenyaMenuBar.xml"/>
         <map:transform type="menufilter"/>
         <!-- Disable menu items according to usecase policies -->
         <map:transform type="usecasemenu"/>
@@ -160,13 +160,14 @@
 
 
       <!-- collect the menu items for the publication and all modules used in the publication -->
-      <!-- menu-xml/{pubId}.xml -->
-      <map:match pattern="menu-xml/*.xml">
+      <!-- {pubId}/lenyaMenuBar.xml -->
+      <map:match pattern="*/lenyaMenuBar.xml">
         <map:generate src="aggregate-fallback://config/publication.xml"/>
-        <map:transform src="lenya/xslt/modules/modules2xinclude.xsl">
+        <map:transform src="lenya/xslt/modules/modules2include.xsl">
           <map:parameter name="pub" value="{1}"/>
         </map:transform>
-        <map:transform type="xinclude"/>
+        <map:transform type="include"/>
+        <map:transform src="lenya/xslt/menu/stripMenuRoots.xsl"/>
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
