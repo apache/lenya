@@ -19,7 +19,7 @@
               <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-          <i:include src="cocoon://modules/collection/collectionWithChildren/{$allLanguages}/{$pub}/{$area}/{$uuid}/{$language}.xml" select="*/*"/>
+          <i:include src="cocoon://modules/collection/collectionWithChildren/{$allLanguages}/{$pub}/{$area}/{$uuid}/{$language}.xml"/>
         </xsl:when>
         <xsl:when test="@type = 'link'">
           <i:include src="{@href}" select="*/*"/>
