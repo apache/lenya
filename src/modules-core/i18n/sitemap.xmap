@@ -58,6 +58,22 @@
         <map:serialize type="xml"/>
       </map:match>
       
+      <!-- Generate module i18n catalogues. We use the selector instead of direct inclusion
+        because otherwise the result wouldn't be cached when catalogues are missing. -->
+      <!-- modules/{1:module}/{2:catalogue} -->
+      <map:match pattern="modules/*/*">
+        <map:select type="resource-exists">
+          <map:when test="aggregate-fallback://lenya/modules/{1}/resources/i18n/{2}">
+            <map:generate src="aggregate-fallback://lenya/modules/{1}/resources/i18n/{2}"/>
+            <map:serialize type="xml"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="xslt/emptyCatalogue.xml"/>
+            <map:serialize type="xml"/>
+          </map:otherwise>
+        </map:select>
+      </map:match>
+      
     </map:pipeline>  
   </map:pipelines>
   

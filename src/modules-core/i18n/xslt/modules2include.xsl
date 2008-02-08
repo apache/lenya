@@ -39,9 +39,7 @@
   
   <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
-      <i:include src="aggregate-fallback://lenya/modules/{@name}/resources/i18n/{$catalogue}" strip-root="true">
-        <i:fallback/>
-      </i:include>
+      <i:include src="cocoon:/modules/{@name}/{$catalogue}" strip-root="true"/>
     </xsl:if>
   </xsl:template>
 
