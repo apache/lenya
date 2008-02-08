@@ -18,7 +18,8 @@
 
 <!-- $Id: cmsui.xml 446542 2006-09-15 08:14:39Z andreas $ -->
 
-<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <message key="Search">Search</message>
   <message key="Rank">Rank</message>

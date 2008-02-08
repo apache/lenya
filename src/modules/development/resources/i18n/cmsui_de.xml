@@ -18,7 +18,8 @@
 
 <!-- $Id: cmsui_de.xml 446564 2006-09-15 10:13:16Z andreas $ -->
 
-<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <message key="Show Log">Logfile anzeigen</message>
   <message key="Development">Entwicklung</message>

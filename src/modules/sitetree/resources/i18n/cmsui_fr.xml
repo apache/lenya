@@ -21,7 +21,8 @@
 	@translators Olivier Lange <wire at petit-atelier dot ch>
 	-->
 
-<catalogue xml:lang="fr" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="fr" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <!-- Nudge document -->
   <message key="nudge-error-direction-unknown">La direction {0} n'est pas soutenue!</message>

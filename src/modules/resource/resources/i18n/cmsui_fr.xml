@@ -18,7 +18,8 @@
 
 <!-- $Id: cmsui_fr.xml 446542 2006-09-15 08:14:39Z andreas $ -->
 
-<catalogue xml:lang="fr" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="fr" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <message key="Dimension (w x h)">Dimension (l&#160;&#215;&#160;h)</message>
   

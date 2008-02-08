@@ -16,7 +16,8 @@
   limitations under the License.
 -->
 
-<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
   <message key="tinymce.edit">Edit with TinyMCE</message>
   <message key="With TinyMCE">With TinyMCE</message>
 </catalogue>
