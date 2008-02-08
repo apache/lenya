@@ -22,7 +22,7 @@
    
 -->
 
-<catalogue xml:lang="de">
+<catalogue xml:lang="de" xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <message key="publication-title">Willkommen zur Default-Publikation von {0}!</message>
   

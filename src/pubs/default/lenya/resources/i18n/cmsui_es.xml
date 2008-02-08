@@ -24,7 +24,7 @@
    
 -->
 
-<catalogue xml:lang="es">
+<catalogue xml:lang="es" xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <message key="default.createdoc.idtaken">El ID introducido ya existe. Por favor, escoja otro.</message>
  

@@ -21,7 +21,7 @@
    
 -->
 
-<catalogue xml:lang="ru">
+<catalogue xml:lang="ru" xmlns="http://apache.org/cocoon/i18n/2.1">
  
   <message key="default.createdoc.idtaken">Введённый идентификатор занят. Выберете дьругой, пожалуйста.</message>
   <message key="Create new language version">Создать версию на другом языке</message>

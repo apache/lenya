@@ -20,7 +20,7 @@
    $Id$
    @translators Giampaolo Trapasso  <trapo at trapo dot it>
 -->
-<catalogue xml:lang="it">
+<catalogue xml:lang="it" xmlns="http://apache.org/cocoon/i18n/2.1">
 	<message key="default.createdoc.idtaken">L'ID scelto è già utilizzato. Scegliere un altro ID.</message>
 	<message key="Create new language version">Crea nuova lingua</message>
 	<message key="New language for existing Document">Nuova lingua per un Documento esistente</message>

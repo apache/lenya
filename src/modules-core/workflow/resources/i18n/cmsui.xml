@@ -18,7 +18,8 @@
 
 <!-- $Id: cmsui.xml 446564 2006-09-15 10:13:16Z andreas $ -->
 
-<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <message key="http://apache.org/lenya/metadata/workflow/1.0">Workflow</message>
   <message key="workflowVersion">Workflow versions</message>
