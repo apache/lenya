@@ -18,7 +18,8 @@
 
 <!-- $Id: cmsui.xml 447395 2006-09-18 13:01:33Z andreas $ -->
 
-<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
   
   <message key="inbox-of">Inbox of User {0}</message>
   <message key="Sender">Sender</message>
