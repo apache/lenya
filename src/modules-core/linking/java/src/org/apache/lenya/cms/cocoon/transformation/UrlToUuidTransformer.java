@@ -47,8 +47,6 @@ import org.xml.sax.SAXException;
  * This transformer is applied to an XHMTL document. It processes all URL-based
  * links to links following the {@link LinkResolver} syntax.
  * </p>
- * 
- * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
 public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
