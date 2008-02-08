@@ -26,40 +26,35 @@
 
   <map:pipelines>
 
-    <!-- I18N  -->
-    <map:pipeline>
-      <map:match pattern="i18n-catalogue/**">
-        <map:mount uri-prefix="" src="lenya/i18n.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-    </map:pipeline>
-
-    <map:pipeline>
-    
-    <!-- Lenya GUI screen -->
+    <map:pipeline internal-only="true">
+      
+      <!-- Lenya GUI screen -->
       <map:match pattern="lenya-screen.xsl">
         <map:generate src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       
+      <map:match pattern="**">
+        <map:mount check-reload="true" reload-method="synchron" src="global-sitemap.xmap" uri-prefix=""/>
+      </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
       <map:match pattern="ac.login" type="usecase">
-        <map:mount src="fallback://lenya/modules/usecase/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+        <map:mount check-reload="yes" reload-method="synchron" src="{fallback:lenya/modules/usecase/usecase.xmap}" uri-prefix=""/>
       </map:match>
       <map:match pattern="ac.logout" type="usecase">
-        <map:mount src="fallback://lenya/modules/usecase/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+        <map:mount check-reload="yes" reload-method="synchron" src="{fallback:lenya/modules/usecase/usecase.xmap}" uri-prefix=""/>
       </map:match>
-
-    <!-- favicon -->
-    <map:match pattern="favicon.ico">
-      <map:read mime-type="image/x-icon" src="lenya/resources/images/lenya.ico"/>
-    </map:match>
-    </map:pipeline>
-
-    <map:pipeline internal-only="true">
-      <map:match pattern="**">
-        <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-    </map:pipeline>
       
+      <!-- favicon -->
+      <map:match pattern="favicon.ico">
+        <map:read mime-type="image/x-icon" src="lenya/resources/images/lenya.ico"/>
+      </map:match>
+    </map:pipeline>
+    
     <map:pipeline>
 
     <map:match pattern="**">

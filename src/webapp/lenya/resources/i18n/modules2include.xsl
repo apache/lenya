@@ -20,25 +20,27 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:i="http://apache.org/cocoon/include/1.0"
   xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.1"
   >
 
-  <xsl:param name="pubId"/>
   <xsl:param name="catalogue"/>
-
-
-  <xsl:template match="catalogue">
-    <xsl:copy>
-      <xsl:copy-of select="@*|node()"/>
-      <xsl:apply-templates select="document('aggregate-fallback://config/publication.xml')/*/lenya:modules/lenya:module"/>
-    </xsl:copy>
+  <xsl:param name="pub"/>
+  
+  <xsl:template match="lenya:publication">
+    <catalogue>
+      <i:include src="aggregate-fallback://resources/i18n/{$catalogue}">
+        <i:fallback/>
+      </i:include>
+      <xsl:apply-templates select="lenya:modules/lenya:module"/>
+    </catalogue>
   </xsl:template>
-
+  
   <xsl:template match="lenya:module">
-    <xsl:if test="not(preceding-sibling::module[@name = current()/@name])">
-      <xi:include href="cocoon:/i18n-catalogue/module/{@name}/{$catalogue}"
-        xpointer="xpointer(/catalogue/message)"/>
+    <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
+      <i:include src="aggregate-fallback://lenya/modules/{@name}/resources/i18n/{$catalogue}">
+        <i:fallback/>
+      </i:include>
     </xsl:if>
   </xsl:template>
 

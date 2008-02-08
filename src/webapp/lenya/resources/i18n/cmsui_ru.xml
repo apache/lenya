@@ -16,7 +16,8 @@
   limitations under the License.
 -->
 <!-- $Id: cmsui.xml 125536 2005-01-18 19:04:09Z gregor $ -->
-<catalogue xmlns:xhtml="http://www.w3.org/1999/xhtml" xml:lang="ru">
+<catalogue xmlns:xhtml="http://www.w3.org/1999/xhtml" xml:lang="ru"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
 <!-- common used words -->
 <message key="Save">Сохранить</message>
 <message key="Submit">Отправить</message>

@@ -18,7 +18,8 @@
 
 <!-- $Id$ -->
 
-<catalogue xml:lang="nl" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="nl" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
 
   <!-- common used words -->
   <message key="Save">Opslaan</message>
