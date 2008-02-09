@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -25,14 +26,19 @@ import java.util.StringTokenizer;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.LinkTarget;
+import org.apache.lenya.cms.linking.UrlToUuidRewriter;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -77,7 +83,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
-public class UuidToUrlTransformer extends AbstractLinkTransformer implements Disposable {
+public class UuidToUrlTransformer extends AbstractLinkTransformer implements Disposable, CacheableProcessingComponent {
 
     protected static final String BROKEN_ATTRIB = "class";
     protected static final String BROKEN_VALUE = "brokenlink";
@@ -88,17 +94,20 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     private DocumentFactory factory;
     private LinkResolver linkResolver;
     private Document currentDoc;
+    private String cacheKey;
+    private SourceValidity validity;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
      *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public void setup(SourceResolver _resolver, Map _objectModel, String _source,
+    public void setup(SourceResolver resolver, Map _objectModel, String _source,
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
-        super.setup(_resolver, _objectModel, _source, _parameters);
+        super.setup(resolver, _objectModel, _source, _parameters);
 
         Request _request = ObjectModelHelper.getRequest(_objectModel);
 
+        Source source = null;
         try {
             Session session = RepositoryUtil.getSession(this.manager, _request);
             this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
@@ -107,8 +116,19 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
                 this.currentDoc = this.factory.getFromURL(this.currentUrl);
             }
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
+            
+            URLInformation info = new URLInformation(this.currentUrl);
+            Publication pub = factory.getPublication(info.getPublicationId());
+            Area area = pub.getArea(info.getArea());
+            this.cacheKey = pub.getId() + ":" + area.getName();
+            source = resolver.resolveURI(area.getSite().getRepositoryNode().getSourceURI());
+            this.validity = source.getValidity();
         } catch (final Exception e) {
             throw new ProcessingException(e);
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
         }
     }
 
@@ -310,4 +330,19 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     protected LinkRewriter getLinkRewriter() {
         return null;
     }
+
+    public Serializable getKey() {
+        if (this.cacheKey == null) {
+            throw new IllegalStateException("setup() was not called.");
+        }
+        return this.cacheKey;
+    }
+
+    public SourceValidity getValidity() {
+        if (this.validity == null) {
+            throw new IllegalStateException("setup() was not called.");
+        }
+        return this.validity;
+    }
+
 }

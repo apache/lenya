@@ -18,13 +18,17 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UrlToUuidRewriter;
@@ -47,10 +51,13 @@ import org.xml.sax.SAXException;
  * This transformer is applied to an XHMTL document. It processes all URL-based
  * links to links following the {@link LinkResolver} syntax.
  * </p>
+ * @see UrlToUuidRewriter
  */
-public class UrlToUuidTransformer extends AbstractLinkTransformer {
+public class UrlToUuidTransformer extends AbstractLinkTransformer implements CacheableProcessingComponent {
 
     private LinkRewriter rewriter;
+    private String cacheKey;
+    private SourceValidity validity;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -61,6 +68,7 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer {
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, _source, _parameters);
 
+        Source source = null;
         Request _request = ObjectModelHelper.getRequest(_objectModel);
         try {
             Session session = RepositoryUtil.getSession(this.manager, _request);
@@ -70,13 +78,34 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer {
             Publication pub = factory.getPublication(info.getPublicationId());
             Area area = pub.getArea(info.getArea());
             this.rewriter = new UrlToUuidRewriter(area);
+            this.cacheKey = pub.getId() + ":" + area.getName();
+            source = resolver.resolveURI(area.getSite().getRepositoryNode().getSourceURI());
+            this.validity = source.getValidity();
         } catch (final Exception e1) {
             throw new ProcessingException(e1);
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
         }
     }
 
     protected LinkRewriter getLinkRewriter() {
         return this.rewriter;
+    }
+
+    public Serializable getKey() {
+        if (this.cacheKey == null) {
+            throw new IllegalStateException("setup() was not called.");
+        }
+        return this.cacheKey;
+    }
+
+    public SourceValidity getValidity() {
+        if (this.validity == null) {
+            throw new IllegalStateException("setup() was not called.");
+        }
+        return this.validity;
     }
 
 }
