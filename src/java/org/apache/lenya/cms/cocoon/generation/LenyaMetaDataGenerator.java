@@ -84,6 +84,8 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     
     /** The repository content holder to generate the meta data for */
     private ContentHolder content;
+    
+    private SourceValidity validity;
 
     /**
      * Recycle this component. All instance variables are set to <code>null</code>.
@@ -92,6 +94,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         this.content = null;
         this.src = null;
         this.parser = null;
+        this.validity = null;
         super.recycle();
     }
     
@@ -121,6 +124,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         try {
             source = (RepositorySource) resolver.resolveURI(src);
             this.content = source.getContent();
+            this.validity = source.getValidity();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -147,14 +151,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
      *         not cacheable.
      */
     public SourceValidity getValidity() {
-        long lastModified;
-        try {
-            lastModified = this.content.getLastModified();
-        } catch (Exception e) {
-            getLogger().error("Error determining last modification date", e);
-            return null;
-        }
-        return new TimeStampValidity(lastModified);
+        return this.validity;
     }
 
     /**
