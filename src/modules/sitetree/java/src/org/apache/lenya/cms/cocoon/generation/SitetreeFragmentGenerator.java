@@ -80,6 +80,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
 
     private String path;
 
+    private String cacheKey;
     private SourceValidity validity;
 
     protected static final String PARAM_PUB = "pub";
@@ -169,6 +170,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
             this.getLogger().debug("Parameter areas: " + areasStr.toString());
         }
 
+        Source source = null;
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
@@ -192,10 +194,19 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
                             "Path parameter not provided, no node for UUID and language found.");
                 }
             }
+            
+            this.cacheKey = pubId + "/" + area + this.path;
+            source = resolver.resolveURI(this.site.getRepositoryNode().getSourceURI());
+            this.validity = source.getValidity();
+            
         } catch (ProcessingException e) {
             throw e;
         } catch (Exception e) {
             throw new ProcessingException("Could not create publication: ", e);
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
         }
 
         this.attributes = new AttributesImpl();
@@ -512,31 +523,15 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
     }
 
     public Serializable getKey() {
-        String s = ":";
-        String pubId = this.site.getPublication().getId();
-        String area = this.site.getArea();
-        return pubId + s + area + this.path;
+        if (this.cacheKey == null) {
+            throw new IllegalStateException("setup() has not been called.");
+        }
+        return this.cacheKey;
     }
 
     public SourceValidity getValidity() {
         if (this.validity == null) {
-            String sourceUri = this.site.getRepositoryNode().getSourceURI();
-            SourceResolver resolver = null;
-            Source source = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                source = resolver.resolveURI(sourceUri);
-                this.validity = source.getValidity();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    this.manager.release(resolver);
-                }
-            }
+            throw new IllegalStateException("setup() has not been called.");
         }
         return this.validity;
     }
