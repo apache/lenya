@@ -30,9 +30,7 @@
   
   <xsl:template match="lenya:publication">
     <i18n:catalogue>
-      <i:include src="aggregate-fallback://lenya/resources/i18n/{$catalogue}" strip-root="true">
-        <i:fallback/>
-      </i:include>
+      <i:include src="cocoon:/publications/{$pub}/{$catalogue}" strip-root="true"/>
       <xsl:apply-templates select="lenya:modules/lenya:module"/>
     </i18n:catalogue>
   </xsl:template>
