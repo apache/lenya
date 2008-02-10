@@ -28,7 +28,7 @@
   
   <map:pipelines>
     
-    <map:pipeline type="caching">
+    <map:pipeline>
       
       <!-- This pipeline is decoupled from the one below because the page-envelope input module
         call prevents it from being cached. -->
