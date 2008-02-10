@@ -18,28 +18,20 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UrlToUuidRewriter;
-import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 
 /**
@@ -53,11 +45,9 @@ import org.xml.sax.SAXException;
  * </p>
  * @see UrlToUuidRewriter
  */
-public class UrlToUuidTransformer extends AbstractLinkTransformer implements CacheableProcessingComponent {
+public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
     private LinkRewriter rewriter;
-    private String cacheKey;
-    private SourceValidity validity;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -68,44 +58,18 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer implements Cac
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, _source, _parameters);
 
-        Source source = null;
-        Request _request = ObjectModelHelper.getRequest(_objectModel);
+        Request request = ObjectModelHelper.getRequest(_objectModel);
         try {
-            Session session = RepositoryUtil.getSession(this.manager, _request);
+            Session session = RepositoryUtil.getSession(this.manager, request);
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
-            String url = ServletHelper.getWebappURI(_request);
-            URLInformation info = new URLInformation(url);
-            Publication pub = factory.getPublication(info.getPublicationId());
-            Area area = pub.getArea(info.getArea());
-            this.rewriter = new UrlToUuidRewriter(area);
-            this.cacheKey = pub.getId() + ":" + area.getName();
-            source = resolver.resolveURI(area.getSite().getRepositoryNode().getSourceURI());
-            this.validity = source.getValidity();
+            this.rewriter = new UrlToUuidRewriter(factory);
         } catch (final Exception e1) {
             throw new ProcessingException(e1);
-        } finally {
-            if (source != null) {
-                resolver.release(source);
-            }
         }
     }
 
     protected LinkRewriter getLinkRewriter() {
         return this.rewriter;
-    }
-
-    public Serializable getKey() {
-        if (this.cacheKey == null) {
-            throw new IllegalStateException("setup() was not called.");
-        }
-        return this.cacheKey;
-    }
-
-    public SourceValidity getValidity() {
-        if (this.validity == null) {
-            throw new IllegalStateException("setup() was not called.");
-        }
-        return this.validity;
     }
 
 }

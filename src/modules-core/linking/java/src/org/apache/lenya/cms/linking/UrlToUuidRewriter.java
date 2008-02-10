@@ -17,14 +17,18 @@
  */
 package org.apache.lenya.cms.linking;
 
+import java.util.Arrays;
+
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
 
 /**
  * <p>
- * Converts webapp URLs to UUID-based internal links. If the URL
- * doesn't refer to a document, the original URL is returned.
+ * Converts webapp URLs to UUID-based internal links. If the URL doesn't refer to a document, the
+ * original URL is returned.
  * </p>
  * <p>
  * Objects of this class are not thread-safe.
@@ -32,17 +36,32 @@ import org.apache.lenya.cms.publication.DocumentFactory;
  */
 public class UrlToUuidRewriter implements LinkRewriter {
 
-    private Area area;
+    private DocumentFactory factory;
 
     /**
-     * @param area The area to operate in.
+     * @param factory The document factory to use.
      */
-    public UrlToUuidRewriter(Area area) {
-        this.area = area;
+    public UrlToUuidRewriter(DocumentFactory factory) {
+        this.factory = factory;
     }
 
     public boolean matches(String url) {
-        return url.startsWith("/" + this.area.getPublication().getId() + "/" + this.area.getName());
+        URLInformation info = new URLInformation(url);
+        String pubId = info.getPublicationId();
+        String area = info.getArea();
+        if (pubId != null && area != null) {
+            if (this.factory.existsPublication(pubId)) {
+                try {
+                    Publication pub = this.factory.getPublication(pubId);
+                    if (Arrays.asList(pub.getAreaNames()).contains(area)) {
+                        return true;
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return false;
     }
 
     public String rewrite(String webappUrl) {
@@ -64,8 +83,6 @@ public class UrlToUuidRewriter implements LinkRewriter {
         if (linkUrlAndQuery.length > 1) {
             queryString = linkUrlAndQuery[1];
         }
-
-        DocumentFactory factory = this.area.getPublication().getFactory();
 
         String rewrittenUrl;
 
