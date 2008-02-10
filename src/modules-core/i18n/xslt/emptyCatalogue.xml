@@ -16,6 +16,6 @@
   limitations under the License.
 -->
 
-<catalogue xmlns:i18n="http://apache.org/cocoon/i18n/2.1"/>
+<i18n:catalogue xmlns:i18n="http://apache.org/cocoon/i18n/2.1"/>
 
 
