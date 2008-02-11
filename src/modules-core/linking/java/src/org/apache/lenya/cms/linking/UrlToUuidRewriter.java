@@ -46,18 +46,20 @@ public class UrlToUuidRewriter implements LinkRewriter {
     }
 
     public boolean matches(String url) {
-        URLInformation info = new URLInformation(url);
-        String pubId = info.getPublicationId();
-        String area = info.getArea();
-        if (pubId != null && area != null) {
-            if (this.factory.existsPublication(pubId)) {
-                try {
-                    Publication pub = this.factory.getPublication(pubId);
-                    if (Arrays.asList(pub.getAreaNames()).contains(area)) {
-                        return true;
+        if (url.startsWith("/")) {
+            URLInformation info = new URLInformation(url);
+            String pubId = info.getPublicationId();
+            String area = info.getArea();
+            if (pubId != null && area != null) {
+                if (this.factory.existsPublication(pubId)) {
+                    try {
+                        Publication pub = this.factory.getPublication(pubId);
+                        if (Arrays.asList(pub.getAreaNames()).contains(area)) {
+                            return true;
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
                 }
             }
         }
