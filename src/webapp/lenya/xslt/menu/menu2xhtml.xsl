@@ -24,6 +24,7 @@
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
+  exclude-result-prefixes="uc menu"
   >
   
   <xsl:param name="contextprefix"/>
