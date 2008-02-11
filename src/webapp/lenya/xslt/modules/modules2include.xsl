@@ -34,9 +34,7 @@
 
   <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
-      <i:include src="cocoon:/menu-xml/module/{@name}.xml" strip-root="true">
-        <i:fallback/>
-      </i:include>
+      <i:include src="cocoon:/menu-xml/module/{@name}.xml" strip-root="true"/>
     </xsl:if>
   </xsl:template>
 
