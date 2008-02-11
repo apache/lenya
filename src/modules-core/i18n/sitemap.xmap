@@ -34,21 +34,25 @@
         call prevents it from being cached. -->
       <!-- catalogue/{1:catalogue} -->
       <map:match pattern="catalogue/*">
-        <map:select type="parameter">
-          <map:parameter name="parameter-selector-test" value="{page-envelope:is-publication}"/>
-          <map:when test="true">
-            <map:generate src="cocoon:/{page-envelope:publication-id}/{1}"/>
+        <map:select type="resource-exists">
+          <map:when test="context://lenya/resources/i18n/{1}">
+            <map:select type="parameter">
+              <map:parameter name="parameter-selector-test" value="{page-envelope:is-publication}"/>
+              <map:when test="true">
+                <map:generate src="cocoon:/pubCatalogue/{page-envelope:publication-id}/{1}"/>
+              </map:when>
+              <map:otherwise>
+                <map:generate src="context://lenya/resources/i18n/{1}"/>
+              </map:otherwise>
+            </map:select>
+            <map:serialize type="xml"/>
           </map:when>
-          <map:otherwise>
-            <map:generate src="fallback://lenya/resources/i18n/{1}"/>
-          </map:otherwise>
         </map:select>
-        <map:serialize type="xml"/>
       </map:match>
       
       <!-- This pipeline generates the catalogue for each publication. The result is cached. -->
       <!-- {1:pub}/{2:catalogue} -->
-      <map:match pattern="*/*">
+      <map:match pattern="pubCatalogue/*/*">
         <map:generate src="aggregate-fallback://config/publication.xml"/>
         <map:transform src="xslt/modules2include.xsl">
           <map:parameter name="pub" value="{1}"/>
