@@ -125,92 +125,10 @@
       <!-- Generate a meta-stylesheet that adds the Lenya GUI menu to pages -->
       <!-- lenya-page/{publication-id}/{area}/... -->
       <map:match pattern="lenya-page/*/*/**">
-        <!-- no menu for revisions -->
-        <map:match type="request-parameter" pattern="lenya.revision">
-          <map:generate src="lenya/xslt/util/identity.xsl"/>
-          <map:serialize type="xml"/>
-        </map:match>
-        <!-- for everything else: --> 
-        <map:generate src="cocoon:/{1}/lenyaMenuBar.xml"/>
-        <map:transform type="menufilter"/>
-        <!-- Disable menu items according to usecase policies -->
-        <map:transform type="usecasemenu"/>
-        <map:transform src="fallback://lenya/xslt/menu/menubar2xhtml.xsl">
-          <map:parameter name="publicationid" value="{1}"/>
-          <map:parameter name="area" value="{2}"/>
-          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-          <map:parameter name="documentid" value="{page-envelope:document-uuid}"/>
-          <map:parameter name="userid" value="{access-control:user-id}"/>
-          <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
-          <map:parameter name="workflowstate" value="{workflow:state}"/>
-          <map:parameter name="islive" value="{workflow:variable.is_live}"/>
-          <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
-          <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
-          <map:parameter name="newMessages" value="{inbox:newMessageCount}"/>
-        </map:transform>
-        <map:call resource="i18n"/>
-        <!-- Generate the meta-stylesheet -->
-        <map:transform src="fallback://lenya/xslt/menu/menu2xslt.xsl">
-          <map:parameter name="publicationid" value="{1}"/>
-          <map:parameter name="area" value="{2}"/>
-          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-        </map:transform>
+        <map:generate src="cocoon://modules/menubar/{1}/{2}/lenyaGui.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
-
-
-      <!-- collect the menu items for the publication and all modules used in the publication -->
-      <!-- {pubId}/lenyaMenuBar.xml -->
-      <map:match pattern="*/lenyaMenuBar.xml">
-        <map:generate src="aggregate-fallback://config/publication.xml"/>
-        <map:transform src="lenya/xslt/modules/modules2include.xsl">
-          <map:parameter name="pub" value="{1}"/>
-        </map:transform>
-        <map:transform type="include"/>
-        <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <!--
-        FIXME: The following pipelines should be replaced by a direct inclusion of the menu XML,
-        so that the XML can be cached. This is not possible yet because we support dynamic menus
-        for backwards compatibility.
-      -->
       
-      <!-- query menu items from modules (used by the xinclude above) -->
-      <!-- menu-xml/module/{area}/{module-id}.xml -->
-      <map:match pattern="menu-xml/module/*.xml">
-        <map:select type="resource-exists">
-          <map:when test="fallback://lenya/modules/{1}/config/menu.xml">
-            <map:generate src="fallback://lenya/modules/{1}/config/menu.xml"/>
-            <map:serialize type="xml"/>
-          </map:when>
-          <!-- @deprecated: Mount menus.xmap for backwards-compatibility reasons -->
-          <map:when test="fallback://lenya/modules/{1}/menus.xmap">
-            <map:mount uri-prefix="menu-xml/module/" src="{fallback:lenya/modules/{1}/menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
-          </map:when>
-          <map:otherwise>
-            <map:generate src="lenya/content/menus/emptyMenu.xml"/>
-            <map:serialize type="xml"/>
-          </map:otherwise>
-        </map:select>
-      </map:match>
-
-      <!-- include publication-specific menus -->
-      <!-- menu-xml/pub/{publication-id}/... -->
-      <map:match pattern="menu-xml/pub/*.xml" internal-only="true">
-        <map:select type="resource-exists">
-          <map:when test="fallback://lenya/pubs/{1}/config/menu.xml">
-            <map:generate src="fallback://lenya/pubs/{1}/config/menu.xml"/>
-            <map:serialize type="xml"/>
-          </map:when>
-          <!-- @deprecated: Mount menus.xmap for backwards-compatibility reasons -->
-          <map:otherwise>
-            <map:mount uri-prefix="menu-xml/pub/{1}" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron" pass-through="true"/>
-          </map:otherwise>
-        </map:select>
-      </map:match>
-
       <!-- FIXME: this is currently unused -->
       <!-- Access Control Policies -->
 <!--
