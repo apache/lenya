@@ -24,8 +24,6 @@
   xmlns="http://www.w3.org/1999/xhtml"
   >
   
-  <xsl:import href="../util/page-util.xsl"/>
-  
   <xsl:param name="pub"/>
   <xsl:param name="area"/>
   <xsl:param name="path"/>
