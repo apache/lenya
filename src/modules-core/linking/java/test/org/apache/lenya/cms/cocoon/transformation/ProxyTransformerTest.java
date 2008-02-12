@@ -50,11 +50,11 @@ import org.xml.sax.helpers.AttributesImpl;
 public class ProxyTransformerTest extends AbstractAccessControlTest {
 
     protected static final String PUBCONF_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
-    
+
     protected static final String NAMESPACE = XHTMLSerializer.XHTML1_NAMESPACE;
     protected static final String ELEMENT = "a";
     protected static final String ATTRIBUTE = "href";
-    
+
     protected String getWebappUrl() {
         return "/default/authoring/index.html";
     }
@@ -64,7 +64,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         ProxyTransformer transformer = new ProxyTransformer();
         transformer.enableLogging(getLogger());
         transformer.service(getManager());
-        
+
         String pubId = "mock";
         String area = "authoring";
         String proxyUrl = "http://www.apache-lenya-proxy-test.org";
@@ -84,13 +84,13 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
             String linkUrl = "/" + pubId + "/" + area + documentUrl;
             String targetUrl = proxyUrl + documentUrl;
             rewriteLink(transformer, linkUrl, targetUrl);
-            
+
             String cssUrl = "/lenya/foo.css";
             rewriteLink(transformer, cssUrl, cssUrl);
 
             String moduleUrl = "/modules/foo/bar.html?x=y";
             rewriteLink(transformer, moduleUrl, moduleUrl);
-            
+
         } finally {
             if (resolver != null) {
                 getManager().release(resolver);
@@ -98,7 +98,8 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         }
     }
 
-    protected void rewriteLink(ProxyTransformer transformer, String linkUrl, String targetUrl) throws Exception {
+    protected void rewriteLink(ProxyTransformer transformer, String linkUrl, String targetUrl)
+            throws Exception {
         AttributesImpl attrs = new AttributesImpl();
         attrs.addAttribute("", ATTRIBUTE, ATTRIBUTE, "string", linkUrl);
 
@@ -113,7 +114,7 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
 
     protected void createMockPublication(String pubId, String area, String proxyUrl)
             throws PublicationException, ServiceException, Exception {
-        if (!existsPublication(pubId)) {
+        if (!getFactory().existsPublication(pubId)) {
 
             Publication defaultPub = getPublication("default");
             Instantiator instantiator = null;
@@ -122,7 +123,8 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
                 selector = (ServiceSelector) getManager().lookup(Instantiator.ROLE + "Selector");
                 instantiator = (Instantiator) selector.select(defaultPub.getInstantiatorHint());
                 instantiator.instantiate(defaultPub, pubId, "Mock");
-                configureProxy(area, proxyUrl);
+                Publication mockPub = getFactory().getPublication(pubId);
+                configureProxy(mockPub, area, proxyUrl);
             } finally {
                 if (selector != null) {
                     if (instantiator != null) {
@@ -134,47 +136,10 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
         }
     }
 
-    protected void configureProxy(String area, String proxyUrl)
-            throws ServiceException, SourceNotFoundException, ParserConfigurationException,
-            SAXException, IOException, TransformerConfigurationException, TransformerException,
-            MalformedURLException {
-        String configUri = "context://lenya/pubs/mock/config/publication.xml";
-        Document dom = SourceUtil.readDOM(configUri, getManager());
-        NamespaceHelper helper = new NamespaceHelper(PUBCONF_NAMESPACE, "", dom);
-        
-        Element docElem = dom.getDocumentElement();
-        Element instantiatorElem = helper.getFirstChild(docElem, "template-instantiator");
-        if (instantiatorElem != null) {
-            docElem.removeChild(instantiatorElem);
-        }
-
-        Element proxies = helper.getFirstChild(docElem, "proxies");
-        if (proxies == null) {
-            proxies = helper.createElement("proxies");
-            docElem.appendChild(proxies);
-        }
-
-        addProxyElement(helper, proxies, area, proxyUrl, false);
-        addProxyElement(helper, proxies, area, proxyUrl, true);
-
-        SourceUtil.writeDOM(dom, configUri, getManager());
+    protected void configureProxy(Publication pub, String area, String proxyUrl) throws Exception {
+        pub.getProxy(area, false).setUrl(proxyUrl);
+        pub.getProxy(area, true).setUrl(proxyUrl);
+        pub.saveConfiguration();
     }
 
-    protected void addProxyElement(NamespaceHelper helper, Element proxies, String area,
-            String proxyUrl, boolean ssl) {
-        Element proxyElement = helper.createElement("proxy");
-        proxyElement.setAttribute("ssl", Boolean.toString(ssl));
-        proxyElement.setAttribute("area", area);
-        proxyElement.setAttribute("url", proxyUrl);
-        proxies.appendChild(proxyElement);
-    }
-
-    protected boolean existsPublication(String pubId) {
-        Publication[] pubs = getFactory().getPublications();
-        List pubIds = new ArrayList();
-        for (int i = 0; i < pubs.length; i++) {
-            pubIds.add(pubs[i].getId());
-        }
-        return pubIds.contains(pubId);
-    }
 }
