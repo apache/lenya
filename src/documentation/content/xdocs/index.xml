@@ -43,14 +43,14 @@
         <li>
           Lenya 2.0
           <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.zip">Windows source code</a> (ZIP archive),
-          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.zip.asc">ASC Signature</a>,
-          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.zip.md5">MD5 Checksum</a>
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.zip.asc">ASC Signature</a>,
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.zip.md5">MD5 Checksum</a>
         </li>
         <li>
           Lenya 2.0
           <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz">Unix source code</a> (tar.gz archive),
-          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.asc">ASC Signature</a>,
-          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.md5">MD5 Checksum</a>
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.asc">ASC Signature</a>,
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.md5">MD5 Checksum</a>
         </li>
       </ul>
       <p>
