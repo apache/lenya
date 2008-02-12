@@ -27,8 +27,7 @@
   
   <!-- includes the default CSS stylesheet -->
   <xsl:template name="include-css">
-    <xsl:param name="contextprefix"/>
-    <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="/lenya/css/default.css" media="screen"/>
   </xsl:template>
   
   <!-- prints a list of $separator-separated strings -->
