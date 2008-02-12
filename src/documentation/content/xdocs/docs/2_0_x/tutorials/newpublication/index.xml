@@ -144,7 +144,8 @@
     <parameter name="directory"
                value="/home/john/src/lenya/data/access-control/passwd"/>
     <user-manager>
-      <user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="admin.addUser">Local User</user-type>
+      <user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="admin.addUser"> 
+        Local User</user-type>
     </user-manager>
   </accreditable-manager>
   
