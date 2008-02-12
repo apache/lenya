@@ -91,10 +91,12 @@ public class MultiWorkflow extends AbstractUsecase {
 
     protected List getPreOrder(SiteNode node) throws SiteException {
         List preOrder = new ArrayList();
-        String[] langs = node.getLanguages();
-        Arrays.sort(langs);
-        for (int i = 0; i < langs.length; i++) {
-            preOrder.add(node.getLink(langs[i]).getDocument());
+        if (node.getUuid() != null) {
+            String[] langs = node.getLanguages();
+            Arrays.sort(langs);
+            for (int i = 0; i < langs.length; i++) {
+                preOrder.add(node.getLink(langs[i]).getDocument());
+            }
         }
         SiteNode[] children = node.getChildren();
         for (int i = 0; i < children.length; i++) {
