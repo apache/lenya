@@ -144,7 +144,7 @@
     <parameter name="directory"
                value="/home/john/src/lenya/data/access-control/passwd"/>
     <user-manager>
-      <user-type class="org.apache.lenya.ac.file.FileUser">Local User</user-type>
+      <user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="admin.addUser">Local User</user-type>
     </user-manager>
   </accreditable-manager>
   
@@ -154,8 +154,6 @@
                  value="/home/john/src/lenya/data/access-control/policies"/>
     </policy-manager>
   </policy-manager>
-  
-  <authorizer type="policy"/>
   
   <authorizer type="usecase">
     <parameter name="configuration"
@@ -171,6 +169,8 @@
   admin.rml
   edit.rml
   review.rml
+  session.rml
+  sitemanager.rml
   visit.rml</source>
       <p>
         To be able to log in for the first time, we'll create a superuser account.
