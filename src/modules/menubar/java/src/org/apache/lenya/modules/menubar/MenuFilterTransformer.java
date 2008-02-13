@@ -41,6 +41,10 @@ import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * Filter menu elements (blocks, items, ...) according to the attributes
+ * <em>areas</em> and <em>resourceTypes</em>.
+ */
 public class MenuFilterTransformer extends AbstractSAXTransformer {
 
     protected static final String NAMESPACE = "http://apache.org/cocoon/lenya/menubar/1.0";
@@ -69,10 +73,10 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
         
         try {
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            if (factory.isDocument(webappUri)) {
-                String resourceType = factory.getFromURL(webappUri).getResourceType().getName();
-                this.attributeHandlers.add(new AttributeHandler(ATTR_RESOURCE_TYPES, resourceType));
-            }
+            String resourceType = factory.isDocument(webappUri) ?
+                resourceType = factory.getFromURL(webappUri).getResourceType().getName()
+                : null;
+            this.attributeHandlers.add(new AttributeHandler(ATTR_RESOURCE_TYPES, resourceType));
         } catch (RepositoryException e) {
             throw new ProcessingException(e);
         }
@@ -156,13 +160,10 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
         }
 
         protected boolean matches(Attributes attr) {
-            if (this.value == null) {
-                return false;
-            }
             String attrValue = attr.getValue(this.attributeName);
             if (attrValue == null) {
                 return true;
-            } else {
+            } else if (this.value != null) {
                 StringTokenizer tokens = new StringTokenizer(attrValue, DELIMITER);
                 while (tokens.hasMoreTokens()) {
                     if (tokens.nextToken().equals(this.value)) {
