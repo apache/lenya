@@ -20,6 +20,7 @@ package org.apache.lenya.modules.news.usecases;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.modules.collection.CollectionWrapper;
 import org.apache.lenya.modules.news.NewsWrapper;
@@ -38,19 +39,22 @@ public class Edit extends InvokeWorkflow {
     
     protected void initParameters() {
         super.initParameters();
-        NewsWrapper news = new NewsWrapper(getSourceDocument(), getLogger());
-        setParameter(NEWS_WRAPPER, news);
-        
-        setParameter(INCLUDE_ITEM_NUMBER, new Short(news.getIncludeItemNumber()));
-        setParameter(SHOW_ALL_LANGUAGES, new Boolean(news.showAllLanguages()));
-        setParameter(TYPE, news.getType());
-        setParameter(HREF, news.getHref());
-        
-        List numbers = new ArrayList();
-        for (int i = 1; i <= 10; i++) {
-            numbers.add(new Integer(i));
+        Document doc = getSourceDocument();
+        if (doc != null) {
+            NewsWrapper news = new NewsWrapper(doc, getLogger());
+            setParameter(NEWS_WRAPPER, news);
+            
+            setParameter(INCLUDE_ITEM_NUMBER, new Short(news.getIncludeItemNumber()));
+            setParameter(SHOW_ALL_LANGUAGES, new Boolean(news.showAllLanguages()));
+            setParameter(TYPE, news.getType());
+            setParameter(HREF, news.getHref());
+            
+            List numbers = new ArrayList();
+            for (int i = 1; i <= 10; i++) {
+                numbers.add(new Integer(i));
+            }
+            setParameter(NUMBERS, numbers);
         }
-        setParameter(NUMBERS, numbers);
     }
 
     protected void doExecute() throws Exception {
