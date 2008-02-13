@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.9-dev">
+<meta name="Forrest-version" content="0.8">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Creating a New Publication</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
@@ -715,7 +715,6 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Creating a New Publication</h1>
-<div id="front-matter">
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
@@ -743,7 +742,6 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Next+Steps">Next Steps</a>
 </li>
 </ul>
-</div>
 </div>
     
     
@@ -850,7 +848,8 @@ document.write("Last Published: " + document.lastModified);
   
   &lt;resource-types/&gt;
   &lt;modules/&gt;
-  
+  &lt;proxies/&gt;
+ 
 &lt;/publication&gt;</pre>
 </div>
     
@@ -870,7 +869,8 @@ document.write("Last Published: " + document.lastModified);
     &lt;parameter name="directory"
                value="/home/john/src/lenya/data/access-control/passwd"/&gt;
     &lt;user-manager&gt;
-      &lt;user-type class="org.apache.lenya.ac.file.FileUser"&gt;Local User&lt;/user-type&gt;
+      &lt;user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="admin.addUser"&gt; 
+        Local User&lt;/user-type&gt;
     &lt;/user-manager&gt;
   &lt;/accreditable-manager&gt;
   
@@ -880,8 +880,6 @@ document.write("Last Published: " + document.lastModified);
                  value="/home/john/src/lenya/data/access-control/policies"/&gt;
     &lt;/policy-manager&gt;
   &lt;/policy-manager&gt;
-  
-  &lt;authorizer type="policy"/&gt;
   
   &lt;authorizer type="usecase"&gt;
     &lt;parameter name="configuration"
@@ -897,6 +895,8 @@ document.write("Last Published: " + document.lastModified);
   admin.rml
   edit.rml
   review.rml
+  session.rml
+  sitemanager.rml
   visit.rml</pre>
 <p>
         To be able to log in for the first time, we'll create a superuser account.
