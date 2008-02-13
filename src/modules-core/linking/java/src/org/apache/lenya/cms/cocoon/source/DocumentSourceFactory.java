@@ -38,6 +38,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkResolver;
@@ -136,6 +137,10 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
                 contextualize(link, webappUrl);
                 target = resolver.resolve(factory, link.getUri());
             }
+            
+            if (!target.exists()) {
+                throw new SourceNotFoundException("Source not found: [" + location + "]");
+            }
 
             Document doc = target.getDocument();
 
@@ -160,7 +165,8 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
                 }
                 return this.sourceResolver.resolveURI(lenyaURL);
             }
-
+        } catch (SourceException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
