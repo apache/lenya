@@ -264,14 +264,25 @@ public class PageEnvelope {
     public String getContext() {
         return this.context;
     }
+    
+    private String path;
 
     /**
-     * Returns the document-path.
-     * @return a <code>File<code> value
+     * Returns the document path. If the current URL doesn't point to a document, the document
+     * builder is used to extract the supposed path from the URL.
+     * @return A string.
      */
     public String getDocumentPath() {
-        return getPublication().getPathMapper().getPath(getDocument().getUUID(),
-                getDocument().getLanguage());
+        if (this.path == null) {
+            final Document doc = getDocument();
+            try {
+                this.path = doc != null ? doc.getPath() :
+                    getPublication().getDocumentBuilder().getLocator(this.factory, this.webappUrl).getPath();
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.path;
     }
 
     /**
