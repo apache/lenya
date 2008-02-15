@@ -28,25 +28,28 @@ import org.apache.log4j.Logger;
 public class SessionCountLogger implements HttpSessionListener {
 
     protected Logger log = Logger.getLogger(SessionCountLogger.class);
-
-    private int sessionCount;
+    private static Object LOCK = SessionCountLogger.class;
+    private static int sessionCount = 0;
 
     public SessionCountLogger() {
-        this.sessionCount = 0;
     }
 
     public void sessionCreated(HttpSessionEvent event) {
-        synchronized (this) {
-            this.sessionCount++;
+        synchronized (LOCK) {
+            sessionCount++;
         }
         log.info("Sessions: " + this.sessionCount);
     }
 
     public void sessionDestroyed(HttpSessionEvent event) {
-        synchronized (this) {
-            --this.sessionCount;
+        synchronized (LOCK) {
+            --sessionCount;
         }
         log.info("Sessions: " + this.sessionCount);
+    }
+    
+    public static int getSessionCount() {
+        return sessionCount;
     }
 
 }
