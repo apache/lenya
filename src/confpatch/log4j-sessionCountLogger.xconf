@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -17,13 +16,20 @@
   limitations under the License.
 -->
 
-<xweb xpath="/web-app" unless="listener" insert-before="node()[1]">
+<xconf xpath="/configuration" unless="/configuration/appender[@name='Sessions']" insert-after="appender">
 
-  <listener>
-    <!--
-      - Listen for new sessions and store the objects in a HashMap 
-      -->
-    <listener-class>org.apache.lenya.util.SessionListener</listener-class>
-  </listener>
-
-</xweb>
+  <appender class="org.apache.log4j.DailyRollingFileAppender" name="Sessions">
+    <param name="File" value="${context-root}/WEB-INF/logs/sessions.log"/>
+    <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %m%n"/>
+    </layout>     
+  </appender>
+  
+  <logger name="org.apache.lenya.modules.monitoring.SessionCountLogger">
+    <!-- set to "info" to enable session logging -->
+    <level value="error"/>
+    <appender-ref ref="Sessions"/>
+  </logger>
+  
+</xconf>
