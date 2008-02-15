@@ -30,7 +30,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.ac.usecases.AccessControlUsecase;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.SessionListener;
+import org.apache.lenya.modules.monitoring.SessionListener;
 
 /**
  * SessionViewer usecase which gets all session objects from the SessionListener and extract the

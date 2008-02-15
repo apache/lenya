@@ -30,7 +30,7 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.util.SessionListener;
+import org.apache.lenya.modules.monitoring.SessionListener;
 
 /**
  * Force a document to be checked in (override a checkout).
