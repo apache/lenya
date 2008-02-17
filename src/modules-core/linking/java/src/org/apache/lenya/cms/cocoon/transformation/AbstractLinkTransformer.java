@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -160,6 +161,8 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
 
     protected String indent = "";
     protected boolean ignoreLinkElement = false;
+    private Stack ignoreLinkElementStack = new Stack();
+    protected boolean useIgnore = false;
 
     /**
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
@@ -203,14 +206,22 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreLinkElement);
         }
 
-        if (!(!configs.isEmpty() && this.ignoreLinkElement)) {
-            if (newAttrs != null) {
-                attrs = newAttrs;
+        // use existsMatching to match up with ednElement
+        if (existsMatchingConfiguration(uri,name) && this.useIgnore) {
+            if(this.ignoreLinkElement) { 
+                ignoreLinkElementStack.push(Boolean.TRUE);
+                return;
+            } else { 
+                ignoreLinkElementStack.push(Boolean.FALSE);
             }
-            super.startElement(uri, name, qname, attrs);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this.indent + "<" + qname + "> sent");
-            }
+        }
+ 
+        if (newAttrs != null) {
+            attrs = newAttrs;
+        }
+        super.startElement(uri, name, qname, attrs);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug(this.indent + "<" + qname + "> sent");
         }
     }
 
@@ -238,14 +249,17 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             this.indent = this.indent.substring(2);
             getLogger().debug(this.indent + "</" + qname + ">");
         }
-        if (existsMatchingConfiguration(uri, name) && this.ignoreLinkElement) {
-            this.ignoreLinkElement = false;
-        } else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this.indent + "</" + qname + "> sent");
+        if (existsMatchingConfiguration(uri, name) && this.useIgnore) { 
+            if( ((Boolean)ignoreLinkElementStack.pop()).booleanValue()) { 
+                this.ignoreLinkElement = false;
+                return;
             }
-            super.endElement(uri, name, qname);
         }
+        
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug(this.indent + "</" + qname + "> sent");
+        }
+        super.endElement(uri, name, qname);
     }
 
     /**

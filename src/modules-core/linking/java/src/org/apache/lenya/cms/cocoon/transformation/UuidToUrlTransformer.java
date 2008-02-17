@@ -107,6 +107,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
 
         Request _request = ObjectModelHelper.getRequest(_objectModel);
 
+        this.useIgnore = true;
         Source source = null;
         try {
             Session session = RepositoryUtil.getSession(this.manager, _request);
