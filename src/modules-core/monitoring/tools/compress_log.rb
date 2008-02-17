@@ -18,6 +18,8 @@
 # log entry for each minute. This way the performance of the SVG diagram generation
 # can be improved.
 #
+# Usage: ruby compress_log.rb sessions.log > sessions-compressed.log
+#
 
 def compress_log(logfile_name)
   File.open(logfile_name, "r") do |logfile|
