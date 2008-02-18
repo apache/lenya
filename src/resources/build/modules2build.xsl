@@ -277,6 +277,11 @@
         includes="config/sitemap/*.xmap"
         addComments="false"/>
       
+      <xpatch file="${{build.webapp}}/WEB-INF/web.xml"
+        srcdir="{$src}" 
+        includes="config/web-xml/*.xweb"
+        addComments="false"/>
+      
     </target>
     
     <xsl:variable name="dependencyList">
