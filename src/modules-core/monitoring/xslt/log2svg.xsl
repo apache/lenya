@@ -41,7 +41,7 @@
           <xsl:apply-templates select="mon:entry"/>
         </xsl:when>
         <xsl:otherwise>
-          <svg:text x="{$margin + $marginLeft + $width div 2}" y="{$margin + 10}" text-anchor="middle">
+          <svg:text x="{$margin + $marginLeft + $width div 2}" y="{$margin + 30}" text-anchor="middle">
             The session log is empty.
           </svg:text>
         </xsl:otherwise>
