@@ -34,9 +34,18 @@
   <xsl:template match="/mon:log">
     <svg:svg width="{$marginLeft + $width + 2 * $margin}" height="{$height + 2 * $margin}">
       <svg:text x="{$margin + $marginLeft + $width div 2}" y="{$margin - 5}" style="font-weight: bold;" text-anchor="middle"><xsl:value-of select="$title"/></svg:text>
-      <xsl:call-template name="yLine"/>
-      <xsl:call-template name="hourLine"/>
-      <xsl:apply-templates select="mon:entry"/>
+      <xsl:choose>
+        <xsl:when test="mon:entry">
+          <xsl:call-template name="yLine"/>
+          <xsl:call-template name="hourLine"/>
+          <xsl:apply-templates select="mon:entry"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <svg:text x="{$margin + $marginLeft + $width div 2}" y="{$margin + 10}" text-anchor="middle">
+            The session log is empty.
+          </svg:text>
+        </xsl:otherwise>
+      </xsl:choose>
     </svg:svg>
   </xsl:template>
   
