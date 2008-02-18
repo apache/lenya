@@ -85,6 +85,7 @@
     <module name="news"/>
     <module name="prettyprinting"/>
     <module name="usecasedocument"/>
+    <module name="monitoring"/>
   </modules>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
