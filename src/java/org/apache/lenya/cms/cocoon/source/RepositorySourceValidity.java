@@ -34,7 +34,7 @@ public class RepositorySourceValidity implements SourceValidity {
      */
     public RepositorySourceValidity(RepositorySource source) {
         this.sourceUri = source.getSourceURI();
-        this.lastModified = source.getLastModified();
+        this.lastModified = source.exists() ? source.getLastModified() : 0;
     }
 
     public int isValid() {
