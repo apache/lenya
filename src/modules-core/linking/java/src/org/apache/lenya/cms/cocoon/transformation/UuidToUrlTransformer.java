@@ -37,7 +37,6 @@ import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.LinkTarget;
-import org.apache.lenya.cms.linking.UrlToUuidRewriter;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
