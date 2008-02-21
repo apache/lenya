@@ -42,8 +42,8 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -94,50 +94,34 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         }
 
         String url = null;
-        ContextUtility contextUtility = null;
-        try {
-            contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
-            Session session = RepositoryUtil.getSession(this.serviceManager, contextUtility
-                    .getRequest());
-            DocumentFactory map = DocumentUtil.createDocumentFactory(this.serviceManager, session);
-
-            // always check for authoring URL since the live document doesn't
-            // have to exist
-
-            URLInformation info = new URLInformation(webappUrl);
-            // Danger, Will Robinson! If area or pubId is null, webappUrl.substring()
-            // will be out of bounds, because null becomes "null" in string concatenation
-            String pubId = info.getPublicationId();
-            String area = info.getArea();
-            String prefix = "/" + ((pubId != null) ? pubId + "/" : "");
-            // String prefix = "/" + pubId + "/";
-            String prefixWithArea = prefix + ((area != null) ? area : "");
-            // String prefixWithArea = prefix + area;
-            String authoringUrl = prefix + Publication.AUTHORING_AREA
-                    + ((webappUrl.length()>prefixWithArea.length())?webappUrl.substring(prefixWithArea.length()):"/");
-
-            if (map.isDocument(authoringUrl)) {
-                Document authoringDoc = map.getFromURL(authoringUrl);
-                url = "/" + authoringDoc.getPublication().getId() + "/" + area
-                        + authoringDoc.getPath();
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("    Document exists");
-                    getLogger().debug("    Document path: [" + authoringDoc.getPath() + "]");
+        URLInformation info = new URLInformation(webappUrl);
+        String pubId = info.getPublicationId();
+        String area = info.getArea();
+        
+        if (pubId != null && area != null && info.getDocumentUrl().length() > 1) {
+            ContextUtility contextUtility = null;
+            try {
+                contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
+                Session session = RepositoryUtil.getSession(this.serviceManager, contextUtility
+                        .getRequest());
+                DocumentFactory map = DocumentUtil.createDocumentFactory(this.serviceManager, session);
+                Publication pub = map.getPublication(pubId);
+                DocumentLocator loc = pub.getDocumentBuilder().getLocator(map, webappUrl);
+                url = "/" + pubId + "/" + area + loc.getPath();
+            } catch (ServiceException e) {
+                throw new AccessControlException("Error looking up ContextUtility component", e);
+            } catch (Exception e) {
+                throw new AccessControlException(e);
+            } finally {
+                if (contextUtility != null) {
+                    serviceManager.release(contextUtility);
                 }
-            }
-        } catch (ServiceException e) {
-            throw new AccessControlException("Error looking up ContextUtility component", e);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        } finally {
-            if (contextUtility != null) {
-                serviceManager.release(contextUtility);
             }
         }
 
         if (url == null) {
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Document does not exist.");
+                getLogger().debug("    URL does not refer to a document.");
             }
             url = webappUrl;
         }
