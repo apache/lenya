@@ -129,7 +129,14 @@ public class OneFormEditor extends DocumentUsecase {
     protected void validate(Document xml) throws Exception {
         ResourceType resourceType = getSourceDocument().getResourceType();
         Schema schema = resourceType.getSchema();
-        ValidationUtil.validate(this.manager, xml, schema, new UsecaseErrorHandler(this));
+        if (schema == null) {
+            getLogger().info(
+                    "No schema declared for resource type [" + resourceType.getName()
+                            + "], skipping validation.");
+        }
+        else {
+            ValidationUtil.validate(this.manager, xml, schema, new UsecaseErrorHandler(this));
+        }
     }
 
     protected Document getXml() throws ParserConfigurationException, IOException {
@@ -163,6 +170,7 @@ public class OneFormEditor extends DocumentUsecase {
 
     /**
      * Save the XML file
+     * 
      * @param content The content
      * @param document The source
      */
@@ -178,6 +186,7 @@ public class OneFormEditor extends DocumentUsecase {
 
     /**
      * Remove redundant namespaces
+     * 
      * @param namespaces The namespaces to remove
      * @return The namespace string without the removed namespaces
      */
@@ -199,13 +208,17 @@ public class OneFormEditor extends DocumentUsecase {
 
     /**
      * Add namespaces
+     * 
      * @param namespaces The namespaces to add
      * @param content The content to add them to
      * @return The content with the added namespaces
      */
     private String addNamespaces(String namespaces, String content) {
-        int i = content.indexOf(">");
-        return content.substring(0, i) + " " + namespaces + content.substring(i);
+        String s = content.substring(0, content.indexOf(">"));
+        while (s.endsWith(" ") || s.endsWith("/")) {
+            s = s.substring(0, s.length() - 1);
+        }
+        return s + " " + namespaces + content.substring(s.length());
     }
 
     protected String getEvent() {
