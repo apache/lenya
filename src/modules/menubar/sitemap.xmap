@@ -35,7 +35,7 @@
       <map:match pattern="*/*/lenyaGui.xsl">
         <!-- no menu for revisions -->
         <map:match type="request-parameter" pattern="lenya.revision">
-          <map:generate src="lenya/xslt/util/identity.xsl"/>
+          <map:generate src="fallback://lenya/xslt/util/identity.xsl"/>
           <map:serialize type="xml"/>
         </map:match>
         <!-- for everything else: --> 
