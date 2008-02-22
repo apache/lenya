@@ -286,5 +286,9 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     public String getId() {
         return this.id;
     }
+    
+    public String toString() {
+        return "Session " + getId();
+    }
 
 }
