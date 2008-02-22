@@ -252,4 +252,8 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         this.manager = manager;
     }
     
+    public String toString() {
+        return getName();
+    }
+    
 }
