@@ -23,7 +23,8 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.overview']">
     <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Overview">
-      <view uri="modules/sitemanagement/usecases/tab/overview.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/overview.jx" menu="true"
+        createContinuation="false">
         <tab group="site" name="overview"/>
       </view>
       <exit usecase="tab.overview"/>

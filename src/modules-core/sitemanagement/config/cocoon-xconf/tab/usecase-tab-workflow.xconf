@@ -23,7 +23,8 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.workflow']">
     <component-instance name="tab.workflow" logger="lenya.site" class="org.apache.lenya.cms.workflow.usecases.History">
-      <view uri="modules/sitemanagement/usecases/tab/workflow.jx" menu="true">
+      <view uri="modules/sitemanagement/usecases/tab/workflow.jx" menu="true"
+        createContinuation="false">
         <tab group="site" name="workflow"/>
       </view>
       <exit usecase="tab.workflow"/>
