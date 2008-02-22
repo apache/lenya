@@ -27,6 +27,9 @@
     <!-- Default time in seconds until the resource-type has expired -->  
     <expires seconds="3600" />
     
+    <schema namespace="http://relaxng.org/ns/structure/0.9"
+      uri="fallback://lenya/modules/collection/resources/schemas/collection.rng"/>
+    
     <sample 
        mime-type="application/xml" 
        uri="fallback://lenya/modules/news/samples/news.xml"

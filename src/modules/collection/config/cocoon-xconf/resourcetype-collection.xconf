@@ -23,12 +23,8 @@
   <component-instance name="collection"
                       logger="lenya.resourcetypes.collection"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <!-- FIXME: shouldn't this resource type provide validation? 
-    <schema
-      namespace="http://relaxng.org/ns/structure/0.9"
-      uri=""
-    />
-    -->
+    <schema namespace="http://relaxng.org/ns/structure/0.9"
+      uri="fallback://lenya/modules/collection/resources/schemas/collection.rng"/>
     <sample name="Manual" mime-type="application/xml" uri="fallback://lenya/modules/collection/samples/collection.xml"/>
     <sample name="Children" mime-type="application/xml" uri="fallback://lenya/modules/collection/samples/children.xml"/>
     <format name="collection" uri="cocoon://modules/collection/collection.xml"/>
