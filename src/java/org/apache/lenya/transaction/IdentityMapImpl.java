@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.transaction;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,7 +35,7 @@ import org.apache.avalon.framework.logger.Logger;
  */
 public final class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
 
-    private Map maps = new HashMap();
+    private Map maps = Collections.synchronizedMap(new HashMap());
     
     /**
      * Ctor.
@@ -48,7 +49,7 @@ public final class IdentityMapImpl extends AbstractLogEnabled implements Identit
         String type = factory.getType();
         Map map = (Map) this.maps.get(type);
         if (map == null) {
-            map = new HashMap();
+            map = Collections.synchronizedMap(new HashMap());
             this.maps.put(type, map);
         }
         Object object = map.get(key);
