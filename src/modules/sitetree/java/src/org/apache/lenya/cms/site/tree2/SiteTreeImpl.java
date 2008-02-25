@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.site.tree2;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -127,7 +126,6 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        checkInvariants();
     }
 
     protected void reset() {
@@ -368,32 +366,6 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             throw new SiteException("No link for [" + key + "]");
         }
         return (Link) getUuidLanguage2Link().get(key);
-    }
-
-    protected void checkInvariants() {
-        if (true) {
-            return;
-        }
-        for (Iterator paths = this.path2node.keySet().iterator(); paths.hasNext();) {
-            String path = (String) paths.next();
-            SiteNode node = (SiteNode) this.path2node.get(path);
-            String uuid = node.getUuid();
-            if (uuid != null) {
-                String[] langs = node.getLanguages();
-                for (int i = 0; i < langs.length; i++) {
-                    String key = getKey(uuid, langs[i]);
-                    Assert.isTrue("contains link for [" + key + "]", this.uuidLanguage2link
-                            .containsKey(key));
-                }
-            }
-        }
-        for (Iterator keys = this.uuidLanguage2link.keySet().iterator(); keys.hasNext();) {
-            String key = (String) keys.next();
-            Link link = (Link) this.uuidLanguage2link.get(key);
-            Assert.isTrue("contains path for [" + key + "]", this.path2node.containsKey(link
-                    .getNode().getPath()));
-        }
-
     }
 
     public SiteNode getNode(String path) throws SiteException {
