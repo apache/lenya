@@ -177,6 +177,7 @@ function log(level, message, usecaseName) {
  * @param view, a org.apache.lenya.cms.usecase.UsecaseView object
  * @param proxy, a org.apache.lenya.cms.usecase.UsecaseProxy object
  * @param generic, a generic Javascript object for custom flow code to preserve state information (currently not used by the default code)
+ * @return A WebContinuation object or null if no continuation was created.
  *
  * This function invokes customLoopFlow if it exists.
  * Otherwise it falls back to defaultLoopFlow.
@@ -233,11 +234,12 @@ function defaultLoopFlow(view, proxy) {
     }
     if (view.createContinuation()) {
         log("debug", "Creating view and continuation, calling Cocoon with viewUri = [" + viewUri + "]");
-        cocoon.sendPageAndWait(viewUri, { "usecase" : proxy });
+        return cocoon.sendPageAndWait(viewUri, { "usecase" : proxy });
     } else {
         log("debug", "Creating view without continuation (!), calling Cocoon with viewUri = [" + viewUri + "]");
         cocoon.sendPage(viewUri, { "usecase" : proxy});
         cocoon.exit(); // we're done.
+        return null;
     }
 }
 
@@ -369,14 +371,16 @@ function executeUsecase() {
         releaseUsecase(usecase);
     }
     loadCustomFlow(view);
+    
     // If the usecase has a view uri, this means we want to display something 
     // to the user before proceeding. This also means the usecase can consist
     // of several steps; repeated until the user chooses to submit or cancel.
     if (view != null && view.getViewURI()) {
+        var continuation = null;
         do {
             // show the view:
             try {
-                loopFlow(view, proxy, generic); //usecase must be released here!
+                continuation = loopFlow(view, proxy, generic); //usecase must be released here!
             } catch (exception) {
                 // if something went wrong, try and rollback the usecase:
                 log("error", "Exception during loopFlow(): " + exception, usecaseName);
@@ -401,6 +405,9 @@ function executeUsecase() {
                 releaseUsecase(usecase);
             }
         } while (state == "continue");
+        if (continuation != null) {
+            continuation.invalidate();
+        }
     // If the usecase does not have a view uri, we can directly jump to 
     // executeFlow().
     } else {
