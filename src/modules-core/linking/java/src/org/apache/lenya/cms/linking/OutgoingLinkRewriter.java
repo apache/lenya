@@ -65,7 +65,8 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     /**
      * @param manager The service manager to use.
      * @param session The current session.
-     * @param requestUrl The request URL where the links should be rewritten.
+     * @param requestUrl The requested web application URL (without servlet context path) where
+     *        the links should be rewritten.
      * @param ssl If the current page is SSL-encrypted.
      * @param considerSslPolicies If the SSL protection of policies should be considered when
      *        resolving the corresponding proxy. Setting this to <code>true</code> leads to a

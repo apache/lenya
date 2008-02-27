@@ -31,6 +31,7 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 
 /**
@@ -65,18 +66,19 @@ public class ProxyTransformer extends AbstractLinkTransformer {
     private boolean relativeUrls = false;
     private LinkRewriter rewriter;
 
-    public void setup(SourceResolver _resolver, Map _objectModel, String _source,
-            Parameters _parameters) throws ProcessingException, SAXException, IOException {
-        super.setup(_resolver, _objectModel, _source, _parameters);
-        Request _request = ObjectModelHelper.getRequest(_objectModel);
+    public void setup(SourceResolver resolver, Map objectModel, String source,
+            Parameters parameters) throws ProcessingException, SAXException, IOException {
+        super.setup(resolver, objectModel, source, parameters);
+        Request request = ObjectModelHelper.getRequest(objectModel);
 
         try {
-            if (_parameters.isParameter(PARAMETER_URLS)) {
-                setUrlType(_parameters.getParameter(PARAMETER_URLS));
+            if (parameters.isParameter(PARAMETER_URLS)) {
+                setUrlType(parameters.getParameter(PARAMETER_URLS));
             }
-            Session session = RepositoryUtil.getSession(this.manager, _request);
-            this.rewriter = new OutgoingLinkRewriter(this.manager, session, _request
-                    .getRequestURI(), request.isSecure(), false, this.relativeUrls);
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            String webappUrl = ServletHelper.getWebappURI(request);
+            this.rewriter = new OutgoingLinkRewriter(this.manager, session, webappUrl,
+                    request.isSecure(), false, this.relativeUrls);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
