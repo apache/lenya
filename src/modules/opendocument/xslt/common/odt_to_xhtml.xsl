@@ -329,7 +329,7 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	<!-- Now select the <text:list-level-style-foo> element at this
 		level of nesting for this list -->
 	<xsl:variable name="node" select="key('listTypes',
-		$listClass)/*[@text:level='$level']"/>
+		$listClass)/*[@text:level=$level]"/>
 
 	<!-- emit appropriate list type -->
 	<xsl:choose>
