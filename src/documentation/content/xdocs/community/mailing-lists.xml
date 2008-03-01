@@ -72,8 +72,8 @@ The Cocoon mailing lists can be read at
   <li><a href="http://news.gmane.org/thread.php?group=gmane.text.xml.cocoon.devel">gmane.text.xml.cocoon.devel</a></li>
 </ul>
 </section>
- 
 <section><title>Archive</title>
+<section><title>Apache</title>
 <p>
 <strong>User List:</strong> <a href="http://mail-archives.apache.org/mod_mbox/lenya-user/">http://mail-archives.apache.org/mod_mbox/lenya-user/</a>
 <br />
@@ -82,6 +82,17 @@ The Cocoon mailing lists can be read at
 <strong>Commits List:</strong> <a href="http://mail-archives.apache.org/mod_mbox/lenya-commits/">http://mail-archives.apache.org/mod_mbox/lenya-commits/</a>
 </p>
 </section>
- 
+<section><title>MarkMail</title>
+<p>
+  <strong>All Lists:</strong> <a href="http://lenya.markmail.org/">http://lenya.markmail.org/</a>
+<br />
+<strong>User List:</strong> <a href="http://markmail.org/search/list:org.apache.lenya.user">http://markmail.org/search/list:org.apache.lenya.user/</a>
+<br />
+<strong>Developer List:</strong> <a href="http://markmail.org/search/list:org.apache.lenya.dev/">http://markmail.org/search/list:org.apache.lenya.dev/</a>
+<br />
+<strong>Commits List:</strong> <a href="http://markmail.org/search/list:org.apache.lenya.commits/">http://markmail.org/search/list:org.apache.lenya.commits/</a>
+</p>
+</section>
+ </section>
   </body>
 </document>
