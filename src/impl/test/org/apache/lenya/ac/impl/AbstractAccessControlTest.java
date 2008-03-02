@@ -55,6 +55,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
             throws AccessControlException {
 
         Session session = new SessionImpl(null, true, getManager(), getLogger());
+        getRequest().setAttribute(Session.class.getName(), session);
         
         DefaultAccessController ac = getAccessController(session, TEST_PUB_ID);
         AccreditableManager acMgr = ac.getAccreditableManager();
@@ -145,7 +146,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         super.tearDown();
     }
 
-    protected static final String USERNAME = "lenya";
+    protected static final String USER_ID = "lenya";
 
     /**
      * Returns the policy manager.
@@ -181,12 +182,16 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     protected Session getSession() {
         if (this.session == null) {
             try {
-                this.session = login("lenya");
+                this.session = login(getUserId());
             } catch (AccessControlException e) {
                 throw new RuntimeException(e);
             }
         }
         return this.session;
+    }
+
+    protected String getUserId() {
+        return USER_ID;
     }
 
     protected Publication getPublication(Session session, String pubId) throws PublicationException {
