@@ -37,6 +37,8 @@ import org.apache.cocoon.environment.mock.MockEnvironment;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.xml.EntityResolver;
+import org.apache.lenya.xml.DocumentHelper;
 
 /**
  * Base class for Lenya tests which need the context information.
@@ -118,6 +120,9 @@ public class LenyaTestCase extends ContainerTestCase {
         Context envContext = (Context) context.get(Constants.CONTEXT_ENVIRONMENT_CONTEXT);
         objectModel.put(ObjectModelHelper.CONTEXT_OBJECT, envContext);
         context.put(ContextHelper.CONTEXT_OBJECT_MODEL, objectModel);
+        
+        EntityResolver entityResolver = (EntityResolver) getManager().lookup(EntityResolver.ROLE);
+        DocumentHelper.setEntityResolver(entityResolver);
         
     }
 
