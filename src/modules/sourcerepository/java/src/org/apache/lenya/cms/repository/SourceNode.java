@@ -409,18 +409,17 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public long getLastModified() throws RepositoryException {
-
-        if (!exists()) {
-            throw new RepositoryException("The node [" + this + "] does not exist!");
+        try {
+            CheckInEntry entry = getRcml().getLatestCheckInEntry();
+            if (entry != null) {
+                return entry.getTime();
+            }
+            else {
+                throw new RepositoryException("The node [" + this + "] hasn't been checked in yet.");
+            }
+        } catch (RevisionControlException e) {
+            throw new RepositoryException(e);
         }
-
-        long contentLastModified = this.contentSource.getLastModified();
-        long metaLastModified = 0;
-        if (this.metaSource.exists()) {
-            metaLastModified = this.metaSource.getLastModified();
-        }
-
-        return Math.max(contentLastModified, metaLastModified);
     }
 
     public String getMimeType() throws RepositoryException {
@@ -498,6 +497,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public Persistable getPersistable() {
         return this.persistable;
+    }
+
+    public String getCacheKey() {
+        return getSourceURI();
     }
 
 }

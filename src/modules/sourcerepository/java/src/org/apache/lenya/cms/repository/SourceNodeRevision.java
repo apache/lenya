@@ -131,7 +131,7 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     protected SourceNodeMetaDataHandler getMetaDataHandler() {
         if (this.metaDataHandler == null) {
-            this.metaDataHandler = new SourceNodeMetaDataHandler(this.manager, getMetaSourceUri());
+            this.metaDataHandler = new SourceNodeMetaDataHandler(this.manager, getMetaSourceUri(), this);
         }
         return this.metaDataHandler;
     }

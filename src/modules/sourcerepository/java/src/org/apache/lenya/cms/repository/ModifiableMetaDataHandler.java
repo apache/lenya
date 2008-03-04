@@ -42,7 +42,7 @@ public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler impleme
      * @param sourceWrapper The source wrapper.
      */
     public ModifiableMetaDataHandler(ServiceManager manager, MetaSourceWrapper sourceWrapper) {
-        super(manager, sourceWrapper.getRealSourceUri());
+        super(manager, sourceWrapper.getRealSourceUri(), sourceWrapper.getNode());
         this.sourceWrapper = sourceWrapper;
         try {
             this.sourceWrapper.getNode().setPersistable(this);

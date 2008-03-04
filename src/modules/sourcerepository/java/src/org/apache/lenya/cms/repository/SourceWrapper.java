@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
-import java.util.Date;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -39,8 +38,6 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.rc.CheckInEntry;
-import org.apache.lenya.cms.rc.RevisionControlException;
 import org.apache.lenya.util.Assert;
 
 /**
@@ -348,7 +345,6 @@ public class SourceWrapper extends AbstractLogEnabled {
          */
         public synchronized void close() throws IOException {
             SourceWrapper.this.data = super.toByteArray();
-            SourceWrapper.this.lastModified = new Date().getTime();
             try {
                 SourceWrapper.this.getNode().registerDirty();
             } catch (RepositoryException e) {
@@ -366,25 +362,6 @@ public class SourceWrapper extends AbstractLogEnabled {
     public long getContentLength() throws RepositoryException {
         loadData();
         return this.data.length;
-    }
-
-    private long lastModified = -1;
-
-    /**
-     * @return The last modification date.
-     * @throws RepositoryException if an error occurs.
-     * @see org.apache.lenya.cms.repository.Node#getLastModified()
-     */
-    public long getLastModified() throws RepositoryException {
-        try {
-            CheckInEntry entry = this.node.getRcml().getLatestCheckInEntry();
-            if (entry != null) {
-                this.lastModified = entry.getTime();
-            }
-        } catch (RevisionControlException e) {
-            throw new RepositoryException(e);
-        }
-        return this.lastModified;
     }
 
     private String mimeType;

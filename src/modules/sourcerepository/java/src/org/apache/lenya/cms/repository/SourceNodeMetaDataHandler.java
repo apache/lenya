@@ -43,15 +43,18 @@ import org.w3c.dom.Element;
 public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
     private ServiceManager manager;
+    private ContentHolder content;
     private String sourceUri;
 
     /**
      * @param manager The service manager.
-     * @param sourceUri The soure URI.
+     * @param sourceUri The source URI.
+     * @param content The content these meta data apply for.
      */
-    public SourceNodeMetaDataHandler(ServiceManager manager, String sourceUri) {
+    public SourceNodeMetaDataHandler(ServiceManager manager, String sourceUri, ContentHolder content) {
         this.manager = manager;
         this.sourceUri = sourceUri;
+        this.content = content;
     }
 
     private Map namespace2metadata = new HashMap();
@@ -259,11 +262,7 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
     }
 
     protected long getLastModified() throws RepositoryException {
-        try {
-            return SourceUtil.getLastModified(this.sourceUri, this.manager);
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        }
+        return this.content.getLastModified();
     }
 
 }
