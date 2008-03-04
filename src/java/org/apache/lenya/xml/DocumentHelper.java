@@ -48,6 +48,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.SAXException;
 
 /**
@@ -55,6 +56,16 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class DocumentHelper {
+    
+    private static EntityResolver entityResolver = null;
+    
+    /**
+     * @param resolver The entity resolver to use.
+     */
+    public static void setEntityResolver(EntityResolver resolver) {
+        entityResolver = resolver;
+    }
+    
     /**
      * Creates a non-validating and namespace-aware DocumentBuilder.
      * @return A new DocumentBuilder object.
@@ -65,8 +76,8 @@ public class DocumentHelper {
         factory.setNamespaceAware(true);
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        CatalogResolver cr = new CatalogResolver();
-        builder.setEntityResolver(cr);
+        EntityResolver resolver = entityResolver != null ? entityResolver : new CatalogResolver();
+        builder.setEntityResolver(resolver);
         return builder;
     }
 
