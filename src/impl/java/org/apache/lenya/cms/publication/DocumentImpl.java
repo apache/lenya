@@ -28,10 +28,12 @@ import java.util.List;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataCache;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.ContentHolder;
@@ -420,6 +422,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     protected static final String IDENTIFIABLE_TYPE = "document";
 
     private ResourceType resourceType;
+    private MetaDataCache metaDataCache;
 
     /**
      * Convenience method to read the document's resource type from the meta-data.
@@ -444,7 +447,26 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
-        return getContentHolder().getMetaData(namespaceUri);
+        MetaData meta = getContentHolder().getMetaData(namespaceUri);
+        if (getSession().isModifiable()) {
+            return meta;
+        }
+        else {
+            String cacheKey = getPublication().getId() + ":" + getArea() + ":"
+                    + getUUID() + ":" + getLanguage();
+            return getMetaDataCache().getMetaData(cacheKey, meta, namespaceUri);
+        }
+    }
+
+    protected MetaDataCache getMetaDataCache() {
+        if (this.metaDataCache == null) {
+            try {
+                this.metaDataCache = (MetaDataCache) this.manager.lookup(MetaDataCache.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.metaDataCache;
     }
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
