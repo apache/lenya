@@ -30,7 +30,6 @@ import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.commons.collections.map.LRUMap;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.ac.AccessControlException;
@@ -38,8 +37,6 @@ import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.LinkTarget;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -98,12 +95,6 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     private Document currentDoc;
     private String cacheKey;
     private SourceValidity validity;
-    
-    private static LRUMap extensionCache;
-    
-    static {
-        extensionCache = new LRUMap(10000);
-    }
     
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -237,39 +228,11 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
      * @return The required extension or, if it is null, the document's default extension.
      */
     protected String getExtension(Document targetDocument, String requiredExtension) {
-        String extension = requiredExtension != null ? requiredExtension : getExtension(targetDocument);
+        String extension = requiredExtension != null ? requiredExtension : targetDocument.getExtension();
         if (extension.length() > 0) {
             extension = "." + extension;
         }
         return extension;
-    }
-
-    /**
-     * Get the extension of a document. The lookup of the extension requires loading the meta
-     * data and is therefore very expensive, so we cache the extension.
-     * @param targetDocument The target document.
-     * @return A string.
-     */
-    protected String getExtension(Document targetDocument) {
-        String key = targetDocument.getRepositoryNode().getSourceURI();
-        Extension ex = null;
-        try {
-            MetaData meta = targetDocument.getMetaData("http://apache.org/lenya/metadata/document/1.0");
-            if (extensionCache.containsKey(key)) {
-                ex = (Extension) extensionCache.get(key);
-                if (meta.getLastModified() > ex.lastModified) {
-                    ex = null;
-                }
-            }
-            if (ex == null) {
-                ex = new Extension(targetDocument.getExtension(), meta.getLastModified());
-                extensionCache.put(key, ex);
-            }
-        } catch (MetaDataException e) {
-            throw new RuntimeException(e);
-        }
-        
-        return ex.extension;
     }
 
     /**
