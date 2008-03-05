@@ -106,7 +106,7 @@
 
 
       <map:match pattern="**">
-        <map:read src="lenya-document:/{page-envelope:document-uuid}"/>
+        <map:read src="lenya-document:{page-envelope:document-uuid}"/>
       </map:match>
       
     </map:pipeline>
