@@ -96,13 +96,13 @@ limitations under the License.
           <map:parameter name="nodeId" value="{doc-info:{1}:{2}:{3}:{4}:nodeName}"/>
           <map:parameter name="path" value="{doc-info:{1}:{2}:{3}:{4}:path}"/>
           <map:parameter name="language" value="{4}"/>
-          <map:parameter name="root" value="{proxy:/{1}/{2}}"/>
+          <map:parameter name="root" value="/{1}/{2}"/>
           <map:parameter name="mimeType" value="{doc-info:{1}:{2}:{3}:{4}:mimeType:{request-param:lenya.revision}}"/>
           <map:parameter name="contentLength" value="{doc-info:{1}:{2}:{3}:{4}:contentLength:{request-param:lenya.revision}}"/>
           <map:parameter name="documentUrl" value="{doc-info:{1}:{2}:{3}:{4}:documentUrl}"/>
           <map:parameter name="sourceExtension" value="{doc-info:{1}:{2}:{3}:{4}:sourceExtension:{request-param:lenya.revision}}"/>
           <map:parameter name="pubid" value="{1}"/>
-          <map:parameter name="imageprefix" value="{proxy:/{1}/modules/resource}"/>
+          <map:parameter name="imageprefix" value="/{1}/modules/resource"/>
           <map:parameter name="revision" value="{request-param:lenya.revision}"/>
         </map:transform>
         <map:transform type="i18n"/>
