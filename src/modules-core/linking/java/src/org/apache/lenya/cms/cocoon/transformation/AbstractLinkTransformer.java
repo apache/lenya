@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.cocoon.transformation;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,9 +28,17 @@ import java.util.Stack;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.linking.LinkRewriter;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -41,18 +50,29 @@ import org.xml.sax.helpers.AttributesImpl;
  * </p>
  * <p>
  * If the link rewriter returns <code>null</code> for a link, an attribute can be
- * added to the corresponding element.
+ * added to the corresponding element, with an optional message of the form "Broken link: ...".
  * </p>
  * <code><pre>
  *   &lt;map:transformer ... &gt;
  *     &lt;transform namespace=&quot;http://www.w3.org/1999/xhtml&quot; element=&quot;a&quot; attribute=&quot;href&quot;/&gt;
  *     &lt;transform namespace=&quot;...&quot; ... /&gt;
- *     &lt;markBrokenLinks attribute=&quot;...&quot; value=&quot;...&quot;/&gt;
+ *     &lt;markBrokenLinks attribute=&quot;...&quot; value=&quot;...&quot; messageAttribute=&quot;...&quot;/&gt;
  *   &lt;/map:transformer&gt;
  * </pre></code>
  */
 public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     
+    private String area;
+    
+    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters params)
+            throws ProcessingException, SAXException, IOException {
+        super.setup(resolver, objectModel, src, params);
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        String webappUrl = ServletHelper.getWebappURI(request);
+        URLInformation url = new URLInformation(webappUrl);
+        this.area = url.getArea();
+    }
+
     /**
      * Set of supported local names for quick pre-checks.
      */
@@ -61,6 +81,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     private boolean markBrokenLinks;
     private String brokenLinkAttribute;
     private String brokenLinkValue;
+    private String brokenLinkMessageAttribute;
     
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
@@ -84,6 +105,10 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         if (brokenLinksConfig != null) {
             this.brokenLinkAttribute = brokenLinksConfig.getAttribute("attribute");
             this.brokenLinkValue = brokenLinksConfig.getAttribute("value");
+            String messageAttr = brokenLinksConfig.getAttribute("messageAttribute", null);
+            if (messageAttr != null) {
+                this.brokenLinkMessageAttribute = messageAttr;
+            }
             this.markBrokenLinks = true;
         }
         else {
@@ -225,7 +250,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreLinkElement);
         }
 
-        // use existsMatching to match up with ednElement
+        // use existsMatching to match up with endElement
         if (existsMatchingConfiguration(uri,name) && this.useIgnore) {
             if(this.ignoreLinkElement) { 
                 ignoreLinkElementStack.push(Boolean.TRUE);
@@ -260,7 +285,12 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
                 setAttribute(newAttrs, config.attribute, rewrittenUrl);
             }
             else {
-                markBrokenLink(newAttrs, config.attribute);
+                if (this.area != null && this.area.equals(Publication.LIVE_AREA)) {
+                    this.ignoreLinkElement = true;
+                }
+                else {
+                    markBrokenLink(newAttrs, config.attribute, linkUrl);
+                }
             }
         }
     }
@@ -313,9 +343,10 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * Marks a link element as broken and removes the attribute which contained the URL.
      * @param newAttrs The new attributes.
      * @param attrName The attribute name containing the URL which could not be rewritten.
+     * @param brokenLinkUri The broken link URI.
      * @throws AccessControlException when something went wrong.
      */
-    protected void markBrokenLink(AttributesImpl newAttrs, String attrName)
+    protected void markBrokenLink(AttributesImpl newAttrs, String attrName, String brokenLinkUri)
             throws AccessControlException {
         if (this.markBrokenLinks) {
             if (newAttrs.getIndex(this.brokenLinkAttribute) > -1) {
@@ -323,6 +354,15 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             }
             if (newAttrs.getIndex(attrName) > -1) {
                 newAttrs.setAttribute(newAttrs.getIndex(attrName), "", attrName, attrName, "CDATA", "");
+            }
+            String msgAttr = this.brokenLinkMessageAttribute;
+            if (msgAttr != null) {
+                int index = newAttrs.getIndex(msgAttr);
+                if (index > -1) {
+                    newAttrs.removeAttribute(index);
+                }
+                String msg = "Broken link: " + brokenLinkUri;
+                newAttrs.addAttribute("", msgAttr, msgAttr, "CDATA", msg);
             }
             newAttrs.addAttribute("", this.brokenLinkAttribute, this.brokenLinkAttribute, "CDATA", this.brokenLinkValue);
         }

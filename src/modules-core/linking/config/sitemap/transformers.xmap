@@ -29,6 +29,7 @@
     <transform namespace="http://www.w3.org/1999/xhtml" element="form" attribute="action"/>
     <transform namespace="http://www.w3.org/1999/xhtml" element="script" attribute="src"/>
     <transform namespace="http://www.w3.org/1999/xhtml" element="input" attribute="src"/>
+    <markBrokenLinks attribute="class" value="brokenlink" messageAttribute="title"/>
   </map:transformer>
     
   <map:transformer name="url2uuid" logger="lenya.sitemap.transformer.url2uuid"
