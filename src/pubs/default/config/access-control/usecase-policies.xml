@@ -296,6 +296,9 @@
   <usecase id="admin.users">
     <role id="admin" method="grant"/>
   </usecase>
+  <usecase id="admin.reports">
+    <role id="admin" method="grant"/>
+  </usecase>
   <usecase id="editors.forms">
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
