@@ -28,6 +28,7 @@ import java.util.Stack;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -36,12 +37,17 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * <p>
  * This transformer processes all links which are configured using
- * <code>&lt;transform/&gt;</code> elements:
+ * <code>&lt;transform/&gt;</code> elements.
+ * </p>
+ * <p>
+ * If the link rewriter returns <code>null</code> for a link, an attribute can be
+ * added to the corresponding element.
  * </p>
  * <code><pre>
  *   &lt;map:transformer ... &gt;
  *     &lt;transform namespace=&quot;http://www.w3.org/1999/xhtml&quot; element=&quot;a&quot; attribute=&quot;href&quot;/&gt;
  *     &lt;transform namespace=&quot;...&quot; ... /&gt;
+ *     &lt;markBrokenLinks attribute=&quot;...&quot; value=&quot;...&quot;/&gt;
  *   &lt;/map:transformer&gt;
  * </pre></code>
  */
@@ -51,6 +57,10 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * Set of supported local names for quick pre-checks.
      */
     private Set localNames = new HashSet();
+    
+    private boolean markBrokenLinks;
+    private String brokenLinkAttribute;
+    private String brokenLinkValue;
     
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
@@ -69,6 +79,15 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
                 this.namespaceLocalname2configSet.put(key, configs);
             }
             configs.add(attrConfig);
+        }
+        Configuration brokenLinksConfig = config.getChild("markBrokenLinks", false);
+        if (brokenLinksConfig != null) {
+            this.brokenLinkAttribute = brokenLinksConfig.getAttribute("attribute");
+            this.brokenLinkValue = brokenLinksConfig.getAttribute("value");
+            this.markBrokenLinks = true;
+        }
+        else {
+            this.markBrokenLinks = false;
         }
     }
 
@@ -236,7 +255,13 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
             throws Exception {
         if (getLinkRewriter().matches(linkUrl)) {
-            setAttribute(newAttrs, config.attribute, getLinkRewriter().rewrite(linkUrl));
+            String rewrittenUrl = getLinkRewriter().rewrite(linkUrl);
+            if (rewrittenUrl != null) {
+                setAttribute(newAttrs, config.attribute, rewrittenUrl);
+            }
+            else {
+                markBrokenLink(newAttrs, config.attribute);
+            }
         }
     }
 
@@ -283,5 +308,24 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * @return The link rewriter used by this transformer.
      */
     protected abstract LinkRewriter getLinkRewriter();
+
+    /**
+     * Marks a link element as broken and removes the attribute which contained the URL.
+     * @param newAttrs The new attributes.
+     * @param attrName The attribute name containing the URL which could not be rewritten.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected void markBrokenLink(AttributesImpl newAttrs, String attrName)
+            throws AccessControlException {
+        if (this.markBrokenLinks) {
+            if (newAttrs.getIndex(this.brokenLinkAttribute) > -1) {
+                newAttrs.removeAttribute(newAttrs.getIndex(this.brokenLinkAttribute));
+            }
+            if (newAttrs.getIndex(attrName) > -1) {
+                newAttrs.setAttribute(newAttrs.getIndex(attrName), "", attrName, attrName, "CDATA", "");
+            }
+            newAttrs.addAttribute("", this.brokenLinkAttribute, this.brokenLinkAttribute, "CDATA", this.brokenLinkValue);
+        }
+    }
 
 }

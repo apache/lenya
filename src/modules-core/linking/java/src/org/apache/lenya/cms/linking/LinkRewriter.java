@@ -30,7 +30,7 @@ public interface LinkRewriter {
     
     /**
      * @param url The original URL.
-     * @return The rewritten URL.
+     * @return The rewritten URL or <code>null</code> if the URL could not be rewritten.
      */
     String rewrite(String url);
 

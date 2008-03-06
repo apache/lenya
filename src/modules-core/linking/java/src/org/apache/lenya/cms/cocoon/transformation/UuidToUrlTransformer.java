@@ -343,14 +343,5 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
         }
         return this.validity;
     }
-    
-    protected static class Extension {
-        public Extension(String extension, long lastModified) {
-            this.extension = extension;
-            this.lastModified = lastModified;
-        }
-        protected String extension;
-        protected long lastModified;
-    }
 
 }
