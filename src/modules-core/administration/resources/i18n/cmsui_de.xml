@@ -67,5 +67,13 @@
   <message key="modules">Module</message>
   <message key="resource-types">Ressource-Typen</message>
   
+  <!-- reports -->
+  <message key="Reports">Berichte</message>
+  <message key="broken-links">Tote interne Links</message>
+  <message key="find-broken-links">Tote interne Links finden</message>
+  <message key="no-broken-links">Keine toten internen Links gefunden.</message>
+  <message key="Source">Quelle</message>
+  <message key="Target">Ziel</message>
+  
 </catalogue>
 

@@ -21,17 +21,13 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/gui-manager" unless="/cocoon/gui-manager/tab-group[@name = 'admin']">
-    <tab-group name="admin">
-      <tab name="users" label="Users" usecase="admin.users"/>
-      <tab name="groups" label="Groups" usecase="admin.groups"/>
-      <tab name="ipRanges" label="IP Ranges" usecase="admin.ipRanges"/>
-      <tab name="usecases" label="Usecases" usecase="admin.usecases"/>
-      <tab name="trash" label="Delete Trash" usecase="admin.emptyTrash"/>
-      <tab name="serverStatus" label="Server Status" usecase="admin.serverStatus"/>
-      <tab name="sessions" label="Sessions" usecase="admin.sessions"/>
-      <tab name="pubConf" label="Publication" usecase="admin.showPubConf"/>
-      <tab name="siteOverview" label="Overview" usecase="admin.siteOverview"/>
-      <tab name="reports" label="Reports" usecase="admin.reports"/>
-    </tab-group>
-  </xconf>
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'admin.reports']">
+
+  <component-instance name="admin.reports" logger="lenya.admin"
+    class="org.apache.lenya.modules.administration.Reports">
+    <view uri="modules/administration/usecases/reports.jx" menu="true" createContinuation="false">
+      <tab group="admin" name="reports"/>
+    </view>
+  </component-instance>
+  
+</xconf>
