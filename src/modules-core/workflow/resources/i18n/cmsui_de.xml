@@ -67,6 +67,9 @@
   <message key="workflow.deactivate">Deaktivieren</message>
   <message key="deactivate-doc?">Möchten Sie das Dokument <xhtml:q>{0}</xhtml:q> deaktivieren?</message>
   
+  <message key="last-published">Diese Seite wurde zuletzt publiziert am {0} von {1}.</message>
+  <message key="never-published">Diese Seite wurde noch nicht publiziert.</message>
+  
   
 </catalogue>
 

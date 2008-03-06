@@ -67,5 +67,7 @@
   <message key="Deactivate Document">Deactivate Document</message>
   <message key="deactivate-doc?">Do you want to deactivate the document <xhtml:q>{0}</xhtml:q>?</message>
   
+  <message key="last-published">This page was last published at {0} by {1}.</message>
+  <message key="never-published">This page has not been published yet.</message>
   
 </catalogue>

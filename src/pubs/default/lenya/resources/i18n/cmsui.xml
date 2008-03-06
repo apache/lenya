@@ -32,9 +32,6 @@
   <message key="New language for existing Document">New language for existing Document</message>
   <message key="default.createdoc.info.all-language-versions-exists">There are already versions of this document for all languages.</message>
 
-  <message key="last-published">This page was last published at {0} by {1}.</message>
-  <message key="never-published">This page has not been published yet.</message>
-
   <message key="error-generic-comment">Please contact your system administrator.</message>
   
 </catalogue>

@@ -32,9 +32,6 @@
   <message key="New language for existing Document">Neue Sprachversion für existierendes Dokument anlegen</message>
   <message key="default.createdoc.info.all-language-versions-exists">Das Dokument existiert bereits in allen notwendigen Sprachen.</message>
   
-  <message key="last-published">Diese Seite wurde zuletzt publiziert am {0} von {1}.</message>
-  <message key="never-published">Diese Seite wurde noch nicht publiziert.</message>
-  
   <message key="error-generic-comment">Bitte kontaktieren Sie den Systemadministrator.</message>
   
 </catalogue>
