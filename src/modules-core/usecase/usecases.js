@@ -69,7 +69,9 @@ function getUsecase(usecaseName) {
 function releaseUsecase(usecase) {
     var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
     try {
-        usecaseResolver.release(usecase);
+        if (usecase != null) {
+            usecaseResolver.release(usecase);
+        }
     } finally {
         cocoon.releaseComponent(usecaseResolver);
     }
