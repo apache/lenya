@@ -251,6 +251,9 @@
   <usecase id="admin.emptyTrash">
     <role id="admin" method="grant"/>
   </usecase>
+  <usecase id="admin.liveCheckIn">
+    <role id="admin" method="grant"/>
+  </usecase>
   <usecase id="admin.group">
     <role id="admin" method="grant"/>
   </usecase>
