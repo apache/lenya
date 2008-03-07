@@ -233,6 +233,7 @@
   <message key="keyLastModified">Last Modified</message>
   <message key="keyPath">Path</message>
   <message key="keyCheckedOut">Checked Out By</message>
+  <message key="keyContentLength">File Size</message>
   <message key="Update">Update</message>
   
   <!-- Site tab (info screens) -->

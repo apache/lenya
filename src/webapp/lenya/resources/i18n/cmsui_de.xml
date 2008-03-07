@@ -241,6 +241,7 @@
   <message key="keyLastModified">Letzte Änderung</message>
   <message key="keyDocumentId">Pfad</message>
   <message key="keyCheckedOut">Ausgecheckt von</message>
+  <message key="keyContentLength">Dateigrösse</message>
   <message key="Update">Aktualisieren</message>
     
     <!-- Site tab (info screens) -->

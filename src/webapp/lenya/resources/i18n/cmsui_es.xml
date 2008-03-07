@@ -241,6 +241,7 @@
   <message key="keyLastModified">Ultima modificación</message>
   <message key="keyPath">Identificativo de documento</message>
   <message key="keyCheckedOut">Revisado por</message>
+  <message key="keyContentLength">Tamaño&#160;del&#160;fichero</message>
   <message key="Update">Actualiza</message>
 
   <!-- Site tab (info screens) -->

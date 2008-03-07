@@ -66,10 +66,11 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String KEY_LAST_MODIFIED = "keyLastModified";
     protected static final String KEY_URL = "keyUrl";
     protected static final String KEY_CHECKED_OUT = "keyCheckedOut";
+    protected static final String KEY_CONTENT_LENGTH = "keyContentLength";
     protected static final String PARAMETER_KEYS = "keys";
 
     protected static final String[] KEYS = { KEY_PATH, KEY_LANGUAGE, KEY_RESOURCE_TYPE,
-            KEY_WORKFLOW_STATE, KEY_LAST_MODIFIED, KEY_CHECKED_OUT };
+            KEY_WORKFLOW_STATE, KEY_LAST_MODIFIED, KEY_CONTENT_LENGTH, KEY_CHECKED_OUT };
 
     protected static final String FILTER_RESOURCE_TYPE = "filterResourceType";
     protected static final String FILTER_WORKFLOW_STATE = "filterWorkflowState";
@@ -109,6 +110,7 @@ public class SiteOverview extends AbstractUsecase {
                         + documents[i].getResourceType().getName());
                 entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
                 entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
+                entry.setValue(KEY_CONTENT_LENGTH, "" + (documents[i].getContentLength() / 1000));
 
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String lastModified = format.format(new Date(documents[i].getLastModified()));
