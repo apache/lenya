@@ -221,8 +221,7 @@ public class UuidToUrlRewriter implements LinkRewriter {
     }
 
     /**
-     * Get the extension of a document. Caution: resolving the extension is
-     * expensive!
+     * Get the extension of a document.
      * 
      * @param targetDocument The document.
      * @param requiredExtension The required extension.
