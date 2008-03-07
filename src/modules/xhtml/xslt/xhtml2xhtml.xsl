@@ -23,7 +23,6 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns:ci="http://apache.org/cocoon/include/1.0" 
     exclude-result-prefixes="xhtml lenya"
     >
@@ -71,7 +70,5 @@
   <xsl:template match="xhtml:a[@class = 'lenya.asset']">
     <ci:include src="{@href}?format=downloadLink"/>
   </xsl:template>
-
- <xsl:template match="dc:metadata"/>
   
 </xsl:stylesheet> 
