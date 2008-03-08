@@ -21,7 +21,6 @@ package org.apache.lenya.xml.parser;
 
 import java.io.InputStream;
 import java.io.Reader;
-
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;

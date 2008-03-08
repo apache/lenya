@@ -28,9 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.xml.transform.TransformerException;
-
 import org.apache.lenya.workflow.BooleanVariable;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;

@@ -19,7 +19,6 @@ package org.apache.lenya.cms.ac.usecase;
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;

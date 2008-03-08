@@ -75,7 +75,6 @@
 <th class="dark"><i18n:text>Delete</i18n:text></th>
 <th><i18n:text>Live</i18n:text></th>
 <th><i18n:text>Edit</i18n:text></th>
-<th><i18n:text>URL</i18n:text></th>
 <th><i18n:text>Title</i18n:text></th>
 <th><i18n:text>Creator</i18n:text></th>
 <th><i18n:text>When</i18n:text></th>
@@ -109,16 +108,6 @@
 </td>
 </tr>
 
-<tr>
-<th><i18n:text>URL</i18n:text></th>
-<td colspan="5">
-<xsl:element name="input">
-<xsl:attribute name="type">text</xsl:attribute>
-<xsl:attribute name="name">new.href</xsl:attribute>
-<xsl:attribute name="size">60</xsl:attribute>
-</xsl:element>
-</td>
-</tr>
 <tr>
 <th><i18n:text>Title</i18n:text></th>
 <td colspan="5">
@@ -223,9 +212,6 @@
 <xsl:if test="@revision = ../@edit"><xsl:attribute name="checked"/></xsl:if>
 </xsl:element>
 </td>
-
-<td>
-<xsl:value-of select="@href"/></td>
 <td><xsl:value-of select="@title"/></td>
 <td><xsl:value-of select="@creator"/></td>
 <td><xsl:value-of select="@when"/></td>

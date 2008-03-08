@@ -21,7 +21,6 @@
 package org.apache.lenya.cms.cocoon.workflow;
 
 import java.util.Map;
-
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;

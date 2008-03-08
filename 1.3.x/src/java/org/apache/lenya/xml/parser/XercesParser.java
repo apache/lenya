@@ -22,7 +22,6 @@ package org.apache.lenya.xml.parser;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
-
 import org.apache.lenya.xml.DOMWriter;
 import org.apache.xerces.dom.CDATASectionImpl;
 import org.apache.xerces.dom.CommentImpl;

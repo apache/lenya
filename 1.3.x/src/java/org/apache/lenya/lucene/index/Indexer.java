@@ -20,7 +20,6 @@
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
-
 import org.w3c.dom.Element;
 
 public interface Indexer {

@@ -50,22 +50,23 @@
          <map:generate src="cocoon:/{1}/{2}"/>
          <map:serialize type="xml"/>   
       </map:match>
-<!--  {menu}/{indexname} -->
-      <map:match pattern="*/**">
+       <!--  {menu}/{indexname}/id -->
        <map:match pattern="*/*/**">
 <!-- Module XMAP -->
-         <map:act type="resource-exists" src="module://{1}/{module:module}.xmap">
-            <map:mount uri-prefix="" src="module://{../1}/{module:module}.xmap"/> 
+      <map:select type="resource-exists">
+         <map:when test="module://{1}/{module:module}.xmap">
+            <map:mount uri-prefix="" src="module://{1}/{module:module}.xmap"/> 
             <map:serialize type="xml"/>
-        </map:act>
+         </map:when>
 <!-- Module XSL -->
-         <map:act type="resource-exists" src="module://{1}/{module:module}.xsl">
-            <map:generate type="sitetree" src="{../2}"/>
+         <map:when test="module://{1}/{module:module}.xsl">
+            <map:generate type="sitetree" src="{2}"/>
             <map:call resource="finish">
-              <map:parameter name="stylesheet" value="{../1}/{module:module}.xsl"/>
-              <map:parameter name="url" value="{../3}"/>
+              <map:parameter name="stylesheet" value="{1}/{module:module}.xsl"/>
+              <map:parameter name="url" value="{3}"/>
             </map:call>
-        </map:act>
+         </map:when>
+      </map:select>
 <!-- Local XSL -->
         <map:generate type="sitetree" src="{2}"/>
         <map:call resource="finish">
@@ -73,7 +74,6 @@
            <map:parameter name="url" value="{3}"/>
         </map:call>
          <map:serialize type="xml"/>   
-       </map:match>
       </map:match>
 <!-- Default -->
         <map:generate type="sitetree" src="live"/>

@@ -30,7 +30,6 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
@@ -72,7 +71,7 @@ public class RevisionControllerAction extends AbstractAction {
       PageEnvelope envelope = null;
       Publication publication = null;
       try{
-         envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+         envelope = PageEnvelope.getCurrent();
          publication = envelope.getPublication();
          document = envelope.getDocument();
       }catch(Exception e){

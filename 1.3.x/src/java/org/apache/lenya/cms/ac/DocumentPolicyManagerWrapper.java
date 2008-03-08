@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;

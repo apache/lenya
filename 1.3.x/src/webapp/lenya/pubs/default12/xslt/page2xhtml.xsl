@@ -14,9 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-
 <!-- $Id$ -->
-
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
@@ -28,21 +26,14 @@
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     exclude-result-prefixes="page xhtml"
     >
-    
-    
 <!-- {context-prefix}/{publication-id}/{area} -->
 <xsl:param name="root"/>
-
 <xsl:param name="document-id"/>
-
 <!-- i.e. doctypes/xhtml-document -->
 <xsl:param name="document-type"/>
-
 <!-- The rquest url i.e. /lenya/doctypes/xhtml-document_en.html -->
 <xsl:param name="url"/>
-
 <xsl:param name="language"/>
-
 
 <xsl:template match="cmsbody">
   <html>
@@ -79,7 +70,9 @@
             <div id="main">
               <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
               <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
+              <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
               <xsl:apply-templates select="xhtml:html/xhtml:div[@id = 'body']"/>
+              <xsl:apply-templates select="xhtml:html/xhtml:body"/>
             </div>
           </td>
         </tr>

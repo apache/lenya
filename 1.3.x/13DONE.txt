@@ -1,7 +1,33 @@
 This file contains completed entries from the TODO file with the most recent entries at the top.  Separate Commits with "---".
 ======
 
-
+---
+-- DONE 20080308
+1.2 Authoring: Uses {pub}/xslt/page2xhtml.xsl.  lenya-body aggregate returns xhtml:html/xhtml:body rather than expected xhtml:html/xhtml:div[@id='body'].  Added former match to page2xhtml.xsl.
+Indexer: creating or updating Resources runs Indexer. Added system so only one thread handles updates while other threads may request that the first thread run update again.
+Patched xhtml module.xmap during testing.
+Replace all ResourceExists Actions with the ResourceExists Selector in Modules.
+New Module requires and passes successful requests to Edit Module.
+-- DONE 20080225
+Fixed setting live revision when currently empty string.
+Migration: Changed doctype of homepage from "homepage" to "home".
+Changed "live" Index removing doctype.
+-- DONE 20080221
+Restructured Modules to remove XML processing from Live.  
+Added live.xmap.  Separates Module inheritance of display from other pipelines.
+Made File, Link, and XML work for create, edit, and display. 
+Fixed ContentSourceFactory to send SourceNotFoundException correctly.
+Fixed FlatResource to use ID.  Also removes extension.  Simplifies XMAPs as ContentSourceFactory and ContentInputModule can receive UNID, ID, or Structure/ID.
+-- DONE 20080219
+New File Resource did not allow new Revisions without uploads=true.  Changed default.
+Merge {module}/resource.xml with current revision to add fields (especially important for new Resources containing no fields.)
+flat.SitetreeGenerator used for "edit" Module must return all Resources diregarding language and including Resources without any languages.
+"edit" Module must use "type".  If "doctype" exists, convert to "/{type}/{doctype}".
+"flat" Module change from type and doctype to type="/{type}/{doctype}".
+DONE: Handled by parsing in FlatResource.  Type is now just the doctype.
+Alternate types? Should Resources remember type hierarchy?  Or is publication's responsibility?  "png" inherits from "image" inherits from "file".  Error if no "png" Module?
+IMPLEMENTATION: Resources only know "type".  Doctype is removed.  Type is the module for the Resource.  "Home" type's Resource Module is "/xml/xhtml/home" but the Resource type is "home".
+Create New Resource: Publication has Resource Types.  Use Generator. Choose Type.  Create required languages. Use Transformer. Pass to Edit Module. [Done except open in edit.]
 
 ---
 DONE 20080127: Fix Publication Module loading and inheritance.  Each Publication should build structure once per restart.  
@@ -21,3 +47,28 @@ DONE 20080127: Add reloadModules to publication. => Files are cached by filename
 FIXED?: CreateRevisionTransformer: Set creator and when properly.
 DONE 20080120: Xinha adds extra fields. Dialog1 - Dialog6 fields added to new revisions.
 
+
+=== Older completed entries ===
+Admin screens: Revision chooser
+Show all revisions (*.xml from Translation directory, not including "translation.xml").  Sort by datetime.
+Mark the Live and Edit (last saved) revisions.
+"Publish" sets live revision.
+"Edit" opens specified revision.
+
+File Resource: Changing XML and Uploading are different operations.  How to handle? XML must change when file is uploaded (new creator, change time). XML can change without upload.  
+
+Resource: Add Language
+
+Admin screens: Document editor for rich text (XHTML) fields.  Integrate Kupu etc. for editing rich text field.  Use a transform to place into Revision XML, then call CreateRevisionTransformer.  [Completed replacing Kupu.]
+
+Admin screens: Document fields editor 
+Pull from Resource, Translation, and Meta
+Upload control if type="file".  How to save?
+
+CreateRevisionTransformer: Create new Resource if none specified or does not exist.  Allow a Title parameter, and default to "NEW " + datetime. [Moved to CreateResourceTransformer.]
+
+CreateRevisionTransformer:  TEST If request has file upload, save uploaded file with newrevision. Save upload Part.  Do not depend on field name.
+
+CreateRevisionTransformer: Add userid and datetime (and extension if fileupload) to root element of revisionUNID.xml
+
+CreateRevisionTransformer: Set "edit"=newRevision in Translation.xml [FlatContent.getNewFilename()]

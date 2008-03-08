@@ -24,8 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
+import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -39,6 +38,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.cocoon.util.PostInputStream;
+import org.apache.commons.io.FileUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.lenya.ac.Identity;

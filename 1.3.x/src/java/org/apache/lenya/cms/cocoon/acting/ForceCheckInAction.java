@@ -19,20 +19,18 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
-
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.Session;
+import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.cocoon.acting.RevisionControllerAction;
-import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.CheckInEntry;
+import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
 
 /**

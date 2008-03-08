@@ -21,7 +21,6 @@ package org.apache.lenya.lucene;
 
 import java.io.File;
 import java.util.Date;
-
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexWriter;
 

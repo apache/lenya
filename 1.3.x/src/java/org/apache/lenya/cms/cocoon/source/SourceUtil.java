@@ -20,7 +20,6 @@ package org.apache.lenya.cms.cocoon.source;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import org.apache.commons.io.CopyUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.excalibur.source.ModifiableSource;

@@ -198,6 +198,9 @@ public class PageEnvelope {
     */
    static public PageEnvelope getCurrent() throws PageEnvelopeException {
       Request request = Globals.getRequest();
+      if(null == request){
+         throw new PageEnvelopeException("Cannot access a PageEnvelope without a Request.");
+      }
       Object o = request.getAttribute(PageEnvelope.class.getName());
       if(null != o){
          return (PageEnvelope) o;

@@ -20,7 +20,6 @@
 package org.apache.lenya.xml;
 
 import java.util.StringTokenizer;
-
 import org.w3c.dom.Node;
 
 public class XPath {

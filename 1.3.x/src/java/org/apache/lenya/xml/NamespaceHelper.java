@@ -20,7 +20,6 @@
 package org.apache.lenya.xml;
 
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;

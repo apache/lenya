@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.task;
 
 import java.util.Map;
-
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;

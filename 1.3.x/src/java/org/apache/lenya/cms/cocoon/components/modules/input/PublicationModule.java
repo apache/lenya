@@ -6,6 +6,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
 /**
  * Retrieves Publication variables.
@@ -24,7 +25,12 @@ public class PublicationModule extends AbstractPageEnvelopeModule implements Thr
       if(getLogger().isDebugEnabled()){
          getLogger().debug("Resolving [" + name + "]");
       }
-      PageEnvelope pe = getEnvelope(objectModel);
+      PageEnvelope pe;
+      try{
+         pe = PageEnvelope.getCurrent();
+      }catch(PageEnvelopeException e){
+         throw new ConfigurationException("Resolving page envelope failed: ", e);
+      }
       Publication pub = pe.getPublication();
       if(name.equalsIgnoreCase("contenttype"))
          return pub.getContentType();

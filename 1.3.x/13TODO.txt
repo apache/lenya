@@ -1,64 +1,29 @@
-DESIGN: Does Module differentiation by ContentType cause confusion with inheritance?  A module overriding one type will intercept calls to all types.
+=================================================
+==== Needed to be function complete with 1.2 ====
+=================================================
+---- Structure editor ----
+Admin screen: Structure editor
+Create new structure.  Copy existing.  Add Resources not in structure.  Move Resource to new parent or root.
+Careful: must keep Resource even if does not exist in current language.  Show greyed, but still allow move.
 
-Create New Resource: Publication has Resource Types.  Use Generator. Choose Type.  Create required languages. Use Transformer. Pass to Edit Module.
+---- Security -----
+Resource-level Security.
+Access Control List in Resource.xml
+"admin" Group bypasses security and is allowed to do anything.
+<acl><read default="yes"><person|group|role id="name" access="yes|no"></read><edit default="yes">same as read</edit></acl>
+Implement in SitetreeGenerator and ContentSourceFactory.
+"Not allowed" returns Sorry page (rather than error).
+"Does not exist" returns same Sorry page.
+Sorry: This resource is not available, either it does not exist or you do not have access to it.  (Link to Login page if not logged in.)
+DESIGN: How to handle inheritance?  Multiple parents?  Assume "live" structure?
 
-Edit-Save must clear Cache.
 
-Administration navigation - Create Resource, return from edit resource.
+=====================================
+==== Links - Editor and Handling ====
+=====================================
+
 Add "Choose Lenya doc link" dialog to Xinha.
 Add "Create file resource" to Xinha.
-Security.
-Link rewriting (CreateRevisionTransformer and HTMLSeriralizer)
-Structure editor.
-
-Replace all ResourceExists Actions with the ResourceExists Selector.
-Replace uses of post.xsp with RequestGenerator.
-
-Modules - Add Resource description distinguished from Module description.
-
-
-Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
-
-==== ToDo List from 2006
-=== 1.2.x Conversion
-Session Module: login.xsp -> NullPointerException
-
-=== CreateRevisionTransformer
-Create new Resource if none specified or does not exist.  Allow a Title parameter, and default to "NEW " + datetime.
-
-TEST If request has file upload, save uploaded file with newrevision.
-Save upload Part.  Do not depend on field name.
-
-Add userid and datetime (and extension if fileupload) to root element of revisionUNID.xml
-
-Set "edit"=newRevision in Translation.xml [FlatContent.getNewFilename()]
-
-=== "flat" Module
-Use Content directory from publication.xconf
-
-Rethink structures.  
-Need "live" or "homepage"?.  Rename livemenu to live?  What variations are useful?
-All = all relations, use for authoring
-Live = use for menus.  Do not include /index.
-StructureEditor should use "visible in menu" flag to build "live".  Checkboxes on Structure editor.
-
-flat/clean: move pub to ../pubs12, then copy 
-content/index|relation|resource 
-modules
-config/???
-
-
-=== Indexer
-Currently indexes everything in Flat Publications every time (and only when) Lenya1.3 starts.
-
-Need sensible test to reindex after a Resource or Structure is changed.  Development must wait until Resource Editor is ready, since saving a Resource should trigger the Indexer.
-
-=== ContentModule.java
-content:type|doctype|...:docid
-(Currently always returns "test".)
-Return specified variable from current Resource/Translation.
-Use FlatIndexPart for retrieval?
-
 
 === XML Serializer
 Automatically pass through i18n Transformer using current module and current language.
@@ -77,64 +42,79 @@ Replace unfound i18n tags with default.
 === CreateRevisionTransformer
 Replace all A and IMG tags with appropriate RESOURCE tags, creating new Resources as necessary.
 
+==============================
+==== Other Critical Tasks ====
+==============================
+
+BUG: Saving xhtml Resource did not change edit version as specified.  Selecting old version before new Revision.
+BUG: File Resource: Create Translation does not save upload.  Create Revision works.
+Edit File: Setting Default Language does not save.  (Fixed for XML earlier, probably also affects Links.)
+Edit Resource: Add description for Revisions, edited separately.  Add return to edit and live.  Add show version.
+Edit: Add return to live.
+
+
+Only explicitly included Modules should appear on New Resource list.  Inherited Modules should not appear.  Configure default pub to exclude "text" (until working), "xml", and "homepage".
+
+Edit-Save must clear Cache. (Or "cache" Module must check if Resource is still valid.)
+
+New: ID Validation - No duplicates, periods, exclamation marks, or underscores.
+
+flat Module: content3.xsl sets doctype.  Need to use rules in {pub}/parameter-doctype.xmap
+Migration: Copy XSLTs to proper modules and patch as needed.
+Flat Module: Use Content directory from publication.xconf
+flat/clean: move pub to ../pubs12, then copy 
+content/index|relation|resource 
+modules
+config/???
+
+==============================
+==== Non-critical Updates ====
+==============================
+Add default option for Live Module to use old "xslt" directory when handling hierarchical content.
+
+Modules are only added to Publications when server is started.  Should ModuleSourceFactory check for changes before erroring?
+
+Modules - Add Resource description distinguished from Module description.
+
+DESIGN: Does Module differentiation by ContentType cause confusion with inheritance?  A module overriding one type will intercept calls to all types.
+Remove Module Types.  Let Module devs handle.
+
+Administration navigation - Create Resource, return from edit resource.
+
+Replace uses of post.xsp with RequestGenerator.
+
+Resource @defaultlanguage is used to return one Translation for all requests.  Does it work?
+
+Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
+
+Check synchronization of HashMaps.
+
+=============================
+==== ToDo List from 2006 ====
+=============================
+
+=== 1.2.x Conversion
+Session Module: login.xsp -> NullPointerException
+
+
+Rethink structures.  
+Need "live" or "homepage"?.  Rename livemenu to live?  What variations are useful?
+All = all relations, use for authoring
+Live = use for menus.  Do not include /index.
+StructureEditor should use "visible in menu" flag to build "live".  Checkboxes on Structure editor.
+
 === Admin Screens
 Admin screen: Navigation between User/Group maintenance and Site maintenance.
-
-Admin screen: Structure editor
-Move structures to Resources so editing uses revision control.
-Create new structure.  Copy existing.  Add Resources not in structure.  Move Resource to new parent or root.
-Careful: must keep Resource even if does not exist in current language.  Show greyed, but still allow move.
 
 Admin screen: Language chooser
 Since all code is based on current language, may need method to have Admin menus in different language than Resource displayed.  Probably add langauge as parameter:
 http:server/pub/admin/en/docid_xx.html
 
-Admin screens: Revision chooser
-Show all revisions (*.xml from Translation directory, not including "translation.xml").  Sort by datetime.
-Mark the Live and Edit (last saved) revisions.
-"Publish" sets live revision.
-"Edit" opens specified revision.
-Use slider at top.  Start at "edit" revision.  WYSIWYG RichText fields (must open in XHTML editor to edit).
-
-Admin screens: Document fields editor 
-Pull from Resource, Translation, and Meta
-Update structures if "id" has changed.
-Upload control if type="file".  How to save?
-
-Admin screens: Document editor for rich text (XHTML) fields.  Integrate Kupu etc. for editing rich text field.  Use a transform to place into Revision XML, then call CreateRevisionTransformer.
-
-Create Resource
-Add Language
-
-Resource @defaultlanguage used to return one Translation for all requests.  Does it work?
-
-=== PageEnvelope
-Smart attempts to find document.
-/publication/module + 
-/structure/path/page.html
-/path/page.html  (Assume module is structure, then assume "live")
-/parameters/structure/path/page.html
-/parameters/path/page.html
-Also check if last element is a UNID.
-
-
 === File Resource
-Changing XML and Uploading are different operations.  How to handle?
-XML must change when file is uploaded (new creator, change time)
-XML can change without upload.  
 New XML should reference old file?  Need another file to register all uses of revision binary
 Or make copy? (waste space, but safer when deleting revisions)
 
-
-
-=== Modules
-ContentModule.java "content:" Variables: type, doctype, extension.
-
-Each type and most subtypes (doctype, extension) has own Module, defines read format (div=body), fields for editing (Title is assumed), workflow, search fields (title, blurb, body)
-
-
 === Search
-Wait until doctype Modules.
 Doctype Configuration should define Body.
 Title is assumed from Revision Title?  Or allow override?
 Multiple Languages?  Or separate indexes for each language?
@@ -143,22 +123,34 @@ URLs: Use a Structure?  All flat (UNIDs)?  Choice?  (I dislike UNIDs in URLs, bu
 
 
 =======================
-====    Security   ====
-=======================
-Resource-level Security.
-Access Control List in Resource.xml
-"admin" Group bypasses security and is allowed to do anything.
-<acl><read default="yes"><person|group|role id="name" access="yes|no"></read><edit default="yes">same as read</edit></acl>
-Implement in SitetreeGenerator and ContentSourceFactory.
-"Not allowed" returns Sorry page (rather than error).
-"Does not exist" returns same Sorry page.
-Sorry: This resource is not available, either it does not exist or you do not have access to it.  (Link to Login page if not logged in.)
-
-DESIGN: How to handle inheritance?  Multiple parents?  Assume "live" structure?
-
-=======================
 ====  Enhancements ====
 =======================
+[This section lists new abilities not required to complete 1.2 functionality.]
+
+Optimize Indexer.  Only run for language changed.
+
+Move structures to Resources so editing uses revision control.
+
+cocoon: protocol does not follow Module inheritance for missing files. Example: /pub/home/parameters should use /pub/xhtml/parameters if modules/home/module.xmap is missing.  Needing module.xmap defeats purpose of inheritance.  (module: protocol follows inheritance so resource-exists works as test for Module.)
+
+Identifier must not contain period, underscore, or exclamation mark.  Allow spaces? Caps?
+Default publication includes an ID with an underscore.  Remove during migration?  
+Current code allows for underscores in ID as long as portion after underscore is not two characters.
+
+New Translation: Warn if no language chosen but other fields changed for new translation.
+
+Check {pub} directory for publication.xml.
+Module to clean migrated publications: copy content, modules, security. For content, fix type and remove doctype. Move publication.xml to {pub}.
+
+Admin screens: Resource - Update structures if "id" has changed.
+
+Design resources: Module protocol can check datastore for design elements such as XSLT and CSS.  This is the reason for named resources; use UNID = publication + module + filepath.  Also useful for structures.
+
+
+Move CreateResourceTransformer and CreateRevisionTransformer to content package with implementation code in content.flat.
+
+Admin: Revision History -- Use slider at top.  Start at "edit" revision.  WYSIWYG RichText fields (must open in XHTML editor to edit).
+
 publication:name - should return name, currently stored in publication.xml.  Why?  Move to publication.xconf?  Must be available from Publication.java and PublicationModule.java
 
 

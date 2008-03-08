@@ -8,11 +8,10 @@ import org.apache.lenya.cms.content.Content;
  * @since 1.3
  */
 public class ModuleSet {
-   // TODO: Rewrite to use Map(type) = Module. Needs to handle >2 Types.
+   // Rewritten to use Map(type) = Module. Needed to handle >2 Types.
+   // DESIGN: Remove types because will cause problems with inheritance.
    Map modules = new HashMap();
    String defaultType;
-   // Module flat = null;
-   // Module hierarchical = null;
    public ModuleSet(Module module) {
       String type = module.getContentType();
       modules.put(type, module);

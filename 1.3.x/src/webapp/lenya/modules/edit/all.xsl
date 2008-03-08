@@ -15,6 +15,7 @@
 <xsl:param name="module"/>
 <xsl:param name="publicationname"/>
 <xsl:param name="publicationlanguages"/>
+<xsl:param name="new"/>
 <xsl:variable name="language"><xsl:value-of select="/index/@language"/></xsl:variable>
 
 <xsl:template match="/index">
@@ -24,6 +25,10 @@
     </head>	
     <body>
 <h1><xsl:value-of select="$publication"/>&#160;<i18n:text>Resources</i18n:text></h1>
+<xsl:if test="string-length($new) &gt; 0">
+<xsl:element name="a">
+<xsl:attribute name="href">/<xsl:value-of select="$publication"/>/<xsl:value-of select="$new"/></xsl:attribute>Create Resource</xsl:element>
+</xsl:if>
 <table border="1">
 <tr>
 <th><i18n:text>UNID</i18n:text></th>
@@ -37,19 +42,10 @@
 <xsl:template match="resource">
 <tr><td><xsl:element name="a">
 <xsl:attribute name="href">/<xsl:value-of select="$publication"/>/<xsl:value-of select="$module"/>/<xsl:value-of select="@unid"/></xsl:attribute><xsl:value-of select="@unid"/></xsl:element></td>
-<td><xsl:value-of select="@type"/><xsl:if test="@doctype">/<xsl:value-of select="@doctype"/></xsl:if></td>
+<td><xsl:value-of select="@type"/></td>
 <td><xsl:value-of select="@id"/></td>
 </tr>
 </xsl:template>
 
-<!-- OBSOLETE
-<xsl:template match="resource">
-<tr><td><xsl:element name="a">
-<xsl:attribute name="href">/<xsl:value-of select="$publication"/>/<xsl:value-of select="$module"/>/<xsl:value-of select="@type"/><xsl:if test="@doctype">/<xsl:value-of select="@doctype"/></xsl:if>/<xsl:value-of select="@unid"/></xsl:attribute><xsl:value-of select="@unid"/></xsl:element></td>
-<td><xsl:value-of select="@id"/></td>
-<td><xsl:value-of select="@title"/></td>
-</tr>
-</xsl:template>
--->
 
 </xsl:stylesheet> 

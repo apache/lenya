@@ -20,7 +20,6 @@
 package org.apache.lenya.net;
 
 import java.util.Vector;
-
 import org.apache.lenya.xml.XPointerFactory;
 import org.w3c.dom.Element;
 

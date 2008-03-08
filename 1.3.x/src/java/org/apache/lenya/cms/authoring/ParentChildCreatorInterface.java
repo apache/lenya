@@ -21,9 +21,7 @@ package org.apache.lenya.cms.authoring;
 
 import java.io.File;
 import java.util.Map;
-
 import org.apache.avalon.framework.configuration.Configuration;
-
 import org.apache.lenya.cms.publication.Publication;
 
 public interface ParentChildCreatorInterface {

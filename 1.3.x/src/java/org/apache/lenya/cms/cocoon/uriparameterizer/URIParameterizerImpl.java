@@ -21,7 +21,6 @@ package org.apache.lenya.cms.cocoon.uriparameterizer;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.parameters.Parameters;

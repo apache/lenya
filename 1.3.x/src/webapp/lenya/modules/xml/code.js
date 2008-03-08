@@ -8,10 +8,7 @@ var manager = Packages.org.apache.cocoon.components.CocoonComponentManager.getSi
       </translation>
       <translation language="ru" action="delete"/>
    </resource>
-   <revision action="new" language="en">
-      <link href="http://enURL" title="enTitle"/>
-   </revision>
-   <translation action="new" language="xx"/>
+   <!-- Create Translation for language xx -->
    <revision action="new" language="xx">
       <link href="http://xxURL" title="xxTitle"/>
    </revision>

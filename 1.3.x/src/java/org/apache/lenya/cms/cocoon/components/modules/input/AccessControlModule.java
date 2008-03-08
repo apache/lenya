@@ -22,7 +22,6 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;

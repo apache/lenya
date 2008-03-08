@@ -2,6 +2,7 @@ package org.apache.lenya.cms.content.flat;
 import java.io.File;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -102,8 +103,10 @@ public class FlatTranslation {
    public String getURI() {
       if(null == fr)
          fr = getRevision();
-      if(null == fr)
+      if(null == fr){
+         // System.out.println("FlatTranslation.getURI no revision.");
          return "";
+      }
       return fr.getURI();
    }
    public String getMetaURI() {
@@ -114,7 +117,7 @@ public class FlatTranslation {
       return fr.getMetaURI();
    }
    public String getNewURI() {
-      String newRevision = getDateString();
+      String newRevision = Globals.getDateString();
       // WORK: Change Edit to newRevision
       return new File(translationDirectory, newRevision + ".xml").getPath();
    }
@@ -159,9 +162,6 @@ public class FlatTranslation {
          return null;
       return new FlatRevision(translationDirectory, rev);
    }
-   private String getDateString() {
-      return Long.toString(new java.util.Date().getTime());
-   }
    void setLive(String revision) {
       live = revision;
       isChanged = true;
@@ -188,6 +188,7 @@ public class FlatTranslation {
          }catch(java.io.IOException ioe2){
             System.out.println("FlatTranslation.save - Could not write file:" + file.getAbsolutePath());
          }
+         // TODO: Update indexes for this language.
       }
       isChanged = false;
    }

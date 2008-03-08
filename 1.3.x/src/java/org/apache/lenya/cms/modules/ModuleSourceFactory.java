@@ -28,7 +28,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
       this.context = context;
    }
    public Source getSource(String location, Map parameters) throws IOException, MalformedURLException {
-      // System.out.println("MSF LOC=" + location);
+      // System.out.println("ModuleSourceFactory LOC=" + location);
       int pos;
       SourceResolver resolver = null;
       ComponentManager manager = CocoonComponentManager.getSitemapComponentManager();
@@ -79,10 +79,10 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
             if(endpos > 0){
                moduleId = location.substring(pos, endpos);
                filepath = location.substring(endpos + 1);
-               // System.out.println("MSF MOD=" + module + " FIL=" + filepath);
+               // System.out.println("ModuleSourceFactory MOD=" + module + " FIL=" + filepath);
             }else{
                moduleId = location.substring(pos);
-               // System.out.println("MSF MOD=" + module + " POS=" + pos);
+               // System.out.println("ModuleSourceFactory MOD=" + module + " POS=" + pos);
             }
          }else{
             pos = location.indexOf(":/");

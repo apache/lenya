@@ -39,7 +39,7 @@
 <xsl:attribute name="action">delete</xsl:attribute>
 </xsl:when>
 <xsl:otherwise>
-<xsl:if test="(@live != $livenew) and (($livenew != 'new') or (newrevision='1'))">
+<xsl:if test="((@live != $livenew) or (string-length(@live) = 0)) and (($livenew != 'new') or ($newrevision='1'))">
 <xsl:attribute name="live"><xsl:value-of select="$livenew"/></xsl:attribute>
 </xsl:if>
 <xsl:if test="(@edit != $editnew) and (newrevision != '1')"><xsl:attribute name="edit"><xsl:value-of select="$editnew"/></xsl:attribute></xsl:if>

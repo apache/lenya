@@ -31,12 +31,17 @@
             <map:serialize type="xml"/>
          </map:match>
          <map:match pattern="edit/*">
-            <map:act type="resource-exists" src="module://edit/module.xmap">
-               <map:redirect-to uri="/{publication:publication}/edit/{../1}"/>
-            </map:act>
+            <map:select type="resource-exists">
+                  <map:when test="module://edit/module.xmap">
+                     <map:redirect-to uri="/{publication:publication}/edit/{1}"/>
+                  </map:when>
+            </map:select>
             <map:mount uri-prefix="" src="module:///edit.xmap"/> 
             <map:serialize type="html"/>
          </map:match>
+<!-- Default -->
+         <map:mount uri-prefix="" src="module:///live.xmap"/> 
+         <map:serialize type="html"/>
       </map:pipeline>
    </map:pipelines>
 </map:sitemap>

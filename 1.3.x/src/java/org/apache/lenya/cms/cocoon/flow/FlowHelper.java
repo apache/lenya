@@ -33,7 +33,6 @@ import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.rc.RCEnvironment;
@@ -95,8 +94,7 @@ public class FlowHelper {
     *            when something went wrong.
     */
    public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
-      PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
-      return factory.getPageEnvelope(cocoon.getObjectModel());
+      return PageEnvelope.getCurrent();
    }
    /**
     * Returns the request URI of the current request.

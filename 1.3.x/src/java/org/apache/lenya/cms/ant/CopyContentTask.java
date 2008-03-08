@@ -22,7 +22,6 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;

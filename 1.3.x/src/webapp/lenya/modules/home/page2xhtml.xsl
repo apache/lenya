@@ -93,6 +93,7 @@
         </tr>
       </table>
       </div>
+Home page2xhtml
     </body>
   </html>
 </xsl:template>

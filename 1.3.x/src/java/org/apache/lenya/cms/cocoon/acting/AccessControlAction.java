@@ -21,7 +21,6 @@ package org.apache.lenya.cms.cocoon.acting;
 
 import java.util.Collections;
 import java.util.Map;
-
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.acting.ConfigurableServiceableAction;

@@ -22,15 +22,16 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.util.NetUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
@@ -40,7 +41,6 @@ import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.impl.AbstractAccreditableManager;
-import org.apache.cocoon.util.NetUtils;
 
 /**
  * File-based accreditable manager.

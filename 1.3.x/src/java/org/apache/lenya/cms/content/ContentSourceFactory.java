@@ -10,7 +10,6 @@ import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.CocoonComponentManager;
-import org.apache.cocoon.components.ContextHelper;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -19,7 +18,6 @@ import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.lenya.cms.cocoon.components.source.impl.StringSource;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.w3c.dom.Document;
 /**
@@ -47,8 +45,8 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
    public void contextualize(org.apache.avalon.framework.context.Context context) throws ContextException {
       this.context = context;
    }
-   public Source getSource(String plocation, Map parameters) throws IOException, MalformedURLException {
-      String location = plocation;
+   public Source getSource(String location, Map parameters) throws IOException, MalformedURLException {
+      String workLocation = location;
       int pos;
       // Map contextmap = ContextHelper.getObjectModel(context);
       // org.apache.cocoon.environment.http.HttpContext httpcontext = (org.apache.cocoon.environment.http.HttpContext) contextmap.get("context");
@@ -60,7 +58,7 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
       }catch(org.apache.avalon.framework.component.ComponentException ce){
       }
       if(null == resolver){
-         throw new SourceNotFoundException("No Resolver: " + plocation);
+         throw new SourceNotFoundException("No Resolver: " + location);
       }
       String uri = resolver.resolveURI("").getURI();
       pos = uri.indexOf("/pubs/");
@@ -77,7 +75,7 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
       Publication pub;
       Content content;
       try{
-         PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(ContextHelper.getObjectModel(context));
+         PageEnvelope envelope = PageEnvelope.getCurrent();
          pub = envelope.getPublication();
          // publication = pub.getId();
          content = pub.getContent();
@@ -85,28 +83,16 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
       }catch(org.apache.lenya.cms.publication.PageEnvelopeException pee){
          throw new MalformedURLException("Could not get Publication ID.");
       }
-      // Revision
-      String revision = "live";
-      pos = location.lastIndexOf("!");
-      if(pos != -1){
-         revision = location.substring(pos + 1);
-         location = location.substring(0, pos);
-      }
-      // Language
-      String language = "";
-      pos = location.lastIndexOf("_");
-      if(pos != -1){
-         language = location.substring(pos + 1);
-         location = location.substring(0, pos);
-      }
-      // TODO: Set language to document or publication's default if not specified.
-      // System.out.println("LOC="+location);
+      // Parse Location
+      Location locationParser = new Location(workLocation);
+      // Removes everything after first period, underscore, or exclamation mark.
+      workLocation = locationParser.getUnid();
       // Decide Usage
-      StringTokenizer tokens = new StringTokenizer(location, "/:", true);
+      StringTokenizer tokens = new StringTokenizer(workLocation, "/:", true);
       if(!tokens.hasMoreTokens())
          throw new MalformedURLException("Nothing specified.");
       String token = tokens.nextToken();
-      if(location.indexOf(":") > 0)
+      if(workLocation.indexOf(":") > 0)
          token = tokens.nextToken(); // Remove protocol
       int colonCount = 0;
       while(token.equals(":")){
@@ -139,30 +125,6 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
          }
          slashCount = (slashCount > slashCount2 ? slashCount : slashCount2);
       }
-      // System.out.println("SL=" + slashCount + "TOK=" + token);
-      // ## Decide UNID
-      // String structure = "";
-      // String unid = "";
-      // String fullid = "";
-      // if(slashCount == 1){
-      // if(tokens.hasMoreTokens()){
-      // slashCount = 0;
-      // }else unid = token;
-      // }
-      // if((slashCount == 0) || (slashCount == 2)){
-      // structure = token;
-      // }
-      // if((slashCount == 0) || (slashCount == 2) || (slashCount == 3)){
-      // StringBuffer buffer = new StringBuffer();
-      // while(tokens.hasMoreTokens())
-      // buffer.append(tokens.nextToken());
-      // fullid = buffer.toString();
-      // }
-      // // Convert fullid to unid
-      // if(unid.length() < 1){
-      // unid = content.getUNID(structure, fullid);
-      // }
-      // ## 20070927 solprovider: This rewrite did not work. Simpler is good. Test later.
       String structure = (2 < slashCount ? "" : token);
       String unid = token;
       StringBuffer buffer = new StringBuffer();
@@ -172,28 +134,39 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
       if((1 < slashCount) || (0 < fullid.length()))
          unid = content.getUNID(structure, fullid);
       // ASSUME: UNID
-      // ## Defaults
-      if(language.length() < 1){
-         Resource resource = content.getResource(unid);
-         if(resource != null)
-            language = resource.getDefaultLanguage();
-      }
-      if(language.length() < 1)
-         language = pub.getDefaultLanguage();
       /** ******** Get Source (uses Content) ************ */
       Source source;
       if(REQUEST_INFO == requestType){
          // TODO: Catch errors
          Resource resource = content.getResource(unid);
-         if(resource == null)
-            System.out.println("NO RESOURCE");
+         if(resource == null){
+            throw new SourceNotFoundException("Source not found (no Resource): " + location);
+         }
          Document doc = resource.getInfoDocument();
-         if(doc == null)
-            System.out.println("NO DOC");
+         if(doc == null){
+            throw new SourceNotFoundException("Source not found (no Document): " + location);
+         }
          source = new StringSource(manager, doc);
-         if(source == null)
-            System.out.println("NO SOURCE");
+         if(source == null){
+            throw new SourceNotFoundException("Source not found (no Source): " + location);
+         }
          return source;
+      }
+      // Revision
+      String revision = locationParser.getRevision();
+      if(0 == revision.length()){
+         revision = "live";
+      }
+      // Language
+      String language = locationParser.getLanguage();
+      if(language.length() < 1){
+         Resource resource = content.getResource(unid);
+         if(resource != null){
+            language = resource.getDefaultLanguage();
+         }
+      }
+      if(language.length() < 1){
+         language = pub.getDefaultLanguage();
       }
       if(REQUEST_META == requestType){
          source = resolver.resolveURI(content.getMetaURI(unid, language, revision));
@@ -201,31 +174,26 @@ public class ContentSourceFactory implements SourceFactory, ThreadSafe, URIAbsol
             if(resolver != null)
                manager.release((Component) resolver);
             return source;
+         }else{
+            throw new SourceNotFoundException("Source not found (no Meta Source): " + location);
          }
       }
-      // System.out.println("CSF UNID=" + unid + " LANG=" + language + " REV=" + revision);
       String curi = content.getURI(unid, language, revision);
-      // System.out.println("CSF CURI=" + curi);
-      source = resolver.resolveURI(curi);
-      if(source.exists()){
-         if(resolver != null)
-            manager.release((Component) resolver);
-         return source;
+      // System.out.println("ContentSourceFactory.getSource UNID=" + unid + " LANG=" + language + " REV=" + revision + " CURI=" + curi);
+      if(curi.length() < 1){
+         throw new SourceNotFoundException("Source not found (no URI): " + location + " UNID=" + unid + " LANG=" + language + " REV=" + revision);
       }
+      source = resolver.resolveURI(curi);
       if(resolver != null)
          manager.release((Component) resolver);
-      throw new SourceNotFoundException("Not found: " + plocation + " (" + curi + ")");
+      if(source.exists()){
+         return source;
+      }
+      throw new SourceNotFoundException("Source not found: " + location + " (" + curi + ")");
    }
    public void release(Source source1) {
    }
    public String absolutize(String baseURI, String location) {
       return SourceUtil.absolutize(baseURI, location, false, false);
    }
-   // private Publication getPublication(String publication) {
-   // try{
-   // return PublicationFactory.getPublication(publication, servletContextPath);
-   // }catch(org.apache.lenya.cms.publication.PublicationException pe){
-   // return (Publication) null;
-   // }
-   // }
 }

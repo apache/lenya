@@ -17,6 +17,8 @@ select="xhtml:html/xhtml:div[@id = 'body']"
 
 
 === Converting data to flat datastore
+WARNING: The module sets the all documents to type "xhtml" except the homepage is set to type "home".  This is handled in content3.xsl and should be changed if your publication has other doctypes.
+
 Open the URL:
 http://{yourServer}/{yourPublication}/flat/migrate
 

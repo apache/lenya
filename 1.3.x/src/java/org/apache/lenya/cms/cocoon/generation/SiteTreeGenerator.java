@@ -22,7 +22,6 @@ package org.apache.lenya.cms.cocoon.generation;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
-
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;

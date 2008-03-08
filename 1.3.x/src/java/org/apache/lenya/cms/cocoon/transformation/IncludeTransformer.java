@@ -22,9 +22,9 @@ package org.apache.lenya.cms.cocoon.transformation;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.cocoon.transformation.AbstractDOMTransformer;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.transformation.AbstractDOMTransformer;
 import org.apache.excalibur.source.Source;
 import org.w3c.dom.Document;
 

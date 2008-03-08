@@ -1,0 +1,11 @@
+
+XML for "new-resource" Transformer:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+<newresource id="newID" type="/xml/xhtml" unid=""/>
+</data>
+
+The root element name is irrelevant.  The "newresource" elements must be children of the root element, must have "id" and "type" attributes, and can optionally have an "unid" attribute.  Multiple "newresource" elements are allowed; a new Resource will be created for each element.  Other elements are ignored and will be returned unchanged.
+
+The result will add the "unid" attribute from the new Resource and a "status" attribute with a value of "SUCCESS" or "FAILURE".  If the status is "FAILURE", a message will be placed in the value of the "newresource" element.

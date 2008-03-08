@@ -12,9 +12,10 @@ import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceValidity;
+import org.apache.lenya.cms.content.Content;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.Globals;
 import org.xml.sax.SAXException;
 /**
  * The <code>SitetreeGenerator</code> is a class that reads XML from a source and generates SAX Events. The SitetreeGenerator implements the <code>CacheableProcessingComponent</code> interface.
@@ -50,23 +51,20 @@ public class SitetreeGenerator extends ServiceableGenerator implements Cacheable
       super.setup(resolver, objectModel, src, par);
       try{
          PageEnvelope envelope;
-         // String publication = "FAILED";
-         Publication pub;
+         Publication pub = Globals.getPublication();
          String language = "en";
          try{
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-            pub = envelope.getPublication();
-            // publication = pub.getId();
+            envelope = PageEnvelope.getCurrent();
             language = envelope.getDocument().getLanguage();
          }catch(org.apache.lenya.cms.publication.PageEnvelopeException pee){
-            System.out.println("PEE EXCEPTION");
+            System.out.println("Sitetree Generator: could not use PageEnvelope.");
             throw new ProcessingException("Sitetree Generator: could not use PageEnvelope.");
          }
-         // Lenya1.3
-         if(pub.getContentType().equalsIgnoreCase("flat")){
+         // Lenya-1.3
+         if(pub.getContentType().equalsIgnoreCase(Content.TYPE_FLAT)){
             this.inputSource = super.resolver.resolveURI(pub.getContent().getIndexFilename(src, language));
          }else{
-            // Lenya1.2
+            // Lenya-1.2
             File testfile = new File(pub.getContentDirectory(), src + File.separator + "sitetree.xml");
             if(!testfile.exists())
                testfile = new File(pub.getContentDirectory(), "live" + File.separator + "sitetree.xml");

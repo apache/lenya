@@ -2,6 +2,8 @@ package org.apache.lenya.cms.content.hierarchical;
 import java.io.File;
 import org.apache.lenya.cms.content.Content;
 import org.apache.lenya.cms.content.Resource;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.Globals;
 /**
  * 
  * @author solprovider
@@ -10,9 +12,9 @@ import org.apache.lenya.cms.content.Resource;
 public class HierarchicalContent implements Content {
    File directory;
    String[] languages = {"en"};
-   public HierarchicalContent(File pdirectory, String[] planguages) {
-      directory = pdirectory;
-      languages = planguages;
+   public HierarchicalContent(File directory, String[] languages) {
+      this.directory = directory;
+      this.languages = languages;
    }
    /* Content API */
    public String getIndexFilename(String indexName, String language) {
@@ -27,24 +29,22 @@ public class HierarchicalContent implements Content {
    }
    public String getURI(String unid, String language, String revision) {
       String area = revision;
-      if(area.equalsIgnoreCase("edit"))
-         area = "authoring";
+      if(area.equalsIgnoreCase("edit")){
+         area = Publication.AUTHORING_AREA;
+      }
       return new File(directory, area + unid + File.separator + "index_" + language + ".xml").getPath();
    }
    public String getMetaURI(String unid, String language, String revision) {
       String area = revision;
       if(area.equalsIgnoreCase("edit"))
-         area = "authoring";
+         area = Publication.AUTHORING_AREA;
       return new File(directory, area + unid + File.separator + "index_" + language + ".xml").getPath();
    }
    public String getNewURI(String unid, String language) {
-      return new File(directory, "live" + unid + File.separator + getDateString() + "_" + language + ".xml").getPath();
-   }
-   private String getDateString() {
-      return Long.toString(new java.util.Date().getTime());
+      return new File(directory, "live" + unid + File.separator + Globals.getDateString() + "_" + language + ".xml").getPath();
    }
    public Resource getResource(String unid) {
       // TODO: HierarchicalResource
-      return (Resource) null;
+      return (Resource) new HierarchicalResource(directory, unid);
    }
 }

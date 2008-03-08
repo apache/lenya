@@ -19,8 +19,8 @@
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.Label;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.tools.ant.BuildException;

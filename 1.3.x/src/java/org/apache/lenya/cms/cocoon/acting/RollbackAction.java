@@ -22,7 +22,6 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;

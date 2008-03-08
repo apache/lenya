@@ -93,6 +93,7 @@
         </tr>
       </table>
       </div>
+Homepage Module's page2xhtml.xsl
     </body>
   </html>
 </xsl:template>

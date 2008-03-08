@@ -7,14 +7,12 @@ import java.util.Iterator;
 import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.cocoon.transformation.AbstractDOMTransformer;
-import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.content.Content;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -111,18 +109,8 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
       // ASSUME: Upload is saved.
       // Store creator, when, revision and extension.
       root.setAttribute("revision", revision);
-      String userid = "anonymous";
-      Session session = request.getSession();
-      if(session != null){
-         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-         if(identity != null){
-            User user = identity.getUser();
-            if(user != null)
-               userid = user.getId();
-         }
-      }
-      root.setAttribute("creator", userid);
-      root.setAttribute("when", getDateString());
+      root.setAttribute("creator", Globals.getUser());
+      root.setAttribute("when", Globals.getDateString());
       if(extension.length() > 0)
          root.setAttribute("extension", extension);
       try{
@@ -202,8 +190,5 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
          // meta.appendChild(helper.createElement(tagName, tagValue));
          root.appendChild(helper.createElement(tagName, tagValue));
       }
-   }
-   static private String getDateString() {
-      return Long.toString(new java.util.Date().getTime());
    }
 }

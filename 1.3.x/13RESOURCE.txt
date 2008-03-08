@@ -1,0 +1,19 @@
+Resource Types are simply special Modules.
+
+The <module> element should contain attributes:
+id - the type or doctype.  Defaults to the directory name if missing.
+resource - the types for inheritance. Can be any other type.
+
+The main types are:
+"/xml" for XML Documents.
+"/file" for binary files.
+"/link" for links.
+"/text" in development for non-XML text files.
+
+XML Resource Types (inheriting from "/xml") will merge resource.xml when a Resource is edited, keeping existing values and adding new fields.  
+Text fields should be children of root or children of root/lenya:meta.
+Rich-text fields are defined as containing elements.  Example:
+   <body><br/></body>
+will display the Rich-text Editor.
+There currently may only be one Rich-text Field.  (This limit will be removed soon.)
+

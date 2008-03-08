@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;

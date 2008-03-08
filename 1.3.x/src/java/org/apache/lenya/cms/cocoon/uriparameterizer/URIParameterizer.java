@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.cocoon.uriparameterizer;
 
 import java.util.Map;
-
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.parameters.Parameters;
 

@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.authoring;
 
 import java.io.File;
-
 import org.apache.lenya.cms.publication.Publication;
 
 public class DefaultLeafCreator extends DefaultCreator {

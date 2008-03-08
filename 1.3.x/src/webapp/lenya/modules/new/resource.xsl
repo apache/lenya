@@ -31,21 +31,10 @@ xmlns:modules="http://apache.org/lenya/1.3/modules"
 </td></tr>
 <tr><td>UNID</td><td>
 <xsl:element name="input">
-<xsl:attribute name="type">radio</xsl:attribute>
-<xsl:attribute name="name">unid</xsl:attribute>
-<xsl:attribute name="value">auto</xsl:attribute>
-<xsl:attribute name="checked"/>
-</xsl:element>Generate UUID or 
-<br/><xsl:element name="input">
-<xsl:attribute name="type">radio</xsl:attribute>
-<xsl:attribute name="name">unid</xsl:attribute>
-<xsl:attribute name="value">name</xsl:attribute>
-</xsl:element>Specify
-<xsl:element name="input">
 <xsl:attribute name="type">text</xsl:attribute>
-<xsl:attribute name="name">unidname</xsl:attribute>
+<xsl:attribute name="name">unid</xsl:attribute>
 <xsl:attribute name="value"></xsl:attribute>
-</xsl:element></td></tr>
+</xsl:element><br/>Leave blank to generate UUID.</td></tr>
 <tr><td>URL identifier (no spaces): </td><td><xsl:element name="input">
 <xsl:attribute name="type">text</xsl:attribute>
 <xsl:attribute name="name">id</xsl:attribute>

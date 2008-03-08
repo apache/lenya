@@ -21,7 +21,6 @@ package org.apache.lenya.cms.workflow;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;

@@ -132,6 +132,7 @@
 <tr><td colspan="8" class="spacer">&#160;</td></tr>
 <tr><th colspan="8" class="spacer"><input type="submit" value="Save" i18n:attribute="value"/></th></tr>
 </table>
+If nothing saves, check that the "enable-uploads" setting in web.xml is "true".
 </form>
 <br/>
 </xsl:template>

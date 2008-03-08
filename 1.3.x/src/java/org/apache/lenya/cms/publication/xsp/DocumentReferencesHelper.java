@@ -29,7 +29,6 @@ import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.PathToDocumentIdMapper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
@@ -54,7 +53,7 @@ public class DocumentReferencesHelper {
     */
    public DocumentReferencesHelper(Map objectModel) throws ProcessingException {
       try{
-         this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+         this.pageEnvelope = PageEnvelope.getCurrent();
       }catch(PageEnvelopeException e){
          throw new ProcessingException(e);
       }

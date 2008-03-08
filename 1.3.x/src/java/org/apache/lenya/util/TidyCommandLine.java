@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.net.URL;
-
 import org.w3c.tidy.Tidy;
 
 

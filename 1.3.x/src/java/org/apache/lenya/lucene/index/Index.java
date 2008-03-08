@@ -21,7 +21,6 @@ package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import java.util.Date;
-
 import org.apache.lenya.lucene.IndexConfiguration;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.DocumentHelper;

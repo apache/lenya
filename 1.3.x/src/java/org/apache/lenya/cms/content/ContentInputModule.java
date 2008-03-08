@@ -7,6 +7,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.cms.cocoon.components.modules.input.AbstractPageEnvelopeModule;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
 /**
  * Retrieves Content Variables from the appropriate Resource
@@ -25,23 +26,39 @@ public class ContentInputModule extends AbstractPageEnvelopeModule implements Th
       if(getLogger().isDebugEnabled()){
          getLogger().debug("Resolving [" + name + "]");
       }
-      PageEnvelope pe = getEnvelope(objectModel);
+      PageEnvelope pe;
+      try{
+         pe = PageEnvelope.getCurrent();
+      }catch(PageEnvelopeException e){
+         throw new ConfigurationException("Resolving page envelope failed: ", e);
+      }
       Publication pub = pe.getPublication();
       // String publication = pub.getId();
       Content content = pub.getContent();
       String unid = "";
+      // System.out.println("ContentInputModule name=" + name);
       int pos = name.indexOf(":");
-      if(pos < 1)
+      if(pos > 0){
+         unid = name.substring(pos + 1);
+         name = name.substring(0, pos);
+      }else{
+         // unid = Globals.getUNID();
          return "error";
-      unid = name.substring(pos + 1);
-      name = name.substring(0, pos);
+      }
       Resource resource = content.getResource(unid);
-      if(name.equalsIgnoreCase("type"))
+      if(null == resource){
+         System.out.println("ContentInputModule: No Resource NAME=" + name + " UNID=" + unid);
+      }
+      if(name.equalsIgnoreCase("type")){
+         // System.out.println("ContentInputModule NAME=" + name + " UNID=" + unid + " TYPE=" + resource.getType());
          return resource.getType();
-      if(name.equalsIgnoreCase("doctype") || name.equalsIgnoreCase("documenttype"))
+      }
+      if(name.equalsIgnoreCase("doctype") || name.equalsIgnoreCase("documenttype")){
          return resource.getDocumentType();
-      if(name.equalsIgnoreCase("defaultlanguage"))
+      }
+      if(name.equalsIgnoreCase("defaultlanguage")){
          return resource.getDefaultLanguage();
+      }
       return "";
    }
    /**

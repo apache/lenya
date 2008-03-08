@@ -20,7 +20,6 @@ package org.apache.lenya.ac.file;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Role;

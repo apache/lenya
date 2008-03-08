@@ -51,16 +51,18 @@
 <!-- Content END -->
 <!-- Resources BEGIN -->
         <map:match pattern="rfiles/*">
-          <map:act type="resource-exists" src="module:///../../resources/{1}">
-            <map:generate type="directory" src="module:///../../resources/{../1}">
-               <map:parameter name="depth" value="99"/>
-             </map:generate>
-             <!-- Mess of all files -->
-             <map:transform src="module:///rdir.xsl">
-               <map:parameter name="area" value="{../1}"/>
-             </map:transform>
-             <map:serialize type="xml"/>
-             </map:act>
+           <map:select type="resource-exists">
+              <map:when test="module:///../../resources/{1}">
+                 <map:generate type="directory" src="module:///../../resources/{1}">
+                    <map:parameter name="depth" value="99"/>
+                 </map:generate>
+                 <!-- Mess of all files -->
+                 <map:transform src="module:///rdir.xsl">
+                    <map:parameter name="area" value="{1}"/>
+                 </map:transform>
+                 <map:serialize type="xml"/>
+              </map:when>
+           </map:select>
             <map:generate src="module://lenya/util/empty.xml"/>
             <map:serialize type="xml"/>
         </map:match>

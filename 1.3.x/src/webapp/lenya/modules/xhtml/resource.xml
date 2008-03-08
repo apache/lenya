@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:dc="http://purl.org/dc/elements/1.1/" 
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" title="New XHTML Resource">
+    <lenya:meta>
+        <dc:title/>
+        <dc:creator/>
+        <dc:subject/>
+        <dc:description/>
+        <dc:publisher/>
+        <dc:contributor/>
+        <dc:date/>
+        <dc:type/>
+        <dc:format/>
+        <dc:identifier/>
+        <dc:source/>
+        <dc:language/>
+        <dc:relation/>
+        <dc:coverage/>
+        <dc:rights/>
+    </lenya:meta>
+  <head><title/></head>
+  <body><br/></body>
+</html>

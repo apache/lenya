@@ -20,8 +20,37 @@
 <!-- Actions -->
    <!-- Create Resource from POST data -->
             <map:match pattern="{module:module}/save*">
-<!-- TODO: Create Resource from POST data -->
                <map:generate type="request"/>
+               <map:transform src="module::///create.xsl"/> 
+               <map:transform type="new-resource">
+               </map:transform>
+               <!-- Open new resource or display failure message-->
+               <map:transform src="module:///edit.xsl">
+                  <map:parameter name="root" value="/{publication:publication}/edit/"/>
+               </map:transform>
+               <map:serialize type="xml"/>
+<!-- DEV: passing UNID did not work
+               <map:select type="parameter">
+                  <map:parameter name="parameter-selector-test" value="{request-param:unid}"/>
+                  <map:when test="">
+                  </map:when>
+                  <map:otherwise>
+                     <map:redirect-to uri="/{publication:publication}/edit/{request-param:unid}"/>
+                  </map:otherwise>
+               </map:select>
+                     <map:redirect-to uri="/{publication:publication}/test/{request:unid}!{request-attr:unid}!{request-param:unid}"/>
+               <map:transform src="module://test/test.xsl">
+                  <map:parameter name="test1" value="{1}"/>
+                  <map:parameter name="test2" value="{request:unid}"/>
+                  <map:parameter name="test3" value="{request-attr:unid}"/>
+                  <map:parameter name="test4" value="{request-param:unid}"/>
+                  <map:parameter name="test5" value="{new:unid}"/>
+                  <map:parameter name="test6" value="{page-envelope:document-node-id}"/>
+               </map:transform>
+-->
+               <map:serialize type="xml"/>
+               <!-- Failure Message -->
+<!-- TODO: Format Failure Message -->
                <map:serialize type="xml"/>
             </map:match>
    <!-- Development -->

@@ -22,7 +22,6 @@ package org.apache.lenya.ac.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;

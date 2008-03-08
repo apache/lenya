@@ -13,6 +13,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 /**
  * Converts querystring Usecases into Module format.
  * 
@@ -21,16 +22,19 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 public class Usecase2ModuleModule extends AbstractPageEnvelopeModule implements Serviceable, Contextualizable, ThreadSafe {
    private org.apache.avalon.framework.context.Context context;
    /**
-    * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-    *      org.apache.avalon.framework.configuration.Configuration,
-    *      java.util.Map)
+    * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
     */
    public Object getAttribute(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
       if(getLogger().isDebugEnabled()){
          getLogger().debug("Resolving [" + name + "]");
       }
       String resolvedUri = name;
-      PageEnvelope pe = getEnvelope(objectModel);
+      PageEnvelope pe;
+      try{
+         pe = PageEnvelope.getCurrent();
+      }catch(PageEnvelopeException e){
+         throw new ConfigurationException("Resolving page envelope failed: ", e);
+      }
       String publication = pe.getPublication().getId();
       Map contextmap = ContextHelper.getObjectModel(context);
       org.apache.cocoon.environment.http.HttpRequest req = (org.apache.cocoon.environment.http.HttpRequest) contextmap.get("request");
@@ -70,16 +74,13 @@ public class Usecase2ModuleModule extends AbstractPageEnvelopeModule implements 
       return resolvedUri;
    }
    /**
-    * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
-    *      java.util.Map)
+    * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
     */
    public Iterator getAttributeNames(Configuration modeConf, Map objectModel) throws ConfigurationException {
       return Collections.EMPTY_SET.iterator();
    }
    /**
-    * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-    *      org.apache.avalon.framework.configuration.Configuration,
-    *      java.util.Map)
+    * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
     */
    public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
       Object[] objects = {getAttribute(name, modeConf, objectModel)};

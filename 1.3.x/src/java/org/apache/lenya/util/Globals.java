@@ -2,14 +2,19 @@ package org.apache.lenya.util;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
+import org.apache.axis.components.uuid.UUIDGen;
+import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Response;
+import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.http.HttpContext;
 import org.apache.cocoon.environment.http.HttpEnvironment;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
@@ -28,6 +33,18 @@ public final class Globals {
     */
    private Globals() {
    }
+   // UUID Generation (from Lenya 2)
+   static private UUIDGen delegate;
+   static private UUIDGen getDelegate() {
+      if(delegate == null){
+         delegate = UUIDGenFactory.getUUIDGen();
+      }
+      return delegate;
+   }
+   static public String createUUID() {
+      return getDelegate().nextUUID();
+   }
+   // Lenya Functions
    static public String getAction() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getAction();
@@ -37,8 +54,16 @@ public final class Globals {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getContentType();
    }
-   public static final Context getContext() {
+   static public final Context getContext() {
       return (Context) getObjectModel().get(ObjectModelHelper.CONTEXT_OBJECT);
+   }
+   /**
+    * Use for modification times e.g. revision filenames.
+    * 
+    * @return current datetime (Date.getTime()) as String (Long.toString()).
+    */
+   static public String getDateString() {
+      return Long.toString(new java.util.Date().getTime());
    }
    // file:///F:/eclipseWS/Lenya13x/build/lenya/webapp/lenya/modules/authoring/
    // file:///F:/eclipseWS/Lenya13x/build/lenya/webapp/lenya/modules/cache/module.xmap
@@ -48,7 +73,7 @@ public final class Globals {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getContext();
    }
-   public static final Long getExpires() {
+   static public final Long getExpires() {
       return (Long) getObjectModel().get(ObjectModelHelper.EXPIRES_OBJECT);
    }
    static public String getModuleId() {
@@ -106,7 +131,7 @@ public final class Globals {
       try{
          return PageEnvelope.getCurrent().getPublication();
       }catch(PageEnvelopeException e){
-         System.out.println("Globals.getPublication failed: " + e.getLocalizedMessage());
+         // getPublication may be called without a request. Return null.
       }
       return null;
    }
@@ -117,10 +142,14 @@ public final class Globals {
          return (Publication) null;
       }
    }
-   public static final Request getRequest() {
-      return (Request) getObjectModel().get(ObjectModelHelper.REQUEST_OBJECT);
+   static public final Request getRequest() {
+      try{
+         return (Request) getObjectModel().get(ObjectModelHelper.REQUEST_OBJECT);
+      }catch(NullPointerException npe){
+      }
+      return null;
    }
-   public static final Response getResponse() {
+   static public final Response getResponse() {
       return (Response) getObjectModel().get(ObjectModelHelper.RESPONSE_OBJECT);
    }
    // file:///F:/eclipseWS/Lenya13x/build/lenya/webapp/
@@ -170,8 +199,24 @@ public final class Globals {
       HttpContext hc = (HttpContext) getObjectModel().get("context");
       return (String) hc.getAttribute("javax.servlet.context.tempdir");
    }
-   public static final Throwable getThrowable() {
+   static public final Throwable getThrowable() {
       return (Throwable) getObjectModel().get(ObjectModelHelper.THROWABLE_OBJECT);
+   }
+   static public String getUser() {
+      String userid = "anonymous";
+      Request request = getRequest();
+      if(null != request){
+         Session session = request.getSession();
+         if(session != null){
+            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+            if(identity != null){
+               User user = identity.getUser();
+               if(user != null)
+                  userid = user.getId();
+            }
+         }
+      }
+      return userid;
    }
    // authoring/index.html
    // edit

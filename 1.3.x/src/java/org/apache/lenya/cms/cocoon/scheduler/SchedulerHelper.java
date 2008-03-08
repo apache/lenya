@@ -14,76 +14,60 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.cocoon.scheduler;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
 import org.apache.lenya.cms.scheduler.ServletJob;
 import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
-
 public class SchedulerHelper {
-
-    /**
-     * Ctor.
-     * @param objectModel The Cocoon component object model.
-     * @param parameters The Cocoon component parameters.
-     * @param logger The logger to use.
-     */
-    public SchedulerHelper(Map objectModel, Parameters parameters, Logger logger) {
-        this.objectModel = objectModel;
-        this.parameters = parameters;
-        this.logger = logger;
-    }
-
-    private Logger logger;
-    private Parameters parameters;
-    private Map objectModel;
-
-    /**
-     * Creates the scheduler parameters.
-     * @return A map.
-     * @throws ProcessingException when something went wrong.
-     */
-    public Map createParameters() throws ProcessingException {
-
-        Map map = new HashMap();
-
-        try {
-            TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
-
-            logger.debug("Adding task wrapper parameters");
-            Map wrapperParameters = wrapper.getParameters();
-            map.putAll(wrapperParameters);
-
-            NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
-
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-
-            schedulerParameters.put(
-                ServletJob.PARAMETER_DOCUMENT_URL,
-                envelope.getDocument().getCompleteURL());
-            schedulerParameters.put(
-                LoadQuartzServlet.PARAMETER_PUBLICATION_ID,
-                envelope.getPublication().getId());
-            map.putAll(schedulerParameters.getPrefixedMap());
-
-        } catch (Exception e) {
-            throw new ProcessingException(e);
-        }
-
-        return map;
-    }
-
+   /**
+    * Ctor.
+    * 
+    * @param objectModel
+    *           The Cocoon component object model.
+    * @param parameters
+    *           The Cocoon component parameters.
+    * @param logger
+    *           The logger to use.
+    */
+   public SchedulerHelper(Map objectModel, Parameters parameters, Logger logger) {
+      this.objectModel = objectModel;
+      this.parameters = parameters;
+      this.logger = logger;
+   }
+   private Logger logger;
+   private Parameters parameters;
+   private Map objectModel;
+   /**
+    * Creates the scheduler parameters.
+    * 
+    * @return A map.
+    * @throws ProcessingException
+    *            when something went wrong.
+    */
+   public Map createParameters() throws ProcessingException {
+      Map map = new HashMap();
+      try{
+         TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
+         logger.debug("Adding task wrapper parameters");
+         Map wrapperParameters = wrapper.getParameters();
+         map.putAll(wrapperParameters);
+         NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
+         PageEnvelope envelope = PageEnvelope.getCurrent();
+         schedulerParameters.put(ServletJob.PARAMETER_DOCUMENT_URL, envelope.getDocument().getCompleteURL());
+         schedulerParameters.put(LoadQuartzServlet.PARAMETER_PUBLICATION_ID, envelope.getPublication().getId());
+         map.putAll(schedulerParameters.getPrefixedMap());
+      }catch(Exception e){
+         throw new ProcessingException(e);
+      }
+      return map;
+   }
 }

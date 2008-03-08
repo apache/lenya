@@ -5,16 +5,18 @@
    <map:pipelines>
       <map:pipeline>
 <!-- Remove Revision -->
-<!-- Was this a bad idea from last year? -->
+<!-- Was this a bad idea from last year?
             <map:match pattern="edit/*!*">
                <map:generate src="cocoon:/edit/{1}"/>
                <map:serialize type="html"/>
             </map:match>
+ -->
 <!-- Show Resource -->
          <map:match pattern="edit/*">
-            <map:act type="resource-exists" src="content:::/{1}">
+            <map:select type="resource-exists">
+             <map:when test="content:::/{1}">
                <map:aggregate element="content">
-                  <map:part src="content:::/{../1}!edit"/>
+                  <map:part src="content:::/{1}!edit"/>
                </map:aggregate>
                <map:transform src="module:///resource.xsl">
                   <map:parameter name="module" value="{module:module}"/>
@@ -24,10 +26,12 @@
                </map:transform>
                <map:transform type="i18n"/>
                <map:serialize type="html"/>
-            </map:act>
+             </map:when>
+            </map:select>
          </map:match>
 <!-- BUG Cocoon: map:handle-errors does not work here. -->
-
+         <map:handle-errors>
+         </map:handle-errors>
       </map:pipeline>
    </map:pipelines>
 </map:sitemap>

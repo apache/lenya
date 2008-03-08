@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.workflow;
 
 import java.io.File;
-
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;

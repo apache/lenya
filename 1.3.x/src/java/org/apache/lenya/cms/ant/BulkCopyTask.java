@@ -22,7 +22,6 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.Copy;
 import org.apache.tools.ant.types.FileSet;

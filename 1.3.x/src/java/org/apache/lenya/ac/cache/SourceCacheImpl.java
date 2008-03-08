@@ -20,7 +20,6 @@ package org.apache.lenya.ac.cache;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;

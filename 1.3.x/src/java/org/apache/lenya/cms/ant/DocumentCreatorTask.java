@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
-
 import org.apache.lenya.cms.authoring.CreatorException;
 import org.apache.lenya.cms.authoring.DocumentCreator;
 import org.apache.tools.ant.BuildException;

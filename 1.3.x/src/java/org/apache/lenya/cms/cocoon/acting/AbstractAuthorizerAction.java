@@ -21,7 +21,6 @@ package org.apache.lenya.cms.cocoon.acting;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;

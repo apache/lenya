@@ -20,7 +20,6 @@
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
-
 import org.apache.lucene.document.Document;
 
 

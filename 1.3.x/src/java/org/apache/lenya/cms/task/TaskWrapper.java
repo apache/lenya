@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.task;
 
 import java.util.Map;
-
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 

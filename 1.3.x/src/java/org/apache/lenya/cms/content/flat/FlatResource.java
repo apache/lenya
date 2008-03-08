@@ -3,8 +3,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.xml.parsers.ParserConfigurationException;
+import org.apache.lenya.cms.content.Location;
 import org.apache.lenya.cms.content.Resource;
+import org.apache.lenya.cms.content.ResourceException;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.xml.DocumentHelper;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -14,68 +20,104 @@ import org.w3c.dom.NodeList;
  * @since 1.3
  */
 public class FlatResource implements Resource {
-   File contentDirectory;
-   File resourceDirectory;
-   Document resource;
-   Element root;
-   String unid = "";
-   String id = "";
-   String type = "xml";
-   String doctype = "";
-   String defaultLanguage = "en";
-   String defaultLanguageParameter = "";
-   String defaultRevision = "live";
-   String extension = "";
-   String[] languages;
+   private static final String FILENAME_RESOURCE = "resource.xml";
+   private File contentDirectory;
+   private File resourceDirectory;
+   private Document resource;
+   private Element root;
+   private String unid = "";
+   private String id = "";
+   private String type = "";
+   private String doctype = "";
+   private String defaultLanguage = "en";
+   private String defaultLanguageParameter = "";
+   private String defaultRevision = "live";
+   // private String extension = ""; //Moved to revision
+   private String[] languages;
    boolean isChanged = false;
-   public FlatResource(File directory, String punid, String language, String revision) {
+   public FlatResource(File directory, String unid, String language, String revision) {
       contentDirectory = directory;
-      unid = punid;
+      this.unid = unid;
       if(language.length() > 0)
          defaultLanguage = language;
       defaultRevision = revision;
       init(false);
    }
-   public FlatResource(File directory, String punid, String language) {
+   public FlatResource(File directory, String unid, String language) {
       contentDirectory = directory;
-      unid = punid;
+      this.unid = unid;
       if(language.length() > 0)
          defaultLanguage = language;
       init(false);
    }
-   public FlatResource(File directory, String punid) {
+   public FlatResource(File directory, String unid) {
       contentDirectory = directory;
-      unid = punid;
+      this.unid = unid;
       init(true);
    }
-   private void init(boolean puseDefaultLanguage) {
-      boolean useDefaultLanguage = puseDefaultLanguage;
-      // Check if unid_lang!revision format
-      int pos = unid.lastIndexOf("!");
-      if(pos > 0){
-         defaultRevision = unid.substring(pos);
-         unid = unid.substring(0, pos);
+   private void init(boolean useDefaultLanguage) {
+      // System.out.println("FlatResource.init BEGIN UNID=" + unid);
+      boolean workUseDefaultLanguage = useDefaultLanguage;
+      Location location = new Location(unid);
+      // Remove extra parts.
+      unid = location.getUnid();
+      // Revision
+      String tmpString = location.getRevision();
+      if(0 < tmpString.length()){
+         defaultRevision = tmpString;
       }
-      pos = unid.lastIndexOf("_");
-      if(pos > 0){
-         defaultLanguage = unid.substring(pos + 1);
-         unid = unid.substring(0, pos);
-         useDefaultLanguage = false;
+      // Language
+      tmpString = location.getLanguage();
+      if(0 < tmpString.length()){
+         defaultLanguage = tmpString;
+         workUseDefaultLanguage = false;
+      }else if(workUseDefaultLanguage){
+         if(defaultLanguageParameter.length() > 0){
+            defaultLanguage = defaultLanguageParameter;
+         }
       }
-      // TODO: defaultLanguage = Publication's default language.
       resourceDirectory = new File(contentDirectory, "resource" + File.separator + unid);
+      Publication pub = Globals.getPublication();
+      if(null != pub){
+         // Use Publication's Default Language. Only possible during Request.
+         if(1 > defaultLanguage.length()){
+            defaultLanguage = pub.getDefaultLanguage();
+         }
+         // unid may be id during Request. If not valid unid, translate id to unid.
+         // DESIGN: Can Content Structures be available outside a Publication?
+         String workUnid = unid;
+         int pos = unid.indexOf('/');
+         if(!resourceDirectory.exists()){
+            // Check structure named before first slash
+            // DESIGN: Use String.split()?
+            String structure = "live";
+            if(pos > 0){
+               structure = workUnid.substring(0, pos);
+               workUnid = workUnid.substring(pos);
+            }
+            workUnid = pub.getContent().getUNID(structure, workUnid);
+            if(0 != workUnid.length()){
+               resourceDirectory = new File(contentDirectory, "resource" + File.separator + workUnid);
+            }
+         }
+         if(!resourceDirectory.exists()){
+            // Check live structure
+            workUnid = pub.getContent().getUNID("live", unid);
+            if(0 != workUnid.length()){
+               resourceDirectory = new File(contentDirectory, "resource" + File.separator + workUnid);
+            }
+         }
+         unid = workUnid;
+      }
+      // System.out.println("FlatResource.init USING UNID=" + unid);
+      if(!resourceDirectory.exists()){
+         return;
+      }
       try{
-         resource = DocumentHelper.readDocument(new File(resourceDirectory, "resource.xml"));
+         resource = DocumentHelper.readDocument(new File(resourceDirectory, FILENAME_RESOURCE));
          root = resource.getDocumentElement();
          if(root.hasAttribute("defaultlanguage")){
             defaultLanguageParameter = root.getAttribute("defaultlanguage");
-         }
-         if(useDefaultLanguage){
-            if(defaultLanguageParameter.length() > 0){
-               defaultLanguage = defaultLanguageParameter;
-            }else{
-               // TODO: Use Publication's Default Language
-            }
          }
          if(root.hasAttribute("doctype"))
             doctype = root.getAttribute("doctype");
@@ -94,9 +136,30 @@ public class FlatResource implements Resource {
          languages = (String[]) list.toArray(new String[0]);
          Arrays.sort(languages);
       }catch(javax.xml.parsers.ParserConfigurationException pce){
+         System.out.println("FlatResource.init ParserConfigurationException UNID=" + unid);
       }catch(org.xml.sax.SAXException saxe){
+         System.out.println("FlatResource.init SAXException UNID=" + unid);
       }catch(java.io.IOException ioe){
+         // Expected for Lenya-1.2 Publications
+         // System.out.println("FlatResource.init IOException UNID=" + unid);
       }
+      // Fix type
+      String workType = doctype;
+      String[] parts = doctype.split("/");
+      if(parts[parts.length - 1].length() > 0){
+         workType = parts[parts.length - 1];
+      }else if((parts.length > 1) && (parts[parts.length - 2].length() > 0)){
+         workType = parts[parts.length - 2];
+      }else{
+         parts = type.split("/");
+         if(parts[parts.length - 1].length() > 0){
+            workType = parts[parts.length - 1];
+         }else if((parts.length > 1) && (parts[parts.length - 2].length() > 0)){
+            workType = parts[parts.length - 2];
+         }
+      }
+      doctype = workType;
+      type = workType;
    }
    public String getURI() {
       return getTranslation(defaultLanguage).getURI();
@@ -116,6 +179,9 @@ public class FlatResource implements Resource {
    public String getType() {
       return type;
    }
+   /**
+    * @deprecated Use getType()
+    */
    public String getDocumentType() {
       return doctype;
    }
@@ -161,11 +227,12 @@ public class FlatResource implements Resource {
    /**
     * Get variable for Index Filters
     */
-   public String get(String property, String fullid, String fulltype, String fulldoctype) {
+   // public String get(String property, String fullid, String fulltype, String fulldoctype) {
+   public String get(String property, String fullid, String fulltype) {
       if(property.equalsIgnoreCase("type")){
          return fulltype;
-      }else if(property.equalsIgnoreCase("doctype")){
-         return fulldoctype;
+         // }else if(property.equalsIgnoreCase("doctype")){
+         // return fulldoctype;
       }
       return get(property, fullid);
    }
@@ -254,30 +321,32 @@ public class FlatResource implements Resource {
       if(doctype.length() > 0)
          root.setAttribute("doctype", doctype);
       String tmp;
-      for(int l = 0; l < languages.length; l++){
-         Element te = addElement(document, root, "translation");
-         te.setAttribute("language", languages[l]);
-         FlatTranslation translation = getTranslation(languages[l]);
-         tmp = translation.getEdit();
-         if(tmp.length() > 0)
-            te.setAttribute("edit", tmp);
-         tmp = translation.getLive();
-         if(tmp.length() > 0)
-            te.setAttribute("live", tmp);
-         String[] revisions = translation.getRevisions();
-         for(int r = 0; r < revisions.length; r++){
-            Element re = addElement(document, te, "revision");
-            re.setAttribute("revision", revisions[r]);
-            FlatRevision revision = translation.getRevision(revisions[r]);
-            tmp = revision.getTitle();
+      if(null != languages){
+         for(int l = 0; l < languages.length; l++){
+            Element te = addElement(document, root, "translation");
+            te.setAttribute("language", languages[l]);
+            FlatTranslation translation = getTranslation(languages[l]);
+            tmp = translation.getEdit();
             if(tmp.length() > 0)
-               re.setAttribute("title", tmp);
-            tmp = revision.getExtension();
+               te.setAttribute("edit", tmp);
+            tmp = translation.getLive();
             if(tmp.length() > 0)
-               re.setAttribute("extension", tmp);
-            tmp = revision.getHREF();
-            if(tmp.length() > 0)
-               re.setAttribute("href", tmp);
+               te.setAttribute("live", tmp);
+            String[] revisions = translation.getRevisions();
+            for(int r = 0; r < revisions.length; r++){
+               Element re = addElement(document, te, "revision");
+               re.setAttribute("revision", revisions[r]);
+               FlatRevision revision = translation.getRevision(revisions[r]);
+               tmp = revision.getTitle();
+               if(tmp.length() > 0)
+                  re.setAttribute("title", tmp);
+               tmp = revision.getExtension();
+               if(tmp.length() > 0)
+                  re.setAttribute("extension", tmp);
+               tmp = revision.getHREF();
+               if(tmp.length() > 0)
+                  re.setAttribute("href", tmp);
+            }
          }
       }
       return document;
@@ -306,7 +375,7 @@ public class FlatResource implements Resource {
          if(translation.hasAttribute("action")){
             String action = translation.getAttribute("action");
             if(action.equalsIgnoreCase("delete")){
-               System.out.println("FlatResource.update - Delete Translation");
+               // System.out.println("FlatResource.update - Delete Translation");
                deleteTranslation(language);
                exist = false;
             }
@@ -326,13 +395,13 @@ public class FlatResource implements Resource {
             NodeList revisions = translation.getElementsByTagName("revision");
             int revisionslength = revisions.getLength();
             for(int r = 0; r < revisionslength; r++){
-               System.out.println("FlatResource.update - BEFORE");
+               // System.out.println("FlatResource.update - BEFORE");
                Element revision = (Element) revisions.item(r);
-               System.out.println("FlatResource.update - AFTER");
+               // System.out.println("FlatResource.update - AFTER");
                if(revision.hasAttribute("action")){
                   String action = revision.getAttribute("action");
                   if(action.equalsIgnoreCase("delete")){
-                     System.out.println("FlatResource.update - Delete Revision");
+                     // System.out.println("FlatResource.update - Delete Revision");
                      String revisionid = revision.getAttribute("revision");
                      ft.deleteRevision(revisionid);
                   }
@@ -341,6 +410,8 @@ public class FlatResource implements Resource {
             ft.save();
          }
       }
+      // Update Indexes
+      ((FlatContent) Globals.getPublication().getContent()).updateIndexes();
       // System.out.println("FlatResource.update - RETURN");
       return document;
    }
@@ -358,7 +429,7 @@ public class FlatResource implements Resource {
    }
    private void deleteTranslation(String language) {
       File translationDirectory = new File(resourceDirectory, language);
-      System.out.println("DELETE=" + translationDirectory.getAbsolutePath());
+      // System.out.println("DELETE=" + translationDirectory.getAbsolutePath());
       deleteFile(translationDirectory);
    }
    // TODO: Backup before delete. Use renameTo() to move outside the resource directory.
@@ -379,13 +450,13 @@ public class FlatResource implements Resource {
          try{
             doc = DocumentHelper.readDocument(file);
          }catch(javax.xml.parsers.ParserConfigurationException pce){
-            System.out.println("FlatResource.save - ParserConfigurationException:" + file.getAbsolutePath());
+            System.out.println("FlatResource.save - ParserConfigurationException: " + file.getAbsolutePath());
             return;
          }catch(org.xml.sax.SAXException saxe){
-            System.out.println("FlatResource.save - SAXException:" + file.getAbsolutePath());
+            System.out.println("FlatResource.save - SAXException: " + file.getAbsolutePath());
             return;
          }catch(java.io.IOException ioe){
-            System.out.println("FlatResource.save - Could not read file:" + file.getAbsolutePath());
+            System.out.println("FlatResource.save - Could not read file: " + file.getAbsolutePath());
             return;
          }
          root = doc.getDocumentElement();
@@ -394,13 +465,70 @@ public class FlatResource implements Resource {
          try{
             DocumentHelper.writeDocument(doc, file);
          }catch(javax.xml.transform.TransformerConfigurationException tce){
-            System.out.println("FlatResource.save - TransformerConfigurationException:" + file.getAbsolutePath());
+            System.out.println("FlatResource.save - TransformerConfigurationException: " + file.getAbsolutePath());
          }catch(javax.xml.transform.TransformerException te){
-            System.out.println("FlatResource.save - TransformerException:" + file.getAbsolutePath());
+            System.out.println("FlatResource.save - TransformerException: " + file.getAbsolutePath());
          }catch(java.io.IOException ioe2){
-            System.out.println("FlatResource.save - Could not write file:" + file.getAbsolutePath());
+            System.out.println("FlatResource.save - Could not write file: " + file.getAbsolutePath());
          }
-      }
+       }
       isChanged = false;
+   }
+   // <?xml version="1.0" encoding="UTF-8"?>
+   // <resource defaultlanguage="en" doctype="xhtml" id="doctypes" type="xml" unid="0002" xmlns=""/>
+   // TODO: Working here.
+   // TODO: Create specific Exception
+   static public FlatResource create(String unid, String type, String id) throws ResourceException {
+      String workUnid = unid;
+      if(unid.length() < 1){
+         workUnid = Globals.createUUID();
+      }
+      Publication publication = Globals.getPublication();
+      File contentDirectory = publication.getContentDirectory();
+      File resourceDirectory = new File(contentDirectory, "resource" + File.separator + workUnid);
+      if(resourceDirectory.exists()){
+         System.out.println("FlatResource.create: Resource creation failed because the Resource '" + workUnid + "' already exists." + resourceDirectory.getAbsolutePath());
+         throw new ResourceException("Resource creation failed because the Resource '" + workUnid + "' already exists: " + resourceDirectory.getAbsolutePath());
+      }
+      resourceDirectory.mkdirs();
+      File resource = new File(resourceDirectory, FILENAME_RESOURCE);
+      Document xml;
+      try{
+         xml = DocumentHelper.createDocument("", "resource", null);
+      }catch(DOMException e){
+         System.out.println("CreateResource: DOMException");
+         throw new ResourceException("CreateResource: DOMException", e);
+      }catch(ParserConfigurationException e){
+         System.out.println("CreateResource: ParserConfigurationException");
+         throw new ResourceException("CreateResource: ParserConfigurationException", e);
+      }
+      Element root = xml.getDocumentElement();
+      root.setAttribute("unid", workUnid);
+      root.setAttribute("id", id);
+      root.setAttribute("creator", Globals.getUser());
+      root.setAttribute("when", Globals.getDateString());
+      String workType = type;
+      int pos = type.lastIndexOf('/');
+      if(pos > 0)
+         workType = type.substring(pos + 1);
+      root.setAttribute("type", workType);
+      root.setAttribute("doctype", workType);
+      // TODO: Throw these Exceptions.
+      try{
+         DocumentHelper.writeDocument(xml, resource);
+      }catch(javax.xml.transform.TransformerConfigurationException tce){
+         System.out.println("CreateResource: TransformerConfigurationException");
+         throw new ResourceException("CreateResource: TransformerConfigurationException", tce);
+      }catch(javax.xml.transform.TransformerException te){
+         System.out.println("CreateResource: TransformerException");
+         throw new ResourceException("CreateResource: TransformerException", te);
+      }catch(java.io.IOException ioe){
+         System.out.println("CreateResource: IOException writing XML file.");
+         throw new ResourceException("CreateResource: IOException writing XML file: " + resource.getAbsolutePath(), ioe);
+      }
+      // Update Indexes
+      ((FlatContent) publication.getContent()).updateIndexes();
+      // Return
+      return new FlatResource(contentDirectory, workUnid);
    }
 }

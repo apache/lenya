@@ -21,7 +21,6 @@ package org.apache.lenya.cms.publication.file;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.AbstractPublication;
 import org.apache.lenya.cms.publication.Document;

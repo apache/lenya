@@ -3,6 +3,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.transformation.AbstractDOMTransformer;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
 /**
  * This transformer modifies the structural information of a Resource. It accepts a UNID as the src parameter. It can: - change the id and defaultlanguage of the Resource, - delete Translations and Revisions, - change the live and edit Revisions of Translations. <resource [id="newid"] [defaultlanguage="aa"]> <translation language="xx" [action="delete"] [live="1137958604000"] [edit="1137958604000"]> <revision revision="1137958604000" [action="delete"]/> </translation> </resource> action="delete" has top priority. Any settings not included will not be affected.
@@ -18,12 +19,16 @@ public class ResourceTransformer extends AbstractDOMTransformer {
       return transformDocument(request, unid, doc);
    }
    static public org.w3c.dom.Document transformDocument(Request request, String unid, org.w3c.dom.Document doc) {
-      PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
+      PageEnvelope envelope;
+      try{
+         envelope = PageEnvelope.getCurrent();
+      }catch(PageEnvelopeException e){
+         return null;
+      }
       Publication pub = envelope.getPublication();
       Content content = pub.getContent();
       Resource resource = content.getResource(unid);
       resource.update(doc);
-      // System.out.println("ResourceTransformer - RETURN");
       return doc;
    }
 }

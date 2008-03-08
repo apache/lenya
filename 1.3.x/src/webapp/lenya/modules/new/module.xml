@@ -1,4 +1,5 @@
 <module id="new" name="New Resource" minimum="1.2" created="1.3" content="all">
+   <required id="edit">For editing newly created Resource.</required>
    <recommended id="file">Resource Type</recommended>
    <recommended id="home">Resource Type</recommended>
    <recommended id="link">Resource Type</recommended>

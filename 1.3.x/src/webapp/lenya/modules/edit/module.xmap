@@ -6,20 +6,29 @@
          <map:select type="parameter">
             <map:parameter name="parameter-selector-test" value="{publication:contenttype}"/>
             <map:when test="flat">
-               <map:generate type="sitetree" src="all"/>
+               <map:generate type="sitetree"/>
                <map:transform src="module:///all.xsl">
                   <map:parameter name="publication" value="{publication:publication}"/>
                   <map:parameter name="module" value="{module:module}"/>
                   <map:parameter name="publicationname" value="{publication:name}"/>
                   <map:parameter name="publicationlanguages" value="{publication:languages}"/>
+                  <map:select type="resource-exists">
+                     <map:when test="module://new/module.xmap">
+                        <map:parameter name="new" value="new"/>
+                     </map:when>
+                  </map:select>
+<!-- BUG: Selector does not work.  -->
+                  <map:parameter name="new" value="new"/>
                </map:transform>
                <map:transform type="i18n"/>           
                <map:serialize type="html"/>
             </map:when>
             <map:otherwise>
-               <map:act type="resource-exists" src="module://authoring/module.xmap">
-                  <map:redirect-to uri="/{publication:publication}/authoring"/>
-               </map:act>
+               <map:select type="resource-exists">
+                  <map:when test="module://authoring/module.xmap">
+                     <map:redirect-to uri="/{publication:publication}/authoring"/>
+                  </map:when>
+               </map:select>
             </map:otherwise>
          </map:select>
          <map:generate src="module:///hierarchical.html"/> 
@@ -37,10 +46,12 @@
             </map:match>
 <!-- Resource -->
             <map:match pattern="{module:module}/*">
-               <map:act type="resource-exists" src="module://{content:type:{1}}/edit.xmap">
-                  <map:mount uri-prefix="" src="module://{content:type:{../1}}/edit.xmap"/> 
-                  <map:serialize type="html"/>
-               </map:act>
+               <map:select type="resource-exists">
+                  <map:when test="module://{content:type:{1}}/edit.xmap">
+                     <map:mount uri-prefix="" src="module://{content:type:{1}}/edit.xmap"/> 
+                     <map:serialize type="html"/>
+                  </map:when>
+               </map:select>
                <map:aggregate element="content">
                   <map:part src="content:::/{1}"/>
                   <map:part src="content::/{1}"/>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML Module - Live - Hierarchical -->
+<!-- Uses Navigation Module for Navigation -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+   <map:pipelines>
+      <map:pipeline type="noncaching">
+         <map:match pattern="**">
+<!-- Get the current document -->
+            <map:match pattern="*/cocoon/*/**">
+               <map:aggregate element="cmsbody">
+                  <map:part src="cocoon://{publication:publication}/navigation/breadcrumb{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{publication:publication}/navigation/tabs{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{publication:publication}/navigation/menu{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{publication:publication}/navigation/search{page-envelope:document-id}_{page-envelope:document-language}"/>
+<!-- TODO: Get doctype.  Hardcoded to "xhtml".   -->
+                 <map:part src="cocoon://{publication:publication}/xhtml/{3}"/> 
+               </map:aggregate>
+               <map:transform type="i18n">
+                  <map:parameter name="locale" value="{page-envelope:document-language}"/>
+               </map:transform>
+<!-- TODO: Get doctype.  Hardcoded to "xhtml".   -->
+               <map:transform src="module://xhtml/page2xhtml.xsl">
+                 <map:parameter name="contenttype" value="{publication:contenttype}"/>
+                 <map:parameter name="root" value="{page-envelope:context-prefix}/{publication:publication}/{module:module}"/>
+                 <map:parameter name="url" value="{3}"/>
+                 <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+                 <map:parameter name="document-name" value="{page-envelope:document-name}"/>
+<!-- TODO: Get doctype.  Hardcoded to "xhtml".   -->
+                 <map:parameter name="document-type" value="xhtml"/>
+                 <map:parameter name="language" value="{page-envelope:document-language}"/>
+                 <map:parameter name="querystring" value="{request:queryString}"/>
+               </map:transform>
+               <map:transform type="i18n">
+                  <map:parameter name="locale" value="{page-envelope:document-language}"/>
+               </map:transform>
+               <map:serialize type="xml"/>
+            </map:match>
+<!-- Check Cache -->
+            <map:select type="resource-exists">
+               <map:when test="module://cache/module.xmap">
+                  <map:mount uri-prefix="" src="module://cache/module.xmap"/> 
+                  <map:serialize type="xml"/>
+               </map:when>
+            </map:select>
+<!-- Default -->
+            <map:generate src="cocoon:/{module:module}/cocoon/{1}"/>
+            <map:serialize type="xml"/>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>

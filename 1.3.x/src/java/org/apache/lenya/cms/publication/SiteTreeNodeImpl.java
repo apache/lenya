@@ -21,7 +21,6 @@ package org.apache.lenya.cms.publication;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Logger;

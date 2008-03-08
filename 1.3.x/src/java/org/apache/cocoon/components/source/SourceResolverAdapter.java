@@ -19,7 +19,6 @@ package org.apache.cocoon.components.source;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
-
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;

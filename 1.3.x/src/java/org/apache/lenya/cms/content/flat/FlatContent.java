@@ -16,15 +16,15 @@ public class FlatContent implements Content {
       languages = planguages;
       indexer = new FlatIndexer(new File(directory, "index"), this);
       // The next line starts indexing everything in the background when Lenya starts.
-      new Thread((Runnable) indexer).start();
+      updateIndexes();
    }
    /* Content API */
    public String getIndexFilename(String indexName, String language) {
       return indexer.getIndexFilename(indexName, language);
    }
-   public String getURI(String unid, String language, String revision) {
-      Resource resource = getResource(unid, language, revision);
-      return resource.getURI();
+   /* FlatContent API */
+   public String[] getLanguages() {
+      return languages;
    }
    public String getMetaURI(String unid, String language, String revision) {
       Resource resource = getResource(unid, language, revision);
@@ -34,24 +34,30 @@ public class FlatContent implements Content {
       Resource resource = getResource(unid, language, "edit");
       return resource.getNewURI();
    }
-   public String getUNID(String structure, String id) {
-      FlatRelations relations = getRelations(structure);
-      return relations.getUNID(id);
+   public FlatRelations getRelations(String structure) {
+      return new FlatRelations(new File(directory, "relation" + File.separator + structure + ".xml"));
    }
    public Resource getResource(String unid) {
       return (Resource) new FlatResource(directory, unid);
    }
-   /* FlatContent API */
-   public String[] getLanguages() {
-      return languages;
+   public Resource getResource(String unid, String language, String revision) {
+      return (Resource) new FlatResource(directory, unid, language, revision);
    }
    public String[] getResources() {
       return (new File(directory, "resource")).list();
    }
-   public Resource getResource(String unid, String language, String revision) {
-      return (Resource) new FlatResource(directory, unid, language, revision);
+   public String getUNID(String structure, String id) {
+      FlatRelations relations = getRelations(structure);
+      return relations.getUNID(id);
    }
-   public FlatRelations getRelations(String structure) {
-      return new FlatRelations(new File(directory, "relation" + File.separator + structure + ".xml"));
+   public String getURI(String unid, String language, String revision) {
+      Resource resource = getResource(unid, language, revision);
+      return resource.getURI();
+   }
+   /**
+    * Updates Indexes in background.
+    */
+   void updateIndexes() {
+         new Thread((Runnable) indexer).start();
    }
 }

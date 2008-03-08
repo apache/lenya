@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
-
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;

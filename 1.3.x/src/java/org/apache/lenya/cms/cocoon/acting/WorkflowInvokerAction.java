@@ -16,7 +16,6 @@
  */
 /* $Id$  */
 package org.apache.lenya.cms.cocoon.acting;
-
 import java.util.Collections;
 import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -27,16 +26,13 @@ import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
-
 /**
- * Action to invoke a workflow transition independently from the request
- * document URL. Parameters:
+ * Action to invoke a workflow transition independently from the request document URL. Parameters:
  * <ul>
  * <li><strong>area:</strong> The area.</li>
  * <li><strong>document-id:</strong> The document id.</li>
@@ -45,53 +41,51 @@ import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
  * </ul>
  */
 public class WorkflowInvokerAction extends AbstractAction {
-    public static final String AREA = "area";
-    public static final String DOCUMENT_ID = "document-id";
-    public static final String LANGUAGE = "language";
-    public static final String EVENT = "event";
-    /**
-     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
-     *      org.apache.cocoon.environment.SourceResolver, java.util.Map,
-     *      java.lang.String, org.apache.avalon.framework.parameters.Parameters)
-     */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source, Parameters parameters) throws Exception {
-        String area = parameters.getParameter(AREA);
-        String documentId = parameters.getParameter(DOCUMENT_ID);
-        String language = parameters.getParameter(LANGUAGE);
-        String eventName = parameters.getParameter(EVENT);
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(getClass().getName() + " invoked.");
-            getLogger().debug("    Area:        [" + area + "]");
-            getLogger().debug("    Document ID: [" + documentId + "]");
-            getLogger().debug("    Language:    [" + language + "]");
-            getLogger().debug("    Event:       [" + eventName + "]");
-        }
-        PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-        Publication publication = envelope.getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
-        String url = builder.buildCanonicalUrl(publication, area, documentId, language);
-        Document document = builder.buildDocument(publication, url);
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        if (factory.hasWorkflow(document)) {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Invoking workflow event");
+   public static final String AREA = "area";
+   public static final String DOCUMENT_ID = "document-id";
+   public static final String LANGUAGE = "language";
+   public static final String EVENT = "event";
+   /**
+    * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+    */
+   public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source, Parameters parameters) throws Exception {
+      String area = parameters.getParameter(AREA);
+      String documentId = parameters.getParameter(DOCUMENT_ID);
+      String language = parameters.getParameter(LANGUAGE);
+      String eventName = parameters.getParameter(EVENT);
+      if(getLogger().isDebugEnabled()){
+         getLogger().debug(getClass().getName() + " invoked.");
+         getLogger().debug("    Area:        [" + area + "]");
+         getLogger().debug("    Document ID: [" + documentId + "]");
+         getLogger().debug("    Language:    [" + language + "]");
+         getLogger().debug("    Event:       [" + eventName + "]");
+      }
+      PageEnvelope envelope = PageEnvelope.getCurrent();
+      Publication publication = envelope.getPublication();
+      DocumentBuilder builder = publication.getDocumentBuilder();
+      String url = builder.buildCanonicalUrl(publication, area, documentId, language);
+      Document document = builder.buildDocument(publication, url);
+      WorkflowFactory factory = WorkflowFactory.newInstance();
+      if(factory.hasWorkflow(document)){
+         if(getLogger().isDebugEnabled()){
+            getLogger().debug("    Invoking workflow event");
+         }
+         SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
+         Situation situation = WorkflowHelper.buildSituation(objectModel);
+         Event[] events = instance.getExecutableEvents(situation);
+         Event event = null;
+         for(int i = 0; i < events.length; i++){
+            if(events[i].getName().equals(eventName)){
+               event = events[i];
             }
-            SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
-            Situation situation = WorkflowHelper.buildSituation(objectModel);
-            Event[] events = instance.getExecutableEvents(situation);
-            Event event = null;
-            for (int i = 0; i < events.length; i++) {
-                if (events[i].getName().equals(eventName)) {
-                    event = events[i];
-                }
-            }
-            // assert event != null;
-            instance.invoke(situation, event);
-        } else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Document has no workflow.");
-            }
-        }
-        return Collections.EMPTY_MAP;
-    }
+         }
+         // assert event != null;
+         instance.invoke(situation, event);
+      }else{
+         if(getLogger().isDebugEnabled()){
+            getLogger().debug("    Document has no workflow.");
+         }
+      }
+      return Collections.EMPTY_MAP;
+   }
 }

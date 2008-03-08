@@ -31,11 +31,14 @@ content/resource/{unid}/{language}/translation.xml
 content/resource/{unid}/{language}/{revision-number}.xml
 content/resource/{unid}/{language}/{revision-number}.{extension} - only if type="file"
 
+NOTE: resource.xml's root has a "unid" attribute solely for human convenience.  The directory name always has precedence.
+
 Resources are stored in the "resource" directory.
 Structures are currently stored in the "relation" directory to define relations between Resources.  They will become Resources soon.
-Indexes are used by the SitetreeGenerator, used for creating navigation elements.  Indexes can be flat or use a specific structure.
+Indexes are used by the SitetreeGenerator for creating navigation elements.  Indexes can be flat or use a specific structure.
 
 The migration routine creates content/relations.xml.  This file stores information for running the "flat" migration multiple times to remember the UNID assigned to each Resource.
+
 
 === File access ===
 The new Module protocol should be used for access to all files.
@@ -51,10 +54,10 @@ module::/... Double colons resets inheritance.  This was useful during developme
 Most XMAPs use the file: protocol.  When in a Module, file:myfile.ext and module:///myfile.ext would both return the file from the module's directory.  The difference is if the file is not in the module directory, the module: protocol will follow Module inheritance until it finds the file.
 
 Inheritance is by file.  Example:
-\build\lenya\webapp\lenya\modules\myModule\test1.xml
-\build\lenya\webapp\lenya\modules\myModule\test2.xml
-\build\lenya\webapp\lenya\pubs\mypub\modules\myModule\test2.xml
-\build\lenya\webapp\lenya\pubs\mypub\modules\myModule\test3.xml
+/build/lenya/webapp/lenya/modules/myModule/test1.xml
+/build/lenya/webapp/lenya/modules/myModule/test2.xml
+/build/lenya/webapp/lenya/pubs/mypub/modules/myModule/test2.xml
+/build/lenya/webapp/lenya/pubs/mypub/modules/myModule/test3.xml
 When in myModule (assuming no inheritance is specified):
 module:///test1.xml would inherit from the global Module.
 module:///test2.xml would use the local Module.  The global file is ignored.

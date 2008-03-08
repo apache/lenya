@@ -12,6 +12,11 @@ public interface Resource {
    public String getUNID();
    public String getID();
    public String getType();
+   /**
+    * Used by Lenya-1.2 Publications.
+    * 
+    * @deprecated Use getType()
+    */
    public String getDocumentType();
    public String getLanguage();
    public String getDefaultLanguage();

@@ -19,7 +19,6 @@ package org.apache.lenya.ac.cache;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 

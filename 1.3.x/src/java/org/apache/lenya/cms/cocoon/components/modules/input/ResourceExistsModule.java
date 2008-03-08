@@ -19,7 +19,6 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;

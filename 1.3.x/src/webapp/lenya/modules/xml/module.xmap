@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Link Module -->
+<!-- XML Module -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:flow language="javascript">
      <map:script src="module:///code.js"/>
@@ -7,68 +7,91 @@
    <map:pipelines>
       <map:pipeline type="noncaching">
 <!-- CSS bypass -->
-         <map:match pattern="{module:module}/*.css">
-            <map:read src="module:///{1}.css" mime-type="text/css"/>
+         <map:match pattern="**/*.css">
+            <map:read src="module:///{2}.css" mime-type="text/css"/>
+         </map:match>
+<!-- Content request pass to live XMAP -->
+         <map:match pattern="*/cocoon/**">
+            <map:mount uri-prefix="" src="module://{content:type:{2}}/live.xmap"/> 
+            <map:serialize type="html"/>
          </map:match>
 <!-- Get POST data function -->
+<!-- TODO: Replace uses of post.xsp with RequestGenerator -->
          <map:match pattern="formdata">
             <map:generate type="serverpages" src="module://form/post.xsp"/>
             <map:serialize type="xml"/>
          </map:match>
 <!-- Edit meta data -->
          <map:match pattern="edit/*">
-            <map:act type="resource-exists" src="module://edit/module.xmap">
-               <map:redirect-to uri="/{publication:publication}/edit/{../1}"/>
-            </map:act>
+            <map:select type="resource-exists">
+               <map:when test="module://edit/module.xmap">
+                  <map:redirect-to uri="/{publication:publication}/edit/{1}"/>
+               </map:when>
+            </map:select>
             <map:mount uri-prefix="" src="module:///edit.xmap"/> 
             <map:serialize type="html"/>
          </map:match>
 <!-- Save meta data -->
-         <map:match pattern="{module:module}/save/*">
-            <map:call function="update">
-             <map:parameter name="publication" value="{page-envelope:publication-id}"/>
-             <map:parameter name="module" value="{module:module}"/>
-             <map:parameter name="unid" value="{1}"/>
-           </map:call>
-         </map:match>
+            <map:match pattern="*/save/*">
+               <map:call function="update">
+                <map:parameter name="publication" value="{page-envelope:publication-id}"/>
+                <map:parameter name="module" value="{module:module}"/>
+                <map:parameter name="unid" value="{2}"/>
+              </map:call>
+            </map:match>
 <!-- Data for update() -->
-         <map:match pattern="{module:module}/savedata/*">
-            <map:aggregate element="save">
-               <map:part src="content:/INFO/{1}!edit"/>
-               <map:part src="cocoon:/formdata"/>
-            </map:aggregate>
-            <map:transform src="module:///save.xsl">
-               <map:parameter name="unid" value="{1}"/>
-            </map:transform>
-            <map:serialize type="xml"/>
-         </map:match>
+<!-- TODO: Replace use of post.xsp with RequestGenerator -->
+            <map:match pattern="*/savedata/*">
+               <map:aggregate element="save">
+                  <map:part src="content:/INFO/{2}!edit"/>
+                  <map:part src="cocoon:/formdata"/>
+               </map:aggregate>
+               <map:transform src="module:///save.xsl">
+                  <map:parameter name="unid" value="{2}"/>
+               </map:transform>
+               <map:serialize type="xml"/>
+            </map:match>
 <!-- Edit new revision -->
-         <map:match pattern="{module:module}/newrevision/*_*!*">
-            <map:generate src="content:/{1}_{2}!{3}"/>
-            <map:transform src="module:///doc2form.xsl">
-             <map:parameter name="publication" value="{publication:publication}"/>
-             <map:parameter name="publicationname" value="{publication:name}"/>
-             <map:parameter name="module" value="{module:module}"/>
-             <map:parameter name="unid" value="{1}"/>
-             <map:parameter name="lang" value="{2}"/>
-            </map:transform>
-            <map:serialize type="html"/>
-         </map:match>
+            <map:match pattern="*/newrevision/*_*!*">
+               <map:select type="resource-exists">
+                  <!-- If ResourceType has resource.xml, merge fields. -->
+                  <map:when test="module://{content:type:{2}}/resource.xml">
+                     <map:aggregate element="merge">
+                        <map:part src="module://{content:type:{2}}/resource.xml"/>
+                       <map:part src="content:/{2}_{3}!{4}"/>
+                     </map:aggregate>
+                     <map:transform src="module:///merge.xsl">
+                        <map:parameter name="extra" value="keep"/>
+                     </map:transform>
+                  </map:when>
+                  <map:otherwise>
+                     <map:generate src="content:/{2}_{3}!{4}"/>
+                  </map:otherwise>
+               </map:select>
+               <map:transform src="module:///doc2form.xsl">
+                  <map:parameter name="publication" value="{publication:publication}"/>
+                  <map:parameter name="publicationname" value="{publication:name}"/>
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="unid" value="{2}"/>
+                  <map:parameter name="lang" value="{3}"/>
+               </map:transform>
+               <map:serialize type="html"/>
+            </map:match>
 <!-- Save new revision -->
-         <map:match pattern="{module:module}/saverevision/*">
-            <map:call function="create">
-             <map:parameter name="module" value="{module:module}"/>
-             <map:parameter name="unid" value="{1}"/>
-           </map:call>
-         </map:match>
+            <map:match pattern="*/saverevision/*">
+               <map:call function="create">
+                <map:parameter name="module" value="{module:module}"/>
+                <map:parameter name="unid" value="{2}"/>
+              </map:call>
+            </map:match>
 <!-- Data for Save new revision -->
-         <map:match pattern="{module:module}/saverevisiondata/**">
-            <map:generate src="cocoon:/formdata"/>
-            <map:transform src="module:///form2xhtml.xsl">
-               <map:parameter name="unid" value="{1}"/>
-            </map:transform>
-            <map:serialize type="xml"/>
-         </map:match>
+            <map:match pattern="*/saverevisiondata/**">
+               <map:generate src="cocoon:/formdata"/>
+               <map:transform src="module:///form2xhtml.xsl">
+                  <map:parameter name="unid" value="{2}"/>
+               </map:transform>
+               <map:serialize type="xml"/>
+            </map:match>
       </map:pipeline>
    </map:pipelines>
 </map:sitemap>

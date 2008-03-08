@@ -22,7 +22,7 @@
 <xsl:attribute name="unid"><xsl:value-of select="$unid"/></xsl:attribute>
 <xsl:attribute name="filename">/resource.xml</xsl:attribute>
 <xsl:choose>
-<xsl:when test="@id='/index'"><xsl:attribute name="doctype">homepage</xsl:attribute></xsl:when>
+<xsl:when test="@id='/index'"><xsl:attribute name="doctype">home</xsl:attribute></xsl:when>
 <xsl:when test="@type='xml'"><xsl:attribute name="doctype">xhtml</xsl:attribute></xsl:when>
 </xsl:choose>
 

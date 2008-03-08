@@ -22,7 +22,6 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.io.File;
 import java.net.URL;
 import java.util.Map;
-
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.acting.ServiceableAction;

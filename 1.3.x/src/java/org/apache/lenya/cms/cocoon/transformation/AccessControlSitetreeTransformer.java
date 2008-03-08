@@ -21,7 +21,6 @@ package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
 import java.util.Map;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;

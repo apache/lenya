@@ -18,7 +18,6 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
-
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;

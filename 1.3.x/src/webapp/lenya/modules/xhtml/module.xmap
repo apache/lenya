@@ -4,12 +4,20 @@
    <map:pipelines>
       <map:pipeline>
          <map:match pattern="**">
-            <!-- Remove extension -->
-            <map:match pattern="**.*">
-               <map:generate src="cocoon:/{1}"/>
-               <map:serialize type="xml"/>
+<!-- CSS bypass -->
+         <map:match pattern="**/*.css">
+            <map:read src="module:///{2}.css" mime-type="text/css"/>
+         </map:match>
+<!-- Content request pass to live XMAP -->
+            <map:match pattern="*/cocoon/**">
+               <map:select type="resource-exists">
+                  <map:when test="module://{content:type:{2}}/live.xmap">
+                    <map:mount uri-prefix="" src="module://{content:type:{1}}/live.xmap"/> 
+                    <map:serialize type="xml"/>
+                  </map:when>
+               </map:select>
             </map:match>
-            <!-- Step: View Revision from Lenya 1.2 -->
+<!-- Step: View Revision from Lenya 1.2 -->
             <map:match type="step" pattern="view-revision">
                <map:generate type="serverpages" src="module://lenya/rc/view.xsp"/>
                <map:transform src="module://lenya/rc/toDoc.xsl"/>
@@ -18,15 +26,46 @@
                </map:transform>
                <map:serialize type="xml"/>
             </map:match>
-            <!-- xhtml/{view|edit}/{area}/{docpath}_{language}.xml -->
-            <map:match pattern="{module:module}/**">
-               <map:generate src="content://{1}"/>
-               <map:transform src="module:///xhtml.xsl">
-                  <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+<!-- For Hierarchical Content: Patched during testing, but uncertain why this is needed -->
+              <!-- Get document.  See 13HELP.txt for legal values to content:/ -->
+              <map:select type="parameter">
+                  <map:parameter name="parameter-selector-test" value="{publication:contenttype}"/>
+                  <map:when test="flat">
+                  </map:when>
+                  <map:otherwise>
+                     <map:select type="resource-exists">
+                        <map:when test="content:/{1}">
+                           <map:generate src="content:/{1}"/>
+                           <map:transform src="module:///xhtml.xsl">
+                              <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+                           </map:transform>
+                           <map:serialize type="xml"/>
+                        </map:when>
+                        <map:when test="content:/live/{page-envelope:document-id}">
+                           <map:generate src="content:/live/{page-envelope:document-id}"/>
+                           <map:transform src="module:///xhtml.xsl">
+                              <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+                           </map:transform>
+                           <map:serialize type="xml"/>
+                        </map:when>
+                     </map:select>
+                  </map:otherwise>
+               </map:select>
+<!-- Force inheritance. Pass to XML Module -->
+                    <map:mount uri-prefix="" src="module://xml/module.xmap"/>
+                    <map:serialize type="xml"/>
+<!-- Testing -->
+              <map:generate src="module://lenya/util/empty.xml"/>
+               <map:transform src="module://lenya/test.xsl">
+                  <map:parameter name="test1" value="{1}"/>
+                  <map:parameter name="test2" value="{page-envelope:document-node-id}"/>
+                  <map:parameter name="test3" value="{page-envelope:document-node-id}"/>
+                  <map:parameter name="test4" value="{page-envelope:document-node-id}"/>
+                  <map:parameter name="test5" value="{page-envelope:document-node-id}"/>
+                  <map:parameter name="test6" value="{page-envelope:document-node-id}"/>
                </map:transform>
                <map:serialize type="xml"/>
-           </map:match>
-       </map:match>
+         </map:match>
       </map:pipeline>
    </map:pipelines>
 </map:sitemap>
