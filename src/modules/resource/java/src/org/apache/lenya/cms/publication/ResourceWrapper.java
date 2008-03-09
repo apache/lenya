@@ -146,8 +146,8 @@ public class ResourceWrapper extends AbstractLogEnabled {
 
             destOutputStream = document.getOutputStream();
             IOUtils.write(sourceBos.toByteArray(), destOutputStream);
-
             document.setMimeType(mimeType);
+            document.setSourceExtension(getSourceExtension(fileName));
 
         } finally {
             if (destOutputStream != null) {
@@ -198,4 +198,16 @@ public class ResourceWrapper extends AbstractLogEnabled {
         }
         return mimeType;
     }
+
+    protected String getSourceExtension(String fileName) {
+        String extension = "";
+        int lastDotIndex = fileName.lastIndexOf(".");
+        if (lastDotIndex > -1) {
+            extension = fileName.substring(lastDotIndex + 1);
+        } else {
+            getLogger().warn("Can't determine extension from file name [" + fileName + "].");
+        }
+        return extension.toLowerCase();
+    }
+
 }
