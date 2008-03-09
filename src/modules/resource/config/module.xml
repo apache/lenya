@@ -4,6 +4,7 @@
 
 <lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
   <lenya:id>org.apache.lenya.modules.resource</lenya:id>
+  <lenya:export package="org.apache.lenya.cms.publication"/>
   <lenya:export package="org.apache.lenya.cms.site.usecases"/>
   <lenya:depends module="org.apache.lenya.modules.usecase"/>
   <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
