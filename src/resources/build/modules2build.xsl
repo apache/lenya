@@ -172,9 +172,9 @@
     
     <path id="module.classpath.{$id}.api">
       <path refid="classpath"/>
-      <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-*-api.jar"/>
+      <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="${{fullname}}-api.jar"/>
       <xsl:for-each select="mod:depends">
-        <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{@module}-api.jar"/>
+        <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{@module}-${{version}}-api.jar"/>
       </xsl:for-each>
       <fileset dir="{$src}" includes="java/lib/*.jar"/>
       <fileset dir="${{lib.dir}}" includes="*.jar"/>
@@ -205,7 +205,7 @@
           <classpath refid="module.classpath.{$id}.api"/>
         </javac>
         
-        <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}-api.jar" index="true">
+        <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}-${{version}}-api.jar" index="true">
           <fileset dir="{$destDirPublic}">
             <exclude name="**/Manifest.mf"/>
           </fileset>
@@ -228,7 +228,7 @@
         <classpath refid="module.classpath.{$id}.impl"/>
       </javac>
       
-      <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}-impl.jar" index="true">
+      <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}-${{version}}-impl.jar" index="true">
         <fileset dir="{$destDirPrivate}">
           <exclude name="**/Manifest.mf"/>
         </fileset>
