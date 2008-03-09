@@ -25,6 +25,7 @@
   <depends module="org.apache.lenya.modules.acusecases"/>
   <depends module="org.apache.lenya.modules.ldap"/>
   <depends module="org.apache.lenya.modules.monitoring"/>
+  <depends module="org.apache.lenya.modules.linking"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Administration</name>
