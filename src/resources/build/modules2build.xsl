@@ -197,8 +197,9 @@
           deprecation="${{deprecation}}"
           target="${{target.vm}}"
           nowarn="${{nowarn}}"
-          source="${{src.java.version}}">
-          <src path="{$src}/java/src"/>
+          source="${{src.java.version}}"
+          srcdir="{$src}/java/src"
+          sourcepath="">
           <xsl:for-each select="mod:export[@package]">
             <include name="{translate(@package, '.', '/')}/*.java"/>
           </xsl:for-each>
