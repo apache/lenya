@@ -14,7 +14,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */package org.apache.lenya.cms.export;
+ */
+package org.apache.lenya.cms.export;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
