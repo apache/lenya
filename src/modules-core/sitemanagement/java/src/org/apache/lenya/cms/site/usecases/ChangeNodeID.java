@@ -73,7 +73,7 @@ public class ChangeNodeID extends DocumentUsecase {
                 Document sourceDocument = getSourceDocument();
   
                 NodeSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument.getLink().getNode());
-                for (NodeIterator i = subsite.ascending(); i.hasNext();) {
+                for (NodeIterator i = subsite.iterator(); i.hasNext();) {
                     SiteNode node = i.next();
                     String[] languages = node.getLanguages();
                     for (int l = 0; l < languages.length; l++) {
