@@ -74,7 +74,7 @@
       -->
       <map:match pattern="**.rss">
         <map:generate src="{resource-type:format-rss}"/>
-        <map:serialize type="xml"/>
+        <map:serialize type="xml" mime-type="application/rss+xml"/>
       </map:match>
 
       <!-- FIXME: either this should be moved into a metadata module, or at least we need to establish
