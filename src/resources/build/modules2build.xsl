@@ -370,7 +370,7 @@
       <path id="module.test-classpath.{$id}">
         <path refid="module.classpath.{$id}.impl"/>
         <fileset dir="${{build.webapp}}/WEB-INF/lib">
-          <include name="lenya-module-{$id}-impl.jar"/>
+          <include name="lenya-module-{$id}-${{version}}-impl.jar"/>
         </fileset>
         <path location="${{build.test}}"/>
       </path>
