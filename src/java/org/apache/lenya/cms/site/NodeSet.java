@@ -139,6 +139,13 @@ public class NodeSet {
     }
 
     /**
+     * @return An iterator iterating in undetermined order.
+     */
+    public NodeIterator iterator() {
+        return new NodeIterator(getNodes());
+    }
+
+    /**
      * @return An iterator iterating in ascending order.
      */
     public NodeIterator ascending() {
