@@ -195,7 +195,7 @@ public class NodeSet {
      */
     public Document[] getDocuments() {
         List documents = new ArrayList();
-        for (NodeIterator i = ascending(); i.hasNext(); ) {
+        for (NodeIterator i = iterator(); i.hasNext(); ) {
             SiteNode node = i.next();
             String[] langs = node.getLanguages();
             for (int l = 0; l < langs.length; l++) {
