@@ -43,6 +43,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
 
     private TreeNode parent;
     private String name;
+    private String path;
 
     /**
      * A top level node.
@@ -133,8 +134,13 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         return (SiteNode) this.parent;
     }
 
-    public String getPath() {
-        return this.parent.getPath() + "/" + getName();
+    public String getPath() { 
+        if(path != null) {
+            return path;
+        }
+        String getPath = this.parent.getPath() + "/" + getName();
+        path = getPath;
+        return path;
     }
 
     public SiteStructure getStructure() {
@@ -165,6 +171,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
 
     protected void changed() {
         getTree().changed();
+        this.path = null;
     }
 
     public SiteTreeNode[] getPrecedingSiblings() {
