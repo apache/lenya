@@ -180,7 +180,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
                     if (AbstractSiteManager.this.requires(map, doc1, doc2)) {
                         result = 1;
                     }
-                    if (AbstractSiteManager.this.requires(map, doc2, doc1)) {
+                    else if (AbstractSiteManager.this.requires(map, doc2, doc1)) {
                         result = -1;
                     }
                 } catch (SiteException e) {
