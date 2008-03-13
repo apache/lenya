@@ -161,10 +161,10 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
         publications.add(publication);
 
-        String[] templateIds = publication.getTemplateIds();
-        for (int i = 0; i < templateIds.length; i++) {
+        String templateId = publication.getTemplateId();
+        if(templateId != null) {
             try {
-                Publication template = publication.getFactory().getPublication(templateIds[i]);
+                Publication template = publication.getFactory().getPublication(templateId);
                 Publication[] templateTemplates = getPublications(template);
                 publications.addAll(Arrays.asList(templateTemplates));
             } catch (PublicationException e) {

@@ -138,20 +138,11 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     private List allResourceTypes;
 
-    protected String getFirstTemplateId() {
-        String[] templateIds = getTemplateIds();
-        if (templateIds.length > 0) {
-            return templateIds[0];
-        } else {
-            return null;
-        }
-    }
-
     public String[] getResourceTypeNames() {
         if (this.allResourceTypes == null) {
             this.allResourceTypes = new ArrayList();
             this.allResourceTypes.addAll(Arrays.asList(this.delegate.getResourceTypeNames()));
-            String templateId = getFirstTemplateId();
+            String templateId = getTemplateId();
             if (templateId != null) {
                 try {
                     Publication template = getFactory().getPublication(templateId);
@@ -177,14 +168,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return delegate.getSourceURI();
     }
 
-    public String[] getTemplateIds() {
-        return delegate.getTemplateIds();
+    public String getTemplateId() {
+        return delegate.getTemplateId();
     }
 
     public String getWorkflowSchema(ResourceType resourceType) {
         String schema = this.delegate.getWorkflowSchema(resourceType);
-        if (schema == null && getTemplateIds().length > 0) {
-            String templateId = getFirstTemplateId();
+        if (schema == null && getTemplateId() != null) {
+            String templateId = getTemplateId();
             try {
                 Publication template = getFactory().getPublication(templateId);
                 schema = template.getWorkflowSchema(resourceType);

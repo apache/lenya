@@ -32,16 +32,16 @@
       <form method="post" id="form-usecases">
         <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-        <p><i18n:text>usecase-policies-message</i18n:text></p>
-        <jx:if test="${usecase.getParameter('templates').size() &gt; 0}">
+        <p><i18n:text>usecase-policies-message</i18n:text></p> 
+        <jx:if test="${usecase.getParameter('template')}">
           <p><strong>Note:</strong><br/>
             If you submit this form, all usecase permissions
             are stored for the publication "<jx:out value="${usecase.getParameter('publicationId')}"/>".
             If you want to change the inherited usecase permissions of a template publication, please go
-            to the administration GUI of one of the templates
-            (<jx:forEach var="template" items="${usecase.getParameter('templates')}">
-              <a href="${'/' + template + '/authoring/index.html?lenya.usecase=admin.usecases'}"><jx:out value="${template}"/></a>
-            </jx:forEach>).
+            to the administration GUI of the template
+            (
+              <a href="${'/' + usecase.getParameter('template') + '/authoring/index.html?lenya.usecase=admin.usecases'}"><jx:out value="${usecase.getParameter('template')}"/></a>
+            ).
           </p>
         </jx:if>
         <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>

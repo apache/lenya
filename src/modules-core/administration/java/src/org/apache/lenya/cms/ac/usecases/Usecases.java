@@ -63,7 +63,7 @@ public class Usecases extends AccessControlUsecase {
 
             Publication pub = getPublication();
             setParameter("publicationId", pub.getId());
-            setParameter("templates", pub.getTemplateIds());
+            setParameter("template", pub.getTemplateId());
 
             for (int u = 0; u < usecases.length; u++) {
                 for (int r = 0; r < roles.length; r++) {

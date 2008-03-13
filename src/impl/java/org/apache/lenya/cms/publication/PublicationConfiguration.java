@@ -231,19 +231,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
             }
 
             Configuration templateConfig = config.getChild(ELEMENT_TEMPLATE, false);
-            // FIXME: this is a hack. For some reason, the old code seems to
-            // imply that a publication
-            // can have multiple templates. This is not the case. All this code
-            // should use a simple string
-            // rather than arrays at some point. For now, the old array is kept,
-            // to avoid having to deal
-            // with all kinds of NPEs that keep cropping up...
-            if (templateConfig == null) {
-                this.templates = new String[0]; // ugh. empty array to keep the
-                // legacy code from breaking.
-            } else {
-                this.templates = new String[1];
-                this.templates[0] = templateConfig.getAttribute(ATTRIBUTE_ID);
+            if (templateConfig != null) {
+                this.template = templateConfig.getAttribute(ATTRIBUTE_ID);
             }
 
             Configuration templateInstantiatorConfig = config.getChild(
@@ -479,15 +468,14 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         return getConfigurationFile().exists();
     }
 
-    private String[] templates;
+    private String template;
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#getTemplateIds()
+     * @see org.apache.lenya.cms.publication.Publication#getTemplateId()
      */
-    public String[] getTemplateIds() {
+    public String getTemplateId() {
         loadConfiguration();
-        List list = Arrays.asList(this.templates);
-        return (String[]) list.toArray(new String[list.size()]);
+        return template;
     }
 
     /**
@@ -690,9 +678,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 }
             }
             
-            String[] templates = getTemplateIds();
-            if (templates.length > 0) {
-                config.addChild(createConfig(ELEMENT_TEMPLATE, ATTRIBUTE_ID, templates[0]));
+            String template = getTemplateId();
+            if (template != null) {
+                config.addChild(createConfig(ELEMENT_TEMPLATE, ATTRIBUTE_ID, template));
             }
 
             String instantiatorHint = getInstantiatorHint();
