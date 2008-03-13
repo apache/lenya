@@ -265,7 +265,7 @@ public class Publish extends InvokeWorkflow {
         SiteNode node = document.area().getSite().getNode(path);
         Link link = null;
         String uuid = node.getUuid();
-        if (uuid != null && uuid.equals(document.getUUID())) {
+        if (uuid != null) {
             if (node.hasLink(document.getLanguage())) {
                 link = node.getLink(document.getLanguage());
             } else if (node.getLanguages().length > 0) {
