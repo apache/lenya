@@ -67,6 +67,7 @@ public class CreateDocument extends Create {
             addErrorMessage("The publication doesn't contain any languages!");
         }
         setParameter(LANGUAGES, languages);
+        setParameter(LANGUAGE,parent.getLanguage());
 
         Document sourceDoc = getSourceDocument();
         String[] childOnly = { RELATION_CHILD };
