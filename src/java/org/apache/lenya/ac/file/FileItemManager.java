@@ -268,15 +268,8 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
             loadItems();
         } catch (AccessControlException e) {
             throw new IllegalStateException(e.getMessage());
-        }
-        Item item;
-        if (items.containsKey(id)) {
-            item = (Item) items.get(id);
-        } else {
-            throw new RuntimeException("Item [" + id + "] not found.");
-        }
-
-        return item;
+        }       
+        return (Item) items.get(id);
     }
 
     /**
