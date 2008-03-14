@@ -59,7 +59,9 @@ public class CacheMap extends HashMap implements LogEnabled {
     public Object put(Object key, Object value) {
         
         if (size() == this.capacity) {
-            Object oldestKey = this.timeToKey.get(this.timeToKey.firstKey());
+            Object timeKey = this.timeToKey.firstKey();
+            Object oldestKey = this.timeToKey.get(timeKey);
+            this.timeToKey.remove(timeKey);
             remove(oldestKey);
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Clearing cache");
