@@ -30,7 +30,7 @@
            delegate the job to the publication's own sitemap. -->
 
       <map:match pattern="tinymce.delegateToPubSitemap/**">
-        <map:mount src="{fallback:{page-envelope:publication-id}:sitemap.xmap}" uri-prefix="tinymce.delegateToPubSitemap"/>
+        <map:mount src="{fallback:sitemap.xmap}" uri-prefix="tinymce.delegateToPubSitemap"/>
       </map:match>
 
       <!-- the usecase framework provides error and info messages. since we bypass
