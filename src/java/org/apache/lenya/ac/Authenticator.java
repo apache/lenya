@@ -31,6 +31,11 @@ public interface Authenticator extends Component {
      * Avalon role.
      */
     String ROLE = Authenticator.class.getName();
+    
+    /**
+     * The default authenticator type.
+     */
+    String DEFAULT_AUTHENTICATOR = "user";
 
     /**
      * Authenticates a request.

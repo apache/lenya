@@ -213,24 +213,14 @@
     </component-instance>
   </access-controller-resolvers>
   
-  <component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator"
-      role="org.apache.lenya.ac.Authenticator">
-    <redirect-to-wayf>true</redirect-to-wayf>
-  </component>
-<!--
-    <component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.ac.impl.UserAuthenticator"
-      role="org.apache.lenya.ac.Authenticator"/>
--->    
-    <xsl:comment>
-Enable this authenticator and disable the UserAuthenticator for anonymous authentication (useful for client certs, for instance)
-
-&lt;component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.ac.impl.AnonymousAuthenticator"
-      role="org.apache.lenya.ac.Authenticator"/&gt;      
-</xsl:comment>
- 
+    <authenticators>
+      <component-instance name="user" class="org.apache.lenya.ac.impl.UserAuthenticator"/>
+      <component-instance name="shibboleth" class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator">
+        <redirect-to-wayf>true</redirect-to-wayf>
+      </component-instance>
+      <component-instance name="anonymous" class="org.apache.lenya.ac.impl.AnonymousAuthenticator"/>
+    </authenticators>
+    
  <component logger="lenya.ac.cache"
      	class="org.apache.lenya.ac.cache.SourceCacheImpl"
      	role="org.apache.lenya.ac.cache.SourceCache"/>

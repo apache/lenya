@@ -44,4 +44,6 @@
   
   <authorizer type="workflow"/>
   
+  <authenticator type="shibboleth"/>
+  
 </access-controller>

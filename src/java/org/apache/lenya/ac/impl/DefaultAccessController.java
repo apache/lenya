@@ -57,6 +57,7 @@ import org.apache.lenya.ac.PolicyManager;
 
 /**
  * Default access controller implementation.
+ * 
  * @version $Id: DefaultAccessController.java 473842 2006-11-12 01:15:20Z gregor $
  */
 public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
@@ -66,6 +67,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     protected static final String TYPE_ATTRIBUTE = "type";
     protected static final String ACCREDITABLE_MANAGER_ELEMENT = "accreditable-manager";
     protected static final String POLICY_MANAGER_ELEMENT = "policy-manager";
+    protected static final String AUTHENTICATOR_ELEMENT = "authenticator";
 
     private static final String REGEX = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
     private ServiceSelector accreditableManagerSelector;
@@ -75,10 +77,12 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     private List authorizerKeys = new ArrayList();
     private ServiceSelector policyManagerSelector;
     private PolicyManager policyManager;
+    private ServiceSelector authenticatorSelector;
     private Authenticator authenticator;
 
     /**
-     * @see org.apache.lenya.ac.AccessController#authenticate(org.apache.cocoon.environment.Request, ErrorHandler)
+     * @see org.apache.lenya.ac.AccessController#authenticate(org.apache.cocoon.environment.Request,
+     *      ErrorHandler)
      */
     public boolean authenticate(Request request, ErrorHandler handler)
             throws AccessControlException {
@@ -150,7 +154,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             setupAccreditableManager(conf);
             setupAuthorizers(conf);
             setupPolicyManager(conf);
-            setupAuthenticator();
+            setupAuthenticator(conf);
         } catch (ConfigurationException e) {
             throw e;
         } catch (Exception e) {
@@ -208,7 +212,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * Creates the authorizers.
-     * 
      * @param configuration The access controller configuration.
      * @throws ConfigurationException when the configuration failed.
      * @throws ServiceException when something went wrong.
@@ -236,7 +239,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * Creates the policy manager.
-     * 
      * @param configuration The access controller configuration.
      * @throws ConfigurationException when the configuration failed.
      * @throws ServiceException when something went wrong.
@@ -260,18 +262,24 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * Sets up the authenticator.
-     * 
-     * @throws ServiceException when something went wrong.
+     * @param config The access controller configuration.
+     * @throws Exception when something went wrong.
      */
-    protected void setupAuthenticator() throws ServiceException {
-        authenticator = (Authenticator) manager.lookup(Authenticator.ROLE);
+    protected void setupAuthenticator(Configuration config) throws Exception {
+        Configuration authConfig = config.getChild(AUTHENTICATOR_ELEMENT, false);
+        String type = authConfig == null ? Authenticator.DEFAULT_AUTHENTICATOR : authConfig
+                .getAttribute(TYPE_ATTRIBUTE);
+
+        this.authenticatorSelector = (ServiceSelector) manager.lookup(Authenticator.ROLE
+                + "Selector");
+        this.authenticator = (Authenticator) this.authenticatorSelector.select(type);
+        configureOrParameterize(this.authenticator, authConfig);
     }
 
     private ServiceManager manager;
 
     /**
      * Set the global component manager.
-     * 
      * @param manager The global component manager
      * @throws ServiceException when something went wrong.
      */
@@ -281,7 +289,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * Returns the service manager.
-     * 
      * @return A service manager.
      */
     protected ServiceManager getManager() {
@@ -305,8 +312,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     }
 
     /**
-     * Returns if this action has authorizers.
-     * 
+     * Returns if this access controller has authorizers.
      * @return A boolean value.
      */
     protected boolean hasAuthorizers() {
@@ -341,8 +347,11 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getManager().release(authorizerSelector);
         }
 
-        if (authenticator != null) {
-            getManager().release(authenticator);
+        if (this.authenticatorSelector != null) {
+            if (this.authenticator != null) {
+                this.authenticatorSelector.release(this.authenticator);
+            }
+            getManager().release(this.authenticatorSelector);
         }
 
         if (getLogger().isDebugEnabled()) {
@@ -352,7 +361,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * Returns the accreditable manager.
-     * 
      * @return An accreditable manager.
      */
     public AccreditableManager getAccreditableManager() {
@@ -370,7 +378,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * Returns the authenticator.
-     * 
      * @return The authenticator.
      */
     public Authenticator getAuthenticator() {
@@ -407,7 +414,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     /**
      * Checks if the session contains an identity that is not null and belongs
      * to the used access controller.
-     * 
      * @param session The current session.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.

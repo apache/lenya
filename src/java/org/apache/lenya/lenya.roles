@@ -44,6 +44,10 @@
     <hint shorthand="usecase" class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer"/>
   </role>
   
+  <role name="org.apache.lenya.ac.AuthenticatorSelector"
+        shorthand="authenticators"
+        default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector"/>
+  
   <role name="org.apache.lenya.ac.PolicyManagerSelector"
         shorthand="policy-managers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
