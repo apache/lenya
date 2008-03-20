@@ -142,9 +142,6 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
 
         try {
             DocumentStore store = getStore(resource);
-            if (resource.equals(store)) {
-                return true;
-            }
             return store.contains(resource);
         } catch (DocumentException e) {
             throw new SiteException(e);
