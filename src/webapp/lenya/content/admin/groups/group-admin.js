@@ -202,6 +202,8 @@ function groupAddGroup() {
         var description = "";
         var rule = "";
         var messages = new java.util.ArrayList();
+
+        var valid = false;
         
         var translator = cocoon.getComponent("org.apache.lenya.ac.saml.AttributeTranslator");
         var attributeNames = translator.getSupportedResultNames();
@@ -235,25 +237,29 @@ function groupAddGroup() {
             }
             else {
                    rule = cocoon.request.getParameter("rule").trim();
-                   var evaluator = groupManager.getAttributeRuleEvaluator();
-                   var result = evaluator.validate(rule);
-                   if (!result.succeeded()) {
-                       var validationMessages = result.getMessages();
-                       for (var i = 0; i < validationMessages.length; i++) {
-                           messages.add(validationMessages[i]);
-                       }
+                   if (rule == "") {
+                      rule = null;
                    }
-                   else {
-                    var configDir = groupManager.getConfigurationDirectory();
-                    var group = new Packages.org.apache.lenya.ac.file.FileGroup(configDir, groupId);
-                    group.setItemManager(groupManager);
-                    group.setName(name);
-                    group.setDescription(description);
-                    group.setRule(rule);
-                    group.save();
-                    groupManager.add(group);
-                    break;
-                }
+                   if (rule != null) {
+                      var evaluator = groupManager.getAttributeRuleEvaluator();
+                      var result = evaluator.validate(rule);
+                      valid = result.succeeded();
+                      if (!valid) {
+                          var validationMessages = result.getMessages();
+                          for (var i = 0; i < validationMessages.length; i++) {
+                              messages.add(validationMessages[i]);
+                          }
+                      }
+                   }
+                   var configDir = groupManager.getConfigurationDirectory();
+                   var group = new Packages.org.apache.lenya.ac.file.FileGroup(configDir, groupId);
+                   group.setItemManager(groupManager);
+                   group.setName(name);
+                   group.setDescription(description);
+                   if (valid) group.setRule(rule);
+                   group.save();
+                   groupManager.add(group);
+                   break;
             }
         }
         cocoon.redirectTo(redirectUri);
