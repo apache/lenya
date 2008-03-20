@@ -565,7 +565,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
 
             // set the mergeFactor
             if (mergeF != null) {
-                int mergeFactor = Integer.parseInt(mergeF);
+                mergeFactor = Integer.parseInt(mergeF);
                 indexer.setMergeFactor(mergeFactor);
             }
 
