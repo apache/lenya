@@ -51,6 +51,7 @@ NavNode.prototype.createNewNode = function(node)
     newItem.uuid = node.getAttribute('uuid');
     newItem.isprotected = isNodeProtected(node);
     newItem.href = node.getAttribute('href');
+    newItem.icon = node.getAttribute('icon');
     newItem.label = getLabel(node);
     newItem.existsChosenLanguage = existsChosenLanguage(node);
     newItem.langSuffix = node.getAttribute('language-suffix');

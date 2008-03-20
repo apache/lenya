@@ -23,6 +23,7 @@
   <export package="org.apache.lenya.cms.site.tree"/>
   <depends module="org.apache.lenya.modules.ac"/>
   <depends module="org.apache.lenya.modules.usecase"/>
+  <depends module="org.apache.lenya.modules.linking"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Sitetree</name>

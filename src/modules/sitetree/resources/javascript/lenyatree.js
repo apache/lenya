@@ -245,17 +245,14 @@ LenyaTree.prototype.getIcon = function(item) {
         else {
             var href;
             if (steps.length < 4) {
-                href = AREA_BASE_PATH + "/folder";
-            }
-            else if(item.href == "") {
-                href = AREA_BASE_PATH + "/default";
+                href = AREA_BASE_PATH + "/folder.gif?lenya.module=sitetree";
             }
             else {
-                href = item.href;
+                href = item.icon;
             }
             var img = this.doc.createElement('img');
             var language = CHOSEN_LANGUAGE;
-            img.setAttribute('src', href + '.gif?lenya.module=sitetree');
+            img.setAttribute('src', href);
             img.setAttribute('alt', '');
             return img;
         }

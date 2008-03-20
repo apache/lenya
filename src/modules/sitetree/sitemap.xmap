@@ -39,10 +39,15 @@ This sitemap creates default navigation components.
         <urls type="relative"/>
         <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="href"/>
       </map:transformer>
+      <map:transformer logger="lenya.sitemap.transformer.uuid2url" name="icon-sitetree"
+        src="org.apache.lenya.cms.cocoon.transformation.IconUrlTransformer">
+        <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="icon"/>
+      </map:transformer>
       <map:transformer logger="lenya.sitemap.transformer.proxy" name="proxy-sitetree"
           src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
         <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="site" attribute="href"/>
         <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="href"/>
+        <transform namespace="http://apache.org/cocoon/lenya/navigation/1.0" element="node" attribute="icon"/>
       </map:transformer>
     </map:transformers>
   </map:components>
@@ -94,6 +99,7 @@ This sitemap creates default navigation components.
       <!-- pattern: {1:nav-element}/{2:pub-id}/{3:area}/{4:default-language}/{5:language}/{6:path}.xml -->
       <map:match pattern="*/*/*/*/*/**.xml">
         <map:generate src="cocoon:/navtree/{2}/{3}/{4}/{5}/{6}.xml"/>
+        <map:transform type="sitemeta"/>
         <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/{1}.xsl">
           <map:parameter name="area" value="{3}"/>
           <map:parameter name="root" value="/{2}/{3}/"/>
@@ -150,6 +156,7 @@ This sitemap creates default navigation components.
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform type="uuid2url-sitetree"/>
+        <map:transform type="icon-sitetree"/>
         <map:transform type="proxy-sitetree"/>
         <map:serialize type="xml"/>
       </map:match>
@@ -173,18 +180,9 @@ This sitemap creates default navigation components.
       <map:match pattern="*/*/default.gif">
         <map:read src="fallback://lenya/modules/sitetree/resources/icons/default.gif"/>
       </map:match> 
- 
-      <map:match pattern="*/*/**.gif">
-        <map:select type="parameter">
-          <map:parameter name="parameter-selector-test"
-            value="{resource-type:{doc-info:{1}:{2}:{page-envelope:document-uuid}:{page-envelope:language}:resourceType}:supportsFormat:icon}"/>
-          <map:when test="true">
-            <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:language},area={2},pub={1}?format=icon"/>
-          </map:when>
-          <map:otherwise>
-            <map:read src="fallback://lenya/modules/sitetree/resources/icons/default.gif"/>
-          </map:otherwise>
-        </map:select>
+      
+      <map:match pattern="*/*/*.gif">
+        <map:read src="{resource-type:{3}:format-icon}" mime-type="image/gif"/>
       </map:match>
     </map:pipeline>
     

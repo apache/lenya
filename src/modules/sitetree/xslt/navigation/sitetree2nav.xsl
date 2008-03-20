@@ -144,6 +144,15 @@ Apply nodes recursively
           </xsl:when>
         </xsl:choose>
       </xsl:attribute>
+      
+      <xsl:attribute name="icon">
+        <xsl:text>icon:</xsl:text>
+        <xsl:if test="@uuid">
+          <xsl:value-of select="@uuid"/>
+          <xsl:text>,lang=</xsl:text><xsl:value-of select="$existinglanguage"/>
+          <xsl:value-of select="$areaParam"/>
+        </xsl:if>
+      </xsl:attribute>
 
       <xsl:if test="@mimetype">
         <xsl:attribute name="mimetype">
