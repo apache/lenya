@@ -499,7 +499,7 @@ public class LuceneIndexTransformerOptimized extends AbstractTransformer impleme
         this.bodyDocument = null;
     }
 
-    class IndexHelperField {
+    static class IndexHelperField {
         String localName;
 
         StringBuffer text;
@@ -529,7 +529,7 @@ public class LuceneIndexTransformerOptimized extends AbstractTransformer impleme
         }
     }
 
-    class IndexerConfiguration {
+    static class IndexerConfiguration {
         String analyzerClassname;
 
         String indexDirectory;

@@ -204,7 +204,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     /**
      * Searches for a declared service of the form "publicationId/service".
      */
-    public class ExistingServiceVisitor implements PublicationVisitor {
+    public static class ExistingServiceVisitor implements PublicationVisitor {
 
         /**
          * Ctor.

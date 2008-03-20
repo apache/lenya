@@ -662,7 +662,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * Abstract base class for document visitors which operate on a source and
      * target document.
      */
-    public abstract class SourceTargetVisitor implements DocumentVisitor {
+    public static abstract class SourceTargetVisitor implements DocumentVisitor {
 
         private DocumentLocator rootSource;
         private DocumentLocator rootTarget;
@@ -768,7 +768,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     /**
      * Visitor to delete documents.
      */
-    public class DeleteVisitor implements DocumentVisitor {
+    public static class DeleteVisitor implements DocumentVisitor {
 
         private DocumentManager manager;
 
