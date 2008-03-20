@@ -45,7 +45,7 @@ public class Edit extends InvokeWorkflow {
             setParameter(NEWS_WRAPPER, news);
             
             setParameter(INCLUDE_ITEM_NUMBER, new Short(news.getIncludeItemNumber()));
-            setParameter(SHOW_ALL_LANGUAGES, new Boolean(news.showAllLanguages()));
+            setParameter(SHOW_ALL_LANGUAGES, Boolean.valueOf(news.showAllLanguages()));
             setParameter(TYPE, news.getType());
             setParameter(HREF, news.getHref());
             
