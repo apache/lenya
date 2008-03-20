@@ -222,22 +222,20 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             this.indent += "  ";
         }
 
+        Set configs = getMatchingConfigurations(uri, name, attrs);
         AttributesImpl newAttrs = null;
 
-        Set configs = getMatchingConfigurations(uri, name, attrs);
-
         if (!configs.isEmpty()) {
-
+            newAttrs = new AttributesImpl(attrs);
             this.ignoreLinkElement = false;
 
             for (Iterator i = configs.iterator(); i.hasNext(); ) {
                 AttributeConfiguration config = (AttributeConfiguration) i.next();
-                String linkUrl = attrs.getValue(config.attribute);
+                String linkUrl = newAttrs.getValue(config.attribute);
                 try {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug(this.indent + "link URL: [" + linkUrl + "]");
                     }
-                    newAttrs = new AttributesImpl(attrs);
                     handleLink(linkUrl, config, newAttrs);
                 } catch (final Exception e) {
                     getLogger().error("startElement failed: ", e);
