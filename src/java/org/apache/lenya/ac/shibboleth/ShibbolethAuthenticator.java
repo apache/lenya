@@ -30,6 +30,8 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.environment.Context;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpEnvironment;
 import org.apache.lenya.ac.AccessControlException;
@@ -50,11 +52,16 @@ import org.apache.lenya.ac.impl.UserAuthenticator;
 import org.apache.lenya.ac.saml.AttributeTranslator;
 import org.apache.lenya.ac.saml.UserFieldsMapper;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.publication.Proxy;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.shibboleth.AssertionConsumerService;
 import org.apache.shibboleth.AttributeRequestService;
 import org.apache.shibboleth.impl.AssertionConsumerServiceImpl;
 import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
+
 
 /**
  * <p>
@@ -194,7 +201,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
 
     /**
      * Passes the attributes from the <em>samlAttributes</em> parameter to the <em>user</em>
-     * object. The {@link AttributeTranslator}Êservice is used to translate the attributes. The
+     * object. The {@link AttributeTranslator}ï¿½service is used to translate the attributes. The
      * name and e-mail attributes are extracted using the {@link UserFieldsMapper}.
      * @param user
      * @param samlAttributes
@@ -262,7 +269,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
      * This method returns the URI which displays the login screen:
      * </p>
      * <ul>
-     * <li>If the configuration option {@link #REDIRECT_TO_WAYF}Êis set to <code>true</code> and
+     * <li>If the configuration option {@link #REDIRECT_TO_WAYF}ï¿½is set to <code>true</code> and
      * the request points to a page which is only protected by rules, we assume that the Shibboleth
      * authentication shall be used and return the URL which redirects to the WAYF server.</li>
      * <li>Otherwise, the Lenya login usecase URL is returned.</li>
@@ -270,9 +277,36 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
      * @return A string.
      * @see org.apache.lenya.ac.impl.UserAuthenticator#getLoginUri(org.apache.cocoon.environment.Request)
      */
-    public String getLoginUri(Request request) {
+   public String getLoginUri(Request request) {
         if (this.redirectToWayf && isOnlyRuleProtected(request)) {
-            return request.getRequestURI() + "?lenya.usecase=shibboleth&lenya.step=wayf";
+            ContextUtility contextUtil = null;
+			String proxyUrl;
+            try {
+                contextUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+                Context context = ObjectModelHelper.getContext(contextUtil.getObjectModel());
+                String servletContextPath = context.getRealPath("");
+                String webappUrl = ServletHelper.getWebappURI(request);
+                URLInformation info = new URLInformation(webappUrl);
+                String pubId = info.getPublicationId();
+                Publication pub = PublicationFactory.getPublication(pubId, servletContextPath);
+
+                String area = info.getArea();
+				Proxy proxy = pub.getProxy(area, true);
+                if (proxy != null) {
+                	    String prefix = "/" + pubId + "/" + area;
+                	    String areaUrl = webappUrl.substring(prefix.length());
+                    proxyUrl = proxy.getUrl() + areaUrl;
+                } else {
+                    proxyUrl = request.getContextPath() + webappUrl;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (contextUtil != null) {
+                    this.manager.release(contextUtil);
+                }
+            }
+            return proxyUrl + "?lenya.usecase=shibboleth&lenya.step=wayf";
         } else {
             return super.getLoginUri(request);
         }
