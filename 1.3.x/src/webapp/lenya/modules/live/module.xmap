@@ -27,7 +27,7 @@
             </map:match>
 <!-- Default -->
             <map:generate src="module://lenya/sorry.xml"/>
-            <map:serialize type="html"/>
+            <map:serialize type="html" status-code="404"/>
          </map:match>
       </map:pipeline>
    </map:pipelines>

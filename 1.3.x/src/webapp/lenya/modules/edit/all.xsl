@@ -27,8 +27,10 @@
 <h1><xsl:value-of select="$publication"/>&#160;<i18n:text>Resources</i18n:text></h1>
 <xsl:if test="string-length($new) &gt; 0">
 <xsl:element name="a">
-<xsl:attribute name="href">/<xsl:value-of select="$publication"/>/<xsl:value-of select="$new"/></xsl:attribute>Create Resource</xsl:element>
+<xsl:attribute name="href">/<xsl:value-of select="$publication"/>/<xsl:value-of select="$new"/></xsl:attribute>Create Resource</xsl:element>&#160;
 </xsl:if>
+<xsl:element name="a">
+<xsl:attribute name="href">/<xsl:value-of select="$publication"/>/relate</xsl:attribute>Edit Structures</xsl:element>
 <table border="1">
 <tr>
 <th><i18n:text>UNID</i18n:text></th>

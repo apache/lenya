@@ -230,6 +230,22 @@ public class FlatIndex {
             String value = resource.get(part.getProperty());
             if(value.length() > 0) element.setAttribute(part.getName(), value);
          }
+         // Add translations with language and title.
+         String[] languages = resource.getLanguages();
+         for(int l = 0; l < languages.length; l++){
+            Element translationElement = addElement(document, element, "translation");
+            translationElement.setAttribute("language", languages[l]);
+            FlatTranslation translation = resource.getTranslation(languages[l], false);
+            if(null != translation){
+               FlatRevision revision = translation.getRevision();
+               if(null != revision){
+                  String title = revision.getTitle();
+                  if(title.length() > 0){
+                     translationElement.setAttribute("title", title);
+                  }
+               }
+            }
+         }
          // INCLUDE - END
       } // for
    }

@@ -1,0 +1,4 @@
+<module id="relate" name="Relations" minimum="1.3" created="1.3" content="flat">
+   <recommended id="edit">Allow editing of Resources.</recommended>
+   <description>Administration Page Module for editing Structures to specify relations amongst Resources.</description>
+</module>

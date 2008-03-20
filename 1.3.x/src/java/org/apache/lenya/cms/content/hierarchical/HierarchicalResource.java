@@ -21,7 +21,6 @@ public class HierarchicalResource implements Resource {
    private String id;
    private String area;
    public HierarchicalResource(File contentDirectory, String unid) {
-      System.out.println("HierarchicalResource UNID=" + unid);
       this.contentDirectory = contentDirectory;
       Location location = new Location(unid);
       id = location.getUnid();

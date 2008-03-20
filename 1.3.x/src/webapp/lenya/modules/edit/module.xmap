@@ -12,12 +12,6 @@
                   <map:parameter name="module" value="{module:module}"/>
                   <map:parameter name="publicationname" value="{publication:name}"/>
                   <map:parameter name="publicationlanguages" value="{publication:languages}"/>
-                  <map:select type="resource-exists">
-                     <map:when test="module://new/module.xmap">
-                        <map:parameter name="new" value="new"/>
-                     </map:when>
-                  </map:select>
-<!-- BUG: Selector does not work.  -->
                   <map:parameter name="new" value="new"/>
                </map:transform>
                <map:transform type="i18n"/>           

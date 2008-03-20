@@ -1,12 +1,22 @@
-=================================================
-==== Needed to be function complete with 1.2 ====
-=================================================
----- Structure editor ----
-Admin screen: Structure editor
-Create new structure.  Copy existing.  Add Resources not in structure.  Move Resource to new parent or root.
-Careful: must keep Resource even if does not exist in current language.  Show greyed, but still allow move.
+====================
+==== Structures ====
+====================
+NOTE: Goal is to add "Save" action to Structure Editor.  [I will be implementing this next. - solprovider]
 
----- Security -----
+- Move Index Configuration to Modules.  Allow both module.xml and separate files.  (module.xml requires work when inherited.  Separate files are automatically inherited.)
+- Read index configuration for names of Structures.  IndexConfiguration includes Structure and Revision names.  Load during initialization for use in adminstration.
+- Generator for names of Structures.
+- Create Design Resources.  Exclude Design Resources from "all" Index.
+- ModuleSourceFactory: Check for Design Resource before file system.
+Design resources: Module protocol can check datastore for design elements such as XSLT and CSS.  This is the reason for named resources; use UNID = publication + module + filepath.  Also useful for structures.
+- Move Structures to Design Resources.
+- "relate" Module: Change Editor to retrieve Structure as Design Resource.  Revisions, choose "live".
+- Implement "Save Resource" with run Indexer.
+
+==================
+==== Security ====
+==================
+
 Resource-level Security.
 Access Control List in Resource.xml
 "admin" Group bypasses security and is allowed to do anything.
@@ -16,11 +26,13 @@ Implement in SitetreeGenerator and ContentSourceFactory.
 "Does not exist" returns same Sorry page.
 Sorry: This resource is not available, either it does not exist or you do not have access to it.  (Link to Login page if not logged in.)
 DESIGN: How to handle inheritance?  Multiple parents?  Assume "live" structure?
+Workflow: Reproduce Lenya-1.2's approve/publish system.
 
+==============================================
+==== Links and i18n - Editor and Handling ====
+==============================================
 
-=====================================
-==== Links - Editor and Handling ====
-=====================================
+BUG?: Remove Attributes.removeAttribute from i18nTransformer.translateAttributes().
 
 Add "Choose Lenya doc link" dialog to Xinha.
 Add "Create file resource" to Xinha.
@@ -58,6 +70,7 @@ Only explicitly included Modules should appear on New Resource list.  Inherited 
 Edit-Save must clear Cache. (Or "cache" Module must check if Resource is still valid.)
 
 New: ID Validation - No duplicates, periods, exclamation marks, or underscores.
+New: UNID Validation - No < and >. Must be valid directory name (deny :!,?*_"&+#/\| and leading .~).
 
 flat Module: content3.xsl sets doctype.  Need to use rules in {pub}/parameter-doctype.xmap
 Migration: Copy XSLTs to proper modules and patch as needed.
@@ -89,19 +102,20 @@ Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
 
 Check synchronization of HashMaps.
 
+"relate" Module/Structure Editor: 
+- Add Categories (placeholder for menu entries with no document) using quotes to distinguish from UNIDs.  
+- Search other Revisions for Title when no "live" Revision or "live" Title is blank.  
+- Add "Copy Resource and all descendants" action.
+- Add export/import to assist copying amongst Structures.
+- Filter Resources on Types.
+
+
 =============================
 ==== ToDo List from 2006 ====
 =============================
 
 === 1.2.x Conversion
 Session Module: login.xsp -> NullPointerException
-
-
-Rethink structures.  
-Need "live" or "homepage"?.  Rename livemenu to live?  What variations are useful?
-All = all relations, use for authoring
-Live = use for menus.  Do not include /index.
-StructureEditor should use "visible in menu" flag to build "live".  Checkboxes on Structure editor.
 
 === Admin Screens
 Admin screen: Navigation between User/Group maintenance and Site maintenance.
@@ -121,15 +135,10 @@ Multiple Languages?  Or separate indexes for each language?
 Filter by type?  doctype?  IndexPart?
 URLs: Use a Structure?  All flat (UNIDs)?  Choice?  (I dislike UNIDs in URLs, but a Structure limits the results to what it contains.)
 
-
 =======================
 ====  Enhancements ====
 =======================
 [This section lists new abilities not required to complete 1.2 functionality.]
-
-Optimize Indexer.  Only run for language changed.
-
-Move structures to Resources so editing uses revision control.
 
 cocoon: protocol does not follow Module inheritance for missing files. Example: /pub/home/parameters should use /pub/xhtml/parameters if modules/home/module.xmap is missing.  Needing module.xmap defeats purpose of inheritance.  (module: protocol follows inheritance so resource-exists works as test for Module.)
 
@@ -142,10 +151,7 @@ New Translation: Warn if no language chosen but other fields changed for new tra
 Check {pub} directory for publication.xml.
 Module to clean migrated publications: copy content, modules, security. For content, fix type and remove doctype. Move publication.xml to {pub}.
 
-Admin screens: Resource - Update structures if "id" has changed.
-
-Design resources: Module protocol can check datastore for design elements such as XSLT and CSS.  This is the reason for named resources; use UNID = publication + module + filepath.  Also useful for structures.
-
+Admin screens: Resource: Change ID - Must Update structures and run Indexer.
 
 Move CreateResourceTransformer and CreateRevisionTransformer to content package with implementation code in content.flat.
 
@@ -153,11 +159,7 @@ Admin: Revision History -- Use slider at top.  Start at "edit" revision.  WYSIWY
 
 publication:name - should return name, currently stored in publication.xml.  Why?  Move to publication.xconf?  Must be available from Publication.java and PublicationModule.java
 
-
-Resource: Active dates: start, expire
-Careful: All children will disappear from Index when parent is deactivated.
-
-Resources: Deleting index kills a structure.  Maintain Structures as Resources with automatic versioning for easy rollback.
+Resource: Active dates: start, expire. Careful: All children will disappear from Index when parent is deactivated.
 
 Admin screen: User/Group editor
 
@@ -171,6 +173,7 @@ Editor: Create reusable CSS classes?  Create "style" with settings of current lo
 
 Editor: Fix tables.  Is there a better plugin?
 
+JCR/Jackrabbit datastore.
 
 == FlatIndexPart
 Parse using / forcing begining, * for any element, and // for any number of elements 
@@ -178,16 +181,13 @@ Example: token = "/xml" must be root
 Example: token = "/*/*" must be second level
 Example: token = "//xml/file" must be file under xml, but xml can be at any level.
 
-
 == Indexer
-Pull confs from Modules.
-Queue background indexing.
-Thread check next index.
-Send changes to indexes with return of needsIndexing so add to queue.
-If exists and does not need updating, return
+Indexer should only update dependent Indexes when a Structure is saved.
+
+Optimize Indexer to only run for language changed.
+
 If exists and needs updating, check update freq.  If cache-and-update (assume true), start new thread for update.
 Match identical indexconfs, same filters.  ?superset include unless different value for same name.  Could cause issues if poor code copies extra attributes.
-
 
 === 1.3.1
 build/lenya directory should be self-contained runnable.

@@ -1,10 +1,14 @@
 This file contains completed entries from the TODO file with the most recent entries at the top.  Separate Commits with "---".
 ======
 
+--- 
+DONE 20080319
+Structure editor/"relate" Module - Add Resources and move branches to new parent or root independent of translations.  Collapse/Expand tree.  Undo abilities.  Added link from Edit screen.
+
 ---
 -- DONE 20080308
 1.2 Authoring: Uses {pub}/xslt/page2xhtml.xsl.  lenya-body aggregate returns xhtml:html/xhtml:body rather than expected xhtml:html/xhtml:div[@id='body'].  Added former match to page2xhtml.xsl.
-Indexer: creating or updating Resources runs Indexer. Added system so only one thread handles updates while other threads may request that the first thread run update again.
+Indexer: creating or updating Resources runs Indexer. Added system so only one thread handles updates while other threads may request that the first thread run update again. IMPLEMENTATION: Queue background indexing. Thread check next index. Send changes to indexes with return of needsIndexing so add to queue. If exists and does not need updating, return
 Patched xhtml module.xmap during testing.
 Replace all ResourceExists Actions with the ResourceExists Selector in Modules.
 New Module requires and passes successful requests to Edit Module.

@@ -64,7 +64,7 @@ public class SitetreeGenerator extends ServiceableGenerator implements Cacheable
          if(pub.getContentType().equalsIgnoreCase(Content.TYPE_FLAT)){
             this.inputSource = super.resolver.resolveURI(pub.getContent().getIndexFilename(src, language));
          }else{
-            // Lenya-1.2
+            // Lenya-1.2 Hierarchical Content 
             File testfile = new File(pub.getContentDirectory(), src + File.separator + "sitetree.xml");
             if(!testfile.exists())
                testfile = new File(pub.getContentDirectory(), "live" + File.separator + "sitetree.xml");
@@ -139,13 +139,5 @@ public class SitetreeGenerator extends ServiceableGenerator implements Cacheable
    // module = uri.substring(pos);
    // }
    // return module;
-   // }
-   // private Publication getPublication(String publication, String servletContextPath) {
-   // try{
-   // return PublicationFactory.getPublication(publication, servletContextPath);
-   // }catch(org.apache.lenya.cms.publication.PublicationException pe){
-   // System.out.println("PNF: " + publication + " not found.");
-   // return (Publication) null;
-   // }
    // }
 }

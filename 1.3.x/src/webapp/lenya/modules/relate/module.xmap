@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Relate Module -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+   <map:resources>
+      <map:resource name="default">
+<!-- Default: Request does not specify anything after the slash. Choose Structure. -->
+<!-- TODO: Must be aware of Structure design elements in content -->
+              <map:generate type="directory" src="module:///../../pubs/{publication:publication}/content/relation">
+                  <map:parameter name="depth" value="1"/>
+               </map:generate>
+               <map:transform src="module:///structures.xsl">
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="publication" value="{publication:publication}"/>
+                  <map:parameter name="publicationname" value="{publication:name}"/>
+               </map:transform>
+               <map:serialize type="xml"/>
+      </map:resource>
+   </map:resources>
+
+  <!-- =========================== Pipelines ================================ -->
+   <map:pipelines>
+      <map:pipeline>
+         <map:match pattern="**">
+<!-- Verify flat content. -->
+            <map:select type="parameter">
+               <map:parameter name="parameter-selector-test" value="{publication:contenttype}"/>
+               <map:when test="flat">
+               </map:when>
+               <map:otherwise>
+                  <map:generate src="module:///hierarchical.html"/> 
+                  <map:serialize type="html"/>
+               </map:otherwise>
+            </map:select>
+            <map:match pattern="all">
+               <map:generate type="sitetree"/>
+               <map:serialize type="xml"/>
+            </map:match>
+<!-- Edit Structure. -->
+            <map:match pattern="{module:module}/">
+               <map:call resource="default"/>
+            </map:match>
+            <!-- module/structure -->
+            <map:match pattern="{module:module}/*">
+               <map:aggregate element="content">
+                  <map:part src="cocoon:/all"/>
+<!-- TODO: Move structures to content -->
+                  <map:part src="module:///../../pubs/{publication:publication}/content/relation/{1}.xml"/>
+               </map:aggregate>
+               <map:transform src="module:///structure.xsl">
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="name" value="{1}"/>
+                  <map:parameter name="publication" value="{publication:publication}"/>
+                  <map:parameter name="publicationname" value="{publication:name}"/>
+               </map:transform>
+               <map:transform type="i18n"/>
+               <map:serialize type="html"/>
+            </map:match>
+            <map:call resource="default"/>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>
