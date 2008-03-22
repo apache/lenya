@@ -25,7 +25,8 @@
   <message key="Rank">Rank</message>
   <message key="Score">Score</message>
   <message key="No Title">(no title)</message>
-  <message key="hits">{0} hits</message>
+  <message key="1 hit">1 hit</message>
+  <message key="… hits">{0} hits</message>
   <message key="Pages">Pages</message>
   
   <message key="indexing-failed-subject">Indexing failed</message>

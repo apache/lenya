@@ -93,10 +93,21 @@
       
       <!-- {1:pub}/{2:area}/{3:queryString} -->
       <map:match pattern="search-generator/*/*/*">
-        <map:generate type="search">
-          <map:parameter name="index" value="{index-path:{1}-{2}}"/>
-          <map:parameter name="query" value="title:{3} OR description:{3} OR subject:{3} OR body:{3}"/>
-        </map:generate>
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{3}"/>
+          <map:when test="">
+            <map:generate type="search">
+              <map:parameter name="index" value="{index-path:{1}-{2}}"/>
+              <map:parameter name="query" value=""/>
+            </map:generate>
+          </map:when>
+          <map:otherwise>
+            <map:generate type="search">
+              <map:parameter name="index" value="{index-path:{1}-{2}}"/>
+              <map:parameter name="query" value="title:{3} OR description:{3} OR subject:{3} OR body:{3}"/>
+            </map:generate>
+          </map:otherwise>
+        </map:select>
         <map:serialize type="xml"/>
       </map:match>
       

@@ -43,7 +43,12 @@
   
   <xsl:template match="search:results">  
     <div id="body">
-      <xsl:apply-templates/>
+      <h1><i18n:text>Search</i18n:text></h1>
+      <form class="search-results-form" action="" method="get">
+        <input name="queryString" type="text" style="width: 400px" value="{$queryString}"
+        />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
+      </form>
+      <xsl:apply-templates select="search:hits"/>
     </div>
   </xsl:template>
 
@@ -56,27 +61,29 @@
         <em><xsl:value-of select="/search:results/@query-string"/></em>
     </h1>
     -->
-    <h1><i18n:text>Search</i18n:text></h1>
-    <form class="search-results-form" action="" method="get">
-      <input name="queryString" type="text" style="width: 400px" value="{$queryString}"
-      />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
-    </form>
-    
     <h2>
-      <i18n:translate>
-        <i18n:text>hits</i18n:text>
-        <i18n:param><xsl:value-of select="@total-count"/></i18n:param>
-      </i18n:translate>
+      <xsl:choose>
+        <xsl:when test="@total-count = 1">
+          <i18n:text>1 hit</i18n:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <i18n:translate>
+            <i18n:text>… hits</i18n:text>
+            <i18n:param><xsl:value-of select="@total-count"/></i18n:param>
+          </i18n:translate>
+        </xsl:otherwise>
+      </xsl:choose>
     </h2>
     <ul class="search-results">
       <xsl:apply-templates/>
     </ul>
     
-    <p>
-      <i18n:text>Pages</i18n:text><xsl:text>: </xsl:text>
-
-      <xsl:if test="count(/search:results/search:navigation/search:navigation-page) &gt; 1">
-        <xsl:for-each select="/search:results/search:navigation/search:navigation-page">
+    <xsl:variable name="pages" select="/search:results/search:navigation/search:navigation-page"/>
+    <xsl:if test="count($pages) &gt; 1">
+      <p>
+        <i18n:text>Pages</i18n:text><xsl:text>: </xsl:text>
+  
+        <xsl:for-each select="$pages">
           <xsl:call-template name="navigation-link"> 
             <xsl:with-param name="query-string" select="/search:results/@query-string"/>
             <xsl:with-param name="page-length" select="/search:results/@page-length"/>
@@ -84,17 +91,17 @@
             <xsl:with-param name="link-text" select="position()"/>
           </xsl:call-template>
         </xsl:for-each>
-      </xsl:if>  
-      
-      <xsl:call-template name="navigation-paging-link">
-        <xsl:with-param name="query-string" select="/search:results/@query-string"/>
-        <xsl:with-param name="page-length" select="/search:results/@page-length"/>
-        <xsl:with-param name="has-previous" select="/search:results/search:navigation/@has-previous"/>
-        <xsl:with-param name="has-next" select="/search:results/search:navigation/@has-next"/>
-        <xsl:with-param name="previous-index" select="/search:results/search:navigation/@previous-index"/>
-        <xsl:with-param name="next-index" select="/search:results/search:navigation/@next-index"/>
-      </xsl:call-template>
-    </p>
+        
+        <xsl:call-template name="navigation-paging-link">
+          <xsl:with-param name="query-string" select="/search:results/@query-string"/>
+          <xsl:with-param name="page-length" select="/search:results/@page-length"/>
+          <xsl:with-param name="has-previous" select="/search:results/search:navigation/@has-previous"/>
+          <xsl:with-param name="has-next" select="/search:results/search:navigation/@has-next"/>
+          <xsl:with-param name="previous-index" select="/search:results/search:navigation/@previous-index"/>
+          <xsl:with-param name="next-index" select="/search:results/search:navigation/@next-index"/>
+        </xsl:call-template>
+      </p>
+    </xsl:if>
     
   </xsl:template>
 
