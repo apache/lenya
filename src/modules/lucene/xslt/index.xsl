@@ -8,11 +8,12 @@
 >
 
 <xsl:param name="index"/>
-<xsl:param name="id"/>
+<xsl:param name="uuid"/>
+  <xsl:param name="language"/>
 
 <xsl:template match="/lucene:index">
-  <lucene:index clear="false" indexid="{$index}" merge-factor="100">
-    <lucene:document uid="{$id}">
+  <lucene:index indexid="{$index}" lucene:clear="false" lucene:merge-factor="100" lucene:analyzer="stopword_{$language}">
+    <lucene:document uid="{$uuid}:{$language}">
       <xsl:apply-templates select="lucene:document/*"/>
     </lucene:document>
   </lucene:index>  
