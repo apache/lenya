@@ -21,9 +21,22 @@
 
 	<analyzer_manager logger="core.search.analyzer_manager">
 		<analyzer id="standard" class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
-		<analyzer id="stopword_en" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/English_en.xml" checkupdate="true"/>
-		<analyzer id="stopword_fr" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/French_fr.xml" checkupdate="true"/>
-		<analyzer id="analyzer_research" class="org.apache.cocoon.components.search.analyzer.ConfigurablePerFieldAnalyzer" configfile="context://WEB-INF/analyzer/perfieldconf.xml" checkupdate="false"/>
+	  <analyzer id="stopword_da" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Danish_da.xml" checkupdate="true"/>
+	  <analyzer id="stopword_nl" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Dutch_nl.xml" checkupdate="true"/>
+	  <analyzer id="stopword_en" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/English_en.xml" checkupdate="true"/>
+	  <analyzer id="stopword_fi" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Finnish_fi.xml" checkupdate="true"/>
+	  <analyzer id="stopword_fr" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/French_fr.xml" checkupdate="true"/>
+	  <analyzer id="stopword_de" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/German_de.xml" checkupdate="true"/>
+	  <analyzer id="stopword_it" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Italian_it.xml" checkupdate="true"/>
+	  <analyzer id="stopword_no" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Norwegian_no.xml" checkupdate="true"/>
+	  <analyzer id="stopword_pl" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Polish_pl.xml" checkupdate="true"/>
+	  <analyzer id="stopword_pt" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Portuguese_pt.xml" checkupdate="true"/>
+	  <!--
+	  <analyzer id="stopword_ru" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Russian_ru.xml" checkupdate="true"/>
+	  -->
+	  <analyzer id="stopword_es" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Spanish_es.xml" checkupdate="true"/>
+	  <analyzer id="stopword_sv" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/Swedish_sv.xml" checkupdate="true"/>
+	  <analyzer id="analyzer_research" class="org.apache.cocoon.components.search.analyzer.ConfigurablePerFieldAnalyzer" configfile="context://WEB-INF/analyzer/perfieldconf.xml" checkupdate="false"/>
 	</analyzer_manager>
 	
 </xconf>
