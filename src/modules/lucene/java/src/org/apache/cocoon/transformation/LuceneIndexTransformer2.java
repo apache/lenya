@@ -536,7 +536,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
         if (analyzerid != null) {
             Analyzer analyzer = null;
             try {
-                AnalyzerManager analyzerM = (AnalyzerManager) manager.lookup(IndexManager.ROLE);
+                AnalyzerManager analyzerM = (AnalyzerManager) manager.lookup(AnalyzerManager.ROLE);
                 analyzer = analyzerM.getAnalyzer(analyzerid);
                 indexer.setAnalyzer(analyzer);
                 manager.release(analyzerM);
