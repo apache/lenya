@@ -40,16 +40,10 @@
     <map:pipeline>
       
       <!-- {pub-id}/{area}/{uuid}/{language} -->
-      <map:match pattern="metadata/*/*/*/*">
-        <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4}"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
-      <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
         <map:aggregate element="cmsbody">
           <map:part src="lenya-document:{3},pub={1},area={2},lang={4}"/>
-          <map:part src="cocoon:/metadata/{1}/{2}/{3}/{4}"/>
+          <map:part src="cocoon://modules/metadata/{1}/{2}/{3}/{4}"/>
         </map:aggregate>
   
         <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">
