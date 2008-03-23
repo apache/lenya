@@ -47,7 +47,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * </p>
  * 
  * <pre>
- *  &lt;lenya:metadata xmlns:lenya=&quot;http://apache.org/cocoon/lenya/metadata/1.0&quot;&gt;
+ *  &lt;meta:metadata xmlns:meta=&quot;http://apache.org/cocoon/lenya/metadata/1.0&quot;&gt;
  *  &lt;elements xmlns=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;
  *  &lt;title&gt;Search&lt;/title&gt;
  *  &lt;date&gt;2006-06-12 13:43:14&lt;/date&gt;
@@ -59,7 +59,7 @@ import org.xml.sax.helpers.AttributesImpl;
  *  &lt;resourceType&gt;usecase&lt;/resourceType&gt;
  *  &lt;contentType&gt;xml&lt;/contentType&gt;
  *  &lt;/elements&gt;
- *  &lt;/lenya:metadata&gt;
+ *  &lt;/meta:metadata&gt;
  * </pre>
  */
 public class LenyaMetaDataGenerator extends ServiceableGenerator implements
