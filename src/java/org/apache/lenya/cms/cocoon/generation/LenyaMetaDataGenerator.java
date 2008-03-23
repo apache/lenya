@@ -43,6 +43,9 @@ import org.xml.sax.helpers.AttributesImpl;
  * a {@link RepositorySource} URI (e.g., <code>lenya-document:...</code>).
  * </p>
  * <p>
+ * For multi-value elements, multiple &lt;prefix:key&gt; elements are generated.
+ * </p>
+ * <p>
  * Example output:
  * </p>
  * 
