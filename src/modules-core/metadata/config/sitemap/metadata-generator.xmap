@@ -19,9 +19,9 @@
 <xmap xpath="/sitemap/components/generators" 
   unless="/sitemap/components/generators/generator[@name = 'lenyaMetaData']"
   xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:generator label="content" logger="sitemap.generator.lenyaMetaData"
+    name="lenyaMetaData" pool-max="16"
+    src="org.apache.lenya.modules.metadata.LenyaMetaDataGenerator"/>
     
-  <map:generator label="content" logger="sitemap.generator.sessionattr"
-    name="session-attr" pool-max="16"
-    src="org.apache.cocoon.generation.SessionAttributeGenerator"/>
-  
 </xmap>
