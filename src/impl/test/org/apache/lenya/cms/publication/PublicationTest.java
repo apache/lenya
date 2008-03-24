@@ -81,12 +81,12 @@ public class PublicationTest extends AbstractAccessControlTest {
 
         Set typeSet = new HashSet(Arrays.asList(types));
 
-        String[] templateIds = pub.getTemplateIds();
-        for (int i = 0; i < templateIds.length; i++) {
-            Publication template = pub.getFactory().getPublication(templateIds[i]);
+        String templateId = pub.getTemplateId();
+        if (templateId != null) {
+            Publication template = pub.getFactory().getPublication(templateId);
             String[] templateTypes = template.getResourceTypeNames();
             for (int t = 0; t < templateTypes.length; t++) {
-                assertTrue(typeSet.contains(templateTypes[i]));
+                assertTrue(typeSet.contains(templateTypes[t]));
             }
         }
 
