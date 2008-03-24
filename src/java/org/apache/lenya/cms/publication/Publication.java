@@ -230,7 +230,8 @@ public interface Publication extends RepositoryItem {
     Proxy getProxy(String area, boolean isSslProtected);
 
     /**
-     * @return The template of the publication.
+     * @return The ID of the template of the publication or <code>null</code> if the
+     * publication has no template.
      */
     String getTemplateId();
 
