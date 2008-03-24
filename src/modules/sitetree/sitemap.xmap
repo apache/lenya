@@ -99,7 +99,6 @@ This sitemap creates default navigation components.
       <!-- pattern: {1:nav-element}/{2:pub-id}/{3:area}/{4:default-language}/{5:language}/{6:path}.xml -->
       <map:match pattern="*/*/*/*/*/**.xml">
         <map:generate src="cocoon:/navtree/{2}/{3}/{4}/{5}/{6}.xml"/>
-        <map:transform type="sitemeta"/>
         <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/{1}.xsl">
           <map:parameter name="area" value="{3}"/>
           <map:parameter name="root" value="/{2}/{3}/"/>
