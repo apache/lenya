@@ -17,6 +17,9 @@
 package org.apache.cocoon.transformation;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Map;
 
 import org.apache.avalon.excalibur.pool.Recyclable;
@@ -42,6 +45,7 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationUtil;
 import org.apache.lucene.analysis.Analyzer;
@@ -208,6 +212,8 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
 
     public static final int DELETING_PROCESS = 6;
 
+    protected static final String NAMESPACE_ATTRIBUTE = "namespace";
+
     // Runtime variables
     private int mergeFactor;
 
@@ -235,6 +241,8 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
     private String area;
     private String uuid;
     private String language;
+
+    private MetaDataFieldRegistry registry;
 
     /**
      * Setup the transformer.
@@ -356,11 +364,13 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
 
             case IN_DOCUMENT_PROCESS:
                 if (LUCENE_FIELD_ELEMENT.equals(localName)) {
-
+                    final String namespace = atts.getValue(NAMESPACE_ATTRIBUTE);
+                    final String name = atts.getValue(LUCENE_FIELD_NAME_ATTRIBUTE);
+                    
                     // set the field name
-                    this.fieldname = atts.getValue(LUCENE_FIELD_NAME_ATTRIBUTE);
+                    this.fieldname = namespace == null ? name : getMetaDataFieldName(namespace, name);
                     if (this.fieldname == null || this.fieldname.equals("")) {
-                        handleError("<lucene:field> element must contain name attribut");
+                        handleError("<lucene:field> element must contain name attribute");
                     }
 
                     // clear the text buffer
@@ -385,6 +395,17 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
         }
     }
 
+    protected String getMetaDataFieldName(String namespace, String elementName) {
+        if (this.registry == null) {
+            try {
+                this.registry = (MetaDataFieldRegistry) this.manager.lookup(MetaDataFieldRegistry.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.registry.getFieldName(namespace, elementName);
+    }
+
     public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
 
         // getLogger().debug("END processing: "+processing+" "+localName);
@@ -399,7 +420,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                     this.processing = NO_PROCESSING;
                     super.endElement(namespaceURI, localName, qName);
                 } else {
-                    handleError("</lucene:" + LUCENE_DELETING_ELEMENT + " was expected!");
+                    handleUnexpectedClosingElement(localName, LUCENE_DELETING_ELEMENT);
                 }
                 break;
 
@@ -410,7 +431,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                     this.processing = NO_PROCESSING;
                     super.endElement(namespaceURI, localName, qName);
                 } else {
-                    handleError("</lucene:" + LUCENE_DELETING_ELEMENT + " was expected!");
+                    handleUnexpectedClosingElement(localName, LUCENE_DELETING_ELEMENT);
                 }
                 break;
 
@@ -434,7 +455,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                     super.endElement(namespaceURI, localName, qName);
                     this.processing = INDEX_PROCESS;
                 } else {
-                    handleError("</lucene:" + LUCENE_DOCUMENT_ELEMENT + " was expected!");
+                    handleUnexpectedClosingElement(localName, LUCENE_DOCUMENT_ELEMENT);
                 }
                 break;
 
@@ -454,7 +475,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                     super.endElement(namespaceURI, localName, qName);
                     this.processing = DELETE_PROCESS;
                 } else {
-                    handleError("</lucene:" + LUCENE_DOCUMENT_ELEMENT + " was expected!");
+                    handleUnexpectedClosingElement(localName, LUCENE_DOCUMENT_ELEMENT);
                 }
                 break;
 
@@ -462,28 +483,32 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
                 if (LUCENE_FIELD_ELEMENT.equals(localName)) {
 
                     // create lucene field
-                    Field f = null;
                     try {
-                        f = index.createField(fieldname, fieldvalue.toString());
+                        Field f = index.createField(fieldname, fieldvalue.toString());
+                        f.setBoost(fieldboost);
+                        
+                        // add field to the lucene document
+                        bodyDocument.add(f);
+                        processing = IN_DOCUMENT_PROCESS;
                     } catch (IndexException ex) {
                         handleError(ex);
                     }
-                    f.setBoost(fieldboost);
-
-                    // add field to the lucene document
-                    bodyDocument.add(f);
-                    processing = IN_DOCUMENT_PROCESS;
                 } else {
-                    handleError("</lucene:" + LUCENE_FIELD_ELEMENT + " was expected!");
+                    handleUnexpectedClosingElement(localName, LUCENE_FIELD_ELEMENT);
                 }
                 break;
 
             default:
-                handleError("unknow element '" + LUCENE_FIELD_ELEMENT + "'!");
+                handleError("Inappropriate element '" + localName + "' in state '" + processing  + "'!");
             }
         } else {
             super.endElement(namespaceURI, localName, qName);
         }
+    }
+
+    protected void handleUnexpectedClosingElement(String localName, String expectedLocalName)
+            throws SAXException {
+        handleError("</lucene:" + expectedLocalName + "> was expected instead of </lucene:" + localName + ">!");
     }
 
     protected boolean canIndex() {
@@ -510,48 +535,18 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
      */
     private void initIndexer(Attributes atts) throws SAXException {
 
-        String id = atts.getValue(LUCENE_INDEXING_INDEXID_ATTRIBUTE);
-        String analyzerid = atts.getValue(LUCENE_URI, LUCENE_INDEXING_ANALYZER_ATTRIBUTE);
-        String mergeF = atts.getValue(LUCENE_URI, LUCENE_INDEXING_MERGE_FACTOR_ATTRIBUTE);
-        String clear = atts.getValue(LUCENE_URI, LUCENE_INDEXING_CREATE_ATTRIBUTE);
+        final String indexId = atts.getValue(LUCENE_INDEXING_INDEXID_ATTRIBUTE);
+        final String mergeF = atts.getValue(LUCENE_URI, LUCENE_INDEXING_MERGE_FACTOR_ATTRIBUTE);
+        final String clear = atts.getValue(LUCENE_URI, LUCENE_INDEXING_CREATE_ATTRIBUTE);
         attrs = new AttributesImpl(atts);
 
-        // set the indexer
-        try {
-            IndexManager indexM = (IndexManager) manager.lookup(IndexManager.ROLE);
-            index = indexM.getIndex(id);
-            if (index == null) {
-                handleError("index [" + id + "] no found in the index definition");
-            }
-            indexer = index.getIndexer();
-            manager.release(indexM);
-        } catch (ServiceException ex1) {
-            handleError(ex1);
-
-        } catch (IndexException ex3) {
-            handleError("get Indexer error for index [" + id + "]", ex3);
-        }
-
-        // set a custum analyzer (default: the analyzer of the index)
-        if (analyzerid != null) {
-            Analyzer analyzer = null;
-            try {
-                AnalyzerManager analyzerM = (AnalyzerManager) manager.lookup(AnalyzerManager.ROLE);
-                analyzer = analyzerM.getAnalyzer(analyzerid);
-                indexer.setAnalyzer(analyzer);
-                manager.release(analyzerM);
-            } catch (ServiceException ex1) {
-                handleError(ex1);
-            } catch (ConfigurationException ex2) {
-                handleError("error setting analyzer for index [" + id + "]", ex2);
-            }
-        } else {
-
-            attrs.addAttribute(LUCENE_URI, LUCENE_INDEXING_ANALYZER_ATTRIBUTE,
-                    LUCENE_INDEXING_ANALYZER_ATTRIBUTE, "CDATA", index.getDefaultAnalyzerID());
-        }
+        setIndexer(indexId);
 
         if (canIndex()) {
+            
+            String analyzerId = atts.getValue(LUCENE_URI, LUCENE_INDEXING_ANALYZER_ATTRIBUTE);
+            setAnalyzer(analyzerId);
+            
             // set clear mode
             boolean new_index = (clear != null && clear.toLowerCase().equals("true")) ? true
                     : false;
@@ -571,8 +566,58 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
 
             if (this.getLogger().isDebugEnabled()) {
                 this.getLogger().debug(
-                        "index " + id + " clear: " + new_index + " analyzerid: " + analyzerid
+                        "index " + indexId + " clear: " + new_index + " analyzerid: " + analyzerId
                                 + "mergefactor: " + mergeF);
+            }
+        }
+    }
+
+    protected void setIndexer(String indexId) throws SAXException {
+        IndexManager indexManager = null;
+        try {
+            indexManager = (IndexManager) manager.lookup(IndexManager.ROLE);
+            index = indexManager.getIndex(indexId);
+            if (index == null) {
+                handleError("index [" + indexId + "] no found in the index definition");
+            }
+            else {
+                indexer = index.getIndexer();
+                if (indexer == null) {
+                    handleError("Index [" + indexId + "] did return a null indexer.");
+                }
+            }
+        } catch (ServiceException ex1) {
+            handleError(ex1);
+        } catch (IndexException ex3) {
+            handleError("get Indexer error for index [" + indexId + "]", ex3);
+        } finally {
+            manager.release(indexManager);
+        }
+    }
+
+    /**
+     * Set a custum analyzer (default: the analyzer of the index).
+     * @param analyzerId The analyzer ID (may be null)
+     * @throws SAXException if an error occurs.
+     */
+    protected void setAnalyzer(String analyzerId) throws SAXException {
+        if (analyzerId == null) {
+            analyzerId = index.getDefaultAnalyzerID();
+        }
+        if (analyzerId != null) {
+            Analyzer analyzer = null;
+            AnalyzerManager analyzerManager = null;
+            try {
+                analyzerManager = (AnalyzerManager) manager.lookup(AnalyzerManager.ROLE);
+                analyzer = analyzerManager.getAnalyzer(analyzerId);
+                indexer.setAnalyzer(analyzer);
+            } catch (ServiceException ex1) {
+                handleError(ex1);
+            } catch (ConfigurationException ex2) {
+                handleError("error setting analyzer for index [" + this.index.getID() + "]", ex2);
+            }
+            finally {
+                manager.release(analyzerManager);
             }
         }
     }
@@ -588,7 +633,10 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
     protected String getExceptionMessage(Exception ex) throws SAXException {
         String exMsg = ex.getMessage();
         String msg = exMsg == null ? "" : " (" + exMsg + ")";
-        return ex.getClass().getName() + msg;
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        ex.printStackTrace(printWriter);
+        return ex.getClass().getName() + msg + ", Stack trace: " + stringWriter.toString();
     }
 
     /**

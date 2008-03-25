@@ -28,6 +28,7 @@ import org.apache.cocoon.components.search.components.AnalyzerManager;
 import org.apache.cocoon.components.search.components.Indexer;
 import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
 import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
@@ -164,7 +165,11 @@ public class Index {
             analyzerM = (AnalyzerManager) this.manager
                     .lookup(AnalyzerManager.ROLE);
 
-            indexer.setAnalyzer(analyzerM.getAnalyzer(getDefaultAnalyzerID()));
+            String analyzerId = getDefaultAnalyzerID();
+            if (analyzerId != null) {
+                Analyzer analyzer = analyzerM.getAnalyzer(analyzerId);
+                indexer.setAnalyzer(analyzer);
+            }
             indexer.setIndex(directory);
 
             return indexer;

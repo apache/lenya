@@ -43,11 +43,16 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.metadata.Element;
+import org.apache.lenya.cms.metadata.ElementSet;
+import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationManager;
+import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
 
 /**
  * Index Manager Component. Configure and Manage the differents indexes.
@@ -106,7 +111,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /**
      * type of the field: "text, "keyword", "date" (see
      * 
-     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition class)
+     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition
+     *      class)
      */
     public static final String TYPE_ATTRIBUTE = "type";
 
@@ -126,8 +132,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     public static final String INDEX_CONF_FILE = "search/lucene_index.xml";
 
     /**
-     * check the config file each time the getIndex is called to update if necessary the
-     * configuration
+     * check the config file each time the getIndex is called to update if
+     * necessary the configuration
      */
     // public static final String CHECK_ATTRIBUTE = "check";
     /**
@@ -135,7 +141,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      */
     // public static final String CONFIG_ATTRIBUTE = "config";
     /**
-     * Check or not the configuration file (automatic update if the file is changed)
+     * Check or not the configuration file (automatic update if the file is
+     * changed)
      */
     // private boolean check;
     /**
@@ -147,7 +154,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     private Map indexMap;
 
     protected Map indexes() {
-        if(this.indexMap == null) {
+        if (this.indexMap == null) {
             this.indexMap = new HashMap();
             loadIndexes();
         }
@@ -259,8 +266,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        this.indexerRole = configuration.getChild(INDEXER_ELEMENT)
-                .getAttribute(INDEXER_ROLE_ATTRIBUTE);
+        this.indexerRole = configuration.getChild(INDEXER_ELEMENT).getAttribute(
+                INDEXER_ROLE_ATTRIBUTE);
     }
 
     /**
@@ -283,6 +290,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      */
     private void addIndexes(Configuration configuration) throws ConfigurationException {
         AnalyzerManager analyzerManager = null;
+        MetaDataFieldRegistry registry = null;
+
         Configuration[] confs = configuration.getChildren(INDEX_ELEMENT);
 
         if (confs.length == 0) {
@@ -290,20 +299,33 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
         }
         try {
             analyzerManager = (AnalyzerManager) this.manager.lookup(AnalyzerManager.ROLE);
+            registry = (MetaDataFieldRegistry) this.manager.lookup(MetaDataFieldRegistry.ROLE);
 
             // configure each index
             for (int i = 0; i < confs.length; i++) {
                 String id = confs[i].getAttribute(ID_ATTRIBUTE);
-                String analyzerid = confs[i].getAttribute(INDEX_DEFAULTANALZER_ATTRIBUTE);
-                String directory = confs[i].getAttribute(INDEX_DIRECTORY_ATTRIBUTE);
-                if (!analyzerManager.exist(analyzerid)) {
+                String analyzerid = confs[i].getAttribute(INDEX_DEFAULTANALZER_ATTRIBUTE, null);
+                if (analyzerid != null && !analyzerManager.exist(analyzerid)) {
                     throw new ConfigurationException("Analyzer " + analyzerid + " no found");
                 }
 
-                Configuration[] fields = confs[i].getChild(STRUCTURE_ELEMENT)
-                        .getChildren(FIELD_ELEMENT);
+                String directory = confs[i].getAttribute(INDEX_DIRECTORY_ATTRIBUTE);
+
+                Configuration[] fields = confs[i].getChild(STRUCTURE_ELEMENT).getChildren(
+                        FIELD_ELEMENT);
 
                 IndexStructure docdecl = new IndexStructure();
+
+                addMetaDataFieldDefinitions(registry, docdecl);
+                
+                FieldDefinition uuidDef = FieldDefinition.create("uuid", FieldDefinition.KEYWORD);
+                uuidDef.setStore(true);
+                docdecl.addFieldDef(uuidDef);
+
+                FieldDefinition langDef = FieldDefinition.create("language", FieldDefinition.KEYWORD);
+                langDef.setStore(true);
+                docdecl.addFieldDef(langDef);
+
                 for (int j = 0; j < fields.length; j++) {
 
                     FieldDefinition fielddecl;
@@ -332,7 +354,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
                     // field dateformat attribute
                     if (fielddecl.getType() == FieldDefinition.DATE) {
                         String dateformat_field = fields[j].getAttribute(DATEFORMAT_ATTRIBUTE);
-                        ((DateFieldDefinition) fielddecl).setDateFormat(new SimpleDateFormat(dateformat_field));
+                        ((DateFieldDefinition) fielddecl).setDateFormat(new SimpleDateFormat(
+                                dateformat_field));
                     }
 
                     this.getLogger().debug("field added: " + fielddecl);
@@ -351,7 +374,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
                 if (index.setDirectory(directory)) {
                     this.getLogger().warn("directory " + directory + " was locked ");
                 }
-                index.setDefaultAnalyzerID(analyzerid);
+                if (analyzerid != null) {
+                    index.setDefaultAnalyzerID(analyzerid);
+                }
                 index.setStructure(docdecl);
                 index.setManager(manager);
 
@@ -367,7 +392,24 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
             if (analyzerManager != null) {
                 this.manager.release(analyzerManager);
             }
+            if (registry != null) {
+                this.manager.release(registry);
+            }
         }
+    }
+
+    protected void addMetaDataFieldDefinitions(MetaDataFieldRegistry registry,
+            IndexStructure indexStructure) throws MetaDataException {
+        String[] fieldNames = registry.getFieldNames();
+        for (int i = 0; i < fieldNames.length; i++) {
+            FieldDefinition fieldDef = FieldDefinition.create(fieldNames[i], FieldDefinition.TEXT);
+            fieldDef.setStore(false);
+            indexStructure.addFieldDef(fieldDef);
+        }
+    }
+
+    public static String getUniversalName(String namespace, String elementName) {
+        return "{" + namespace + "}" + elementName;
     }
 
     /**

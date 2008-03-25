@@ -23,6 +23,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:meta="http://apache.org/lenya/meta/1.0/"
   exclude-result-prefixes="cinclude search xhtml"
 >
 
@@ -123,27 +124,18 @@
   <xsl:template match="search:hit">
     <li class="search-result">
       <div class="search-result-rank"><xsl:value-of select="@rank + 1"/>. </div>
+      <xsl:variable name="uuid" select="search:field[@name='uuid']"/>
+      <xsl:variable name="language" select="search:field[@name='language']"/>
       <div class="search-result-title">
-        <xsl:variable name="titleField" select="search:field[attribute::name='title']"/>
-        <xsl:variable name="title">
-          <xsl:choose>
-            <xsl:when test="normalize-space($titleField) != ''">
-              <xsl:value-of select="$titleField"/>
-            </xsl:when>
-            <xsl:otherwise><i18n:text>No Title</i18n:text></xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:choose>
-          <xsl:when test="normalize-space(search:field[@name = 'uid']) != ''">
-            <a href="{$root}{search:field[attribute::name='uid']}"><xsl:value-of select="$title"/></a>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$title"/> (<i18n:text>not in site structure</i18n:text>)
-          </xsl:otherwise>
-        </xsl:choose>
-      <span class="search-result-score"> (<i18n:text>Score</i18n:text>: <xsl:value-of select="format-number( @score, '### %' )"/>)</span>
+        <a href="lenya-document:{$uuid},lang={$language}">
+          <meta:value element="title" ns="http://purl.org/dc/elements/1.1/" default="No Title"
+            i18n:attr="default" uuid="{$uuid}" lang="{$language}"/>
+        </a>
+        <span class="search-result-score"> (<i18n:text>Score</i18n:text>: <xsl:value-of select="format-number( @score, '### %' )"/>)</span>
       </div>
-      <div class="search-result-description"><xsl:value-of select="search:field[attribute::name='description']"/></div>
+      <div class="search-result-description">
+        <meta:value element="description" ns="http://purl.org/dc/elements/1.1/" default="" uuid="{$uuid}" lang="{$language}"/>
+      </div>
     </li>
   </xsl:template>
 

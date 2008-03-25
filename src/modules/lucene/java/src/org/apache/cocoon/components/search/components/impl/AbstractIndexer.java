@@ -222,12 +222,12 @@ public abstract class AbstractIndexer extends AbstractLogEnabled implements
      */
     public void optimize() throws IndexException {
         // optimize index
-        try {
+        //try {
             this.switchToADD_MODE(false);
-            add_writer.optimize();
-        } catch (IOException ex) {
-            throw new IndexException("optimization error", ex);
-        }
+            //add_writer.optimize();
+        //} catch (IOException ex) {
+        //    throw new IndexException("optimization error", ex);
+        //}
     }
 
     /*

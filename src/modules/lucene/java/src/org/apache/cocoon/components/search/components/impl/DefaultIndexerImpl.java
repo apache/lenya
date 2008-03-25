@@ -90,7 +90,7 @@ public class DefaultIndexerImpl extends AbstractIndexer implements Configurable 
             flushBufferedDocs();
         }
         bufferSize = defaultMaxBufDocs;
-        this.optimize();
+        //this.optimize();
         super.release();
     }
 

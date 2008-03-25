@@ -14,6 +14,8 @@
   <xsl:template match="/lucene:index">
     <lucene:index indexid="{$index}" lucene:clear="false" lucene:merge-factor="100" lucene:analyzer="stopword_{$language}">
       <lucene:document uid="{$uuid}:{$language}">
+        <lucene:field name="uuid"><xsl:value-of select="$uuid"/></lucene:field>
+        <lucene:field name="language"><xsl:value-of select="$language"/></lucene:field>
         <xsl:apply-templates select="lucene:document/*"/>
       </lucene:document>
     </lucene:index>  
