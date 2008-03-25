@@ -87,7 +87,15 @@
           </map:act>  
         </map:match>
         
-        <map:generate src="dummy.xml"/>
+        <map:generate src="imageMetaData.xml"/>
+        <map:transform src="fallback://lenya/modules/svg/xslt/parameterize.xsl">
+          <map:parameter name="uuid" value="{page-envelope:document-uuid}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
+        <map:transform type="metaData">
+          <map:parameter name="pubid" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+        </map:transform>
         <map:act type="resource-exists">
           <map:parameter name="url" value="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language},pub={1},area={2}"/>
           <map:transform src="xslt/scale.xsl">

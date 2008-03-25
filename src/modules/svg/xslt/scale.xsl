@@ -18,15 +18,35 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:svg="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:media="http://apache.org/lenya/metadata/media/1.0">
   
   <xsl:param name="url"/>
   <xsl:param name="height"/>
   <xsl:param name="width"/>
   
-  <xsl:template match="/">
-    <svg width="{$width}" height="{$height}" version="1.1">
-      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$url}" preserveAspectRatio="none"/>        
+  <xsl:variable name="imgWidth" select="/svg:svg/media:width"/>
+  <xsl:variable name="imgHeight" select="/svg:svg/media:height"/>
+  
+  <xsl:variable name="targetWidth">
+    <xsl:choose>
+      <xsl:when test="$width"><xsl:value-of select="$width"/></xsl:when>
+      <xsl:when test="$height"><xsl:value-of select="($height div $imgHeight) * $imgWidth"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="$imgWidth"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  
+  <xsl:variable name="targetHeight">
+    <xsl:choose>
+      <xsl:when test="$height"><xsl:value-of select="$height"/></xsl:when>
+      <xsl:when test="$width"><xsl:value-of select="($width div $imgWidth) * $imgHeight"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="$imgHeight"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  
+  <xsl:template match="/svg:svg">
+    <svg width="{$targetWidth}" height="{$targetHeight}" version="1.1">
+      <image x="0" y="0" width="{$targetWidth}" height="{$targetHeight}" xlink:href="{$url}" preserveAspectRatio="none"/>        
     </svg>
   </xsl:template>
   

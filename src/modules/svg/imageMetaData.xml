@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<svg:svg xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:media="http://apache.org/lenya/metadata/media/1.0"
+  xmlns:meta="http://apache.org/lenya/meta/1.0/">
+  <media:width><meta:value element="width" ns="http://apache.org/lenya/metadata/media/1.0"
+    uuid="" lang=""/></media:width>
+  <media:height><meta:value element="height" ns="http://apache.org/lenya/metadata/media/1.0"
+    uuid="" lang=""/></media:height>
+</svg:svg>
