@@ -61,5 +61,10 @@ public interface Element {
      * @return The action to be taken when meta data are copied from one owner to another.
      */
     int getActionOnCopy();
+    
+    /**
+     * @return If this element shall be included in search queries.
+     */
+    boolean isSearchable();
 
 }

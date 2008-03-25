@@ -49,8 +49,9 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
             String name = attributeConfigs[i].getAttribute("name");
             boolean isMultiple = attributeConfigs[i].getAttributeAsBoolean("multiple", false);
             boolean isEditable = attributeConfigs[i].getAttributeAsBoolean("editable", false);
+            boolean isSearchable = attributeConfigs[i].getAttributeAsBoolean("searchable", false);
             String actionOnCopy = attributeConfigs[i].getAttribute("onCopy", "copy");
-            ElementImpl element = new ElementImpl(name, isMultiple, isEditable);
+            ElementImpl element = new ElementImpl(name, isMultiple, isEditable, isSearchable);
             int action;
             if (actionOnCopy.equalsIgnoreCase("copy")) {
                 action = Element.ONCOPY_COPY;

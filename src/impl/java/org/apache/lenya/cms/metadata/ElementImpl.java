@@ -26,17 +26,21 @@ public class ElementImpl implements Element {
     private boolean multiple;
     private String description = "";
     private boolean editable;
+    private int actionOnCopy;
+    private boolean searchable;
     
     /**
      * Ctor.
      * @param name The name.
      * @param isMultiple if the element can have multiple values.
      * @param isEditable if the element can be edited.
+     * @param isSearchable if the element is searchable.
      */
-    public ElementImpl(String name, boolean isMultiple, boolean isEditable) {
+    public ElementImpl(String name, boolean isMultiple, boolean isEditable, boolean isSearchable) {
         this.name = name;
         this.multiple = isMultiple;
         this.editable = isEditable;
+        this.searchable = isSearchable;
     }
 
     /**
@@ -44,10 +48,11 @@ public class ElementImpl implements Element {
      * @param name The name.
      * @param isMultiple if the element can have multiple values.
      * @param isEditable  if the element can be edited.
+     * @param isSearchable if the element is searchable.
      * @param description The description of the element.
      */
-    public ElementImpl(String name, boolean isMultiple, boolean isEditable, String description) {
-        this(name, isMultiple, isEditable);
+    public ElementImpl(String name, boolean isMultiple, boolean isEditable, boolean isSearchable, String description) {
+        this(name, isMultiple, isEditable, isSearchable);
         this.description = description;
     }
 
@@ -67,8 +72,6 @@ public class ElementImpl implements Element {
         return this.editable;
     }
     
-    private int actionOnCopy;
-
     public int getActionOnCopy() {
         return this.actionOnCopy;
     }
@@ -79,6 +82,10 @@ public class ElementImpl implements Element {
      */
     public void setActionOnCopy(int action) throws MetaDataException {
         this.actionOnCopy = action;
+    }
+
+    public boolean isSearchable() {
+        return this.searchable;
     }
 
 }

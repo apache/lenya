@@ -151,6 +151,10 @@ public class MetaDataTest extends AbstractAccessControlTest {
             return false;
         }
 
+        public boolean isSearchable() {
+            return false;
+        }
+
     }
 
     protected class TestElementSet implements ElementSet {
