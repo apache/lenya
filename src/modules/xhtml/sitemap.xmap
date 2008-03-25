@@ -41,15 +41,10 @@
       
       <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
-        <map:aggregate element="cmsbody">
-          <map:part src="lenya-document:{3},pub={1},area={2},lang={4}"/>
-          <map:part src="cocoon://modules/metadata/{1}/{2}/{3}/{4}"/>
-        </map:aggregate>
-  
+        <map:generate src="lenya-document:{3},pub={1},area={2},lang={4}"/>
         <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">
           <map:parameter name="url" value="{request:requestURI}"/>
         </map:transform>
-        
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

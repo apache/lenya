@@ -9,38 +9,22 @@
 
 <xsl:param name="uri"/>
 
-<xsl:variable name="boost" select="number(/descendant-or-self::dc:rights)"/>  
-
 <xsl:template match="/">
   <!-- attributes of the index and document element will be added by the lucene module -->
   <lucene:index>
     <lucene:document>
-      <lucene:field name="url" boost="{$boost}"><xsl:value-of select="$uri"/></lucene:field>
+      <lucene:field name="url" boost="0"><xsl:value-of select="$uri"/></lucene:field>
       <xsl:apply-templates/>
     </lucene:document>
   </lucene:index>  
 </xsl:template>
 
-<xsl:template match="dc:rights" priority="1"/>
-
 <xsl:template match="xhtml:body" priority="1">
-  <lucene:field name="body" boost="{$boost}">
+  <lucene:field name="body" boost="1">
     <xsl:for-each select=".//text()">
       <xsl:value-of select="concat(normalize-space(.),' ')"/>
     </xsl:for-each>
   </lucene:field>
-</xsl:template>
-
-<xsl:template match="dc:title" priority="1">
-  <lucene:field name="title" boost="{$boost}"><xsl:value-of select="."/></lucene:field>
-</xsl:template>
-
-<xsl:template match="dc:description" priority="1">
-  <lucene:field name="description" boost="{$boost}"><xsl:value-of select="."/></lucene:field>
-</xsl:template>
-
-<xsl:template match="dc:subject" priority="1">
-  <lucene:field name="subject" boost="{$boost}"><xsl:value-of select="."/></lucene:field>
 </xsl:template>
 
 <xsl:template match="@*|node()" priority="-1">
