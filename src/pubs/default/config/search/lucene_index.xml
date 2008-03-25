@@ -17,7 +17,7 @@
 -->
 
 <indexes>
-  <index id="default-live" analyzer="stopword_en" directory="lenya/pubs/default/work/lucene/index/live/index">
+  <index id="default-live" directory="lenya/pubs/default/work/lucene/index/live/index">
     <structure>
       <field id="url" type="keyword" />
       <field id="title" type="text" storetext="true"/>
@@ -26,7 +26,7 @@
       <field id="body" type="text" storetext="true"/>
     </structure>
   </index>
-  <index id="default-authoring" analyzer="stopword_en" directory="lenya/pubs/default/work/lucene/index/authoring/index">
+  <index id="default-authoring" directory="lenya/pubs/default/work/lucene/index/authoring/index">
     <structure>
       <field id="url" type="keyword" />
       <field id="title" type="text" storetext="true"/>
@@ -35,7 +35,7 @@
       <field id="body" type="text" storetext="true"/>
     </structure>
   </index>
-  <index id="default-trash" analyzer="stopword_en" directory="lenya/pubs/default/work/lucene/index/trash/index">
+  <index id="default-trash" directory="lenya/pubs/default/work/lucene/index/trash/index">
     <structure>
       <field id="url" type="keyword" />
       <field id="title" type="text" storetext="true"/>
@@ -44,7 +44,7 @@
       <field id="body" type="text" storetext="true"/>
     </structure>
   </index>
-  <index id="default-archive" analyzer="stopword_en" directory="lenya/pubs/default/work/lucene/index/archive/index">
+  <index id="default-archive" directory="lenya/pubs/default/work/lucene/index/archive/index">
     <structure>
       <field id="url" type="keyword" />
       <field id="title" type="text" storetext="true"/>
