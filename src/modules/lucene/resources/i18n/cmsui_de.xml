@@ -37,5 +37,9 @@
   <message key="re-index site?">
     Wollen Sie alle Dokumente dieser Publikation in der aktuellen Area neu indexieren?
   </message>
+
+  <message key="documents">Dokumente</message>
+  <message key="images">Bilder</message>
+
 </catalogue>
 

@@ -36,4 +36,7 @@
   <message key="Re-Index Site">Re-Index Site</message>
   <message key="re-index site?">Do you want to re-index all documents of this publication in the current area?</message>
   
+  <message key="documents">Documents</message>
+  <message key="images">Images</message>
+  
 </catalogue>

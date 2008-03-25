@@ -33,6 +33,16 @@
   <xsl:param name="root"/>
   <xsl:param name="lenya.usecase"/>
   <xsl:param name="queryString"/>
+  <xsl:param name="type"/>
+  
+  <xsl:variable name="selectedType">
+    <xsl:choose>
+      <xsl:when test="$type = 'images' or $type = 'documents'">
+        <xsl:value-of select="$type"/>
+      </xsl:when>
+      <xsl:otherwise>documents</xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   
   <xsl:variable name="usecaseParam">
     <xsl:if test="$lenya.usecase != ''">
@@ -46,12 +56,36 @@
     <div id="body">
       <h1><i18n:text>Search</i18n:text></h1>
       <form class="search-results-form" action="" method="get">
-        <input name="queryString" type="text" style="width: 400px" value="{$queryString}"
-        />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
+        <p>
+          <input name="queryString" type="text" style="width: 400px" value="{$queryString}"
+          />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
+        </p>
+        <p>
+          <xsl:call-template name="type">
+            <xsl:with-param name="searchType">documents</xsl:with-param>
+          </xsl:call-template>
+          &#160;&#160;&#160;
+          <xsl:call-template name="type">
+            <xsl:with-param name="searchType">images</xsl:with-param>
+          </xsl:call-template>
+        </p>
       </form>
       <xsl:apply-templates select="search:hits"/>
     </div>
   </xsl:template>
+  
+  
+  <xsl:template name="type">
+    <xsl:param name="searchType"/>
+    <xsl:param name="default"/>
+    <input type="radio" name="type" value="{$searchType}">
+      <xsl:if test="$selectedType = $searchType">
+        <xsl:attribute name="checked">checked</xsl:attribute>
+      </xsl:if>
+    </input>
+    <i18n:text><xsl:value-of select="$searchType"/></i18n:text>
+  </xsl:template>
+  
 
   <xsl:template match="search:hits">
     <!--
@@ -75,9 +109,18 @@
         </xsl:otherwise>
       </xsl:choose>
     </h2>
-    <ul class="search-results">
-      <xsl:apply-templates/>
+    <ul class="search-results {$selectedType}">
+      <xsl:choose>
+        <xsl:when test="$selectedType = 'images'">
+          <xsl:apply-templates select="search:hit" mode="image"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="search:hit" mode="document"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </ul>
+    
+    <hr style="clear: both; border: none;" size="0"/>
     
     <xsl:variable name="pages" select="/search:results/search:navigation/search:navigation-page"/>
     <xsl:if test="count($pages) &gt; 1">
@@ -121,8 +164,27 @@
     -->
   </xsl:template>
   
-  <xsl:template match="search:hit">
-    <li class="search-result">
+  
+  <xsl:template match="search:hit" mode="image">
+    <li>
+      <xsl:variable name="uuid" select="search:field[@name='uuid']"/>
+      <xsl:variable name="language" select="search:field[@name='language']"/>
+      <a href="lenya-document:{$uuid},lang={$language}?uuid2url.extension=html">
+        <img src="lenya-document:{$uuid},lang={$language}?lenya.module=svg&amp;height=100">
+          <meta:value element="title" ns="http://purl.org/dc/elements/1.1/" default="No Title"
+            i18n:attr="default" uuid="{$uuid}" lang="{$language}"/>
+        </img>
+      </a>
+      <div class="imageTitle">
+        <meta:value element="title" ns="http://purl.org/dc/elements/1.1/" default="No Title"
+          i18n:attr="default" uuid="{$uuid}" lang="{$language}"/>
+      </div>
+    </li>
+  </xsl:template>
+  
+  
+  <xsl:template match="search:hit" mode="document">
+    <li>
       <div class="search-result-rank"><xsl:value-of select="@rank + 1"/>. </div>
       <xsl:variable name="uuid" select="search:field[@name='uuid']"/>
       <xsl:variable name="language" select="search:field[@name='language']"/>
@@ -138,6 +200,7 @@
       </div>
     </li>
   </xsl:template>
+  
 
   <xsl:template name="navigation-paging-form">
     <xsl:param name="page-length"/>

@@ -31,6 +31,10 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * Creates a Lucene query string from a <em>queryString</em> request parameter
@@ -44,7 +48,7 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
     protected static final char[] ESCAPED_CHARACTERS = { '+', '-', '&', '|', '!', '(', ')', '{',
         '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\' };
 
-    private ServiceManager manager;
+    protected ServiceManager manager;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -64,11 +68,21 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
         if (searchTerm == null || searchTerm.trim().equals("")) {
             return "";
         }
+        
+        if (searchTerm.indexOf(' ') > -1) {
+            searchTerm = "(" + searchTerm + ")";
+        }
 
-        StringBuffer queryString = new StringBuffer();
+        BooleanQuery query = getQuery(searchTerm);
+        return query.toString();
+    }
+
+    protected BooleanQuery getQuery(String searchTerm) {
+        BooleanQuery query = new BooleanQuery();
 
         for (int i = 0; i < DEFAULT_FIELDS.length; i++) {
-            appendTerm(queryString, DEFAULT_FIELDS[i], searchTerm);
+            TermQuery termQuery = new TermQuery(getTerm(DEFAULT_FIELDS[i], searchTerm));
+            query.add(termQuery, false, false);
         }
 
         MetaDataRegistry registry = null;
@@ -83,7 +97,8 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
                 for (int e = 0; e < elements.length; e++) {
                     if (elements[e].isSearchable()) {
                         String field = fieldRegistry.getFieldName(namespaces[n], elements[e].getName());
-                        appendTerm(queryString, field, searchTerm);
+                        TermQuery termQuery = new TermQuery(getTerm(field, searchTerm));
+                        query.add(termQuery, false, false);
                     }
                 }
             }
@@ -97,7 +112,7 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
                 this.manager.release(fieldRegistry);
             }
         }
-        return queryString.toString();
+        return query;
     }
 
     protected boolean shallEscape(char c) {
@@ -123,16 +138,8 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
         return builder.toString();
     }
     
-    protected void appendTerm(StringBuffer queryString, String field, String searchTerm) {
-        if (queryString.length() > 0) {
-            queryString.append(" OR ");
-        }
-        String term = getTerm(field, searchTerm);
-        queryString.append(term);
-    }
-
-    protected String getTerm(String field, String searchTerm) {
-        return escape(field) + ":" + searchTerm;
+    protected Term getTerm(String field, String value) {
+        return new Term(escape(field), value);
     }
 
     public void service(ServiceManager manager) throws ServiceException {
