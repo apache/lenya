@@ -16,6 +16,10 @@
  */
 package org.apache.lenya.modules.lucene;
 
+import java.util.Map;
+
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
@@ -23,13 +27,31 @@ import org.apache.lucene.search.TermQuery;
 
 /**
  * Same as {@link QueryStringModule}, but searches only for images.
+ * If the <em>queryString</em> request parameter is empty, all images are shown.
  */
 public class ImageQueryStringModule extends QueryStringModule {
     
     protected static final String DOCUMENT_METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
 
+    protected String getQueryString(Map objectModel) {
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        String searchTerm = request.getParameter(PARAM_QUERY_STRING);
+        
+        if (searchTerm != null && searchTerm.indexOf(' ') > -1) {
+            searchTerm = "(" + searchTerm + ")";
+        }
+
+        BooleanQuery query = getQuery(searchTerm);
+        return query.toString();
+    }
+
     protected BooleanQuery getQuery(String searchTerm) {
-        BooleanQuery query = super.getQuery(searchTerm);
+        
+        BooleanQuery query = new BooleanQuery();
+        
+        if (!isEmpty(searchTerm)) {
+            query.add(super.getQuery(searchTerm), true, false);
+        }
         
         MetaDataRegistry registry = null;
         MetaDataFieldRegistry fieldRegistry = null;

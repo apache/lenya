@@ -65,7 +65,7 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
         Request request = ObjectModelHelper.getRequest(objectModel);
         String searchTerm = request.getParameter(PARAM_QUERY_STRING);
         
-        if (searchTerm == null || searchTerm.trim().equals("")) {
+        if (isEmpty(searchTerm)) {
             return "";
         }
         
@@ -75,6 +75,10 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
 
         BooleanQuery query = getQuery(searchTerm);
         return query.toString();
+    }
+
+    protected boolean isEmpty(String searchTerm) {
+        return searchTerm == null || searchTerm.trim().equals("");
     }
 
     protected BooleanQuery getQuery(String searchTerm) {
