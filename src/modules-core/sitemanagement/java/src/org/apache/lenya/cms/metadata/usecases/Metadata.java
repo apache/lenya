@@ -121,64 +121,6 @@ public class Metadata extends SiteUsecase {
                 this.manager.release(registry);
             }
         }
-
-    }
-
-    protected void doCheckPreconditions() throws Exception {
-        super.doCheckPreconditions();
-        Document doc = getSourceDocument();
-        if (doc == null) {
-            return;
-        }
-        
-        if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
-            addErrorMessage("This usecase can only be invoked in the authoring area!");
-        }
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc,
-                getLogger());
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
-     */
-    protected void doExecute() throws Exception {
-        super.doExecute();
-
-        // we need a reverse lookup to get the correct ns index:
-        Map num2namespace = (Map) getParameter("namespaces");
-        Map namespace2num = new HashMap();
-
-        Iterator iter = num2namespace.keySet().iterator();
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
-            namespace2num.put(num2namespace.get(key), key);
-        }
-
-        Document document = getSourceDocument();
-        String[] namespaces = document.getMetaDataNamespaceUris();
-
-        for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
-            MetaData meta = document.getMetaData(namespaces[nsIndex]);
-            String orgNsIndex = (String) namespace2num.get(namespaces[nsIndex]);
-
-            String[] keys = meta.getPossibleKeys();
-            for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
-                String key = keys[keyIndex];
-                Element element = meta.getElementSet().getElement(key);
-                if (element.isEditable()) {
-                    Object value = getParameter("ns" + orgNsIndex + "." + key);
-                    if (value != null && value instanceof String) {
-                        meta.setValue(key, (String) value);
-                    }
-                }
-            }
-        }
-
-        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), document, getEvent());
-    }
-
-    protected String getEvent() {
-        return "edit";
     }
 
 }

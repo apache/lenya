@@ -19,6 +19,7 @@
   <id>org.apache.lenya.modules.metadata</id>
   <export package="org.apache.lenya.modules.metadata"/>
   <depends module="org.apache.lenya.modules.usecase"/>
+  <depends module="org.apache.lenya.modules.workflow"/>
   <package>org.apache.lenya.modules</package>
   <version>2.0.2-dev</version>
   <name>Meta Data</name>

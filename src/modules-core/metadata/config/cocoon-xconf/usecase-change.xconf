@@ -24,5 +24,6 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'metadata.change']">
     <component-instance name="metadata.change" logger="lenya.metadata" class="org.apache.lenya.modules.metadata.ChangeMetaData">
       <view uri="cocoon://modules/metadata/change" createContinuation="false"/>
+      <event id="edit"/>
     </component-instance>
   </xconf>

@@ -18,14 +18,17 @@
 package org.apache.lenya.modules.metadata;
 
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
+import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.util.Assert;
 
 /**
  * Save a meta data element.
  */
-public class ChangeMetaData extends DocumentUsecase {
+public class ChangeMetaData extends InvokeWorkflow {
     
     protected static final String PARAM_NAMESPACE = "namespace";
     protected static final String PARAM_ELEMENT = "element";
@@ -48,6 +51,16 @@ public class ChangeMetaData extends DocumentUsecase {
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
+        
+        Document doc = getSourceDocument();
+        if (doc == null) {
+            return;
+        }
+        if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+            return;
+        }
+
         String namespace = getParameterAsString(PARAM_NAMESPACE);
         Assert.notNull("namespace", namespace);
         String element = getParameterAsString(PARAM_ELEMENT);
@@ -71,6 +84,8 @@ public class ChangeMetaData extends DocumentUsecase {
 
     protected void doExecute() throws Exception {
         
+        super.doExecute();
+        
         String namespace = getParameterAsString(PARAM_NAMESPACE);
         Assert.notNull("namespace", namespace);
         String element = getParameterAsString(PARAM_ELEMENT);
@@ -83,5 +98,4 @@ public class ChangeMetaData extends DocumentUsecase {
         MetaData meta = getSourceDocument().getMetaData(namespace);
         meta.setValue(element, value);
     }
-
 }
