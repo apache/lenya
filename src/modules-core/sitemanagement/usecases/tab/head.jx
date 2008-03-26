@@ -33,5 +33,11 @@
     <script src="/modules/sitetree/javascript/lenyatree.js"/>
     <script src="/modules/sitetree/javascript/navtree.js"/>
     <script src="/modules/sitemanagement/javascript/lenyaTabs.js"/>
+    <script type="text/javascript">
+      djConfig = { isDebug: false, bindEncoding: "UTF-8" };
+      URL = "${usecase.getParameter('private.sourceUrl')}";
+    </script>
+    <script type="text/javascript" src="/modules/menubar/dojo/dojo.js">&#160;</script>
+    <script src="/modules/sitemanagement/javascript/metadata.js"/>
   </page:head>
 </jx:template>

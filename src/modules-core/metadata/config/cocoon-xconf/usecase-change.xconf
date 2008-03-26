@@ -21,11 +21,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'tab.meta']">
-    <component-instance name="tab.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.usecases.Metadata">
-      <view uri="modules/sitemanagement/usecases/tab/meta.jx" menu="true" createContinuation="false">
-        <tab group="site" name="meta"/>
-      </view>
-      <exit usecase="tab.meta" />
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'metadata.change']">
+    <component-instance name="metadata.change" logger="lenya.metadata" class="org.apache.lenya.modules.metadata.ChangeMetaData">
+      <view uri="cocoon://modules/metadata/change" createContinuation="false"/>
     </component-instance>
   </xconf>

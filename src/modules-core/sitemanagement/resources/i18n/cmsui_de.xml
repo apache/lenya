@@ -94,5 +94,8 @@
   <message key="user-logged-in">Der Nutzer "{0}" ist noch eingeloggt.</message>
   <message key="user-not-logged-in">Der Nutzer "{0}" ist nicht mehr eingeloggt.</message>
   <message key="not-checked-out">Das Dokument "{0}" ist nicht ausgecheckt.</message>
+
+  <!-- meta data -->
+  <message key="saved">Gespeichert</message>
 </catalogue>
 

@@ -18,6 +18,7 @@
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.metadata</id>
   <export package="org.apache.lenya.modules.metadata"/>
+  <depends module="org.apache.lenya.modules.usecase"/>
   <package>org.apache.lenya.modules</package>
   <version>2.0.2-dev</version>
   <name>Meta Data</name>

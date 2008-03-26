@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,24 +16,15 @@
   limitations under the License.
 -->
 
-<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+<!-- $Id: revisions.jx 564507 2007-08-10 08:33:31Z andreas $ -->
 
-  <map:pipelines>
-
-    <map:pipeline type="noncaching">
-      
-      <!-- {1:pub-id}/{2:area}/{3:uuid}/{4:language} -->
-      <map:match pattern="*/*/*/*">
-        <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4}"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
-      <map:match pattern="change">
-        <map:generate type="jx" src="fallback://lenya/modules/metadata/usecases/change.jx"/>
-        <map:serialize type="text"/>
-      </map:match>
-      
-    </map:pipeline>
-    
-  </map:pipelines>
-</map:sitemap>
+<jx:template xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  <jx:choose>
+    <jx:when test="${usecase.hasErrors()}">
+      <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+        ${message}
+      </jx:forEach>
+    </jx:when>
+    <jx:otherwise>${usecase.getParameter('element')}@${usecase.getParameter('namespace')}</jx:otherwise>
+  </jx:choose>
+</jx:template>
