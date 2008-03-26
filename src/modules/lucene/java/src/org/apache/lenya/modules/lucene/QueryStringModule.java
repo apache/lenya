@@ -33,7 +33,6 @@ import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 
 /**
@@ -129,17 +128,17 @@ public class QueryStringModule extends AbstractInputModule implements Serviceabl
     }
 
     protected String escape(final String prefix) {
-        StringBuilder builder = new StringBuilder();
+        StringBuffer buffer = new StringBuffer();
         StringCharacterIterator i = new StringCharacterIterator(prefix);
         char c = i.current();
         while (c != CharacterIterator.DONE) {
             if (shallEscape(c)) {
-                builder.append('\\');
+                buffer.append('\\');
             }
-            builder.append(c);
+            buffer.append(c);
             c = i.next();
         }
-        return builder.toString();
+        return buffer.toString();
     }
     
     protected Term getTerm(String field, String value) {
