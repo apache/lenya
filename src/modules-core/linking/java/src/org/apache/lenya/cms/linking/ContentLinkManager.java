@@ -59,7 +59,7 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
                     Node node;
                     while ((node = iter.nextNode()) != null) {
                         Attr attr = (Attr) node;
-                        String uri = attr.getValue();
+                        String uri = getDocumentUri(attr.getValue());
                         if (isLinkUri(uri)) {
                             links.add(new Link(uri));
                         }
@@ -73,6 +73,25 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
         }
 
         return (Link[]) links.toArray(new Link[links.size()]);
+    }
+
+    /**
+     * @param uri The URI as used in the content.
+     * @return The actual document URI without anchor and query string.
+     */
+    protected String getDocumentUri(String uri) {
+        String docUri = uri;
+        docUri = removeSuffix(docUri, '#');
+        docUri = removeSuffix(docUri, '?');
+        return docUri;
+    }
+
+    protected String removeSuffix(String docUri, char delimiter) {
+        int anchorIndex = docUri.indexOf(delimiter);
+        if (anchorIndex > -1) {
+            docUri = docUri.substring(0, anchorIndex);
+        }
+        return docUri;
     }
 
     protected boolean isLinkUri(String uri) {
