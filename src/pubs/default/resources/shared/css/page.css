@@ -489,14 +489,27 @@ a.brokenlink {
 .search-results-form {
     margin-bottom: 20px; }
 
-.search-results {
+ul.search-results {
     list-style-type: none;
     margin: 0;
     padding: 0;
 } 
 
-.search-result {
+ul.search-results li {
     padding: 0.50em 0;
+}
+
+ul.images li {
+    float: left;
+    padding: 0 10px 10px 0;
+    text-align: center;
+}
+
+ul.images img {
+    border: solid 1px blue;
+}
+
+ul.images div.imageTitle {
 }
 
 .search-result-score {
