@@ -19,7 +19,7 @@
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
 <xconf xpath="/cocoon"
-  unless="/cocoon/copmonent[@role = 'org.apache.lenya.modules.lucene.MetaDataFieldRegistry']">
+  unless="/cocoon/component[@role = 'org.apache.lenya.modules.lucene.MetaDataFieldRegistry']">
 
   <component role="org.apache.lenya.modules.lucene.MetaDataFieldRegistry"
     class="org.apache.lenya.modules.lucene.impl.MetaDataFieldRegistryImpl"/>
