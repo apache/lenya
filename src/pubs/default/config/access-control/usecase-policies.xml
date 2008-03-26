@@ -388,10 +388,6 @@
   <usecase id="news.edit">
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="">
-    <role id="sitemanager" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
   <usecase id="editors.insertLink">
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
@@ -418,5 +414,8 @@
   </usecase>
   <usecase id="monitoring.sessionLogs">
     <role id="admin" method="grant"/>
+  </usecase>
+  <usecase id="metadata.change">
+    <role id="edit" method="grant"/>
   </usecase>
 </usecases>
