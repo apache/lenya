@@ -7,13 +7,10 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
 >
 
-<xsl:param name="uri"/>
-
 <xsl:template match="/">
   <!-- attributes of the index and document element will be added by the lucene module -->
   <lucene:index>
     <lucene:document>
-      <lucene:field name="url" boost="0"><xsl:value-of select="$uri"/></lucene:field>
       <xsl:apply-templates/>
     </lucene:document>
   </lucene:index>  

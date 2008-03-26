@@ -42,9 +42,7 @@
       <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
         <map:generate src="lenya-document:{3},pub={1},area={2},lang={4}"/>
-        <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">
-          <map:parameter name="url" value="{request:requestURI}"/>
-        </map:transform>
+        <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
