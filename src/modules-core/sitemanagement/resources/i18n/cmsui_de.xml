@@ -97,5 +97,6 @@
 
   <!-- meta data -->
   <message key="saved">Gespeichert</message>
+  <message key="cannot-change-metadata">Die Metadaten können in diesem Workflow-Zustand nicht geändert werden.</message>
 </catalogue>
 

@@ -20,7 +20,6 @@ package org.apache.lenya.cms.metadata.usecases;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +27,10 @@ import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 
 /**
  * Usecase to edit metadata for a resource.
@@ -57,10 +54,12 @@ public class Metadata extends SiteUsecase {
         
         private String[] values;
         private Element element;
+        private boolean editable;
         
-        public MetaDataWrapper(Element element, String[] values) {
+        public MetaDataWrapper(Element element, String[] values, boolean canChange) {
             this.values = values;
             this.element = element;
+            this.editable = element.isEditable() && canChange;
         }
         
         public String[] getValues() {
@@ -71,6 +70,10 @@ public class Metadata extends SiteUsecase {
             return this.element;
         }
         
+        public boolean isEditable() {
+            return this.editable;
+        }
+        
     }
 
     /**
@@ -79,12 +82,20 @@ public class Metadata extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
         
-        if (getSourceDocument() == null) {
+        Document doc = getSourceDocument();
+        if (doc == null) {
             return;
         }
+        
 
         MetaDataRegistry registry = null;
         try {
+            boolean canChange = WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, "edit");
+            
+            if (!canChange) {
+                addInfoMessage("cannot-change-metadata");
+            }
+            
             registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
 
             List numbers = new ArrayList();
@@ -94,13 +105,13 @@ public class Metadata extends SiteUsecase {
             String[] namespaces = registry.getNamespaceUris();
 
             for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
-                MetaData meta = getSourceDocument().getMetaData(namespaces[nsIndex]);
+                MetaData meta = doc.getMetaData(namespaces[nsIndex]);
                 String[] keys = meta.getPossibleKeys();
                 for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
                     String key = "ns" + nsIndex + "." + keys[keyIndex];
                     String[] values = meta.getValues(keys[keyIndex]);
                     Element element = meta.getElementSet().getElement(keys[keyIndex]);
-                    setParameter(key, new MetaDataWrapper(element, values));
+                    setParameter(key, new MetaDataWrapper(element, values, canChange));
                     keyList.add(key);
                 }
                 numbers.add("" + nsIndex);

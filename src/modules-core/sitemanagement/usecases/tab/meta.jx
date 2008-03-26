@@ -58,7 +58,7 @@
                     <jx:set var="values" value="${wrapper.getValues()}"/>
                     <jx:set var="id" value="${element + '@' + namespace}"/>
                     <jx:choose>
-                      <jx:when test="${wrapper.getElement().isEditable()}">
+                      <jx:when test="${wrapper.isEditable()}">
                         <jx:choose>
                           <jx:when test="${values.size() &gt; 0}">
                             <input type="hidden" id="oldValue_${id}" value="${values[0]}"/>
@@ -78,7 +78,7 @@
                       <jx:otherwise>
                         <jx:set var="value" value="${wrapper.getValue()}"/>
                         <jx:choose>
-                          <jx:when test="${values.size() == 0}"><em><i18n:text>value-not-set</i18n:text></em></jx:when>
+                          <jx:when test="${values.size() == 0}"><em style="color: #999999"><i18n:text>value-not-set</i18n:text></em></jx:when>
                           <jx:otherwise>
                             <jx:forEach var="value" items="${values}">
                               ${value}<br/>
