@@ -22,6 +22,7 @@
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:proxy="http://apache.org/lenya/proxy/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   name="">
   
@@ -35,7 +36,7 @@
     <script src="/modules/sitemanagement/javascript/lenyaTabs.js"/>
     <script type="text/javascript">
       djConfig = { isDebug: false, bindEncoding: "UTF-8" };
-      URL = "${usecase.getParameter('private.sourceUrl')}";
+      URL = "<proxy:url href="${usecase.getParameter('private.sourceUrl')}"/>";
     </script>
     <script type="text/javascript" src="/modules/menubar/dojo/dojo.js">&#160;</script>
     <script src="/modules/sitemanagement/javascript/metadata.js"/>
