@@ -65,6 +65,7 @@ import org.apache.lenya.util.ServletHelper;
  * <code>lenyadoc:meta://<publication>/<area>/<language>/<uuid></code>
  * 
  * @version $Id:$
+ * @deprecated Use <code>lenya-document</code> instead (see {@link org.apache.lenya.cms.cocoon.source.DocumentSourceFactory}.
  */
 public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
         Contextualizable, Serviceable, Configurable {
