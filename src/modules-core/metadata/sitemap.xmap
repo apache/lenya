@@ -22,9 +22,15 @@
 
     <map:pipeline type="noncaching">
       
-      <!-- {1:pub-id}/{2:area}/{3:uuid}/{4:language} -->
+      <!-- {1:pubId}/{2:area}/{3:uuid}/{4:language} -->
       <map:match pattern="*/*/*/*">
         <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- {1:pubId}/{2:area}/{3:uuid}/{4:language}/{5:revision} -->
+      <map:match pattern="*/*/*/*/*">
+        <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4},rev={5}"/>
         <map:serialize type="xml"/>
       </map:match>
       

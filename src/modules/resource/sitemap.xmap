@@ -21,9 +21,6 @@ limitations under the License.
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:components>
     <map:generators default="file">
-      <map:generator label="content" logger="sitemap.generator.directory"
-        name="lenyaMetaData" pool-max="16"
-        src="org.apache.lenya.modules.metadata.LenyaMetaDataGenerator"/>
       <map:generator name="pdf" pool-max="16" src="org.apache.lenya.modules.resource.PdfToTextGenerator"/>
     </map:generators>
     <map:serializers default="xhtml">
@@ -34,13 +31,6 @@ limitations under the License.
   <map:pipelines>
     
     <map:pipeline>
-      
-      <!-- Generates the lenya metadata to be aggregated for each page -->
-      <!-- {1:pubId}/{2:area}/{3:uuid}/{4:language}/{5:revision} -->
-      <map:match pattern="lenyametadata.xml/*/*/*/*/*">
-        <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4},rev={5}"/>
-        <map:serialize type="xml"/>
-      </map:match>
       
       <!-- {1:pubId}/{2:area}/{3:uuid}/{4:language}/{5:extension} -->
       <map:match pattern="lucene-index-content/*/*/*/*.pdf">
@@ -77,7 +67,7 @@ limitations under the License.
       
       <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} -->
       <map:match pattern="downloadLink.xml/*/*/*/*">
-        <map:generate src="cocoon:/lenyametadata.xml/{1}/{2}/{3}/{4}/"/>
+        <map:generate src="cocoon://modules/metadata/{1}/{2}/{3}/{4}"/>
         <map:transform src="fallback://lenya/modules/resource/xslt/downloadLink.xsl">
           <map:parameter name="contentLength" value="{doc-info:{1}:{2}:{3}:{4}}"/>
           <map:parameter name="mimeType" value="{doc-info:{1}:{2}:{3}:{4}}"/>
@@ -90,7 +80,7 @@ limitations under the License.
       
       <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} -->
       <map:match pattern="xhtml.xml/*/*/*/*">
-        <map:generate src="cocoon:/lenyametadata.xml/{1}/{2}/{3}/{4}/{request-param:lenya.revision}"/>
+        <map:generate src="cocoon://modules/metadata/{1}/{2}/{3}/{4}/{request-param:lenya.revision}"/>
         <map:transform src="fallback://lenya/modules/resource/xslt/resource2xhtml.xsl">
           <map:parameter name="document-type" value="{doc-info:{1}:{2}:{3}:{4}:resourceType:{request-param:lenya.revision}}"/>
           <map:parameter name="nodeId" value="{doc-info:{1}:{2}:{3}:{4}:nodeName}"/>
