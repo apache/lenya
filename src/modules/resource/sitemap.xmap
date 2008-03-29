@@ -23,7 +23,7 @@ limitations under the License.
     <map:generators default="file">
       <map:generator label="content" logger="sitemap.generator.directory"
         name="lenyaMetaData" pool-max="16"
-        src="org.apache.lenya.cms.cocoon.generation.LenyaMetaDataGenerator"/>
+        src="org.apache.lenya.modules.metadata.LenyaMetaDataGenerator"/>
       <map:generator name="pdf" pool-max="16" src="org.apache.lenya.modules.resource.PdfToTextGenerator"/>
     </map:generators>
     <map:serializers default="xhtml">
