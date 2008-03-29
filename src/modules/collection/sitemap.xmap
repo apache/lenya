@@ -16,8 +16,6 @@
   limitations under the License.
 -->
 
-<!-- $Id: doctypes.xmap 179488 2005-06-02 02:29:39Z gregor $ -->
-
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:pipelines>
@@ -44,12 +42,6 @@
           -->
           <map:parameter name="defaultLanguage" value="en"/>
         </map:transform>
-        <map:serialize type="xml"/>
-      </map:match>
-      
-      <!-- metadata/{1:pub}/{2:area}{3:uuid}/{4:language}.xml -->
-      <map:match pattern="metadata/*/*/*/*.xml">
-        <map:generate type="lenyaMetaData" src="lenya-document:{3},pub={1},area={2},lang={4}"/>
         <map:serialize type="xml"/>
       </map:match>
       
