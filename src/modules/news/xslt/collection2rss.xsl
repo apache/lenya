@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,19 +16,17 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml2xhtml.xsl 201776 2005-06-25 18:25:26Z gregor $ -->
-
 <xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
-    xmlns:meta="http://apache.org/cocoon/lenya/metadata/1.0"
-    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-    exclude-result-prefixes="xhtml lenya col meta dc i18n"
-    >
-    
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
+  xmlns:meta="http://apache.org/lenya/meta/1.0/"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  exclude-result-prefixes="xhtml lenya col meta dc i18n"
+  >
+  
   <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
   <xsl:include href="shared.xsl"/>
   
@@ -39,29 +37,29 @@
   
   
   <xsl:template match="/col:collection">
-    <xsl:variable name="title" select="meta:metadata/dc:elements/dc:title"/>
     
     <rss version="2.0">
       
       <channel>
-        <title><xsl:value-of select="$title"/></title>
+        <title><meta:value ns="http://purl.org/dc/elements/1.1/" element="title"
+          uuid="{@uuid}" lang="{$language}"/></title>
         <link><xhtml:a href="{$baseUrl}"/></link>
-        <description></description>
+        <description><meta:value ns="http://purl.org/dc/elements/1.1/" element="description"
+          uuid="{@uuid}" lang="{$language}"/></description>
         <language><xsl:value-of select="$language"/></language>
-        <copyright></copyright>
-        <pubDate><xsl:call-template name="date"/></pubDate>
+        <copyright><meta:value ns="http://purl.org/dc/elements/1.1/" element="rights"
+          uuid="{@uuid}" lang="{$language}"/></copyright>
+        <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{col:document[1]/dc:date}"/></pubDate>
         
         <!--
-        <image>
+          <image>
           <url></url>
           <title></title>
           <link></link>
-        </image>
+          </image>
         -->
         
-        <xsl:apply-templates select="col:document">
-          <xsl:sort order="descending" select="meta:metadata/dc:elements/dc:date"/>
-        </xsl:apply-templates>
+        <xsl:apply-templates select="col:document"/>
         
       </channel>
       
@@ -69,37 +67,38 @@
   </xsl:template>
   
   
-  <xsl:template name="date">
-    <xsl:for-each select="col:document">
-      <xsl:sort select="meta:metadata/dc:elements/dc:date"/>
-      <xsl:if test="position() = 1">
-        <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
-        <i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{$date}" />
-      </xsl:if>
-    </xsl:for-each>
-  </xsl:template>
-
-
-  <xsl:template match="col:document">
+  <xsl:template match="col:document[xhtml:html]">
     <item>
-      <title><xsl:value-of select="meta:metadata/dc:elements/dc:title"/></title>
-      <description><xsl:value-of select="meta:metadata/dc:elements/dc:description"/></description>
+      <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></title>
+      <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></description>
       <xsl:variable name="href">
         <xsl:call-template name="getHref"/>
-      </xsl:variable>
+        </xsl:variable>
       <link><xhtml:a href="{$href}"/></link>
-      <author><xsl:value-of select="meta:metadata/dc:elements/dc:creator"/></author>
-      <xsl:variable name="date" select="meta:metadata/dc:elements/dc:date"/>
-      <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{$date}" /></pubDate>
+      <author><meta:value element="creator" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></author>
+      <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{dc:date}"/></pubDate>
     </item>
   </xsl:template>
-
-
-  <xsl:template match="@*|node()">
+  
+  
+  <xsl:template match="col:document[*[local-name() = 'item']]">
+    <xsl:apply-templates mode="stripNamespace"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="*" mode="stripNamespace">
+    <xsl:element name="{local-name()}">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates select="node()" mode="stripNamespace"/>
+    </xsl:element>
+  </xsl:template>
+  
+  
+  <xsl:template match="@*|node()" priority="-1">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
   
-
+  
 </xsl:stylesheet> 

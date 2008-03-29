@@ -20,33 +20,31 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
-  xmlns:meta="http://apache.org/lenya/meta/1.0/"
-  exclude-result-prefixes="xhtml col meta"
+  xmlns:meta="http://apache.org/cocoon/lenya/metadata/1.0"
+  xmlns:doc="http://apache.org/lenya/metadata/document/1.0"
+  xmlns:i="http://apache.org/cocoon/include/1.0"
   >
   
-  <xsl:import href="fallback://lenya/modules/news/xslt/collection2xhtml.xsl"/>
-  
-  <xsl:param name="nodeid"/>
   <xsl:param name="pub"/>
   <xsl:param name="area"/>
-  <xsl:param name="language"/>
-  <xsl:param name="uuid"/>
+  <xsl:param name="format"/>
   
-  <xsl:variable name="includeItems" select="/col:collection/@includeItems"/>
+  <xsl:template match="col:document[@uuid]">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+      <i:include src="cocoon:/feedContent/{doc:resourceType}/{$format}/{$pub}/{$area}/{@uuid}/{@xml:lang}" strip-root="true"/>
+    </xsl:copy>
+  </xsl:template>
   
-  <xsl:template match="/col:collection">
-    <div id="news">
-      <h1><meta:value element="title" ns="http://purl.org/dc/elements/1.1/"
-        uuid="{$uuid}" lang="{$language}"/></h1>
-      <xsl:for-each select="col:document">
-        <xsl:if test="position() &lt;= number($includeItems)">
-          <xsl:apply-templates select="."/>
-        </xsl:if>
-      </xsl:for-each>
-    </div>
+  
+  <xsl:template match="doc:resourceType"/>
+  
+  
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
   </xsl:template>
   
   
