@@ -47,10 +47,11 @@
     <html>
       <body>
         <div id="body">
-          <div class="rsslink">
-            <a type="application/rss+xml" href="lenya-document:{$uuid},pub={$pub},area={$area},lang={$language}?uuid2url.extension=rss">RSS 2.0</a>
-          </div>
-          <h1><meta:value ns="http://purl.org/dc/elements/1.1/" element="title"
+          <h1>
+            <div class="rsslink">
+              <a type="application/rss+xml" href="lenya-document:{$uuid},pub={$pub},area={$area},lang={$language}?uuid2url.extension=rss">RSS 2.0</a>
+            </div>
+            <meta:value ns="http://purl.org/dc/elements/1.1/" element="title"
             uuid="{$uuid}" lang="{$language}"/></h1>
           
           <xsl:if test="$area = 'authoring'">

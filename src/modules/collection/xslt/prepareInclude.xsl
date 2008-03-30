@@ -29,6 +29,12 @@
   <xsl:template match="col:collection">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
+      <xsl:if test="not(@uuid)">
+        <xsl:attribute name="uuid"><xsl:value-of select="$uuid"/></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="not(@language)">
+        <xsl:attribute name="xml:lang"><xsl:value-of select="$language"/></xsl:attribute>
+      </xsl:if>
       <xsl:choose>
         <xsl:when test="@type = 'children'">
           <xsl:variable name="allLanguages">
@@ -37,10 +43,10 @@
               <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-          <i:include src="cocoon://modules/collection/collectionWithChildren/{$allLanguages}/{$pub}/{$area}/{$uuid}/{$language}.xml"/>
+          <i:include src="cocoon://modules/collection/collectionWithChildren/{$allLanguages}/{$pub}/{$area}/{$uuid}/{$language}.xml" strip-root="true"/>
         </xsl:when>
         <xsl:when test="@type = 'link'">
-          <i:include src="{@href}">
+          <i:include src="{@href}" strip-root="true">
             <i:parameter name="format" value="{$format}"/>
           </i:include>
         </xsl:when>

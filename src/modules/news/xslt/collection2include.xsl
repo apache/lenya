@@ -39,6 +39,9 @@
   
   <xsl:template match="/col:collection">
     <div id="news">
+      <div class="rsslink">
+        <a type="application/rss+xml" href="lenya-document:{$uuid},pub={$pub},area={$area},lang={$language}?uuid2url.extension=rss">RSS 2.0</a>
+      </div>
       <h1><meta:value element="title" ns="http://purl.org/dc/elements/1.1/"
         uuid="{$uuid}" lang="{$language}"/></h1>
       <xsl:for-each select="col:document">
