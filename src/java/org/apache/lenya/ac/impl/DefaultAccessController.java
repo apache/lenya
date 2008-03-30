@@ -267,16 +267,17 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      */
     protected void setupAuthenticator(Configuration config) throws Exception {
         Configuration authConfig = config.getChild(AUTHENTICATOR_ELEMENT, false);
-        String type = authConfig == null ? Authenticator.DEFAULT_AUTHENTICATOR : authConfig
+        this.authenticatorType = authConfig == null ? Authenticator.DEFAULT_AUTHENTICATOR : authConfig
                 .getAttribute(TYPE_ATTRIBUTE);
 
         this.authenticatorSelector = (ServiceSelector) manager.lookup(Authenticator.ROLE
                 + "Selector");
-        this.authenticator = (Authenticator) this.authenticatorSelector.select(type);
+        this.authenticator = (Authenticator) this.authenticatorSelector.select(this.authenticatorType);
         configureOrParameterize(this.authenticator, authConfig);
     }
 
     private ServiceManager manager;
+    private String authenticatorType;
 
     /**
      * Set the global component manager.
@@ -452,6 +453,10 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         AttributeDefinition definition = (AttributeDefinition) this.manager
                 .lookup(AttributeDefinition.ROLE);
         AttributeDefinitionRegistry.register(definition);
+    }
+
+    public String getAuthenticatorType() {
+        return this.authenticatorType;
     }
 
 }

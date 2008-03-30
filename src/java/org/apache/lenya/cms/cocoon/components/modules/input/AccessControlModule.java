@@ -64,33 +64,32 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
      */
     public static final String LOGIN_URI = "login-uri";
 
+    /**
+     * The authenticator type (i.e., selector hint) as declared in cocoon.xconf.
+     * Used for the login screen presentation.
+     */
+    public static final String AUTHENTICATOR_TYPE = "authenticator-type";
+
     public static final String USER_MANAGER = "user-manager";
     public static final String GROUP_MANAGER = "group-manager";
     public static final String ROLE_MANAGER = "role-manager";
     public static final String IP_RANGE_MANAGER = "iprange-manager";
 
     /**
-      * The names of the AccessControlModule parameters.
-      */
-    public static final String[] PARAMETER_NAMES =
-        {
-            IP_ADDRESS,
-            USER_ID,
-            USER_NAME,
-            USER_EMAIL,
-            ROLE_IDS,
-            USER_MANAGER,
-            GROUP_MANAGER,
-            ROLE_MANAGER,
-            IP_RANGE_MANAGER,
-            LOGIN_URI };
+     * The names of the AccessControlModule parameters.
+     */
+    public static final String[] PARAMETER_NAMES = { IP_ADDRESS, USER_ID, USER_NAME, USER_EMAIL,
+            ROLE_IDS, USER_MANAGER, GROUP_MANAGER, ROLE_MANAGER, IP_RANGE_MANAGER, LOGIN_URI,
+            AUTHENTICATOR_TYPE };
 
     /**
-     *
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * 
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession();
@@ -135,23 +134,39 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                         }
                         value = roleIds;
                     } catch (AccessControlException e) {
-                        throw new ConfigurationException(
-                            "Obtaining value for attribute [" + name + "] failed: ", e);
+                        throw new ConfigurationException("Obtaining value for attribute [" + name
+                                + "] failed: ", e);
                     }
                 }
             }
         }
 
-        if (name.equals(USER_MANAGER)
-            || name.equals(GROUP_MANAGER)
-            || name.equals(ROLE_MANAGER)
-            || name.equals(IP_RANGE_MANAGER)) {
+        if (name.equals(USER_MANAGER) || name.equals(GROUP_MANAGER) || name.equals(ROLE_MANAGER)
+                || name.equals(IP_RANGE_MANAGER)) {
             value = getItemManager(request, name);
-        }
-        else if (name.equals(LOGIN_URI)) {
-            value = getLoginUri(request);
+        } else if (name.equals(LOGIN_URI)) {
+            ValueExtractor extractor = new ValueExtractor() {
+                protected String extractValue(DefaultAccessController accessController,
+                        Request request) {
+                    return accessController.getAuthenticator().getLoginUri(request);
+                }
+            };
+            value = extractValue(request, extractor);
+        } else if (name.equals(AUTHENTICATOR_TYPE)) {
+            ValueExtractor extractor = new ValueExtractor() {
+                protected String extractValue(DefaultAccessController accessController,
+                        Request request) {
+                    return accessController.getAuthenticatorType();
+                }
+            };
+            value = extractValue(request, extractor);
         }
         return value;
+    }
+
+    protected String getAuthenticatorType() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     protected User getUser(Request request, Identity identity) throws ConfigurationException {
@@ -167,21 +182,30 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         return user;
     }
 
-    protected String getLoginUri(Request request) throws ConfigurationException {
+    /**
+     * Class to obtain a property of the access controller without duplicating
+     * the lookup/release boilerplate code.
+     */
+    protected static abstract class ValueExtractor {
+        protected abstract String extractValue(DefaultAccessController accessController,
+                Request request);
+    }
+
+    protected String extractValue(Request request, ValueExtractor extractor)
+            throws ConfigurationException {
         DefaultAccessController accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
 
         try {
             selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             String url = ServletHelper.getWebappURI(request);
             accessController = (DefaultAccessController) resolver.resolveAccessController(url);
-            
-            return accessController.getAuthenticator().getLoginUri(request);
+
+            return extractor.extractValue(accessController, request);
 
         } catch (Exception e) {
             throw new ConfigurationException("Could not determine login URI: ", e);
@@ -199,19 +223,22 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         return Arrays.asList(PARAMETER_NAMES).iterator();
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel)};
+            throws ConfigurationException {
+        Object[] objects = { getAttribute(name, modeConf, objectModel) };
 
         return objects;
     }
@@ -220,12 +247,13 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
      * Returns the item manager for a certain name.
      * @param request The request.
      * @param name The name of the manager ({@link #USER_MANAGER},
-     * {@link #ROLE_MANAGER}, {@link #GROUP_MANAGER}, or {@link IP_RANGE_MANAGER}
+     *                {@link #ROLE_MANAGER}, {@link #GROUP_MANAGER}, or
+     *                {@link IP_RANGE_MANAGER}
      * @return An item manager.
      * @throws ConfigurationException when something went wrong.
      */
     protected ItemManager getItemManager(Request request, String name)
-        throws ConfigurationException {
+            throws ConfigurationException {
         AccessController accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
@@ -233,15 +261,14 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
 
         try {
             selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             String url = ServletHelper.getWebappURI(request);
             accessController = resolver.resolveAccessController(url);
 
-            AccreditableManager accreditableManager =
-                ((DefaultAccessController) accessController).getAccreditableManager();
+            AccreditableManager accreditableManager = ((DefaultAccessController) accessController)
+                    .getAccreditableManager();
 
             if (name.equals(USER_MANAGER)) {
                 itemManager = accreditableManager.getUserManager();

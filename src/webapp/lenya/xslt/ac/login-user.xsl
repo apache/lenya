@@ -101,11 +101,13 @@
                 </tr>
               </table>
             </form>
-            <br/>
-            <a href="?lenya.usecase=shibboleth&amp;lenya.step=wayf">Login via Shibboleth</a>
+            <xsl:call-template name="afterLoginForm"/>
           </div>
         </div>
       </xsl:template>
+      
+      <xsl:template name="afterLoginForm"/>
+      
       <xsl:template name="pubname">
         <xsl:value-of
           select="translate($publication_name, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" />
