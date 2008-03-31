@@ -45,10 +45,7 @@ limitations under the License.
       
       <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
-        <map:aggregate element="cmsbody">
-          <map:part src="cocoon:/lenyametadata.xml/{1}/{2}/{3}/{4}/-1"/>
-          <map:part src="cocoon:/lucene-index-content/{1}/{2}/{3}/{4}.{doc-info:{1}:{2}:{3}:{4}:sourceExtension}"/>
-        </map:aggregate>
+        <map:generate src="cocoon:/lucene-index-content/{1}/{2}/{3}/{4}.{doc-info:{1}:{2}:{3}:{4}:sourceExtension}"/>
         <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">
           <map:parameter name="url" value="{request:requestURI}"/>
         </map:transform>

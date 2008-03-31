@@ -100,7 +100,7 @@ limitations under the License.
         <th class="vertical"><i18n:text>MimeType</i18n:text>:</th>
         <td><xsl:value-of select="$mimeType"/></td>
       </tr>
-      <xsl:if test="mediameta:elements/mediameta:width != ''">
+      <xsl:if test="starts-with(docmeta:elements/docmeta:mimeType, 'image/')">
         <tr>
           <th class="vertical"><i18n:text>Width</i18n:text>:</th>
           <td><xsl:value-of select="mediameta:elements/mediameta:width"/></td>
