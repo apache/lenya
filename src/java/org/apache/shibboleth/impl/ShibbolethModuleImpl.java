@@ -52,19 +52,14 @@ import edu.internet2.middleware.shibboleth.metadata.MetadataException;
 import edu.internet2.middleware.shibboleth.metadata.provider.XMLMetadata;
 
 /**
- * Initial Date: 16.07.2004
- * 
- * @author Mike Stock
- * 
- * Comment:
- * 
+ * Shibboleth module implementation.
  */
 public class ShibbolethModuleImpl extends AbstractLogEnabled implements ShibbolethModule,
         Configurable, Initializable, Serviceable, ThreadSafe, Disposable {
 
     private static final String WAYF_SERVER = "WayfServer";
     private static final String CONF_PROVIDER_ID = "ProviderId";
-	private static final String CONF_SHIRE = "Shire";
+    private static final String CONF_SHIRE = "Shire";
     private static final String CONF_METADATA = "Metadata";
     private static final String CONF_AAP = "AAP";
     private static final String CONF_CHECK_CERTIFICATES = "CheckCertificateValidity";
@@ -369,18 +364,18 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
         return this.wayfServerUrl;
     }
 
-	public String getShireUrl(String baseUrl) {
-		return baseUrl + this.shire;
-	}
-	
-	public String getTargetBaseUrl(String targetUrl){
-		try {
+    public String getShireUrl(String baseUrl) {
+        return baseUrl + this.shire;
+    }
+    
+    public String getTargetBaseUrl(String targetUrl){
+        try {
             URL url = new URL(targetUrl);
             return url.getProtocol() + "://" + url.getAuthority();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
-	}
+    }
 
 }
