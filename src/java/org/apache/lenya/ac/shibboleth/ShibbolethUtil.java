@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.ac.shibboleth;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Context;
@@ -49,20 +52,20 @@ public class ShibbolethUtil {
 
     /**
      * <p>
-     * This method computes the base URL of the web application:
+     * This method computes the host URL of the web application (<code>{protocol}://{host}[:{port}]</code>).
+     * The port suffix is omitted for the ports 80 and 443.
      * </p>
      * <ul>
      * <li>
-     *   If a proxy is declared for the current area, the URL of the proxy is returned.
+     *   If a proxy is declared for the current area, the host URL of the proxy is returned.
      * </li>
      * <li>
-     *   If no proxy is declared, <code>{protocol}://{host}[:{port}]</code> is returned. The port suffix is omitted
-     *   for the ports 80 and 443.
+     *   If no proxy is declared, the host URL of the current request is returned. 
      * </li>
      * </ul>
      * @return A string.
      */
-    public String getBaseUrl() {
+    public String getHostUrl() {
 
         String baseUrl = null;
         ContextUtility contextUtil = null;
@@ -85,7 +88,10 @@ public class ShibbolethUtil {
 
                 Proxy proxy = pub.getProxy(area, isSslProtected(webappUrl));
                 if (proxy != null) {
-                    baseUrl = proxy.getUrl();
+                    String proxyUrl = proxy.getUrl();
+                    if (containsAuthority(proxyUrl)) {
+                        baseUrl = getHostUrl(proxyUrl);
+                    }
                 }
             }
 
@@ -106,6 +112,34 @@ public class ShibbolethUtil {
 
         return baseUrl;
     }
+    
+    public String getHostUrl(String url) {
+        StringBuffer hostUrl = new StringBuffer();
+        if (!containsAuthority(url)) {
+            throw new IllegalArgumentException("The URL [" + url + "] doesn't contain the authority.");
+        }
+        URL urlObj = toUrl(url);
+        hostUrl.append(urlObj.getProtocol());
+        hostUrl.append("://");
+        hostUrl.append(urlObj.getAuthority());
+        return hostUrl.toString();
+    }
+
+    protected URL toUrl(String urlString) {
+        URL url;
+        try {
+            url = new URL(urlString);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return url;
+    }
+    
+    protected boolean containsAuthority(String url) {
+        return url.startsWith("http://") || url.startsWith("https://");
+    }
+
+
 
     /**
      * @param port The port.

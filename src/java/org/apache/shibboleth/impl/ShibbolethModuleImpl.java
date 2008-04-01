@@ -364,36 +364,8 @@ public class ShibbolethModuleImpl extends AbstractLogEnabled implements Shibbole
         return this.wayfServerUrl;
     }
 
-    public String getShireUrl(String baseUrl) {
-        StringBuffer shireUrl = new StringBuffer();
-        if (this.shire.startsWith("/") && containsAuthority(baseUrl)) {
-            URL url = toUrl(baseUrl);
-            shireUrl.append(url.getProtocol());
-            shireUrl.append("://");
-            shireUrl.append(url.getAuthority());
-        }
-        else {
-            shireUrl.append(baseUrl);
-            if (!baseUrl.endsWith("/")) {
-                shireUrl.append("/");
-            }
-        }
-        shireUrl.append(this.shire);
-        return shireUrl.toString();
-    }
-
-    protected URL toUrl(String urlString) {
-        URL url;
-        try {
-            url = new URL(urlString);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-        return url;
-    }
-    
-    protected boolean containsAuthority(String url) {
-        return url.startsWith("http://") || url.startsWith("https://");
+    public String getShireUrl(String hostUrl) {
+        return hostUrl + this.shire;
     }
 
     public String getTargetBaseUrl(String targetUrl){

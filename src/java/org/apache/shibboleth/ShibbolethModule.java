@@ -97,12 +97,10 @@ public interface ShibbolethModule {
     String getWayfServerUrl();
 
     /**
-     * @param baseUrl The URL to append the shire URL to. If the shire URL
-     *                starts with a slash, only the authority part
-     *                (protocol://host[:port]) is used.
+     * @param hostUrl The host URL to append the shire URL to.
      * @return The shire URL.
      */
-    String getShireUrl(String baseUrl);
+    String getShireUrl(String hostUrl);
 
     /**
      * @param targetUrl the target URL the user is send to after authentication.

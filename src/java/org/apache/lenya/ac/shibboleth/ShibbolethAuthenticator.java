@@ -129,7 +129,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
                     .lookup(AttributeRequestService.ROLE);
 
             ShibbolethUtil util = new ShibbolethUtil(this.manager);
-            String host = util.getBaseUrl();
+            String host = util.getHostUrl();
             BrowserProfileResponse bpResponse = consumerService.processRequest(req, host);
             Map attributesMap = attrReqService.requestAttributes(bpResponse);
             logAttributesMap(attributesMap);

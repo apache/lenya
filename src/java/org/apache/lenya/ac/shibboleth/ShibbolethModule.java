@@ -57,7 +57,7 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
             throws ConfigurationException {
         
         ShibbolethUtil util = new ShibbolethUtil(this.manager);
-        String host = util.getBaseUrl();
+        String host = util.getHostUrl();
 
         // attributes to get from the org.apache.shibboleth.ShibbolethModule
         String[] shibModuleAttrs = { ATTR_WAYF_SERVER, ATTR_PROVIDER_ID, ATTR_SHIRE };
