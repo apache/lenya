@@ -486,6 +486,7 @@
           <map:generate type="serverpages" src="{fallback:content/ac/login.xsp}"/>
           <map:transform src="{fallback:xslt/ac/login-{access-control:authenticator-type}.xsl}">
             <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
           <map:call resource="style-cms-page"/>
         </map:match>
