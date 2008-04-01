@@ -56,7 +56,7 @@ public class ShibbolethUtil {
      *   If a proxy is declared for the current area, the URL of the proxy is returned.
      * </li>
      * <li>
-     *   If no proxy is declared, <code>http://{host}[:{port}]</code> is returned. The port suffix is omitted
+     *   If no proxy is declared, <code>{protocol}://{host}[:{port}]</code> is returned. The port suffix is omitted
      *   for the ports 80 and 443.
      * </li>
      * </ul>
