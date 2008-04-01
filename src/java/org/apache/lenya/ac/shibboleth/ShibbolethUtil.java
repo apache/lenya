@@ -38,74 +38,74 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class ShibbolethUtil {
 
-	private ServiceManager manager;
+    private ServiceManager manager;
 
-	/**
-	 * @param manager The service manager.
-	 */
-	public ShibbolethUtil(ServiceManager manager) {
-		this.manager = manager;
-	}
+    /**
+     * @param manager The service manager.
+     */
+    public ShibbolethUtil(ServiceManager manager) {
+        this.manager = manager;
+    }
 
-	/**
-	 * <p>
-	 * This method computes the base URL of the web application:
-	 * </p>
-	 * <ul>
-	 * <li>
-	 *   If a proxy is declared for the current area, the URL of the proxy is returned.
-	 * </li>
-	 * <li>
-	 *   If no proxy is declared, <code>http://{host}[:{port}]</code> is returned. The port suffix is omitted
-	 *   for the ports 80 and 443.
-	 * </li>
-	 * </ul>
-	 * @return A string.
-	 */
-	public String getBaseUrl() {
+    /**
+     * <p>
+     * This method computes the base URL of the web application:
+     * </p>
+     * <ul>
+     * <li>
+     *   If a proxy is declared for the current area, the URL of the proxy is returned.
+     * </li>
+     * <li>
+     *   If no proxy is declared, <code>http://{host}[:{port}]</code> is returned. The port suffix is omitted
+     *   for the ports 80 and 443.
+     * </li>
+     * </ul>
+     * @return A string.
+     */
+    public String getBaseUrl() {
 
-		String baseUrl = null;
-		ContextUtility contextUtil = null;
-		try {
-			contextUtil = (ContextUtility) this.manager
-					.lookup(ContextUtility.ROLE);
-			Request request = ObjectModelHelper.getRequest(contextUtil
-					.getObjectModel());
-			String webappUrl = ServletHelper.getWebappURI(request);
-			URLInformation info = new URLInformation(webappUrl);
-			String pubId = info.getPublicationId();
-			String area = info.getArea();
+        String baseUrl = null;
+        ContextUtility contextUtil = null;
+        try {
+            contextUtil = (ContextUtility) this.manager
+                    .lookup(ContextUtility.ROLE);
+            Request request = ObjectModelHelper.getRequest(contextUtil
+                    .getObjectModel());
+            String webappUrl = ServletHelper.getWebappURI(request);
+            URLInformation info = new URLInformation(webappUrl);
+            String pubId = info.getPublicationId();
+            String area = info.getArea();
 
-			if (pubId != null && area != null) {
-				Context context = ObjectModelHelper.getContext(contextUtil
-						.getObjectModel());
-				String servletContextPath = context.getRealPath("");
-				Publication pub = PublicationFactory.getPublication(pubId,
-						servletContextPath);
+            if (pubId != null && area != null) {
+                Context context = ObjectModelHelper.getContext(contextUtil
+                        .getObjectModel());
+                String servletContextPath = context.getRealPath("");
+                Publication pub = PublicationFactory.getPublication(pubId,
+                        servletContextPath);
 
-				Proxy proxy = pub.getProxy(area, isSslProtected(webappUrl));
-				if (proxy != null) {
-					baseUrl = proxy.getUrl();
-				}
-			}
+                Proxy proxy = pub.getProxy(area, isSslProtected(webappUrl));
+                if (proxy != null) {
+                    baseUrl = proxy.getUrl();
+                }
+            }
 
-			if (baseUrl == null) {
-				int port = request.getServerPort();
-				String portSuffix = getPortSuffix(port);
-				baseUrl = request.getScheme() + "://" + request.getServerName()
-						+ portSuffix;
-			}
+            if (baseUrl == null) {
+                int port = request.getServerPort();
+                String portSuffix = getPortSuffix(port);
+                baseUrl = request.getScheme() + "://" + request.getServerName()
+                        + portSuffix;
+            }
 
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			if (contextUtil != null) {
-				this.manager.release(contextUtil);
-			}
-		}
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (contextUtil != null) {
+                this.manager.release(contextUtil);
+            }
+        }
 
-		return baseUrl;
-	}
+        return baseUrl;
+    }
 
     /**
      * @param port The port.
@@ -115,40 +115,40 @@ public class ShibbolethUtil {
         return (port == 80 || port == 443) ? "" : ":" + port;
     }
 
-	/**
-	 * @param webappUrl A web application URL.
-	 * @return If the URL is required to be requested using an SSL connection.
-	 */
-	protected boolean isSslProtected(String webappUrl) {
-		DefaultAccessController accessController = null;
-		ServiceSelector selector = null;
-		AccessControllerResolver resolver = null;
+    /**
+     * @param webappUrl A web application URL.
+     * @return If the URL is required to be requested using an SSL connection.
+     */
+    protected boolean isSslProtected(String webappUrl) {
+        DefaultAccessController accessController = null;
+        ServiceSelector selector = null;
+        AccessControllerResolver resolver = null;
 
-		try {
-			selector = (ServiceSelector) manager
-					.lookup(AccessControllerResolver.ROLE + "Selector");
-			resolver = (AccessControllerResolver) selector
-					.select(AccessControllerResolver.DEFAULT_RESOLVER);
+        try {
+            selector = (ServiceSelector) manager
+                    .lookup(AccessControllerResolver.ROLE + "Selector");
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
-			accessController = (DefaultAccessController) resolver
-					.resolveAccessController(webappUrl);
-			PolicyManager policyManager = accessController.getPolicyManager();
-			Policy policy = policyManager.getPolicy(accessController
-					.getAccreditableManager(), webappUrl);
-			return policy.isSSLProtected();
+            accessController = (DefaultAccessController) resolver
+                    .resolveAccessController(webappUrl);
+            PolicyManager policyManager = accessController.getPolicyManager();
+            Policy policy = policyManager.getPolicy(accessController
+                    .getAccreditableManager(), webappUrl);
+            return policy.isSSLProtected();
 
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			if (selector != null) {
-				if (resolver != null) {
-					if (accessController != null) {
-						resolver.release(accessController);
-					}
-					selector.release(resolver);
-				}
-				manager.release(selector);
-			}
-		}
-	}
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (resolver != null) {
+                    if (accessController != null) {
+                        resolver.release(accessController);
+                    }
+                    selector.release(resolver);
+                }
+                manager.release(selector);
+            }
+        }
+    }
 }
