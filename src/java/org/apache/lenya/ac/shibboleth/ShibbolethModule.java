@@ -55,7 +55,6 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-    	
         
         ShibbolethUtil util = new ShibbolethUtil(this.manager);
         String host = util.getBaseUrl();
@@ -73,7 +72,7 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                 } else if (name.equals(ATTR_PROVIDER_ID)) {
                     return shibModule.getProviderId();
                 } else if (name.equals(ATTR_SHIRE)) {
-                	    return shibModule.getShireUrl(host);
+                        return shibModule.getShireUrl(host);
                 } else {
                     throw new ConfigurationException("Attribute [" + name + "] not supported!");
                 }
@@ -91,7 +90,7 @@ public class ShibbolethModule extends AbstractPageEnvelopeModule implements Serv
                 Request req = ObjectModelHelper.getRequest(objectModel);
                 String webappUrl = ServletHelper.getWebappURI(req);
                 OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getLogger());
-    	
+        
                 String outgoingUrl = rewriter.rewrite(webappUrl);
                 if (outgoingUrl.startsWith("/")) {
                     int port = req.getServerPort();
