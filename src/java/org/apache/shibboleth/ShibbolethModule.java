@@ -75,7 +75,7 @@ public interface ShibbolethModule {
      *         code.
      */
     String getLanguageParamName();
-    
+
     /**
      * @return The provider ID for this shibboleth resource.
      */
@@ -90,21 +90,24 @@ public interface ShibbolethModule {
      * @return The Shibboleth metadata object.
      */
     Metadata getMetadata();
-    
+
     /**
      * @return The URL of the WAYF server (without query string).
      */
     String getWayfServerUrl();
-    
+
     /**
-     * @param baseUrl The URL to append the shire URL to.
+     * @param baseUrl The URL to append the shire URL to. If the shire URL
+     *                starts with a slash, only the authority part
+     *                (protocol://host[:port]) is used.
      * @return The shire URL.
      */
     String getShireUrl(String baseUrl);
-    
+
     /**
-     * @param targetUrl the target URL the user is send to after authentication. 
-     * @return The base Part of the targetUrl i.e. the scheme and the authority part of the URI.
+     * @param targetUrl the target URL the user is send to after authentication.
+     * @return The base Part of the targetUrl i.e. the scheme and the authority
+     *         part of the URI.
      */
     String getTargetBaseUrl(String targetUrl);
 
