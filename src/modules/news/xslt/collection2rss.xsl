@@ -76,7 +76,7 @@
       <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}">
         <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
       </meta:value></title>
-      <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}">
+      <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}">
         <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
       </meta:value></description>
       <xsl:variable name="href">
