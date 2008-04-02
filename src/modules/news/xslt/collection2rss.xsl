@@ -24,7 +24,7 @@
   xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
   xmlns:meta="http://apache.org/lenya/meta/1.0/"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-  exclude-result-prefixes="xhtml lenya col meta dc i18n"
+  exclude-result-prefixes="xhtml lenya col meta dc i18n xml"
   >
   
   <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
@@ -73,19 +73,13 @@
         We have to use <xsl:attribute> instead of attribute-value-templates
         for @xml:lang to avoid the xmlns:xml declaration in the output.
       -->
-      <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}">
-        <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
-      </meta:value></title>
-      <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}">
-        <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
-      </meta:value></description>
+      <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></title>
+      <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></description>
       <xsl:variable name="href">
         <xsl:call-template name="getHref"/>
         </xsl:variable>
       <link><xhtml:a href="{$href}"/></link>
-      <author><meta:value element="creator" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}">
-        <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
-      </meta:value></author>
+      <author><meta:value element="creator" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></author>
       <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{dc:date}"/></pubDate>
     </item>
   </xsl:template>
