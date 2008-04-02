@@ -117,6 +117,7 @@
         <map:transform type="i18n">
           <map:parameter name="locale" value="{5}"/>
         </map:transform>
+        <map:transform src="fallback://lenya/xslt/util/identity.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
