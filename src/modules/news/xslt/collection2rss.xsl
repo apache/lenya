@@ -69,10 +69,6 @@
   
   <xsl:template match="col:document[xhtml:html]">
     <item>
-      <!--
-        We have to use <xsl:attribute> instead of attribute-value-templates
-        for @xml:lang to avoid the xmlns:xml declaration in the output.
-      -->
       <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></title>
       <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></description>
       <xsl:variable name="href">
