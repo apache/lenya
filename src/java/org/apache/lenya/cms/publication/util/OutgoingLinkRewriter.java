@@ -59,7 +59,7 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
         URLInformation info = new URLInformation(webappUrl);
         String pubId = info.getPublicationId();
         String area = info.getArea();
-
+        
         String proxyUrl = null;
 
         if (pubId != null && area != null) {
@@ -73,7 +73,7 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
 
                 Proxy proxy = pub.getProxy(area, isSslProtected(webappUrl));
                 if (proxy != null) {
-                	    String prefix = "/" + pubId + "/" + area;
+                	    String prefix = "/" + pubId + "/" + info.getCompleteArea();
                 	    String areaUrl = webappUrl.substring(prefix.length());
                     proxyUrl = proxy.getUrl() + areaUrl;
                 } else {
