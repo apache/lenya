@@ -69,13 +69,23 @@
   
   <xsl:template match="col:document[xhtml:html]">
     <item>
-      <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></title>
-      <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></description>
+      <!--
+        We have to use <xsl:attribute> instead of attribute-value-templates
+        for @xml:lang to avoid the xmlns:xml declaration in the output.
+      -->
+      <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}">
+        <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
+      </meta:value></title>
+      <description><meta:value element="description" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}">
+        <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
+      </meta:value></description>
       <xsl:variable name="href">
         <xsl:call-template name="getHref"/>
         </xsl:variable>
       <link><xhtml:a href="{$href}"/></link>
-      <author><meta:value element="creator" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></author>
+      <author><meta:value element="creator" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}">
+        <xsl:attribute name="lang"><xsl:value-of select="@xml:lang"/></xsl:attribute>
+      </meta:value></author>
       <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{dc:date}"/></pubDate>
     </item>
   </xsl:template>
