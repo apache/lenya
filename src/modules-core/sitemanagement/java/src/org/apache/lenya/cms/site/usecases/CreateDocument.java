@@ -55,6 +55,7 @@ public class CreateDocument extends Create {
         if (parent == null) {
             setParameter(PARENT_PATH, "");
         } else {
+            setParameter(LANGUAGE,parent.getLanguage());
             try {
                 setParameter(PARENT_PATH, parent.getPath());
             } catch (DocumentException e) {
@@ -67,7 +68,6 @@ public class CreateDocument extends Create {
             addErrorMessage("The publication doesn't contain any languages!");
         }
         setParameter(LANGUAGES, languages);
-        setParameter(LANGUAGE,parent.getLanguage());
 
         Document sourceDoc = getSourceDocument();
         String[] childOnly = { RELATION_CHILD };
