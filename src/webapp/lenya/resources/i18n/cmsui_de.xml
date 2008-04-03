@@ -105,6 +105,7 @@
   <message key="Authentication failed">Anmeldung ist fehlgeschlagen</message>  
   <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1} (Bearbeiter), oder Benutzername {2} und Passwort {3} (Prüfer)</message>
   <message key="page-can-only-accessed-by">Auf diese Seite haben nur die folgenden Nutzer Zugriff:</message>
+  <message key="access-denied">Zugriff verweigert</message>
   
   <!-- logout screen -->
   <message key="logout-from-pub">Abmelden von der {0} Publikation</message>

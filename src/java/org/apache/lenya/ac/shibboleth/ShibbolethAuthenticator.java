@@ -33,6 +33,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.http.HttpEnvironment;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -41,16 +42,17 @@ import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Message;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserReference;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.TransientUser;
-import org.apache.lenya.ac.impl.TransientUserReference;
 import org.apache.lenya.ac.impl.UserAuthenticator;
 import org.apache.lenya.ac.saml.AttributeTranslator;
 import org.apache.lenya.ac.saml.UserFieldsMapper;
+import org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
@@ -62,7 +64,6 @@ import org.apache.shibboleth.AttributeRequestService;
 import org.apache.shibboleth.impl.AssertionConsumerServiceImpl;
 import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
 
-
 /**
  * <p>
  * Shibboleth-based authenticator.
@@ -71,17 +72,21 @@ import org.opensaml.SAMLBrowserProfile.BrowserProfileResponse;
  * Configuration:
  * </p>
  * <ul>
- * <li> <code>&lt;redirect-to-wayf&gt;true|false&lt;/redirect-to-wayf&gt;</code> - if the
- * application should redirect to the WAYF server instead of the login screen if a resource is
- * protected only via group rules </li>
+ * <li> <code>&lt;redirect-to-wayf&gt;true|false&lt;/redirect-to-wayf&gt;</code> -
+ * if the application should redirect to the WAYF server instead of the login
+ * screen if a resource is protected only via group rules </li>
  * 
  * </pre>
  */
 public class ShibbolethAuthenticator extends UserAuthenticator implements Configurable {
 
+    protected static final String PREVIOUSLY_REDIRECTED_USER = ShibbolethAuthenticator.class
+            .getName()
+            + "previouslyRedirectedUser";
+
     /**
-     * Configuration option to determine if the WAYF server should be used for logging in to
-     * rule-only protected pages.
+     * Configuration option to determine if the WAYF server should be used for
+     * logging in to rule-only protected pages.
      */
     protected static final String REDIRECT_TO_WAYF = "redirect-to-wayf";
 
@@ -93,11 +98,13 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
     private boolean redirectToWayf = false;
 
     /**
-     * Authenticates the request. If the request contains the parameters <em>username</em> and
-     * <em>password</em>, the authentication is delegated to the super class
-     * {@link UserAuthenticator}. Otherwise, the Shibboleth browser profile request is evaluated.
+     * Authenticates the request. If the request contains the parameters
+     * <em>username</em> and <em>password</em>, the authentication is
+     * delegated to the super class {@link UserAuthenticator}. Otherwise, the
+     * Shibboleth browser profile request is evaluated.
      * @see org.apache.lenya.ac.impl.UserAuthenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
-     *      org.apache.cocoon.environment.Request, org.apache.lenya.ac.ErrorHandler)
+     *      org.apache.cocoon.environment.Request,
+     *      org.apache.lenya.ac.ErrorHandler)
      */
     public boolean authenticate(AccreditableManager accreditableManager, Request request,
             ErrorHandler handler) throws AccessControlException {
@@ -193,16 +200,17 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
             }
             identity.removeIdentifiable(oldUser);
         }
-        identity.addIdentifiable(new TransientUserReference(user));
+        identity.addIdentifiable(new ShibbolethUserReference(user));
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Adding user [" + user + "] to identity.");
         }
     }
 
     /**
-     * Passes the attributes from the <em>samlAttributes</em> parameter to the <em>user</em>
-     * object. The {@link AttributeTranslator}�service is used to translate the attributes. The
-     * name and e-mail attributes are extracted using the {@link UserFieldsMapper}.
+     * Passes the attributes from the <em>samlAttributes</em> parameter to the
+     * <em>user</em> object. The {@link AttributeTranslator}�service is
+     * used to translate the attributes. The name and e-mail attributes are
+     * extracted using the {@link UserFieldsMapper}.
      * @param user
      * @param samlAttributes
      * @throws AccessControlException
@@ -243,7 +251,8 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
     }
 
     /**
-     * Extracts the <code>HttpServletRequest</code> object from the current Cocoon context.
+     * Extracts the <code>HttpServletRequest</code> object from the current
+     * Cocoon context.
      * @return An <code>HttpServletRequest</code> object.
      * @throws AccessControlException
      */
@@ -269,47 +278,110 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
      * This method returns the URI which displays the login screen:
      * </p>
      * <ul>
-     * <li>If the configuration option {@link #REDIRECT_TO_WAYF}�is set to <code>true</code> and
-     * the request points to a page which is only protected by rules, we assume that the Shibboleth
-     * authentication shall be used and return the URL which redirects to the WAYF server.</li>
+     * <li>If the configuration option {@link #REDIRECT_TO_WAYF} is set to
+     * <code>true</code> and the request points to a page which is only
+     * protected by rules, we assume that the Shibboleth authentication shall be
+     * used and return the URL which redirects to the WAYF server.</li>
      * <li>Otherwise, the Lenya login usecase URL is returned.</li>
      * </ul>
      * @return A string.
      * @see org.apache.lenya.ac.impl.UserAuthenticator#getLoginUri(org.apache.cocoon.environment.Request)
      */
-   public String getLoginUri(Request request) {
+    public String getLoginUri(Request request) {
+        String loginUri = null;
+        
         if (this.redirectToWayf && isOnlyRuleProtected(request)) {
-            ContextUtility contextUtil = null;
-			String proxyUrl;
-            try {
-                contextUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                Context context = ObjectModelHelper.getContext(contextUtil.getObjectModel());
-                String servletContextPath = context.getRealPath("");
-                String webappUrl = ServletHelper.getWebappURI(request);
-                URLInformation info = new URLInformation(webappUrl);
-                String pubId = info.getPublicationId();
-                Publication pub = PublicationFactory.getPublication(pubId, servletContextPath);
-
-                String area = info.getArea();
-				Proxy proxy = pub.getProxy(area, true);
-                if (proxy != null) {
-                	    String prefix = "/" + pubId + "/" + area;
-                	    String areaUrl = webappUrl.substring(prefix.length());
-                    proxyUrl = proxy.getUrl() + areaUrl;
-                } else {
-                    proxyUrl = request.getContextPath() + webappUrl;
+            
+            // avoid redirect loop (WAYF->IdP->SP->WAYF) because of failing authorization
+            ShibbolethUserReference user = getLoggedInShibboletUser(request);
+            if (user != null) {
+                String userId = user.getId();
+                String previouslyRedirectedUserId = getPreviouslyRedirectedUser(request);
+                if (previouslyRedirectedUserId != null && userId.equals(previouslyRedirectedUserId)) {
+                    // reportAuthorizationError(request);
+                    loginUri = super.getLoginUri(request);
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (contextUtil != null) {
-                    this.manager.release(contextUtil);
+                else {
+                    setPreviouslyRedirectedUser(request, userId);
                 }
             }
-            return proxyUrl + "?lenya.usecase=shibboleth&lenya.step=wayf";
+            if (loginUri == null) {
+                loginUri = getWayfLoginUrl(request);
+            }
         } else {
-            return super.getLoginUri(request);
+            loginUri = super.getLoginUri(request);
         }
+
+        return loginUri;
+    }
+
+    protected void reportAuthorizationError(Request request) {
+        Message msg = new Message("access-denied");
+        Message[] messages = { msg };
+        request.getSession().setAttribute(DelegatingAuthorizerAction.ERRORS, messages);
+    }
+
+    protected void setPreviouslyRedirectedUser(Request request, String userId) {
+        request.getSession().setAttribute(PREVIOUSLY_REDIRECTED_USER, userId);
+    }
+
+    protected String getPreviouslyRedirectedUser(Request request) {
+        return (String) request.getSession()
+                .getAttribute(PREVIOUSLY_REDIRECTED_USER);
+    }
+
+    /**
+     * @param request The current request.
+     * @return A Shibboleth user reference or <code>null</code> if no
+     *         Shiboleth user is logged in.
+     */
+    protected ShibbolethUserReference getLoggedInShibboletUser(Request request) {
+        Session session = request.getSession(false);
+        if (session != null) {
+            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+            if (identity != null) {
+                UserReference user = identity.getUserReference();
+                if (user instanceof ShibbolethUserReference) {
+                    return (ShibbolethUserReference) user;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param request The current request.
+     * @return The URI which issues a redirect to the WAYF server.
+     */
+    protected String getWayfLoginUrl(Request request) {
+        ContextUtility contextUtil = null;
+        String proxyUrl;
+        try {
+            contextUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            Context context = ObjectModelHelper.getContext(contextUtil.getObjectModel());
+            String servletContextPath = context.getRealPath("");
+            String webappUrl = ServletHelper.getWebappURI(request);
+            URLInformation info = new URLInformation(webappUrl);
+            String pubId = info.getPublicationId();
+            Publication pub = PublicationFactory.getPublication(pubId, servletContextPath);
+
+            String area = info.getArea();
+            Proxy proxy = pub.getProxy(area, true);
+            if (proxy != null) {
+                String prefix = "/" + pubId + "/" + area;
+                String areaUrl = webappUrl.substring(prefix.length());
+                proxyUrl = proxy.getUrl() + areaUrl;
+            } else {
+                proxyUrl = request.getContextPath() + webappUrl;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (contextUtil != null) {
+                this.manager.release(contextUtil);
+            }
+        }
+        return proxyUrl + "?lenya.usecase=shibboleth&lenya.step=wayf";
     }
 
     /**
@@ -317,9 +389,10 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
      * Checks if a page is protected only with rules:
      * </p>
      * <ul>
-     * <li> If the aggregated policy for the current page contains credentials which assign a role
-     * to a particular user or IP range, or to a group which contains explicitly assigned members,
-     * the method returns <code>false</code>. </li>
+     * <li> If the aggregated policy for the current page contains credentials
+     * which assign a role to a particular user or IP range, or to a group which
+     * contains explicitly assigned members, the method returns
+     * <code>false</code>. </li>
      * <li> Otherwise, the method returns <code>true</code>.
      * </ul>
      * @param request The request referring to the page.
@@ -390,10 +463,11 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
 
     /**
      * <p>
-     * This method returns the URL of the protected page, as passed from the identity provider as
-     * the value of the {@link AssertionConsumerServiceImpl#REQ_PARAM_TARGET} request parameter. If
-     * the request parameter is missing, the current URL, i.e. the assertion consumer URL, is
-     * returned.
+     * This method returns the URL of the protected page, as passed from the
+     * identity provider as the value of the
+     * {@link AssertionConsumerServiceImpl#REQ_PARAM_TARGET} request parameter.
+     * If the request parameter is missing, the current URL, i.e. the assertion
+     * consumer URL, is returned.
      * </p>
      * @see org.apache.lenya.ac.impl.UserAuthenticator#getTargetUri(org.apache.cocoon.environment.Request)
      */

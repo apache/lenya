@@ -105,12 +105,13 @@
   <message key="Authentication failed">Authentication failed</message>
   <message key="try-user-lenya">Try user {0} and password {1} (editor), or user {2} and password {3} (reviewer)</message>
   <message key="page-can-only-accessed-by">This page can only be accessed by</message>
+  <message key="access-denied">Access denied</message>
 
   <!-- logout screen -->
   <message key="logout-from-pub">LOGOUT from the {0} Publication</message>
   <message key="Your History">Your History</message>
   <message key="Login to Authoring Area">Login to Authoring Area</message>
-
+  
   <!-- reject screen -->
   <message key="Reject">Reject</message>
   <message key="reject-doc?">Do you want to reject the document {0}?</message>
