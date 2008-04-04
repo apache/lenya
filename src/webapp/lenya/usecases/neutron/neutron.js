@@ -91,7 +91,7 @@ function checkout () {
   var rc = flowHelper.getRevisionController(cocoon);
   
   var identity = new Identity();
-  var user = identity.getIdentity(cocoon.session).getUser();
+  var user = identity.getIdentity(cocoon.session).getUserReference();
   
   var docToPathMapper = new DefaultDocumentIdToPathMapper();
   var path = docToPathMapper.getPath(document.getId(), document.getLanguage());
@@ -148,7 +148,7 @@ function lock() {
   var rc = flowHelper.getRevisionController(cocoon);
   
   var identity = new Identity();
-  var user = identity.getIdentity(cocoon.session).getUser();
+  var user = identity.getIdentity(cocoon.session).getUserReference();
 
   var docToPathMapper = new DefaultDocumentIdToPathMapper();
   var path = docToPathMapper.getPath(document.getId(), document.getLanguage());
