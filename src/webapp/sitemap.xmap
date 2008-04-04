@@ -533,7 +533,7 @@
     
     <map:match type="usecase" pattern="neutron">
       <map:match type="step" pattern="introspect">
-        <map:mount uri-prefix="" src="lenya/usecases/neutron/usecase-neutron.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:match>
 
@@ -584,6 +584,9 @@
           <map:generate type="jx" src="lenya/usecases/neutron/jx/exception-auth.jx">
             <map:parameter name="base-url" value="http://{request:serverName}:{request:serverPort}{request:requestURI}"/>
           </map:generate>
+          <map:act type="set-header">
+            <map:parameter name="WWW-Authenticate" value="Neutron-Auth"/>
+          </map:act>
           <map:serialize type="xml" status-code="401"/>
         </map:match>
         <!-- End Neutron Authentication -->
