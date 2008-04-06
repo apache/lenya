@@ -182,7 +182,7 @@
     
     <path id="module.classpath.{$id}.impl">
       <path refid="module.classpath.{$id}.api"/>
-      <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{$id}-api.jar"/>
+      <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{$id}-${{version}}-api.jar"/>
     </path>
     
     <target name="compile-module-{$id}" if="compile.module.{$id}">
