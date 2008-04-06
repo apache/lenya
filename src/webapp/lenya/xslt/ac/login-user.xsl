@@ -22,6 +22,7 @@
       xmlns:i18n="http://apache.org/cocoon/i18n/2.1"      
       xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
       xmlns:session="http://www.apache.org/xsp/session/2.0"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <xsl:output indent="yes" version="1.0" />
       <xsl:param name="publication_name" />
@@ -75,36 +76,49 @@
             <i18n:text>Login</i18n:text>
           </div>
           <div class="lenya-box-body">
-            <form name="login" method="post" action="?lenya.usecase=login&amp;lenya.step=login">
-              <table class="lenya-table-noborder">
-                <tr>
-                  <td>
-                    <i18n:text>Username</i18n:text>:</td>
-                  <td>
-                    <input class="lenya-form-element" name="username"
-                      type="text" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i18n:text>Password</i18n:text>:</td>
-                  <td>
-                    <input class="lenya-form-element" name="password"
-                      type="password" />
-                  </td>
-                </tr>
-                <tr>
-                  <td />
-                  <td>
-                    <input i18n:attr="value" type="submit" value="Login" name="submit"/>
-                  </td>
-                </tr>
-              </table>
-            </form>
-            <xsl:call-template name="afterLoginForm"/>
+            <xsl:call-template name="loginFormWrapper"/>
           </div>
         </div>
       </xsl:template>
+      
+      
+      <!--
+        This template allows extending stylesheets to hide or change the login form.
+      -->
+      <xsl:template name="loginFormWrapper">
+        <xsl:call-template name="loginForm"/>
+      </xsl:template>
+      
+      
+      <xsl:template name="loginForm">
+        <form name="login" method="post" action="?lenya.usecase=login&amp;lenya.step=login">
+          <table class="lenya-table-noborder">
+            <tr>
+              <td>
+                <i18n:text>Username</i18n:text>:</td>
+              <td>
+                <input class="lenya-form-element" name="username"
+                  type="text" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i18n:text>Password</i18n:text>:</td>
+              <td>
+                <input class="lenya-form-element" name="password"
+                  type="password" />
+              </td>
+            </tr>
+            <tr>
+              <td />
+              <td>
+                <input i18n:attr="value" type="submit" value="Login" name="submit"/>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </xsl:template>
+      
       
       <xsl:template name="afterLoginForm"/>
       

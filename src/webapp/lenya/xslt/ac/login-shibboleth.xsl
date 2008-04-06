@@ -16,21 +16,23 @@
   limitations under the License.
 -->
 
-<!-- $Id: login.xsl 473841 2006-11-12 00:46:38Z gregor $ -->
-    
-    <xsl:stylesheet version="1.0"
-      xmlns:i18n="http://apache.org/cocoon/i18n/2.1"      
-      xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-      xmlns:session="http://www.apache.org/xsp/session/2.0"
-      xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-      
-      <xsl:import href="login-user.xsl"/>
-      
-      <xsl:template name="afterLoginForm">
-        <br/>
-        <a href="?lenya.usecase=shibboleth&amp;lenya.step=wayf">Login via Shibboleth</a>
-      </xsl:template>
-      
-    </xsl:stylesheet>
-    
-    
+<xsl:stylesheet version="1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"      
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns:session="http://www.apache.org/xsp/session/2.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  
+  <xsl:import href="login-user.xsl"/>
+  
+  <xsl:template name="loginFormWrapper">
+    <xsl:if test="not(/page/body/login/errors/error[normalize-space() = 'shibboleth-delete-cookies'])">
+      <xsl:call-template name="loginForm"/>
+      <br/>
+    </xsl:if>
+    <a href="?lenya.usecase=shibboleth&amp;lenya.step=wayf">Login via Shibboleth</a>
+  </xsl:template>
+  
+  
+</xsl:stylesheet>
+
