@@ -17,9 +17,11 @@
  */
 package org.apache.lenya.ac.shibboleth;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -298,7 +300,7 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
                 String userId = user.getId();
                 String previouslyRedirectedUserId = getPreviouslyRedirectedUser(request);
                 if (previouslyRedirectedUserId != null && userId.equals(previouslyRedirectedUserId)) {
-                    // reportAuthorizationError(request);
+                    reportAuthorizationError(request);
                     loginUri = super.getLoginUri(request);
                 }
                 else {
@@ -316,8 +318,11 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Config
     }
 
     protected void reportAuthorizationError(Request request) {
-        Message msg = new Message("access-denied");
-        Message[] messages = { msg };
+        Session session = request.getSession();
+        Message[] messages = (Message[]) session.getAttribute(DelegatingAuthorizerAction.ERRORS);
+        List messageList = messages == null ? new ArrayList(1) : new ArrayList(Arrays.asList(messages));
+        messageList.add(new Message("shibboleth-delete-cookies"));
+        messages = (Message[]) messageList.toArray(new Message[messageList.size()]);
         request.getSession().setAttribute(DelegatingAuthorizerAction.ERRORS, messages);
     }
 

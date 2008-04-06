@@ -106,6 +106,9 @@
   <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1} (Bearbeiter), oder Benutzername {2} und Passwort {3} (Prüfer)</message>
   <message key="page-can-only-accessed-by">Auf diese Seite haben nur die folgenden Nutzer Zugriff:</message>
   <message key="access-denied">Zugriff verweigert</message>
+  <message key="shibboleth-delete-cookies">
+    Wenn Sie sich mit einem anderen Account anmelden wollen, löschen Sie bitte die Cookies in Ihrem Browser. 
+  </message>
   
   <!-- logout screen -->
   <message key="logout-from-pub">Abmelden von der {0} Publikation</message>

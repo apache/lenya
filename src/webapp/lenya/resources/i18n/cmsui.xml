@@ -106,6 +106,9 @@
   <message key="try-user-lenya">Try user {0} and password {1} (editor), or user {2} and password {3} (reviewer)</message>
   <message key="page-can-only-accessed-by">This page can only be accessed by</message>
   <message key="access-denied">Access denied</message>
+  <message key="shibboleth-delete-cookies">
+    If you want to log in with a different account, please delete the cookies in your browser. 
+  </message>
 
   <!-- logout screen -->
   <message key="logout-from-pub">LOGOUT from the {0} Publication</message>
