@@ -34,7 +34,7 @@ If you have a Mime-Type which is not yet known to Lenya, such as Avi Videos (Mim
 </p>
 <source>
           &lt;map:match pattern="*/*/**.avi"&gt;
-            &lt;map:read src="pubs/{1}/resources/{2}/{3}.avi" mime-tyoe="video/x-msvideo" /&gt;
+            &lt;map:read src="pubs/{1}/resources/{2}/{3}.avi" mime-type="video/x-msvideo" /&gt;
           &lt;/map:match&gt;
 
 </source>
