@@ -326,7 +326,7 @@ public abstract class AbstractIndexer extends AbstractLogEnabled implements
     final protected void openIndexReader() throws IndexException {
         try {
 	    if (this.dir == null) {
-	        throw new IllegalStateException("Index directory not set.");
+	        throw new IndexException(new IllegalStateException("Index directory not set."));
 	    }
             this.delete_reader = IndexReader.open(dir);
         } catch (IOException e) {
