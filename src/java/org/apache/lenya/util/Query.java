@@ -73,6 +73,10 @@ public class Query {
 
     private Map key2value;
 
+    /**
+     * @param key The value for the key.
+     * @return A string or <code>null</code> if no value exists.
+     */
     public String getValue(String key) {
         return (String) this.key2value.get(key);
     }
