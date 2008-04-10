@@ -56,10 +56,15 @@ public class RepositoryEventFactory {
     public static final RepositoryEvent createEvent(ServiceManager manager, Document doc,
             Logger logger, Object descriptor) {
         try {
-            RepositoryEvent event = new DocumentEvent(doc.getRepositoryNode().getSession(), doc.getPublication()
+            Node node = doc.getRepositoryNode();
+            RepositoryEvent event = new DocumentEvent(node.getSession(), doc.getPublication()
                     .getId(), doc.getArea(), doc.getUUID(), doc.getLanguage(), doc
                     .getResourceType(), descriptor);
-            event.setNodeUri(doc.getRepositoryNode().getSourceURI());
+            event.setNodeUri(node.getSourceURI());
+            int[] revisions = node.getHistory().getRevisionNumbers();
+            if (revisions.length > 0) {
+                event.setRevision(revisions[0]);
+            }
             return event;
         } catch (DocumentException e) {
             throw new RuntimeException(e);

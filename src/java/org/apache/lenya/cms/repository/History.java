@@ -29,6 +29,7 @@ public interface History {
     
     /**
      * @return The latest revision.
+     * @throws RuntimeException if the node has no revisions yet.
      */
     Revision getLatestRevision();
     

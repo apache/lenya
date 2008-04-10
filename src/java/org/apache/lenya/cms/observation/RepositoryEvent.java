@@ -27,6 +27,7 @@ public class RepositoryEvent {
 
     private Session session;
     private Object descriptor = null;
+    private int revision = -1;
 
     /**
      * Ctor.
@@ -74,6 +75,20 @@ public class RepositoryEvent {
      */
     public String getNodeUri() {
         return this.nodeUri;
+    }
+
+    /**
+     * @param revision The latest revision of the node at the time the event was created.
+     */
+    public void setRevision(int revision) {
+        this.revision = revision;
+    }
+    
+    /**
+     * @return The latest revision of the node at the time the event was created.
+     */
+    public int getRevision() {
+        return this.revision;
     }
 
 }
