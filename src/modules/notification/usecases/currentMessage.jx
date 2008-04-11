@@ -52,12 +52,14 @@
           <tr>
             <td class="lenya-entry-caption" valign="top"><i18n:text>Message</i18n:text>:</td>
             <td>
+              <pre>
               <i18n:translate>
                 <i18n:text><jx:out value="${message.getMessage().getBody()}"/></i18n:text>
                 <jx:forEach var="param" items="${message.getMessage().getBodyParameters()}">
                   <i18n:param><jx:out value="${param}"/></i18n:param>
                 </jx:forEach>
               </i18n:translate>
+              </pre>
             </td>
           </tr>
           <tr>
