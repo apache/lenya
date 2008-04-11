@@ -24,6 +24,7 @@
   xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
   xmlns:meta="http://apache.org/lenya/meta/1.0/"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:user="http://apache.org/lenya/userinfo/1.0"
   exclude-result-prefixes="xhtml lenya col meta dc i18n xml"
   >
   
@@ -75,7 +76,7 @@
         <xsl:call-template name="getHref"/>
         </xsl:variable>
       <link><xhtml:a href="{$href}"/></link>
-      <author><meta:value element="creator" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></author>
+      <author><user:fullname><meta:value element="creator" ns="http://purl.org/dc/elements/1.1/" uuid="{@uuid}" lang="{@xml:lang}"/></user:fullname></author>
       <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{dc:date}"/></pubDate>
     </item>
   </xsl:template>

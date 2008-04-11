@@ -108,6 +108,7 @@
           <map:parameter name="area" value="{3}"/>
         </map:transform>
         <map:match pattern="rss.xml/**">
+          <map:transform type="userInfo"/>
           <map:transform type="uuid2url"/>
           <map:transform type="proxy">
             <map:parameter name="urls" value="absolute"/>
