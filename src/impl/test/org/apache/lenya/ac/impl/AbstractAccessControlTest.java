@@ -50,14 +50,19 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
+    
+        
 
     protected org.apache.lenya.cms.repository.Session login(String userId)
             throws AccessControlException {
+        return login(userId, TEST_PUB_ID);
+    }
 
+    protected Session login(String userId, String pubId) throws AccessControlException {
         Session session = new SessionImpl(null, true, getManager(), getLogger());
         getRequest().setAttribute(Session.class.getName(), session);
         
-        DefaultAccessController ac = getAccessController(session, TEST_PUB_ID);
+        DefaultAccessController ac = getAccessController(session, pubId);
         AccreditableManager acMgr = ac.getAccreditableManager();
         User user = acMgr.getUserManager().getUser(userId);
 
