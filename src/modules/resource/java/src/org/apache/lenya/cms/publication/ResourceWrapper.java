@@ -167,7 +167,8 @@ public class ResourceWrapper extends AbstractLogEnabled {
     public void updateImageDimensions() {
         Document doc = getDocument();
         try {
-            updateImageDimensions(doc.getMimeType(), doc.getInputStream(), doc.getMetaData(MEDIA_METADATA_NAMESPACE));
+            updateImageDimensions(doc.getMimeType(), doc.getInputStream(), doc.getMetaData(MEDIA_METADATA_NAMESPACE),
+                    doc.toString() + " (" + doc.getPath() + ")");
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -179,17 +180,22 @@ public class ResourceWrapper extends AbstractLogEnabled {
         if (customMeta != null) {
             customMeta.setValue("filename", fileName);
         }
-        updateImageDimensions(mimeType, stream, customMeta);
+        updateImageDimensions(mimeType, stream, customMeta, fileName);
     }
 
-    protected void updateImageDimensions(String mimeType, InputStream stream, MetaData customMeta)
+    protected void updateImageDimensions(String mimeType, InputStream stream, MetaData customMeta, String logInfo)
             throws IOException, MetaDataException {
         if (canReadMimeType(mimeType)) {
             BufferedImage input = ImageIO.read(stream);
-            String width = Integer.toString(input.getWidth());
-            String height = Integer.toString(input.getHeight());
-            customMeta.setValue("height", height);
-            customMeta.setValue("width", width);
+            if (input == null) {
+                getLogger().warn("Couln't read image information from [" + logInfo + "].");
+            }
+            else {
+                String width = Integer.toString(input.getWidth());
+                String height = Integer.toString(input.getHeight());
+                customMeta.setValue("height", height);
+                customMeta.setValue("width", width);
+            }
         }
     }
 
