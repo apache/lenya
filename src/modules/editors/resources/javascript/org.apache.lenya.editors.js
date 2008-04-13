@@ -230,7 +230,7 @@ org.apache.lenya.editors.usecaseWindowOptions =
     + "status=no,"
     + "resizable=yes,"
 //  + "dependent=yes,"  not in IE6, and the moz people want to get rid of it, too...
-    + "width=600,"
+    + "width=1000,"
     + "height=700";
 
 
