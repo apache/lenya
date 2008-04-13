@@ -101,14 +101,12 @@
                   <td>
                     <jx:out value="${asset.getPath()}"/>
                   </td>
-                  <td>
+                  <td style="width: 50px; overflow: hidden;">
                     <jx:choose>
                       <jx:when test="${mimeType.startsWith('image/')}">
                         <!-- Add one to avoid dividing by 0 -->
                         <jx:set var="scaledWidth" value="${Packages.java.lang.Math.round(width / ( height + 1 ) * 32.0)}"/>
-                        <div  style="width: 50px; overflow: hidden;">
-                          <img src="${url}?lenya.module=svg&amp;height=32&amp;width=${scaledWidth}" style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160;           
-                        </div>
+                        <img src="${url}?lenya.module=svg&amp;height=32&amp;width=${scaledWidth}" style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160;           
                       </jx:when>
                       <jx:otherwise>
                         <jx:out value="${mimeType}"/>
@@ -118,14 +116,14 @@
                   <td>
                     <jx:out value="${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/>
                   </td>
-                  <td align="right">
+                  <td align="right" style="white-space: nowrap;">
                     <jx:out value="${asset.getContentLength() / 1000}"/> kB
                   </td>
-                  <td align="right">
+                  <td align="right" style="white-space: nowrap;">
                     <jx:if test="${mimeType.startsWith('image/')}">
                       <jx:out value="${width}"/> x <jx:out value="${height}"/></jx:if>
                   </td>
-                  <td align="right">
+                  <td align="right" style="white-space: nowrap;">
                     <jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/>
                   </td>
                 </tr>
