@@ -105,7 +105,7 @@
                     <jx:choose>
                       <jx:when test="${mimeType.startsWith('image/')}">
                         <!-- Add one to avoid dividing by 0 -->
-                        <jx:set var="scaledWidth" value="${width / ( height + 1 ) * 32.0}"/>
+                        <jx:set var="scaledWidth" value="${Packages.java.lang.Math.round(width / ( height + 1 ) * 32.0)}"/>
                         <img src="${url}?lenya.module=svg&amp;height=32&amp;width=${scaledWidth}" style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160; 
                       </jx:when>
                       <jx:otherwise>
