@@ -45,6 +45,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
  */
 public class ResourceWrapper extends AbstractLogEnabled {
 
+    protected static final String MEDIA_METADATA_NAMESPACE = "http://apache.org/lenya/metadata/media/1.0";
     private ServiceManager manager;
     private Document document;
 
@@ -141,7 +142,7 @@ public class ResourceWrapper extends AbstractLogEnabled {
 
         OutputStream destOutputStream = null;
         try {
-            mediaMeta = document.getMetaData("http://apache.org/lenya/metadata/media/1.0");
+            mediaMeta = document.getMetaData(MEDIA_METADATA_NAMESPACE);
             addResourceMeta(fileName, mimeType, input, mediaMeta);
 
             destOutputStream = document.getOutputStream();
@@ -159,12 +160,30 @@ public class ResourceWrapper extends AbstractLogEnabled {
         if (getLogger().isDebugEnabled())
             getLogger().debug("Resource::addResource() done.");
     }
+    
+    /**
+     * Updates the image width and height depending on the content, if possible.
+     */
+    public void updateImageDimensions() {
+        Document doc = getDocument();
+        try {
+            updateImageDimensions(doc.getMimeType(), doc.getInputStream(), doc.getMetaData(MEDIA_METADATA_NAMESPACE));
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     protected void addResourceMeta(String fileName, String mimeType, InputStream stream,
             MetaData customMeta) throws MetaDataException, IOException {
         if (customMeta != null) {
             customMeta.setValue("filename", fileName);
         }
+        updateImageDimensions(mimeType, stream, customMeta);
+    }
+
+    protected void updateImageDimensions(String mimeType, InputStream stream, MetaData customMeta)
+            throws IOException, MetaDataException {
         if (canReadMimeType(mimeType)) {
             BufferedImage input = ImageIO.read(stream);
             String width = Integer.toString(input.getWidth());
