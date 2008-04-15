@@ -1,0 +1,41 @@
+=== Installing Lenya 1.3 ===
+
+The "cocoon-2.1.11" and "lenya-1.3" directories should be in the same directory for the easiest configuration.
+
+Download Cocoon-2.1.11 from:
+http://cocoon.apache.org/mirror.cgi
+
+Use svn to checkout from:
+http://svn.apache.org/repos/asf/lenya/branches/revolution/1.3.x 
+
+
+Copy lenya-1.3/src/cocoon/
+   local.blocks.properties
+   local.build.properties
+To Cocoon-2.1.11/
+
+Run cocoon-2.1.11/build.bat
+
+Open lenya-1.3/build.properties and verify cocoon.src.dir
+Run lenya-1.3/build.bat (or build.sh)
+
+Check for duplicate libraries in directory:
+  lenya-1.3/build/lenya/webapp/WEB-INF/lib
+
+Move to the endorsed directory:
+   serializer-2.7.1.jar
+
+Do not delete files from the "lib/endorsed" directory.  Keep the latest version of each duplicate (except for quartz -- see below.)  These files may be safely deleted:
+  commons-httpclient-2.0.2.jar
+  commons-io-1.1.jar
+  log4j-1.2.14.jar
+  lucene-1.4.3.jar
+  xercesImpl-2.7.1.jar
+  xml-apis-2.7.1.jar
+  xml-commons-resolver-1.1.jar
+
+Note that quartx-1.6.0.jar will cause Cocoon to error so quartx-1.5.2.jar must be used.
+
+Run lenya-1.3/lenya.bat (or lenya.sh)
+
+

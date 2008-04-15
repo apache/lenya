@@ -7,7 +7,7 @@ Create a new repository location:
 http://svn.apache.org/repos/asf/lenya/branches/revolution/1.3.x 
 (Committers should use https:.)
 Next
-Click top choice matching the reposityory string.
+Click top choice matching the repository string.
 Next
 Finish
 (New Project Wizard)
@@ -19,31 +19,55 @@ OK
 Next
 Finish
 
-
-Add lib Libraries to build path.
-Add tools/jetty/lib/servlet-2.3.jar to build path
-
-Lenya 1.3 will use Cocoon-2.1.11 when it is released.  A major bug from before Cocoon-2.1.6 survived through Cocoon-2.1.10 making those releases undesirable.
+-- Cocoon-2.1.11
+Lenya 1.3 uses Cocoon-2.1.11.  A major bug from before Cocoon-2.1.6 survived through Cocoon-2.1.10 making those releases undesirable.
 
 Repeat for Cocoon:
-http://svn.apache.org/repos/asf/cocoon/branches/BRANCH_2_1_X
-Project name: Cocoon21x
+Download the Cocoon-2.1.11 release.
 
+-- Cocoon in Eclipse
+These instructions attempt to make an Eclipse project for Cocoon.  The instructions are incomplete because I could not discover the proper libraries to prevent errors.  The code may just be incompatible with Eclipse's convention of all classes resolving without errors.
+
+Project name: Cocoon-2.1.11
+
+Cocoon is missing several libraries.  Download and add to Cocoon's build path:
+  commons-httpclient-3.1.jar - 
+  commons-lang-2.3.jar - 
+  htmlunit-1.14.jar - 
+  jaxen-1.1.1.jar  - http://jaxen.codehaus.org/releases.html
+  jcr-1.0.jar - http://www.day.com/maven/jsr170/jars/jcr-1.0.jar (This jar is also found buried in a download from Sun with a misleading name.)
+Remove source from the build path.
+  src/jdk1.3/java
+  src/blocks/slop
+
+These may not be the correct libraries as Eclipse still finds errors.
+
+---  Java version error
 JRE: Must be above 1.4 or will error:
 Access restriction: the method ___ from the type ___ is not accessible due to restriction on required library rt.jar
 
-Add to build path
-lib/core 
-lib/endorsed
-tools/lib/ant.jar
+Install and configure j2sdk1.4.2_15
+
+--- Finish Lenya in Eclipse
 
 Copy Lenya13x/src/cocoon/
    local.blocks.properties
    local.build.properties
-To Cocoon21x/
+To Cocoon-2.1.11/
 
-Run Cocoon21x/build.bat
+Run cocoon-2.1.11/build.bat
 
-Open Lenya13x/build.properties
-Verify cocoon.src.dir.
+Add libraries to build path from:
+lib/core 
+lib/endorsed
+tools/jetty/lib/servlet-2.3.jar
+tools/lib/ant.jar
+cocoon-2.1.11/build/webapp/WEB-INF/lib/*
+
+Remove duplicate libraries keeping latest versions (higher numbers.)
+
+Open Lenya13x/build.properties and verify cocoon.src.dir
 Run Lenya13x/build.bat
+Run Lenya13x/lenya.bat
+
+Change the Problems filter to "description" "doesn't contain" "deprecated" (unless you are fixing these warnings.)
