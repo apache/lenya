@@ -25,9 +25,10 @@
     <component-instance name="workflow.multiWorkflow" logger="lenya.workflow" class="org.apache.lenya.cms.workflow.usecases.MultiWorkflow">
       <view uri="modules/workflow/usecases/multiWorkflow.jx" menu="true" createContinuation="false"/>
       <exit usecase="workflow.multiWorkflow"/>
+      <variable name="is_live"/>
       <usecase name="workflow.submit" event="submit"/>
-      <usecase name="workflow.publish" event="publish"/>
       <usecase name="workflow.reject" event="reject"/>
+      <usecase name="workflow.publish" event="publish"/>
       <usecase name="workflow.deactivate" event="deactivate"/>
       <usecase name="sitemanagement.delete" event="delete"/>
       <usecase name="sitemanagement.archive" event="archive"/>

@@ -23,15 +23,9 @@
 
   <message key="http://apache.org/lenya/metadata/workflow/1.0">Workflow</message>
   <message key="workflowVersion">Workflow versions</message>
-  <message key="workflow.multiWorkflow">Workflow Overview</message>
-  <message key="back-to-document">Back to document</message>
   <message key="workflow.reject">Reject</message>
   <message key="workflow.publish">Publish</message>
   <message key="workflow.deactivate">Deactivate</message>
-  <message key="Path">Path</message>
-  <message key="Actions">Actions</message>
-  <message key="state-as-text">State as text</message>
-  <message key="state-as-columns">State as columns</message>
   <message key="publish-missing-documents">
     The document can't be published unless the following documents are published:
   </message>
@@ -69,5 +63,14 @@
   
   <message key="last-published">This page was last published at {0} by {1}.</message>
   <message key="never-published">This page has not been published yet.</message>
+  
+  <!-- workflow overview -->
+  <message key="back-to-document">Back to document</message>
+  <message key="Path">Path</message>
+  <message key="Actions">Actions</message>
+  <message key="state-as-text">State as text</message>
+  <message key="state-as-columns">State as columns</message>
+  <message key="workflow.multiWorkflow">Workflow Overview</message>
+  <message key="is_live">Live</message>
   
 </catalogue>

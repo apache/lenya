@@ -23,13 +23,7 @@
 
   <message key="http://apache.org/lenya/metadata/workflow/1.0">Workflow</message>
   <message key="workflowVersion">Workflow-Versionen</message>
-  <message key="workflow.multiWorkflow">Workflow-Übersicht</message>
-  <message key="back-to-document">Zurück zum Dokument</message>
   <message key="workflow.publish">Publizieren</message>
-  <message key="Path">Pfad</message>
-  <message key="Actions">Aktionen</message>
-  <message key="state-as-text">Zustand als Text</message>
-  <message key="state-as-columns">Zustand als Spalten</message>
   <message key="publish-missing-documents">
     Das Dokument kann nicht publiziert werden, solange die folgenden Dokumente nicht publiziert sind:
   </message>
@@ -70,6 +64,14 @@
   <message key="last-published">Diese Seite wurde zuletzt publiziert am {0} von {1}.</message>
   <message key="never-published">Diese Seite wurde noch nicht publiziert.</message>
   
+  <!-- workflow overview -->
+  <message key="workflow.multiWorkflow">Workflow-Übersicht</message>
+  <message key="back-to-document">Zurück zum Dokument</message>
+  <message key="Path">Pfad</message>
+  <message key="Actions">Aktionen</message>
+  <message key="state-as-text">Zustand als Text</message>
+  <message key="state-as-columns">Zustand als Spalten</message>
+  <message key="is_live">Live</message>
   
 </catalogue>
 

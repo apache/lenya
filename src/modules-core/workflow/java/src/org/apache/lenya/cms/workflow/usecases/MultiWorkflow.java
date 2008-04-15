@@ -46,9 +46,7 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
  */
 public class MultiWorkflow extends AbstractUsecase {
 
-    protected void initParameters() {
-        super.initParameters();
-
+    protected void prepareView() {
         try {
             List preOrder = getNodes();
             List wrappers = new ArrayList();
@@ -62,6 +60,8 @@ public class MultiWorkflow extends AbstractUsecase {
             }
             setParameter("documents", wrappers);
             setParameter("states", states);
+            setParameter("usecases", this.usecases);
+            setParameter("variables", this.variables);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -105,7 +105,9 @@ public class MultiWorkflow extends AbstractUsecase {
         return preOrder;
     }
 
+    private List usecases = new ArrayList();
     private Map usecase2event = new HashMap();
+    private List variables = new ArrayList();
 
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
@@ -114,7 +116,12 @@ public class MultiWorkflow extends AbstractUsecase {
         for (int i = 0; i < usecaseConfigs.length; i++) {
             String usecase = usecaseConfigs[i].getAttribute("name");
             String event = usecaseConfigs[i].getAttribute("event");
+            this.usecases.add(usecase);
             this.usecase2event.put(usecase, event);
+        }
+        Configuration[] varConfigs = config.getChildren("variable");
+        for (int i = 0; i < varConfigs.length; i++) {
+            this.variables.add(varConfigs[i].getAttribute("name"));
         }
     }
 
@@ -131,6 +138,10 @@ public class MultiWorkflow extends AbstractUsecase {
             }
         }
         return (String[]) usecases.toArray(new String[usecases.size()]);
+    }
+
+    public String getEvent(String usecase) {
+        return (String) this.usecase2event.get(usecase);
     }
 
 }

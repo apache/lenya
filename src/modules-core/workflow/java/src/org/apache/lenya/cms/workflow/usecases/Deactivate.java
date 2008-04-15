@@ -141,7 +141,7 @@ public class Deactivate extends InvokeWorkflow {
     }
     
     /**
-     * A list of links pointing to a document. Allows lazy loading rom the usecase view.
+     * A list of links pointing to a document. Allows lazy loading from the usecase view.
      */
     public static class LinkList {
         

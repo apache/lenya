@@ -18,8 +18,6 @@
 package org.apache.lenya.cms.workflow.usecases;
 
 import java.util.Arrays;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -122,21 +120,31 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
     }
 
     /**
-     * @return All executable events in alphabetical order.
+     * @param usecaseName The usecase name.
+     * @return if the usecase can be invoked.
      * @throws WorkflowException if an error occurs.
      */
-    public String[] getUsecases() throws WorkflowException {
-        SortedSet usecases = new TreeSet();
-        String[] events = getWorkflowSchema().getEvents();
-        for (int i = 0; i < events.length; i++) {
-            if (WorkflowUtil.canInvoke(this.manager, this.session, getLogger(), this.document,
-                    events[i])) {
-                String[] eventUsecases = this.usecase.getUsecases(events[i]);
-                usecases.addAll(Arrays.asList(eventUsecases));
-            }
+    public boolean canInvoke(String usecaseName) throws WorkflowException {
+        String event = this.usecase.getEvent(usecaseName);
+        return WorkflowUtil.canInvoke(this.manager, this.session, getLogger(), this.document,
+                event);
+    }
+    
+    /**
+     * Returns the current value of a workflow variable.
+     * @param variable The name of the variable.
+     * @return The value.
+     * @throws WorkflowException if an error occurs. 
+     */
+    public boolean getValue(String variable) throws WorkflowException {
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, this.session, getLogger(), this.document);
+        if (workflowable.getVersions().length == 0) {
+            Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager, this.session, getLogger(), this.document);
+            return workflow.getInitialValue(variable);
         }
-
-        return (String[]) usecases.toArray(new String[usecases.size()]);
+        else {
+            return workflowable.getLatestVersion().getValue(variable);
+        }
     }
     
     /**
