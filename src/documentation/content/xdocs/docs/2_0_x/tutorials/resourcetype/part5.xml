@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Creating a Resource Type, Part 5: WYSIWYG Editing with BXE</title>
+  </header>
+  <body>
+    
+    <p>
+      In this section we make our person documents editable with the BXE WYSIWYG editor.
+    </p>
+    
+    <section>
+      <title>Adding the Menu Item</title>
+      <p>
+        First, we add the BXE menu item to <code>$MODULE_HOME/config/menu.xsp</code>,
+        right above the one-form editor item:
+      </p>
+      <source xml:space="preserve"><![CDATA[<item uc:usecase="bxe.edit" href="?"><i18n:text>With BXE</i18n:text></item>]]></source>
+    </section>
+    
+    <section>
+      <title>Adding the webdavGET format</title>
+      <p>
+        The BXE editor uses the <acronym title="Web-based Distributed Authoring and Versioning">WebDAV</acronym>
+        protocol to load the document source. To provide this functionality, we have to
+        add the <em>webdavGET</em> format to our resource type declaration: 
+      </p>
+      <source xml:space="preserve"><![CDATA[<component-instance name="person"
+  ...
+  <format name="webdavGET" uri="cocoon://modules/person/davget.xml"/>
+</component-instance>]]></source>
+      <p>
+        When you re-deploy the module, make sure that <code>cocoon.xconf</code> is properly updated
+        - either by deleting the file from the web application, or by adding the new line manually.
+      </p>
+      <p>
+        The format is served by the following pipeline in <code>$MODULE_HOME/sitemap.xmap</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<!-- webdav GET matcher -->
+<map:match pattern="davget.xml">
+  <map:act type="set-header">
+    <map:parameter name="Last-Modified" value="{date-iso8601-rfc822:{page-envelope:document-lastmodified}}" />
+    <map:generate src="lenya-document:{page-envelope:document-uuid}"/>
+    <map:transform type="uuid2url">
+      <map:parameter name="urls" value="absolute"/>
+    </map:transform>
+    <map:serialize type="xml"/>
+  </map:act>
+</map:match>]]></source>
+    </section>
+
+    <section>
+      <title>Adding BXE Support to the XSLT</title>
+      <p>
+        Now we have to add specific <code>bxe_xpath</code> attributes to the XHTML elements
+        of our page so that BXE knows what can be edited. We update our stylesheet
+        <code>$MODULE_HOME/xslt/foaf2xhtml.xsl</code> and add the attributes when the
+        parameter <code>rendertype</code> equals <code>edit</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[  <xsl:param name="rendertype"/>
+  
+  ...
+      
+  <xsl:template name="bxeAttribute">
+    <xsl:param name="element"/>
+    <xsl:if test="$rendertype = 'edit'">
+      <xsl:attribute name="bxe_xpath">
+        /rdf:RDF/foaf:Person/foaf:<xsl:value-of select="$element"/>
+      </xsl:attribute>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="foaf:Person">
+    <h2>Person Details</h2>
+    <table class="person">
+      <tr>
+        <th>Title:</th>
+        <td>
+          <xsl:call-template name="bxeAttribute">
+            <xsl:with-param name="element">title</xsl:with-param>
+          </xsl:call-template>
+          <xsl:value-of select="foaf:title"/>
+        </td>
+      </tr>
+      <tr>
+        <th>Given name:</th>
+        <td>
+          <xsl:call-template name="bxeAttribute">
+            <xsl:with-param name="element">givenname</xsl:with-param>
+          </xsl:call-template>
+          <xsl:value-of select="foaf:givenname"/>
+        </td>
+      </tr>
+      <tr>
+        <th>Family name:</th>
+        <td>
+          <xsl:call-template name="bxeAttribute">
+            <xsl:with-param name="element">family_name</xsl:with-param>
+          </xsl:call-template>
+          <xsl:value-of select="foaf:family_name"/>
+        </td>
+      </tr>
+      ...
+  </xsl:template>]]></source>
+      <p>
+        Now we're faced with a limitation of BXE: It is not possible to edit attributes in WYSIWYG mode.
+        We'd have to change our XML structure to allow this. For this little tutorial, we'll
+        just edit the element values - <code>foaf:title</code>, <code>foaf:givenname</code>,
+        and <code>foaf:family_name</code>.
+      </p>
+      <p>
+        The <code>rendertype</code> parameter is passed to the stylesheet in
+        <code>$MODULE_HOME/sitemap.xmap</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform src="fallback://lenya/modules/person/xslt/foaf2xhtml.xsl">
+  <map:parameter name="rendertype" value="{request-param:rendertype}"/>
+</map:transform>]]></source>
+    </section>
+    <section>
+      <title>Start Editing</title>
+      <p>
+        Now you should be able to edit your person documents with BXE:
+      </p>
+      <figure src="site:resourceTypeBxe.img" alt="Editing with BXE"/>
+    </section>
+  </body>
+</document>

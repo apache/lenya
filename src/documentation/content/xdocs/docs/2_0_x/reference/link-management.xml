@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Link Management</title>
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      
+      <p>Link Managements deals with internal links, i.e. documents
+        that refer to other documents within the same publication. In Lenya 1.2, links
+        are rewritten each time the URL of the target document changes (see
+        section <a href="site:a-management-1">Link Management</a> in the Lenya 1.2 documentation).
+      </p>
+      <p>
+        In Lenya 2.0, documents are identified and referenced using
+        <acronym title="Universally Unique Identifier">UUID</acronym>s.
+        The UUID of a document never changes, that's why the internal
+        links don't have to be rewritten when a document is moved
+        in the site structure.
+     </p>
+    </section>
+    
+    <section>
+      <title>Syntax for Internal Links</title>
+      
+      <p>
+        Internal links have the following syntax:
+      </p>
+      
+      <source xml:space="preserve">lenya-document:{uuid}[,lang={&#8230;}][,pub={&#8230;}][,area={&#8230;}][,rev={&#8230;}][{queryString}]</source>
+      <ul>
+        <li>
+          The <code>{uuid}</code> value is usually present, but optional.
+          This enables you to create links to "the russian translation of
+          this page" (<code>&lt;a href="lenya-document:,lang=ru"&gt;...</code>).
+          The language selector module makes use of this feature.
+          Other conceivable uses are links to the current document in another area
+          or revision.
+        </li>
+        <li>
+          The parameters <code>lang</code>, <code>pub</code>, <code>area</code>,
+          and <code>rev</code> are optional. If omitted, the corresponding values
+          of the current context and the latest revision are used.
+        </li>
+        <li>
+          The optional query string is not evaluated when resolving the link target.
+          It can be used to provide information for subsequent processing
+          steps (e.g., the <code>UuidToUrlTransformer</code>) and to add request
+          parameters to the resulting HTTP link URL. The query string is separated
+          from the link URL using a question mark.
+        </li>
+      </ul>
+      <p>Some link URI examples:</p>
+      <ul>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0</code> - document in same language</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0,lang=de</code> - document in different language</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0,area=trash</code> - document in different area</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0?uuid2url.extension=rss</code> - HTML link should use a particular extension</li>
+        <li><code>lenya-document:031b21e0-d898-11db-b5f3-e5afac0e35a0?lenya.usecase=bxe.edit</code> - HTML link with request parameter</li>
+      </ul>
+    </section>
+    
+    <section>
+      <title>Specifying the Resource Type Format</title>
+      <p>
+        Sometimes you want to specify the format of the link target. This can be done using the
+        <code>format</code> parameter. A typical use case is the inclusion via CInclude.
+      </p>
+      <p>
+        Imagine you're converting a collection of documents to a list of teasers.
+        The collection source might look like this:
+      </p>
+      <source xml:space="preserve">&lt;col:collection&gt;
+  &lt;col:document uuid="031&#8230;"/&gt;
+  &lt;col:document uuid="a5r&#8230;"/&gt;
+  &#8230;
+&lt;/col:collection&gt;</source>
+      <p>
+        You could use the following XSLT template to generate the CInclude statements for the
+        teaser list:
+      </p>
+      <source xml:space="preserve"><![CDATA[<xsl:template match="col:document">
+  <ci:include src="lenya-document:{@uuid}?format=teaser"/>
+</xsl:template>]]></source>
+      <p>
+        When the resulting XML is processed by
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform type="cinclude"/>]]></source>
+      <p>the teaser version of each document will be included.</p>
+    </section>
+    
+    <section>
+      <title>Converting UUID-based URLs to Web Application URLs</title>
+      <p>
+        The <code>UuidToUrlTransformer</code> is responsible for translating <code>lenya-document:</code>
+        links into the corresponding web application links. The context path or proxy settings
+        are not considered yet, this is the responsibility of the ProxyTransformer (see below).
+        So don't forget to apply the ProxyTransformer after the UuidToUrlTransformer.
+      </p>
+      <p>
+        If your source document contains a link like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="lenya-document:031&#8230;"&gt;News&lt;/a&gt;</source>
+      <p>
+        and your pipeline contains a call to the UuidToUrlTransformer:
+      </p>
+      <source xml:space="preserve"><![CDATA[<map:transform type="uuid2url"/>]]></source>
+      <p>
+        the resulting HTML link will look like this:
+      </p>
+      <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+      
+      <section>
+        <title>Specifying an Extension</title>
+        <p>
+          The UuidToUrlTransformer recognizes the query string parameter
+          <code>uuid2url.extension</code>. You can use it to force a specific extension.
+          For instance
+        </p>
+        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="lenya-document:031&#8230;?uuid2url.extension=rss"&gt;RSS Feed&lt;/a&gt;</source>
+        <p>
+          will result in
+        </p>
+        <source xml:space="preserve">&lt;a type="application/rss+xhtml" href="/default/authoring/news.rss"&gt;RSS Feed&lt;/a&gt;</source>
+      </section>
+    </section>
+    
+    <section>
+      <title>Converting Web Application Links to Servlet Container or Proxy Links</title>
+      
+      <section>
+        <title>The Proxy Transformer</title>
+        <p>
+          The <code>ProxyTransformer</code> converts all web application links to final links
+          by adding the servlet context path or the proxy URL. For instance, if you run your
+          Lenya servlet in Tomcat under the context path <em>lenya14</em>, transforming
+        </p>
+        <source xml:space="preserve">&lt;a href="/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          with the ProxyTransformer
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transform type="proxy"/>]]></source>
+        <p>
+          will result in
+        </p>
+        <source xml:space="preserve">&lt;a href="/lenya14/default/authoring/news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          If you have declared a proxy for the authoring area, the resulting link might look like this:
+        </p>
+        <source xml:space="preserve">&lt;a href="http://cms.mysite.com/news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          Typically, the ProxyTransformer is applied right after the UuidToUrlTransformer.
+        </p>
+        <p>
+          The ProxyTransformer can be used to transform attribute values of elements in arbitrary namespaces.
+          It is recommended to declare a dedicated proxy transformer instance for each type of transformation,
+          for instance <em>proxy-xhtml</em> for XHTML documents and <em>proxy-rng</em> for Relax NG documents.
+          For each namespace and element combination, you have to add a <code><![CDATA[<transform/>]]></code> element
+          to the configuration. The following snippet shows the configuration to convert XHTML links. Beware
+          that the XHTML document format supports various elements and attributes which can contain URLs, so
+          the configuration below won't be sufficient in most cases.
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transformer name="proxy" logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+  <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+  ...
+</map:transformer>]]></source>
+        <p>
+          The next example declares a proxy transformer for Relax NG include statements:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transformer name="proxy-rng" logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+  <transform namespace="http://relaxng.org/ns/structure/1.0" element="include" attribute="href"/>
+</map:transformer>]]></source>
+      </section>
+      <section>
+        <title>The Proxy Input Module</title>
+        <p>
+          The <code>ProxyModule</code> provides the same functionality in sitemaps.
+          It takes a URL as parameter and rewrites it in the same way as the ProxyTransformer:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:parameter name="url" value="{proxy:/default/authoring/news.html}"/>]]></source>
+      </section>
+      
+      <section>
+        <title>Generating Relative URLs</title>
+        <p>
+          In some cases it is convenient to use relative URLs in HTML links. This is especially
+          useful if you want to export the website statically and open it directly from the
+          filesystem or transfer it to a different root path on the web server. In the example
+          above, the relative URL would look like this:
+        </p>
+        <source xml:space="preserve">&lt;a href="../../news.html"&gt;News&lt;/a&gt;</source>
+        <p>
+          Both proxy transformer and proxy module can be configured to generate relative URLs.
+          For the proxy transformer, the configuration looks like this:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transformer name="proxy"
+    logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+  <urls type="relative"/>
+  ...
+</map:transformer>]]></source>
+        <p>
+          Alternatively, you can pass the URL type as a parameter when calling the transformer:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:transform type="proxy">
+  <map:parameter name="urls" value="relative"/>
+</map:transform>]]></source>
+        <p>
+          The configuration of the proxy input module is equivalent, but it doesn't provide
+          an option to pass a parameter yet.
+        </p>
+      </section>
+    </section>
+    
+    <section>
+      <title>URLs in CSS Files</title>
+      <p>
+        URLs in <acronym title="Cascading StyleSheet">CSS</acronym> files are converted
+        to valid links automatically. In your CSS, you can just write
+      </p>
+      <source xml:space="preserve">div.news { background: url('/mypub/live/images/news.png') left top no-repeat }</source>
+      <p>
+        and, according to your proxy settings or context path, this will end up as one of these:
+      </p>
+      <source xml:space="preserve">div.news { background: url('/lenya14/mypub/live/images/news.png') left top no-repeat }</source>
+      <source xml:space="preserve">div.news { background: url('http://mysite.com/images/news.png') left top no-repeat }</source>
+      <source xml:space="preserve">div.news { background: url('../images/news.png') left top no-repeat }</source>
+      <p>
+        This operation cannot be performed by our standard XSLT transformer,
+        because a CSS file is not well-formed XML. The <a
+        href="http://chaperon.sourceforge.net">Chaperon</a> transformer is
+      used instead.
+      </p>
+    </section>
+    
+  </body>
+</document>

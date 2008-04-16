@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>WebDAV quick start</title>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>The WebDAV module is right now in rapid development to overcome some 
+        limitations. More documentation in progress can be found at the <a 
+        href="ext:wiki/lenya/webdav">Lenya wiki webDAV page</a> </p>
+    </section>
+    <section>
+      <title>Linux</title>
+      <p>To get started with WebDAV editing under linux you need to install a 
+        WebDAV client such as <a href="ext:webdav/cadaver">cadaver</a>. </p>
+      <section>
+        <title>Cadaver - command line</title>
+        <p>Most distributions offer a packaged version of <a 
+          href="ext:webdav/cadaver">cadaver</a>.</p>
+        <p>After having cadaver installed open a shell of your choice and type 
+          the following</p>
+        <source>cadaver http://localhost:8888/default/webdav</source>
+        <p>You will be asked for your username and password:</p>
+        <source>Username: lenya
+Password: levi</source>
+        <p>Optional (if you do not like "vi") you can change the default 
+          editor:</p>
+        <source>dav:/default/webdav/> set editor emacs</source>
+        <p>Now you can edit and save your first file via webdav.</p>
+        <source>dav:/default/webdav/> edit tutorial_en.html</source>
+      </section>
+    </section>
+  </body>
+</document>

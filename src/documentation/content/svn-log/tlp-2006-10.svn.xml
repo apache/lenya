@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<log>
+<logentry
+   revision="451921">
+<author>josias</author>
+<date>2006-10-02T08:56:31.808226Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/site/usecases/UploadResource.java</path>
+</paths>
+<msg>invoke workflow event 'edit' when a new file is uploaded. should fix bug #40648</msg>
+</logentry>
+<logentry
+   revision="452024">
+<author>cdupoirieux</author>
+<date>2006-10-02T13:08:27.463778Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/common/odt_to_xhtml.xsl</path>
+<path
+   action="M">/forrest/trunk/whiteboard/plugins/org.apache.forrest.plugin.input.odt/src/documentation/content/xdocs/samples/opendocument-writer.odt</path>
+</paths>
+<msg>It was a little more complicated than I thought.
+Ok, now the styles management is Ok (em, sub, sup and strong at least...)
+I am going to work on the boxes (Warnings, Notes...)</msg>
+</logentry>
+<logentry
+   revision="452337">
+<author>josias</author>
+<date>2006-10-03T08:04:26.295961Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-optional/jcrsource/java/src/org/apache/lenya/cms/jcr/metadata/JCRMetaData.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/metadata/MetaData.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNodeMetaData.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/repository/java/src/org/apache/lenya/cms/repo/adapter/RepoMetaData.java</path>
+</paths>
+<msg>fixed meta data moving/copying: when a document is moved from one area to another, the metadata has to be moved completely, including workflow etc. fixes bug #40627</msg>
+</logentry>
+<logentry
+   revision="452340">
+<author>josias</author>
+<date>2006-10-03T08:11:06.255023Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/xslt/menu/filter-menu.xsl</path>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/menu/menu2xhtml.xsl</path>
+</paths>
+<msg>remove menu blocks/items which will not be displayed in the current view ('area') before the UsecaseMenuTransformer step. this is a performance optimization, it reduces the number of usecase precondition checks in the menu generation.</msg>
+</logentry>
+<logentry
+   revision="452347">
+<author>nettings</author>
+<date>2006-10-03T08:33:27.491993Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/usecasedocument/usecases/createUsecaseDocument.jx</path>
+</paths>
+<msg>fixes mismatch in usecasedocument module between view and model (causing
+npe). thanks to richard frovarp for the report and the fix.
+http://issues.apache.org/bugzilla/show_bug.cgi?id=40664
+
+</msg>
+</logentry>
+<logentry
+   revision="452359">
+<author>josias</author>
+<date>2006-10-03T09:06:48.372675Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/restore.jx</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/i18n/cmsui_de.xml</path>
+</paths>
+<msg>fixed i18n and layout of restore confirmation screen</msg>
+</logentry>
+<logentry
+   revision="452400">
+<author>josias</author>
+<date>2006-10-03T10:21:39.503618Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/java/org/apache/lenya/cms/site/Label.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleLink.java</path>
+<path
+   copyfrom-path="/lenya/trunk/src/java/org/apache/lenya/cms/site/Label.java"
+   copyfrom-rev="452391"
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/site/AbstractLink.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeLink.java</path>
+</paths>
+<msg>renamed Label to AbstractLink to make the naming more consistent. now we have 'SiteTreeLink extends AbstractLink implements Link'.</msg>
+</logentry>
+<logentry
+   revision="452456">
+<author>cdupoirieux</author>
+<date>2006-10-03T12:39:28.840914Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/common/odt_to_xhtml.xsl</path>
+</paths>
+<msg>Ordered List management.
+I have change the key management. (But I think it was not working at all !)
+</msg>
+</logentry>
+<logentry
+   revision="452873">
+<author>cdupoirieux</author>
+<date>2006-10-04T12:21:01.300329Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/common/odt_to_xhtml.xsl</path>
+<path
+   action="M">/forrest/trunk/whiteboard/plugins/org.apache.forrest.plugin.input.odt/src/documentation/content/xdocs/samples/opendocument-writer.odt</path>
+</paths>
+<msg>Suppress a $ that should not be there in the list management,
+Add a sample of a two level list,
+Add a simple Boxes management (Fixme, Warning, Notes) which is not XHTML yet...</msg>
+</logentry>
+<logentry
+   revision="453159">
+<author>cdupoirieux</author>
+<date>2006-10-05T09:31:28.458158Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/common/odt_to_xhtml.xsl</path>
+<path
+   action="M">/forrest/trunk/whiteboard/plugins/org.apache.forrest.plugin.input.odt/resources/stylesheets/odt-to-forrest-xhtml.xsl</path>
+<path
+   action="M">/forrest/trunk/whiteboard/plugins/org.apache.forrest.plugin.input.odt/src/documentation/content/xdocs/samples/opendocument-writer.odt</path>
+<path
+   copyfrom-path="/forrest/trunk/plugins/org.apache.forrest.plugin.input.OpenOffice.org/resources.xmap"
+   copyfrom-rev="452028"
+   action="A">/forrest/trunk/whiteboard/plugins/org.apache.forrest.plugin.input.odt/resources.xmap</path>
+<path
+   action="M">/forrest/trunk/whiteboard/plugins/org.apache.forrest.plugin.input.odt/input.xmap</path>
+</paths>
+<msg>Images management.
+(inspired by the OOo plugin.)</msg>
+</logentry>
+<logentry
+   revision="453206">
+<author>nettings</author>
+<date>2006-10-05T12:41:01.495673Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt/profile2xhtml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt/xml2xhtml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt/xml2nicexml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/config/menu.xsp</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/module.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt/test.xhtml</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/config</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt/test.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/resources</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/menus.xmap</path>
+</paths>
+<msg>new profiling module (uses cocoon profiler).
+adds a menu item to the "file" menu and provides
+xslts for sourcecode prettyprinting and xml source
+to xhtml rendering (very naive implementation atm).
+</msg>
+</logentry>
+<logentry
+   revision="453316">
+<author>chestnut</author>
+<date>2006-10-05T19:01:27.846782Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/java/src/org/apache/lenya/cms/editors/fckeditor/Fckeditor.java</path>
+</paths>
+<msg>reload content during fckeditor save after xslt/before validation
+Thanks to Richard Frovarp for catching this bug.
+This should fix bug 40689</msg>
+</logentry>
+<logentry
+   revision="453639">
+<author>cdupoirieux</author>
+<date>2006-10-06T15:31:02.463472Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/common/odt_to_xhtml.xsl</path>
+</paths>
+<msg>text:line-break should just be transfomed into &lt;br/&gt;</msg>
+</logentry>
+<logentry
+   revision="454171">
+<author>nettings</author>
+<date>2006-10-08T16:43:06.346676Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/profiling/config/menu.xsp</path>
+<path
+   action="M">/lenya/trunk/src/modules/profiling/menus.xmap</path>
+</paths>
+<msg>add missing context path to profiler URL
+
+</msg>
+</logentry>
+<logentry
+   revision="462532">
+<author>chestnut</author>
+<date>2006-10-10T19:50:19.557047Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk/src/pubs/default/config/ac/policies/authoring"
+   copyfrom-rev="462490"
+   action="A">/lenya/trunk/src/pubs/default/config/ac/policies/webdav</path>
+</paths>
+<msg>add policy for webDAV</msg>
+</logentry>
+<logentry
+   revision="462611">
+<author>chestnut</author>
+<date>2006-10-10T22:28:29.899590Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/usecases/webdav/filePropfind.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/usecases/webdav/propfind.jx</path>
+</paths>
+<msg>use path instead of id for webDAV propfind listing</msg>
+</logentry>
+<logentry
+   revision="463143">
+<author>nettings</author>
+<date>2006-10-12T07:12:21.892355Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/resources/misc/inc/config.xml</path>
+</paths>
+<msg>adds a textarea-based cut-and-paste dialog to bxe (needed because the
+normal mechanism does not work in firefox due to javascript security
+restrictions). thanks to chregu for the code and to renaud for preparing
+the patch.
+
+</msg>
+</logentry>
+<logentry
+   revision="463265">
+<author>cdupoirieux</author>
+<date>2006-10-12T14:58:01.807429Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/common/odt_to_xhtml.xsl</path>
+</paths>
+<msg>RollBack of modifications which should be applied in Forrest...</msg>
+</logentry>
+<logentry
+   revision="464702">
+<author>nettings</author>
+<date>2006-10-16T22:43:41.060176Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/usecases/insertAsset.jx</path>
+</paths>
+<msg>Added a page:title to FCKEditor insertAsset usecase.
+This prevents IE from collapsing the title tag and choking on the page.
+Thanks to Richard Frovarp for the fix.
+</msg>
+</logentry>
+<logentry
+   revision="467288">
+<author>andreas</author>
+<date>2006-10-24T09:17:49.678796Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/LanguageExistsAction.java</path>
+</paths>
+<msg>LanguageExistsAction: Replaced call to SiteUtil by direct API calls</msg>
+</logentry>
+<logentry
+   revision="467289">
+<author>andreas</author>
+<date>2006-10-24T09:18:33.562449Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+</paths>
+<msg>SiteUtil: consider language in contains() method</msg>
+</logentry>
+<logentry
+   revision="467908">
+<author>andreas</author>
+<date>2006-10-26T08:22:56.026874Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/site/SimpleSiteManagerTest.java</path>
+</paths>
+<msg>Added failing test for bug 40666 (navigation title does not stick)</msg>
+</logentry>
+<logentry
+   revision="467920">
+<author>andreas</author>
+<date>2006-10-26T08:51:23.890771Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/site/SimpleSiteManagerTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeNodeImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeLink.java</path>
+</paths>
+<msg>Save sitetree link after changing the label. This fixes bug #40666.</msg>
+</logentry>
+<logentry
+   revision="467921">
+<author>andreas</author>
+<date>2006-10-26T08:54:56.053096Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/samples/xhtml.xml</path>
+</paths>
+<msg>Set title of XHTML document. This fixes bug #40709. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="467922">
+<author>andreas</author>
+<date>2006-10-26T09:00:30.846197Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/ChangePasswordAdmin.java</path>
+</paths>
+<msg>Set userId exit parameter for ChangePasswordAdmin usecase. This fixes bug 40779. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="467923">
+<author>andreas</author>
+<date>2006-10-26T09:05:56.995492Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/tinymce/usecases/insertAsset.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/usecases/insertAsset.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/cforms/usecases/dynamicrepeater_template.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/usecases/upload-resource.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/usecases/insertAsset.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/usecases/upload.jx</path>
+</paths>
+<msg>Setting titles of several usecases, see bug 40767. Thanks to Richard Frovarp for the patch.</msg>
+</logentry>
+<logentry
+   revision="467930">
+<author>andreas</author>
+<date>2006-10-26T09:25:35.291467Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/i18n.xmap</path>
+</paths>
+<msg>Use resource in i18n.xmap to avoid setting a transformer without a generator. This fixes bug 40675.</msg>
+</logentry>
+<logentry
+   revision="467936">
+<author>andreas</author>
+<date>2006-10-26T09:47:29.168883Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/resources/css/boxes.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/svg/shape/tab.js</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/util/page2xhtml.xsl</path>
+</paths>
+<msg>Using extra &lt;div&gt; for lenya box bottoms. Looks good on Mac OS with Firefox 2.0.</msg>
+</logentry>
+<logentry
+   revision="467943">
+<author>andreas</author>
+<date>2006-10-26T10:01:33.057518Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>[minor change] code formatting</msg>
+</logentry>
+<logentry
+   revision="467948">
+<author>andreas</author>
+<date>2006-10-26T10:25:54.928508Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/usecases/insertAsset.jx</path>
+</paths>
+<msg>Don't treat the 'insert asset' button as usecase submit button. This avoids the NPE in Create.checkPreConditions(), see bug 40558.</msg>
+</logentry>
+<logentry
+   revision="467952">
+<author>andreas</author>
+<date>2006-10-26T10:37:22.871987Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/metadata/usecases/Metadata.java</path>
+</paths>
+<msg>Invoke workflow event when changing meta data. This fixes bug 40568.</msg>
+</logentry>
+<logentry
+   revision="467996">
+<author>nettings</author>
+<date>2006-10-26T13:24:33.774541Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules/profiling/xslt/xml2xhtml.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/resources/css</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/resources/css/xmlverbatim.css</path>
+<path
+   action="M">/lenya/trunk/src/modules/profiling/sitemap.xmap</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt/xmlverbatim.xsl</path>
+<path
+   action="A">/lenya/trunk/src/modules/profiling/xslt/xmlverbatimwrapper.xsl</path>
+</paths>
+<msg>added xmlverbatim xml-to-html syntax highlighter. thanks to oliver
+becker for the contribution. i have slightly amended the license lingo
+to follow the examples i found in the cocoon code.
+oliver's original contribution statement can be found at 
+http://mail-archives.apache.org/mod_mbox/lenya-dev/200610.mbox/browser 
+.
+
+</msg>
+</logentry>
+<logentry
+   revision="468060">
+<author>andreas</author>
+<date>2006-10-26T16:39:52.472732Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/test/org/apache/lenya/cms/site/tree/SiteTreeNodeImplTest.java</path>
+</paths>
+<msg>Update test after changing API. This fixes bug 40821. Thanks to Renaud Richardet for the patch.</msg>
+</logentry>
+<logentry
+   revision="468474">
+<author>nettings</author>
+<date>2006-10-27T17:44:55.514634Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java/src/org</path>
+<path
+   action="D">/lenya/trunk/src/webapp/lenya/usecases/usecases-util.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/flow</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe-close.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java/src</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java/src/org/apache/lenya/cms</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java/src/org/apache/lenya/cms/editors/cforms</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/flow/lenyadoc-utils.js</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java/src/org/apache</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java/src/org/apache/lenya/cms/editors</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/flow/customFlow.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/cforms/module.xml</path>
+<path
+   copyfrom-path="/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/DummyCFormsUsecase.java"
+   copyfrom-rev="468313"
+   action="A">/lenya/trunk/src/modules/cforms/java/src/org/apache/lenya/cms/editors/cforms/CForms.java</path>
+<path
+   action="D">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/DummyCFormsUsecase.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecases/usecases.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/cforms/config/cocoon-xconf/usecase-edit.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/cforms/java/src/org/apache/lenya</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/UsecaseView.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecases/usecase.xmap</path>
+</paths>
+<msg>usecase handler cleanup.
+
+[1] remove all cforms-specific code from usecases.js and
+UsecaseView.java
+[2] split usecases.js into maintainable chunks
+[3] introduce a mechanism to add custom flow code (see javadocs in
+UsecaseView.java and read usecases.js for details)
+[4] remove DummyCFormsUsecase.java and cforms-specific usecases-utils.js
+from global code
+[5] add CForms.java usecase to cforms module
+[6] add custom flow to cforms module to restore functionality
+[7] tweak bxe usecases to not create continuations (this restores their
+original behaviour which was changed by the previous revision of
+usecases.js)
+
+HEADSUP: cforms saving is currently broken, and there is instrumentation
+code left in modules/cforms/flow/customFlow.js.
+
+</msg>
+</logentry>
+<logentry
+   revision="468661">
+<author>andreas</author>
+<date>2006-10-28T08:23:05.273263Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/test/org/apache/lenya/cms/site/tree/SiteTreeNodeImplTest.java</path>
+</paths>
+<msg>Removed some offending lines from SiteTreeNodeImplTest. This funcationality is now tested by the core SiteManagerTest.</msg>
+</logentry>
+</log>

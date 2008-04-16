@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Apache Lenya - Open Source Content Management (Java/XML)</title>
+  </header>
+  <body>
+    <p>
+      <img src="site:screenshotMenubar.img" alt="Screenshot of the Apache Lenya menu bar"/>
+    </p>
+    <p>
+      Apache Lenya is an Open Source Java/XML Content Management System and comes with revision
+      control, multi-site management, scheduling, search, WYSIWYG editors, and workflow.
+      Please see some <a href="screenshots.html">screenshots</a> or try the <a href="ext:lenya.demo.20">Demo</a>.
+    </p>
+    
+    <section id="download">
+      <title>Downloads</title>
+      <p>
+        The current stable version of Apache Lenya is 2.0. This is the recommended version
+        for production use. You will at least need the Java 2 Platform, Standard Edition,
+        version 1.4.2. Please follow the <a href="site:install20">installation instructions</a>.
+      </p>
+      <ul>
+        <li>
+          Lenya 2.0
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.zip">Windows source code</a> (ZIP archive),
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.zip.asc">ASC Signature</a>,
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.zip.md5">MD5 Checksum</a>
+        </li>
+        <li>
+          Lenya 2.0
+          <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-2.0-src.tar.gz">Unix source code</a> (tar.gz archive),
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.asc">ASC Signature</a>,
+          <a href="http://www.apache.org/dist/lenya/SOURCES/apache-lenya-2.0-src.tar.gz.md5">MD5 Checksum</a>
+        </li>
+      </ul>
+      <p>
+        At the moment we don't provide binary versions, you'll find more information on the
+        <a href="site:download20">download page</a>.
+      </p>
+      <p>
+        Previous releases can be obtained from the
+        <a href="http://www.apache.org/dyn/closer.cgi/lenya/">distribution page</a>.
+      </p>
+      <p>
+        The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more
+        information on ASC Signatures and MD5 checksums</a>.
+      </p>
+    </section>
+    
+    <section>
+      <title>Features</title>
+      <p>
+        If you have additional requirements beyond the features listed below,
+        you have access to all <a href="ext:cocoon.2.1.features">Apache Cocoon
+        features</a> to develop them.
+      </p>
+      <section>
+        <title>Authoring</title>
+        <ul>
+          <li>
+            Browser-based WYSIWYG Editors are provided that validate input against a RELAX
+            NG Schema. This prevents invalid markup as produced by other WYSIWYG
+            editors and enables enforcement of web site style guidelines. Lenya ships with the
+            <a href="http://bxe.oscom.org">BXE</a> and <a href="ext:kupu">Kupu</a> editors out
+            of the box.  Asset management and link management are integrated into BXE and Kupu.
+          </li>
+          <li>
+            A forms editor is available for situations where a full-blown 
+            WYSIWYG editor is overkill or where legacy browsers need to be supported.
+          </li>
+          <li>
+            Pages that are being edited are automatically locked for other users, preventing conflicting changes 
+            to the same page.
+          </li>
+          <li>
+            Each edit of a page creates a new revision, and you can revert to any previous revision of a page.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Workflow</title>
+        <ul>
+          <li>
+            Lenya includes a customizable workflow engine that uses an easy XML format to define workflows. 
+            Standard one- and two-stage workflows are included. Users can be notified by email about pending approvals.
+          </li>
+          <li>
+            Workflow events such as publishing or deactivating a page can be scheduled.
+          </li>
+          <li>
+            Separate authoring, staging and live areas are supported. For convenience, the staging area is 
+            disabled by default.
+          </li>
+          <li>
+            All workflow steps are logged, providing an audit trail.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Internationalization</title>
+        <ul>
+          <li>
+            Pages can be created in multiple languages with no impact on your site structure. Lenya automatically 
+            displays your page in the default languge if it is not available in a specific language.
+          </li>
+          <li>
+            The user interface is currently localized in Spanish, Italian, French, German, English, Dutch and Japanese.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Layout</title>
+        <ul>
+          <li>
+            The "publications" concept allows reuse of the information architecture of a site and brings modularity 
+            to the content level. Different publications (sites) can share content and business logic, and new 
+            publications can be created with a cloning process.
+          </li>
+          <li>
+            XHTML+CSS templating is supported, eliminating the need to learn yet another templating language. 
+            Wherever possible, Lenya uses CSS for styling, thereby enforcing the separation of content and layout.
+          </li>
+          <li>
+            The navigation framework automatically creates navigation items such as menus, breadcrumb paths and tabs. 
+            A site map can be easily created.
+          </li>
+          <li>
+            Lenya produces clean URLs without request parameters and is thus optimally accessible to search engines.
+          </li>
+          <li>
+            There are no restrictions on the nesting of templates. You can use 
+            any template you have defined at any level of your site structure thanks to the URI parameterizer.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Site Management</title>
+        <ul>
+          <li>
+            You can move, copy, rename, archive or delete individual pages or whole parts 
+            of your site with an easy to use site view that shows you the pages of your site in an explorer-like view.
+          </li>
+          <li>
+            Each page has tabs for easy access to meta data, assets, workflow status, revisions, access control 
+            and scheduling.
+          </li>
+          <li>
+            The archive function allows you to deactiviate pages and store them in an archive.
+          </li>
+          <li>
+            Deleted pages can be retrieved from the trash.
+          </li>
+          <li>
+            Each page can have Dublin Core metadata assigned. Other metadata standards can be added if required.
+          </li>
+          <li>
+            Asset management allows you to keep track of images and documents that belong to a page.
+          </li>
+          <li>
+            Link management ensures that internal links are not shown if the target page doesn't exist or the 
+            user has no access to it. Link management also warns users about broken links when they publish a page.
+          </li>
+          <li>
+            Before publishing a page, Lenya checks whether parent pages are already published, to avoid inconsistent sites.
+          </li>
+          <li>
+            Deployment is flexible: Sites can be served dynamically by the authoring server (for small deployments) 
+            or another servlet container. It is also possible to export content statically or to use Apache HTTP Server as a proxy.
+          </li>
+          <li>
+            If used with a reverse proxy, URLs can be rewritten based on the site structure of 
+            the live site.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Security</title>
+        <ul>
+          <li>
+            Each page or parts of your site can be protected by SSL. You can protect just the parts of your site that need 
+            protection for best performance.
+          </li>
+          <li>
+            The access control mechanism allows you to restrict access to parts of your site to members of a group or 
+            individuals. You can restrict access by function, such as viewing, editing, approval or 
+            administration.
+          </li>
+          <li>
+            Users can be authenticated against an LDAP server.
+          </li>
+          <li>
+            Access can also be controlled by IP ranges.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Misc</title>
+        <ul>
+          <li>
+            A Windows Installer makes installation on Windows a 3-click process.
+            <em>(The binary version and installer are not available in the release 2.0.
+              You find more information on the <a href="site:download20">download page</a>.)</em>
+          </li>
+          <li>
+            Apache Lucene is integrated for full-text and fielded searching.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <title>Under the Hood</title>
+        <ul>
+          <li>
+            Lenya is based on Apache Cocoon. All Cocoon components can be used to develop customized functionality.
+          </li>
+          <li>
+            Lenya uses Unit Tests to discover regressions in the code.
+          </li>
+          <li>
+            A publication API defines an interface for common CMS operations.
+          </li>
+          <li>
+            A "fallback" mechanism allows you to selectively override core functionality in your site where needed. 
+            Default implementations are provided for convenience and ease of development.
+          </li>
+          <li>
+            Ant is used for portable scripting.
+          </li>
+        </ul>
+      </section>
+    </section>
+  </body>
+</document>

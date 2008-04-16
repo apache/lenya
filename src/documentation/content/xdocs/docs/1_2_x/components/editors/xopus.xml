@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: xopus.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document> 
+
+<header> 
+    <title>Xopus</title>
+     
+     
+     
+</header> 
+<body> 
+
+<section>
+<title>About Xopus</title>
+<p>Xopus is a browser based validating in-place wysiwyg XML editor. It uses Javascript, XML Schema and XSLT.
+    At this time, it only works on Internet Explorer. If you need a cross-platform solution, take a look at
+    BXE. Note that Xopus is not open source, but a commerical product by Q42.</p>
+</section>
+    
+<section>
+<title>Demo</title>
+<p>There is an online <a href="http://www.xopus.com/demo/index.html">XOPUS demo</a> available. You need Internet
+    Explorer 5.5 or newer to view the demo.</p>
+</section>
+
+<section>
+<title>Configuration</title>
+<p>Lenya is expecting an <em>@XOPUS:CONTEXT@</em> (e.g. Xopus-2.1.66) directory 
+within your <em>@XOPUS:PATH@</em> (e.g. <em>webapps/ROOT</em>) directory. 
+<em>@XOPUS:CONTEXT@</em> and <em>@XOPUS:PATH@</em> are configured 
+within your <em>local.build.properties</em> (xopus.context resp. xopus.path). 
+The path is relative to <em>usecase.xmap</em>. 
+</p>
+</section>
+
+<section>
+<title>Saving via POST</title>
+<p>To enable saving via POST, one needs to modify <code>$XOPUS/xopusPlugins/datadriver.js</code> as follows</p>
+<source>
+<![CDATA[
+    // Save data START
+    alert('Save XML via POST');
+    var result = Application.sendXML(doc, 'POST', name);
+
+    switch (result.status)
+    {
+      case 200:
+        //OK
+        var resultXML = result.responseXML;
+        alert('XML saved');
+        return;
+      case -1:
+        alert('Error while saving ' + name + ':\n\n' + result.responseText);
+        break;
+      default:
+        alert('Server responded not ok while saving ' + name + ':\n\nstatus:' + result.status + '\nmessage: ' + resul
+t.responseText);
+    }
+    // Save data END
+]]>
+</source>
+<p>
+You may change the text of the alerts by something else.
+</p>
+</section>
+
+<section>
+<title>Exit Xopus</title>
+<p>To exit Xopus one needs to modify <code>$XOPUS/xopusPlugins/cmsdriver.js</code> as follows</p>
+<source>
+<![CDATA[
+  getExitURL: function(path)
+  {
+    exitURL = path.substring(0, path.indexOf('?'));
+    alert('Exit to: ' + exitURL);
+    return exitURL;
+  },
+]]>
+</source>
+<p>
+You may replace the text of the alert by something else.
+</p>
+</section>
+
+<section>
+<title>Making a page editable with Xopus: Schemas, Views (XSLT) and Menus</title>
+<p>Xopus needs an XML Schema for validation and an XSLT to view the document. The Schemas and XSLTs need to be located at:</p>
+<source>
+<![CDATA[
+$PUBLICATION/config/doctypes/schemas/$DOCTYPE.xsd
+$PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl
+]]>
+</source>
+<p>
+You might want to use <a href="http://www.thaiopensource.com/relaxng/trang.html">Trang</a> to generate XML Schemas.
+</p>
+<p>
+Editing with Xopus is implemented as a usecase. One can add a menu item as follows:
+</p>
+<source>
+<![CDATA[
+<item uc:usecase="xopus" uc:step="open" href="?doctype=$DOCTYPE">Edit&#160;with&#160;Xopus</item>
+]]>
+</source>
+<p>In addition, you may want to study the oscom publication which has an Xopus integration example, 
+    as well as the root xopus.xmap, the xopus.xmap in the oscom publication, and the section in 
+    usecase.xmap pertaining to xopus. This will help you understand how the integration was done
+    (which admittedly is a bit clunky as it predates many Lenya concepts).
+    </p>
+</section>
+<section>
+<title>Things to watch out for</title>
+<section>
+    <title>Check your Internet Explorer cache settings</title>
+<p>Make sure that the page is loaded from scratch everytime you visit it, because
+otherwise you'll always see a cached version. This cached version will be
+saved if you click on 'save' in Xopus.</p>
+</section>
+<section>
+    <title>Check your local.build.properties</title>
+<p>Your variable settings could look like this:</p>
+<source>
+<![CDATA[
+  xopus.context=Xopus-2.1.72   root directory for all Xopus files
+  xopus.path=../../ROOT        relative path from usecase.xmap to Xopus root
+                               directory
+]]>
+</source>
+</section>
+    <section>
+    <title>Check your schema files</title>
+<p>I had troubles with schemas including other schema files. You have to insert a
+separate pipeline for this kind of architecture. Unfortunately I couldn't
+figure out if I had to put this matcher in
+'$PUBLICATION/publication-sitemap.xmap' or elsewhere. I ended up using one and
+only one schema file for a specific doctype.</p>
+</section>
+<section>
+    <title>Check your CSS files</title>
+<p>You have to provide a stylesheet for Xopus in
+'$PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl'. If you use a *.css file to
+control layout and style of the XML file displayed by Xopus, you'll have to
+insert a pipeline matcher in '$PUBLICATION/publication-sitemap.xmap':</p>
+<source>
+<![CDATA[
+  <map:pipeline>
+    <map:match pattern="**/xopus.css">
+      <map:read src="resources/shared/css/xopus.css" mime-type="text/css"/>
+    </map:match>
+  </map:pipeline>
+]]>
+</source>
+</section>
+<section>
+<title>Missing preparexinclude.xsl</title>
+<p>If Xopus complains that it cannot find <code>$XOPUS/xopusPlugins/preparexinclude.xsl</code>, then add the following at that location:</p>
+<source>
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+                       xmlns:x="http://www.w3.org/2001/XInclude"
+                       xmlns:xlink="http://www.w3.org/1999/xlink"
+                       xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                       >
+
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+</xsl:stylesheet>]]>
+</source>
+</section>
+</section>
+</body>
+</document>

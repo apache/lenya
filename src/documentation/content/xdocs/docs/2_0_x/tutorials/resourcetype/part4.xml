@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Creating a Resource Type, Part 4: Editing</title>
+  </header>
+  <body>
+    
+    <p>
+      In this section we make our person documents editable.
+    </p>
+    
+    <section>
+      <title>Adding the Relax NG Schema</title>
+      <p>
+        When we allow to edit documents, we have to make sure that the resulting
+        XML conforms to the FoaF specification. For this purpose we provide a
+        <a href="http://relaxng.org">Relax NG</a> schema for the FoaF person XML format.
+        Here's a simple schema, created with <a href="http://www.thaiopensource.com/relaxng/trang.html">Trang</a>,
+        which - according to the resource type declaration - has to be located at
+        <code>$MODULE_HOME/resources/schemas/foaf.rng</code>:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="rdf:RDF">
+      <element name="foaf:Person">
+        <attribute name="rdf:ID"><data type="NCName"/></attribute>
+        <element name="foaf:title"><text/></element>
+        <element name="foaf:givenname"><text/></element>
+        <element name="foaf:family_name"><text/></element>
+        <element name="foaf:mbox">
+          <attribute name="rdf:resource">
+            <data type="anyURI"/>
+          </attribute>
+        </element>
+        <element name="foaf:phone">
+          <attribute name="rdf:resource">
+            <data type="NMTOKEN"/>
+          </attribute>
+        </element>
+        <element name="foaf:workplaceHomepage">
+          <attribute name="rdf:resource">
+            <data type="anyURI"/>
+          </attribute>
+        </element>
+      </element>
+    </element>
+  </start>
+</grammar>
+      ]]></source>
+    </section>
+
+    <section>
+      <title>Enabling the One-Form Editor</title>
+      
+      <p>
+        In the first step we don't want to invest much time, so we just
+        enable the one-form editor. We have to add the corresponding menu item
+        to our <code>menu.xsp</code> file. But since we want to enable it only
+        for person documents, we have to test if the currently displayed document
+        has the <em>person</em> resource type. Here's the extended <code>menu.xsp</code>
+        file - note that a new namespace declaration (<code>xmlns:input</code>)
+        has been added:
+      </p>
+      <source xml:space="preserve"><![CDATA[<?xml version="1.0"?>
+<xsp:page 
+    language="java" 
+    xmlns:xsp="http://apache.org/xsp"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+    xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+    xmlns="http://apache.org/cocoon/lenya/menubar/1.0">
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+  </xsp:structure>
+  
+  <menu>
+    <menus>
+      <menu i18n:attr="name" name="File">
+        <block areas="site authoring">
+          <item uc:usecase="sitemanagement.create" href="?doctype=person">
+            <i18n:translate>
+              <i18n:text>New ... Document</i18n:text>
+              <i18n:param>Person</i18n:param>
+            </i18n:translate>
+          </item>
+        </block>
+      </menu>
+      
+      <menu i18n:attr="name" name="Edit">
+        <xsp:logic>
+          try {
+              Object doc = <input:get-attribute module="page-envelope"
+                  as="object" name="document"/>;
+              if (doc instanceof Document &amp;&amp; ((Document) doc).exists()) {
+                  String doctype = <input:get-attribute module="page-envelope"
+                      as="string" name="document-type"/>;
+                  if ("person".equals(doctype)) {
+                      <block areas="authoring">
+                        <item uc:usecase="editors.oneform" href="?">
+                          <i18n:text>With one Form</i18n:text>
+                        </item>
+                      </block>
+                  }
+              }
+          }
+          catch (Exception e) {
+              throw new ProcessingException("Error during menu generation: ", e);
+          }
+        </xsp:logic>
+      </menu>
+      
+    </menus>
+  </menu>
+</xsp:page>
+      ]]></source>
+      
+      <p>
+        Now you should be able to edit your person document with the one-form editor.
+      </p>
+      <p>
+        In the <a href="site:newResourceTypePart5">next section</a> we explain how
+        to make person documents editable with the BXE WYSIWYG editor.
+      </p>
+      
+    </section>    
+  </body>
+</document>

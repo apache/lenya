@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<log>
+<logentry
+   revision="350228">
+<author>andreas</author>
+<date>2005-12-01T11:07:34.364164Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/Path.java</path>
+</paths>
+<msg>JCR integration: fixed Path.append(Path) - avoid changing UnmodifiableList</msg>
+</logentry>
+<logentry
+   revision="350230">
+<author>andreas</author>
+<date>2005-12-01T11:41:27.850389Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/JCRRepositoryTest.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/ResourceProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/lenya.roles</path>
+</paths>
+<msg>JCR integration: using Property.getLength() instead of custom property for Document.getContentLength()</msg>
+</logentry>
+<logentry
+   revision="350257">
+<author>andreas</author>
+<date>2005-12-01T14:21:31.198282Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/Area.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/JCRSession.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/AbstractNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/AreaProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/migration/Migrate14.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/SiteNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/RepositoryFacade.java</path>
+</paths>
+<msg>Added method Area.getAreaID(), implemented NodeProxy.toString() to improve debugging</msg>
+</logentry>
+<logentry
+   revision="350268">
+<author>andreas</author>
+<date>2005-12-01T16:03:49.583459Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/mock</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata/MetaDataRegistry.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata/impl/ElementImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/JCRRepositoryTest.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata/MetaData.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata/impl</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/JCRRepository.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/DocumentProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jackrabbit/repository/repository/nodetypes/custom_nodetypes.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/MetaDataProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/JCRSession.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata/Element.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata/impl/MetaDataRegistryImpl.java</path>
+<path
+   action="A">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/mock/TestElementSet.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/Repository.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/ResourceProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/RepositoryFacade.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/metadata/ElementSet.java</path>
+</paths>
+<msg>repo layer: added meta data handling</msg>
+</logentry>
+<logentry
+   revision="350270">
+<author>andreas</author>
+<date>2005-12-01T16:12:59.307448Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/sitemap.xmap</path>
+</paths>
+<msg>[minor change] reverted accidential check-in</msg>
+</logentry>
+<logentry
+   revision="350280">
+<author>andreas</author>
+<date>2005-12-01T17:20:21.100838Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/ContentNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/SiteNode.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/SiteProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/JCRRepositoryTest.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/ContentNode.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/SiteNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/Site.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/RepositoryFacade.java</path>
+</paths>
+<msg>Repo layer: added method Site.move()</msg>
+</logentry>
+<logentry
+   revision="350281">
+<author>andreas</author>
+<date>2005-12-01T17:26:38.298164Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/ContentNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/AbstractNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/SiteNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/RepositoryFacade.java</path>
+</paths>
+<msg>JCR integration: simplified node removal</msg>
+</logentry>
+<logentry
+   revision="351654">
+<author>andreas</author>
+<date>2005-12-02T09:52:03.321820Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/avalon/ConfigurableElementSet.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/avalon/RepositoryFactory.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/avalon/RepositoryFactoryImpl.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repo/avalon</path>
+</paths>
+<msg>Repo layer: added Avalon-based RepositoryFactory</msg>
+</logentry>
+<logentry
+   revision="351656">
+<author>andreas</author>
+<date>2005-12-02T09:52:49.819991Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/ContentSource.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/ContentSourceFactory.java</path>
+</paths>
+<msg>Repo layer: Added ContentSource to access repository content</msg>
+</logentry>
+<logentry
+   revision="351677">
+<author>andreas</author>
+<date>2005-12-02T10:59:55.781255Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/webapp-build.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/JCRRepositoryTest.java</path>
+<path
+   action="A">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/valid.xml</path>
+<path
+   action="A">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/schema.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/ResourceProxy.java</path>
+<path
+   action="A">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/invalid.xml</path>
+</paths>
+<msg>Repo layer: implemented document content validation</msg>
+</logentry>
+<logentry
+   revision="351685">
+<author>andreas</author>
+<date>2005-12-02T11:16:15.444859Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/jackrabbit/repository/repository/nodetypes/custom_nodetypes.xml</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/ContentNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/Content.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/test/org/apache/lenya/cms/jcr/JCRRepositoryTest.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repo/ContentNode.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/migration/Migrate14.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/ContentProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/SiteNodeProxy.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/jcr/java/src/org/apache/lenya/cms/jcr/mapping/RepositoryFacade.java</path>
+</paths>
+<msg>Repo layer: using JCR UUIDs for content node IDs</msg>
+</logentry>
+<logentry
+   revision="354395">
+<author>josias</author>
+<date>2005-12-06T10:40:50.452467Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/targets/properties-build.xml</path>
+<path
+   action="A">/lenya/branches/BRANCH_1_2_X/lib/endorsed</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/targets/webapp-build.xml</path>
+</paths>
+<msg>Applied a patch by Felix Roethenbacher, s.t. Lenya also works with Cocoon 2.1.8 (see bug #36382). Thanks Felix.</msg>
+</logentry>
+<logentry
+   revision="354396">
+<author>josias</author>
+<date>2005-12-06T10:42:07.655255Z</date>
+<paths>
+<path
+   action="D">/lenya/branches/BRANCH_1_2_X/lib/xercesImpl-2.6.2.jar</path>
+<path
+   action="D">/lenya/branches/BRANCH_1_2_X/lib/xml-apis.jar</path>
+</paths>
+<msg>These libraries are now taken from cocoon's lib/endorsed directory, so they can be removed from Lenya.</msg>
+</logentry>
+<logentry
+   revision="354402">
+<author>josias</author>
+<date>2005-12-06T11:01:34.074839Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/build.properties</path>
+</paths>
+<msg>[minor] removed comment, because Lenya should now work with Cocoon 2.1.8</msg>
+</logentry>
+<logentry
+   revision="354773">
+<author>edith</author>
+<date>2005-12-07T15:30:12.151809Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecases/usecases.js</path>
+</paths>
+<msg>After the call of sendPageAndWait, a new request is created. Get the context from it. fix bug 37534</msg>
+</logentry>
+<logentry
+   revision="355010">
+<author>michi</author>
+<date>2005-12-08T06:45:42.780244Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/lenya.sh</path>
+</paths>
+<msg>default action servlet added</msg>
+</logentry>
+<logentry
+   revision="355011">
+<author>michi</author>
+<date>2005-12-08T06:46:32.361600Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/message-build.xml</path>
+</paths>
+<msg>build message changed according to default action servlet</msg>
+</logentry>
+<logentry
+   revision="355013">
+<author>michi</author>
+<date>2005-12-08T06:47:18.259676Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/blog/publication.xml</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/publication.xml</path>
+</paths>
+<msg> version  number fixed</msg>
+</logentry>
+<logentry
+   revision="355050">
+<author>josias</author>
+<date>2005-12-08T09:10:34.933006Z</date>
+<paths>
+<path
+   action="A">/lenya/branches/BRANCH_1_2_X/lib/xercesImpl-2.6.2.jar</path>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/targets/webapp-build.xml</path>
+<path
+   action="A">/lenya/branches/BRANCH_1_2_X/lib/xml-apis.jar</path>
+</paths>
+<msg>readded libraries because they are needed to build lenya, but remove them from the build directory because they cause conflicts with the endorsed libraries from cocoon.</msg>
+</logentry>
+<logentry
+   revision="356264">
+<author>edith</author>
+<date>2005-12-12T14:53:48.228637Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/config/ac/ac.xconf</path>
+</paths>
+<msg>Disable the workflow authorizer. Fix bug #37602 and 37534. Thanks to Felix Röthenbacher.</msg>
+</logentry>
+<logentry
+   revision="356483">
+<author>chestnut</author>
+<date>2005-12-13T05:50:01.274511Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/search/java/src/org/apache/lenya/lucene/IndexConfiguration.java</path>
+</paths>
+<msg>fixes broken compilation: IndexConfiguration (Bug 37873)
+Thanks to Felix Röthenbacher for the patch
+
+</msg>
+</logentry>
+<logentry
+   revision="356538">
+<author>edith</author>
+<date>2005-12-13T16:50:51.567422Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/global-sitemap.xmap</path>
+</paths>
+<msg>Remove the workflowMenuTransformation: the menu's disability according to the workflow is checked by the usecase transformation.</msg>
+</logentry>
+<logentry
+   revision="356755">
+<author>edith</author>
+<date>2005-12-14T09:00:59.018636Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/editors/kupu/Kupu.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/editors/bxe/BXE.java</path>
+</paths>
+<msg>Fix the availability of the edit menu according to the workflow: bug#37602</msg>
+</logentry>
+<logentry
+   revision="356812">
+<author>edith</author>
+<date>2005-12-14T17:19:32.634756Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/WEB-INF/cocoon-xconf.xsl</path>
+</paths>
+<msg>Kupu isn't integrated according to the usecase framekork</msg>
+</logentry>
+<logentry
+   revision="357006">
+<author>andreas</author>
+<date>2005-12-15T12:02:04.010533Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk"
+   copyfrom-rev="357005"
+   action="A">/lenya/sandbox/repository</path>
+</paths>
+<msg>Created repository integration working copy in the sandbox
+</msg>
+</logentry>
+<logentry
+   revision="357508">
+<author>michi</author>
+<date>2005-12-18T21:39:37.977443Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/mod_lenya/README.txt</path>
+</paths>
+<msg>TODOs added</msg>
+</logentry>
+<logentry
+   revision="357530">
+<author>michi</author>
+<date>2005-12-18T22:24:12.247568Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/build.properties</path>
+</paths>
+<msg>another note about WLS added</msg>
+</logentry>
+<logentry
+   revision="357671">
+<author>michi</author>
+<date>2005-12-19T09:24:23.706325Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X</path>
+</paths>
+<msg>ignore dist directory</msg>
+</logentry>
+<logentry
+   revision="357724">
+<author>michi</author>
+<date>2005-12-19T16:47:13.993902Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/mod_lenya/README.txt</path>
+</paths>
+<msg>RewriteRules added</msg>
+</logentry>
+<logentry
+   revision="357926">
+<author>chestnut</author>
+<date>2005-12-20T06:25:43.524164Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/resources/shared/javascript/linkreporter.js</path>
+</paths>
+<msg>add linkcheck function to window.onload so we don't override previously assigned functions</msg>
+</logentry>
+<logentry
+   revision="357937">
+<author>michi</author>
+<date>2005-12-20T08:28:14.020938Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>Furphys added</msg>
+</logentry>
+<logentry
+   revision="357994">
+<author>michi</author>
+<date>2005-12-20T14:37:02.537169Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>another live site added</msg>
+</logentry>
+<logentry
+   revision="357997">
+<author>michi</author>
+<date>2005-12-20T14:41:42.470928Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/lenya.sh</path>
+</paths>
+<msg>default action servlet introduced</msg>
+</logentry>
+<logentry
+   revision="357999">
+<author>michi</author>
+<date>2005-12-20T14:43:21.826897Z</date>
+<paths>
+<path
+   action="M">/lenya/branches/BRANCH_1_2_X/src/targets/message-build.xml</path>
+</paths>
+<msg>default action servlet added</msg>
+</logentry>
+<logentry
+   revision="358412">
+<author>michi</author>
+<date>2005-12-21T23:05:26.480056Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/content/authoring/doctypes/opendocument/index_en.odt</path>
+</paths>
+<msg>another link added</msg>
+</logentry>
+<logentry
+   revision="358413">
+<author>michi</author>
+<date>2005-12-21T23:06:00.984877Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/xslt/opendocument2xhtml.xsl</path>
+</paths>
+<msg>list items added</msg>
+</logentry>
+<logentry
+   revision="358595">
+<author>chestnut</author>
+<date>2005-12-22T17:47:39.190440Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/propfind.jx</path>
+<path
+   action="M">/lenya/trunk/src/confpatch/pipelines.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/URLInformation.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Publication.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/init.xsl</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/PublicationImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/java/src/org/apache/lenya/defaultpub/cms/usecases/webdav/Propfind.java</path>
+</paths>
+<msg>making webdav work via /pubid/webdav/ instead of /pubid/authoring/ path.  This way we no longer have to rely on the
+useragent header to determine dav clients</msg>
+</logentry>
+<logentry
+   revision="358610">
+<author>chestnut</author>
+<date>2005-12-22T19:49:37.158002Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/sitemap.xmap</path>
+</paths>
+<msg>use page-envelope to get lang version instead of trying to match it</msg>
+</logentry>
+<logentry
+   revision="358611">
+<author>chestnut</author>
+<date>2005-12-22T19:50:54.656466Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/propfind.jx</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/webdav.js</path>
+</paths>
+<msg>handle Depth header in request (specificly Depth: 0)</msg>
+</logentry>
+<logentry
+   revision="358615">
+<author>chestnut</author>
+<date>2005-12-22T20:16:00.987680Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/pubs/default/lenya/usecases/webdav/sitemap.xmap</path>
+</paths>
+<msg></msg>
+</logentry>
+<logentry
+   revision="360020">
+<author>chestnut</author>
+<date>2005-12-30T08:05:41.939324Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/tools/jetty/extra/ext/activation.jar</path>
+<path
+   action="D">/lenya/trunk/tools/jetty/extra/ext/mail.jar</path>
+</paths>
+<msg>removed due to licensing</msg>
+</logentry>
+</log>

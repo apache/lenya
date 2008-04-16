@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya 2.0 Documentation</title>
+  </header>
+  <body>
+    <note label="Help wanted!"> Since 2.0 is new and provides many 
+      enhancements and new features, please help to document them with us. 
+      Send documentation patches and use the Wiki. Thanks in advance :)</note>
+    <p>
+      More documentation (work in progress) can be found at the <a href="site:wiki/lenya/">Apache Lenya
+    Wiki</a>. Please treat the Wiki with care for now, as much of the
+      information there is outdated.
+    </p>
+    
+    <section>
+      <title>Download</title>
+      <p>
+        You find different download options on the <a href="site:download20">download page</a>.
+      </p>
+    </section>
+    
+    <section>
+      <title>What's New in Lenya 2.0</title>
+      <dl>
+        <dt><a href="site:modules">Modularization</a></dt>
+        <dd>
+          The monolithic architecture has been replaced by a small generic core and
+          various modules for specific purposes. This makes the codebase easier to understand
+          and simplifies making custom functionality available in multiple publications.
+        </dd>
+        <dt><a href="site:repository">Improved Repository Access</a></dt>
+        <dd>
+          The refactored and extended repository API and new protocols make it easier
+          to access and manipulate documents.
+        </dd>
+        <dt><a href="site:link-management">UUIDs for Internal Links</a></dt>
+        <dd>
+          Documents are now identified and referenced using
+          <acronym title="Universally Unique Identifier">UUID</acronym>s.
+          Static link rewriting is not necessary anymore.
+        </dd>
+        <dt><a href="site:resource_module_overview">Assets Are Treated as Documents</a></dt>
+        <dd>
+          There is no distinction between XML and binary documents anymore.
+          Images, PDFs and other non-XML documents are now managed using the <em>resource</em>
+          resource type. This simplifies both API and user interface.
+        </dd>
+        <dt><a href="site:ac-restricted">Improved Access Control</a></dt>
+        <dd>
+          It is now possible to explicitly deny permissions on specific pages.
+        </dd>
+        <dt><a href="site:metadata">Configurable Meta Data</a></dt>
+        <dd>
+          Additionally to the default <a href="http://dublincore.org">Dublin Core</a> meta data,
+          you can now declare your own custom meta data element sets. For each meta data element,
+          you can specify if it can be edited using the GUI or if it is used for internal purposes only.
+        </dd>
+        <dt><a href="site:publication-templating">Publication Templating</a></dt>
+        <dd>
+          Publication templating allows to re-use common functionality in multiple publications.
+          All resources, like layout images, CSS, XSLT and Cocoon sitemap files, are inherited to
+          child publications unless you explicitely override them.
+        </dd>
+        <dt><a href="site:usecase-framework-overview">Usecase Framework</a></dt>
+        <dd>
+          The usecase framework simplifies the implementation of user interaction functionality.
+          It is not necessary to implement Cocoon sitemaps for each usecase anymore.
+        </dd>
+        <dt><a href="site:notification_module_overview">Simplified Notification, Inboxes</a></dt>
+        <dd>
+          It is now easier to trigger notification messages. Each user has a personal
+          inbox to read and send messages.
+        </dd>
+      </dl>
+    </section>
+    
+  </body>
+</document>

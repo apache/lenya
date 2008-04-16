@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>The tinymce Module</title>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>
+        The <code>tinymce</code> module contains the integration of the TinyMCE WYSIWYG editor.
+      </p>
+    </section>
+    
+    <section>
+      <title>Installation</title>
+      <ol>
+        <li>
+          <p>
+            Download TinyMCE from <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a>
+          </p>
+          <p>
+            Unpack the archive in the resources directory of the tinymce module
+            (<code>$LENYA_HOME/src/modules/tinymce/resources/</code>) to make it globally available, <br />
+            <strong>or</strong>, if you don't want to change stuff in your source tree,<br />
+            in your publication under <code>$PUB_HOME/lenya/modules/tinymce/resources/</code>.
+          </p>
+          <p>
+            That should give you a subdirectory named <code>tinymce</code>.
+          </p> 
+        </li>
+        <li>
+          Optionally download additional language packs and unpack them
+          in the same place. (The new files will end up in <code>tinymce/</code> as 
+          well.)
+          As of module version 0.5.1, TinyMCE will present itself in the
+          locale that your browser requests, <em>if</em> an appropriate
+          language pack can be found.
+        </li>
+        <li>
+          Check the file permissions of the new "tinymce" directory.
+          It should not be world-writable for security reasons. On UNIX systems,
+          you can fix that with
+          <source>chmod -R og-w tinymce/</source>
+        </li>
+        <li>
+          <p>
+            Add the appropriate permissions to 
+            <code>$PUB_HOME/config/access-control/usecase-policies.xml</code>
+            (or use the usecase administration GUI), for example:
+          </p>
+          <source xml:space="preserve"><![CDATA[<usecase id="tinymce.edit">
+  <role id="admin" method="grant"/>
+  <role id="edit" method="grant"/>
+</usecase>]]></source>
+          <p>
+            This will allow the "admin" and "edit" roles to access the 
+            usecases to edit and upload images.
+          </p>
+        </li>
+        <li>
+          To add a menu entry, in <code>$PUB_HOME/config/publication.xml</code>
+          add <source><![CDATA[<module name="tinymce"/>]]></source> next to the other module 
+          declarations. This does not work in the default publication, 
+          because it creates its own custom menus. But for a quick test,
+          you can append <code>?lenya.usecase=tinymce.edit</code> to your 
+          address-bar URL.
+        </li>
+      </ol>
+    </section>
+    <section>
+      <title>Make sure your site plays well with TinyMCE</title>
+      <p>
+        You will find that TinyMCE does not look good with certain layout styles.
+        Specifically, floating objects inside or next to your editable area might result in 
+        wrecked layout when the editor is active. To achive true WYSIWYG, try 
+        to design your page so that editable areas have a fixed size and be careful with floats 
+        (you can still have accessible design by using "em" instead of "px").
+      </p>
+      <p>
+        By default, TinyMCE will parse your CSS stylesheet and make all classes
+        available in its styling dropdown menu. That means you should not 
+        introduce classes for one-shot stylings outside the editable area (unless
+        you want to make those stylings available in the content area as well).
+        Use ids instead.
+      </p>
+      <p>
+        This module has been tested with TinyMCE 2.1.2.
+      </p>
+    </section>
+    
+  </body>
+</document>

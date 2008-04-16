@@ -1,0 +1,1096 @@
+<?xml version="1.0"?>
+<log>
+<logentry
+   revision="606783">
+<author>andreas</author>
+<date>2007-12-25T10:54:11.335284Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/src/targets/properties-build.xml</path>
+</paths>
+<msg>Updated version in properties-build.xml</msg>
+</logentry>
+<logentry
+   revision="607924">
+<author>nettings</author>
+<date>2008-01-01T21:40:39.538958Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/prettyprinting/xslt/xml2nicexml.xsl</path>
+</paths>
+<msg>don't prettyprint &lt;script/&gt; elements.
+</msg>
+</logentry>
+<logentry
+   revision="608151">
+<author>ragaller</author>
+<date>2008-01-02T17:16:21.843855Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/prettyprinting/xslt/xml2nicexml.xsl</path>
+</paths>
+<msg>prettyprinting: leave textarea alone to avoid &lt;textarea /&gt;</msg>
+</logentry>
+<logentry
+   revision="608458">
+<author>andreas</author>
+<date>2008-01-03T11:47:26.351627Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/modules/languageselector/index.xml</path>
+</paths>
+<msg>Added docs about languageselector URL syntax</msg>
+</logentry>
+<logentry
+   revision="608531">
+<author>andreas</author>
+<date>2008-01-03T15:36:53.310160Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/confpatch/log4j-loglevel.xconf</path>
+</paths>
+<msg>Set log4j log level to error by default. This fixes bug 43987.</msg>
+</logentry>
+<logentry
+   revision="608543">
+<author>nettings</author>
+<date>2008-01-03T16:17:07.209015Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>purge lenya live sites list.
+</msg>
+</logentry>
+<logentry
+   revision="608546">
+<author>nettings</author>
+<date>2008-01-03T16:25:39.459066Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>add 2.0 live site
+</msg>
+</logentry>
+<logentry
+   revision="608548">
+<author>andreas</author>
+<date>2008-01-03T16:27:37.081845Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Updated credits from website</msg>
+</logentry>
+<logentry
+   revision="608551">
+<author>andreas</author>
+<date>2008-01-03T16:33:17.439243Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Added Juergen Ragaller to committer list</msg>
+</logentry>
+<logentry
+   revision="608569">
+<author>solprovider</author>
+<date>2008-01-03T17:22:53.966299Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/who.xml</path>
+</paths>
+<msg>Corrected my last name.</msg>
+</logentry>
+<logentry
+   revision="608632">
+<author>andreas</author>
+<date>2008-01-03T21:23:58.670604Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/lenya.sh</path>
+</paths>
+<msg>Set endorsed libs directory to WEB-INF/lib/endorsed instead of the endorsed lib directory in the Cocoon sources. This avoids hard-coding the name of the Cocoon source directory which might be different in different Lenya distributions.</msg>
+</logentry>
+<logentry
+   revision="608663">
+<author>nettings</author>
+<date>2008-01-03T22:34:01.162477Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/tools/proxytest/README</path>
+</paths>
+<msg>use endorsed libs from webapp directory in jetty6 commandline, not from
+the cocoon_2_1/ dir, because cocoon dir might change its name at some
+point (tracking andreas' change in r608632)
+</msg>
+</logentry>
+<logentry
+   revision="608780">
+<author>andreas</author>
+<date>2008-01-04T09:38:59.369935Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/release.xml</path>
+</paths>
+<msg>Added note about setting the revision number when releasing with a development version of Cocoon.</msg>
+</logentry>
+<logentry
+   revision="608783">
+<author>andreas</author>
+<date>2008-01-04T09:50:51.535584Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
+</paths>
+<msg>[minor change] changed line wrapping</msg>
+</logentry>
+<logentry
+   revision="608786">
+<author>andreas</author>
+<date>2008-01-04T10:02:02.461680Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
+</paths>
+<msg>[minor change] changed formatting</msg>
+</logentry>
+<logentry
+   revision="608788">
+<author>andreas</author>
+<date>2008-01-04T10:07:41.604095Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/externals</path>
+</paths>
+<msg>Setting svn:externals to a specific Cocoon revision from before the critical changes to the build process.</msg>
+</logentry>
+<logentry
+   revision="608791">
+<author>andreas</author>
+<date>2008-01-04T10:12:33.149552Z</date>
+<paths>
+<path
+   action="A">/lenya/tags/RELEASE_2_0/RELEASE-NOTES.txt</path>
+</paths>
+<msg>Adding release notes</msg>
+</logentry>
+<logentry
+   revision="608802">
+<author>andreas</author>
+<date>2008-01-04T11:21:13.563882Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/development/test/canoo/test.xml</path>
+</paths>
+<msg>Updating web test to GUI change</msg>
+</logentry>
+<logentry
+   revision="608803">
+<author>andreas</author>
+<date>2008-01-04T11:21:52.563624Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/test/canoo/test.xml</path>
+</paths>
+<msg>Updating web test to GUI change, adding accept-language header to configuration</msg>
+</logentry>
+<logentry
+   revision="608804">
+<author>andreas</author>
+<date>2008-01-04T11:28:28.824187Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow/test/canoo/test.xml</path>
+</paths>
+<msg>Reverting accidential change to canoo web test base path.</msg>
+</logentry>
+<logentry
+   revision="608809">
+<author>andreas</author>
+<date>2008-01-04T11:45:34.466077Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/lib/xercesImpl-2.9.0.jar</path>
+</paths>
+<msg>Removing Xerces 2.9.0, Cocoon ships with a newer version.</msg>
+</logentry>
+<logentry
+   revision="608844">
+<author>andreas</author>
+<date>2008-01-04T14:13:53.946842Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/tools/svn2changes.xsl</path>
+</paths>
+<msg>[minor change] fixed indentation</msg>
+</logentry>
+<logentry
+   revision="608855">
+<author>andreas</author>
+<date>2008-01-04T14:29:43.798489Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/who.xml</path>
+</paths>
+<msg>Added list of 'other contributions' to who.html page</msg>
+</logentry>
+<logentry
+   revision="608861">
+<author>andreas</author>
+<date>2008-01-04T14:33:54.333431Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/CREDITS.txt</path>
+</paths>
+<msg>Replaced list of committers and contributors in CREDITS.txt with link to who.html on our website.</msg>
+</logentry>
+<logentry
+   revision="608863">
+<author>andreas</author>
+<date>2008-01-04T14:34:41.371156Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/CREDITS.txt</path>
+</paths>
+<msg>Replaced list of committers and contributors in CREDITS.txt with link to who.html on our website.</msg>
+</logentry>
+<logentry
+   revision="608925">
+<author>nettings</author>
+<date>2008-01-04T17:11:23.755922Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>add info column, add harvard medical school library
+</msg>
+</logentry>
+<logentry
+   revision="608926">
+<author>nettings</author>
+<date>2008-01-04T17:17:40.160653Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>minor corrections
+</msg>
+</logentry>
+<logentry
+   revision="608929">
+<author>nettings</author>
+<date>2008-01-04T17:22:25.129848Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/live-sites.xml</path>
+</paths>
+<msg>saner table headers
+</msg>
+</logentry>
+<logentry
+   revision="609032">
+<author>andreas</author>
+<date>2008-01-04T22:19:56.491761Z</date>
+<paths>
+<path
+   action="A">/lenya/sandbox/modules/forrest/resources/samples/svnLog.xml</path>
+<path
+   action="A">/lenya/sandbox/modules/forrest/xslt/svnLog2document.xsl</path>
+<path
+   action="A">/lenya/sandbox/modules/forrest/config/cocoon-xconf/resourcetype-svnLog.xconf</path>
+</paths>
+<msg>Added svnLog resource type for forrest module</msg>
+</logentry>
+<logentry
+   revision="609033">
+<author>andreas</author>
+<date>2008-01-04T22:23:45.075657Z</date>
+<paths>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67329360-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/657c57e0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67b557f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67f01700-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66dc5d10-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65fdbce0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6592c610-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65d35180-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/660780e0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/680b6730-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/674be7c0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66e3b010-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66c3f310-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66225be0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65ee7aa0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/678dabb0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66ace8a0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66bb8ea0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67257400-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66317710-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66653140-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6715bc90-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65e1a960-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65a870f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66842af0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65ca02b0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67e4f370-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6611e120-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6677a7d0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66479720-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66597170-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66956900-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/668c8f60-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/670800f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67cf4890-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67ad1a90-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66d29910-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6759a360-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67725b80-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/667cd7f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6794feb0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/671dabd0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/68015510-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66eb5130-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/662b83a0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/676a1e20-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67a440f0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67da4510-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/65af4ec0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67bea6c0-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67810180-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/67f65890-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/66f5b170-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/666ea720-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/664e9c00-8730-11dc-ae46-9e7b5d14892d</path>
+<path
+   action="D">/lenya/sandbox/pubs/docu/content/authoring/6818d4b0-8730-11dc-ae46-9e7b5d14892d</path>
+</paths>
+<msg>Removing old changes documents</msg>
+</logentry>
+<logentry
+   revision="609045">
+<author>andreas</author>
+<date>2008-01-04T22:56:25.293391Z</date>
+<paths>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.1199485732572.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732695.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.1199485733913.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.1199485733066.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.1199485733769.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733209.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.1199485733272.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.meta.1199485732572.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.1199485733785.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732727.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732910.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733187.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733332.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.1199485733532.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733879.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/svn-commit.sh</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.1199485733896.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732469.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732504.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733628.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.1199485732393.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733749.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733272.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.1199485733332.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733589.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.1199485733822.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.1199485732695.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.1199485733589.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733723.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733143.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733769.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733501.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.1199485733565.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732866.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732608.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.1199485732910.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.1199485733501.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.1199485732335.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733805.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.1199485733932.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733050.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733913.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e515200-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/6571d090-8730-11dc-ae46-9e7b5d14892d/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.1199485732504.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/66b80bf0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.1199485733187.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733669.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.1199485732803.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733932.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.1199485732608.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.1199485733749.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.1199485733647.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/45456cb0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.1199485732991.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="M">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733473.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732803.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a/en.1199485733050.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732335.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e8cd460-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.1199485733105.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3be9a460-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732991.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3e2a6ca0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41bb0d70-bb14-11dc-91d0-da1223b5643a/en.meta.1199485732393.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733532.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.1199485733669.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/sitetree.xml.1199485733709.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733066.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733684.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.1199485733805.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/63731a20-bb14-11dc-91d0-da1223b5643a/en.1199485732727.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.1199485733143.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/639261f0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733858.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.1199485733879.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4dfdf020-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733647.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6aa376f0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44d3e630-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3b4c7a00-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733565.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e1b4de0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44671aa0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a/en.1199485733209.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/364edbb0-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ca8aea0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/412b5090-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/62daf8d0-bb14-11dc-91d0-da1223b5643a/en.1199485732469.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6707b290-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733822.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ed97150-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4c0db8e0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733105.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5e861da0-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/44dbd570-bb14-11dc-91d0-da1223b5643a/en.meta</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f2f5980-bb14-11dc-91d0-da1223b5643a/en.1199485733628.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f191260-bb14-11dc-91d0-da1223b5643a/en.1199485733723.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b5b7c50-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733896.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3f11bf60-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3c53d7e0-bb14-11dc-91d0-da1223b5643a/en.1199485733473.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/5df883a0-bb14-11dc-91d0-da1223b5643a/en.meta.1199485733785.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4badbe90-bb14-11dc-91d0-da1223b5643a/en.1199485733684.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e4e5a10-bb14-11dc-91d0-da1223b5643a/en</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/41462b90-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/37e978e0-bb14-11dc-91d0-da1223b5643a/en.1199485732866.bak</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3ebff5e0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/68e1c9c0-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/4e49ed40-bb14-11dc-91d0-da1223b5643a/en.rcml</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/6b798ba0-bb14-11dc-91d0-da1223b5643a</path>
+<path
+   action="A">/lenya/sandbox/pubs/docu/content/authoring/3789ccb0-bb14-11dc-91d0-da1223b5643a/en.1199485733858.bak</path>
+</paths>
+<msg>Adding new generated changes documents</msg>
+</logentry>
+<logentry
+   revision="609054">
+<author>andreas</author>
+<date>2008-01-04T23:38:45.345030Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/modules/docustyle/resources/css/page.css</path>
+</paths>
+<msg>Changed table layout for docu publication</msg>
+</logentry>
+<logentry
+   revision="609553">
+<author>andreas</author>
+<date>2008-01-07T10:22:26.062862Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg>Clarified installation instructions</msg>
+</logentry>
+<logentry
+   revision="609562">
+<author>andreas</author>
+<date>2008-01-07T10:36:03.230415Z</date>
+<paths>
+<path
+   action="D">/lenya/tags/RELEASE_2_0/INSTALL-BIN.txt</path>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/INSTALL-SRC.txt</path>
+</paths>
+<msg>Updating source installation instructions, removing binary release instructions</msg>
+</logentry>
+<logentry
+   revision="609585">
+<author>andreas</author>
+<date>2008-01-07T12:38:42.605147Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/KEYS</path>
+</paths>
+<msg>Adding my public key to the KEYS file</msg>
+</logentry>
+<logentry
+   revision="609586">
+<author>andreas</author>
+<date>2008-01-07T12:40:19.055085Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/KEYS</path>
+</paths>
+<msg>Adding my public key to the KEYS file</msg>
+</logentry>
+<logentry
+   revision="609671">
+<author>nettings</author>
+<date>2008-01-07T16:26:44.929253Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg></msg>
+</logentry>
+<logentry
+   revision="609684">
+<author>andreas</author>
+<date>2008-01-07T16:52:37.203815Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/faq.xml</path>
+</paths>
+<msg>Adding FAQ about 'failure during job recovery'.</msg>
+</logentry>
+<logentry
+   revision="609687">
+<author>andreas</author>
+<date>2008-01-07T16:59:17.091018Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/config/module.xml</path>
+</paths>
+<msg>Added dependency from fckeditor module to workflow module</msg>
+</logentry>
+<logentry
+   revision="609690">
+<author>andreas</author>
+<date>2008-01-07T17:06:44.616241Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/src/modules/fckeditor/config/module.xml</path>
+</paths>
+<msg>Added dependency from fckeditor module to workflow module</msg>
+</logentry>
+<logentry
+   revision="609694">
+<author>nettings</author>
+<date>2008-01-07T17:12:36.882557Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/INSTALL-SRC.txt</path>
+</paths>
+<msg>added md5 sum verification instructions, minor other fixes.
+
+</msg>
+</logentry>
+<logentry
+   revision="609705">
+<author>andreas</author>
+<date>2008-01-07T17:21:40.120817Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/source_version.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/tutorials/setupide/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Updating website: Reference 2.0 on download page, updated installation instrucations, removed 2.0 warning messages.</msg>
+</logentry>
+<logentry
+   revision="609706">
+<author>andreas</author>
+<date>2008-01-07T17:23:17.201080Z</date>
+<paths>
+<path
+   action="M">/lenya/tags/RELEASE_2_0/INSTALL-SRC.txt</path>
+</paths>
+<msg>Updating installation instructions (merged from trunk)</msg>
+</logentry>
+<logentry
+   revision="609711">
+<author>andreas</author>
+<date>2008-01-07T17:33:51.513721Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/source_version.xml</path>
+</paths>
+<msg>[minor change] formatting</msg>
+</logentry>
+<logentry
+   revision="609797">
+<author>andreas</author>
+<date>2008-01-07T22:30:38.790736Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/faq.xml</path>
+</paths>
+<msg>Use &lt;p&gt; in &lt;answer&gt; to avoid validation problems.</msg>
+</logentry>
+<logentry
+   revision="609931">
+<author>andreas</author>
+<date>2008-01-08T11:08:34.880585Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/2_0_x/installation/index.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/index.xml</path>
+</paths>
+<msg>Added note about missing binary versions in 2.0 release.</msg>
+</logentry>
+<logentry
+   revision="609993">
+<author>andreas</author>
+<date>2008-01-08T14:08:05.310515Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/tools/svn2changes.xsl</path>
+</paths>
+<msg>Replace 1.4 with 2.0, added years 2007 and 2008 to version selection</msg>
+</logentry>
+</log>

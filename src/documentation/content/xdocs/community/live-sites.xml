@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: live-sites.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya Live Sites</title>
+    </header>
+  <body>
+ 
+<p>
+The Lenya community is aware of the following sites that are running on Apache Lenya. 
+If you want to suggest additional sites for inclusion or update the
+information of your site, please send an email to the 
+<a href="mailto:user@lenya.apache.org?Subject=Lenya Live Sites">Lenya User mailing list</a>.
+Thanks!
+</p>
+
+<table>
+  <tr>
+    <th>Site</th>
+    <th>Version</th>
+    <th>Technical information</th>
+    <th>Last verified</th>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.aiesec.org.af/">AIESEC Afghanistan (Afghan chapter of the worldwide students exchange
+organisation)</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.becompany.ch">BeCompany GmbH</a></td>
+    <td>2.0-trunk</td>
+    <td>Static export using wget</td>
+    <td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.beeschool.ch/">Beeschool</a></td>
+    <td>dead</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://biblioteca.uned.es/">Biblioteca de la UNED</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.shopbloomfield.com/">Bloomfield Nutrition and Sport Supplements</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://bostonlawcollaborative.com/">Boston Law Collaborative</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://cocooncenter.org">cocooncenter</a></td>
+    <td>1.2.x</td>
+    <td>Static export using Cocoon CLI</td>
+    <td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://cmc.uio.no">Competence and Media Convergence, University of Oslo</a></td>
+    <td>Plone</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><a href="http://computerworld.ch">Computerworld Switzerland (IT newspaper)</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://ejo.ch">European Journalism Observatory</a></td>
+    <td>Joomla</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://web3d.dimi.uniud.it/ffp6/index.html">FFP6 Symposium, Udine</a></td>
+    <td>dead</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.gurit.ch">Gurit Heberlein Group</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.graduate.abnamro.com">ABN AMRO graduate website</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://hci.mmc-kiel.com">Human Computer Interface Research Group, University of Kiel</a></td>
+    <td>dead</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a
+  href="https://www.countway.harvard.edu/lenya/countway/live/index.html">Harvard
+    Medical School - Countway Library of Medicine</a></td>
+    <td>1.2.4</td>
+    <td>
+      ~ 240 pages<br />
+      ~ 30 authors<br />
+      Tomcat 5.0.28 via Apache 2.2.6 / mod_jk 1.2.25
+    </td>
+    <td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.helium5.com/">Helium 5 ERP</a></td>
+    <td>1.2.x-unizh</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.hiltrud-breyer.de/">Hiltrud Breyer (german MP)</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.hiram.edu/index.html">Hiram College</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr><td><a href="http://www.hybrigenics.com/">Hybrigenics</a></td>
+    <td>Joomla</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.ingenieurbuero-metzing.de/">Ingenieurbüro Metzing</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.interactivesystems.info">Institut für Informatik und Interaktive Systeme</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.intermedia.uio.no">InterMedia, University of Oslo</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr><td><a href="http://www.investmentclub-niederrhein.de/">Investmentclub-Niederrhein GbR (ICN)</a></td>
+    <td>dead</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.java-concepts.com/lenya/jconcepts/live/index.html">Java Concepts</a></td>
+    <td>unknown</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.kas-kriftel.org">Konrad-Adenauer School</a></td>
+    <td>dead</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.krista-sager.de/">Krista Sager (german MP)</a></td>
+    <td>Wordpress</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.itth.de">IT Thomas Hartwig</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.marevol.com/">Marevol</a> (in Japanese)</td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.mediothek.org.af/">Mediothek Afghanistan e.V.</a> (a german non-profit that collects afghan media)</td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.minimax.ch">Minimax AG (firesafety company)</a></td>
+    <td>2.0</td>
+    <td>
+      ~ 250 pages<br/>
+      ~ 10 authors<br/>
+      integration with a shop application (php)</td>
+    <td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://mobi.ch">Die Mobiliar (insurance company)</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.mortalityrisk.org/">mortalityrisk.org</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.njtelecomupdate.com">National Journal Telecom Update</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://netcom.no">Netcom AS</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://new-phone.com/">New Phone</a> (a systems integrator in Madrid, Spain)</td>
+    <td>dead</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.nicksyear.com/">Nick's Year</a></td>
+    <td>PHPLinkGenerator</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.ohiotransfer.org">Ohio Transfer Council</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>  
+  <tr>
+    <td><a href="http://oscom.org/matrix/">OSCOM CMS matrix</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->  
+  <tr>
+    <td><a href="http://www.unipublic.unizh.ch">Online Journal of the University of Zürich</a></td>
+    <td>1.2.x-unizh</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.pabloabraira.com/">Pablo Abraira</a></td>
+    <td>unknown</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.patst.com.au">Patrick Street Clinic</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.preferredms.net/">Preferred</a></td>
+    <td>ASP</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.publicstaticvoidmain.de">public static void main</a> (German Java knowledge base)</td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.ece.queensu.ca/">Queen's University - Department of Electrical and Computer Engineering</a></td>
+    <td>unknown</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.quoininc.com">Quoin</a></td>
+    <td>Daisy</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://koerperarbeit-zeche-ludwig.de">Studio für Körperarbeit auf Zeche Ludwig, Essen, Germany</a></td>
+    <td>2.0-trunk</td>
+    <td>
+      Jetty6 via Apache 2.2/mod_proxy_ajp
+    </td>
+    <td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.shsolutions.com">S&amp;H Solutions</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr><td><a href="http://www.techblue.co.uk">Techblue Software</a></td>
+    <td>dead (401)</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.turbotrade.com">Turbotrade</a></td>
+    <td>Joomla</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://doc.uvnc.com/index.html">UltraVNC documentation</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.uniklinik-freiburg.de">Universitätsklinikum Freiburg</a></td>
+    <td>1.2.4</td>
+    <td>
+      Site was launched in April 2006,<br/>
+      ~ 8300 pages in 130 publications,<br/>
+      ~ 240 editors
+    </td>
+    <td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.unipost.es">Unipost</a> (Spanish postal organization)</td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://ra.crema.unimi.it">University of Milano, Software Engineering Group</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+  <tr>
+    <td><a href="http://www.univ-reunion.fr">University of Reunion</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.unicms.unizh.ch/docu/live-pubs.html">University of Zürich</a></td>
+    <td>1.2.x-unizh</td>
+    <td>several different publications</td>
+    <td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.vorlesungen.unizh.ch">University of Zurich Course List</a></td>
+    <td>1.2.x</td>
+    <td>DB backend, XSP+XSLT for presentation</td>
+    <td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.uniaktuell.unibe.ch/">University of Bern Online Magazine</a></td>
+    <td>1.2.x</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://hcilab.uniud.it">University of Udine - HCI Lab</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.fisica.uniud.it/ffp6/">University of Udine - Sixth Int. Symp. of Frontiers of Fundamental and Comp. Physics</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.whitebearsolutions.com/">White Bear Solutions</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--
+  <tr>
+    <td><a href="http://www.worldshops.org">the Network of European Worldshops</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+  <tr>
+    <td><a href="http://www.furphys.com.au/">J. Furphy &amp; Sons</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->  
+  <tr>
+    <td><a href="http://www.ofdt.fr/">Observatoire français des drogues et des toxicomanies</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--  
+  <tr><td>WHO, Open Public Health Library</td><td></td><td></td><td></td></tr> 
+  <tr>
+    <td><a href="http://www.wired.com">Wired News</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>  
+-->
+  <tr>
+    <td><a href="http://www.technologyblueprint.co.uk">Technology Blueprint</a></td>
+    <td>1.2.x?</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+<!--  
+  <tr>
+    <td><a href="ext:wyona">Wyona</a></td>
+    <td>doubtful</td>
+    <td>&#160;</td><td>2008/01</td>
+  </tr>
+-->
+</table>
+  </body>
+</document>

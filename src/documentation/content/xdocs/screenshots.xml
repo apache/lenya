@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document> 
+  <header> 
+    <title>Apache Lenya Screenshots</title> 
+  </header> 
+  <body> 
+    <p>
+      The following screenshots are meant for the evaluator in a hurry. For a much more complete impression,
+      <a href="ext:lenya.dist">download</a> the latest release and try it out yourself. You may also want
+      to try out the <a href="ext:lenya.demo.20">online demo</a>.
+    </p>
+        <section id="site-assets">
+      <title>Site management</title><p>
+    The Apache Lenya site area is used to perform operations that concern multiple pages, like moving pages
+    around, renaming sections of the site, etc. The site area gives a quick overview of the complete site.
+    Detailed information about each page can be accessed by clicking on the relevant node in the tree
+    structure at left. In this view, the asset management is shown. <br/><br/><img src="site:screenshotSiteAssets.img" alt="Screenshot of the Apache Lenya site area"/>
+      </p>
+<p>
+  This is the metadata tab of the site area.<br/><br/><img src="site:screenshotSiteMeta.img" alt="Screenshot of the Apache Lenya site area"/>
+      </p>
+<p>
+  This is the workflow tab of the site area.<br/><br/><img src="site:screenshotSiteWorkflow.img" alt="Screenshot of the Apache Lenya site area"/>
+      </p>
+  </section>
+        <section id="wysiwyg">
+      <title>WYSIWYG editing</title><p>
+    Apache Lenya comes with different editors for content editing. One of the more advanced ones is <a href="ext:bxe">BXE</a>. 
+    Using BXE, you can edit arbitrary XML in WYSIWYG and validate your document against an Relax NG
+    schema while it is being edited.
+    BXE uses validation to restrict the editing choices instead of allowing free-form input and then
+    generating validation errors on save (an approach that makes it different from most other editors).
+      <br/><br/><img src="site:screenshotEditorBxe.img" alt="Screenshot of editing a page with the BXE editor inside Apache Lenya"/>
+      </p>
+      <p>Another editor shipping with Apache Lenya is <a href="ext:kupu">Kupu</a>. Kupu is specialized for XHTML editing and works in Internet Explorer and Mozilla.
+        <br/><br/><img src="site:screenshotEditorKupu.img" alt="Screenshot of editing a page with the Kupu editor inside Apache Lenya"/>
+      </p>
+      <p>Both editors are tightly integrated, and can of course access assets and links managed by Apache Lenya, as the following insert link popup shows.
+        <br/><br/><img src="site:screenshotEditorInsertLink.img" alt="Screenshot of the insert link popup"/></p>
+  </section>
+
+  </body>
+</document>

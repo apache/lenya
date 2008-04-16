@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Resource Types</title>
+	</header>
+	<body>
+	  
+<section>
+	<title>Introduction</title>
+	
+	<p>
+	A resource type defines a certain (XML or binary) source format, together with processing options.
+	It typically consists of
+	</p>
+	<ul>
+	  <li>an XML structure definition (e.g., Relax NG), if the resource type is XML-based,</li>
+	  <li>some presentation pipelines,</li>
+	  <li>some presentation XSLT stylesheets,</li>
+	  <li>usecases to manipulate documents.</li>
+	</ul>
+	<p>
+	  All of these can be shared between several resource types.
+	</p>
+	<p>
+	  The information describing a resource type is managed by a
+	  <a href="http://lenya.apache.org/apidocs/2.0/org/apache/lenya/cms/publication/ResourceType.html"><code>ResourceType</code></a>
+	  service. The default implementation is <code>ResourceTypeImpl</code>.
+	  It implements <code>ThreadSafe</code>, which ensures that only a single instance of every resource type is created.
+	  It is not possible to declare multiple resource types with the same name. 
+	</p>
+</section>
+
+<section><title>Choose a Unique Resource Type Name</title>
+  <p>
+    You should choose a reasonable name for your resource type.
+  </p>
+  <note>
+    In the examples, we use the name <em>profile</em> (page with information about a person).
+  </note>
+</section>
+	  
+<section>
+  <title>Adding the Resource Type to a Publication</title>
+  
+  <p>
+    The resource types used by a publication are declared in <code>publication.xml</code>,
+    including the assignment of a workflow schema to a resource type. You have to add your
+    resource type to the <code><![CDATA[<resource-types>]]></code> section of this file:
+  </p>
+  
+<source xml:space="preserve"><![CDATA[<publication>
+  ...
+  <resource-types>
+    <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="profile" workflow="fallback://config/workflow/workflow.xml"/>
+    ...
+  </resource-types>
+  ...
+</publication>
+]]></source>
+
+  
+  <p>
+    You can add references to any resource types configured in
+    <code><![CDATA[<lenya-webapp>/WEB-INF/cocoon.xconf]]></code> (see below),
+    containing
+  </p>
+  
+  <ul>
+    <li>resource types provided by modules,</li>
+    <li>resource types of template publications, and</li>
+    <li>resource types of the publication itself.</li>
+  </ul>
+  
+  </section>
+  
+  <section><title>Providing One or More Sample XML Documents</title>
+    <p>
+      If you want to enable users to create new resources belonging to
+      your resource type, it is useful to provide one more more sample XML documents.
+    </p>
+    <p>
+      The sample document(s) are typically placed in the directory
+      <code>$MODULE_HOME/samples</code>.
+      You can choose arbitrary filenames, but for a single sample
+      it is recommended to use the resource type name
+      (e.g., <code>profile.xml</code>).
+    </p>
+    <p>
+      There are two ways of declaring the samples. The first option is very
+      convenient if you don't need custom samples per publication. You just add
+      the samples to the resource type declaration:
+    </p>
+    <source xml:space="preserve"><![CDATA[<component-instance name="profile" ...
+  ...
+  <sample-name name="Empty Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/empty.xml</sample-name>
+  <sample-name name="Example Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/example.xml</sample-name>
+  ...
+</component-instance>]]>
+    </source>
+    <p>
+      The second option allows you to specify a file where the samples declarations
+      are stored. This enables you to override this file in your publications,
+      providing a different sample list per publication:
+    </p>
+    <source xml:space="preserve"><![CDATA[<component-instance name="profile" ...
+  ...
+  <samples uri="fallback://lenya/modules/profile/samples/samples.xml"/>
+  ...
+</component-instance>]]>
+    </source>
+    <p>
+      The <code>samples.xml</code> file uses the same syntax:
+    </p>
+    <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<samples>
+  <sample-name name="Empty Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/empty.xml</sample-name>
+  <sample-name name="Example Profile" mime-type="application/xml">
+    fallback://lenya/modules/profile/samples/example.xml</sample-name>
+</samples>]]></source>
+  </section>
+  
+  <section><title>Providing an XML Structure Definition</title>
+    <p>
+      This step is only needed if you want to edit resources with Lenya
+      or validate them after they have been imported or manipulated.
+      The type of the structure definition
+      (<a href="http://www.w3.org/XML/Schema">XML Schema</a>,
+      <a href="http://www.relaxng.org/">Relax NG</a>, ...)
+      depends on the editor or validator you want to use. For instance,
+      the <a href="http://www.bitfluxeditor.org/">BXE</a> WYSIWYG
+      editor requires a Relax NG document.
+    </p>
+    <p>The structure definition document is typically placed in the directory
+      <code>$MODULE_HOME/resources/schemas</code>. The name
+      of the file is arbitrary, but it is recommended to use the
+      resource type name (e.g., <code>profile.rng</code>).
+    </p>
+  </section>
+  
+  <section><title>Creating a Workflow Schema</title>
+    <p>
+      If your resources should have a workflow, you have to add a workflow
+      schema for your resource type as described in
+      <a href="site:wfconfig">Workflow Configuration</a>.
+      A workflow schema can be shared between multiple resource types.
+      The workflow schema is assigned to a resource type in
+      <code>$PUB_HOME/config/publication.xml</code>
+      (see section <em>Adding Resource Types to a Publication</em>).
+    </p>
+  </section>
+	  
+	  <section id="expiration">
+	    <title>Cache Expiration Time</title>
+	    <p>
+	      For each resource type, you can configure how long the documents shall be cached by
+	      the client, for instance:
+	    </p>
+	    <source xml:space="preserve"><![CDATA[<expires seconds="3600" />]]></source>
+	    <p>
+	      This value can be accessed via the <code>getExpires()</code> methods of the
+	      <code>ResourceType</code> and <code>Document</code> interfaces. You can use the
+	      header action to set the corresponding HTTP response header in your publication:
+	    </p>
+	    <source xml:space="preserve"><![CDATA[<map:act type="set-header">
+  <map:parameter name="Expires"
+    value="{date-iso8601-rfc822:{doc-info:{pubId}:{area}:{uuid}:{language}:expires}}"/>
+</map:act>]]></source>
+	  </section>
+  
+  <section><title>The Resource Type Definition</title>
+    <p>
+    To declare a custom resource type and assign the creator, schema etc. to it,
+	  add the component instance to an XPatch file (e.g.,
+	  <code>$MODULE_HOME/config/cocoon-xconf/resourcetype-profile.xconf</code>):
+    </p>
+    <source><![CDATA[<xconf xpath="/cocoon/resource-types"
+       unless="/cocoon/resource-types/component-instance[@name = 'profile']">
+
+  <component-instance name="profile"
+                      logger="lenya.resourcetypes.profile"
+                      class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+                      
+    <schema src="fallback://lenya/modules/profile/resources/schemas/profile.rng"
+            language="http://relaxng.org/ns/structure/0.9"/>
+            
+    <sample-name name="Empty Profile" mime-type="application/xml">
+        fallback://lenya/modules/profile/samples/empty.xml</sample-name>
+        
+    <sample-name name="Example Profile" mime-type="application/xml">
+        fallback://lenya/modules/profile/samples/example.xml</sample-name>
+    
+    <link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/>
+    
+    <format name="xhtml" uri="cocoon://modules/profile/profile.xml"/>
+    
+    <expires seconds="3600" />
+    
+  </component-instance>
+
+</xconf>]]></source>
+
+    <p>
+      This XPatch file will be used when the publication is deployed (e.g., when you issue
+      a <code>./build</code> command). Its contents will be patched into
+      <code><![CDATA[<lenya-webapp>/WEB-INF/cocoon.xconf]]></code>.
+    </p>
+
+  </section>
+  
+  <section>
+    <title>I18n for the Resource Type Label</title>
+    <p>
+      There is a convention that the message key <em>resourceType-{name}</em> is used for a
+      human-readable, translated resource type label:
+    </p>
+    <source xml:space="preserve"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <message key="resourceType-profile">Profile</message>
+</catalogue>]]></source>
+  </section>
+  
+  <section><title>Define a Custom Menubar</title>
+    <p>
+      If you want to use a custom menubar for your resource type,
+      follow the guidelines on the page
+      <a href="site:menubar">The Lenya Menubar</a>.
+      Typically, a menubar is shared between multiple resource types.
+      Small customizations can be achieved with Java code in the menubar XSP.
+    </p>
+    <p>
+      To let the user create new resources using the <code>DefaultBranchCreator</code>,
+      you have to add the following menu item:
+    </p>
+    <source><![CDATA[<item uc:usecase="sitemanagement.create" href="?doctype=profile">
+  <i18n:translate>
+    <i18n:text>New ... Document</i18n:text>
+    <i18n:param><i18n:text>resourceType-profile</i18n:text></i18n:param>
+  </i18n:translate>
+</item>]]></source>
+  </section>
+  
+  <section>
+    <title>Formats</title>
+    
+    <p>
+      A resource type provides a set of <em>formats</em> to provide different ways of presenting content documents.
+      The formats are defined in the resource type declaration in
+      <code>$MODULE_HOME/config/cocoon-xconf/resourcetype-profile.xconf</code>:
+    </p>
+<source xml:space="preserve">
+  <![CDATA[<format name="xhtml" uri="cocoon://modules/profile/xhtml.xml"/>]]>
+  <![CDATA[<format name="include" uri="cocoon://modules/profile/xhtml-inline.xml"/>]]>
+</source>
+    <p>
+      The following figure illustrates some usage examples of formats:
+    </p>
+    <figure src="site:resourceTypeFormats.img" alt="Resource type formats"/>
+    <ul>
+      <li>
+        Example <strong>A</strong> shows the most typical case - a <em>msg</em> (message) document
+        is rendered using the format <em>xhtml</em> to be displayed as page content.
+      </li>
+      <li>
+        In example <strong>B</strong>, the format <em>teaser</em> is used to render teaser versions
+        of the <em>msg</em> documents to be displayed in the sidebar. This is usually done using
+        an include mechanism (see below).
+      </li>
+      <li>
+        In example <strong>C</strong>, a <em>news</em> document includes the <em>teaser</em>
+        versions of message documents. The <em>news</em> document in turn provides the format
+        <em>xhtml</em> to be rendered as page content.
+      </li>
+    </ul>
+    <p>
+      The <code>uri</code> attribute of the <code>format</code> element may refer to an arbitrary URL,
+      which is typically a request into the module itself. This URI is matched inside the module
+      sitemap (in our case, <code>modules/profile/sitemap.xmap</code>).
+    </p>
+    <p>
+      There are two ways in which the format can be requested:
+    </p>
+    <ul>
+      <li>for the current document - without parameters</li>
+      <li>for a specific document - with the parameters <code>/{pubId}/{area}/{uuid}/{language}</code></li>
+    </ul>
+    <p>
+      Typically, an XSLT is applied to the content document to transform
+      it into another format (XHTML, XSL-FO, ...). In the following example,
+      the name of the XSLT stylesheet is supposed to end with the format name
+      (e.g., <code>profile2xhtml.xsl</code>):
+    </p>
+    <source xml:space="preserve"><![CDATA[
+  <!-- apply a format -->
+  <!-- {format}.xml (current document) -->
+  <map:match pattern="*.xml">
+    <map:generate src="cocoon:/{1}/{page-envelope:publication-id}/ \
+                                   {page-envelope:area}/ \
+                                   {page-envelope:document-uuid}/ \
+                                   {page-envelope:document-language}"/>
+    <map:serialize type="xml"/>
+  </map:match>
+  
+  <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} (specific document) -->
+  <map:match pattern="*.xml/*/*/*/*">
+    <map:generate src="lenya-document:{4},lang={5}{link:rev}"/>
+    <map:transform src="fallback://lenya/modules/profile/xslt/profile2{1}.xsl">
+      <map:parameter name="rendertype" value="{request-param:rendertype}"/>
+      <map:parameter name="nodeid" value="{doc-info:{2}:{3}:{4}:{5}:nodeName}"/>
+      <map:parameter name="language" value="{4}"/>
+    </map:transform>
+    <map:serialize type="xml"/>
+  </map:match>
+]]></source>
+    <p>
+      To request a formatted document, you can use the <em>format</em> parameter of the
+      <code>site:</code> and <code>lenya-document:</code> protocols. You can issue such
+      a request from an arbitrary sitemap (e.g., from your publication sitemap or from
+      a different module sitemap).
+    </p>
+<source xml:space="preserve">
+  <![CDATA[<!-- aggregate navigation components and XHTML-formatted content -->
+  <map:aggregate element="cmsbody">
+    <map:part src="cocoon://modules/sitetree/{2}/{3}/breadcrumb/{5}.xml"/>
+    <map:part src="cocoon://modules/sitetree/{2}/{3}/tabs/{5}.xml"/>
+    <map:part src="cocoon://modules/sitetree/{2}/{3}/menu/{5}.xml"/>
+    <map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/>
+    <map:part src="lenya-document:{page-envelope:documente-uuid}?format=xhtml"/>
+  </map:aggregate>
+]]>
+</source>
+
+    <p>
+      Another usage scenario is to include formatted documents in other documents, e.g. as a teaser or summary
+      (see the figure above):
+    </p>
+    <source xml:space="preserve"><![CDATA[<ci:include src="site:/{$language}{$path}?format=teaser"/>]]></source>
+    <source xml:space="preserve"><![CDATA[<ci:include src="lenya-document:{$uuid}?format=teaser"/>]]></source>
+  
+    <p>
+      Since formats allow you to select the presentation style of a document
+      on demand, you can use them as layout templates. But unfortunately formats have to
+      be declared in <code>cocoon.xconf</code>, so you can't add new templates at
+      runtime with this approach at the moment. Here's an example how to use formats to select templates:
+    </p>
+    <ul>
+      <li>
+        Set the Dublin Core element <code>format</code> when you create the document,
+        e.g. using a combo box. We use the Dublin Core for simplicity here, for a cleaner
+        approach you should define your own meta data element set.
+      </li>
+      <li>
+        In the resource type module, provide an XSLT stylesheet
+        <code>{resource-type}2{format}.xsl</code> for each format (see above)
+      </li>
+      <li>
+        <p>
+          Add the format parameter to the <code>lenya-document</code> call:
+        </p>
+        <source xml:space="preserve"><![CDATA[<map:generate src="lenya-document:{page-envelope:uuid}?format={dublincore:format}"/>]]></source>
+      </li>
+    </ul>
+  
+  </section>
+  
+  <section><title>Presentation</title>
+    
+    <p>
+      To make your resources available as HTTP pages, you have to add the
+      appropriate pipelines and XSLT stylesheets. In general, there are no
+      restrictions.
+    </p>
+    <p>
+      The pipelines have to be placed in
+      <code>$MODULE_HOME/sitemap.xmap</code>. The stylesheets are typically located in
+      <code>$MODULE_HOME/xslt/</code> and named <code>{resource-type}2{format}.xsl</code>
+      (e.g., <code>profile2xhtml.xsl</code>).
+    </p>
+    <p>  
+      In the case of the <em>xhtml</em> format, the stylesheet is supposed to generate
+      a valid XHTML document (in the XHTML namespace). The output of other formats depends
+      on the purpose of the respective format.
+    </p>
+    
+  </section>
+
+	</body>
+</document>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Part 1: Understanding Lenya</title>
+  </header>
+    <body>
+        <p>In this first installment in a series of articles on Lenya, we’d like to talk about
+            what Lenya is and what approach it takes in content management, including its
+            advantages and disadvantages.</p>
+        
+        <section id="history">
+                    <title>History</title>
+        
+        <p>Lenya was started by Michael Wechner in early 1999 as a way to document a journal on
+            pattern formation. From there, he co-started a company called
+            <a href="ext:wyona">Wyona</a> which continued to work on the project
+            until the spring of 2003, where the project was donated to the Apache Software
+            Foundation.</p>
+        </section>
+        <section id="approach"><title>Approach to Content Management</title>
+        
+        <p>Lenya’s approach to content management is just that: content management. While
+            <a href="http://www.textpattern.com/">some</a> CMS’s allow users to
+            change the styling of pages in the graphical interface of the application, Lenya
+            does not. Some consider this to be a big negative for Lenya, and for a large
+            institution with multiple designers and CSS developers, it can be. We’ve been
+            finding, however, as just one user that maintains the look and feel of Hiram’s
+            website, this isn’t that bad. Instead of working in a webpage to update our CSS, we
+            just upload it to the server.</p>
+        
+        <p>Of course, this means that the structural markup for the overall page layout is not
+            managed in Lenya either, well, at least not through the graphical user
+            interface. Instead, your page layout is done in XSL files, and when the page is
+            accessed through your web browser, the content and the XSL template merge and get
+            transformed into a valid HTML or XHTML document.</p>
+        </section>
+        <section id="goodstuff"><title>The good stuff</title>
+        
+        <p>What grabbed our attention with Lenya was how it went about presenting your content
+            for editing. When you log in to your website through Lenya, you can click on the
+            navigation in the pages as if you were browsing your website right there. Find
+            something wrong in the text of one page as you browse? Just go to Edit -> WYSIWYG
+            Editor and you’re taken to a page where you can change the content. Save your
+            changes, then publish the updated page. It’s incredibly easy.</p>
+        
+        <p>What’s also nice is that the foundation of Lenya is built on XML which, of course, is
+            great news for web standards gurus who will only work with XHTML. By default,
+            Lenya uses HTML 4.0, but a quick change in one file will switch all your pages to
+            XHTML Strict. And since it relies on XML, there’s no backend database that
+            manages this: it’s all flat XML files stored on the server. Don’t get this
+            confused, however, with having the ability to connect to a database as you would
+            with any
+            <a href="http://www.php.net/">PHP</a>-type language, because Lenya can
+            definitely do this as well.</p>
+        
+        <p>And as any good CMS would, information about the pages, like metadata, amongst
+            other things, can be edited for each page and is kept separate from the content on
+            the page itself. Lenya utilizes the
+            <a href="http://www.dublincore.org/">Dublin Core</a> for its metadata
+            tags in pages.</p>
+            </section>
+        
+        <section id="downers"><title>Some downers</title>
+        
+        <p>OK, so there are some downers. The terminology takes a bit of getting used to. For
+            example, “assets” are documents, images, or anything you want to link to in the
+            page that isn’t text. Some things just don’t happen by default in Lenya: they
+            require some extra programming. For example, say you add a new item in your site’s
+            navigation, but it doesn’t have a page on your website, it just links to an outside
+            site. There’s no nice way of doing this in the graphical interface. A login to the
+            server to edit the publication’s sitemap will provide this functionality.</p>
+        
+        <p>Also, Lenya runs on top of
+            <a href="http://cocoon.apache.org/">Apache Cocoon</a>, which is not the
+            downer, but the time required to learn it makes a lot of people give up quickly.
+            
+                <a href="http://cocoon.apache.org/2.1/userdocs/concepts/index.html#Basic+Mechanisms.">
+                Pipelines</a> are the big key to understanding how a page is created in
+            Lenya, and trust me, that will take some getting used to when you want to do
+            something that doesn’t fit the general site provided for you as an example. With
+            that, it’s much harder to find a company that will host Lenya for you – chances are
+            you’ll need to have a server of your own.</p>
+        
+        <p>One last thing for picky web developers: getting a website to have clean URLs is a
+            bit tricky. Even we have yet to get this working exactly the way we would like it to.
+            And with Lenya and clean URLs comes a much more detailed look into configurations
+            with the Apache web server than you are probably used to, which does take some
+            time.</p>
+        </section>
+        <section id="next"><title>What’s next?</title>
+        
+        <p>So, you read the advantages and disadvantages and you want to take the plunge into
+            Lenya? Good, because in my next article we’ll be explaining the methods we took to
+            get Lenya up and running on our RedHat Enterprise Linux server. Don’t worry, you
+            won’t need this specific operating system to make Lenya work. Lenya can run on
+            pretty much any UNIX/Linux server and (even) Microsoft Windows.</p>
+            </section>
+    </body>
+</document>

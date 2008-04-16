@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Running Lenya Behind Apache with mod_proxy</title>
+  </header>
+  <body>
+    
+    <section>
+      <title>Configuring the Apache Web Server</title>
+      <p>
+        First we'll declare the virtual hosts for the Apache web server. This is done in
+        a file called <code>httpd-vhosts.conf</code>. On Mac OS X, it is located in the directory
+        <code>/opt/local/apache2/conf/extra</code>. If you're using Jetty on port 8888, the
+        contents of the file should look like this:
+      </p>
+      <source xml:space="preserve"><![CDATA[NameVirtualHost *:80
+NameVirtualHost *:443
+
+# This is the non-SSL host for the authoring environment.
+<VirtualHost *:80>
+    ServerAdmin webmaster@cms.example.com
+    ServerName cms.example.com
+    ServerAlias cms
+    
+    # Turn proxy requests off for security reasons
+    ProxyRequests Off
+    
+    RewriteEngine On
+    RewriteLog /home/john/src/www/logs/cms.example.com-rewrite_log
+    RewriteLogLevel 4
+    
+    # First we match everything which is not mapped to /default/{area}
+    RewriteRule ^/lenya/(.*) http://cms.example.com:8888/lenya/$1 [P,L]
+    RewriteRule ^/modules/(.*) http://cms.example.com.com:8888/modules/$1 [P,L]
+    RewriteRule ^/default/modules/(.*) http://cms.example.com:8888/default/modules/$1 [P,L]
+    
+    # Redirect the login usecase to https
+    RewriteCond %{QUERY_STRING} (.*)lenya\.usecase=ac\.login(.*)
+    RewriteRule ^/(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+    # Forward the areas to the proxy
+    RewriteRule ^/(.*) http://cms.example.com:8888/default/$1 [P,L]
+    ProxyPassReverse / http://cms.example.com:8888/default/
+    
+    ErrorLog /home/john/src/www/logs/cms.example.com-error_log
+    CustomLog /home/john/src/www/logs/cms.example.com-access_log common
+</VirtualHost>
+
+# This is the SSL host for the authoring environment.
+<VirtualHost *:443>
+    ServerAdmin webmaster@cms.example.com
+    ServerName cms.example.com
+    ServerAlias cms
+
+    SSLEngine On
+    SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+    SSLCertificateFile /home/john/pki/server.crt
+    SSLCertificateKeyFile /home/john/pki/server.key
+
+    ProxyRequests Off
+    RewriteEngine On
+    RewriteLog /home/john/src/www/logs/cms.example.com-rewrite_log
+    RewriteLogLevel 4
+
+    RewriteRule ^/lenya/(.*) http://cms.example.com:8888/lenya/$1 [P,L]
+    RewriteRule ^/modules/(.*) http://cms.example.com.com:8888/modules/$1 [P,L]
+    RewriteRule ^/default/modules/(.*) http://cms.example.com:8888/default/modules/$1 [P,L]
+
+    RewriteRule ^/(.*) http://cms.example.com:8888/default/$1 [P,L]
+    ProxyPassReverse / http://cms.example.com:8888/default/
+    
+    ErrorLog /home/john/src/www/logs/cms.example.com-error_log
+    CustomLog /home/john/src/www/logs/cms.example.com-access_log common
+</VirtualHost>
+
+# This is the non-SSL host for the live area.
+<VirtualHost *:80>
+    ServerAdmin webmaster@www.example.com
+    ServerName www.example.com
+    ServerAlias lenya
+    
+    ProxyRequests Off
+    RewriteEngine On
+    RewriteLog /Users/john/src/www/logs/www.example.com-rewrite_log
+    RewriteLogLevel 4
+    
+    RewriteRule ^/([^/\.]+)$ $1/ [R]
+    RewriteRule ^/(.*) http://www.example.com:8888/default/live/$1 [P,L]
+    ProxyPassReverse / http://www.example.com:8888/default/live/
+    
+    ErrorLog /Users/john/src/www/logs/www.example.com-error_log
+    CustomLog /Users/john/src/www/logs/www.example.com-access_log common
+</VirtualHost>]]></source>
+
+      <p>
+        If you're using Tomcat on port 8080 with Lenya in the context path <em>lenya14</em>,
+        you have to change the port and add the context path accordingly: 
+      </p>
+      <source xml:space="preserve"><![CDATA[    RewriteRule ^/(.*) http://cms.example.com:8080/lenya14/default/authoring/$1 [P,L]
+    ProxyPassReverse / http://cms.example.com:8080/lenya14/default/authoring/]]></source>
+      <note>
+        With this setup, your browser might show error messages like "You have requested an
+        encrypted page that contains some unencrypted information" when accessing a page
+        with the <code>https</code> protocol. This is because Apache always connects to Lenya
+        with the <code>http</code> protocol, so Lenya doesn't know that it should use <code>https</code>
+        links to include images etc. on this page. This problem won't occur if you use the
+        <a href="site:mod_proxy_ajp">mod_proxy_ajp</a> approach.
+      </note>
+    </section>
+        
+  </body>
+</document>

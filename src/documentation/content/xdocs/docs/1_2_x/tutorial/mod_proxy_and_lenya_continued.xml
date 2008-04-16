@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Part 6b: mod_proxy and Lenya</title>
+  </header>
+    <body>
+        <p>One thing to note about the previous article: the last statement is indeed correct
+            if you don't make any changes to the publication.xconf file in the "config"
+            directory of your default publication. However, if you update it according to
+            the
+            <a href="http://wiki.apache.org/lenya/HowToModProxy">
+                HowToModProxy</a> document, after login, you'll be taken back to a non-SSL
+            connection for the rest of your editing.</p>
+        
+        <p>OK, now that the Authoring environment has been setup, we need to finish the Live
+            server setup.</p>
+        
+        <section id="live_environment"><title>Live environment</title>
+            
+            <p>The live environment, at least for this setup, is remarkably similar. Since
+                we're using the same Apache instance but a different IP address, just setup
+                another NameVirtualHost directive with the new IP address. We'll assume
+                that for every publication in Lenya, that will be a directory under our
+                domain name. So, say we have the following publications in our pubs
+                directory:</p>
+            
+            <source>
+                default -&gt; Default Publication 
+                weblog -&gt; Lenya Weblog</source>
+            
+            <p>Then we want to access them this way:</p>
+            
+            <source>
+                http://www.client.com/default/ 
+                http://www.client.com/weblog/</source>
+            
+            <p>In the end, our setup for the live server should look like this:</p>
+            
+            <source> 
+                NameVirtualHost 192.168.1.200:80
+                
+                &lt;VirtualHost 192.168.1.200:80&gt; 
+                    ServerName www.client.com
+                    ServerAlias www
+                    ProxyRequests Off 
+                    RewriteEngine On
+                    RewriteLog logs/www.client.com.rewrite.log 
+                    RewriteLogLevel 0
+                    RewriteRule ^/([^/\.]+)$ $1/ [R] 
+                    RewriteRule ^/([^/\.]+)/$ $1/index.html [R] 
+                    RewriteRule ^/([^/\.]+)/live/(.*)$ $1/$2 [R,L]
+
+                    # Rewrite for Lenya-wide resources (e.g. 404 page) 
+                    RewriteRule ^/lenya/(.*) http://www.client.com:8080/lenya/$1 [P]
+                    RewriteRule ^/([^/\.]+)/(.*) http://www.client.com:8080/$1/live/$2 [P] 
+                    ProxyPassReverse / http://www.client.com:8080/
+                &lt;/VirtualHost&gt;
+                
+                &lt;VirtualHost 192.168.1.200:443&gt; 
+                    ServerName www.client.com
+                    ServerAlias www
+                    ProxyRequests Off 
+                    RewriteEngine On
+                    RewriteLog logs/ssl.www.client.com.rewrite.log
+                    RewriteLogLevel 0
+                    RewriteRule ^/([^/\.]+)$ $1/ [R] 
+                    RewriteRule ^/([^/\.]+)/$ $1/index.html [R] 
+                    RewriteRule ^/([^/\.]+)/live/(.*)$ $1/$2 [R,L]
+                
+                    # Rewrite for Lenya-wide resources (e.g. 404 page) 
+                    RewriteRule ^/lenya/(.*) http://www.client.com:8080/lenya/$1 [P]
+                    RewriteRule ^/([^/\.]+)/(.*) http://%{SERVER_NAME}:8080/$1/live/$2 [P]
+                    ProxyPassReverse / http://www.client.com:8080/
+                &lt;/VirtualHost&gt;
+            </source>
+            
+            <p>So, what's going on here? Well, to use the non-SSL virtualhost as an example,
+                we're simply matching for any directory and mapping it to it's live
+                counterpart. We add the rewrite for the 404 page (remember, this
+                installation is under the ROOT context, so some of the "lenya" directories
+                are missing) and then reverse proxy it to port 8080 as usual. Now, if you go to
+                http://www.client.com/default/, you get taken to the live site for the
+                default publication.</p>
+            
+            <p>There are some things that aren't good about this. For one, it doesn't take
+                into account the root directory (i.e., http://www.client.com/). It will
+                be served by Apache in the DocumentRoot instead of through Lenya. That may be
+                what you're looking for, but my guess is that your publications won't
+                directly match to their URLs. No problems - just be more specific. If you
+                wanted to map the http://www.client.com/ URL to the default publication,
+                then just use this instead:</p>
+            
+            <source> 
+                RewriteRule ^/$ index.html [R] 
+                RewriteRule ^/default/live/(.*)$ $1 [R,L] 
+                RewriteRule ^/(.*) http://www.client.com:8080/default/live/$1 [P]
+            </source>
+            
+            <p>Then reverse proxy as always. In configurations we've used, we just list each
+                publication we have that maps to a URL, so we know for certain that we are matching
+                everything we want to.</p>
+            
+        </section><section id="modifying_the_publication_proxy_configuration">
+        <title>Modifying the publication proxy configuration</title>
+        
+        <p>There's one last thing that you'll want to do, and that's modifying the default
+            proxy settings in the publication's files itself so that you can switch between
+            SSL and non-SSL encrypted pages with ease. The start of the
+            <a href="http://wiki.apache.org/lenya/HowToModProxy">
+                HowToModProxy</a> document, as mentioned before, shows how to do this
+            really well. Using the
+            example above where the publications relate to their web address:</p>
+        
+        <source>
+            &lt;proxy url="https://www.client.com/default" ssl="true" area="live"/&gt;
+            &lt;proxy url="http://www.client.com/default" ssl="false" area="live"/&gt;
+            &lt;proxy url="https://lenya.client.com/default" ssl="true" area="authoring"/&gt;
+            &lt;proxy url="http://lenya.client.com/default" ssl="false" area="authoring"/&gt;
+        </source>
+        
+        <p>WARNING! we haven't tried the above configuration because we don't have the
+            necessary resources to test it properly. Hopefully someone will test it and get
+            back to us on the results. According to the documentation on Lenya's website, it
+            should be correct.</p>
+        
+        </section>
+            <section id="this_concludes_the_test_of_the_emergency_broadcast_system">
+        <title>This concludes the test of the emergency broadcast system</title>
+        
+        <p>Well, that's it. There's obviously more that you can play with when it comes to
+            mod_proxy and general URLs, but we hope this is a springboard for more ideas and a
+            place to gather more resources on the subject. If you're ever stuck on mod_proxy
+            in general, you can visit
+            <a href="http://httpd.apache.org/docs-2.0/mod/mod_proxy.html">
+                Apache's documentation</a> on the subject, and as always, a post to the
+            Lenya user <a href="site:ml">mailing list</a> will most likely yield some answers.</p>
+        </section>
+    </body>
+</document>

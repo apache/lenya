@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>The properties Module</title>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>
+        The <code>properties</code> module provides a service (InputModule) to configure
+        publications using properties. The idea is to have a fallback of properties.
+      </p>
+    </section>
+    <section>
+      <title>Sample</title>
+      <source><![CDATA[<properties>
+  <property name="pubs.default.author" value="Miguel de Cervantes Saavedra"/>
+</properties>]]></source>
+    </section>
+    <section>
+      <title>Order of precedence</title>
+      <note>The first values set get precedence, as in AntProperties</note>
+      <ol>
+        <li>Publication (lazy loaded in loadPublicationPropertiesIfNotDone()) </li>
+        <li>Lenya local</li>
+        <li>Modules (all modules, not only the ones referenced in the publication)</li>
+        <li>Lenya</li>
+      </ol>
+    </section>
+    <section>
+      <title>Locations</title>
+      <ol>
+        <li>{pubDir}/lenya.properties.xml</li>
+        <li>$LENYA_HOME/src/webapp/local.lenya.properties.xml</li>
+        <li>{module}/lenya.properties.xml</li>
+        <li>$LENYA_HOME/src/webapp/lenya.properties.xml</li>
+      </ol>
+    </section>
+    <section>
+      <title>Usage</title>
+      <p>To activate your properties you need to save the above sample file in one of the above locations.</p>
+      <ol>
+        <li>Publication - on a publication level you are able to implement all properties and override all possible default ones.</li>
+        <li>Lenya local - use this for global properties for all your lenya based pubs</li>
+        <li>Modules - modules can use properties to allow user to override module specific properties.</li>
+        <li>Lenya - global default properties</li>
+      </ol>
+      <section>
+        <title>sitemap.xmap</title>
+        <p>Since the properties module is a cocoon input module, you can use it as any other
+          input module.</p>
+        <source><![CDATA[...
+<map:transform src="cocoon:/getDoctypeXSLT/{4}">
+  <map:parameter name="author" value="{properties:pubs.default.author}"/>
+  ...
+</map:transform>]]>
+        </source>
+      </section>
+      <section>
+        <title>java</title>
+        <p>In your custom cocoon components use like follows.</p>
+        <source> InputModule inputModule = null;
+ ServiceSelector selector = null;
+ String propKey = "pubs.default.author";
+   try {
+     selector = (ServiceSelector) m_manager.lookup(InputModule.ROLE + "Selector");
+     inputModule = (InputModule) selector.select("properties");   
+     String propValue = (String) inputModule.getAttribute(propKey, null,
+                    objectModel)
+...
+        </source>
+      </section>
+    </section>
+  </body>
+</document>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: revisioncontroller.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Revision Controller</title>
+    <version />
+    <type />
+    
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>The Revision Controller controls the different reserved
+      check-in and check-out of documents, the backup versions and the
+      rollback. It is filesystem oriented</p>
+    </section>
+
+    <section>
+      <title>Check-in / Check-out</title>
+      <p>The 
+      <a href="checkin.html">check-in</a>
+      and 
+      <a href="checkout.html">check-out</a>
+      are reserved: a checked out document cannot be checked out by
+      another user.</p>
+      <p>A user "System" exists, who can force internally a checkin</p>
+      <p>The different check-in/check-out states (the checkin/out,
+      the time, the user's identity) of a document are stored in an
+      xml file with a own markup language: the 
+      <a href="rcml.html">RCML-file.</a></p>
+    </section>
+
+    <section>
+      <title>Versions</title>
+      <p>When a document is checked in, the old version of the
+      document is copied ( 
+      <a href="version.html">backup</a>
+      )</p>
+    </section>
+
+    <section>
+      <title>Rollback</title>
+      <p>It is also possible to retrieve an old version with the 
+      <a href="rollback.html">rollback</a>
+      </p>
+    </section>
+    
+    <section>
+      <title>Package</title>
+      <source>org.apache.lenya.cms.rc</source>
+    </section>
+  </body>
+</document>
