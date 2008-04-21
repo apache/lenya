@@ -50,26 +50,44 @@ public class Metadata extends SiteUsecase {
         return objects;
     }
     
+    /**
+     * Object to pass a meta data entry to the view.
+     */
     public static class MetaDataWrapper {
         
         private String[] values;
         private Element element;
         private boolean editable;
         
+        /**
+         * @param element The element.
+         * @param values The values for the element.
+         * @param canChange If the element value can be changed via the GUI. A <code>true</code>
+         *     value is only effective if the element itself is editable.
+         */
         public MetaDataWrapper(Element element, String[] values, boolean canChange) {
             this.values = values;
             this.element = element;
             this.editable = element.isEditable() && canChange;
         }
         
+        /**
+         * @return The values for the element.
+         */
         public String[] getValues() {
             return this.values;
         }
         
+        /**
+         * @return The element.
+         */
         public Element getElement() {
             return this.element;
         }
         
+        /**
+         * @return If the value can be changed via the GUI.
+         */
         public boolean isEditable() {
             return this.editable;
         }
