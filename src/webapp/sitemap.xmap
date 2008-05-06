@@ -487,6 +487,7 @@
           <map:transform src="{fallback:xslt/ac/login-{access-control:authenticator-type}.xsl}">
             <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="homepageUrl" value="{proxy-url:{page-envelope:area}:/index:{page-envelope:document-language}}"/>
           </map:transform>
           <map:call resource="style-cms-page"/>
         </map:match>

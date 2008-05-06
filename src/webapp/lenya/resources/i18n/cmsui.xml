@@ -109,6 +109,7 @@
   <message key="shibboleth-delete-cookies">
     If you want to log in with a different account, please delete the cookies in your browser. 
   </message>
+  <message key="link-to-publication-homepage">Back to publication homepage</message>
 
   <!-- logout screen -->
   <message key="logout-from-pub">LOGOUT from the {0} Publication</message>

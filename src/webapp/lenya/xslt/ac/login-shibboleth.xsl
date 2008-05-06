@@ -25,12 +25,19 @@
   
   <xsl:import href="login-user.xsl"/>
   
+  <xsl:param name="homepageUrl"/>
+  
   <xsl:template name="loginFormWrapper">
     <xsl:if test="not(/page/body/login/errors/error[normalize-space() = 'shibboleth-delete-cookies'])">
       <xsl:call-template name="loginForm"/>
       <br/>
     </xsl:if>
-    <a href="?lenya.usecase=shibboleth&amp;lenya.step=wayf">Login via Shibboleth</a>
+    <p>
+      <a href="{$homepageUrl}"><i18n:text>link-to-publication-homepage</i18n:text></a>
+    </p>
+    <p>
+      <a href="?lenya.usecase=shibboleth&amp;lenya.step=wayf">Login via Shibboleth</a>
+    </p>
   </xsl:template>
   
   

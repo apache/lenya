@@ -26,6 +26,8 @@
       xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <xsl:output indent="yes" version="1.0" />
       <xsl:param name="publication_name" />
+      <xsl:param name="contextprefix" />
+      <xsl:param name="area" />
       <xsl:variable name="copyright">Copyright &#169; 2003-2005 The Apache Software Foundation</xsl:variable>
       <xsl:template match="/">
         <xsl:apply-templates />

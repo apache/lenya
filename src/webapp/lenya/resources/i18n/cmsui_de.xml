@@ -109,6 +109,7 @@
   <message key="shibboleth-delete-cookies">
     Wenn Sie sich mit einem anderen Account anmelden wollen, löschen Sie bitte die Cookies in Ihrem Browser. 
   </message>
+  <message key="link-to-publication-homepage">Zurück zur Homepage der Publikation</message>
   
   <!-- logout screen -->
   <message key="logout-from-pub">Abmelden von der {0} Publikation</message>
