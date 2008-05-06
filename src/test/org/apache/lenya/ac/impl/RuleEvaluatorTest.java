@@ -50,6 +50,13 @@ public class RuleEvaluatorTest extends TestCase {
         
         assertTrue(evaluator.isComplied(user, ATTR_NAME + " == \"bar\""));
         assertFalse(evaluator.isComplied(user, ATTR_NAME + " == \"baz\""));
+        
+        String[] value = { "foo" };
+        user.setAttributeValues(ATTR_NAME, value);
+        assertTrue(evaluator.isComplied(user, ATTR_NAME + " == \"foo\""));
+        assertFalse(evaluator.isComplied(user, ATTR_NAME + " == \"bar\""));
+        
+
     }
 
 }
