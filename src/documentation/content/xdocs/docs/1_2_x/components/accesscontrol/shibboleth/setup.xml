@@ -493,25 +493,24 @@ NameVirtualHost *:443
         <title>Configure Lenya</title>
         <ul>
           <li>
+            Edit <code>$PUB_HOME/config/ac/ac.xconf</code>.
+          </li>
+          <li>
+            Declare the <code>shibboleth</code> authenticator instead of the default
+            <code>user</code> authenticator for the publication:
+            <source xml:space="preserve"><![CDATA[<access-controller type="bypassable">
+  ...
+  <authenticator type="shibboleth"/>
+  ...
+</access-controller>]]></source>
+          </li>
+          <li>
             Edit <code>$LENYA_HOME/src/webapp/WEB-INF/cocoon-xconf.xsl</code>.
           </li>
           <li>
-            Declare the <code>ShibbolethAuthenticator</code> instead of the default
-            <code>UserAuthenticator</code>:
-            <source xml:space="preserve"><![CDATA[<component logger="lenya.ac.authenticator"
-    class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator"
-    role="org.apache.lenya.ac.Authenticator"/>
-<!--
-<component logger="lenya.ac.authenticator"
-    class="org.apache.lenya.ac.impl.UserAuthenticator"
-    role="org.apache.lenya.ac.Authenticator"/>
--->    
-]]></source>
-          </li>
-          <li>
             <p>
-          The next section of interest is the declaration of the
-            <code>org.apache.shibboleth.ShibbolethModule</code> with the following elements:
+              The section of interest is the declaration of the
+              <code>org.apache.shibboleth.ShibbolethModule</code> with the following elements:
             </p>
         <dl>
           <dt>ProviderId</dt>
