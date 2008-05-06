@@ -78,7 +78,7 @@ public class SourceCacheImpl
     /**
      * @see org.apache.lenya.ac.cache.SourceCache#get(java.lang.String, org.apache.lenya.ac.cache.InputStreamBuilder)
      */
-    public Object get(String sourceUri, InputStreamBuilder builder) throws CachingException {
+    public synchronized Object get(String sourceUri, InputStreamBuilder builder) throws CachingException {
 
         String key = sourceUri;
         Object value = null;
@@ -186,7 +186,7 @@ public class SourceCacheImpl
      * @throws SourceNotFoundException when an error occurs.
      * @throws BuildException if an error occurs.
      */
-    protected Object buildObject(String sourceUri, InputStreamBuilder builder)
+    protected synchronized Object buildObject(String sourceUri, InputStreamBuilder builder)
         throws MalformedURLException, IOException, SourceNotFoundException, BuildException {
         Object value = null;
         Source source = null;
@@ -211,7 +211,7 @@ public class SourceCacheImpl
      * @throws MalformedURLException when an error occurs.
      * @throws IOException when an error occurs.
      */
-    protected SourceValidity getSourceValidity(String sourceUri)
+    protected synchronized SourceValidity getSourceValidity(String sourceUri)
         throws MalformedURLException, IOException {
         SourceValidity sourceValidity;
         Source source = null;
