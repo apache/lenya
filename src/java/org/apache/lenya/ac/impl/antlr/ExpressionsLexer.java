@@ -1,4 +1,4 @@
-// $ANTLR 3.0 src/java/org/apache/lenya/ac/impl/antlr/Expressions.g 2007-06-19 15:30:41
+// $ANTLR 3.0.1 /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g 2008-05-06 16:50:47
 
 package org.apache.lenya.ac.impl.antlr;
 import org.apache.lenya.ac.ErrorHandler;
@@ -37,17 +37,17 @@ public class ExpressionsLexer extends Lexer {
     public ExpressionsLexer(CharStream input) {
         super(input);
     }
-    public String getGrammarFileName() { return "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g"; }
+    public String getGrammarFileName() { return "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g"; }
 
     // $ANTLR start LITERAL
     public final void mLITERAL() throws RecognitionException {
         try {
             int _type = LITERAL;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:92:10: ( '\"' ( 'a' .. 'z' | 'A' .. 'Z' | '_' | ' ' | '.' )* '\"' )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:92:10: '\"' ( 'a' .. 'z' | 'A' .. 'Z' | '_' | ' ' | '.' )* '\"'
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:106:8: ( '\"' ( 'a' .. 'z' | 'A' .. 'Z' | '_' | ' ' | '.' )* '\"' )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:106:10: '\"' ( 'a' .. 'z' | 'A' .. 'Z' | '_' | ' ' | '.' )* '\"'
             {
             match('\"'); 
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:92:14: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | ' ' | '.' )*
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:106:14: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | ' ' | '.' )*
             loop1:
             do {
                 int alt1=2;
@@ -60,7 +60,7 @@ public class ExpressionsLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:
+            	    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:
             	    {
             	    if ( input.LA(1)==' '||input.LA(1)=='.'||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -96,8 +96,8 @@ public class ExpressionsLexer extends Lexer {
     public final void mID() throws RecognitionException {
         try {
             int _type = ID;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:93:5: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:93:5: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:107:3: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:107:5: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -109,7 +109,7 @@ public class ExpressionsLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:93:25: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:107:25: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -122,7 +122,7 @@ public class ExpressionsLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:
+            	    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -157,8 +157,8 @@ public class ExpressionsLexer extends Lexer {
     public final void mEQUALS() throws RecognitionException {
         try {
             int _type = EQUALS;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:94:9: ( '==' )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:94:9: '=='
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:108:7: ( '==' )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:108:9: '=='
             {
             match("=="); 
 
@@ -176,8 +176,8 @@ public class ExpressionsLexer extends Lexer {
     public final void mQUOT() throws RecognitionException {
         try {
             int _type = QUOT;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:95:7: ( '\"' )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:95:7: '\"'
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:109:5: ( '\"' )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:109:7: '\"'
             {
             match('\"'); 
 
@@ -194,8 +194,8 @@ public class ExpressionsLexer extends Lexer {
     public final void mOR() throws RecognitionException {
         try {
             int _type = OR;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:96:5: ( '||' )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:96:5: '||'
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:110:3: ( '||' )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:110:5: '||'
             {
             match("||"); 
 
@@ -213,8 +213,8 @@ public class ExpressionsLexer extends Lexer {
     public final void mAND() throws RecognitionException {
         try {
             int _type = AND;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:97:6: ( '&&' )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:97:6: '&&'
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:111:4: ( '&&' )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:111:6: '&&'
             {
             match("&&"); 
 
@@ -232,8 +232,8 @@ public class ExpressionsLexer extends Lexer {
     public final void mLEFTPAR() throws RecognitionException {
         try {
             int _type = LEFTPAR;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:98:10: ( '(' )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:98:10: '('
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:112:8: ( '(' )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:112:10: '('
             {
             match('('); 
 
@@ -250,8 +250,8 @@ public class ExpressionsLexer extends Lexer {
     public final void mRIGHTPAR() throws RecognitionException {
         try {
             int _type = RIGHTPAR;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:99:11: ( ')' )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:99:11: ')'
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:113:9: ( ')' )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:113:11: ')'
             {
             match(')'); 
 
@@ -268,10 +268,10 @@ public class ExpressionsLexer extends Lexer {
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:100:5: ( ( ' ' | '\\t' )+ )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:100:5: ( ' ' | '\\t' )+
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:114:3: ( ( ' ' | '\\t' )+ )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:114:5: ( ' ' | '\\t' )+
             {
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:100:5: ( ' ' | '\\t' )+
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:114:5: ( ' ' | '\\t' )+
             int cnt3=0;
             loop3:
             do {
@@ -285,7 +285,7 @@ public class ExpressionsLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:
+            	    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:
             	    {
             	    if ( input.LA(1)=='\t'||input.LA(1)==' ' ) {
             	        input.consume();
@@ -322,7 +322,7 @@ public class ExpressionsLexer extends Lexer {
     // $ANTLR end WS
 
     public void mTokens() throws RecognitionException {
-        // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:10: ( LITERAL | ID | EQUALS | QUOT | OR | AND | LEFTPAR | RIGHTPAR | WS )
+        // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:8: ( LITERAL | ID | EQUALS | QUOT | OR | AND | LEFTPAR | RIGHTPAR | WS )
         int alt4=9;
         switch ( input.LA(1) ) {
         case '\"':
@@ -432,63 +432,63 @@ public class ExpressionsLexer extends Lexer {
 
         switch (alt4) {
             case 1 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:10: LITERAL
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:10: LITERAL
                 {
                 mLITERAL(); 
 
                 }
                 break;
             case 2 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:18: ID
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:18: ID
                 {
                 mID(); 
 
                 }
                 break;
             case 3 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:21: EQUALS
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:21: EQUALS
                 {
                 mEQUALS(); 
 
                 }
                 break;
             case 4 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:28: QUOT
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:28: QUOT
                 {
                 mQUOT(); 
 
                 }
                 break;
             case 5 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:33: OR
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:33: OR
                 {
                 mOR(); 
 
                 }
                 break;
             case 6 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:36: AND
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:36: AND
                 {
                 mAND(); 
 
                 }
                 break;
             case 7 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:40: LEFTPAR
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:40: LEFTPAR
                 {
                 mLEFTPAR(); 
 
                 }
                 break;
             case 8 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:48: RIGHTPAR
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:48: RIGHTPAR
                 {
                 mRIGHTPAR(); 
 
                 }
                 break;
             case 9 :
-                // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:57: WS
+                // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:1:57: WS
                 {
                 mWS(); 
 

@@ -13,24 +13,24 @@ lexer grammar Expressions;
 }
 @header {
 package org.apache.lenya.ac.impl.antlr;
-import org.apache.lenya.ac.impl.ErrorHandler;
+import org.apache.lenya.ac.ErrorHandler;
 }
 
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 92
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 106
 LITERAL: '"' ('a'..'z'|'A'..'Z'|'_'|' '|'.')* '"';
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 93
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 107
 ID: ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9')*;
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 94
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 108
 EQUALS: '==';
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 95
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 109
 QUOT: '"';
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 96
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 110
 OR: '||';
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 97
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 111
 AND: '&&';
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 98
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 112
 LEFTPAR: '(';
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 99
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 113
 RIGHTPAR: ')';
-// $ANTLR src "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 100
+// $ANTLR src "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g" 114
 WS: (' '|'\t')+ {skip();} ;

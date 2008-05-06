@@ -1,8 +1,7 @@
-// $ANTLR 3.0 src/java/org/apache/lenya/ac/impl/antlr/Expressions.g 2007-06-19 15:30:40
+// $ANTLR 3.0.1 /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g 2008-05-06 16:50:45
 
 package org.apache.lenya.ac.impl.antlr;
 import java.util.HashMap;
-
 import org.apache.lenya.ac.ErrorHandler;
 
 
@@ -32,7 +31,7 @@ public class ExpressionsParser extends Parser {
         
 
     public String[] getTokenNames() { return tokenNames; }
-    public String getGrammarFileName() { return "src/java/org/apache/lenya/ac/impl/antlr/Expressions.g"; }
+    public String getGrammarFileName() { return "/Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g"; }
 
 
     /** Map variable name to object holding value */
@@ -62,7 +61,7 @@ public class ExpressionsParser extends Parser {
 
 
     // $ANTLR start prog
-    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:53:1: prog returns [boolean value] : e= orExpression ;
+    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:53:1: prog returns [boolean value] : e= orExpression ;
     public final boolean prog() throws RecognitionException {
         boolean value = false;
 
@@ -70,8 +69,8 @@ public class ExpressionsParser extends Parser {
 
 
         try {
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:54:7: (e= orExpression )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:54:7: e= orExpression
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:54:5: (e= orExpression )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:54:7: e= orExpression
             {
             pushFollow(FOLLOW_orExpression_in_prog50);
             e=orExpression();
@@ -94,7 +93,7 @@ public class ExpressionsParser extends Parser {
 
 
     // $ANTLR start orExpression
-    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:57:1: orExpression returns [boolean value] : e= andExpression ( OR e= andExpression )* ;
+    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:57:1: orExpression returns [boolean value] : e= andExpression ( OR e= andExpression )* ;
     public final boolean orExpression() throws RecognitionException {
         boolean value = false;
 
@@ -102,15 +101,15 @@ public class ExpressionsParser extends Parser {
 
 
         try {
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:58:9: (e= andExpression ( OR e= andExpression )* )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:58:9: e= andExpression ( OR e= andExpression )*
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:58:5: (e= andExpression ( OR e= andExpression )* )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:58:9: e= andExpression ( OR e= andExpression )*
             {
             pushFollow(FOLLOW_andExpression_in_orExpression77);
             e=andExpression();
             _fsp--;
 
             value = e; 
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:59:5: ( OR e= andExpression )*
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:59:5: ( OR e= andExpression )*
             loop1:
             do {
                 int alt1=2;
@@ -123,7 +122,7 @@ public class ExpressionsParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:59:7: OR e= andExpression
+            	    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:59:7: OR e= andExpression
             	    {
             	    match(input,OR,FOLLOW_OR_in_orExpression87); 
             	    pushFollow(FOLLOW_andExpression_in_orExpression91);
@@ -156,7 +155,7 @@ public class ExpressionsParser extends Parser {
 
 
     // $ANTLR start andExpression
-    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:62:1: andExpression returns [boolean value] : e= comparison ( AND e= comparison )* ;
+    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:62:1: andExpression returns [boolean value] : e= comparison ( AND e= comparison )* ;
     public final boolean andExpression() throws RecognitionException {
         boolean value = false;
 
@@ -164,15 +163,15 @@ public class ExpressionsParser extends Parser {
 
 
         try {
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:63:9: (e= comparison ( AND e= comparison )* )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:63:9: e= comparison ( AND e= comparison )*
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:63:5: (e= comparison ( AND e= comparison )* )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:63:9: e= comparison ( AND e= comparison )*
             {
             pushFollow(FOLLOW_comparison_in_andExpression125);
             e=comparison();
             _fsp--;
 
             value = e;
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:64:5: ( AND e= comparison )*
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:64:5: ( AND e= comparison )*
             loop2:
             do {
                 int alt2=2;
@@ -185,7 +184,7 @@ public class ExpressionsParser extends Parser {
 
                 switch (alt2) {
             	case 1 :
-            	    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:64:7: AND e= comparison
+            	    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:64:7: AND e= comparison
             	    {
             	    match(input,AND,FOLLOW_AND_in_andExpression135); 
             	    pushFollow(FOLLOW_comparison_in_andExpression139);
@@ -218,19 +217,19 @@ public class ExpressionsParser extends Parser {
 
 
     // $ANTLR start comparison
-    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:67:1: comparison returns [boolean value] : (a= atom EQUALS b= atom | LEFTPAR e= orExpression RIGHTPAR );
+    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:67:1: comparison returns [boolean value] : (a= atom EQUALS b= atom | LEFTPAR e= orExpression RIGHTPAR );
     public final boolean comparison() throws RecognitionException {
         boolean value = false;
 
-        String a = null;
+        atom_return a = null;
 
-        String b = null;
+        atom_return b = null;
 
         boolean e = false;
 
 
         try {
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:68:9: (a= atom EQUALS b= atom | LEFTPAR e= orExpression RIGHTPAR )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:68:5: (a= atom EQUALS b= atom | LEFTPAR e= orExpression RIGHTPAR )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -248,7 +247,7 @@ public class ExpressionsParser extends Parser {
             }
             switch (alt3) {
                 case 1 :
-                    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:68:9: a= atom EQUALS b= atom
+                    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:68:9: a= atom EQUALS b= atom
                     {
                     pushFollow(FOLLOW_atom_in_comparison173);
                     a=atom();
@@ -259,12 +258,26 @@ public class ExpressionsParser extends Parser {
                     b=atom();
                     _fsp--;
 
-                    value = a.equals(b);
+
+                                if (a.value instanceof String && b.value instanceof String) {
+                                    value = a.value.equals(b.value);
+                                }
+                                else if (a.value instanceof String && b.value.getClass().isArray()) {
+                                    value = java.util.Arrays.asList((String[]) b.value).contains(a.value);
+                                }
+                                else if (a.value.getClass().isArray() && b.value instanceof String) {
+                                    value = java.util.Arrays.asList((String[]) a.value).contains(b.value);
+                                }
+                                else {
+                                    throw new FailedPredicateException(input, input.toString(a.start,a.stop) + " == " + input.toString(b.start,b.stop),
+                                        "Incompatible arguments for comparison: " + a.value + ", " + b.value);
+                                }
+                            
 
                     }
                     break;
                 case 2 :
-                    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:69:9: LEFTPAR e= orExpression RIGHTPAR
+                    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:83:9: LEFTPAR e= orExpression RIGHTPAR
                     {
                     match(input,LEFTPAR,FOLLOW_LEFTPAR_in_comparison191); 
                     pushFollow(FOLLOW_orExpression_in_comparison195);
@@ -289,18 +302,22 @@ public class ExpressionsParser extends Parser {
     }
     // $ANTLR end comparison
 
+    public static class atom_return extends ParserRuleReturnScope {
+        public Object value;
+    };
 
     // $ANTLR start atom
-    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:72:1: atom returns [String value] : ( quotedString | ID );
-    public final String atom() throws RecognitionException {
-        String value = null;
+    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:86:1: atom returns [Object value] : ( quotedString | ID );
+    public final atom_return atom() throws RecognitionException {
+        atom_return retval = new atom_return();
+        retval.start = input.LT(1);
 
         Token ID2=null;
         String quotedString1 = null;
 
 
         try {
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:73:9: ( quotedString | ID )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:87:5: ( quotedString | ID )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -312,34 +329,34 @@ public class ExpressionsParser extends Parser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("72:1: atom returns [String value] : ( quotedString | ID );", 4, 0, input);
+                    new NoViableAltException("86:1: atom returns [Object value] : ( quotedString | ID );", 4, 0, input);
 
                 throw nvae;
             }
             switch (alt4) {
                 case 1 :
-                    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:73:9: quotedString
+                    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:87:9: quotedString
                     {
                     pushFollow(FOLLOW_quotedString_in_atom222);
                     quotedString1=quotedString();
                     _fsp--;
 
-                    value = quotedString1;
+                    retval.value = quotedString1;
 
                     }
                     break;
                 case 2 :
-                    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:74:9: ID
+                    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:88:9: ID
                     {
                     ID2=(Token)input.LT(1);
                     match(input,ID,FOLLOW_ID_in_atom234); 
 
-                                String s = (String) memory.get(ID2.getText());
-                                if ( s != null ) {
-                                    value = s;
+                                Object v = memory.get(ID2.getText());
+                                if ( v != null ) {
+                                    retval.value = v;
                                 }
                                 else {
-                                	value = "undefined";
+                                	retval.value = "undefined";
                                     throw new FailedPredicateException(input, ID2.getText(),
                                         "Undefined variable \"" + ID2.getText() + "\"");
                                 }
@@ -349,6 +366,8 @@ public class ExpressionsParser extends Parser {
                     break;
 
             }
+            retval.stop = input.LT(-1);
+
         }
         catch (RecognitionException re) {
             reportError(re);
@@ -356,21 +375,21 @@ public class ExpressionsParser extends Parser {
         }
         finally {
         }
-        return value;
+        return retval;
     }
     // $ANTLR end atom
 
 
     // $ANTLR start quotedString
-    // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:88:1: quotedString returns [String value] : LITERAL ;
+    // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:102:1: quotedString returns [String value] : LITERAL ;
     public final String quotedString() throws RecognitionException {
         String value = null;
 
         Token LITERAL3=null;
 
         try {
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:89:9: ( LITERAL )
-            // src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:89:9: LITERAL
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:103:7: ( LITERAL )
+            // /Users/nobby/apache/lenya/branches/branch_1_2_x_shibboleth/src/java/org/apache/lenya/ac/impl/antlr/Expressions.g:103:9: LITERAL
             {
             LITERAL3=(Token)input.LT(1);
             match(input,LITERAL,FOLLOW_LITERAL_in_quotedString267); 

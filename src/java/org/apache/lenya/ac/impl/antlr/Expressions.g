@@ -3,12 +3,12 @@ grammar Expressions;
 @header {
 package org.apache.lenya.ac.impl.antlr;
 import java.util.HashMap;
-import org.apache.lenya.ac.impl.ErrorHandler;
+import org.apache.lenya.ac.ErrorHandler;
 }
 
 @lexer::header {
 package org.apache.lenya.ac.impl.antlr;
-import org.apache.lenya.ac.impl.ErrorHandler;
+import org.apache.lenya.ac.ErrorHandler;
 }
 
 @members {
@@ -65,17 +65,31 @@ andExpression returns [boolean value]
     ;
     
 comparison returns [boolean value]
-    :   a=atom EQUALS b=atom {$value = $a.value.equals($b.value);}
+    :   a=atom EQUALS b=atom {
+            if ($a.value instanceof String && $b.value instanceof String) {
+                $value = $a.value.equals($b.value);
+            }
+            else if ($a.value instanceof String && $b.value.getClass().isArray()) {
+                $value = java.util.Arrays.asList((String[]) $b.value).contains($a.value);
+            }
+            else if ($a.value.getClass().isArray() && $b.value instanceof String) {
+                $value = java.util.Arrays.asList((String[]) $a.value).contains($b.value);
+            }
+            else {
+                throw new FailedPredicateException(input, $a.text + " == " + $b.text,
+                    "Incompatible arguments for comparison: " + $a.value + ", " + $b.value);
+            }
+        }
     |   LEFTPAR e=orExpression RIGHTPAR {$value = $e.value;}
     ;
 
-atom returns [String value]
+atom returns [Object value]
     :   quotedString {$value = $quotedString.value;}
     |   ID
         {
-            String s = (String) memory.get($ID.text);
-            if ( s != null ) {
-                $value = s;
+            Object v = memory.get($ID.text);
+            if ( v != null ) {
+                $value = v;
             }
             else {
             	$value = "undefined";
