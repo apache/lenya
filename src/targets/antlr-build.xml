@@ -21,15 +21,14 @@
 <project name="antlr">
   
   <target name="antlr.compile" description="Generate the ANTLR parser for attribute rule evaluation">
-    <property name="antlr.build" value="build/lenya/antlr"/>
+    <property name="antlr.build" value="src/java/org/apache/lenya/ac/impl/antlr"/>
     <mkdir dir="${antlr.build}"/>
     <antlr:antlr3 xmlns:antlr="antlib:org/apache/tools/ant/antlr"
       target="src/java/org/apache/lenya/ac/impl/antlr/Expressions.g"
       outputdirectory="${antlr.build}">
       <jvmarg value="-Djava.compiler=NONE"/>
     </antlr:antlr3>
-    
-    
+    <antcall target="compile"/>
   </target>
   
 </project>
