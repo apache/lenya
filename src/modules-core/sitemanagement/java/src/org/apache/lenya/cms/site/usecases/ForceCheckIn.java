@@ -59,12 +59,15 @@ public class ForceCheckIn extends DocumentUsecase {
         Node node = getSourceDocument().getRepositoryNode();
         if (node.isCheckedOut()) {
             String userId = node.getCheckoutUserId();
-            String[] params = { userId };
-            if (isLoggedIn(userId)) {
-                addInfoMessage("user-logged-in", params);
-            }
-            else {
-                addInfoMessage("user-not-logged-in", params);
+            User currentUser = getSession().getIdentity().getUser();
+            if (currentUser == null || !userId.equals(currentUser.getId())) {
+                String[] params = { userId };
+                if (isLoggedIn(userId)) {
+                    addInfoMessage("user-logged-in", params);
+                }
+                else {
+                    addInfoMessage("user-not-logged-in", params);
+                }
             }
         }
     }
