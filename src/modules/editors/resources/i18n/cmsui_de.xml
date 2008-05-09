@@ -51,4 +51,8 @@
   <message key="insertAsset.createResource">Neue Datei hochladen...</message>
 
   <message key="Choose element ...">Element wählen ...</message>
+  <message key="upload-disabled">
+    Das Hochladen von Dateien ist nicht erlaubt.
+    Bitte prüfen Sie die Einstellungen in local.build.properties!
+  </message>
 </catalogue>

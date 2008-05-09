@@ -69,7 +69,7 @@ public class OneFormEditor extends DocumentUsecase {
             UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(),
                     getSourceDocument(), getLogger());
             if (!ServletHelper.isUploadEnabled(this.manager)) {
-                addErrorMessage("This function requires to enable uploads.");
+                addErrorMessage("upload-disabled");
             }
         }
         setParameter("executable", Boolean.valueOf(!hasErrors()));

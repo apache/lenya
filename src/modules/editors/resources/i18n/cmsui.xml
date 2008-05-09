@@ -51,4 +51,5 @@
   <message key="insertAsset.createResource">Upload new resource</message>
   
   <message key="Choose element ...">Choose element ...</message>
+  <message key="upload-disabled">Upload is not enabled. Please check local.build.properties!</message>
 </catalogue>
