@@ -101,7 +101,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
 
         // Replace author
         Identity identity = (Identity)parameters.get("org.apache.lenya.ac.Identity");
-        du.setElementValue(doc, "/echo:entry/echo:author/echo:name", identity.getUser().getId());
+        du.setElementValue(doc, "/echo:entry/echo:author/echo:name", identity.getUserReference().getId());
 
         // Replace date created (and issued and modified, FIXME: issued should be set during first time publishing, modified should be set during re-publishing)
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
