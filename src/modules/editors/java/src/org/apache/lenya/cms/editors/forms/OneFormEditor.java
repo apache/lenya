@@ -33,6 +33,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
@@ -67,6 +68,9 @@ public class OneFormEditor extends DocumentUsecase {
         if (!hasErrors()) {
             UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(),
                     getSourceDocument(), getLogger());
+            if (!ServletHelper.isUploadEnabled(this.manager)) {
+                addErrorMessage("This function requires to enable uploads.");
+            }
         }
         setParameter("executable", Boolean.valueOf(!hasErrors()));
     }
