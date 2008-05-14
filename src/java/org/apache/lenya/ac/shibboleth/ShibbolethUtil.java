@@ -86,7 +86,7 @@ public class ShibbolethUtil {
                 Publication pub = PublicationFactory.getPublication(pubId,
                         servletContextPath);
 
-                Proxy proxy = pub.getProxy(area, isSslProtected(webappUrl));
+                Proxy proxy = pub.getProxy(area, true);
                 if (proxy != null) {
                     String proxyUrl = proxy.getUrl();
                     if (containsAuthority(proxyUrl)) {

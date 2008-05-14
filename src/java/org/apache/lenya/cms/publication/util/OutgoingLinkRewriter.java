@@ -55,11 +55,31 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
      * @return A URL.
      */
     public String rewrite(String webappUrl) {
+        return rewrite(webappUrl, true, false);
+    }
+    
+    /**
+     * @param webappUrl The web application URL to rewrite.
+     * @param useSsl If the SSL proxy should be used.
+     * @return A URL.
+     */
+    public String rewrite(String webappUrl, boolean useSsl) {
+        return rewrite(webappUrl, false, useSsl);
+    }
+
+    
+    /**
+     * @param webappUrl The web application URL to rewrite.
+     * @param checkSsl If the method should check if the request is SSL protected.
+     * @param useSsl If the SSL proxy should be used (ignored if checkSsl is true).
+     * @return A URL.
+     */
+    protected String rewrite(String webappUrl, boolean checkSsl, boolean useSsl) {
 
         URLInformation info = new URLInformation(webappUrl);
         String pubId = info.getPublicationId();
         String area = info.getArea();
-        
+
         String proxyUrl = null;
 
         if (pubId != null && area != null) {
@@ -71,10 +91,12 @@ public class OutgoingLinkRewriter extends AbstractLogEnabled {
                 String servletContextPath = context.getRealPath("");
                 Publication pub = PublicationFactory.getPublication(pubId, servletContextPath);
 
-                Proxy proxy = pub.getProxy(area, isSslProtected(webappUrl));
+                boolean chooseSslProxy = checkSsl ? request.isSecure() : useSsl;
+
+                Proxy proxy = pub.getProxy(area, chooseSslProxy);
                 if (proxy != null) {
-                	    String prefix = "/" + pubId + "/" + info.getCompleteArea();
-                	    String areaUrl = webappUrl.substring(prefix.length());
+                    String prefix = "/" + pubId + "/" + info.getCompleteArea();
+                    String areaUrl = webappUrl.substring(prefix.length());
                     proxyUrl = proxy.getUrl() + areaUrl;
                 } else {
                     webappUrl = request.getContextPath() + webappUrl;
