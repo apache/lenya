@@ -27,9 +27,5 @@
   <group id="reviewer">
     <role id="review"/>
   </group>
-  
-  <user id="shib">
-    <role id="edit"/>
-  </user>
 
 </policy> 
