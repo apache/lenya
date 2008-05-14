@@ -167,6 +167,7 @@ function groupChangeMembers() {
                     if (java.lang.Class.forName("org.apache.lenya.ac.User").isInstance(oldMembers[i])
                         && !groupUsers.contains(oldMembers[i])) {
                         group.remove(oldMembers[i]);
+                        oldMembers[i].save();
                     }
                 }
                 
