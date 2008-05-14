@@ -61,7 +61,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
         Request request = ObjectModelHelper.getRequest(objectModel);
 
         try {
-        	
+            
             selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
             resolver =
                 (AccessControllerResolver) selector.select(
@@ -73,7 +73,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
 
             if (accessController != null) {
 
-            		AccreditableManager accMgr = accessController.getAccreditableManager();
+                AccreditableManager accMgr = accessController.getAccreditableManager();
                 Policy policy = accessController.getPolicyManager().getPolicy(accMgr, url);
 
                 URLInformation info = new URLInformation(url);
@@ -83,7 +83,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
                     Session session = request.getSession(true);
                     OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getLogger());
                     String sslUri = rewriter.rewrite(url);
-                    return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);                    	
+                    return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);
                 }
             }
 
