@@ -55,19 +55,21 @@ public class Link {
         
         StringTokenizer schemeAndPath = new StringTokenizer(linkUri, ":");
         schemeAndPath.nextToken();
-        String path = schemeAndPath.nextToken();
-
-        if (path.indexOf(PAIR_DELIMITER) > -1) {
-            int firstDelimiterIndex = path.indexOf(PAIR_DELIMITER);
-            this.uuid = path.substring(0, firstDelimiterIndex);
-            String pathQueryString = path.substring(firstDelimiterIndex + 1);
-            Query query = new Query(pathQueryString, PAIR_DELIMITER, KEY_VALUE_DELIMITER);
-            this.pubId = query.getValue("pub");
-            this.area = query.getValue("area");
-            this.language = query.getValue("lang");
-            this.revision = query.getValue("rev");
-        } else {
-            this.uuid = path;
+        if (schemeAndPath.hasMoreTokens()) {
+            String path = schemeAndPath.nextToken();
+    
+            if (path.indexOf(PAIR_DELIMITER) > -1) {
+                int firstDelimiterIndex = path.indexOf(PAIR_DELIMITER);
+                this.uuid = path.substring(0, firstDelimiterIndex);
+                String pathQueryString = path.substring(firstDelimiterIndex + 1);
+                Query query = new Query(pathQueryString, PAIR_DELIMITER, KEY_VALUE_DELIMITER);
+                this.pubId = query.getValue("pub");
+                this.area = query.getValue("area");
+                this.language = query.getValue("lang");
+                this.revision = query.getValue("rev");
+            } else {
+                this.uuid = path;
+            }
         }
     }
     
