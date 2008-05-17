@@ -29,8 +29,6 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
@@ -42,7 +40,6 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeImpl;
-import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -101,8 +98,6 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
 
             this.urlPrefix = "/" + publicationId + "/" + area;
 
-            Request _request = ObjectModelHelper.getRequest(_objectModel);
-
             this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
 
@@ -112,8 +107,7 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
                 getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
             }
 
-            String webappUrl = ServletHelper.getWebappURI(_request);
-            AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
+            AccessController accessController = this.acResolver.resolveAccessController(this.urlPrefix);
             this.accreditableManager = accessController.getAccreditableManager();
             this.policyManager = accessController.getPolicyManager();
 
