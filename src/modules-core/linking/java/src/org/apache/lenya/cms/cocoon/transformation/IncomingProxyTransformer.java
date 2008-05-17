@@ -32,7 +32,6 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 
 /**
@@ -44,14 +43,15 @@ public class IncomingProxyTransformer extends AbstractLinkTransformer {
     private LinkRewriter rewriter;
 
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
-            Parameters _parameters) throws ProcessingException, SAXException, IOException {
-        super.setup(_resolver, _objectModel, _source, _parameters);
+            Parameters params) throws ProcessingException, SAXException, IOException {
+        super.setup(_resolver, _objectModel, _source, params);
         Request request = ObjectModelHelper.getRequest(_objectModel);
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
-            URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
+            String webappUrl = getWebappUrl(params, objectModel);
+            URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
             this.rewriter = new IncomingLinkRewriter(factory.getPublication(pubId));
         } catch (final Exception e) {

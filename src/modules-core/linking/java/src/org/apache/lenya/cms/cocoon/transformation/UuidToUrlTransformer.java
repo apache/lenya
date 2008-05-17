@@ -31,7 +31,6 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UuidToUrlRewriter;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 
 /**
@@ -47,14 +46,14 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     private LinkResolver linkResolver;
     
     public void setup(SourceResolver resolver, Map objectModel, String source,
-            Parameters parameters) throws ProcessingException, SAXException, IOException {
-        super.setup(resolver, objectModel, source, parameters);
+            Parameters params) throws ProcessingException, SAXException, IOException {
+        super.setup(resolver, objectModel, source, params);
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         this.useIgnore = true;
         try {
+            String currentUrl = getWebappUrl(params, objectModel);
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            String currentUrl = ServletHelper.getWebappURI(request);
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
             this.rewriter = new UuidToUrlRewriter(currentUrl, this.linkResolver, factory);
             

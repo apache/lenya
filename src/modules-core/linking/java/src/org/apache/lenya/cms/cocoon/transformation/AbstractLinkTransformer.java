@@ -28,6 +28,7 @@ import java.util.Stack;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -49,8 +50,9 @@ import org.xml.sax.helpers.AttributesImpl;
  * <code>&lt;transform/&gt;</code> elements.
  * </p>
  * <p>
- * If the link rewriter returns <code>null</code> for a link, an attribute can be
- * added to the corresponding element, with an optional message of the form "Broken link: ...".
+ * If the link rewriter returns <code>null</code> for a link, an attribute can
+ * be added to the corresponding element, with an optional message of the form
+ * "Broken link: ...".
  * </p>
  * <code><pre>
  *   &lt;map:transformer ... &gt;
@@ -59,30 +61,58 @@ import org.xml.sax.helpers.AttributesImpl;
  *     &lt;markBrokenLinks attribute=&quot;...&quot; value=&quot;...&quot; messageAttribute=&quot;...&quot;/&gt;
  *   &lt;/map:transformer&gt;
  * </pre></code>
+ * <p>
+ * The reference URL can optionally be passed using the <em>url</em>
+ * parameter.
+ * </p>
  */
 public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
-    
+
     private String area;
-    
+    protected static final String PARAM_URL = "url";
+
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters params)
             throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, params);
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        String webappUrl = ServletHelper.getWebappURI(request);
+
+        String webappUrl = getWebappUrl(params, objectModel);
         URLInformation url = new URLInformation(webappUrl);
         this.area = url.getArea();
+    }
+
+    /**
+     * @param params
+     * @param objectModel
+     * @return The web application URL which was passed using the <em>url</em>
+     *         parameter or the web application URL the transformer was called on,
+     *         respectively.
+     * @throws ProcessingException
+     */
+    protected String getWebappUrl(Parameters params, Map objectModel) throws ProcessingException {
+        String webappUrl;
+        if (params.isParameter(PARAM_URL)) {
+            try {
+                webappUrl = params.getParameter(PARAM_URL);
+            } catch (ParameterException e) {
+                throw new ProcessingException(e);
+            }
+        } else {
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            webappUrl = ServletHelper.getWebappURI(request);
+        }
+        return webappUrl;
     }
 
     /**
      * Set of supported local names for quick pre-checks.
      */
     private Set localNames = new HashSet();
-    
+
     private boolean markBrokenLinks;
     private String brokenLinkAttribute;
     private String brokenLinkValue;
     private String brokenLinkMessageAttribute;
-    
+
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
         Configuration[] transformConfigs = config.getChildren("transform");
@@ -110,8 +140,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
                 this.brokenLinkMessageAttribute = messageAttr;
             }
             this.markBrokenLinks = true;
-        }
-        else {
+        } else {
             this.markBrokenLinks = false;
         }
     }
@@ -155,20 +184,19 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * @param attrs The attributes.
      * @return A set of {@link AttributeConfiguration} objects.
      */
-    protected Set getMatchingConfigurations(String namespace,
-            String localName, Attributes attrs) {
-        
+    protected Set getMatchingConfigurations(String namespace, String localName, Attributes attrs) {
+
         // pre-check for performance reasons
         if (!existsMatchingConfiguration(namespace, localName)) {
             return Collections.EMPTY_SET;
         }
-        
+
         String key = getCacheKey(namespace, localName);
-        
+
         // don't initialize yet for performance reasons
         Set configs = null;
         Set allConfigs = (Set) this.namespaceLocalname2configSet.get(key);
-        for (Iterator i = allConfigs.iterator(); i.hasNext(); ) {
+        for (Iterator i = allConfigs.iterator(); i.hasNext();) {
             AttributeConfiguration config = (AttributeConfiguration) i.next();
             if (config.matches(namespace, localName, attrs)) {
                 if (configs == null) {
@@ -182,7 +210,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         }
         return configs;
     }
-    
+
     /**
      * Cache to improve performance.
      */
@@ -193,7 +221,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         if (!this.localNames.contains(localName)) {
             return false;
         }
-        
+
         // more expensive check
         String key = getCacheKey(namespace, localName);
         return this.namespaceLocalname2configSet.containsKey(key);
@@ -229,7 +257,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             newAttrs = new AttributesImpl(attrs);
             this.ignoreLinkElement = false;
 
-            for (Iterator i = configs.iterator(); i.hasNext(); ) {
+            for (Iterator i = configs.iterator(); i.hasNext();) {
                 AttributeConfiguration config = (AttributeConfiguration) i.next();
                 String linkUrl = newAttrs.getValue(config.attribute);
                 try {
@@ -249,15 +277,15 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         }
 
         // use existsMatching to match up with endElement
-        if (existsMatchingConfiguration(uri,name) && this.useIgnore) {
-            if(this.ignoreLinkElement) { 
+        if (existsMatchingConfiguration(uri, name) && this.useIgnore) {
+            if (this.ignoreLinkElement) {
                 ignoreLinkElementStack.push(Boolean.TRUE);
                 return;
-            } else { 
+            } else {
                 ignoreLinkElementStack.push(Boolean.FALSE);
             }
         }
- 
+
         if (newAttrs != null) {
             attrs = newAttrs;
         }
@@ -272,7 +300,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * @param linkUrl The link URL.
      * @param config The attribute configuration which matched the link.
      * @param newAttrs The new attributes which will be added to the result
-     *        element.
+     *                element.
      * @throws Exception if an error occurs.
      */
     protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
@@ -281,12 +309,10 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             String rewrittenUrl = getLinkRewriter().rewrite(linkUrl);
             if (rewrittenUrl != null) {
                 setAttribute(newAttrs, config.attribute, rewrittenUrl);
-            }
-            else {
+            } else {
                 if (this.area != null && this.area.equals(Publication.LIVE_AREA)) {
                     this.ignoreLinkElement = true;
-                }
-                else {
+                } else {
                     markBrokenLink(newAttrs, config.attribute, linkUrl);
                 }
             }
@@ -302,13 +328,13 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             this.indent = this.indent.substring(2);
             getLogger().debug(this.indent + "</" + qname + ">");
         }
-        if (existsMatchingConfiguration(uri, name) && this.useIgnore) { 
-            if( ((Boolean)ignoreLinkElementStack.pop()).booleanValue()) { 
+        if (existsMatchingConfiguration(uri, name) && this.useIgnore) {
+            if (((Boolean) ignoreLinkElementStack.pop()).booleanValue()) {
                 this.ignoreLinkElement = false;
                 return;
             }
         }
-        
+
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this.indent + "</" + qname + "> sent");
         }
@@ -322,7 +348,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * @param name The attribute name.
      * @param value The value.
      * @throws IllegalArgumentException if the href attribute is not contained
-     *         in this attributes.
+     *                 in this attributes.
      */
     protected void setAttribute(AttributesImpl attr, String name, String value) {
         int position = attr.getIndex(name);
@@ -338,9 +364,11 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     protected abstract LinkRewriter getLinkRewriter();
 
     /**
-     * Marks a link element as broken and removes the attribute which contained the URL.
+     * Marks a link element as broken and removes the attribute which contained
+     * the URL.
      * @param newAttrs The new attributes.
-     * @param attrName The attribute name containing the URL which could not be rewritten.
+     * @param attrName The attribute name containing the URL which could not be
+     *                rewritten.
      * @param brokenLinkUri The broken link URI.
      * @throws AccessControlException when something went wrong.
      */
@@ -351,7 +379,8 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
                 newAttrs.removeAttribute(newAttrs.getIndex(this.brokenLinkAttribute));
             }
             if (newAttrs.getIndex(attrName) > -1) {
-                newAttrs.setAttribute(newAttrs.getIndex(attrName), "", attrName, attrName, "CDATA", "");
+                newAttrs.setAttribute(newAttrs.getIndex(attrName), "", attrName, attrName, "CDATA",
+                        "");
             }
             String msgAttr = this.brokenLinkMessageAttribute;
             if (msgAttr != null) {
@@ -362,7 +391,8 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
                 String msg = "Broken link: " + brokenLinkUri;
                 newAttrs.addAttribute("", msgAttr, msgAttr, "CDATA", msg);
             }
-            newAttrs.addAttribute("", this.brokenLinkAttribute, this.brokenLinkAttribute, "CDATA", this.brokenLinkValue);
+            newAttrs.addAttribute("", this.brokenLinkAttribute, this.brokenLinkAttribute, "CDATA",
+                    this.brokenLinkValue);
         }
     }
 

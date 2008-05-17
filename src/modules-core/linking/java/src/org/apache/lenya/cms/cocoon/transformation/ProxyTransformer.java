@@ -67,16 +67,16 @@ public class ProxyTransformer extends AbstractLinkTransformer {
     private LinkRewriter rewriter;
 
     public void setup(SourceResolver resolver, Map objectModel, String source,
-            Parameters parameters) throws ProcessingException, SAXException, IOException {
-        super.setup(resolver, objectModel, source, parameters);
+            Parameters params) throws ProcessingException, SAXException, IOException {
+        super.setup(resolver, objectModel, source, params);
         Request request = ObjectModelHelper.getRequest(objectModel);
 
         try {
-            if (parameters.isParameter(PARAMETER_URLS)) {
-                setUrlType(parameters.getParameter(PARAMETER_URLS));
+            if (params.isParameter(PARAMETER_URLS)) {
+                setUrlType(params.getParameter(PARAMETER_URLS));
             }
             Session session = RepositoryUtil.getSession(this.manager, request);
-            String webappUrl = ServletHelper.getWebappURI(request);
+            String webappUrl = getWebappUrl(params, objectModel);
             this.rewriter = new OutgoingLinkRewriter(this.manager, session, webappUrl,
                     request.isSecure(), false, this.relativeUrls);
         } catch (final Exception e) {
