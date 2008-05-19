@@ -43,6 +43,7 @@
   
   <!--Following is a show off to explain lenya.properties.xml -->
   <xsl:param name="author"/>
+  <xsl:param name="lenyaVersion"/>
   
   <xsl:variable name="root" select="concat('/', $publication-id, '/', $area)"/>
   
@@ -59,7 +60,7 @@
           <link rel="stylesheet" href="{$root}/css/{$document-type}.css" type="text/css"/>
           <xsl:copy-of select="xhtml:html/xhtml:head/*"/>
         </xsl:if>
-        <meta content="Apache Lenya" name="generator"/>
+        <meta content="Apache Lenya {$lenyaVersion}" name="generator"/>
         
         <title><meta:value element="title" ns="http://purl.org/dc/elements/1.1/" default="error-404"
           i18n:attr="default" uuid="{$uuid}" lang="{$language}"/></title>
