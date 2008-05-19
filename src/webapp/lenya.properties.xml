@@ -17,4 +17,5 @@
 -->
 <properties>
   <property name="pubs.default.author" value="the Lenya community"/>
+  <property name="lenya.version" value="@lenya.version@"/>
 </properties>
