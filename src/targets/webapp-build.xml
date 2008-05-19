@@ -202,6 +202,7 @@
     <replace dir="${build.webapp}">
       <include name="lenya/content/welcome.xml"/>
       <include name="lenya/content/about.xml"/>
+      <include name="lenya.properties.xml"/>
       <include name="**/config/publication.xml"/>
       <replacefilter token="@lenya.version@" value="${version}"/>
       <replacefilter token="@lenya.revision@" value="${lenya.revision}"/>
