@@ -171,6 +171,7 @@
           <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
           <!-- Following is a show off to explain lenya.properties.xml -->
           <map:parameter name="author" value="{properties:pubs.default.author}"/>
+          <map:parameter name="lenyaVersion" value="{properties:lenya.version}"/>
           <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
         </map:transform>
         <map:transform type="i18n">      
