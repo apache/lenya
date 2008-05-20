@@ -38,8 +38,9 @@ public class BreadcrumbSelector implements FragmentSelector {
         while (tokens.hasMoreTokens()) {
             String name = tokens.nextToken();
             currentPath.append("/").append(name);
-            if (site.contains(path)) {
-                SiteNode node = site.getNode(path);
+            String pathString = currentPath.toString();
+            if (site.contains(pathString)) {
+                SiteNode node = site.getNode(pathString);
                 generator.startNode(node);
                 generator.generateLink(node, lang);
                 generator.endNode(node);
