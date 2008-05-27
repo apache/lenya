@@ -150,6 +150,7 @@ which will be used to configure the chosen Forrest skin.
     dt { font-weight: bold; margin-top: .5em; }
     div#content { padding: 30px 30px 30px 210px; }
     h1 { padding: 0px 0 10px 0; }
+    #menu #credit2 { padding-left: 0; padding-right: 0; }
 
   </extra-css>
 
@@ -233,12 +234,13 @@ which will be used to configure the chosen Forrest skin.
       <height>31</height>
     </credit>
     <credit box-location="alt2">
-      <name>Meeting Zurich 2007</name>
-      <url>http://wiki.apache.org/lenya/MeetingZurich2007</url>
-      <image>images/apache-lenya-meeting-zurich-2007_small.png</image>
-      <width>150</width>
-      <height>39</height>
+      <name>Meeting Freiburg 2008</name>
+      <url>http://wiki.apache.org/lenya/MeetingFreiburg2008</url>
+      <image>images/apache-lenya-meeting-freiburg-2008.png</image>
+      <width>160</width>
+      <height>40</height>
     </credit>
+<!--
     <credit box-location="alt2">
       <name>ApacheCon Europe 2007</name>
       <url>http://apachecon.com/2007/EU/</url>
@@ -253,6 +255,7 @@ which will be used to configure the chosen Forrest skin.
       <width>125</width>
       <height>125</height>
     </credit>
+-->
     <!-- A credit with @role='pdf' will have its name and url
       displayed in the PDF page's footer. -->
   </credits>
