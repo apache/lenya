@@ -154,5 +154,6 @@ color: #000000;
     dt { font-weight: bold; margin-top: .5em; }
     div#content { padding: 30px 30px 30px 210px; }
     h1 { padding: 0px 0 10px 0; }
+    #menu #credit2 { padding-left: 0; padding-right: 0; }
 
   

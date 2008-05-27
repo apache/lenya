@@ -697,7 +697,7 @@ document.write("Last Published: " + document.lastModified);
   |alternative credits
   +-->
 <div id="credit2">
-<a href="http://wiki.apache.org/lenya/MeetingZurich2007"><img border="0" title="Meeting Zurich 2007" alt="Meeting Zurich 2007 - logo" src="../../images/apache-lenya-meeting-zurich-2007_small.png" style="width: 150px;height: 39px;"></a><a href="http://apachecon.com/2007/EU/"><img border="0" title="ApacheCon Europe 2007" alt="ApacheCon Europe 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-europe-125x125.png" style="width: 125px;height: 125px;"></a><a href="http://people.apache.org/calendar.html#200711"><img border="0" title="ApacheCon US 2007" alt="ApacheCon US 2007 - logo" src="http://apache.org/ads/ApacheCon/2007-usa-125x125.png" style="width: 125px;height: 125px;"></a>
+<a href="http://wiki.apache.org/lenya/MeetingFreiburg2008"><img border="0" title="Meeting Freiburg 2008" alt="Meeting Freiburg 2008 - logo" src="../../images/apache-lenya-meeting-freiburg-2008.png" style="width: 160px;height: 40px;"></a>
 </div>
 </div>
 <!--+
@@ -712,69 +712,87 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Frequently Asked Questions</h1>
-<div id="front-matter"></div>
-<a name="N10008"></a><a name="Questions"></a>
-<h2 class="h3">Questions</h2>
-<div class="section">
-<a name="N1000C"></a><a name="getting_started"></a>
-<h3 class="h4">1. Getting Started and Building Lenya</h3>
-<a name="N10010"></a><a name="TransformerFactoryImpl"></a>
-<h4 class="faq">1.1. 
+<div id="front-matter">
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#getting_started">1. Getting Started and Building Lenya</a>
+<ul class="minitoc">
+<li>
+<a href="#TransformerFactoryImpl">1.1. 
         The build fails with a message like Fatal error during transformation. 
-      </h4>
-<div align="right">
-<a href="#TransformerFactoryImpl-menu">^</a>
+      </a>
+</li>
+<li>
+<a href="#faq-N1001D">1.2. 
+        When I request the web application, I get the error message "Failure occured during job recovery".
+      </a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#BuildingWebsites">2. Building Websites</a>
+<ul class="minitoc">
+<li>
+<a href="#resourcetypes">2.1. How do I add a custom type of documents?</a>
+</li>
+<li>
+<a href="#interaction">2.2. How can I add user interaction to web pages?</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#i18n_">3. Internationalisation (i18n)</a>
+</li>
+<li>
+<a href="#editors">4. Editors</a>
+</li>
+<li>
+<a href="#Deployment">5. Deployment</a>
+</li>
+</ul>
 </div>
-<div style="margin-left: 15px">
+</div>
+<a name="N10008"></a><a name="getting_started"></a>
+<h2 class="h3">1. Getting Started and Building Lenya</h2>
+<div class="section">
+<a name="N1000C"></a><a name="TransformerFactoryImpl"></a>
+<h3 class="h4">1.1. 
+        The build fails with a message like Fatal error during transformation. 
+      </h3>
 <p>
           You might want to take a look at the comments for
           <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=40113">bug 40113</a>.
         </p>
-</div>
-<a name="N1001C"></a><a name="faq-N1001D"></a>
-<h4 class="faq">1.2. 
+<a name="N10018"></a><a name="faq-N1001D"></a>
+<h3 class="h4">1.2. 
         When I request the web application, I get the error message "Failure occured during job recovery".
-      </h4>
-<div align="right">
-<a href="#faq-N1001D-menu">^</a>
-</div>
-<div style="margin-left: 15px">
+      </h3>
 <p>
           Please verify that the user which runs the application server has write permissions in the
           directory <span class="codefrag">$WEBAPP_HOME/WEB-INF/db/</span>.
         </p>
 </div>
-<a name="N10027"></a><a name="BuildingWebsites"></a>
-<h3 class="h4">2. Building Websites</h3>
-<a name="N1002B"></a><a name="resourcetypes"></a>
-<h4 class="faq">2.1. How do I add a custom type of documents?</h4>
-<div align="right">
-<a href="#resourcetypes-menu">^</a>
-</div>
-<div style="margin-left: 15px">
+<a name="N10023"></a><a name="BuildingWebsites"></a>
+<h2 class="h3">2. Building Websites</h2>
+<div class="section">
+<a name="N10027"></a><a name="resourcetypes"></a>
+<h3 class="h4">2.1. How do I add a custom type of documents?</h3>
 <p>
           See section <a href="../../docs/2_0_x/reference/resource-types.html">resource types</a>.
         </p>
-</div>
-<a name="N10037"></a><a name="interaction"></a>
-<h4 class="faq">2.2. How can I add user interaction to web pages?</h4>
-<div align="right">
-<a href="#interaction-menu">^</a>
-</div>
-<div style="margin-left: 15px">
+<a name="N10033"></a><a name="interaction"></a>
+<h3 class="h4">2.2. How can I add user interaction to web pages?</h3>
 <p>
           The <a href="../../docs/2_0_x/../modules/usecasedocument/index.html">usecasedocument</a>
           module allows to add usecases as CMS documents.
         </p>
 </div>
-<a name="N10043"></a><a name="i18n_"></a>
-<h3 class="h4">3. Internationalisation (i18n)</h3>
-<a name="N10047"></a><a name="i18n"></a>
-<h4 class="faq">3.1.  How to extend the i18n catalog for Lenya 2.0? </h4>
-<div align="right">
-<a href="#i18n-menu">^</a>
-</div>
-<div style="margin-left: 15px">
+<a name="N1003F"></a><a name="i18n_"></a>
+<h2 class="h3">3. Internationalisation (i18n)</h2>
+<div class="section">
+<a name="N10043"></a><a name="i18n"></a>
+<h3 class="h4">3.1.  How to extend the i18n catalog for Lenya 2.0? </h3>
 <p> In the default publication you can find 
           <span class="codefrag">pubs/default/lenya/resources/i18n</span>. That are the files 
           you need to edit if you wish to override it on a publication base. 
@@ -786,33 +804,26 @@ document.write("Last Published: " + document.lastModified);
           so that the i18n catalog is detected.
         </p>
 </div>
-<a name="N1005B"></a><a name="editors"></a>
-<h3 class="h4">4. Editors</h3>
-<a name="N1005F"></a><a name="bxe-css"></a>
-<h4 class="faq">4.1.  Is it possible to override in BXE *only* a css style definition? </h4>
-<div align="right">
-<a href="#bxe-css-menu">^</a>
-</div>
-<div style="margin-left: 15px">
+<a name="N10057"></a><a name="editors"></a>
+<h2 class="h3">4. Editors</h2>
+<div class="section">
+<a name="N1005B"></a><a name="bxe-css"></a>
+<h3 class="h4">4.1.  Is it possible to override in BXE *only* a css style definition? </h3>
 <p> Yes, this is possible.<br> Just add and edit it like you need it 
           (have a look in the default pub): 
           <span class="codefrag">{pubid}/resources/misc/bxe/{ressourcetype}-bxe.css</span> 
 </p>
 </div>
-<a name="N1006C"></a><a name="Deployment"></a>
-<h3 class="h4">5. Deployment</h3>
-<a name="N10070"></a><a name="plain-cocoon"></a>
-<h4 class="faq">5.1. Can I serve my public site with Cocoon only?</h4>
-<div align="right">
-<a href="#plain-cocoon-menu">^</a>
-</div>
-<div style="margin-left: 15px">
+<a name="N10068"></a><a name="Deployment"></a>
+<h2 class="h3">5. Deployment</h2>
+<div class="section">
+<a name="N1006C"></a><a name="plain-cocoon"></a>
+<h3 class="h4">5.1. Can I serve my public site with Cocoon only?</h3>
 <p>
           In general, the answer is "no", because various Lenya components are necessary
           to access the repository and generate the pages. You'd have to invest a lot
           of effort to extract these components from Lenya, and this will hardly be worth it.
         </p>
-</div>
 </div>
 </div>
 <!--+
