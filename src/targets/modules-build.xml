@@ -119,6 +119,14 @@
     </ant>
   </target>
   
+  <target name="module.test.canoo" depends="init" description="Run Canoo web tests for a module">
+    <property name="module" value=""/>
+    <ant antfile="${build.dir}/temp/modules-build.xml">
+      <property name="webtest.home" value="${webtest.home}"/>
+      <target name="canoo-module-${module}"/>
+    </ant>
+  </target>
+  
   <target name="patch-modules-test" depends="set-test-patch-property, tests.prepare, prepare-module-test">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
