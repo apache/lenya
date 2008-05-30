@@ -31,6 +31,7 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SharedItemStore;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -38,11 +39,11 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
- * Site tree implementation which delegates all operations to a shared site tree.
+ * Site tree implementation which delegates all operations to a shared site
+ * tree.
  */
 public class DelegatingSiteTree implements SiteStructure, SiteTree {
-    
-    private SiteTreeImpl tree;
+
     private Area area;
     private ServiceManager manager;
     private Map links = new HashMap();
@@ -51,16 +52,24 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     private List topLevelNodes;
     private List preOrder;
     private String sourceUri;
+    private SharedItemStore store;
+    private String key;
+    private SiteTreeFactory factory;
 
     /**
      * @param manager The service manager.
      * @param area The area which this tree belongs to.
-     * @param tree The tree to delegate to.
+     * @param factory The site tree factory.
+     * @param store The shared item store.
+     * @param key The key to build the sitetree.
      */
-    public DelegatingSiteTree(ServiceManager manager, Area area, SiteTreeImpl tree) {
-        this.tree = tree;
+    public DelegatingSiteTree(ServiceManager manager, Area area, SiteTreeFactory factory,
+            SharedItemStore store, String key) {
         this.area = area;
         this.manager = manager;
+        this.store = store;
+        this.key = key;
+        this.factory = factory;
     }
 
     public Link add(String path, Document doc) throws SiteException {
@@ -76,39 +85,39 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     }
 
     public boolean contains(String path) {
-        return this.tree.contains(path);
+        return getTree().contains(path);
     }
 
     public boolean contains(String path, String language) {
-        return this.tree.contains(path, language);
+        return getTree().contains(path, language);
     }
 
     public boolean containsByUuid(String uuid, String language) {
-        return this.tree.containsByUuid(uuid, language);
+        return getTree().containsByUuid(uuid, language);
     }
 
     public boolean containsInAnyLanguage(String uuid) {
-        return this.tree.containsInAnyLanguage(uuid);
+        return getTree().containsInAnyLanguage(uuid);
     }
 
     public String getArea() {
         return this.area.getName();
     }
-    
+
     public Link getByUuid(String uuid, String language) throws SiteException {
-        Link delegate = this.tree.getByUuid(uuid, language);
+        Link delegate = getTree().getByUuid(uuid, language);
         return getLink(delegate);
     }
 
     protected Link getLink(Link delegate) {
         Link link = (Link) this.links.get(delegate);
         if (link == null) {
-            link = new DelegatingLink(this.area.getPublication().getFactory(), getNode(delegate.getNode()),
-                    delegate.getLabel(), delegate.getLanguage());
+            link = new DelegatingLink(this.area.getPublication().getFactory(), getNode(delegate
+                    .getNode()), delegate.getLabel(), delegate.getLanguage());
         }
         return link;
     }
-    
+
     protected DelegatingNode getNode(SiteNode delegate) {
         DelegatingNode node = (DelegatingNode) this.nodes.get(delegate);
         if (node == null) {
@@ -119,12 +128,12 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     }
 
     public SiteNode getNode(String path) throws SiteException {
-        return getNode(this.tree.getNode(path));
+        return getNode(getTree().getNode(path));
     }
 
     public SiteNode[] getNodes() {
         if (this.nodeList == null) {
-            SiteNode[] delegates = this.tree.getNodes();
+            SiteNode[] delegates = getTree().getNodes();
             this.nodeList = new ArrayList();
             for (int i = 0; i < delegates.length; i++) {
                 this.nodeList.add(getNode(delegates[i]));
@@ -139,7 +148,7 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
 
     public SiteNode[] getTopLevelNodes() {
         if (this.topLevelNodes == null) {
-            SiteNode[] delegates = this.tree.getTopLevelNodes();
+            SiteNode[] delegates = getTree().getTopLevelNodes();
             this.topLevelNodes = new ArrayList();
             for (int i = 0; i < delegates.length; i++) {
                 this.topLevelNodes.add(getNode(delegates[i]));
@@ -153,7 +162,7 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     }
 
     private NodeFactory nodeFactory;
-    
+
     protected NodeFactory getNodeFactory() {
         if (this.nodeFactory == null) {
             try {
@@ -191,13 +200,21 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
 
     public SiteNode[] preOrder() {
         if (this.preOrder == null) {
-            SiteNode[] delegates = this.tree.preOrder();
+            SiteNode[] delegates = getTree().preOrder();
             this.preOrder = new ArrayList();
             for (int i = 0; i < delegates.length; i++) {
                 this.preOrder.add(getNode(delegates[i]));
             }
         }
         return (SiteNode[]) this.preOrder.toArray(new SiteNode[this.preOrder.size()]);
+    }
+
+    protected SiteTree getTree() {
+        try {
+            return (SiteTree) this.store.getRepositoryItem(this.factory, this.key);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void save() throws RepositoryException {

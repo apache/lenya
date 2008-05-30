@@ -68,8 +68,7 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
                 SharedItemStore store = null;
                 try {
                     store = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
-                    SiteTreeImpl sharedTree = (SiteTreeImpl) store.getRepositoryItem(this, key);
-                    tree = new DelegatingSiteTree(this.manager, area, sharedTree);
+                    tree = new DelegatingSiteTree(this.manager, area, this, store, key);
                 }
                 finally {
                     if (store != null) {
