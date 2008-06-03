@@ -138,8 +138,10 @@
     <property name="module" value=""/>
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
-      inheritrefs="true"
-      target="test-module-${module}"/>
+      inheritrefs="true">
+      <target name="test-module-org.apache.lenya.modules.export"/>
+      <target name="test-module-${module}"/>
+    </ant>
   </target>
   
   <target name="module.compile">
