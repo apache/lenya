@@ -141,9 +141,29 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     public String rewrite(final String url) {
 
         String rewrittenUrl = "";
-
+        
+        String path;
+        String suffix;
+        
+        int numIndex = url.indexOf('#');
+        if (numIndex > -1) {
+            path = url.substring(0, numIndex);
+            suffix = url.substring(numIndex);
+        }
+        else {
+            int qmIndex = url.indexOf('?');
+            if (qmIndex > -1) {
+                path = url.substring(0, qmIndex);
+                suffix = url.substring(qmIndex);
+            }
+            else {
+                path = url;
+                suffix = "";
+            }
+        }
+        
         try {
-            String normalizedUrl = normalizeUrl(url);
+            String normalizedUrl = normalizeUrl(path);
             if (this.relativeUrls) {
                 rewrittenUrl = getRelativeUrlTo(normalizedUrl);
             } else {
@@ -176,7 +196,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return rewrittenUrl;
+        return rewrittenUrl + suffix;
     }
 
     protected String normalizeUrl(final String url) throws URISyntaxException {
@@ -242,10 +262,12 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         else {
             List sourceSteps = toList(this.requestUrl);
             List targetSteps = toList(webappUrl);
+            
+            String lastEqualStep = null;
 
             while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
                     && sourceSteps.get(0).equals(targetSteps.get(0))) {
-                sourceSteps.remove(0);
+                lastEqualStep = (String) sourceSteps.remove(0);
                 targetSteps.remove(0);
             }
 
@@ -258,6 +280,9 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
             }
             else if (sourceSteps.size() > 1) {
                 prefix = generateUpDots(sourceSteps.size() - 1) + "/";
+            }
+            else if (sourceSteps.size() == 1 && targetSteps.get(0).equals("")) {
+                prefix = generateUpDots(1) + "/" + lastEqualStep + "/";
             }
 
             String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);

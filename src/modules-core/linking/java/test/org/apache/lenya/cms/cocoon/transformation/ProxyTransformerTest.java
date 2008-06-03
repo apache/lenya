@@ -123,8 +123,6 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
                 selector = (ServiceSelector) getManager().lookup(Instantiator.ROLE + "Selector");
                 instantiator = (Instantiator) selector.select(defaultPub.getInstantiatorHint());
                 instantiator.instantiate(defaultPub, pubId, "Mock");
-                Publication mockPub = getFactory().getPublication(pubId);
-                configureProxy(mockPub, area, proxyUrl);
             } finally {
                 if (selector != null) {
                     if (instantiator != null) {
@@ -134,6 +132,8 @@ public class ProxyTransformerTest extends AbstractAccessControlTest {
                 }
             }
         }
+        Publication mockPub = getFactory().getPublication(pubId);
+        configureProxy(mockPub, area, proxyUrl);
     }
 
     protected void configureProxy(Publication pub, String area, String proxyUrl) throws Exception {

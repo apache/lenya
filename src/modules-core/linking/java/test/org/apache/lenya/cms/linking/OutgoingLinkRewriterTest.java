@@ -25,8 +25,14 @@ public class OutgoingLinkRewriterTest extends AbstractAccessControlTest {
     public void testRelativeUrls() throws Exception {
         Session session = login("lenya");
         String url = "/aaa/bbb/ccc";
-        OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(getManager(), session, url, false, false, true);
-        
+
+        boolean ssl = false;
+        boolean considerSslPolicies = false;
+        boolean relativeUrls = true;
+
+        OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(getManager(), session, url, ssl,
+                considerSslPolicies, relativeUrls);
+
         assertEquals(rewriter.rewrite("/aaa/bbb/foo"), "foo");
         assertEquals(rewriter.rewrite("/aaa/bbb"), "..");
         assertEquals(rewriter.rewrite("/aaa/bbb/ccc/ddd"), "ccc/ddd");
@@ -34,6 +40,9 @@ public class OutgoingLinkRewriterTest extends AbstractAccessControlTest {
         assertEquals(rewriter.rewrite("/aaa/foo/bar"), "../foo/bar");
         assertEquals(rewriter.rewrite("/foo/bar"), "../../foo/bar");
         assertEquals(rewriter.rewrite("/aaa/foo/bar/baz"), "../foo/bar/baz");
+        assertEquals(rewriter.rewrite("/aaa/bbb/?hello"), "../bbb/?hello");
+        assertEquals(rewriter.rewrite("/aaa/?hello"), "../?hello");
+        assertEquals(rewriter.rewrite("/?hello"), "../../?hello");
     }
-    
+
 }
