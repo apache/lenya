@@ -392,7 +392,7 @@
         <fileset dir="{$src}/java/test" excludes="**/*.java"/>
       </copy>
       
-      <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
+      <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on" fork="on">
         <classpath>
           <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="*.jar, endorsed/*.jar"/>
           <path location="${{build.webapp}}/WEB-INF/classes"/>
