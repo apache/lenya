@@ -91,34 +91,10 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
 
     protected String[] findUris(final String location, Map parameters) throws IOException,
             MalformedURLException {
-
-        // Remove the protocol and the first '//'
-        int pos = location.indexOf("://");
-
-        if (pos == -1) {
-            throw new RuntimeException("The location [" + location
-                    + "] does not contain the string '://'");
-        }
-
-        String path = location.substring(pos + 3);
-        String publicationId = null;
-
-        // allow for template-fallback://{pubid}//{path} for the sake of the
-        // cocoon use-store
-        if (path.indexOf("//") > 1) {
-            pos = path.indexOf("//");
-            publicationId = path.substring(0, pos);
-            path = path.substring(pos + 2, path.length());
-        }
-
-        if (path.length() == 0) {
-            throw new RuntimeException("The path after the protocol must not be empty!");
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Location:     [" + location + "]");
-            getLogger().debug("Path:         [" + path + "]");
-        }
+        
+        FallbackUri uri = new FallbackUri(location);
+        String pubId = uri.getPubId();
+        String path = uri.getPath();
 
         PublicationTemplateManager templateManager = null;
         try {
@@ -127,18 +103,18 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
 
             Request request = ContextHelper.getRequest(this.context);
 
-            if (publicationId == null) {
+            if (pubId == null) {
                 String webappUrl = ServletHelper.getWebappURI(request);
                 URLInformation info = new URLInformation(webappUrl);
-                publicationId = info.getPublicationId();
+                pubId = info.getPublicationId();
             }
 
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
 
             String[] uris;
 
-            if (factory.existsPublication(publicationId)) {
-                Publication pub = factory.getPublication(publicationId);
+            if (factory.existsPublication(pubId)) {
+                Publication pub = factory.getPublication(pubId);
                 AllExistingSourceResolver resolver = new AllExistingSourceResolver();
                 templateManager.visit(pub, path, resolver);
                 uris = resolver.getUris();

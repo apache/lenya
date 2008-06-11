@@ -20,7 +20,6 @@ package org.apache.lenya.cms.cocoon.source;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
@@ -160,44 +159,14 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         }
         return pubId;
     }
-
+    
     protected Source findSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
+        
+        FallbackUri uri = new FallbackUri(location);
 
-        // Remove the protocol and the first '//'
-        int pos = location.indexOf("://");
-
-        if (pos == -1) {
-            throw new RuntimeException("The location [" + location
-                    + "] does not contain the string '://'");
-        }
-
-        String path = location.substring(pos + 3);
-
-        String publicationId = null;
-
-        // extract publication ID
-        String prefix = location.substring(0, pos);
-        StringTokenizer tokens = new StringTokenizer(prefix, ":");
-        if (tokens.countTokens() > 1) {
-            tokens.nextToken();
-            publicationId = tokens.nextToken();
-        }
-
-        // remove query string
-        int questionMarkIndex = path.indexOf("?");
-        if (questionMarkIndex > -1) {
-            path = path.substring(0, questionMarkIndex);
-        }
-
-        if (path.length() == 0) {
-            throw new RuntimeException("The path after the protocol must not be empty!");
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Location:     [" + location + "]");
-            getLogger().debug("Path:         [" + path + "]");
-        }
+        String pubId = uri.getPubId();
+        String path = uri.getPath();
 
         PublicationTemplateManager templateManager = null;
         SourceResolver sourceResolver = null;
@@ -210,17 +179,17 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
             Request request = ContextHelper.getRequest(this.context);
 
-            if (publicationId == null) {
+            if (pubId == null) {
                 String webappUrl = request.getRequestURI().substring(
                         request.getContextPath().length());
 
                 URLInformation info = new URLInformation(webappUrl);
-                publicationId = info.getPublicationId();
+                pubId = info.getPublicationId();
             }
 
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            if (factory.existsPublication(publicationId)) {
-                Publication pub = factory.getPublication(publicationId);
+            if (factory.existsPublication(pubId)) {
+                Publication pub = factory.getPublication(pubId);
                 VisitingSourceResolver resolver = getSourceVisitor();
                 templateManager.visit(pub, path, resolver);
                 source = resolver.getSource();
