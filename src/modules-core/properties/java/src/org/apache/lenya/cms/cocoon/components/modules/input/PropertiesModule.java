@@ -19,7 +19,7 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedSet;
@@ -38,13 +38,17 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.modules.input.DefaultsModule;
 import org.apache.cocoon.components.modules.input.InputModule;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.forrest.conf.AntProperties;
-import org.apache.lenya.cms.publication.Publication;	
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.module.ModuleManager;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.util.ServletHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -55,44 +59,39 @@ import org.xml.sax.SAXException;
  * are the locations of the <b>source </b> directories and of the <b>Lenya </b>
  * directories.
  */
-public class PropertiesModule extends DefaultsModule implements InputModule,
-        Initializable, ThreadSafe, Serviceable {
-    
-    private HashSet pubInit;
-    
-    private AntProperties filteringProperties;
+public class PropertiesModule extends DefaultsModule implements InputModule, Initializable,
+        ThreadSafe, Serviceable {
+
+    private Map pubId2roperties = new HashMap();
+
+    private AntProperties globalProperties;
 
     private SourceResolver m_resolver;
 
     private ModuleManager moduleManager;
-    
+
     private ServiceManager serviceManager;
 
-    private final static String lenyaHome = "context:/";
+    private final static String LENYA_HOME = "context:/";
 
     private final static String DEFAULT_HOME_PROP = "lenya.home";
 
-    private final static String PROPERTY_NAME = "lenya.properties.xml";
+    private final static String PROPERTY_FILE_NAME = "lenya.properties.xml";
 
-    private final static String PROPERTY_NAME_LOCAL = "local." + PROPERTY_NAME;
+    private final static String PROPERTY_FILE_NAME_LOCAL = "local." + PROPERTY_FILE_NAME;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-        String attributeValue;
-
-        loadPublicationPropertiesIfNotDone(objectModel);
-        attributeValue = filteringProperties.getProperty(name);
+        
+        String attributeValue = getProperties(objectModel).getProperty(name);
         if (attributeValue == null) {
-            String error = "Unable to get attribute value for "
-                + name
-                + ".\n"
-                + "Please make sure you defined "
-                + name
-                + " in lenya.properties.xml either in $LENYA_HOME, $PUB_HOME or "
-                + "in the module that is requesting this property.\n"
-                + "If you see this message, most of the time you spotted a module bug "
-                + "(forget to define the default property). Please report it to "
-                + "our mailing list.";           
+            String error = "Unable to get attribute value for " + name + ".\n"
+                    + "Please make sure you defined " + name
+                    + " in lenya.properties.xml either in $LENYA_HOME, $PUB_HOME or "
+                    + "in the module that is requesting this property.\n"
+                    + "If you see this message, most of the time you spotted a module bug "
+                    + "(forget to define the default property). Please report it to "
+                    + "our mailing list.";
             throw new ConfigurationException(error);
         }
 
@@ -104,24 +103,48 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
         return attributeValue;
     }
 
-    public Object[] getAttributeValues(String name, Configuration modeConf,
-            Map objectModel) throws ConfigurationException {
-        loadPublicationPropertiesIfNotDone(objectModel);
-        Object[] attributeValues = super.getAttributeValues(name, modeConf,
-                objectModel);
-        for (int i = 0; i < attributeValues.length; i++) {
-            attributeValues[i] = filteringProperties.filter(attributeValues[i]
-                    .toString());
+    /**
+     * Returns the properties for the current request. If the request refers to a publication,
+     * the publication properties are considered. For global requests, only the global
+     * properties are considered.
+     * @param objectModel The current object model.
+     * @return An AntProperties object.
+     * @throws ConfigurationException if an error occurs.
+     */
+    protected AntProperties getProperties(Map objectModel) throws ConfigurationException {
+        AntProperties properties;
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        String webappUrl = ServletHelper.getWebappURI(request);
+        URLInformation info = new URLInformation(webappUrl);
+        String pubId = info.getPublicationId();
+        DocumentFactory factory = DocumentUtil.getDocumentFactory(this.serviceManager, request);
+        if (factory.existsPublication(pubId)) {
+            try {
+                Publication pub = factory.getPublication(pubId);
+                properties = getPublicationProperties(pub);
+            }
+            catch (Exception e) {
+                throw new ConfigurationException("Could not resolve properties for publication [" + pubId + "]: ", e);
+            }
         }
+        else {
+            properties = this.globalProperties;
+        }
+        return properties;
+    }
 
-        return attributeValues;
+    public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
+            throws ConfigurationException {
+        Object value = getAttribute(name, modeConf, objectModel);
+        Object[] values = { value };
+        return values;
     }
 
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-        loadPublicationPropertiesIfNotDone(objectModel);
+        AntProperties properties = getProperties(objectModel);
         SortedSet matchset = new TreeSet();
-        Enumeration enumeration = filteringProperties.keys();
+        Enumeration enumeration = properties.keys();
         while (enumeration.hasMoreElements()) {
             String key = (String) enumeration.nextElement();
             matchset.add(key);
@@ -134,53 +157,44 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
     public void initialize() throws Exception {
 
-        pubInit = new HashSet();
-        
         // add all homes important to Lenya to the properties
         setHomes();
 
-        loadSystemProperties(filteringProperties);
+        loadSystemProperties(globalProperties);
 
         // NOTE: the first values set get precedence, as in AntProperties
         // 
-        // Order of precedence:        
+        // Order of precedence:
         // 1. Publication (lazy loaded in loadPublicationPropertiesIfNotDone())
         // 2. Lenya local
-        // 3. Modules (all modules, not only the ones referenced in the publication)
+        // 3. Modules (all modules, not only the ones referenced in the
+        // publication)
         // 4. Lenya
-        //
-        String lenyaPropertiesStringURI = "";
-
-        try {
-            // get the values from local.lenya.properties.xml
-            lenyaPropertiesStringURI = lenyaHome + SystemUtils.FILE_SEPARATOR
-                    + PROPERTY_NAME_LOCAL;
-            filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
-                    lenyaPropertiesStringURI, false);
-
-            // get the values from all modules
-            String[] module2src = moduleManager.getModuleIds();
-            for (int i = 0; i < module2src.length; i++) {
-                String id = module2src[i];
-                Object value = moduleManager.getBaseURI(id);
-                if (value != null) {
-                    lenyaPropertiesStringURI = value + SystemUtils.FILE_SEPARATOR
-                            + PROPERTY_NAME;
-                    filteringProperties = loadXMLPropertiesFromURI(
-                            filteringProperties, lenyaPropertiesStringURI, false);
-                }
+        
+        // get the values from lenya.properties.xml, these are the default lenya values
+        String lenyaPropsUri = LENYA_HOME + "/" + PROPERTY_FILE_NAME;
+        AntProperties lenyaProperties = loadXMLPropertiesFromURI(lenyaPropsUri);
+        merge(this.globalProperties, lenyaProperties);
+        
+        // get the values from all modules
+        String[] module2src = moduleManager.getModuleIds();
+        for (int i = 0; i < module2src.length; i++) {
+            String moduleName = module2src[i];
+            String moduleBaseUri = moduleManager.getBaseURI(moduleName);
+            if (moduleBaseUri != null) {
+                String modulePropsUri = moduleBaseUri + "/" + PROPERTY_FILE_NAME;
+                AntProperties moduleProperties = loadXMLPropertiesFromURI(modulePropsUri);
+                merge(this.globalProperties, moduleProperties);
             }
-            // get the values from lenya.properties.xml this are the default
-            // lenya values
-            lenyaPropertiesStringURI = lenyaHome + SystemUtils.FILE_SEPARATOR
-                    + PROPERTY_NAME;
-            filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
-                    lenyaPropertiesStringURI, false);
-        } finally {
-            if (debugging())
-                debug("Loaded project lenya.properties.xml:" + filteringProperties);
         }
+        
+        // get the values from local.lenya.properties.xml
+        String lenyaLocalPropsUri = LENYA_HOME + "/" + PROPERTY_FILE_NAME_LOCAL;
+        AntProperties localLenyaProperties = loadXMLPropertiesFromURI(lenyaLocalPropsUri);
+        merge(this.globalProperties, localLenyaProperties);
 
+        if (debugging())
+            debug("Loaded project lenya.properties.xml:" + globalProperties);
     }
 
     /**
@@ -190,9 +204,8 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
      * @throws Exception
      */
     private void setHomes() throws Exception {
-
-        filteringProperties = new AntProperties();
-        filteringProperties.setProperty(DEFAULT_HOME_PROP, lenyaHome);
+        this.globalProperties = new AntProperties();
+        this.globalProperties.setProperty(DEFAULT_HOME_PROP, LENYA_HOME);
     }
 
     /**
@@ -218,27 +231,24 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
     /**
      * @param precedingProperties
-     * @param propertiesStringURI
+     * @param uri
      * @param overwrite
      * @throws IOException
      * @throws MalformedURLException
      * @throws ParserConfigurationException
      * @throws SAXException
      */
-    private AntProperties loadXMLPropertiesFromURI(AntProperties precedingProperties, 
-            String propertiesStringURI, boolean overwrite)
-            throws MalformedURLException, IOException,
-            ParserConfigurationException, SAXException {
+    private AntProperties loadXMLPropertiesFromURI(String uri) throws Exception {
 
+        AntProperties properties = new AntProperties();
         Source source = null;
         try {
 
-            source = m_resolver.resolveURI(propertiesStringURI);
+            source = m_resolver.resolveURI(uri);
 
             if (source.exists()) {
 
-                DocumentBuilderFactory factory = DocumentBuilderFactory
-                        .newInstance();
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document document = builder.parse(source.getURI());
 
@@ -246,74 +256,71 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
                 if (nl != null && nl.getLength() > 0) {
                     for (int i = 0; i < nl.getLength(); i++) {
                         Element el = (Element) nl.item(i);
-                        if (overwrite == true) {
-                            overwriteProperty(filteringProperties, el.getAttribute("name"), 
-                                              el.getAttribute("value"));
-                        } else {
-                            filteringProperties.setProperty(el.getAttribute("name"), 
-                                                            el.getAttribute("value"));
-                        }
+                        properties.setProperty(el.getAttribute("name"), el.getAttribute("value"));
                     }
                 }
-
-                if (debugging())
-                    debug("Loaded:" + propertiesStringURI
-                            + filteringProperties.toString());
-
+                if (debugging()) {
+                    debug("Loaded:" + uri + properties.toString());
+                }
             }
-
         } finally {
             if (source != null) {
                 m_resolver.release(source);
             }
         }
-
-        return filteringProperties;
+        return properties;
     }
 
     /**
-     * Get the properties from the requested publication
+     * Get the properties of the requested publication, including the global properties.
      */
-    private void loadPublicationPropertiesIfNotDone(Map objectModel) 
-            throws ConfigurationException {
-        Publication pub;
-        String pubId;
-
-        try {
-            pub = PublicationUtil.getPublication(serviceManager, objectModel);
-        } catch (Exception e) {
-            throw new ConfigurationException(e.getMessage());
+    protected AntProperties getPublicationProperties(Publication pub) throws Exception {
+        
+        String pubId = pub.getId();
+        AntProperties properties = (AntProperties) this.pubId2roperties.get(pubId);
+        if (properties == null) {
+            properties = new AntProperties(this.globalProperties);
+            String uri = "context://lenya/pubs/" + pubId + "/" + PROPERTY_FILE_NAME;
+            merge(properties, loadXMLPropertiesFromURI(uri));
+            this.pubId2roperties.put(pubId, properties);
+            if (debugging()) {
+                debug("Loaded properties for publication [" + pubId + "]: " + properties);
+            }
         }
-        pubId = pub.getId();
-        if (pubInit.contains(pubId)) {
-            return;
+        return properties;
+    }
+    
+    /**
+     * Inserts all key-value pairs from newProps into existingProps. Existing entries
+     * will be replaced.
+     * @param existingProps The existing properties.
+     * @param newProps The new properties.
+     */
+    public void merge(AntProperties existingProps, AntProperties newProps) {
+        for (Iterator i = newProps.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            if (existingProps.containsKey(key)) {
+                existingProps.remove(key);
+            }
+            existingProps.setProperty(key, newProps.getProperty(key));
         }
-        try {
-            filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
-                                  PROPERTY_NAME, true);
-        } catch (IOException e) {       
-          getLogger().warn("Could not load properties from pub \""+pubId+"\".\n"+e);
-        } catch (Exception e) {
-            throw new ConfigurationException(e.getMessage());
-        }
-        pubInit.add(pubId);
     }
 
-    public void service(ServiceManager manager) throws ServiceException {        
+    public void service(ServiceManager manager) throws ServiceException {
         this.serviceManager = manager;
         m_resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
         moduleManager = (ModuleManager) manager.lookup(ModuleManager.ROLE);
     }
 
     /**
-     * Rocked science
+     * Rocket science
      */
     private final boolean debugging() {
         return getLogger().isDebugEnabled();
     }
 
     /**
-     * Rocked science
+     * Rocket science
      * 
      * @param debugString
      */
