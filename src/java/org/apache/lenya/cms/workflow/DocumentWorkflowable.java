@@ -107,7 +107,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
     private Version[] versions = null;
 
-    private long lastModified = 0;
+    private int revision = 0;
 
     protected static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/workflow/1.0";
     protected static final String METADATA_VERSION = "workflowVersion";
@@ -118,7 +118,10 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
     public Version[] getVersions() {
         try {
             MetaData meta = this.document.getMetaData(METADATA_NAMESPACE);
-            if (this.versions == null || meta.getLastModified() > this.lastModified) {
+            
+            org.apache.lenya.cms.repository.History history = this.document.getRepositoryNode().getHistory();
+            boolean checkedIn = history.getRevisionNumbers().length > 0;
+            if (this.versions == null || (checkedIn && history.getLatestRevision().getNumber() > this.revision)) {
                 String[] versionStrings = meta.getValues(METADATA_VERSION);
                 this.versions = new Version[versionStrings.length];
                 
@@ -141,7 +144,9 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
                     number++;
                 }
                 
-                this.lastModified = meta.getLastModified();
+                if (checkedIn) {
+                    this.revision = history.getLatestRevision().getNumber();
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
