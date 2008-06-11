@@ -36,8 +36,6 @@
     </policy-manager>
   </policy-manager>
   
-  <authorizer type="usecase">
-    <parameter name="configuration" value="aggregate-fallback://config/access-control/usecase-policies.xml"/>
-  </authorizer>
+  <authorizer type="usecase"/>
   
 </access-controller>
