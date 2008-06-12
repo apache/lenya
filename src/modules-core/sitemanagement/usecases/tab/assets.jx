@@ -30,6 +30,8 @@
     <div id="contentblock1" class="lenya-tab-sitetree">
       
       <h1><i18n:text>Assets</i18n:text></h1>
+      
+      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
 
       <jx:choose>
         <jx:when test="${usecase.getParameter('resourceDocuments').size() == 0}">
@@ -74,7 +76,8 @@
         </jx:otherwise>
       </jx:choose>
       
-     <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
+     <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')
+       &amp;&amp; !usecase.getParameter('uploadEnabled').equals(Packages.java.lang.Boolean.FALSE)}">
       <form method="GET" id="form-add_asset" style="margin-top: 20px">
         <input type="hidden" name="lenya.usecase" value="resource.create"/>
         <input type="hidden" name="doctype" value="resource"/>

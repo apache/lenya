@@ -34,6 +34,7 @@ import org.apache.lenya.util.ServletHelper;
 public class CreateResource extends CreateDocument {
 
     protected static final String PARAMETER_FILE = "file";
+    protected static final String PARAMETER_CAN_SUBMIT = "canSubmit";
     
     protected static final String MESSAGE_UPLOAD_DISABLED = "upload-disabled";
     protected static final String MESSAGE_UPLOAD_ENTER_TITLE = "upload-enter-title";
@@ -44,8 +45,9 @@ public class CreateResource extends CreateDocument {
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!ServletHelper.isUploadEnabled(manager)) {
+        if (!ServletHelper.isUploadEnabled(this.manager)) {
             addErrorMessage(MESSAGE_UPLOAD_DISABLED);
+            setParameter(PARAMETER_CAN_SUBMIT, Boolean.FALSE);
         }
     }
 

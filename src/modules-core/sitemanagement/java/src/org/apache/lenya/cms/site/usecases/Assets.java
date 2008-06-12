@@ -24,6 +24,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Usecase to add Assets to a resource.
@@ -31,19 +32,24 @@ import org.apache.lenya.cms.site.SiteNode;
  * @version $Id$
  */
 public class Assets extends SiteUsecase {
+    
+    protected static final String PARAMETER_UPLOAD_ENABLED = "uploadEnabled";
+    protected static final String MESSAGE_UPLOAD_DISABLED = "upload-disabled";
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
-
+    protected void prepareView() throws Exception {
+        super.prepareView();
+        
         if (getSourceDocument() != null) {
             try {
                 Document[] resourceDocs = getResourceDocuments();
                 setParameter("resourceDocuments", resourceDocs);
             } catch (final Exception e) {
                 throw new RuntimeException(e);
+            }
+            
+            if (!ServletHelper.isUploadEnabled(this.manager)) {
+                addErrorMessage(MESSAGE_UPLOAD_DISABLED);
+                setParameter(PARAMETER_UPLOAD_ENABLED, Boolean.FALSE);
             }
         }
     }
