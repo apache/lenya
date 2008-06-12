@@ -21,38 +21,51 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.lenya.ac.Identifiable;
+import org.apache.lenya.util.Assert;
 
 /**
  * A notification message.
  */
 public class Message {
+    
+    private Text subject;
+    private Text body;
 
-    private String subject;
-    private String[] subjectParams;
-    private String body;
-    private String[] bodyParams;
     private Identifiable sender;
     private Identifiable[] recipients;
     private Date time;
+    
+    /**
+     * @param subject The subject.
+     * @param body The body.
+     * @param sender The sender.
+     * @param recipients The recipients.
+     */
+    public Message(Text subject, Text body, Identifiable sender, Identifiable[] recipients) {
+        Assert.notNull("subject", subject);
+        Assert.notNull("body", body);
+        Assert.notNull("sender", sender);
+        Assert.notNull("recipients", recipients);
+        this.subject = subject;
+        this.body = body;
+        this.sender = sender;
+        this.recipients = recipients;
+        this.time = new Date();
+    }
 
     /**
-     * Ctor.
+     * Constructor.
      * @param subject The subject.
      * @param subjectParams The subject parameters.
      * @param body The body.
      * @param bodyParams The body parameters.
      * @param sender The sender.
      * @param recipients The recipients.
+     * @deprecated Use {@link #Message(Text, Text, Identifiable, Identifiable[])}Êinstead.
      */
     public Message(String subject, String[] subjectParams, String body, String[] bodyParams,
             Identifiable sender, Identifiable[] recipients) {
-        this.subject = subject;
-        this.subjectParams = subjectParams;
-        this.body = body;
-        this.bodyParams = bodyParams;
-        this.sender = sender;
-        this.recipients = recipients;
-        this.time = new Date();
+        this(new Text(subject, subjectParams), new Text(body, bodyParams), sender, recipients);
     }
 
     /**
@@ -60,47 +73,62 @@ public class Message {
      * @return true if the message has parameters
      */
     public boolean hasBodyParameters() {
-        return bodyParams != null && bodyParams.length > 0;
+        Text[] params = this.body.getParameters();
+        return params != null && params.length > 0;
     }
 
     /**
      * Retrieve the message content
      * @return the message
+     * @deprecated Use {@link #getBodyText()} instead.
      */
     public String getBody() {
-        return body;
+        return this.body.getText();
     }
 
     /**
      * Retrieve the parameters for this message
      * @return the parameters
+     * @deprecated Use {@link #getBodyText()} instead.
      */
     public String[] getBodyParameters() {
-        return bodyParams;
+        return convert(this.body.getParameters());
+    }
+
+    protected String[] convert(Text[] textParams) {
+        String[] params = new String[textParams.length];
+        for (int i = 0; i < params.length; i++) {
+            params[i] = textParams[i].getText();
+        }
+        return params;
     }
 
     /**
      * Determine if this message has parameters
      * @return true if the message has parameters
+     * @deprecated Use {@link #getSubjectText()} instead.
      */
     public boolean hasSubjectParameters() {
-        return subjectParams != null && subjectParams.length > 0;
+        Text[] params = this.subject.getParameters();
+        return params != null && params.length > 0;
     }
 
     /**
      * Retrieve the message subject
      * @return the subject
+     * @deprecated Use {@link #getSubjectText()} instead.
      */
     public String getSubject() {
-        return subject;
+        return this.subject.getText();
     }
 
     /**
      * Retrieve the parameters for this message
      * @return the parameters
+     * @deprecated Use {@link #getSubjectText()} instead.
      */
     public String[] getSubjectParameters() {
-        return subjectParams;
+        return convert(this.subject.getParameters());
     }
     
     /**
@@ -124,6 +152,20 @@ public class Message {
      */
     public Date getTime() {
         return (Date)this.time.clone();
+    }
+    
+    /**
+     * @return The message subject.
+     */
+    public Text getSubjectText() {
+        return this.subject;
+    }
+    
+    /**
+     * @return The message body.
+     */
+    public Text getBodyText() {
+        return this.body;
     }
 
 }

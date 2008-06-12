@@ -62,6 +62,7 @@ import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
 import org.apache.lenya.notification.NotificationException;
+import org.apache.lenya.notification.Text;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflowable;
 
@@ -370,9 +371,12 @@ public class Publish extends InvokeWorkflow {
 
         url = getWebUrl(liveVersion);
         User sender = getSession().getIdentity().getUser();
-        String[] params = { url };
-        Message message = new Message(MESSAGE_SUBJECT, new String[0],
-                MESSAGE_DOCUMENT_PUBLISHED, params, sender, recipients);
+        
+        Text[] subjectParams = { new Text(getEvent(), true) };
+        Text[] params = { new Text(url, false) };
+        Text subject = new Text(MESSAGE_SUBJECT, subjectParams);
+        Text body = new Text(MESSAGE_DOCUMENT_PUBLISHED, params);
+        Message message = new Message(subject, body, sender, recipients);
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
         RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),

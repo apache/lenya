@@ -321,11 +321,6 @@
   <message key="restore">wiederherstellen</message>
   <message key="error-workflow-document">Das Ereignis {0} kann nicht auf das Dokument "{1}" angewandt werden.</message>
     
-  <!-- Notification -->
-  <message key="notification-message">Lenya-Benachrichtigung</message>
-  <message key="notify-submitter">Benachrichtigung an den einreichenden Nutzer senden</message>
-  <message key="document-published">Ein von Ihnen eingereichtes Dokument wurde publiziert: {0}</message>
-  
   <!-- areas -->
   <message key="authoring-area">Bearbeitung</message>
   <message key="live-area">Live</message>

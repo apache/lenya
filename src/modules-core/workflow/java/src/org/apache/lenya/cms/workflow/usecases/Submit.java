@@ -32,6 +32,7 @@ import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
+import org.apache.lenya.notification.Text;
 
 /**
  * Submit usecase handler.
@@ -82,10 +83,13 @@ public class Submit extends InvokeWorkflow {
             url = serverUrl + request.getContextPath() + webappUrl;
         }
 
-        String[] params = { url };
+        Text[] subjectParams = { new Text(getEvent(), true) };
+        Text[] params = { new Text(url, false) };
+        Text subject = new Text(MESSAGE_SUBJECT, subjectParams);
+        Text body = new Text(MESSAGE_DOCUMENT_SUBMITTED, params);
+        Message message = new Message(subject, body, sender, recipients);
 
-        Message message = new Message(MESSAGE_SUBJECT, new String[0], MESSAGE_DOCUMENT_SUBMITTED,
-                params, sender, recipients);
+
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
         RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
                 getLogger(), descriptor);

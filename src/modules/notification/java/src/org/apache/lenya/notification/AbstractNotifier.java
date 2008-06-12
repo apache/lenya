@@ -78,6 +78,29 @@ public abstract class AbstractNotifier extends AbstractLogEnabled implements Not
     protected abstract void notify(User user, Message translatedMessage)
             throws NotificationException;
 
+    protected Element createTranslateElement(NamespaceHelper helper, Text text) {
+        Element translateElement = helper.createElement("translate");
+        Element textElement = helper.createElement("text", text.getText());
+        translateElement.appendChild(textElement);
+
+        Text[] params = text.getParameters();
+        for (int i = 0; i < params.length; i++) {
+            Element paramElement;
+            if (params[i].translate()) {
+                if (params[i].getParameters().length > 0) {
+                    getLogger().warn("Parameters can't have parameters (not supported by Cocoon i18n): " + text);
+                }
+                paramElement = helper.createElement("param");
+                Element paramTextElement = helper.createElement("text", params[i].getText());
+                paramElement.appendChild(paramTextElement);
+            } else {
+                paramElement = helper.createElement("param", params[i].getText());
+            }
+            translateElement.appendChild(paramElement);
+        }
+        return translateElement;
+    }
+
     protected Message translateMessage(String locale, Message message) throws NotificationException {
 
         SourceResolver resolver = null;
@@ -93,29 +116,15 @@ public abstract class AbstractNotifier extends AbstractLogEnabled implements Not
 
             Element subjectElement = helper.createElement("subject");
             docElement.appendChild(subjectElement);
-            Element i18nTranslateSubjectElement = i18nHelper.createElement("translate");
+            Element i18nTranslateSubjectElement = createTranslateElement(i18nHelper, message
+                    .getSubjectText());
             subjectElement.appendChild(i18nTranslateSubjectElement);
-            Element subjectI18nElement = i18nHelper.createElement("text", message.getSubject());
-            i18nTranslateSubjectElement.appendChild(subjectI18nElement);
-
-            String[] subjectParams = message.getSubjectParameters();
-            for (int i = 0; i < subjectParams.length; i++) {
-                Element paramElement = i18nHelper.createElement("param", subjectParams[i]);
-                i18nTranslateSubjectElement.appendChild(paramElement);
-            }
 
             Element bodyElement = helper.createElement("body");
             docElement.appendChild(bodyElement);
-            Element i18nTranslateElement = i18nHelper.createElement("translate");
-            bodyElement.appendChild(i18nTranslateElement);
-            Element bodyI18nElement = i18nHelper.createElement("text", message.getBody());
-            i18nTranslateElement.appendChild(bodyI18nElement);
-
-            String[] msgParams = message.getBodyParameters();
-            for (int i = 0; i < msgParams.length; i++) {
-                Element paramElement = i18nHelper.createElement("param", msgParams[i]);
-                i18nTranslateElement.appendChild(paramElement);
-            }
+            Element i18nTranslateBodyElement = createTranslateElement(i18nHelper, message
+                    .getBodyText());
+            bodyElement.appendChild(i18nTranslateBodyElement);
 
             Session session = this.request.getSession();
             session.setAttribute("notification.dom", doc);
@@ -134,8 +143,8 @@ public abstract class AbstractNotifier extends AbstractLogEnabled implements Not
                 bodyElement = helper.getFirstChild(doc.getDocumentElement(), "body");
                 String body = DocumentHelper.getSimpleElementText(bodyElement);
 
-                return new Message(subject, new String[0], body, new String[0],
-                        message.getSender(), message.getRecipients());
+                return new Message(new Text(subject, false), new Text(body, false), message
+                        .getSender(), message.getRecipients());
             } else {
                 // this happens in the test
                 getLogger().info("cocoon protocol not available, not translating message");

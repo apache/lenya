@@ -34,6 +34,7 @@ import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.notification.NotificationEventDescriptor;
+import org.apache.lenya.notification.Text;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflowable;
 
@@ -97,9 +98,12 @@ public class Reject extends InvokeWorkflow {
                 final String webappUrl = authoringVersion.getCanonicalWebappURL();
                 url = serverUrl + request.getContextPath() + webappUrl;
             }
-            String[] params = { reason, url };
-            Message message = new Message(MESSAGE_SUBJECT, new String[0],
-                    MESSAGE_DOCUMENT_REJECTED, params, sender, recipients);
+            
+            Text[] subjectParams = { new Text(getEvent(), true) };
+            Text[] params = { new Text(reason, false), new Text(url, false) };
+            Text subject = new Text(MESSAGE_SUBJECT, subjectParams);
+            Text body = new Text(MESSAGE_DOCUMENT_REJECTED, params);
+            Message message = new Message(subject, body, sender, recipients);
 
             NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
             RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),

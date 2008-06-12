@@ -298,11 +298,6 @@
   <message key="publish">publier</message>
   <message key="error-workflow-document">L'événement {0} n'est pas exécutable pour le document "{1}"</message>
 
- <!-- Notification -->
-  <message key="notification-message">Notification de Lenya</message>
-  <message key="notify-submitter">Notifier le soumetteur</message>
-  <message key="document-published">Un document que vous avez soumis pour approbation a été publié: {0}</message>
-
   <!-- Info asset  -->
   <message key="New Asset">Nouvel Actif</message>
 
