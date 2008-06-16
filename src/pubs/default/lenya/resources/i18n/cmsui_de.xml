@@ -24,7 +24,7 @@
 
 <catalogue xml:lang="de" xmlns="http://apache.org/cocoon/i18n/2.1">
 
-  <message key="publication-title">Willkommen zur Default-Publikation von {0}!</message>
+  <message key="publication-title">Willkommen zur {0}-Publikation von {1}!</message>
   
   <message key="default.doc.create.idtaken">Die eingebene ID ist schon vergeben. Bitte wählen Sie eine andere ID.</message>
 

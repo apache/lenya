@@ -30,5 +30,18 @@
   </xsl:choose>
   
 </xsl:template>
+  
+  <!--
+    Transform the first letter of a string to uppercase. Works only with latin characters.
+  -->
+  <xsl:template name="capitalize">
+    <xsl:param name="text"/>
+    <xsl:if test="string-length($text) &gt; 0">
+      <xsl:variable name="firstLetter" select="substring($text, 1, 1)"/>
+      <xsl:value-of select="translate($firstLetter, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+      <xsl:text/>
+      <xsl:value-of select="substring($text, 2)"/>
+    </xsl:if>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -28,6 +28,8 @@
   exclude-result-prefixes="xhtml lenya"
   >
   
+  <xsl:import href="context://lenya/xslt/util/string-functions.xsl"/>
+  
   <xsl:param name="publication-id"/>
   <xsl:param name="area"/>
   <xsl:param name="uuid"/>
@@ -72,8 +74,14 @@
           <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td id="publication-title">
+                <xsl:variable name="pubTitle">
+                  <xsl:call-template name="capitalize">
+                    <xsl:with-param name="text" select="$publication-id"/>
+                  </xsl:call-template>
+                </xsl:variable>
                 <i18n:translate>
                   <i18n:text>publication-title</i18n:text>
+                  <i18n:param><xsl:value-of select="$pubTitle"/></i18n:param>
                   <i18n:param><xsl:value-of select="$author"/></i18n:param>
                 </i18n:translate>
               </td>
