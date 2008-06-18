@@ -44,7 +44,8 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_UUID, PageEnvelope.DOCUMENT_TYPE, PageEnvelope.DEFAULT_LANGUAGE,
             PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
             PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
-            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX, PageEnvelope.LANGUAGE };
+            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX, PageEnvelope.LANGUAGE,
+            PageEnvelope.DOCUMENT_MIME_TYPE };
     /**
      * <code>PUBLICATION_ID</code> The publication id
      */
@@ -109,6 +110,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     /**
      * <code>DOCUMENT_FILE</code> The file of the current document
+     * @deprecated Reference a document via the lenya-document: URI instead.
      */
     public static final String DOCUMENT_FILE = "document-file";
     /**
@@ -123,6 +125,10 @@ public class PageEnvelope {
      * <code>DOCUMENT_SOURCE_EXTENSION</code> The source extension of the current document
      */
     public static final String DOCUMENT_SOURCE_EXTENSION = "document-source-extension";
+    /**
+     * <code>DOCUMENT_MIME_TYPE</code> The MIME type of the current document
+     */
+    public static final String DOCUMENT_MIME_TYPE = "document-mime-type";
     /**
      * <code>DOCUMENT_UUID</code> The uuid of the current document
      */

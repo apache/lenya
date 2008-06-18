@@ -127,6 +127,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                     } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
                         Date date = new Date(document.getLastModified());
                         value = new SimpleDateFormat(DATE_FORMAT).format(date);
+                    } else if (name.equals(PageEnvelope.DOCUMENT_MIME_TYPE)) {
+                        value = document.getMimeType();
                     } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
                         ResourceType resourceType = document.getResourceType();
                         if (resourceType == null) {

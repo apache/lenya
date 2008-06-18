@@ -355,7 +355,8 @@
             </map:read>
           </map:match>      
           <!-- Documents other than *.html are served as-is and do not require processing: -->
-          <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}"/>
+          <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}"
+            mime-type="{page-envelope:document-mime-type}"/>
         </map:act>
 
         <!-- 
