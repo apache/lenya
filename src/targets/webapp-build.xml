@@ -179,13 +179,8 @@
       <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-module-*.jar"/>
     </path>
     
-    <!-- compile and package publications -->
-    <antcall target="compile-src">
-      <param name="compile.src.dir" value="${build.dir}/java/pubs"/>
-      <param name="compile.dest.dir" value="${build.dir}/pubs"/>
-      <param name="compile.classpath" value="classpath.pubs"/>
-      <param name="jar.name" value="pubs"/>
-    </antcall>
+    <available property="pubs.java.exists" file="${build.dir}/java/pubs"/>
+    <antcall target="compile-pubs"/>
     
     <!-- Patch lenya.roles -->
     <copy todir="${build.webapp}/WEB-INF/classes/org/apache/lenya"
@@ -219,6 +214,17 @@
     </condition>
     <antcall target="successfully-built-message-jetty"/>
 
+  </target>
+  
+  
+  <target name="compile-pubs" if="pubs.java.exists"
+    description="Compile and package publication Java classes">
+    <antcall target="compile-src">
+      <param name="compile.src.dir" value=""/>
+      <param name="compile.dest.dir" value="${build.dir}/pubs"/>
+      <param name="compile.classpath" value="classpath.pubs"/>
+      <param name="jar.name" value="pubs"/>
+    </antcall>
   </target>
 
   
