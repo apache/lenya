@@ -220,7 +220,7 @@
   <target name="compile-pubs" if="pubs.java.exists"
     description="Compile and package publication Java classes">
     <antcall target="compile-src">
-      <param name="compile.src.dir" value=""/>
+      <param name="compile.src.dir" value="${build.dir}/java/pubs"/>
       <param name="compile.dest.dir" value="${build.dir}/pubs"/>
       <param name="compile.classpath" value="classpath.pubs"/>
       <param name="jar.name" value="pubs"/>
