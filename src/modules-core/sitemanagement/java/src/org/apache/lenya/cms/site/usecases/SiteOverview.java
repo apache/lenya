@@ -34,12 +34,14 @@ import java.util.TreeSet;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -47,6 +49,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -89,82 +92,124 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String DESC = "desc";
     protected static final String ASC = "asc";
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
+    protected void prepareView() throws Exception {
+        super.prepareView();
+        setDefaultParameter(SORT, KEY_PATH);
+        setDefaultParameter(ORDER, ASC);
+        
         try {
             Document[] documents = getDocuments();
-
             List entries = new ArrayList();
             for (int i = 0; i < documents.length; i++) {
-
-                Entry entry = new Entry();
-                if (documents[i].hasLink()) {
-                    entry.setValue(KEY_PATH, documents[i].getPath());
-                } else {
-                    entry.setValue(KEY_PATH, "not in site structure");
-                }
-                entry.setValue(KEY_RESOURCE_TYPE, ResourceType.I18N_PREFIX
-                        + documents[i].getResourceType().getName());
-                entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
-                entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
-                entry.setValue(KEY_CONTENT_LENGTH, "" + (documents[i].getContentLength() / 1000));
-
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String lastModified = format.format(new Date(documents[i].getLastModified()));
-                entry.setValue(KEY_LAST_MODIFIED, lastModified);
-
-                if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), documents[i])) {
-                    Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                            getSession(), getLogger(), documents[i]);
-                    Version latestVersion = workflowable.getLatestVersion();
-                    String state;
-                    if (latestVersion != null) {
-                        state = latestVersion.getState();
-                    } else {
-                        Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
-                                getSession(), getLogger(), documents[i]);
-                        state = workflow.getInitialState();
-                    }
-                    entry.setValue(KEY_WORKFLOW_STATE, state);
-                } else {
-                    entry.setValue(KEY_WORKFLOW_STATE, "");
-                }
-
-                Node node = documents[i].getRepositoryNode();
-                if (node.isCheckedOut()) {
-                    entry.setValue(KEY_CHECKED_OUT, node.getCheckoutUserId());
-                } else {
-                    entry.setValue(KEY_CHECKED_OUT, "");
-                }
-                entries.add(entry);
+                entries.add(createEntry(documents[i]));
             }
 
-            for (int i = 0; i < FILTERS.length; i++) {
-                SortedSet filterValues = new TreeSet();
-                filterValues.add(VALUE_ALL);
-
-                String key = "key" + FILTERS[i].substring("filter".length());
-
-                for (Iterator docs = entries.iterator(); docs.hasNext();) {
-                    Entry entry = (Entry) docs.next();
-                    filterValues.add(entry.getValue(key));
-                }
-                setParameter(FILTERS[i] + "Values", filterValues);
-                setParameter(FILTERS[i], VALUE_ALL);
-            }
-            setParameter(PARAMETER_FILTERS, Arrays.asList(FILTERS));
-
-            setParameter(ALL_DOCUMENTS, new ArrayList(entries));
-            setParameter(DOCUMENTS, entries);
+            prepareFilters(entries);
+            
+            List filteredDocuments = filter(entries);
+            sort(filteredDocuments);
+            setParameter(DOCUMENTS, filteredDocuments);
 
             setParameter(PARAMETER_KEYS, Arrays.asList(KEYS));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    protected void setDefaultParameter(String name, String value) {
+        if (getParameter(name) == null) {
+            setParameter(name, value);
+        }
+    }
+
+    protected Entry createEntry(Document doc) throws DocumentException, WorkflowException,
+            RepositoryException {
+        Entry entry = new Entry();
+        if (doc.hasLink()) {
+            entry.setValue(KEY_PATH, doc.getPath());
+        } else {
+            entry.setValue(KEY_PATH, "not in site structure");
+        }
+        entry.setValue(KEY_RESOURCE_TYPE, ResourceType.I18N_PREFIX
+                + doc.getResourceType().getName());
+        entry.setValue(KEY_LANGUAGE, doc.getLanguage());
+        entry.setValue(KEY_URL, doc.getCanonicalWebappURL());
+        entry.setValue(KEY_CONTENT_LENGTH, "" + (doc.getContentLength() / 1000));
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String lastModified = format.format(new Date(doc.getLastModified()));
+        entry.setValue(KEY_LAST_MODIFIED, lastModified);
+
+        if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), doc)) {
+            Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
+                    getSession(), getLogger(), doc);
+            Version latestVersion = workflowable.getLatestVersion();
+            String state;
+            if (latestVersion != null) {
+                state = latestVersion.getState();
+            } else {
+                Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
+                        getSession(), getLogger(), doc);
+                state = workflow.getInitialState();
+            }
+            entry.setValue(KEY_WORKFLOW_STATE, state);
+        } else {
+            entry.setValue(KEY_WORKFLOW_STATE, "");
+        }
+
+        Node node = doc.getRepositoryNode();
+        if (node.isCheckedOut()) {
+            entry.setValue(KEY_CHECKED_OUT, node.getCheckoutUserId());
+        } else {
+            entry.setValue(KEY_CHECKED_OUT, "");
+        }
+        return entry;
+    }
+
+    protected void prepareFilters(List entries) {
+        for (int i = 0; i < FILTERS.length; i++) {
+            SortedSet filterValues = new TreeSet();
+            filterValues.add(VALUE_ALL);
+
+            String key = "key" + FILTERS[i].substring("filter".length());
+
+            for (Iterator docs = entries.iterator(); docs.hasNext();) {
+                Entry entry = (Entry) docs.next();
+                filterValues.add(entry.getValue(key));
+            }
+            setParameter(FILTERS[i] + "Values", filterValues);
+            setDefaultParameter(FILTERS[i], VALUE_ALL);
+        }
+        setParameter(PARAMETER_FILTERS, Arrays.asList(FILTERS));
+    }
+
+    protected void sort(List documents) {
+        String sort = getParameterAsString(SORT);
+        String order = getParameterAsString(ORDER, ASC);
+        if (sort != null) {
+            Comparator comparator = new EntryComparator(sort, order);
+            Collections.sort(documents, comparator);
+        }
+    }
+
+    protected List filter(List entries) {
+        List filteredDocuments = new ArrayList(entries);
+
+        for (int i = 0; i < FILTERS.length; i++) {
+            String key = "key" + FILTERS[i].substring("filter".length());
+            String filterValue = getParameterAsString(FILTERS[i]);
+            if (!filterValue.equals(VALUE_ALL)) {
+                Entry[] allEntries = (Entry[]) filteredDocuments.toArray(new Entry[filteredDocuments
+                        .size()]);
+                for (int entryIndex = 0; entryIndex < allEntries.length; entryIndex++) {
+                    if (!allEntries[entryIndex].getValue(key).equals(filterValue)) {
+                        filteredDocuments.remove(allEntries[entryIndex]);
+                    }
+                }
+            }
+        }
+        return filteredDocuments;
     }
 
     /**
@@ -205,39 +250,6 @@ public class SiteOverview extends AbstractUsecase {
     protected Publication getPublication() throws PublicationException {
         return PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
                 getSourceURL());
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#advance()
-     */
-    public void advance() throws UsecaseException {
-        super.advance();
-
-        List allDocuments = (List) getParameter(ALL_DOCUMENTS);
-        List filteredDocuments = new ArrayList(allDocuments);
-
-        for (int i = 0; i < FILTERS.length; i++) {
-            String key = "key" + FILTERS[i].substring("filter".length());
-            String filterValue = getParameterAsString(FILTERS[i]);
-            if (!filterValue.equals(VALUE_ALL)) {
-                Entry[] entries = (Entry[]) filteredDocuments.toArray(new Entry[filteredDocuments
-                        .size()]);
-                for (int entryIndex = 0; entryIndex < entries.length; entryIndex++) {
-                    if (!entries[entryIndex].getValue(key).equals(filterValue)) {
-                        filteredDocuments.remove(entries[entryIndex]);
-                    }
-                }
-            }
-        }
-
-        String sort = getParameterAsString(SORT);
-        String order = getParameterAsString(ORDER, ASC);
-        if (sort != null) {
-            Comparator comparator = new EntryComparator(sort, order);
-            Collections.sort(filteredDocuments, comparator);
-        }
-
-        setParameter(DOCUMENTS, filteredDocuments);
     }
 
     /**
