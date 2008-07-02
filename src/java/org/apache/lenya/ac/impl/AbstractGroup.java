@@ -28,11 +28,11 @@ import java.util.Set;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.AttributeOwner;
-import org.apache.lenya.ac.AttributeRuleEvaluator;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
-import org.apache.lenya.ac.Message;
+import org.apache.lenya.ac.attr.AttributeOwner;
+import org.apache.lenya.ac.attr.AttributeRule;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
 import org.apache.lenya.util.Assert;
 
 /**
@@ -109,12 +109,12 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
     }
 
     public boolean matches(AttributeOwner user) {
-        String rule = getRule();
-        return rule == null ? false : getAttributeRuleEvaluator().isComplied(user, rule);
+        AttributeRule rule = getRule();
+        return rule == null ? false : rule.matches(user);
     }
 
     protected AttributeRuleEvaluator getAttributeRuleEvaluator() {
-        return getItemManager().getAttributeRuleEvaluator();
+        return getItemManager().getAccreditableManager().getAttributeManager().getEvaluator();
     }
 
     /**
@@ -129,29 +129,13 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
         }
     }
 
-    private String rule;
+    private AttributeRule rule;
 
-    public void setRule(String rule) throws AccessControlException {
-        if (rule != null) {
-            AttributeRuleEvaluator evaluator = getAttributeRuleEvaluator();
-            ValidationResult result = evaluator.validate(rule);
-            if (!result.succeeded()) {
-                StringBuffer msg = new StringBuffer();
-                Message[] messages = result.getMessages();
-                for (int i = 0; i < messages.length; i++) {
-                    if (i > 0) {
-                        msg.append("; ");
-                    }
-                    msg.append(messages[i].getText());
-                }
-                throw new AccessControlException("The rule for group [" + getId()
-                        + "] is not valid: " + msg.toString());
-            }
-        }
+    public void setRule(AttributeRule rule) {
         this.rule = rule;
     }
 
-    public String getRule() {
+    public AttributeRule getRule() {
         return this.rule;
     }
 

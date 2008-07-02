@@ -216,7 +216,8 @@
     <authenticators>
       <component-instance name="user" class="org.apache.lenya.ac.impl.UserAuthenticator"/>
       <component-instance name="shibboleth" class="org.apache.lenya.ac.shibboleth.ShibbolethAuthenticator">
-        <redirect-to-wayf>true</redirect-to-wayf>
+        <parameter name="redirect-to-wayf" value="true"/>
+        <parameter name="attribute-set" value="switch"/>
       </component-instance>
       <component-instance name="anonymous" class="org.apache.lenya.ac.impl.AnonymousAuthenticator"/>
     </authenticators>
@@ -234,8 +235,8 @@
     class="org.apache.lenya.cms.cocoon.components.context.ContextUtility"/>
   
   <component logger="lenya.ac.attributeruleevaluator"
-    role="org.apache.lenya.ac.AttributeRuleEvaluatorFactory"
-    class="org.apache.lenya.ac.impl.antlr.AntlrEvaluatorFactory"/>
+    role="org.apache.lenya.ac.attr.AttributeRuleEvaluatorFactory"
+    class="org.apache.lenya.ac.attr.antlr.AntlrEvaluatorFactory"/>
     
   <!-- Shibboleth -->
     
@@ -293,47 +294,49 @@
     <LanguageParamName>YOUR_PARAM_NAME</LanguageParamName>
   </component>
   
-  <component logger="lenya.ac.saml"
-    role="org.apache.lenya.ac.saml.AttributeTranslator"
-    class="org.apache.lenya.ac.saml.impl.AttributeTranslatorImpl">
-    <!--
-      Attributes to translate for easier reading/handling within Lenya.
-      Attributes will be available by their translated name (outName) within Lenya.
-    -->
-    <Attribute inName="urn:mace:dir:attribute-def:eduPersonEntitlement" outName="eduPersonEntitlement" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonUniqueID" outName="swissEduPersonUniqueID" />
-    <Attribute inName="urn:mace:dir:attribute-def:sn" outName="surname" />
-    <Attribute inName="urn:mace:dir:attribute-def:givenName" outName="givenName" />
-    <Attribute inName="urn:mace:dir:attribute-def:mail" outName="mail" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonHomeOrganization" outName="swissEduPersonHomeOrganization" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonHomeOrganizationType" outName="swissEduPersonHomeOrganizationType" />
-    <Attribute inName="urn:mace:dir:attribute-def:eduPersonAffiliation" outName="eduPersonAffiliation" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonStudyBranch1" outName="swissEduPersonStudyBranch1" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonStudyBranch2" outName="swissEduPersonStudyBranch2" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonStudyBranch3" outName="swissEduPersonStudyBranch3" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonStudyLevel" outName="swissEduPersonStudyLevel" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:swissEduPersonStaffCategory" outName="swissEduPersonStaffCategory" />
-    <Attribute inName="urn:mace:switch.ch:attribute-def:eduPersonOrgUnitDN" outName="eduPersonOrgUnitDN" />
-    <Attribute inName="urn:mace:dir:attribute-def:eduPersonScopedAffiliation" outName="eduPersonScopedAffiliation" />
-    <Attribute inName="urn:mace:dir:attribute-def:postalAddress" outName="postalAddress" />
-    <Attribute inName="urn:mace:dir:attribute-def:swissEduPersonGender" outName="swissEduPersonGender" />
-    <Attribute inName="urn:mace:dir:attribute-def:employeeNumber" outName="employeeNumber" />
-    <Attribute inName="urn:mace:dir:attribute-def:ou" outName="organizationalUnit" />
-    <Attribute inName="urn:mace:dir:attribute-def:eduPersonPrincipalName" outName="eduPersonPrincipalName"/>
+  <attribute-sets>
+    <component-instance name="switch" class="org.apache.lenya.ac.attr.impl.AttributeSetImpl">
+      <!--
+        Attributes to translate for easier reading/handling within Lenya.
+        Attributes will be available by their translated name (alias) within Lenya.
+      -->
+      <Attribute name="urn:mace:dir:attribute-def:eduPersonEntitlement" alias="eduPersonEntitlement" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonUniqueID" alias="swissEduPersonUniqueID" />
+      <Attribute name="urn:mace:dir:attribute-def:sn" alias="surname" />
+      <Attribute name="urn:mace:dir:attribute-def:givenName" alias="givenName" />
+      <Attribute name="urn:mace:dir:attribute-def:mail" alias="mail" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonHomeOrganization" alias="swissEduPersonHomeOrganization" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonHomeOrganizationType" alias="swissEduPersonHomeOrganizationType" />
+      <Attribute name="urn:mace:dir:attribute-def:eduPersonAffiliation" alias="eduPersonAffiliation" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonStudyBranch1" alias="swissEduPersonStudyBranch1" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonStudyBranch2" alias="swissEduPersonStudyBranch2" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonStudyBranch3" alias="swissEduPersonStudyBranch3" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonStudyLevel" alias="swissEduPersonStudyLevel" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:swissEduPersonStaffCategory" alias="swissEduPersonStaffCategory" />
+      <Attribute name="urn:mace:switch.ch:attribute-def:eduPersonOrgUnitDN" alias="eduPersonOrgUnitDN" />
+      <Attribute name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation" alias="eduPersonScopedAffiliation" />
+      <Attribute name="urn:mace:dir:attribute-def:postalAddress" alias="postalAddress" />
+      <Attribute name="urn:mace:dir:attribute-def:swissEduPersonGender" alias="swissEduPersonGender" />
+      <Attribute name="urn:mace:dir:attribute-def:employeeNumber" alias="employeeNumber" />
+      <Attribute name="urn:mace:dir:attribute-def:ou" alias="organizationalUnit" />
+      <Attribute name="urn:mace:dir:attribute-def:eduPersonPrincipalName" alias="eduPersonPrincipalName"/>
+    </component-instance>
 
-    <!-- Mac OS X LDAP attributes -->
-    <Attribute inName="apple-generateduid" outName="apple-generateduid"/>
-    <Attribute inName="apple-user-authenticationhint" outName="apple-user-authenticationhint"/>
-    <Attribute inName="apple-user-picture" outName="apple-user-picture"/>
-    <Attribute inName="cn" outName="cn"/>
-    <Attribute inName="gidNumber" outName="gidNumber"/>
-    <Attribute inName="homeDirectory" outName="homeDirectory"/>
-    <Attribute inName="loginShell" outName="loginShell"/>
-    <Attribute inName="objectClass" outName="objectClass"/>
-    <Attribute inName="uid" outName="uid"/>
-    <Attribute inName="uidNumber" outName="uidNumber"/>
-    <Attribute inName="userPassword" outName="userPassword"/>
-  </component>
+    <component-instance name="macos" class="org.apache.lenya.ac.attr.impl.AttributeSetImpl">
+      <!-- Mac OS X LDAP attributes -->
+      <Attribute name="apple-generateduid" alias="apple-generateduid"/>
+      <Attribute name="apple-user-authenticationhint" alias="apple-user-authenticationhint"/>
+      <Attribute name="apple-user-picture" alias="apple-user-picture"/>
+      <Attribute name="cn" alias="cn"/>
+      <Attribute name="gidNumber" alias="gidNumber"/>
+      <Attribute name="homeDirectory" alias="homeDirectory"/>
+      <Attribute name="loginShell" alias="loginShell"/>
+      <Attribute name="objectClass" alias="objectClass"/>
+      <Attribute name="uid" alias="uid"/>
+      <Attribute name="uidNumber" alias="uidNumber"/>
+      <Attribute name="userPassword" alias="userPassword"/>
+    </component-instance>
+  </attribute-sets>
   <!--
   <component logger="lenya.ac.shibboleth"
     role="org.apache.shibboleth.util.CredentialsManager"
@@ -400,9 +403,9 @@
     role="org.apache.shibboleth.saml.ArtifactMapperImpl"
     class="org.apache.shibboleth.saml.ArtifactMapperImpl"/>
   
-  <component logger="lenya.ac.shibboleth"
-    role="org.apache.lenya.ac.AttributeDefinition"
-    class="org.apache.lenya.ac.saml.impl.SamlAttributeDefinition"/>
+    <component logger="lenya.ac.attr"
+      role="org.apache.lenya.ac.attr.AttributeManager"
+      class="org.apache.lenya.ac.attr.impl.AttributeManagerImpl"/>
     
   </xsl:copy>
   

@@ -25,12 +25,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.GroupManager;
 import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluatorFactory;
 
 /**
  * File-based group manager.
@@ -120,6 +123,26 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
 
     public boolean contains(String groupId) {
         return containsItem(groupId);
+    }
+
+    private AttributeRuleEvaluator evaluator;
+
+    public AttributeRuleEvaluator getAttributeRuleEvaluator() {
+        if (this.evaluator == null) {
+            AttributeRuleEvaluatorFactory factory = null;
+            try {
+                factory = (AttributeRuleEvaluatorFactory) this.manager
+                        .lookup(AttributeRuleEvaluatorFactory.ROLE);
+                this.evaluator = factory.getEvaluator();
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (factory != null) {
+                    this.manager.release(factory);
+                }
+            }
+        }
+        return this.evaluator;
     }
 
 }

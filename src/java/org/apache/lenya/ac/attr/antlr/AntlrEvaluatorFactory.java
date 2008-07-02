@@ -15,27 +15,19 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac.impl.antlr;
+package org.apache.lenya.ac.attr.antlr;
+
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluatorFactory;
 
 /**
- * Thrown in attribute rule evaluators if an attribute is not defined.
+ * Factory for ANTLR-based attribute rule evaluators.
  */
-public class ParseException extends RuntimeException {
+public class AntlrEvaluatorFactory extends AbstractLogEnabled implements AttributeRuleEvaluatorFactory {
 
-    public ParseException() {
-        super();
-    }
-
-    public ParseException(String arg0, Throwable arg1) {
-        super(arg0, arg1);
-    }
-
-    public ParseException(String arg0) {
-        super(arg0);
-    }
-
-    public ParseException(Throwable arg0) {
-        super(arg0);
+    public AttributeRuleEvaluator getEvaluator() {
+        return new AntlrEvaluator(getLogger());
     }
 
 }

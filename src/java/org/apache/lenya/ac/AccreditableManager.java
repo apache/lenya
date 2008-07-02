@@ -19,6 +19,7 @@
 package org.apache.lenya.ac;
 
 import org.apache.avalon.framework.component.Component;
+import org.apache.lenya.ac.attr.AttributeManager;
 
 /**
  * An AccreditableManager combines a UserManager, a GroupManager, an IPRangeManager and a
@@ -71,5 +72,10 @@ public interface AccreditableManager extends Component {
      * @param listener An item manager listener.
      */
     void removeItemManagerListener(ItemManagerListener listener);
+    
+    /**
+     * @return The attribute manager of this application.
+     */
+    AttributeManager getAttributeManager();
 
 }

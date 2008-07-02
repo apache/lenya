@@ -38,15 +38,16 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.AttributeRuleEvaluator;
-import org.apache.lenya.ac.AttributeRuleEvaluatorFactory;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.ItemManagerListener;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluatorFactory;
 import org.apache.lenya.ac.impl.AbstractItem;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
@@ -83,26 +84,6 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         this.accreditableManager = accreditableManager;
         notifier = new DirectoryChangeNotifier(getConfigurationDirectory(), getFileFilter());
         loadItems();
-    }
-
-    private AttributeRuleEvaluator evaluator;
-
-    public AttributeRuleEvaluator getAttributeRuleEvaluator() {
-        if (this.evaluator == null) {
-            AttributeRuleEvaluatorFactory factory = null;
-            try {
-                factory = (AttributeRuleEvaluatorFactory) this.manager
-                        .lookup(AttributeRuleEvaluatorFactory.ROLE);
-                this.evaluator = factory.getEvaluator();
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (factory != null) {
-                    this.manager.release(factory);
-                }
-            }
-        }
-        return this.evaluator;
     }
 
     public AccreditableManager getAccreditableManager() {

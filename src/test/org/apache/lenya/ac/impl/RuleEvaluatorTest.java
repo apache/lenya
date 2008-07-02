@@ -22,11 +22,11 @@ package org.apache.lenya.ac.impl;
 import junit.framework.TestCase;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
-import org.apache.lenya.ac.AttributeDefinition;
-import org.apache.lenya.ac.AttributeDefinitionRegistry;
-import org.apache.lenya.ac.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.AttributeSet;
+import org.apache.lenya.ac.attr.AttributeSetRegistry;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.antlr.AntlrEvaluator;
 import org.apache.lenya.ac.file.FileUser;
-import org.apache.lenya.ac.impl.antlr.AntlrEvaluator;
 
 public class RuleEvaluatorTest extends TestCase {
     
@@ -34,13 +34,13 @@ public class RuleEvaluatorTest extends TestCase {
 
     public void testRuleEvaluation() throws Exception {
         
-        AttributeDefinition def = new AttributeDefinition() {
+        AttributeSet def = new AttributeSet() {
             public String[] getAttributeNames() {
                 String[] names = { ATTR_NAME };
                 return names;
             }
         };
-        AttributeDefinitionRegistry.register(def);
+        AttributeSetRegistry.register(def);
         
         AttributeRuleEvaluator evaluator = new AntlrEvaluator(new ConsoleLogger());
         

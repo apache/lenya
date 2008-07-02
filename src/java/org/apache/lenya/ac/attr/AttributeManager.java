@@ -15,28 +15,24 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac;
-
-import org.apache.lenya.ac.impl.ValidationResult;
+package org.apache.lenya.ac.attr;
 
 /**
- * Service to evaluate attribute rules.
+ * Manager for attribute sets and evaluators.
  */
-public interface AttributeRuleEvaluator {
+public interface AttributeManager {
+    
+    String ROLE = AttributeManager.class.getName();
 
     /**
-     * @param user The user.
-     * @param rule The rule.
-     * @return if the rule is complied by the user's attributes.
+     * @return The attribute rule evaluator used by this application.
      */
-    public boolean isComplied(AttributeOwner user, String rule);
-
+    AttributeRuleEvaluator getEvaluator();
+    
     /**
-     * @param rule The rule to validate.
-     * @return If the rule is valid, i.e. if it is syntactically correct and doesn't reference any
-     *         attributes which are not supported by the {@link AttributeDefinition} that is
-     *         provided by the {@link AttributeDefinitionRegistry}.
+     * @param name The name.
+     * @return The attribute set with this name.
      */
-    public ValidationResult validate(String rule);
+    AttributeSet getAttributeSet(String name);
 
 }

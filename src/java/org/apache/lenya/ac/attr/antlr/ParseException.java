@@ -15,19 +15,27 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac.impl.jexl;
-
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.lenya.ac.AttributeRuleEvaluator;
-import org.apache.lenya.ac.AttributeRuleEvaluatorFactory;
+package org.apache.lenya.ac.attr.antlr;
 
 /**
- * Factory for JEXL-based attribute rule evaluators.
+ * Thrown in attribute rule evaluators if an attribute is not defined.
  */
-public class JexlEvaluatorFactory extends AbstractLogEnabled implements AttributeRuleEvaluatorFactory {
+public class ParseException extends RuntimeException {
 
-    public AttributeRuleEvaluator getEvaluator() {
-        return new JexlEvaluator(getLogger());
+    public ParseException() {
+        super();
+    }
+
+    public ParseException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+    }
+
+    public ParseException(String arg0) {
+        super(arg0);
+    }
+
+    public ParseException(Throwable arg0) {
+        super(arg0);
     }
 
 }

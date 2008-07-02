@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac.impl.antlr;
+package org.apache.lenya.ac.attr.antlr;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -23,13 +23,12 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.lenya.ac.AttributeDefinition;
-import org.apache.lenya.ac.AttributeDefinitionRegistry;
-import org.apache.lenya.ac.AttributeOwner;
-import org.apache.lenya.ac.AttributeRuleEvaluator;
 import org.apache.lenya.ac.ErrorHandler;
 import org.apache.lenya.ac.Message;
 import org.apache.lenya.ac.SimpleErrorHandler;
+import org.apache.lenya.ac.attr.AttributeSet;
+import org.apache.lenya.ac.attr.AttributeOwner;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
 import org.apache.lenya.ac.impl.ValidationResult;
 import org.apache.lenya.util.Assert;
 
@@ -51,7 +50,7 @@ public class AntlrEvaluator extends AbstractLogEnabled implements AttributeRuleE
         ErrorHandler handler = new SimpleErrorHandler();
         ExpressionsParser parser = getParser(rule, handler);
         try {
-            String[] names = getAttributeNames();
+            String[] names = user.getAttributeNames();
             for (int i = 0; i < names.length; i++) {
                 String[] values = user.getAttributeValues(names[i]);
                 if (values == null) {
@@ -82,14 +81,14 @@ public class AntlrEvaluator extends AbstractLogEnabled implements AttributeRuleE
         }
     }
 
-    public ValidationResult validate(String rule) {
+    public ValidationResult validate(String rule, AttributeSet attrs) {
         ErrorHandler handler = new SimpleErrorHandler();
         ExpressionsParser parser = getParser(rule, handler);
         ValidationResult result;
         try {
-            String[] names = getAttributeNames();
+            String[] names = attrs.getAttributeNames();
             for (int i = 0; i < names.length; i++) {
-                parser.memory.put(names[i], UNDEFINED_VALUE);
+                parser.memory.put(attrs.getAttribute(names[i]).getAlias(), UNDEFINED_VALUE);
             }
             parser.prog();
             result = new ValidationResult(handler.getErrors());
@@ -97,13 +96,6 @@ public class AntlrEvaluator extends AbstractLogEnabled implements AttributeRuleE
             throw new RuntimeException(e);
         }
         return result;
-    }
-
-    protected String[] getAttributeNames() {
-        AttributeDefinition attributesDef = AttributeDefinitionRegistry
-        .getAttributeDefinition();
-        String[] names = attributesDef.getAttributeNames();
-        return names;
     }
 
     protected ExpressionsParser getParser(String rule, ErrorHandler handler) {

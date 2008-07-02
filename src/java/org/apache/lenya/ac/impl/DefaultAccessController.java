@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.regex.*;
 
 import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -44,8 +43,6 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.AttributeDefinition;
-import org.apache.lenya.ac.AttributeDefinitionRegistry;
 import org.apache.lenya.ac.Authenticator;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.ErrorHandler;
@@ -61,7 +58,7 @@ import org.apache.lenya.ac.PolicyManager;
  * @version $Id: DefaultAccessController.java 473842 2006-11-12 01:15:20Z gregor $
  */
 public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
-        Configurable, Serviceable, Disposable, ItemManagerListener, Initializable {
+        Configurable, Serviceable, Disposable, ItemManagerListener {
 
     protected static final String AUTHORIZER_ELEMENT = "authorizer";
     protected static final String TYPE_ATTRIBUTE = "type";
@@ -446,13 +443,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getLogger().debug("Notifying policy manager");
         }
         getPolicyManager().accreditableRemoved(getAccreditableManager(), (Accreditable) item);
-    }
-
-    public void initialize() throws Exception {
-        // register the attribute definition
-        AttributeDefinition definition = (AttributeDefinition) this.manager
-                .lookup(AttributeDefinition.ROLE);
-        AttributeDefinitionRegistry.register(definition);
     }
 
     public String getAuthenticatorType() {

@@ -32,6 +32,8 @@ import org.apache.lenya.ac.ManagedUserReference;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserReference;
+import org.apache.lenya.ac.attr.AttributeSet;
+import org.apache.lenya.ac.attr.impl.EmptyAttributeSet;
 import org.apache.lenya.cms.publication.util.OutgoingLinkRewriter;
 import org.apache.lenya.util.ServletHelper;
 
@@ -139,4 +141,9 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
         return request.getRequestURI();
     }
 
+    private AttributeSet attrs = new EmptyAttributeSet();
+
+    public AttributeSet getAttributeSet() {
+        return this.attrs;
+    }
 }

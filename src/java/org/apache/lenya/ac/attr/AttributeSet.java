@@ -15,19 +15,32 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac.impl.antlr;
-
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.lenya.ac.AttributeRuleEvaluator;
-import org.apache.lenya.ac.AttributeRuleEvaluatorFactory;
+package org.apache.lenya.ac.attr;
 
 /**
- * Factory for ANTLR-based attribute rule evaluators.
+ * Definition of user attribute names.
  */
-public class AntlrEvaluatorFactory extends AbstractLogEnabled implements AttributeRuleEvaluatorFactory {
+public interface AttributeSet {
 
-    public AttributeRuleEvaluator getEvaluator() {
-        return new AntlrEvaluator(getLogger());
-    }
+    /**
+     * The service role.
+     */
+    String ROLE = AttributeSet.class.getName();
 
+    /**
+     * @return All available attribute names.
+     */
+    String[] getAttributeNames();
+    
+    /**
+     * @param name An attribute name.
+     * @return An attribute.
+     */
+    Attribute getAttribute(String name);
+    
+    /**
+     * @return The name of the attribute set.
+     */
+    String getName();
+    
 }

@@ -18,6 +18,8 @@
 
 package org.apache.lenya.ac;
 
+import org.apache.lenya.ac.attr.AttributeOwner;
+
 /**
  * A user.
  * @version $Id: User.java 473841 2006-11-12 00:46:38Z gregor $

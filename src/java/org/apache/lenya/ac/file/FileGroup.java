@@ -27,6 +27,10 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.attr.AttributeManager;
+import org.apache.lenya.ac.attr.AttributeRule;
+import org.apache.lenya.ac.attr.AttributeSet;
+import org.apache.lenya.ac.attr.impl.AttributeRuleImpl;
 import org.apache.lenya.ac.impl.AbstractGroup;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
@@ -35,6 +39,7 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  */
 public class FileGroup extends AbstractGroup implements FileItem {
 
+    protected static final String ATTRIBUTE_SET = "attributeSet";
     protected static final String RULE = "rule";
 
     /**
@@ -70,11 +75,15 @@ public class FileGroup extends AbstractGroup implements FileItem {
         new ItemConfiguration().configure(this, config);
         Configuration ruleConfig = config.getChild(RULE, false);
         if (ruleConfig != null) {
-            String rule = ruleConfig.getValue();
+            String ruleString = ruleConfig.getValue();
+            String attributeSetName = ruleConfig.getAttribute(ATTRIBUTE_SET);
             try {
+                AttributeManager attrMgr = getItemManager().getAccreditableManager().getAttributeManager();
+                AttributeSet attrs = attrMgr.getAttributeSet(attributeSetName);
+                AttributeRule rule = new AttributeRuleImpl(ruleString, attrs, attrMgr.getEvaluator());
                 setRule(rule);
             } catch (AccessControlException e) {
-                throw new ConfigurationException("Setting rule [" + rule + "] failed: ", e);
+                throw new ConfigurationException("Setting rule [" + ruleString + "] failed: ", e);
             }
         }
     }
@@ -118,9 +127,11 @@ public class FileGroup extends AbstractGroup implements FileItem {
     private Configuration createConfiguration() {
         DefaultConfiguration config = new DefaultConfiguration(GROUP);
         new ItemConfiguration().save(this, config);
-        if (getRule() != null) {
+        AttributeRule rule = getRule();
+        if (rule != null) {
             DefaultConfiguration ruleConfig = new DefaultConfiguration(RULE);
-            ruleConfig.setValue(getRule());
+            ruleConfig.setValue(rule.getRule());
+            ruleConfig.setAttribute(ATTRIBUTE_SET, rule.getAttributeSet().getName());
             config.addChild(ruleConfig);
         }
         return config;
@@ -136,11 +147,9 @@ public class FileGroup extends AbstractGroup implements FileItem {
         return configurationDirectory;
     }
 
-    /**
-     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
-     */
     public void setConfigurationDirectory(File configurationDirectory) {
         assert (configurationDirectory != null) && configurationDirectory.isDirectory();
         this.configurationDirectory = configurationDirectory;
     }
+
 }

@@ -15,21 +15,36 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac;
+package org.apache.lenya.ac.attr.impl;
 
-/**
- * Factory for attribute rule evaluators.
- */
-public interface AttributeRuleEvaluatorFactory {
+import org.apache.lenya.ac.attr.Attribute;
+import org.apache.lenya.util.Assert;
+
+public class AttributeImpl implements Attribute {
+
+    private String description;
+    private String name;
+    private String alias;
     
-    /**
-     * The service role.
-     */
-    String ROLE = AttributeRuleEvaluatorFactory.class.getName();
+    public AttributeImpl(String name, String alias, String description) {
+        Assert.notNull("name", name);
+        Assert.notNull("alias", alias);
+        Assert.notNull("description", description);
+        this.name = name;
+        this.alias = alias;
+        this.description = description;
+    }
 
-    /**
-     * @return An evaluator.
-     */
-    AttributeRuleEvaluator getEvaluator();
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getAlias() {
+        return this.alias;
+    }
 
 }

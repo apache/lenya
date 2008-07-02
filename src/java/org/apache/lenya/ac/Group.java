@@ -18,6 +18,9 @@
 
 package org.apache.lenya.ac;
 
+import org.apache.lenya.ac.attr.AttributeOwner;
+import org.apache.lenya.ac.attr.AttributeRule;
+
 /**
  * A group.
  * @version $Id: Group.java 473841 2006-11-12 00:46:38Z gregor $
@@ -68,14 +71,13 @@ public interface Group extends Accreditable, Item {
     
     /**
      * @param rule The rule. A <code>null</code> value means that no rule should be used.
-     * @throws AccessControlException if the rule is not valid.
      */
-    void setRule(String rule) throws AccessControlException;
+    void setRule(AttributeRule rule);
     
     /**
      * @return The rule or <code>null</code> if no rule is set.
      */
-    String getRule();
+    AttributeRule getRule();
     
     /**
      * @param user The user.

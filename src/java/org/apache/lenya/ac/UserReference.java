@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.lenya.ac.attr.AttributeOwner;
+
 /**
  * An identifiable which represents a user.
  */

@@ -43,6 +43,7 @@ import org.apache.lenya.ac.IPRangeManager;
 import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserType;
+import org.apache.lenya.ac.attr.AttributeManager;
 import org.apache.lenya.ac.impl.AbstractAccreditableManager;
 
 import org.apache.cocoon.util.NetUtils;
@@ -261,6 +262,19 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      */
     protected UserManager initializeUserManager() throws AccessControlException {
         return FileUserManager.instance(this.manager, this, getUserTypes(), getLogger());
+    }
+    
+    private AttributeManager attributeMgr;
+
+    public AttributeManager getAttributeManager() {
+        if (this.attributeMgr == null) {
+            try {
+                this.attributeMgr = (AttributeManager) this.manager.lookup(AttributeManager.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.attributeMgr;
     }
 
 }

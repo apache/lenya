@@ -15,35 +15,31 @@
  *  limitations under the License.
  *
  */
+package org.apache.lenya.ac.attr;
 
-package org.apache.lenya.ac;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Group;
 
 /**
- * Item manager.
- * @version $Id: ItemManager.java 473841 2006-11-12 00:46:38Z gregor $
+ * An attribute owner provides a map of key-value pairs which are used for authorization decisions.
+ * The values are string arrays, i.e. the AttributeOwner can provide multiple values for each key.
+ * 
+ * @see Group#matches(AttributeOwner)
+ * @see AttributeRuleEvaluator
  */
-public interface ItemManager {
+public interface AttributeOwner {
 
     /**
-     * Adds an item manager listener.
-     * @param listener The listener to add.
+     * @return The names of all possible attributes.
      */
-    void addItemManagerListener(ItemManagerListener listener);
-    
+    String[] getAttributeNames();
+
     /**
-     * Removes an item manager listener.
-     * @param listener The listener to remove.
+     * @param name The attribute name.
+     * @return The attribute values or <code>null</code> if no value is available for the
+     *         attribute.
+     * @throws AccessControlException if the attribute is not supported.
      */
-    void removeItemManagerListener(ItemManagerListener listener);
-    
-    /**
-     * @return The ID to identify this item manager.
-     */
-    String getId();
-    
-    /**
-     * @return The accreditable manager this item manager belongs to.
-     */
-    AccreditableManager getAccreditableManager();
-    
+    String[] getAttributeValues(String name) throws AccessControlException;
+
 }

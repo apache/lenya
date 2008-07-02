@@ -20,6 +20,7 @@ package org.apache.lenya.ac;
 
 import org.apache.avalon.framework.component.Component;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.ac.attr.AttributeSet;
 
 /**
  * An authenticator.
@@ -31,7 +32,7 @@ public interface Authenticator extends Component {
      * Avalon role.
      */
     String ROLE = Authenticator.class.getName();
-    
+
     /**
      * The default authenticator type.
      */
@@ -55,11 +56,18 @@ public interface Authenticator extends Component {
      * @return A string.
      */
     String getLoginUri(Request request);
-    
+
     /**
-     * The target URI, i.e. the URI to redirect to after a successful authentication.
+     * The target URI, i.e. the URI to redirect to after a successful
+     * authentication.
      * @param request The request containing the authentication data.
      * @return A string.
      */
     String getTargetUri(Request request);
+
+    /**
+     * @return The set of attributes to be expected when a user has been
+     *         authenticated by this authenticator.
+     */
+    AttributeSet getAttributeSet();
 }

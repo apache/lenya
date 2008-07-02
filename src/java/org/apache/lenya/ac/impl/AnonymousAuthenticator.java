@@ -27,6 +27,8 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.ManagedUserReference;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserReference;
+import org.apache.lenya.ac.attr.AttributeSet;
+import org.apache.lenya.ac.attr.impl.EmptyAttributeSet;
 
 /**
  * The anonymous authenticator authenticates to an anonymous user with no password (you just have to
@@ -84,5 +86,11 @@ public class AnonymousAuthenticator extends AbstractLogEnabled implements Authen
 
     public String getTargetUri(Request request) {
         return request.getRequestURI();
+    }
+    
+    private AttributeSet attrs = new EmptyAttributeSet();
+
+    public AttributeSet getAttributeSet() {
+        return this.attrs;
     }
 }

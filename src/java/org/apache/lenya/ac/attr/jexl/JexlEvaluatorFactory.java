@@ -15,28 +15,19 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac;
+package org.apache.lenya.ac.attr.jexl;
+
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluatorFactory;
 
 /**
- * An attribute owner provides a map of key-value pairs which are used for authorization decisions.
- * The values are string arrays, i.e. the AttributeOwner can provide multiple values for each key.
- * 
- * @see Group#matches(AttributeOwner)
- * @see AttributeRuleEvaluator
+ * Factory for JEXL-based attribute rule evaluators.
  */
-public interface AttributeOwner {
+public class JexlEvaluatorFactory extends AbstractLogEnabled implements AttributeRuleEvaluatorFactory {
 
-    /**
-     * @return The names of all possible attributes.
-     */
-    String[] getAttributeNames();
-
-    /**
-     * @param name The attribute name.
-     * @return The attribute values or <code>null</code> if no value is available for the
-     *         attribute.
-     * @throws AccessControlException if the attribute is not supported.
-     */
-    String[] getAttributeValues(String name) throws AccessControlException;
+    public AttributeRuleEvaluator getEvaluator() {
+        return new JexlEvaluator(getLogger());
+    }
 
 }

@@ -15,35 +15,21 @@
  *  limitations under the License.
  *
  */
-
-package org.apache.lenya.ac;
+package org.apache.lenya.ac.attr;
 
 /**
- * Item manager.
- * @version $Id: ItemManager.java 473841 2006-11-12 00:46:38Z gregor $
+ * Factory for attribute rule evaluators.
  */
-public interface ItemManager {
+public interface AttributeRuleEvaluatorFactory {
+    
+    /**
+     * The service role.
+     */
+    String ROLE = AttributeRuleEvaluatorFactory.class.getName();
 
     /**
-     * Adds an item manager listener.
-     * @param listener The listener to add.
+     * @return An evaluator.
      */
-    void addItemManagerListener(ItemManagerListener listener);
-    
-    /**
-     * Removes an item manager listener.
-     * @param listener The listener to remove.
-     */
-    void removeItemManagerListener(ItemManagerListener listener);
-    
-    /**
-     * @return The ID to identify this item manager.
-     */
-    String getId();
-    
-    /**
-     * @return The accreditable manager this item manager belongs to.
-     */
-    AccreditableManager getAccreditableManager();
-    
+    AttributeRuleEvaluator getEvaluator();
+
 }

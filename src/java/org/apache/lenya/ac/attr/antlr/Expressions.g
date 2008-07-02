@@ -1,13 +1,13 @@
 grammar Expressions;
 
 @header {
-package org.apache.lenya.ac.impl.antlr;
+package org.apache.lenya.ac.attr.antlr;
 import java.util.HashMap;
 import org.apache.lenya.ac.ErrorHandler;
 }
 
 @lexer::header {
-package org.apache.lenya.ac.impl.antlr;
+package org.apache.lenya.ac.attr.antlr;
 import org.apache.lenya.ac.ErrorHandler;
 }
 

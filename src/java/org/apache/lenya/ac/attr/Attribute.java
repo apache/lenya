@@ -15,31 +15,26 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac;
+package org.apache.lenya.ac.attr;
 
 /**
- * Registry for attribute definition.
+ * A definition of a single user attribute.
  */
-public class AttributeDefinitionRegistry {
+public interface Attribute {
+    
+    /**
+     * @return The name of the attribute as provided by the identity provider.
+     */
+    String getName();
+    
+    /**
+     * @return The alias of the attribute as used in rules.
+     */
+    String getAlias();
+    
+    /**
+     * @return The description of the attribute.
+     */
+    String getDescription();
 
-    private static AttributeDefinition definition;
-    
-    /**
-     * @return The definition.
-     */
-    public static AttributeDefinition getAttributeDefinition() {
-        if (definition == null) {
-            throw new IllegalStateException("Attribute definition not registered!");
-        }
-        return definition;
-    }
-    
-    /**
-     * @param def The definition to register. If another definition was registered, the
-     * old definition will be discarded.
-     */
-    public static void register(AttributeDefinition def) {
-        AttributeDefinitionRegistry.definition = def;
-    }
-    
 }

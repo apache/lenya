@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.ac.impl.jexl;
+package org.apache.lenya.ac.attr.jexl;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -24,10 +24,9 @@ import org.apache.commons.jexl.Expression;
 import org.apache.commons.jexl.ExpressionFactory;
 import org.apache.commons.jexl.JexlContext;
 import org.apache.commons.jexl.JexlHelper;
-import org.apache.lenya.ac.AttributeDefinition;
-import org.apache.lenya.ac.AttributeDefinitionRegistry;
-import org.apache.lenya.ac.AttributeOwner;
-import org.apache.lenya.ac.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.AttributeOwner;
+import org.apache.lenya.ac.attr.AttributeRuleEvaluator;
+import org.apache.lenya.ac.attr.AttributeSet;
 import org.apache.lenya.ac.impl.ValidationResult;
 
 /**
@@ -53,9 +52,7 @@ public class JexlEvaluator extends AbstractLogEnabled implements AttributeRuleEv
         } else {
             try {
                 JexlContext context = JexlHelper.createContext();
-                AttributeDefinition attributesDef = AttributeDefinitionRegistry
-                        .getAttributeDefinition();
-                String[] names = attributesDef.getAttributeNames();
+                String[] names = user.getAttributeNames();
                 for (int i = 0; i < names.length; i++) {
                     String[] values = user.getAttributeValues(names[i]);
                     if (values != null) {
@@ -84,15 +81,14 @@ public class JexlEvaluator extends AbstractLogEnabled implements AttributeRuleEv
      * @param rule The rule to validate.
      * @return If the rule is valid.
      */
-    public ValidationResult validate(String rule) {
+    public ValidationResult validate(String rule, AttributeSet attrs) {
         ValidationResult result;
         try {
             JexlContext context = JexlHelper.createContext();
-            AttributeDefinition attributesDef = AttributeDefinitionRegistry
-                    .getAttributeDefinition();
-            String[] names = attributesDef.getAttributeNames();
+            
+            String[] names = attrs.getAttributeNames();
             for (int i = 0; i < names.length; i++) {
-                context.getVars().put(names[i], null);
+                context.getVars().put(attrs.getAttribute(names[i]).getAlias(), null);
             }
             try {
                 Expression e = ExpressionFactory.createExpression(rule);
