@@ -30,14 +30,12 @@ function groupChangeProfile() {
         var group = groupManager.getGroup(groupId);
         var name = group.getName();
         var description = group.getDescription();
-        var rule = group.getRule();
+        var ruleObject = group.getRule();
+        var rule = ruleObject != null ? ruleObject.getRule() : "";
         
         var valid = false;
         
         var messages = new java.util.ArrayList();
-        
-        var translator = cocoon.getComponent("org.apache.lenya.ac.saml.AttributeTranslator");
-        var attributeNames = translator.getSupportedResultNames();
         
         while (!valid) {
             cocoon.sendPageAndWait("groups/profile.xml", {
@@ -46,7 +44,7 @@ function groupChangeProfile() {
                 "description" : description,
                 "rule" : rule,
                 "page-title" : "Edit Profile",
-                "attribute-names" : attributeNames,
+                "attributes" : attributeSet,
                 "messages" : messages
             });
 
@@ -63,8 +61,7 @@ function groupChangeProfile() {
                     rule = null;
                 }
                 if (rule != null) {
-                    var evaluator = groupManager.getAttributeRuleEvaluator();
-                    var result = evaluator.validate(rule);
+                    var result = evaluator.validate(rule, attributeSet);
                     valid = result.succeeded();
                     if (!valid) {
                         var validationMessages = result.getMessages();
@@ -74,7 +71,8 @@ function groupChangeProfile() {
                     }
                 }
                 if (valid) {
-                    group.setRule(rule);
+                    var ruleObj = new Packages.org.apache.lenya.ac.attr.impl.AttributeRuleImpl(rule, attributeSet, evaluator);
+                    group.setRule(ruleObj);
                     name = cocoon.request.getParameter("name");
                     description = cocoon.request.getParameter("description");
                     group.setName(name);

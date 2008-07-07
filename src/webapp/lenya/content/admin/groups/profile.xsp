@@ -27,6 +27,8 @@
   
   <xsp:structure>
     <xsp:include>org.apache.lenya.ac.Message</xsp:include>
+    <xsp:include>org.apache.lenya.ac.attr.Attribute</xsp:include>
+    <xsp:include>org.apache.lenya.ac.attr.AttributeSet</xsp:include>
   </xsp:structure>
   
   <page>
@@ -61,9 +63,11 @@
     </group>
     <attributeNames>
       <xsp:logic>
-        String[] names = (String[]) <jpath:value-of select="attribute-names"/>;
+        AttributeSet attrSet = (AttributeSet) <jpath:value-of select="attributes"/>;
+        String[] names = (String[]) attrSet.getAttributeNames(); 
         for (int i = 0; i &lt; names.length; i++) {
-            <attributeName><xsp:expr>names[i]</xsp:expr></attributeName>
+            Attribute attr = attrSet.getAttribute(names[i]);
+            <attributeName><xsp:expr>attr.getAlias()</xsp:expr></attributeName>
         }
       </xsp:logic>
     </attributeNames>
