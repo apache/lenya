@@ -204,9 +204,6 @@ function groupAddGroup() {
 
         var valid = false;
         
-        var translator = cocoon.getComponent("org.apache.lenya.ac.saml.AttributeTranslator");
-        var attributeNames = translator.getSupportedResultNames();
-        
         while (true) {
             cocoon.sendPageAndWait("groups/profile.xml", {
                 "page-title" : "Add Group",
@@ -216,7 +213,7 @@ function groupAddGroup() {
                 "description" : description,
                 "messages" : messages,
                 "new-group" : true,
-                "attribute-names" : attributeNames
+                "attributes" : attributeSet
             });
             
             if (cocoon.request.getParameter("cancel")) {
@@ -240,8 +237,7 @@ function groupAddGroup() {
                       rule = null;
                    }
                    if (rule != null) {
-                      var evaluator = groupManager.getAttributeRuleEvaluator();
-                      var result = evaluator.validate(rule);
+                      var result = evaluator.validate(rule, attributeSet);
                       valid = result.succeeded();
                       if (!valid) {
                           var validationMessages = result.getMessages();
@@ -255,7 +251,10 @@ function groupAddGroup() {
                    group.setItemManager(groupManager);
                    group.setName(name);
                    group.setDescription(description);
-                   if (valid) group.setRule(rule);
+                   if (valid) { 
+                     var ruleObj = new Packages.org.apache.lenya.ac.attr.impl.AttributeRuleImpl(rule, attributeSet, evaluator);
+                     group.setRule(ruleObj);
+		   }
                    group.save();
                    groupManager.add(group);
                    break;
