@@ -41,6 +41,7 @@
       <page:body>
         <xsl:apply-templates select="messages"/>
         <xsl:apply-templates select="group"/>
+        <xsl:apply-templates select="attributeNames"/>
       </page:body>
     </page:page>
   </xsl:template>
@@ -99,12 +100,14 @@
                 <textarea class="lenya-form-element" name="description"><xsl:value-of select="description"/>&#160;</textarea>
               </td>
             </tr>
-            <tr>
-              <td class="lenya-entry-caption" valign="top"><i18n:text>Rule</i18n:text></td>
-              <td>
-                <textarea class="lenya-form-element" name="rule" rows="5"><xsl:value-of select="rule"/> </textarea>
-              </td>
-            </tr>
+            <xsl:if test="../attributeNames">
+              <tr>
+                <td class="lenya-entry-caption" valign="top"><i18n:text>Rule</i18n:text></td>
+                <td>
+                  <textarea class="lenya-form-element" name="rule" rows="5"><xsl:value-of select="rule"/> </textarea>
+                </td>
+              </tr>
+            </xsl:if>
             <tr>
               <td/>
               <td>
@@ -113,29 +116,6 @@
                 <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
               </td>
             </tr>
-          </table>
-          <hr/>
-          
-          <strong><i18n:text>Example rule</i18n:text>:</strong><br/>
-          <code style="white-space: nowrap;">
-            swissEduPersonHomeOrganization == "unizh" &amp;&amp; surname == "Meier"
-          </code>
-          <br/><br/>
-          <strong><i18n:text>Available attributes</i18n:text></strong>:
-          <table class="lenya-table" style="margin-top: 1em;">
-            <tr>
-              <th style="border-right: none"><i18n:text>Name</i18n:text></th>
-              <th style="border-left: none"><i18n:text>Description</i18n:text></th>
-            </tr>
-            <xsl:for-each select="../attributeNames/attributeName">
-              <xsl:sort select="."/>
-              <tr>
-                <td style="border-right: none"><xsl:value-of select="."/></td>
-                <td style="border-left: none">
-                  <i18n:text>accesscontrol.attribute.<xsl:value-of select="."/></i18n:text>
-                </td>
-              </tr>
-            </xsl:for-each>
           </table>
           
         </form>
@@ -146,6 +126,31 @@
     </tr>
     </table>
     
+  </xsl:template>
+  
+  
+  <xsl:template match="attributeNames">
+    <strong><i18n:text>Example rule</i18n:text>:</strong><br/>
+    <code style="white-space: nowrap;">
+      swissEduPersonHomeOrganization == "unizh" &amp;&amp; surname == "Meier"
+    </code>
+    <br/><br/>
+    <strong><i18n:text>Available attributes</i18n:text></strong>:
+    <table class="lenya-table" style="margin-top: 1em;">
+      <tr>
+        <th style="border-right: none"><i18n:text>Name</i18n:text></th>
+        <th style="border-left: none"><i18n:text>Description</i18n:text></th>
+      </tr>
+      <xsl:for-each select="../attributeNames/attributeName">
+        <xsl:sort select="."/>
+        <tr>
+          <td style="border-right: none"><xsl:value-of select="."/></td>
+          <td style="border-left: none">
+            <i18n:text>accesscontrol.attribute.<xsl:value-of select="."/></i18n:text>
+          </td>
+        </tr>
+      </xsl:for-each>
+    </table>
   </xsl:template>
   
   

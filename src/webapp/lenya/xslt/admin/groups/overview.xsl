@@ -71,10 +71,7 @@
               <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
               <td><xsl:value-of select="description"/></td>
             </tr>
-            <tr>
-              <td valign="top" class="lenya-entry-caption"><i18n:text>Rule</i18n:text>:</td>
-              <td><xsl:value-of select="rule"/></td>
-            </tr>
+            <xsl:apply-templates select="rule"/>
             <tr>
               <td/>
               <td>
@@ -113,6 +110,14 @@
     </tr>
     </table>
     
+  </xsl:template>
+  
+  
+  <xsl:template match="rule">
+    <tr>
+      <td valign="top" class="lenya-entry-caption"><i18n:text>Rule</i18n:text>:</td>
+      <td><xsl:value-of select="."/></td>
+    </tr>
   </xsl:template>
   
   

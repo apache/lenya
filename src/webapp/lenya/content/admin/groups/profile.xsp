@@ -61,16 +61,20 @@
       <description><jpath:value-of select="description"/></description>
       <rule><jpath:value-of select="rule"/></rule>
     </group>
-    <attributeNames>
-      <xsp:logic>
-        AttributeSet attrSet = (AttributeSet) <jpath:value-of select="attributes"/>;
-        String[] names = (String[]) attrSet.getAttributeNames(); 
-        for (int i = 0; i &lt; names.length; i++) {
-            Attribute attr = attrSet.getAttribute(names[i]);
-            <attributeName><xsp:expr>attr.getAlias()</xsp:expr></attributeName>
-        }
-      </xsp:logic>
-    </attributeNames>
+    <xsp:logic>
+      AttributeSet attrSet = (AttributeSet) <jpath:value-of select="attributes"/>;
+      String[] names = (String[]) attrSet.getAttributeNames();
+      if (names.length &gt; 0) { 
+        <attributeNames>
+          <xsp:logic>
+          for (int i = 0; i &lt; names.length; i++) {
+              Attribute attr = attrSet.getAttribute(names[i]);
+              <attributeName><xsp:expr>attr.getAlias()</xsp:expr></attributeName>
+          }
+          </xsp:logic>
+        </attributeNames>
+      }
+    </xsp:logic>
   </page>
   
 </xsp:page>

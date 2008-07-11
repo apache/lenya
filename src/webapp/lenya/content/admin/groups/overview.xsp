@@ -69,17 +69,18 @@
             }
         }
         
-        AttributeRule rule = group.getRule();
-        String ruleString = null;
-        if (rule != null) {
-            ruleString = rule.getRule();
-        }
     </xsp:logic>
     <group>
       <id><xsp:expr>group.getId()</xsp:expr></id>
       <name><xsp:expr>group.getName()</xsp:expr></name>
       <description><xsp:expr>group.getDescription()</xsp:expr></description>
-      <rule><xsp:expr>ruleString</xsp:expr></rule>
+      <xsp:logic>
+        AttributeRule rule = group.getRule();
+        String ruleString = null;
+        if (rule != null) {
+          <rule><xsp:expr>rule.getRule()</xsp:expr></rule>
+        }
+      </xsp:logic>
       <users>
         <xsp:logic>
             for (Iterator i = users.iterator(); i.hasNext();) {
