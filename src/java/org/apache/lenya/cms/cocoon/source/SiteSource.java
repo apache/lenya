@@ -51,7 +51,6 @@ public class SiteSource extends AbstractLogEnabled implements Source {
 
     private ServiceManager manager;
     private Source delegate;
-    private Source repositorySource;
     private String scheme;
     private String uri;
 
@@ -108,9 +107,6 @@ public class SiteSource extends AbstractLogEnabled implements Source {
 
             if (site.contains(path, language)) {
                 Document doc = site.getNode(path).getLink(language).getDocument();
-                String lenyaURL = doc.getSourceURI();
-                Session session = RepositoryUtil.getSession(this.manager, request);
-                this.repositorySource = new RepositorySource(manager, lenyaURL, session, getLogger());
 
                 if (locationSteps.hasMoreTokens()) {
                     Query query = new Query(locationSteps.nextToken());
@@ -120,7 +116,9 @@ public class SiteSource extends AbstractLogEnabled implements Source {
                     }
                 }
                 if (this.delegate == null) {
-                    this.delegate = this.repositorySource;
+                    String lenyaURL = doc.getSourceURI();
+                    Session session = RepositoryUtil.getSession(this.manager, request);
+                    this.delegate = new RepositorySource(manager, lenyaURL, session, getLogger());
                 }
             }
 
@@ -130,7 +128,7 @@ public class SiteSource extends AbstractLogEnabled implements Source {
     }
     
     public boolean exists() {
-        return this.repositorySource != null;
+        return this.delegate != null;
     }
 
     public long getContentLength() {
