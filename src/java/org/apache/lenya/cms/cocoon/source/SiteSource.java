@@ -51,6 +51,7 @@ public class SiteSource extends AbstractLogEnabled implements Source {
 
     private ServiceManager manager;
     private Source delegate;
+    private Source repositorySource;
     private String scheme;
     private String uri;
 
@@ -107,6 +108,10 @@ public class SiteSource extends AbstractLogEnabled implements Source {
 
             if (site.contains(path, language)) {
                 Document doc = site.getNode(path).getLink(language).getDocument();
+                String lenyaURL = doc.getSourceURI();
+                Session session = RepositoryUtil.getSession(this.manager, request);
+                this.repositorySource = new RepositorySource(manager, lenyaURL, session, getLogger());
+
                 if (locationSteps.hasMoreTokens()) {
                     Query query = new Query(locationSteps.nextToken());
                     String format = query.getValue("format");
@@ -115,9 +120,7 @@ public class SiteSource extends AbstractLogEnabled implements Source {
                     }
                 }
                 if (this.delegate == null) {
-                    String lenyaURL = doc.getSourceURI();
-                    Session session = RepositoryUtil.getSession(this.manager, request);
-                    this.delegate = new RepositorySource(manager, lenyaURL, session, getLogger());
+                    this.delegate = this.repositorySource;
                 }
             }
 
@@ -127,11 +130,11 @@ public class SiteSource extends AbstractLogEnabled implements Source {
     }
     
     public boolean exists() {
-        return this.delegate != null;
+        return this.repositorySource != null;
     }
 
     public long getContentLength() {
-        return this.delegate == null ? 0 : this.delegate.getContentLength();
+        return !exists() ? 0 : this.delegate.getContentLength();
     }
 
     public InputStream getInputStream() throws IOException, SourceNotFoundException {
@@ -139,11 +142,11 @@ public class SiteSource extends AbstractLogEnabled implements Source {
     }
 
     public long getLastModified() {
-        return this.delegate == null ? 0 : this.delegate.getLastModified();
+        return !exists() ? 0 : this.delegate.getLastModified();
     }
 
     public String getMimeType() {
-        return this.delegate == null ? "" : this.delegate.getMimeType();
+        return !exists() ? "" : this.delegate.getMimeType();
     }
 
     public String getScheme() {
@@ -159,7 +162,7 @@ public class SiteSource extends AbstractLogEnabled implements Source {
     }
 
     public void refresh() {
-        if (this.delegate != null) {
+        if (exists()) {
             this.delegate.refresh();
         }
     }
