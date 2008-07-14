@@ -138,6 +138,9 @@ public class SiteSource extends AbstractLogEnabled implements Source {
     }
 
     public InputStream getInputStream() throws IOException, SourceNotFoundException {
+        if (!exists()) {
+            throw new SourceNotFoundException("The source [" + getURI() + "] does not exist!");
+        }
         return this.delegate.getInputStream();
     }
 
