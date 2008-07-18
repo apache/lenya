@@ -59,15 +59,16 @@ function userEventsInit() {
     var obj;
     var i;
     for (i=1; i <= numberOfMenus; i++) {
-	    obj = document.getElementById("nav"+i);
-	    if (obj != null) {
-		    obj.onclick = eventShowMenu;
-	    }
-	
-	    obj = document.getElementById("menu"+i);
-	    if (obj != null) {
-		    obj.onmouseover = menuOver;
-		    obj.onmouseout = menuOut;
-	    }
+        obj = document.getElementById("nav"+i);
+        if (obj != null) {
+            obj.onclick = eventShowMenu;
+            obj.onmouseout = menuOut;
+        }
+    
+        obj = document.getElementById("menu"+i);
+        if (obj != null) {
+            obj.onmouseover = menuOver;
+            obj.onmouseout = menuOut;
+        }
     }
  }
