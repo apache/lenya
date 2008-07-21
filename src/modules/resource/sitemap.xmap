@@ -66,8 +66,8 @@ limitations under the License.
       <map:match pattern="downloadLink.xml/*/*/*/*">
         <map:generate src="cocoon://modules/metadata/{1}/{2}/{3}/{4}"/>
         <map:transform src="fallback://lenya/modules/resource/xslt/downloadLink.xsl">
-          <map:parameter name="contentLength" value="{doc-info:{1}:{2}:{3}:{4}}"/>
-          <map:parameter name="mimeType" value="{doc-info:{1}:{2}:{3}:{4}}"/>
+          <map:parameter name="contentLength" value="{doc-info:{1}:{2}:{3}:{4}:contentLength}"/>
+          <map:parameter name="mimeType" value="{doc-info:{1}:{2}:{3}:{4}:mimeType}"/>
           <map:parameter name="uuid" value="{3}"/>
           <map:parameter name="language" value="{4}"/>
           <map:parameter name="imageprefix" value="{proxy:/{1}/modules/resource}"/>
