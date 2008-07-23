@@ -34,6 +34,9 @@
       error: function(type, data, evt) {
         alert("An error occurred.");
       },
+      headers: { 
+        "Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"
+      },
       load: function(type, data, evt) {
         var result = data.replace(/\s/g, "");
         if (result == "concurrent-change") {
@@ -53,27 +56,3 @@
     dojo.io.bind(bindArgs);
   }
 
-  /*
-  function saveMetaData(namespace, element, oldValue) {
-    var id = element + "@" + namespace;
-    var bindArgs = {
-      method: "post",
-      error: function(type, data, evt) {
-        alert("An error occurred.");
-      },
-      load: function(type, data, evt) {
-        var result = data.replace(/\s/g, "");
-        if (result = "concurrent-change") {
-          alert("Value can't be saved, concurrent change detected.");
-        }
-        else {
-          var successIndicator = dojo.byId(id);
-          successIndicator.style.visibility = "visible";
-        }
-      },
-      mimetype: "text/plain",
-      formNode: dojo.byId("form_" + id)
-    };
-    dojo.io.bind(bindArgs);
-  }
-*/
