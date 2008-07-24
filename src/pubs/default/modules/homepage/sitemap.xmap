@@ -66,7 +66,7 @@
           <map:parameter name="language" value="{page-envelope:document-language}"/>
           <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
         </map:transform>
-        <map:transform type="cinclude"/>
+        <map:transform type="include"/>
         <map:serialize type="xml"/>
       </map:match>
 
