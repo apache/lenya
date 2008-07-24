@@ -20,6 +20,7 @@ package org.apache.lenya.cms.cocoon.source;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
@@ -35,6 +36,15 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
+import org.apache.excalibur.source.SourceNotFoundException;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * <p>
@@ -61,10 +71,9 @@ import org.apache.excalibur.source.SourceFactory;
 public class SiteSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
         Contextualizable, Serviceable {
 
-    protected static final String SCHEME = "site";
-
     private Context context;
     private ServiceManager manager;
+    private SourceResolver resolver;
 
     /**
      * Used for resolving the object model.
@@ -88,14 +97,71 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
             IOException, SourceException {
         Map objectModel = ContextHelper.getObjectModel(this.context);
         Request request = ObjectModelHelper.getRequest(objectModel);
-        return new SiteSource(this.manager, request, location, getLogger());
+
+        String areaName = null;
+        String pubId;
+
+        StringTokenizer locationSteps = new StringTokenizer(location, "?");
+        String completePath = locationSteps.nextToken();
+
+        String relativePath;
+        try {
+            this.resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+
+            String scheme = completePath.substring(0, completePath.indexOf(":") + 1);
+            final String absolutePath = completePath.substring(scheme.length());
+            if (absolutePath.startsWith("//")) {
+                final String fullPath = absolutePath.substring(2);
+                StringTokenizer steps = new StringTokenizer(fullPath, "/");
+                pubId = steps.nextToken();
+                areaName = steps.nextToken();
+                String prefix = pubId + "/" + areaName;
+                relativePath = fullPath.substring(prefix.length());
+            } else if (absolutePath.startsWith("/")) {
+                String webappUrl = ServletHelper.getWebappURI(request);
+                URLInformation info = new URLInformation(webappUrl);
+                pubId = info.getPublicationId();
+                areaName = info.getArea();
+                relativePath = absolutePath;
+            } else {
+                throw new MalformedURLException("The path [" + absolutePath
+                        + "] must start with at least one slash.");
+            }
+
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Publication pub = factory.getPublication(pubId);
+            SiteStructure site = pub.getArea(areaName).getSite();
+
+            String[] steps = relativePath.substring(1).split("/");
+
+            String language = steps[0];
+            String prefix = "/" + language;
+            String path = relativePath.substring(prefix.length());
+
+            if (site.contains(path, language)) {
+                Document doc = site.getNode(path).getLink(language).getDocument();
+                String docUri = "lenya-document:" + doc.getUUID() + ",lang=" + doc.getLanguage()
+                        + ",area=" + doc.getArea() + ",pub=" + doc.getPublication().getId();
+
+                if (locationSteps.hasMoreTokens()) {
+                    String queryString = locationSteps.nextToken();
+                    docUri = docUri + "?" + queryString;
+                }
+                return this.resolver.resolveURI(docUri);
+            } else {
+                throw new SourceNotFoundException("The source [" + location + "] doesn't exist.");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * @see org.apache.excalibur.source.SourceFactory#release(org.apache.excalibur.source.Source)
      */
     public void release(Source source) {
-        // Source will be released by delegated source factory.
+        this.resolver.release(source);
     }
 
 }
