@@ -18,7 +18,7 @@
   Now you can start Lenya using Jetty 6.1 from the command line as follows:
   
   $LENYA_HOME:> cd tools/jetty-6.1.6 
-  $LENYA_HOME:> java -Djava.endorsed.dirs="../../externals/cocoon_2_1_x/lib/endorsed/" \
+  $LENYA_HOME:> java -Djava.endorsed.dirs="../../externals/cocoon_2_1_11/lib/endorsed/" \
                      -jar start.jar ../proxytest/jetty6.xml
   
   The Lenya webapp is now available at http://localhost:8888/webapp/.
