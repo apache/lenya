@@ -30,7 +30,7 @@ fi
 OLD_CLASSPATH="$CLASSPATH"
 unset CLASSPATH
 CLASSPATH="`echo lib/*.jar | tr ' ' $S`"
-ENDORSED_DIR="externals/cocoon_2_1_x/lib/endorsed"
+ENDORSED_DIR="externals/cocoon_2_1_11/lib/endorsed"
 # Add cocoon endorsed libs
 CLASSPATH="$CLASSPATH `echo $ENDORSED_DIR/*.jar | tr ' ' $S`"
 export CLASSPATH
