@@ -56,7 +56,8 @@ function groupChangeProfile() {
             
             valid = true;
             if (cocoon.request.getParameter("submit")) {
-                rule = cocoon.request.getParameter("rule").trim();
+                rule = cocoon.request.getParameter("rule");
+                if (rule != null) rule.trim();
                 if (rule == "") {
                     rule = null;
                 }
@@ -71,8 +72,12 @@ function groupChangeProfile() {
                     }
                 }
                 if (valid) {
-                    var ruleObj = new Packages.org.apache.lenya.ac.attr.impl.AttributeRuleImpl(rule, attributeSet, evaluator);
-                    group.setRule(ruleObj);
+                    if (rule != null) {
+                       var ruleObj = new Packages.org.apache.lenya.ac.attr.impl.AttributeRuleImpl(rule, attributeSet, evaluator);
+                       group.setRule(ruleObj);
+                    } else {
+                       group.setRule(null);
+                    }
                     name = cocoon.request.getParameter("name");
                     description = cocoon.request.getParameter("description");
                     group.setName(name);
