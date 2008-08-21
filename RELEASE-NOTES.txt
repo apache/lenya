@@ -1,0 +1,21 @@
+About Apache Lenya 2.0.2
+========================
+
+Subversion repository URL: https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0_2
+Cocoon version: 2.1.x r 687094
+
+Bugfixes
+========
+
+* Fixed infinite loop caused by unsychrnoized HashMap
+* Miscellaneous performance enhancements
+* Removed old multiple inheritance code that wasn't functional
+
+New Features
+============
+
+* Added checkin of live sitetree
+* Added report to find broken internal links
+* Added session monitoring
+* Display file size in overview
+
