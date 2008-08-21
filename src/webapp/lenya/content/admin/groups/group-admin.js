@@ -232,7 +232,8 @@ function groupAddGroup() {
                   messages.add(new Packages.org.apache.lenya.ac.Message("This is not a valid group ID."));
             }
             else {
-                   rule = cocoon.request.getParameter("rule").trim();
+                   rule = cocoon.request.getParameter("rule");
+                   if (rule != null) rule.trim();
                    if (rule == "") {
                       rule = null;
                    }
