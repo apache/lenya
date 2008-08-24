@@ -7,13 +7,18 @@ Cocoon version: 2.1.x r 687094
 Bugfixes
 ========
 
-* Fixed infinite loop caused by unsychrnoized HashMap
+* Miscellaneous smaller bugfixes
 * Miscellaneous performance enhancements
+* Fixes for web tests
+* Fixed infinite loop caused by unsynchronized HashMap
 * Removed old multiple inheritance code that wasn't functional
+* Enhanced / Fixed layout for asset overview
 
 New Features
 ============
 
+* New navigation module for more flexibility (it's use is optional)
+* Added meta data search capabilities (e.g. image search)
 * Added checkin of live sitetree
 * Added report to find broken internal links
 * Added session monitoring
