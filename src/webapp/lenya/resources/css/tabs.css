@@ -52,7 +52,7 @@
 }
 
 #contentblock1 .lenya-box {
-  display: relative;
+  position: relative;
 }
 
 .lenya-tabs {
@@ -123,7 +123,6 @@
 }
 
 #lenya-info-treecanvas {
-  font-size: 11px;
   float: left;
   padding-right: 20px;
   width: 250px;
@@ -166,6 +165,7 @@
 }
 
 #lenya-info-tree td {
+  font-size: 70%;
   vertical-align: top;
   margin: 0px;
   padding: 0px; 
