@@ -76,7 +76,7 @@
         </xsl:when>
         <xsl:when test="$sort = 'time'">
           <xsl:apply-templates select="profile:pipeline">
-            <xsl:sort select="@time" data-type="number"/>
+            <xsl:sort select="profile:average/@time" data-type="number"/>
           </xsl:apply-templates>
         </xsl:when>
         <xsl:when test="$sort = 'count'">
