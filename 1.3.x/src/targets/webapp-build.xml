@@ -143,14 +143,7 @@
     <copy todir="${build.webapp}/WEB-INF/lib/endorsed">
       <fileset dir="${cocoon.endorsed.lib.dir}">
         <include name="**/*"/>
-<!-- Lenya 1.3 Overrides BEGIN -->
-        <exclude name="**/xercesImpl-2.9.1.jar"/>
       </fileset>
-      <fileset dir="${build.webapp}/WEB-INF/lib">
-        <include name="serializer-2.7.1.jar"/>
-        <include name="xercesImpl-2.7.1.jar"/>
-      </fileset>
-<!-- Lenya 1.3 Overrides END -->
     </copy>
 
     <!-- Delete endorsed libraries from common webapp lib directory -->
@@ -161,16 +154,6 @@
       <fileset dir="${build.webapp}/WEB-INF/lib">
         <include name="xml-apis.jar"/>
         <include name="xercesImpl-2.6.2.jar"/>
-<!-- Lenya 1.3 Overrides BEGIN -->
-        <include name="commons-httpclient-2.0.2.jar"/>
-        <include name="commons-io-1.1.jar"/>
-        <include name="log4j-1.2.14.jar"/>
-        <include name="lucene-1.4.3.jar"/>
-        <include name="xercesImpl-2.7.1.jar"/>
-        <include name="xercesImpl-2.9.1.jar"/>
-        <include name="xml-apis-2.7.1.jar"/>
-        <include name="xml-commons-resolver-1.1.jar"/>
-<!-- Lenya 1.3 Overrides END -->
       </fileset>
     </delete>
 
