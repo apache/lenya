@@ -5,12 +5,18 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.cocoon.transformation.AbstractDOMTransformer;
 import org.apache.lenya.cms.content.Content;
+import org.apache.lenya.cms.content.Location;
+import org.apache.lenya.cms.content.ResourceTransformer;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.Globals;
 import org.apache.lenya.xml.DocumentHelper;
@@ -22,21 +28,26 @@ import org.w3c.dom.Element;
  * @author solprovider
  * @since 1.3
  */
-public class CreateRevisionTransformer extends AbstractDOMTransformer {
-   public static final String UPLOADASSET_PARAM_PREFIX = "dc.";
-   public static final String UPLOADASSET_RETURN_FILESIZE = "file-size";
-   public static final String UPLOADASSET_RETURN_MIMETYPE = "mime-type";
-   public static final String CONTENT_PREFIX = "content";
-   public static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_. ]+";
+public class CreateRevisionTransformer extends AbstractDOMTransformer implements Configurable {
+   private static final String UPLOADASSET_PARAM_PREFIX = "dc.";
+   // private static final String UPLOADASSET_RETURN_FILESIZE = "file-size";
+   // private static final String UPLOADASSET_RETURN_MIMETYPE = "mime-type";
+   // private static final String CONTENT_PREFIX = "content";
+   // private static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_. ]+";
    // optional parameters for meta data according to dublin core
-   public static final String[] DUBLIN_CORE_PARAMETERS = {"title", "creator", "subject", "description", "publisher", "contributor", "date", "type", "format", "identifier", "source", "language", "relation", "coverage", "rights"};
+   private static final String[] DUBLIN_CORE_PARAMETERS = {"title", "creator", "subject", "description", "publisher", "contributor", "date", "type", "format", "identifier", "source", "language", "relation", "coverage", "rights"};
+   private String type = ResourceTransformer.TYPE_CONTENT;
+   public void configure(Configuration conf) throws ConfigurationException {
+      Configuration child = conf.getChild("type");
+      type = child.getValue(type);
+   }
    protected org.w3c.dom.Document transform(org.w3c.dom.Document doc) {
       Request request = ObjectModelHelper.getRequest(super.objectModel);
-      createRevision(request, this.source, doc, false);
+      createRevision(request, this.source, doc, type, false);
       return doc;
    }
-   static public org.w3c.dom.Document transformDocument(Request request, String unid, org.w3c.dom.Document doc, boolean setLive) {
-      createRevision(request, unid, doc, setLive);
+   static public org.w3c.dom.Document transformDocument(Request request, String unid, org.w3c.dom.Document doc, String type, boolean setLive) {
+      createRevision(request, unid, doc, type, setLive);
       return doc;
    }
    /**
@@ -45,25 +56,50 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
     * @param doc
     *           The data to be inserted.
     */
-   static private void createRevision(Request request, String unid, org.w3c.dom.Document doc, boolean setLive) {
+   static private void createRevision(Request request, String unid, org.w3c.dom.Document doc, String type, boolean setLive) {
+      System.out.println("CreateRevisionTransformer createRevision TYPE=" + type);
       if(doc == null){
          System.out.println("CreateRevision: Document is required.");
          // throw new ProcessingException("CreateRevision: document is required.");
       }
-      PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
-      Publication pub = envelope.getPublication();
+      Publication pub = Globals.getPublication();
       Content content = pub.getContent();
-      String workUnid = unid;
-      String language = envelope.getDocument().getLanguage(); // default
-      // check if unid contains language
-      int pos = workUnid.indexOf("_");
-      if(pos > 0){ // Use unid to avoid using the variable that is changing.
-         language = unid.substring(pos + 1);
-         workUnid = unid.substring(0, pos);
-      }
+      FlatDesign design = pub.getDesign();
+      Location location = new Location(unid);
+      String workUnid = location.getUnid();
+      String language = location.getLanguage();
       // System.out.println("CreateRevision TEST: u=" + unid + " w=" + workUnid + " l=" + language + " p=" + pos);
-      String newFilename = content.getNewURI(workUnid, language);
-      if(newFilename == null){
+      String newFilename;
+      if(ResourceTransformer.TYPE_DESIGN.equalsIgnoreCase(type)){
+         if(null == design){
+            System.out.println("CreateRevision Design: No Design.");
+            return;
+            // TODO: Throw exception.
+         }else{
+            language = FlatDesign.DESIGN_LANGUAGE;
+            newFilename = design.getDesign(workUnid).getNewURI();
+         }
+      }else if(ResourceTransformer.TYPE_STRUCTURE.equalsIgnoreCase(type)){
+         if(null == design){
+            System.out.println("CreateRevision Structure: No Design.");
+            return;
+            // TODO: Throw exception.
+         }else{
+            language = FlatDesign.DESIGN_LANGUAGE;
+            newFilename = design.getStructure(workUnid).getNewURI();
+            System.out.println("CreateRevision Structure filename=" + newFilename);
+         }
+      }else{ // TYPE_CONTENT
+         if(1 > language.length()){
+            try{
+               language = PageEnvelope.getCurrent().getDocument().getLanguage();
+            }catch(PageEnvelopeException e1){
+            }
+         }
+         if(1 > language.length()) language = pub.getDefaultLanguage();
+         newFilename = content.getNewURI(workUnid, language);
+      }
+      if(null == newFilename){
          System.out.println("CreateRevision: Could not get new filename.");
          // throw new ProcessingException("CreateRevision: Could not get new filename.");
       }
@@ -73,24 +109,21 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
          // throw new ProcessingException("Revision '" + newFilename + "' already exists.");
       }
       String filenameNoExtension = newFilename;
-      pos = newFilename.lastIndexOf(".");
-      if(pos > 0)
-         filenameNoExtension = newFilename.substring(0, pos);
+      int pos = newFilename.lastIndexOf(".");
+      if(pos > 0) filenameNoExtension = newFilename.substring(0, pos);
       String revision = (new File(filenameNoExtension)).getName();
       File assetFile;
-      // determine if the upload is an asset or a content upload
+      // Determine if the upload is an asset or a content upload
       Map dublinCoreParams = getDublinCoreParameters(request);
-      // upload the file to the uploadDir
+      // Upload the file to the uploadDir
       String extension = "";
-      // Document metadoc = (Document) null;
       Element root = doc.getDocumentElement();
       if(root.hasAttribute("filefield")){
          Part part = (Part) request.get(root.getAttribute("filefield"));
          if(null != part){
             String filename = part.getFileName();
             pos = filename.lastIndexOf(".");
-            if(pos > 0)
-               extension = filename.substring(pos + 1);
+            if(pos > 0) extension = filename.substring(pos + 1);
             // System.out.println("Upload: EXT=" + extension);
             String mimeType = part.getMimeType();
             dublinCoreParams.put("format", mimeType);
@@ -111,8 +144,7 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
       root.setAttribute("revision", revision);
       root.setAttribute("creator", Globals.getUser());
       root.setAttribute("when", Globals.getDateString());
-      if(extension.length() > 0)
-         root.setAttribute("extension", extension);
+      if(extension.length() > 0) root.setAttribute("extension", extension);
       try{
          DocumentHelper.writeDocument(doc, file);
       }catch(javax.xml.transform.TransformerConfigurationException tce){
@@ -123,12 +155,33 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
          System.out.println("CreateRevision: IOException writing XML file.");
       }
       // Update Translation
-      FlatResource resource = (FlatResource) ((FlatContent) content).getResource(workUnid, language, "edit");
-      FlatTranslation translation = resource.getTranslation();
-      translation.setEdit(revision);
-      if(setLive)
-         translation.setLive(revision);
+      FlatResource resource;
+      if(ResourceTransformer.TYPE_DESIGN.equalsIgnoreCase(type)){
+         if(null == design){
+            System.out.println("CreateRevision Design: No Design.");
+            return;
+            // TODO: Throw exception.
+         }else{
+            resource = (FlatResource) design.getDesign(workUnid);
+         }
+      }else if(ResourceTransformer.TYPE_STRUCTURE.equalsIgnoreCase(type)){
+         if(null == design){
+            System.out.println("CreateRevision Structure: No Design.");
+            return;
+            // TODO: Throw exception.
+         }else{
+            resource = (FlatResource) design.getStructure(workUnid);
+         }
+      }else{
+         resource = (FlatResource) ((FlatContent) content).getResource(workUnid, language, "edit");
+      }
+      FlatTranslation translation = resource.getTranslation(language);
+      // TODO: Other NamedRevisions?
+      translation.setNamedRevision("edit", revision);
+      if(setLive || !ResourceTransformer.TYPE_CONTENT.equalsIgnoreCase(type)) translation.setNamedRevision(Content.REVISION_DEFAULT, revision);
       translation.save();
+      // Update Indexes
+      ((FlatContent) Globals.getPublication().getContent()).updateIndexes();
    }
    /**
     * Saves the asset to a file.
@@ -143,9 +196,7 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
    static private void saveFileFromPart(File assetFile, Part part) throws Exception {
       if(!assetFile.exists()){
          boolean created = assetFile.createNewFile();
-         if(!created){
-            throw new RuntimeException("The file [" + assetFile + "] could not be created.");
-         }
+         if(!created){ throw new RuntimeException("The file [" + assetFile + "] could not be created."); }
       }
       byte[] buf = new byte[4096];
       FileOutputStream out = new FileOutputStream(assetFile);
@@ -172,8 +223,7 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer {
       for(int i = 0; i < DUBLIN_CORE_PARAMETERS.length; i++){
          String paramName = DUBLIN_CORE_PARAMETERS[i];
          String paramValue = request.getParameter(UPLOADASSET_PARAM_PREFIX + paramName);
-         if(paramValue == null)
-            paramValue = "";
+         if(paramValue == null) paramValue = "";
          dublinCoreParams.put(paramName, paramValue);
       }
       return dublinCoreParams;

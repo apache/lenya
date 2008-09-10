@@ -5,9 +5,9 @@ package org.apache.lenya.cms.content;
  * @since 1.3
  */
 public interface Content {
-   public static final String TYPE_FLAT = "flat";
    public static final String TYPE_HIERARCHICAL = "hierarchical";
    public static final String TYPE_DEFAULT = "all";
+   public static final String REVISION_DEFAULT = "live";
    public String getURI(String unid, String language, String revision);
    public String getMetaURI(String unid, String language, String revision);
    public String getNewURI(String unid, String language);

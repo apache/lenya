@@ -38,8 +38,7 @@ public class PublicationModules {
    Configuration config;
    public PublicationModules(String publicationId, String contentType, Configuration config) {
       // public PublicationModules(String publicationId, String contentType, String servletContextPath, Configuration config) {
-      if(null == config)
-         return;
+      if(null == config) return;
       int i;
       this.publicationId = publicationId;
       // this.servletContextPath = servletContextPath;
@@ -51,16 +50,14 @@ public class PublicationModules {
             String attribute = attrnames[i];
             String value = config.getAttribute(attrnames[i]);
             if(attribute.equalsIgnoreCase("include")){
-               if(!value.equalsIgnoreCase("all"))
-                  allAllowed = false;
+               if(!value.equalsIgnoreCase("all")) allAllowed = false;
             }else if(attribute.equalsIgnoreCase("external")){
-               if(!(value.equalsIgnoreCase("all") | value.equalsIgnoreCase("true")))
-                  allExternal = false;
+               if(!(value.equalsIgnoreCase("all") | value.equalsIgnoreCase("true"))) allExternal = false;
             }else if((attribute.equalsIgnoreCase("inherit") | attribute.equalsIgnoreCase("template"))){
                templates.add(value);
             }
          }catch(org.apache.avalon.framework.configuration.ConfigurationException ce){
-            // TODO: Log Errors?
+            System.out.println("PublicationModules attributes ConfigurationException " + ce.getLocalizedMessage());
          }
       } // For each Attribute
       Configuration[] children = config.getChildren();
@@ -72,7 +69,7 @@ public class PublicationModules {
                try{
                   templates.add(children[c].getAttribute(attrnames[i]));
                }catch(org.apache.avalon.framework.configuration.ConfigurationException ce){
-                  // TODO: Log Errors?
+                  System.out.println("PublicationModules inherit ConfigurationException " + ce.getLocalizedMessage());
                }
             }
             try{
@@ -91,11 +88,9 @@ public class PublicationModules {
                try{
                   String value = children[c].getAttribute(attrnames[i]);
                   if(attribute.equalsIgnoreCase("external")){
-                     if(!(value.equalsIgnoreCase("yes") | value.equalsIgnoreCase("true")))
-                        isExternal = false;
+                     if(!(value.equalsIgnoreCase("yes") | value.equalsIgnoreCase("true"))) isExternal = false;
                   }else if(attribute.equalsIgnoreCase("exclude")){
-                     if(!(value.equalsIgnoreCase("yes") | value.equalsIgnoreCase("true")))
-                        isExcluded = true;
+                     if(!(value.equalsIgnoreCase("yes") | value.equalsIgnoreCase("true"))) isExcluded = true;
                   }else if(attribute.equalsIgnoreCase("name")){
                      name = value;
                   }else if((attribute.equalsIgnoreCase("inherit") | attribute.equalsIgnoreCase("template"))){
@@ -105,6 +100,7 @@ public class PublicationModules {
                   }
                }catch(org.apache.avalon.framework.configuration.ConfigurationException ce){
                   // TODO: Log Errors?
+                  System.out.println("PublicationModules module ConfigurationException " + ce.getLocalizedMessage());
                }
             }
             if(name.length() > 0){
@@ -112,10 +108,8 @@ public class PublicationModules {
                   exclude.add(name);
                }else{
                   external.put(name, new Boolean(isExternal));
-                  if(template.length() > 0)
-                     inherit.put(name, template);
-                  if(module.length() > 0)
-                     inherit.put(name, module);
+                  if(template.length() > 0) inherit.put(name, template);
+                  if(module.length() > 0) inherit.put(name, module);
                   // Variables
                   Map varmap = getVariablesFromConfiguration(children[c]);
                   Iterator keys = varmap.keySet().iterator();
@@ -136,38 +130,18 @@ public class PublicationModules {
     * @return
     */
    public boolean isExternal(String moduleId) {
-      if(exclude.contains(moduleId))
-         return false;
-      if(allExternal)
-         return true;
-      if(external.containsKey(moduleId))
-         return ((Boolean) external.get(moduleId)).booleanValue();
+      if(exclude.contains(moduleId)) return false;
+      if(allExternal) return true;
+      if(external.containsKey(moduleId)) return ((Boolean) external.get(moduleId)).booleanValue();
       // TODO: Check parent templates?
       return allAllowed;
    }
    public boolean isAllowed(String moduleId) {
-      if(exclude.contains(moduleId))
-         return false;
-      if(allAllowed)
-         return true;
-      if(external.containsKey(moduleId))
-         return true;
+      if(exclude.contains(moduleId)) return false;
+      if(allAllowed) return true;
+      if(external.containsKey(moduleId)) return true;
       return false;
    }
-   // public String[] getTemplates(String moduleId) {
-   // if(inherit.containsKey(moduleId)){
-   // ArrayList tmpArray = new ArrayList();
-   // tmpArray.add(inherit.get(moduleId));
-   // tmpArray.addAll(templates);
-   // return (String[]) tmpArray.toArray(new String[0]);
-   // }
-   // return (String[]) templates.toArray(new String[0]);
-   // }
-   // public String getInheritedModule(String moduleId) {
-   // if(modules.containsKey(moduleId))
-   // return (String) modules.get(moduleId);
-   // return moduleId;
-   // }
    /**
     * Returns Map("moduleId") = "inheritedFromPublication" Expected to be used only for Publication creation and modification (using the PublicationModulesGenerator) so performance (e.g. using a cache) is unimportant.
     */
@@ -187,7 +161,7 @@ public class PublicationModules {
             if((publication.length() < 1) || publication.equalsIgnoreCase(publicationId) || templates.contains(publication)){
                String module = parts[1];
                if(!exclude.contains(module)){
-                  // System.out.println("KEY=" + key + " P=" + publication + " M=" + module);
+                  // System.out.println("PublicationModules.getSourceModules KEY=" + key + " P=" + publication + " M=" + module);
                   modulesList.add(module);
                }
             }
@@ -200,18 +174,19 @@ public class PublicationModules {
       Iterator iterator = modulesList.iterator();
       while(iterator.hasNext()){
          String moduleId = (String) iterator.next();
+         // TODO: Do not call getFile during initialization.
          String filepath = getFile(moduleId, ".", false);
          String inheritedModuleId = Globals.getModuleId(filepath);
          String inheritedPublication = Globals.getPublicationId(filepath);
          Module inheritedModule = Modules.getModule(inheritedPublication, inheritedModuleId, contentType);
          if(null == inheritedModule){
-            System.out.println(moduleId + "Module found at " + filepath + " could not be opened as Publication " + inheritedPublication + " Module " + inheritedModuleId);
+            System.out.println("PublicationModules.getSourceModules " + moduleId + "Module found at " + filepath + " could not be opened as Publication " + inheritedPublication + " Module " + inheritedModuleId);
          }else{
             String resource = inheritedModule.getResource();
             if(resource.length() > 0){
                resources.put(resource, inheritedModule);
             }
-            // System.out.println("FP=" + filepath + " MI=" + moduleId + " P=" + inheritedPublication + " M=" + inheritedModuleId + " R=" + resource);
+            // System.out.println("PublicationModules.getSourceModules MI=" + moduleId + " P=" + inheritedPublication + " M=" + inheritedModuleId + " R=" + resource); // + "FP=" + filepath);
             modules.put(moduleId, inheritedModule);
          }
       }
@@ -230,8 +205,7 @@ public class PublicationModules {
    }
    public String getVariable(String moduleId, String varname) {
       // TODO: Add reset. Do InputModules support double colon syntax?
-      if(exclude.contains(moduleId))
-         return "";
+      if(exclude.contains(moduleId)) return "";
       if(variables.containsKey(publicationId + "." + moduleId + "." + varname)){
          return (String) variables.get(publicationId + "." + moduleId + "." + varname);
       }
@@ -272,12 +246,23 @@ public class PublicationModules {
       }
       return ret;
    }
+   /**
+    * Do not call getFile() during initialization.<br>
+    * getFile calls Module.getFile calling Content.getDesignResource.<br>
+    * Content initialization checks Modules for Structures and RevisionNames.<br>
+    * Infinite loop!<br>
+    * 
+    * @param moduleId
+    * @param filename
+    * @param reset
+    * @return
+    */
    public String getFile(String moduleId, String filename, boolean reset) {
+      // WARNING: Do not call during initialization.
       if(reset){
          files = new HashMap();
       }
-      if(exclude.contains(moduleId))
-         return "";
+      if(exclude.contains(moduleId)) return "";
       if(files.containsKey(moduleId + "." + filename)){
          return (String) files.get(moduleId + "." + filename);
       }
@@ -285,8 +270,7 @@ public class PublicationModules {
       String ret = "";
       Module module = Modules.getModule(publicationId, moduleId, contentType);
       if(null != module){
-         if(reset)
-            module.resetFiles();
+         if(reset) module.resetFiles();
          ret = module.getFile(filename);
       }
       if(ret.length() < 1){
@@ -295,8 +279,7 @@ public class PublicationModules {
          while(iterator.hasNext() && (ret.length() < 1)){
             module = Modules.getModule((String) iterator.next(), moduleId, contentType);
             if(null != module){
-               if(reset)
-                  module.resetFiles();
+               if(reset) module.resetFiles();
                ret = module.getFile(filename);
             }
          }
@@ -305,8 +288,7 @@ public class PublicationModules {
          // Check Global Module
          module = Modules.getModule("", moduleId, contentType);
          if(null != module){
-            if(reset)
-               module.resetFiles();
+            if(reset) module.resetFiles();
             ret = module.getFile(filename);
          }
       }

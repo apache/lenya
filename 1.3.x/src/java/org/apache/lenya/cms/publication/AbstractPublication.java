@@ -26,6 +26,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.content.Content;
 import org.apache.lenya.cms.content.flat.FlatContent;
+import org.apache.lenya.cms.content.flat.FlatDesign;
 import org.apache.lenya.cms.content.hierarchical.HierarchicalContent;
 import org.apache.lenya.cms.modules.PublicationModules;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
@@ -59,6 +60,7 @@ public abstract class AbstractPublication implements Publication {
    // Lenya1.3 - BEGIN
    private PublicationModules modules;
    private Content content;
+   private FlatDesign design = null;
    private File publicationDirectory;
    private File contentDirectory;
    private String contentType = Content.TYPE_HIERARCHICAL;
@@ -75,11 +77,10 @@ public abstract class AbstractPublication implements Publication {
     *            if there was a problem reading the config file
     */
    protected AbstractPublication(String id, String servletContextPath) throws PublicationException {
+      // System.out.println("AbstractPublication " + id + " cp=" + servletContextPath);
       // assert id != null;
       this.id = id;
       // assert servletContextPath != null;
-      // System.out.println("Publication ServletContextPath=" +
-      // servletContextPath);
       File servletContext = new File(servletContextPath);
       // assert servletContext.exists();
       this.servletContext = servletContext;
@@ -153,20 +154,24 @@ public abstract class AbstractPublication implements Publication {
             this.areaContentDir.put(key, dir);
          }
          // Lenya1.3 - BEGIN
-         // Content
+         // Configuration
          Configuration contentConfig = config.getChild("content");
          contentType = contentConfig.getAttribute("type", Content.TYPE_HIERARCHICAL);
          String contentConfigValue = contentConfig.getValue(CONTENT_PATH);
          publicationDirectory = new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
          contentDirectory = new File(publicationDirectory, contentConfigValue);
-         // TODO: Move code based on ContentType to Content package.
-         if(contentType.equalsIgnoreCase(Content.TYPE_FLAT)){
-            content = (Content) new FlatContent(contentDirectory, getLanguages());
-         }else{
-            content = (Content) new HierarchicalContent(contentDirectory, getLanguages());
+         // Design
+         if(contentType.equalsIgnoreCase(FlatContent.TYPE)){
+            design = new FlatDesign(contentDirectory, id);
          }
          // Modules
          modules = new PublicationModules(id, contentType, config.getChild("modules"));
+         // Content
+         if(contentType.equalsIgnoreCase(FlatContent.TYPE)){
+            content = (Content) new FlatContent(contentDirectory, getLanguages(), modules, design);
+         }else{
+            content = (Content) new HierarchicalContent(contentDirectory, getLanguages());
+         }
          // Lenya1.3 - END
       }catch(PublicationException e){
          throw e;
@@ -184,6 +189,9 @@ public abstract class AbstractPublication implements Publication {
    }
    public Content getContent() {
       return content;
+   }
+   public FlatDesign getDesign() {
+      return design;
    }
    public File getContentDirectory() {
       return contentDirectory;
@@ -224,8 +232,7 @@ public abstract class AbstractPublication implements Publication {
     * @return A <code>File</code> object.
     */
    public File getDirectory() {
-      if(null == publicationDirectory)
-         publicationDirectory = new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
+      if(null == publicationDirectory) publicationDirectory = new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
       return publicationDirectory;
    }
    // Lenya1.3 - deprecated
@@ -375,9 +382,7 @@ public abstract class AbstractPublication implements Publication {
     * @return A document builder.
     */
    public DocumentBuilder getDocumentBuilder() {
-      if(documentBuilder == null){
-         throw new IllegalStateException("The document builder was not defined in publication.xconf!");
-      }
+      if(documentBuilder == null){ throw new IllegalStateException("The document builder was not defined in publication.xconf!"); }
       return documentBuilder;
    }
    /**
@@ -440,9 +445,7 @@ public abstract class AbstractPublication implements Publication {
             SiteTree sourceTree = getSiteTree(sourceDocument.getArea());
             SiteTree destinationTree = getSiteTree(destinationDocument.getArea());
             SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
-            if(sourceNode == null){
-               throw new PublicationException("The node for source document [" + sourceDocument.getId() + "] doesn't exist!");
-            }
+            if(sourceNode == null){ throw new PublicationException("The node for source document [" + sourceDocument.getId() + "] doesn't exist!"); }
             SiteTreeNode[] siblings = sourceNode.getNextSiblings();
             String parentId = sourceNode.getAbsoluteParentId();
             SiteTreeNode sibling = null;
@@ -480,8 +483,7 @@ public abstract class AbstractPublication implements Publication {
                // and synchronize visibilityinnav attribute with the one in
                // the source area
                String visibility = "true";
-               if(!sourceNode.visibleInNav())
-                  visibility = "false";
+               if(!sourceNode.visibleInNav()) visibility = "false";
                destinationNode.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, visibility);
                // also update the link attribute if necessary
                if(sourceNode.hasLink() != destinationNode.hasLink()){
@@ -510,9 +512,7 @@ public abstract class AbstractPublication implements Publication {
     * @see org.apache.lenya.cms.publication.Publication#deleteDocument(org.apache.lenya.cms.publication.Document)
     */
    public void deleteDocument(Document document) throws PublicationException {
-      if(!document.exists()){
-         throw new PublicationException("Document [" + document + "] does not exist!");
-      }
+      if(!document.exists()){ throw new PublicationException("Document [" + document + "] does not exist!"); }
       deleteFromSiteStructure(document);
       deleteDocumentSource(document);
    }
@@ -533,16 +533,10 @@ public abstract class AbstractPublication implements Publication {
             throw new PublicationException(e);
          }
          SiteTreeNode node = tree.getNode(document.getId());
-         if(node == null){
-            throw new PublicationException("Sitetree node for document [" + document + "] does not exist!");
-         }
+         if(node == null){ throw new PublicationException("Sitetree node for document [" + document + "] does not exist!"); }
          Label label = node.getLabel(document.getLanguage());
-         if(label == null){
-            throw new PublicationException("Sitetree label for document [" + document + "] in language [" + document.getLanguage() + "]does not exist!");
-         }
-         if(node.getLabels().length == 1 && node.getChildren().length > 0){
-            throw new PublicationException("Cannot delete last language version of document [" + document + "] because this node has children.");
-         }
+         if(label == null){ throw new PublicationException("Sitetree label for document [" + document + "] in language [" + document.getLanguage() + "]does not exist!"); }
+         if(node.getLabels().length == 1 && node.getChildren().length > 0){ throw new PublicationException("Cannot delete last language version of document [" + document + "] because this node has children."); }
          node.removeLabel(label);
          try{
             if(node.getLabels().length == 0){

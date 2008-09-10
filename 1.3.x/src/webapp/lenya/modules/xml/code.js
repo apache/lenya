@@ -31,11 +31,12 @@ function update(){
    var root = dom.getDocumentElement();
 //print("ROOT=" + root.getTagName());
    var child = root.getFirstChild();
+   var isDesign = "content";
    while(child != null){
       var childtag = child.getNodeName();
       if(childtag.equalsIgnoreCase("resource")){
          var doc = convertNodeToDocument(child);
-         Packages.org.apache.lenya.cms.content.ResourceTransformer.transformDocument(cocoon.request, unid, doc);
+         Packages.org.apache.lenya.cms.content.ResourceTransformer.transformDocument(cocoon.request, unid, doc, isDesign);
       }
       if(childtag.equalsIgnoreCase("revision")){
          var language = child.getAttribute("language");
@@ -45,7 +46,7 @@ function update(){
          }
          var revision = child.getFirstChild();
          var doc = convertNodeToDocument(revision);
-         Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid + "_" + language, doc, setLive);
+         Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid + "_" + language, doc, isDesign, setLive);
       }
       child = child.getNextSibling();
    }
@@ -57,8 +58,9 @@ function create(){
    var module = cocoon.parameters.module;
    var unid = cocoon.parameters.unid;
    var dom = loadDocument("cocoon:/" + module + "/saverevisiondata/" + unid);
+   var isDesign = "content";
    var setLive = false;
-Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid, dom, setLive);
+Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid, dom, isDesign, setLive);
    cocoon.sendPage("edit/" + unid);
 }
 

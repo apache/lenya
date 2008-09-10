@@ -76,4 +76,10 @@ public class Location {
    public String getExtension() {
       return extension;
    }
+   void setUnid(String unid) {
+      this.unid = unid;
+   }
+   public String toString() {
+      return unid + (0 < extension.length() ? "." + extension : "") + (0 < language.length() ? "_" + language : "") + (0 < revision.length() ? "!" + revision : "");
+   }
 }

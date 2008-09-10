@@ -1,0 +1,34 @@
+=== Lenya 1.3's Navigation System ===
+
+== Administration ==
+
+1. A Navigation Module defines Index configurations.  Configuration includes the Revision name (currently "live" or "edit", but will allow the Module developer to create more) and filters (e.g.limit to certain Types).  Hierarchical Indexes also require a Structure.  
+
+Index Configurations in module.xml must have id attribute.  Indexes configured as files named "{indexname}.index" default to using the indexname part of the filename.
+
+Most Indexes will use the "live" Structure, but Module developers have the freedom to request a new Structure, and administrators can have as many Structures as they are willing to maintain.  With Module Inheritance, a new Module could use all the code from an existing Module while specifying a different Structure.
+
+NOTE: A large Publication could have several local Modules inheriting from the global "nav" Module with each using a different Index/Structure. That might require only one file in one new directory for each new Module. Then teach the aggregation to use different Modules based on the current page (again implemented by overriding only one file.)
+
+2. Lenya-1.3 notices Module Indexes that need Structures and adds the Structure names to an administration menu.
+
+3. Administrators edit the Structure Resources.  
+Default Relations are stored in {pub}/content/relation.  Relations become Design Resources when edited using the GUI.   The Relations editor is completely DHTML. The data sent to the browser includes the UNID, ID, and Type of each Resource, the language of each Translation, and the Title of "live" Translations. The browser submits a String of UNIDs with <> characters marking parent-child relationships.  Current actions are "Add Resource", "Move Resource and all descendants", and "Remove Resource and all descendants".  "Copy Resource and all descendants" is easy to program, but needs an easy interface distinguishing between move and copy actions.
+
+Relation Resources contain the UNID, ID, and FullPath of each Resource.  (The data could be optimized to contain only the UNID and let the Indexers do more work.  Wasting drive space saves processing by the frequently run Indexers.)  
+
+Selecting the "live" Relations from all Revisions is a future enhancement.
+
+
+4. The Indexer creates/updates the Index using the specified Structure.  The result is similar to a Sitetree file.  Indexes are language-specific and add the Title from the specified Translation/Revision to the information in the Structure.  Indexes are stored as temporary delete-on-exit files because they are completely and frequently generated so permanent storage is unnecessary and unwise.
+
+== Browser Responses ==
+
+5. Something (usually a Type Module which received the user request from the Live Module) requests a menu from the Navigation Module. (The "nav" Module handles menus for Flat datastores.)
+
+6. The Module calls the SitetreeGenerator with the name of the Index. The SitetreeGenerator sends the correct file and will filter based on security (so people cannot see what they cannot get.) 
+
+7. The Module transforms the Index into XHTML and returns the information to the requesting Module.
+
+
+

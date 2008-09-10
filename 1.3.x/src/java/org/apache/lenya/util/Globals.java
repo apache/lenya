@@ -1,6 +1,8 @@
 package org.apache.lenya.util;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.axis.components.uuid.UUIDGen;
 import org.apache.axis.components.uuid.UUIDGenFactory;
@@ -15,10 +17,10 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.publication.file.FilePublication;
 import org.apache.log.ContextMap;
 /**
  * Static functions for accessing global and thread-based constants.
@@ -34,52 +36,54 @@ public final class Globals {
    private Globals() {
    }
    // UUID Generation (from Lenya 2)
-   static private UUIDGen delegate;
-   static private UUIDGen getDelegate() {
+   private static UUIDGen delegate;
+   private static UUIDGen getDelegate() {
       if(delegate == null){
          delegate = UUIDGenFactory.getUUIDGen();
       }
       return delegate;
    }
-   static public String createUUID() {
+   public static String createUUID() {
       return getDelegate().nextUUID();
    }
    // Lenya Functions
-   static public String getAction() {
+   public static String getAction() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getAction();
    }
    // null
-   static public String getContentType() {
+   public static String getContentType() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getContentType();
    }
-   static public final Context getContext() {
-      return (Context) getObjectModel().get(ObjectModelHelper.CONTEXT_OBJECT);
+   public static final Context getContext() {
+      Map objectModel = getObjectModel();
+      if(null == objectModel) return (Context) null;
+      return (Context) objectModel.get(ObjectModelHelper.CONTEXT_OBJECT);
    }
    /**
     * Use for modification times e.g. revision filenames.
     * 
     * @return current datetime (Date.getTime()) as String (Long.toString()).
     */
-   static public String getDateString() {
+   public static String getDateString() {
       return Long.toString(new java.util.Date().getTime());
    }
    // file:///F:/eclipseWS/Lenya13x/build/lenya/webapp/lenya/modules/authoring/
    // file:///F:/eclipseWS/Lenya13x/build/lenya/webapp/lenya/modules/cache/module.xmap
    // file:///F:/eclipseWS/Lenya13x/build/lenya/webapp/lenya/modules/edit/
    // ?? Last use of map:mount
-   static public String getEnvironmentContext() {
+   public static String getEnvironmentContext() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getContext();
    }
-   static public final Long getExpires() {
+   public static final Long getExpires() {
       return (Long) getObjectModel().get(ObjectModelHelper.EXPIRES_OBJECT);
    }
-   static public String getModuleId() {
+   public static String getModuleId() {
+      // System.out.println("Globals.getModuleId");
       Source source = getSource();
-      if(null == source)
-         return "";
+      if(null == source) return "";
       return getModuleId(source.getURI());
    }
    /**
@@ -88,10 +92,8 @@ public final class Globals {
     * @param filepath
     * @return
     */
-   static public String getModuleId(String filepath) {
-      if(filepath.length() < 1){
-         return "";
-      }
+   public static String getModuleId(String filepath) {
+      if(filepath.length() < 1){ return ""; }
       String ret = "";
       String[] strings = filepath.split("^(.*)modules");
       if(1 < strings.length){
@@ -108,10 +110,8 @@ public final class Globals {
     * @param filepath
     * @return
     */
-   static public String getPublicationId(String filepath) {
-      if(filepath.length() < 1){
-         return "";
-      }
+   public static String getPublicationId(String filepath) {
+      if(filepath.length() < 1){ return ""; }
       String ret = "";
       String[] strings = filepath.split("^(.*)pubs");
       if(1 < strings.length){
@@ -123,49 +123,50 @@ public final class Globals {
       return ret;
    }
    // null
-   static public Map getObjectModel() {
+   public static Map getObjectModel() {
       ContextMap contextMap = ContextMap.getCurrentContext();
       return (Map) contextMap.get("objectModel");
    }
-   static public Publication getPublication() {
-      try{
-         return PageEnvelope.getCurrent().getPublication();
-      }catch(PageEnvelopeException e){
-         // getPublication may be called without a request. Return null.
-      }
-      return null;
-   }
-   static public Publication getPublication(String publicationId) {
-      try{
-         return PublicationFactory.getPublication(publicationId, getServletContextPath());
-      }catch(org.apache.lenya.cms.publication.PublicationException pe){
-         return (Publication) null;
-      }
-   }
-   static public final Request getRequest() {
+   // public static Publication getPublication() {
+   // try{
+   // return PageEnvelope.getCurrent().getPublication();
+   // }catch(PageEnvelopeException e){
+   // // getPublication may be called without a request. Return null.
+   // System.out.println("Globals.getPublication PageEnvelopeException: " + e.getLocalizedMessage());
+   // }
+   // return null;
+   // }
+   // public static Publication getPublication(String publicationId) {
+   // try{
+   // return PublicationFactory.getPublication(publicationId, getServletContextPath());
+   // }catch(org.apache.lenya.cms.publication.PublicationException pe){
+   // return (Publication) null;
+   // }
+   // }
+   public static final Request getRequest() {
       try{
          return (Request) getObjectModel().get(ObjectModelHelper.REQUEST_OBJECT);
       }catch(NullPointerException npe){
       }
       return null;
    }
-   static public final Response getResponse() {
+   public static final Response getResponse() {
       return (Response) getObjectModel().get(ObjectModelHelper.RESPONSE_OBJECT);
    }
    // file:///F:/eclipseWS/Lenya13x/build/lenya/webapp/
    // ??? servletContextPath with protocol
-   static public String getRootContext() {
+   public static String getRootContext() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getRootContext();
    }
    // Jetty/4.2
-   static public String getServerName() {
+   public static String getServerName() {
       HttpContext hc = (HttpContext) getObjectModel().get("context");
       return hc.getServerInfo();
    }
    // F:\eclipseWS\Lenya13x\build\lenya\webapp
    // servletContextPath in OS' native format
-   static public String getServletContextPath() {
+   public static String getServletContextPath() {
       HttpContext hc = (HttpContext) getObjectModel().get("context");
       return hc.getRealPath("");
    }
@@ -181,7 +182,8 @@ public final class Globals {
    /**
     * FileSource
     */
-   static public Source getSource() {
+   public static Source getSource() {
+      // System.out.println("Globals.getSource");
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       try{
          return he.resolveURI("");
@@ -195,14 +197,14 @@ public final class Globals {
       return null;
    }
    // C:\DOCUME~1\solprovider\LOCALS~1\Temp\Jetty__8888__
-   static public String getTempDir() {
+   public static String getTempDir() {
       HttpContext hc = (HttpContext) getObjectModel().get("context");
       return (String) hc.getAttribute("javax.servlet.context.tempdir");
    }
-   static public final Throwable getThrowable() {
+   public static final Throwable getThrowable() {
       return (Throwable) getObjectModel().get(ObjectModelHelper.THROWABLE_OBJECT);
    }
-   static public String getUser() {
+   public static String getUser() {
       String userid = "anonymous";
       Request request = getRequest();
       if(null != request){
@@ -211,8 +213,7 @@ public final class Globals {
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if(identity != null){
                User user = identity.getUser();
-               if(user != null)
-                  userid = user.getId();
+               if(user != null) userid = user.getId();
             }
          }
       }
@@ -223,18 +224,84 @@ public final class Globals {
    // live/features_en.html
    // live/index.html
    // ??? The current match string for the XMAP.
-   static public String getURI() {
+   public static String getURI() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getURI();
    }
    // default13/
-   static public String getURIPrefix() {
+   public static String getURIPrefix() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getURIPrefix();
    }
    // null
-   static public String getView() {
+   public static String getView() {
       HttpEnvironment he = (HttpEnvironment) getObjectModel().get("source-resolver");
       return he.getView();
+   }
+   // ###########################
+   // ## Publication Functions ##
+   // ###########################
+   private static volatile Map keyToPublication = new HashMap();
+   public static Publication getPublication() {
+      // Creating publication from webapp URL and servlet context Webapp URL: [" + webappUrl + "]"
+      Request request = getRequest();
+      if(null == request){
+         // This is acceptable as getPublication may be called without a request.
+         return (Publication) null;
+      }
+      String publicationId = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
+      Publication publication = getPublication(publicationId);
+      return publication;
+   }
+   public static synchronized Publication getPublication(String publicationId) {
+      File servletContext = new File(getContext().getRealPath(""));
+      String servletContextPath = servletContext.getAbsolutePath();
+      // String key = generatePublicationKey(id);
+      // File servletContext = new File(getContext().getRealPath(""));
+      // String key;
+      String canonicalPath;
+      try{
+         canonicalPath = servletContext.getCanonicalPath();
+      }catch(IOException e){
+         System.out.println("Globals.generatePublicationKey: Publication ID='" + publicationId + "' IOException " + e.getLocalizedMessage());
+         return (Publication) null;
+      }
+      String key = canonicalPath + "_" + publicationId;
+      Publication publication = null;
+      if(keyToPublication.containsKey(key)){
+         publication = (Publication) keyToPublication.get(key);
+         // System.out.println("Globals.getPublication ID='" + publicationId + "' Found");
+      }else{
+         if(existsPublication(publicationId)){
+            try{
+               publication = new FilePublication(publicationId, servletContextPath);
+               // System.out.println("Globals.getPublication ID='" + publicationId + "' Created");
+            }catch(PublicationException e){
+               // This is acceptable as getPublication may be called without a request.
+               System.out.println("Globals.getPublication ID='" + publicationId + "' PublicationException " + e.getLocalizedMessage());
+               return (Publication) null;
+            }
+            keyToPublication.put(key, publication);
+         }
+      }
+      if(publication == null){
+         // This is acceptable as getPublication may be called without a request.
+         System.out.println("Globals.getPublication: Publication ID='" + publicationId + "' could not be created.");
+      }
+      return publication;
+   }
+   public static boolean existsPublication(String id) {
+      Context context = getContext();
+      if(null == context) return false;
+      File servletContext = new File(getContext().getRealPath(""));
+      String servletContextPath = servletContext.getAbsolutePath();
+      if(servletContextPath.endsWith("/")){
+         servletContextPath = servletContextPath.substring(0, servletContextPath.length() - 1);
+      }
+      File publicationDirectory = new File(servletContextPath + File.separator + Publication.PUBLICATION_PREFIX + File.separator + id);
+      boolean exists = true;
+      exists = exists && publicationDirectory.isDirectory();
+      exists = exists && new File(publicationDirectory, Publication.CONFIGURATION_FILE).exists();
+      return exists;
    }
 }

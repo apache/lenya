@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DublinCoreImpl;
@@ -31,23 +32,19 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 /**
  * Input module to access the dublin core values.
  */
-public class DublinCoreModule extends AbstractPageEnvelopeModule {
+public class DublinCoreModule extends AbstractInputModule {
    /**
     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
     */
    public Object getAttribute(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
-      if(!Arrays.asList(DublinCoreImpl.ELEMENTS).contains(name) && !Arrays.asList(DublinCoreImpl.TERMS).contains(name)){
-         throw new ConfigurationException("The attribute [" + name + "] is not supported!");
-      }
+      if(!Arrays.asList(DublinCoreImpl.ELEMENTS).contains(name) && !Arrays.asList(DublinCoreImpl.TERMS).contains(name)){ throw new ConfigurationException("The attribute [" + name + "] is not supported!"); }
       Document document;
       try{
          document = PageEnvelope.getCurrent().getDocument();
       }catch(PageEnvelopeException e1){
          throw new ConfigurationException("Resolving page envelope failed: ", e1);
       }
-      if(document == null){
-         throw new ConfigurationException("There is no document for this page envelope!");
-      }
+      if(document == null){ throw new ConfigurationException("There is no document for this page envelope!"); }
       Object value;
       try{
          value = document.getDublinCore().getFirstValue(name);

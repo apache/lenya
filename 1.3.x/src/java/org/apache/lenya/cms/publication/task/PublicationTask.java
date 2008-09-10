@@ -26,7 +26,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.rc.RCEnvironment;
@@ -36,6 +35,7 @@ import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
@@ -58,8 +58,10 @@ public abstract class PublicationTask extends AbstractTask {
       if(publication == null){
          try{
             String publicationId = getParameters().getParameter(Task.PARAMETER_PUBLICATION_ID);
-            String servletContextPath = getParameters().getParameter(Task.PARAMETER_SERVLET_CONTEXT);
-            publication = PublicationFactory.getPublication(publicationId, servletContextPath);
+            publication = Globals.getPublication(publicationId);
+            if(null == publication){
+               throw new PublicationException("PublicationTask.getPublication: No Publication.");
+            }
          }catch(Exception e){
             throw new ExecutionException(e);
          }

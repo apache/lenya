@@ -28,8 +28,8 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Logger;
 import org.quartz.JobDataMap;
@@ -203,7 +203,11 @@ public class SchedulerWrapper {
     *            when the publication does not exist.
     */
    protected Publication getPublication(String jobGroup) throws PublicationException {
-      return PublicationFactory.getPublication(jobGroup, getServletContextPath());
+      Publication publication = Globals.getPublication(jobGroup);
+      if(null == publication){
+         throw new PublicationException("ScheduleWrapper.getPublication: No Publication.");
+      }
+      return publication;
    }
    /**
     * Adds a job.

@@ -44,7 +44,7 @@
     <map:generator name="stream" label="content,data" logger="sitemap.generator.stream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.cocoon.generation.StreamGenerator"/>
     <map:generator name="xpathdirectory" label="content" logger="sitemap.generator.xpathdirectory" src="org.apache.cocoon.generation.XPathDirectoryGenerator"/>
     <!--
-    <map:generator label="content,data" logger="sitemap.generator.profiler" name="profiler" src="org.apache.cocoon.generation.ProfilerGenerator"/>
+    <map:generator name="profiler" label="content,data" logger="sitemap.generator.profiler" src="org.apache.cocoon.generation.ProfilerGenerator"/>
     -->
 <!-- LENYA1.3 BEGIN -->
     <map:generator name="sitetree" label="content,data" logger="sitemap.generator.sitetree" src="org.apache.lenya.cms.content.flat.SitetreeGenerator"/>
@@ -135,10 +135,28 @@
     </map:transformer>
 
 <!-- Lenya 1.3 BEGIN -->
-   <!-- TODO: Create Transformers should be implementation-agnostic. -->
-    <map:transformer name="new-resource" logger="sitemap.transformer.create-resource" src="org.apache.lenya.cms.content.flat.CreateResourceTransformer"/>
-    <map:transformer name="create-revision" logger="sitemap.transformer.create-revision" src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer"/>
+   <!-- TODO: Create Transformers should be implementation-agnostic. Move from flat package.-->
+    <map:transformer name="new" logger="sitemap.transformer.create-resource" src="org.apache.lenya.cms.content.flat.CreateResourceTransformer"/>
+    <map:transformer name="new-design" logger="sitemap.transformer.create-resource" src="org.apache.lenya.cms.content.flat.CreateResourceTransformer">
+      <type>design</type>
+    </map:transformer>
+    <map:transformer name="new-structure" logger="sitemap.transformer.create-resource" src="org.apache.lenya.cms.content.flat.CreateResourceTransformer">
+      <type>structure</type>
+    </map:transformer>
+    <map:transformer name="revise" logger="sitemap.transformer.create-revision" src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer"/>
+    <map:transformer name="revise-design" logger="sitemap.transformer.create-revision" src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer">
+      <type>design</type>
+    </map:transformer>
+    <map:transformer name="revise-structure" logger="sitemap.transformer.create-revision" src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer">
+      <type>structure</type>
+    </map:transformer>
     <map:transformer name="resource" logger="sitemap.transformer.resource" src="org.apache.lenya.cms.content.ResourceTransformer"/>
+    <map:transformer name="design-resource" logger="sitemap.transformer.resource" src="org.apache.lenya.cms.content.ResourceTransformer">
+      <type>design</type>
+    </map:transformer>
+    <map:transformer name="structure-resource" logger="sitemap.transformer.resource" src="org.apache.lenya.cms.content.ResourceTransformer">
+      <type>structure</type>
+    </map:transformer>
     <!-- VirtualTransformer is not used in Lemya 1.3 -->
     <map:transformer name="virtual" logger="sitemap.transformer.virtual" src="org.apache.lenya.cms.cocoon.transformation.VirtualTransformer"/>
 <!-- Lenya 1.3 END -->
@@ -163,7 +181,6 @@
       <encoding>UTF-8</encoding>
     </map:serializer>
 -->
-
     <map:serializer name="html-no-dtd" logger="sitemap.serializer.html-no-dtd" mime-type="text/html; charset=utf-8" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
       <buffer-size>1024</buffer-size>
     </map:serializer>

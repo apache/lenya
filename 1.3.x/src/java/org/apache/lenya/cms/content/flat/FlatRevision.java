@@ -28,20 +28,16 @@ public class FlatRevision {
          metafile = new File(translationDirectory, revision + ".xml");
          resource = DocumentHelper.readDocument(metafile);
          root = resource.getDocumentElement();
-         if(root.hasAttribute("title"))
-            title = root.getAttribute("title");
-         if(root.hasAttribute("extension"))
-            extension = root.getAttribute("extension");
-         if(root.hasAttribute("href"))
-            href = root.getAttribute("href");
+         if(root.hasAttribute("title")) title = root.getAttribute("title");
+         if(root.hasAttribute("extension")) extension = root.getAttribute("extension");
+         if(root.hasAttribute("href")) href = root.getAttribute("href");
       }catch(javax.xml.parsers.ParserConfigurationException pce){
       }catch(org.xml.sax.SAXException saxe){
       }catch(java.io.IOException ioe){
       }
       if(extension.length() > 0){
          file = new File(translationDirectory, revision + "." + extension);
-      }else
-         file = metafile;
+      }else file = metafile;
    }
    public String getTitle() {
       return title;
@@ -53,7 +49,8 @@ public class FlatRevision {
       return href;
    }
    public String getURI() {
-      return file.getPath();
+      // System.out.println("FlatRevision.getURI=" + file.getAbsolutePath());
+      return file.getAbsolutePath();
    }
    public String getMetaURI() {
       return metafile.getPath();

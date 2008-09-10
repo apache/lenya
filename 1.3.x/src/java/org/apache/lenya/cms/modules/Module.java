@@ -1,5 +1,6 @@
 package org.apache.lenya.cms.modules;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,12 +20,14 @@ import org.xml.sax.SAXException;
  */
 public abstract class Module {
    public static final String MODULE_XML = "module.xml";
+   public static final String INDEX_FILE_SUFFIX = ".index"; // Start with period.
    Set inheritList = new LinkedHashSet(); // String names of other Modules in this publication.
    Map requiredList = new TreeMap(); // required Modules: id = reason
    Map recommendedList = new TreeMap(); // recommended Modules: id = reason
    Map optionalList = new TreeMap(); // optional Modules: id = reason
    Map variables = new HashMap(); // nameString = valueString
    Map files; // filename -> actual location as String (Better as File or Source?)
+   Map indexes = new HashMap(); // indexId -> Configuration
    File moduleDirectory;
    private String type = Content.TYPE_DEFAULT;
    private String id;
@@ -43,9 +46,9 @@ public abstract class Module {
       this.moduleDirectory = moduleDirectory;
       id = moduleDirectory.getName();
       File configFile = new File(moduleDirectory, MODULE_XML);
+      DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+      Configuration config;
       if(configFile.canRead()){
-         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
-         Configuration config;
          try{
             config = builder.buildFromFile(configFile);
             id = config.getAttribute("id", id);
@@ -125,6 +128,16 @@ public abstract class Module {
                String key = publication + "." + module;
                inheritList.add(key);
             }
+            // Indexes
+            Configuration[] indexesConf = config.getChildren("index");
+            int numIndexes = indexesConf.length;
+            for(int vI = 0; vI < numIndexes; vI++){
+               Configuration index = indexesConf[vI];
+               // Get attributes
+               String indexId = index.getAttribute("id", "");
+               // System.out.println("Module: Found Index " + indexId);
+               if(0 < indexId.length()) indexes.put(indexId, index);
+            }
             // Resource parents inherit after specified inheritance.
             // Added from bottom to top: xml/xhtml/home inherits from xhtml then xml.
             if(resource.length() > 0){
@@ -146,6 +159,28 @@ public abstract class Module {
             System.out.println("Module " + publicationId + "." + id + " has a SAXException.\n" + e.getLocalizedMessage());
          }catch(IOException e){
             System.out.println("Module " + publicationId + "." + id + " has an IOException.\n" + e.getLocalizedMessage());
+         }
+      } // end if - read configuration
+      IndexFileFilter filter = new IndexFileFilter();
+      File[] indexFiles = moduleDirectory.listFiles(filter);
+      int numIndexFiles = indexFiles.length;
+      for(int vI = 0; vI < numIndexFiles; vI++){
+         File indexFile = indexFiles[vI];
+         // System.out.println("Module: Found Index File " + indexFile.getAbsolutePath());
+         try{
+            config = builder.buildFromFile(indexFile);
+            String indexId = config.getAttribute("id", indexFile.getName().split(INDEX_FILE_SUFFIX, 1)[0]);
+            if(1 > indexId.length()){
+               String filename = indexFile.getName();
+               indexId = filename.substring(0, filename.length() - INDEX_FILE_SUFFIX.length());
+               indexes.put(indexId, config);
+            }
+         }catch(ConfigurationException e){
+            System.out.println("Module " + publicationId + "." + id + " Index " + indexFile.getName() + " has a ConfigurationException.\n" + e.getLocalizedMessage());
+         }catch(SAXException e){
+            System.out.println("Module " + publicationId + "." + id + " Index " + indexFile.getName() + " has a SAXException.\n" + e.getLocalizedMessage());
+         }catch(IOException e){
+            System.out.println("Module " + publicationId + "." + id + " Index " + indexFile.getName() + " has an IOException.\n" + e.getLocalizedMessage());
          }
       }
    }
@@ -177,6 +212,7 @@ public abstract class Module {
     * @return
     */
    public String getFile(String filename) {
+      // System.out.println("Module.getFile " + filename);
       String ret = "";
       // Check cache
       if(files.containsKey(filename)){
@@ -187,6 +223,20 @@ public abstract class Module {
             ret = "";
          }
       }
+      // TODO: Check Design Resources without creating infinite loop.
+      // BUG WATCH: This function is called by FlatIndexer while initializing FlatContent. Infinite loop.
+      // Initialization only needs filename="."
+      // if((ret.length() < 1) && (0 < filename.length()) && !(".".equals(filename))){
+      // // Check Design Resources
+      // Publication publication = Globals.getPublication();
+      // if(FlatContent.TYPE.equalsIgnoreCase(publication.getContentType())){
+      // String unid = Globals.getDesignUnid(filename);
+      // // Cannot access Content during initialization.
+      // Resource resource = ((FlatContent) publication.getContent()).getDesignResource(unid);
+      // File file = new File(resource.getURI());
+      // if(file.exists()) ret = file.getAbsolutePath();
+      // }
+      // }
       if(ret.length() < 1){
          // Check this Module.
          File file = new File(moduleDirectory, filename);
@@ -223,12 +273,10 @@ public abstract class Module {
          Iterator inherit = inheritList.iterator();
          while(inherit.hasNext() && (ret.length() < 1)){
             module = Modules.getModule((String) inherit.next(), type);
-            if(null != module)
-               ret = module.getVariable(parameterName);
+            if(null != module) ret = module.getVariable(parameterName);
          }
       }
-      if(ret.length() > 0)
-         variables.put(parameterName, ret);
+      if(ret.length() > 0) variables.put(parameterName, ret);
       return ret;
    }
    /**
@@ -253,5 +301,18 @@ public abstract class Module {
    }
    public String getPublicationId() {
       return publicationId;
+   }
+   /**
+    * 
+    * @return Map(indexId) = Configuration
+    */
+   public Map getIndexes() {
+      return indexes;
+   }
+   private class IndexFileFilter implements FileFilter {
+      public boolean accept(File file) {
+         if(!file.canRead()) return false;
+         return file.getName().toLowerCase().endsWith(INDEX_FILE_SUFFIX.toLowerCase());
+      }
    }
 }

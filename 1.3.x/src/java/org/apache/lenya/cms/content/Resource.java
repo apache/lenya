@@ -13,9 +13,7 @@ public interface Resource {
    public String getID();
    public String getType();
    /**
-    * Used by Lenya-1.2 Publications.
-    * 
-    * @deprecated Use getType()
+    * getDocumentType() is used by Lenya-1.2 Publications. Deprecate in post-1.3 version.
     */
    public String getDocumentType();
    public String getLanguage();

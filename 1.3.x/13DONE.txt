@@ -1,28 +1,59 @@
 This file contains completed entries from the TODO file with the most recent entries at the top.  Separate Commits with "---".
 ======
 
---- 
-DONE 20080319
+
+--- 20080909
+Fixed setting revisions to none (to unpublish.)  
+Fixed getting PageEnvelope when outside the Module system (for 1.2 Kupu's global usecase.) 
+- 20080615
+Major library issues.  Reverted to 20080320 commit rev 639174 and copied all Java, Module, and unrelated files from current development version. Committed 20080908.  
+The lack of serializer.jar may again cause problems on Macs.  
+- 200804??
+Structure and design resource transformers handle naming of UNIDs.
+Structure = publicationId + "+" + StructureName
+Design Resource = publicationId + "." + moduleId + "." + safe(filename)
+Design Resources retrieved by ModuleSourceFactory.  Editors retrieve with structure: and design: protocols.
+Documented navigation system as 13Navigation.txt.
+Added serializer.jar.  Upgraded XalanJ to 2.7.1.  Changed Installation Instructions to upgrade Cocoon before building to avoid WrappedRuntimeException caused by incompatible versions of Transformer objects.
+Created FlatDesign class to separate Design Resources from Content Resources.  Design Resources are needed during Modules Initialization needed before Content Initialization.
+- 20080401
+"relate" Module: Change Editor to retrieve Structure as Design Resource.  Revisions, choose "live".
+Update Resource editor to use Named Revisions from Content.
+Deprecated PublicationFactory (to solve bugs.)
+Move Structures to Design Resources. Use publication '+' structure
+Set Index files to delete on exit.
+Fix Migration to convert Live Sitetree to Live Structure Resource. SOLUTION: Create Design Resource and copy relation/live.xml as first revision.
+"relate" Module - Added "Save" Action.
+- 20080327
+Added "live" index configuration to nav Module's module.xml.
+Modules read index configuration from module.xml and {module}/*.index; passes to FlatContent's Indexer.  
+Moved language control from FlatIndexer to FlatIndex.
+FlatIndex: Use temp files.  (Defaults to content directory if cannot create temp files.)
+FlatIndex reports Named Revisions and Structures to FlatIndexer.  List is exposed by FlatContent and was added to PublicationGenerator.  Note that "live" is hardcoded in many places.  Named Revisions always include "live" and "edit".  No predefined Structures exist.
+Created Design Resources.  Used separate directory "design" to distinguish from Content Resources.
+ModuleSourceFactory: Check for Design Resource before file system.
+Design resources: Module protocol can check datastore for design elements such as XSLT and CSS.  This is the reason for named resources; use UNID = publication '$' module '$' safe(filepath).  Also useful for structures.
+
+--- 20080319
 Structure editor/"relate" Module - Add Resources and move branches to new parent or root independent of translations.  Collapse/Expand tree.  Undo abilities.  Added link from Edit screen.
 
----
--- DONE 20080308
+-- 20080308
 1.2 Authoring: Uses {pub}/xslt/page2xhtml.xsl.  lenya-body aggregate returns xhtml:html/xhtml:body rather than expected xhtml:html/xhtml:div[@id='body'].  Added former match to page2xhtml.xsl.
 Indexer: creating or updating Resources runs Indexer. Added system so only one thread handles updates while other threads may request that the first thread run update again. IMPLEMENTATION: Queue background indexing. Thread check next index. Send changes to indexes with return of needsIndexing so add to queue. If exists and does not need updating, return
 Patched xhtml module.xmap during testing.
 Replace all ResourceExists Actions with the ResourceExists Selector in Modules.
 New Module requires and passes successful requests to Edit Module.
--- DONE 20080225
+-- 20080225
 Fixed setting live revision when currently empty string.
 Migration: Changed doctype of homepage from "homepage" to "home".
 Changed "live" Index removing doctype.
--- DONE 20080221
+-- 20080221
 Restructured Modules to remove XML processing from Live.  
 Added live.xmap.  Separates Module inheritance of display from other pipelines.
 Made File, Link, and XML work for create, edit, and display. 
 Fixed ContentSourceFactory to send SourceNotFoundException correctly.
 Fixed FlatResource to use ID.  Also removes extension.  Simplifies XMAPs as ContentSourceFactory and ContentInputModule can receive UNID, ID, or Structure/ID.
--- DONE 20080219
+-- 20080219
 New File Resource did not allow new Revisions without uploads=true.  Changed default.
 Merge {module}/resource.xml with current revision to add fields (especially important for new Resources containing no fields.)
 flat.SitetreeGenerator used for "edit" Module must return all Resources diregarding language and including Resources without any languages.
@@ -33,8 +64,7 @@ Alternate types? Should Resources remember type hierarchy?  Or is publication's 
 IMPLEMENTATION: Resources only know "type".  Doctype is removed.  Type is the module for the Resource.  "Home" type's Resource Module is "/xml/xhtml/home" but the Resource type is "home".
 Create New Resource: Publication has Resource Types.  Use Generator. Choose Type.  Create required languages. Use Transformer. Pass to Edit Module. [Done except open in edit.]
 
----
-DONE 20080127: Fix Publication Module loading and inheritance.  Each Publication should build structure once per restart.  
+-- 20080127: Fix Publication Module loading and inheritance.  Each Publication should build structure once per restart.  
 [Modules.java]
 synchronize setting of static variables.
 Move inherit to static (publication.module.name=publication.module.name).
@@ -49,8 +79,7 @@ DONE 20080127: Add reloadModules to publication. => Files are cached by filename
 
 ---
 FIXED?: CreateRevisionTransformer: Set creator and when properly.
-DONE 20080120: Xinha adds extra fields. Dialog1 - Dialog6 fields added to new revisions.
-
+20080120: Xinha adds extra fields. Dialog1 - Dialog6 fields added to new revisions.
 
 === Older completed entries ===
 Admin screens: Revision chooser

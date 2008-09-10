@@ -1,31 +1,37 @@
-====================
-==== Structures ====
-====================
-NOTE: Goal is to add "Save" action to Structure Editor.  [I will be implementing this next. - solprovider]
+=====================
+==== Underscores ====
+=====================
+IDs cannot contain underscores.  
 
-- Move Index Configuration to Modules.  Allow both module.xml and separate files.  (module.xml requires work when inherited.  Separate files are automatically inherited.)
-- Read index configuration for names of Structures.  IndexConfiguration includes Structure and Revision names.  Load during initialization for use in adminstration.
-- Generator for names of Structures.
-- Create Design Resources.  Exclude Design Resources from "all" Index.
-- ModuleSourceFactory: Check for Design Resource before file system.
-Design resources: Module protocol can check datastore for design elements such as XSLT and CSS.  This is the reason for named resources; use UNID = publication + module + filepath.  Also useful for structures.
-- Move Structures to Design Resources.
-- "relate" Module: Change Editor to retrieve Structure as Design Resource.  Revisions, choose "live".
-- Implement "Save Resource" with run Indexer.
+Fix migration to convert underscores to dashes.  (Default publication includes an ID with an underscore.)
+
+Add validation to Create Resource forms.
+ID Validation - No duplicate IDs, spaces, periods, exclamation marks, or underscores.
+UNID Validation - No < and >. Must be valid directory name (deny .:!,?*_"&+#/\| and leading ~).
+
+Can fix Location for easier parsing on underscores.  Currently only allows 2-character languages.
 
 ==================
 ==== Security ====
 ==================
 
-Resource-level Security.
-Access Control List in Resource.xml
-"admin" Group bypasses security and is allowed to do anything.
-<acl><read default="yes"><person|group|role id="name" access="yes|no"></read><edit default="yes">same as read</edit></acl>
 Implement in SitetreeGenerator and ContentSourceFactory.
-"Not allowed" returns Sorry page (rather than error).
+
+Resource-level Security.  
+Access Control List in Resource.xml
+<acl><read default="yes"><person|group|role id="name" access="yes|no"></read><edit default="yes">same as read</edit></acl>
+Inherit from Resource using Structure.  Multiple inheritance: default allow or deny.
+Authors field?
+
+Publication: 
+Master group: "admin" Group bypasses security and is allowed to do anything.
+Revision-level security.
+Action-level security.
+"Not allowed" returns Sorry page (rather than error). Specify sorry page: module://lenya/sorry.xml
 "Does not exist" returns same Sorry page.
-Sorry: This resource is not available, either it does not exist or you do not have access to it.  (Link to Login page if not logged in.)
-DESIGN: How to handle inheritance?  Multiple parents?  Assume "live" structure?
+
+Sorry page: Add link to login if not logged in.
+
 Workflow: Reproduce Lenya-1.2's approve/publish system.
 
 ==============================================
@@ -54,23 +60,33 @@ Replace unfound i18n tags with default.
 === CreateRevisionTransformer
 Replace all A and IMG tags with appropriate RESOURCE tags, creating new Resources as necessary.
 
+====================
+==== Known Bugs ====
+====================
+
+Saving xhtml Resource did not change "edit" version as specified. Workaround: Select old version before new Revision.  Do we still need "edit" named revision?  Alternate: Add links to "edit" Module for opening and editing each revision.  Add "edit" button to live pages?
+
+File Resource: Create Translation does not save upload.  Create Revision works.
+
+Edit File: Setting Default Language does not save.  (Fixed for XML earlier, probably also affects Links.)
+
 ==============================
 ==== Other Critical Tasks ====
 ==============================
 
-BUG: Saving xhtml Resource did not change edit version as specified.  Selecting old version before new Revision.
-BUG: File Resource: Create Translation does not save upload.  Create Revision works.
-Edit File: Setting Default Language does not save.  (Fixed for XML earlier, probably also affects Links.)
-Edit Resource: Add description for Revisions, edited separately.  Add return to edit and live.  Add show version.
-Edit: Add return to live.
+Edit: Add link for return to live. Need Administration navigation.  Like 1.2 or 2.x?
 
+Test: Module Index Files (module.xml works, but did not test /modules/moduleid/myindex.index
+
+Include Cocoon in Lenya-1.3 so installing Cocoon separately is not required.  (Or downgrade Xalan and SourceResolver to the versions included in Cocoon so replacing files before building Cocoon is not required.)
+
+Edit Screens: Use NamedRevisions.
 
 Only explicitly included Modules should appear on New Resource list.  Inherited Modules should not appear.  Configure default pub to exclude "text" (until working), "xml", and "homepage".
 
 Edit-Save must clear Cache. (Or "cache" Module must check if Resource is still valid.)
 
-New: ID Validation - No duplicates, periods, exclamation marks, or underscores.
-New: UNID Validation - No < and >. Must be valid directory name (deny :!,?*_"&+#/\| and leading .~).
+Flat Migration: Test.  Creates "live" structure?  Needs mkdirs()?
 
 flat Module: content3.xsl sets doctype.  Need to use rules in {pub}/parameter-doctype.xmap
 Migration: Copy XSLTs to proper modules and patch as needed.
@@ -80,10 +96,15 @@ content/index|relation|resource
 modules
 config/???
 
+Add default option for Live Module to use old "xslt" directory when handling hierarchical content.
+
 ==============================
 ==== Non-critical Updates ====
 ==============================
-Add default option for Live Module to use old "xslt" directory when handling hierarchical content.
+
+FlatIndex: Need to synchronize so filename is created once.  Currently creates each index twice.
+
+Administration navigation - Create Resource, return from edit resource.
 
 Modules are only added to Publications when server is started.  Should ModuleSourceFactory check for changes before erroring?
 
@@ -92,23 +113,17 @@ Modules - Add Resource description distinguished from Module description.
 DESIGN: Does Module differentiation by ContentType cause confusion with inheritance?  A module overriding one type will intercept calls to all types.
 Remove Module Types.  Let Module devs handle.
 
-Administration navigation - Create Resource, return from edit resource.
-
 Replace uses of post.xsp with RequestGenerator.
 
 Resource @defaultlanguage is used to return one Translation for all requests.  Does it work?
 
 Xinha adds xmlns:xhtml="http://www.w3.org/1999/xhtml to some elements (P H1).
 
+Replace <map:generate src="module://lenya/empty.xml"/> with <map:generate src="empty:empty"/>
+
+Move page.css from {pub}\resources\shared\css\page.css to Module (xml?).  Fix xml/live.xmap, page2html.xsl in home and xml, and Lenya global XMAPs.  Add to migration?
+
 Check synchronization of HashMaps.
-
-"relate" Module/Structure Editor: 
-- Add Categories (placeholder for menu entries with no document) using quotes to distinguish from UNIDs.  
-- Search other Revisions for Title when no "live" Revision or "live" Title is blank.  
-- Add "Copy Resource and all descendants" action.
-- Add export/import to assist copying amongst Structures.
-- Filter Resources on Types.
-
 
 =============================
 ==== ToDo List from 2006 ====
@@ -124,10 +139,6 @@ Admin screen: Language chooser
 Since all code is based on current language, may need method to have Admin menus in different language than Resource displayed.  Probably add langauge as parameter:
 http:server/pub/admin/en/docid_xx.html
 
-=== File Resource
-New XML should reference old file?  Need another file to register all uses of revision binary
-Or make copy? (waste space, but safer when deleting revisions)
-
 === Search
 Doctype Configuration should define Body.
 Title is assumed from Revision Title?  Or allow override?
@@ -140,11 +151,42 @@ URLs: Use a Structure?  All flat (UNIDs)?  Choice?  (I dislike UNIDs in URLs, bu
 =======================
 [This section lists new abilities not required to complete 1.2 functionality.]
 
+Make a publication based on pubs/{publication-id}.xml.   Content, Modules, and security can be placed outside Lenya removing the need for a publication directory,
+
+"relate" Module/Structure Editor:
+- Add Categories (placeholder for menu entries with no document) using quotes to distinguish from UNIDs.  
+- Search other Revisions for Title when no "live" Revision or "live" Title is blank.  
+- Add "Copy Resource and all descendants" action.
+- Add export/import to assist copying amongst Structures.
+- Filter Resources on Types.
+
+Replace System.out messages with logger.
+
+Saving Structure should only update indexes dependent on that Structure.
+
+Revisions: Remember base revision for each edit to enhance with branching history for diff viewer.
+Diff viewer showing progress and compare any two revisions.
+
+Edit Resource: Add description for Revisions, edited separately.  Add return to edit and live.  Add show version.
+
+Allow configuration of Named Revisions other than needed for Indexes.  Currently only Indexes can specify Revision Names.  Workflow should also configure new Revision Names and allow limiting to a specific Resource type.
+
+Many Modules were created before 1.3's SourceFactories and Transformers.  Revise xml,file,link Modules to use Create Transformers directly without JS Flow.
+
+Try adding final slash to request before sending error.
+
+"relate" Module - Allow selection of "live" revision for Structures.
+
+Transactions - All changes saved to content/transactions filename formatted when(revision).unid.lang:
+1207025524250.{uuid}.en.xml = Revision
+1207025524250.{uuid}.en.ext = Revision Files
+1207025524250.{uuid}.en.translation.xml = Translation
+1207025524250.{uuid}.xml = Resource
+Create transaction during change, not when deleting.
+Future functions include scheduled zipping of transactions, monthly and annually.
+
 cocoon: protocol does not follow Module inheritance for missing files. Example: /pub/home/parameters should use /pub/xhtml/parameters if modules/home/module.xmap is missing.  Needing module.xmap defeats purpose of inheritance.  (module: protocol follows inheritance so resource-exists works as test for Module.)
 
-Identifier must not contain period, underscore, or exclamation mark.  Allow spaces? Caps?
-Default publication includes an ID with an underscore.  Remove during migration?  
-Current code allows for underscores in ID as long as portion after underscore is not two characters.
 
 New Translation: Warn if no language chosen but other fields changed for new translation.
 

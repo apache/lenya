@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
@@ -13,8 +14,9 @@ import org.apache.lenya.cms.publication.Publication;
  * 
  * @author solprovider
  * @since 1.3
+ * @deprecated Use org.apache.lenya.cms.modules.PublicationInputModule.  Will be deleted soon.
  */
-public class PublicationModule extends AbstractPageEnvelopeModule implements ThreadSafe {
+public class PublicationModule extends AbstractInputModule implements ThreadSafe {
    // public class PublicationModule extends AbstractPageEnvelopeModule implements Serviceable, Contextualizable, ThreadSafe {
    // private ServiceManager manager;
    // private org.apache.avalon.framework.context.Context context;

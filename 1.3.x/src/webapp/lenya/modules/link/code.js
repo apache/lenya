@@ -38,9 +38,10 @@ print("ROOT=" + root.getTagName());
 
    while(child != null){
       var childtag = child.getNodeName();
+      var type = "content";
       if(childtag.equalsIgnoreCase("resource")){
          var doc = convertNodeToDocument(child);
-         Packages.org.apache.lenya.cms.content.ResourceTransformer.transformDocument(cocoon.request, unid, doc);
+         Packages.org.apache.lenya.cms.content.ResourceTransformer.transformDocument(cocoon.request, unid, doc, type);
       }
       if(childtag.equalsIgnoreCase("revision")){
          var language = child.getAttribute("language");
@@ -50,7 +51,7 @@ print("ROOT=" + root.getTagName());
          }
          var revision = child.getFirstChild();
          var doc = convertNodeToDocument(revision);
-         Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid + "_" + language, doc, setLive);
+         Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid + "_" + language, doc, type, setLive);
       }
       child = child.getNextSibling();
    }

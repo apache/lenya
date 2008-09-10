@@ -109,11 +109,12 @@ public class PageEnvelope {
     * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
     */
    public PageEnvelope(Map objectModel) throws PageEnvelopeException {
-      try{
-         init(PublicationFactory.getPublication(objectModel), ObjectModelHelper.getRequest(objectModel));
-      }catch(PublicationException e){
-         throw new PageEnvelopeException(e);
-      }
+      // try{
+      // init(PublicationFactory.getPublication(objectModel), ObjectModelHelper.getRequest(objectModel));
+      init(Globals.getPublication(), ObjectModelHelper.getRequest(objectModel));
+      // }catch(PublicationException e){
+      // throw new PageEnvelopeException(e);
+      // }
    }
    /**
     * Creates a new instance of PageEnvelope from a sitemap inside a publication.
@@ -197,17 +198,18 @@ public class PageEnvelope {
     * @throws PageEnvelopeException
     */
    static public PageEnvelope getCurrent() throws PageEnvelopeException {
+      // Check if already set.
       Request request = Globals.getRequest();
-      if(null == request){
-         throw new PageEnvelopeException("Cannot access a PageEnvelope without a Request.");
+      if(null != request){
+         Object o = request.getAttribute(PageEnvelope.class.getName());
+         if(null != o){ return (PageEnvelope) o; }
       }
-      Object o = request.getAttribute(PageEnvelope.class.getName());
-      if(null != o){
-         return (PageEnvelope) o;
+      // Otherwise create.
+      PageEnvelope envelope = new PageEnvelope(Globals.getObjectModel(), true);
+      if(null != request){
+         // Store for future use.
+         request.setAttribute(PageEnvelope.class.getName(), envelope);
       }
-      PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
-      envelope = new PageEnvelope(Globals.getObjectModel(), true);
-      request.setAttribute(PageEnvelope.class.getName(), envelope);
       return envelope;
    }
    /**

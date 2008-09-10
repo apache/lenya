@@ -1,9 +1,11 @@
 package org.apache.lenya.cms.content.flat;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.apache.lenya.xml.DocumentHelper;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.lenya.util.Globals;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -12,132 +14,160 @@ import org.w3c.dom.NodeList;
  * @author solprovider
  * @since 1.3
  */
-public class FlatIndex {
-   File configurationFile = null;
-   File indexFile;
+class FlatIndex {
+   private static final String LANGUAGE_ALL = "ALLINDEX";
    FlatContent content;
-   String indexName;
-   String language = "";
+   volatile Map files = new HashMap(); // files(language) = filename String
    String structure = "";
    String revision = "live";
    Map filter = new HashMap();
    Map include = new HashMap();
-   public FlatIndex(FlatContent content, File indexDirectory, String indexName, String language) {
-      if(null == indexName){ // SitetreeGenerator called without src attribute.
-         this.indexName = "";
-      }else{
-         this.indexName = indexName;
-      }
+   String name = "";
+   boolean isAll = false;
+   FlatIndex(FlatContent content) {
+      // System.out.println("FlatIndex ALL");
       this.content = content;
-      if(0 == this.indexName.length()){ // Special case: all Resources disregarding Translations
-         indexFile = new File(indexDirectory, "all.xml");
-      }else{
-         this.language = language;
-         configurationFile = new File(indexDirectory, indexName + ".xconf");
-         indexFile = new File(indexDirectory, indexName + "_" + language + ".xml");
-      }
+      isAll = true;
+      include.put("type", new FlatIndexPart("type"));
+      include.put("id", new FlatIndexPart("id"));
    }
-   private void loadConfiguration() {
-      if(null == configurationFile){ // Special case: all Resources disregarding Translations
-         include.put("unid", new FlatIndexPart("unid"));
-         include.put("type", new FlatIndexPart("type"));
-         include.put("doctype", new FlatIndexPart("doctype"));
-         include.put("id", new FlatIndexPart("id"));
-      }else{
-         Document document;
-         try{
-            document = DocumentHelper.readDocument(configurationFile);
-         }catch(javax.xml.parsers.ParserConfigurationException pce){
-            System.out.println("Indexer: could not parse " + configurationFile.getPath());
-            return;
-         }catch(org.xml.sax.SAXException saxe){
-            System.out.println("Indexer: " + configurationFile.getPath() + " is not valid.");
-            return;
-         }catch(java.io.IOException ioe){
-            System.out.println("Indexer: could not read " + configurationFile.getPath());
-            return;
-         }
-         Element root = document.getDocumentElement();
-         if(root.hasAttribute("structure")) structure = root.getAttribute("structure");
-         if(root.hasAttribute("revision")) revision = root.getAttribute("revision");
-         NodeList nl;
-         int length;
-         int i;
-         nl = root.getElementsByTagName("filter");
-         length = nl.getLength();
-         for(i = 0; i < length; i++){
-            FlatIndexPart part = new FlatIndexPart((Element) nl.item(i));
+   FlatIndex(String name, Configuration config, FlatContent content) {
+      // System.out.println("FlatIndex " + name);
+      this.name = name;
+      this.content = content;
+      structure = config.getAttribute("structure", structure);
+      revision = config.getAttribute("revision", revision);
+      // For each element
+      Configuration[] children = config.getChildren();
+      for(int c = 0; c < children.length; c++){
+         Configuration child = children[c];
+         String element = child.getName();
+         if(element.equalsIgnoreCase("flter")){
+            FlatIndexPart part = new FlatIndexPart(child);
             filter.put(part.getName(), part);
          }
-         nl = root.getElementsByTagName("include");
-         length = nl.getLength();
-         for(i = 0; i < length; i++){
-            FlatIndexPart part = new FlatIndexPart((Element) nl.item(i));
+         if(element.equalsIgnoreCase("include")){
+            FlatIndexPart part = new FlatIndexPart(child);
             include.put(part.getName(), part);
          }
-         include.put("unid", new FlatIndexPart("unid"));
-         include.put("type", new FlatIndexPart("type"));
-         include.put("doctype", new FlatIndexPart("doctype"));
-         include.put("id", new FlatIndexPart("id"));
-         include.put("title", new FlatIndexPart("title"));
-         include.put("href", new FlatIndexPart("href"));
-         include.put("extension", new FlatIndexPart("extension"));
+      }
+      include.put("unid", new FlatIndexPart("unid"));
+      include.put("type", new FlatIndexPart("type"));
+      include.put("doctype", new FlatIndexPart("doctype"));
+      include.put("id", new FlatIndexPart("id"));
+      include.put("title", new FlatIndexPart("title"));
+      include.put("href", new FlatIndexPart("href"));
+      include.put("extension", new FlatIndexPart("extension"));
+   }
+   void update() {
+      // System.out.println("FlatIndexer.update");
+      if(isAll){
+         update("");
+         return;
+      }
+      String[] languages = content.getLanguages();
+      int languagesLength = languages.length;
+      for(int l = 0; l < languagesLength; l++){
+         String language = languages[l];
+         update(language);
       }
    }
-   public String getIndexFilename() {
-      if(!indexFile.exists()) update();
-      return indexFile.getPath();
-   }
-   public void update() {
-      // TODO: Add publication ID to the log.
-      // System.out.println("Indexer updating " + indexName + "(" + language + ")");
-      loadConfiguration();
+   /**
+    * 
+    * @param language
+    * @return Absolute filename of index
+    */
+   String update(String language) {
+      // System.out.println("FlatIndex.update " + name + " language=" + language);
       // Init Document
       Document document;
       try{
          document = org.apache.lenya.xml.DocumentHelper.createDocument("", "index", null);
       }catch(javax.xml.parsers.ParserConfigurationException pce){
          System.out.println("FlatIndex: ParserConfigurationException");
-         return;
+         return "";
       }
       Element root = document.getDocumentElement();
-      root.setAttribute("name", indexName);
+      root.setAttribute("name", name);
       root.setAttribute("language", language);
       // Update
       if(structure.length() > 0){
          include.put("fullid", new FlatIndexPart("fullid"));
-         updateStructure(document, root);
-      }else if(0 < this.indexName.length()){
-         updateFlat(document, root);
-      }else{ // Special case: all Resources disregarding Translations
+         updateStructure(document, root, language);
+      }else if(0 < this.name.length()){
+         updateFlat(document, root, language);
+      }else{
+         // SitetreeGenerator called without src attribute.
+         // Special case: all Resources disregarding Translations
          updateAll(document, root);
       }
+      // Get File
+      File indexFile = getFile(language);
       // Write document
+      // System.out.println("FlatIndex: Writing " + indexFile.getAbsolutePath());
       try{
          org.apache.lenya.xml.DocumentHelper.writeDocument(document, indexFile);
+         // System.out.println("Indexing " + name + "_" + language + " completed.");
       }catch(javax.xml.transform.TransformerConfigurationException tce){
-         System.out.println("FlatIndex: TransformerConfigurationException");
+         System.out.println("FlatIndex: TransformerConfigurationException" + name + "_" + language);
       }catch(javax.xml.transform.TransformerException te){
-         System.out.println("FlatIndex: TransformerException");
+         System.out.println("FlatIndex: TransformerException" + name + "_" + language);
       }catch(java.io.IOException ioe){
-         System.out.println("FlatIndex: IOException");
+         System.out.println("FlatIndex: IOException" + name + "_" + language);
+      }catch(Exception e){
+         System.out.println("FlatIndex: Unknown Exception - " + name + "_" + language + "\n" + e.getLocalizedMessage());
       }
-      // System.out.println("Indexing " + indexName + "_" + language + " Completed");
+      return indexFile.getAbsolutePath();
    }
-   private void updateStructure(Document document, Element root) {
+   private synchronized File getFile(String language) {
+      File indexFile;
+      if(isAll){
+         if(files.containsKey(LANGUAGE_ALL)){
+            indexFile = new File((String) files.get(LANGUAGE_ALL));
+         }else{
+            try{
+               indexFile = File.createTempFile("all", ".xml");
+            }catch(IOException e){
+               indexFile = new File(Globals.getPublication().getContentDirectory(), "all.xml");
+            }
+            indexFile.deleteOnExit();
+            files.put(LANGUAGE_ALL, indexFile.getAbsolutePath());
+         }
+      }else{
+         if(files.containsKey(language)){
+            indexFile = new File((String) files.get(language));
+         }else{
+            try{
+               indexFile = File.createTempFile(name, "_" + language + ".xml");
+            }catch(IOException e){
+               indexFile = new File(Globals.getPublication().getContentDirectory(), name + "_" + language + ".xml");
+            }
+            indexFile.deleteOnExit();
+            files.put(language, indexFile.getAbsolutePath());
+         }
+      }
+      // System.out.println("FlatIndex.getFile " + indexFile.getName());
+      return indexFile;
+   }
+   private void updateStructure(Document document, Element root, String language) {
+      // System.out.println("FlatIndexer.updateStructure " + name + " Structure='" + structure + "'");
       FlatRelations relations = content.getRelations(structure);
+      if(null == relations){
+         System.out.println("FlatIndexer.updateStructure " + name + " Structure '" + structure + "' was null");
+         return;
+      }
       Element resourceElement = relations.getRoot();
       if(null == resourceElement){
-         System.out.println("Error creating Index " + indexName + "_" + language + ".  Could not find Structure " + structure);
+         System.out.println("Error creating Index " + name + "_" + language + ".  Could not find Structure " + structure);
       }else{
-         addStructureResource(document, root, resourceElement, "");
+         addStructureResource(document, root, resourceElement, "", language);
       }
    }
    /**
     * Add child "resource" elements of resourceElement to root, and recurse for each. Must pass filters.
     */
    // private void addStructureResource(Document document, Element root, Element resourceElement, String parenttype, String parentdoctype) {
-   private void addStructureResource(Document document, Element root, Element resourceElement, String parenttype) {
+   private void addStructureResource(Document document, Element root, Element resourceElement, String parenttype, String language) {
       // NodeList children = resourceElement.getElementsByTagName("resource"); //getDescendants, need getChildren
       NodeList children = resourceElement.getChildNodes();
       int length = children.getLength();
@@ -173,13 +203,14 @@ public class FlatIndex {
                   }
                   // INCLUDE - END
                   // addStructureResource(document, element, resourceChild, fulltype, fulldoctype);
-                  addStructureResource(document, element, resourceChild, fulltype);
+                  addStructureResource(document, element, resourceChild, fulltype, language);
                } // if useResource
             } // if resource not null
          } // if "resource"
       } // for
    } // function
-   private void updateFlat(Document document, Element root) {
+   private void updateFlat(Document document, Element root, String language) {
+      // System.out.println("FlatIndexer.updateFlat " + name);
       // Build Index
       String[] unids = content.getResources();
       int unidsLength = unids.length;
@@ -212,14 +243,14 @@ public class FlatIndex {
       } // for
    }
    private void updateAll(Document document, Element root) {
-      // System.out.println("updateAll BEGIN");
+      // System.out.println("FlatIndexer.updateAll");
       root.setAttribute("description", "Special index containing all Resources ignoring existence of Translations: no filtering by language and no information from Translations and Revisions.");
       // Build Index
       String[] unids = content.getResources();
       int unidsLength = unids.length;
       for(int u = 0; u < unidsLength; u++){
          String unid = unids[u];
-         FlatResource resource = (FlatResource) content.getResource(unid, language, revision);
+         FlatResource resource = (FlatResource) content.getResource(unid);
          FlatIndexPart part;
          // INCLUDE - BEGIN
          Element element = addElement(document, root, "resource");
@@ -232,16 +263,18 @@ public class FlatIndex {
          }
          // Add translations with language and title.
          String[] languages = resource.getLanguages();
-         for(int l = 0; l < languages.length; l++){
-            Element translationElement = addElement(document, element, "translation");
-            translationElement.setAttribute("language", languages[l]);
-            FlatTranslation translation = resource.getTranslation(languages[l], false);
-            if(null != translation){
-               FlatRevision revision = translation.getRevision();
-               if(null != revision){
-                  String title = revision.getTitle();
-                  if(title.length() > 0){
-                     translationElement.setAttribute("title", title);
+         if(null != languages){
+            for(int l = 0; l < languages.length; l++){
+               Element translationElement = addElement(document, element, "translation");
+               translationElement.setAttribute("language", languages[l]);
+               FlatTranslation translation = resource.getTranslation(languages[l], false);
+               if(null != translation){
+                  FlatRevision revision = translation.getRevision();
+                  if(null != revision){
+                     String title = revision.getTitle();
+                     if(title.length() > 0){
+                        translationElement.setAttribute("title", title);
+                     }
                   }
                }
             }
@@ -253,5 +286,18 @@ public class FlatIndex {
       Element newElement = document.createElement(newElementName);
       parent.appendChild(newElement);
       return newElement;
+   }
+   String getFilename(String language) {
+      // System.out.println("FlatIndex.getFilename " + name + " l=" + language);
+      if(isAll) language = LANGUAGE_ALL;
+      String filename = (String) files.get(language);
+      if(null == filename) filename = update(language);
+      return filename;
+   }
+   String getStructure() {
+      return structure;
+   }
+   String getRevision() {
+      return revision;
    }
 }

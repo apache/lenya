@@ -27,7 +27,6 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
@@ -35,8 +34,9 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.SiteTree;
+import org.apache.lenya.util.Globals;
 import org.apache.log4j.Logger;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -82,9 +82,12 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
     *            DOCUMENT ME!
     */
    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src, Parameters parameters) throws Exception {
-      Publication publication = PublicationFactory.getPublication(objectModel);
+      Publication publication = Globals.getPublication();
+      if(null == publication){
+         throw new PublicationException("DefaultCreatorAction.act: No Publication.");
+      }
       // Get request object
-      Request request = ObjectModelHelper.getRequest(objectModel);
+      Request request = Globals.getRequest();
       if(request == null){
          getLogger().error("No request object");
          return null;

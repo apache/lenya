@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.DocumentHelper;
 /**
  * <p>
@@ -31,18 +32,14 @@ import org.apache.lenya.cms.publication.DocumentHelper;
  * 
  * @version: $Id$
  */
-public class DocumentURLModule extends AbstractPageEnvelopeModule {
-   // public class DocumentURLModule extends AbstractPageEnvelopeModule implements Serviceable {
-   // private ServiceManager manager;
+public class DocumentURLModule extends AbstractInputModule {
    /**
     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
     */
    public Object getAttribute(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
       String url;
       final String[] attributes = name.split(":");
-      if(attributes.length < 3){
-         throw new ConfigurationException("Invalid number of parameters: " + attributes.length + ". Expected 3 (area, document-id, language)");
-      }
+      if(attributes.length < 3){ throw new ConfigurationException("Invalid number of parameters: " + attributes.length + ". Expected 3 (area, document-id, language)"); }
       final String area = attributes[0];
       final String documentId = attributes[1];
       final String language = attributes[2];
@@ -67,10 +64,4 @@ public class DocumentURLModule extends AbstractPageEnvelopeModule {
       Object[] objects = {getAttribute(name, modeConf, objectModel)};
       return objects;
    }
-   // /**
-   // * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-   // */
-   // public void service(ServiceManager manager) throws ServiceException {
-   // this.manager = manager;
-   // }
 }

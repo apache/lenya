@@ -5,17 +5,16 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.cms.cocoon.components.modules.input.AbstractPageEnvelopeModule;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.Globals;
 /**
  * Retrieves Content Variables from the appropriate Resource
  * 
  * @author solprovider
  * @since 1.3
  */
-public class ContentInputModule extends AbstractPageEnvelopeModule implements ThreadSafe {
+public class ContentInputModule extends AbstractInputModule implements ThreadSafe {
    // public class ContentInputModule extends AbstractPageEnvelopeModule implements Serviceable, Contextualizable, ThreadSafe {
    // private ServiceManager manager;
    // private org.apache.avalon.framework.context.Context context;
@@ -23,20 +22,17 @@ public class ContentInputModule extends AbstractPageEnvelopeModule implements Th
     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
     */
    public Object getAttribute(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
+      // System.out.println("ContentInputModule.getAttribute " + name);
       if(getLogger().isDebugEnabled()){
          getLogger().debug("Resolving [" + name + "]");
       }
-      PageEnvelope pe;
-      try{
-         pe = PageEnvelope.getCurrent();
-      }catch(PageEnvelopeException e){
-         throw new ConfigurationException("Resolving page envelope failed: ", e);
+      Publication publication = Globals.getPublication();
+      if(null == publication){
+         System.out.println("ContentInputModule.getAttribute: Publication is null");
+         return "error";
       }
-      Publication pub = pe.getPublication();
-      // String publication = pub.getId();
-      Content content = pub.getContent();
+      Content content = publication.getContent();
       String unid = "";
-      // System.out.println("ContentInputModule name=" + name);
       int pos = name.indexOf(":");
       if(pos > 0){
          unid = name.substring(pos + 1);
@@ -47,18 +43,14 @@ public class ContentInputModule extends AbstractPageEnvelopeModule implements Th
       }
       Resource resource = content.getResource(unid);
       if(null == resource){
-         System.out.println("ContentInputModule: No Resource NAME=" + name + " UNID=" + unid);
+         System.out.println("ContentInputModule.getAttribute: No Resource NAME=" + name + " UNID=" + unid);
       }
       if(name.equalsIgnoreCase("type")){
          // System.out.println("ContentInputModule NAME=" + name + " UNID=" + unid + " TYPE=" + resource.getType());
          return resource.getType();
       }
-      if(name.equalsIgnoreCase("doctype") || name.equalsIgnoreCase("documenttype")){
-         return resource.getDocumentType();
-      }
-      if(name.equalsIgnoreCase("defaultlanguage")){
-         return resource.getDefaultLanguage();
-      }
+      if(name.equalsIgnoreCase("doctype") || name.equalsIgnoreCase("documenttype")){ return resource.getDocumentType(); }
+      if(name.equalsIgnoreCase("defaultlanguage")){ return resource.getDefaultLanguage(); }
       return "";
    }
    /**

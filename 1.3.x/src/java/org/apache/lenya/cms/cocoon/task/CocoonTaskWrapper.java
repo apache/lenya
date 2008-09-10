@@ -19,7 +19,6 @@ package org.apache.lenya.cms.cocoon.task;
 import java.util.Iterator;
 import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
@@ -28,13 +27,12 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Notifier;
 import org.apache.lenya.cms.task.TaskWrapperParameters;
 import org.apache.lenya.cms.task.WorkflowInvoker;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Logger;
@@ -55,13 +53,11 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
     */
    public CocoonTaskWrapper(Map objectModel, Parameters parameters) throws ExecutionException {
       log.debug("Creating CocoonTaskWrapper");
-      Publication publication;
-      try{
-         publication = PublicationFactory.getPublication(objectModel);
-      }catch(PublicationException e){
-         throw new ExecutionException(e);
+      Publication publication = Globals.getPublication();
+      if(null == publication){
+         throw new ExecutionException("CocoonTaskWrapper: No Publication.");
       }
-      Request request = ObjectModelHelper.getRequest(objectModel);
+      Request request = Globals.getRequest();
       initialize(parameters, publication, request);
    }
    /**

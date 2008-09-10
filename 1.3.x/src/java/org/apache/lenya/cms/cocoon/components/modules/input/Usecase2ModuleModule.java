@@ -12,6 +12,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 /**
@@ -19,7 +20,7 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
  * 
  * @author solprovider
  */
-public class Usecase2ModuleModule extends AbstractPageEnvelopeModule implements Serviceable, Contextualizable, ThreadSafe {
+public class Usecase2ModuleModule extends AbstractInputModule implements Serviceable, Contextualizable, ThreadSafe {
    private org.apache.avalon.framework.context.Context context;
    /**
     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)

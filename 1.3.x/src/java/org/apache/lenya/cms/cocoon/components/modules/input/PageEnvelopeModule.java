@@ -27,6 +27,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
@@ -40,7 +41,7 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
  * 
  * @see org.apache.lenya.cms.publication.PageEnvelope
  */
-public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
+public class PageEnvelopeModule extends AbstractInputModule implements Serviceable {
    private ServiceManager manager;
    /**
     * Get the the page envelope for the given objectModel.
@@ -115,8 +116,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
          }else if(name.equals(PageEnvelope.DOCUMENT_LANGUAGE)){
             value = envelope.getDocument().getLanguage();
             // LENYA1.3 - BEGIN
-            if(((String) value).length() < 1)
-               value = envelope.getPublication().getDefaultLanguage();
+            if(((String) value).length() < 1) value = envelope.getPublication().getDefaultLanguage();
             // LENYA1.3 - END
          }else if(name.equals(PageEnvelope.DOCUMENT_LANGUAGES)){
             value = envelope.getDocument().getLanguages();
@@ -223,9 +223,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
    // FIXME Maybe make this more configureable
    private String filterURI(final String uri) {
       final int index = uri.indexOf(";jsessionid");
-      if(index >= 0)
-         return uri.substring(0, index);
-      else
-         return uri;
+      if(index >= 0) return uri.substring(0, index);
+      else return uri;
    }
 }

@@ -80,6 +80,6 @@ public class FlatRelations {
       return "";
    }
    private void update() {
-      // WORK: Reset if file modified
+      // TODO: Reset if file modified
    }
 }

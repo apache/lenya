@@ -2,6 +2,7 @@ var PublicationDirectory;
 var ContentDirectoryNew;
 var ResourcesDirectory;
 var RelationsDirectory;
+var DesignDirectory;
 
 function init(){
 //Inconsistent directories.
@@ -15,6 +16,7 @@ function init(){
    ContentDirectoryNew = PublicationDirectory + "content/";
    ResourcesDirectory = ContentDirectoryNew + "resource/";
    RelationsDirectory = ContentDirectoryNew + "relation/";
+   DesignDirectory = ContentDirectoryNew + "design/";
 }
 
 var incremental = false;
@@ -176,8 +178,7 @@ print("*** Resources ***");
             if(oldfilename.length() > 0){
                filedoc = loadDocument(PublicationDirectory + oldfilename);
             }else{
-                filedoc = createDocument(resource.getAttribute("type"), 
-                      ResourcesDirectory + unid + file.getAttribute("filename"));
+                filedoc = createDocument(resource.getAttribute("type"), ResourcesDirectory + unid + file.getAttribute("filename"));
             }
             fileroot = filedoc.getDocumentElement();
             if(file.hasAttribute("navtitle")){
@@ -248,7 +249,26 @@ print("*** Resources ***");
       var result = new Packages.javax.xml.transform.stream.StreamResult(resultFile);
       transformer.transform(source, result);
    }
-   //### Copy Indexes
+   //### Copy "live" structure to Design Resource - Added 20080331
+   unid = publication + "+live"   
+   if(!incremental){
+      resourcedoc = createDocument("resource", DesignDirectory + unid + "/resource.xml");
+      resourceroot = resourcedoc.getDocumentElement();
+      resourceroot.setAttribute("unid", unid);
+      resourceroot.setAttribute("id", "live");
+      resourceroot.setAttribute("defaultlanguage", "xx");
+      resourceroot.setAttribute("type", "relate");
+      writeDocument(resourcedoc, DesignDirectory + unid + "/resource.xml");
+      translationdoc = createDocument("translation", designDirectory + unid + "/xx/translation.xml");
+      translationroot = translationdoc.getDocumentElement();
+      translationroot.setAttribute("language", "xx");
+      translationroot.setAttribute("edit", "1");
+      translationroot.setAttribute("live", "1");
+      writeDocument(translationdoc, DesignDirectory + unid + "/xx/translation.xml");
+      copyfile(RelationsDirectory + "live.xml", DesignDirectory + unid + "/xx/1.xml");
+   }
+   // TODO: Add a revision and update translation.xml for "live" structure if not incremental?
+   //### Copy Indexes - Obsolete because indexes are configured in Modules (20080331)
    var isource = resolver.resolveURI("module:///index");
    var oldindexdirectoryURI = new Packages.java.net.URI(isource.getURI());
    var oldindexdirectory = new Packages.java.io.File(oldindexdirectoryURI);

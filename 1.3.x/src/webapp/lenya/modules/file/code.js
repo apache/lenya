@@ -17,21 +17,22 @@ print("####### FILE UPDATE BEGIN #######");
    var root = dom.getDocumentElement();
 print("ROOT=" + root.getTagName());
    var child = root.getFirstChild();
+   var type = "content";
    while(child != null){
       var childtag = child.getNodeName();
       if(childtag.equalsIgnoreCase("resource")){
          var doc = convertNodeToDocument(child);
-         Packages.org.apache.lenya.cms.content.ResourceTransformer.transformDocument(cocoon.request, unid, doc);
+         Packages.org.apache.lenya.cms.content.ResourceTransformer.transformDocument(cocoon.request, unid, doc, type);
       }
       if(childtag.equalsIgnoreCase("revision")){
          var language = child.getAttribute("language");
-         var setLive = false;
+          var setLive = false;
          if(child.hasAttribute("live")){
             if(child.getAttribute("live").equalsIgnoreCase("true")) setLive = true;
          }
          var revision = child.getFirstChild();
          var doc = convertNodeToDocument(revision);
-         Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid + "_" + language, doc, setLive);
+         Packages.org.apache.lenya.cms.content.flat.CreateRevisionTransformer.transformDocument(cocoon.request, unid + "_" + language, doc, type, setLive);
       }
       child = child.getNextSibling();
    }

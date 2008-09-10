@@ -2,8 +2,10 @@ package org.apache.lenya.cms.content.flat;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.lenya.cms.content.Content;
 import org.apache.lenya.cms.content.Location;
 import org.apache.lenya.cms.content.Resource;
 import org.apache.lenya.cms.content.ResourceException;
@@ -21,6 +23,7 @@ import org.w3c.dom.NodeList;
  */
 public class FlatResource implements Resource {
    private static final String FILENAME_RESOURCE = "resource.xml";
+   private static final String ATTR_DEFAULT_LANGUAGE = "defaultlanguage";
    private File contentDirectory;
    private File resourceDirectory;
    private Document resource;
@@ -29,42 +32,45 @@ public class FlatResource implements Resource {
    private String id = "";
    private String type = "";
    private String doctype = "";
-   private String defaultLanguage = "en";
+   private String defaultLanguage = FlatContent.LANGUAGE_DEFAULT;
    private String defaultLanguageParameter = "";
-   private String defaultRevision = "live";
+   private String defaultRevision = Content.REVISION_DEFAULT;
    // private String extension = ""; //Moved to revision
    private String[] languages;
    boolean isChanged = false;
    public FlatResource(File directory, String unid, String language, String revision) {
+      // System.out.println("FlatResource new unid=" + unid + "_" + language + "!" + revision + " " + directory.getAbsolutePath());
       contentDirectory = directory;
       this.unid = unid;
-      if(language.length() > 0)
-         defaultLanguage = language;
+      if((null == language) || (0 < language.length())) defaultLanguage = language;
       defaultRevision = revision;
       init(false);
    }
    public FlatResource(File directory, String unid, String language) {
+      // System.out.println("FlatResource new unid=" + unid + "_" + language + " " + directory.getAbsolutePath());
       contentDirectory = directory;
       this.unid = unid;
-      if(language.length() > 0)
-         defaultLanguage = language;
+      if(language.length() > 0) defaultLanguage = language;
       init(false);
    }
    public FlatResource(File directory, String unid) {
+      // System.out.println("FlatResource new unid=" + unid + " " + directory.getAbsolutePath());
       contentDirectory = directory;
       this.unid = unid;
       init(true);
    }
    private void init(boolean useDefaultLanguage) {
-      // System.out.println("FlatResource.init BEGIN UNID=" + unid);
+      // System.out.println("FlatResource.init unid=" + unid + " " + contentDirectory.getAbsolutePath());
       boolean workUseDefaultLanguage = useDefaultLanguage;
       Location location = new Location(unid);
       // Remove extra parts.
       unid = location.getUnid();
       // Revision
+      // System.out.println("FlatResource.init REV1=" + defaultRevision);
       String tmpString = location.getRevision();
       if(0 < tmpString.length()){
          defaultRevision = tmpString;
+         // System.out.println("FlatResource.init REV2=" + defaultRevision);
       }
       // Language
       tmpString = location.getLanguage();
@@ -76,7 +82,7 @@ public class FlatResource implements Resource {
             defaultLanguage = defaultLanguageParameter;
          }
       }
-      resourceDirectory = new File(contentDirectory, "resource" + File.separator + unid);
+      resourceDirectory = new File(contentDirectory, unid);
       Publication pub = Globals.getPublication();
       if(null != pub){
          // Use Publication's Default Language. Only possible during Request.
@@ -90,48 +96,71 @@ public class FlatResource implements Resource {
          if(!resourceDirectory.exists()){
             // Check structure named before first slash
             // DESIGN: Use String.split()?
-            String structure = "live";
+            String structure = FlatContent.RELATIONS_DEFAULT;
             if(pos > 0){
                structure = workUnid.substring(0, pos);
                workUnid = workUnid.substring(pos);
             }
-            workUnid = pub.getContent().getUNID(structure, workUnid);
-            if(0 != workUnid.length()){
-               resourceDirectory = new File(contentDirectory, "resource" + File.separator + workUnid);
+            // Do not test if no structure or when seeking itself.
+            // if((0 < structure.length()) && !workUnid.endsWith(FlatContent.SEPARATOR_RELATIONS + structure)){
+            if((0 < structure.length()) && !workUnid.endsWith(structure)){
+               // System.out.println("FlatResource.init Check Structure=" + structure);
+               workUnid = pub.getContent().getUNID(structure, workUnid);
+               if(0 != workUnid.length()){
+                  resourceDirectory = new File(contentDirectory, workUnid);
+               }
             }
          }
          if(!resourceDirectory.exists()){
-            // Check live structure
-            workUnid = pub.getContent().getUNID("live", unid);
-            if(0 != workUnid.length()){
-               resourceDirectory = new File(contentDirectory, "resource" + File.separator + workUnid);
+            // Check default structure without part before slash
+            // Do not test default structure when seeking default Structure Design Resource
+            // if(!workUnid.endsWith(FlatContent.SEPARATOR_RELATIONS + FlatContent.RELATIONS_DEFAULT)){
+            if(!workUnid.endsWith(FlatContent.RELATIONS_DEFAULT)){
+               // System.out.println("FlatResource.init Check default Structure partialUnid=" + workUnid);
+               workUnid = pub.getContent().getUNID(FlatContent.RELATIONS_DEFAULT, unid);
+               if(0 != workUnid.length()){
+                  resourceDirectory = new File(contentDirectory, workUnid);
+               }
             }
          }
-         unid = workUnid;
+         if(!resourceDirectory.exists()){
+            // Check default structure using entire unid
+            workUnid = unid;
+            // Do not test default structure when seeking default Structure Design Resource
+            // if(!workUnid.endsWith(FlatContent.SEPARATOR_RELATIONS + FlatContent.RELATIONS_DEFAULT)){
+            if(!workUnid.endsWith(FlatContent.RELATIONS_DEFAULT)){
+               // System.out.println("FlatResource.init Check Default Structure with unid=" + workUnid);
+               workUnid = pub.getContent().getUNID(FlatContent.RELATIONS_DEFAULT, unid);
+               if(0 != workUnid.length()){
+                  resourceDirectory = new File(contentDirectory, workUnid);
+               }
+            }
+         }
+         if(resourceDirectory.exists()){
+            unid = workUnid;
+         }
       }
       // System.out.println("FlatResource.init USING UNID=" + unid);
       if(!resourceDirectory.exists()){
+         // System.out.println("FlatResource.init Could not find unid '" + unid + "' at " + resourceDirectory.getAbsolutePath());
          return;
       }
+      // System.out.println("FlatResource.init Loading");
       try{
          resource = DocumentHelper.readDocument(new File(resourceDirectory, FILENAME_RESOURCE));
          root = resource.getDocumentElement();
-         if(root.hasAttribute("defaultlanguage")){
-            defaultLanguageParameter = root.getAttribute("defaultlanguage");
+         if(root.hasAttribute(ATTR_DEFAULT_LANGUAGE)){
+            defaultLanguageParameter = root.getAttribute(ATTR_DEFAULT_LANGUAGE);
          }
-         if(root.hasAttribute("doctype"))
-            doctype = root.getAttribute("doctype");
-         if(root.hasAttribute("type"))
-            type = root.getAttribute("type");
-         if(root.hasAttribute("id"))
-            id = root.getAttribute("id");
+         if(root.hasAttribute("doctype")) doctype = root.getAttribute("doctype");
+         if(root.hasAttribute("type")) type = root.getAttribute("type");
+         if(root.hasAttribute("id")) id = root.getAttribute("id");
          String[] files = resourceDirectory.list();
          int length = files.length;
          List list = new ArrayList();
          for(int i = 0; i < length; i++){
             File file = new File(resourceDirectory, files[i]);
-            if(file.isDirectory())
-               list.add(files[i]);
+            if(file.isDirectory()) list.add(files[i]);
          }
          languages = (String[]) list.toArray(new String[0]);
          Arrays.sort(languages);
@@ -229,10 +258,9 @@ public class FlatResource implements Resource {
     */
    // public String get(String property, String fullid, String fulltype, String fulldoctype) {
    public String get(String property, String fullid, String fulltype) {
-      if(property.equalsIgnoreCase("type")){
-         return fulltype;
-         // }else if(property.equalsIgnoreCase("doctype")){
-         // return fulldoctype;
+      if(property.equalsIgnoreCase("type")){ return fulltype;
+      // }else if(property.equalsIgnoreCase("doctype")){
+      // return fulldoctype;
       }
       return get(property, fullid);
    }
@@ -240,9 +268,7 @@ public class FlatResource implements Resource {
     * Get variable for Structured Index Filters
     */
    public String get(String property, String fullid) {
-      if(property.equalsIgnoreCase("fullid")){
-         return fullid;
-      }
+      if(property.equalsIgnoreCase("fullid")){ return fullid; }
       return get(property);
    }
    /**
@@ -265,9 +291,7 @@ public class FlatResource implements Resource {
          return getLanguage();
       }else if(property.equalsIgnoreCase("fullid")){
          return getID();
-      }else if(property.equalsIgnoreCase("href")){
-         return getHREF();
-      }
+      }else if(property.equalsIgnoreCase("href")){ return getHREF(); }
       return getXPath(property);
    }
    private String getXPath(String property) {
@@ -280,18 +304,14 @@ public class FlatResource implements Resource {
       return getTranslation(language, true);
    }
    public FlatTranslation getTranslation(String language, boolean allowDefaultLanguage) {
-      if(allowDefaultLanguage){
-         return new FlatTranslation(resourceDirectory, language, defaultRevision, defaultLanguage);
-      }else
-         return new FlatTranslation(resourceDirectory, language, defaultRevision);
+      if(allowDefaultLanguage){ return new FlatTranslation(resourceDirectory, language, defaultRevision, defaultLanguage); }
+      return new FlatTranslation(resourceDirectory, language, defaultRevision);
    }
    public boolean hasRevision() {
       FlatTranslation translation = getTranslation(defaultLanguage, false);
-      if(null == translation)
-         return false;
+      if(null == translation) return false;
       FlatRevision revision = translation.getRevision(defaultRevision);
-      if(null == revision)
-         return false;
+      if(null == revision) return false;
       // DEV TEST
       // boolean exists = revision.exists();
       // if(getTitle().length() < 1){
@@ -316,36 +336,30 @@ public class FlatResource implements Resource {
       root.setAttribute("unid", unid);
       root.setAttribute("type", type);
       root.setAttribute("id", id);
-      if(defaultLanguageParameter.length() > 0)
-         root.setAttribute("defaultlanguage", defaultLanguageParameter);
-      if(doctype.length() > 0)
-         root.setAttribute("doctype", doctype);
+      if(defaultLanguageParameter.length() > 0) root.setAttribute(ATTR_DEFAULT_LANGUAGE, defaultLanguageParameter);
+      if(doctype.length() > 0) root.setAttribute("doctype", doctype);
       String tmp;
       if(null != languages){
          for(int l = 0; l < languages.length; l++){
             Element te = addElement(document, root, "translation");
             te.setAttribute("language", languages[l]);
             FlatTranslation translation = getTranslation(languages[l]);
-            tmp = translation.getEdit();
-            if(tmp.length() > 0)
-               te.setAttribute("edit", tmp);
-            tmp = translation.getLive();
-            if(tmp.length() > 0)
-               te.setAttribute("live", tmp);
+            // TODO: Use NamedRevisions - Content.getRevisions()
+            tmp = translation.getNamedRevision("edit");
+            if(tmp.length() > 0) te.setAttribute("edit", tmp);
+            tmp = translation.getNamedRevision(Content.REVISION_DEFAULT);
+            if(tmp.length() > 0) te.setAttribute(Content.REVISION_DEFAULT, tmp);
             String[] revisions = translation.getRevisions();
             for(int r = 0; r < revisions.length; r++){
                Element re = addElement(document, te, "revision");
                re.setAttribute("revision", revisions[r]);
                FlatRevision revision = translation.getRevision(revisions[r]);
                tmp = revision.getTitle();
-               if(tmp.length() > 0)
-                  re.setAttribute("title", tmp);
+               if(tmp.length() > 0) re.setAttribute("title", tmp);
                tmp = revision.getExtension();
-               if(tmp.length() > 0)
-                  re.setAttribute("extension", tmp);
+               if(tmp.length() > 0) re.setAttribute("extension", tmp);
                tmp = revision.getHREF();
-               if(tmp.length() > 0)
-                  re.setAttribute("href", tmp);
+               if(tmp.length() > 0) re.setAttribute("href", tmp);
             }
          }
       }
@@ -360,10 +374,8 @@ public class FlatResource implements Resource {
    public Document update(Document document) {
       // System.out.println("FlatResource.update - BEGIN");
       Element root = document.getDocumentElement();
-      if(root.hasAttribute("id"))
-         setID(root.getAttribute("id"));
-      if(root.hasAttribute("defaultlanguage"))
-         setDefaultLanguage(root.getAttribute("defaultlanguage"));
+      if(root.hasAttribute("id")) setID(root.getAttribute("id"));
+      if(root.hasAttribute(ATTR_DEFAULT_LANGUAGE)) setDefaultLanguage(root.getAttribute(ATTR_DEFAULT_LANGUAGE));
       save();
       NodeList translations = root.getElementsByTagName("translation");
       int translationslength = translations.getLength();
@@ -383,25 +395,23 @@ public class FlatResource implements Resource {
          // System.out.println("FlatResource.update - Get translation");
          if(exist){
             ft = getTranslation(language, false);
-            if(null == ft)
-               exist = false;
+            if(null == ft) exist = false;
          }
          // System.out.println("FlatResource.update - Update Translation");
          if(exist){
-            if(translation.hasAttribute("live"))
-               ft.setLive(translation.getAttribute("live"));
-            if(translation.hasAttribute("edit"))
-               ft.setEdit(translation.getAttribute("edit"));
+            // Use Content's NamedRevisions
+            Iterator iterator = ((FlatContent) Globals.getPublication().getContent()).getRevisions().iterator();
+            while(iterator.hasNext()){
+               String revisionName = (String) iterator.next();
+               if(translation.hasAttribute(revisionName)) ft.setNamedRevision(revisionName, translation.getAttribute(revisionName));
+            }
             NodeList revisions = translation.getElementsByTagName("revision");
             int revisionslength = revisions.getLength();
             for(int r = 0; r < revisionslength; r++){
-               // System.out.println("FlatResource.update - BEFORE");
                Element revision = (Element) revisions.item(r);
-               // System.out.println("FlatResource.update - AFTER");
                if(revision.hasAttribute("action")){
                   String action = revision.getAttribute("action");
                   if(action.equalsIgnoreCase("delete")){
-                     // System.out.println("FlatResource.update - Delete Revision");
                      String revisionid = revision.getAttribute("revision");
                      ft.deleteRevision(revisionid);
                   }
@@ -412,7 +422,6 @@ public class FlatResource implements Resource {
       }
       // Update Indexes
       ((FlatContent) Globals.getPublication().getContent()).updateIndexes();
-      // System.out.println("FlatResource.update - RETURN");
       return document;
    }
    private void setID(String newid) {
@@ -432,10 +441,9 @@ public class FlatResource implements Resource {
       // System.out.println("DELETE=" + translationDirectory.getAbsolutePath());
       deleteFile(translationDirectory);
    }
-   // TODO: Backup before delete. Use renameTo() to move outside the resource directory.
+   // TODO: Backup before delete. Use renameTo() to move outside the resource directory. See 13TODO.txt for design of transactions.
    private void deleteFile(File file) {
-      if(!file.exists())
-         return;
+      if(!file.exists()) return;
       if(file.isDirectory()){
          File[] files = file.listFiles();
          for(int f = 0; f < files.length; f++)
@@ -460,7 +468,7 @@ public class FlatResource implements Resource {
             return;
          }
          root = doc.getDocumentElement();
-         root.setAttribute("defaultlanguage", defaultLanguageParameter);
+         root.setAttribute(ATTR_DEFAULT_LANGUAGE, defaultLanguageParameter);
          root.setAttribute("id", id);
          try{
             DocumentHelper.writeDocument(doc, file);
@@ -471,21 +479,41 @@ public class FlatResource implements Resource {
          }catch(java.io.IOException ioe2){
             System.out.println("FlatResource.save - Could not write file: " + file.getAbsolutePath());
          }
-       }
+      }
       isChanged = false;
    }
    // <?xml version="1.0" encoding="UTF-8"?>
    // <resource defaultlanguage="en" doctype="xhtml" id="doctypes" type="xml" unid="0002" xmlns=""/>
    // TODO: Working here.
    // TODO: Create specific Exception
-   static public FlatResource create(String unid, String type, String id) throws ResourceException {
+   static public FlatResource createContent(String unid, String type, String id) throws ResourceException {
+      // System.out.println("FlatResource.createContent");
+      File contentDirectory = new File(Globals.getPublication().getContentDirectory(), FlatContent.DIRECTORY_CONTENT);
+      FlatResource resource = create(unid, type, id, contentDirectory, false);
+      // Only update "ALL" Index because cannot Resoruce cannot appear in other Indexes until a Revision is created.
+      ((FlatContent) Globals.getPublication().getContent()).indexer.updateAllIndex();
+      return resource;
+   }
+   static public FlatResource createDesign(String unid, String type, String id) throws ResourceException {
+      // System.out.println("FlatResource.createDesign");
+      FlatResource resource = create(FlatDesign.getDesignUnid(unid), type, id, Globals.getPublication().getDesign().getDirectory(), true);
+      return resource;
+   }
+   static public FlatResource createStructure(String unid, String type, String id) throws ResourceException {
+      System.out.println("FlatResource.createStructure");
+      FlatDesign design = Globals.getPublication().getDesign();
+      // FlatResource resource = create(FlatDesign.getStructureUnid(unid), type, id, Globals.getPublication().getDesign().getDirectory(), true);
+      FlatResource resource = create(design.getStructureUnid(unid), type, id, Globals.getPublication().getDesign().getDirectory(), true);
+      return resource;
+   }
+   static private FlatResource create(String unid, String type, String id, File contentDirectory, boolean isDesign) throws ResourceException {
+      // System.out.println("FlatResource.create DIR=" + contentDirectory.getAbsolutePath());
       String workUnid = unid;
+      // TODO: Make unid safe. See ModuleSourceFactory.safe().
       if(unid.length() < 1){
          workUnid = Globals.createUUID();
       }
-      Publication publication = Globals.getPublication();
-      File contentDirectory = publication.getContentDirectory();
-      File resourceDirectory = new File(contentDirectory, "resource" + File.separator + workUnid);
+      File resourceDirectory = new File(contentDirectory, workUnid);
       if(resourceDirectory.exists()){
          System.out.println("FlatResource.create: Resource creation failed because the Resource '" + workUnid + "' already exists." + resourceDirectory.getAbsolutePath());
          throw new ResourceException("Resource creation failed because the Resource '" + workUnid + "' already exists: " + resourceDirectory.getAbsolutePath());
@@ -494,7 +522,7 @@ public class FlatResource implements Resource {
       File resource = new File(resourceDirectory, FILENAME_RESOURCE);
       Document xml;
       try{
-         xml = DocumentHelper.createDocument("", "resource", null);
+         xml = DocumentHelper.createDocument("", FlatContent.DIRECTORY_CONTENT, null);
       }catch(DOMException e){
          System.out.println("CreateResource: DOMException");
          throw new ResourceException("CreateResource: DOMException", e);
@@ -509,10 +537,10 @@ public class FlatResource implements Resource {
       root.setAttribute("when", Globals.getDateString());
       String workType = type;
       int pos = type.lastIndexOf('/');
-      if(pos > 0)
-         workType = type.substring(pos + 1);
+      if(pos > 0) workType = type.substring(pos + 1);
       root.setAttribute("type", workType);
       root.setAttribute("doctype", workType);
+      if(isDesign) root.setAttribute(ATTR_DEFAULT_LANGUAGE, FlatDesign.DESIGN_LANGUAGE);
       // TODO: Throw these Exceptions.
       try{
          DocumentHelper.writeDocument(xml, resource);
@@ -527,8 +555,11 @@ public class FlatResource implements Resource {
          throw new ResourceException("CreateResource: IOException writing XML file: " + resource.getAbsolutePath(), ioe);
       }
       // Update Indexes
-      ((FlatContent) publication.getContent()).updateIndexes();
+      ((FlatContent) Globals.getPublication().getContent()).updateIndexes();
       // Return
       return new FlatResource(contentDirectory, workUnid);
+   }
+   public boolean exists() {
+      return getTranslation().exists();
    }
 }

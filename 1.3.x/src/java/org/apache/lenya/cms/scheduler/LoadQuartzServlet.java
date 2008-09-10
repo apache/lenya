@@ -37,9 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.log4j.Logger;
@@ -220,7 +220,10 @@ public class LoadQuartzServlet extends HttpServlet {
             String jobId = getJobId(schedulerParameters);
             getScheduler().deleteJob(jobId, publicationId);
          }else if(action.equals(DOCUMENT_DELETED)){
-            Publication publication = PublicationFactory.getPublication(publicationId, getServletContextDirectory().getAbsolutePath());
+            Publication publication = Globals.getPublication(publicationId);
+            if(null == publication){
+               throw new PublicationException("LoadQuartzServlet.handleRequest: No Publication.");
+            }
             String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
             org.apache.lenya.cms.publication.Document document = publication.getDocumentBuilder().buildDocument(publication, documentUrl);
             deleteDocumentJobs(document);
@@ -332,7 +335,7 @@ public class LoadQuartzServlet extends HttpServlet {
       for(int i = 0; i < publicationDirectories.length; i++){
          File directory = publicationDirectories[i];
          String publicationId = directory.getName();
-         if(PublicationFactory.existsPublication(publicationId, getServletContextDirectory().getAbsolutePath())){
+         if(Globals.existsPublication(publicationId)){
             getScheduler().restoreJobs(publicationId);
          }
       }

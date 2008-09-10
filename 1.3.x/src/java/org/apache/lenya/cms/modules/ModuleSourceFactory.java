@@ -14,8 +14,8 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.excalibur.source.impl.FileSource;
-import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.Globals;
 /**
  * 2000125: Integrated with org.apache.lenya.cms.modules
  * 
@@ -41,19 +41,15 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
          return new FileSource(location);
       }
       String uri = resolver.resolveURI("").getURI();
-      String publication;
-      Publication pub;
-      try{
-         PageEnvelope envelope = PageEnvelope.getCurrent();
-         pub = envelope.getPublication();
-         publication = pub.getId();
-      }catch(org.apache.lenya.cms.publication.PageEnvelopeException pee){
-         throw new MalformedURLException("ModuleSourceFactory PageEnvelopeException. Could not get Publication.");
+      Publication publication = Globals.getPublication();
+      
+      String publicationId = "";
+      if(null != publication){
+         publicationId = publication.getId();
       }
       // Reset moduleInheritance
       boolean needsReset = false;
-      if(location.indexOf("::") != -1)
-         needsReset = true;
+      if(location.indexOf("::") != -1) needsReset = true;
       // Decide Usage
       pos = location.indexOf(":///");
       int endpos;
@@ -68,6 +64,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
       // This errors.
       // Every Module must have a module.xmap (even if it is empty)!
       String filepath = "module.xmap";
+      // TODO: Improve parsing using
       if(pos != -1){ // module:/filepath/filename.ext
          // Get current Module ID
          filepath = location.substring(pos + 4);
@@ -90,7 +87,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
                pos += 2;
                endpos = location.indexOf("/", pos);
                if(endpos > 0){
-                  publication = location.substring(pos, endpos);
+                  publicationId = location.substring(pos, endpos);
                   pos = endpos + 1;
                   endpos = location.indexOf("/", pos);
                   if(endpos > 0){
@@ -100,7 +97,7 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
                      moduleId = location.substring(pos);
                   }
                }else{
-                  publication = location.substring(pos);
+                  publicationId = location.substring(pos);
                }
             }else{
                // /filepath/filename.ext (Default protocol)
@@ -109,16 +106,12 @@ public class ModuleSourceFactory implements SourceFactory, ThreadSafe, URIAbsolu
          }
       }
       // Verify
-      if(publication.length() < 1)
-         throw new MalformedURLException("No Publication ID found.");
-      if(moduleId.length() < 1)
-         moduleId = getModuleID(uri);
+      if(publicationId.length() < 1) throw new MalformedURLException("No Publication ID found.");
+      if(moduleId.length() < 1) moduleId = getModuleID(uri);
       // BUG ALERT: See description above about no default
-      if(filepath.length() < 1)
-         filepath = "module.xmap";
-      String newlocation = pub.getModules().getFile(moduleId, filepath, needsReset);
-      if(newlocation.length() < 1)
-         throw new SourceNotFoundException("Not found: " + location + " -> " + newlocation);
+      if(filepath.length() < 1) filepath = "module.xmap";
+      String newlocation = publication.getModules().getFile(moduleId, filepath, needsReset);
+      if(newlocation.length() < 1) throw new SourceNotFoundException("Not found: " + location + " -> " + newlocation);
       // System.out.println("ModuleSource: " + newlocation);
       return new FileSource("file://" + newlocation);
    }

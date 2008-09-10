@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.publication;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -26,11 +25,13 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
-import org.apache.lenya.cms.publication.file.FilePublication;
+import org.apache.lenya.util.Globals;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Logger;
 /**
  * Factory for creating publication objects.
+ * 
+ * @deprecated Use Globals.getPublication functions.
  */
 public final class PublicationFactory {
    private static Logger log = Logger.getLogger(PublicationFactory.class);
@@ -39,7 +40,7 @@ public final class PublicationFactory {
     */
    private PublicationFactory() {
    }
-   private static Map keyToPublication = new HashMap();
+   // private static Map keyToPublication = new HashMap();
    /**
     * Creates a new publication. The publication ID is resolved from the request URI. The servlet context path is resolved from the context object.
     * 
@@ -50,8 +51,10 @@ public final class PublicationFactory {
     * 
     * @throws PublicationException
     *            if there was a problem creating the publication.
+    * @deprecated Use Globals.getPublication()
     */
    public static Publication getPublication(Map objectModel) throws PublicationException {
+      // System.out.println("PublicationFactory Map");
       // assert objectModel != null;
       Request request = ObjectModelHelper.getRequest(objectModel);
       Context context = ObjectModelHelper.getContext(objectModel);
@@ -69,24 +72,27 @@ public final class PublicationFactory {
     * 
     * @throws PublicationException
     *            if there was a problem creating the publication.
+    * @deprecated Use Globals.getPublication(id)
     */
    public static Publication getPublication(String id, String servletContextPath) throws PublicationException {
-      // assert id != null;
-      // assert servletContextPath != null;
-      String key = generateKey(id, servletContextPath);
-      Publication publication = null;
-      if(keyToPublication.containsKey(key)){
-         publication = (Publication) keyToPublication.get(key);
-      }else{
-         if(PublicationFactory.existsPublication(id, servletContextPath)){
-            publication = new FilePublication(id, servletContextPath);
-            keyToPublication.put(key, publication);
-         }
-      }
-      if(publication == null){
-         throw new PublicationException("The publication for ID [" + id + "] could not be created.");
-      }
-      return publication;
+      // System.out.println("PublicationFactory id contextPath");
+      return Globals.getPublication(id);
+      // // assert id != null;
+      // // assert servletContextPath != null;
+      // String key = generateKey(id, servletContextPath);
+      // Publication publication = null;
+      // if(keyToPublication.containsKey(key)){
+      // publication = (Publication) keyToPublication.get(key);
+      // }else{
+      // if(PublicationFactory.existsPublication(id, servletContextPath)){
+      // publication = new FilePublication(id, servletContextPath);
+      // keyToPublication.put(key, publication);
+      // }
+      // }
+      // if(publication == null){
+      // throw new PublicationException("The publication for ID [" + id + "] could not be created.");
+      // }
+      // return publication;
    }
    /**
     * Generates a key to cache a publication. The cache key is constructed using the canonical servlet context path and the publication ID.
@@ -100,6 +106,7 @@ public final class PublicationFactory {
     *            when the servlet context does not exist.
     */
    protected static String generateKey(String publicationId, String servletContextPath) throws PublicationException {
+      // System.out.println("PublicationFactory.generateKey");
       String key;
       File servletContext = new File(servletContextPath);
       String canonicalPath;
@@ -123,8 +130,10 @@ public final class PublicationFactory {
     * 
     * @throws PublicationException
     *            if there was a problem creating the publication.
+    * @deprecated Use Globals.getPublication()
     */
    public static Publication getPublication(Request request, Context context) throws PublicationException {
+      // System.out.println("PublicationFactory request context");
       log.debug("Creating publication from Cocoon object model");
       String webappUrl = ServletHelper.getWebappURI(request);
       String servletContextPath = context.getRealPath("");
@@ -140,8 +149,10 @@ public final class PublicationFactory {
     * @return A publication
     * @throws PublicationException
     *            when something went wrong
+    * @deprecated Use Globals.getPublication()
     */
    public static Publication getPublication(String webappUrl, File servletContext) throws PublicationException {
+      // System.out.println("PublicationFactory url context");
       log.debug("Creating publication from webapp URL and servlet context");
       log.debug("    Webapp URL:       [" + webappUrl + "]");
       String publicationId = new URLInformation(webappUrl).getPublicationId();
@@ -156,16 +167,19 @@ public final class PublicationFactory {
     * @param servletContextPath
     *           The webapp context path.
     * @return <code>true</code> if the publication exists, <code>false</code> otherwise.
+    * @deprecated Use Globals.existsPublication(id)
     */
    public static boolean existsPublication(String id, String servletContextPath) {
-      if(servletContextPath.endsWith("/")){
-         servletContextPath = servletContextPath.substring(0, servletContextPath.length() - 1);
-      }
-      File publicationDirectory = new File(servletContextPath + File.separator + Publication.PUBLICATION_PREFIX + File.separator + id);
-      boolean exists = true;
-      exists = exists && publicationDirectory.isDirectory();
-      exists = exists && new File(publicationDirectory, Publication.CONFIGURATION_FILE).exists();
-      return exists;
+      // System.out.println("PublicationFactory.existsPublication");
+      return Globals.existsPublication(id);
+      // if(servletContextPath.endsWith("/")){
+      // servletContextPath = servletContextPath.substring(0, servletContextPath.length() - 1);
+      // }
+      // File publicationDirectory = new File(servletContextPath + File.separator + Publication.PUBLICATION_PREFIX + File.separator + id);
+      // boolean exists = true;
+      // exists = exists && publicationDirectory.isDirectory();
+      // exists = exists && new File(publicationDirectory, Publication.CONFIGURATION_FILE).exists();
+      // return exists;
    }
    /**
     * Creates a publication using a source resolver and a request.
@@ -177,8 +191,10 @@ public final class PublicationFactory {
     * @return A publication.
     * @throws PublicationException
     *            when something went wrong.
+    * @deprecated Use Globals.getPublication()
     */
    public static Publication getPublication(SourceResolver resolver, Request request) throws PublicationException {
+      // System.out.println("PublicationFactory resolver request");
       log.debug("Creating publication from resolver and request");
       Publication publication;
       String webappUri = ServletHelper.getWebappURI(request);
@@ -186,7 +202,7 @@ public final class PublicationFactory {
       try{
          source = resolver.resolveURI("context:///");
          File servletContext = SourceUtil.getFile(source);
-         publication = PublicationFactory.getPublication(webappUri, servletContext);
+         publication = getPublication(webappUri, servletContext);
       }catch(Exception e){
          throw new PublicationException(e);
       }finally{

@@ -1,5 +1,7 @@
 About Lenya 1.3
 
+Lenya 1.3.0-dev is developed for Java 1.4 and Cocoon 2.1.11.
+
 === History
 February 2006: Started a private fork of Lenya 1.2.2.  
 June 2006: The other Committers expressed interest in (or demanded) the code.  I stopped new development and integrated my code with Lenya 1.2.x (between the 1.2.4 and 1.2.5 releases.)

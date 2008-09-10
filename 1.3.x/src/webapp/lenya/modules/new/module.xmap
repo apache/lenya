@@ -22,7 +22,7 @@
             <map:match pattern="{module:module}/save*">
                <map:generate type="request"/>
                <map:transform src="module::///create.xsl"/> 
-               <map:transform type="new-resource">
+               <map:transform type="new">
                </map:transform>
                <!-- Open new resource or display failure message-->
                <map:transform src="module:///edit.xsl">

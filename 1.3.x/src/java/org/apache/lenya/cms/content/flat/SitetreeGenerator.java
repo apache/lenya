@@ -12,7 +12,6 @@ import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.lenya.cms.content.Content;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.Globals;
@@ -48,30 +47,34 @@ public class SitetreeGenerator extends ServiceableGenerator implements Cacheable
     * Setup the file generator. Try to get the last modification date of the source for caching.
     */
    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par) throws ProcessingException, SAXException, IOException {
+      if(null == src) src = "";
       super.setup(resolver, objectModel, src, par);
       try{
          PageEnvelope envelope;
          Publication pub = Globals.getPublication();
-         String language = "en";
+         if(null == pub){ throw new ProcessingException("SitetreeGenerator.setup: No Publication."); }
+         String language = FlatContent.LANGUAGE_DEFAULT;
          try{
             envelope = PageEnvelope.getCurrent();
             language = envelope.getDocument().getLanguage();
          }catch(org.apache.lenya.cms.publication.PageEnvelopeException pee){
-            System.out.println("Sitetree Generator: could not use PageEnvelope.");
-            throw new ProcessingException("Sitetree Generator: could not use PageEnvelope.");
+            System.out.println("SitetreeGenerator.setup: Could not use PageEnvelope.");
+            throw new ProcessingException("SitetreeGenerator.setup: Could not use PageEnvelope.");
          }
-         // Lenya-1.3
-         if(pub.getContentType().equalsIgnoreCase(Content.TYPE_FLAT)){
-            this.inputSource = super.resolver.resolveURI(pub.getContent().getIndexFilename(src, language));
+         File indexFile;
+         if(pub.getContentType().equalsIgnoreCase(FlatContent.TYPE)){
+            // Flat Content
+            // NOTE: Using Oresolver.resolveURI(getIndexFilename()) fails. Must create File first.
+            indexFile = new File(pub.getContent().getIndexFilename(src, language));
+            // System.out.println("SitetreeGenerator setup src=" + src + " " + (indexFile.exists() ? "exists" : "does not exist") + "\nFILE=" + indexFile.getAbsolutePath());
          }else{
-            // Lenya-1.2 Hierarchical Content 
-            File testfile = new File(pub.getContentDirectory(), src + File.separator + "sitetree.xml");
-            if(!testfile.exists())
-               testfile = new File(pub.getContentDirectory(), "live" + File.separator + "sitetree.xml");
-            this.inputSource = super.resolver.resolveURI(testfile.getPath());
+            // Hierarchical Content
+            indexFile = new File(pub.getContentDirectory(), src + File.separator + "sitetree.xml");
+            if(!indexFile.exists()) indexFile = new File(pub.getContentDirectory(), "live" + File.separator + "sitetree.xml");
          }
+         this.inputSource = super.resolver.resolveURI(indexFile.getPath());
       }catch(SourceException se){
-         throw SourceUtil.handle("Error during resolving of '" + src + "'.", se);
+         throw SourceUtil.handle("SitetreeGenerator SourceException resolving '" + src + "'.", se);
       }
    }
    /**
@@ -94,6 +97,7 @@ public class SitetreeGenerator extends ServiceableGenerator implements Cacheable
     * Generate XML data.
     */
    public void generate() throws IOException, SAXException, ProcessingException {
+      // System.out.println("SitetreeGenerator.generate");
       try{
          if(getLogger().isDebugEnabled()){
             getLogger().debug("Source " + super.source + " resolved to " + this.inputSource.getURI());
@@ -103,41 +107,4 @@ public class SitetreeGenerator extends ServiceableGenerator implements Cacheable
          SourceUtil.handleSAXException(this.inputSource.getURI(), e);
       }
    }
-   // DEV
-   // private void showMap(Map map) {
-   // System.out.println("%%% MAP BEGIN %%%");
-   // Set keys = map.keySet();
-   // Iterator iterator = keys.iterator();
-   // while(iterator.hasNext()){
-   // Object key = iterator.next();
-   // System.out.println(key + " = " + map.get(key));
-   // }
-   // System.out.println("%%% MAP END %%%");
-   // }
-   // private void showParameters(Parameters parameters) {
-   // System.out.println("%%% PARAMETERS BEGIN %%%");
-   // String[] names = parameters.getNames();
-   // int nlength = names.length;
-   // for(int i = 0; i < nlength; i++){
-   // try{
-   // System.out.println("PAR: " + names[i] + "=" + parameters.getParameter(names[i]));
-   // }catch(org.apache.avalon.framework.parameters.ParameterException pe){
-   // System.out.println("PAR: " + names[i] + " FAILURE");
-   // }
-   // }
-   // System.out.println("%%% PARAMETERS END %%%");
-   // }
-   // private String getModuleID(String uri) throws MalformedURLException {
-   // String module = "";
-   // int pos = uri.indexOf("modules/");
-   // if(pos > -1){
-   // pos += "modules/".length();
-   // int endpos = uri.indexOf("/", pos);
-   // if(endpos > -1){
-   // module = uri.substring(pos, endpos);
-   // }else
-   // module = uri.substring(pos);
-   // }
-   // return module;
-   // }
 }

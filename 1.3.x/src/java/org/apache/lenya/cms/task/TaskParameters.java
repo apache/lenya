@@ -14,82 +14,71 @@
  *  limitations under the License.
  *
  */
-
 /* $Id$  */
-
 package org.apache.lenya.cms.task;
-
 import java.util.Map;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
+import org.apache.lenya.util.Globals;
 public class TaskParameters extends ParameterWrapper {
-    public static final String[] REQUIRED_KEYS =
-        {
-            Task.PARAMETER_SERVLET_CONTEXT,
-            Task.PARAMETER_SERVER_URI,
-            Task.PARAMETER_SERVER_PORT,
-            Task.PARAMETER_CONTEXT_PREFIX,
-            Task.PARAMETER_PUBLICATION_ID };
-
-    /**
-     * Ctor.
-     * @param prefixedParameters The prefixed parameters .
-     */
-    public TaskParameters(Map prefixedParameters) {
-        super(prefixedParameters);
-    }
-
-    public static final String PREFIX = "task";
-
-    /**
-     * @see org.apache.lenya.cms.task.ParameterWrapper#getPrefix()
-     */
-    public String getPrefix() {
-        return PREFIX;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.task.ParameterWrapper#getRequiredKeys()
-     */
-    protected String[] getRequiredKeys() {
-        return REQUIRED_KEYS;
-    }
-
-    /**
-     * Returns the publication.
-     * @return A publication.
-     * @throws ExecutionException when something went wrong.
-     */
-    public Publication getPublication() throws ExecutionException {
-        Publication publication;
-        try {
-            publication =
-                PublicationFactory.getPublication(
-                    get(Task.PARAMETER_PUBLICATION_ID),
-                    get(Task.PARAMETER_SERVLET_CONTEXT));
-        } catch (PublicationException e) {
-            throw new ExecutionException(e);
-        }
-        return publication;
-    }
-
-    /**
-     * Sets the publication.
-     * @param publication A publication.
-     */
-    public void setPublication(Publication publication) {
-        put(Task.PARAMETER_PUBLICATION_ID, publication.getId());
-        put(Task.PARAMETER_SERVLET_CONTEXT, publication.getServletContext().getAbsolutePath());
-    }
-
-    /**
-     * Sets the servlet context path.
-     * @param servletContextPath A string.
-     */
-    public void setServletContextPath(String servletContextPath) {
-        put(Task.PARAMETER_SERVLET_CONTEXT, servletContextPath);
-    }
-
+   public static final String[] REQUIRED_KEYS = {Task.PARAMETER_SERVLET_CONTEXT, Task.PARAMETER_SERVER_URI, Task.PARAMETER_SERVER_PORT, Task.PARAMETER_CONTEXT_PREFIX, Task.PARAMETER_PUBLICATION_ID};
+   /**
+    * Ctor.
+    * 
+    * @param prefixedParameters
+    *           The prefixed parameters .
+    */
+   public TaskParameters(Map prefixedParameters) {
+      super(prefixedParameters);
+   }
+   public static final String PREFIX = "task";
+   /**
+    * @see org.apache.lenya.cms.task.ParameterWrapper#getPrefix()
+    */
+   public String getPrefix() {
+      return PREFIX;
+   }
+   /**
+    * @see org.apache.lenya.cms.task.ParameterWrapper#getRequiredKeys()
+    */
+   protected String[] getRequiredKeys() {
+      return REQUIRED_KEYS;
+   }
+   /**
+    * Returns the publication.
+    * 
+    * @return A publication.
+    * @throws ExecutionException
+    *            when something went wrong.
+    */
+   public Publication getPublication() throws ExecutionException {
+      try{
+         Publication publication = Globals.getPublication(get(Task.PARAMETER_PUBLICATION_ID));
+         if(null == publication){
+            throw new PublicationException("TaskParameters.getPublication: No Publication.");
+         }
+         return publication;
+      }catch(PublicationException e){
+         throw new ExecutionException(e);
+      }
+   }
+   /**
+    * Sets the publication.
+    * 
+    * @param publication
+    *           A publication.
+    */
+   public void setPublication(Publication publication) {
+      put(Task.PARAMETER_PUBLICATION_ID, publication.getId());
+      put(Task.PARAMETER_SERVLET_CONTEXT, publication.getServletContext().getAbsolutePath());
+   }
+   /**
+    * Sets the servlet context path.
+    * 
+    * @param servletContextPath
+    *           A string.
+    */
+   public void setServletContextPath(String servletContextPath) {
+      put(Task.PARAMETER_SERVLET_CONTEXT, servletContextPath);
+   }
 }

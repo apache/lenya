@@ -20,7 +20,7 @@
 <xsl:template match="/content">
   <html>
     <head>
-      <title><xsl:value-of select="$publication"/>&#160;<xsl:value-of select="$name"/>&#160;<i18n:text>Structure</i18n:text></title>
+      <title><xsl:value-of select="$publication"/>&#160;<xsl:value-of select="$name"/>&#160;<i18n:text>Relations</i18n:text></title>
 <style type="text/css">
 h1{
    margin: 0 0 5px 0;
@@ -531,6 +531,11 @@ function move(key, action){
       structure = beforeTarget.toString() + selection.toString() + afterTarget.toString();
    }
    undos.add(selected + '!' + selectedInstance + '!' + structure);
+
+   structureField = getElementForId("relations");
+   structureField.value = structure;
+
+   
    // Collapses are saved by position which may not be accurate after changing the structure
    // if a Resource is moved before or after an entry for the same Resource and only one is collapsed 
    // expandAllFunction(); // Prevents issue but annoys user.
@@ -608,6 +613,13 @@ function getElementForId(id){
 </div>
 <div id="structure">&#160;</div>
 <div id="information">&#160;</div>
+<div id="save">
+<form method="post" action="/{$publication}/{$module}/save/{$name}">
+<input type="hidden" name="id" value="{$name}"/>
+<input type="hidden" name="relations" id="relations"/>
+<input type="submit" value="Save Structure"/>
+</form>
+</div>
 <div id="instructions">
 <h2>Instructions</h2>
 This editor has 7 areas. <ol>
@@ -637,7 +649,9 @@ This editor has 7 areas. <ol>
 Note that Sibling and Child actions depend on where the selected Resource was clicked.  If the Resource was chosen from the All Resources list, the Resource will be ADDED.  If the Resource was chosen from the Structure list, the Resource and its descendants will be MOVED.  Copying a portion of the structure has not been implemented.
 </div>
 <script language="JavaScript">
-redraw();
+   redraw();
+   structureField = getElementForId("relations");
+   structureField.value = structure;
 </script>
 </body></html>
 </xsl:template>

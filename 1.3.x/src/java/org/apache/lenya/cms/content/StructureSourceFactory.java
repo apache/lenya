@@ -20,47 +20,42 @@ import org.w3c.dom.Document;
  * @author solprovider
  * @since 1.3
  */
-public class ContentSourceFactory extends AbstractContentSourceFactory {
+public class StructureSourceFactory extends AbstractContentSourceFactory {
    Source getResource(int requestType, Location location) throws MalformedURLException, IOException {
-      // System.out.println("ContentSourceFactory.getResource " + location.toString());
+      System.out.println("StructureSourceFactory.getResource l=" + location.toString());
       /** ******** Get Source (uses Content) ************ */
-      Content content = super.publication.getContent();
-      StringTokenizer tokens = new StringTokenizer(location.getUnid(), "/:", true);
-      int slashCount = 0;
+      StringTokenizer tokens = new StringTokenizer(location.getUnid(), "/", true);
       String token = tokens.nextToken();
-      while(token.equals("/")){
-         slashCount++;
+      // Remove leading slashes
+      while(token.equals("/") && tokens.hasMoreTokens()){
          token = tokens.nextToken();
       }
-      String structure = (2 < slashCount ? "" : token);
-      String unid = token;
       StringBuffer buffer = new StringBuffer();
+      buffer.append(token);
       while(tokens.hasMoreTokens()){
          buffer.append(tokens.nextToken());
       }
-      String fullid = buffer.toString();
-      if((1 < slashCount) || (0 < fullid.length())){
-         unid = content.getUNID(structure, fullid);
-      }
-      // System.out.println("ContentSourceFactory.getResource unid=" + unid);
+      String structure = buffer.toString();
+      System.out.println("StructureSourceFactory.getResource s=" + structure);
       Source source;
+      FlatDesign design = super.publication.getDesign();
       if(REQUEST_INFO == requestType){
-         // TODO: Catch errors
-         Resource resource = content.getResource(unid);
+         Resource resource = design.getStructure(structure);
          if(resource == null){
-            System.out.println("ContentSourceFactory.getSource Null Resource UNID=" + unid);
+            System.out.println("StructureSourceFactory.getResource MISSING INFO Resource=null");
             throw new SourceNotFoundException("Source not found (no Resource): " + location.toString());
          }
          Document doc = resource.getInfoDocument();
          if(doc == null){
-            System.out.println("ContentSourceFactory.getSource Null Document UNID=" + unid);
+            System.out.println("StructureSourceFactory.getResource MISSING INFO doc=null");
             throw new SourceNotFoundException("Source not found (no Document): " + location.toString());
          }
          source = new StringSource(manager, doc);
          if(source == null){
-            System.out.println("ContentSourceFactory.getSource Null Source UNID=" + unid);
+            System.out.println("StructureSourceFactory.getResource MISSING INFO source=null");
             throw new SourceNotFoundException("Source not found (no Source): " + location.toString());
          }
+         System.out.println("StructureSourceFactory.getResource FOUND INFO " + location.toString());
          return source;
       }
       // Revision
@@ -68,30 +63,28 @@ public class ContentSourceFactory extends AbstractContentSourceFactory {
       if(0 == revision.length()){
          revision = Content.REVISION_DEFAULT;
       }
-      // Language
-      String language = location.getLanguage();
-      if((1 > language.length()) || (FlatDesign.DESIGN_LANGUAGE.equalsIgnoreCase(language))){
-         Resource resource = content.getResource(unid);
-         if(resource != null){
-            language = resource.getDefaultLanguage();
-         }
-      }
-      if((1 > language.length()) || (FlatDesign.DESIGN_LANGUAGE.equalsIgnoreCase(language))){
-         language = publication.getDefaultLanguage();
-      }
       if(REQUEST_META == requestType){
-         source = resolver.resolveURI(content.getMetaURI(unid, language, revision));
+         source = resolver.resolveURI(design.getStructure(structure, revision).getMetaURI());
          if(source.exists()){
+            System.out.println("StructureSourceFactory.getResource FOUND META " + location.toString());
             return source;
          }else{
-            throw new SourceNotFoundException("Source not found (no Meta Source): " + location);
+            System.out.println("StructureSourceFactory.getResource MISSING INFO " + location.toString());
+            throw new SourceNotFoundException("Source not found (no Meta Source): " + location.toString());
          }
       }
-      String curi = content.getURI(unid, language, revision);
-      // System.out.println("ContentSourceFactory.getSource UNID=" + unid + " LANG=" + language + " REV=" + revision + " CURI=" + curi);
-      if(curi.length() < 1){ throw new SourceNotFoundException("Source not found (no URI): " + location + " UNID=" + unid + " LANG=" + language + " REV=" + revision); }
+      String curi = design.getStructure(structure, revision).getURI();
+      System.out.println("StructureSourceFactory.getResource REV=" + revision + " CURI='" + curi + "'");
+      if(curi.length() < 1){
+         System.out.println("StructureSourceFactory.getResource: No URI " + location.toString());
+         throw new SourceNotFoundException("Source not found (no URI): " + location.toString() + " UNID=" + structure + " REV=" + revision);
+      }
       source = resolver.resolveURI(curi);
-      if(source.exists()){ return source; }
-      throw new SourceNotFoundException("Source not found: " + location + " (" + curi + ")");
+      if(source.exists()){
+         System.out.println("StructureSourceFactory.getResource FOUND " + location.toString());
+         return source;
+      }
+      System.out.println("StructureSourceFactory.getResource MISSING " + location.toString());
+      throw new SourceNotFoundException("Source not found: " + location.toString() + " (" + curi + ")");
    }
 }

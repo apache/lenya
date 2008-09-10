@@ -32,20 +32,75 @@
                   <map:serialize type="html"/>
                </map:otherwise>
             </map:select>
+<!-- Because Cocoon's Aggregator does not understand Generators -->
             <map:match pattern="all">
                <map:generate type="sitetree"/>
+               <map:serialize type="xml"/>
+            </map:match>
+            <map:match pattern="request">
+               <map:generate type="request"/>
                <map:serialize type="xml"/>
             </map:match>
 <!-- Edit Structure. -->
             <map:match pattern="{module:module}/">
                <map:call resource="default"/>
             </map:match>
+<!-- Retrieve Structure -->
+            <map:match pattern="structure/*">
+               <map:select type="resource-exists">
+   <!-- Get Structure as Design Resource if exists. -->
+                  <map:when test="structure:/{1}">
+                     <map:generate src="structure:/{1}!edit"/>
+                  </map:when>
+   <!-- From development of Lenya 1.3.  Structures were stored in content/relation before becoming Design Resources. -->
+                  <map:when test="module:///../../pubs/{publication:publication}/content/relation/{1}.xml">
+                     <map:generate src="module:///../../pubs/{publication:publication}/content/relation/{1}.xml"/>
+                  </map:when>
+   <!-- Defaults to create new Structure -->
+                  <map:otherwise>
+                     <map:generate src="empty:resources"/>
+                  </map:otherwise>
+               </map:select>
+               <map:serialize type="xml"/>
+            </map:match>
+<!-- Save -->
+            <map:match pattern="{module:module}/save/*">
+               <map:aggregate element="data">
+                  <map:part src="cocoon:/request"/>
+                  <map:part src="cocoon:/all"/>
+               </map:aggregate>
+               <map:transform src="module:///save.xsl">
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="name" value="{1}"/>
+                  <map:parameter name="publication" value="{publication:publication}"/>
+                  <map:parameter name="publicationname" value="{publication:name}"/>
+               </map:transform>
+               <map:select type="resource-exists">
+                  <map:when test="structure:/{1}">
+                  </map:when>
+                  <map:otherwise>
+                     <!-- If no Design Resource, create it. -->
+                     <map:transform type="new-structure"/>
+                  </map:otherwise>
+               </map:select>
+               <!-- Create revision -->
+<!--               <map:transform src="module:///clean.xsl"/>
+-->
+               <map:transform type="revise-structure" src="{1}"/>
+              <!-- Sensible return after save -->
+               <map:transform src="module:///finish.xsl">
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="structure" value="{1}"/>
+                  <map:parameter name="publication" value="{publication:publication}"/>
+               </map:transform>
+               <map:serialize type="html"/>
+            </map:match>
+<!-- Edit -->
             <!-- module/structure -->
             <map:match pattern="{module:module}/*">
                <map:aggregate element="content">
                   <map:part src="cocoon:/all"/>
-<!-- TODO: Move structures to content -->
-                  <map:part src="module:///../../pubs/{publication:publication}/content/relation/{1}.xml"/>
+                  <map:part src="cocoon:/structure/{1}"/>
                </map:aggregate>
                <map:transform src="module:///structure.xsl">
                   <map:parameter name="module" value="{module:module}"/>

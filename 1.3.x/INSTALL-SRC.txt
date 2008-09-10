@@ -15,15 +15,14 @@
   You will need
 
 	* Java 2 Platform, Standard Edition
-	  version 1.4.2 or newer, 1.5.x works with some limitations
-	  (see http://issues.apache.org/bugzilla/show_bug.cgi?id=32923)
-          Lenya 1.3 was developed with j2sdk1.4.2_07
+	  version 1.4.2 or newer.
+          Lenya 1.3 was developed with j2sdk1.4.2_15
 
-	* Apache Cocoon, version 2.1.9
+	* Apache Cocoon, version 2.1.11
 	  Available from http://cocoon.apache.org/mirror.cgi
 
 	* Apache Tomcat, version 5
-	  (optional, only if you don't want to use the built-in Jetty)
+	  Optional and untested replacement for Jetty (included with Lenya.)
 
   Don't install Tomcat in a location with spaces in the path!
   On Windows, put it directly in C:\tomcat rather than
@@ -33,44 +32,42 @@
 
 	1.	Create a directory src/ in a location with no spaces in the path
 
-	2.	Unpack Cocoon in src/, thereby creating src/cocoon-2.1.9
+	2.	Unpack Cocoon in src/, thereby creating src/cocoon-2.1.11
 
-	3.	Unpack Lenya in src/, thereby creating src/lenya-1.3.x
+	3.	Unpack Lenya in src/, thereby creating src/lenya-1.3
 
   Build Cocoon
 
 	1.	Copy
+			src/lenya-1.3/src/cocoon/local.build.properties
+			src/lenya-1.3/src/cocoon/local.blocks.properties
+		to	src/cocoon-2.1.11/
 
-			src/lenya-1.3.x/src/cocoon/local.build.properties
-			src/lenya-1.3.x/src/cocoon/local.blocks.properties
 
-		to	src/cocoon-2.1.9/
+	2.	Go to src/cocoon-2.1.11 and type
+			./build.sh on Unix
+			build.bat  on Windows
 
-        2.      If Windows, fix the 4 batch files.
-                    src\cocoon-2.1.9\tools\bin
+        	If errors on Windows, fix the 4 batch files.
+                    src\cocoon-2.1.11\tools\bin
                     ant.bat  antRun.bat  appendcp.bat  lcp.bat
                 Convert to DOS format.  
                 Copy from src\lenya-1.3\tools\bin
                 OR Open each in Wordpad and save it.)
 
-	3.	Go to src/cocoon-2.1.9 and type
-
-			./build.sh on Unix
-			build.bat  on Windows
 
   Standalone Installation (using the built-in Jetty)
 
 	1.	Configure Lenya
 
-		In lenya-1.3.x, copy
-
+		In lenya-1.3, copy
 			build.properties
 
 		to	local.build.properties
  
 		Edit local.build.properties and make sure that
 
-			cocoon.src.dir=../cocoon-2.1.9
+			cocoon.src.dir=../cocoon-2.1.11
 			web.app.server=Jetty
 
 		If you want to upload files to your Lenya website
@@ -80,28 +77,24 @@
 
 	2.	Build Lenya 
 
-		In lenya-1.3.x, execute
-
+		In lenya-1.3, execute
 			./build.sh on Unix
 			build.bat  on Windows
 
 		If you need to re-build Lenya, issue
-
 			./build.sh clean on Unix
 			build.bat clean  on Windows
-
 		to clear the build directory prior to your next build.
 
 	3.	Start Lenya/Jetty
 
-		In lenya-1.3.x, type
-
+		In lenya-1.3, type
 			./lenya.sh servlet on Unix
 			lenya.bat servlet  on Windows
 
 	4.	Test the Installation
 
-		Point your browser to http://localhost:8888
+		Open your browser to http://localhost:8888
 
   End of standalone installation using the built-in Jetty
   ----
@@ -110,7 +103,7 @@
 
 	1.	Configure Lenya
 
-		In lenya-1.3.x, copy
+		In lenya-1.3, copy
 
 			build.properties
 
@@ -118,7 +111,7 @@
 
 		Edit local.build.properties and make sure that
 
-			cocoon.src.dir=../cocoon-2.1.9
+			cocoon.src.dir=../cocoon-2.1.11
 			web.app.server=Tomcat
 			tomcat.home.dir=[path_to_tomcat]
 
@@ -135,7 +128,7 @@
 
 	2.	Build Lenya
 
-		In lenya-1.3.x, execute
+		In lenya-1.3, execute
 
 			./build.sh on Unix
 			build.bat  on Windows

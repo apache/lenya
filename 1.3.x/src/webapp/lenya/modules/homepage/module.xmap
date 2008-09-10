@@ -11,6 +11,10 @@
    <map:pipelines>
       <map:pipeline type="noncaching">
          <map:match pattern="**">
+<!-- CSS bypass -->
+            <map:match pattern="**/*.css">
+               <map:read src="module:///{2}.css" mime-type="text/css"/>
+            </map:match>
             <map:match pattern="**/">
                <map:redirect-to uri="index.html"  session="false"/>
             </map:match>
