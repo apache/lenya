@@ -36,7 +36,7 @@
       <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" title="default css"/>
       <!-- the following line is a fix for an Internet Explorer incompatibility -->
       <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
-      <xsl:apply-templates select="xhtml:script"/>
+      <xsl:apply-templates select="xhtml:script|xhtml:style"/>
     </head>
     <body>
     
