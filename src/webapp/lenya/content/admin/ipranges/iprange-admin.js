@@ -86,10 +86,9 @@ function iprangeChangeProfile(newRange) {
 	    }
 	    else {
 	        range = ipRangeManager.getIPRange(iprangeId);
-	    }
 		var name = range.getName();
 		var description = range.getDescription();
-		
+	   }	
 		var net = new Array(4);
 		var mask = new Array(4);
 
