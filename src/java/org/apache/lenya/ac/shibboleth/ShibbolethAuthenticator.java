@@ -494,6 +494,10 @@ public class ShibbolethAuthenticator extends UserAuthenticator implements Parame
 
     public AttributeSet getAttributeSet() {
         if (this.attributeSet == null) {
+            if (this.attributeSetHint == null) {
+                throw new RuntimeException("The parameter 'attribute-set' was not set. "
+                        + "Please check $WEBAPP_HOME/WEB-INF/cocoon.xconf.");
+            }
             try {
                 this.attributeManager = (AttributeManager) this.manager.lookup(AttributeManager.ROLE);
                 this.attributeSet = this.attributeManager.getAttributeSet(this.attributeSetHint);

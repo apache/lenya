@@ -52,7 +52,7 @@ public class AttributeManagerImpl extends AbstractLogEnabled implements Servicea
             try {
                 attrs = (AttributeSet) this.attrSetSelector.select(name);
             } catch (ServiceException e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
             this.name2attributeSet.put(name, attrs);
         }
