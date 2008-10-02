@@ -37,7 +37,7 @@
 	  <div class="lenya-box-title"><i18n:text>Error while publishing</i18n:text></div>
 	  <div class="lenya-box-body">
 	    <p>
-	      <i18n:text>An error occured while publishing. Most likely you are trying
+	      <i18n:text>An error occurred while publishing. Most likely you are trying
 	      to publish a document whose parent document hasn't been
 	      published yet.</i18n:text></p>
 	    <p><i18n:text>Try to publish the parent document first.</i18n:text></p>

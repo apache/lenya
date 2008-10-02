@@ -35,7 +35,7 @@
 	  <div class="lenya-box-title"><i18n:text>Page not published yet</i18n:text></div>
 	  <div class="lenya-box-body">
 	    <p>
-	      <i18n:text>An error occured. Most likely you are trying access a
+	      <i18n:text>An error occurred. Most likely you are trying access a
 	      page which has not been published yet.</i18n:text></p>
 	      
 	    <p><i18n:text>To publish this page click on the <strong>File</strong> menu

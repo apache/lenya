@@ -397,7 +397,7 @@
   <message key="error-missing-language">The requested document is not available for language: {0}</message>
   <message key="error-document-existance-short">Document does not exist</message>
   <message key="error-document-existance">The requested document {0} does not exist.</message>
-  <message key="error-generic">An error occured.</message>
+  <message key="error-generic">An error occurred.</message>
   <message key="error-404">404: Page not found</message>
   
   <message key="publication-does-not-exist">The publication does not exist</message>
