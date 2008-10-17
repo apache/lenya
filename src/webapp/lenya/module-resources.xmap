@@ -25,6 +25,7 @@
       <!-- temporary fix for bxe. should be reconsidered -->
       <map:transformer name="proxy-rng" logger="lenya.sitemap.transformer.proxy"
         src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+        <urls type="relative"/>
         <transform namespace="http://relaxng.org/ns/structure/1.0" element="include" attribute="href"/>
       </map:transformer>
     </map:transformers>
