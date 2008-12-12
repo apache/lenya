@@ -22,7 +22,7 @@
   <menus>
     <menu i18n:attr="name" name="Development">
       <block areas="admin site authoring">
-        <item href="/modules/development/log4j.log"><i18n:text>Show Log</i18n:text></item>
+        <item href="/modules/development/log4j.log" target="_blank"><i18n:text>Show Log</i18n:text></item>
       </block>
     </menu>
   </menus>
