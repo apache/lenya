@@ -40,11 +40,7 @@ public class Users extends AccessControlUsecase {
     protected static final String CURRENT_USER = "currentUser";
     protected static final String USER_TYPES = "userTypes";
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
+    protected void prepareView() throws Exception {
         
         User[] users = getUserManager().getUsers();
         List userList = new ArrayList();
