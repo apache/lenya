@@ -143,6 +143,12 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
         AccessController accessController = null;
         UsecaseResolver usecaseResolver = null;
         UsecaseAuthorizer authorizer = null;
+        
+        String usecaseName = tab.getUsecase();
+        if (usecaseName == null) {
+            throw new IllegalArgumentException("The usecase name of the tab [" + tab.getName() + "] is null.");
+        }
+        
         try {
 
             selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
@@ -180,7 +186,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 Publication pub = PublicationUtil.getPublicationFromUrl(this.manager,
                         factory,
                         this.webappUrl);
-                if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub)) {
+                if (!authorizer.authorizeUsecase(usecaseName, this.roles, pub)) {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Usecase not authorized");
                     }
@@ -189,10 +195,10 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 }
             }
 
-            if (usecaseResolver.isRegistered(this.webappUrl, tab.getUsecase())) {
+            if (usecaseResolver.isRegistered(this.webappUrl, usecaseName)) {
                 Usecase usecase = null;
                 try {
-                    usecase = usecaseResolver.resolve(this.webappUrl, tab.getUsecase());
+                    usecase = usecaseResolver.resolve(this.webappUrl, usecaseName);
                     usecase.setSourceURL(this.webappUrl);
                     usecase.setName(tab.getUsecase());
                     String[] keys = tab.getParameterNames();
@@ -217,8 +223,8 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 }
             } else {
                 messages = new UsecaseMessage[1];
-                messages[0] = new UsecaseMessage("Usecase [" + tab.getUsecase()
-                        + "] is not registered!", null);
+                String[] params = {};
+                messages[0] = new UsecaseMessage("Usecase [" + usecaseName + "] is not registered!", params);
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
