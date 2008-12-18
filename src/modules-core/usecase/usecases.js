@@ -328,8 +328,6 @@ function redirect(targetUrl) {
     cocoon.redirectTo(proxyUrl, true);
 }
 
-
-
 /**
  * Main function to execute a usecase. This is called from <map:flow/>.
  *
@@ -364,6 +362,9 @@ function executeUsecase() {
         }
         // create proxy object to save usecase state
         view = usecase.getView();
+        if (view) {
+            usecase.setupView();
+        }
         proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
         log("debug", "Successfully prepared usecase.", usecaseName);
     } catch (exception) {

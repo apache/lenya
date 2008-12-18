@@ -222,4 +222,10 @@ public interface Usecase {
      * @return if the usecase uses optimistic offline lock.
      */
     boolean isOptimistic();
+    
+    /**
+     * Initialize the view.
+     * @throws UsecaseException if an error occurs.
+     */
+    void setupView() throws UsecaseException;
 }
