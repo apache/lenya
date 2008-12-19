@@ -39,6 +39,7 @@ import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
@@ -73,6 +74,12 @@ import org.apache.lenya.workflow.Workflowable;
  */
 public class Publish extends InvokeWorkflow {
 
+    /**
+     * If the usecase should check for missing live ancestors in {@link #checkPreconditions()}.
+     * Type: {@link Boolean} or {@link String}
+     */
+    public static final String PARAM_CHECK_MISSING_ANCESTORS = "checkMissingAncestors";
+
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_PUBLISHED = "document-published";
     protected static final String SCHEDULE = "schedule";
@@ -80,7 +87,7 @@ public class Publish extends InvokeWorkflow {
     protected static final String CAN_SEND_NOTIFICATION = "canSendNotification";
     protected static final String SEND_NOTIFICATION = "sendNotification";
     protected static final String UNPUBLISHED_LINKS = "unpublishedLinks";
-
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
@@ -187,69 +194,82 @@ public class Publish extends InvokeWorkflow {
         if (!hasErrors()) {
 
             Document document = getSourceDocument();
-
             if (!document.getArea().equals(Publication.AUTHORING_AREA)) {
                 addErrorMessage("This usecase can only be invoked from the authoring area.");
                 return;
             }
 
-            Publication publication = document.getPublication();
-            DocumentFactory map = document.getFactory();
-            SiteStructure liveSite = publication.getArea(Publication.LIVE_AREA).getSite();
-
-            List missingDocuments = new ArrayList();
-
-            ServiceSelector selector = null;
-            SiteManager siteManager = null;
-            try {
-                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-                siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-
-                if (!liveSite.contains(document.getPath())) {
-                    DocumentLocator liveLoc = document.getLocator().getAreaVersion(
-                            Publication.LIVE_AREA);
-                    DocumentLocator[] requiredNodes = siteManager
-                            .getRequiredResources(map, liveLoc);
-                    for (int i = 0; i < requiredNodes.length; i++) {
-                        String path = requiredNodes[i].getPath();
-                        if (!liveSite.contains(path)) {
-                            Link link = getExistingLink(path, document);
-                            if (link != null) {
-                                missingDocuments.add(link.getDocument());
-                            }
-                        }
-
-                    }
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (selector != null) {
-                    if (siteManager != null) {
-                        selector.release(siteManager);
-                    }
-                    this.manager.release(selector);
-                }
-            }
-
-            if (!missingDocuments.isEmpty()) {
-                addErrorMessage("publish-missing-documents");
-                for (Iterator i = missingDocuments.iterator(); i.hasNext();) {
-                    Document doc = (Document) i.next();
-                    /*
-                     * This doesn't work yet, see
-                     * https://issues.apache.org/jira/browse/COCOON-2057
-                     * String[] params = { doc.getCanonicalWebappURL(),
-                     * doc.getPath() + " (" + doc.getLanguage() + ")" };
-                     */
-                    String[] params = { doc.getPath() + ":" + doc.getLanguage(),
-                            DublinCoreHelper.getTitle(doc, true) };
-                    addErrorMessage("missing-document", params);
-                }
-            }
+            checkMissingAncestors();
             
             if (hasBrokenLinks()) {
                 addInfoMessage("publish-broken-links");
+            }
+        }
+    }
+
+    /**
+     * @see #PARAM_CHECK_MISSING_ANCESTORS
+     * @throws Exception if an error occurs.
+     */
+    protected void checkMissingAncestors() throws Exception {
+        
+        if (!getParameterAsBoolean(PARAM_CHECK_MISSING_ANCESTORS, true)) {
+            return;
+        }
+        
+        Document document = getSourceDocument();
+        Publication publication = document.getPublication();
+        DocumentFactory map = document.getFactory();
+        SiteStructure liveSite = publication.getArea(Publication.LIVE_AREA).getSite();
+
+        List missingDocuments = new ArrayList();
+
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+
+            if (!liveSite.contains(document.getPath())) {
+                DocumentLocator liveLoc = document.getLocator().getAreaVersion(
+                        Publication.LIVE_AREA);
+                DocumentLocator[] requiredNodes = siteManager
+                        .getRequiredResources(map, liveLoc);
+                for (int i = 0; i < requiredNodes.length; i++) {
+                    String path = requiredNodes[i].getPath();
+                    if (!liveSite.contains(path)) {
+                        Link link = getExistingLink(path, document);
+                        if (link != null) {
+                            missingDocuments.add(link.getDocument());
+                        }
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+
+        if (!missingDocuments.isEmpty()) {
+            addErrorMessage("publish-missing-documents");
+            for (Iterator i = missingDocuments.iterator(); i.hasNext();) {
+                Document doc = (Document) i.next();
+                /*
+                 * This doesn't work yet, see
+                 * https://issues.apache.org/jira/browse/COCOON-2057
+                 * String[] params = { doc.getCanonicalWebappURL(),
+                 * doc.getPath() + " (" + doc.getLanguage() + ")" };
+                 */
+                String[] params = { doc.getPath() + ":" + doc.getLanguage(),
+                        DublinCoreHelper.getTitle(doc, true) };
+                addErrorMessage("missing-document", params);
             }
         }
     }

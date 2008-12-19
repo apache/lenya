@@ -25,9 +25,11 @@ import java.util.Set;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.NodeSet;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -39,6 +41,12 @@ import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
  * @version $Id$
  */
 public class Deactivate extends InvokeWorkflow {
+    
+    /**
+     * If the usecase should check for live children in {@link #checkPreconditions()}.
+     * Type: {@link Boolean} or {@link String}
+     */
+    public static final String PARAM_CHECK_LIVE_CHILDREN = "checkLiveChildren";
 
     protected static final String LINKS_TO_DOCUMENT = "linksToDocument";
 
@@ -63,16 +71,30 @@ public class Deactivate extends InvokeWorkflow {
             if (!doc.existsAreaVersion(Publication.LIVE_AREA)) {
                 addErrorMessage("This usecase can only be invoked when the live version exists.");
             } else {
-                Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-                NodeSet subSite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
-                SiteNode node = liveDoc.getLink().getNode();
-                subSite.remove(node);
-
-                if (!subSite.isEmpty()) {
-                    addErrorMessage("You can't deactivate this document because it has children.");
-                }
+                checkChildren();
                 setParameter(LINKS_TO_DOCUMENT, new LinkList(this.manager, doc));
             }
+        }
+    }
+
+    /**
+     * @see #PARAM_CHECK_LIVE_CHILDREN
+     * @throws Exception if an error occurs.
+     */
+    protected void checkChildren() throws Exception {
+        
+        if (!getParameterAsBoolean(PARAM_CHECK_LIVE_CHILDREN, true)) {
+            return;
+        }
+
+        Document doc = getSourceDocument();
+        Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
+        NodeSet subSite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
+        SiteNode node = liveDoc.getLink().getNode();
+        subSite.remove(node);
+
+        if (!subSite.isEmpty()) {
+            addErrorMessage("You can't deactivate this document because it has children.");
         }
     }
 
