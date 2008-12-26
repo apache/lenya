@@ -104,6 +104,11 @@ public interface UsecaseInvoker {
     int POSTCONDITIONS_FAILED = 4;
 
     /**
+     * The authorization failed.
+     */
+    int AUTHORIZATION_FAILED = 5;
+
+    /**
      * Returns the error messages from the previous operation. Error messages
      * prevent the operation from being executed.
      * @return A list of {@link UsecaseMessage} objects.

@@ -26,7 +26,20 @@ import java.util.Map;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.Authorizer;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.cms.ac.PolicyUtil;
+import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -44,6 +57,54 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
     private String targetUrl;
 
     /**
+     * @return if the identity is authorized to invoke the usecase.
+     * @throws Exception if an error occurs.
+     */
+    protected boolean isUsecaseAuthorized(String webappUrl, String usecaseName) throws Exception {
+        boolean authorized = false;
+        ServiceSelector selector = null;
+        AccessControllerResolver acResolver = null;
+        AccessController accessController = null;
+        ContextUtility contextUtil = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
+            acResolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            accessController = acResolver.resolveAccessController(webappUrl);
+
+            contextUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            Request request = contextUtil.getRequest();
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            URLInformation info = new URLInformation(webappUrl);
+            Publication pub = factory.getPublication(info.getPublicationId());
+            Role[] roles = PolicyUtil.getRoles(request);
+
+            Authorizer[] authorizers = accessController.getAuthorizers();
+            for (int i = 0; i < authorizers.length; i++) {
+                if (authorizers[i] instanceof UsecaseAuthorizer) {
+                    UsecaseAuthorizer authorizer = (UsecaseAuthorizer) authorizers[i];
+                    authorized = authorizer.authorizeUsecase(usecaseName, roles, pub);
+                }
+            }
+        } finally {
+            if (selector != null) {
+                if (acResolver != null) {
+                    if (accessController != null) {
+                        acResolver.release(accessController);
+                    }
+                    selector.release(acResolver);
+                }
+                this.manager.release(selector);
+            }
+            if (contextUtil != null) {
+                this.manager.release(contextUtil);
+            }
+        }
+        return authorized;
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.UsecaseInvoker#invoke(java.lang.String, java.lang.String,
      *      java.util.Map)
      */
@@ -57,6 +118,13 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
         Usecase usecase = null;
         this.result = SUCCESS;
         try {
+
+            if (!isUsecaseAuthorized(webappUrl, usecaseName)) {
+                this.errorMessages.add(new UsecaseMessage("Authorization of usecase " + usecaseName
+                        + " failed."));
+                this.result = AUTHORIZATION_FAILED;
+                return;
+            }
 
             resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
             usecase = resolver.resolve(webappUrl, usecaseName);
@@ -102,9 +170,9 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             }
         }
     }
-    
+
     private Session testSession = null;
-    
+
     protected Session getTestSession() {
         return this.testSession;
     }
