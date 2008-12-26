@@ -68,7 +68,7 @@ public class UsecaseProxy {
 
         String[] names = getParameterNames();
         for (int i = 0; i < names.length; i++) {
-            usecase.setParameter(names[i], parameters.get(names[i]));
+            usecase.setParameter(names[i], this.parameters.get(names[i]));
         }
     }
 
@@ -203,6 +203,21 @@ public class UsecaseProxy {
      */
     public String getSourceURL() {
         return this.sourceUrl;
+    }
+
+    /**
+     * Returns a parameter as integer. If the parameter does not exist, a default value is returned.
+     * @param name The parameter name.
+     * @param defaultValue The default value.
+     * @return An integer.
+     */
+    public int getParameterAsInteger(String name, int defaultValue) {
+        int valueInt = defaultValue;
+        Object value = getParameter(name);
+        if (value != null) {
+            valueInt = Integer.valueOf(value.toString()).intValue();
+        }
+        return valueInt;
     }
 
 }

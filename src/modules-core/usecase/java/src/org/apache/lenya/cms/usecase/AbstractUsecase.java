@@ -428,22 +428,15 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public Object getParameter(String name, Object defaultValue) {
         Object value = getParameter(name);
-        if (value == null) {
-            value = defaultValue;
-        }
-        return value;
+        return value == null ? defaultValue : value;
     }
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getParameterAsString(java.lang.String)
      */
     public String getParameterAsString(String name) {
-        String valueString = null;
         Object value = getParameter(name);
-        if (value != null) {
-            valueString = value.toString();
-        }
-        return valueString;
+        return value == null ? null : value.toString();
     }
 
     /**
@@ -453,12 +446,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @return A string.
      */
     public String getParameterAsString(String name, String defaultValue) {
-        String valueString = defaultValue;
         Object value = getParameter(name);
-        if (value != null) {
-            valueString = value.toString();
-        }
-        return valueString;
+        return value == null ? defaultValue : value.toString();
     }
 
     /**
@@ -468,12 +457,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @return An integer.
      */
     public int getParameterAsInteger(String name, int defaultValue) {
-        int valueInt = defaultValue;
         Object value = getParameter(name);
-        if (value != null) {
-            valueInt = Integer.valueOf(value.toString()).intValue();
-        }
-        return valueInt;
+        return value == null ? defaultValue : Integer.valueOf(value.toString()).intValue();
     }
 
     /**

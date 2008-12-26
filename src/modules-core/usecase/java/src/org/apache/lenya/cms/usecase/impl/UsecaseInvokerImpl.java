@@ -134,6 +134,7 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
                 usecase.setTestSession(testSession);
             }
 
+            usecase.getParameterNames(); // initialize usecase parameters to enable overriding
             passParameters(usecase, parameters);
 
             usecase.checkPreconditions();
