@@ -76,8 +76,12 @@
   <!-- Notification -->
   <message key="notification-message">Lenya-Benachrichtigung: {0}</message>
   <message key="notify-submitter">Benachrichtigung an den einreichenden Nutzer senden</message>
-  <message key="document-published">Ein von Ihnen eingereichtes Dokument wurde publiziert: {0}</message>
-  <message key="document-submitted">Ein Dokument wurde zur Durchsicht eingereicht: {0}</message>
+  <message key="document-published">Ein von Ihnen eingereichtes Dokument wurde publiziert: {0}
+  
+{1}</message>
+  <message key="document-submitted">Ein Dokument wurde zur Durchsicht eingereicht: {0}
+  
+{1}</message>
   <message key="document-rejected">Ein von Ihnen eingereichtes Dokument wurde aus folgendem Grund zurückgewiesen: {0}, {1}</message>
   
 </catalogue>

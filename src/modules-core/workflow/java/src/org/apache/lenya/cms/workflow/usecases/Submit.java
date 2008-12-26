@@ -39,10 +39,19 @@ import org.apache.lenya.notification.Text;
  */
 public class Submit extends InvokeWorkflow {
 
+    /**
+     * The notification message to send in addition to the default message.
+     */
+    public static final String PARAM_USER_NOTIFICATION_MESSAGE = "userNotificationMessage";
+
+    /**
+     * If a notification message shall be sent. 
+     */
+    public static final String PARAM_SEND_NOTIFICATION = "sendNotification";
+    
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_SUBMITTED = "document-submitted";
-    protected static final String SEND_NOTIFICATION = "sendNotification";
-
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -50,7 +59,7 @@ public class Submit extends InvokeWorkflow {
 
         super.doExecute();
         
-        if (Boolean.valueOf(getBooleanCheckboxParameter(SEND_NOTIFICATION)).booleanValue()) {
+        if (Boolean.valueOf(getBooleanCheckboxParameter(PARAM_SEND_NOTIFICATION)).booleanValue()) {
             sendNotification(getSourceDocument());
         }
     }
@@ -82,9 +91,11 @@ public class Submit extends InvokeWorkflow {
             final String webappUrl = authoringVersion.getCanonicalWebappURL();
             url = serverUrl + request.getContextPath() + webappUrl;
         }
+        
+        String userMessage = getParameterAsString(PARAM_USER_NOTIFICATION_MESSAGE, "");
 
         Text[] subjectParams = { new Text(getEvent(), true) };
-        Text[] params = { new Text(url, false) };
+        Text[] params = { new Text(url, false), new Text(userMessage, false) };
         Text subject = new Text(MESSAGE_SUBJECT, subjectParams);
         Text body = new Text(MESSAGE_DOCUMENT_SUBMITTED, params);
         Message message = new Message(subject, body, sender, recipients);

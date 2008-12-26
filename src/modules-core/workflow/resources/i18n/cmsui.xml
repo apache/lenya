@@ -75,8 +75,12 @@
   
   <!-- Notification -->
   <message key="notification-message">Lenya Notification: {0}</message>
-  <message key="document-published">A document you submitted was published: {0}</message>
-  <message key="document-submitted">A document has been submitted for you to review: {0}</message>
+  <message key="document-published">A document you submitted was published: {0}
+  
+{1}</message>
+  <message key="document-submitted">A document has been submitted for you to review: {0}
+    
+{1}</message>
   <message key="document-rejected">A document you submitted was rejected for the following reason: {0}, {1}</message>
   
 </catalogue>
