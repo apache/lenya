@@ -42,11 +42,19 @@ import org.apache.lenya.workflow.Workflowable;
  * Reject usecase handler.
  */
 public class Reject extends InvokeWorkflow {
+    
+    /**
+     * The reason for rejection.
+     */
+    public static final String PARAM_REJECT_REASON = "rejectReason";
+    
+    /**
+     * If a notification message shall be sent. 
+     */
+    public static final String PARAM_SEND_NOTIFICATION = "sendNotification";
 
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_REJECTED = "document-rejected";
-    protected static final String REJECT_REASON = "rejectReason";
-    protected static final String SEND_NOTIFICATION = "sendNotification";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
@@ -55,7 +63,7 @@ public class Reject extends InvokeWorkflow {
 
         super.doExecute();
 
-        boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(SEND_NOTIFICATION))
+        boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(PARAM_SEND_NOTIFICATION))
                 .booleanValue();
         if (notify) {
             sendNotification(getSourceDocument());
@@ -67,7 +75,7 @@ public class Reject extends InvokeWorkflow {
 
         User sender = getSession().getIdentity().getUser();
 
-        String reason = getParameterAsString(REJECT_REASON);
+        String reason = getParameterAsString(PARAM_REJECT_REASON);
         Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
                 getLogger(), authoringDocument);
         Version versions[] = workflowable.getVersions();

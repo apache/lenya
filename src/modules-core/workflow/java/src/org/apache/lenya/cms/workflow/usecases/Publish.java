@@ -80,12 +80,21 @@ public class Publish extends InvokeWorkflow {
      */
     public static final String PARAM_CHECK_MISSING_ANCESTORS = "checkMissingAncestors";
 
+    /**
+     * If a notification message shall be sent.
+     */
+    public static final String PARAM_SEND_NOTIFICATION = "sendNotification";
+
+    /**
+     * The notification message to send in addition to the default message.
+     */
+    public static final String PARAM_USER_NOTIFICATION_MESSAGE = "userNotificationMessage";
+
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_PUBLISHED = "document-published";
     protected static final String SCHEDULE = "schedule";
     protected static final String SCHEDULE_TIME = "schedule.time";
     protected static final String CAN_SEND_NOTIFICATION = "canSendNotification";
-    protected static final String SEND_NOTIFICATION = "sendNotification";
     protected static final String UNPUBLISHED_LINKS = "unpublishedLinks";
     
     /**
@@ -104,7 +113,7 @@ public class Publish extends InvokeWorkflow {
 
         Boolean canSendNotification = Boolean.valueOf(canNotifySubmitter());
         setParameter(CAN_SEND_NOTIFICATION, canSendNotification);
-        setParameter(SEND_NOTIFICATION, canSendNotification);
+        setParameter(PARAM_SEND_NOTIFICATION, canSendNotification);
         
         setParameter(UNPUBLISHED_LINKS, new LinkList(this.manager, getSourceDocument()));
         
@@ -349,7 +358,7 @@ public class Publish extends InvokeWorkflow {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
 
-            boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(SEND_NOTIFICATION))
+            boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(PARAM_SEND_NOTIFICATION))
                     .booleanValue();
             if (notify) {
                 sendNotification(authoringDocument);
@@ -393,8 +402,10 @@ public class Publish extends InvokeWorkflow {
         User sender = getSession().getIdentity().getUser();
         
         Text[] subjectParams = { new Text(getEvent(), true) };
-        Text[] params = { new Text(url, false) };
         Text subject = new Text(MESSAGE_SUBJECT, subjectParams);
+        
+        String userMessage = getParameterAsString(PARAM_USER_NOTIFICATION_MESSAGE, "");
+        Text[] params = { new Text(url, false), new Text(userMessage, false) };
         Text body = new Text(MESSAGE_DOCUMENT_PUBLISHED, params);
         Message message = new Message(subject, body, sender, recipients);
 
