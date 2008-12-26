@@ -43,6 +43,15 @@
     <role name="org.apache.excalibur.xml.EntityResolver"
       shorthand="entity-resolver"
       default-class="org.apache.cocoon.components.resolver.DefaultResolver"/>
+    <role name="org.apache.cocoon.Processor"
+      shorthand="sitemap"
+      default-class="org.apache.cocoon.components.treeprocessor.TreeProcessor"/>
+    <role name="org.apache.excalibur.xmlizer.XMLizer"
+      shorthand="xmlizer"
+      default-class="org.apache.excalibur.xmlizer.DefaultXMLizer"/>
+    <role name="org.apache.excalibur.xml.sax.SAXParser"
+      shorthand="xml-parser"
+      default-class="org.apache.excalibur.xml.impl.JaxpParser"/>
   </roles>
   
   <components/>
