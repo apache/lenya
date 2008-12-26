@@ -350,6 +350,10 @@
         <xsl:attribute name="depends"><xsl:value-of select="$testDependencyList"/></xsl:attribute>
       </xsl:if>
       <mkdir dir="${{build.dir}}/modules/{$id}"/>
+      <copy todir="${{build.dir}}/modules/{$id}">
+        <fileset dir="{$src}"
+          includes="config/cocoon-xconf/*.xtest, config/cocoon-xconf/*/*.xtest"/>
+      </copy>
       <xslt basedir="{$src}"
         includes="config/cocoon-xconf/*.xconf, config/cocoon-xconf/*/*.xconf"
         destdir="${{build.dir}}/modules/{$id}"
