@@ -249,10 +249,6 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
         getLogger().debug("Setting up transformer");
 
-        this.serviceSelector = null;
-        this.acResolver = null;
-        this.authorizer = null;
-
         this.sourceUrl = ServletHelper.getWebappURI(this.request);
 
         try {
@@ -292,6 +288,16 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             }
             this.manager.release(this.serviceSelector);
         }
+    }
+
+    public void recycle() {
+        super.recycle();
+        this.publication = null;
+        this.roles = null;
+        this.serviceSelector = null;
+        this.acResolver = null;
+        this.authorizer = null;
+        this.sourceUrl = null;
     }
 
 }

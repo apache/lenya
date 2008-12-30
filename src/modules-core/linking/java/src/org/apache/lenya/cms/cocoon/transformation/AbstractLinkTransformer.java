@@ -396,4 +396,9 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         }
     }
 
+    public void recycle() {
+        super.recycle();
+        this.area = null;
+    }
+
 }

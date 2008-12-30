@@ -100,15 +100,10 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
 
     /** Helper for lenya document retrival */
     protected String publicationId = null;
-
     protected String area = null;
-
     protected String language = null;
-
     protected String uuid = null;
-
     protected Publication pub;
-
     private DocumentFactory factory;
 
     /**
@@ -210,4 +205,15 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
             super.endElement(uri, name, raw);
         }
     }
+
+    public void recycle() {
+        super.recycle();
+        this.publicationId = null;
+        this.area = null;
+        this.language = null;
+        this.uuid = null;
+        this.pub = null;
+        this.factory = null;
+    }
+
 }

@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
  * @see IncomingLinkRewriter
  */
 public class IncomingProxyTransformer extends AbstractLinkTransformer {
-
+    
     private LinkRewriter rewriter;
 
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
@@ -62,4 +62,10 @@ public class IncomingProxyTransformer extends AbstractLinkTransformer {
     protected LinkRewriter getLinkRewriter() {
         return this.rewriter;
     }
+    
+    public void recycle() {
+        super.recycle();
+        this.rewriter = null;
+    }
+
 }

@@ -108,4 +108,9 @@ public class ProxyTransformer extends AbstractLinkTransformer {
         return this.rewriter;
     }
 
+    public void recycle() {
+        super.recycle();
+        this.rewriter = null;
+    }
+
 }

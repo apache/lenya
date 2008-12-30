@@ -79,4 +79,9 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
         return this.rewriter;
     }
 
+    public void recycle() {
+        super.recycle();
+        this.rewriter = null;
+    }
+
 }
