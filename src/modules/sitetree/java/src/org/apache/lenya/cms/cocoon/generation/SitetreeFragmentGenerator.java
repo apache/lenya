@@ -196,7 +196,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
             }
             
             this.cacheKey = pubId + "/" + area + this.path;
-            source = resolver.resolveURI(this.site.getRepositoryNode().getSourceURI());
+            source = this.resolver.resolveURI(this.site.getRepositoryNode().getSourceURI());
             this.validity = source.getValidity();
             
         } catch (ProcessingException e) {
@@ -211,6 +211,17 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
 
         this.attributes = new AttributesImpl();
 
+    }
+
+    public void recycle() {
+        super.recycle();
+        this.areas = null;
+        this.path = null;
+        this.initialTree = false;
+        this.attributes = null;
+        this.cacheKey = null;
+        this.validity = null;
+        this.site = null;
     }
 
     /**

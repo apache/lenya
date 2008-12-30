@@ -136,4 +136,12 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
         }
     }
 
+    public void recycle() {
+        super.recycle();
+        this.factory = null;
+        this.pubId = null;
+        this.area = null;
+        this.linkResolver = null;
+    }
+
 }
