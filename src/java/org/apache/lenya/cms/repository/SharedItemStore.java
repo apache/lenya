@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.repository;
 
+import org.apache.lenya.transaction.IdentityMap;
+
 /**
  * Store for read-only items which are shared by all sessions for performance reasons.
  */
@@ -31,5 +33,7 @@ public interface SharedItemStore extends Session {
      * Clears the store when a session has been committed.
      */
     void clear();
+    
+    Session getSession();
 
 }

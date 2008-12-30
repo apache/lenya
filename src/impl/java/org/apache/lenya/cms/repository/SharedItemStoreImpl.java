@@ -18,12 +18,13 @@
 package org.apache.lenya.cms.repository;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
-import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.Lockable;
 import org.apache.lenya.transaction.TransactionException;
@@ -32,15 +33,20 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Shared item store implementation.
  */
-public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedItemStore, ThreadSafe {
+public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedItemStore, ThreadSafe, Serviceable {
 
-    private IdentityMap map;
+    private Session session;
+    private ServiceManager manager;
 
-    protected synchronized IdentityMap getIdentityMap() {
-        if (this.map == null) {
-            this.map = new IdentityMapImpl(getLogger());
+    public synchronized Session getSession() {
+        if (this.session == null) {
+            try {
+                this.session = RepositoryUtil.createSession(this.manager, new Identity(getLogger()), false);
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return this.map;
+        return this.session;
     }
 
     public void addListener(RepositoryListener listener) throws RepositoryException {
@@ -61,8 +67,7 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
 
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
-        RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
-        return (RepositoryItem) getIdentityMap().get(wrapper, key);
+        return (RepositoryItem) getSession().getRepositoryItem(factory, key);
     }
 
     public boolean isListenerRegistered(RepositoryListener listener) {
@@ -106,11 +111,18 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
     }
 
     public synchronized void clear() {
-        this.map = null;
+        this.session = null;
     }
 
     public String getId() {
         return getClass().getName();
+    }
+
+    public void addListener(SharedItemStoreListener listener) {
+    }
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
     
 }

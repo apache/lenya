@@ -56,28 +56,24 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         String publicationId = snippets[0];
         String areaName = snippets[1];
         SiteTree tree;
+        SharedItemStore store = null;
         try {
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication publication = factory.getPublication(publicationId);
-            Area  area = publication.getArea(areaName);
-            
-            if (session.isModifiable() || session instanceof SharedItemStore) {
+            Area area = publication.getArea(areaName);
+            store = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
+
+            if (session.isModifiable() || session == store.getSession()) {
                 tree = new SiteTreeImpl(this.manager, area, getLogger());
-            }
-            else {
-                SharedItemStore store = null;
-                try {
-                    store = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
-                    tree = new DelegatingSiteTree(this.manager, area, this, store, key);
-                }
-                finally {
-                    if (store != null) {
-                        this.manager.release(store);
-                    }
-                }
+            } else {
+                tree = new DelegatingSiteTree(this.manager, area, this, store, key);
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
+        } finally {
+            if (store != null) {
+                this.manager.release(store);
+            }
         }
         return tree;
     }
