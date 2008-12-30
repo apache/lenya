@@ -52,7 +52,7 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     private List topLevelNodes;
     private List preOrder;
     private String sourceUri;
-    private SharedItemStore store;
+    private Session session;
     private String key;
     private SiteTreeFactory factory;
 
@@ -64,10 +64,10 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
      * @param key The key to build the sitetree.
      */
     public DelegatingSiteTree(ServiceManager manager, Area area, SiteTreeFactory factory,
-            SharedItemStore store, String key) {
+            Session session, String key) {
         this.area = area;
         this.manager = manager;
-        this.store = store;
+        this.session = session;
         this.key = key;
         this.factory = factory;
     }
@@ -211,7 +211,7 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
 
     protected SiteTree getTree() {
         try {
-            return (SiteTree) this.store.getRepositoryItem(this.factory, this.key);
+            return (SiteTree) this.session.getRepositoryItem(this.factory, this.key);
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }

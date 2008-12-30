@@ -66,7 +66,7 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
             if (session.isModifiable() || session == store.getSession()) {
                 tree = new SiteTreeImpl(this.manager, area, getLogger());
             } else {
-                tree = new DelegatingSiteTree(this.manager, area, this, store, key);
+                tree = new DelegatingSiteTree(this.manager, area, this, store.getSession(), key);
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
