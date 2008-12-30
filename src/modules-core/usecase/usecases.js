@@ -18,7 +18,6 @@
 /* $Id$ */
  
 cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
-importPackage(Packages.org.apache.lenya.cms.linking)
 
 //placeholders for custom flow code:
 var customLoopFlow = undefined;
