@@ -118,9 +118,6 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         return getClass().getName();
     }
 
-    public void addListener(SharedItemStoreListener listener) {
-    }
-
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
