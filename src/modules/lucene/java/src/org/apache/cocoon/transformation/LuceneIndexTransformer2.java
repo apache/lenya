@@ -261,9 +261,16 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
     }
 
     public void recycle() {
+        super.recycle();
         this.index = null;
         this.indexer = null;
         this.processing = NO_PROCESSING;
+        this.request = null;
+        this.area = null;
+        this.uuid = null;
+        this.language = null;
+        this.attrs = null;
+        this.bodyDocument = null;
     }
 
     public void service(ServiceManager manager) throws ServiceException {
