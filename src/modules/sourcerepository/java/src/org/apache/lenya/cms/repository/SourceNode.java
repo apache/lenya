@@ -393,7 +393,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public boolean exists() throws RepositoryException {
-        return this.contentSource.exists();
+        try {
+            return getRcml().getLatestCheckInEntry() != null;
+        } catch (RevisionControlException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public OutputStream getOutputStream() throws RepositoryException {
@@ -417,6 +421,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             else {
                 throw new RepositoryException("The node [" + this + "] hasn't been checked in yet.");
             }
+        } catch (RepositoryException e) {
+            throw e;
         } catch (RevisionControlException e) {
             throw new RepositoryException(e);
         }
