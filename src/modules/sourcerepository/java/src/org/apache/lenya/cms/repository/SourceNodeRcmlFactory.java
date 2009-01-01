@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.repository;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -37,7 +38,7 @@ public class SourceNodeRcmlFactory {
         return instance;
     }
 
-    private Map uri2rcml = new WeakHashMap();
+    private Map uri2rcml = new HashMap();
 
     private SourceNodeRcmlFactory() {
     }
