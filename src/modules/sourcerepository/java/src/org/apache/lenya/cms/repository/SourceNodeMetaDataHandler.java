@@ -262,7 +262,7 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
     }
 
     protected long getLastModified() throws RepositoryException {
-        return this.content.getLastModified();
+        return this.content.exists() ? this.content.getLastModified() : -1;
     }
 
 }
