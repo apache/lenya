@@ -40,8 +40,7 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
     }
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        Node node = new SourceNode(session, key, this.manager, getLogger());
-        return node;
+        return new SourceNode(session, key, this.manager, getLogger());
     }
 
     public String getItemType() {
