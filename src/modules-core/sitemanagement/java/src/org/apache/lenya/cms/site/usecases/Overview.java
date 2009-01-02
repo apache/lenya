@@ -23,7 +23,10 @@ import java.util.Date;
 
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
@@ -44,6 +47,8 @@ public class Overview extends SiteUsecase {
     protected static final String ISLIVE = "isLive";
     protected static final String VISIBLE_IN_NAVIGATION = "visibleInNav";
     protected static final String WORKFLOW_VARIABLE_ISLIVE = "is_live";
+    protected static final String PARAM_NUMBER_OF_DOCUMENTS = "numberOfDocuments";
+    protected static final String PARAM_NUMBER_OF_SITE_NODES = "numberOfSiteNodes";
 
     /**
      * Ctor.
@@ -61,7 +66,14 @@ public class Overview extends SiteUsecase {
         WorkflowManager resolver = null;
         try {
             Document doc = getSourceDocument();
-            if (doc != null) {
+            if (doc == null) {
+                URLInformation info = new URLInformation(getSourceURL());
+                Publication pub = getDocumentFactory().getPublication(info.getPublicationId());
+                Area area = pub.getArea(info.getArea());
+                setParameter(PARAM_NUMBER_OF_DOCUMENTS, area.getDocuments().length);
+                setParameter(PARAM_NUMBER_OF_SITE_NODES, area.getSite().getNodes().length);
+            }
+            else {
                 // read parameters from Dublin Core meta-data
                 MetaData dc = doc.getMetaData(DublinCore.DC_NAMESPACE);
                 setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));

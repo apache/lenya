@@ -97,4 +97,7 @@
   <!-- meta data -->
   <message key="saved">Saved</message>
   <message key="cannot-change-metadata">The meta data can't be changed in this workflow state.</message>
+  
+  <message key="sitemanagement.numberOfDocuments">Documents</message>
+  <message key="sitemanagement.numberOfSiteNodes">Sitetree nodes</message>
 </catalogue>

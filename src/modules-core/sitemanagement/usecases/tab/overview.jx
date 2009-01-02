@@ -146,7 +146,18 @@
           <i18n:text>This document is not available in this language.</i18n:text><br/><br/>
           <i18n:text>Available Languages</i18n:text>: <jx:out value="${usecase.getParameter('languages')}"/>
         </jx:when>
-        <jx:otherwise><i18n:text>No overview available.</i18n:text></jx:otherwise>
+        <jx:otherwise>
+          <table class="lenya-table-noborder">
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>sitemanagement.numberOfDocuments</i18n:text>:</td>
+              <td>${usecase.getParameter('numberOfDocuments')}</td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>sitemanagement.numberOfSiteNodes</i18n:text>:</td>
+              <td>${usecase.getParameter('numberOfSiteNodes')}</td>
+            </tr>
+          </table>
+        </jx:otherwise>
       </jx:choose>
     </div>
   </page:body>
