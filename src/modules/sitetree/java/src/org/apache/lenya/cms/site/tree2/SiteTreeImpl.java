@@ -40,9 +40,6 @@ import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.util.Assert;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-import org.w3c.dom.Element;
 
 /**
  * Simple site tree implementation.
@@ -52,6 +49,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     private Area area;
     protected ServiceManager manager;
     private RootNode root;
+    private int revision;
 
     /**
      * @param manager The service manager.
@@ -90,7 +88,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     protected synchronized void load() {
 
-        if (this.loaded) {
+        if (this.loaded || this.loading) {
             return;
         }
 
@@ -100,22 +98,25 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             repoNode.setPersistable(this);
             
             if (repoNode.exists()) {
-                org.w3c.dom.Document xml = DocumentHelper.readDocument(repoNode.getInputStream());
-
-                NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", xml);
-                Assert.isTrue("document element is site", xml.getDocumentElement().getLocalName()
-                        .equals("site"));
-                this.loading = true;
-                reset();
-                loadNodes(this.root, helper, xml.getDocumentElement());
-                this.loading = false;
+                TreeBuilder builder = null;
+                try {
+                    this.loading = true;
+                    builder = (TreeBuilder) this.manager.lookup(TreeBuilder.ROLE);
+                    reset();
+                    builder.buildTree(this);
+                    Assert.isTrue("Latest revision loaded", getRevision() == getRevision(getRepositoryNode()));
+                    this.loaded = true;
+                } finally {
+                    this.loading = false;
+                    if (builder != null) {
+                        this.manager.release(builder);
+                    }
+                }
             }
 
             if (!repoNode.exists()) {
                 reset();
             }
-
-            this.loaded = true;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -133,52 +134,23 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         return this.root;
     }
 
-    protected void loadNodes(TreeNode parent, NamespaceHelper helper, Element element) {
-        Element[] nodeElements = helper.getChildren(element, "node");
-        for (int n = 0; n < nodeElements.length; n++) {
-            String name = nodeElements[n].getAttribute("id");
-            boolean visible = DEFAULT_VISIBILITY;
-            if (nodeElements[n].hasAttribute("visibleinnav")) {
-                String visibleString = nodeElements[n].getAttribute("visibleinnav");
-                visible = Boolean.valueOf(visibleString).booleanValue();
-            }
-            TreeNodeImpl node = (TreeNodeImpl) parent.addChild(name, visible);
-            if (nodeElements[n].hasAttribute("uuid")) {
-                String uuid = nodeElements[n].getAttribute("uuid");
-                node.setUuid(uuid);
-            }
-            loadLinks(node, helper, nodeElements[n]);
-            loadNodes(node, helper, nodeElements[n]);
-        }
-    }
-
-    protected void loadLinks(TreeNodeImpl node, NamespaceHelper helper, Element element) {
-        Element[] linkElements = helper.getChildren(element, "label");
-        for (int l = 0; l < linkElements.length; l++) {
-            String lang = linkElements[l].getAttribute("xml:lang");
-            String label = DocumentHelper.getSimpleElementText(linkElements[l]);
-            node.addLink(lang, label);
-        }
-    }
-
     public synchronized void save() throws RepositoryException {
         if (loading || !changed) {
             return;
         }
+        TreeWriter writer = null;
         try {
-            Node repoNode = getRepositoryNode();
-            NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", "site");
-
-            int revision = getRevision(repoNode) + 1;
-            helper.getDocument().getDocumentElement().setAttribute("revision",
-                    Integer.toString(revision));
-
-            saveNodes(getRoot(), helper, helper.getDocument().getDocumentElement());
-            helper.save(repoNode.getOutputStream());
+            writer = (TreeWriter) this.manager.lookup(TreeWriter.ROLE);
+            int revision = getRevision(getRepositoryNode()) + 1;
+            writer.writeTree(this);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
             throw new RepositoryException(e);
+        } finally {
+            if (writer != null) {
+                this.manager.release(writer);
+            }
         }
 
     }
@@ -189,34 +161,6 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             revision = repoNode.getHistory().getLatestRevision().getNumber();
         }
         return revision;
-    }
-
-    protected void saveNodes(TreeNode parent, NamespaceHelper helper, Element parentElement)
-            throws SiteException {
-        SiteNode[] children = parent.getChildren();
-        for (int i = 0; i < children.length; i++) {
-            Element nodeElement = helper.createElement("node");
-            nodeElement.setAttribute("id", children[i].getName());
-            String uuid = children[i].getUuid();
-            if (uuid != null) {
-                nodeElement.setAttribute("uuid", uuid);
-            }
-            nodeElement.setAttribute("visibleinnav", Boolean.toString(children[i].isVisible()));
-            saveLinks(children[i], helper, nodeElement);
-            saveNodes((TreeNode) children[i], helper, nodeElement);
-            parentElement.appendChild(nodeElement);
-        }
-    }
-
-    protected void saveLinks(SiteNode node, NamespaceHelper helper, Element nodeElement)
-            throws SiteException {
-        String[] languages = node.getLanguages();
-        for (int i = 0; i < languages.length; i++) {
-            Link link = node.getLink(languages[i]);
-            Element linkElement = helper.createElement("label", link.getLabel());
-            linkElement.setAttribute("xml:lang", languages[i]);
-            nodeElement.appendChild(linkElement);
-        }
     }
 
     public Link add(String path, Document doc) throws SiteException {
@@ -294,7 +238,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     protected String getKey(Link link) {
-        String uuid = link.getDocument().getUUID();
+        String uuid = link.getNode().getUuid();
         Assert.notNull("uuid", uuid);
         String language = link.getLanguage();
         Assert.notNull("language", language);
@@ -476,4 +420,13 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     public boolean isModified() {
         return this.changed;
     }
+
+    protected int getRevision() {
+        return this.revision;
+    }
+    
+    protected void setRevision(int revision) {
+        this.revision = revision;
+    }
+
 }

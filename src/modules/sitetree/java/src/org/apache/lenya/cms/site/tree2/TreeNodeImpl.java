@@ -348,5 +348,5 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     public boolean hasLink() {
         return false;
     }
-
+    
 }

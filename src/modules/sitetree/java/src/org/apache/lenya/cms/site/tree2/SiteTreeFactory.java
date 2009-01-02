@@ -63,10 +63,11 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
             Area area = publication.getArea(areaName);
             store = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
 
-            if (session.isModifiable() || session == store.getSession()) {
+            Session storeSession = store.getSession();
+            if (session.isModifiable() || session == storeSession) {
                 tree = new SiteTreeImpl(this.manager, area, getLogger());
             } else {
-                tree = new DelegatingSiteTree(this.manager, area, this, store.getSession(), key);
+                tree = new DelegatingSiteTree(this.manager, area, this, storeSession, key);
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
