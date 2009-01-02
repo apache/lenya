@@ -30,7 +30,7 @@
         <item uc:usecase="sitemanagement.paste"><i18n:text>Paste</i18n:text></item>
       </block>
       <block areas="site">
-        <item uc:usecase="sitemanagement.changeNodeID"><i18n:text>Rename URL</i18n:text></item>
+        <item href="?lenya.usecase=sitemanagement.changeNodeID"><i18n:text>Rename URL</i18n:text></item>
         <item uc:usecase="sitemanagement.changeLabel"><i18n:text>Edit Navigation Title</i18n:text></item>
         <item uc:usecase="sitemanagement.changeVisibility"><i18n:text>Visible in Navigation</i18n:text></item>
       </block>
