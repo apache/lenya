@@ -264,7 +264,7 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
 
         NamespaceHelper helper;
 
-        if (getDelegate().exists()) {
+        if (getDelegate().getContentLength() > 0) {
             org.w3c.dom.Document document = DocumentHelper.readDocument(getDelegate()
                     .getInputStream());
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
