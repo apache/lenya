@@ -38,34 +38,10 @@
     </menu>
     
     <menu i18n:attr="name" name="Edit">
-      
       <block areas="authoring">
         <item uc:usecase="tab.meta"><i18n:text>Edit Metadata</i18n:text></item>
         <item uc:usecase="sitemanagement.changeLabel"><i18n:text>Edit Navigation Title</i18n:text></item>
       </block>
-      
-      <block areas="site">
-        <item uc:usecase="sitemanagement.cut"><i18n:text>Cut</i18n:text></item>
-        <item uc:usecase="sitemanagement.copy"><i18n:text>Copy</i18n:text></item>
-        <item uc:usecase="sitemanagement.paste"><i18n:text>Paste</i18n:text></item>
-      </block>
-      
-      
-      <block areas="site">
-        <item uc:usecase="sitemanagement.changeNodeID"><i18n:text>Rename URL</i18n:text></item>
-        <item uc:usecase="sitemanagement.changeLabel"><i18n:text>Edit Navigation Title</i18n:text></item>
-        <item uc:usecase="sitemanagement.changeVisibility"><i18n:text>Visible in Navigation</i18n:text></item>
-      </block>
-      <block areas="site">
-        <item uc:usecase="sitetree.nudge" href="?direction=up"><i18n:text>Move Up</i18n:text></item>
-        <item uc:usecase="sitetree.nudge" href="?direction=down"><i18n:text>Move Down</i18n:text></item>
-      </block>
-      <block areas="site">
-        <item uc:usecase="sitemanagement.delete"><i18n:text>Delete</i18n:text></item>
-        <item uc:usecase="sitemanagement.archive"><i18n:text>Archive</i18n:text></item>
-        <item uc:usecase="sitemanagement.restore"><i18n:text>Restore</i18n:text></item>
-      </block>
-      
     </menu>
     
     <menu i18n:attr="name" name="Workflow">
