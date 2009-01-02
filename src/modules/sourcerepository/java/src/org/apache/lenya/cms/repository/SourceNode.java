@@ -35,7 +35,9 @@ import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.rc.CheckInEntry;
+import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
+import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
@@ -394,7 +396,16 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public boolean exists() throws RepositoryException {
         try {
-            return getRcml().getLatestCheckInEntry() != null;
+            RCMLEntry entry = getRcml().getLatestEntry();
+            if (entry == null) {
+                return false;
+            } else if (entry.getType() == RCML.ci) {
+                return true;
+            }
+            else {
+                // before check-in, the node exists only in the session that created it
+                return entry.getSessionId().equals(getSession().getId());
+            }
         } catch (RevisionControlException e) {
             throw new RepositoryException(e);
         }
