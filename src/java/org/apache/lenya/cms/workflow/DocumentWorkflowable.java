@@ -39,6 +39,7 @@ import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.Workflowable;
@@ -59,6 +60,9 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
      */
     public DocumentWorkflowable(ServiceManager manager, Session session, Document document,
             Logger logger) {
+        if (session.getIdentity() == null) {
+            throw new IllegalArgumentException("The session must have an identity.");
+        }
         this.document = document;
         this.session = session;
         this.manager = manager;
