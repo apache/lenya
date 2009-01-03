@@ -41,7 +41,7 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
     public synchronized Session getSession() {
         if (this.session == null) {
             try {
-                this.session = RepositoryUtil.createSession(this.manager, new Identity(getLogger()), false);
+                this.session = RepositoryUtil.createSession(this.manager, null, false);
             } catch (RepositoryException e) {
                 throw new RuntimeException(e);
             }
