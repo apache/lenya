@@ -31,7 +31,6 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.SharedItemStore;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -52,7 +51,7 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     private List topLevelNodes;
     private List preOrder;
     private String sourceUri;
-    private Session session;
+    private Session sharedItemStoreSession;
     private String key;
     private SiteTreeFactory factory;
 
@@ -63,13 +62,13 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
      * @param store The shared item store.
      * @param key The key to build the sitetree.
      */
-    public DelegatingSiteTree(ServiceManager manager, Area area, SiteTreeFactory factory,
-            Session session, String key) {
+    public DelegatingSiteTree(ServiceManager manager, Area area, SiteTreeFactory factory, Session session,
+            String key) {
         this.area = area;
         this.manager = manager;
-        this.session = session;
         this.key = key;
         this.factory = factory;
+        this.sharedItemStoreSession = session;
     }
 
     public Link add(String path, Document doc) throws SiteException {
@@ -211,7 +210,7 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
 
     protected SiteTree getTree() {
         try {
-            return (SiteTree) this.session.getRepositoryItem(this.factory, this.key);
+            return (SiteTree) this.sharedItemStoreSession.getRepositoryItem(this.factory, this.key);
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
