@@ -61,12 +61,10 @@ public class RoleCondition implements Condition {
     }
 
     /**
-     * Returns if the condition is complied in a certain situation. The
-     * condition is complied when the current user has the role that is required
-     * by the RoleCondition.
+     * Returns if the condition is complied in a certain situation. The condition is complied when
+     * the current user has the role that is required by the RoleCondition.
      * 
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow,
-     *      Workflowable)
+     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Workflowable)
      */
     public boolean isComplied(Workflow workflow, Workflowable instance) {
 
@@ -86,14 +84,17 @@ public class RoleCondition implements Condition {
 
             PolicyManager policyManager = accessController.getPolicyManager();
             Identity identity = workflowable.getSession().getIdentity();
-            AccreditableManager accreditableMgr = accessController
-            .getAccreditableManager();
+            if (identity == null) {
+                throw new IllegalArgumentException("The session of the workflowable "
+                        + workflowable + " has no identity.");
+            }
+            AccreditableManager accreditableMgr = accessController.getAccreditableManager();
             Policy policy = policyManager.getPolicy(accreditableMgr, url);
             RoleManager roleManager = accreditableMgr.getRoleManager();
-            
+
             boolean complied = false;
-            
-            for (Iterator i = this.roleIds.iterator(); i.hasNext(); ) {
+
+            for (Iterator i = this.roleIds.iterator(); i.hasNext();) {
                 String roleId = (String) i.next();
                 Role role = roleManager.getRole(roleId);
                 if (policy.check(identity, role) == Policy.RESULT_GRANTED) {
