@@ -35,7 +35,7 @@ public class SaxTreeBuilder extends AbstractLogEnabled implements TreeBuilder, S
         try {
             this.currentNode = tree.getRoot();
             Node node = tree.getRepositoryNode();
-            
+
             if (node.exists() && node.getContentLength() > 0) {
                 parser = (SAXParser) this.manager.lookup(SAXParser.ROLE);
                 parser.parse(new InputSource(node.getInputStream()), this);
@@ -93,7 +93,8 @@ public class SaxTreeBuilder extends AbstractLogEnabled implements TreeBuilder, S
             if (localName.equals(ELEM_NODE)) {
                 String id = attrs.getValue(ATTR_ID);
                 String visibleString = attrs.getValue(ATTR_VISIBLE_IN_NAV);
-                boolean visible = visibleString == null ? true : Boolean.valueOf(visibleString);
+                boolean visible = visibleString == null ? true : Boolean.valueOf(visibleString)
+                        .booleanValue();
                 TreeNodeImpl node = (TreeNodeImpl) this.currentNode.addChild(id, visible);
                 String uuid = attrs.getValue(ATTR_UUID);
                 if (uuid != null) {
