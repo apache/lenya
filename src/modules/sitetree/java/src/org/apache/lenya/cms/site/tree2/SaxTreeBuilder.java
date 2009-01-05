@@ -80,7 +80,7 @@ public class SaxTreeBuilder extends AbstractLogEnabled implements TreeBuilder, S
             throws SAXException {
         try {
             if (localName.equals(ELEM_SITE)) {
-                int revision = Integer.valueOf(attrs.getValue("revision"));
+                int revision = Integer.valueOf(attrs.getValue("revision")).intValue();
                 SiteTreeImpl tree = this.currentNode.getTree();
                 int latestRevision = tree.getRevision(tree.getRepositoryNode());
                 if (revision != latestRevision) {
