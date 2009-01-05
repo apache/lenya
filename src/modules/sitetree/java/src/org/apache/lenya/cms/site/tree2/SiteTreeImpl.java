@@ -105,7 +105,6 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
                     reset();
                     builder.buildTree(this);
                     Assert.isTrue("Latest revision loaded", getRevision() == getRevision(getRepositoryNode()));
-                    this.loaded = true;
                 } finally {
                     this.loading = false;
                     if (builder != null) {
@@ -113,11 +112,10 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
                     }
                 }
             }
-
+            this.loaded = true;
             if (!repoNode.exists()) {
                 reset();
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
