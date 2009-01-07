@@ -104,10 +104,8 @@ public class SaxTreeWriter extends AbstractLogEnabled implements TreeWriter, XML
         if (uuid != null) {
             attrs.addAttribute("", ATTR_UUID, ATTR_UUID, TYPE_CDATA, uuid);
         }
-        boolean visible = node.isVisible();
-        if (visible) {
-            attrs.addAttribute("", ATTR_VISIBLE, ATTR_VISIBLE, TYPE_CDATA, Boolean
-                    .toString(visible));
+        if (!node.isVisible()) {
+            attrs.addAttribute("", ATTR_VISIBLE, ATTR_VISIBLE, TYPE_CDATA, Boolean.FALSE.toString());
         }
         handler.startElement(NS, ELEM_NODE, ELEM_NODE, attrs);
 
