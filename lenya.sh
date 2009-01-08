@@ -114,7 +114,7 @@ fi
 
 # Set Jetty Port
 if [ -f local.build.properties ] ; then
-  JETTY_PORT=`grep web.app.server.jetty.port $LENYA_HOME/local.build.properties | grep -v "#" | sed -e 's/web\.app\.server\.jetty\.port=//'`
+  JETTY_PORT=`grep web.app.server.jetty.port $LENYA_HOME/local.build.properties | grep -v "#" | sed -e 's/web\.app\.server\.jetty\.port\s*=\s*//'`
 fi
 if [ "$JETTY_PORT" = "" ] ; then
   JETTY_PORT=`grep web.app.server.jetty.port $LENYA_HOME/build.properties | grep -v "#" | sed -e 's/web\.app\.server\.jetty\.port=//'`
