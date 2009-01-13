@@ -19,7 +19,6 @@ package org.apache.lenya.cms.repository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.rc.RCML;
