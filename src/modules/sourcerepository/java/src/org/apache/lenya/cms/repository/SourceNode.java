@@ -396,15 +396,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public boolean exists() throws RepositoryException {
         try {
-            RCMLEntry entry = getRcml().getLatestEntry();
+            RCML rcml = getRcml();
+            RCMLEntry entry = rcml.getLatestEntry();
             if (entry == null) {
                 return false;
             } else if (entry.getType() == RCML.ci) {
                 return true;
-            }
-            else {
-                // before check-in, the node exists only in the session that created it
-                return entry.getSessionId().equals(getSession().getId());
+            } else {
+                if (rcml.getLatestCheckInEntry() != null) {
+                    return true;
+                } else {
+                    // before first check-in, the node exists only in the session that created it
+                    return entry.getSessionId().equals(getSession().getId());
+                }
             }
         } catch (RevisionControlException e) {
             throw new RepositoryException(e);
