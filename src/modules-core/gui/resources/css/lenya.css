@@ -1,0 +1,28 @@
+@import url(listContainer.css);
+
+.lenyaButton {
+  cursor: pointer;
+  background-color: #DDDDEE;
+  border: solid 1px #AAAADD;
+  -moz-border-radius: .4em;
+  -webkit-border-radius: .4em;
+  color: #000066;
+  padding: .2em .6em;
+  font-family: Arial;
+  font-weight: bold;
+  font-size: 90%;
+}
+
+a.lenyaButton {
+  text-decoration: none;
+}
+
+a.lenyaButton:hover {
+  background-color: #CCCCDD;
+  color: #000066;
+  border: solid 1px #9999CC;
+}
+
+a img {
+  border: none;
+}
