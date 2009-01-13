@@ -24,6 +24,11 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
+  <page:head>
+    <link rel="stylesheet" type="text/css" href="/modules/gui/css/lenya.css"/>
+    <link rel="stylesheet" type="text/css" href="/modules/notification/css/inbox.css"/>
+  </page:head>
+  
   <page:body>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
@@ -34,32 +39,22 @@
         </i18n:translate>
       </h1>
       
-      <table class="lenya-table-noborder">
-        <tr>
-          <td colspan="2">
-            <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
-          </td>
-        </tr>
-      </table>
+      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
       
-      <div style="margin-bottom: 10px;">
-        <a href="?lenya.usecase=notification.sendMessage"><i18n:text>new-message</i18n:text></a>
+      <div class="lenyaNotification">
+        
+        <div style="margin-bottom: 10px;">
+          <a class="lenyaButton" href="?lenya.usecase=notification.sendMessage"><i18n:text>new-message</i18n:text></a>
+        </div>
+        
+        <jx:set var="inbox" value="${usecase.getParameter('inbox')}"/>
+        <jx:set var="messageId" value="${request.getParameter('messageId')}"/>
+        
+        <jx:import uri="fallback://lenya/modules/notification/usecases/messageList.jx"/>
+        
+        <jx:import uri="fallback://lenya/modules/notification/usecases/currentMessage.jx"/>
       </div>
       
-      <jx:set var="inbox" value="${usecase.getParameter('inbox')}"/>
-      <jx:set var="messageId" value="${request.getParameter('messageId')}"/>
-      
-      <table>
-        <tr>
-          <td valign="top" style="padding: 0px; padding-right: 20px;">
-            <jx:import uri="fallback://lenya/modules/notification/usecases/messageList.jx"/>
-          </td>
-          <td valign="top" style="padding: 0px; padding-left: 20px;">
-            <jx:import uri="fallback://lenya/modules/notification/usecases/currentMessage.jx"/>
-          </td>
-        </tr>
-      </table>
-            
     </div>
   </page:body>
 </page:page>

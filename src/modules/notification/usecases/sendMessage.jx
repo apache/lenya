@@ -53,9 +53,17 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>To</i18n:text></td>
               <td>
+                <jx:set var="recipient" value="${usecase.getParameter('recipient')}"/>
                 <select class="lenya-form-element" name="recipient">
-                  <jx:forEach var="recipient" items="${usecase.getParameter('users')}">
-                    <option value="${recipient.getId()}"><jx:out value="${recipient.getId()}"/></option>
+                  <jx:forEach var="rec" items="${usecase.getParameter('users')}">
+                    <jx:choose>
+                      <jx:when test="${rec.getId().equals(recipient)}">
+                        <option value="${rec.getId()}" selected="selected"><jx:out value="${rec.getName()}"/> (<jx:out value="${rec.getId()}"/>)</option>
+                      </jx:when>
+                      <jx:otherwise>
+                        <option value="${rec.getId()}"><jx:out value="${rec.getName()}"/> (<jx:out value="${rec.getId()}"/>)</option>
+                      </jx:otherwise>
+                    </jx:choose>
                   </jx:forEach>
                 </select>
               </td>

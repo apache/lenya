@@ -20,7 +20,7 @@ package org.apache.lenya.inbox.usecases;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
-import org.apache.lenya.cms.usecase.AbstractUsecase;
+import org.apache.lenya.inbox.InboxMessage;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationUtil;
 import org.apache.lenya.util.Assert;
@@ -28,13 +28,29 @@ import org.apache.lenya.util.Assert;
 /**
  * Show and manage an inbox.
  */
-public class SendMessage extends AbstractUsecase {
+public class SendMessage extends AbstractInboxUsecase {
 
-    protected void initParameters() {
-        super.initParameters();
+    protected static final String PARAM_BODY = "body";
+    protected static final String PARAM_SUBJECT = "subject";
+    protected static final String PARAM_RECIPIENT = "recipient";
+    protected static final String PARAM_USER = "user";
+    protected static final String PARAM_REPLY_TO = "replyTo";
+
+    protected void prepareView() throws Exception {
+        super.prepareView();
+        
+        String replyToMessageId = getParameterAsString(PARAM_REPLY_TO);
+        if (replyToMessageId != null) {
+            org.apache.lenya.inbox.Inbox inbox = getInbox();
+            InboxMessage message = inbox.getMessage(replyToMessageId);
+            if (message != null) {
+                User sender = (User) message.getMessage().getSender();
+                setParameter(PARAM_RECIPIENT, sender.getId());
+            }
+        }
 
         User user = getSession().getIdentity().getUser();
-        setParameter("user", user);
+        setParameter(PARAM_USER, user);
 
         try {
             UserManager userManager = user.getAccreditableManager().getUserManager();
@@ -60,15 +76,15 @@ public class SendMessage extends AbstractUsecase {
     }
 
     protected String getSubject() {
-        return getParameterAsString("subject");
+        return getParameterAsString(PARAM_SUBJECT);
     }
 
     protected String getRecipient() {
-        return getParameterAsString("recipient");
+        return getParameterAsString(PARAM_RECIPIENT);
     }
 
     protected String getBody() {
-        return getParameterAsString("body");
+        return getParameterAsString(PARAM_BODY);
     }
 
     protected void doExecute() throws Exception {

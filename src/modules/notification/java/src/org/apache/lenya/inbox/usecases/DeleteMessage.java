@@ -20,39 +20,24 @@ package org.apache.lenya.inbox.usecases;
 import org.apache.lenya.inbox.InboxMessage;
 
 /**
- * Show and manage an inbox.
+ * Delete a message from the inbox.
  */
-public class Inbox extends AbstractInboxUsecase {
+public class DeleteMessage extends AbstractInboxUsecase {
 
     protected static final String PARAM_MESSAGE_ID = "messageId";
-    protected static final String PARAM_NOF_MESSAGES = "nofMessages";
-    protected static final String PARAM_NOF_UNREAD_MESSAGES = "nofUnreadMessages";
 
-    protected void prepareView() throws Exception {
-        super.prepareView();
-        setParameter(PARAM_USER, getUser());
-
-        org.apache.lenya.inbox.Inbox inbox = getInbox();
-
+    protected void doExecute() throws Exception {
+        super.doExecute();
         String id = getParameterAsString(PARAM_MESSAGE_ID);
         if (id != null) {
+            org.apache.lenya.inbox.Inbox inbox = getInbox();
             InboxMessage message = inbox.getMessage(id);
             if (message == null) {
                 addErrorMessage("The message " + id + " does not exist.");
             } else {
-                message.markAsRead(true);
+                inbox.remove(message);
             }
         }
-        
-        InboxMessage[] messages = inbox.getMessages();
-        int nofUnreadMessages = 0;
-        for (int i = 0; i < messages.length; i++) {
-            if (!messages[i].isMarkedAsRead()) {
-                nofUnreadMessages++;
-            }
-        }
-        setParameter(PARAM_NOF_MESSAGES, new Integer(messages.length));
-        setParameter(PARAM_NOF_UNREAD_MESSAGES, new Integer(nofUnreadMessages));
     }
 
 }

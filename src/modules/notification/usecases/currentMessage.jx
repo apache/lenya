@@ -15,7 +15,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!-- $Id: groups.jx 473861 2006-11-12 03:51:14Z gregor $ -->
 
 <jx:template
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
@@ -26,56 +25,29 @@
   
   <jx:if test="${usecase.getName().getClass().isInstance(messageId)}">
     <jx:set var="message" value="${inbox.getMessage(messageId)}"/>
-    
-    <div class="lenya-box" style="width: 100%">
-      <div class="lenya-box-title"><i18n:text>selected-message</i18n:text></div>
-      <div class="lenya-box-body">
-        <table class="lenya-table-noborder">
-          <tr>
-            <td class="lenya-entry-caption"><i18n:text>From</i18n:text>:</td>
-            <td style="white-space: nowrap">
-              <jx:out value="${message.getMessage().getSender().getName()}"/>
-              (<a href="?lenya.usecase=admin.user&amp;userId=${message.getMessage().getSender().getId()}"><jx:out value="${message.getMessage().getSender().getId()}"/></a>)
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption"><i18n:text>Subject</i18n:text>:</td>
-            <td>
-              <i18n:translate>
-                <i18n:text><jx:out value="${message.getMessage().getSubject()}"/></i18n:text>
-                <jx:forEach var="param" items="${message.getMessage().getSubjectParameters()}">
-                  <i18n:param><jx:out value="${param}"/></i18n:param>
-                </jx:forEach>
-              </i18n:translate>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption" valign="top"><i18n:text>Message</i18n:text>:</td>
-            <td>
-              <pre><i18n:translate>
-                <i18n:text><jx:out value="${message.getMessage().getBody()}"/></i18n:text>
-                <jx:forEach var="param" items="${message.getMessage().getBodyParameters()}">
-                  <i18n:param><jx:out value="${param}"/></i18n:param>
-                </jx:forEach>
-              </i18n:translate></pre>
-            </td>
-          </tr>
-          <tr>
-            <td/>
-            <td>
-              <br/>
-              <form method="POST">
-                <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-                <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-                <input type="hidden" name="deleteMessageId" value="${messageId}"/>
-                <input type="submit" name="submit" value="Delete" i18n:attr="value"/>
-              </form>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    
+    <jx:set var="sender" value="${message.getMessage().getSender().getId()}"/>
+    <p class="lenyaNotificationActions">
+      <a class="lenyaButton" href="?lenya.usecase=notification.sendMessage&amp;replyTo=${messageId}"><i18n:text>notification.reply</i18n:text></a>
+      <a class="lenyaButton" href="?lenya.usecase=notification.deleteMessage&amp;messageId=${messageId}"><i18n:text>notification.delete</i18n:text></a>
+    </p>
+    <p>
+      <span class="lenyaNotificationLabel"><i18n:text>From</i18n:text>: </span>
+      <jx:out value="${message.getMessage().getSender().getName()}"/>
+      (<a href="?lenya.usecase=admin.user&amp;userId=${sender}"><jx:out value="${sender}"/></a>)
+      <br/>
+      <span class="lenyaNotificationLabel"><i18n:text>Subject</i18n:text>: </span>
+      <i18n:translate>
+        <i18n:text><jx:out value="${message.getMessage().getSubject()}"/></i18n:text>
+        <jx:forEach var="param" items="${message.getMessage().getSubjectParameters()}">
+          <i18n:param><jx:out value="${param}"/></i18n:param>
+        </jx:forEach>
+      </i18n:translate>
+    </p>
+    <textarea disabled="disabled"><i18n:translate><i18n:text><jx:out value="${message.getMessage().getBody()}"/></i18n:text>
+      <jx:forEach var="param" items="${message.getMessage().getBodyParameters()}">
+        <i18n:param><jx:out value="${param}"/></i18n:param>
+      </jx:forEach>
+    </i18n:translate></textarea>
   </jx:if>
   
 </jx:template>

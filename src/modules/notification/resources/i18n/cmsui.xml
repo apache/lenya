@@ -34,5 +34,8 @@
   <message key="unread-message">1 new message</message>
   <message key="Read">Read</message>
   <message key="Inbox">Inbox</message>
+  <message key="notification.delete">Delete</message>
+  <message key="notification.reply">Reply</message>
+  <message key="notification.nofMessages">{0} messages, {1} new</message>
   
 </catalogue>

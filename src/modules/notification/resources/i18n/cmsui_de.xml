@@ -34,5 +34,8 @@
   <message key="unread-message">1 neue Nachricht</message>
   <message key="Read">Gelesen</message>
   <message key="Inbox">Posteingang</message>
+  <message key="notification.delete">Löschen</message>
+  <message key="notification.reply">Antworten</message>
+  <message key="notification.nofMessages">{0} Nachrichten, davon {1} ungelesen</message>
   
 </catalogue>
