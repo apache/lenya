@@ -379,6 +379,11 @@
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
+  <usecase id="notification.deleteMessage">
+    <role id="sitemanager" method="grant"/>
+    <role id="edit" method="grant"/>
+    <role id="review" method="grant"/>
+  </usecase>
   <usecase id="neutron.checkout">
     <role id="edit" method="grant"/>
   </usecase>
