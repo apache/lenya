@@ -21,8 +21,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
@@ -35,18 +38,21 @@ import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.avalon.framework.parameters.Parameterizable;
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.search.components.IndexManager;
+import org.apache.cocoon.components.search.components.impl.IndexManagerImpl;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationManager;
-// import org.apache.lenya.cms.publication.PublicationConfiguration;
+import org.apache.lenya.cms.publication.PublicationManager; // import org.apache.lenya.cms.publication.PublicationConfiguration;
 import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -56,20 +62,16 @@ import org.xml.sax.SAXException;
 
 /**
  * Instantiate the publication.
- * 
- * @version $Id$
  */
 public class Instantiator extends AbstractLogEnabled implements
-        org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
+        org.apache.lenya.cms.publication.templating.Instantiator, Serviceable, Parameterizable {
 
-    protected static final String[] sourcesToCopy = {
-            "config/publication.xml",
-            "config/access-control/access-control.xml",
-            "config/access-control/policies/",
-            "config/access-control/usecase-policies.xml",
-            "config/workflow/workflow.xml",
-            "config/"
-                    + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE };
+    protected static final String[] sourcesToCopy = { "config/publication.xml",
+            "config/access-control/access-control.xml", "config/access-control/policies/",
+            "config/access-control/usecase-policies.xml", "config/workflow/workflow.xml",
+            "config/" + IndexManagerImpl.INDEX_CONF_FILE };
+
+    protected static final String ACCREDITABLES_DIRECTORY = "config/access-control/passwd/";
 
     // the following stuff should actually come from PublicationConfiguration,
     // but there's currently no way to get at it.
@@ -81,6 +83,7 @@ public class Instantiator extends AbstractLogEnabled implements
     // hack.
     private static final String CONFIGURATION_FILE = "config/publication.xml";
     private static final String CONFIGURATION_NAMESPACE = "http://apache.org/cocoon/lenya/publication/1.1";
+    private static final String ACCESS_CONTROL_FILE = "config/access-control/access-control.xml";
     private static final String ELEMENT_NAME = "name";
     private static final String ELEMENT_TEMPLATE = "template";
     private static final String ATTRIBUTE_ID = "id";
@@ -89,17 +92,20 @@ public class Instantiator extends AbstractLogEnabled implements
     private static final String ELEMENT_MODULES = "modules";// *
     private static final String ELEMENT_MODULE = "module";// *
 
+    private ServiceManager manager;
+    private boolean shareAccreditables;
+
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
      *      java.lang.String, java.lang.String)
      */
     public void instantiate(Publication template, String newPublicationId, String name)
             throws Exception {
-        
+
         Assert.notNull("template", template);
         Assert.notNull("publication ID", newPublicationId);
         Assert.notNull("name", name);
-        
+
         if (name.equals("")) {
             name = newPublicationId;
         }
@@ -114,22 +120,30 @@ public class Instantiator extends AbstractLogEnabled implements
                     + Publication.PUBLICATION_PREFIX_URI);
             String publicationsUri = publicationsSource.getURI();
 
-            for (int i = 0; i < sourcesToCopy.length; i++) {
+            List sources = new ArrayList(Arrays.asList(sourcesToCopy));
 
-                String source = sourcesToCopy[i];
+            if (!this.shareAccreditables) {
+                sources.add(ACCREDITABLES_DIRECTORY);
+            }
+
+            for (Iterator i = sources.iterator(); i.hasNext();) {
+
+                String source = (String) i.next();
                 if (source.endsWith("/")) {
                     copyDirSource(template, newPublicationId, resolver, publicationsUri, source);
                 } else {
                     copySource(template, newPublicationId, resolver, publicationsUri, source);
                 }
             }
-            
+
             updateMetaData(resolver, newPublicationId, name, publicationsUri);
 
             configureSearchIndex(resolver, template, newPublicationId, publicationsUri);
 
             updateConfiguration(resolver, template, newPublicationId, publicationsUri);
-            
+
+            updateAccessControl(resolver, template, newPublicationId, publicationsUri);
+
             pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             pubManager.addPublication(newPublicationId);
 
@@ -264,7 +278,7 @@ public class Instantiator extends AbstractLogEnabled implements
 
             // Second, configure the index and add it to the IndexManager
 
-            indexManager = (IndexManager) manager.lookup(IndexManager.ROLE);
+            indexManager = (IndexManager) this.manager.lookup(IndexManager.ROLE);
 
             indexManager.addIndexes(indexSource);
 
@@ -324,6 +338,59 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
+    protected void updateAccessControl(SourceResolver resolver, Publication template,
+            String newPublicationId, String publicationsUri) throws MalformedURLException,
+            IOException, SAXException, ConfigurationException, SourceNotFoundException {
+        ModifiableSource configSource = null;
+        try {
+
+            configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
+                    + newPublicationId + "/" + ACCESS_CONTROL_FILE);
+
+            final boolean enableXmlNamespaces = true;
+            DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder(
+                    enableXmlNamespaces).build(configSource.getInputStream());
+            DefaultConfiguration acreditableDirectory = (DefaultConfiguration) config.getChild(
+                    "accreditable-manager", false).getChild("parameter", false);
+
+            if (!this.shareAccreditables) {
+                acreditableDirectory.setAttribute("value", "context:///lenya/pubs/"
+                        + newPublicationId + "/config/access-control/passwd");
+            }
+
+            DefaultConfiguration policyDirectory = (DefaultConfiguration) config.getChild(
+                    "policy-manager", false).getChild("policy-manager", false).getChild(
+                    "parameter", false);
+            policyDirectory.setAttribute("value", "context:///lenya/pubs/" + newPublicationId
+                    + "/config/access-control/policies");
+
+            saveConfiguration(config, configSource);
+        } finally {
+            if (resolver != null) {
+                if (configSource != null) {
+                    resolver.release(configSource);
+                }
+            }
+        }
+    }
+
+    protected void saveConfiguration(DefaultConfiguration config, ModifiableSource source)
+            throws IOException, SAXException, ConfigurationException {
+        OutputStream oStream = source.getOutputStream();
+        new DefaultConfigurationSerializer().serialize(oStream, config);
+        if (oStream != null) {
+            oStream.flush();
+            try {
+                oStream.close();
+            } catch (Throwable t) {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Exception closing output stream: ", t);
+                }
+                throw new RuntimeException("Could not write document: ", t);
+            }
+        }
+    }
+
     protected void save(Document metaDoc, ModifiableSource metaSource) throws IOException,
             TransformerConfigurationException, TransformerException {
         OutputStream oStream = metaSource.getOutputStream();
@@ -341,13 +408,15 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
-    private ServiceManager manager;
-
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    public void parameterize(Parameters params) throws ParameterException {
+        this.shareAccreditables = params.getParameterAsBoolean("shareAccreditables", true);
     }
 
 }

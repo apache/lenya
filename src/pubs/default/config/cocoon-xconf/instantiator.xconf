@@ -15,8 +15,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-
-<!-- $Id: usecase.xmap 158794 2005-03-23 16:21:15Z andreas $ -->
 <!--
     This file defines the publication specific template instantiator
 -->
@@ -25,6 +23,9 @@
 
     <component-instance name="default"
                         logger="lenya.publication.templating"
-                        class="org.apache.lenya.defaultpub.cms.publication.templating.Instantiator"/>
+                        class="org.apache.lenya.defaultpub.cms.publication.templating.Instantiator">
+      <!-- if the new publication should use the same accreditables as the template. -->
+      <parameter name="shareAccreditables" value="false"/>
+    </component-instance>
 
   </xconf>
