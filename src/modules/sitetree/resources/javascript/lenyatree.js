@@ -70,7 +70,7 @@ LenyaNode.prototype.getStyle = function() {
 LenyaNode.prototype.loadSubTree = function(handler) {
     // display a 'loading' that the tree is being loaded
     if (SHOW_LOADING_HINT) {
-        var div = this.tree.doc.createElement('div');
+        var div = this.tree.createElement('div');
         var text = this.tree.doc.createTextNode('loading...');
         div.appendChild(text);
         this.element.firstChild.firstChild.firstChild.lastChild.appendChild(div);
@@ -170,6 +170,11 @@ LenyaTree.prototype.init = function(id) {
     this._currentId = 0;
 };
 
+LenyaTree.prototype.createElement = function(name) {
+    return this.doc.createElementNS("http://www.w3.org/1999/xhtml", name);
+};
+
+
 LenyaTree.prototype.getItems = function(item, handler, allow_cache) {
     if (item.tree.root == item) {
         alert('getTtems() of root called. This should not happen, loadInitialTree should be called first.');
@@ -250,7 +255,7 @@ LenyaTree.prototype.getIcon = function(item) {
             else {
                 href = item.icon;
             }
-            var img = this.doc.createElement('img');
+            var img = this.createElement('img');
             var language = CHOSEN_LANGUAGE;
             img.setAttribute('src', href);
             img.setAttribute('alt', '');
@@ -263,8 +268,8 @@ LenyaTree.prototype.getIcon = function(item) {
 
 /* creates the item name and any icons and such */
 LenyaTree.prototype.createItemLine = function(item) {
-    var div = this.doc.createElement('div');
-    var span = this.doc.createElement('span');
+    var div = this.createElement('div');
+    var span = this.createElement('span');
     var icon = this.getIcon(item);
     if (icon.nodeType == 1) {
         icon.className = 'treenode_icon';
@@ -282,24 +287,24 @@ LenyaTree.prototype.createItemLine = function(item) {
 };
 
 LenyaTree.prototype.createItemHtml = function(item) {
-    var div = this.doc.createElement('div');
+    var div = this.createElement('div');
     div.className = 'treenode';
 
     // place a reference to the item on the div
     div.treeitem = item;
     
-    var table = this.doc.createElement('table');
+    var table = this.createElement('table');
     div.appendChild(table);
-    var tbody = this.doc.createElement('tbody');
+    var tbody = this.createElement('tbody');
     table.appendChild(tbody);
-    var tr = this.doc.createElement('tr');
+    var tr = this.createElement('tr');
     tbody.appendChild(tr);
 
     // add the lines:
     this.addLines(item, tr);
 
     // add the opensign
-    var td1 = this.doc.createElement('td');
+    var td1 = this.createElement('td');
     tr.appendChild(td1);
     item.opensign = this.getCloseSign(item);
     item.opensign.className = 'treenode_sign';
@@ -313,7 +318,7 @@ LenyaTree.prototype.createItemHtml = function(item) {
     td1.appendChild(item.opensign);
 
     // add the label
-    var td2 = this.doc.createElement('td');
+    var td2 = this.createElement('td');
     tr.appendChild(td2);
     td2.className = 'lenya-info-label-td';
     var line = this.createItemLine(item);
@@ -345,7 +350,7 @@ LenyaTree.prototype.getSignType = function(item) {
 
 /* get the [+] sign for a collection or resource */
 LenyaTree.prototype.getCloseSign = function(item) {
-    var opensign = this.doc.createElement('img');
+    var opensign = this.createElement('img');
     opensign.className = 'treenode_sign';
     
     if (item.tree.root == item) {
@@ -365,7 +370,7 @@ LenyaTree.prototype.getCloseSign = function(item) {
 
 /* get the [-] sign for a collection */
 LenyaTree.prototype.getOpenSign = function(item) {
-    var opensign = this.doc.createElement('img');
+    var opensign = this.createElement('img');
     opensign.className = 'treenode_sign';
 
     if (item.tree.root == item) {
@@ -384,8 +389,8 @@ LenyaTree.prototype.addLines = function(item, parentElement) {
     var linesStr = this.computeLinesString(item);
     // linesStr is in the reverse order
     for (var i=linesStr.length-1; i>0; i--) {
-        var td = this.doc.createElement('td');
-        var img = this.doc.createElement('img');
+        var td = this.createElement('td');
+        var img = this.createElement('img');
         
         var imageName = '';
         if (linesStr.charAt(i)=='I') {

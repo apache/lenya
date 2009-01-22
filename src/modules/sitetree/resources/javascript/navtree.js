@@ -241,18 +241,18 @@ NavTree.prototype.createItemHtml = function(item) {
     // place a reference to the item on the div
     div.treeitem = item;
     
-    var table = this.doc.createElement('table');
+    var table = this.createElement('table');
     div.appendChild(table);
-    var tbody = this.doc.createElement('tbody');
+    var tbody = this.createElement('tbody');
     table.appendChild(tbody);
-    var tr = this.doc.createElement('tr');
+    var tr = this.createElement('tr');
     tbody.appendChild(tr);
 
     // add the lines:
     this.addLines(item, tr);
 
     // add the opensign
-    var td1 = this.doc.createElement('td');
+    var td1 = this.createElement('td');
     tr.appendChild(td1);
     item.opensign = this.getCloseSign(item);
     item.opensign.className = 'treenode_sign';
@@ -266,7 +266,7 @@ NavTree.prototype.createItemHtml = function(item) {
     td1.appendChild(item.opensign);
     
     // add the label
-    var td2 = this.doc.createElement('td');
+    var td2 = this.createElement('td');
     tr.appendChild(td2);
     td2.className = 'lenya-info-label-td';
     var line = this.createItemLine(item);
