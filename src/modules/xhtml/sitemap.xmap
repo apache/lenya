@@ -37,7 +37,7 @@
   <map:pipelines>
 
     <!-- search pipeline -->
-    <map:pipeline>
+    <map:pipeline type="noncaching">
       
       <!-- {pub-id}/{area}/{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
@@ -82,7 +82,7 @@
       </map:match>
 
       <map:match pattern="icon/*/*/*/*">
-        <map:read src="fallback://lenya/modules/xhtml/resources/icons/xhtml.gif"/>
+        <map:read src="fallback://lenya/modules/xhtml/resources/icons/xhtml.gif" mime-type="image/gif"/>
       </map:match>
       
       <map:match pattern="icon">
