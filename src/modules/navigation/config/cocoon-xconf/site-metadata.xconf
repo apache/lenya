@@ -16,17 +16,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-  This file defines the publication specific use-cases
--->
+<xconf xpath="/cocoon/meta-data"
+  unless="/cocoon/meta-data/component-instance[@name = 'http://apache.org/lenya/metadata/site/1.0']">
+  <component-instance name="http://apache.org/lenya/metadata/site/1.0"
+    class="org.apache.lenya.cms.metadata.ConfigurableElementSet">
+    <element name="folderNode" multiple="false" editable="true"/>
+    <element name="externalLink" multiple="false" editable="true"/>
+  </component-instance>
+</xconf>
 
-  <xconf xpath="/cocoon/meta-data"
-    unless="/cocoon/meta-data/component-instance[@name = 'http://apache.org/lenya/metadata/site/1.0']">
-    <component-instance name="http://apache.org/lenya/metadata/site/1.0"
-      class="org.apache.lenya.cms.metadata.ConfigurableElementSet">
-      <element name="folderNode" multiple="false" editable="true"/>
-      <element name="externalLink" multiple="false" editable="true"/>
-    </component-instance>
-  </xconf>
-  
