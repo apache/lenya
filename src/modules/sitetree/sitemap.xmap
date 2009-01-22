@@ -128,35 +128,39 @@ This sitemap creates default navigation components.
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- {publication-id}/{area}/info-sitetree -->
-      <map:match pattern="*/*/sitetree-fragment.xml">
+      <map:match pattern="sitetree-fragment.xml">
         <map:generate type="sitetree-fragment">
-          <map:parameter name="areas" value="{request-param:areas}"/>
+          <map:parameter name="pub" value="{request-param:pub}"/>
           <map:parameter name="area" value="{request-param:area}"/>
+          <map:parameter name="areas" value="{request-param:areas}"/>
           <map:parameter name="path" value="{request-param:path}"/>
           <map:parameter name="initial" value="{request-param:initial}"/>
           <map:parameter name="mimetype" value="{request-param:mimetype}"/>
         </map:generate>
         <!-- <map:call resource="i18n"/> -->
-        <map:transform type="access-control-sitetree">
-          <map:parameter name="publication-id" value="{1}"/>
-          <map:parameter name="area" value="{2}"/>
-        </map:transform>
+        <map:transform type="access-control-sitetree"/>
         <map:act type="set-header">
           <map:parameter name="Cache-Control" value="pre-check=0" />
           <map:parameter name="Expires" value="-1" />
         </map:act>
         <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/sitetree2nav.xsl" label="navtree">
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          <map:parameter name="defaultlanguage" value="{request-param:defaultLanguage}"/>
           <map:parameter name="extension" value="html"/>
         </map:transform>
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
-        <map:transform type="uuid2url-sitetree"/>
-        <map:transform type="icon-sitetree"/>
-        <map:transform type="proxy-sitetree"/>
+        <map:transform type="uuid2url-sitetree">
+          <map:parameter name="url" value="/{request-param:pub}/{request-param:area}/"/>
+        </map:transform>
+        <map:transform type="icon-sitetree">
+          <map:parameter name="url" value="/{request-param:pub}/{request-param:area}/"/>
+        </map:transform>
+        <map:transform type="proxy-sitetree">
+          <map:parameter name="pub" value="{request-param:pub}"/>
+          <map:parameter name="area" value="{request-param:area}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
@@ -172,16 +176,16 @@ This sitemap creates default navigation components.
     <!-- Resource type icons -->
     <map:pipeline>
       
-      <map:match pattern="*/*/folder.gif">
+      <map:match pattern="folder.gif">
         <map:read src="fallback://lenya/modules/sitetree/resources/icons/folder.gif"/>
       </map:match>
 
-      <map:match pattern="*/*/default.gif">
+      <map:match pattern="default.gif">
         <map:read src="fallback://lenya/modules/sitetree/resources/icons/default.gif"/>
       </map:match> 
       
-      <map:match pattern="*/*/*.gif">
-        <map:read src="{resource-type:{3}:format-icon}" mime-type="image/gif"/>
+      <map:match pattern="*.gif">
+        <map:read src="{resource-type:{1}:format-icon}" mime-type="image/gif"/>
       </map:match>
     </map:pipeline>
     

@@ -70,7 +70,6 @@
       <div id="tree">
         <script type="text/javascript">
           WEBAPP_BASE_PATH = '<proxy:url href="/"/>';
-          AREA_BASE_PATH = '<proxy:url href="/${publicationId}/${area}"/>';
           USECASE = '${usecase.getName()}';
           
           PUBLICATION_ID = '<jx:out value="${publicationId}"/>';
@@ -98,7 +97,7 @@
           </jx:choose>
           
           ALL_AREAS = 'authoring,trash,archive';
-          PIPELINE_PATH = '/sitetree-fragment.xml';
+          PIPELINE_PATH = 'modules/sitetree/sitetree-fragment.xml';
           SHOW_LOADING_HINT = true;
           SHOW_ICONS = true;
           

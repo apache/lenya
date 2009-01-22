@@ -67,7 +67,13 @@ NavNode.prototype.getBasePath = function() {
 NavNode.prototype.getLoadSubTreeURL = function() {
     area = this.area;
     var path = this.getBasePath();
-    return encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree');
+    return encodeURI(WEBAPP_BASE_PATH + PIPELINE_PATH
+        + '?pub=' + PUBLICATION_ID
+        + '&area=' + area
+        + '&path=' + path
+        + '&language=' + CHOSEN_LANGUAGE
+        + '&defaultLanguage=' + DEFAULT_LANGUAGE
+        + '&areas=' + ALL_AREAS);
 }
 
 NavNode.prototype.getStyle = function() {
@@ -155,7 +161,14 @@ NavTree.prototype.init = function(id, label) {
 };
 
 NavTree.prototype.loadInitialTree = function(area, path) {
-    var url = encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS+'&lenya.module=sitetree');
+    var url = encodeURI(WEBAPP_BASE_PATH + PIPELINE_PATH + '?'
+        + 'pub=' + PUBLICATION_ID
+        + '&area=' + area
+        + '&path=' + path
+        + '&defaultLanguage=' + DEFAULT_LANGUAGE
+        + '&language=' + CHOSEN_LANGUAGE
+        + '&initial=true'
+        + '&areas=' + ALL_AREAS);
     
     callback = function(fragment, param) {
         var tree = param[0];

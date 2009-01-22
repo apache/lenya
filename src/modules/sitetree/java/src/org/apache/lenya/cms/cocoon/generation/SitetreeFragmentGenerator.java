@@ -93,31 +93,31 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
     protected static final String PARAM_AREAS = "areas";
 
     /** The URI of the namespace of this generator. */
-    protected static final String URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
-    protected static final String XML_URI = "http://www.w3.org/XML/1998/namespace";
+    public static final String URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
+    public static final String XML_URI = "http://www.w3.org/XML/1998/namespace";
 
     /** The namespace prefix for this namespace. */
     protected static final String PREFIX = "site";
     protected static final String XML_PREFIX = "xml";
 
-    protected static final String NODE_NODE = "node";
-    protected static final String NODE_LABEL = "label";
-    protected static final String NODE_SITE = "site";
-    protected static final String NODE_FRAGMENT = "fragment";
+    public static final String NODE_NODE = "node";
+    public static final String NODE_LABEL = "label";
+    public static final String NODE_SITE = "site";
+    public static final String NODE_FRAGMENT = "fragment";
 
-    protected static final String ATTR_ID = "id";
-    protected static final String ATTR_FOLDER = "folder";
-    protected static final String ATTR_AREA = "area";
-    protected static final String ATTR_PUBLICATION = "publication";
-    protected static final String ATTR_LABEL = "label";
-    protected static final String ATTR_VISIBLEINNAV = "visibleinnav";
-    protected static final String ATTR_LINK = "link";
-    protected static final String ATTR_BASE = "base";
-    protected static final String ATTR_SUFFIX = "suffix";
-    protected static final String ATTR_HREF = "href";
-    protected static final String ATTR_UUID = "uuid";
-    protected static final String ATTR_LANG = "lang";
-    protected static final String ATTR_TYPE = "mimetype";
+    public static final String ATTR_ID = "id";
+    public static final String ATTR_FOLDER = "folder";
+    public static final String ATTR_AREA = "area";
+    public static final String ATTR_PUBLICATION = "publication";
+    public static final String ATTR_LABEL = "label";
+    public static final String ATTR_VISIBLEINNAV = "visibleinnav";
+    public static final String ATTR_LINK = "link";
+    public static final String ATTR_BASE = "base";
+    public static final String ATTR_SUFFIX = "suffix";
+    public static final String ATTR_HREF = "href";
+    public static final String ATTR_UUID = "uuid";
+    public static final String ATTR_LANG = "lang";
+    public static final String ATTR_TYPE = "mimetype";
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,

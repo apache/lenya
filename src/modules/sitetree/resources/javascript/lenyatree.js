@@ -19,7 +19,6 @@
 /*
   The following variables must be set:
   WEBAPP_BASE_PATH - path to the web application root, including the trailing slash
-  AREA_BASE_PATH - path to the area root, without the trailing slash
   PUBLICATION_ID
   PIPELINE_PATH
   IMAGE_PATH
@@ -85,7 +84,7 @@ LenyaNode.prototype.loadSubTree = function(handler) {
 
 LenyaNode.prototype.getLoadSubTreeURL = function() {
     var path = this.getPath();
-    return encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
+    return encodeURI(WEBAPP_BASE_PATH + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
 }
 
 
@@ -195,7 +194,7 @@ LenyaTree.prototype.loadInitialTree = function(path) {
 };
 
 LenyaTree.prototype.getLoadInitialTreeURL = function(path) {
-    return encodeURI(AREA_BASE_PATH + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
+    return encodeURI(WEBAPP_BASE_PATH + PIPELINE_PATH + '?path='+path+'&lenya.module=sitetree');
 }
 
 LenyaTree.prototype.initialTreeLoaded = function(xml) {
@@ -246,7 +245,7 @@ LenyaTree.prototype.getIcon = function(item) {
         else {
             var href;
             if (steps.length < 4) {
-                href = AREA_BASE_PATH + "/folder.gif?lenya.module=sitetree";
+                href = WEBAPP_BASE_PATH + "modules/sitetree/folder.gif";
             }
             else {
                 href = item.icon;

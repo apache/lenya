@@ -21,10 +21,11 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Stack;
 
 import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -38,8 +39,8 @@ import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNodeImpl;
+import org.apache.lenya.cms.cocoon.generation.SitetreeFragmentGenerator;
+import org.apache.lenya.util.Assert;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -54,22 +55,17 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
      * <code>ATTRIBUTE_PROTECTED</code> The attribute for protected
      */
     public static final String ATTRIBUTE_PROTECTED = "protected";
-    /**
-     * <code>PARAMETER_PUBLICATION_ID</code> The publication id parameter
-     */
-    public static final String PARAMETER_PUBLICATION_ID = "publication-id";
-    /**
-     * <code>PARAMETER_AREA</code> The area parameter
-     */
-    public static final String PARAMETER_AREA = "area";
 
-    private String documentId;
     private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
     private AccessControllerResolver acResolver;
     private AccreditableManager accreditableManager;
     private Identity identity;
-    private String urlPrefix;
+
+    private String pubId;
+    private String area;
+    private String basePath;
+    private Stack pathElements = new Stack();
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -86,39 +82,23 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         this.identity = Identity.getIdentity(this.request.getSession(false));
 
         try {
-            String publicationId = par.getParameter(PARAMETER_PUBLICATION_ID);
-            String area = par.getParameter(PARAMETER_AREA);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Setting up transformer");
                 getLogger().debug("    Identity:       [" + this.identity + "]");
-                getLogger().debug("    Publication ID: [" + publicationId + "]");
-                getLogger().debug("    Area:           [" + area + "]");
             }
 
-            this.urlPrefix = "/" + publicationId + "/" + area;
+            this.serviceSelector = (ServiceSelector) this.manager
+                    .lookup(AccessControllerResolver.ROLE + "Selector");
 
-            this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-
-            this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+            this.acResolver = (AccessControllerResolver) this.serviceSelector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
             }
 
-            AccessController accessController = this.acResolver.resolveAccessController(this.urlPrefix);
-            this.accreditableManager = accessController.getAccreditableManager();
-            this.policyManager = accessController.getPolicyManager();
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Using policy manager [" + this.policyManager + "]");
-            }
-        } catch (final ParameterException e) {
-            throw new ProcessingException(e);
         } catch (final ServiceException e) {
-            throw new ProcessingException(e);
-        } catch (final AccessControlException e) {
             throw new ProcessingException(e);
         }
 
@@ -128,9 +108,6 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing transformer");
-        }
         if (this.serviceSelector != null) {
             if (this.acResolver != null) {
                 this.serviceSelector.release(this.acResolver);
@@ -144,7 +121,6 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
      */
     public void startDocument() throws SAXException {
         super.startDocument();
-        this.documentId = "";
     }
 
     /**
@@ -157,39 +133,41 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
 
         Attributes attributes = attr;
 
-        if (isFragmentNode(uri, localName)) {
-            String area = attr.getValue("area"); // FIXME: don't hardcode
-            String base = attr.getValue("base");
-            if (area != null && base != null) {
-                this.documentId = "/" + area + base;
-            }
-        }
-        if (isNode(uri, localName)) {
-            String id = attr.getValue(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME);
-            if (id != null) {
-                this.documentId += "/" + id;
+        if (isFragmentElement(uri, localName)) {
+            this.pubId = attr.getValue(SitetreeFragmentGenerator.ATTR_PUBLICATION);
+            Assert.notNull("publication attribute", this.pubId);
+
+            String area = attr.getValue("area");
+            if (area != null) {
+                this.area = area;
             }
 
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Checking node");
-                getLogger().debug("    Document ID: [" + this.documentId + "]");
-                getLogger().debug("    URL:         [" + this.urlPrefix + this.documentId + "]");
-            }
+            String basePath = attr.getValue(SitetreeFragmentGenerator.ATTR_BASE);
+            this.basePath = basePath == null ? "" : basePath;
 
             try {
-                String url = this.urlPrefix + this.documentId;
-                Role[] roles = this.policyManager.getGrantedRoles(this.accreditableManager, this.identity, url);
+                AccessController accessController = this.acResolver.resolveAccessController("/"
+                        + this.pubId + "/");
+                this.accreditableManager = accessController.getAccreditableManager();
+                this.policyManager = accessController.getPolicyManager();
+            } catch (AccessControlException e) {
+                throw new SAXException(e);
+            }
 
-                getLogger().debug("    Roles:       [" + roles.length + "]");
+        } else if (isSiteElement(uri, localName)) {
+            this.area = attr.getValue("area");
+            Assert.notNull("area attribute", this.area);
+        } else if (isNodeElement(uri, localName)) {
+            String id = attr.getValue(SitetreeFragmentGenerator.ATTR_ID);
+            Assert.notNull("id attribute", id);
+            this.pathElements.push(id);
 
-                if (roles.length == 0) {
-                    getLogger().debug("    Adding attribute [protected='true']");
-
+            try {
+                Role[] roles = this.policyManager.getGrantedRoles(this.accreditableManager,
+                        this.identity, getUrl());
+                if (roles.length == 0 || roles.length == 1 && roles[0].getId().equals("session")) {
                     AttributesImpl attributesImpl = new AttributesImpl(attributes);
-                    attributesImpl.addAttribute("",
-                            ATTRIBUTE_PROTECTED,
-                            ATTRIBUTE_PROTECTED,
-                            "",
+                    attributesImpl.addAttribute("", ATTRIBUTE_PROTECTED, ATTRIBUTE_PROTECTED, "",
                             Boolean.toString(true));
                     attributes = attributesImpl;
                 }
@@ -201,15 +179,26 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         super.startElement(uri, localName, raw, attributes);
     }
 
+    protected String getUrl() {
+        Assert.notNull("pub ID", this.pubId);
+        Assert.notNull("area", this.area);
+        Assert.notNull("base path", this.basePath);
+        StringBuffer path = new StringBuffer();
+        for (Iterator i = this.pathElements.iterator(); i.hasNext();) {
+            path.append("/").append(i.next());
+        }
+        return "/" + this.pubId + "/" + this.area + this.basePath + path.toString();
+    }
+
     /**
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String,
      *      java.lang.String)
      */
     public void endElement(String uri, String localName, String raw) throws SAXException {
-        super.endElement(uri, localName, raw);
-        if (isNode(uri, localName) && this.documentId.length() > 0) {
-            this.documentId = this.documentId.substring(0, this.documentId.lastIndexOf("/"));
+        if (isNodeElement(uri, localName)) {
+            this.pathElements.pop();
         }
+        super.endElement(uri, localName, raw);
     }
 
     /**
@@ -218,9 +207,9 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
      * @param localName The local name.
      * @return A boolean value.
      */
-    protected boolean isNode(String uri, String localName) {
-        return uri.equals(DefaultSiteTree.NAMESPACE_URI)
-                && (localName.equals(SiteTreeNodeImpl.NODE_NAME) || localName.equals("site"));
+    protected boolean isNodeElement(String uri, String localName) {
+        return uri.equals(SitetreeFragmentGenerator.URI)
+                && localName.equals(SitetreeFragmentGenerator.NODE_NODE);
     }
 
     /**
@@ -229,8 +218,27 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
      * @param localName The local name.
      * @return A boolean value.
      */
-    protected boolean isFragmentNode(String uri, String localName) {
-        return uri.equals(DefaultSiteTree.NAMESPACE_URI) && (localName.equals("fragment"));
+    protected boolean isFragmentElement(String uri, String localName) {
+        return uri.equals(SitetreeFragmentGenerator.URI)
+                && localName.equals(SitetreeFragmentGenerator.NODE_FRAGMENT);
+    }
+
+    /**
+     * Returns if an element represents a site node.
+     * @param uri The namespace URI.
+     * @param localName The local name.
+     * @return A boolean value.
+     */
+    protected boolean isSiteElement(String uri, String localName) {
+        return uri.equals(SitetreeFragmentGenerator.URI)
+                && localName.equals(SitetreeFragmentGenerator.NODE_SITE);
+    }
+
+    public void recycle() {
+        super.recycle();
+        this.pubId = null;
+        this.area = null;
+        this.pathElements.clear();
     }
 
 }
