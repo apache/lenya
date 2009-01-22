@@ -72,8 +72,6 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
         public String rewrite(String url) {
             String pubId = IconUrlTransformer.this.pubId;
             String area = IconUrlTransformer.this.area;
-            StringBuffer iconUrl = new StringBuffer();
-            iconUrl.append("/").append(pubId).append("/").append(area).append("/");
             String name = "default";
             if (url.length() > PROTOCOL.length()) {
                 String suffix = url.substring(PROTOCOL.length());
@@ -93,8 +91,7 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
                     throw new RuntimeException(e);
                 }
             }
-            iconUrl.append(name).append(".gif?lenya.module=sitetree");
-            return iconUrl.toString();
+            return "/modules/sitetree/" + name + ".gif";
         }
 
         protected Link getLink(String linkUri, String pubId, String area)
@@ -119,7 +116,7 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
             this.factory = DocumentUtil.getDocumentFactory(this.manager, request);
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
 
-            String webappUrl = ServletHelper.getWebappURI(request);
+            String webappUrl = getWebappUrl(params, objectModel);
             URLInformation url = new URLInformation(webappUrl);
             this.pubId = url.getPublicationId();
             this.area = url.getArea();
