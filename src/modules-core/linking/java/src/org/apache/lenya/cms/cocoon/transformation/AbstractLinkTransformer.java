@@ -279,10 +279,10 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         // use existsMatching to match up with endElement
         if (existsMatchingConfiguration(uri, name) && this.useIgnore) {
             if (this.ignoreLinkElement) {
-                ignoreLinkElementStack.push(Boolean.TRUE);
+                this.ignoreLinkElementStack.push(Boolean.TRUE);
                 return;
             } else {
-                ignoreLinkElementStack.push(Boolean.FALSE);
+                this.ignoreLinkElementStack.push(Boolean.FALSE);
             }
         }
 
@@ -329,7 +329,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             getLogger().debug(this.indent + "</" + qname + ">");
         }
         if (existsMatchingConfiguration(uri, name) && this.useIgnore) {
-            if (((Boolean) ignoreLinkElementStack.pop()).booleanValue()) {
+            if (((Boolean) this.ignoreLinkElementStack.pop()).booleanValue()) {
                 this.ignoreLinkElement = false;
                 return;
             }
@@ -399,6 +399,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     public void recycle() {
         super.recycle();
         this.area = null;
+        this.ignoreLinkElementStack.clear();
     }
 
 }
