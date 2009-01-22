@@ -31,8 +31,8 @@
       },
       method: "post",
       encoding: "utf-8",
-      error: function(type, data, evt) {
-        alert("An error occurred.");
+      error: function(response) {
+        alert(response);
       },
       headers: { 
         "Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"
