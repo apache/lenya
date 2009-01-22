@@ -18,8 +18,10 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
@@ -74,14 +76,27 @@ public class GroupMembers extends AccessControlUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
+        Set usersToSave = new HashSet();
+        
         final Group group = getGroup();
+        Groupable[] members = group.getMembers();
+        for (int i = 0; i < members.length; i++) {
+            if (members[i] instanceof User) {
+                usersToSave.add(members[i]);
+            }
+        }
+        
         group.removeAllMembers();
 
         List groupUsers = (List) getParameter(GROUP_USERS);
         for (Iterator i = groupUsers.iterator(); i.hasNext();) {
             User user = (User) i.next();
             group.add(user);
-            user.save();
+            usersToSave.add(user);
+        }
+        
+        for (Iterator i = usersToSave.iterator(); i.hasNext(); ) {
+            ((User) i.next()).save();
         }
     }
 
