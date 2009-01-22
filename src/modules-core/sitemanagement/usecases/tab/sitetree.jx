@@ -71,6 +71,7 @@
         <script type="text/javascript">
           WEBAPP_BASE_PATH = '<proxy:url href="/"/>';
           AREA_BASE_PATH = '<proxy:url href="/${publicationId}/${area}"/>';
+          USECASE = '${usecase.getName()}';
           
           PUBLICATION_ID = '<jx:out value="${publicationId}"/>';
           <jx:choose>

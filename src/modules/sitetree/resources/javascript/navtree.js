@@ -211,7 +211,7 @@ NavTree.prototype.addLoadedSite = function(site)
 
 NavTree.prototype.handleItemClick = function(item, event) {
     if (!item.isprotected) { // && item.root!=item) {
-        href = encodeURI(item.href + "?lenya.usecase=tab.overview"); 
+        href = encodeURI(item.href + "?lenya.usecase=" + USECASE); 
         window.location = href;
     }
 };
