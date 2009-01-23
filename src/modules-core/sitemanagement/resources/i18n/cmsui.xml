@@ -38,7 +38,7 @@
   <message key="Meta Data">Meta Data</message>
   <message key="no-assets">No assets uploaded yet.</message>
   <message key="Editor">Editor</message>
-  <message key="missing-languages">Missing Languages<br/> (click to create)</message>
+  <message key="missing-languages">Missing Languages<xhtml:br/> (click to create)</message>
   <message key="Namespace">Namespace</message>
   <message key="http://purl.org/dc/terms/">Dublin Core Terms</message>
   <message key="http://purl.org/dc/elements/1.1/">Dublin Core Elements</message>

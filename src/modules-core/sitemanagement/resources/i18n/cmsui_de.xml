@@ -38,7 +38,7 @@
   <message key="Meta Data">Meta-Daten</message>
   <message key="no-assets">Es wurden noch keine Anlagen hochgeladen.</message>
   <message key="Editor">Bearbeiter</message>
-  <message key="missing-languages">Fehlende Sprachen<br/> (Klicken zum Erstellen)</message>
+  <message key="missing-languages">Fehlende Sprachen<xhtml:br/> (Klicken zum Erstellen)</message>
   <message key="Namespace">Namensraum</message>
   <message key="http://purl.org/dc/terms/">Dublin-Core-Terme</message>
   <message key="http://purl.org/dc/elements/1.1/">Dublin-Core-Elemente</message>
