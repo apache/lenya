@@ -75,18 +75,11 @@
                 <a href="${usecase.getSourceURL()}?lenya.usecase=admin.group&amp;groupId=${group}"><jx:out value="${group}"/></a></jx:forEach>
             </td>
             <td style="vertical-align: middle">
-              <form method="get" id="form-delete_user" action="${usecase.getSourceURL()}">
-                <input type="hidden" name="lenya.usecase" value="admin.deleteUser"/>
-                <input name="userId" type="hidden" value="${user.getId()}"/>
-                <jx:choose>
-                  <jx:when test="${user.equals(usecase.getParameter('currentUser'))}">
-                    <input i18n:attr="value" type="submit" value="Delete" disabled="disabled" name="input-delete_user"/>
-                  </jx:when>
-                  <jx:otherwise>
-                    <input i18n:attr="value" type="submit" value="Delete" name="input-delete_user"/>
-                  </jx:otherwise>
-                </jx:choose>
-              </form>
+              <jx:if test="${!user.equals(usecase.getParameter('currentUser'))}">
+                <a href="${usecase.getSourceURL()}?lenya.usecase=admin.deleteUser&amp;userId=${user.getId()}" class="lenyaButton">
+                  <i18n:text>Delete</i18n:text>
+                </a>
+              </jx:if>
             </td>
           </tr>
         </jx:forEach>
