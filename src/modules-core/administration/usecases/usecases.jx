@@ -30,9 +30,11 @@
       <h1><i18n:text>Usecases</i18n:text></h1>
       
       <form method="post" id="form-usecases" action="${usecase.getSourceURL()}">
-        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-        <p><i18n:text>usecase-policies-message</i18n:text></p> 
+        <p>
+          <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+          <i18n:text>usecase-policies-message</i18n:text>
+        </p> 
         <jx:if test="${usecase.getParameter('template')}">
           <p><strong>Note:</strong><br/>
             If you submit this form, all usecase permissions
