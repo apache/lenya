@@ -32,13 +32,9 @@
       
       <h1><i18n:text>Users</i18n:text></h1>
       
-      <table class="lenya-table-noborder">
-        <tr>
-          <td colspan="2">
-            <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
-          </td>
-        </tr>
-      </table>
+      <p>
+        <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+      </p>
       
       <p>
         <i18n:text>Add User</i18n:text>:

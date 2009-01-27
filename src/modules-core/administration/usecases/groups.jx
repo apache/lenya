@@ -39,7 +39,7 @@
       </p>
       
       <p>
-        <a href="{usecase.getSourceURL()}?lenya.usecase=admin.addGroup" class="lenyaButton">
+        <a href="${usecase.getSourceURL()}?lenya.usecase=admin.addGroup" class="lenyaButton">
           <i18n:text>Add Group</i18n:text>
         </a>
       </p>
@@ -60,7 +60,7 @@
               <jx:out value="${group.getName()}"/>
             </td>
             <td style="vertical-align: middle">
-              <a href="{usecase.getSourceURL()}?lenya.usecase=admin.deleteGroup&amp;groupId=${group.getId()}" class="lenyaButton">
+              <a href="${usecase.getSourceURL()}?lenya.usecase=admin.deleteGroup&amp;groupId=${group.getId()}" class="lenyaButton">
                 <i18n:text>Delete</i18n:text>
               </a>
             </td>
