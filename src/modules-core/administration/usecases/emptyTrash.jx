@@ -57,16 +57,18 @@
         </jx:choose>
       </p>
       <form id="form-delete_trash" style="margin-top: 20px" action="${usecase.getSourceURL()}" method="post">
-        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-        <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
-        <jx:choose>
-          <jx:when test="${usecase.getParameter('documents').isEmpty()}">
-            <input i18n:attr="value" name="submit" type="submit" value="Delete" disabled="disabled"/>
-          </jx:when>
-          <jx:otherwise>
-            <input i18n:attr="value" name="submit" type="submit" value="Delete"/>
-          </jx:otherwise>
-        </jx:choose>
+        <p>
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+          <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+          <jx:choose>
+            <jx:when test="${usecase.getParameter('documents').isEmpty()}">
+              <input i18n:attr="value" name="submit" type="submit" value="Delete" disabled="disabled"/>
+            </jx:when>
+            <jx:otherwise>
+              <input i18n:attr="value" name="submit" type="submit" value="Delete"/>
+            </jx:otherwise>
+          </jx:choose>
+        </p>
       </form>
     </div>
   </page:body>
