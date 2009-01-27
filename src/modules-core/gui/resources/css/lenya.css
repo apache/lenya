@@ -6,7 +6,7 @@
   border: solid 1px #AAAAAA;
   -moz-border-radius: .4em;
   -webkit-border-radius: .4em;
-  color: #000066;
+  color: #333333;
   padding: .2em .6em;
   font-family: Arial;
   font-weight: bold;
@@ -19,7 +19,7 @@ a.lenyaButton {
 
 a.lenyaButton:hover {
   background: url('/modules/gui/images/button-background-hover.gif') left top repeat-x;
-  color: #000066;
+  color: #222222;
   border: solid 1px #999999;
 }
 
