@@ -48,9 +48,9 @@
           <html>
             <head>
               <xso:call-template name="title"/>
-              <script src="{$contextprefix}/lenya/menu/menu.js" type="text/javascript">&#160;</script>
-              <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
-              <link rel="icon" href="{$contextprefix}/favicon.ico" type="image/ico"/>
+              <script src="/modules/menubar/javascript/menu.js" type="text/javascript"/>
+              <link href="/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
+              <link rel="icon" href="/favicon.ico" type="image/ico"/>
               <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
                <!-- internet explorer 6 switches to quirks mode with the xml declaration
                    the quirks layout inconsistencies are fixed in a ie6 only stylesheet -->

@@ -61,7 +61,7 @@
         <html>
           <head>
             <xso:call-template name="title"/>
-            <script src="/lenya/menu/menu.js" type="text/javascript">&#160;</script>
+            <script src="/modules/menubar/javascript/menu.js" type="text/javascript">&#160;</script>
             <!--
             -->
             <link href="/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
