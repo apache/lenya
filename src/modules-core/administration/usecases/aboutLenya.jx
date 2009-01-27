@@ -25,11 +25,7 @@
   xmlns:ci="http://apache.org/cocoon/include/1.0"  
   >
   <page:body>  
-
     <ci:include src="context://lenya/content/about.xml" select="/*/*/*"/>
-  
-    <form>
-      <input i18n:attr="value" type="submit" value="Back"/>
-    </form>  
+    <input i18n:attr="value" type="submit" value="Back" onclick="history.back();"/>
   </page:body>
 </page:page>
