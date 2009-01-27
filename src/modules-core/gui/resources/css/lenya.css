@@ -2,8 +2,8 @@
 
 .lenyaButton {
   cursor: pointer;
-  background-color: #DDDDEE;
-  border: solid 1px #AAAADD;
+  background: url('/modules/gui/images/button-background.gif') left top repeat-x;
+  border: solid 1px #AAAAAA;
   -moz-border-radius: .4em;
   -webkit-border-radius: .4em;
   color: #000066;
@@ -18,9 +18,9 @@ a.lenyaButton {
 }
 
 a.lenyaButton:hover {
-  background-color: #CCCCDD;
+  background: url('/modules/gui/images/button-background-hover.gif') left top repeat-x;
   color: #000066;
-  border: solid 1px #9999CC;
+  border: solid 1px #999999;
 }
 
 a img {
