@@ -56,7 +56,7 @@
         <tr>
           <td/>
           <td>
-            <form id="form-edit_profile">
+            <form id="form-edit_profile" action="${usecase.getSourceURL()}">
               <input type="hidden" name="lenya.usecase" value="admin.groupProfile"/>
               <input type="hidden" name="groupId" value="${group.getId()}"/>
               <input i18n:attr="value" type="submit" value="Edit Profile" name="input-edit_profile"/>
@@ -75,7 +75,7 @@
         <tr>
           <td/>
           <td>
-            <form id="form-edit_members">
+            <form id="form-edit_members" action="${usecase.getSourceURL()}">
               <input type="hidden" name="lenya.usecase" value="admin.groupMembers"/>
               <input type="hidden" name="groupId" value="${group.getId()}"/>
               <input i18n:attr="value" type="submit" value="Edit Members" name="input-edit_members"/>
@@ -86,7 +86,7 @@
         <tr>
           <td/>
           <td>
-            <form id="form-cancel">
+            <form id="form-cancel" action="${usecase.getSourceURL()}">
               <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
               <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
               <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>

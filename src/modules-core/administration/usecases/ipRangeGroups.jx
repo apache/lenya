@@ -28,7 +28,7 @@
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
       <h1><i18n:text>Group Affiliation</i18n:text></h1>
-    <form method="post" id="form-group_affiliation">
+      <form method="post" id="form-group_affiliation" action="${usecase.getSourceURL()}">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
 

@@ -56,7 +56,7 @@
         </jx:otherwise>
       </jx:choose>
     </p>
-    <form id="form-delete_trash" style="margin-top: 20px">
+      <form id="form-delete_trash" style="margin-top: 20px" action="${usecase.getSourceURL()}" method="post">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
       <jx:choose>

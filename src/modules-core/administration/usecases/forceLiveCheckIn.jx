@@ -30,7 +30,7 @@
     <h1><i18n:text>Live CheckIn</i18n:text></h1>
       
       <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
-    <form id="form-live_checkin" style="margin-top: 20px">
+      <form id="form-live_checkin" style="margin-top: 20px" method="post" action="${usecase.getSourceURL()}">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
       <input i18n:attr="value" name="submit" type="submit" value="Submit"/>

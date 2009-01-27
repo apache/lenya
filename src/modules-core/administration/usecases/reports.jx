@@ -62,7 +62,7 @@
                 <i18n:text>find-broken-links</i18n:text>
               </td>
               <td>
-                <form id="form-brokenLinks" method="get">
+                <form id="form-brokenLinks" method="get" action="${usecase.getSourceURL()}">
                   <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
                   <input type="hidden" name="report" value="brokenLinks"/>
                   <input type="submit" value="Submit" i18n:attr="value"/>
