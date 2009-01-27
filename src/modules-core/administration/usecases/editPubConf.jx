@@ -30,8 +30,10 @@
       <h1><i18n:text>show-pub-conf</i18n:text></h1>
       
       <form method="post" action="${usecase.getSourceURL()}">
-        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        <p>
+          <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        </p>
         
         <jx:set var="pub" value="${usecase.getParameter('publication')}"/>
         
