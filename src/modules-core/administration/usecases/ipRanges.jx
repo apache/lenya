@@ -39,7 +39,7 @@
       </table>
       
       <div style="margin-bottom: 10px">
-        <form method="GET" id="form-add_iprange">
+        <form method="get" id="form-add_iprange" action="${usecase.getSourceURL()}">
           <input type="hidden" name="lenya.usecase" value="admin.addIPRange"/>
           <input i18n:attr="value" type="submit" value="Add IP Range" name="input-add_iprange"/>
         </form>
@@ -67,7 +67,7 @@
               </jx:forEach>
             </td>
             <td style="vertical-align: middle">
-              <form method="GET" id="form-delete_iprange">
+              <form method="get" id="form-delete_iprange" action="${usecase.getSourceURL()}">
                 <input type="hidden" name="lenya.usecase" value="admin.deleteIPRange"/>
                 <input name="ipRangeId" type="hidden" value="${ipRange.getId()}"/>
                 <input i18n:attr="value" type="submit" value="Delete" name="input-delete_iprange"/>

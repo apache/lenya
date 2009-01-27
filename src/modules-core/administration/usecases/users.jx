@@ -44,7 +44,7 @@
     	    </td>
     	    <jx:forEach var="type" items="${usecase.getParameter('userTypes')}">
     	      <td style="padding: 0; margin: 0 10px 0 0;">
-    	        <form method="GET" id="form-add_user">
+    	        <form method="get" id="form-add_user" action="${usecase.getSourceURL()}">
                 <input type="hidden" name="lenya.usecase" value="${type.getCreateUseCase()}"/>
                 <input type="hidden" name="className" value="${type.getClassName()}"/>
                 <input type="hidden" name="userType" value="${type.getKey()}"/>
@@ -81,7 +81,7 @@
                 <a href="${usecase.getSourceURL()}?lenya.usecase=admin.group&amp;groupId=${group}"><jx:out value="${group}"/></a></jx:forEach>
             </td>
             <td style="vertical-align: middle">
-              <form method="GET" id="form-delete_user">
+              <form method="get" id="form-delete_user" action="${usecase.getSourceURL()}">
                 <input type="hidden" name="lenya.usecase" value="admin.deleteUser"/>
                 <input name="userId" type="hidden" value="${user.getId()}"/>
                 <jx:choose>

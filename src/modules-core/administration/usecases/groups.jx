@@ -42,7 +42,7 @@
         <table class="lenya-table-noborder">
       	  <tr>
             <td style="padding: 0px">
-              <form method="GET" id="form-add_group">
+              <form method="get" id="form-add_group" action="${usecase.getSourceURL()}">
                 <input type="hidden" name="lenya.usecase" value="admin.addGroup"/>
                 <input i18n:attr="value" type="submit" value="Add Group" name="input-add_group"/>
               </form>
@@ -67,7 +67,7 @@
               <jx:out value="${group.getName()}"/>
             </td>
             <td style="vertical-align: middle">
-              <form method="GET" id="form-delete_group">
+              <form method="get" id="form-delete_group" action="${usecase.getSourceURL()}">
                 <input type="hidden" name="lenya.usecase" value="admin.deleteGroup"/>
                 <input name="groupId" type="hidden" value="${group.getId()}"/>
                 <input i18n:attr="value" type="submit" value="Delete" name="input-delete_group"/>
