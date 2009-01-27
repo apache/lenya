@@ -176,19 +176,22 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:choose>
-      <xsl:when test="$tabName = $currentTab">
-        <!-- 
-           FIXME: why do we normalize-space here? fiddling with uris is none of our business. 
-           Looks like a workaround for a real bug that should be fixed. Sure, we don't allow spaces
-           in document URLs, but that policy decision is made elsewhere.
-        -->
-        <li id="area-{$tab-area}-active" class="area-active"><a href="/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
-      </xsl:when>
-      <xsl:otherwise>
-        <li id="area-{$tab-area}" class="area-inactive"><a href="/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="prefix">
+      <xsl:if test="$tabName != $currentTab">in</xsl:if>
+    </xsl:variable>
+    <!-- 
+       FIXME: why do we normalize-space here? fiddling with uris is none of our business. 
+       Looks like a workaround for a real bug that should be fixed. Sure, we don't allow spaces
+       in document URLs, but that policy decision is made elsewhere.
+    -->
+    <li class="area-{$prefix}active">
+      <a href="/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}">
+        <xsl:if test="$target = '_blank'">
+          <xsl:attribute name="onclick">window.open(this.href); return false;</xsl:attribute>
+        </xsl:if>
+        <span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span>
+      </a>
+    </li>
   </xsl:template>
   
   
