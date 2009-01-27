@@ -84,12 +84,14 @@
         <li>
           <xsl:call-template name="checkItem"/>
           <a>
-            <xsl:copy-of select="@target"/>
             <xsl:attribute name="href">
               <xsl:value-of select="@href"/>
               <xsl:apply-templates select="@*[local-name() != 'href']"/>
               <xsl:text/>
             </xsl:attribute>
+            <xsl:if test="@target = '_blank'">
+              <xsl:attribute name="onclick">window.open(this.href); return false;</xsl:attribute>
+            </xsl:if>
             <span><xsl:apply-templates select="i18n:*|text()"/></span>
           </a></li>
       </xsl:when>
@@ -97,7 +99,6 @@
         <li class="disabled">
           <xsl:call-template name="checkItem"/>
           <a>
-            <xsl:copy-of select="@target"/>
             <xsl:for-each select="menu:message">
               <xsl:copy>
                 <i18n:translate>
