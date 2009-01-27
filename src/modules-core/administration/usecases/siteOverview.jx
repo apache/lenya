@@ -29,13 +29,15 @@
     <jx:parameter name="text"/>
     <jx:set var="formId" value="${'form_sort_' + key + '_' + order}"/>
     <form id="${formId}" action="${usecase.getSourceURL()}" style="display: inline;">
-      <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-      <input type="hidden" name="sort" value="${key}"/>
-      <input type="hidden" name="order" value="${order}"/>
-      <jx:forEach var="filter" items="${usecase.getParameter('filters')}">
-        <input type="hidden" name="${filter}" value="${usecase.getParameter(filter)}"/>
-      </jx:forEach>
-      <span onclick="document.forms.${formId}.submit()" style="cursor: pointer">${text}</span>
+      <p style="display: inline; cursor: pointer;" onclick="document.forms.${formId}.submit()">
+        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+        <input type="hidden" name="sort" value="${key}"/>
+        <input type="hidden" name="order" value="${order}"/>
+        <jx:forEach var="filter" items="${usecase.getParameter('filters')}">
+          <input type="hidden" name="${filter}" value="${usecase.getParameter(filter)}"/>
+        </jx:forEach>
+        ${text}
+      </p>
     </form>
   </jx:macro>
   
@@ -49,11 +51,12 @@
       
       <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
       <form id="form-overview" action="${usecase.getSourceURL()}">
-        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-        <input type="hidden" name="sort" value="${sort}"/>
-        <input type="hidden" name="order" value="${order}"/>
         
         <div class="lenya-box">
+          <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+          <input type="hidden" name="sort" value="${sort}"/>
+          <input type="hidden" name="order" value="${order}"/>
+          
           <div class="lenya-box-title"><i18n:text>Filter</i18n:text></div>
           <div class="lenya-box-body">
             <table class="lenya-table-noborder">
