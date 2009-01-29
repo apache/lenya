@@ -33,8 +33,8 @@
     <html>
       <head>
         <title><xsl:apply-templates select="page:title/node()" mode="htmlTitle"/></title>
-        <link rel="stylesheet" type="text/css" href="/lenya/css/default.css" title="default css"/>
-        <xsl:comment>[if IE 6]<![CDATA[>]]>&lt;link rel="stylesheet" type="text/css" href="/lenya/css/ie6hacksonly.css" /><![CDATA[<![endif]]]></xsl:comment>
+        <link rel="stylesheet" type="text/css" href="/modules/gui/css/default.css" title="default css"/>
+        <xsl:comment>[if IE 6]<![CDATA[>]]>&lt;link rel="stylesheet" type="text/css" href="/modules/gui/css/ie6hacksonly.css" /><![CDATA[<![endif]]]></xsl:comment>
         <link rel="icon" href="/favicon.ico" type="image/ico"/>
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
         <xsl:apply-templates select="xhtml:script"/>
