@@ -27,4 +27,9 @@
   </message>
   <message key="Access denied">Zugriff verweigert</message>
   
+  <message key="usecase.validationError">Validierungsfehler: {0} (Zeile {1}, Spalte {2})</message>
+  <message key="usecase.validationWarning">Validierungswarnung: {0} (Zeile {1}, Spalte {2})</message>
+  <message key="usecase.validationFatal">Fataler Validierungsfehler: {0} (Zeile {1}, Spalte {2})</message>
+  
+  
 </catalogue>

@@ -27,4 +27,8 @@
   </message>
   <message key="Access denied">Access denied</message>
   
+  <message key="usecase.validationError">Validation error: {0} (line {1}, column {2})</message>
+  <message key="usecase.validationWarning">Validation warning: {0} (line {1}, column {2})</message>
+  <message key="usecase.validationFatal">Fatal validation error: {0} (line {1}, column {2})</message>
+  
 </catalogue>

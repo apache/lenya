@@ -16,17 +16,27 @@
  */
 package org.apache.lenya.cms.usecase.xml;
 
-import org.apache.lenya.cms.usecase.AbstractUsecase;
+import javax.xml.transform.SourceLocator;
+import javax.xml.transform.TransformerException;
 
-import com.thaiopensource.xml.sax.ErrorHandlerImpl;
+import org.apache.lenya.cms.usecase.AbstractUsecase;
+import org.apache.xml.utils.SAXSourceLocator;
+import org.apache.xml.utils.WrappedRuntimeException;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Error handler which outputs its errors to usecase messages.
  */
-public class UsecaseErrorHandler extends ErrorHandlerImpl {
-    
+public class UsecaseErrorHandler implements ErrorHandler {
+
+    protected static final String MSG_ERROR = "usecase.validationError";
+    protected static final String MSG_WARNING = "usecase.validationWarning";
+    protected static final String MSG_FATAL = "usecase.validationFatal";
+
     private AbstractUsecase usecase;
-    
+
     /**
      * Ctor.
      * @param usecase The usecase.
@@ -35,8 +45,24 @@ public class UsecaseErrorHandler extends ErrorHandlerImpl {
         this.usecase = usecase;
     }
 
-    public void print(String message) {
-        this.usecase.addErrorMessage(message);
+    protected void addErrorMessage(SAXParseException e, String message) {
+        String[] params = new String[3];
+        params[0] = e.getMessage();
+        params[1] = Integer.toString(e.getLineNumber());
+        params[2] = Integer.toString(e.getColumnNumber());
+        this.usecase.addErrorMessage(message, params);
+    }
+
+    public void error(SAXParseException e) throws SAXException {
+        addErrorMessage(e, MSG_ERROR);
+    }
+
+    public void fatalError(SAXParseException e) throws SAXException {
+        addErrorMessage(e, MSG_FATAL);
+    }
+
+    public void warning(SAXParseException e) throws SAXException {
+        addErrorMessage(e, MSG_WARNING);
     }
 
 }
