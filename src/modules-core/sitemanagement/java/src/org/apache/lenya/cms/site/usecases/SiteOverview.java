@@ -45,7 +45,6 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
-import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;

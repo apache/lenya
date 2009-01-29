@@ -58,12 +58,10 @@
             <td><i18n:text><jx:out value="${item.state}"/></i18n:text></td>
             <td>
               <span style="white-space: nobreak">
-                <jx:out value="${item.userId}"/>
+                <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${item.userId}">${item.userId}</a>
               </span>
             </td>
-            <td>
-              <jx:out value="${item.iPAddress}"/>
-            </td>
+            <td>${item.iPAddress}</td>
           </tr>
         </jx:forEach>
       </table>

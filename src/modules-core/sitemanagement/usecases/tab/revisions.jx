@@ -94,7 +94,9 @@
                 />
               </td>
               <td align="right"><i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss"><jx:formatDate value="${revision.getTime()}" pattern="yyyy-MM-dd HH:mm:ss"/></i18n:date-time></td>
-              <td><jx:out value="${revision.getUserId()}"/></td>
+              <td>
+                <jx:set var="userId" value="${revision.getUserId()}"/>
+                <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${userId}">${userId}</a></td>
               <td>
                 <input 
                   type="button" 
