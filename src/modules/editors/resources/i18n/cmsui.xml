@@ -53,5 +53,5 @@
   <message key="Choose element ...">Choose element ...</message>
   <message key="upload-disabled">Upload is not enabled. Please check local.build.properties!</message>
   
-  <message key="editors.editSource">With Source Editor</message>
+  <message key="editors.sourceEditor">With Source Editor</message>
 </catalogue>

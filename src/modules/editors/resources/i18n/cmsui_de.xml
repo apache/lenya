@@ -56,5 +56,5 @@
     Bitte prüfen Sie die Einstellungen in local.build.properties!
   </message>
   
-  <message key="editors.editSource">Mit Quellcode-Editor</message>
+  <message key="editors.sourceEditor">Mit Quellcode-Editor</message>
 </catalogue>
