@@ -17,11 +17,15 @@
  */
 package org.apache.lenya.cms.editors.forms;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
@@ -34,18 +38,23 @@ import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.xml.ChainErrorHandler;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 import org.w3c.dom.Document;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * One form editor.
  * 
  * @version $Id$
  */
-public class OneFormEditor extends DocumentUsecase {
+public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
+    
+    protected static final String PARAM_VALIDATION_ERRORS = "validationErrors";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -80,14 +89,12 @@ public class OneFormEditor extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        Document xml = getXml();
-        saveDocument(xml);
+        saveDocument(getXml());
     }
 
     protected String getEncoding() {
         Request request = ContextHelper.getRequest(this.context);
-        String encoding = request.getCharacterEncoding();
-        return encoding;
+        return request.getCharacterEncoding();
     }
 
     protected String getXmlString(String encoding) {
@@ -97,9 +104,8 @@ public class OneFormEditor extends DocumentUsecase {
             getLogger().debug(namespaces);
         }
         // Aggregate content
-        String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
+        return "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
                 + addNamespaces(namespaces, getParameterAsString("content"));
-        return content;
     }
 
     public void advance() throws UsecaseException {
@@ -107,7 +113,7 @@ public class OneFormEditor extends DocumentUsecase {
         try {
             Document xml = getXml();
             if (xml != null) {
-                validate(xml);
+                validate();
             }
             if (!hasErrors()) {
                 SourceUtil.writeDOM(xml, getSourceDocument().getOutputStream());
@@ -124,13 +130,16 @@ public class OneFormEditor extends DocumentUsecase {
             return;
         }
 
-        Document xml = getXml();
-        if (xml != null) {
-            validate(xml);
+        // check document form
+        getXml();
+        
+        if (!hasErrors()) {
+            validate();
         }
+
     }
 
-    protected void validate(Document xml) throws Exception {
+    protected void validate() throws Exception {
         ResourceType resourceType = getSourceDocument().getResourceType();
         Schema schema = resourceType.getSchema();
         if (schema == null) {
@@ -139,7 +148,16 @@ public class OneFormEditor extends DocumentUsecase {
                             + "], skipping validation.");
         }
         else {
-            ValidationUtil.validate(this.manager, xml, schema, new UsecaseErrorHandler(this));
+            deleteParameter(PARAM_VALIDATION_ERRORS);
+            ChainErrorHandler handler = new ChainErrorHandler();
+            handler.add(new UsecaseErrorHandler(this));
+            handler.add(this);
+            String encoding = getEncoding();
+            String xmlString = getXmlString(encoding);
+            byte bytes[] = xmlString.getBytes(encoding);
+            ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+            StreamSource source = new StreamSource(stream);
+            ValidationUtil.validate(this.manager, source, schema, handler);
         }
     }
 
@@ -147,13 +165,12 @@ public class OneFormEditor extends DocumentUsecase {
         String encoding = getEncoding();
         String xmlString = getXmlString(encoding);
 
-        Document xml = null;
         try {
-            xml = DocumentHelper.readDocument(xmlString, encoding);
+            return DocumentHelper.readDocument(xmlString, encoding);
         } catch (SAXException e) {
             addErrorMessage("error-document-form", new String[] { e.getMessage() });
+            return null;
         }
-        return xml;
     }
 
     /**
@@ -227,6 +244,60 @@ public class OneFormEditor extends DocumentUsecase {
 
     protected String getEvent() {
         return "edit";
+    }
+    
+    public static class ValidationError {
+        
+        protected static final int SEVERITY_WARNING = 0;
+        protected static final int SEVERITY_ERROR = 1;
+        protected static final int SEVERITY_FATAL = 2;
+        
+        private int severity;
+        
+        public int getLine() {
+            return this.line;
+        }
+
+        public int getColumn() {
+            return this.column;
+        }
+
+        public String getMessage() {
+            return this.message;
+        }
+
+        private int line;
+        private int column;
+        private String message;
+        
+        public ValidationError(int severity, SAXParseException e) {
+            this.message = e.getMessage();
+            this.line = e.getLineNumber();
+            this.column = e.getColumnNumber();
+            this.severity = severity;
+        }
+        
+    }
+    
+    protected List getValidationErrors() {
+        List errors = (List) getParameter(PARAM_VALIDATION_ERRORS);
+        if (errors == null) {
+            errors = new ArrayList();
+            setParameter(PARAM_VALIDATION_ERRORS, errors);
+        }
+        return errors;
+    }
+
+    public void error(SAXParseException e) throws SAXException {
+        getValidationErrors().add(new ValidationError(ValidationError.SEVERITY_ERROR, e));
+    }
+
+    public void fatalError(SAXParseException e) throws SAXException {
+        getValidationErrors().add(new ValidationError(ValidationError.SEVERITY_FATAL, e));
+    }
+
+    public void warning(SAXParseException e) throws SAXException {
+        getValidationErrors().add(new ValidationError(ValidationError.SEVERITY_WARNING, e));
     }
 
 }

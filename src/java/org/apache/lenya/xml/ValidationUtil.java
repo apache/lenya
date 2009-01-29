@@ -17,6 +17,11 @@
  */
 package org.apache.lenya.xml;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXResult;
+
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.components.validation.Validator;
 import org.apache.cocoon.xml.dom.DOMStreamer;
@@ -60,7 +65,35 @@ public class ValidationUtil {
                     handler);
 
             DOMStreamer streamer = new DOMStreamer(validatorHandler);
+            streamer.setNormalizeNamespaces(false);
             streamer.stream(xmlDoc);
+
+        } finally {
+            if (validator != null) {
+                manager.release(validator);
+            }
+        }
+    }
+
+    /**
+     * @param manager The service manager.
+     * @param source The source to validate.
+     * @param schema The schema to use.
+     * @param handler The SAX error handler.
+     * @throws Exception if an error occurs.
+     */
+    public static void validate(ServiceManager manager, Source source, Schema schema,
+            ErrorHandler handler) throws Exception {
+
+        Validator validator = null;
+        try {
+            validator = (Validator) manager.lookup(Validator.ROLE);
+            ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI(),
+                    handler);
+
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            SAXResult result = new SAXResult(validatorHandler);
+            transformer.transform(source, result);
 
         } finally {
             if (validator != null) {
