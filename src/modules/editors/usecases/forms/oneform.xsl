@@ -32,7 +32,8 @@
   
   <xsl:template match="/">
     <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates mode="namespaces" /></xsl:attribute></input>
-    <textarea name="content" cols="120" rows="80">
+    <textarea name="content" style="display: none"/>
+    <textarea id="editorContent" cols="120" rows="80">
       <xsl:apply-templates mode="mixedcontent" />
     </textarea>
   </xsl:template>

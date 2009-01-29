@@ -27,10 +27,13 @@
   <page:title><i18n:text>Edit</i18n:text></page:title>
   <page:head>
     <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js"/>
-    <script type="text/javascript" src="/modules/editors/javascript/oneform_lenya_glue.js"/>
+    <script type="text/javascript" src="/modules/editors/javascript/sourceEditor/lenya_glue.js"/>
     <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js"/>
+    <script type="text/javascript" src="/modules/editors/codemirror/0.60/js/codemirror.js"/>
+    <script type="text/javascript" src="/modules/editors/javascript/sourceEditor/codemirror.js"/>
+    <link rel="stylesheet" type="text/css" href="/modules/editors/css/sourceEditor.css"/>
   </page:head>
-  <page:body>
+  <page:body onload="insertEditor()">
     
 
     <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
@@ -81,9 +84,13 @@
           </div>
           
           <div style="clear: both;">
-            <input type="submit" value="Save" name="submit" i18n:attr="value"/>
+            <input id="save1" disabled="disabled" type="submit" value="Save" name="submit" i18n:attr="value"/>
             <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
+            <!--
             <input type="submit" value="Reformat" name="reformat" i18n:attr="value"/>
+            -->
+            <input type="button" value="Reformat" name="reformat" i18n:attr="value"
+              onclick="indent()"/>
             <input type="button" value="insertLink.submit" i18n:attr="value"
               onclick="triggerUsecase('insertLink')"/>
             <input type="button" value="insertAsset.insertImage" i18n:attr="value"
@@ -92,12 +99,11 @@
               onclick="triggerUsecase('insertAsset')"/>
           </div>
 
-          <div style="clear: both;">
+          <div class="editorContentContainer">
             <jx:choose>
               <jx:when test="${usecase.getParameter('content')}">
-                <textarea name="content" cols="120" rows="80">
-                  <jx:out value="${usecase.getParameter('content')}"/>
-                </textarea>
+                <textarea name="content" style="display: none"/>
+                <textarea id="editorContent" cols="120" rows="80">${usecase.getParameter('content')}</textarea>
               </jx:when>
               <jx:otherwise>
                 <cinclude:includexml>
@@ -108,7 +114,7 @@
           </div>
 
           <div>
-            <input type="submit" value="Save" name="submit" i18n:attr="value"/>
+            <input id="save2" disabled="disabled" type="submit" value="Save" name="submit" i18n:attr="value"/>
             <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
           </div>
           
