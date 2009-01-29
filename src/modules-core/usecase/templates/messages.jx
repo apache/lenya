@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,46 +19,43 @@
 <!-- $Id$ -->
 
 <jx:template name="messages"
-           xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
-           xmlns="http://www.w3.org/1999/xhtml" 
-           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
-
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  
   <!-- 
-     Note: in current implementation, ${usecase} refers to an 
-     instance of UsecaseProxy, not of Usecase !
-     -->
+    Note: in current implementation, ${usecase} refers to an 
+    instance of UsecaseProxy, not of Usecase !
+  -->
   <jx:if test="${usecase.hasErrors() || usecase.hasInfoMessages()}">
-    <div class="lenya-error">
-      <ul>
-        
+    <div class="lenyaInfoBox">
+      <ul class="lenyaMessages">
         <jx:forEach var="message" items="${usecase.getErrorMessages()}">
-          <li>
+          <li class="lenyaErrorMessage">
             <i18n:translate>
               <i18n:text><jx:out value="${message.getMessage()}"/></i18n:text>
-                <jx:if test="${message.hasParameters()}"> 
-                    <jx:forEach var="param" items="${message.getParameters()}">
-                        <i18n:param><jx:out value="${param}"/></i18n:param>
-                    </jx:forEach>
-                </jx:if>
+              <jx:if test="${message.hasParameters()}"> 
+                <jx:forEach var="param" items="${message.getParameters()}">
+                  <i18n:param><jx:out value="${param}"/></i18n:param>
+                </jx:forEach>
+              </jx:if>
             </i18n:translate>
           </li>
         </jx:forEach>
-        
         <jx:forEach var="message" items="${usecase.getInfoMessages()}">
-          <li>
+          <li class="lenyaInfoMessage">
             <i18n:translate>
               <i18n:text><jx:out value="${message.getMessage()}"/></i18n:text>
-                <jx:if test="${message.hasParameters()}"> 
-                    <jx:forEach var="param" items="${message.getParameters()}">
-                        <i18n:param><jx:out value="${param}"/></i18n:param>
-                    </jx:forEach>
-                </jx:if>
+              <jx:if test="${message.hasParameters()}"> 
+                <jx:forEach var="param" items="${message.getParameters()}">
+                  <i18n:param><jx:out value="${param}"/></i18n:param>
+                </jx:forEach>
+              </jx:if>
             </i18n:translate>
           </li>
         </jx:forEach>
-        
       </ul>
     </div>
   </jx:if>
-
+  
 </jx:template>

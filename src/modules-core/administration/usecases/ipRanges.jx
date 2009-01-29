@@ -24,10 +24,6 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
-  <page:head>
-    <link rel="stylesheet" type="text/css" href="/modules/gui/css/lenya.css"/>
-  </page:head>
-  
   <page:body>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">

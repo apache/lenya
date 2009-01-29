@@ -14,6 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+@import url(lenya.css);
 @import url(antlog.css);
 @import url(forms.css);
 @import url(tables.css);
@@ -107,12 +108,6 @@ td.lenya-frontpage {
 .lenya-page-title {
     font-size: 130%;
     font-weight: bold;
-}
-
-div.lenya-error {
-    padding: 5px;
-    margin: 5px 0px;
-    background-color: #FF9999;
 }
 
 .lenya-page-subtitle {
