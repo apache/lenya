@@ -1,8 +1,0 @@
-
-Credits
-=======
-                                 
-All active and inactive committers and contributers of
-the Apache Lenya project are listed on the page
-
-    http://lenya.apache.org/who.html
