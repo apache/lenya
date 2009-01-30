@@ -54,4 +54,7 @@
   <message key="upload-disabled">Upload is not enabled. Please check local.build.properties!</message>
   
   <message key="editors.sourceEditor">With Source Editor</message>
+  <message key="editors.validationFailed">Validation failed</message>
+  <message key="editors.validationErrorLine">line</message>
+  <message key="editors.validationErrorColumn">column</message>
 </catalogue>

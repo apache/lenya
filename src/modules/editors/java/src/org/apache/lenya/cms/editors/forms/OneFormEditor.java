@@ -19,6 +19,8 @@ package org.apache.lenya.cms.editors.forms;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,16 +31,15 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.io.IOUtils;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.lenya.xml.ChainErrorHandler;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
@@ -53,8 +54,10 @@ import org.xml.sax.SAXParseException;
  * @version $Id$
  */
 public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
-    
+
     protected static final String PARAM_VALIDATION_ERRORS = "validationErrors";
+    protected static final String PARAM_CONTENT = "content";
+    protected static final String DEFAULT_ENCODING = "utf-8";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -67,6 +70,16 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
         }
         return (org.apache.lenya.cms.repository.Node[]) nodes
                 .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+    }
+
+    protected void prepareView() throws Exception {
+        super.prepareView();
+
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(getSourceDocument().getInputStream(), writer, DEFAULT_ENCODING);
+        String xmlString = writer.toString();
+        setParameter(PARAM_CONTENT, xmlString);
+        validate(xmlString, DEFAULT_ENCODING);
     }
 
     /**
@@ -89,35 +102,30 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        saveDocument(getXml());
+        saveDocument(getXml(getContent(), getRequestEncoding()));
     }
 
-    protected String getEncoding() {
+    protected String getRequestEncoding() {
         Request request = ContextHelper.getRequest(this.context);
         return request.getCharacterEncoding();
     }
 
-    protected String getXmlString(String encoding) {
-        // Get namespaces
-        String namespaces = removeRedundantNamespaces(getParameterAsString("namespaces"));
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(namespaces);
-        }
-        // Aggregate content
-        return "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
-                + addNamespaces(namespaces, getParameterAsString("content"));
+    protected String getContent() {
+        return getParameterAsString(PARAM_CONTENT);
     }
 
     public void advance() throws UsecaseException {
         clearErrorMessages();
         try {
-            Document xml = getXml();
+            String content = getContent();
+            String encoding = getRequestEncoding();
+            Document xml = getXml(content, encoding);
             if (xml != null) {
-                validate();
+                validate(content, encoding);
             }
             if (!hasErrors()) {
-                SourceUtil.writeDOM(xml, getSourceDocument().getOutputStream());
-                deleteParameter("content");
+                IOUtils.copy(new StringReader(content), getSourceDocument().getOutputStream());
+                deleteParameter(PARAM_CONTENT);
             }
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -129,42 +137,34 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
         if (hasErrors()) {
             return;
         }
-
-        // check document form
-        getXml();
-        
-        if (!hasErrors()) {
-            validate();
+        String encoding = getRequestEncoding();
+        Document xml = getXml(getContent(), encoding);
+        if (xml != null) {
+            validate(getContent(), encoding);
         }
-
     }
 
-    protected void validate() throws Exception {
+    protected void validate(String xmlString, String encoding) throws Exception {
         ResourceType resourceType = getSourceDocument().getResourceType();
         Schema schema = resourceType.getSchema();
         if (schema == null) {
             getLogger().info(
                     "No schema declared for resource type [" + resourceType.getName()
                             + "], skipping validation.");
-        }
-        else {
+        } else {
             deleteParameter(PARAM_VALIDATION_ERRORS);
-            ChainErrorHandler handler = new ChainErrorHandler();
-            handler.add(new UsecaseErrorHandler(this));
-            handler.add(this);
-            String encoding = getEncoding();
-            String xmlString = getXmlString(encoding);
             byte bytes[] = xmlString.getBytes(encoding);
             ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
             StreamSource source = new StreamSource(stream);
-            ValidationUtil.validate(this.manager, source, schema, handler);
+            ValidationUtil.validate(this.manager, source, schema, this);
+            if (!getValidationErrors().isEmpty()) {
+                addErrorMessage("editors.validationFailed");
+            }
         }
     }
 
-    protected Document getXml() throws ParserConfigurationException, IOException {
-        String encoding = getEncoding();
-        String xmlString = getXmlString(encoding);
-
+    protected Document getXml(String xmlString, String encoding)
+            throws ParserConfigurationException, IOException {
         try {
             return DocumentHelper.readDocument(xmlString, encoding);
         } catch (SAXException e) {
@@ -174,10 +174,9 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
     }
 
     /**
-     * Save the content to the document source. After saving, the XML is
-     * validated. If validation errors occur, the usecase transaction is rolled
-     * back, so the changes are not persistent. If the validation succeeded, the
-     * workflow event is invoked.
+     * Save the content to the document source. After saving, the XML is validated. If validation
+     * errors occur, the usecase transaction is rolled back, so the changes are not persistent. If
+     * the validation succeeded, the workflow event is invoked.
      * 
      * @param content The content to save.
      * @throws Exception if an error occurs.
@@ -205,55 +204,18 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
         }
     }
 
-    /**
-     * Remove redundant namespaces
-     * 
-     * @param namespaces The namespaces to remove
-     * @return The namespace string without the removed namespaces
-     */
-    private String removeRedundantNamespaces(String namespaces) {
-        String[] namespace = namespaces.split(" ");
-
-        String ns = "";
-        for (int i = 0; i < namespace.length; i++) {
-            if (ns.indexOf(namespace[i]) < 0) {
-                ns = ns + " " + namespace[i];
-            } else {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Redundant namespace: " + namespace[i]);
-                }
-            }
-        }
-        return ns;
-    }
-
-    /**
-     * Add namespaces
-     * 
-     * @param namespaces The namespaces to add
-     * @param content The content to add them to
-     * @return The content with the added namespaces
-     */
-    private String addNamespaces(String namespaces, String content) {
-        String s = content.substring(0, content.indexOf(">"));
-        while (s.endsWith(" ") || s.endsWith("/")) {
-            s = s.substring(0, s.length() - 1);
-        }
-        return s + " " + namespaces + content.substring(s.length());
-    }
-
     protected String getEvent() {
         return "edit";
     }
-    
+
     public static class ValidationError {
-        
+
         protected static final int SEVERITY_WARNING = 0;
         protected static final int SEVERITY_ERROR = 1;
         protected static final int SEVERITY_FATAL = 2;
-        
+
         private int severity;
-        
+
         public int getLine() {
             return this.line;
         }
@@ -269,16 +231,16 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
         private int line;
         private int column;
         private String message;
-        
+
         public ValidationError(int severity, SAXParseException e) {
             this.message = e.getMessage();
             this.line = e.getLineNumber();
             this.column = e.getColumnNumber();
             this.severity = severity;
         }
-        
+
     }
-    
+
     protected List getValidationErrors() {
         List errors = (List) getParameter(PARAM_VALIDATION_ERRORS);
         if (errors == null) {

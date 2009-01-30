@@ -33,7 +33,7 @@
     <script type="text/javascript" src="/modules/editors/javascript/sourceEditor/codemirror.js"/>
     <link rel="stylesheet" type="text/css" href="/modules/editors/css/sourceEditor.css"/>
   </page:head>
-  <page:body onload="insertEditor()">
+  <page:body onload="insertEditor();">
     
 
     <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
@@ -99,18 +99,27 @@
               onclick="triggerUsecase('insertAsset')"/>
           </div>
 
+          <jx:set var="validationErrors" value="${usecase.getParameter('validationErrors')}"/>
+          <jx:if test="${validationErrors.size() != 0}">
+            <div class="lenyaInfoBox">
+              <h3><i18n:text>editors.validationFailed</i18n:text></h3>
+              <ul class="lenyaMessages">
+                <jx:forEach var="error" items="${validationErrors}">
+                  <li class="lenyaErrorMessage">
+                    ${error.getMessage()}
+                    <a onclick="gotoPosition(${error.getLine()}, ${error.getColumn()})" href="#">
+                      (<i18n:text>editors.validationErrorLine</i18n:text> ${error.getLine()},
+                      <i18n:text>editors.validationErrorColumn</i18n:text> ${error.getColumn()})
+                    </a>
+                  </li>
+                </jx:forEach>
+              </ul>
+            </div>
+          </jx:if>
+          
           <div class="editorContentContainer">
-            <jx:choose>
-              <jx:when test="${usecase.getParameter('content')}">
-                <textarea name="content" style="display: none"/>
-                <textarea id="editorContent" cols="120" rows="80">${usecase.getParameter('content')}</textarea>
-              </jx:when>
-              <jx:otherwise>
-                <cinclude:includexml>
-                  <cinclude:src>cocoon://modules/editors/oneform</cinclude:src>
-                </cinclude:includexml>
-              </jx:otherwise>
-            </jx:choose>
+            <textarea name="content" style="display: none"/>
+            <textarea id="editorContent" cols="120" rows="80">${usecase.getParameter('content')}</textarea>
           </div>
 
           <div>

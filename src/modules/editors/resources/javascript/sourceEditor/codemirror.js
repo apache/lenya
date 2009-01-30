@@ -28,17 +28,20 @@ function insertEditor() {
 }
 
 function saveContent() {
-    if (editor) {
-        // Firefox
-        document.forms.oneform.content.innerHTML = editor.getCode();
-        // Safari
-        document.forms.oneform.content.value = editor.getCode();
-        
-        document.getElementById("save1").disabled = null;
-        document.getElementById("save2").disabled = null;
-    }
+    // Firefox
+    document.forms.oneform.content.innerHTML = editor.getCode();
+    // Safari
+    document.forms.oneform.content.value = editor.getCode();
+    
+    document.getElementById("save1").disabled = null;
+    document.getElementById("save2").disabled = null;
 }
 
 function indent() {
     editor.reindent();
+}
+
+function gotoPosition(lineNr, columnNr) {
+    var line = editor.nthLine(lineNr);
+    editor.selectLines(line, columnNr);
 }
