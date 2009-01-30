@@ -43,29 +43,13 @@
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <jx:choose>
         <jx:when test="${usecase.getParameter('executable').booleanValue()}">
-          
-          <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
-            <div class="lenya-box-title">Information</div>
-            <div class="lenya-box-body">
-              <jx:set var="doc" value="${usecase.getParameter('document')}"/>
-              <table class="lenya-table-noborder">
-                <tr>
-                  <td class="lenya-entry-caption"><i18n:text>Titel</i18n:text>:</td>
-                  <td><jx:out value="${doc.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption"><i18n:text>UUID</i18n:text>:</td>
-                  <td><jx:out value="${doc.getUUID()}"/></td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption"><i18n:text>Language</i18n:text>:</td>
-                  <td>
-                    <jx:out value="${doc.getLanguage()}"/>
-                    (<i18n:text><jx:out value="${doc.getLanguage()}"/></i18n:text>)
-                  </td>
-                </tr>
-              </table>
-            </div>
+          <div class="lenyaInfoBox">
+            <jx:set var="doc" value="${usecase.getParameter('document')}"/>
+            <strong><i18n:text>Document</i18n:text>:</strong>
+            <q>${doc.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}</q>,
+            <strong><i18n:text>UUID</i18n:text>:</strong> ${doc.getUUID()},
+            <strong><i18n:text>Language</i18n:text>:</strong> ${doc.getLanguage()}
+            (<i18n:text>${doc.getLanguage()}</i18n:text>)
           </div>
           
           <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
