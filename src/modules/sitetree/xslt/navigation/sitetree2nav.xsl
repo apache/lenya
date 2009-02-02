@@ -93,10 +93,9 @@ Apply nodes recursively
       <xsl:call-template name="resolve-existing-language"/>
     </xsl:variable>
 
-    <nav:node>
+    <nav:node visibleinnav="{string(@visibleinnav) != 'false'}">
 
       <xsl:copy-of select="@id"/>
-      <xsl:copy-of select="@visibleinnav"/>
       <xsl:copy-of select="@protected"/>
       <xsl:copy-of select="@folder"/>
       <xsl:copy-of select="@uuid"/>
