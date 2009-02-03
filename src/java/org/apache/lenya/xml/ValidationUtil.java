@@ -57,17 +57,12 @@ public class ValidationUtil {
      */
     public static void validate(ServiceManager manager, org.w3c.dom.Document xmlDoc, Schema schema,
             ErrorHandler handler) throws Exception {
-
         Validator validator = null;
         try {
             validator = (Validator) manager.lookup(Validator.ROLE);
             ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI(),
                     handler);
-
-            DOMStreamer streamer = new DOMStreamer(validatorHandler);
-            streamer.setNormalizeNamespaces(false);
-            streamer.stream(xmlDoc);
-
+            new DOMStreamer(validatorHandler).stream(xmlDoc);
         } finally {
             if (validator != null) {
                 manager.release(validator);
