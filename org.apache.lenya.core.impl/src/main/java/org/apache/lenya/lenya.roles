@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!--
+  This file contains the role definitions for Lenya-specific Avalon services.
+  A role is the interface for an Avalon service.
+
+  The name of the role usually corresponds to the class name of the interface,
+  and is used for looking up a class implementing that interface.
+
+  The relation between a role and implementations for that role may be
+  one-to-one or one-to-many.
+
+  For a one-to-one relationship, the entry in this file can be sufficient
+  to completely specify this role, by setting the "default-class" for that
+  role. This is the class name of the implementation.
+
+  For a one-to-many relationship, the entry in this file refers to an
+  ExtendedComponentSelector, meaning that the list of available 
+  implementations for that role are retrieved via a selector.
+  This requires additional configuration in the Cocoon service
+  configuration file (cocoon.xconf).
+  
+  If a service requires configuration parameters, these can be specified
+  in the Cocoon service configuration file (cocoon.xconf) as an arbitrary
+  XML snippet which is then automatically passed to the service's 
+  configure() method at initialization.
+
+  $Id$
+  -->
+
+<!DOCTYPE role-list [
+<!ELEMENT role-list (role+)> 
+<!ELEMENT role (hint*)>
+<!ELEMENT hint EMPTY>
+<!ATTLIST role name CDATA #REQUIRED
+               shorthand CDATA #REQUIRED
+               default-class CDATA #IMPLIED
+>
+<!ATTLIST hint shorthand CDATA #REQUIRED
+               class CDATA #REQUIRED
+>
+]>
+
+<role-list>
+
+  <role name="org.apache.lenya.ac.AuthorizerSelector"
+        shorthand="authorizers"
+        default-class="org.apache.cocoon.components.ExtendedComponentSelector">
+    <hint shorthand="policy" class="org.apache.lenya.ac.impl.PolicyAuthorizer"/>
+    <hint shorthand="workflow" class="org.apache.lenya.cms.ac.workflow.WorkflowAuthorizer"/>
+    <hint shorthand="usecase" class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer"/>
+  </role>
+  
+  <role name="org.apache.lenya.ac.PolicyManagerSelector"
+        shorthand="policy-managers"
+        default-class="org.apache.cocoon.components.ExtendedComponentSelector">
+    <hint shorthand="file" class="org.apache.lenya.ac.file.FilePolicyManager"/>
+    <hint shorthand="sitemap" class="org.apache.lenya.cms.ac.sitemap.SitemapPolicyManager"/>
+  </role>
+  
+  <role name="org.apache.lenya.ac.AccessController"
+        shorthand="access-controller"
+        default-class="org.apache.lenya.ac.impl.BypassableAccessController"/>
+        
+  <role name="org.apache.lenya.ac.AccessControllerResolverSelector"
+        shorthand="access-controller-resolvers"
+        default-class="org.apache.cocoon.components.ExtendedComponentSelector">
+    <hint shorthand="composable" class="org.apache.lenya.ac.ComposableAccessControllerResolver"/>
+    <hint shorthand="configurable" class="org.apache.lenya.ac.ConfigurableAccessControllerResolver"/>
+    <hint shorthand="publication" class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"/>
+  </role>
+  
+  <role name="org.apache.lenya.ac.Authenticator"
+        shorthand="authenticator"
+        default-class="org.apache.lenya.ac.impl.UserAuthenticator"/>
+        
+  <role name="org.apache.lenya.ac.cache.SourceCache"
+  		shorthand="sourcecache"
+  		default-class="org.apache.lenya.ac.cache.SourceCacheImpl"/>
+  		
+  <role name="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"
+  	    shorthand="publication-template-manager"
+  	    default-class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"/>
+        
+  <role name="org.apache.lenya.cms.usecase.Operation"
+  	    shorthand="operation"
+  	    default-class="org.apache.lenya.cms.usecase.AbstractOperation"/>
+        
+  <role name="org.apache.lenya.cms.usecase.UsecaseSelector"
+        shorthand="usecases"
+        default-class="org.apache.lenya.cms.usecase.impl.UsecaseSelector"/>
+
+  <role name="org.apache.lenya.cms.cocoon.flow.FlowHelper"
+  	    shorthand="flowhelper"
+  	    default-class="org.apache.lenya.cms.cocoon.flow.FlowHelperImpl"/>
+        
+  <role name="org.apache.lenya.workflow.WorkflowManager"
+  	    shorthand="workflow-manager"
+  	    default-class="org.apache.lenya.workflow.impl.WorkflowManagerImpl"/>
+        
+  <role name="org.apache.lenya.cms.site.usecases.LinkRewriter"
+  	    shorthand="link-rewriter"
+  	    default-class="org.apache.lenya.cms.site.usecases.LinkRewriterImpl"/>
+        
+  <role name="org.apache.lenya.cms.publication.DocumentManager"
+  	    shorthand="document-manager"
+  	    default-class="org.apache.lenya.cms.publication.DocumentManagerImpl"/>
+        
+  <role name="org.apache.lenya.cms.publication.DocumentTypeBuilder"
+  	    shorthand="document-type-builder"
+  	    default-class="org.apache.lenya.cms.publication.DocumentTypeBuilderImpl"/>
+
+  <role name="org.apache.lenya.cms.publication.ResourcesManager"
+  	    shorthand="resources-manager"
+  	    default-class="org.apache.lenya.cms.publication.DefaultResourcesManager"/>
+        
+  <role name="org.apache.lenya.cms.site.SiteManagerSelector"
+  	    shorthand="site-managers"
+  	    default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+        
+  <role name="org.apache.lenya.cms.publication.DocumentBuilderSelector"
+  	    shorthand="document-builders"
+  	    default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+        
+  <role name="org.apache.lenya.cms.publication.templating.InstantiatorSelector"
+  	    shorthand="template-instantiators"
+  	    default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+        
+  <role name="org.apache.lenya.cms.usecase.gui.GUIManager"
+        shorthand="gui-manager"
+        default-class="org.apache.lenya.cms.usecase.gui.impl.GUIManagerImpl"/>
+        
+  <role name="org.apache.lenya.cms.publication.ResourceTypeSelector"
+  	    shorthand="resource-types"
+  	    default-class="org.apache.lenya.cms.publication.ResourceTypeSelector"/>
+        
+  <role name="org.apache.lenya.cms.metadata.ElementSetSelector"
+  	    shorthand="meta-data"
+  	    default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+        
+  <role name="org.apache.lenya.cms.repository.RepositoryManager"
+        shorthand="repository-manager"
+        default-class="org.apache.lenya.cms.repository.RepositoryManagerImpl"/>
+        
+  <role name="org.apache.lenya.cms.publication.PublicationManager"
+        shorthand="publication-manager"
+        default-class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
+        
+  <role name="org.apache.lenya.cms.repo.avalon.RepositoryFactory"
+        shorthand="repository-factory"
+        default-class="org.apache.lenya.cms.repo.avalon.RepositoryFactoryImpl"/>
+
+<!-- RGE: inserted roles used by the Lucene2 block -->	
+
+    <!-- default indexer -->
+  <role name="org.apache.cocoon.components.search.components.Indexer/default" shorthand="default_indexer"
+default-class="org.apache.cocoon.components.search.components.impl.DefaultIndexerImpl"/>
+
+    <!-- parallel indexer -->
+  <role name="org.apache.cocoon.components.search.components.Indexer/parallel" shorthand="parallel_indexer"
+default-class="org.apache.cocoon.components.search.components.impl.ParallelIndexerImpl"/>
+
+	<!-- analyzer manager -->
+  <role name="org.apache.cocoon.components.search.components.AnalyzerManager" shorthand="analyzer_manager"
+default-class="org.apache.cocoon.components.search.components.impl.AnalyzerManagerImpl"/>
+
+	<!-- index manager -->
+  <role name="org.apache.cocoon.components.search.components.IndexManager" shorthand="index_manager"
+default-class="org.apache.cocoon.components.search.components.impl.IndexManagerImpl"/>
+
+</role-list>
