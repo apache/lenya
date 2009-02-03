@@ -41,24 +41,28 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
     public boolean authenticate(AccreditableManager accreditableManager, Request request)
             throws AccessControlException {
 
-        String encoded = "";
-        String unencoded = "";
-        String username = "";
-        String password = "";
+        String username = null;
+        String password = null;
+        
+        boolean useHeader = false;
         if (request.getHeader("Authorization") != null) {
-            encoded = request.getHeader("Authorization");
-        }
-        if (encoded.indexOf("Basic") > -1) {
-            encoded = encoded.trim();
-            encoded = encoded.substring(encoded.indexOf(' ') + 1);
-            unencoded = new String(Base64.decodeBase64(encoded.getBytes()));
-        }
-        if (unencoded.indexOf(":") - 1 > -1) {
-            username = unencoded.substring(0, unencoded.indexOf(":"));
-            password = unencoded.substring(unencoded.indexOf(":") + 1);
-        }
+            String encoded = request.getHeader("Authorization");
 
-        if (encoded.length() == 0 && request.getParameter("username") != null) {
+            if (encoded.indexOf("Basic") > -1) {
+                encoded = encoded.trim();
+                encoded = encoded.substring(encoded.indexOf(' ') + 1);
+                String unencoded = new String(Base64.decodeBase64(encoded.getBytes()));
+
+                if (unencoded.indexOf(":") - 1 > -1) {
+                    useHeader = true;
+                    username = unencoded.substring(0, unencoded.indexOf(":"));
+                    password = unencoded.substring(unencoded.indexOf(":") + 1);
+                }
+
+            }
+        }
+        
+        if (!useHeader && request.getParameter("username") != null) {
             username = request.getParameter("username").toLowerCase();
             password = request.getParameter("password");
         }
