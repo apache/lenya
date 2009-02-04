@@ -88,7 +88,7 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
 
             String userId = "";
             Request request = ContextHelper.getRequest(this.context);
-            Session session = request.getSession(false);
+            Session session = request.getCocoonSession(false);
             if (session != null) {
                 Identity identity = (Identity) session.getAttribute(Identity.class.getName());
                 if (identity != null) {

@@ -27,6 +27,7 @@ import org.apache.axis.components.uuid.UUIDGenFactory;
  */
 public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator, ThreadSafe {
 
+	// FIXME Get rid of this absurd dependency on Axis!! - fr
     private UUIDGen delegate;
 
     protected UUIDGen getDelegate() {

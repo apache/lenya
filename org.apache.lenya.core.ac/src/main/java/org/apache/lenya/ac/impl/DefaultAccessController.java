@@ -137,7 +137,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     protected void resolveRoles(Request request) throws AccessControlException {
         String webappUrl = ServletHelper.getWebappURI(request);
-        Session session = request.getSession(true);
+        Session session = request.getCocoonSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
 
         Role[] roles;
@@ -404,7 +404,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * @see org.apache.lenya.ac.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
      */
     public void setupIdentity(Request request) throws AccessControlException {
-        Session session = request.getSession(true);
+        Session session = request.getCocoonSession(true);
         if (!hasValidIdentity(session)) {
             Identity identity = new Identity(getLogger());
             identity.initialize();

@@ -159,6 +159,16 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-metadata</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-monitoring</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-usecase</artifactId>
         <version>${project.version}</version>
       </dependency>

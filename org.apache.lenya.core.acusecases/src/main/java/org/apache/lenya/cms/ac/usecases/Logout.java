@@ -41,7 +41,7 @@ public class Logout extends AccessControlUsecase {
         super.initParameters();
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(false);
+        Session session = request.getCocoonSession(false);
 
         if (session != null) {
             Vector history = (Vector) session
@@ -57,7 +57,7 @@ public class Logout extends AccessControlUsecase {
 
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(false);
+        Session session = request.getCocoonSession(false);
 
         if (session != null) {
             session.removeAttribute(Identity.class.getName());

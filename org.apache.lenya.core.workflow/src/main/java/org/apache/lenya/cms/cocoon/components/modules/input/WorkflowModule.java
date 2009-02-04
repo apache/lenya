@@ -27,6 +27,8 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -43,6 +45,7 @@ import org.apache.lenya.workflow.Workflowable;
  * @version $Id$
  */
 public class WorkflowModule extends AbstractPageEnvelopeModule {
+	private static final Log logger = LogFactory.getLog(WorkflowModule.class);
 
     /**
      * <code>STATE</code> The state
@@ -87,7 +90,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                         ObjectModelHelper.getRequest(objectModel));
                 Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                         session,
-                        getLogger(),
+                        logger,
                         document);
                 if (wfManager.hasWorkflow(workflowable)) {
 

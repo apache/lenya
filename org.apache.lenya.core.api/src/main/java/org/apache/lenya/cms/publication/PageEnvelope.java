@@ -24,6 +24,8 @@ import java.io.File;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.rc.RCEnvironment;
 
 /**
@@ -31,6 +33,7 @@ import org.apache.lenya.cms.rc.RCEnvironment;
  * document.
  */
 public class PageEnvelope {
+	private final static Log logger = LogFactory.getLog(PageEnvelope.class);
     /**
      * The names of the page envelope parameters.
      */
@@ -260,7 +263,7 @@ public class PageEnvelope {
      */
     public RCEnvironment getRCEnvironment() {
         return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath(),
-                new ConsoleLogger());
+                logger);
     }
 
     /**

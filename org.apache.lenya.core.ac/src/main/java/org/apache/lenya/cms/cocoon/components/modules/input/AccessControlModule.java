@@ -129,7 +129,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             throws ConfigurationException {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession();
+        Session session = request.getCocoonSession();
         Object value = null;
 
         String[] parameters = attribute.split(":", 2);

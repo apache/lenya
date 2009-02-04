@@ -28,10 +28,11 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
+// FIXME Dependency on non-core module.
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
+import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.notification.Text;
 
 /**

@@ -290,7 +290,7 @@ public abstract class Create extends AbstractUsecase {
 
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(false);
+        Session session = request.getCocoonSession(false);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         User user = identity.getUser();
         if (user != null) {

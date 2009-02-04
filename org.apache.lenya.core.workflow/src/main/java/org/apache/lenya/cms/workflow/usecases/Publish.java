@@ -32,6 +32,8 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
@@ -60,6 +62,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
+// FIXME Dependency on non-core module.
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
 import org.apache.lenya.notification.NotificationException;
@@ -73,6 +76,7 @@ import org.apache.lenya.workflow.Workflowable;
  * @version $Id$
  */
 public class Publish extends InvokeWorkflow {
+	private static final Log logger = LogFactory.getLog(Publish.class);
 
     /**
      * If the usecase should check for missing live ancestors in {@link #checkPreconditions()}.
@@ -123,7 +127,7 @@ public class Publish extends InvokeWorkflow {
         
         boolean shallNotifySubmitter = false;
         Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
-                getLogger(), getSourceDocument());
+                logger, getSourceDocument());
         Version versions[] = workflowable.getVersions();
         
         // consider the case that there was no submit transition
@@ -383,7 +387,7 @@ public class Publish extends InvokeWorkflow {
         }
 
         Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
-                getLogger(), authoringDocument);
+                logger, authoringDocument);
         Version versions[] = workflowable.getVersions();
         
         // obtain submitted version
@@ -391,7 +395,7 @@ public class Publish extends InvokeWorkflow {
         
         String userId = version.getUserId();
         User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
-                userId, getLogger());
+                userId, logger);
 
         Identifiable[] recipients = { user };
 

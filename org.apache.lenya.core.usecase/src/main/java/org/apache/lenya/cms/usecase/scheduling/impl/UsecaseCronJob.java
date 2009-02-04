@@ -174,7 +174,7 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
 
             Request request = ContextHelper.getRequest(this.context);
             controller.setupIdentity(request);
-            Session session = request.getSession(false);
+            Session session = request.getCocoonSession(false);
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             Identifiable[] identifiables = identity.getIdentifiables();
             for (int i = 0; i < identifiables.length; i++) {

@@ -28,6 +28,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -78,7 +79,7 @@ public final class PolicyUtil {
      * @throws AccessControlException if an error occurs.
      */
     public static final User getUser(ServiceManager manager, String webappUrl,
-            String userId, Logger logger) throws AccessControlException {
+            String userId, Log logger) throws AccessControlException {
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         AccessController controller = null;

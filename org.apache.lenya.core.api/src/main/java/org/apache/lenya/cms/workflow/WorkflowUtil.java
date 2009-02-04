@@ -20,6 +20,7 @@ package org.apache.lenya.cms.workflow;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Session;
@@ -45,7 +46,7 @@ public class WorkflowUtil {
      * @param event The name of the event.
      * @throws WorkflowException if the event could not be invoked in the current situation.
      */
-    public static void invoke(ServiceManager manager, Session session, Logger logger,
+    public static void invoke(ServiceManager manager, Session session, Log logger,
             Document document, String event) throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
@@ -74,7 +75,7 @@ public class WorkflowUtil {
      *            set to <code>false</code>, non-supporting documents are ignored.
      * @throws WorkflowException if the event could not be invoked in the current situation.
      */
-    public static void invoke(ServiceManager manager, Session session, Logger logger,
+    public static void invoke(ServiceManager manager, Session session, Log logger,
             Document document, String event, boolean force) throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
@@ -227,7 +228,7 @@ public class WorkflowUtil {
      * @throws WorkflowException if an error occurs.
      */
     public static Workflow getWorkflowSchema(ServiceManager manager, Session session,
-            Logger logger, Document document) throws WorkflowException {
+            Log logger, Document document) throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
@@ -255,7 +256,7 @@ public class WorkflowUtil {
      * @return A workflowable.
      */
     public static Workflowable getWorkflowable(ServiceManager manager, Session session,
-            Logger logger, Document document) {
+            Log logger, Document document) {
         Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
         return workflowable;
     }

@@ -87,7 +87,7 @@ public class DelegatingAuthorizerAction extends AccessControlAction implements P
      * @param request The request.
      */
     protected void setHistory(Request request) {
-        Session session = request.getSession(true);
+        Session session = request.getCocoonSession(true);
 
         Stack history = (Stack) session.getAttribute(HISTORY);
 

@@ -51,7 +51,7 @@ public class RepositoryUtil {
     }
 
     protected static Identity getIdentity(Request request) {
-        org.apache.cocoon.environment.Session cocoonSession = request.getSession();
+        org.apache.cocoon.environment.Session cocoonSession = request.getCocoonSession();
         Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
         return identity;
     }

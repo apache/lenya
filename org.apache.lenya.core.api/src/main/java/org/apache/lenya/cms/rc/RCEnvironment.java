@@ -31,6 +31,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.xml.sax.SAXException;
 
 /**
@@ -62,7 +63,7 @@ public class RCEnvironment extends AbstractLogEnabled implements Configurable {
      * @param logger The logger.
      * @return An RC environment.
      */
-    public static RCEnvironment getInstance(String contextPath, Logger logger) {
+    public static RCEnvironment getInstance(String contextPath, Log logger) {
         RCEnvironment instance = (RCEnvironment) instances.get(contextPath); 
         if (instance == null) {
             instance = new RCEnvironment(contextPath, logger);
@@ -76,8 +77,7 @@ public class RCEnvironment extends AbstractLogEnabled implements Configurable {
      * @param contextPath The context path
      * @param logger The logger.
      */
-    public RCEnvironment(String contextPath, Logger logger) {
-        enableLogging(logger);
+    public RCEnvironment(String contextPath, Log logger) {
         getLogger().debug("context path:" + contextPath);
 
         String configurationFilePath = contextPath + "/" + CONFIGURATION_FILE;

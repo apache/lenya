@@ -49,7 +49,7 @@ public class Users extends AccessControlUsecase {
         setParameter(USERS, userList);
         
         Request request = ContextHelper.getRequest(getContext());
-        Session session = request.getSession(false);
+        Session session = request.getCocoonSession(false);
         if (session != null) {
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {

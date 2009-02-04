@@ -31,6 +31,7 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -59,14 +60,13 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
      * @param logger The logger.
      */
     public DocumentWorkflowable(ServiceManager manager, Session session, Document document,
-            Logger logger) {
+            Log logger) {
         if (session.getIdentity() == null) {
             throw new IllegalArgumentException("The session must have an identity.");
         }
         this.document = document;
         this.session = session;
         this.manager = manager;
-        ContainerUtil.enableLogging(this, logger);
     }
 
     private Session session;

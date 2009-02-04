@@ -19,6 +19,8 @@ package org.apache.lenya.cms.workflow.usecases;
 
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
@@ -31,6 +33,7 @@ import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
+// FIXME Dependency on non-core module.
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.notification.NotificationEventDescriptor;
@@ -42,6 +45,7 @@ import org.apache.lenya.workflow.Workflowable;
  * Reject usecase handler.
  */
 public class Reject extends InvokeWorkflow {
+	private static final Log logger = LogFactory.getLog(Reject.class);
     
     /**
      * The reason for rejection.
@@ -77,7 +81,7 @@ public class Reject extends InvokeWorkflow {
 
         String reason = getParameterAsString(PARAM_REJECT_REASON);
         Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
-                getLogger(), authoringDocument);
+                logger, authoringDocument);
         Version versions[] = workflowable.getVersions();
         // current version is reject, want originating submit
         Version version = versions[versions.length - 2];
@@ -88,7 +92,7 @@ public class Reject extends InvokeWorkflow {
 
             String userId = version.getUserId();
             User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
-                    userId, getLogger());
+                    userId, logger);
 
             Identifiable[] recipients = { user };
 

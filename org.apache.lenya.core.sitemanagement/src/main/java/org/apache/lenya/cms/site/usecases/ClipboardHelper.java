@@ -58,7 +58,7 @@ public class ClipboardHelper {
     protected Session getSession(Context context) {
         Map objectModel = ContextHelper.getObjectModel(context);
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(true);
+        Session session = request.getCocoonSession(true);
         return session;
     }
 

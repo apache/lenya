@@ -105,7 +105,7 @@ public class RevisionControllerAction extends ServiceableAction {
         this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
 
         // Get session
-        Session session = request.getSession(false);
+        Session session = request.getCocoonSession(false);
 
         if (session == null) {
             getLogger().error(".act(): No session object");
