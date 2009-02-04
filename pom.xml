@@ -177,6 +177,16 @@
         <artifactId>lenya-core-workflow</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-ldap</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-acusecases</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
