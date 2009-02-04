@@ -27,9 +27,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
@@ -40,7 +38,6 @@ import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.Workflowable;
@@ -55,12 +52,10 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
     /**
      * Ctor.
      * @param manager The service manager.
-     * @param session The repository session.
      * @param document The document.
      * @param logger The logger.
      */
-    public DocumentWorkflowable(ServiceManager manager, Session session, Document document,
-            Log logger) {
+    public DocumentWorkflowable(ServiceManager manager, Document document, Log logger) {
         if (session.getIdentity() == null) {
             throw new IllegalArgumentException("The session must have an identity.");
         }
@@ -122,15 +117,17 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
     public Version[] getVersions() {
         try {
             MetaData meta = this.document.getMetaData(METADATA_NAMESPACE);
-            
-            org.apache.lenya.cms.repository.History history = this.document.getRepositoryNode().getHistory();
+
+            org.apache.lenya.cms.repository.History history = this.document.getRepositoryNode()
+                    .getHistory();
             boolean checkedIn = history.getRevisionNumbers().length > 0;
-            if (this.versions == null || (checkedIn && history.getLatestRevision().getNumber() > this.revision)) {
+            if (this.versions == null
+                    || (checkedIn && history.getLatestRevision().getNumber() > this.revision)) {
                 String[] versionStrings = meta.getValues(METADATA_VERSION);
                 this.versions = new Version[versionStrings.length];
-                
+
                 SortedMap number2version = new TreeMap();
-                
+
                 for (int i = 0; i < versionStrings.length; i++) {
                     String string = versionStrings[i];
                     int spaceIndex = string.indexOf(" ");
@@ -140,14 +137,14 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
                     Version version = decodeVersion(versionString);
                     number2version.put(new Integer(number), version);
                 }
-                
+
                 int number = 0;
-                for (Iterator i = number2version.keySet().iterator(); i.hasNext(); ) {
+                for (Iterator i = number2version.keySet().iterator(); i.hasNext();) {
                     Version version = (Version) number2version.get(i.next());
                     this.versions[number] = version;
                     number++;
                 }
-                
+
                 if (checkedIn) {
                     this.revision = history.getLatestRevision().getNumber();
                 }
@@ -185,10 +182,10 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
         String string = number + " " + encodeVersion(workflow, version);
         addToMetaData(string);
-        
+
         WorkflowEventDescriptor descriptor = new WorkflowEventDescriptor(version);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(
-                this.manager, getDocument(), getLogger(), descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getDocument(),
+                getLogger(), descriptor);
         getDocument().getRepositoryNode().getSession().enqueueEvent(event);
     }
 

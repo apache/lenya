@@ -15,6 +15,11 @@
   <name>Apache Lenya Core Administration</name>
   <dependencies>
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-usecase</artifactId>
     </dependency>

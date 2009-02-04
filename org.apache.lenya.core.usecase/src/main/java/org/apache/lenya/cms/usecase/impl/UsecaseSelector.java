@@ -22,23 +22,29 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.avalon.framework.activity.Startable;
+import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.components.ExtendedComponentSelector;
+import org.apache.cocoon.core.container.spring.avalon.AvalonServiceSelector;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 
 /**
  * Usecase selector.
  */
-public class UsecaseSelector extends ExtendedComponentSelector implements ThreadSafe, Startable, Serviceable {
-    
+public class UsecaseSelector extends AvalonServiceSelector implements ThreadSafe, Startable,
+        Serviceable, Configurable {
+
+    public UsecaseSelector(String role) {
+        super(role);
+    }
+
     private SortedSet usecaseNames;
     private ServiceManager manager;
-    
+
     /**
      * @return The names of all registered usecases in alphabetical order.
      */
@@ -47,8 +53,6 @@ public class UsecaseSelector extends ExtendedComponentSelector implements Thread
     }
 
     public void configure(Configuration config) throws ConfigurationException {
-        super.configure(config);
-        
         this.usecaseNames = new TreeSet();
         Configuration[] usecaseConfigs = config.getChildren("component-instance");
         for (int i = 0; i < usecaseConfigs.length; i++) {
@@ -60,11 +64,10 @@ public class UsecaseSelector extends ExtendedComponentSelector implements Thread
         UsecaseResolver resolver = null;
         try {
             resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
-            for (Iterator i = this.usecaseNames.iterator(); i.hasNext(); ) {
+            for (Iterator i = this.usecaseNames.iterator(); i.hasNext();) {
                 resolver.register((String) i.next());
             }
-        }
-        finally {
+        } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
             }

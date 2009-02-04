@@ -28,7 +28,6 @@ import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.components.CocoonComponentManager;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.cron.ConfigurableCronJob;
 import org.apache.cocoon.components.cron.ServiceableCronJob;
@@ -36,7 +35,7 @@ import org.apache.cocoon.environment.Environment;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.environment.commandline.CommandLineRequest;
+import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -72,6 +71,9 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
     private String sourceUrl;
     private String userId;
     private String machineIp;
+    private Context context;
+    private ProcessInfoProvider processInfoProvider;
+
 
     private Map parameters = new HashMap();
 
@@ -128,9 +130,9 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
      * triggered the usecase.
      */
     protected void setupOriginalRequest() {
-        Environment env = CocoonComponentManager.getCurrentEnvironment();
 
-        Request request = ContextHelper.getRequest(this.context);
+        Map objectModel = this.processInfoProvider.getObjectModel();
+        Request request = ObjectModelHelper.getRequest(objectModel);
         Map attributes = new HashMap();
         for (Enumeration e = request.getAttributeNames(); e.hasMoreElements();) {
             String key = (String) e.nextElement();
@@ -142,14 +144,14 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
             String key = (String) e.nextElement();
             requestParameters.put(key, request.getParameter(key));
         }
-
-        Map objectModel = ContextHelper.getObjectModel(this.context);
+/*
         objectModel.put(ObjectModelHelper.REQUEST_OBJECT, new CommandLineRequest(env,
                 request.getContextPath(),
                 request.getServletPath(),
                 getSourceURL(),
                 attributes,
                 requestParameters));
+                */
     }
 
     /**
@@ -224,13 +226,15 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
         this.machineIp = (String) objects.get(MACHINE_IP);
     }
 
-    private Context context;
-
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
     public void contextualize(Context context) throws ContextException {
         this.context = context;
+    }
+    
+    public void setProcessInfoProvider(ProcessInfoProvider provider) {
+        this.processInfoProvider = provider;
     }
 
 }

@@ -23,12 +23,12 @@ package org.apache.lenya.cms.cocoon.flow;
 import java.util.Enumeration;
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -142,14 +142,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
         Document document = getPageEnvelope(cocoon).getDocument();
-        Request request = getRequest(cocoon);
-        try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            WorkflowUtil.invoke(this.manager, session, getLogger(), document, event);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        WorkflowUtil.invoke(this.manager, getLogger(), document, event);
     }
 
     /**

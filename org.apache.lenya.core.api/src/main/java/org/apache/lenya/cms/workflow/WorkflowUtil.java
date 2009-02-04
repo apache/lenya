@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.workflow;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.logging.Log;
@@ -40,18 +39,17 @@ public class WorkflowUtil {
      * Invokes a workflow event on a document. This is the same as
      * <code>invoke(Document, String, true)</code>.
      * @param manager The service manager.
-     * @param session The repository session.
      * @param logger The logger.
      * @param document The document.
      * @param event The name of the event.
      * @throws WorkflowException if the event could not be invoked in the current situation.
      */
-    public static void invoke(ServiceManager manager, Session session, Log logger,
-            Document document, String event) throws WorkflowException {
+    public static void invoke(ServiceManager manager, Log logger, Document document, String event)
+            throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = getWorkflowable(manager, session, logger, document);
+            Workflowable workflowable = getWorkflowable(manager, logger, document);
             wfManager.invoke(workflowable, event);
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -66,7 +64,6 @@ public class WorkflowUtil {
     /**
      * Invokes a workflow event on a document.
      * @param manager The service manager.
-     * @param session The repository session.
      * @param logger The logger.
      * @param document The document.
      * @param event The name of the event.
@@ -75,12 +72,12 @@ public class WorkflowUtil {
      *            set to <code>false</code>, non-supporting documents are ignored.
      * @throws WorkflowException if the event could not be invoked in the current situation.
      */
-    public static void invoke(ServiceManager manager, Session session, Log logger,
-            Document document, String event, boolean force) throws WorkflowException {
+    public static void invoke(ServiceManager manager, Log logger, Document document, String event,
+            boolean force) throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = getWorkflowable(manager, session, logger, document);
+            Workflowable workflowable = getWorkflowable(manager, logger, document);
             wfManager.invoke(workflowable, event, force);
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -95,28 +92,24 @@ public class WorkflowUtil {
     /**
      * Invokes a workflow event on a document set.
      * @param manager The service manager.
-     * @param session The repository session.
      * @param logger The logger.
      * @param documentSet The document.
      * @param event The event.
      * @param force If this is set to <code>true</code>, the execution is forced, which means an
      *            exception is thrown if a document in the set does not support the event. If set to
      *            <code>false</code>, non-supporting documents are ignored.
-     * @throws WorkflowException if <code>force</code> is set to <code>true</code> and a
-     *             document does not support the workflow event.
+     * @throws WorkflowException if <code>force</code> is set to <code>true</code> and a document
+     *             does not support the workflow event.
      */
-    public static void invoke(ServiceManager manager, Session session, Logger logger,
-            DocumentSet documentSet, String event, boolean force) throws WorkflowException {
+    public static void invoke(ServiceManager manager, Log logger, DocumentSet documentSet,
+            String event, boolean force) throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
 
             Document[] documents = documentSet.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                Workflowable workflowable = new DocumentWorkflowable(manager,
-                        session,
-                        documents[i],
-                        logger);
+                Workflowable workflowable = new DocumentWorkflowable(manager, documents[i], logger);
                 wfManager.invoke(workflowable, event, force);
             }
 
@@ -133,19 +126,18 @@ public class WorkflowUtil {
     /**
      * Checks if an event can be invoked on a document.
      * @param manager The service manager.
-     * @param session The repository session.
      * @param logger The logger.
      * @param document The document.
      * @param event The event.
      * @return A boolean value.
      * @throws WorkflowException
      */
-    public static boolean canInvoke(ServiceManager manager, Session session, Logger logger,
-            Document document, String event) throws WorkflowException {
+    public static boolean canInvoke(ServiceManager manager, Log logger, Document document,
+            String event) throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
+            Workflowable workflowable = new DocumentWorkflowable(manager, document, logger);
             return wfManager.canInvoke(workflowable, event);
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -167,7 +159,7 @@ public class WorkflowUtil {
      * @return if an error occurs.
      * @throws WorkflowException
      */
-    public static boolean canInvoke(ServiceManager manager, Session session, Logger logger,
+    public static boolean canInvoke(ServiceManager manager, Session session, Log logger,
             DocumentSet documents, String event) throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
@@ -176,9 +168,7 @@ public class WorkflowUtil {
             boolean canInvoke = true;
             Document[] documentArray = documents.getDocuments();
             for (int i = 0; i < documentArray.length; i++) {
-                Workflowable workflowable = new DocumentWorkflowable(manager,
-                        session,
-                        documentArray[i],
+                Workflowable workflowable = new DocumentWorkflowable(manager, documentArray[i],
                         logger);
                 canInvoke = canInvoke && wfManager.canInvoke(workflowable, event);
             }
@@ -202,12 +192,12 @@ public class WorkflowUtil {
      * @return A boolean value.
      * @throws WorkflowException if an error occurs.
      */
-    public static boolean hasWorkflow(ServiceManager manager, Session session, Logger logger,
-            Document document) throws WorkflowException {
+    public static boolean hasWorkflow(ServiceManager manager, Log logger, Document document)
+            throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
+            Workflowable workflowable = new DocumentWorkflowable(manager, document, logger);
             return wfManager.hasWorkflow(workflowable);
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -221,18 +211,17 @@ public class WorkflowUtil {
     /**
      * Returns the workflow schema of a document.
      * @param manager The service manager.
-     * @param session The repository session.
      * @param logger The logger.
      * @param document The document.
      * @return A workflow schema.
      * @throws WorkflowException if an error occurs.
      */
-    public static Workflow getWorkflowSchema(ServiceManager manager, Session session,
-            Log logger, Document document) throws WorkflowException {
+    public static Workflow getWorkflowSchema(ServiceManager manager, Log logger, Document document)
+            throws WorkflowException {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = getWorkflowable(manager, session, logger, document);
+            Workflowable workflowable = getWorkflowable(manager, logger, document);
             if (wfManager.hasWorkflow(workflowable)) {
                 return wfManager.getWorkflowSchema(workflowable);
             } else {
@@ -250,14 +239,12 @@ public class WorkflowUtil {
     /**
      * Returns a workflowable for a document.
      * @param manager The service manager.
-     * @param session The session.
      * @param logger The logger.
      * @param document The document.
      * @return A workflowable.
      */
-    public static Workflowable getWorkflowable(ServiceManager manager, Session session,
-            Log logger, Document document) {
-        Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
+    public static Workflowable getWorkflowable(ServiceManager manager, Log logger, Document document) {
+        Workflowable workflowable = new DocumentWorkflowable(manager, document, logger);
         return workflowable;
     }
 
