@@ -13,7 +13,6 @@
   <artifactId>lenya-core-ac</artifactId>
   <packaging>jar</packaging>
   <name>Apache Lenya Core AC</name>
-
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
