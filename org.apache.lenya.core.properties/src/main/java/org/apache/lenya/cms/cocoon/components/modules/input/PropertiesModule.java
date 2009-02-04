@@ -64,6 +64,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
 
     private Map pubId2roperties = new HashMap();
 
+	// FIXME Use commons-configuration
     private AntProperties globalProperties;
 
     private SourceResolver m_resolver;

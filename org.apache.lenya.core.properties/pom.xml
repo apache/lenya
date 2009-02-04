@@ -30,5 +30,9 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+    </dependency>
   </dependencies>
 </project>
