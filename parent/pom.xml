@@ -72,28 +72,6 @@
     </plugins>
   </build>
 
-  <modules>
-    <module>org.apache.lenya.core.ac</module>
-    <module>org.apache.lenya.core.acusecases</module>
-    <module>org.apache.lenya.core.administration</module>
-    <module>org.apache.lenya.core.api</module>
-    <module>org.apache.lenya.core.cache</module>
-    <module>org.apache.lenya.core.i18n</module>
-    <module>org.apache.lenya.core.impl</module>
-    <module>org.apache.lenya.core.janitor</module>
-    <module>org.apache.lenya.core.ldap</module>
-    <module>org.apache.lenya.core.linking</module>
-    <module>org.apache.lenya.core.metadata</module>
-    <module>org.apache.lenya.core.monitoring</module>
-    <module>org.apache.lenya.core.observation</module>
-    <module>org.apache.lenya.core.properties</module>
-    <module>org.apache.lenya.core.sitemanagement</module>
-    <module>org.apache.lenya.core.templating</module>
-    <module>org.apache.lenya.core.usecase</module>
-    <module>org.apache.lenya.core.workflow</module>
-    <module>org.apache.lenya.optional.jcrsource</module>
-  </modules>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
