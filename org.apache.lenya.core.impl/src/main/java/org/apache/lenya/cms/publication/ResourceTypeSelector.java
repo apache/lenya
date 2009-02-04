@@ -18,18 +18,19 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.component.Component;
-import org.apache.avalon.framework.component.ComponentException;
-import org.apache.cocoon.components.ExtendedComponentSelector;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.cocoon.core.container.spring.avalon.AvalonServiceSelector;
 
 /**
- * Specifis selector for resource types.
+ * Specifies selector for resource types.
  */
-public class ResourceTypeSelector extends ExtendedComponentSelector{
+public class ResourceTypeSelector extends AvalonServiceSelector {
 
-    /**
-     * @see org.apache.cocoon.components.ExtendedComponentSelector#select(java.lang.Object)
-     */
-    public Component select(Object hint) throws ComponentException {
+    public ResourceTypeSelector(String r) {
+        super(r);
+    }
+
+    public Component select(Object hint) throws ServiceException {
         ResourceType type = (ResourceType) super.select(hint);
         if (type != null) {
             type.setName((String) hint);
