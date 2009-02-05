@@ -31,11 +31,11 @@ import java.util.Set;
 
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
@@ -158,7 +158,6 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
             context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
             PublicationConfiguration config = new PublicationConfiguration(pubId,
                     this.servletContextPath, context.getRequest().getContextPath());
-            ContainerUtil.enableLogging(config, getLogger());
             id2config.put(pubId, config);
         } catch (ServiceException e) {
             throw new PublicationException(e);

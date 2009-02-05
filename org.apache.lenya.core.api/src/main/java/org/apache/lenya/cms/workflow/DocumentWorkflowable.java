@@ -27,8 +27,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;

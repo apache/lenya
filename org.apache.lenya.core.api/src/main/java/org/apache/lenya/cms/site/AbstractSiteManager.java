@@ -21,10 +21,10 @@ package org.apache.lenya.cms.site;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.DocumentFactory;
 
 /**

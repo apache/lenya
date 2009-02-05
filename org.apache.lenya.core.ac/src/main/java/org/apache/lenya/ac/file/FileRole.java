@@ -24,7 +24,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManager;
@@ -45,7 +45,7 @@ public class FileRole extends AbstractRole implements Item {
      * @param logger The logger.
      * @param id The role ID.
      */
-    public FileRole(ItemManager itemManager, Logger logger, String id) {
+    public FileRole(ItemManager itemManager, Log logger, String id) {
         this(itemManager, logger);
         setId(id);
     }
@@ -57,7 +57,7 @@ public class FileRole extends AbstractRole implements Item {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public FileRole(ItemManager itemManager, Logger logger) {
+    public FileRole(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
         setConfigurationDirectory(fileItemManager.getConfigurationDirectory());

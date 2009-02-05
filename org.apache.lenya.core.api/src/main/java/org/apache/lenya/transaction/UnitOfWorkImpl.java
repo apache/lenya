@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.util.Assert;
 
@@ -42,8 +42,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @param identity The identity.
      * @param logger The logger.
      */
-    public UnitOfWorkImpl(IdentityMap map, Identity identity, Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public UnitOfWorkImpl(IdentityMap map, Identity identity, Log logger) {
 
         Assert.notNull(map);
         this.identityMap = map;

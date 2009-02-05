@@ -20,8 +20,8 @@ package org.apache.lenya.cms.site;
 import java.util.Arrays;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.Assert;
 
@@ -35,10 +35,8 @@ public abstract class AbstractSiteNode extends AbstractLogEnabled implements Sit
     private String uuid;
 
     protected AbstractSiteNode(Publication publication, SiteStructure structure, String path,
-            String uuid, Logger logger) {
+            String uuid, Log logger) {
         
-        ContainerUtil.enableLogging(this, logger);
-
         Assert.notNull("structure", structure);
         this.structure = structure;
 

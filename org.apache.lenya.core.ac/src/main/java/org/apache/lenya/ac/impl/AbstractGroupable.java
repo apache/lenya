@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
@@ -39,7 +39,7 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public AbstractGroupable(ItemManager itemManager, Logger logger) {
+    public AbstractGroupable(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
     }
 

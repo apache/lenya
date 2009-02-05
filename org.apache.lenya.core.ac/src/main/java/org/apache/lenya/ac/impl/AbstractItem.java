@@ -18,9 +18,8 @@
 
 package org.apache.lenya.ac.impl;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManager;
@@ -45,12 +44,9 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
      * @param itemManager The item manager this item belongs to.
      * @param logger The logger.
      */
-    public AbstractItem(ItemManager itemManager, Logger logger) {
+    public AbstractItem(ItemManager itemManager, Log logger) {
         Assert.notNull("item manager", itemManager);
         this.itemManager = itemManager;
-
-        Assert.notNull("logger", logger);
-        ContainerUtil.enableLogging(this, logger);
     }
 
     /**

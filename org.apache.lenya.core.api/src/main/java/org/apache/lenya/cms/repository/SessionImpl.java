@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
@@ -60,7 +60,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public SessionImpl(Identity identity, boolean modifiable, ServiceManager manager, Logger logger) {
+    public SessionImpl(Identity identity, boolean modifiable, ServiceManager manager, Log logger) {
 
         ContainerUtil.enableLogging(this, logger);
 

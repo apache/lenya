@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -212,7 +212,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
          * @param hint The hint to check.
          * @param logger The logger.
          */
-        public ExistingServiceVisitor(ServiceSelector selector, Object hint, Logger logger) {
+        public ExistingServiceVisitor(ServiceSelector selector, Object hint, Log logger) {
             this.selector = selector;
             this.hint = hint;
             this.logger = logger;
@@ -221,7 +221,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         private ServiceSelector selector;
         private Object hint;
         private Object selectableHint = null;
-        private Logger logger;
+        private Log logger;
 
         /**
          * @see org.apache.lenya.cms.publication.templating.PublicationVisitor#visit(org.apache.lenya.cms.publication.Publication)

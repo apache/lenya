@@ -20,10 +20,10 @@ package org.apache.lenya.cms.linking;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;

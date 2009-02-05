@@ -18,10 +18,10 @@
 package org.apache.lenya.cms.linking;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -45,8 +45,7 @@ public class LinkConverter extends AbstractLogEnabled {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public LinkConverter(ServiceManager manager, Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public LinkConverter(ServiceManager manager, Log logger) {
         this.manager = manager;
     }
 

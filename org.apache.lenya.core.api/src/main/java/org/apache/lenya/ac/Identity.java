@@ -29,9 +29,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.cocoon.environment.Session;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 
 /**
  * Identity object. Used to store the authenticated accreditables in the session.
@@ -47,8 +47,7 @@ public class Identity extends AbstractLogEnabled implements Identifiable, Serial
      * Ctor.
      * @param logger The logger.
      */
-    public Identity(Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public Identity(Log logger) {
     }
     
     /**

@@ -30,7 +30,6 @@ import org.apache.lenya.workflow.Workflowable;
  * @version $Id$
  */
 public class History extends DocumentUsecase {
-	private static final Log logger = LogFactory.getLog(History.class);
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
@@ -41,7 +40,7 @@ public class History extends DocumentUsecase {
 
         if (getSourceDocument() != null) {
             Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
-                    logger, getSourceDocument());
+                    getLogger(), getSourceDocument());
             Version[] versions = workflowable.getVersions();
             setParameter("versions", versions);
         }

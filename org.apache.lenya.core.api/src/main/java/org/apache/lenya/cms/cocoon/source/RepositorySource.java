@@ -31,9 +31,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.ModifiableTraversableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
@@ -62,7 +62,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     private ServiceManager manager;
     private ContentHolder content;
     private Session session;
-    private Logger logger;
+    private Log logger;
     protected static final String SCHEME = "lenya";
 
     /**
@@ -73,7 +73,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      * @throws SourceException if an error occurs.
      * @throws MalformedURLException if an error occurs.
      */
-    public RepositorySource(ServiceManager manager, String uri, Session session, Logger logger)
+    public RepositorySource(ServiceManager manager, String uri, Session session, Log logger)
             throws SourceException, MalformedURLException {
         this.manager = manager;
         this.logger = logger;
@@ -171,7 +171,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         return (Node) this.content;
     }
 
-    protected Logger getLogger() {
+    protected Log getLogger() {
         return this.logger;
     }
 

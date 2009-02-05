@@ -25,7 +25,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.ItemManager;
@@ -74,7 +74,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public AbstractIPRange(ItemManager itemManager, Logger logger) {
+    public AbstractIPRange(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
         try {
             this.networkAddress = InetAddress.getLocalHost();
@@ -106,7 +106,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * @param logger The logger.
      * @param id The IP range ID.
      */
-    public AbstractIPRange(ItemManager itemManager, Logger logger, String id) {
+    public AbstractIPRange(ItemManager itemManager, Log logger, String id) {
         super(itemManager, logger);
         setId(id);
     }

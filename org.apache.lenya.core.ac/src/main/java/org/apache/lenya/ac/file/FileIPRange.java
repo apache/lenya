@@ -29,8 +29,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.avalon.framework.logger.ConsoleLogger;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
@@ -64,7 +63,7 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
             InetAddress subnetMask = InetAddress.getByName(args[1]);
             Machine machine = new Machine(args[2]);
 
-            InetAddressUtil util = new InetAddressUtil(new ConsoleLogger());
+            InetAddressUtil util = new InetAddressUtil(getLogger());
             if (util.contains(networkAddress, subnetMask, machine.getAddress())) {
                 System.out.println("true");
             } else {
@@ -82,7 +81,7 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public FileIPRange(ItemManager itemManager, Logger logger) {
+    public FileIPRange(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
     }
 
@@ -92,7 +91,7 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
      * @param logger The logger.
      * @param id The IP range ID.
      */
-    public FileIPRange(ItemManager itemManager, Logger logger, String id) {
+    public FileIPRange(ItemManager itemManager, Log logger, String id) {
         super(itemManager, logger, id);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
         setConfigurationDirectory(fileItemManager.getConfigurationDirectory());

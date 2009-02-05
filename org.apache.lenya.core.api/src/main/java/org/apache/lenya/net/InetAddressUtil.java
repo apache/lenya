@@ -23,8 +23,8 @@ package org.apache.lenya.net;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 
 /**
  * A utility class for InetAddress. Also see http://jodies.de/ipcalc
@@ -35,8 +35,7 @@ public class InetAddressUtil extends AbstractLogEnabled {
      * Ctor.
      * @param logger The logger.
      */
-    public InetAddressUtil(Logger logger) {
-        enableLogging(logger);
+    public InetAddressUtil(Log logger) {
     }
 
     /**

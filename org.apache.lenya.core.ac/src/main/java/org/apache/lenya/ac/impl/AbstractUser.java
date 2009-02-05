@@ -18,7 +18,7 @@
 
 package org.apache.lenya.ac.impl;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Password;
@@ -40,7 +40,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public AbstractUser(ItemManager itemManager, Logger logger) {
+    public AbstractUser(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
     }
 
@@ -53,7 +53,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
      * @param _email the users email address
      * @param password the users password
      */
-    public AbstractUser(ItemManager itemManager, Logger logger, String id, String fullName,
+    public AbstractUser(ItemManager itemManager, Log logger, String id, String fullName,
             String _email, String password) {
         this(itemManager, logger);
         setId(id);

@@ -25,10 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.repository.Session;
 

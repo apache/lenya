@@ -18,11 +18,11 @@
 package org.apache.lenya.cms.observation;
 
 import org.apache.avalon.framework.activity.Startable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.util.AbstractLogEnabled;
 
 /**
  * Abstract repository listener implementation which registeres with the observation

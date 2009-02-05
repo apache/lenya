@@ -60,7 +60,6 @@ public class AddIPRange extends AccessControlUsecase {
         String description = getParameterAsString(IPRangeProfile.DESCRIPTION);
 
         IPRange ipRange = getIpRangeManager().add(id);
-        ContainerUtil.enableLogging(ipRange, getLogger());
 
         ipRange.setName(name);
         ipRange.setDescription(description);

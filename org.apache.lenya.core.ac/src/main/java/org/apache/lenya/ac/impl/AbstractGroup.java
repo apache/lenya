@@ -23,7 +23,7 @@ package org.apache.lenya.ac.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Group;
@@ -41,7 +41,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public AbstractGroup(ItemManager itemManager, Logger logger) {
+    public AbstractGroup(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
     }
 
@@ -51,7 +51,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param logger The logger.
      * @param id The group ID.
      */
-    public AbstractGroup(ItemManager itemManager, Logger logger, String id) {
+    public AbstractGroup(ItemManager itemManager, Log logger, String id) {
         super(itemManager, logger);
         setId(id);
     }

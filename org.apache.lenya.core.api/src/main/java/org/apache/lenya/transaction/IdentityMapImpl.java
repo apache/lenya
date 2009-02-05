@@ -24,9 +24,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 
 /**
  * Identity map implementation.
@@ -41,8 +40,7 @@ public final class IdentityMapImpl extends AbstractLogEnabled implements Identit
      * Ctor.
      * @param logger The logger.
      */
-    public IdentityMapImpl(Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public IdentityMapImpl(Log logger) {
     }
 
     public Object get(IdentifiableFactory factory, String key) {

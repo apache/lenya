@@ -38,7 +38,7 @@ import javax.naming.ldap.InitialLdapContext;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.file.FileUser;
@@ -93,7 +93,7 @@ public class LDAPUser extends FileUser {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public LDAPUser(ItemManager itemManager, Logger logger) {
+    public LDAPUser(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
     }
 
@@ -107,8 +107,8 @@ public class LDAPUser extends FileUser {
      * @param _logger The logger.
      * @throws ConfigurationException if the properties could not be read
      */
-    public LDAPUser(ItemManager itemManager, Logger logger, String id, String email,
-            String _ldapId, Logger _logger) throws ConfigurationException {
+    public LDAPUser(ItemManager itemManager, Log logger, String id, String email,
+            String _ldapId, Log _logger) throws ConfigurationException {
         super(itemManager, logger, id, null, email, null);
         this.ldapId = _ldapId;
         initialize();

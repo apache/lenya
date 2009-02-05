@@ -18,8 +18,8 @@
 package org.apache.lenya.ac.impl;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Authenticator;

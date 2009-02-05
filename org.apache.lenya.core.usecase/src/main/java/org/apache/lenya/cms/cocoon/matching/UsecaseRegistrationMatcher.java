@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.apache.avalon.excalibur.pool.Poolable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -33,6 +32,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.matching.Matcher;
 import org.apache.cocoon.sitemap.PatternException;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.util.ServletHelper;
 

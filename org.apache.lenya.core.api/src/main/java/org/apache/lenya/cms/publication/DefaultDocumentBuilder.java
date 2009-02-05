@@ -18,10 +18,10 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.site.SiteNode;
 
 /**

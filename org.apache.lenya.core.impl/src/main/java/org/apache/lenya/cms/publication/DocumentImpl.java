@@ -26,11 +26,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataCache;
@@ -98,9 +98,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param _logger a logger
      */
     protected DocumentImpl(ServiceManager manager, DocumentFactory map,
-            DocumentIdentifier identifier, int revision, Logger _logger) {
+            DocumentIdentifier identifier, int revision, Log logger) {
 
-        ContainerUtil.enableLogging(this, _logger);
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(
                     "DefaultDocument() creating new instance with id [" + identifier.getUUID()

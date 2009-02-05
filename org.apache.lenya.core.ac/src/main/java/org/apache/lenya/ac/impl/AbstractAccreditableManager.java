@@ -25,8 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.GroupManager;
@@ -46,8 +46,7 @@ public abstract class AbstractAccreditableManager
     /**
      * @param logger The logger.
      */
-    public AbstractAccreditableManager(Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public AbstractAccreditableManager(Log logger) {
     }
 
     private UserManager userManager = null;

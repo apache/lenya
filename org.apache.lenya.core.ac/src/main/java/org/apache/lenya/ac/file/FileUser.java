@@ -25,7 +25,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.GroupManager;
@@ -58,7 +58,7 @@ public class FileUser extends AbstractUser implements Item, Serializable {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public FileUser(ItemManager itemManager, Logger logger) {
+    public FileUser(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
         setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
@@ -73,7 +73,7 @@ public class FileUser extends AbstractUser implements Item, Serializable {
      * @param email the users email address
      * @param password the users password
      */
-    public FileUser(ItemManager itemManager, Logger logger, String id, String fullName,
+    public FileUser(ItemManager itemManager, Log logger, String id, String fullName,
             String email, String password) {
         super(itemManager, logger, id, fullName, email, password);
         FileItemManager fileItemManager = (FileItemManager) itemManager;

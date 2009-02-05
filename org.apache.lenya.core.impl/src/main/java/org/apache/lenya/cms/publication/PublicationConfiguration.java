@@ -30,7 +30,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Assert;

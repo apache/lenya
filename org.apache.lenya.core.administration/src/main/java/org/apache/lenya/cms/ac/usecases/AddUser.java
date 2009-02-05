@@ -69,7 +69,6 @@ public class AddUser extends AccessControlUsecase {
 
         if (className.equals(LDAPUser.class.getName())) {
             LDAPUser ldapUser = new LDAPUser(getUserManager(), getLogger());
-            ContainerUtil.enableLogging(ldapUser, getLogger());
 
             try {
                 if (!ldapUser.existsUser(ldapId)) {
@@ -118,7 +117,6 @@ public class AddUser extends AccessControlUsecase {
             user.setName(fullName);
             user.setPassword(password);
         }
-        ContainerUtil.enableLogging(user, getLogger());
         user.setDescription(description);
         user.save();
         getUserManager().add(user);

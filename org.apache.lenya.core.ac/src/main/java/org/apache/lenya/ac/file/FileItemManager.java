@@ -35,8 +35,8 @@ import java.util.Set;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
@@ -81,7 +81,6 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
 
         this.configurationDirectory = _configurationDirectory;
         this.notifier = new DirectoryChangeNotifier(_configurationDirectory, getFileFilter());
-        this.notifier.enableLogging(getLogger());
         loadItems();
     }
 
@@ -157,7 +156,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         String klass = ItemConfiguration.getItemClass(config);
         if (item == null) {
             try {
-                Class[] paramTypes = { ItemManager.class, Logger.class };
+                Class[] paramTypes = { ItemManager.class, Log.class };
                 Constructor ctor = Class.forName(klass).getConstructor(paramTypes);
                 Object[] params = { this, getLogger() };
                 item = (Item) ctor.newInstance(params);

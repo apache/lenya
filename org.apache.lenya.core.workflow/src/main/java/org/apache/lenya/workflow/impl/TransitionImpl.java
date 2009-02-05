@@ -20,7 +20,7 @@
 
 package org.apache.lenya.workflow.impl;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Transition;

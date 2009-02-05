@@ -20,7 +20,7 @@
 
 package org.apache.lenya.ac.impl;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.util.Assert;
@@ -36,7 +36,7 @@ public abstract class AbstractRole extends AbstractItem implements Role {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public AbstractRole(ItemManager itemManager, Logger logger) {
+    public AbstractRole(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
     }
 
@@ -46,7 +46,7 @@ public abstract class AbstractRole extends AbstractItem implements Role {
      * @param logger The logger.
      * @param name The role name.
      */
-    public AbstractRole(ItemManager itemManager, Logger logger, String name) {
+    public AbstractRole(ItemManager itemManager, Log logger, String name) {
         this(itemManager, logger);
         Assert.notNull("name", name);
         setName(name);

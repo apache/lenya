@@ -23,8 +23,8 @@ package org.apache.lenya.workflow.impl;
 import java.io.File;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
@@ -61,8 +61,7 @@ public class WorkflowBuilder extends AbstractLogEnabled {
      * Ctor.
      * @param logger The logger to use.
      */
-    public WorkflowBuilder(Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public WorkflowBuilder(Log logger) {
     }
 
     /**
@@ -179,7 +178,6 @@ public class WorkflowBuilder extends AbstractLogEnabled {
         String destination = element.getAttribute(DESTINATION_ATTRIBUTE);
 
         TransitionImpl transition = new TransitionImpl(source, destination);
-        ContainerUtil.enableLogging(transition, getLogger());
 
         // set event
         Element eventElement = (Element) element.getElementsByTagNameNS(Workflow.NAMESPACE,
