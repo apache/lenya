@@ -52,6 +52,8 @@
   </build>
   
   <dependencies>
+    
+    <!-- Cocoon -->
     <dependency>
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-core</artifactId>
@@ -64,6 +66,8 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-samples-style-default</artifactId>
     </dependency>
+    
+    <!-- Lenya -->
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
@@ -75,6 +79,10 @@
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-linking</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-usecase</artifactId>
     </dependency>
   </dependencies>
 </project>
