@@ -29,8 +29,6 @@ import javax.jcr.Property;
 import javax.jcr.Value;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.jcr.source.JCRNodeSource;
 import org.apache.excalibur.source.SourceResolver;

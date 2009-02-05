@@ -15,5 +15,9 @@
   <packaging>jar</packaging>
   <name>Apache Lenya Module SVG</name>
   <dependencies>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-api</artifactId>
+    </dependency>
   </dependencies>
 </project>

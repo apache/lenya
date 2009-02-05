@@ -19,7 +19,7 @@ package org.apache.lenya.modules.news;
 
 import javax.xml.transform.TransformerException;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.modules.collection.CollectionWrapper;
@@ -40,7 +40,7 @@ public class NewsWrapper extends CollectionWrapper {
      * @param doc The document to wrap.
      * @param logger The logger.
      */
-    public NewsWrapper(Document doc, Logger logger) {
+    public NewsWrapper(Document doc, Log logger) {
         super(doc, logger);
     }
 

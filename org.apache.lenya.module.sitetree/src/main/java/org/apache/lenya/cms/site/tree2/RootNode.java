@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.site.SiteNode;
 
 /**
@@ -35,7 +35,7 @@ public class RootNode extends TreeNodeImpl {
      * @param tree The tree.
      * @param logger The logger.
      */
-    public RootNode(SiteTreeImpl tree, Logger logger) {
+    public RootNode(SiteTreeImpl tree, Log logger) {
         super(null, "", false, logger);
         this.tree = tree;
     }

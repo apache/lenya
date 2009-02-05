@@ -26,7 +26,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManager;
@@ -51,7 +51,7 @@ public class FileGroup extends AbstractGroup implements Item {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public FileGroup(ItemManager itemManager, Logger logger) {
+    public FileGroup(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
     }
 
@@ -61,7 +61,7 @@ public class FileGroup extends AbstractGroup implements Item {
      * @param logger The logger.
      * @param id the ID of the group
      */
-    public FileGroup(ItemManager itemManager, Logger logger, String id) {
+    public FileGroup(ItemManager itemManager, Log logger, String id) {
         super(itemManager, logger, id);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
         setConfigurationDirectory(fileItemManager.getConfigurationDirectory());

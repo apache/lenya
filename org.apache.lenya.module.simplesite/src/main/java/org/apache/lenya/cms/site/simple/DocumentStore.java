@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -62,7 +62,7 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure {
      * @param logger The logger.
      * @throws DocumentException if an error occurs.
      */
-    public DocumentStore(Document doc, Logger logger) throws DocumentException {
+    public DocumentStore(Document doc, Log logger) throws DocumentException {
         super(doc, logger);
         this.doc2path.put(getKey(doc.getUUID(), doc.getLanguage()), SITE_PATH);
     }

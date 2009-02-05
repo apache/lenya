@@ -20,9 +20,9 @@ package org.apache.lenya.cms.repository;
 import java.util.Vector;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.RCML;
 
@@ -40,10 +40,9 @@ public class SourceNodeHistory extends AbstractLogEnabled implements History {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public SourceNodeHistory(SourceNode node, ServiceManager manager, Logger logger) {
+    public SourceNodeHistory(SourceNode node, ServiceManager manager, Log logger) {
         this.node = node;
         this.manager = manager;
-        ContainerUtil.enableLogging(this, logger);
     }
 
     public Revision getLatestRevision() {

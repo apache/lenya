@@ -21,10 +21,10 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
@@ -54,10 +54,9 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @param manager The service manager.
      * @param logger The logger to use.
      */
-    public DocumentFactoryImpl(Session session, ServiceManager manager, Logger logger) {
+    public DocumentFactoryImpl(Session session, ServiceManager manager, Log logger) {
         this.session = session;
         this.manager = manager;
-        ContainerUtil.enableLogging(this, logger);
     }
 
     /**
@@ -284,7 +283,6 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             int revision, DocumentBuilder builder) throws DocumentBuildException {
 
         DocumentImpl document = createDocument(map, identifier, revision, builder);
-        ContainerUtil.enableLogging(document, getLogger());
         return document;
     }
 

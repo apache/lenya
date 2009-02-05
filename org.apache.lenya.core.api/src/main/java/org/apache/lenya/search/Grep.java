@@ -36,12 +36,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Utility class to provide a subset of the grep functionality. 
  */
 public class Grep {
+	private static final Log logger = LogFactory.getLog(Grep.class);
     
     private static Charset charset = Charset.forName("UTF-8");
     private static CharsetDecoder decoder = charset.newDecoder();
@@ -55,8 +57,6 @@ public class Grep {
      */
     public static boolean containsPattern(File file, Pattern pattern) throws IOException {
         
-        Logger log = new ConsoleLogger();
-
         FileChannel fc = null;
 		// Open the file and then get a channel from the stream
         FileInputStream fis = null;
@@ -78,11 +78,11 @@ public class Grep {
 
 			result = pm.find();
 		} catch (FileNotFoundException e) {
-			log.error("File not found: " +e.toString());
+			logger.error("File not found: " +e.toString());
 		} catch (CharacterCodingException e) {
-			log.error("Problem with encoding: " +e.toString());
+			logger.error("Problem with encoding: " +e.toString());
 		} catch (IOException e) {
-			log.error("IO Exception: " +e.toString());
+			logger.error("IO Exception: " +e.toString());
 		} finally {
 	        // Close the channel and the stream
 	        if (fc != null)
@@ -103,8 +103,6 @@ public class Grep {
      * @throws IOException if the file could not be read.
      */
     public static String[] findPattern(File file, Pattern pattern, int group) throws IOException {
-
-        Logger log = new ConsoleLogger();
 
         ArrayList occurences = new ArrayList();
         FileInputStream fis = null;
@@ -129,11 +127,11 @@ public class Grep {
                 occurences.add(pm.group(group));
             }
         } catch (FileNotFoundException e) {
-            log.error("file not found " +e.toString());
+            logger.error("file not found " +e.toString());
         } catch (CharacterCodingException e) {
-            log.error("encoding problem " +e.toString());
+            logger.error("encoding problem " +e.toString());
         } catch (IOException e) {
-            log.error("IO exception" +e.toString());
+            logger.error("IO exception" +e.toString());
         } finally {
 	        // Close the channel and the stream
 	        if (fc != null)

@@ -20,7 +20,6 @@ package org.apache.lenya.cms.lucene;
 import java.util.Arrays;
 
 import org.apache.avalon.framework.activity.Startable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;

@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
@@ -38,7 +38,7 @@ public class MetaSourceWrapper extends SourceWrapper implements MetaDataOwner {
      * @param logger
      */
     public MetaSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager,
-            Logger logger) {
+            Log logger) {
         super(node, sourceURI + "." + LENYA_META_SUFFIX, manager, logger);
         this.handler = new ModifiableMetaDataHandler(manager, this);
     }

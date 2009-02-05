@@ -21,10 +21,9 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -51,11 +50,10 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public SourceNodeRevision(SourceNode node, int number, ServiceManager manager, Logger logger) {
+    public SourceNodeRevision(SourceNode node, int number, ServiceManager manager, Log logger) {
         this.node = node;
         this.number = number;
         this.manager = manager;
-        ContainerUtil.enableLogging(this, logger);
     }
 
     public long getTime() {

@@ -24,9 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -52,8 +51,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
      * @param visible The navigation visibility.
      * @param logger The logger.
      */
-    public TreeNodeImpl(TreeNode parent, String name, boolean visible, Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public TreeNodeImpl(TreeNode parent, String name, boolean visible, Log logger) {
         Assert.notNull("name", name);
         this.name = name;
         this.parent = parent;

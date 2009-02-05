@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.observation;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -41,7 +41,7 @@ public class RepositoryEventFactory {
      * @return An event.
      */
     public static final RepositoryEvent createEvent(ServiceManager manager,
-            Session session, Logger logger, Object descriptor) {
+            Session session, Log logger, Object descriptor) {
             return new RepositoryEvent(session, descriptor);
     }
 
@@ -54,7 +54,7 @@ public class RepositoryEventFactory {
      * @return An event.
      */
     public static final RepositoryEvent createEvent(ServiceManager manager, Document doc,
-            Logger logger, Object descriptor) {
+            Log logger, Object descriptor) {
         try {
             Node node = doc.getRepositoryNode();
             RepositoryEvent event = new DocumentEvent(node.getSession(), doc.getPublication()
@@ -81,7 +81,7 @@ public class RepositoryEventFactory {
      * @return An event.
      */
     public static final RepositoryEvent createEvent(ServiceManager manager, Node node,
-            Logger logger, Object descriptor) {
+            Log logger, Object descriptor) {
         RepositoryEvent event;
         Document doc = null;
         if (!node.getSourceURI().endsWith("meta")) {
@@ -103,7 +103,7 @@ public class RepositoryEventFactory {
      * @return The document represented by the node or <code>null</code> if
      *         the node doesn't represent a document.
      */
-    protected static final Document getDocument(ServiceManager manager, Node node, Logger logger) {
+    protected static final Document getDocument(ServiceManager manager, Node node, Log logger) {
 
         final String sourceUri = node.getSourceURI();
         if (sourceUri.endsWith(".xml")) {

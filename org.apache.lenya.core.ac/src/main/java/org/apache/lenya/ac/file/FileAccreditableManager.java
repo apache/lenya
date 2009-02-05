@@ -27,9 +27,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.NetUtils;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
@@ -55,7 +55,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
      * @param configurationUri The configuration directory URI.
      * @param _userTypes The supported user types.
      */
-    public FileAccreditableManager(ServiceManager manager, Logger logger,
+    public FileAccreditableManager(ServiceManager manager, Log logger,
             String configurationUri, UserType[] _userTypes) {
         super(logger);
 

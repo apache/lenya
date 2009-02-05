@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.logging.Log;
 
 /**
  * Content source wrapper.
@@ -32,7 +32,7 @@ public class ContentSourceWrapper extends SourceWrapper {
      * @param manager
      * @param logger
      */
-    public ContentSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager, Logger logger) {
+    public ContentSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager, Log logger) {
         super(node, sourceURI, manager, logger);
     }
 

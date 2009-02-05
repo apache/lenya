@@ -18,10 +18,10 @@
 package org.apache.lenya.cms.site.simple;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -49,9 +49,8 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public DocumentStoreFactory(ServiceManager manager, Logger logger) {
+    public DocumentStoreFactory(ServiceManager manager, Log logger) {
         this.manager = manager;
-        ContainerUtil.enableLogging(this, logger);
     }
 
     /**

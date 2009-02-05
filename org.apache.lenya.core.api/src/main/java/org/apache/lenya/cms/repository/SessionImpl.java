@@ -62,8 +62,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     public SessionImpl(Identity identity, boolean modifiable, ServiceManager manager, Log logger) {
 
-        ContainerUtil.enableLogging(this, logger);
-
         Assert.notNull("service manager", manager);
         this.manager = manager;
 

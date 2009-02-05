@@ -21,10 +21,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
@@ -63,9 +63,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @param manager
      * @param logger
      */
-    public SourceNode(Session session, String sourceUri, ServiceManager manager, Logger logger) {
+    public SourceNode(Session session, String sourceUri, ServiceManager manager, Log logger) {
         this.manager = manager;
-        enableLogging(logger);
         this.session = session;
 
         this.contentSource = new ContentSourceWrapper(this, sourceUri, manager, logger);

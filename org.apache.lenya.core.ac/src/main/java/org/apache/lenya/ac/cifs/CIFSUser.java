@@ -27,7 +27,7 @@ import org.apache.lenya.ac.file.FileUser;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbAuthException;
@@ -61,7 +61,7 @@ public class CIFSUser extends FileUser {
      * @param itemManager The item manager.
      * @param logger The logger.
      */
-    public CIFSUser(ItemManager itemManager, Logger logger) {
+    public CIFSUser(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
 
     }
@@ -75,7 +75,7 @@ public class CIFSUser extends FileUser {
      * @param email The e-mail address.
      * @param password The password.
      */
-    public CIFSUser(ItemManager itemManager, Logger logger, String id, String fullName,
+    public CIFSUser(ItemManager itemManager, Log logger, String id, String fullName,
             String email, String password) {
         super(itemManager, logger, id, fullName, email, password);
 

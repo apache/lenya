@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.SourceNode;
@@ -37,7 +37,7 @@ public class JCRSourceNode extends SourceNode {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public JCRSourceNode(Session session, String sourceURI, ServiceManager manager, Logger logger) {
+    public JCRSourceNode(Session session, String sourceURI, ServiceManager manager, Log logger) {
         super(session, sourceURI, manager, logger);
         this.sourceUri = sourceURI;
     }

@@ -23,7 +23,6 @@ import java.util.Iterator;
 
 import org.apache.avalon.framework.activity.Startable;
 import org.apache.avalon.framework.component.Component;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;

@@ -20,7 +20,7 @@ package org.apache.lenya.cms.site.simple;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.AbstractSiteNode;
@@ -33,7 +33,7 @@ import org.apache.lenya.cms.site.SiteNode;
  */
 public class SimpleSiteNode extends AbstractSiteNode {
 
-    protected SimpleSiteNode(DocumentStore store, String path, String uuid, Logger logger) {
+    protected SimpleSiteNode(DocumentStore store, String path, String uuid, Log logger) {
         super(store.getPublication(), store, path, uuid, logger);
     }
 

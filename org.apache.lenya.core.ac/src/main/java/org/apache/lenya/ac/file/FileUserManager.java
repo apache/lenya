@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
@@ -65,7 +65,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
      * @return an <code>UserManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileUserManager instance(AccreditableManager mgr, File configurationDirectory, UserType[] userTypes, Logger logger)
+    public static FileUserManager instance(AccreditableManager mgr, File configurationDirectory, UserType[] userTypes, Log logger)
             throws AccessControlException {
 
         assert configurationDirectory != null;
@@ -76,7 +76,6 @@ public class FileUserManager extends FileItemManager implements UserManager {
 
         if (!instances.containsKey(configurationDirectory)) {
             FileUserManager manager = new FileUserManager(mgr, userTypes);
-            manager.enableLogging(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
         }

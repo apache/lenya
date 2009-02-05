@@ -20,8 +20,8 @@ package org.apache.lenya.inbox;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.User;
 
 /**

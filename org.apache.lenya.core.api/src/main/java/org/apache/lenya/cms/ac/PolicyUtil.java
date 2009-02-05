@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -118,7 +117,7 @@ public final class PolicyUtil {
      * @throws AccessControlException if an error occurs.
      */
     public static final User[] getUsersWithRole(ServiceManager manager, String webappUrl,
-            String role, Logger logger) throws AccessControlException {
+            String role, Log logger) throws AccessControlException {
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         AccessController controller = null;

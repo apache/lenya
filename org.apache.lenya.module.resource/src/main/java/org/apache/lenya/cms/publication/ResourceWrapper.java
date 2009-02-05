@@ -27,13 +27,13 @@ import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -57,10 +57,9 @@ public class ResourceWrapper extends AbstractLogEnabled {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public ResourceWrapper(Document document, ServiceManager manager, Logger logger) {
+    public ResourceWrapper(Document document, ServiceManager manager, Log logger) {
         this.document = document;
         this.manager = manager;
-        enableLogging(logger);
     }
 
     protected Document getDocument() {

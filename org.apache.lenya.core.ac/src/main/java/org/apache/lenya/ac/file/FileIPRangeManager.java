@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.IPRange;
@@ -63,7 +63,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
      * @return an <code>IPRangeManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileIPRangeManager instance(AccreditableManager mgr, File configurationDirectory, Logger logger)
+    public static FileIPRangeManager instance(AccreditableManager mgr, File configurationDirectory, Log logger)
             throws AccessControlException {
 
         assert configurationDirectory != null;
@@ -74,7 +74,6 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
         if (!instances.containsKey(configurationDirectory)) {
             FileIPRangeManager manager = new FileIPRangeManager(mgr);
-            manager.enableLogging(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
         }

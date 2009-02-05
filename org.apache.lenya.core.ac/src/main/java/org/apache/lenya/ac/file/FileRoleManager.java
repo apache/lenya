@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
@@ -54,11 +54,10 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
      * @return A role manager.
      * @throws AccessControlException when something went wrong.
      */
-    public static FileRoleManager instance(AccreditableManager mgr, File configurationDirectory, Logger logger)
+    public static FileRoleManager instance(AccreditableManager mgr, File configurationDirectory, Log logger)
             throws AccessControlException {
         if (!instances.containsKey(configurationDirectory)) {
             FileRoleManager manager = new FileRoleManager(mgr);
-            manager.enableLogging(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
         }

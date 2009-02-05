@@ -27,10 +27,10 @@ import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
@@ -56,7 +56,7 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @param manager
      * @param logger
      */
-    public SourceWrapper(SourceNode node, String sourceUri, ServiceManager manager, Logger logger) {
+    public SourceWrapper(SourceNode node, String sourceUri, ServiceManager manager, Log logger) {
 
         Assert.notNull("node", node);
         this.node = node;
@@ -67,7 +67,6 @@ public class SourceWrapper extends AbstractLogEnabled {
         Assert.notNull("service manager", manager);
         this.manager = manager;
 
-        enableLogging(logger);
     }
 
     protected static final String FILE_PREFIX = "file:/";
@@ -93,7 +92,7 @@ public class SourceWrapper extends AbstractLogEnabled {
     }
 
     protected static final String computeRealSourceUri(ServiceManager manager, Session session,
-            String sourceUri, Logger logger) {
+            String sourceUri, Log logger) {
         String contentDir = null;
         String publicationId = null;
         try {

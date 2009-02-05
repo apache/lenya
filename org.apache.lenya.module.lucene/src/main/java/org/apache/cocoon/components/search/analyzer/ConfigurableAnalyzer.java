@@ -20,8 +20,6 @@ import java.io.Reader;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.logger.LogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.cocoon.components.search.components.AnalyzerManager;
 import org.apache.cocoon.components.search.utils.SourceHelper;
 import org.apache.excalibur.source.Source;
@@ -33,18 +31,13 @@ import org.apache.lucene.analysis.TokenStream;
  * 
  * @author Nicolas Maisonneuve
  */
-public abstract class ConfigurableAnalyzer extends Analyzer implements
-        LogEnabled {
-
+public abstract class ConfigurableAnalyzer extends Analyzer implements {
+	private static final Log logger = LogFactory.getLog(ConfigurableAnalyzer.class);
     /**
      * the lucene analyzer
      */
     protected Analyzer analyzer;
 
-    /**
-     * a logger
-     */
-    protected Logger logger;
 
     /**
      * the analyzer manager component
@@ -78,15 +71,6 @@ public abstract class ConfigurableAnalyzer extends Analyzer implements
      */
     public final TokenStream tokenStream(String fieldName, Reader reader) {
         return analyzer.tokenStream(fieldName, reader);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.avalon.framework.logger.LogEnabled#enableLogging(org.apache.avalon.framework.logger.Logger)
-     */
-    public void enableLogging(Logger log) {
-        logger = log;
     }
 
     /**
