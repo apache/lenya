@@ -28,6 +28,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.search.analyzer.ConfigurableAnalyzer;
 import org.apache.cocoon.components.search.components.AnalyzerManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lucene.analysis.Analyzer;
@@ -120,10 +121,6 @@ public class AnalyzerManagerImpl extends AbstractLogEnabled implements
             } catch (Exception ex) {
                 throw new ConfigurationException("instanciation of " + key
                         + " error", ex);
-            }
-
-            if (analyzer instanceof LogEnabled) {
-                this.setupLogger(analyzer);
             }
 
             if (analyzer instanceof ConfigurableAnalyzer) {

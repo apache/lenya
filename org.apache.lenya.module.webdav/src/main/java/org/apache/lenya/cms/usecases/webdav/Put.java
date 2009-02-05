@@ -160,7 +160,7 @@ public class Put extends CreateDocument {
 
             String event = getParameterAsString(EVENT);
             if (event != null) {
-                WorkflowUtil.invoke(this.manager, getSession(), getLogger(), doc, event);
+                WorkflowUtil.invoke(this.manager, getLogger(), doc, event);
             }
 
         } finally {

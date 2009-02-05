@@ -24,6 +24,7 @@ import org.apache.avalon.excalibur.pool.Recyclable;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.components.search.components.Searcher;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;

@@ -49,7 +49,6 @@ public class Deactivate extends DocumentUsecase {
             }
             String event = getEvent();
             if (!WorkflowUtil.canInvoke(this.manager,
-                    getSession(),
                     getLogger(),
                     getSourceDocument(),
                     event)) {
@@ -101,7 +100,6 @@ public class Deactivate extends DocumentUsecase {
             documentManager.delete(liveDocument);
          
             WorkflowUtil.invoke(this.manager,
-                    getSession(),
                     getLogger(),
                     authoringDocument,
                     getEvent());                  

@@ -3,6 +3,7 @@ package org.apache.lenya.cms.site.tree2;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.Link;

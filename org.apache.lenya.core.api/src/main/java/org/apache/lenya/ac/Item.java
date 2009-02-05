@@ -22,13 +22,12 @@ package org.apache.lenya.ac;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.logger.LogEnabled;
 
 
 /**
  * An item can be initialized from a configuration.
  */
-public interface Item extends LogEnabled {
+public interface Item {
     
     /**
      * Returns the ID.

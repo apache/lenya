@@ -76,7 +76,7 @@ public class Restore extends MoveSubsite {
         super.doCheckPostconditions();
 
         Document doc = getTargetDocument(true);
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                 getLogger(), doc);
         String state = workflowable.getLatestVersion().getState();
         if (!state.equals("authoring")) {

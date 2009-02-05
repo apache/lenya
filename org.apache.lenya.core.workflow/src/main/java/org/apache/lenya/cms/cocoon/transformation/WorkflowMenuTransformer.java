@@ -146,7 +146,6 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
             if (hasWorkflow()) {
                 Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                        session,
                         getLogger(),
                         document);
                 Workflow workflow = workflowManager.getWorkflowSchema(workflowable);

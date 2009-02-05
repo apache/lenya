@@ -57,9 +57,8 @@ public class Rollback extends DocumentUsecase {
         Document document = getSourceDocument();
         Node node = document.getRepositoryNode();
         node.rollback(revision);
-        
-        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
-                getEvent());
+
+        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
     }
 
     protected String getEvent() {

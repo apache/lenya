@@ -31,5 +31,9 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-usecase</artifactId>
     </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
   </dependencies>
 </project>

@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
-import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.ItemUtil;
 import org.apache.lenya.ac.User;
@@ -69,7 +69,7 @@ public class AddUser extends AccessControlUsecase {
 
         if (className.equals(LDAPUser.class.getName())) {
             LDAPUser ldapUser = new LDAPUser(getUserManager(), getLogger());
-
+            ldapUser.setLogger(getLogger());
             try {
                 if (!ldapUser.existsUser(ldapId)) {
                     addErrorMessage("ldap_no_such_user", new String[]{ldapId});
@@ -117,6 +117,7 @@ public class AddUser extends AccessControlUsecase {
             user.setName(fullName);
             user.setPassword(password);
         }
+        ((AbstractLogEnabled) user).setLogger(getLogger());
         user.setDescription(description);
         user.save();
         getUserManager().add(user);

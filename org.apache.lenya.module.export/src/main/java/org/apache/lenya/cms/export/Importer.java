@@ -19,6 +19,8 @@ package org.apache.lenya.cms.export;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.linking.LinkConverter;
@@ -47,9 +49,9 @@ public class Importer extends AbstractLogEnabled {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public Importer(ServiceManager manager, Logger logger) {
+    public Importer(ServiceManager manager, Log logger) {
+        setLogger(logger);
         this.manager = manager;
-        enableLogging(logger);
     }
 
     /**

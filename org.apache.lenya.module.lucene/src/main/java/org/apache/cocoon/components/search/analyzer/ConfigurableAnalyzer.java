@@ -22,6 +22,8 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.search.components.AnalyzerManager;
 import org.apache.cocoon.components.search.utils.SourceHelper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.Source;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -31,8 +33,9 @@ import org.apache.lucene.analysis.TokenStream;
  * 
  * @author Nicolas Maisonneuve
  */
-public abstract class ConfigurableAnalyzer extends Analyzer implements {
-	private static final Log logger = LogFactory.getLog(ConfigurableAnalyzer.class);
+public abstract class ConfigurableAnalyzer extends Analyzer {
+    private static final Log logger = LogFactory.getLog(ConfigurableAnalyzer.class);
+    
     /**
      * the lucene analyzer
      */

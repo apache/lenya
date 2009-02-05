@@ -25,6 +25,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.search.IndexException;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.ObservationRegistry;

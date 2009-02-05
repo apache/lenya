@@ -36,6 +36,7 @@ public class InetAddressUtil extends AbstractLogEnabled {
      * @param logger The logger.
      */
     public InetAddressUtil(Log logger) {
+        setLogger(logger);
     }
 
     /**

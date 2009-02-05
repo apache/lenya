@@ -54,7 +54,6 @@ public class Delete extends DocumentUsecase {
             }
             String event = getEvent();
             if (!WorkflowUtil.canInvoke(this.manager,
-                    getSession(),
                     getLogger(),
                     getSourceDocument(),
                     event)) {
@@ -98,7 +97,6 @@ public class Delete extends DocumentUsecase {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.delete(document);       
             WorkflowUtil.invoke(this.manager,
-                    getSession(),
                     getLogger(),
                     document,
                     getEvent());

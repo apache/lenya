@@ -32,6 +32,7 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.transformation.I18nTransformer;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Group;

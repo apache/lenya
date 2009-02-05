@@ -184,8 +184,7 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
     protected void saveDocument(Document content) throws Exception {
         saveXMLFile(content, getSourceDocument());
 
-        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
-                getEvent());
+        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
     }
 
     /**

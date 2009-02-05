@@ -41,7 +41,6 @@ import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
-import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
@@ -61,8 +60,6 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
-// FIXME Dependency on non-core module.
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
 import org.apache.lenya.notification.NotificationException;
@@ -76,7 +73,7 @@ import org.apache.lenya.workflow.Workflowable;
  * @version $Id$
  */
 public class Publish extends InvokeWorkflow {
-	private static final Log logger = LogFactory.getLog(Publish.class);
+    private static final Log logger = LogFactory.getLog(Publish.class);
 
     /**
      * If the usecase should check for missing live ancestors in {@link #checkPreconditions()}.
@@ -100,7 +97,7 @@ public class Publish extends InvokeWorkflow {
     protected static final String SCHEDULE_TIME = "schedule.time";
     protected static final String CAN_SEND_NOTIFICATION = "canSendNotification";
     protected static final String UNPUBLISHED_LINKS = "unpublishedLinks";
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
@@ -118,22 +115,22 @@ public class Publish extends InvokeWorkflow {
         Boolean canSendNotification = Boolean.valueOf(canNotifySubmitter());
         setParameter(CAN_SEND_NOTIFICATION, canSendNotification);
         setParameter(PARAM_SEND_NOTIFICATION, canSendNotification);
-        
+
         setParameter(UNPUBLISHED_LINKS, new LinkList(this.manager, getSourceDocument()));
-        
+
     }
-    
+
     protected boolean canNotifySubmitter() {
-        
+
         boolean shallNotifySubmitter = false;
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
-                logger, getSourceDocument());
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, logger,
+                getSourceDocument());
         Version versions[] = workflowable.getVersions();
-        
+
         // consider the case that there was no submit transition
         if (versions.length > 0) {
             Version version = versions[versions.length - 1];
-    
+
             // we check if the document has been submitted, otherwise we do nothing
             if (version.getEvent().equals("submit")) {
                 shallNotifySubmitter = true;
@@ -141,7 +138,7 @@ public class Publish extends InvokeWorkflow {
         }
         return shallNotifySubmitter;
     }
-    
+
     protected boolean hasBrokenLinks() {
         LinkManager linkMgr = null;
         LinkResolver resolver = null;
@@ -167,7 +164,7 @@ public class Publish extends InvokeWorkflow {
         }
         return false;
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -176,15 +173,16 @@ public class Publish extends InvokeWorkflow {
             List nodes = new ArrayList();
 
             Document doc = getSourceDocument();
-            if(doc != null) {
+            if (doc != null) {
                 nodes.add(doc.getRepositoryNode());
-                
+
                 // lock the authoring site to avoid having live nodes for which no corresponding
                 // authoring node exists
                 nodes.add(doc.area().getSite().getRepositoryNode());
-                
+
                 // lock the live site to avoid overriding changes made by others
-                SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
+                SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA)
+                        .getSite();
                 nodes.add(liveSite.getRepositoryNode());
             }
 
@@ -197,8 +195,8 @@ public class Publish extends InvokeWorkflow {
     }
 
     /**
-     * Checks if the workflow event is supported and the parent of the document
-     * exists in the live area.
+     * Checks if the workflow event is supported and the parent of the document exists in the live
+     * area.
      * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -213,7 +211,7 @@ public class Publish extends InvokeWorkflow {
             }
 
             checkMissingAncestors();
-            
+
             if (hasBrokenLinks()) {
                 addInfoMessage("publish-broken-links");
             }
@@ -225,11 +223,11 @@ public class Publish extends InvokeWorkflow {
      * @throws Exception if an error occurs.
      */
     protected void checkMissingAncestors() throws Exception {
-        
+
         if (!getParameterAsBoolean(PARAM_CHECK_MISSING_ANCESTORS, true)) {
             return;
         }
-        
+
         Document document = getSourceDocument();
         Publication publication = document.getPublication();
         DocumentFactory map = document.getFactory();
@@ -246,8 +244,7 @@ public class Publish extends InvokeWorkflow {
             if (!liveSite.contains(document.getPath())) {
                 DocumentLocator liveLoc = document.getLocator().getAreaVersion(
                         Publication.LIVE_AREA);
-                DocumentLocator[] requiredNodes = siteManager
-                        .getRequiredResources(map, liveLoc);
+                DocumentLocator[] requiredNodes = siteManager.getRequiredResources(map, liveLoc);
                 for (int i = 0; i < requiredNodes.length; i++) {
                     String path = requiredNodes[i].getPath();
                     if (!liveSite.contains(path)) {
@@ -275,10 +272,9 @@ public class Publish extends InvokeWorkflow {
             for (Iterator i = missingDocuments.iterator(); i.hasNext();) {
                 Document doc = (Document) i.next();
                 /*
-                 * This doesn't work yet, see
-                 * https://issues.apache.org/jira/browse/COCOON-2057
-                 * String[] params = { doc.getCanonicalWebappURL(),
-                 * doc.getPath() + " (" + doc.getLanguage() + ")" };
+                 * This doesn't work yet, see https://issues.apache.org/jira/browse/COCOON-2057
+                 * String[] params = { doc.getCanonicalWebappURL(), doc.getPath() + " (" +
+                 * doc.getLanguage() + ")" };
                  */
                 String[] params = { doc.getPath() + ":" + doc.getLanguage(),
                         DublinCoreHelper.getTitle(doc, true) };
@@ -288,8 +284,8 @@ public class Publish extends InvokeWorkflow {
     }
 
     /**
-     * Returns a link of a certain node, preferably in the document's language,
-     * or <code>null</code> if the node has no links.
+     * Returns a link of a certain node, preferably in the document's language, or <code>null</code>
+     * if the node has no links.
      * @param path The path of the node.
      * @param document The document.
      * @return A link or <code>null</code>.
@@ -379,20 +375,21 @@ public class Publish extends InvokeWorkflow {
 
     protected void sendNotification(Document authoringDocument) throws NotificationException,
             DocumentException, AccessControlException {
-        
+
         if (!getParameterAsBoolean(CAN_SEND_NOTIFICATION, false)) {
-            getLogger().error("Can't notify submitter of document [" + authoringDocument +
-                    "] because it hasn't been submitted.");
+            getLogger().error(
+                    "Can't notify submitter of document [" + authoringDocument
+                            + "] because it hasn't been submitted.");
             return;
         }
 
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
-                logger, authoringDocument);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, logger,
+                authoringDocument);
         Version versions[] = workflowable.getVersions();
-        
+
         // obtain submitted version
         Version version = versions[versions.length - 2];
-        
+
         String userId = version.getUserId();
         User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
                 userId, logger);
@@ -404,10 +401,10 @@ public class Publish extends InvokeWorkflow {
 
         url = getWebUrl(liveVersion);
         User sender = getSession().getIdentity().getUser();
-        
+
         Text[] subjectParams = { new Text(getEvent(), true) };
         Text subject = new Text(MESSAGE_SUBJECT, subjectParams);
-        
+
         String userMessage = getParameterAsString(PARAM_USER_NOTIFICATION_MESSAGE, "");
         Text[] params = { new Text(url, false), new Text(userMessage, false) };
         Text body = new Text(MESSAGE_DOCUMENT_PUBLISHED, params);
@@ -452,16 +449,16 @@ public class Publish extends InvokeWorkflow {
             s++;
         }
     }
-    
+
     /**
      * A list of links originating from a document. Allows lazy loading from the usecase view.
      */
     public static class LinkList {
-        
+
         private Document document;
         private Document[] documents;
         private ServiceManager manager;
-        
+
         /**
          * @param manager The manager.
          * @param doc The document to resolve the links from.
@@ -470,7 +467,7 @@ public class Publish extends InvokeWorkflow {
             this.manager = manager;
             this.document = doc;
         }
-        
+
         /**
          * @return The link documents.
          */
@@ -480,7 +477,7 @@ public class Publish extends InvokeWorkflow {
             }
             return this.documents;
         }
-        
+
         protected Document[] getUnpublishedLinks() {
             Set docs = new HashSet();
             LinkManager linkMgr = null;

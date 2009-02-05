@@ -112,7 +112,7 @@ public class ChangeLabel extends DocumentUsecase {
         String label = getParameterAsString(LABEL).trim();
         document.getLink().setLabel(label);
 
-        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), document, getEvent());
+        WorkflowUtil.invoke(this.manager, getLogger(), document, getEvent());
 
     }
 }

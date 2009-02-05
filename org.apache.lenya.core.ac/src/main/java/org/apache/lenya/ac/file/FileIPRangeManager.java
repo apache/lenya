@@ -74,6 +74,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
         if (!instances.containsKey(configurationDirectory)) {
             FileIPRangeManager manager = new FileIPRangeManager(mgr);
+            manager.setLogger(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
         }

@@ -21,7 +21,8 @@ package org.apache.lenya.cms.site.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.site.Link;
@@ -94,8 +95,8 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      * 
      * @param _node the node which is to be wrapped by this SiteTreeNode
      */
-    protected SiteTreeNodeImpl(DocumentFactory factory, DefaultSiteTree tree, Element node, Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    protected SiteTreeNodeImpl(DocumentFactory factory, DefaultSiteTree tree, Element node, Log logger) {
+        setLogger(logger);
         this.node = node;
         this.tree = tree;
         this.factory = factory;
@@ -443,7 +444,6 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                 && parentNode.getLocalName().equals(NODE_NAME)) {
             parent = new SiteTreeNodeImpl(this.factory, getTree(), (Element) parentNode,
                     getLogger());
-            ContainerUtil.enableLogging(parent, getLogger());
         } else {
             throw new SiteException("The node [" + this + "] has no parent.");
         }

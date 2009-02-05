@@ -139,11 +139,11 @@ public abstract class MoveSubsite extends DocumentUsecase {
         targetLoc = SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), targetLoc);
 
         for (int i = 0; i < sources.length; i++) {
-            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), sources[i], getEvent(),
+            WorkflowUtil.invoke(this.manager, getLogger(), sources[i], getEvent(),
                     true);
             
             if (this.getClass().getName().equals(Restore.class.getName())) {
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                         getLogger(), sources[i]);
                 String state = workflowable.getLatestVersion().getState();
                 if (!state.equals("authoring")) {

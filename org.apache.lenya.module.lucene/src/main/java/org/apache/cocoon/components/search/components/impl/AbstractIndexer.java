@@ -21,6 +21,7 @@ import java.io.IOException;
 import org.apache.avalon.excalibur.pool.Recyclable;
 import org.apache.cocoon.components.search.IndexException;
 import org.apache.cocoon.components.search.components.Indexer;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;

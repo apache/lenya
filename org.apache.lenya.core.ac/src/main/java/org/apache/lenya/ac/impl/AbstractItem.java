@@ -45,6 +45,8 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
      * @param logger The logger.
      */
     public AbstractItem(ItemManager itemManager, Log logger) {
+        Assert.notNull("logger", logger);
+        setLogger(logger);
         Assert.notNull("item manager", itemManager);
         this.itemManager = itemManager;
     }

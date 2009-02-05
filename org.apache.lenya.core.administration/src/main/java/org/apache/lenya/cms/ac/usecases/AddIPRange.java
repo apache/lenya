@@ -21,7 +21,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.ItemUtil;
 import org.apache.lenya.cms.ac.usecases.IPRangeProfile.Part;
@@ -60,7 +60,7 @@ public class AddIPRange extends AccessControlUsecase {
         String description = getParameterAsString(IPRangeProfile.DESCRIPTION);
 
         IPRange ipRange = getIpRangeManager().add(id);
-
+        ((AbstractLogEnabled) ipRange).setLogger(getLogger());
         ipRange.setName(name);
         ipRange.setDescription(description);
 

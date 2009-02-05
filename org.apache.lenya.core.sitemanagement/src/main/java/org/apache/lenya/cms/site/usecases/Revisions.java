@@ -51,19 +51,19 @@ public class Revisions extends SiteUsecase {
                 setParameter("revisions", revisions);
 
                 Boolean canRollback = Boolean.valueOf(WorkflowUtil.canInvoke(this.manager,
-                        getDocumentFactory().getSession(), getLogger(), sourceDoc, getEvent()));
+                        getLogger(), sourceDoc, getEvent()));
                 setParameter("canRollback", canRollback);
 
-                if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), sourceDoc)) {
+                if (WorkflowUtil.hasWorkflow(this.manager, getLogger(), sourceDoc)) {
                     Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                            getSession(), getLogger(), sourceDoc);
+                            getLogger(), sourceDoc);
                     Version latestVersion = workflowable.getLatestVersion();
                     String state;
                     if (latestVersion != null) {
                         state = latestVersion.getState();
                     } else {
                         Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
-                                getSession(), getLogger(), sourceDoc);
+                                getLogger(), sourceDoc);
                         state = workflow.getInitialState();
                     }
                     setParameter("workflowState", state);

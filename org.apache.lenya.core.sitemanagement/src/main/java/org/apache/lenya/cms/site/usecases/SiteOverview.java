@@ -140,16 +140,16 @@ public class SiteOverview extends AbstractUsecase {
         String lastModified = format.format(new Date(doc.getLastModified()));
         entry.setValue(KEY_LAST_MODIFIED, lastModified);
 
-        if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), doc)) {
+        if (WorkflowUtil.hasWorkflow(this.manager, getLogger(), doc)) {
             Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                    getSession(), getLogger(), doc);
+                    getLogger(), doc);
             Version latestVersion = workflowable.getLatestVersion();
             String state;
             if (latestVersion != null) {
                 state = latestVersion.getState();
             } else {
                 Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
-                        getSession(), getLogger(), doc);
+                        getLogger(), doc);
                 state = workflow.getInitialState();
             }
             entry.setValue(KEY_WORKFLOW_STATE, state);

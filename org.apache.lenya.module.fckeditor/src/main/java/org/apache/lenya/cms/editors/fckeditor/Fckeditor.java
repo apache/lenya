@@ -86,9 +86,9 @@ public class Fckeditor extends DocumentUsecase {
         URLInformation info = new URLInformation(getSourceURL());
         String pubId = info.getPublicationId();
         LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getSession(),
-                    getSourceURL(), request.isSecure(), false, false);
-        
-        setParameter("proxyUrl",rewriter.rewrite("/" + pubId));
+                getSourceURL(), request.isSecure(), false, false);
+
+        setParameter("proxyUrl", rewriter.rewrite("/" + pubId));
     }
 
     /**
@@ -122,10 +122,9 @@ public class Fckeditor extends DocumentUsecase {
     }
 
     /**
-     * Save the content to the document source. After saving, the XML is
-     * validated. If validation errors occur, the usecase transaction is rolled
-     * back, so the changes are not persistent. If the validation succeeded, the
-     * workflow event is invoked.
+     * Save the content to the document source. After saving, the XML is validated. If validation
+     * errors occur, the usecase transaction is rolled back, so the changes are not persistent. If
+     * the validation succeeded, the workflow event is invoked.
      * @param encoding The encoding to use.
      * @param content The content to save.
      * @throws Exception if an error occurs.
@@ -202,8 +201,6 @@ public class Fckeditor extends DocumentUsecase {
                 }
             }
 
-
-
             // Try to clean the xml using xslt
             ResourceType resType = getSourceDocument().getResourceType();
             String[] formats = resType.getFormats();
@@ -232,7 +229,7 @@ public class Fckeditor extends DocumentUsecase {
             }
             // Convert URLs back to UUIDs. convert() does a save
             LinkConverter converter = new LinkConverter(this.manager, getLogger());
-            converter.convertUrlsToUuids(getSourceDocument(),false);
+            converter.convertUrlsToUuids(getSourceDocument(), false);
 
             xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
 
@@ -244,8 +241,7 @@ public class Fckeditor extends DocumentUsecase {
                         .validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
 
                 if (!hasErrors()) {
-                    WorkflowUtil.invoke(this.manager, getSession(), getLogger(),
-                            getSourceDocument(), getEvent());
+                    WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
                 }
             }
 

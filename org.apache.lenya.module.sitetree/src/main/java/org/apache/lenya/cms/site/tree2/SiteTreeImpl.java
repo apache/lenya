@@ -21,9 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -54,8 +55,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
      * @param area The area.
      * @param logger The logger.
      */
-    public SiteTreeImpl(ServiceManager manager, Area area, Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
+    public SiteTreeImpl(ServiceManager manager, Area area, Log logger) {
+        setLogger(logger);
         this.area = area;
         this.manager = manager;
         initRoot();

@@ -19,5 +19,9 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>batik</groupId>
+      <artifactId>batik-util</artifactId>
+    </dependency>
   </dependencies>
 </project>

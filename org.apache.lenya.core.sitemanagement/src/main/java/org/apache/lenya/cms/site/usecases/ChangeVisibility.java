@@ -86,7 +86,7 @@ public class ChangeVisibility extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = doc.getTranslation(languages[i]);
-            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), version, getEvent());
+            WorkflowUtil.invoke(this.manager, getLogger(), version, getEvent());
         }
     }
 

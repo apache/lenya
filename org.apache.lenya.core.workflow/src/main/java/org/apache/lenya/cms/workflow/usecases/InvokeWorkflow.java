@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -38,14 +36,13 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * @version $Id$
  */
 public class InvokeWorkflow extends CheckWorkflow {
-	private static final Log logger = LogFactory.getLog(InvokeWorkflow.class);
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         Node[] objects = new Node[0];
-        if(getSourceDocument() != null) {
+        if (getSourceDocument() != null) {
             objects = new Node[] { getSourceDocument().getRepositoryNode() };
         }
         return objects;
@@ -56,8 +53,7 @@ public class InvokeWorkflow extends CheckWorkflow {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        WorkflowUtil.invoke(this.manager, getSession(), logger, getSourceDocument(),
-                getEvent());
+        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
     }
 
 }

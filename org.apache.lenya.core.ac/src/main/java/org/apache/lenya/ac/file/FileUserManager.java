@@ -76,6 +76,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
 
         if (!instances.containsKey(configurationDirectory)) {
             FileUserManager manager = new FileUserManager(mgr, userTypes);
+            manager.setLogger(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
         }

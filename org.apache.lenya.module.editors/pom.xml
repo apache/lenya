@@ -23,5 +23,29 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-linking</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-workflow</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-resource</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xindice</groupId>
+      <artifactId>xindice</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xmldb</groupId>
+      <artifactId>xmldb-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xmldb</groupId>
+      <artifactId>xmldb-xupdate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
   </dependencies>
 </project>

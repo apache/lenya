@@ -22,8 +22,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.logging.Log;
 
 /**
  * Wrapper class for the ODT resource type.
@@ -46,8 +48,8 @@ public class OpenDocumentWrapper extends AbstractLogEnabled {
      * @param doc The document to wrap.
      * @param logger The logger.
      */
-    public OpenDocumentWrapper(Document doc, Logger logger) {
-        enableLogging(logger);
+    public OpenDocumentWrapper(Document doc, Log logger) {
+        setLogger(logger);
         this.delegate = doc;
     }
 

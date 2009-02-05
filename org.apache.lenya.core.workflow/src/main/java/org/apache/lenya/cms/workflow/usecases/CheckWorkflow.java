@@ -60,7 +60,7 @@ public class CheckWorkflow extends DocumentUsecase implements Configurable {
         }
 
         Document doc = getSourceDocument();
-        if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
+        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), doc, getEvent())) {
             UsecaseWorkflowHelper.addWorkflowError(this, getEvent(), doc);
         }
     }

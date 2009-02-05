@@ -17,11 +17,9 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.jcr.AccessDeniedException;
@@ -29,24 +27,18 @@ import javax.jcr.LoginException;
 import javax.jcr.NamespaceException;
 import javax.jcr.NamespaceRegistry;
 import javax.jcr.NoSuchWorkspaceException;
-import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.UnsupportedRepositoryOperationException;
+import javax.servlet.http.HttpSession;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.jackrabbit.core.nodetype.InvalidNodeTypeDefException;
-import org.apache.jackrabbit.core.nodetype.NodeTypeDef;
 import org.apache.jackrabbit.core.nodetype.NodeTypeManagerImpl;
 import org.apache.jackrabbit.core.nodetype.NodeTypeRegistry;
-import org.apache.jackrabbit.core.nodetype.PropDef;
-import org.apache.jackrabbit.core.nodetype.PropDefImpl;
-import org.apache.jackrabbit.name.QName;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 
 /**
  * Lenya-specific repository implementation.
@@ -83,7 +75,7 @@ public class LenyaRepository extends org.apache.cocoon.jcr.JackrabbitRepository 
 
         Map objectModel = ContextHelper.getObjectModel(this.context);
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(false);
+        HttpSession session = request.getSession(false);
         if (session != null) {
             jcrSession = (javax.jcr.Session) session.getAttribute(SESSION_ATTRIBUTE);
             if (jcrSession == null) {

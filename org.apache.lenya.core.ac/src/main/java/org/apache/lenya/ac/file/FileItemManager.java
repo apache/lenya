@@ -81,6 +81,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
 
         this.configurationDirectory = _configurationDirectory;
         this.notifier = new DirectoryChangeNotifier(_configurationDirectory, getFileFilter());
+        this.notifier.setLogger(getLogger());
         loadItems();
     }
 

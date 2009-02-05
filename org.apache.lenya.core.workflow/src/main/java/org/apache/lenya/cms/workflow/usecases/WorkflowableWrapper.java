@@ -19,14 +19,11 @@ package org.apache.lenya.cms.workflow.usecases;
 
 import java.util.Arrays;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
@@ -36,33 +33,31 @@ import org.apache.lenya.workflow.Workflowable;
  * Wrap a workflowable for easy evaluation in JX template.
  */
 public class WorkflowableWrapper extends AbstractLogEnabled {
-	
+    
     private MultiWorkflow usecase;
     private Workflowable workflowable;
     private ServiceManager manager;
     private Document document;
-    private Session session;
 
     /**
      * Ctor.
      * @param usecase The usecase.
      * @param manager The service manager.
-     * @param session The session.
      * @param document The document to wrap.
      * @param logger The logger.
      */
-    public WorkflowableWrapper(MultiWorkflow usecase, ServiceManager manager, Session session,
-            Document document, Log logger) {
+    public WorkflowableWrapper(MultiWorkflow usecase, ServiceManager manager, Document document,
+            Log logger) {
+        setLogger(logger);
         this.usecase = usecase;
         this.document = document;
         this.manager = manager;
-        this.session = session;
     }
 
     protected Workflowable getWorkflowable() {
         if (this.workflowable == null) {
-            this.workflowable = WorkflowUtil.getWorkflowable(this.manager, this.session,
-                    getLogger(), this.document);
+            this.workflowable = WorkflowUtil.getWorkflowable(this.manager, getLogger(),
+                    this.document);
         }
         return this.workflowable;
     }
@@ -91,15 +86,14 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
     }
 
     protected Workflow getWorkflowSchema() throws WorkflowException {
-        Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager, this.session, getLogger(),
-                this.document);
+        Workflow workflow = WorkflowUtil
+                .getWorkflowSchema(this.manager, getLogger(), this.document);
         return workflow;
     }
 
     /**
      * @return The path of the document.
-     * @throws DocumentException If the document is not referenced in the site
-     *         structure.
+     * @throws DocumentException If the document is not referenced in the site structure.
      */
     public String getPath() throws DocumentException {
         return this.document.getPath();
@@ -126,30 +120,30 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
      */
     public boolean canInvoke(String usecaseName) throws WorkflowException {
         String event = this.usecase.getEvent(usecaseName);
-        return WorkflowUtil.canInvoke(this.manager, this.session, getLogger(), this.document,
-                event);
+        return WorkflowUtil.canInvoke(this.manager, getLogger(), this.document, event);
     }
-    
+
     /**
      * Returns the current value of a workflow variable.
      * @param variable The name of the variable.
      * @return The value.
-     * @throws WorkflowException if an error occurs. 
+     * @throws WorkflowException if an error occurs.
      */
     public boolean getValue(String variable) throws WorkflowException {
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, this.session, getLogger(), this.document);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getLogger(),
+                this.document);
         if (workflowable.getVersions().length == 0) {
-            Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager, this.session, getLogger(), this.document);
+            Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager, getLogger(),
+                    this.document);
             return workflow.getInitialValue(variable);
-        }
-        else {
+        } else {
             return workflowable.getLatestVersion().getValue(variable);
         }
     }
-    
+
     /**
      * @return The languages of the document in alphabetical order.
-     * @throws DocumentException 
+     * @throws DocumentException
      */
     public String[] getLanguages() throws DocumentException {
         String[] languages = this.document.getLanguages();

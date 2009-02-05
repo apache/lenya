@@ -32,14 +32,13 @@ import org.apache.lenya.workflow.WorkflowException;
 public class UsecaseWorkflowHelper {
 
     /**
-     * The error message that an event can not be invoked on a document. It
-     * takes two parameters: the event name and the document title.
+     * The error message that an event can not be invoked on a document. It takes two parameters:
+     * the event name and the document title.
      */
     protected static final String ERROR_CANNOT_INVOKE_EVENT = "error-workflow-document";
 
     /**
-     * Adds an error message to a usecase that an event cannot be invoked on a
-     * document.
+     * Adds an error message to a usecase that an event cannot be invoked on a document.
      * @param usecase The usecase.
      * @param event The event.
      * @param doc The document.
@@ -67,7 +66,7 @@ public class UsecaseWorkflowHelper {
     public static final void checkWorkflow(ServiceManager manager, AbstractUsecase usecase,
             String event, Document doc, Log logger) {
         try {
-            if (!WorkflowUtil.canInvoke(manager, usecase.getSession(), logger, doc, event)) {
+            if (!WorkflowUtil.canInvoke(manager, logger, doc, event)) {
                 UsecaseWorkflowHelper.addWorkflowError(usecase, event, doc);
             }
         } catch (WorkflowException e) {

@@ -53,8 +53,8 @@ public class MultiWorkflow extends AbstractUsecase {
             SortedSet states = new TreeSet();
             for (Iterator i = preOrder.iterator(); i.hasNext();) {
                 Document doc = (Document) i.next();
-                WorkflowableWrapper wrapper = new WorkflowableWrapper(this, this.manager,
-                        getDocumentFactory().getSession(), doc, getLogger());
+                WorkflowableWrapper wrapper = new WorkflowableWrapper(this, this.manager, doc,
+                        getLogger());
                 wrappers.add(wrapper);
                 states.addAll(Arrays.asList(wrapper.getStates()));
             }
@@ -68,7 +68,8 @@ public class MultiWorkflow extends AbstractUsecase {
         }
     }
 
-    protected List getNodes() throws DocumentBuildException, DocumentException, PublicationException {
+    protected List getNodes() throws DocumentBuildException, DocumentException,
+            PublicationException {
         List preOrder;
         String sourceUrl = getSourceURL();
         DocumentFactory factory = getDocumentFactory();

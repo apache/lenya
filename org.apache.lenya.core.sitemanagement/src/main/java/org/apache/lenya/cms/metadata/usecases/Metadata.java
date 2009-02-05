@@ -108,7 +108,7 @@ public class Metadata extends SiteUsecase {
 
         MetaDataRegistry registry = null;
         try {
-            boolean canChange = WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, "edit");
+            boolean canChange = WorkflowUtil.canInvoke(this.manager, getLogger(), doc, "edit");
             
             if (!canChange) {
                 addInfoMessage("cannot-change-metadata");

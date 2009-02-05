@@ -25,8 +25,9 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.NodeFactory;
@@ -85,9 +86,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @throws SiteException if an error occurs.
      */
     protected DefaultSiteTree(DocumentFactory factory, Publication publication, String _area,
-            ServiceManager manager, Logger logger) throws SiteException {
-
-        ContainerUtil.enableLogging(this, logger);
+            ServiceManager manager, Log logger) throws SiteException {
+        setLogger(logger);
 
         this.factory = factory;
         this.pub = publication;
@@ -334,7 +334,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
 
         SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, this, (Element) node, getLogger());
-        ContainerUtil.enableLogging(newNode, getLogger());
         return newNode;
     }
 
@@ -395,7 +394,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
         if (node != null) {
             treeNode = new SiteTreeNodeImpl(this.factory, this, (Element) node, getLogger());
-            ContainerUtil.enableLogging(treeNode, getLogger());
         } else {
             throw new SiteException("No node contained for path [" + path + "]!");
         }

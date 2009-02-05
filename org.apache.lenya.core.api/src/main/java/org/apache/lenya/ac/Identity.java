@@ -28,6 +28,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
@@ -47,6 +49,7 @@ public class Identity extends AbstractLogEnabled implements Identifiable, Serial
      * @param logger The logger.
      */
     public Identity(Log logger) {
+        setLogger(logger);
     }
     
     /**
@@ -198,7 +201,7 @@ public class Identity extends AbstractLogEnabled implements Identifiable, Serial
      * @param session The session.
      * @return An identity.
      */
-    public static Identity getIdentity(Session session) {
+    public static Identity getIdentity(HttpSession session) {
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         return identity;
     }

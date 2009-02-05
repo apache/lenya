@@ -90,7 +90,7 @@ public class Overview extends SiteUsecase {
                 setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 
                 Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                        getSession(), getLogger(), doc);
+                        getLogger(), doc);
                 resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
                 if (resolver.hasWorkflow(workflowable)) {
                     Workflow workflow = resolver.getWorkflowSchema(workflowable);

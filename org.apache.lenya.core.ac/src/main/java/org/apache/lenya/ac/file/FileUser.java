@@ -26,6 +26,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.GroupManager;

@@ -61,6 +61,7 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
 
         if (!instances.containsKey(configurationDirectory)) {
             FileGroupManager manager = new FileGroupManager(mgr);
+            manager.setLogger(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
         }

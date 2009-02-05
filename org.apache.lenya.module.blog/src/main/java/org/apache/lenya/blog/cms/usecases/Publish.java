@@ -111,7 +111,7 @@ public class Publish extends DocumentUsecase {
             updateFeed();
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), authoringDocument,
+            WorkflowUtil.invoke(this.manager, getLogger(), authoringDocument,
                     getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -173,7 +173,7 @@ public class Publish extends DocumentUsecase {
         DocumentHelper.setSimpleElementText(element, datestr);
 
         // set issued date on first time publish
-        Workflowable dw = WorkflowUtil.getWorkflowable(this.manager, this.getSession(), this
+        Workflowable dw = WorkflowUtil.getWorkflowable(this.manager, this
                 .getLogger(), doc);
         Version versions[] = dw.getVersions();
         boolean wasLive = false;

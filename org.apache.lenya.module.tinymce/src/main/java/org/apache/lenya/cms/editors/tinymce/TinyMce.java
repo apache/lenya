@@ -177,7 +177,7 @@ public class TinyMce extends DocumentUsecase {
         LinkConverter converter = new LinkConverter(this.manager, getLogger());
         converter.convertUrlsToUuids(doc, false);
 
-        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), doc, getEvent());
+        WorkflowUtil.invoke(this.manager, getLogger(), doc, getEvent());
     }
 
     /**

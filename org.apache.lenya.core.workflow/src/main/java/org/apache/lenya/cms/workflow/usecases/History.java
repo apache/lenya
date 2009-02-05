@@ -17,11 +17,8 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -32,17 +29,16 @@ import org.apache.lenya.workflow.Workflowable;
 public class History extends DocumentUsecase {
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
-     *      get wf variables, get date and machine ip for versions
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO get wf variables, get
+     *      date and machine ip for versions
      */
     protected void initParameters() {
         super.initParameters();
 
         if (getSourceDocument() != null) {
-            Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
-                    getLogger(), getSourceDocument());
-            Version[] versions = workflowable.getVersions();
-            setParameter("versions", versions);
+            Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getLogger(),
+                    getSourceDocument());
+            setParameter("versions", workflowable.getVersions());
         }
     }
 }

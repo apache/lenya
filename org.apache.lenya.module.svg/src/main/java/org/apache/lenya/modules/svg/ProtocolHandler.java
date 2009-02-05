@@ -34,6 +34,7 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.ParsedURLData;
 import org.apache.batik.util.ParsedURLProtocolHandler;
 import org.apache.cocoon.CascadingIOException;
+import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.util.Assert;

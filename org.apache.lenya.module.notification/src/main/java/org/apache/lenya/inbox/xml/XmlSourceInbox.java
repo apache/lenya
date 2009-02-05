@@ -23,6 +23,8 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.axis.components.uuid.UUIDGen;
+import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identifiable;

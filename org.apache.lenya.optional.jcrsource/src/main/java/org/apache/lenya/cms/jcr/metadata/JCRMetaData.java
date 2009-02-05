@@ -28,15 +28,14 @@ import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.Value;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.jcr.source.JCRNodeSource;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * JCR based meta data.
@@ -56,11 +55,11 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
      * @param manager
      * @param logger
      */
-    public JCRMetaData(String namespace, String sourceUri, ServiceManager manager, Logger logger) {
+    public JCRMetaData(String namespace, String sourceUri, ServiceManager manager, Log logger) {
         this.namespace = namespace;
         this.sourceUri = sourceUri;
         this.manager = manager;
-        ContainerUtil.enableLogging(this, logger);
+        setLogger(logger);
     }
 
     protected Map getKey2Values() {

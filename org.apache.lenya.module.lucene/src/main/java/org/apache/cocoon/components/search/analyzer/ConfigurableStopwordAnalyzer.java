@@ -18,6 +18,8 @@ package org.apache.cocoon.components.search.analyzer;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 /**
@@ -31,6 +33,8 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
  * @author Nicolas Maisonneuve
  */
 public class ConfigurableStopwordAnalyzer extends ConfigurableAnalyzer {
+
+    private static final Log logger = LogFactory.getLog(ConfigurableStopwordAnalyzer.class);
 
     /** The element containing a stop word. */
     private static final String STOP_WORD_ELEMENT = "stopword";

@@ -58,6 +58,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
             throws AccessControlException {
         if (!instances.containsKey(configurationDirectory)) {
             FileRoleManager manager = new FileRoleManager(mgr);
+            manager.setLogger(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
         }

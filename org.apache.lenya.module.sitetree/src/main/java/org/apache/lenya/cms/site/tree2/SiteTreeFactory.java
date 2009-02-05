@@ -17,8 +17,9 @@
  */
 package org.apache.lenya.cms.site.tree2;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -44,9 +45,9 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public SiteTreeFactory(ServiceManager manager, Logger logger) {
+    public SiteTreeFactory(ServiceManager manager, Log logger) {
         this.manager = manager;
-        ContainerUtil.enableLogging(this, logger);
+        setLogger(logger);
     }
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
