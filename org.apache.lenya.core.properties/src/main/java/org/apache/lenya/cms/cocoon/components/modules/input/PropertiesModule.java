@@ -18,7 +18,6 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -30,7 +29,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.activity.Initializable;
-import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -40,9 +38,10 @@ import org.apache.cocoon.components.modules.input.DefaultsModule;
 import org.apache.cocoon.components.modules.input.InputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.configuration.BaseConfiguration;
+import org.apache.commons.configuration.Configuration;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.forrest.conf.AntProperties;
 import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -65,7 +64,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
     private Map pubId2roperties = new HashMap();
 
 	// FIXME Use commons-configuration
-    private AntProperties globalProperties;
+    private Configuration globalProperties;
 
     private SourceResolver m_resolver;
 
@@ -84,7 +83,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         
-        String attributeValue = getProperties(objectModel).getProperty(name);
+        String attributeValue = getProperties(objectModel).getString(name);
         if (attributeValue == null) {
             String error = "Unable to get attribute value for " + name + ".\n"
                     + "Please make sure you defined " + name
@@ -112,8 +111,8 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
      * @return An AntProperties object.
      * @throws ConfigurationException if an error occurs.
      */
-    protected AntProperties getProperties(Map objectModel) throws ConfigurationException {
-        AntProperties properties;
+    protected Configuration getProperties(Map objectModel) throws ConfigurationException {
+        Configuration properties;
         Request request = ObjectModelHelper.getRequest(objectModel);
         String webappUrl = ServletHelper.getWebappURI(request);
         URLInformation info = new URLInformation(webappUrl);
@@ -141,13 +140,12 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         return values;
     }
 
-    public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
+    public Iterator getAttributeNames(org.apache.avalon.framework.configuration.Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-        AntProperties properties = getProperties(objectModel);
+        Configuration properties = getProperties(objectModel);
         SortedSet matchset = new TreeSet();
-        Enumeration enumeration = properties.keys();
-        while (enumeration.hasMoreElements()) {
-            String key = (String) enumeration.nextElement();
+        for (Iterator i = properties.getKeys(); i.hasNext(); ) {
+            String key = (String) i.next();
             matchset.add(key);
         }
         Iterator iterator = super.getAttributeNames(modeConf, objectModel);
@@ -174,7 +172,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         
         // get the values from lenya.properties.xml, these are the default lenya values
         String lenyaPropsUri = LENYA_HOME + "/" + PROPERTY_FILE_NAME;
-        AntProperties lenyaProperties = loadXMLPropertiesFromURI(lenyaPropsUri);
+        Configuration lenyaProperties = loadXMLPropertiesFromURI(lenyaPropsUri);
         merge(this.globalProperties, lenyaProperties);
         
         // get the values from all modules
@@ -184,14 +182,14 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
             String moduleBaseUri = moduleManager.getBaseURI(moduleName);
             if (moduleBaseUri != null) {
                 String modulePropsUri = moduleBaseUri + "/" + PROPERTY_FILE_NAME;
-                AntProperties moduleProperties = loadXMLPropertiesFromURI(modulePropsUri);
+                Configuration moduleProperties = loadXMLPropertiesFromURI(modulePropsUri);
                 merge(this.globalProperties, moduleProperties);
             }
         }
         
         // get the values from local.lenya.properties.xml
         String lenyaLocalPropsUri = LENYA_HOME + "/" + PROPERTY_FILE_NAME_LOCAL;
-        AntProperties localLenyaProperties = loadXMLPropertiesFromURI(lenyaLocalPropsUri);
+        Configuration localLenyaProperties = loadXMLPropertiesFromURI(lenyaLocalPropsUri);
         merge(this.globalProperties, localLenyaProperties);
 
         if (debugging())
@@ -205,16 +203,16 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
      * @throws Exception
      */
     private void setHomes() throws Exception {
-        this.globalProperties = new AntProperties();
+        this.globalProperties = new BaseConfiguration();
         this.globalProperties.setProperty(DEFAULT_HOME_PROP, LENYA_HOME);
     }
 
     /**
      * Override any properties for which a system property exists
      */
-    private void loadSystemProperties(AntProperties props) {
-        for (Enumeration e = props.propertyNames(); e.hasMoreElements();) {
-            String propName = (String) e.nextElement();
+    private void loadSystemProperties(Configuration props) {
+        for (Iterator i = props.getKeys(); i.hasNext();) {
+            String propName = (String) i.next();
             String systemPropValue = System.getProperty(propName);
             if (systemPropValue != null) {
                 overwriteProperty(props, propName, systemPropValue);
@@ -222,11 +220,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         }
     }
 
-    private void overwriteProperty(AntProperties props, String propName, String propValue) {
-        //
-        // AntProperties.setProperty doesn't let you override, so we
-        // have to remove the property then add it again
-        props.remove(propName);
+    private void overwriteProperty(Configuration props, String propName, String propValue) {
         props.setProperty(propName, propValue);
     }
 
@@ -239,9 +233,9 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
      * @throws ParserConfigurationException
      * @throws SAXException
      */
-    private AntProperties loadXMLPropertiesFromURI(String uri) throws Exception {
+    private Configuration loadXMLPropertiesFromURI(String uri) throws Exception {
 
-        AntProperties properties = new AntProperties();
+        Configuration properties = new BaseConfiguration();
         Source source = null;
         try {
 
@@ -275,12 +269,13 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
     /**
      * Get the properties of the requested publication, including the global properties.
      */
-    protected AntProperties getPublicationProperties(Publication pub) throws Exception {
+    protected Configuration getPublicationProperties(Publication pub) throws Exception {
         
         String pubId = pub.getId();
-        AntProperties properties = (AntProperties) this.pubId2roperties.get(pubId);
+        Configuration properties = (Configuration) this.pubId2roperties.get(pubId);
         if (properties == null) {
-            properties = new AntProperties(this.globalProperties);
+            properties = new BaseConfiguration();
+            merge(properties, this.globalProperties);
             String uri = "context://lenya/pubs/" + pubId + "/" + PROPERTY_FILE_NAME;
             merge(properties, loadXMLPropertiesFromURI(uri));
             this.pubId2roperties.put(pubId, properties);
@@ -290,19 +285,16 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         }
         return properties;
     }
-    
+
     /**
      * Inserts all key-value pairs from newProps into existingProps. Existing entries
      * will be replaced.
      * @param existingProps The existing properties.
      * @param newProps The new properties.
      */
-    public void merge(AntProperties existingProps, AntProperties newProps) {
-        for (Iterator i = newProps.keySet().iterator(); i.hasNext(); ) {
+    public void merge(Configuration existingProps, Configuration newProps) {
+        for (Iterator i = newProps.getKeys(); i.hasNext(); ) {
             String key = (String) i.next();
-            if (existingProps.containsKey(key)) {
-                existingProps.remove(key);
-            }
             existingProps.setProperty(key, newProps.getProperty(key));
         }
     }
