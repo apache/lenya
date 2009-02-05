@@ -24,9 +24,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.parameters.ParameterException;
-import org.apache.avalon.framework.parameters.Parameterizable;
-import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -43,6 +40,7 @@ import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
+import org.springframework.util.Assert;
 
 /**
  * <p>
@@ -50,9 +48,8 @@ import org.apache.lenya.util.ServletHelper;
  * template-fallback, ...) is configurable via the <em>protocol</em> parameter.
  * </p>
  */
-public class FallbackModule extends AbstractInputModule implements Serviceable, Parameterizable {
+public class FallbackModule extends AbstractInputModule implements Serviceable {
 
-    protected static final String PARAM_PROTOCOL = "protocol";
     protected ServiceManager manager;
     private String protocol;
     protected static MRUMemoryStore store;
@@ -153,10 +150,10 @@ public class FallbackModule extends AbstractInputModule implements Serviceable, 
         this.manager = manager;
         
     }
-
-    public void parameterize(Parameters params) throws ParameterException {
-        this.protocol = params.getParameter(PARAM_PROTOCOL);
-        
+    
+    public void setProtocol(String protocol) {
+        Assert.notNull(protocol, "protocol");
+        this.protocol = protocol;
     }
 
 }
