@@ -114,21 +114,6 @@
         <version>${avalon.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.cocoon</groupId>
-        <artifactId>cocoon-core</artifactId>
-        <version>${cocoon.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cocoon</groupId>
-        <artifactId>cocoon-mail-impl</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cocoon</groupId>
-        <artifactId>cocoon-lucene-impl</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
         <groupId>batik</groupId>
         <artifactId>batik-util</artifactId>
         <version>1.6-1</version>
@@ -154,6 +139,83 @@
         <version>4aug2000r7-dev</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>2.5.5</version>
+        <exclusions>
+          <exclusion>
+            <groupId>avalon-framework</groupId>
+            <artifactId>avalon-framework</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>2.5.5</version>
+        <exclusions>
+          <exclusion>
+            <groupId>avalon-framework</groupId>
+            <artifactId>avalon-framework</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>logkit</groupId>
+            <artifactId>logkit</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>2.5.5</version>
+      </dependency>
+      
+      <!-- Cocoon -->
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-core</artifactId>
+        <version>${cocoon.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-mail-impl</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-lucene-impl</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-servlet-service-impl</artifactId>
+        <version>1.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-servlet-service-components</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-block-deployment</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-template-impl</artifactId>
+        <version>1.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-flowscript-impl</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.cocoon</groupId>
         <artifactId>cocoon-mail-impl</artifactId>
         <version>1.1.0-SNAPSHOT</version>
@@ -168,6 +230,13 @@
         <artifactId>cocoon-sitemap-impl</artifactId>
         <version>1.1.0-SNAPSHOT</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-samples-style-default</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      
+      <!-- Lenya -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-ac</artifactId>
@@ -251,6 +320,16 @@
       <dependency>
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-optional-jcrsource</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-webapp</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-welcome</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

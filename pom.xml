@@ -16,8 +16,7 @@
   KIND, either express or implied.  See the License for the
   specific language governing permissions and limitations
   under the License.
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
@@ -88,6 +87,8 @@
     <module>org.apache.lenya.module.xhtml</module>
     <module>org.apache.lenya.module.xopus</module>
     <module>org.apache.lenya.optional.jcrsource</module>
+    <module>org.apache.lenya.webapp</module>
+    <module>org.apache.lenya.welcome</module>
   </modules>
 
 </project>
