@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<map:components xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:serializers>
+    <map:serializer name="svgxml" logger="sitemap.serializer.svgxml" mime-type="image/svg-xml" src="org.apache.cocoon.serialization.XMLSerializer">
+      <doctype-public>-//W3C//DTD SVG 20000303 Stylable//EN</doctype-public>
+      <doctype-system>http://www.w3.org/TR/2000/03/WD-SVG-20000303/</doctype-system>
+    </map:serializer>
+    <map:serializer name="svg2jpeg" logger="sitemap.serializer.svg2png" mime-type="image/jpeg" src="org.apache.cocoon.serialization.SVGSerializer">
+      <parameter name="quality" type="float" value="0.9"/>
+    </map:serializer>
+    <map:serializer name="svg2png" logger="sitemap.serializer.svg2png" mime-type="image/png" src="org.apache.cocoon.serialization.SVGSerializer"/>
+    <map:serializer name="svg2tiff" logger="sitemap.serializer.svg2tiff" mime-type="image/tiff" src="org.apache.cocoon.serialization.SVGSerializer"/>
+  </map:serializers>
+</map:components>
