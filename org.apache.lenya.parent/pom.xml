@@ -176,6 +176,21 @@
         <artifactId>spring-core</artifactId>
         <version>2.5.5</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.axis</groupId>
+        <artifactId>axis</artifactId>
+        <version>1.4</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
       
       <!-- Cocoon -->
       <dependency>
@@ -250,6 +265,8 @@
       </dependency>
       
       <!-- Lenya -->
+      
+      <!-- Core -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-ac</artifactId>
@@ -268,6 +285,16 @@
       <dependency>
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-cache</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-i18n</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-ldap</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -300,11 +327,8 @@
         <artifactId>lenya-core-workflow</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.apache.lenya</groupId>
-        <artifactId>lenya-core-ldap</artifactId>
-        <version>${project.version}</version>
-      </dependency>
+      
+      <!-- Modules -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-module-collection</artifactId>
@@ -344,21 +368,6 @@
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-welcome</artifactId>
         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.axis</groupId>
-        <artifactId>axis</artifactId>
-        <version>1.4</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -25,7 +25,7 @@
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
-      <map:transform type="proxy"/>
+      <map:transform type="proxy-xhtml"/>
       <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
       <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
     </map:resource>  
@@ -59,7 +59,7 @@
         src="fallback://lenya/chaperon/grammars/link.xlex"/>
       <map:transform
         src="fallback://lenya/chaperon/stylesheets/pattern-to-link.xsl"/>
-      <map:transform type="proxy"/>
+      <map:transform type="proxy-xhtml"/>
       <map:transform
         src="fallback://lenya/chaperon/stylesheets/a-to-txt.xsl"/>
       <map:serialize type="text" mime-type="text/css"/>
