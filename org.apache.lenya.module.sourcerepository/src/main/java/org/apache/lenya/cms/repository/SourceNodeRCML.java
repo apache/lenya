@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.rc.CheckInEntry;
@@ -54,10 +53,10 @@ public class SourceNodeRCML implements RCML {
     private int maximalNumberOfEntries = 5;
     private Vector entries;
 
-    private ServiceManager manager;
-
     private String contentSourceUri;
     private String metaSourceUri;
+
+    private SourceResolver sourceResolver;
 
     private static Map ELEMENTS = new HashMap();
     protected static final String ELEMENT_CHECKIN = "CheckIn";
@@ -85,12 +84,12 @@ public class SourceNodeRCML implements RCML {
      * @param metaSourceUri The meta source URI.
      * @param manager The service manager.
      */
-    public SourceNodeRCML(String contentSourceUri, String metaSourceUri, ServiceManager manager) {
+    public SourceNodeRCML(String contentSourceUri, String metaSourceUri, SourceResolver resolver) {
         this.maximalNumberOfEntries = 200;
         this.maximalNumberOfEntries = (2 * this.maximalNumberOfEntries) + 1;
-        this.manager = manager;
         this.contentSourceUri = contentSourceUri;
         this.metaSourceUri = metaSourceUri;
+        this.sourceResolver = resolver;
     }
 
     protected static final String RCML_EXTENSION = ".rcml";
@@ -121,7 +120,7 @@ public class SourceNodeRCML implements RCML {
         NamespaceHelper helper = saveToXml();
         Assert.notNull("XML document", helper);
         try {
-            SourceUtil.writeDOM(helper.getDocument(), getRcmlSourceUri(), this.manager);
+            SourceUtil.writeDOM(helper.getDocument(), getRcmlSourceUri(), getSourceResolver());
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
@@ -350,8 +349,8 @@ public class SourceNodeRCML implements RCML {
             this.entries = new Vector();
             String uri = getRcmlSourceUri();
             try {
-                if (SourceUtil.exists(uri, this.manager)) {
-                    Document xml = SourceUtil.readDOM(uri, this.manager);
+                if (SourceUtil.exists(uri, getSourceResolver())) {
+                    Document xml = SourceUtil.readDOM(uri, getSourceResolver());
                     NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", xml);
                     Element parent = xml.getDocumentElement();
                     Element[] elements = helper.getChildren(parent);
@@ -393,8 +392,8 @@ public class SourceNodeRCML implements RCML {
             throws RevisionControlException {
         String backupSourceUri = getBackupSourceUri(sourceUri, time);
         try {
-            if (SourceUtil.exists(sourceUri, manager)) {
-                SourceUtil.copy(this.manager, sourceUri, backupSourceUri);
+            if (SourceUtil.exists(sourceUri, getSourceResolver())) {
+                SourceUtil.copy(getSourceResolver(), sourceUri, backupSourceUri);
             }
         } catch (Exception e) {
             throw new RevisionControlException(e);
@@ -410,16 +409,10 @@ public class SourceNodeRCML implements RCML {
     protected synchronized void restoreBackup(SourceWrapper wrapper, long time)
             throws RevisionControlException {
         String backupSourceUri = getBackupSourceUri(wrapper, time);
-        SourceResolver resolver = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            SourceUtil.copy(resolver, backupSourceUri, wrapper.getOutputStream());
+            SourceUtil.copy(getSourceResolver(), backupSourceUri, wrapper.getOutputStream());
         } catch (Exception e) {
             throw new RevisionControlException(e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
     }
 
@@ -458,8 +451,8 @@ public class SourceNodeRCML implements RCML {
             throws RevisionControlException {
         String uri = getBackupSourceUri(sourceUri, time);
         try {
-            SourceUtil.delete(uri, this.manager);
-            SourceUtil.deleteEmptyCollections(uri, this.manager);
+            SourceUtil.delete(uri, getSourceResolver());
+            SourceUtil.deleteEmptyCollections(uri, getSourceResolver());
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
@@ -513,8 +506,8 @@ public class SourceNodeRCML implements RCML {
     public synchronized boolean delete() {
         try {
             deleteRevisions();
-            SourceUtil.delete(getRcmlSourceUri(), this.manager);
-            SourceUtil.deleteEmptyCollections(getRcmlSourceUri(), this.manager);
+            SourceUtil.delete(getRcmlSourceUri(), getSourceResolver());
+            SourceUtil.deleteEmptyCollections(getRcmlSourceUri(), getSourceResolver());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -555,12 +548,12 @@ public class SourceNodeRCML implements RCML {
                         .getContentSource(), time);
                 String thisContentUri = this
                         .getBackupSourceUri(sourceNode.getContentSource(), time);
-                SourceUtil.copy(this.manager, otherContentUri, thisContentUri);
+                SourceUtil.copy(getSourceResolver(), otherContentUri, thisContentUri);
 
                 String otherMetaUri = otherRcml.getBackupSourceUri(otherSourceNode.getMetaSource(),
                         time);
                 String thisMetaUri = this.getBackupSourceUri(sourceNode.getMetaSource(), time);
-                SourceUtil.copy(this.manager, otherMetaUri, thisMetaUri);
+                SourceUtil.copy(getSourceResolver(), otherMetaUri, thisMetaUri);
             }
 
             this.entries = new Vector();
@@ -635,6 +628,10 @@ public class SourceNodeRCML implements RCML {
             }
         }
         return false;
+    }
+
+    protected SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
     
 }

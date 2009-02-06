@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
@@ -34,13 +34,13 @@ public class MetaSourceWrapper extends SourceWrapper implements MetaDataOwner {
      * Ctor.
      * @param node
      * @param sourceURI
-     * @param manager
+     * @param resolver
      * @param logger
      */
-    public MetaSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager,
+    public MetaSourceWrapper(SourceNode node, String sourceURI, SourceResolver resolver,
             Log logger) {
-        super(node, sourceURI + "." + LENYA_META_SUFFIX, manager, logger);
-        this.handler = new ModifiableMetaDataHandler(manager, this);
+        super(node, sourceURI + "." + LENYA_META_SUFFIX, resolver, logger);
+        this.handler = new ModifiableMetaDataHandler(this, resolver);
     }
     
     private ModifiableMetaDataHandler handler;

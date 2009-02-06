@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
@@ -53,6 +52,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     private DocumentIdentifier identifier;
     private DocumentFactory factory;
+    private NodeFactory nodeFactory;
     private int revision = -1;
 
     /**
@@ -95,8 +95,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param revision The revision number or -1 if the latest revision should be used.
      * @param _logger a logger
      */
-    protected DocumentImpl(DocumentFactory map,
-            DocumentIdentifier identifier, int revision, Log logger) {
+    protected DocumentImpl(DocumentFactory map, DocumentIdentifier identifier, int revision,
+            Log logger) {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(
@@ -107,7 +107,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         if (identifier.getUUID() == null) {
             throw new IllegalArgumentException("The UUID must not be null!");
         }
-        
+
         this.identifier = identifier;
         this.factory = map;
         this.revision = revision;
@@ -163,7 +163,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     private Publication publication;
-    
+
     /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
@@ -434,10 +434,10 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                 throw new DocumentException(e);
             }
             if (name == null) {
-                throw new DocumentException("No resource type defined for document [" + this
-                        + "]!");
+                throw new DocumentException("No resource type defined for document [" + this + "]!");
             }
-            this.resourceType = (ResourceType) WebAppContextUtils.getCurrentWebApplicationContext().getBean(ResourceType.class.getName() + "/" + name);
+            this.resourceType = (ResourceType) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(ResourceType.class.getName() + "/" + name);
         }
         return this.resourceType;
     }
@@ -446,10 +446,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         MetaData meta = getContentHolder().getMetaData(namespaceUri);
         if (getSession().isModifiable()) {
             return meta;
-        }
-        else {
-            String cacheKey = getPublication().getId() + ":" + getArea() + ":"
-                    + getUUID() + ":" + getLanguage();
+        } else {
+            String cacheKey = getPublication().getId() + ":" + getArea() + ":" + getUUID() + ":"
+                    + getLanguage();
             return getMetaDataCache().getMetaData(cacheKey, meta, namespaceUri);
         }
     }
@@ -545,7 +544,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public Node getRepositoryNode() {
         if (this.repositoryNode == null) {
-            this.repositoryNode = getRepositoryNode(this.manager, getFactory(), getSourceURI());
+            this.repositoryNode = getRepositoryNode(getNodeFactory(), getFactory(), getSourceURI());
         }
         return this.repositoryNode;
     }
@@ -563,19 +562,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
-    protected static Node getRepositoryNode(ServiceManager manager, DocumentFactory docFactory,
+    protected static Node getRepositoryNode(NodeFactory nodeFactory, DocumentFactory docFactory,
             String sourceUri) {
         Session session = docFactory.getSession();
-        NodeFactory factory = null;
         try {
-            factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
-            return (Node) session.getRepositoryItem(factory, sourceUri);
+            return (Node) session.getRepositoryItem(nodeFactory, sourceUri);
         } catch (Exception e) {
             throw new RuntimeException("Creating repository node failed: ", e);
-        } finally {
-            if (factory != null) {
-                manager.release(factory);
-            }
         }
     }
 
@@ -594,7 +587,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public boolean existsVersion(String area, String language) {
         String sourceUri = getSourceURI(getPublication(), area, getUUID(), language);
         try {
-            return SourceUtil.exists(sourceUri, this.manager);
+            return SourceUtil.exists(sourceUri, getSourceResolver());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -706,6 +699,14 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public void setSourceResolver(SourceResolver resolver) {
         this.resolver = resolver;
+    }
+
+    public NodeFactory getNodeFactory() {
+        return nodeFactory;
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
     }
 
 }

@@ -21,11 +21,6 @@ package org.apache.lenya.cms.metadata;
  * Meta data registry.
  */
 public interface MetaDataRegistry {
-    
-    /**
-     * The Avalon role.
-     */
-    String ROLE = MetaDataRegistry.class.getName();
 
     /**
      * @param namespaceUri The namespace URI of the element set.

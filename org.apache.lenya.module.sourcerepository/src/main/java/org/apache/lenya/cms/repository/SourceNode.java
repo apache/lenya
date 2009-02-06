@@ -21,8 +21,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
@@ -35,7 +33,6 @@ import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.rc.CheckInEntry;
-import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
@@ -50,25 +47,23 @@ import org.apache.lenya.transaction.Transactionable;
  */
 public class SourceNode extends AbstractLogEnabled implements Node, Transactionable {
 
-    protected ServiceManager manager;
-
     private ContentSourceWrapper contentSource;
     private MetaSourceWrapper metaSource;
+    private NodeFactory nodeFactory;
+    private SourceResolver sourceResolver;
 
     /**
      * Ctor.
      * 
      * @param session
      * @param sourceUri
-     * @param manager
      * @param logger
      */
-    public SourceNode(Session session, String sourceUri, ServiceManager manager, Log logger) {
-        this.manager = manager;
+    public SourceNode(Session session, String sourceUri, SourceResolver resolver, Log logger) {
         this.session = session;
 
-        this.contentSource = new ContentSourceWrapper(this, sourceUri, manager, logger);
-        this.metaSource = new MetaSourceWrapper(this, sourceUri, manager, logger);
+        this.contentSource = new ContentSourceWrapper(this, sourceUri, resolver, logger);
+        this.metaSource = new MetaSourceWrapper(this, sourceUri, resolver, logger);
     }
 
     protected ContentSourceWrapper getContentSource() {
@@ -211,21 +206,13 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @throws ServiceException
      * @throws RepositoryException
      */
-    protected Node getDocumentNode() throws ServiceException, RepositoryException {
+    protected Node getDocumentNode() throws RepositoryException {
         Node node;
         String sourceUri = getSourceURI();
         if (sourceUri.endsWith(".meta")) {
             String documentSourceUri = sourceUri
                     .substring(0, sourceUri.length() - ".meta".length());
-            NodeFactory factory = null;
-            try {
-                factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
-                node = (Node) factory.buildItem(getSession(), documentSourceUri);
-            } finally {
-                if (factory != null) {
-                    this.manager.release(factory);
-                }
-            }
+            node = (Node) getNodeFactory().buildItem(getSession(), documentSourceUri);
         } else {
             node = this;
         }
@@ -298,18 +285,17 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * 
      */
     public Collection getChildren() throws RepositoryException {
-        SourceResolver resolver = null;
         TraversableSource source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (TraversableSource) resolver.resolveURI(this.contentSource.getRealSourceUri());
+            source = (TraversableSource) getSourceResolver().resolveURI(
+                    this.contentSource.getRealSourceUri());
             Collection children = source.getChildren();
             java.util.Iterator iterator = children.iterator();
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
                 newChildren.add(new SourceNode(getSession(),
-                        getSourceURI() + "/" + child.getName(), this.manager, getLogger()));
+                        getSourceURI() + "/" + child.getName(), getSourceResolver(), getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -321,11 +307,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * 
      */
     public boolean isCollection() throws RepositoryException {
-        SourceResolver resolver = null;
         TraversableSource source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (TraversableSource) resolver.resolveURI(this.contentSource.getRealSourceUri());
+            source = (TraversableSource) getSourceResolver().resolveURI(
+                    this.contentSource.getRealSourceUri());
             return source.isCollection();
         } catch (Exception e) {
             throw new RepositoryException(e);
@@ -360,7 +345,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     protected void enqueueEvent(Object descriptor) {
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, this, getLogger(),
+        RepositoryEvent event = RepositoryEventFactory.createEvent(this, getLogger(),
                 descriptor);
         getSession().enqueueEvent(event);
     }
@@ -380,13 +365,13 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     protected synchronized RCML getRcml() {
         if (this.rcml == null) {
             SourceNodeRcmlFactory factory = SourceNodeRcmlFactory.getInstance();
-            this.rcml = factory.getRcml(this, this.manager);
+            this.rcml = factory.getRcml(this);
         }
         return this.rcml;
     }
 
     public History getHistory() {
-        return new SourceNodeHistory(this, this.manager, getLogger());
+        return new SourceNodeHistory(this, getSourceResolver(), getLogger());
     }
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
@@ -431,8 +416,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             CheckInEntry entry = getRcml().getLatestCheckInEntry();
             if (entry != null) {
                 return entry.getTime();
-            }
-            else {
+            } else {
                 throw new RepositoryException("The node [" + this + "] hasn't been checked in yet.");
             }
         } catch (RepositoryException e) {
@@ -521,6 +505,22 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public String getCacheKey() {
         return getSourceURI();
+    }
+
+    protected NodeFactory getNodeFactory() {
+        return nodeFactory;
+    }
+
+    protected void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
+    }
+
+    protected SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    protected void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

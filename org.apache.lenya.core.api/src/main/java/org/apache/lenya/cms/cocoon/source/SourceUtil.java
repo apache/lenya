@@ -50,22 +50,20 @@ public final class SourceUtil {
 
     /**
      * <p>
-     * Copies one Source to another using a source buffer i.e. the source Source
-     * is buffered before it is copied to its final destination.
+     * Copies one Source to another using a source buffer i.e. the source Source is buffered before
+     * it is copied to its final destination.
      * </p>
      * <p>
-     * The optional buffering is sometimes useful, if the source Source somehow
-     * depends on the destination Source. This situation may occur e.g. if
-     * source Source is a Cocoon pipeline.
+     * The optional buffering is sometimes useful, if the source Source somehow depends on the
+     * destination Source. This situation may occur e.g. if source Source is a Cocoon pipeline.
      * </p>
      * <p>
-     * <em>NOTE:</em> o.a.e..s.SourceUtil.copy does not close streams on an
-     * exception!!
+     * <em>NOTE:</em> o.a.e..s.SourceUtil.copy does not close streams on an exception!!
      * </p>
      * @param source
      * @param destination
-     * @param useBuffer If true, the source data will be read into a buffer
-     *        before it is written to the final destination.
+     * @param useBuffer If true, the source data will be read into a buffer before it is written to
+     *            the final destination.
      * @throws IOException If an error occures.
      */
     public static void copy(Source source, ModifiableSource destination, boolean useBuffer)
@@ -99,8 +97,8 @@ public final class SourceUtil {
      * @param resolver The SourceResolver to use for lookin up Sources.
      * @param sourceUri The source to be copied.
      * @param destUri The URI to copy to.
-     * @param useBuffer If true, the source Source is buffered before copied to
-     *        the final destination.
+     * @param useBuffer If true, the source Source is buffered before copied to the final
+     *            destination.
      * @throws IOException If an error occures.
      * @throws SourceException If the destination is not modifiable.
      * @see #copy(Source, ModifiableSource, boolean)
@@ -238,6 +236,7 @@ public final class SourceUtil {
      * @throws ServiceException if the source resolver could not be obtained.
      * @throws MalformedURLException if the source URI is not valid.
      * @throws IOException if an error occurs.
+     * @deprecated
      */
     public static void writeDOM(Document document, String sourceUri, ServiceManager manager)
             throws TransformerConfigurationException, TransformerException, ServiceException,
@@ -257,6 +256,32 @@ public final class SourceUtil {
                     resolver.release(source);
                 }
                 manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * Writes a DOM to a source.
+     * @param document The document.
+     * @param sourceUri The source URI.
+     * @throws TransformerConfigurationException if an error occurs.
+     * @throws TransformerException if an error occurs.
+     * @throws ServiceException if the source resolver could not be obtained.
+     * @throws MalformedURLException if the source URI is not valid.
+     * @throws IOException if an error occurs.
+     */
+    public static void writeDOM(Document document, String sourceUri, SourceResolver resolver)
+            throws TransformerConfigurationException, TransformerException, ServiceException,
+            MalformedURLException, IOException {
+        ModifiableSource source = null;
+        try {
+            source = (ModifiableSource) resolver.resolveURI(sourceUri);
+
+            OutputStream oStream = source.getOutputStream();
+            writeDOM(document, oStream);
+        } finally {
+            if (source != null) {
+                resolver.release(source);
             }
         }
     }
@@ -288,6 +313,7 @@ public final class SourceUtil {
      * @throws ServiceException if an error occurs.
      * @throws MalformedURLException if an error occurs.
      * @throws IOException if an error occurs.
+     * @deprecated
      */
     public static void delete(String sourceUri, ServiceManager manager) throws ServiceException,
             MalformedURLException, IOException {
@@ -312,6 +338,31 @@ public final class SourceUtil {
     }
 
     /**
+     * Deletes a source if it exists.
+     * @param sourceUri The source URI.
+     * @throws ServiceException if an error occurs.
+     * @throws MalformedURLException if an error occurs.
+     * @throws IOException if an error occurs.
+     */
+    public static void delete(String sourceUri, SourceResolver resolver) throws ServiceException,
+            MalformedURLException, IOException {
+        ModifiableTraversableSource source = null;
+        try {
+            source = (ModifiableTraversableSource) resolver.resolveURI(sourceUri);
+            if (source.exists()) {
+                source.delete();
+            }
+
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+            }
+        }
+    }
+
+    /**
      * Deletes all empty collections in a subtree.
      * @param sourceUri The root source URI.
      * @param manager The service manager.
@@ -322,25 +373,40 @@ public final class SourceUtil {
     public static void deleteEmptyCollections(String sourceUri, ServiceManager manager)
             throws ServiceException, MalformedURLException, IOException {
         SourceResolver resolver = null;
-        ModifiableTraversableSource source = null;
         try {
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            deleteEmptyCollections(sourceUri, resolver);
+        } finally {
+            if (resolver != null) {
+                manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * Deletes all empty collections in a subtree.
+     * @param sourceUri The root source URI.
+     * @throws ServiceException
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public static void deleteEmptyCollections(String sourceUri, SourceResolver resolver)
+            throws ServiceException, MalformedURLException, IOException {
+        ModifiableTraversableSource source = null;
+        try {
             source = (ModifiableTraversableSource) resolver.resolveURI(sourceUri);
             if (source.isCollection()) {
                 for (Iterator i = source.getChildren().iterator(); i.hasNext();) {
                     ModifiableTraversableSource child = (ModifiableTraversableSource) i.next();
-                    deleteEmptyCollections(child.getURI(), manager);
+                    deleteEmptyCollections(child.getURI(), resolver);
                 }
                 if (source.getChildren().size() == 0) {
                     source.delete();
                 }
             }
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                manager.release(resolver);
+            if (source != null) {
+                resolver.release(source);
             }
         }
     }
@@ -383,8 +449,8 @@ public final class SourceUtil {
      * @throws MalformedURLException if an error occurs.
      * @throws IOException if an error occurs.
      */
-    public static boolean exists(String sourceUri, SourceResolver resolver) throws ServiceException,
-            MalformedURLException, IOException {
+    public static boolean exists(String sourceUri, SourceResolver resolver)
+            throws ServiceException, MalformedURLException, IOException {
         Source source = null;
         try {
             source = resolver.resolveURI(sourceUri);
@@ -601,16 +667,15 @@ public final class SourceUtil {
      * @throws ServiceException
      * @throws MalformedURLException
      * @throws IOException
+     * @deprecated
      */
     public static long getContentLength(String sourceUri, ServiceManager manager)
             throws ServiceException, MalformedURLException, IOException {
         SourceResolver resolver = null;
         Source source = null;
         try {
-
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI(sourceUri);
-
             return source.getContentLength();
         } finally {
             if (resolver != null) {
@@ -624,11 +689,52 @@ public final class SourceUtil {
 
     /**
      * @param sourceUri The source URI.
+     * @return A content length.
+     * @throws ServiceException
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public static long getContentLength(String sourceUri, SourceResolver resolver)
+            throws ServiceException, MalformedURLException, IOException {
+        Source source = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            return source.getContentLength();
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
+        }
+    }
+
+    /**
+     * @param sourceUri The source URI.
+     * @return A mime type.
+     * @throws ServiceException
+     * @throws IOException
+     * @throws MalformedURLException
+     */
+    public static String getMimeType(String sourceUri, SourceResolver resolver)
+            throws ServiceException, MalformedURLException, IOException {
+        Source source = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            return source.getMimeType();
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
+        }
+    }
+
+    /**
+     * @param sourceUri The source URI.
      * @param manager The service manager.
      * @return A mime type.
      * @throws ServiceException
      * @throws IOException
      * @throws MalformedURLException
+     * @deprecated
      */
     public static String getMimeType(String sourceUri, ServiceManager manager)
             throws ServiceException, MalformedURLException, IOException {
@@ -657,7 +763,8 @@ public final class SourceUtil {
      * @throws MalformedURLException
      * @throws IOException
      */
-    public static void copy(SourceResolver resolver, String sourceUri, OutputStream destOutputStream) throws MalformedURLException, IOException {
+    public static void copy(SourceResolver resolver, String sourceUri, OutputStream destOutputStream)
+            throws MalformedURLException, IOException {
         boolean useBuffer = true;
         InputStream sourceInputStream = null;
         Source source = null;

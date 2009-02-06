@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
@@ -37,22 +38,20 @@ public class SiteUtil {
     }
 
     /**
-     * Returns a sub-site starting with a certain node, which includes the node
-     * itself and all nodes which require this node, in preorder.
+     * Returns a sub-site starting with a certain node, which includes the node itself and all nodes
+     * which require this node, in preorder.
      * 
-     * @param manager The service manager.
      * @param node The top-level document.
      * @return A document set.
      * @throws SiteException if an error occurs.
      */
-    public static NodeSet getSubSite(ServiceManager manager, SiteNode node) throws SiteException {
-        ServiceSelector selector = null;
+    public static NodeSet getSubSite(SiteNode node) throws SiteException {
         SiteManager siteManager = null;
         SiteNode[] subsite;
         try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(node.getStructure().getPublication()
-                    .getSiteManagerHint());
+            String hint = node.getStructure().getPublication().getSiteManagerHint();
+            siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
+                    SiteManager.class.getName() + "/" + hint);
 
             DocumentFactory map = node.getStructure().getPublication().getFactory();
             Set nodes = new HashSet();
@@ -66,15 +65,8 @@ public class SiteUtil {
             subsite = (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
         } catch (Exception e) {
             throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
         }
-        return new NodeSet(manager, subsite);
+        return new NodeSet(subsite);
     }
 
     /**

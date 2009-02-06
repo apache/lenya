@@ -30,13 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -47,6 +41,7 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.cms.site.Link;
@@ -64,13 +59,16 @@ import org.apache.lenya.util.Assert;
  * 
  * @version $Id$
  */
-public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentManager,
-        Serviceable, Contextualizable {
+public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentManager {
+
+    private SourceResolver sourceResolver;
+    private UUIDGenerator uuidGenerator;
+    private NodeFactory nodeFactory;
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
-     *      java.lang.String, java.lang.String, java.lang.String,
-     *      java.lang.String, java.lang.String, boolean)
+     *      java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     *      java.lang.String, boolean)
      */
     public Document add(Document sourceDocument, String area, String path, String language,
             String extension, String navigationTitle, boolean visibleInNav)
@@ -85,9 +83,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * Copies meta data from one document to another. If the destination
-     * document is a different area version, the meta data are duplicated (i.e.,
-     * onCopy = delete is neglected).
+     * Copies meta data from one document to another. If the destination document is a different
+     * area version, the meta data are duplicated (i.e., onCopy = delete is neglected).
      * @param source
      * @param destination
      * @throws PublicationException
@@ -115,9 +112,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.publication.ResourceType, java.lang.String,
-     *      org.apache.lenya.cms.publication.Publication, java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String,
-     *      java.lang.String, boolean)
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String, boolean)
      */
     public Document add(DocumentFactory factory, ResourceType documentType,
             String initialContentsURI, Publication pub, String area, String path, String language,
@@ -140,8 +136,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     protected Document add(DocumentFactory factory, ResourceType documentType,
             InputStream initialContentsStream, Publication pub, String area, String path,
-            String language, String extension, String navigationTitle, boolean visibleInNav, String mimeType)
-            throws DocumentBuildException, DocumentException, PublicationException {
+            String language, String extension, String navigationTitle, boolean visibleInNav,
+            String mimeType) throws DocumentBuildException, DocumentException, PublicationException {
 
         Area areaObj = pub.getArea(area);
         SiteStructure site = areaObj.getSite();
@@ -162,22 +158,17 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String extension) throws DocumentBuildException, DocumentException,
             PublicationException {
 
-        String uuid = generateUUID();
-        SourceResolver resolver = null;
+        String uuid = getUuidGenerator().nextUUID();
         Source source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(initialContentsURI);
+            source = getSourceResolver().resolveURI(initialContentsURI);
             return add(factory, documentType, uuid, source.getInputStream(), pub, area, language,
                     extension, getMimeType(source));
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
+            if (source != null) {
+                getSourceResolver().release(source);
             }
         }
     }
@@ -195,14 +186,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String extension, String mimeType) throws DocumentBuildException, DocumentException,
             PublicationException {
 
-        String uuid = generateUUID();
+        String uuid = getUuidGenerator().nextUUID();
         return add(factory, documentType, uuid, initialContentsStream, pub, area, language,
                 extension, mimeType);
     }
 
     protected Document add(DocumentFactory factory, ResourceType documentType, String uuid,
-            InputStream stream, Publication pub, String area, String language, String extension, String mimeType)
-            throws DocumentBuildException {
+            InputStream stream, Publication pub, String area, String language, String extension,
+            String mimeType) throws DocumentBuildException {
         try {
 
             if (exists(factory, pub, area, uuid, language)) {
@@ -234,24 +225,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
-    protected String generateUUID() throws DocumentBuildException {
-        String uuid;
-        UUIDGenerator generator = null;
-        try {
-
-            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
-            uuid = generator.nextUUID();
-
-        } catch (Exception e) {
-            throw new DocumentBuildException("call to creator for new document failed", e);
-        } finally {
-            if (generator != null) {
-                this.manager.release(generator);
-            }
-        }
-        return uuid;
-    }
-
     protected void create(InputStream stream, Document document) throws Exception {
 
         // Read initial contents as DOM
@@ -260,15 +233,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     "DefaultCreator::create(), ready to read initial contents from URI [" + stream
                             + "]");
 
-        SourceResolver resolver = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            copy(resolver, stream, document);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
-        }
+        copy(getSourceResolver(), stream, document);
     }
 
     protected void copy(SourceResolver resolver, InputStream sourceInputStream, Document destination)
@@ -315,9 +280,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * Template method to copy a document. Override
-     * {@link #copyDocumentSource(Document, Document)} to implement access to a
-     * custom repository.
+     * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
+     * to implement access to a custom repository.
      * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.DocumentLocator)
      */
@@ -480,31 +444,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
-
-    private Context context;
-
-    /**
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context _context) throws ContextException {
-        this.context = _context;
-    }
-
-    /**
-     * @return The Avalon context.
-     */
-    protected Context getContext() {
-        return this.context;
-    }
-
     public void moveAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
             throws PublicationException {
         SiteStructure site = sourceArea.getSite();
@@ -525,15 +464,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     + subPath);
         }
     }
-    
+
     protected List preOrder(SiteNode node) {
-    	List list = new ArrayList();
-    	list.add(node);
-    	SiteNode[] children = node.getChildren();
-    	for (int i = 0; i < children.length; i++) {
-    		list.addAll(preOrder(children[i]));
-    	}
-    	return list;
+        List list = new ArrayList();
+        list.add(node);
+        SiteNode[] children = node.getChildren();
+        for (int i = 0; i < children.length; i++) {
+            list.addAll(preOrder(children[i]));
+        }
+        return list;
     }
 
     public void moveAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
@@ -564,7 +503,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         targetNode.setVisible(sourceNode.isVisible());
     }
 
-    protected void copyRevisions(Document sourceDoc, Document targetDoc) throws PublicationException {
+    protected void copyRevisions(Document sourceDoc, Document targetDoc)
+            throws PublicationException {
         try {
             Node targetNode = targetDoc.getRepositoryNode();
             targetNode.copyRevisionsFrom(sourceDoc.getRepositoryNode());
@@ -578,9 +518,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         SiteStructure site = sourceArea.getSite();
         SiteNode root = site.getNode(sourcePath);
-        
+
         List preOrder = preOrder(root);
-        for (Iterator i = preOrder.iterator(); i.hasNext(); ) {
+        for (Iterator i = preOrder.iterator(); i.hasNext();) {
             SiteNode node = (SiteNode) i.next();
             String nodeSourcePath = node.getPath();
             String nodeTargetPath = targetPath + nodeSourcePath.substring(sourcePath.length());
@@ -659,8 +599,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * Abstract base class for document visitors which operate on a source and
-     * target document.
+     * Abstract base class for document visitors which operate on a source and target document.
      */
     public static abstract class SourceTargetVisitor implements DocumentVisitor {
 
@@ -702,8 +641,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
 
         /**
-         * Returns the target corresponding to a source relatively to the root
-         * target document.
+         * Returns the target corresponding to a source relatively to the root target document.
          * @param source The source.
          * @return A document.
          * @throws DocumentBuildException if the target could not be built.
@@ -724,31 +662,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAll(org.apache.lenya.cms.publication.Document)
      */
     public void deleteAll(Document document) throws PublicationException {
-
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-
-            NodeSet subsite = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
-            for (NodeIterator i = subsite.descending(); i.hasNext();) {
-                SiteNode node = i.next();
-                String[] languages = node.getLanguages();
-                for (int l = 0; l < languages.length; l++) {
-                    Document doc = node.getLink(languages[l]).getDocument();
-                    delete(doc);
-                }
-            }
-        } catch (ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
+        NodeSet subsite = SiteUtil.getSubSite(document.getLink().getNode());
+        for (NodeIterator i = subsite.descending(); i.hasNext();) {
+            SiteNode node = i.next();
+            String[] languages = node.getLanguages();
+            for (int l = 0; l < languages.length; l++) {
+                Document doc = node.getLink(languages[l]).getDocument();
+                delete(doc);
             }
         }
     }
@@ -802,29 +722,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             return;
         }
 
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            Publication pub = documents.getDocuments()[0].getPublication();
-            siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
+        DocumentSet set = new DocumentSet(documents.getDocuments());
+        sortAscending(set);
+        set.reverse();
 
-            DocumentSet set = new DocumentSet(documents.getDocuments());
-            sortAscending(set);
-            set.reverse();
-
-            DocumentVisitor visitor = new DeleteVisitor(this);
-            set.visit(visitor);
-        } catch (ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
+        DocumentVisitor visitor = new DeleteVisitor(this);
+        set.visit(visitor);
 
     }
 
@@ -839,20 +742,17 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
          * Document[] sourceDocs = sources.getDocuments(); Document[] targetDocs =
          * destinations.getDocuments();
          * 
-         * if (sourceDocs.length != targetDocs.length) { throw new
-         * PublicationException( "The number of source and destination documents
-         * must be equal!"); }
+         * if (sourceDocs.length != targetDocs.length) { throw new PublicationException( "The number
+         * of source and destination documents must be equal!"); }
          * 
-         * Map source2target = new HashMap(); for (int i = 0; i <
-         * sourceDocs.length; i++) { source2target.put(sourceDocs[i],
-         * targetDocs[i]); }
+         * Map source2target = new HashMap(); for (int i = 0; i < sourceDocs.length; i++) {
+         * source2target.put(sourceDocs[i], targetDocs[i]); }
          * 
          * DocumentSet sortedSources = new DocumentSet(sourceDocs);
-         * SiteUtil.sortAscending(this.manager, sortedSources); Document[]
-         * sortedSourceDocs = sortedSources.getDocuments();
+         * SiteUtil.sortAscending(this.manager, sortedSources); Document[] sortedSourceDocs =
+         * sortedSources.getDocuments();
          * 
-         * for (int i = 0; i < sortedSourceDocs.length; i++) {
-         * move(sortedSourceDocs[i], (Document)
+         * for (int i = 0; i < sortedSourceDocs.length; i++) { move(sortedSourceDocs[i], (Document)
          * source2target.get(sortedSourceDocs[i])); }
          */
     }
@@ -893,43 +793,30 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             int n = docs.length;
 
             Publication pub = docs[0].getPublication();
-            SiteManager siteManager = null;
-            ServiceSelector selector = null;
-            try {
-                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-                siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
+            SiteManager siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
+                .getBean(SiteManager.class.getName() + "/" + pub.getSiteManagerHint());
 
-                Set nodes = new HashSet();
-                for (int i = 0; i < docs.length; i++) {
-                    nodes.add(docs[i].getLink().getNode());
-                }
+            Set nodes = new HashSet();
+            for (int i = 0; i < docs.length; i++) {
+                nodes.add(docs[i].getLink().getNode());
+            }
 
-                SiteNode[] ascending = siteManager.sortAscending((SiteNode[]) nodes
-                        .toArray(new SiteNode[nodes.size()]));
+            SiteNode[] ascending = siteManager.sortAscending((SiteNode[]) nodes
+                    .toArray(new SiteNode[nodes.size()]));
 
-                set.clear();
-                for (int i = 0; i < ascending.length; i++) {
-                    for (int d = 0; d < docs.length; d++) {
-                        if (docs[d].getPath().equals(ascending[i].getPath())) {
-                            set.add(docs[d]);
-                        }
+            set.clear();
+            for (int i = 0; i < ascending.length; i++) {
+                for (int d = 0; d < docs.length; d++) {
+                    if (docs[d].getPath().equals(ascending[i].getPath())) {
+                        set.add(docs[d]);
                     }
-                }
-
-                if (set.getDocuments().length != n) {
-                    throw new IllegalStateException("Number of documents has changed!");
-                }
-
-            } catch (final ServiceException e) {
-                throw new PublicationException(e);
-            } finally {
-                if (selector != null) {
-                    if (siteManager != null) {
-                        selector.release(siteManager);
-                    }
-                    this.manager.release(selector);
                 }
             }
+
+            if (set.getDocuments().length != n) {
+                throw new IllegalStateException("Number of documents has changed!");
+            }
+
         }
     }
 
@@ -951,7 +838,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
                 sourceDocument.getUUID(), sourceDocument.getInputStream(), sourceDocument
                         .getPublication(), area, language, sourceDocument.getSourceExtension(),
-                        sourceDocument.getMimeType());
+                sourceDocument.getMimeType());
         copyMetaData(sourceDocument, document);
 
         return document;
@@ -961,11 +848,35 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String language) throws PublicationException {
         String sourceUri = DocumentImpl.getSourceURI(pub, area, uuid, language);
         try {
-            Node node = DocumentImpl.getRepositoryNode(this.manager, factory, sourceUri);
+            Node node = DocumentImpl.getRepositoryNode(getNodeFactory(), factory, sourceUri);
             return node.exists();
         } catch (RepositoryException e) {
             throw new PublicationException(e);
         }
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public UUIDGenerator getUuidGenerator() {
+        return uuidGenerator;
+    }
+
+    public void setUuidGenerator(UUIDGenerator uuidGenerator) {
+        this.uuidGenerator = uuidGenerator;
+    }
+
+    public NodeFactory getNodeFactory() {
+        return nodeFactory;
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
     }
 
 }

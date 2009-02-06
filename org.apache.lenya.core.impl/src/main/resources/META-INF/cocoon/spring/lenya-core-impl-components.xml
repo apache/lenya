@@ -35,6 +35,12 @@
     <property name="metaDataCache" ref="org.apache.lenya.cms.metadata.MetaDataCache"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
   </bean>
+  <bean name="org.apache.lenya.cms.publication.DocumentManager"
+    class="org.apache.lenya.cms.publication.DocumentManagerImpl">
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
+    <property name="uuidGenerator" ref="org.apache.lenya.cms.repository.UUIDGenerator"/>
+  </bean>
   <bean name="org.apache.lenya.cms.module.ModuleManager"
     class="org.apache.lenya.cms.module.ModuleManagerImpl"/>
   <bean name="org.apache.lenya.cms.repository.SharedItemStore"

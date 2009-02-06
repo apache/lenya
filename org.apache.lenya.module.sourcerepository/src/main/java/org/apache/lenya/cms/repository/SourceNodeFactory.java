@@ -17,21 +17,17 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Factory to create source nodes.
  * 
  * @version $Id$
  */
-public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory, Serviceable,
-        ThreadSafe {
-
-    private ServiceManager manager;
+public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory {
+    
+    private SourceResolver sourceResolver;
 
     /**
      * Ctor.
@@ -40,18 +36,19 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
     }
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        return new SourceNode(session, key, this.manager, getLogger());
+        return new SourceNode(session, key, getSourceResolver(), getLogger());
     }
 
     public String getItemType() {
         return Node.IDENTIFIABLE_TYPE;
     }
 
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Content source wrapper.
@@ -29,11 +29,11 @@ public class ContentSourceWrapper extends SourceWrapper {
      * Ctor.
      * @param node
      * @param sourceURI
-     * @param manager
+     * @param resolver 
      * @param logger
      */
-    public ContentSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager, Log logger) {
-        super(node, sourceURI, manager, logger);
+    public ContentSourceWrapper(SourceNode node, String sourceURI, SourceResolver resolver, Log logger) {
+        super(node, sourceURI, resolver, logger);
     }
 
 }

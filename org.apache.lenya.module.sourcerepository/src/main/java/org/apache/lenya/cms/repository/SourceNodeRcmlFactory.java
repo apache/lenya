@@ -20,7 +20,7 @@ package org.apache.lenya.cms.repository;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.rc.RCML;
 
 /**
@@ -29,6 +29,7 @@ import org.apache.lenya.cms.rc.RCML;
 public class SourceNodeRcmlFactory {
 
     private static SourceNodeRcmlFactory instance = new SourceNodeRcmlFactory();
+    private SourceResolver sourceResolver;
 
     /**
      * @return The singleton instance.
@@ -39,22 +40,29 @@ public class SourceNodeRcmlFactory {
 
     private Map uri2rcml = new HashMap();
 
-    private SourceNodeRcmlFactory() {
-    }
-
     /**
      * @param node The node.
      * @param manager The service manager.
      * @return An RCML object.
      */
-    public synchronized RCML getRcml(SourceNode node, ServiceManager manager) {
+    public synchronized RCML getRcml(SourceNode node) {
         String uri = node.getSourceURI();
         RCML rcml = (RCML) this.uri2rcml.get(uri);
         if (rcml == null) {
             rcml = new SourceNodeRCML(node.getContentSource().getRealSourceUri(), node
-                    .getMetaSource().getRealSourceUri(), manager);
+                    .getMetaSource().getRealSourceUri(), getSourceResolver());
             this.uri2rcml.put(uri, rcml);
         }
         return rcml;
     }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+    
+    
 }

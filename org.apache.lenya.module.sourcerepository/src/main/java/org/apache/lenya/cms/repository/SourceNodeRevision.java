@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.Source;
@@ -40,20 +39,19 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     private SourceNode node;
     private int number;
-    private ServiceManager manager;
     private long time = -1;
     private String userId;
+    private SourceResolver sourceResolver;
 
     /**
      * @param node The node.
      * @param number The revision number.
-     * @param manager The service manager.
      * @param logger The logger.
      */
-    public SourceNodeRevision(SourceNode node, int number, ServiceManager manager, Log logger) {
+    public SourceNodeRevision(SourceNode node, int number, SourceResolver resolver, Log logger) {
         this.node = node;
         this.number = number;
-        this.manager = manager;
+        this.sourceResolver = resolver;
     }
 
     public long getTime() {
@@ -86,11 +84,9 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     public InputStream getInputStream() {
         Source source = null;
-        SourceResolver resolver = null;
         try {
             String sourceUri = getSourceURI();
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(sourceUri);
+            source = getSourceResolver().resolveURI(sourceUri);
             if (source.exists()) {
                 return source.getInputStream();
             } else {
@@ -101,13 +97,6 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
     }
 
@@ -129,13 +118,13 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     protected SourceNodeMetaDataHandler getMetaDataHandler() {
         if (this.metaDataHandler == null) {
-            this.metaDataHandler = new SourceNodeMetaDataHandler(this.manager, getMetaSourceUri(), this);
+            this.metaDataHandler = new SourceNodeMetaDataHandler(getMetaSourceUri(), this, getSourceResolver());
         }
         return this.metaDataHandler;
     }
 
     protected String getMetaSourceUri() {
-        String realSourceUri = SourceWrapper.computeRealSourceUri(this.manager, this.node.getSession(), 
+        String realSourceUri = SourceWrapper.computeRealSourceUri(getSourceResolver(), this.node.getSession(), 
                 this.node.getSourceURI(), getLogger());
         return realSourceUri + ".meta." + getTime() + ".bak";
     }
@@ -146,7 +135,7 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     public boolean exists() throws RepositoryException {
         try {
-            return SourceUtil.exists(getSourceURI(), this.manager);
+            return SourceUtil.exists(getSourceURI(), getSourceResolver());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -154,7 +143,7 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     public long getContentLength() throws RepositoryException {
         try {
-            return SourceUtil.getContentLength(getSourceURI(), this.manager);
+            return SourceUtil.getContentLength(getSourceURI(), getSourceResolver());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -162,7 +151,7 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     public long getLastModified() throws RepositoryException {
         try {
-            return SourceUtil.getLastModified(getSourceURI(), this.manager);
+            return SourceUtil.getLastModified(getSourceURI(), getSourceResolver());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -170,7 +159,7 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     public String getMimeType() throws RepositoryException {
         try {
-            return SourceUtil.getMimeType(getSourceURI(), this.manager);
+            return SourceUtil.getMimeType(getSourceURI(), getSourceResolver());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -179,6 +168,10 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
     public String getUserId() {
         initialize();
         return this.userId;
+    }
+
+    protected SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

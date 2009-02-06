@@ -17,12 +17,12 @@
  */
 package org.apache.lenya.cms.observation;
 
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.Session;
@@ -34,27 +34,23 @@ public class RepositoryEventFactory {
 
     /**
      * Creates a repository event for a node.
-     * @param manager The service manager.
      * @param session The session.
      * @param logger The logger.
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(ServiceManager manager,
-            Session session, Log logger, Object descriptor) {
-            return new RepositoryEvent(session, descriptor);
+    public static final RepositoryEvent createEvent(Session session, Log logger, Object descriptor) {
+        return new RepositoryEvent(session, descriptor);
     }
 
     /**
      * Creates a repository event for a node.
-     * @param manager The service manager.
      * @param doc The document.
      * @param logger The logger.
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(ServiceManager manager, Document doc,
-            Log logger, Object descriptor) {
+    public static final RepositoryEvent createEvent(Document doc, Log logger, Object descriptor) {
         try {
             Node node = doc.getRepositoryNode();
             RepositoryEvent event = new DocumentEvent(node.getSession(), doc.getPublication()
@@ -80,15 +76,14 @@ public class RepositoryEventFactory {
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(ServiceManager manager, Node node,
-            Log logger, Object descriptor) {
+    public static final RepositoryEvent createEvent(Node node, Log logger, Object descriptor) {
         RepositoryEvent event;
         Document doc = null;
         if (!node.getSourceURI().endsWith("meta")) {
-            doc = getDocument(manager, node, logger);
+            doc = getDocument(node, logger);
         }
         if (doc != null) {
-            event = createEvent(manager, doc, logger, descriptor);
+            event = createEvent(doc, logger, descriptor);
         } else {
             event = new RepositoryEvent(node.getSession(), descriptor);
             event.setNodeUri(node.getSourceURI());
@@ -97,13 +92,12 @@ public class RepositoryEventFactory {
     }
 
     /**
-     * @param manager The service manager.
      * @param node The node.
      * @param logger The logger.
-     * @return The document represented by the node or <code>null</code> if
-     *         the node doesn't represent a document.
+     * @return The document represented by the node or <code>null</code> if the node doesn't
+     *         represent a document.
      */
-    protected static final Document getDocument(ServiceManager manager, Node node, Log logger) {
+    protected static final Document getDocument(Node node, Log logger) {
 
         final String sourceUri = node.getSourceURI();
         if (sourceUri.endsWith(".xml")) {
@@ -125,8 +119,10 @@ public class RepositoryEventFactory {
 
         try {
 
-            DocumentFactory factory = DocumentUtil
-                    .createDocumentFactory(manager, node.getSession());
+            DocumentFactoryBuilder builder = (DocumentFactoryBuilder) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(
+                            DocumentFactoryBuilder.class.getName());
+            DocumentFactory factory = builder.createDocumentFactory(node.getSession());
             Publication pub = factory.getPublication(pubId);
             String docPath = path.substring((pubId + "/content/" + area).length());
 

@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.ModifiableSource;
@@ -36,7 +36,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.Assert;
 
@@ -47,16 +47,15 @@ public class SourceWrapper extends AbstractLogEnabled {
 
     private SourceNode node;
     private String sourceUri;
-    protected ServiceManager manager;
+    private SourceResolver sourceResolver;
 
     /**
      * Ctor.
      * @param node
      * @param sourceUri
-     * @param manager
      * @param logger
      */
-    public SourceWrapper(SourceNode node, String sourceUri, ServiceManager manager, Log logger) {
+    public SourceWrapper(SourceNode node, String sourceUri, SourceResolver resolver, Log logger) {
 
         Assert.notNull("node", node);
         this.node = node;
@@ -64,9 +63,8 @@ public class SourceWrapper extends AbstractLogEnabled {
         Assert.notNull("source URI", sourceUri);
         this.sourceUri = sourceUri;
 
-        Assert.notNull("service manager", manager);
-        this.manager = manager;
-
+        Assert.notNull("source resolver", resolver);
+        this.sourceResolver = resolver;
     }
 
     protected static final String FILE_PREFIX = "file:/";
@@ -85,14 +83,14 @@ public class SourceWrapper extends AbstractLogEnabled {
      */
     protected String getRealSourceUri() {
         if (this.realSourceUri == null) {
-            this.realSourceUri = computeRealSourceUri(this.manager, getNode().getSession(),
+            this.realSourceUri = computeRealSourceUri(getSourceResolver(), getNode().getSession(),
                     this.sourceUri, getLogger());
         }
         return this.realSourceUri;
     }
 
-    protected static final String computeRealSourceUri(ServiceManager manager, Session session,
-            String sourceUri, Log logger) {
+    protected static final String computeRealSourceUri(SourceResolver sourceResolver,
+            Session session, String sourceUri, Log logger) {
         String contentDir = null;
         String publicationId = null;
         try {
@@ -100,7 +98,9 @@ public class SourceWrapper extends AbstractLogEnabled {
             String publicationsPath = sourceUri.substring(pubBase.length());
             int firstSlashIndex = publicationsPath.indexOf("/");
             publicationId = publicationsPath.substring(0, firstSlashIndex);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(manager, session);
+            DocumentFactoryBuilder builder = (DocumentFactoryBuilder) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(DocumentFactoryBuilder.class.getName());
+            DocumentFactory factory = builder.createDocumentFactory(session);
             Publication pub = factory.getPublication(publicationId);
             contentDir = pub.getContentDir();
         } catch (Exception e) {
@@ -130,7 +130,7 @@ public class SourceWrapper extends AbstractLogEnabled {
 
         if (logger.isDebugEnabled()) {
             try {
-                if (!SourceUtil.exists(contentBaseUri, manager)) {
+                if (!SourceUtil.exists(contentBaseUri, sourceResolver)) {
                     logger.debug("The content directory [" + contentBaseUri + "] does not exist. "
                             + "It will be created as soon as documents are added.");
                 }
@@ -158,7 +158,7 @@ public class SourceWrapper extends AbstractLogEnabled {
                         + "]: not checked out!");
             } else {
                 this.data = null;
-                SourceUtil.delete(getRealSourceUri(), this.manager);
+                SourceUtil.delete(getRealSourceUri(), getSourceResolver());
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
@@ -192,7 +192,7 @@ public class SourceWrapper extends AbstractLogEnabled {
             return true;
         } else {
             try {
-                return SourceUtil.exists(getRealSourceUri(), this.manager);
+                return SourceUtil.exists(getRealSourceUri(), getSourceResolver());
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }
@@ -219,11 +219,9 @@ public class SourceWrapper extends AbstractLogEnabled {
 
         ByteArrayOutputStream out = null;
         InputStream in = null;
-        SourceResolver resolver = null;
         TraversableSource source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (TraversableSource) resolver.resolveURI(getRealSourceUri());
+            source = (TraversableSource) getSourceResolver().resolveURI(getRealSourceUri());
 
             if (source.exists() && !source.isCollection()) {
                 byte[] buf = new byte[4096];
@@ -250,12 +248,8 @@ public class SourceWrapper extends AbstractLogEnabled {
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }
-
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
+            if (source != null) {
+                getSourceResolver().release(source);
             }
         }
         this.loadRevision = this.node.getCurrentRevisionNumber();
@@ -291,14 +285,12 @@ public class SourceWrapper extends AbstractLogEnabled {
     }
 
     protected void saveTransactionable(String realSourceUri) throws RepositoryException {
-        SourceResolver resolver = null;
         ModifiableSource source = null;
         InputStream in = null;
         OutputStream out = null;
 
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (ModifiableSource) resolver.resolveURI(realSourceUri);
+            source = (ModifiableSource) getSourceResolver().resolveURI(realSourceUri);
 
             out = source.getOutputStream();
 
@@ -325,12 +317,8 @@ public class SourceWrapper extends AbstractLogEnabled {
             } catch (Throwable t) {
                 throw new RuntimeException("Could not close streams: ", t);
             }
-
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                manager.release(resolver);
+            if (source != null) {
+                getSourceResolver().release(source);
             }
         }
     }
@@ -393,9 +381,13 @@ public class SourceWrapper extends AbstractLogEnabled {
         loadData();
         return new NodeOutputStream();
     }
-    
+
     protected int getLoadRevision() {
         return this.loadRevision;
+    }
+
+    protected SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

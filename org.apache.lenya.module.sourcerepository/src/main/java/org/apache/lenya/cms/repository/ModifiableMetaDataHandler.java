@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -41,8 +41,8 @@ public class ModifiableMetaDataHandler extends SourceNodeMetaDataHandler impleme
      * @param manager The service manager.
      * @param sourceWrapper The source wrapper.
      */
-    public ModifiableMetaDataHandler(ServiceManager manager, MetaSourceWrapper sourceWrapper) {
-        super(manager, sourceWrapper.getRealSourceUri(), sourceWrapper.getNode());
+    public ModifiableMetaDataHandler(MetaSourceWrapper sourceWrapper, SourceResolver resolver) {
+        super(sourceWrapper.getRealSourceUri(), sourceWrapper.getNode(), resolver);
         this.sourceWrapper = sourceWrapper;
         try {
             this.sourceWrapper.getNode().setPersistable(this);

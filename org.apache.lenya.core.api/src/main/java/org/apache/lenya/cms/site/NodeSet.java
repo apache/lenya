@@ -24,8 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
@@ -35,23 +34,18 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
  */
 public class NodeSet {
 
-    private ServiceManager manager;
-
     /**
      * Ctor.
      * @param manager The service manager.
      */
-    public NodeSet(ServiceManager manager) {
-        this.manager = manager;
+    public NodeSet() {
     }
 
     /**
      * Ctor.
-     * @param manager The service manager.
      * @param _nodes The initial nodes.
      */
-    public NodeSet(ServiceManager manager, SiteNode[] _nodes) {
-        this(manager);
+    public NodeSet(SiteNode[] _nodes) {
         for (int i = 0; i < _nodes.length; i++) {
             add(_nodes[i]);
         }
@@ -167,27 +161,15 @@ public class NodeSet {
         if (isEmpty()) {
             return new SiteNode[0];
         }
-        
-        SiteNode[] nodes;
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
+
         try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getNodes()[0].getStructure()
-                    .getPublication()
-                    .getSiteManagerHint());
-            nodes = siteManager.sortAscending(getNodes());
+            String hint = getNodes()[0].getStructure().getPublication().getSiteManagerHint();
+            SiteManager siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
+                    SiteManager.class.getName() + "/" + hint);
+            return siteManager.sortAscending(getNodes());
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
         }
-        return nodes;
     }
 
     /**
@@ -195,7 +177,7 @@ public class NodeSet {
      */
     public Document[] getDocuments() {
         List documents = new ArrayList();
-        for (NodeIterator i = iterator(); i.hasNext(); ) {
+        for (NodeIterator i = iterator(); i.hasNext();) {
             SiteNode node = i.next();
             String[] langs = node.getLanguages();
             for (int l = 0; l < langs.length; l++) {

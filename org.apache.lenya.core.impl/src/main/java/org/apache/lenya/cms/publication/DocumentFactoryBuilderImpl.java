@@ -40,7 +40,7 @@ public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
         return factory;
     }
 
-    protected void setPublicationManager(PublicationManager pubManager) {
+    public void setPublicationManager(PublicationManager pubManager) {
         this.pubManager = pubManager;
     }
 
@@ -48,12 +48,12 @@ public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
         return this.pubManager;
     }
 
-    protected MetaDataCache getMetaDataCache() {
-        return metaDataCache;
-    }
-
     public void setMetaDataCache(MetaDataCache metaDataCache) {
         this.metaDataCache = metaDataCache;
+    }
+
+    protected MetaDataCache getMetaDataCache() {
+        return metaDataCache;
     }
 
     public SourceResolver getSourceResolver() {

@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -42,19 +42,19 @@ import org.w3c.dom.Element;
  */
 public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
-    private ServiceManager manager;
     private ContentHolder content;
     private String sourceUri;
+    private SourceResolver sourceResolver;
 
     /**
-     * @param manager The service manager.
      * @param sourceUri The source URI.
      * @param content The content these meta data apply for.
      */
-    public SourceNodeMetaDataHandler(ServiceManager manager, String sourceUri, ContentHolder content) {
-        this.manager = manager;
+    public SourceNodeMetaDataHandler(String sourceUri, ContentHolder content,
+            SourceResolver resolver) {
         this.sourceUri = sourceUri;
         this.content = content;
+        this.sourceResolver = resolver;
     }
 
     private Map namespace2metadata = new HashMap();
@@ -63,24 +63,15 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
         MetaData meta = (MetaData) this.namespace2metadata.get(namespaceUri);
         if (meta == null) {
-            
-            MetaDataRegistry registry = null;
-            try {
-                registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-                if (!registry.isRegistered(namespaceUri)) {
-                    throw new MetaDataException("The namespace [" + namespaceUri
-                            + "] is not registered!");
-                }
-            } catch (ServiceException e) {
-                throw new MetaDataException(e);
-            } finally {
-                if (registry != null) {
-                    this.manager.release(registry);
-                }
+
+            MetaDataRegistry registry = getMetaDataRegistry();
+            if (!registry.isRegistered(namespaceUri)) {
+                throw new MetaDataException("The namespace [" + namespaceUri
+                        + "] is not registered!");
             }
-            
+
             synchronized (this) {
-                meta = new SourceNodeMetaData(namespaceUri, this, this.manager);
+                meta = new SourceNodeMetaData(namespaceUri, this, registry);
                 this.namespace2metadata.put(namespaceUri, meta);
             }
         }
@@ -117,8 +108,8 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
         try {
             this.namespace2metamap = new HashMap();
-            if (SourceUtil.exists(this.sourceUri, this.manager)) {
-                Document xml = SourceUtil.readDOM(this.sourceUri, this.manager);
+            if (SourceUtil.exists(this.sourceUri, this.sourceResolver)) {
+                Document xml = SourceUtil.readDOM(this.sourceUri, this.sourceResolver);
                 if (!xml.getDocumentElement().getNamespaceURI().equals(META_DATA_NAMESPACE)) {
                     loadLegacyMetaData(xml);
                 } else {
@@ -176,9 +167,8 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
         Element dcElement = helper.getFirstChild(metaElement, "dc");
 
         if (dcElement != null) {
-            MetaDataRegistry registry = null;
+            MetaDataRegistry registry = getMetaDataRegistry();
             try {
-                registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
                 ElementSet dcElementSet = registry.getElementSet(DublinCore.DC_NAMESPACE);
                 ElementSet dcTermSet = registry.getElementSet(DublinCore.DCTERMS_NAMESPACE);
 
@@ -203,13 +193,19 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
                 throw e;
             } catch (Exception e) {
                 throw new MetaDataException(e);
-            } finally {
-                if (registry != null) {
-                    this.manager.release(registry);
-                }
             }
         }
 
+    }
+
+    private MetaDataRegistry registry;
+
+    protected MetaDataRegistry getMetaDataRegistry() {
+        if (this.registry == null) {
+            this.registry = (MetaDataRegistry) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(MetaDataRegistry.class.getName());
+        }
+        return this.registry;
     }
 
     protected String[] getValues(String namespaceUri, String key, int revisionNumber)
@@ -248,17 +244,7 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
     }
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
-        MetaDataRegistry registry = null;
-        try {
-            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-            return registry.getNamespaceUris();
-        } catch (ServiceException e) {
-            throw new MetaDataException(e);
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
+        return getMetaDataRegistry().getNamespaceUris();
     }
 
     protected long getLastModified() throws RepositoryException {

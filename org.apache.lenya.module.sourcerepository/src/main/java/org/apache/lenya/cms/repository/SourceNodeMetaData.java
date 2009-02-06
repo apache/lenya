@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.ElementSet;
@@ -35,20 +34,19 @@ import org.apache.lenya.cms.metadata.MetaDataRegistry;
 public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     private String namespaceUri;
-    private ServiceManager manager;
     private SourceNodeMetaDataHandler handler;
+    private MetaDataRegistry registry;
 
     /**
      * Ctor.
      * @param namespaceUri The namespace URI.
      * @param handler The meta data handler.
-     * @param manager The service manager.
      */
     public SourceNodeMetaData(String namespaceUri, SourceNodeMetaDataHandler handler,
-            ServiceManager manager) {
+            MetaDataRegistry registry) {
         this.namespaceUri = namespaceUri;
         this.handler = handler;
-        this.manager = manager;
+        this.registry = registry;
     }
 
     protected String getNamespaceUri() {
@@ -64,9 +62,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
     public ElementSet getElementSet() {
         if (this.elementSet == null) {
             try {
-                MetaDataRegistry registry = (MetaDataRegistry) this.manager
-                        .lookup(MetaDataRegistry.ROLE);
-                this.elementSet = registry.getElementSet(this.namespaceUri);
+                this.elementSet = this.registry.getElementSet(this.namespaceUri);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

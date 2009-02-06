@@ -19,10 +19,9 @@ package org.apache.lenya.cms.repository;
 
 import java.util.Vector;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.RCML;
 
@@ -32,17 +31,17 @@ import org.apache.lenya.cms.rc.RCML;
 public class SourceNodeHistory extends AbstractLogEnabled implements History {
 
     private SourceNode node;
-    private ServiceManager manager;
+    private SourceResolver sourceResolver;
 
     /**
      * Ctor.
      * @param node The node which the history belongs to.
-     * @param manager The service manager.
      * @param logger The logger.
      */
-    public SourceNodeHistory(SourceNode node, ServiceManager manager, Log logger) {
+    public SourceNodeHistory(SourceNode node, SourceResolver resolver, Log logger) {
         this.node = node;
-        this.manager = manager;
+        this.sourceResolver = resolver;
+        setLogger(logger);
     }
 
     public Revision getLatestRevision() {
@@ -60,7 +59,7 @@ public class SourceNodeHistory extends AbstractLogEnabled implements History {
     }
 
     public Revision getRevision(int number) throws RepositoryException {
-        return new SourceNodeRevision(this.node, number, this.manager, getLogger());
+        return new SourceNodeRevision(this.node, number, this.sourceResolver, getLogger());
     }
 
     public int[] getRevisionNumbers() {
