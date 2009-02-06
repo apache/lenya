@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.repository;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.Identity;
@@ -32,6 +34,31 @@ public class RepositoryUtil {
      * @param request The request.
      * @return A session.
      * @throws RepositoryException if an error occurs.
+     */
+    public static Session getSession(RepositoryManager repoManager, Request request)
+            throws RepositoryException {
+        Session session = (Session) request.getAttribute(Session.class.getName());
+        if (session == null) {
+            Identity identity = getIdentity(request);
+            // attach a read-only repository session to the HTTP request
+            session = repoManager.createSession(identity, false);
+            request.setAttribute(Session.class.getName(), session);
+        } else if (session.getIdentity() == null) {
+            Identity identity = getIdentity(request);
+            if (identity != null) {
+                session.setIdentity(identity);
+            }
+        }
+        return session;
+    }
+
+    /**
+     * Returns the session attached to the request or creates a session.
+     * @param manager The service manager.
+     * @param request The request.
+     * @return A session.
+     * @throws RepositoryException if an error occurs.
+     * @deprecated
      */
     public static Session getSession(ServiceManager manager, Request request)
             throws RepositoryException {
@@ -51,9 +78,8 @@ public class RepositoryUtil {
     }
 
     protected static Identity getIdentity(Request request) {
-        org.apache.cocoon.environment.Session cocoonSession = request.getCocoonSession();
-        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
-        return identity;
+        HttpSession cocoonSession = request.getSession();
+        return (Identity) cocoonSession.getAttribute(Identity.class.getName());
     }
 
     /**
@@ -63,6 +89,7 @@ public class RepositoryUtil {
      * @param modifiable Determines if the repository items in this session should be modifiable.
      * @return a session.
      * @throws RepositoryException if an error occurs.
+     * @deprecated
      */
     public static Session createSession(ServiceManager manager, Identity identity, boolean modifiable)
             throws RepositoryException {

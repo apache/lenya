@@ -24,23 +24,23 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.cocoon.source.FallbackSourceFactory;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 import org.springframework.util.Assert;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>
@@ -48,29 +48,34 @@ import org.springframework.util.Assert;
  * template-fallback, ...) is configurable via the <em>protocol</em> parameter.
  * </p>
  */
-public class FallbackModule extends AbstractInputModule implements Serviceable {
+public class FallbackModule extends AbstractInputModule {
 
-    protected ServiceManager manager;
     private String protocol;
-    protected static MRUMemoryStore store;
+    protected MRUMemoryStore store;
+    private RepositoryManager repositoryManager;
+    private DocumentFactoryBuilder documentFactoryBuilder;
+    private SourceResolver resolver;
     private static Boolean useCache = null;
 
+    public void setRepositoryManager(RepositoryManager manager) {
+        this.repositoryManager = manager;
+    }
+
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder builder) {
+        this.documentFactoryBuilder = builder;
+    }
+
     protected boolean useCache() {
-        if (useCache == null) {
-            useCache = Boolean.valueOf(this.manager.hasService(FallbackSourceFactory.STORE_ROLE));
-        }
-        return useCache.booleanValue();
+        return this.store != null;
+    }
+
+    public void setStore(MRUMemoryStore store) {
+        Assert.notNull(store, "store");
+        this.store = store;
     }
 
     protected MRUMemoryStore getStore() {
-        if (store == null) {
-            try {
-                store = (MRUMemoryStore) this.manager.lookup(FallbackSourceFactory.STORE_ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return store;
+        return this.store;
     }
 
     protected String getPublicationId(Map objectModel) {
@@ -79,8 +84,8 @@ public class FallbackModule extends AbstractInputModule implements Serviceable {
         URLInformation info = new URLInformation(webappUri);
         String pubId = null;
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
             String pubIdCandidate = info.getPublicationId();
             if (pubIdCandidate != null && factory.existsPublication(pubIdCandidate)) {
                 pubId = pubIdCandidate;
@@ -101,32 +106,25 @@ public class FallbackModule extends AbstractInputModule implements Serviceable {
             MRUMemoryStore store = getStore();
             if (store.containsKey(cacheKey)) {
                 uri = (String) store.get(cacheKey);
-            }
-            else {
+            } else {
                 uri = resolveSourceUri(name);
             }
-        }
-        else {
+        } else {
             uri = resolveSourceUri(name);
         }
         return uri;
     }
 
     protected String resolveSourceUri(String name) throws ConfigurationException {
-        SourceResolver resolver = null;
         Source source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getFallbackUri(name));
+            source = this.resolver.resolveURI(getFallbackUri(name));
             return source.getURI();
         } catch (Exception e) {
             throw new ConfigurationException("Resolving fallback source [" + name + "] failed: ", e);
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
+            if (source != null) {
+                this.resolver.release(source);
             }
         }
     }
@@ -146,14 +144,13 @@ public class FallbackModule extends AbstractInputModule implements Serviceable {
         return objects;
     }
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-        
-    }
-    
     public void setProtocol(String protocol) {
         Assert.notNull(protocol, "protocol");
         this.protocol = protocol;
+    }
+    
+    public void setSourceResolver(SourceResolver resolver) {
+        this.resolver = resolver;
     }
 
 }

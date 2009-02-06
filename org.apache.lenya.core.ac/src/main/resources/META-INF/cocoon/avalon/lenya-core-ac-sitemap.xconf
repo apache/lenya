@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<map:components xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:transformers>
+    <map:transformer name="userInfo" logger="lenya.sitemap.transformer.userInfo"
+      src="org.apache.lenya.modules.ac.UserInfoTransformer"/>
+  </map:transformers>
+
+  <!-- Actions -->
+  <map:actions>
+    <map:action name="authenticator" logger="lenya.sitemap.action.authenticator"
+      src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthenticatorAction"/>
+    <map:action name="authorizer" logger="lenya.sitemap.action.authorizer"
+      src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction"/>
+    <map:action name="ssl-redirect" logger="lenya.sitemap.action.ssl-redirect"
+      src="org.apache.lenya.cms.cocoon.acting.SslRedirectAction"/>
+  </map:actions>
+
+</map:components>

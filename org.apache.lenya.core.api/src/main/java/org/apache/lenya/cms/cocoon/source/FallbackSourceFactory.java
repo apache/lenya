@@ -46,6 +46,7 @@ import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
+import org.springframework.util.Assert;
 
 /**
  * <p>
@@ -61,27 +62,23 @@ import org.apache.lenya.util.ServletHelper;
 public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
         Serviceable, Contextualizable, URIAbsolutizer {
 
-    protected static MRUMemoryStore store;
-    private static Boolean useCache = null;
-
-    public static final String STORE_ROLE = FallbackSourceFactory.class.getName() + "Store";
+    protected MRUMemoryStore store;
+    
+    /**
+     * Configure the spring bean accordingly if you want to use a store.
+     * @param store The store.
+     */
+    public void setStore(MRUMemoryStore store) {
+        Assert.notNull(store, "store");
+        this.store = store;
+    }
 
     protected boolean useCache() {
-        if (useCache == null) {
-            useCache = Boolean.valueOf(this.manager.hasService(STORE_ROLE));
-        }
-        return useCache.booleanValue();
+        return this.store != null;
     }
 
     protected MRUMemoryStore getStore() {
-        if (store == null) {
-            try {
-                store = (MRUMemoryStore) this.manager.lookup(STORE_ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return store;
+        return this.store;
     }
 
     /**

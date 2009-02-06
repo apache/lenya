@@ -22,5 +22,15 @@
   <bean name="org.apache.cocoon.components.modules.input.InputModule/fallback"
     class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule">
     <property name="protocol" value="fallback"/>
-  </bean>  
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+    <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
+  </bean>
+  <bean name="org.apache.cocoon.components.modules.input.InputModule/page-envelope"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
+  <bean name="org.apache.cocoon.components.modules.input/resource-type"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceTypeModule"/>
+  <bean name="org.apache.cocoon.components.modules.input/doc-info"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentInfoModule"/>
+  <bean name="org.apache.cocoon.components.modules.input/document-url"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentURLModule"/>
 </beans>

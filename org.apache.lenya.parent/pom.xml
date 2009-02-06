@@ -294,6 +294,11 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-ldap</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -417,7 +422,7 @@
   </reporting>
 
   <properties>
-    <cocoon.version>2.2.0</cocoon.version>
+    <cocoon.version>2.2.1-SNAPSHOT</cocoon.version>
     <avalon.version>4.3.1</avalon.version>
   </properties>
 </project>
