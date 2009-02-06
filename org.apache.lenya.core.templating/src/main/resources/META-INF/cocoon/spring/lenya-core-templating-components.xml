@@ -19,10 +19,6 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
-  <bean name="org.apache.lenya.cms.repository.RepositoryManager"
-    class="org.apache.lenya.cms.repository.RepositoryManagerImpl"/>
-  <bean name="org.apache.lenya.cms.publication.DocumentFactoryBuilder"
-    class="org.apache.lenya.cms.publication.DocumentFactoryBuilderImpl"/>
-  <bean name="org.apache.lenya.cms.module.ModuleManager"
-    class="org.apache.lenya.cms.module.ModuleManagerImpl"/>
+  <bean name="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"
+    class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"/>
 </beans>

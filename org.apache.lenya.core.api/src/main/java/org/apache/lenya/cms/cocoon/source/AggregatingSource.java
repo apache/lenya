@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.components.source.impl.MultiSourceValidity;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -23,17 +22,16 @@ public class AggregatingSource implements Source {
 
     private String uri;
     private String[] sourceUris;
-    private ServiceManager manager;
+    private SourceResolver resolver;
 
     /**
      * @param uri
      * @param uris
-     * @param manager
      */
-    public AggregatingSource(String uri, String[] uris, ServiceManager manager) {
-        this.manager = manager;
+    public AggregatingSource(String uri, String[] uris, SourceResolver resolver) {
         this.sourceUris = (String[]) uris.clone();
         this.uri = uri;
+        this.resolver = resolver;
     }
 
     public String toString() {
@@ -43,7 +41,8 @@ public class AggregatingSource implements Source {
     protected void loadDom() {
         try {
             for (int i = 0; i < sourceUris.length; i++) {
-                Document sourceDom = SourceUtil.readDOM(sourceUris[i], this.manager);
+                
+                Document sourceDom = SourceUtil.readDOM(sourceUris[i], this.resolver);
 
                 if (sourceDom == null) {
                     throw new RuntimeException("The source [" + sourceUris[i]
@@ -124,7 +123,7 @@ public class AggregatingSource implements Source {
         for (int i = 0; i < this.sourceUris.length; i++) {
             try {
                 lastModified = Math.max(lastModified, SourceUtil.getLastModified(sourceUris[i],
-                        this.manager));
+                        this.resolver));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -148,9 +147,7 @@ public class AggregatingSource implements Source {
 
     public SourceValidity getValidity() {
         if (this.validity == null) {
-            SourceResolver resolver = null;
             try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 MultiSourceValidity aggregatedValidity = new MultiSourceValidity(resolver,
                         MultiSourceValidity.CHECK_ALWAYS);
                 for (int i = 0; i < this.sourceUris.length; i++) {
@@ -168,10 +165,6 @@ public class AggregatingSource implements Source {
                 this.validity = aggregatedValidity;
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (resolver != null) {
-                    this.manager.release(resolver);
-                }
             }
         }
         return this.validity;

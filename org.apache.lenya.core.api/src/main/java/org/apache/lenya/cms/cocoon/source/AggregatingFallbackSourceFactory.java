@@ -28,13 +28,12 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
-import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.AllExistingSourceResolver;
-import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -86,7 +85,7 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
         else {
             uris = findUris(location, parameters);
         }
-        return new AggregatingSource(location, uris, this.manager);
+        return new AggregatingSource(location, uris, getSourceResolver());
     }
 
     protected String[] findUris(final String location, Map parameters) throws IOException,
@@ -96,10 +95,7 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
         String pubId = uri.getPubId();
         String path = uri.getPath();
 
-        PublicationTemplateManager templateManager = null;
         try {
-            templateManager = (PublicationTemplateManager) this.manager
-                    .lookup(PublicationTemplateManager.ROLE);
 
             Request request = ContextHelper.getRequest(this.context);
 
@@ -109,14 +105,15 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
                 pubId = info.getPublicationId();
             }
 
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory factory = getDocumentFactoryBuilder().createDocumentFactory(session);
 
             String[] uris;
 
             if (factory.existsPublication(pubId)) {
                 Publication pub = factory.getPublication(pubId);
                 AllExistingSourceResolver resolver = new AllExistingSourceResolver();
-                templateManager.visit(pub, path, resolver);
+                getTemplateManager().visit(pub, path, resolver);
                 uris = resolver.getUris();
             } else {
                 uris = new String[0];
@@ -127,22 +124,14 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
             
             String contextSourceUri = null;
             if (path.startsWith("lenya/modules/")) {
-                ModuleManager moduleMgr = null;
-                try {
-                    moduleMgr = (ModuleManager) this.manager.lookup(ModuleManager.ROLE);
-                    final String moduleShortcut = path.split("/")[2];
-                    String baseUri = moduleMgr.getBaseURI(moduleShortcut);
-                    final String modulePath = path.substring(("lenya/modules/" + moduleShortcut).length());
-                    contextSourceUri = baseUri + modulePath;
-                } finally {
-                    if (moduleMgr != null) {
-                        this.manager.release(moduleMgr);
-                    }
-                }
+                final String moduleShortcut = path.split("/")[2];
+                String baseUri = getModuleManager().getBaseURI(moduleShortcut);
+                final String modulePath = path.substring(("lenya/modules/" + moduleShortcut).length());
+                contextSourceUri = baseUri + modulePath;
             } else {
                 contextSourceUri = "context://" + path;
             }
-            if (org.apache.lenya.cms.cocoon.source.SourceUtil.exists(contextSourceUri, this.manager)) {
+            if (org.apache.lenya.cms.cocoon.source.SourceUtil.exists(contextSourceUri, getSourceResolver())) {
                 allUris.add(contextSourceUri);
             }
 
@@ -150,10 +139,6 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
 
         } catch (Exception e) {
             throw new RuntimeException("Resolving path [" + location + "] failed: ", e);
-        } finally {
-            if (templateManager != null) {
-                this.manager.release(templateManager);
-            }
         }
     }
 

@@ -170,6 +170,7 @@ public final class SourceUtil {
      * @throws ParserConfigurationException if an error occurs.
      * @throws SAXException if an error occurs.
      * @throws IOException if an error occurs.
+     * @deprecated
      */
     public static Document readDOM(String sourceUri, ServiceManager manager)
             throws ServiceException, SourceNotFoundException, ParserConfigurationException,
@@ -191,6 +192,37 @@ public final class SourceUtil {
                     resolver.release(source);
                 }
                 manager.release(resolver);
+            }
+        }
+        return document;
+    }
+
+    /**
+     * Reads a DOM from a source.
+     * @param sourceUri The source URI.
+     * @param manager The service manager.
+     * @return A document or <code>null</code> if the source does not exist.
+     * @throws ServiceException if an error occurs.
+     * @throws SourceNotFoundException if an error occurs.
+     * @throws ParserConfigurationException if an error occurs.
+     * @throws SAXException if an error occurs.
+     * @throws IOException if an error occurs.
+     */
+    public static Document readDOM(String sourceUri, SourceResolver resolver)
+            throws ServiceException, SourceNotFoundException, ParserConfigurationException,
+            SAXException, IOException {
+        Source source = null;
+        Document document = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            if (source.exists()) {
+                document = DocumentHelper.readDocument(source.getInputStream());
+            }
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
             }
         }
         return document;
@@ -321,6 +353,7 @@ public final class SourceUtil {
      * @throws ServiceException if an error occurs.
      * @throws MalformedURLException if an error occurs.
      * @throws IOException if an error occurs.
+     * @deprecated
      */
     public static boolean exists(String sourceUri, ServiceManager manager) throws ServiceException,
             MalformedURLException, IOException {
@@ -343,6 +376,27 @@ public final class SourceUtil {
     }
 
     /**
+     * Checks if a source exists.
+     * @param sourceUri The source URI.
+     * @return A boolean value.
+     * @throws ServiceException if an error occurs.
+     * @throws MalformedURLException if an error occurs.
+     * @throws IOException if an error occurs.
+     */
+    public static boolean exists(String sourceUri, SourceResolver resolver) throws ServiceException,
+            MalformedURLException, IOException {
+        Source source = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            return source.exists();
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
+        }
+    }
+
+    /**
      * Returns the last modification date of a source.
      * @param sourceUri The source URI.
      * @param manager The service manager.
@@ -350,6 +404,7 @@ public final class SourceUtil {
      * @throws ServiceException if an error occurs.
      * @throws MalformedURLException if an error occurs.
      * @throws IOException if an error occurs.
+     * @deprecated
      */
     public static long getLastModified(String sourceUri, ServiceManager manager)
             throws ServiceException, MalformedURLException, IOException {
@@ -367,6 +422,28 @@ public final class SourceUtil {
                     resolver.release(source);
                 }
                 manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * Returns the last modification date of a source.
+     * @param sourceUri The source URI.
+     * @param manager The service manager.
+     * @return A long value.
+     * @throws ServiceException if an error occurs.
+     * @throws MalformedURLException if an error occurs.
+     * @throws IOException if an error occurs.
+     */
+    public static long getLastModified(String sourceUri, SourceResolver resolver)
+            throws ServiceException, MalformedURLException, IOException {
+        Source source = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            return source.getLastModified();
+        } finally {
+            if (source != null) {
+                resolver.release(source);
             }
         }
     }

@@ -23,9 +23,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.util.AbstractLogEnabled;
@@ -37,12 +34,13 @@ import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
@@ -60,9 +58,14 @@ import org.springframework.util.Assert;
  * @version $Id$
  */
 public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
-        Serviceable, Contextualizable, URIAbsolutizer {
+        Contextualizable, URIAbsolutizer {
 
     protected MRUMemoryStore store;
+    private SourceResolver resolver;
+    private RepositoryManager repositoryManager;
+    private DocumentFactoryBuilder documentFactoryBuilder;
+    private PublicationTemplateManager templateManager;
+    private ModuleManager moduleManager;
     
     /**
      * Configure the spring bean accordingly if you want to use a store.
@@ -79,6 +82,46 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
     protected MRUMemoryStore getStore() {
         return this.store;
+    }
+    
+    public void setSourceResolver(SourceResolver resolver) {
+        this.resolver = resolver;
+    }
+    
+    protected SourceResolver getSourceResolver() {
+        return this.resolver;
+    }
+    
+    public void setRepositoryManager(RepositoryManager repoMgr) {
+        this.repositoryManager = repoMgr;
+    }
+    
+    protected RepositoryManager getRepositoryManager() {
+        return this.repositoryManager;
+    }
+    
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder builder) {
+        this.documentFactoryBuilder = builder;
+    }
+    
+    protected DocumentFactoryBuilder getDocumentFactoryBuilder() {
+        return this.documentFactoryBuilder;
+    }
+    
+    public void setTemplateManager(PublicationTemplateManager mgr) {
+        this.templateManager = mgr;
+    }
+    
+    protected PublicationTemplateManager getTemplateManager() {
+        return this.templateManager;
+    }
+    
+    public void setModuleManager(ModuleManager mgr) {
+        this.moduleManager = mgr;
+    }
+    
+    protected ModuleManager getModuleManager() {
+        return this.moduleManager;
     }
 
     /**
@@ -105,17 +148,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                                     + resolvedSourceUri);
                 }
             } else {
-                SourceResolver resolver = null;
-                try {
-                    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                    source = resolver.resolveURI(cachedSourceUri);
-                } catch (ServiceException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    if (resolver != null) {
-                        this.manager.release(resolver);
-                    }
-                }
+                source = this.resolver.resolveURI(cachedSourceUri);
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
                             "Using cached source URI " + cachedSourceUri + " for key " + cacheKey);
@@ -145,8 +178,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         URLInformation info = new URLInformation(webappUri);
         String pubId = null;
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
             String pubIdCandidate = info.getPublicationId();
             if (pubIdCandidate != null && factory.existsPublication(pubIdCandidate)) {
                 pubId = pubIdCandidate;
@@ -165,14 +198,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         String pubId = uri.getPubId();
         String path = uri.getPath();
 
-        PublicationTemplateManager templateManager = null;
-        SourceResolver sourceResolver = null;
         Source source = null;
         try {
-            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-
-            templateManager = (PublicationTemplateManager) this.manager
-                    .lookup(PublicationTemplateManager.ROLE);
 
             Request request = ContextHelper.getRequest(this.context);
 
@@ -184,32 +211,25 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                 pubId = info.getPublicationId();
             }
 
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
             if (factory.existsPublication(pubId)) {
                 Publication pub = factory.getPublication(pubId);
                 VisitingSourceResolver resolver = getSourceVisitor();
-                templateManager.visit(pub, path, resolver);
+                this.templateManager.visit(pub, path, resolver);
                 source = resolver.getSource();
             }
 
             if (source == null) {
                 if (path.startsWith("lenya/modules/")) {
-                    ModuleManager moduleMgr = null;
-                    try {
-                        moduleMgr = (ModuleManager) this.manager.lookup(ModuleManager.ROLE);
-                        final String moduleShortcut = path.split("/")[2];
-                        String baseUri = moduleMgr.getBaseURI(moduleShortcut);
-                        final String modulePath = path
-                                .substring(("lenya/modules/" + moduleShortcut).length());
-                        source = sourceResolver.resolveURI(baseUri + modulePath);
-                    } finally {
-                        if (moduleMgr != null) {
-                            this.manager.release(moduleMgr);
-                        }
-                    }
+                    final String moduleShortcut = path.split("/")[2];
+                    String baseUri = this.moduleManager.getBaseURI(moduleShortcut);
+                    final String modulePath = path
+                            .substring(("lenya/modules/" + moduleShortcut).length());
+                    source = this.resolver.resolveURI(baseUri + modulePath);
                 } else {
                     String contextUri = "context://" + path;
-                    source = sourceResolver.resolveURI(contextUri);
+                    source = this.resolver.resolveURI(contextUri);
                 }
             }
 
@@ -219,13 +239,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
         } catch (Exception e) {
             throw new RuntimeException("Resolving path [" + location + "] failed: ", e);
-        } finally {
-            if (templateManager != null) {
-                this.manager.release(templateManager);
-            }
-            if (sourceResolver != null) {
-                this.manager.release(sourceResolver);
-            }
         }
 
         return source;
@@ -236,16 +249,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     }
 
     protected org.apache.avalon.framework.context.Context context;
-
-    /** The ServiceManager */
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
 
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
@@ -266,15 +269,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             if (this.getLogger().isDebugEnabled()) {
                 this.getLogger().debug("Releasing source " + source.getURI());
             }
-            SourceResolver resolver = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                resolver.release(source);
-            } catch (ServiceException ignore) {
-                // ignore the exception
-            } finally {
-                this.manager.release(resolver);
-            }
+            this.resolver.release(source);
         }
     }
 
