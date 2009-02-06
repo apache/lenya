@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: introduction.xml 473861 2006-11-12 03:51:14Z gregor $ -->
+
+<page:page 
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+>
+  <page:title>Apache Lenya @lenya.version@ (Revision:@lenya.revision@)</page:title>
+  <page:body>
+  
+    <h1>Welcome to Apache Lenya</h1>
+    <p>
+      You have successfully installed Apache Lenya 
+      <strong>@lenya.version@</strong> (Revision: @lenya.revision@).
+      To start, click on any of the publications on the left, or create
+      a new publication.
+    </p>
+  
+    <h2>About</h2>
+    <p>
+      <a href="http://lenya.apache.org">Apache Lenya</a> is a Java-based
+      <a href="http://www.opensource.org">open-source</a> Content Management 
+      System. It is based on open standards such as 
+      <a href="http://www.w3c.org/XML/">XML</a> and 
+      <a href="http://www.w3c.org/TR/xslt">XSLT</a>. It is based on
+      <a href="http://cocoon.apache.org">Apache Cocoon</a>.
+    </p>
+    <p>
+      Lenya is a community project and is being developed under the aegis of the 
+      <a href="http://www.apache.org/">Apache Software Foundation (ASF)</a>. 
+      You are welcome to join our mailing lists and contribute!
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>supports multi-lingual websites</li>
+      <li>
+        includes several client-side content editors, many of them
+        WYSIWYG
+      </li>
+      <li>allows for complex workflows (edit/submit/review/publish)</li>
+      <li>
+        allows for arbitrary output, does not impose standard layouts or 
+        techniques (such as HTML tables) on the user
+      </li>
+      <li>
+        provides revision control, old page versions can be viewed and restored
+        if necessary
+      </li>
+      <li>
+        powerful XML processing capabilities thanks to the underlying Cocoon
+        engine
+      </li>
+      <li>...</li>
+    </ul>
+  
+  </page:body>
+</page:page>

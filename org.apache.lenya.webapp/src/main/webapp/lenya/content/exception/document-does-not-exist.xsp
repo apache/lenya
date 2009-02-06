@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  >
+  
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.util.DocumentLanguagesHelper</xsp:include>
+    <xsp:include>org.apache.avalon.framework.service.WrapperServiceManager</xsp:include>
+  </xsp:structure>
+  
+  <missing-language>
+    
+    <xsp:logic>
+      DocumentLanguagesHelper helper = new DocumentLanguagesHelper(
+        objectModel, new WrapperServiceManager(this.manager));
+    </xsp:logic>
+    
+    <current-language><xsp:expr>helper.getLanguage()</xsp:expr></current-language>
+    <available-languages>
+      <xsp:logic>
+        String[] availableLanguages = helper.getLanguages();
+        String language = null;
+        for (int i = 0; i &lt; availableLanguages.length; i++) {
+          language = availableLanguages[i];
+          <xsp:content>
+            <available-language>
+              <language><xsp:expr>language</xsp:expr></language>
+              <url><xsp:expr>helper.getUrl(language)</xsp:expr></url>
+            </available-language>
+          </xsp:content>
+        }
+      </xsp:logic>
+    </available-languages>
+    
+  </missing-language>
+</xsp:page>

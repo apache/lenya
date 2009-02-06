@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<catalogue xml:lang="ja" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
+
+  <!-- common used words -->
+  <message key="Save">保存</message>
+  <message key="Submit">送信</message>
+  <message key="Cancel">キャンセル</message>
+  <message key="Delete">削除</message>
+  <message key="NOTE">＜注＞</message>
+  <message key="No referer">参照無し</message>
+  <message key="Referer">参照</message>
+  <message key="EXCEPTION">例外</message>
+  <message key="User">ユーザ</message>
+  <message key="live">ライブ</message>
+  <message key="not">not</message>
+  <message key="authoring">オーサリング</message>
+  <message key="Authoring">オーサリング</message>
+  <message key="review">レビュー</message>
+  <message key="user">ユーザ</message>
+  <message key="Users">ユーザ群</message>
+  <message key="group">グループ</message>
+  <message key="Group">グループ</message>
+  <message key="Groups">グループ群</message>
+  <message key="Group ID">グループ ID</message>
+  <message key="Yes">はい</message>
+  <message key="No">いいえ</message>
+  <message key="Description">説明</message>
+  <message key="Name">名前</message>
+  <message key="Full Name">フルネーム</message>
+  <message key="required fields">必須フィールド</message>
+  <message key="Search">検索</message>
+  <message key="Home">ホーム</message>
+  <message key="Title">タイトル</message>
+  <message key="Last modified">最終更新日</message>
+  <message key="Overview">概要</message>
+  <message key="Role">ロール</message>
+  <message key="View">ビュー</message>
+  <message key="Assets">アセット</message>
+  <message key="true">はい</message>
+  <message key="false">いいえ</message>
+  <message key="Rename">名前変更</message>
+  <message key="Modify">修正</message>
+  <message key="Document">ドキュメント</message>
+  <message key="Date">日付</message>
+  <message key="Back">戻る</message>
+  <message key="Add">追加</message>
+  <message key="Create">作成</message>
+  <message key="The Archive">アーカイブ</message>
+  <message key="Trash">ゴミ箱</message>
+  <message key="Publisher">発行者</message>
+  <message key="Navigation Title">ナビゲーションタイトル</message>
+  <message key="Creator">作成者</message>
+  <message key="Language">言語</message>
+  <message key="Subject">題名</message>
+  <message key="Rights">権利</message>
+  <message key="Select File">ファイル選択</message>
+  <message key="select-object">{0} の選択</message>
+  <message key="Insert">挿入</message>
+  <message key="Insert File">ファイル挿入</message>
+  <message key="upload-with-invalid-extension">拡張子の正しくないファイルをアップロードしようとしました。正しい拡張子は {0} です。拡張子名は小文字(a,b,c,...）にしてください</message>
+  <message key="upload-with-missing-title">タイトルの無いファイルをアップロードしようとしました</message>
+  <message key="filename-format-exception">アップロードしようとしたファイルの名前に拡張子がないか或いは半角スペースやウムラウトといった使用不可能な文字が含まれています</message>
+  <message key="Creation Date">作成日</message>
+  <message key="File Size">ファイルサイズ</message>
+  <message key="Image">イメージ</message>
+  <message key="Link">リンク</message>
+  <message key="Caption">キャプション</message>
+  <message key="All rights reserved">All rights reserved.</message>
+
+  <!-- submit screen -->
+  <message key="submit-for-approval">承認用に {0} を送信</message>
+  <message key="submit-for-approval?">承認用に {0} を送信しますか？</message>
+
+  <!-- publish screen -->
+  <message key="Publish">パブリッシュ</message>
+  <message key="Source File(s)">ソースファイル</message>
+
+  <!-- login screen -->
+  <message key="login-to-pub">{0} パブリケーションへのログイン</message>
+  <message key="Login">ログイン</message>
+  <message key="Password">パスワード</message>
+  <message key="Username">ユーザ名</message>
+  <message key="Authentication failed">認証失敗</message>
+  <message key="try-user-lenya-alice">ユーザ {0} のパスワード {1} （編集者）、あるいは、ユーザ {2} のパスワード {3} （レビュアー）を使ってください</message>
+  
+  <!-- logout screen -->
+  <message key="logout-from-pub">{0} パブリケーションからのログアウト</message>
+  <message key="Your History">履歴</message>
+  <message key="Login to Authoring Area">オーサリングエリアへのログイン</message>
+
+  <!-- reject screen -->
+  <message key="Reject">拒否</message>
+  <message key="reject-doc?">ドキュメント {0} を拒否しますか？</message>
+
+  <!-- cms menu -->
+  <message key="New Document">新規ドキュメント</message>
+  <message key="New ... Document">新規ドキュメント {0}</message>
+  <message key="New Language Version">新規言語バージョン</message>
+  <message key="Remove Language Version">言語バージョンの削除</message>
+  <message key="File">ファイル</message>
+  <message key="Edit">編集</message>
+  <message key="Workflow">ワークフロー</message>
+  <message key="Deactivate">アクティベート解除</message>
+  <message key="Schedule">スケジュール</message>
+  <message key="Copy">コピー</message>
+  <message key="Paste">貼り付け</message>
+  <message key="Cut">切り取り</message>
+  <message key="Help">ヘルプ</message>
+  <message key="Debug">デバッグ</message>
+  <message key="Delete">削除</message>
+  <message key="Archive">アーカイブ</message>
+  <message key="Restore">リストア</message>
+  <message key="Move Up">上へ</message>
+  <message key="Move Down">下へ</message>
+  <message key="Logout">ログアウト</message>
+  <message key="View Task Logs">View Task Logs</message>
+  <message key="Support">サポート</message>
+  <message key="System Documentation">システムドキュメント</message>
+  <message key="User Documentation">ユーザドキュメント</message>
+  <message key="About Apache Lenya">Apache Lenya について</message>
+  <message key="Apache Lenya Homepage">Apache Lenya ホームページ</message>
+  <message key="Edit with Kupu">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
+  </message>
+  <message key="Edit with BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
+  </message>
+  <message key="Edit with one Form">ソースエディタ</message>
+  <message key="Edit with Forms">フォームエディタ</message>
+  <message key="Edit Metadata">メタデータの編集</message>
+  <message key="Edit Navigation Title">ナビゲーションタイトルの編集</message>
+  <message key="Rename URL">URLの変更</message>
+
+  <!-- cms tabs -->
+  <message key="Server Time">サーバ時間</message>
+  <message key="Workflow State">ワークフロー状態</message>
+
+  <!-- Administration tab -->
+  <message key="Administration">管理</message>
+  <message key="really-delete?">本当に {0} を削除しますか？</message>
+  <message key="Do you really want to delete the trash ?">本当にゴミ箱を削除しますか？</message>
+  <message key="delete-object">{0} の削除</message>
+  <message key="delete-object?">本当に {0} を削除しますか？</message>
+  <message key="Passwd">パスワード</message>
+  <message key="Switch User">ユーザ切替</message>
+  <message key="Delete Trash">ゴミ箱の削除</message>
+  <message key="Cocoon and Server Status">Cocoon／Serverのステータス</message>
+
+    <!-- Group Administration -->
+  <message key="Profile">プロフィール</message>
+  <message key="Members">メンバー</message>
+  <message key="IP Ranges">IP範囲</message>
+  <message key="Edit Profile">プロフィール編集</message>
+  <message key="Edit Members">メンバー編集</message>
+  <message key="Group Administration">グループ管理</message>
+  <message key="Add Group">グループ追加</message>
+  <message key="Group Data">グループデータ</message>
+
+    <!-- User Administration -->
+  <message key="User Data">ユーザデータ</message>
+  <message key="CMS User ID">CMSユーザID</message>
+  <message key="LDAP ID">LDAP&#160;ID</message>
+  <message key="Confirm password">パスワード確認</message>
+  <message key="Add User">ユーザ追加</message>
+  <message key="User Administration">ユーザ管理</message>
+  <message key="User Details">ユーザ詳細</message>
+  <message key="All Groups">すべてのグループ</message>
+  <message key="User Groups">ユーザグループ</message>
+  <message key="Group Affiliation">グループアフィリエート</message>
+  <message key="Change Password">パスワード変更</message>
+  <message key="Edit Group Affiliation">グループアフィリエートの編集</message>
+
+    <!-- User Types -->
+  <message key="LDAP User">LDAP ユーザ</message>
+  <message key="Local User">CMS ユーザ</message>
+
+    <!-- IP Range Administration -->
+  <message key="IP Range">IP範囲</message>
+  <message key="IP Range ID">IP範囲ID</message>
+  <message key="Network Address">ネットワークアドレス</message>
+  <message key="Subnet Mask">サブネットマスク</message>
+  <message key="IP Range Administration">IP範囲管理</message>
+  <message key="Add IP Range">IP範囲の追加</message>
+  <message key="IP Range Profile">IP範囲のプロフィール</message>
+
+  <!-- Site tab (info screens) -->
+  <message key="Available Languages">利用可能言語</message>
+  <message key="This document is not available in this language.">このドキュメントで指定の言語は対応していません</message>
+  <message key="Document ID">ドキュメントID</message>
+  <message key="Versions">バージョン</message>
+  <message key="SSL Encryption">SSL暗号化</message>
+  <message key="Rollback to this version">このバージョンへロールバック</message>
+  <message key="AC Archive">ACアーカイブ</message>
+  <message key="AC Trash">ACゴミ箱</message>
+  <message key="AC Auth">AC&#160;Auth</message>
+  <message key="AC Live">AC&#160;Live</message>
+  <message key="Scheduler">スケジューラ</message>
+
+    <!-- Info screen actions-->
+  <message key="New Navigation Title">新規ナビゲーションタイトル</message>
+  <message key="Rename Document">ドキュメントの名前変更</message>
+  <message key="New Document ID">新規ドキュメントID</message>
+  <message key="No whitespace, no special characters">空白無し特殊文字無し</message>
+      <!-- Scheduler -->
+  <message key="No active jobs">有効なジョブ無し</message>
+  <message key="The job date has expired">このジョブは有効期限切れです</message>
+  <message key="check the log files">ログファイルの確認</message>
+  <message key="Task">タスク</message>
+  <message key="Day">Day</message>
+  <message key="Time">Time</message>
+      <!-- Deactivate and delete -->
+  <message key="docs-have-links-to-doc">以下のドキュメントにはこのドキュメントへのリンクがあります</message>
+  <message key="Deactivate Document">ドキュメントのアクティベート解除</message>
+  <message key="deactivate-doc">ドキュメント {0} のアクティベート解除</message>
+  <message key="deactivate-doc?">本当にドキュメント {0} のアクティベートを解除しますか？</message>
+  <message key="Delete Document">ドキュメントの削除</message>
+  <message key="delete-doc">ドキュメント {0} の削除</message>
+  <message key="cannot-deactivate-unless-children-deactivated">以下の子ドキュメントがアクティベート解除状態でなければ、このドキュメントのアクティベートを解除できません</message>
+  <message key="delete-language-versions?">本当にドキュメント {0} のすべての言語バージョンを削除してもよろしいですか？</message>
+      <!-- Archive document -->
+  <message key="Archive Document">ドキュメントのアーカイブ</message>
+  <message key="archive-doc">ドキュメント {0} のアーカイブ</message>
+  <message key="archive-doc?">本当にドキュメント {0} をアーカイブしますか？</message>
+      <!-- Rename document -->
+  <message key="Rename Document">ドキュメントの名前変更</message>
+  <message key="rename-doc">ドキュメント {0} の名前変更</message>
+      <!-- Copy document -->
+  <message key="Copy Document">ドキュメントのコピー</message>
+  <message key="copy-doc-to-clip?">ドキュメント {0} をコピーしクリップボードに移動させますか？ お好みの場所に後で貼り付けをすることが出来ます</message>
+      <!-- Paste document -->
+  <message key="Paste Document">ドキュメントの貼り付け</message>
+  <message key="paste-doc-from-clip?">クリップボードからドキュメント {0} を貼り付けしますか？</message>
+      <!-- Cut document -->
+  <message key="Cut Document">ドキュメントの切り取り</message>
+  <message key="cut-doc-to-clip?">ドキュメント {0} を切り取りクリップボードに移動させますか？ お好みの場所に後で貼り付けをすることが出来ます</message>
+    <!--Change visibility in navigation -->
+  <message key="Change">変更</message>
+  <message key="Change Document visiblity in navigation">ナビゲーションでのドキュメントの可視性の変更</message>
+  <message key="Visibility in navigation">ナビゲーションでの可視性</message>
+  <message key="visible">可視</message>
+  <message key="hidden">不可視</message>
+
+  <!-- Info Asset -->
+  <message key="Insert Image">イメージの挿入</message>
+  <message key="Insert Asset">アセットの挿入</message>
+  <message key="Asset Upload">アセットのアップロード</message>
+  <message key="Insert a new Image">新規イメージの挿入</message>
+  <message key="Upload an Asset">アセットのアップロード</message>
+
+  <!-- Info workflow  -->
+  <message key="Value">値</message>
+  <message key="Event">イベント</message>
+  <message key="Variables">変数</message>
+  <message key="History">履歴</message>
+  <message key="State">状況</message>
+  <message key="IP Address">IPアドレス</message>
+  <message key="edit">編集</message>
+  <message key="submit">送信</message>
+  <message key="reject">拒否</message>
+  <message key="publish">パブリッシュ</message>
+
+  <!-- Info asset  -->
+  <message key="New Asset">新規アセット</message>
+
+  <!-- Info RC  -->
+  <message key="Current Version">現在のバージョン</message>
+  <message key="Rollback to this revision">このリビジョンにロールバック</message>
+
+  <!-- Info AC  -->
+  <message key="SSL Encryption">SSL 暗号化</message>
+  <message key="Access Object">Access&#160;Object</message>
+  <message key="visit">訪問</message>
+  <message key="reviewer">reviewer</message>
+  <message key="editor">編集者</message>
+  <message key="admin">管理者</message>
+  <message key="world">世界</message>
+  <message key="the world">世界</message>
+
+  <!-- Scheduler -->
+  <message key="New job">新規ジョブ</message>
+  <message key="Active jobs">有効なジョブ</message>
+  <message key="Publish and Export">パブリッシュ／エクスポート</message>
+  <message key="doc-has-links-to-unpublished">このドキュメントには以下のパブリッシュされていないドキュメントへのリンクが含まれています：</message>
+
+  <!-- New Document -->
+  <message key="Please check the following possible causes of the exception">例外が発生しました：以下の可能性がありますので確認してください</message>
+  <message key="exception.cause.createdoc.whitespace-in-id">ID に空白文字を含めることは出来ません</message>
+  <message key="exception.cause.createdoc.id-in-use">この ID は既に使われています</message>
+  <message key="failmessage.createdoc.invalidformat">ID フィールドには 正しい文字を入れてください： A-Z, a-z, 0-9 あるいは - のみが利用可能です</message>
+  <message key="failmessage.createdoc.required">必須項目 (*) の値をすべて満たしてください</message>
+
+  <!-- Asset Upload/Insert Dialog -->
+  <message key="lenya.assetupload.subtitle">アセットライブラリへの追加</message>
+  <message key="Asset Library">アセットライブラリ</message>
+  <message key="No assets available">アセットは利用不可能です</message>
+  <message key="Insert Asset">アセットの挿入</message>
+
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">イメージの挿入</message>
+  <message key="lenya.imageupload.selectimage.label">イメージの選択</message>
+  <message key="lenya.imageupload.info.noimages">イメージは利用不可能です</message>
+  <message key="lenya.imageupload.links.hint">外部リソースへのリンクは 'http://' から始め、内部リソースへは '/' から始めるようにしてください</message>
+
+  <!-- Revision Controller -->
+  <message key="Reason">理由</message>
+  <message key="Filename">ファイル名</message>
+  <message key="lenya.rc.nocheckout">リソースがチェックアウト（check out）できませんでした</message>
+  <message key="lenya.rc.checkedoutalready">このリソースは既に他のユーザがチェックアウトしています</message>
+  <message key="lenya.rc.nocheckin">リソースをチェックインできませんでした</message>
+  <message key="Generic Exception">一般的例外</message>
+  <message key="Check the log files.">ログファイルを確認してください</message>
+</catalogue>
