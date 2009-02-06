@@ -25,12 +25,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataCache;
@@ -54,7 +53,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     private DocumentIdentifier identifier;
     private DocumentFactory factory;
-    protected ServiceManager manager;
     private int revision = -1;
 
     /**
@@ -97,7 +95,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param revision The revision number or -1 if the latest revision should be used.
      * @param _logger a logger
      */
-    protected DocumentImpl(ServiceManager manager, DocumentFactory map,
+    protected DocumentImpl(DocumentFactory map,
             DocumentIdentifier identifier, int revision, Log logger) {
 
         if (getLogger().isDebugEnabled()) {
@@ -110,7 +108,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             throw new IllegalArgumentException("The UUID must not be null!");
         }
         
-        this.manager = manager;
         this.identifier = identifier;
         this.factory = map;
         this.revision = revision;
@@ -422,6 +419,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     private ResourceType resourceType;
     private MetaDataCache metaDataCache;
+    private SourceResolver resolver;
 
     /**
      * Convenience method to read the document's resource type from the meta-data.
@@ -429,18 +427,17 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public ResourceType getResourceType() throws DocumentException {
         if (this.resourceType == null) {
-            ServiceSelector selector = null;
+            String name;
             try {
-                String name = getMetaData(METADATA_NAMESPACE).getFirstValue(METADATA_RESOURCE_TYPE);
-                if (name == null) {
-                    throw new DocumentException("No resource type defined for document [" + this
-                            + "]!");
-                }
-                selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-                this.resourceType = (ResourceType) selector.select(name);
-            } catch (Exception e) {
+                name = getMetaData(METADATA_NAMESPACE).getFirstValue(METADATA_RESOURCE_TYPE);
+            } catch (MetaDataException e) {
                 throw new DocumentException(e);
             }
+            if (name == null) {
+                throw new DocumentException("No resource type defined for document [" + this
+                        + "]!");
+            }
+            this.resourceType = (ResourceType) WebAppContextUtils.getCurrentWebApplicationContext().getBean(ResourceType.class.getName() + "/" + name);
         }
         return this.resourceType;
     }
@@ -458,13 +455,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     protected MetaDataCache getMetaDataCache() {
-        if (this.metaDataCache == null) {
-            try {
-                this.metaDataCache = (MetaDataCache) this.manager.lookup(MetaDataCache.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
         return this.metaDataCache;
     }
 
@@ -522,7 +512,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public boolean existsAreaVersion(String area) {
         String sourceUri = getSourceURI(getPublication(), area, getUUID(), getLanguage());
         try {
-            return SourceUtil.exists(sourceUri, this.manager);
+            return SourceUtil.exists(sourceUri, this.resolver);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -704,6 +694,18 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                     "This is not a particular revision of the document [" + this + "].");
         }
         return this.revision;
+    }
+
+    public void setMetaDataCache(MetaDataCache metaDataCache) {
+        this.metaDataCache = metaDataCache;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return resolver;
+    }
+
+    public void setSourceResolver(SourceResolver resolver) {
+        this.resolver = resolver;
     }
 
 }

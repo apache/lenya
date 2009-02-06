@@ -25,8 +25,16 @@
     <property name="uuidGenerator" ref="org.apache.lenya.cms.repository.UUIDGenerator"/>
     <property name="sharedItemStore" ref="org.apache.lenya.cms.repository.SharedItemStore"/>
   </bean>
+  <bean name="org.apache.lenya.cms.publication.PublicationManager"
+    class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
+  <bean name="org.apache.lenya.cms.metadata.MetaDataCache"
+    class="org.apache.lenya.cms.metadata.MetaDataCache"/>
   <bean name="org.apache.lenya.cms.publication.DocumentFactoryBuilder"
-    class="org.apache.lenya.cms.publication.DocumentFactoryBuilderImpl"/>
+    class="org.apache.lenya.cms.publication.DocumentFactoryBuilderImpl">
+    <property name="publicationManager" ref="org.apache.lenya.cms.publication.PublicationManager"/>
+    <property name="metaDataCache" ref="org.apache.lenya.cms.metadata.MetaDataCache"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  </bean>
   <bean name="org.apache.lenya.cms.module.ModuleManager"
     class="org.apache.lenya.cms.module.ModuleManagerImpl"/>
   <bean name="org.apache.lenya.cms.repository.SharedItemStore"

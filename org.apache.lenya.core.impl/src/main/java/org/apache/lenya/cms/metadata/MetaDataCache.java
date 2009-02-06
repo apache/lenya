@@ -17,23 +17,17 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.avalon.framework.component.Component;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
-import org.apache.lenya.cms.publication.Document;
 
 /**
  * Cache for meta data.
  */
-public class MetaDataCache implements ThreadSafe, Serviceable, Component {
+public class MetaDataCache {
 
     public static final String ROLE = MetaDataCache.class.getName();
     protected static final String STORE_ROLE = MetaDataCache.ROLE + "Store";
     private MRUMemoryStore store;
-    protected ServiceManager manager;
 
     /**
      * Get a meta data object from the cache.
@@ -68,18 +62,11 @@ public class MetaDataCache implements ThreadSafe, Serviceable, Component {
     protected MRUMemoryStore getStore() {
         if (this.store == null) {
             synchronized (this) {
-                try {
-                    this.store = (MRUMemoryStore) this.manager.lookup(STORE_ROLE);
-                } catch (ServiceException e) {
-                    throw new RuntimeException(e);
-                }
+                this.store = (MRUMemoryStore) WebAppContextUtils.getCurrentWebApplicationContext()
+                        .getBean(STORE_ROLE);
             }
         }
         return this.store;
-    }
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
 }

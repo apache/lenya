@@ -25,11 +25,6 @@ import org.apache.lenya.cms.repository.Session;
 public interface DocumentFactoryBuilder {
 
     /**
-     * The Avalon service role.
-     */
-    String ROLE = DocumentFactoryBuilder.class.getName();
-
-    /**
      * Creates a new document factory.
      * @param session The session.
      * @return A document identity map.

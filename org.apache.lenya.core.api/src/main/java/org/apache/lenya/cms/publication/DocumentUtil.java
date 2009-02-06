@@ -17,9 +17,9 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -40,24 +40,14 @@ public final class DocumentUtil {
      */
     public static final DocumentFactory createDocumentFactory(ServiceManager manager,
             Session session) {
-        DocumentFactoryBuilder builder = getBuilder(manager);
+        DocumentFactoryBuilder builder = (DocumentFactoryBuilder) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(DocumentFactoryBuilder.class.getName());
         return builder.createDocumentFactory(session);
     }
 
-    protected static DocumentFactoryBuilder getBuilder(ServiceManager manager) {
-        if (DocumentUtil.builder == null) {
-            try {
-                DocumentUtil.builder = (DocumentFactoryBuilder) manager.lookup(DocumentFactoryBuilder.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return DocumentUtil.builder;
-    }
-
     /**
-     * Returns a document factory for the session which is attached to the
-     * request. If no session exists, it is created.
+     * Returns a document factory for the session which is attached to the request. If no session
+     * exists, it is created.
      * @param manager The service manager.
      * @param request The request.
      * @return A document factory.
@@ -73,8 +63,7 @@ public final class DocumentUtil {
     }
 
     /**
-     * Returns the currently requested document or <code>null</code> if no
-     * document is requested.
+     * Returns the currently requested document or <code>null</code> if no document is requested.
      * @param manager The service manager.
      * @param request The request.
      * @return A document.

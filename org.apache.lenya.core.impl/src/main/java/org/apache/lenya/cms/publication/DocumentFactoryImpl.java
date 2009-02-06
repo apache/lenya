@@ -25,6 +25,8 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.metadata.MetaDataCache;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
@@ -39,7 +41,8 @@ import org.apache.lenya.util.Assert;
 public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentFactory {
 
     private Session session;
-    protected ServiceManager manager;
+    private MetaDataCache metaDataCache;
+    private SourceResolver sourceResolver;
 
     /**
      * @return The session.
@@ -51,12 +54,10 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     /**
      * Ctor.
      * @param session The session to use.
-     * @param manager The service manager.
      * @param logger The logger to use.
      */
-    public DocumentFactoryImpl(Session session, ServiceManager manager, Log logger) {
+    public DocumentFactoryImpl(Session session, Log logger) {
         this.session = session;
-        this.manager = manager;
     }
 
     /**
@@ -179,7 +180,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      */
     public boolean isDocument(String webappUrl) throws DocumentBuildException {
         Assert.notNull("webapp URL", webappUrl);
-        PublicationManager pubMgr = getPubManager();
+        PublicationManager pubMgr = getPublicationManager();
         try {
             URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
@@ -236,8 +237,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     protected DocumentLocator getLocator(String webappUrl) {
         DocumentLocator locator;
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
-                    webappUrl);
+            URLInformation info = new URLInformation(webappUrl);
+            Publication publication = getPublication(info.getPublicationId());
             DocumentBuilder builder = publication.getDocumentBuilder();
             locator = builder.getLocator(this, webappUrl);
 
@@ -298,7 +299,10 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      */
     protected DocumentImpl createDocument(DocumentFactory map, DocumentIdentifier identifier,
             int revision, DocumentBuilder builder) throws DocumentBuildException {
-        return new DocumentImpl(this.manager, map, identifier, revision, getLogger());
+        DocumentImpl doc = new DocumentImpl(map, identifier, revision, getLogger());
+        doc.setMetaDataCache(getMetaDataCache());
+        doc.setSourceResolver(getSourceResolver());
+        return doc;
     }
 
     public Document get(DocumentIdentifier identifier) throws DocumentBuildException {
@@ -326,28 +330,41 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     }
 
     public Publication getPublication(String id) throws PublicationException {
-        return getPubManager().getPublication(this, id);
+        return getPublicationManager().getPublication(this, id);
     }
 
     public Publication[] getPublications() {
-        return getPubManager().getPublications(this);
+        return getPublicationManager().getPublications(this);
     }
 
-    private static PublicationManager pubManager;
+    private PublicationManager pubManager;
 
-    protected PublicationManager getPubManager() {
-        if (pubManager == null) {
-            try {
-                pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return pubManager;
+    protected void setPublicationManager(PublicationManager pubManager) {
+        this.pubManager = pubManager;
+    }
+
+    protected PublicationManager getPublicationManager() {
+        return this.pubManager;
     }
 
     public boolean existsPublication(String id) {
-        return Arrays.asList(getPubManager().getPublicationIds()).contains(id);
+        return Arrays.asList(getPublicationManager().getPublicationIds()).contains(id);
+    }
+
+    protected MetaDataCache getMetaDataCache() {
+        return metaDataCache;
+    }
+
+    public void setMetaDataCache(MetaDataCache metaDataCache) {
+        this.metaDataCache = metaDataCache;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

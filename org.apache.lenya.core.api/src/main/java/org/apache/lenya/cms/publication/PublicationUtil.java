@@ -74,6 +74,7 @@ public class PublicationUtil {
      * @param webappUrl The URL within the web application (without context prefix)
      * @return A publication
      * @throws PublicationException when something went wrong
+     * @deprecated
      */
     public static Publication getPublicationFromUrl(ServiceManager manager,
             DocumentFactory factory, String webappUrl) throws PublicationException {

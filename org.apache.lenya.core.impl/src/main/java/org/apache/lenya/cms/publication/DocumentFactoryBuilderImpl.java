@@ -17,27 +17,52 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.metadata.MetaDataCache;
 import org.apache.lenya.cms.repository.Session;
 
 /**
  * Document factory builder implementation.
  */
-public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements ThreadSafe,
-        DocumentFactoryBuilder, Serviceable {
+public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
+        DocumentFactoryBuilder {
+
+    private PublicationManager pubManager;
+    private MetaDataCache metaDataCache;
+    private SourceResolver sourceResolver;
 
     public DocumentFactory createDocumentFactory(Session session) {
-        return new DocumentFactoryImpl(session, this.manager, getLogger());
+        DocumentFactoryImpl factory = new DocumentFactoryImpl(session, getLogger());
+        factory.setMetaDataCache(getMetaDataCache());
+        factory.setPublicationManager(getPublicationManager());
+        factory.setSourceResolver(getSourceResolver());
+        return factory;
     }
-    
-    protected ServiceManager manager;
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    protected void setPublicationManager(PublicationManager pubManager) {
+        this.pubManager = pubManager;
     }
+
+    protected PublicationManager getPublicationManager() {
+        return this.pubManager;
+    }
+
+    protected MetaDataCache getMetaDataCache() {
+        return metaDataCache;
+    }
+
+    public void setMetaDataCache(MetaDataCache metaDataCache) {
+        this.metaDataCache = metaDataCache;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
 
 }
