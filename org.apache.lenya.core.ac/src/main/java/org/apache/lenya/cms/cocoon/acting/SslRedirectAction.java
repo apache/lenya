@@ -21,12 +21,12 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.acting.ConfigurableServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Policy;
@@ -39,10 +39,10 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * Returns a map if the current request needs a redirect to the <code>https://</code> protocol.
- * This is the case if the policy requires SSL protection and the current request is not secure. The
- * map contains the redirect URI as value for the key <em>redirectUri</em>. Otherwise,
- * <code>null</code> is returned.
+ * Returns a map if the current request needs a redirect to the <code>https://</code> protocol. This
+ * is the case if the policy requires SSL protection and the current request is not secure. The map
+ * contains the redirect URI as value for the key <em>redirectUri</em>. Otherwise, <code>null</code>
+ * is returned.
  */
 public class SslRedirectAction extends ConfigurableServiceableAction {
 
@@ -50,53 +50,40 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
      * The key to obtain the redirect URI from the returned map.
      */
     public static final String KEY_REDIRECT_URI = "redirectUri";
-    
+
     private RepositoryManager repositoryManager;
 
     public Map act(Redirector redirector, SourceResolver sourceResolver, Map objectModel,
             String source, Parameters parameters) throws Exception {
 
-        ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         AccessController accessController = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        
+
         if (!request.isSecure()) {
-            try {
-                selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                        + "Selector");
-    
-                resolver = (AccessControllerResolver) selector
-                        .select(AccessControllerResolver.DEFAULT_RESOLVER);
-    
-                String url = ServletHelper.getWebappURI(request);
-                accessController = resolver.resolveAccessController(url);
-    
-                if (accessController != null) {
-                    PolicyManager policyManager = accessController.getPolicyManager();
-                    Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
-                            url);
-                    if (policy.isSSLProtected()) {
-                        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-                        LinkRewriter rewriter = new OutgoingLinkRewriter(session, url,
-                                false, true, false);
-                        String sslUri = rewriter.rewrite(url);
-                        return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);
-                    }
-                }
-    
-            } finally {
-                if (selector != null) {
-                    if (resolver != null) {
-                        if (accessController != null) {
-                            resolver.release(accessController);
-                        }
-                        selector.release(resolver);
-                    }
-                    this.manager.release(selector);
+
+            resolver = (AccessControllerResolver) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(
+                            AccessControllerResolver.ROLE + "/"
+                                    + AccessControllerResolver.DEFAULT_RESOLVER);
+
+            String url = ServletHelper.getWebappURI(request);
+            accessController = resolver.resolveAccessController(url);
+
+            if (accessController != null) {
+                PolicyManager policyManager = accessController.getPolicyManager();
+                Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
+                        url);
+                if (policy.isSSLProtected()) {
+                    Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+                    LinkRewriter rewriter = new OutgoingLinkRewriter(session, url, false, true,
+                            false);
+                    String sslUri = rewriter.rewrite(url);
+                    return Collections.singletonMap(KEY_REDIRECT_URI, sslUri);
                 }
             }
+
         }
         return null;
     }

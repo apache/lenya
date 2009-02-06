@@ -20,7 +20,6 @@ package org.apache.lenya.ac.impl;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
@@ -29,8 +28,7 @@ import org.apache.lenya.ac.AccessController;
  * Configurable access controller resolver.
  * @version $Id$
  */
-public class ConfigurableAccessControllerResolver extends AbstractAccessControllerResolver
-        implements Configurable {
+public class ConfigurableAccessControllerResolver extends AbstractAccessControllerResolver {
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
@@ -61,12 +59,12 @@ public class ConfigurableAccessControllerResolver extends AbstractAccessControll
 
     private Configuration accessControllerConfiguration;
 
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration) throws ConfigurationException {
-        this.accessControllerConfiguration = configuration.getChild(ACCESS_CONTROLLER_ELEMENT);
-        this.accessControllerType = this.accessControllerConfiguration.getAttribute(TYPE_ATTRIBUTE);
+    public void setAccessControllerType(String accessControllerType) {
+        this.accessControllerType = accessControllerType;
+    }
+
+    public void setAccessControllerConfiguration(Configuration accessControllerConfiguration) {
+        this.accessControllerConfiguration = accessControllerConfiguration;
     }
 
 }

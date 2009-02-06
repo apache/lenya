@@ -23,8 +23,6 @@ package org.apache.lenya.ac.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.sitemap.PatternException;
 import org.apache.lenya.ac.AccessControlException;
@@ -47,44 +45,20 @@ public class BypassableAccessController extends DefaultAccessController {
 
     private List publicMatchers = new ArrayList();
     private List publicExtensions = new ArrayList();
-
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-        
-        getLogger().debug("Configuring bypass patterns");
-        
-        Configuration[] publics = conf.getChildren("public");
-
-        for (int i = 0; i < publics.length; i++) {
-            String publicHref = publics[i].getValue(null);
-
-            try {
-                this.publicMatchers.add(preparePattern(publicHref));
-            } catch (PatternException pe) {
-                throw new ConfigurationException("invalid pattern for public hrefs", pe);
+    
+    public void setPublicExtensions(String extensions) {
+        String[] extensionArray = extensions.split(",");
+        for (int e = 0; e < extensionArray.length; e++) {
+            String ext = extensionArray[e].trim();
+            if (!ext.startsWith(".")) {
+                ext = "." + ext;
             }
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("CONFIGURATION: public: " + publicHref);
-            }
+            this.publicExtensions.add(ext);
         }
-        
-        Configuration[] extensionConfigs = conf.getChildren("public-extensions");
-        for (int i = 0; i < extensionConfigs.length; i++) {
-            String extensionString = extensionConfigs[i].getValue();
-            String[] extensions = extensionString.split(",");
-            for (int e = 0; e < extensions.length; e++) {
-                String ext = extensions[e].trim();
-                if (!ext.startsWith(".")) {
-                    ext = "." + ext;
-                }
-                this.publicExtensions.add(ext);
-            }
-        }
-
+    }
+    
+    public void setPublicPatterns(String patterns) throws PatternException {
+        this.publicMatchers.add(preparePattern(patterns));
     }
 
     /**

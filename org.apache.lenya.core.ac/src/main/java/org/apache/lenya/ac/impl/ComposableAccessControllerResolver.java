@@ -18,12 +18,12 @@
 
 package org.apache.lenya.ac.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -43,18 +43,12 @@ public class ComposableAccessControllerResolver extends AbstractAccessController
 
         AccessController controller = null;
 
-        String[] types = getResolverTypes();
-        int i = 0;
-        while (controller == null && i < types.length) {
-
-            getLogger().debug("Trying to resolve AC resolver for type [" + types[i] + "]");
-            AccessControllerResolver resolver = (AccessControllerResolver) WebAppContextUtils
-                    .getCurrentWebApplicationContext().getBean(
-                            AccessControllerResolver.ROLE + "/" + types[i]);
+        Iterator i = this.resolvers.iterator();
+        while (controller == null && i.hasNext()) {
+            AccessControllerResolver resolver = (AccessControllerResolver) i.next();
             controller = resolver.resolveAccessController(url);
             setResolver(controller, resolver);
             getLogger().debug("Resolved access controller [" + controller + "]");
-            i++;
         }
 
         return controller;
@@ -94,25 +88,10 @@ public class ComposableAccessControllerResolver extends AbstractAccessController
     protected static final String RESOLVER_ELEMENT = "resolver";
     protected static final String TYPE_ATTRIBUTE = "type";
 
-    private String[] resolverTypes;
-
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration) throws ConfigurationException {
-        Configuration[] accessControllerConfigs = configuration.getChildren(RESOLVER_ELEMENT);
-        this.resolverTypes = new String[accessControllerConfigs.length];
-        for (int i = 0; i < accessControllerConfigs.length; i++) {
-            this.resolverTypes[i] = accessControllerConfigs[i].getAttribute(TYPE_ATTRIBUTE);
-        }
-    }
-
-    /**
-     * Returns the access controller types.
-     * @return A string array.
-     */
-    protected String[] getResolverTypes() {
-        return this.resolverTypes;
+    private List resolvers = new ArrayList();
+    
+    public void setResolvers(List resolvers) {
+        this.resolvers = resolvers;
     }
 
 }
