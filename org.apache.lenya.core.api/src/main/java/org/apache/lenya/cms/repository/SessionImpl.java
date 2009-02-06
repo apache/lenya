@@ -23,9 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
@@ -50,8 +47,30 @@ import org.apache.lenya.util.Assert;
 public class SessionImpl extends AbstractLogEnabled implements Session {
 
     protected static final String UNMODIFIABLE_SESSION_ID = "unmodifiable";
-    private ServiceManager manager;
     private Identity identity;
+    private ObservationRegistry observationRegistry;
+    private UUIDGenerator uuidGenerator;
+
+    protected ObservationRegistry getObservationRegistry() {
+        return observationRegistry;
+    }
+
+    protected void setObservationRegistry(ObservationRegistry observationRegistry)
+            throws RepositoryException {
+        if (this.observationRegistry != null) {
+            throw new IllegalStateException("Observation registry already set.");
+        }
+        this.observationRegistry = observationRegistry;
+        addListener(observationRegistry);
+    }
+
+    protected UUIDGenerator getUuidGenerator() {
+        return uuidGenerator;
+    }
+
+    protected void setUuidGenerator(UUIDGenerator uuidGenerator) {
+        this.uuidGenerator = uuidGenerator;
+    }
 
     /**
      * Ctor.
@@ -60,26 +79,11 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public SessionImpl(Identity identity, boolean modifiable, ServiceManager manager, Log logger) {
-
-        Assert.notNull("service manager", manager);
-        this.manager = manager;
+    public SessionImpl(Identity identity, boolean modifiable, Log logger) {
 
         this.identityMap = new IdentityMapImpl(logger);
         this.identity = identity;
         this.id = modifiable ? createUuid() : UNMODIFIABLE_SESSION_ID;
-
-        ObservationRegistry registry = null;
-        try {
-            registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
-            addListener(registry);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
 
         if (modifiable) {
             this.unitOfWork = new UnitOfWorkImpl(this.identityMap, this.identity, getLogger());
@@ -87,20 +91,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     }
 
     protected String createUuid() {
-        String id;
-        UUIDGenerator generator = null;
-        try {
-
-            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
-            id = generator.nextUUID();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (generator == null) {
-                this.manager.release(generator);
-            }
-        }
-        return id;
+        return getUuidGenerator().nextUUID();
     }
 
     public Identity getIdentity() {
@@ -126,17 +117,17 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * Commits the transaction.
      * @throws RepositoryException if an error occurs.
      * @throws ConcurrentModificationException if a transactionable has been modified by another
-     *         session.
+     *             session.
      */
     public synchronized void commit() throws RepositoryException, ConcurrentModificationException {
 
         savePersistables();
-        
+
         this.committing = true;
 
         try {
             synchronized (TransactionLock.LOCK) {
-                
+
                 getUnitOfWork().commit();
                 getSharedItemStore().clear();
             }
@@ -190,14 +181,11 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     }
 
     protected SharedItemStore getSharedItemStore() {
-        if (this.sharedItemStore == null) {
-            try {
-                this.sharedItemStore = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
         return this.sharedItemStore;
+    }
+
+    protected void setSharedItemStore(SharedItemStore sharedItemStore) {
+        this.sharedItemStore = sharedItemStore;
     }
 
     /**
@@ -284,7 +272,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     public String getId() {
         return this.id;
     }
-    
+
     public String toString() {
         return "Session " + getId();
     }

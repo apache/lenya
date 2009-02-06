@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.axis.components.uuid.UUIDGen;
 import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.apache.cocoon.util.AbstractLogEnabled;
@@ -25,7 +24,7 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 /**
  * UUID generator based on Apache Axis.
  */
-public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator, ThreadSafe {
+public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator {
 
 	// FIXME Get rid of this absurd dependency on Axis!! - fr
     private UUIDGen delegate;

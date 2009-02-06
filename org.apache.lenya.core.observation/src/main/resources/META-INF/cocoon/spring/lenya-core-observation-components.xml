@@ -19,20 +19,6 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
-  <bean name="org.apache.lenya.cms.repository.RepositoryManager"
-    class="org.apache.lenya.cms.repository.RepositoryManagerImpl">
-    <property name="observationRegistry" ref="org.apache.lenya.cms.observation.ObservationRegistry"/>
-    <property name="uuidGenerator" ref="org.apache.lenya.cms.repository.UUIDGenerator"/>
-    <property name="sharedItemStore" ref="org.apache.lenya.cms.repository.SharedItemStore"/>
-  </bean>
-  <bean name="org.apache.lenya.cms.publication.DocumentFactoryBuilder"
-    class="org.apache.lenya.cms.publication.DocumentFactoryBuilderImpl"/>
-  <bean name="org.apache.lenya.cms.module.ModuleManager"
-    class="org.apache.lenya.cms.module.ModuleManagerImpl"/>
-  <bean name="org.apache.lenya.cms.repository.SharedItemStore"
-    class="org.apache.lenya.cms.repository.SharedItemStoreImpl">
-    <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
-  </bean>
-  <bean name="org.apache.lenya.cms.repository.UUIDGenerator"
-    class="org.apache.lenya.cms.repository.AxisUUIDGenerator"/>
+  <bean name="org.apache.lenya.cms.observation.ObservationRegistry"
+    class="org.apache.lenya.cms.observation.ObservationManager"/>
 </beans>

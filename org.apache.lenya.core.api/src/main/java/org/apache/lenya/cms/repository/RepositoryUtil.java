@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.repository;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.avalon.framework.service.ServiceManager;
@@ -35,7 +36,7 @@ public class RepositoryUtil {
      * @return A session.
      * @throws RepositoryException if an error occurs.
      */
-    public static Session getSession(RepositoryManager repoManager, Request request)
+    public static Session getSession(RepositoryManager repoManager, HttpServletRequest request)
             throws RepositoryException {
         Session session = (Session) request.getAttribute(Session.class.getName());
         if (session == null) {
@@ -75,6 +76,11 @@ public class RepositoryUtil {
             }
         }
         return session;
+    }
+
+    protected static Identity getIdentity(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (Identity) session.getAttribute(Identity.class.getName());
     }
 
     protected static Identity getIdentity(Request request) {

@@ -17,10 +17,6 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.RepositoryEvent;
@@ -33,15 +29,23 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Shared item store implementation.
  */
-public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedItemStore, ThreadSafe, Serviceable {
+public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedItemStore {
 
     private Session session;
-    private ServiceManager manager;
+    private RepositoryManager repositoryManager;
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
 
     public synchronized Session getSession() {
         if (this.session == null) {
             try {
-                this.session = RepositoryUtil.createSession(this.manager, null, false);
+                this.session = getRepositoryManager().createSession(null, false);
             } catch (RepositoryException e) {
                 throw new RuntimeException(e);
             }
@@ -118,8 +122,4 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         return getClass().getName();
     }
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-    
 }

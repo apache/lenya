@@ -17,30 +17,50 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.observation.ObservationRegistry;
 
 /**
  * Repository manager implementation.
  * @version $Id:$
  */
-public class RepositoryManagerImpl extends AbstractLogEnabled implements RepositoryManager,
-        Serviceable {
-
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
+public class RepositoryManagerImpl extends AbstractLogEnabled implements RepositoryManager {
 
     public Session createSession(Identity identity, boolean modifiable) throws RepositoryException {
-        return new SessionImpl(identity, modifiable, this.manager, getLogger());
+        SessionImpl session = new SessionImpl(identity, modifiable, getLogger());
+        session.setObservationRegistry(getObservationRegistry());
+        session.setUuidGenerator(getUuidGenerator());
+        session.setSharedItemStore(getSharedItemStore());
+        return session;
+    }
+
+    private SharedItemStore sharedItemStore;
+    private UUIDGenerator uuidGenerator;
+    private ObservationRegistry observationRegistry;
+
+    protected SharedItemStore getSharedItemStore() {
+        return sharedItemStore;
+    }
+
+    public void setSharedItemStore(SharedItemStore sharedItemStore) {
+        this.sharedItemStore = sharedItemStore;
+    }
+
+    protected UUIDGenerator getUuidGenerator() {
+        return uuidGenerator;
+    }
+
+    public void setUuidGenerator(UUIDGenerator uuidGenerator) {
+        this.uuidGenerator = uuidGenerator;
+    }
+
+    protected ObservationRegistry getObservationRegistry() {
+        return observationRegistry;
+    }
+
+    public void setObservationRegistry(ObservationRegistry observationRegistry) {
+        this.observationRegistry = observationRegistry;
     }
 
 }

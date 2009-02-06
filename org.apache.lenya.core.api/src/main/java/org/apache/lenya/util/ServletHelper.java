@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -49,6 +50,17 @@ public final class ServletHelper {
      */
     private ServletHelper() {
         // do nothing
+    }
+
+    /**
+     * Returns the URL inside the web application (without the context prefix).
+     * @param request The request.
+     * @return A string.
+     */
+    public static String getWebappURI(HttpServletRequest request) {
+        String context = request.getContextPath();
+        String requestUri = request.getRequestURI();
+        return getWebappURI(context, requestUri);
     }
 
     /**

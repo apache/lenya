@@ -24,8 +24,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -56,7 +58,7 @@ import org.apache.lenya.util.ServletHelper;
  * </p>
  */
 public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
-    
+
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
@@ -73,7 +75,10 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
                 uris = findUris(location, parameters);
                 store.hold(cacheKey, uris);
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("No cached source URI for key " + cacheKey + ", caching resolved URIs.");
+                    getLogger()
+                            .debug(
+                                    "No cached source URI for key " + cacheKey
+                                            + ", caching resolved URIs.");
                 }
             } else {
                 uris = cachedUris;
@@ -81,8 +86,7 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
                     getLogger().debug("Using cached source URIs for key " + cacheKey);
                 }
             }
-        }
-        else {
+        } else {
             uris = findUris(location, parameters);
         }
         return new AggregatingSource(location, uris, getSourceResolver());
@@ -90,14 +94,16 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
 
     protected String[] findUris(final String location, Map parameters) throws IOException,
             MalformedURLException {
-        
+
         FallbackUri uri = new FallbackUri(location);
         String pubId = uri.getPubId();
         String path = uri.getPath();
 
         try {
 
-            Request request = ContextHelper.getRequest(this.context);
+            final ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+            HttpServletRequest request = processInfo.getRequest();
 
             if (pubId == null) {
                 String webappUrl = ServletHelper.getWebappURI(request);
@@ -118,24 +124,26 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
             } else {
                 uris = new String[0];
             }
-            
+
             List allUris = new ArrayList();
             allUris.addAll(Arrays.asList(uris));
-            
+
             String contextSourceUri = null;
             if (path.startsWith("lenya/modules/")) {
                 final String moduleShortcut = path.split("/")[2];
                 String baseUri = getModuleManager().getBaseURI(moduleShortcut);
-                final String modulePath = path.substring(("lenya/modules/" + moduleShortcut).length());
+                final String modulePath = path.substring(("lenya/modules/" + moduleShortcut)
+                        .length());
                 contextSourceUri = baseUri + modulePath;
             } else {
                 contextSourceUri = "context://" + path;
             }
-            if (org.apache.lenya.cms.cocoon.source.SourceUtil.exists(contextSourceUri, getSourceResolver())) {
+            if (org.apache.lenya.cms.cocoon.source.SourceUtil.exists(contextSourceUri,
+                    getSourceResolver())) {
                 allUris.add(contextSourceUri);
             }
 
-            return (String[]) allUris.toArray(new String[allUris.size()]); 
+            return (String[]) allUris.toArray(new String[allUris.size()]);
 
         } catch (Exception e) {
             throw new RuntimeException("Resolving path [" + location + "] failed: ", e);

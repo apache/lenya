@@ -21,10 +21,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
@@ -51,14 +51,15 @@ import org.springframework.util.Assert;
  * Source factory following the fallback principle.
  * </p>
  * <p>
- * The ID of the current publication can be passed in the URL (<code>fallback:pub://path</code),
+ * The ID of the current publication can be passed in the URL (
+ * <code>fallback:pub://path</code),
  * this is necessary as a workaround for bug 40564.
  * </p>
  * 
  * @version $Id$
  */
 public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
-        Contextualizable, URIAbsolutizer {
+        URIAbsolutizer {
 
     protected MRUMemoryStore store;
     private SourceResolver resolver;
@@ -66,7 +67,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     private DocumentFactoryBuilder documentFactoryBuilder;
     private PublicationTemplateManager templateManager;
     private ModuleManager moduleManager;
-    
+
     /**
      * Configure the spring bean accordingly if you want to use a store.
      * @param store The store.
@@ -83,43 +84,43 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     protected MRUMemoryStore getStore() {
         return this.store;
     }
-    
+
     public void setSourceResolver(SourceResolver resolver) {
         this.resolver = resolver;
     }
-    
+
     protected SourceResolver getSourceResolver() {
         return this.resolver;
     }
-    
+
     public void setRepositoryManager(RepositoryManager repoMgr) {
         this.repositoryManager = repoMgr;
     }
-    
+
     protected RepositoryManager getRepositoryManager() {
         return this.repositoryManager;
     }
-    
+
     public void setDocumentFactoryBuilder(DocumentFactoryBuilder builder) {
         this.documentFactoryBuilder = builder;
     }
-    
+
     protected DocumentFactoryBuilder getDocumentFactoryBuilder() {
         return this.documentFactoryBuilder;
     }
-    
+
     public void setTemplateManager(PublicationTemplateManager mgr) {
         this.templateManager = mgr;
     }
-    
+
     protected PublicationTemplateManager getTemplateManager() {
         return this.templateManager;
     }
-    
+
     public void setModuleManager(ModuleManager mgr) {
         this.moduleManager = mgr;
     }
-    
+
     protected ModuleManager getModuleManager() {
         return this.moduleManager;
     }
@@ -173,7 +174,9 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     }
 
     protected String getPublicationId() {
-        Request request = ContextHelper.getRequest(this.context);
+        final ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = processInfo.getRequest();
         String webappUri = ServletHelper.getWebappURI(request);
         URLInformation info = new URLInformation(webappUri);
         String pubId = null;
@@ -189,10 +192,10 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         }
         return pubId;
     }
-    
+
     protected Source findSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
-        
+
         FallbackUri uri = new FallbackUri(location);
 
         String pubId = uri.getPubId();
@@ -200,8 +203,9 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
         Source source = null;
         try {
-
-            Request request = ContextHelper.getRequest(this.context);
+            final ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+            HttpServletRequest request = processInfo.getRequest();
 
             if (pubId == null) {
                 String webappUrl = request.getRequestURI().substring(
@@ -224,8 +228,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                 if (path.startsWith("lenya/modules/")) {
                     final String moduleShortcut = path.split("/")[2];
                     String baseUri = this.moduleManager.getBaseURI(moduleShortcut);
-                    final String modulePath = path
-                            .substring(("lenya/modules/" + moduleShortcut).length());
+                    final String modulePath = path.substring(("lenya/modules/" + moduleShortcut)
+                            .length());
                     source = this.resolver.resolveURI(baseUri + modulePath);
                 } else {
                     String contextUri = "context://" + path;
@@ -246,16 +250,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
     protected VisitingSourceResolver getSourceVisitor() {
         return new ExistingSourceResolver();
-    }
-
-    protected org.apache.avalon.framework.context.Context context;
-
-    /**
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(org.apache.avalon.framework.context.Context _context)
-            throws ContextException {
-        this.context = _context;
     }
 
     /**

@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
@@ -32,8 +31,7 @@ import org.apache.lenya.util.Assert;
 /**
  * Observation manager. Works as an observation registry and sends the notifications.
  */
-public class ObservationManager extends AbstractLogEnabled implements ObservationRegistry,
-        ThreadSafe {
+public class ObservationManager extends AbstractLogEnabled implements ObservationRegistry {
 
     private Map identifier2listeners = new HashMap();
     private Set listeners = new HashSet();

@@ -90,6 +90,10 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-observation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-templating</artifactId>
     </dependency>
     <dependency>
