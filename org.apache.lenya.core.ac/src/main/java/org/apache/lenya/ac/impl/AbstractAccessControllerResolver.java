@@ -116,7 +116,7 @@ public abstract class AbstractAccessControllerResolver extends AbstractLogEnable
         this.sourceResolver = sourceResolver;
     }
 
-    public SourceResolver getSourceResolver() {
+    protected SourceResolver getSourceResolver() {
         return sourceResolver;
     }
 

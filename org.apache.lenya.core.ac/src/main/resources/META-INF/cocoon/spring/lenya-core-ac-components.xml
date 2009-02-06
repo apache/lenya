@@ -21,17 +21,21 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
   
   <!-- Resolvers -->
-  <bean name="org.apache.lenya.cms.ac.AccessControllerResolver/publication"
-    class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"/>
+  <bean name="org.apache.lenya.ac.AccessControllerResolver/publication"
+    class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver">
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  </bean>
   <bean name="org.apache.lenya.cms.ac.AccessControllerResolver/global"
     class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver">
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
     <property name="accessControllerType" value="global"/>
   </bean>
-  <bean name="org.apache.lenya.cms.ac.AccessControllerResolver/composable"
+  <bean name="org.apache.lenya.ac.AccessControllerResolver/composable"
     class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver">
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
     <property name="resolvers">
       <list>
-        <ref bean="org.apache.lenya.cms.ac.AccessControllerResolver/publication"/>
+        <ref bean="org.apache.lenya.ac.AccessControllerResolver/publication"/>
       </list>
     </property>
   </bean>

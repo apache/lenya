@@ -31,31 +31,32 @@ import org.apache.commons.logging.Log;
  * A map with a maximum capacity. When the map is full, the oldest entry is removed.
  */
 public class CacheMap extends HashMap {
-    
+
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-    
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * Ctor.
      * @param _capacity The maximum number of entries.
      * @param logger The logger.
      */
     public CacheMap(int _capacity, Log logger) {
+        this.logger = logger;
         assert _capacity > -1;
         this.capacity = _capacity;
     }
-    
+
     private int capacity;
     private SortedMap timeToKey = new TreeMap();
     private Log logger;
-    
+
     /**
      * @see java.util.Map#put(Object, Object)
      */
     public Object put(Object key, Object value) {
-        
+
         if (size() == this.capacity) {
             Object timeKey = this.timeToKey.firstKey();
             Object oldestKey = this.timeToKey.get(timeKey);
@@ -68,7 +69,7 @@ public class CacheMap extends HashMap {
         this.timeToKey.put(new Date(), key);
         return super.put(key, value);
     }
-    
+
     /**
      * @see java.util.Map#get(java.lang.Object)
      */
@@ -77,12 +78,11 @@ public class CacheMap extends HashMap {
         if (logger.isDebugEnabled()) {
             if (result != null) {
                 logger.debug("Using cached object for key [" + key + "]");
-            }
-            else {
+            } else {
                 logger.debug("No cached object for key [" + key + "]");
             }
         }
         return result;
     }
-    
+
 }

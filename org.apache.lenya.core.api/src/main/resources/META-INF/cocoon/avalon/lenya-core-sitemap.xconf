@@ -22,6 +22,9 @@
   <map:generators>
     <map:generator label="content" logger="sitemap.generator.sessionattr" name="session-attr"
       pool-max="16" src="org.apache.cocoon.generation.SessionAttributeGenerator"/>
+    <map:generator name="text" src="org.apache.cocoon.generation.TextGenerator">
+      <parameter name="localizable" value="true"/>
+    </map:generator>
   </map:generators>
 
 
