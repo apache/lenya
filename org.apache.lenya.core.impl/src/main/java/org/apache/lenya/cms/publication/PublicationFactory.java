@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
@@ -28,21 +28,23 @@ import org.apache.lenya.cms.repository.Session;
  */
 public class PublicationFactory implements RepositoryItemFactory {
 
-    private ServiceManager manager;
     private PublicationConfiguration config;
+    private DocumentFactoryBuilder documentFactoryBuilder;
+    private NodeFactory nodeFactory;
 
     /**
-     * @param manager The service manager.
      * @param config The publication configuration.
      */
-    public PublicationFactory(ServiceManager manager, PublicationConfiguration config) {
-        this.manager = manager;
+    public PublicationFactory(DocumentFactoryBuilder builder, NodeFactory nodeFactory,
+            PublicationConfiguration config) {
         this.config = config;
+        this.documentFactoryBuilder = builder;
+        this.nodeFactory = nodeFactory;
     }
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
-        return new PublicationImpl(this.manager, factory, config);
+        DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
+        return new PublicationImpl(factory, this.nodeFactory, config);
     }
 
     public String getItemType() {

@@ -26,7 +26,10 @@
     <property name="sharedItemStore" ref="org.apache.lenya.cms.repository.SharedItemStore"/>
   </bean>
   <bean name="org.apache.lenya.cms.publication.PublicationManager"
-    class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
+    class="org.apache.lenya.cms.publication.PublicationManagerImpl">
+    <property name="documentFactoryBuilder" ref="org.apache.lenya.cms.publication.DocumentFactoryBuilder"/>
+    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
+  </bean>
   <bean name="org.apache.lenya.cms.metadata.MetaDataCache"
     class="org.apache.lenya.cms.metadata.MetaDataCache"/>
   <bean name="org.apache.lenya.cms.publication.DocumentFactoryBuilder"

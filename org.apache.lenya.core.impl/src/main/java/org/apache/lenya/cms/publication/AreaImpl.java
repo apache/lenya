@@ -20,9 +20,7 @@ package org.apache.lenya.cms.publication;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -41,19 +39,17 @@ public class AreaImpl implements Area {
     private Publication pub;
     private DocumentFactory factory;
     private NodeFactory nodeFactory;
-    private ServiceManager manager;
 
     /**
-     * @param manager The service manager.
      * @param factory The factory.
      * @param pub The publication.
      * @param name The area name.
      */
-    public AreaImpl(ServiceManager manager, DocumentFactory factory, Publication pub, String name) {
-        this.manager = manager;
+    public AreaImpl(DocumentFactory factory, NodeFactory nodeFactory, Publication pub, String name) {
         this.factory = factory;
         this.pub = pub;
         this.name = name;
+        this.nodeFactory = nodeFactory;
     }
 
     public boolean contains(String uuid, String language) {
@@ -78,13 +74,6 @@ public class AreaImpl implements Area {
     }
 
     protected NodeFactory getNodeFactory() {
-        if (this.nodeFactory == null) {
-            try {
-                this.nodeFactory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
         return this.nodeFactory;
     }
 
@@ -105,20 +94,12 @@ public class AreaImpl implements Area {
     public SiteStructure getSite() {
         if (this.site == null) {
             SiteManager siteManager = null;
-            ServiceSelector selector = null;
             try {
-                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-                siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+                siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
+                        .getBean(SiteManager.ROLE + "/" + getPublication().getSiteManagerHint());
                 this.site = siteManager.getSiteStructure(this.factory, getPublication(), getName());
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (selector != null) {
-                    if (siteManager != null) {
-                        selector.release(siteManager);
-                    }
-                    this.manager.release(selector);
-                }
             }
         }
         return this.site;

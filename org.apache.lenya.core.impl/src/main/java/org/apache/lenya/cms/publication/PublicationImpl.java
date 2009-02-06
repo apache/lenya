@@ -25,11 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.Session;
 
 /**
@@ -39,14 +38,14 @@ import org.apache.lenya.cms.repository.Session;
 public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     private PublicationConfiguration delegate;
-    protected ServiceManager manager;
     private DocumentFactory factory;
+    private NodeFactory nodeFactory;
 
-    protected PublicationImpl(ServiceManager manager, DocumentFactory factory,
+    protected PublicationImpl(DocumentFactory factory, NodeFactory nodeFactory,
             PublicationConfiguration delegate) {
         this.delegate = delegate;
-        this.manager = manager;
         this.factory = factory;
+        this.nodeFactory = nodeFactory;
     }
 
     public boolean exists() {
@@ -78,13 +77,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     private DocumentBuilder documentBuilder;
-    
+
     public DocumentBuilder getDocumentBuilder() {
         if (this.documentBuilder == null) {
-            ServiceSelector selector = null;
             try {
-                selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-                this.documentBuilder = (DocumentBuilder) selector.select(delegate.getDocumentBuilderHint());
+                this.documentBuilder = (DocumentBuilder) WebAppContextUtils
+                        .getCurrentWebApplicationContext()
+                        .getBean(
+                                DocumentBuilder.class.getName() + delegate.getDocumentBuilderHint());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -115,23 +115,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public Proxy getProxy(String area, boolean isSslProtected) {
         return delegate.getProxy(area, isSslProtected);
     }
-    
+
     private String contextPath;
-    
+
     protected String getContextPath() {
         if (this.contextPath == null) {
-            ContextUtility context = null;
-            try {
-                context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                this.contextPath = context.getRequest().getContextPath();
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-            finally {
-                if (context != null) {
-                    this.manager.release(context);
-                }
-            }
+            ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+            this.contextPath = process.getRequest().getContextPath();
         }
         return this.contextPath;
     }
@@ -195,10 +186,10 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     private Map areas = new HashMap();
-    
+
     public Area getArea(String name) throws PublicationException {
         if (!this.areas.containsKey(name)) {
-            Area area = new AreaImpl(this.manager, this.factory, this, name);
+            Area area = new AreaImpl(this.factory, this.nodeFactory, this, name);
             this.areas.put(name, area);
         }
         return (Area) this.areas.get(name);
