@@ -17,14 +17,28 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.transaction.ConcurrentModificationException;
+
 public interface Session {
     
     Repository getRepository();
 
     Publication getPublication(String id);
     
+    Publication[] getPublications();
+
     boolean existsPublication(String id);
 
     DocumentFactory getDocumentFactory();
+
+    Identity getIdentity();
+
+    void commit() throws RepositoryException, ConcurrentModificationException;
+
+    void rollback() throws RepositoryException;
+
+    boolean isModifiable();
 
 }

@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.transaction.ConcurrentModificationException;
 import org.springframework.util.Assert;
 
 public class SessionImpl implements Session {
@@ -54,6 +57,26 @@ public class SessionImpl implements Session {
 
     public boolean existsPublication(String id) {
         return getDocumentFactory().existsPublication(id);
+    }
+
+    public Publication[] getPublications() {
+        return getDocumentFactory().getPublications();
+    }
+
+    public Identity getIdentity() {
+        return getDocumentFactory().getSession().getIdentity();
+    }
+
+    public void commit() throws RepositoryException, ConcurrentModificationException {
+        getDocumentFactory().getSession().commit();
+    }
+
+    public void rollback() throws RepositoryException {
+        getDocumentFactory().getSession().rollback();        
+    }
+
+    public boolean isModifiable() {
+        return getDocumentFactory().getSession().isModifiable();
     }
 
 }

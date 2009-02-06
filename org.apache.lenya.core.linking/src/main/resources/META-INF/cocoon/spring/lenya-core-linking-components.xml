@@ -18,9 +18,70 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+  xmlns:p="http://www.springframework.org/schema/p"
   xmlns="http://www.springframework.org/schema/beans">
+  
+  <!-- Input Modules -->
   <bean name="org.apache.cocoon.components.modules.input.InputModule/proxy"
-    class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyModule"/>
+    class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyModule">
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
+  </bean>
   <bean name="org.apache.cocoon.components.modules.input.InputModule/uuid2url"
     class="org.apache.lenya.cms.cocoon.components.modules.input.UuidToUrlModule"/>
+  
+  <!-- Lenya can rewrite the links to cater to special proxy setups.
+    Make sure to update the proxy configuration in publication.xml as well.
+    For information about these settings, read
+    http://lenya.apache.org/docs/2_0_x/tutorials/proxy.html
+    
+    The example setting below describes a test setup that corresponds to the example 
+    in src/pubs/default/config/publication.xml.
+  -->
+  <bean name="org.apache.lenya.cms.linking.GlobalProxies"
+    class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl">
+    <!--
+    <property name="nonSslProxyUrl" value="http://www.example.com/lenya"/>
+    <property name="sslProxyUrl" value="https://www.example.com/lenya"/>
+    -->
+  </bean>
+  
+  <bean id="xhtml-a-href" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributeImpl"
+    p:namespace="http://www.w3.org/1999/xhtml" p:element="a" p:attribute="href"/>
+  <bean id="xhtml-object-data" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributeImpl"
+    p:namespace="http://www.w3.org/1999/xhtml" p:element="object" p:attribute="data"/>
+  <bean id="xhtml-img-src" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributeImpl"
+    p:namespace="http://www.w3.org/1999/xhtml" p:element="img" p:attribute="src"/>
+  <bean id="xhtml-link-href" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributeImpl"
+    p:namespace="http://www.w3.org/1999/xhtml" p:element="link" p:attribute="href"/>
+  <bean id="xhtml-form-action" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributeImpl"
+    p:namespace="http://www.w3.org/1999/xhtml" p:element="form" p:attribute="action"/>
+  <bean id="xhtml-script-src" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributeImpl"
+    p:namespace="http://www.w3.org/1999/xhtml" p:element="script" p:attribute="src"/>
+  <bean id="xhtml-input-src" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributeImpl"
+  p:namespace="http://www.w3.org/1999/xhtml" p:element="input" p:attribute="src"/>
+  
+  <bean id="link-rewriting-xhtml" class="org.apache.lenya.cms.linking.impl.LinkRewriteAttributesImpl">
+    <property name="attributes">
+      <list>
+        <ref bean="xhtml-a-href"/>
+        <ref bean="xhtml-object-data"/>
+        <ref bean="xhtml-img-src"/>
+        <ref bean="xhtml-link-href"/>
+        <ref bean="xhtml-form-action"/>
+        <ref bean="xhtml-script-src"/>
+        <ref bean="xhtml-input-src"/>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- Transformers -->
+  <bean name="org.apache.cocoon.transformation.Transformer/proxy-xhtml"
+    class="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer"
+    scope="prototype">
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
+    <property name="attributes" ref="link-rewriting-xhtml"/>
+  </bean>
+  
+  
+  
 </beans>

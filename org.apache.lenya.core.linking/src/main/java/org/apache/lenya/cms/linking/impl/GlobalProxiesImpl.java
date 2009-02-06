@@ -20,15 +20,9 @@ package org.apache.lenya.cms.linking.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.linking.GlobalProxies;
 import org.apache.lenya.cms.publication.Proxy;
 
@@ -36,11 +30,9 @@ import org.apache.lenya.cms.publication.Proxy;
  * GlobalProxy service implementation.
  * The class is implemented as a singleton.
  */
-public class GlobalProxiesImpl extends AbstractLogEnabled implements GlobalProxies, Serviceable,
-        ThreadSafe, Configurable {
+public class GlobalProxiesImpl extends AbstractLogEnabled implements GlobalProxies {
     
     private Map ssl2proxy = new HashMap();
-    private ServiceManager manager;
 
     public Proxy getProxy(boolean ssl) {
         Object key = Boolean.valueOf(ssl);
@@ -52,37 +44,24 @@ public class GlobalProxiesImpl extends AbstractLogEnabled implements GlobalProxi
     }
 
     protected synchronized Proxy initializeProxy(Object key) {
-        Proxy proxy;
-        proxy = new Proxy();
-        ContextUtility context = null;
-        try {
-            context = (ContextUtility) manager.lookup(ContextUtility.ROLE);
-            proxy.setUrl(context.getRequest().getContextPath());
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        }
-        finally {
-            if (context != null) {
-                this.manager.release(context);
-            }
-        }
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        Proxy proxy = new Proxy();
+        proxy.setUrl(process.getRequest().getContextPath());
         this.ssl2proxy.put(key, proxy);
         return proxy;
     }
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    
+    public void setNonSslProxyUrl(String url) {
+        Proxy proxy = new Proxy();
+        proxy.setUrl(url);
+        setProxy(false, proxy);
     }
 
-    public void configure(Configuration config) throws ConfigurationException {
-        Configuration[] proxyConfigs = config.getChildren("proxy");
-        for (int p = 0; p < proxyConfigs.length; p++) {
-            boolean ssl = proxyConfigs[p].getAttributeAsBoolean("ssl");
-            String url = proxyConfigs[p].getAttribute("url");
-            Proxy proxy = new Proxy();
-            proxy.setUrl(url);
-            setProxy(ssl, proxy);
-        }
+    public void setSslProxyUrl(String url) {
+        Proxy proxy = new Proxy();
+        proxy.setUrl(url);
+        setProxy(true, proxy);
     }
 
     /**

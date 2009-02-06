@@ -100,8 +100,8 @@ public class Submit extends InvokeWorkflow {
         Message message = new Message(subject, body, sender, recipients);
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(getSession(), getLogger(),
-                descriptor);
-        getSession().enqueueEvent(event);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(getSession()
+                .getDocumentFactory().getSession(), getLogger(), descriptor);
+        getSession().getDocumentFactory().getSession().enqueueEvent(event);
     }
 }

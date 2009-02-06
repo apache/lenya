@@ -28,10 +28,11 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * <p>
@@ -57,7 +58,7 @@ public class ProxyModule extends AbstractInputModule {
     protected static final String PARAMETER_URLS = "urls";
 
     private boolean relativeUrls;
-    private RepositoryManager repositoryManager;
+    protected Repository repository;
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -89,7 +90,7 @@ public class ProxyModule extends AbstractInputModule {
 
     protected String rewrite(Request request, String url) throws RepositoryException,
             ConfigurationException {
-        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+        Session session = this.repository.getSession(request);
         LinkRewriter rewriter = new OutgoingLinkRewriter(session, request.getRequestURI(), request
                 .isSecure(), false, this.relativeUrls);
         if (!rewriter.matches(url)) {
@@ -137,12 +138,8 @@ public class ProxyModule extends AbstractInputModule {
         }
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

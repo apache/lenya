@@ -17,6 +17,7 @@
 -->
 
 <map:components xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <!--
   <map:transformers>
 
     <map:transformer name="uuid2url-xhtml" logger="lenya.sitemap.transformer.uuid2url"
@@ -65,4 +66,5 @@
     </map:transformer>
     
   </map:transformers>
+  -->
 </map:components>

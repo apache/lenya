@@ -33,9 +33,8 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -51,7 +50,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
      */
     public static final String KEY_REDIRECT_URI = "redirectUri";
 
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     public Map act(Redirector redirector, SourceResolver sourceResolver, Map objectModel,
             String source, Parameters parameters) throws Exception {
@@ -76,7 +75,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
                 Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
                         url);
                 if (policy.isSSLProtected()) {
-                    Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+                    Session session = this.repository.getSession(request);
                     LinkRewriter rewriter = new OutgoingLinkRewriter(session, url, false, true,
                             false);
                     String sslUri = rewriter.rewrite(url);
@@ -88,11 +87,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
         return null;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 }

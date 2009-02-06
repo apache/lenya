@@ -24,6 +24,7 @@
   <bean name="org.apache.lenya.ac.AccessControllerResolver/publication"
     class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver">
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
   </bean>
   <bean name="org.apache.lenya.cms.ac.AccessControllerResolver/global"
     class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver">

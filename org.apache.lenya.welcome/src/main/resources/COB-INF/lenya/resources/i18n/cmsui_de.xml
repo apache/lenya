@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
+
+  <!-- common used words -->
+  <message key="Save">Speichern</message>
+  <message key="Submit">Einreichen</message>
+  <message key="Cancel">Abbrechen</message>
+  <message key="Delete">Löschen</message>
+  <message key="NOTE">Hinweis</message>
+  <message key="No referer">Keine Rückverweiseite</message>  
+  <message key="Referer">Rückverweis</message>
+  <message key="EXCEPTION">AUSNAHME</message>  
+  <message key="User">Benutzer</message>
+  <message key="live">live</message>
+  <message key="not live">nicht live</message>
+  <message key="authoring">Bearbeitung</message>
+  <message key="Authoring">Bearbeitung</message>
+  <message key="review">Freigabe</message>
+  <message key="trash">Papierkorb</message>
+  <message key="archive">Archiv</message>
+  <message key="user">Benutzer</message>
+  <message key="Users">Benutzer</message>  
+  <message key="User Profile">Benutzerprofil</message>  
+  <message key="Edit User Profile">Benutzerprofil bearbeiten</message>  
+  <message key="Default Menu Locale">Bevorzugte Menü-Sprache</message>  
+  <message key="Default Document Locale">Bevorzugte Dokumenten-Sprache</message>  
+  <message key="Group Profile">Gruppenprofil</message>  
+  <message key="Edit Group Profile">Gruppenprofil bearbeiten</message>  
+  <message key="group">Gruppe</message>
+  <message key="Group">Gruppe</message>
+  <message key="Groups">Gruppen</message>
+  <message key="Group ID">Gruppen-ID</message>
+  <message key="Yes">Ja</message>
+  <message key="No">Nein</message>
+  <message key="Description">Beschreibung</message>
+  <message key="Name">Name</message>
+  <message key="Full Name">Vor-&#160;und&#160;Nachname</message>
+  <message key="required fields">Pflichtfelder</message> 
+  <message key="Search">Suche</message>
+  <message key="Home">Startseite</message>
+  <message key="Title">Titel</message>
+  <message key="Last modified">Letzte&#160;Änderung</message>
+  <message key="Overview">Übersicht</message>  
+  <message key="Revisions">Revisionen</message>  
+  <message key="Role">Rolle</message>
+  <message key="View">Anzeigen</message>
+  <message key="Assets">Anlagen</message>
+  <message key="true">ja</message>
+  <message key="false">nein</message>
+  <message key="Rename">Umbenennen</message>
+  <message key="Modify">Ändern</message>
+  <message key="Document">Dokument</message>
+  <message key="Date">Datum</message>
+  <message key="Back">Zurück</message>
+  <message key="Add">Hinzufügen</message>
+  <message key="Create">Erstellen</message>
+  <message key="create-document">Dieses Dokument erstellen</message>
+  <message key="The Archive">Archiv</message>
+  <message key="Trash">Papierkorb</message>
+  <message key="Publisher">Herausgeber</message>
+  <message key="Navigation Title">Navigationstitel</message>
+  <message key="Creator">Ersteller</message>
+  <message key="Language">Sprache</message>
+  <message key="Subject">Betrifft</message>
+  <message key="Rights">Rechte</message>
+  <message key="Select File">Datei wählen</message>
+  <message key="select-object">{0}&#160;auswählen</message>
+  <message key="Insert">Einfügen</message>
+  <message key="Insert File">Datei einfügen</message>
+  <message key="upload-with-invalid-extension">Es dürfen nur Dateien mit folgenden Endungen hochgeladen werden{0}. Die Endung muss zudem klein geschrieben sein.</message>
+  <message key="upload-with-missing-title">Dateien müssen einen Titel haben.</message>
+  <message key="filename-format-exception">Der Name der gewählten Datei enthält Umlaute, Leerzeichen, unerlaubte Zeichen oder besitzt keine gültige Endung.</message>
+  <message key="Creation Date">Erstelldatum</message>
+  <message key="File Size">Dateigrösse</message>
+  <message key="Image">Bild</message>
+  <message key="Link">Verweis</message>
+  <message key="Caption">Überschrift</message>
+  <message key="All rights reserved">Alle Rechte vorbehalten.</message>
+  <message key="show">&#160;+&#160;</message>
+  <message key="hide">&#160;-&#160;</message>
+  <message key="Height">Höhe</message>
+  <message key="Width">Breite</message>
+  <message key="Publication">Publikation</message>
+  <message key="Publications">Publikationen</message>
+  <message key="... Publication">{0}-Publikation</message>
+  <message key="This Publication">Diese&#160;Publikation</message>
+  <message key="Login as Editor">Im&#160;System&#160;anmelden</message>
+  <message key="Live View">Live-Ansicht</message>
+  <message key="Other Publications">Andere&#160;Publikationen</message>
+  
+
+  <!-- publish screen --> 
+  <message key="Publish">Veröffentlichen</message>    
+  <message key="Source File(s)">Quelldatei(en)</message>
+  <message key="publish complete subtree">den gesamten Teilbaum veröffentlichen</message>
+   
+  <!-- logn screen -->        
+  <message key="login-to-pub">Anmelden an der {0}-Publikation</message>    
+  <message key="Login">Anmelden</message>
+  <message key="Password">Passwort</message>    
+  <message key="Username">Benutzername</message>                
+  <message key="Authentication failed">Anmeldung ist fehlgeschlagen</message>  
+  <message key="try-user-lenya-alice">Versuchen Sie Benutzername {0} und Passwort {1} (Bearbeiter), oder Benutzername {2} und Passwort {3} (Prüfer)</message>
+  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1}</message>
+  <message key="Access Denied">Zugriff verweigert</message>
+  <message key="user-not-authorized">Der Benutzer '{0}' ist nicht berechtigt, auf die Seite '{1}' zuzugreifen.</message>
+  <message key="have-another-account">Wenn Sie ein weiteres Benutzerkonto mit den entsprechenden Berechtigungen haben, geben Sie bitte Benutzernamen und Passwort unten ein.</message>
+
+  <!-- logout screen -->
+  <message key="logout-from-pub">Abmelden von der {0} Publikation</message>
+  <message key="Your History">Ihr Verlauf</message>
+  <message key="Login to Authoring Area">An Autorenbereich anmelden</message>
+
+  <!-- cms menu -->
+  <message key="New Document">Neues Dokument</message>
+  <message key="New ... Document">Neues {0}-Dokument</message>
+  <message key="New Language Version">Neue Sprachversion</message>
+  <message key="Remove Language Version">Sprachversion löschen</message>
+  <message key="File">Datei</message>  
+  <message key="Edit">Bearbeiten</message>
+  <message key="Workflow">Arbeitsfluss</message>
+  <message key="Deactivate">Deaktivieren</message>
+  <message key="Schedule">Zeitsteuerung</message>  
+  <message key="Copy">Kopieren</message>  
+  <message key="Paste">Einfügen</message>
+  <message key="Cut">Ausschneiden</message>
+  <message key="Help">Hilfe</message>
+  <message key="Debug">Debug</message>
+  <message key="Delete">Löschen</message>
+  <message key="Archive">Archivieren</message>
+  <message key="Restore">Wiederherstellen</message>
+  <message key="Move Up">Nach oben</message>
+  <message key="Move Down">Nach unten</message>
+  <message key="Logout">Abmelden</message>
+  <message key="View Task Logs">Aufgabenberichte</message>
+  <message key="Support">Support</message>
+  <message key="Documentation">Dokumentation</message>
+  <message key="System Documentation">Systemdokumentation</message>
+  <message key="User Documentation">Benutzerdokumentation</message>
+  <message key="About Apache Lenya">Über Apache Lenya</message>
+  <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
+  <message key="With Kupu">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>-Editor&#160;(Kupu)
+  </message>
+  <message key="With BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>-Editor&#160;(BXE)
+  </message>
+  <message key="With one Form">Mit Formulareditor</message>
+  <message key="With Forms">Mit Formwizard</message>
+  <message key="Edit Metadata">Metadaten bearbeiten</message>
+  <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
+  <message key="Visible in Navigation">Sichtbar in Navigation</message>
+  <message key="Rename URL">URL&#160;umbenennen</message>
+
+  <!-- cms tabs -->
+  <message key="Server Time">Serverzeit</message>  
+  <message key="Workflow State">Status</message>
+
+  <!-- Administration tab -->
+  <message key="Administration">Administration</message>
+  <message key="really-delete?">{0} wirklich löschen ?</message>
+  <message key="Do you really want to delete the trash ?">Wollen Sie den Papierkorb wirklich leeren ?</message>
+  <message key="delete-object">{0} löschen</message>
+  <message key="delete-object?">Wollen Sie {0} wirklich löschen ?</message>  
+  <message key="Passwd">Passwort ändern</message>
+  <message key="Switch User">Benutzer wechseln</message>
+  <message key="Delete Trash">Papierkorb leeren</message>
+  <message key="Cocoon and Server Status">Cocoon- und Serverstatus</message>
+  
+    <!-- Group Administration -->
+  <message key="Profile">Profil</message>  
+  <message key="Members">Mitglieder</message>
+  <message key="IP Ranges">IP&#160;Bereiche</message>
+  <message key="Edit Profile">Profil&#160;ändern</message>
+  <message key="Edit Members">Mitglieder&#160;bearbeiten</message>
+  <message key="Group Administration">Gruppenadministration</message>
+  <message key="Add Group">Gruppe hinzufügen</message>
+  <message key="Group Data">Gruppendetails</message>
+  
+    <!-- User Administration -->
+  <message key="User Data">Benutzerdetails</message>
+  <message key="User ID">Benutzer</message>
+  <message key="CMS User ID">CMS&#160;Benutzer</message>
+  <message key="LDAP ID">LDAP&#160;ID</message>
+  <message key="Confirm password">Passwort&#160;bestätigen</message>
+  <message key="Add User">Benutzer hinzufügen</message>
+  <message key="User Administration">Benutzeradministration</message>
+  <message key="User Details">Benutzerdetails</message>
+  <message key="All Groups">Alle Gruppen</message>
+  <message key="User Groups">Benutzergruppen</message>
+  <message key="Group Affiliation">Gruppenmitgliedschaften</message>
+  <message key="Change Password">Passwort ändern</message>
+  <message key="Old Password">Bestehendes Passwort</message>
+  <message key="New Password">Neues Passwort</message>
+  <message key="Confirm Password">Passwort bestätigen</message>
+  <message key="Edit Group Affiliation">Mitgliedschaften ändern</message>
+  
+  <!-- IP Range Administration -->
+  <message key="IP Range">IP-Bereich</message>
+  <message key="IP Range ID">IP-Bereichs-ID</message>
+  <message key="Network Address">IP-Adresse</message>
+  <message key="Subnet Mask">Netzwerkmaske</message>
+  <message key="IP Range Administration">IP Administration</message>
+  <message key="Add IP Range">IP-Bereich&#160;hinzufügen</message>
+  <message key="IP Range Profile">IP-Bereichs-Profil</message>
+
+  <!-- User Types -->
+  <message key="LDAP User">LDAP User</message>
+  <message key="Local User">CMS User</message>
+
+  <!-- Site Overview -->
+  <message key="- all -">- alle -</message>
+  <message key="filterResourceType">Ressource-Typ</message>
+  <message key="filterWorkflowState">Workflow-Status</message>
+  <message key="filterLanguage">Sprache</message>
+  <message key="filterLastModified">Letzte Änderung</message>
+  <message key="filterDocumentId">Dokument-ID</message>
+  <message key="keyResourceType">Ressource-Typ</message>
+  <message key="keyWorkflowState">Workflow-Status</message>
+  <message key="keyLanguage">Sprache</message>
+  <message key="keyLastModified">Letzte Änderung</message>
+  <message key="keyDocumentId">Pfad</message>
+  <message key="keyCheckedOut">Ausgecheckt von</message>
+  <message key="keyContentLength">Dateigrösse</message>
+  <message key="Update">Aktualisieren</message>
+    
+    <!-- Site tab (info screens) -->
+  <message key="Available Languages">Verfügbare Sprachen</message>
+  <message key="This document is not available in this language.">Das Dokument ist in der gewünschten Sprache nicht vorhanden.</message>
+  <message key="Document ID">Dokument ID</message>
+  <message key="Versions">Versionen</message>
+  <message key="SSL Encryption">SSL-Verschlüsselung</message>
+  <message key="Rollback to this version">Zu dieser Version zurücksetzen</message>
+  <message key="AC Archive">Rechte&#160;Archiv</message>
+  <message key="AC Trash">Rechte&#160;Papierkorb</message>
+  <message key="AC Auth">Rechte&#160;Bearb.</message>
+  <message key="AC Live">Rechte&#160;Live</message>
+  <message key="Scheduler">Zeitsteuerung</message>
+
+  <!-- Info screen actions-->
+  <message key="New Navigation Title">Neuer Navigationstitel</message>
+  <message key="rename-document">Dokument {0} umbenennen</message>
+  <message key="New Document ID">Neue Dokument ID</message>
+  <message key="No whitespace, no special characters">Keine Leer- oder Sonderzeichen</message>
+
+      <!-- Scheduler -->
+  <message key="No active jobs">Keine aktiven Aufgaben.</message>
+  <message key="The job date has expired">Das Datum der Aufgabe ist abgelaufen.</message>
+  <message key="check the log files">Bitte überprüfen Sie die Log-Dateien.</message>
+  <message key="Task">Aufgabe</message>
+  <message key="Day">Tag</message>
+  <message key="Time">Zeit</message>
+      <!-- Deactivate and delete -->
+  <message key="docs-have-links-to-doc">Folgende Dokumente verweisen auf dieses Dokument</message>
+  <message key="Delete Document">Dokument löschen</message>
+  <message key="cannot-deactivate-unless-children-deactivated">Dieses Dokument kann erst deaktiviert werden, wenn alle untergeordneten Dokumente deaktiviert worden sind.</message>
+  <message key="delete-language-versions?">Wollen Sie wirklich alle Sprachversionen des Dokuments {0} löschen?</message>
+  
+      <!-- Archive document -->
+  <message key="Archive Document">Dokument archivieren</message>
+  <message key="archive-doc">Dokument {0} archivieren</message>
+  <message key="archive-doc?">Wollen Sie das Dokument {0} wirklich archivieren?</message>
+      <!-- Restore document -->
+  <message key="Restore Document">Dokument wiederherstellen</message>
+  <message key="restore-doc">Dokument {0} wiederherstellen</message>
+  <message key="restore-doc?">Wollen Sie das Dokument {0} wirklich wiederherstellen?</message>
+      <!--Rename document -->
+  <message key="Rename Document">Dokument umbenennen</message>
+  <message key="rename-doc">Dokument {0} umbenennen</message>
+  <message key="rename-label-doc">Navigationstitel des Dokuments {0} ändern</message>
+      <!-- Copy document -->
+  <message key="Copy Document">Dokument kopieren</message>
+  <message key="copy-doc">Dokument kopieren</message>
+  <message key="copy-doc-to-clip?">
+    Wollen Sie das Dokument <xhtml:q>{0}</xhtml:q> und die untergeordneten Dokumente in die Zwischenablage kopieren?
+    Sie können den Teilbaum später an gewünschter Stelle einfügen.
+  </message>
+      <!-- Paste document -->
+  <message key="Paste Document">Dokument einfügen</message>
+  <message key="paste-doc-from-clip?">Wollen Sie das Dokument <xhtml:q>{0}</xhtml:q> aus der Zwischenablage einfügen?</message>
+      <!-- Cut document -->
+  <message key="Cut Document">Dokument ausschneiden</message>
+  <message key="cut-doc-to-clip?">
+    Wollen Sie das Dokument <xhtml:q>{0}</xhtml:q> und die untergeordneten Dokumente ausschneiden und in die Zwischenablage verschieben?
+    Sie können den Teilbaum später an gewünschter Stelle einfügen.
+  </message>
+
+  <!-- Info workflow  --> 
+  <message key="Value">Wert</message>
+  <message key="Event">Ereignis</message>
+  <message key="Variables">Variablen</message>
+  <message key="History">Verlauf</message>
+  <message key="State">Status</message>
+  <message key="IP Address">IP Adresse</message>   
+  <message key="edit">bearbeiten</message>
+  <message key="submit">einreichen</message>
+  <message key="reject">ablehnen</message>
+  <message key="publish">veröffentlichen</message>
+  <message key="deactivate">deaktivieren</message>
+  <message key="delete">löschen</message>
+  <message key="restore">wiederherstellen</message>
+  <message key="error-workflow-document">Das Ereignis {0} kann nicht auf das Dokument "{1}" angewandt werden.</message>
+    
+  <!-- areas -->
+  <message key="authoring-area">Bearbeitung</message>
+  <message key="live-area">Live</message>
+  <message key="archive-area">Archiv</message>
+  <message key="trash-area">Papierkorb</message>
+  <message key="staging-area">Staging</message>
+
+  <!-- Info asset  --> 
+  <message key="New Asset">Neue Anlage</message>
+
+  <!-- Info RC  --> 
+  <message key="Current Version">Aktuelle Version</message>
+  <message key="Rollback to this revision">Zu dieser Version zurücksetzen</message>
+
+  <!-- Info AC  --> 
+  <message key="Access Object">Zugriffsobjekt</message>
+  <message key="Inherited Rights">Geerbte&#160;Rechte</message>
+  <message key="visit">besuchen</message>
+  <message key="reviewer">Prüfer</message>
+  <message key="editor">Bearbeiter</message>
+  <message key="admin">Admin</message>
+  <message key="world">Welt</message>
+  <message key="the world">Die Welt</message>
+
+  <!-- Scheduler --> 
+  <message key="New job">Neuer&#160;Job</message>
+  <message key="Active jobs">Aktive Aufgaben</message>
+  <message key="Publish and Export">Veröffentlichen und&#160;exportieren</message>
+  <message key="doc-has-links-to-unpublished">Dieses Dokument hat Referenzen auf folgende unveröffentlichte Dokumente:</message>
+
+  <!-- New Document -->
+  <message key="Please check the following possible causes of the exception">Bitte überprüfen Sie folgende Ursachen für die Ausnahme.</message>
+  <message key="Parent ID">Übergerodnete ID</message>
+  <message key="exception.cause.createdoc.whitespace-in-id">Die ID darf keine Leerzeichen enthalten.</message>
+  <message key="exception.cause.createdoc.id-in-use">Die ID ist schon vergeben.</message>   
+    <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen gültigen Wert für "ID" ein. Gültige Zeichen sind A-Z, a-z, 0-9 oder -</message>
+    <message key="failmessage.createdoc.required">Bitte füllen Sie alle Pflichfelder (*) aus..</message>
+
+  <!-- Asset Upload/Insert Dialog -->
+  <message key="lenya.assetupload.subtitle">Zur Bibliothek hinzufügen</message>
+  <message key="Asset Library">Objektbibliothek</message>
+  <message key="No assets available">Keine Objekte verfügbar</message>
+  <message key="lenya.assetupload.title">Objekt einfügen</message>
+
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">Bild einfügen</message>
+  <message key="lenya.imageupload.selectimage.label">Bild auswählen</message>
+  <message key="lenya.imageupload.info.noimages">Keine Bilder verfügbar.</message>
+  <message key="lenya.imageupload.links.hint">Externe Verweise müssen mit 'http://' und interne Verweise mit '/' beginnen.</message>  
+
+  <!-- Revision Controller -->
+  <message key="Reason">Grund</message>
+  <message key="Filename">Dateiname</message>
+  <message key="lenya.rc.nocheckout">Resource konnte nicht ausgecheckt werden</message>
+  <message key="lenya.rc.checkedoutalready">Die Ressource wurde bereits von jemand anders ausgecheckt.</message>
+  <message key="lenya.rc.nocheckin">Resource konnte nicht eingecheckt werden</message>
+  <message key="Generic Exception">Allgemeiner Fehler</message>
+  <message key="Check the log files.">Überprüfen Sie die Logdatei.</message>
+  
+  <!-- Publication introduction page -->
+  <message key="Publication properties">Eigenschaften der Publikation</message>
+  <message key="Available languages">Verfügbare Sprachen</message>
+  <message key="Available resource types">Verfügbare Ressource-Typen</message>
+  <message key="Required Lenya version">Benötigte Lenya-Version</message>
+  <message key="Required Lenya revision">Benötigte Lenya-Revision</message>
+  <message key="Required Cocoon version">Benötigte Cocoon-Version</message>
+  <message key="Modules used">Verwendete Module</message>
+  <message key="Templates used">Verwendete Templates</message>
+  <message key="Inherited: see template publication">Vererbt: Siehe Template-Publikation</message>
+  
+  <!--
+    Publication templating. Can't go in the module yet, since module
+    i18n is only supported in publications.
+  -->
+  <message key="create-publication">Publikation erstellen</message>
+  <message key="Create Publication from Template">Publikation von einer Vorlage erstellen</message>
+  <message key="Publication ID">Publikations-ID</message>
+  <message key="Publication Name">Name der Publikation</message>
+  <message key="Template">Vorlage</message>
+  <message key="invalid-publication-id">Bitte geben Sie eine gültige Publikations-ID ein!</message>
+  <message key="publication-already-exists">Eine Publikation mit dieser ID existiert bereits.</message>
+  <message key="invalid-publication-name">Bitte geben Sie einen Namen für die Publikation ein!</message>
+  
+  <!-- Error messages of a general nature -->
+  <message key="error-document-form">Dokument ist nicht wohlgeformt: {0}</message>
+  <message key="error-validation">Schema Validierung schlug fehl: {0}</message>
+  <message key="error-missing-language">Das angeforderte Dokument ist nicht verfügbar in der Sprache: {0}</message>
+  <message key="error-document-existance-short">Dokument existiert nicht</message>
+  <message key="error-document-existance">Das angeforderte Dokument {0} existiert nicht.</message>
+  <message key="error-generic">Ein Fehler ist aufgetreten.</message>
+  <message key="error-404">404: Seite nicht gefunden</message>
+  
+  <message key="publication-does-not-exist">Die Publikation existiert nicht</message>
+  <message key="publication-...-does-not-exist">Die Publikation mit der ID "{0}" existiert nicht.</message>
+  
+  <message key="configure-content-repository">
+    <xhtml:strong>Hinweis:</xhtml:strong> Überprüfen Sie, ob das Content-Repository
+    in <xhtml:code>$PUB_HOME/config/(local.)publication.xml</xhtml:code> richtig konfiguriert ist.
+  </message>
+
+  <!-- Document meta data -->
+  <message key="http://apache.org/lenya/metadata/document/1.0">Dokument</message>
+  <message key="contentType">Inhaltstyp</message>
+  <message key="expires">Läuft ab nach</message>
+  <message key="extension">Endung</message>
+  <message key="mimeType">MIME-Type</message>
+  <message key="resourceType">Ressourcen-Typ</message>
+  
+</catalogue>
+

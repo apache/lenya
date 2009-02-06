@@ -32,13 +32,11 @@ import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.StringUtil;
 
 /**
@@ -56,10 +54,10 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     private boolean relativeUrls;
     private PolicyManager policyManager;
     private AccreditableManager accreditableManager;
-    private DocumentFactory factory;
     private boolean ssl;
     private GlobalProxies globalProxies;
     private boolean considerSslPolicies;
+    private Session session;
 
     /**
      * @param session The current session.
@@ -81,7 +79,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         ServiceSelector serviceSelector = null;
 
         try {
-            this.factory = DocumentUtil.createDocumentFactory(session);
+            this.session = session;
 
             if (this.considerSslPolicies) {
                 AccessControllerResolver acResolver = (AccessControllerResolver) WebAppContextUtils
@@ -95,7 +93,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
                 }
             }
 
-            Publication[] pubs = this.factory.getPublications();
+            Publication[] pubs = this.session.getPublications();
             for (int i = 0; i < pubs.length; i++) {
                 this.publicationCache.put(pubs[i].getId(), pubs[i]);
             }

@@ -80,7 +80,7 @@ public class JCRImport extends AbstractUsecase {
         try {
             Session session;
             try {
-                session = getRepository().login();
+                session = getJcrRepository().login();
             } catch (LoginException e1) {
                 throw new JCRImportException("Login to repository failed", e1);
             } catch (RepositoryException e1) {
@@ -169,7 +169,7 @@ public class JCRImport extends AbstractUsecase {
         this.repository = repository;
     }
 
-    public Repository getRepository() {
+    public Repository getJcrRepository() {
         return repository;
     }
 

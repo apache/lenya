@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: cmsui.xml 125536 2005-01-18 19:04:09Z gregor $ -->
+<catalogue xmlns:xhtml="http://www.w3.org/1999/xhtml" xml:lang="ru"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
+<!-- common used words -->
+<message key="Save">Сохранить</message>
+<message key="Submit">Отправить</message>
+<message key="Cancel">Отмена</message>
+<message key="Delete">Удалить</message>
+<message key="NOTE">Заметка</message>
+<message key="No referer">Нет сссылок</message>
+
+<message key="Referer">Ссылка</message>
+<message key="EXCEPTION">ИСКЛЮЧЕНИЕ</message>
+<message key="User">Пользователь</message>
+<message key="Live">Опубликованное</message>
+<message key="Authoring">разработка</message>
+<message key="not">не</message>
+<message key="review">отзыв</message>
+<message key="user">пользователь</message>
+<message key="Users">Пользователи</message>
+
+<message key="group">группа</message>
+<message key="Group">Группа</message>
+<message key="Groups">Группы</message>
+<message key="Group ID">Идентификатор группы</message>
+<message key="Yes">Да</message>
+<message key="No">Нет</message>
+<message key="Description">Описание</message>
+<message key="Name">Имя</message>
+<message key="Full Name">Полное имя</message>
+
+<message key="required fields">обязательные поля</message>
+<message key="Search">Поиск</message>
+<message key="Home">Home</message>
+<message key="Title">Заголовок</message>
+<message key="Last modified">Последнее изменение</message>
+<message key="Overview">Обзор</message>
+<message key="Role">Роль</message>
+<message key="View">Вид</message>
+<message key="Assets">Ресурсы</message>
+
+<message key="true">да</message>
+<message key="false">нет</message>
+<message key="Rename">Переименовать</message>
+<message key="Modify">Изменить</message>
+<message key="Document">Документ</message>
+<message key="Date">Дата</message>
+<message key="Back">Назад</message>
+<message key="Add">Добавить</message>
+<message key="Create">Создать</message>
+
+<message key="The Archive">Архив</message>
+<message key="Trash">Корзина</message>
+<message key="Publisher">Издатель</message>
+<message key="Navigation Title">Навигационный заголовок</message>
+<message key="Creator">Создатель</message>
+<message key="Language">Язык</message>
+<message key="Subject">Тема</message>
+<message key="Rights">Права</message>
+<message key="Select File">Выберите файл</message>
+
+<message key="select-object">Выберите {0}</message>
+<message key="Insert">Вставить</message>
+<message key="Insert File">Вставить файл</message>
+<message key="upload-with-invalid-extension">У загружаемого файла  неправильное расширение. Правильные расширения{0}. Расширение должно быть в нижнем регистре (маленькими буквами).</message>
+<message key="upload-with-missing-title">Загружамый файл без названия.</message>
+<message key="filename-format-exception">У загружаемого файла не указано расширение или его имя содержит недопустимые символы, например, пробелы или умляуты.</message>
+<message key="Creation Date">Дата создания</message>
+<message key="File Size">Размер файла</message>
+
+<message key="Image">Изображение</message>
+<message key="Link">Ссылка</message>
+<message key="Caption">Всплывающая подсказка</message>
+<message key="All rights reserved">Все права защищены.</message>
+<!-- used as tabs names AND states -->
+<message key="live">опубликовано</message>
+<message key="authoring">разработка</message>
+<message key="Site">сайт</message>
+<message key="admin">админ</message>
+
+<!-- state -->
+<message key="not live">неопубликовано</message>
+<!-- submit screen -->
+<message key="submit-for-approval">Отправить {0} на утверждение</message>
+<message key="submit-for-approval?">Хотите отправить {0} на утверждение?</message>
+<!-- publish screen -->
+<message key="Publish">Опубликовать</message>
+<message key="Source File(s)">Исходный файл (или файлы исходные)</message>
+<!-- login screen -->
+<message key="login-to-pub">Войти в {0} публикацию</message>
+<message key="Login">Логин</message>
+
+<message key="Password">Пароль</message>
+<message key="Username">Имя пользователя</message>
+<message key="Authentication failed">Авторизация провалилась</message>
+<message key="try-user-lenya-alice">Попробуйте логин {0} и пароль {1} (редактор), или логин {2} и пароль {3} (обозреватель)</message>
+<message key="try-user-lenya">Попробуйте логин {0} и пароль {1}</message>
+<!-- logout screen -->
+<message key="logout-from-pub">Выйти из {0} Публикации</message>
+<message key="Your History">Ваша история</message>
+<message key="Login to Authoring Area">Войти в авторскую зону</message>
+<!-- reject screen -->
+<message key="Reject">Отклонить</message>
+
+<message key="reject-doc?">Хотите отклонить документ {0}?</message>
+<!-- cms menu -->
+<message key="New Document">Новый документ</message>
+<message key="New ... Document">Новый {0} документ</message>
+<message key="New Language Version">Версия на другом языке</message>
+<message key="Remove Language Version">Удалить версию на другом языке</message>
+<message key="File">Файл</message>
+<message key="Edit">Редактировать</message>
+<message key="Workflow">Техпроцесс</message>
+<message key="Deactivate">Отключить</message>
+
+<message key="Schedule">График</message>
+<message key="Copy">Копировать</message>
+<message key="Paste">Вставить</message>
+<message key="Cut">Вырезать</message>
+<message key="Help">Помощь</message>
+<message key="Debug">Отладить</message>
+<message key="Delete">Удалить</message>
+<message key="Archive">Архивировать</message>
+<message key="Restore">Восстановить</message>
+
+<message key="Move Up">Сместить вверх</message>
+<message key="Move Down">Сместить вниз</message>
+<message key="Logout">Выход</message>
+<message key="View Task Logs">Посмотреть журналы задач</message>
+<message key="Support">Техподдержка</message>
+<message key="System Documentation">Системная Документация</message>
+<message key="User Documentation">Пользовательская документация</message>
+<message key="About Apache Lenya">О проекте Apache Lenya</message>
+<message key="Apache Lenya Homepage">Сайт проекта Apache Lenya</message>
+
+<message key="Edit with Kupu">Редактор <xhtml:abbr title="What You See Is What You Get">WYSIWYG</xhtml:abbr> (Kupu)</message>
+<message key="Edit with BXE">Редактор <xhtml:abbr title="What You See Is What You Get">WYSIWYG</xhtml:abbr> (BXE)</message>
+<message key="Edit with one Form">Редактор исходных текстов</message>
+<message key="Edit with Forms">Редактор форм</message>
+<message key="Edit Metadata">Редактировать метаданные</message>
+<message key="Edit Navigation Title">Редактировать навигационный заголовок</message>
+<message key="Rename URL">Переименовать URL</message>
+
+<message key="Change node visibility">Переключить видимость</message>
+<!-- cms tabs -->
+<message key="Server Time">Время на сервере</message>
+<message key="Workflow State">Состояние техпроцесса</message>
+<!-- Administration tab -->
+<message key="Administration">Администрирование</message>
+<message key="really-delete?">Правда удалить {0}?</message>
+<message key="Do you really want to delete the trash ?">Дейсвительно хотите удалить корзину ?</message>
+<message key="delete-object">Удалить {0}</message>
+<message key="delete-object?">Дейсвительно хотите удалить {0}?</message>
+
+<message key="Passwd">Пароль</message>
+<message key="Switch User">Сменить пользователя</message>
+<message key="Delete Trash">Удалить корзину</message>
+<message key="Cocoon and Server Status">Cocoon and Server Status</message>
+<!-- Group Administration -->
+<message key="Profile">Параметры</message>
+<message key="Members">Участники</message>
+<message key="IP Ranges">Диапазоны IP-адресов</message>
+<message key="Edit Profile">Редактировать параметры</message>
+
+<message key="Edit Members">Редактировать членов</message>
+<message key="Group Administration">Администрирование групп</message>
+<message key="Add Group">Добавить группы</message>
+<message key="Group Data">Данные группы</message>
+<!-- User Administration -->
+<message key="User Data">Данные пользователя</message>
+<message key="CMS User ID">Идентификатор пользователя CMS</message>
+<message key="LDAP ID">Идентификатор LDAP</message>
+<message key="Confirm password">Подтвердить пароль</message>
+
+<message key="Add User">Добавить пользователя</message>
+<message key="User Administration">Управление пользователями</message>
+<message key="User Details">Детали пользователя</message>
+<message key="All Groups">Все группы</message>
+<message key="User Groups">Пользовательские группы</message>
+<message key="Group Affiliation">Членство в группе</message>
+<message key="Change Password">Сменить пароль</message>
+<message key="Edit Group Affiliation">Редактировать членство в группе</message>
+<message key="This group already exists.">Такая группа уже существует.</message>
+
+<message key="This is not a valid group ID.">Некорректный идентификатор группы.</message>
+<message key="This user already exists.">Такой пользователь уже существует.</message>
+<message key="This is not a valid user ID.">Некорректный идентификатор CMS пользователя.</message>
+<message key="Please enter an e-mail address.">Введите адрес e-mail.</message>
+<message key="This LDAP user ID does not exist.">Такой пользователь LDAP не существуте.</message>
+<message key="Password and confirmed password are not equal.">Пароль и подтверждение пароля не совпадают.</message>
+<message key="The password must be at least six characters long.">Пароль должен быть как минимум 6 символов.</message>
+<message key="The password must contain at least one number.">Пароль должен содержать как минимум одну цифру.</message>
+<message key="You cannot change the password of this user.">Вы не можете сменить пароль для этого пользователя.</message>
+
+<!-- User Types -->
+<message key="LDAP User">Пользователь LDAP</message>
+<message key="Local User">Локальный пользователь</message>
+<!-- IP Range Administration -->
+<message key="IP Range">Диапазон IP-адресов</message>
+<message key="IP Range ID">Идентификатор диапазона IP-адресов</message>
+<message key="Network Address">Сетевой адрес</message>
+<message key="Subnet Mask">Маска подсети</message>
+<message key="IP Range Administration">Администрирование диапазонов IP-адресов</message>
+
+<message key="Add IP Range">Добавить диапазон IP-адресов</message>
+<message key="IP Range Profile">Настройки диапазона IP-адресов</message>
+<!-- Site tab (info screens) -->
+<message key="Available Languages">Доступные языки</message>
+<message key="This document is not available in this language.">На этом языке документ не доступен.</message>
+<message key="Document ID">Идентификатор документа</message>
+<message key="Versions">Версии</message>
+<message key="SSL Encryption">SSL шифрование</message>
+<message key="Rollback to this version">Откатиться к этой версии</message>
+
+<message key="AC Archive">AC Архива</message>
+<message key="AC Trash">AC Корзины</message>
+<message key="AC Live">AC Просмотра</message>
+<message key="AC Auth">AC Разработки</message>
+<message key="Scheduler">Планировщик</message>
+<!-- Info screen actions-->
+<message key="New Navigation Title">Новый заголовок навигации</message>
+<message key="Rename Document">Переименовать документ</message>
+<message key="New Document ID">Новый идентификатор документа</message>
+
+<message key="No whitespace, no special characters">Без пробелов и спецсимволов</message>
+<!-- Scheduler -->
+<message key="No active jobs">Нет активных заданий.</message>
+<message key="The job date has expired">Задание просрочено.</message>
+<message key="check the log files">проверить файлы журналов</message>
+<message key="Task">Задание</message>
+<message key="Day">День</message>
+<message key="Time">Время</message>
+<!-- Deactivate and delete -->
+<message key="docs-have-links-to-doc">Следующие документы ссылаются на этот документ</message>
+
+<message key="Deactivate Document">Отключить документ</message>
+<message key="deactivate-doc">Отключить документ {0}</message>
+<message key="deactivate-doc?">Вы действительно хотите отключить документ {0}?</message>
+<message key="Delete Document">Удалить документ</message>
+<message key="delete-doc">Удалить документ {0}</message>
+<message key="cannot-deactivate-unless-children-deactivated">Этот документ не может быть отклчен пока следующие дочерние документы не отключены</message>
+<message key="delete-language-versions?">Вы действительно хотите удалить версии документа {0} на всех языках?</message>
+<!-- Archive document -->
+<message key="Archive Document">Архивировать документ</message>
+
+<message key="archive-doc">Архивировать документ {0}</message>
+<message key="archive-doc?">Вы действительно хотите заархивировать документ {0}?</message>
+<!-- Rename document -->
+<message key="Rename Document">Переименовать документ</message>
+<message key="rename-doc">Переименовать документ {0}</message>
+<!-- Copy document -->
+<message key="Copy Document">Копировать документ</message>
+<message key="copy-doc-to-clip?">Хотите скопировать документ <xhtml:q>{0}</xhtml:q> В буфер обмена? Скопированный документ можно будет вставить после в выбранное место.</message>
+<!-- Paste document -->
+
+<message key="Paste Document">Вставить документ</message>
+<message key="paste-doc-from-clip?">Хотите вставить документ <xhtml:q>{0}</xhtml:q> из буфера обмена?</message>
+<!-- Cut document -->
+<message key="Cut Document">Вырезать документ</message>
+<message key="cut-doc-to-clip?">Хотите вырезать документ <xhtml:q>{0}</xhtml:q> и переместить его в буфер обмена? Вырезанный документ можно будет вставить после в выбранное место.</message>
+<!--Change visibility in navigation -->
+<message key="Change">Изменить</message>
+<message key="Change Document visiblity in navigation">Выберите видимость документа в навигации</message>
+
+<message key="Visibility in navigation">Видимость в навигации</message>
+<message key="visible">видимый</message>
+<message key="hidden">скрытый</message>
+<!-- Info Asset -->
+<message key="Insert Image">Вставить изображение</message>
+<message key="Insert Asset">Вставить ресурс</message>
+<message key="Asset Upload">Загрузка ресурса</message>
+<message key="Insert a new Image">Вставить новое изображение</message>
+<message key="Upload an Asset">Загрузить ресурс</message>
+
+<!-- Info workflow  -->
+<message key="Value">Значение</message>
+<message key="Event">Событие</message>
+<message key="Variables">Переменные</message>
+<message key="History">История</message>
+<message key="State">Состояние</message>
+<message key="IP Address">IP Адрес</message>
+<message key="edit">редактировать</message>
+<message key="submit">отправить</message>
+
+<message key="reject">отклонить</message>
+<message key="publish">опубликовать</message>
+<!-- Info asset  -->
+<message key="New Asset">Новый ресурс</message>
+<!-- Info RC  -->
+<message key="Current Version">Текущая версия</message>
+<message key="Rollback to this revision">Откатиться к этой версии</message>
+<!-- Info AC  -->
+<message key="SSL Encryption">SSL шифрование</message>
+<message key="Access Object">Объект доступа</message>
+
+<message key="visit">посещение</message>
+<message key="reviewer">обозреватель</message>
+<message key="editor">редактор</message>
+<message key="world">world</message>
+<message key="the world">the world</message>
+<!-- Scheduler -->
+<message key="New job">Новое задание</message>
+<message key="Active jobs">Текущие задания</message>
+<message key="Publish and Export">Опубликовать и экспортировать</message>
+
+<message key="doc-has-links-to-unpublished">Документ ссылается на следующие неопубликованные документы:</message>
+<!-- New Document -->
+<message key="Please check the following possible causes of the exception">Провертье следующие причины исключения, пожалуйста.</message>
+<message key="exception.cause.createdoc.whitespace-in-id">Идентификатор не может содержать пробелов</message>
+<message key="exception.cause.createdoc.id-in-use">Идентификатор уже используется</message>
+<message key="failmessage.createdoc.invalidformat">Введите пожалуйста допустимое значение в поле ID. A-Z, a-z, 0-9 или - составляют допустимое значение.</message>
+<message key="failmessage.createdoc.required">Заполните все обязательные (*) поля пожалуйста.</message>
+<!-- Asset Upload/Insert Dialog -->
+<message key="lenya.assetupload.subtitle">Пополнить библиотеку ресурсов</message>
+<message key="Asset Library">Библиотека ресурсов</message>
+
+<message key="No assets available">Нет доступных ресурсов</message>
+<message key="Insert Asset">Вставить ресурс</message>
+<message key="lenya.assetuploa.no.asset.selected">Ресурс не выбран. Выберите что-нибудь.</message>
+<message key="lenya.imageupload.no.image.selected">Изображение не выбрано. Выберите что-нибудь.</message>
+<!-- Image Upload/Insert Dialog -->
+<message key="lenya.imageupload.title">Вставить изображение</message>
+<message key="lenya.imageupload.selectimage.label">Выберите изображение</message>
+<message key="lenya.imageupload.info.noimages">Нет доступных изображений.</message>
+<message key="lenya.imageupload.links.hint">Внешние ссылки должны начинаться с  'http://', а внутренние &#151; с  '/'</message>
+
+<!-- Revision Controller -->
+<message key="Reason">Причина</message>
+<message key="Filename">Файл</message>
+<message key="lenya.rc.nocheckout">Ресурс не может быть извлечён</message>
+<message key="lenya.rc.checkedoutalready">Ресурс был уже излвечён другим пользователем</message>
+<message key="lenya.rc.nocheckin">Реурс не может быть записан</message>
+<message key="Generic Exception">Общее исключение</message>
+<message key="Check the log files.">Проверьте файлы журналов.</message>
+
+<message key="User ID">Идентификатор пользователя</message>
+
+<message key="rename-document">Переименование документа {0}</message>
+<message key="Inherited Rights">Унаследованные права</message>
+<message key="Parent ID">Родительский идентификатор</message>
+<message key="lenya.assetupload.title">Objekt einfügen</message>
+<message key="Add to Asset Library">Добавить в библиотеку ресурсов</message>
+<message key="New document">Nouveau document</message>
+<message key="IP Range Groups">Группы IP-адресов</message>
+<message key="IP Range Overview">Обзор IP-адресов</message>
+<message key="Meta">Мета</message>
+
+<message key="Resource Type">Тип документа</message>
+</catalogue>

@@ -19,6 +19,7 @@ package org.apache.lenya.cms.publication;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -33,14 +34,24 @@ public class RepositoryImpl implements Repository {
         try {
             org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(
                     this.repositoryManager, request);
+            return new SessionImpl(this, repoSession);
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public void setRepositoryManager(RepositoryManager repositoryManager) {
         this.repositoryManager = repositoryManager;
+    }
+
+    public Session startSession(Identity identity, boolean modifiable) {
+        org.apache.lenya.cms.repository.Session repoSession;
+        try {
+            repoSession = this.repositoryManager.createSession(identity, modifiable);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
+        return new SessionImpl(this, repoSession);
     }
 
 }

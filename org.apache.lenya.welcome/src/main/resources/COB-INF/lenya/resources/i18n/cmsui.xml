@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
+
+  <!-- common used words -->
+  <message key="Save">Save</message>
+  <message key="Submit">Submit</message>
+  <message key="Cancel">Cancel</message>
+  <message key="Delete">Delete</message>
+  <message key="NOTE">Note</message>
+  <message key="No referer">No referer</message>
+  <message key="Referer">Referer</message>
+  <message key="EXCEPTION">EXCEPTION</message>  
+  <message key="User">User</message>
+  <message key="live">live</message>
+  <message key="not live">not live</message>
+  <message key="authoring">authoring</message>
+  <message key="Authoring">Authoring</message>
+  <message key="review">review</message>
+  <message key="user">user</message>
+  <message key="Users">Users</message>
+  <message key="group">group</message>
+  <message key="Group">Group</message>
+  <message key="Groups">Groups</message>
+  <message key="Group ID">Group ID</message>
+  <message key="Yes">Yes</message>
+  <message key="No">No</message>
+  <message key="Description">Description</message>
+  <message key="Name">Name</message>
+  <message key="Full Name">Full Name</message>
+  <message key="required fields">required fields</message>
+  <message key="Search">Search</message>
+  <message key="Home">Home</message>
+  <message key="Title">Title</message>
+  <message key="Last modified">Last&#160;modified</message>
+  <message key="Overview">Overview</message>
+  <message key="Role">Role</message>
+  <message key="View">View</message>
+  <message key="Assets">Assets</message>
+  <message key="true">yes</message>
+  <message key="false">no</message>
+  <message key="Rename">Rename</message>
+  <message key="Modify">Modify</message>
+  <message key="Document">Document</message>
+  <message key="Date">Date</message>
+  <message key="Back">Back</message>
+  <message key="Add">Add</message>
+  <message key="Create">Create</message>
+  <message key="create-document">Create this document</message>
+  <message key="The Archive">Archive</message>
+  <message key="Trash">Trash</message>
+  <message key="Publisher">Publisher</message>
+  <message key="Navigation Title">Navigation Title</message>
+  <message key="Creator">Creator</message>
+  <message key="Language">Language</message>
+  <message key="Subject">Subject</message>
+  <message key="Rights">Rights</message>
+  <message key="Select File">Select File</message>
+  <message key="select-object">Select {0}</message>
+  <message key="Insert">Insert</message>
+  <message key="Insert File">Insert File</message>
+  <message key="upload-with-invalid-extension">You tried to upload a file with an invalid extension. Valid extensions are{0}. Note that extensions need to be in lowercase.</message>
+  <message key="upload-with-missing-title">You tried to upload a file without a title.</message>
+  <message key="filename-format-exception">The file name of the file you are trying to upload either has no extension, or contains characters which are not allowed, such as spaces or umlauts.</message>
+  <message key="Creation Date">Creation Date</message>
+  <message key="File Size">File Size</message>
+  <message key="Image">Image</message>
+  <message key="Link">Link</message>
+  <message key="Caption">Caption</message>
+  <message key="Height">Height</message>
+  <message key="Width">Width</message>
+  <message key="All rights reserved">All rights reserved.</message>
+  <message key="show">&#160;+&#160;</message>
+  <message key="hide">&#160;-&#160;</message>
+  <message key="Publication">Publication</message>
+  <message key="Publications">Publications</message>
+  <message key="... Publication">{0} Publication</message>
+  <message key="This Publication">This&#160;Publication</message>
+  <message key="Login as Editor">Login&#160;for&#160;authoring</message>
+  <message key="Live View">Live&#160;View</message>
+  <message key="Other Publications">Other&#160;Publications</message>
+  
+
+  <!-- publish screen -->     
+  <message key="Publish">Publish</message>  
+  <message key="Source File(s)">Source File(s)</message>
+
+  <!-- login screen -->
+  <message key="login-to-pub">Login to the {0} Publication</message>
+  <message key="Login">Login</message>
+  <message key="Password">Password</message>
+  <message key="Username">Username</message>
+  <message key="Authentication failed">Authentication failed</message>
+  <message key="try-user-lenya-alice">Try user {0} and password {1} (editor), or user {2} and password {3} (reviewer)</message>
+  <message key="try-user-lenya">Try user {0} and password {1}</message>
+  <message key="Access Denied">Access Denied</message>
+  <message key="user-not-authorized">The user '{0}' is not authorized to access the page '{1}'.</message>
+  <message key="have-another-account">If you have another user account with the corresponding privileges, please provide user name and password below.</message>
+
+  <!-- logout screen -->
+  <message key="logout-from-pub">Logout from the {0} Publication</message>
+  <message key="Your History">Your History</message>
+  <message key="Login to Authoring Area">Login to Authoring Area</message>
+
+  <!-- cms menu -->
+  <message key="New Document">New Document</message>
+  <message key="New ... Document">New {0} Document</message>
+  <message key="New Language Version">New Language Version</message>
+  <message key="Remove Language Version">Remove Language Version</message>
+  <message key="File">File</message>  
+  <message key="Edit">Edit</message>
+  <message key="Workflow">Workflow</message>
+  <message key="Deactivate">Deactivate</message>
+  <message key="Schedule">Schedule</message>
+  <message key="Copy">Copy</message>  
+  <message key="Paste">Paste</message>
+  <message key="Cut">Cut</message>
+  <message key="Help">Help</message>
+  <message key="Debug">Debug</message>
+  <message key="Delete">Delete</message>
+  <message key="Archive">Archive</message>
+  <message key="Restore">Restore</message>
+  <message key="Move Up">Move Up</message>
+  <message key="Move Down">Move Down</message>
+  <message key="Logout">Logout</message>
+  <message key="View Task Logs">View Task Logs</message>
+  <message key="Support">Support</message>
+  <message key="Documentation">Documentation</message>
+  <message key="System Documentation">System Documentation</message>
+  <message key="User Documentation">User Documentation</message>
+  <message key="About Apache Lenya">About Apache Lenya</message>
+  <message key="Apache Lenya Homepage">Apache Lenya Homepage</message>
+  <message key="With Kupu">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
+  </message>
+  <message key="With BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
+  </message>
+  <message key="With one Form">With one Form</message>
+  <message key="With Forms">With Forms</message>
+  <message key="Edit Metadata">Edit&#160;Metadata</message>
+  <message key="Edit Navigation Title">Edit&#160;Navigation&#160;Title</message>
+  <message key="Visible in Navigation">Visible in Navigation</message>
+  <message key="Rename URL">Rename&#160;URL</message>
+  
+  <!-- cms tabs -->
+  <message key="Server Time">Server Time</message>  
+  <message key="Workflow State">Workflow State</message>
+
+  <!-- Administration tab -->
+  <message key="Administration">Administration</message>
+  <message key="really-delete?">Really delete {0}?</message>
+  <message key="Do you really want to delete the trash ?">Do you really want to delete the trash ?</message>
+  <message key="delete-object">Delete {0}</message>
+  <message key="delete-object?">Do you really want to delete {0}?</message>
+  <message key="Passwd">Passwd</message>
+  <message key="Switch User">Switch User</message>
+  <message key="Delete Trash">Delete Trash</message>
+  <message key="Cocoon and Server Status">Cocoon and Server Status</message>
+  
+    <!-- Group Administration -->
+  <message key="Profile">Profile</message>
+  <message key="Members">Members</message>
+  <message key="IP Ranges">IP&#160;Ranges</message>
+  <message key="Edit Profile">Edit Profile</message>
+  <message key="Edit Members">Edit Members</message>
+  <message key="Group Administration">Group Administration</message>
+  <message key="Add Group">Add Group</message>
+  <message key="Group Data">Group Data</message>
+  <message key="group_no_such_entry">The group {0} does not exist.</message>
+
+    <!-- User Administration -->
+  <message key="User Data">User&#160;Data</message>
+
+  <message key="CMS User ID">CMS&#160;User&#160;ID</message>
+  <message key="LDAP ID">LDAP&#160;ID</message>
+  <message key="Confirm password">Confirm&#160;password</message>
+  <message key="Add User">Add User</message>
+  <message key="User Administration">User Administration</message>
+  <message key="User Details">User Details</message>
+  <message key="All Groups">All Groups</message>
+  <message key="User Groups">User Groups</message>
+  <message key="Group Affiliation">Group Affiliation</message>
+  <message key="Change Password">Change Password</message>
+  <message key="Edit Group Affiliation">Edit Group Affiliation</message>
+  <message key="user_no_such_user">The user {0} does not exist.</message>
+  <message key="ldap_no_such_user">The user {0} does not exist in the LDAP directory.</message>
+
+    <!-- User Types -->
+  <message key="LDAP User">LDAP User</message>
+  <message key="Local User">CMS User</message>
+  
+    <!-- Role Administration -->
+  <message key="role_no_such_role">The role {0} does not exist.</message>
+
+    <!-- IP Range Administration -->
+  <message key="IP Range">IP&#160;Range</message>
+  <message key="IP Range ID">IP&#160;Range&#160;ID</message>
+  <message key="Network Address">Network&#160;Address</message>
+  <message key="Subnet Mask">Subnet&#160;Mask</message>
+  <message key="IP Range Administration">IP&#160;Range&#160;Administration</message>
+  <message key="Add IP Range">Add&#160;IP&#160;Range</message>
+  <message key="IP Range Profile">IP&#160;Range&#160;Profile</message>
+  
+  <!-- Site Overview -->
+  <message key="filterResourceType">Resource Type</message>
+  <message key="filterWorkflowState">Workflow State</message>
+  <message key="filterLanguage">Language</message>
+  <message key="filterLastModified">Last Modification</message>
+  <message key="filterDocumentId">Document ID</message>
+  <message key="keyResourceType">Resource Type</message>
+  <message key="keyWorkflowState">Workflow State</message>
+  <message key="keyLanguage">Language</message>
+  <message key="keyLastModified">Last Modified</message>
+  <message key="keyPath">Path</message>
+  <message key="keyCheckedOut">Checked Out By</message>
+  <message key="keyContentLength">File Size</message>
+  <message key="Update">Update</message>
+  
+  <!-- Site tab (info screens) -->
+  <message key="Available Languages">Available Languages</message>
+  <message key="This document is not available in this language.">This document is not available in this language.</message>
+  <message key="Document ID">Document ID</message>
+  <message key="Versions">Versions</message>
+  <message key="SSL Encryption">SSL&#160;Encryption</message>
+  <message key="Rollback to this version">Rollback to this version</message>
+  <message key="AC Archive">AC&#160;Archive</message>
+  <message key="AC Trash">AC&#160;Trash</message>
+  <message key="AC Auth">AC&#160;Auth</message>
+  <message key="AC Live">AC&#160;Live</message>
+  <message key="Scheduler">Scheduler</message>
+
+    <!-- Info screen actions-->
+  <message key="New Navigation Title">New Navigation Title</message>
+  <message key="Rename Document">Rename Document</message>
+  <message key="New Document ID">New Document ID</message>
+  <message key="No whitespace, no special characters">No whitespace, no special characters</message>
+      <!-- Scheduler -->
+  <message key="No active jobs">No active jobs.</message>
+  <message key="The job date has expired">The job date has expired.</message>
+  <message key="check the log files">check the log files</message>
+  <message key="Task">Task</message>
+  <message key="Day">Day</message>
+  <message key="Time">Time</message>
+
+      <!-- Deactivate and delete -->
+  <message key="docs-have-links-to-doc">The following documents have links to this document</message>
+  <message key="Delete Document">Delete Document</message>
+  <message key="delete-doc">Delete document {0}</message>
+  <message key="cannot-deactivate-unless-children-deactivated">This document cannot be deactivated unless the following child documents are deactivated</message>
+  <message key="delete-language-versions?">Do you really want to delete all language versions of the document {0}?</message>      
+  <message key="delete-doc-live">Cannot delete because document {0} is live!</message>
+
+      <!-- Archive document -->
+  <message key="Archive Document">Archive Document</message>
+  <message key="archive-doc">Archive document {0}</message>
+  <message key="archive-doc?">Do you really want to archive the document {0}?</message>
+      <!-- Restore document -->
+  <message key="Restore Document">Restore Document</message>
+  <message key="restore-doc">Restore document {0}</message>
+  <message key="restore-doc?">Do you really want to restore the document {0}?</message>
+      <!-- Rename document -->
+  <message key="Rename Document">Rename Document</message>
+  <message key="rename-doc">Rename document {0}</message>
+  <message key="rename-label-doc">Change navigation title of document {0}</message>
+      <!-- Copy document -->
+  <message key="Copy Document">Copy Document</message>
+  <message key="copy-doc-to-clip?">
+    Do you want to copy the document <xhtml:q>{0}</xhtml:q> and its descendants to the clipboard?
+    You can paste the subtree later at the location of your choosing.
+  </message>
+      <!-- Paste document -->
+  <message key="Paste Document">Paste Document</message>
+  <message key="paste-doc-from-clip?">Do you want to paste the document <xhtml:q>{0}</xhtml:q> from the clipboard?</message>
+
+      <!-- Cut document -->
+  <message key="Cut Document">Cut Document</message>
+  <message key="cut-doc-to-clip?">
+    Do you want to cut the document <xhtml:q>{0}</xhtml:q> and its descendants and move it to the clipboard?
+    You can paste the subtree later at the location of your choosing.
+  </message>
+
+  <!-- Workflow  --> 
+  <message key="Value">Value</message>
+  <message key="Event">Event</message>
+  <message key="Variables">Variables</message>
+  <message key="History">History</message>
+  <message key="State">State</message>   
+  <message key="IP Address">IP Address</message>   
+  <message key="edit">edit</message>
+  <message key="submit">submit</message>
+  <message key="reject">reject</message>
+  <message key="publish">publish</message>
+  <message key="delete">delete</message>
+  <message key="archive">archive</message>
+  <message key="restore">restore</message>
+  <message key="error-workflow-document">The event {0} is not executable on document "{1}"</message>
+  
+  <!-- areas -->
+  <message key="authoring-area">Authoring</message>
+  <message key="live-area">Live</message>
+  <message key="archive-area">Archive</message>
+  <message key="trash-area">Trash</message>
+  <message key="staging-area">Staging</message>
+
+  <!-- Info asset  --> 
+  <message key="New Asset">New Asset</message>
+  
+  <!-- Info meta -->
+  <message key="Custom metadata">Custom metadata</message>
+  <message key="Show custom metadata">Show custom metadata</message>
+  <message key="Hide custom metadata">Hide custom metadata</message>
+  
+  <!-- Info RC  --> 
+  <message key="Current Version">Current Version</message>
+  <message key="Rollback to this revision">Rollback to this revision</message>
+
+  <!-- Info AC  --> 
+  <message key="SSL Encryption">SSL&#160;Encryption</message>
+  <message key="Access Object">Access&#160;Object</message>
+  <message key="visit">visit</message>
+  <message key="reviewer">reviewer</message>
+  <message key="editor">editor</message>
+  <message key="admin">admin</message>
+  <message key="world">world</message>
+  <message key="the world">the world</message>
+  
+  <!-- Scheduler --> 
+  <message key="New job">New&#160;job</message>
+  <message key="Active jobs">Active&#160;jobs</message>
+  <message key="Publish and Export">Publish and&#160;Export</message>
+  <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
+
+  <!-- New Document -->
+  <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>   
+  <message key="exception.cause.createdoc.whitespace-in-id">The id is not allowed to have whitespaces</message>
+  <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>   
+  <message key="failmessage.createdoc.invalidformat">Please enter a valid value in the ID field. A-Z, a-z, 0-9 or - are valid characters.</message>
+  <message key="failmessage.createdoc.required">Please input all required (*)  values.</message>
+
+  <!-- Asset Upload/Insert Dialog -->
+  <message key="lenya.assetupload.subtitle">Add to Asset Library</message>
+  <message key="Asset Library">Asset Library</message>
+  <message key="No assets available">No assets available</message>
+  <message key="Insert Asset">Insert Asset</message>
+  
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">Insert Image</message>
+  <message key="lenya.imageupload.selectimage.label">Select Image</message>
+  <message key="lenya.imageupload.info.noimages">No images available.</message>  
+  <message key="lenya.imageupload.links.hint">External links have to start with 'http://', internal links have to start with '/'</message>  
+
+  <!-- Revision Controller -->
+  <message key="Reason">Reason</message>
+  <message key="Filename">File name</message>
+  <message key="lenya.rc.nocheckout">Resource could not be checked out</message>
+  <message key="lenya.rc.checkedoutalready">The resource has already been checked out by another user</message>
+  <message key="lenya.rc.nocheckin">Resource could not be checked in</message>
+  <message key="Generic Exception">Generic Exception</message>
+  <message key="Check the log files.">Check the log files.</message>
+  
+  <!--
+  Publication templating. Can't go in the module yet, since module
+  i18n is only supported in publications.
+  -->
+  <message key="create-publication">Create publication</message>
+  <message key="Create Publication from Template">Create Publication from Template</message>
+  <message key="Publication ID">Publication ID</message>
+  <message key="Publication Name">Publication Name</message>
+  <message key="Template">Template</message>
+  <message key="invalid-publication-id">Please enter a valid publication ID!</message>
+  <message key="publication-already-exists">A publication with this ID already exists.</message>
+  <message key="invalid-publication-name">Please enter a publication name!</message>
+  
+  <!-- Error messages of a general nature -->
+  <message key="error-document-form">Document is not well-formed: {0}</message>
+  <message key="error-validation">Schema validation failed: {0}</message>
+  <message key="error-missing-language">The requested document is not available for language: {0}</message>
+  <message key="error-document-existance-short">Document does not exist</message>
+  <message key="error-document-existance">The requested document {0} does not exist.</message>
+  <message key="error-generic">An error occurred.</message>
+  <message key="error-404">404: Page not found</message>
+  
+  <message key="publication-does-not-exist">The publication does not exist</message>
+  <message key="publication-...-does-not-exist">The publication with the ID "{0}" does not exist.</message>
+  
+  <message key="configure-content-repository">
+    <xhtml:strong>Note:</xhtml:strong> Make sure that your content repository
+    is configured correctly within <xhtml:code>$PUB_HOME/config/(local.)publication.xml</xhtml:code>.
+  </message>
+  
+  <!-- Document meta data -->
+  <message key="http://apache.org/lenya/metadata/document/1.0">Document</message>
+  <message key="contentType">Content type</message>
+  <message key="expires">Expires after</message>
+  <message key="extension">Extension</message>
+  <message key="mimeType">MIME type</message>
+  <message key="resourceType">Resource type</message>
+  
+</catalogue>

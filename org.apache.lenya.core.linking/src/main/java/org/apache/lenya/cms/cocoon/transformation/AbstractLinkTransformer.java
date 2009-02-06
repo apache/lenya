@@ -22,12 +22,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
@@ -36,6 +35,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.cms.linking.LinkRewriteAttribute;
+import org.apache.lenya.cms.linking.LinkRewriteAttributes;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -46,13 +47,12 @@ import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * <p>
- * This transformer processes all links which are configured using
- * <code>&lt;transform/&gt;</code> elements.
+ * This transformer processes all links which are configured using <code>&lt;transform/&gt;</code>
+ * elements.
  * </p>
  * <p>
- * If the link rewriter returns <code>null</code> for a link, an attribute can
- * be added to the corresponding element, with an optional message of the form
- * "Broken link: ...".
+ * If the link rewriter returns <code>null</code> for a link, an attribute can be added to the
+ * corresponding element, with an optional message of the form "Broken link: ...".
  * </p>
  * <code><pre>
  *   &lt;map:transformer ... &gt;
@@ -62,19 +62,20 @@ import org.xml.sax.helpers.AttributesImpl;
  *   &lt;/map:transformer&gt;
  * </pre></code>
  * <p>
- * The reference URL can optionally be passed using the <em>url</em>
- * parameter.
+ * The reference URL can optionally be passed using the <em>url</em> parameter.
  * </p>
  */
 public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
 
     private String area;
     protected static final String PARAM_URL = "url";
+    
+    public AbstractLinkTransformer() {
+    }
 
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters params)
             throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, params);
-
         String webappUrl = getWebappUrl(params, objectModel);
         URLInformation url = new URLInformation(webappUrl);
         this.area = url.getArea();
@@ -83,9 +84,8 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     /**
      * @param params
      * @param objectModel
-     * @return The web application URL which was passed using the <em>url</em>
-     *         parameter or the web application URL the transformer was called on,
-     *         respectively.
+     * @return The web application URL which was passed using the <em>url</em> parameter or the web
+     *         application URL the transformer was called on, respectively.
      * @throws ProcessingException
      */
     protected String getWebappUrl(Parameters params, Map objectModel) throws ProcessingException {
@@ -108,74 +108,35 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      */
     private Set localNames = new HashSet();
 
-    private boolean markBrokenLinks;
     private String brokenLinkAttribute;
     private String brokenLinkValue;
     private String brokenLinkMessageAttribute;
 
-    public void configure(Configuration config) throws ConfigurationException {
-        super.configure(config);
-        Configuration[] transformConfigs = config.getChildren("transform");
-        for (int i = 0; i < transformConfigs.length; i++) {
-            String namespace = transformConfigs[i].getAttribute("namespace");
-            String element = transformConfigs[i].getAttribute("element");
-            String attribute = transformConfigs[i].getAttribute("attribute");
-            AttributeConfiguration attrConfig = new AttributeConfiguration(namespace, element,
-                    attribute);
-            String key = getCacheKey(namespace, element);
+    public void setBrokenLinkAttribute(String brokenLinkAttribute) {
+        this.brokenLinkAttribute = brokenLinkAttribute;
+    }
+
+    public void setBrokenLinkValue(String brokenLinkValue) {
+        this.brokenLinkValue = brokenLinkValue;
+    }
+
+    public void setBrokenLinkMessageAttribute(String brokenLinkMessageAttribute) {
+        this.brokenLinkMessageAttribute = brokenLinkMessageAttribute;
+    }
+
+    public void setAttributes(LinkRewriteAttributes attributes) {
+        List attrs = attributes.getAttributes();
+        for (Iterator i = attrs.iterator(); i.hasNext(); ) {
+            LinkRewriteAttribute attr = (LinkRewriteAttribute) i.next();
+            String key = getCacheKey(attr.getNamespace(), attr.getElement());
             Set configs = (Set) this.namespaceLocalname2configSet.get(key);
             if (configs == null) {
                 configs = new HashSet();
-                this.localNames.add(element);
+                this.localNames.add(attr.getElement());
                 this.namespaceLocalname2configSet.put(key, configs);
             }
-            configs.add(attrConfig);
+            configs.add(attr);
         }
-        Configuration brokenLinksConfig = config.getChild("markBrokenLinks", false);
-        if (brokenLinksConfig != null) {
-            this.brokenLinkAttribute = brokenLinksConfig.getAttribute("attribute");
-            this.brokenLinkValue = brokenLinksConfig.getAttribute("value");
-            String messageAttr = brokenLinksConfig.getAttribute("messageAttribute", null);
-            if (messageAttr != null) {
-                this.brokenLinkMessageAttribute = messageAttr;
-            }
-            this.markBrokenLinks = true;
-        } else {
-            this.markBrokenLinks = false;
-        }
-    }
-
-    /**
-     * Declaration of an attribute which should be transformed.
-     */
-    public static class AttributeConfiguration {
-
-        protected final String element;
-        protected final String namespace;
-        protected final String attribute;
-
-        /**
-         * @param namespace The namespace of the element.
-         * @param element The local name of the element.
-         * @param attribute The name of the attribute to transform.
-         */
-        public AttributeConfiguration(String namespace, String element, String attribute) {
-            this.namespace = namespace;
-            this.element = element;
-            this.attribute = attribute;
-        }
-
-        /**
-         * @param uri The namespace URI.
-         * @param name The local name.
-         * @param attrs The attributes.
-         * @return If this configuration matches the parameters.
-         */
-        public boolean matches(String uri, String name, Attributes attrs) {
-            return this.namespace.equals(uri) && this.element.equals(name)
-                    && attrs.getValue(this.attribute) != null;
-        }
-
     }
 
     /**
@@ -197,7 +158,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
         Set configs = null;
         Set allConfigs = (Set) this.namespaceLocalname2configSet.get(key);
         for (Iterator i = allConfigs.iterator(); i.hasNext();) {
-            AttributeConfiguration config = (AttributeConfiguration) i.next();
+            LinkRewriteAttribute config = (LinkRewriteAttribute) i.next();
             if (config.matches(namespace, localName, attrs)) {
                 if (configs == null) {
                     configs = new HashSet();
@@ -237,8 +198,8 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     protected boolean useIgnore = false;
 
     /**
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String name, String qname, Attributes attrs)
             throws SAXException {
@@ -258,8 +219,8 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             this.ignoreLinkElement = false;
 
             for (Iterator i = configs.iterator(); i.hasNext();) {
-                AttributeConfiguration config = (AttributeConfiguration) i.next();
-                String linkUrl = newAttrs.getValue(config.attribute);
+                LinkRewriteAttribute config = (LinkRewriteAttribute) i.next();
+                String linkUrl = newAttrs.getValue(config.getAttribute());
                 try {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug(this.indent + "link URL: [" + linkUrl + "]");
@@ -299,29 +260,28 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * Handle a link in the source SAX stream.
      * @param linkUrl The link URL.
      * @param config The attribute configuration which matched the link.
-     * @param newAttrs The new attributes which will be added to the result
-     *                element.
+     * @param newAttrs The new attributes which will be added to the result element.
      * @throws Exception if an error occurs.
      */
-    protected void handleLink(String linkUrl, AttributeConfiguration config, AttributesImpl newAttrs)
+    protected void handleLink(String linkUrl, LinkRewriteAttribute config, AttributesImpl newAttrs)
             throws Exception {
         if (getLinkRewriter().matches(linkUrl)) {
             String rewrittenUrl = getLinkRewriter().rewrite(linkUrl);
             if (rewrittenUrl != null) {
-                setAttribute(newAttrs, config.attribute, rewrittenUrl);
+                setAttribute(newAttrs, config.getAttribute(), rewrittenUrl);
             } else {
                 if (this.area != null && this.area.equals(Publication.LIVE_AREA)) {
                     this.ignoreLinkElement = true;
                 } else {
-                    markBrokenLink(newAttrs, config.attribute, linkUrl);
+                    markBrokenLink(newAttrs, config.getAttribute(), linkUrl);
                 }
             }
         }
     }
 
     /**
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
-     *      java.lang.String, java.lang.String)
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String,
+     *      java.lang.String)
      */
     public void endElement(String uri, String name, String qname) throws SAXException {
         if (getLogger().isDebugEnabled()) {
@@ -347,8 +307,7 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * @param attr The attributes.
      * @param name The attribute name.
      * @param value The value.
-     * @throws IllegalArgumentException if the href attribute is not contained
-     *                 in this attributes.
+     * @throws IllegalArgumentException if the href attribute is not contained in this attributes.
      */
     protected void setAttribute(AttributesImpl attr, String name, String value) {
         int position = attr.getIndex(name);
@@ -364,17 +323,15 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     protected abstract LinkRewriter getLinkRewriter();
 
     /**
-     * Marks a link element as broken and removes the attribute which contained
-     * the URL.
+     * Marks a link element as broken and removes the attribute which contained the URL.
      * @param newAttrs The new attributes.
-     * @param attrName The attribute name containing the URL which could not be
-     *                rewritten.
+     * @param attrName The attribute name containing the URL which could not be rewritten.
      * @param brokenLinkUri The broken link URI.
      * @throws AccessControlException when something went wrong.
      */
     protected void markBrokenLink(AttributesImpl newAttrs, String attrName, String brokenLinkUri)
             throws AccessControlException {
-        if (this.markBrokenLinks) {
+        if (this.brokenLinkAttribute != null) {
             if (newAttrs.getIndex(this.brokenLinkAttribute) > -1) {
                 newAttrs.removeAttribute(newAttrs.getIndex(this.brokenLinkAttribute));
             }
@@ -397,7 +354,6 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     }
 
     public void recycle() {
-        super.recycle();
         this.area = null;
         this.ignoreLinkElementStack.clear();
     }

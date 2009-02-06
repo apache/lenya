@@ -37,10 +37,9 @@ import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
@@ -56,7 +55,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInvoker {
 
     private String targetUrl;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     private UsecaseResolver usecaseResolver;
 
     /**
@@ -75,10 +74,9 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
         ProcessInfoProvider process = (ProcessInfoProvider) context
                 .getBean(ProcessInfoProvider.ROLE);
         HttpServletRequest request = process.getRequest();
-        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+        Session session = this.repository.getSession(request);
         URLInformation info = new URLInformation(webappUrl);
-        Publication pub = factory.getPublication(info.getPublicationId());
+        Publication pub = session.getPublication(info.getPublicationId());
         Role[] roles = PolicyUtil.getRoles(request);
 
         Authorizer[] authorizers = accessController.getAuthorizers();
@@ -112,7 +110,7 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
                 return;
             }
 
-            usecase = getUsecaseResolver().resolve(webappUrl, usecaseName);
+            usecase = this.usecaseResolver.resolve(webappUrl, usecaseName);
 
             Session testSession = getTestSession();
             if (testSession != null) {
@@ -233,20 +231,12 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
         this.testSession = session;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     public void setUsecaseResolver(UsecaseResolver usecaseResolver) {
         this.usecaseResolver = usecaseResolver;
-    }
-
-    public UsecaseResolver getUsecaseResolver() {
-        return usecaseResolver;
     }
 
 }

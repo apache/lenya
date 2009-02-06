@@ -35,13 +35,10 @@ import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * Resolves the access controller according to the <code>access-control.xml</code> file of a
@@ -53,7 +50,7 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             .replace('/', File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
 
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     private SourceResolver sourceResolver;
 
     public SourceResolver getSourceResolver() {
@@ -125,10 +122,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
                 ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
                         .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
                 HttpServletRequest request = process.getRequest();
-                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-                DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-                if (pubId != null && factory.existsPublication(pubId)) {
-                    publication = factory.getPublication(pubId);
+                Session session = this.repository.getSession(request);
+                if (pubId != null && session.existsPublication(pubId)) {
+                    publication = session.getPublication(pubId);
                 }
             } catch (Exception e) {
                 throw new AccessControlException(e);
@@ -227,12 +223,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
         this.context = contextDir;
     }
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
-
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

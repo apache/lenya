@@ -29,9 +29,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.xml.sax.SAXException;
 
 /**
@@ -65,7 +64,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
 
     private boolean relativeUrls = false;
     private LinkRewriter rewriter;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     public void setup(SourceResolver resolver, Map objectModel, String source, Parameters params)
             throws ProcessingException, SAXException, IOException {
@@ -76,7 +75,7 @@ public class ProxyTransformer extends AbstractLinkTransformer {
             if (params.isParameter(PARAMETER_URLS)) {
                 setUrlType(params.getParameter(PARAMETER_URLS));
             }
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            Session session = this.repository.getSession(request);
             String webappUrl = getWebappUrl(params, objectModel);
             this.rewriter = new OutgoingLinkRewriter(session, webappUrl, request.isSecure(), false,
                     this.relativeUrls);
@@ -114,12 +113,9 @@ public class ProxyTransformer extends AbstractLinkTransformer {
         this.rewriter = null;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
 
 }

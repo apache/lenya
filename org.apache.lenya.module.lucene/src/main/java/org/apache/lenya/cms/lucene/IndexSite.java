@@ -44,8 +44,9 @@ public class IndexSite extends AbstractUsecase {
 
         for (int i = 0; i < docs.length; i++) {
             try {
-                getIndexUpdater().index(getSession(), docs[i].getResourceType(), pubId,
-                        area.getName(), docs[i].getUUID(), docs[i].getLanguage());
+                getIndexUpdater().index(getSession().getDocumentFactory().getSession(),
+                        docs[i].getResourceType(), pubId, area.getName(), docs[i].getUUID(),
+                        docs[i].getLanguage());
             } catch (Exception e) {
                 String message = "Error indexing document [" + docs[i].getPath() + ":"
                         + docs[i].getLanguage() + "], UUID=" + docs[i].getUUID();

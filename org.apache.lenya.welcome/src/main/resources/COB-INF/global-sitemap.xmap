@@ -23,11 +23,17 @@
     <map:resource name="style-cms-page">
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
+      </map:transform>
+      <map:transform src="lenya/xslt/util/page2xhtml.xsl"/>
       <map:transform type="proxy-xhtml"/>
-      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
+      <!--
+      <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
+      -->
+      <!--
+      <map:transform type="servletService">
+        <map:parameter name="service" value="servlet:org.apache.lenya.module.prettyprinting:/xml2nicexml"/>
+      </map:transform>
+      -->
     </map:resource>  
 
     <map:resource name="i18n">
@@ -218,11 +224,13 @@
       <!-- the Lenya welcome page with a list of available publications -->
       <map:match pattern="index.html">
         <map:aggregate element="aggregation-wrapper" label="aggregate">
+          <!--
           <map:part src="cocoon:/aggregate-publications"/>
-          <map:part src="lenya/content/welcome.xml"/>
-          <map:part src="readme.xml"/>
+          -->
+          <map:part src="content/welcome.xml"/>
+          <map:part src="content/readme.xml"/>
         </map:aggregate>
-        <map:transform src="lenya/xslt/util/welcome.xsl"/>
+        <map:transform src="xslt/welcome.xsl"/>
         <map:call resource="style-cms-page"/>
         <map:serialize />
       </map:match>

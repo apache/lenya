@@ -20,7 +20,7 @@ package org.apache.lenya.cms.usecase;
 import java.util.List;
 
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * Usecase interface.

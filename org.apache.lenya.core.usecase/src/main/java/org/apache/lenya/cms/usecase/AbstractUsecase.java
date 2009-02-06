@@ -36,12 +36,11 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.transaction.ConcurrentModificationException;
 import org.apache.lenya.transaction.LockException;
 import org.apache.lenya.transaction.TransactionLock;
@@ -84,8 +83,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
     protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
 
-    private DocumentFactoryBuilder documentFactoryBuilder;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     private UsecaseView view;
 
     /**
@@ -551,8 +549,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     protected DocumentFactory getDocumentFactory() {
         DocumentFactory factory = (DocumentFactory) getParameter(PARAMETER_FACTORY);
         Session session = getSession();
-        if (factory == null || factory.getSession() != session) {
-            factory = getDocumentFactoryBuilder().createDocumentFactory(session);
+        if (factory == null || factory != session.getDocumentFactory()) {
+            factory = session.getDocumentFactory();
             setParameter(PARAMETER_FACTORY, factory);
         }
         return factory;
@@ -561,11 +559,11 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     /**
      * TODO: Add init-method to bean.
      */
-    public final void initialize() throws RepositoryException {
+    public final void initialize() {
         ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
                 .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
         HttpServletRequest request = processInfo.getRequest();
-        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+        Session session = this.repository.getSession(request);
         setSession(session);
         setParameter(PARAMETER_STATE_MACHINE, new StateMachine(MODEL));
     }
@@ -702,11 +700,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
     public final void lockInvolvedObjects() throws UsecaseException {
-        try {
-            startTransaction();
-        } catch (RepositoryException e) {
-            throw new UsecaseException(e);
-        }
+        startTransaction();
         synchronized (TransactionLock.LOCK) {
             lockInvolvedObjects(getNodesToLock());
         }
@@ -717,9 +711,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * Start a transaction by using a new, modifiable session.
      * @throws RepositoryException if an error occurs.
      */
-    protected void startTransaction() throws RepositoryException {
+    protected void startTransaction() {
         if (this.commitEnabled) {
-            setSession(getRepositoryManager().createSession(getSession().getIdentity(), true));
+            setSession(this.repository.startSession(getSession().getIdentity(), true));
         }
     }
 
@@ -742,7 +736,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
                 if (!objects[i].isLocked()) {
                     objects[i].lock();
                 }
-                if (!isOptimistic() && !objects[i].isCheckedOutBySession(getSession())) {
+                if (!isOptimistic()
+                        && !objects[i].isCheckedOutBySession(getSession().getDocumentFactory()
+                                .getSession())) {
                     objects[i].checkout(checkoutRestrictedToSession());
                 }
             }
@@ -755,7 +751,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         boolean canExecute = true;
 
         for (int i = 0; i < objects.length; i++) {
-            if (objects[i].isCheckedOut() && !objects[i].isCheckedOutBySession(getSession())) {
+            if (objects[i].isCheckedOut()
+                    && !objects[i].isCheckedOutBySession(getSession().getDocumentFactory()
+                            .getSession())) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
                             "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
@@ -819,7 +817,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         return (Session) getParameter(PARAMETER_SESSION);
     }
 
-    protected void setSession(org.apache.lenya.cms.repository.Session session) {
+    protected void setSession(Session session) {
         setParameter(PARAMETER_SESSION, session);
     }
 
@@ -834,20 +832,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         return getParameterAsBoolean(PARAMETER_CHECKOUT_RESTRICTED_TO_SESSION, true);
     }
 
-    protected DocumentFactoryBuilder getDocumentFactoryBuilder() {
-        return documentFactoryBuilder;
+    protected Repository getRepository() {
+        return repository;
     }
 
-    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
-        this.documentFactoryBuilder = documentFactoryBuilder;
-    }
-
-    protected RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
-
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     public void setParameters(Properties params) {

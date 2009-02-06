@@ -19,8 +19,12 @@ package org.apache.lenya.cms.publication;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.lenya.ac.Identity;
+
 public interface Repository {
     
     Session getSession(HttpServletRequest request);
+
+    Session startSession(Identity identity, boolean modifiable);
     
 }

@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: resources-shared.xmap 349588 2005-11-29 02:07:44Z chestnut $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <map:components>
+    <map:transformers default="xslt">
+      <!-- temporary fix for bxe. should be reconsidered -->
+      <map:transformer name="proxy-rng" logger="lenya.sitemap.transformer.proxy"
+        src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+        <urls type="relative"/>
+        <transform namespace="http://relaxng.org/ns/structure/1.0" element="include" attribute="href"/>
+      </map:transformer>
+    </map:transformers>
+  </map:components>
+
+  <map:resources>
+    <map:resource name="proxy-css">
+      <map:generate type="text" src="{url}.css"/>
+      <map:transform type="pattern" src="fallback://lenya/chaperon/grammars/link.xlex"/>
+      <map:transform src="fallback://lenya/chaperon/stylesheets/pattern-to-link.xsl"/>
+      <map:transform type="proxy"/>
+      <map:transform src="fallback://lenya/chaperon/stylesheets/a-to-txt.xsl"/>
+      <map:serialize type="text" mime-type="text/css"/>
+    </map:resource>
+  </map:resources>
+  
+  <map:pipelines>
+    <map:pipeline internal-only="true">
+      <map:match pattern="*/**.*">
+        <map:match type="regexp" pattern="(.*\.)(rng)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/xml"/>
+        </map:match> 
+      </map:match>
+    </map:pipeline>
+    <map:pipeline>
+      
+      <!-- matches modules/*/**.css -->
+      <map:match pattern="*/**.css">
+        <!-- Only called if a {3}.css exists because of resource-exists-enhanced before -->
+        <map:call resource="proxy-css">
+           <map:parameter name="url" value="fallback://lenya/modules/{1}/resources/{2}"/>
+         </map:call>
+      </map:match>
+
+      <!-- matches modules/*/**.js -->
+      <map:match pattern="*/**.js">
+        <map:read src="fallback://lenya/modules/{1}/resources/{2}.js" mime-type="application/x-javascript" />
+      </map:match>
+
+      <map:match pattern="*/**.xsl">
+        <map:read src="fallback://lenya/modules/{1}/resources/{2}.xsl" mime-type="application/xslt+xml"/>
+      </map:match>
+      
+      <!-- matches modules/*/**.* -->
+      <map:match pattern="*/**.*">
+        
+        <map:match type="regexp" pattern="(.*\.)(html|HTML|htm|HTM)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="text/html"/>
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(xml)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="text/xml"/>
+        </map:match>        
+        <map:match type="regexp" pattern="(.*\.)(rng)$">
+          <map:generate src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}"/>
+          <map:transform src="fallback://lenya/xslt/resources/translate-rng-includes.xsl">
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+          </map:transform>
+          <map:transform type="proxy-rng"/>
+          <map:serialize type="xml"/>
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="image/jpeg" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="image/gif" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(png|PNG|Png)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="image/png" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(tar\.gz|tgz)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/x-gtar" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/pdf">
+            <!-- TODO: http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 -->
+            <map:parameter name="byte-ranges" value="false"/>
+          </map:read>
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(doc|DOC|Doc|dot|DOT|Dot)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/msword" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(rtf|RTF|Rtf)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/rtf" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(txt|TXT|Txt|asc|ASC|Asc|ascii|ASCII|Ascii)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="text/plain" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(xls|XLS|Xls|xlt|XLT|Xlt)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/vnd.ms-excel" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(ppt|PPT|Ppt|pot|POT|Pot)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/vnd.ms-powerpoint" />
+        </map:match>  
+        <map:match type="regexp" pattern="(.*\.)(swf|SWF|Swf)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/x-shockwave-flash" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(tif|TIF|Tif)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="image/tiff" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(eps|EPS|Eps)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/postscript" />
+        </map:match>  
+        <map:match type="regexp" pattern="(.*\.)(m3u|M3U|M3u)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/x-mpegurl" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(kar|KAR|Kar|mid|MID|Mid)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="audio/midi" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(smf|SMF|Smf)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/vnd.stardivision.math" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(mp3|MP3|Mp3)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="audio/mpeg" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(swa|SWA|Swa)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="audio/x-swa" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(mpg|MPG|Mpg|mpv|MPV|Mpv|mp4|MP4|Mp4)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="video/mpeg" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(mov|MOV|Mov)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="video/quicktime" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(bin|BIN|Bin|hqx|HQX|Hqx)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/mac-binhex40" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(sea|SEA|Sea)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/sea" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(sit|SIT|Sit)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/x-stuffit" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(zip|ZIP|Zip)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/zip" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(pct|PCT|Pct|jmx|JMX|Jmx|jcl|JCL|Jcl|qz|QZ|Qz|jbc|JBC|Jbc|jmt|JMT|Jmt|cfg|CFG|Cfg)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/x-ms-word" />
+        </map:match>                                                
+      </map:match>
+      
+      <!-- matches pub-id/area/**favicon.ico -->
+      <map:match pattern="*/**favicon.ico">
+        <map:read src="fallback://lenya/modules/{1}/resources/{2}favicon.ico" mime-type="application/ico"/>
+      </map:match>
+
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>

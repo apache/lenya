@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<catalogue xml:lang="nl" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
+
+  <!-- common used words -->
+  <message key="Save">Opslaan</message>
+  <message key="Submit">Verstuur</message>
+  <message key="Cancel">Afbreken</message>
+
+  <message key="Delete">Verwijder</message>
+  <message key="NOTE">Let Op</message>
+  <message key="No referer">Geen terugverwijzing</message>
+  <message key="Referer">Terugverwijzing</message>
+  <message key="EXCEPTION">EXCEPTIE</message>
+  <message key="User">Gebruiker</message>
+
+  <message key="live">live</message>
+  <message key="not">niet</message>
+  <message key="authoring">schrijven</message>
+  <message key="Authoring">Schrijven</message>
+  <message key="review">controle</message>
+  <message key="user">gebruiker</message>
+
+  <message key="Users">Gebruikers</message>
+  <message key="group">groep</message>
+  <message key="Group">Groep</message>
+  <message key="Groups">Groepen</message>
+  <message key="Group ID">Groep ID</message>
+  <message key="Yes">Ja</message>
+
+  <message key="No">Nee</message>
+  <message key="Description">Beschrijving</message>
+  <message key="Name">Naam</message>
+  <message key="Full Name">Volledige naam</message>
+  <message key="required fields">verplichte velden</message>
+  <message key="Search">Zoek</message>
+
+  <message key="Home">Startpagina</message>
+  <message key="Title">Titel</message>
+  <message key="Last modified">Laatste&#160;wijziging</message>
+  <message key="Overview">Overzicht</message>
+  <message key="Role">Rol</message>
+  <message key="View">Aanzicht</message>
+
+  <message key="Assets">Onderdelen</message>
+  <message key="true">ja</message>
+  <message key="false">nee</message>
+  <message key="Rename">Hernoemen</message>
+  <message key="Modify">Veranderen</message>
+  <message key="Document">Document</message>
+
+  <message key="Date">Datum</message>
+  <message key="Back">Terug</message>
+  <message key="Add">Toevoegen</message>
+  <message key="Create">Maken</message>
+  <message key="The Archive">Het Archief</message>
+  <message key="Trash">Prullenbak</message>
+
+  <message key="Publisher">Eigenaar</message>
+  <message key="Navigation Title">Navigatie Titel</message>
+  <message key="Creator">Maker</message>
+  <message key="Language">Taal</message>
+  <message key="Subject">Onderwerp</message>
+  <message key="Rights">Rechten</message>
+
+  <message key="Select File">Kies Bestand</message>
+  <message key="select-object">Kies {0}</message>
+  <message key="Insert">Toevoegen</message>
+  <message key="Insert File">Bestand toevoegen</message>
+  <message key="upload-with-invalid-extension">U heeft geprobeerd een bestand met een onjuiste extentie toe te voegen.  Juiste extenties zijn{0}.  Merk op dat extenties met kleine letters moeten worden geschreven.</message>
+  <message key="upload-with-missing-title">U heeft geprobeerd een bestand zonder een titel toe te voegen.</message>
+
+  <message key="filename-format-exception">De bestandsnaam van het bestand dat u probeert toe te voegen heeft geen extentie of bevat karakters die niet zijn toegestaan zoals spaties of trema's.</message>
+  <message key="Creation Date">Aanmaak datum</message>
+  <message key="File Size">Bestands omvang</message>
+  <message key="Image">Afbeelding</message>
+  <message key="Link">Verwijzing</message>
+  <message key="Caption">Onderschrift</message>
+
+  <message key="All rights reserved">Alle rechten voorbehouden.</message>
+
+  <!-- submit screen -->
+  <message key="submit-for-approval">Bied {0} aan voor goedkeuring</message>
+  <message key="submit-for-approval?">Wilt u {0} aanbieden voor goedkeuring?</message>
+
+  <!-- publish screen -->
+  <message key="Publish">Publiceer</message>
+
+  <message key="Source File(s)">Bron Bestand(en)</message>
+
+  <!-- login screen -->
+  <message key="login-to-pub">Aanmelden voor de {0} Publicatie</message>
+  <message key="Login">Inloggen</message>
+  <message key="Password">Wachtwoord</message>
+  <message key="Username">Gebruikersnaam</message>
+
+  <message key="Authentication failed">Authenticatie mislukt</message>
+  <message key="try-user-lenya-alice">Probeer gebruiker {0} met wachtwoord {1} (auteur), of gebruiker {2} en wachtwoord {3} (reviewer)</message>
+  <message key="try-user-lenya">Probeer gebruiker {0} met wachtwoord {1}</message>
+  
+  <!-- logout screen -->
+  <message key="logout-from-pub">Afmelden voor de {0} Publicatie</message>
+  <message key="Your History">Uw historie</message>
+  <message key="Login to Authoring Area">Inloggen in het schrijf onderdeel</message>
+
+  <!-- reject screen -->
+  <message key="Reject">Afwijzen</message>
+  <message key="reject-doc?">Wilt u het document {0} afwijzen?</message>
+
+  <!-- cms menu -->
+  <message key="New Document">Nieuw Document</message>
+  <message key="New ... Document">Nieuw {0} Document</message>
+  <message key="New Language Version">Nieuwe taal versie</message>
+
+  <message key="Remove Language Version">Verwijder taal versie</message>
+  <message key="File">Bestand</message>
+  <message key="Edit">Wijzig</message>
+  <message key="Workflow">Workflow</message>
+  <message key="Deactivate">Deactivate</message>
+  <message key="Schedule">Schedule</message>
+
+  <message key="Copy">Kopieer</message>
+  <message key="Paste">Plakken</message>
+  <message key="Cut">Knippen</message>
+  <message key="Help">Help</message>
+  <message key="Debug">Debug</message>
+  <message key="Delete">Verwijder</message>
+
+  <message key="Archive">Archiveer</message>
+  <message key="Restore">Herstel</message>
+  <message key="Move Up">Verplaats omhoog</message>
+  <message key="Move Down">Verplaats omlaag</message>
+  <message key="Logout">Uitloggen</message>
+  <message key="View Task Logs">Bekijk taak logs</message>
+
+  <message key="Support">Ondersteuning</message>
+  <message key="System Documentation">Systeem&#160;Documentatie</message>
+  <message key="User Documentation">Gebruikers Documentatie</message>
+  <message key="About Apache Lenya">Over Apache Lenya</message>
+  <message key="Apache Lenya Homepage">Apache Lenya Startpagina</message>
+  <message key="Wijzig met Kupu">
+
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;All&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
+  </message>
+  <message key="Wijzig met BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;All&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
+  </message>
+  <message key="Edit with one Form">Broncode&#160;Editor</message>
+  <message key="Edit with Forms">Formulier&#160;Editor</message>
+
+  <message key="Edit Metadata">Wijzig&#160;Metadata</message>
+  <message key="Edit Navigation Title">Wijzig&#160;Navigatie&#160;Titel</message>
+  <message key="Rename URL">Hernoem&#160;URL</message>
+
+  <!-- cms tabs -->
+  <message key="Server Time">Server Tijd</message>
+
+  <message key="Workflow State">Workflow Status</message>
+
+  <!-- Administration tab -->
+  <message key="Administration">Beheer</message>
+  <message key="really-delete?">{0} echt verwijderen?</message>
+  <message key="Do you really want to delete the trash ?">Weet u zeker dat u de prullenbak wilt legen?</message>
+  <message key="delete-object">Verwijder {0}</message>
+
+  <message key="delete-object?">Weet u zeker dat u {0} wilt verwijderen?</message>
+  <message key="Passwd">Wachtwoord</message>
+  <message key="Switch User">Van gebruiker wisselen</message>
+  <message key="Delete Trash">Prullenbak legen</message>
+  <message key="Cocoon and Server Status">Status van Cocoon en de Server</message>
+
+    <!-- Group Administration -->
+
+  <message key="Profile">Profiel</message>
+  <message key="Members">Leden</message>
+  <message key="IP Ranges">IP&#160;Bereiken</message>
+  <message key="Edit Profile">Wijzig Profiel</message>
+  <message key="Edit Members">Wijzig Leden</message>
+  <message key="Group Administration">Groep Beheer</message>
+
+  <message key="Add Group">Groep Toevoegen</message>
+  <message key="Group Data">Groep Gegevens</message>
+
+    <!-- User Administration -->
+  <message key="User Data">Gebruiker&#160;Gegevens</message>
+
+  <message key="CMS User ID">CMS&#160;Gebruiker&#160;ID</message>
+
+  <message key="LDAP ID">LDAP&#160;ID</message>
+  <message key="Confirm password">Bevestig&#160;wachtwoord</message>
+  <message key="Add User">Gebruiker toevoegen</message>
+  <message key="User Administration">Gebruiker Beheer</message>
+  <message key="User Details">Gebruiker Details</message>
+
+  <message key="All Groups">Alle Groepen</message>
+  <message key="User Groups">Gebruiker Groepen</message>
+  <message key="Group Affiliation">Group Toewijzing</message>
+  <message key="Change Password">Verander Wachtwoord</message>
+  <message key="Edit Group Affiliation">Wijzig groep toewijzing</message>
+
+    <!-- User Types -->
+
+  <message key="LDAP User">LDAP Gebruiker</message>
+  <message key="Local User">CMS Gebruiker</message>
+
+    <!-- IP Range Administration -->
+  <message key="IP Range">IP&#160;Bereik</message>
+  <message key="IP Range ID">IP&#160;Bereik&#160;ID</message>
+
+  <message key="Network Address">Netwerk&#160;Adres</message>
+  <message key="Subnet Mask">Subnet&#160;Masker</message>
+  <message key="IP Range Administration">IP&#160;Bereik&#160;Beheer</message>
+  <message key="Add IP Range">IP&#160;Range&#160;Toevoegen</message>
+
+  <message key="IP Range Profile">IP&#160;Bereik&#160;Profiel</message>
+
+  <!-- Site tab (info screens) -->
+  <message key="Available Languages">Beschikbare Talen</message>
+  <message key="This document is not available in this language.">Dit document is niet beschikbaar in deze taal.</message>
+  <message key="Document ID">Document ID</message>
+
+  <message key="Versions">Versies</message>
+  <message key="SSL Encryption">SSL&#160;Encryptie</message>
+  <message key="Rollback to this version">Herstel naar deze versie</message>
+  <message key="AC Archive">AC&#160;Archief</message>
+  <message key="AC Trash">AC&#160;Prullenbak</message>
+
+  <message key="AC Auth">AC&#160;Aut</message>
+  <message key="AC Live">AC&#160;Live</message>
+  <message key="Scheduler">Scheduler</message>
+
+    <!-- Info screen actions-->
+  <message key="New Navigation Title">Nieuwe Navigatie Titel</message>
+
+  <message key="Rename Document">Hernoem Document</message>
+  <message key="New Document ID">Nieuw Document ID</message>
+  <message key="No whitespace, no special characters">Geen witruimte, geen speciale karakters</message>
+      <!-- Scheduler -->
+  <message key="No active jobs">Geen actieve opdrachten.</message>
+  <message key="The job date has expired">De opdracht datum is verlopen.</message>
+
+  <message key="check the log files">controleer de log bestanden</message>
+  <message key="Task">Opdracht</message>
+  <message key="Day">Dag</message>
+  <message key="Time">Tijd</message>
+      <!-- Deactivate and delete -->
+  <message key="docs-have-links-to-doc">De volgende documenten hebben een link naar dit document</message>
+
+  <message key="Deactivate Document">Deactiveer Document</message>
+  <message key="deactivate-doc">Deactiveer document {0}</message>
+  <message key="deactivate-doc?">Wilt u echt het document {0} deactiveren?</message>
+  <message key="Delete Document">Verwijder Document</message>
+  <message key="delete-doc">Verwijder document {0}</message>
+  <message key="cannot-deactivate-unless-children-deactivated">Dit document kan niet worden gedeactiveerd voordat de volgende kind documenten worden gedeactiveerd</message>
+
+  <message key="delete-language-versions?">Wilt u echt all taal versies van het document {0} verwijderen?</message>
+      <!-- Archive document -->
+  <message key="Archive Document">Archiveer Document</message>
+  <message key="archive-doc">Archiveer document {0}</message>
+  <message key="archive-doc?">Wilt u echt het document {0} archiveren?</message>
+      <!-- Rename document -->
+  <message key="Rename Document">Hernoem Document</message>
+
+  <message key="rename-doc">Hernoem document {0}</message>
+      <!-- Copy document -->
+  <message key="Copy Document">Kopieer Document</message>
+  <message key="copy-doc-to-clip?">Wilt u het document <xhtml:q>{0}</xhtml:q> kopieren naar het clipboard? U kan het document later plakken op een lokatie naar keuze.</message>
+      <!-- Paste document -->
+  <message key="Paste Document">Document Plakken</message>
+
+  <message key="paste-doc-from-clip?">Wilt u het document <xhtml:q>{0}</xhtml:q> plakken vanaf het clipboard?</message>
+      <!-- Cut document -->
+  <message key="Cut Document">Document Knippen</message>
+  <message key="cut-doc-to-clip?">Wilt u het document <xhtml:q>{0}</xhtml:q> knippen en verplaatsen naar het clipboard? U kunt het document later plakken op een lokatie naar keuze.</message>
+
+    <!--Change visibility in navigation -->
+  <message key="Change">Aanpassen</message>
+  <message key="Change Document visiblity in navigation">Verander de document zichtbaarheid in de navigatie</message>
+  <message key="Visibility in navigation">Zichtbaarheid in navigatie</message>
+  <message key="visible">zichtbaar</message>
+  <message key="hidden">verborgen</message>
+
+  <!-- Info Asset -->
+  <message key="Insert Image">Afbeelding Toevoegen</message>
+  <message key="Insert Asset">Onderdeel Toevoegen</message>
+  <message key="Asset Upload">Onderdeel Inladen</message>
+  <message key="Insert a new Image">Nieuwe Afbeelding Toevoegen</message>
+  <message key="Upload an Asset">Inladen van een Onderdeel</message>
+
+  <!-- Info workflow  -->
+  <message key="Value">Waarde</message>
+  <message key="Event">Gebeurtenis</message>
+  <message key="Variables">Variabelen</message>
+  <message key="History">Historie</message>
+  <message key="State">Status</message>
+
+  <message key="IP Address">IP Adres</message>
+  <message key="edit">wijzig</message>
+  <message key="submit">aanbieden</message>
+  <message key="reject">wijs af</message>
+  <message key="publish">publiceer</message>
+
+  <!-- Info asset  -->
+
+  <message key="New Asset">New Onderdeel</message>
+
+  <!-- Info RC  -->
+  <message key="Current Version">Huidige Versie</message>
+  <message key="Rollback to this revision">Keer terug naar deze versie</message>
+
+  <!-- Info AC  -->
+  <message key="SSL Encryption">SSL&#160;Encryptie</message>
+
+  <message key="Access Object">Benader&#160;Objekt</message>
+  <message key="visit">bezoek</message>
+  <message key="reviewer">reviewer</message>
+  <message key="editor">auteur</message>
+  <message key="admin">beheer</message>
+  <message key="world">wereld</message>
+
+  <message key="the world">de wereld</message>
+
+  <!-- Scheduler -->
+  <message key="New job">Nieuw&#160;opdracht</message>
+  <message key="Active jobs">Actieve&#160;opdrachten</message>
+  <message key="Publish and Export">Publiseer en&#160;Export</message>
+
+  <message key="doc-has-links-to-unpublished">Dit document heeft links naar de volgende niet gepubliceerde documenten:</message>
+
+  <!-- New Document -->
+  <message key="Please check the following possible causes of the exception">Controleer aub de volgende mogelijke oorzaken van de exceptie.</message>
+  <message key="exception.cause.createdoc.whitespace-in-id">Het is niet toegestaan om witruimte in de id te gebruiken</message>
+  <message key="exception.cause.createdoc.id-in-use">De id is al in gebruik</message>
+  <message key="failmessage.createdoc.invalidformat">Vul aub een valide waarde voor het ID veld in. A-Z, a-z, 0-9 of - zijn valide characters.</message>
+
+  <message key="failmessage.createdoc.required">Aub all verplichte velden (*) invullen.</message>
+
+  <!-- Asset Upload/Insert Dialog -->
+  <message key="lenya.assetupload.subtitle">Voeg toe aan Onderdelen bibliotheek</message>
+  <message key="Asset Library">Onderdelen Bibliotheek</message>
+  <message key="No assets available">Geen Onderdelen beschikbaar</message>
+  <message key="Insert Asset">Onderdeel toevoegen</message>
+
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">Afbeelding Toevoegen</message>
+  <message key="lenya.imageupload.selectimage.label">Selecteer Afbeelding</message>
+  <message key="lenya.imageupload.info.noimages">Geen afbeeldingen beschikbaar.</message>
+  <message key="lenya.imageupload.links.hint">Externe links moeten beginnen met 'http://', interne links moeten beginnen met '/'</message>
+
+  <!-- Revision Controller -->
+
+  <message key="Reason">Reden</message>
+  <message key="Filename">Bestandsnaam</message>
+  <message key="lenya.rc.nocheckout">Middel kon niet worden uitgechecked</message>
+  <message key="lenya.rc.checkedoutalready">Het middel is in bewerking door een andere gebruiker</message>
+  <message key="lenya.rc.nocheckin">Middel kon niet worden ingechecked</message>
+  <message key="Generic Exception">Algemene Exceptie</message>
+
+  <message key="Check the log files.">Controleer de log bestanden.</message>
+</catalogue>
