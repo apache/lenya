@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.site.tree2;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
@@ -37,16 +36,14 @@ import org.apache.lenya.cms.site.tree.SiteTree;
  * @version $Id: SiteTreeFactory.java 179568 2005-06-02 09:27:26Z jwkaltz $
  */
 public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryItemFactory {
-
-    protected ServiceManager manager;
+    
+    private SharedItemStore sharedItemStore;
 
     /**
      * Ctor.
-     * @param manager The service manager.
      * @param logger The logger.
      */
-    public SiteTreeFactory(ServiceManager manager, Log logger) {
-        this.manager = manager;
+    public SiteTreeFactory(Log logger) {
         setLogger(logger);
     }
 
@@ -55,31 +52,36 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         String publicationId = snippets[0];
         String areaName = snippets[1];
         SiteTree tree;
-        SharedItemStore store = null;
         try {
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             Publication publication = factory.getPublication(publicationId);
             Area area = publication.getArea(areaName);
-            store = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
 
-            Session storeSession = store.getSession();
+            Session storeSession = getSharedItemStore().getSession();
             if (session.isModifiable() || session == storeSession) {
-                tree = new SiteTreeImpl(this.manager, area, getLogger());
+                tree = new SiteTreeImpl(area, getLogger());
             } else {
-                tree = new DelegatingSiteTree(this.manager, area, this, storeSession, key);
+                tree = new DelegatingSiteTree(area, this, storeSession, key);
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
-        } finally {
-            if (store != null) {
-                this.manager.release(store);
-            }
         }
         return tree;
     }
 
     public String getItemType() {
         return SiteTree.IDENTIFIABLE_TYPE;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSharedItemStore(SharedItemStore sharedItemStore) {
+        this.sharedItemStore = sharedItemStore;
+    }
+
+    public SharedItemStore getSharedItemStore() {
+        return sharedItemStore;
     }
 
 }

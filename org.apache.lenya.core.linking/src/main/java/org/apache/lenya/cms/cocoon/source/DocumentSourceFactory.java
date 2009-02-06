@@ -21,19 +21,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
@@ -48,6 +40,9 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 
@@ -61,54 +56,30 @@ import org.apache.lenya.util.ServletHelper;
  * </p>
  * <ul>
  * <li><strong>format</strong> - the resource type format</li>
- * <li><strong>session</strong> - the session.
- *   To use the session of the current usecase, specify <code>session=usecase</code></li>
+ * <li><strong>session</strong> - the session. To use the session of the current usecase, specify
+ * <code>session=usecase</code></li>
  * </ul>
  */
-public class DocumentSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
-        Contextualizable, Serviceable, Configurable {
+public class DocumentSourceFactory extends AbstractLogEnabled implements SourceFactory {
 
     /**
      * The URI scheme.
      */
     public static final String SCHEME = "lenya-document";
 
-    private Context context;
-    private ServiceManager manager;
-
-    /**
-     * Used for resolving the object model.
-     * 
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
-    }
-    
     private SourceResolver sourceResolver;
+    private LinkResolver linkResolver;
+    private RepositoryManager repositoryManager;
 
     /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration) throws ConfigurationException {
-    }
-
-    /**
-     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String,
-     *      java.util.Map)
+     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(String location, Map parameters) throws MalformedURLException,
             IOException, SourceException {
-        
-        Map objectModel = ContextHelper.getObjectModel(this.context);
-        Request request = ObjectModelHelper.getRequest(objectModel);
+
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
 
         String[] uriAndQuery = location.split("\\?");
 
@@ -118,26 +89,21 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             queryString = uriAndQuery[1];
         }
 
-        LinkResolver resolver = null;
         try {
-            if (this.sourceResolver == null) {
-                this.sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            }
 
-            resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             String webappUrl = ServletHelper.getWebappURI(request);
             LinkTarget target;
             if (factory.isDocument(webappUrl)) {
                 Document currentDoc = factory.getFromURL(webappUrl);
-                target = resolver.resolve(currentDoc, linkUri);
-            }
-            else {
+                target = getLinkResolver().resolve(currentDoc, linkUri);
+            } else {
                 Link link = new Link(linkUri);
                 contextualize(link, webappUrl);
-                target = resolver.resolve(factory, link.getUri());
+                target = getLinkResolver().resolve(factory, link.getUri());
             }
-            
+
             if (!target.exists()) {
                 throw new SourceNotFoundException("Source not found: [" + location + "]");
             }
@@ -202,6 +168,30 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
      */
     public void release(Source source) {
         this.sourceResolver.release(source);
+    }
+
+    public void setLinkResolver(LinkResolver linkResolver) {
+        this.linkResolver = linkResolver;
+    }
+
+    public LinkResolver getLinkResolver() {
+        return linkResolver;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

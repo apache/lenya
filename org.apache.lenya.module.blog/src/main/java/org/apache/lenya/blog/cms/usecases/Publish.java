@@ -50,6 +50,8 @@ public class Publish extends DocumentUsecase {
 
     protected static final String MISSING_DOCUMENTS = "missingDocuments";
 
+    private DocumentManager documentManager;
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -59,7 +61,7 @@ public class Publish extends DocumentUsecase {
             DocumentSet set = new DocumentSet();
 
             Document doc = getSourceDocument();
-            NodeSet subsite = SiteUtil.getSubSite(this.manager, doc.getLink().getNode());
+            NodeSet subsite = SiteUtil.getSubSite(doc.getLink().getNode());
             set.addAll(new DocumentSet(subsite.getDocuments()));
 
             Document[] documents = set.getDocuments();
@@ -77,8 +79,8 @@ public class Publish extends DocumentUsecase {
     }
 
     /**
-     * Checks if the workflow event is supported and the parent of the document
-     * exists in the live area.
+     * Checks if the workflow event is supported and the parent of the document exists in the live
+     * area.
      * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -94,7 +96,7 @@ public class Publish extends DocumentUsecase {
                 return;
             }
 
-            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, event, document, getLogger());
+            UsecaseWorkflowHelper.checkWorkflow(this, event, document, getLogger());
         }
     }
 
@@ -102,23 +104,16 @@ public class Publish extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        DocumentManager documentManager = null;
         try {
             Document authoringDocument = getSourceDocument();
             if (authoringDocument.getResourceType().getName().equals("entry")) {
                 updateBlogEntry(authoringDocument);
             }
             updateFeed();
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(this.manager, getLogger(), authoringDocument,
-                    getEvent());
+            getDocumentManager().copyToArea(authoringDocument, Publication.LIVE_AREA);
+            WorkflowUtil.invoke(getLogger(), authoringDocument, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
         }
     }
 
@@ -173,8 +168,7 @@ public class Publish extends DocumentUsecase {
         DocumentHelper.setSimpleElementText(element, datestr);
 
         // set issued date on first time publish
-        Workflowable dw = WorkflowUtil.getWorkflowable(this.manager, this
-                .getLogger(), doc);
+        Workflowable dw = WorkflowUtil.getWorkflowable(this.getLogger(), doc);
         Version versions[] = dw.getVersions();
         boolean wasLive = false;
         for (int i = 0; i < versions.length; i++) {
@@ -197,6 +191,17 @@ public class Publish extends DocumentUsecase {
      */
     private String getEvent() {
         return "publish";
+    }
+
+    public DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
     }
 
 }

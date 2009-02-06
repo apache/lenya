@@ -17,16 +17,13 @@
  */
 package org.apache.lenya.cms.site.simple;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -39,16 +36,10 @@ import org.apache.lenya.transaction.TransactionException;
  * 
  * @version $Id$
  */
-public class SimpleSiteManager extends AbstractSiteManager implements Serviceable {
+public class SimpleSiteManager extends AbstractSiteManager {
 
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
+    private DocumentStoreFactory documentStoreFactory;
+    private SourceResolver sourceResolver;
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
@@ -95,9 +86,9 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
             throws SiteException {
         String key = getKey(publication, area);
         DocumentStore store;
-        RepositoryItemFactory factory = new DocumentStoreFactory(this.manager, getLogger());
         try {
-            store = (DocumentStore) map.getSession().getRepositoryItem(factory, key);
+            store = (DocumentStore) map.getSession().getRepositoryItem(getDocumentStoreFactory(),
+                    key);
         } catch (Exception e) {
             throw new SiteException(e);
         }
@@ -108,12 +99,13 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     protected String getCollectionUuid(Publication pub) {
         String sourceUri = pub.getContentURI(Publication.AUTHORING_AREA) + DOCUMENT_PATH;
         try {
-            
-            if (!SourceUtil.exists(sourceUri, manager)) {
-                throw new RuntimeException("The site configuration [" + sourceUri + "] does not exist!");
+
+            if (!SourceUtil.exists(sourceUri, getSourceResolver())) {
+                throw new RuntimeException("The site configuration [" + sourceUri
+                        + "] does not exist!");
             }
-            
-            org.w3c.dom.Document xml = SourceUtil.readDOM(sourceUri, manager);
+
+            org.w3c.dom.Document xml = SourceUtil.readDOM(sourceUri, getSourceResolver());
             if (!xml.getDocumentElement().hasAttribute("uuid")) {
                 throw new RuntimeException("The document element of [" + sourceUri
                         + "] doesn't contain a uuid attribute!");
@@ -237,6 +229,28 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator)
             throws SiteException {
         return new DocumentLocator[0];
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentStoreFactory(DocumentStoreFactory documentStoreFactory) {
+        this.documentStoreFactory = documentStoreFactory;
+    }
+
+    public DocumentStoreFactory getDocumentStoreFactory() {
+        return documentStoreFactory;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

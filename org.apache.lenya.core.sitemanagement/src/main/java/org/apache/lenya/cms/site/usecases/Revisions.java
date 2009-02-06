@@ -33,8 +33,8 @@ import org.apache.lenya.workflow.Workflowable;
 public class Revisions extends SiteUsecase {
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
-     *      filter out checkin entries
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO filter out checkin
+     *      entries
      */
     protected void initParameters() {
         super.initParameters();
@@ -50,20 +50,19 @@ public class Revisions extends SiteUsecase {
                 }
                 setParameter("revisions", revisions);
 
-                Boolean canRollback = Boolean.valueOf(WorkflowUtil.canInvoke(this.manager,
-                        getLogger(), sourceDoc, getEvent()));
+                Boolean canRollback = Boolean.valueOf(WorkflowUtil.canInvoke(getLogger(),
+                        sourceDoc, getEvent()));
                 setParameter("canRollback", canRollback);
 
-                if (WorkflowUtil.hasWorkflow(this.manager, getLogger(), sourceDoc)) {
-                    Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                            getLogger(), sourceDoc);
+                if (WorkflowUtil.hasWorkflow(getLogger(), sourceDoc)) {
+                    Workflowable workflowable = WorkflowUtil
+                            .getWorkflowable(getLogger(), sourceDoc);
                     Version latestVersion = workflowable.getLatestVersion();
                     String state;
                     if (latestVersion != null) {
                         state = latestVersion.getState();
                     } else {
-                        Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
-                                getLogger(), sourceDoc);
+                        Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), sourceDoc);
                         state = workflow.getInitialState();
                     }
                     setParameter("workflowState", state);
@@ -73,22 +72,19 @@ public class Revisions extends SiteUsecase {
             }
 
             /*
-             * // since we need both state and canInvoke, we could deal with the
-             * avalon // component ourselves rather than using WorkflowUtil -
-             * saves one // service manager lookup. // problem is that
-             * DocumentWorkflowable is not public and Workflowable is abstract :(
+             * // since we need both state and canInvoke, we could deal with the avalon // component
+             * ourselves rather than using WorkflowUtil - saves one // service manager lookup. //
+             * problem is that DocumentWorkflowable is not public and Workflowable is abstract :(
              * 
-             * WorkflowManager wfManager = null; String workflowState; Boolean
-             * canRollback; try { wfManager = (WorkflowManager)
-             * this.manager.lookup(WorkflowManager.ROLE); Workflowable
+             * WorkflowManager wfManager = null; String workflowState; Boolean canRollback; try {
+             * wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE); Workflowable
              * workflowable = new DocumentWorkflowable( this.manager,
-             * getDocumentFactory().getSession(), sourceDoc, getLogger() );
-             * workflowState = workflowable.getLatestVersion().getState();
-             * canRollback = new Boolean(wfManager.canInvoke(workflowable,
-             * WORKFLOW_EVENT_EDIT)); } catch (ServiceException e) { throw new
-             * RuntimeException(e); } finally { if (wfManager != null) {
-             * manager.release(wfManager); } } setParameter("workflowState",
-             * workflowState); setParameter("canRollback", canRollback);
+             * getDocumentFactory().getSession(), sourceDoc, getLogger() ); workflowState =
+             * workflowable.getLatestVersion().getState(); canRollback = new
+             * Boolean(wfManager.canInvoke(workflowable, WORKFLOW_EVENT_EDIT)); } catch
+             * (ServiceException e) { throw new RuntimeException(e); } finally { if (wfManager !=
+             * null) { manager.release(wfManager); } } setParameter("workflowState", workflowState);
+             * setParameter("canRollback", canRollback);
              */
 
         }

@@ -189,7 +189,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
         Publication publication;
         try {
-            publication = PublicationUtil.getPublicationFromUrl(this.manager, factory, webappUrl);
+            publication = factory.getPublication(info.getPublicationId());
         } catch (PublicationException e) {
             throw new DocumentBuildException(e);
         }

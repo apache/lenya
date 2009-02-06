@@ -17,11 +17,9 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -60,14 +58,8 @@ public class Nudge extends DocumentUsecase {
         }
 
         Publication publication = doc.getPublication();
-
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
         try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(doc.getFactory(), publication,
-                    doc.getArea());
+            SiteStructure structure = publication.getArea(doc.getArea()).getSite();
             if (structure instanceof SiteTree) {
 
                 SiteTreeNode node = (SiteTreeNode) doc.getLink().getNode();
@@ -90,13 +82,6 @@ public class Nudge extends DocumentUsecase {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 
@@ -105,7 +90,7 @@ public class Nudge extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         Node[] nodes = new Node[0];
-        if(getSourceDocument() != null) {
+        if (getSourceDocument() != null) {
             Node node = getSourceDocument().area().getSite().getRepositoryNode();
             nodes = new Node[] { node };
         }
@@ -119,13 +104,8 @@ public class Nudge extends DocumentUsecase {
         super.doExecute();
 
         Publication publication = getSourceDocument().getPublication();
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
         try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(
-                    getSourceDocument().getFactory(), publication, getSourceDocument().getArea());
+            SiteStructure structure = publication.getArea(getSourceDocument().getArea()).getSite();
             if (structure instanceof SiteTree) {
 
                 SiteTree tree = (SiteTree) structure;
@@ -143,13 +123,6 @@ public class Nudge extends DocumentUsecase {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
 
     }

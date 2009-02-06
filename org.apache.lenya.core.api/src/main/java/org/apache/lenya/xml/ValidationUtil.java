@@ -24,6 +24,7 @@ import javax.xml.transform.sax.SAXResult;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.components.validation.Validator;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.xml.dom.DOMStreamer;
 import org.apache.lenya.cms.publication.Document;
 import org.xml.sax.ContentHandler;
@@ -35,66 +36,49 @@ import org.xml.sax.ErrorHandler;
 public class ValidationUtil {
 
     /**
-     * @param manager The service manager.
      * @param document The document to validate.
      * @param handler The SAX error handler.
      * @throws Exception if an error occurs.
      */
-    public static void validate(ServiceManager manager, Document document, ErrorHandler handler)
-            throws Exception {
-
+    public static void validate(Document document, ErrorHandler handler) throws Exception {
         org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(document.getInputStream());
-        validate(manager, xmlDoc, document.getResourceType().getSchema(), handler);
+        validate(xmlDoc, document.getResourceType().getSchema(), handler);
 
     }
 
     /**
-     * @param manager The service manager.
      * @param xmlDoc The XML document.
      * @param schema The schema to use.
      * @param handler The SAX error handler.
      * @throws Exception if an error occurs.
      */
-    public static void validate(ServiceManager manager, org.w3c.dom.Document xmlDoc, Schema schema,
-            ErrorHandler handler) throws Exception {
-        Validator validator = null;
-        try {
-            validator = (Validator) manager.lookup(Validator.ROLE);
-            ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI(),
-                    handler);
-            new DOMStreamer(validatorHandler).stream(xmlDoc);
-        } finally {
-            if (validator != null) {
-                manager.release(validator);
-            }
-        }
+    public static void validate(org.w3c.dom.Document xmlDoc, Schema schema, ErrorHandler handler)
+            throws Exception {
+        Validator validator = getValidator();
+        ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI(), handler);
+        new DOMStreamer(validatorHandler).stream(xmlDoc);
+    }
+
+    protected static Validator getValidator() {
+        Validator validator = (Validator) WebAppContextUtils.getCurrentWebApplicationContext()
+                .getBean(Validator.ROLE);
+        return validator;
     }
 
     /**
-     * @param manager The service manager.
      * @param source The source to validate.
      * @param schema The schema to use.
      * @param handler The SAX error handler.
      * @throws Exception if an error occurs.
      */
-    public static void validate(ServiceManager manager, Source source, Schema schema,
-            ErrorHandler handler) throws Exception {
+    public static void validate(Source source, Schema schema, ErrorHandler handler)
+            throws Exception {
+        Validator validator = getValidator();
+        ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI(), handler);
 
-        Validator validator = null;
-        try {
-            validator = (Validator) manager.lookup(Validator.ROLE);
-            ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI(),
-                    handler);
-
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            SAXResult result = new SAXResult(validatorHandler);
-            transformer.transform(source, result);
-
-        } finally {
-            if (validator != null) {
-                manager.release(validator);
-            }
-        }
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        SAXResult result = new SAXResult(validatorHandler);
+        transformer.transform(source, result);
     }
 
 }

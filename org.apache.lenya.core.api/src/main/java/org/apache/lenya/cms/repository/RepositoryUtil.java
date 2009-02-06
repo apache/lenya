@@ -20,8 +20,6 @@ package org.apache.lenya.cms.repository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.Identity;
 
 /**
@@ -31,7 +29,7 @@ public class RepositoryUtil {
 
     /**
      * Returns the session attached to the request or creates a session.
-     * @param manager The service manager.
+     * @param repoManager The repository manager.
      * @param request The request.
      * @return A session.
      * @throws RepositoryException if an error occurs.
@@ -53,78 +51,17 @@ public class RepositoryUtil {
         return session;
     }
 
-    /**
-     * Returns the session attached to the request or creates a session.
-     * @param manager The service manager.
-     * @param request The request.
-     * @return A session.
-     * @throws RepositoryException if an error occurs.
-     * @deprecated
-     */
-    public static Session getSession(ServiceManager manager, Request request)
-            throws RepositoryException {
-        Session session = (Session) request.getAttribute(Session.class.getName());
-        if (session == null) {
-            Identity identity = getIdentity(request);
-            // attach a read-only repository session to the HTTP request
-            session = createSession(manager, identity, false);
-            request.setAttribute(Session.class.getName(), session);
-        } else if (session.getIdentity() == null) {
-            Identity identity = getIdentity(request);
-            if (identity != null) {
-                session.setIdentity(identity);
-            }
-        }
-        return session;
-    }
-
     protected static Identity getIdentity(HttpServletRequest request) {
         HttpSession session = request.getSession();
         return (Identity) session.getAttribute(Identity.class.getName());
     }
 
-    protected static Identity getIdentity(Request request) {
-        HttpSession cocoonSession = request.getSession();
-        return (Identity) cocoonSession.getAttribute(Identity.class.getName());
-    }
-
-    /**
-     * Creates a session.
-     * @param manager The service manager.
-     * @param identity The identity.
-     * @param modifiable Determines if the repository items in this session should be modifiable.
-     * @return a session.
-     * @throws RepositoryException if an error occurs.
-     * @deprecated
-     */
-    public static Session createSession(ServiceManager manager, Identity identity, boolean modifiable)
-            throws RepositoryException {
-        RepositoryManager repoMgr = null;
-        Session session;
-        try {
-            repoMgr = (RepositoryManager) manager.lookup(RepositoryManager.ROLE);
-            session = repoMgr.createSession(identity, modifiable);
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        } finally {
-            manager.release(repoMgr);
-        }
-        return session;
-    }
-
     /**
      * Removes the repository session from the servlet session.
-     * @param manager The service manager.
      * @param request The current request.
      */
-    public static void removeSession(ServiceManager manager, Request request) {
+    public static void removeSession(HttpServletRequest request) {
         request.removeAttribute(Session.class.getName());
-        /*
-        org.apache.cocoon.environment.Session session = request.getSession(false);
-        if (session != null) {
-            session.removeAttribute(Session.class.getName());
-        }
-        */
     }
 
 }

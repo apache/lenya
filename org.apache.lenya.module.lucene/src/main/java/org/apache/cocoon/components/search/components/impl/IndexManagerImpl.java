@@ -22,13 +22,11 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.search.Index;
 import org.apache.cocoon.components.search.IndexException;
 import org.apache.cocoon.components.search.IndexStructure;
@@ -37,18 +35,22 @@ import org.apache.cocoon.components.search.components.IndexManager;
 import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
 import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
 import org.apache.cocoon.components.search.utils.SourceHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationManager;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Index Manager Component. Configure and Manage the differents indexes.
@@ -56,8 +58,7 @@ import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
  * @author Maisonneuve Nicolas
  * @version 1.0
  */
-public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager, Serviceable,
-        ThreadSafe, Configurable {
+public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager {
 
     /**
      * indexer element
@@ -107,8 +108,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /**
      * type of the field: "text, "keyword", "date" (see
      * 
-     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition
-     *      class)
+     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition class)
      */
     public static final String TYPE_ATTRIBUTE = "type";
 
@@ -128,8 +128,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     public static final String INDEX_CONF_FILE = "search/lucene_index.xml";
 
     /**
-     * check the config file each time the getIndex is called to update if
-     * necessary the configuration
+     * check the config file each time the getIndex is called to update if necessary the
+     * configuration
      */
     // public static final String CHECK_ATTRIBUTE = "check";
     /**
@@ -137,15 +137,15 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      */
     // public static final String CONFIG_ATTRIBUTE = "config";
     /**
-     * Check or not the configuration file (automatic update if the file is
-     * changed)
+     * Check or not the configuration file (automatic update if the file is changed)
      */
     // private boolean check;
     /**
      * Index configuration file
      */
-    // private Source configfile;
-    private ServiceManager manager;
+
+    private RepositoryManager repositoryManager;
+    private SourceResolver sourceResolver;
 
     private Map indexMap;
 
@@ -194,7 +194,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.cocoon.components.search.components.IndexManager#addIndex(org.apache.cocoon.components.search.Index)
+     * @see
+     * org.apache.cocoon.components.search.components.IndexManager#addIndex(org.apache.cocoon.components
+     * .search.Index)
      */
     public void addIndex(Index base) {
         this.indexes().put(base.getID(), base);
@@ -213,43 +215,32 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
         // configure the index manager:
 
         // now check all publications and add their indexes:
-        PublicationManager pubManager = null;
-        SourceResolver resolver = null;
         Source confSource = null;
-        ContextUtility util = null;
         try {
-            util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-            Request request = util.getRequest();
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
-            Publication[] publications = pubManager.getPublications(factory);
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+            HttpServletRequest request = process.getRequest();
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+
+            Publication[] publications = factory.getPublications();
 
             for (int i = 0; i < publications.length; i++) {
                 String uri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
                         + publications[i].getId() + "/" + Publication.CONFIGURATION_PATH + "/"
                         + INDEX_CONF_FILE;
-                confSource = resolver.resolveURI(uri);
+                confSource = this.sourceResolver.resolveURI(uri);
                 if (confSource.exists()) {
                     addIndexes(confSource);
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException("Config file error", e);
-        } catch (ServiceException e) {
-            throw new RuntimeException("PublicationManager lookup error", e);
+        } catch (RepositoryException e) {
+            throw new RuntimeException("Repository access error", e);
         } finally {
-            if (pubManager != null) {
-                this.manager.release(pubManager);
-            }
-            if (resolver != null) {
-                if (confSource != null) {
-                    resolver.release(confSource);
-                }
-                this.manager.release(resolver);
-            }
-            if (util != null) {
-                this.manager.release(util);
+            if (confSource != null) {
+                this.sourceResolver.release(confSource);
             }
         }
 
@@ -259,7 +250,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     * @see
+     * org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework
+     * .configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
         this.indexerRole = configuration.getChild(INDEXER_ELEMENT).getAttribute(
@@ -294,8 +287,10 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
             throw new ConfigurationException("no index is defined !");
         }
         try {
-            analyzerManager = (AnalyzerManager) this.manager.lookup(AnalyzerManager.ROLE);
-            registry = (MetaDataFieldRegistry) this.manager.lookup(MetaDataFieldRegistry.ROLE);
+            // TODO: replace with bean wiring
+            WebApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
+            analyzerManager = (AnalyzerManager) context.getBean(AnalyzerManager.ROLE);
+            registry = (MetaDataFieldRegistry) context.getBean(MetaDataFieldRegistry.ROLE);
 
             // configure each index
             for (int i = 0; i < confs.length; i++) {
@@ -313,12 +308,13 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
                 IndexStructure docdecl = new IndexStructure();
 
                 addMetaDataFieldDefinitions(registry, docdecl);
-                
+
                 FieldDefinition uuidDef = FieldDefinition.create("uuid", FieldDefinition.KEYWORD);
                 uuidDef.setStore(true);
                 docdecl.addFieldDef(uuidDef);
 
-                FieldDefinition langDef = FieldDefinition.create("language", FieldDefinition.KEYWORD);
+                FieldDefinition langDef = FieldDefinition.create("language",
+                        FieldDefinition.KEYWORD);
                 langDef.setStore(true);
                 docdecl.addFieldDef(langDef);
 
@@ -374,7 +370,6 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
                     index.setDefaultAnalyzerID(analyzerid);
                 }
                 index.setStructure(docdecl);
-                index.setManager(manager);
 
                 this.addIndex(index);
                 this.getLogger()
@@ -384,13 +379,6 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
             throw new ConfigurationException("AnalyzerManager lookup error", e);
         } catch (Exception e) {
             throw new ConfigurationException(e.getMessage(), e);
-        } finally {
-            if (analyzerManager != null) {
-                this.manager.release(analyzerManager);
-            }
-            if (registry != null) {
-                this.manager.release(registry);
-            }
         }
     }
 
@@ -413,36 +401,32 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      * @throws Exception if an error occurs.
      */
     public String getServletContextPath() throws Exception {
-        SourceResolver resolver = null;
         Source source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context:///");
+            source = this.sourceResolver.resolveURI("context:///");
             return SourceUtil.getFile(source).getCanonicalPath();
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
+            if (source != null) {
+                this.sourceResolver.release(source);
             }
         }
     }
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.apache.cocoon.components.search.components.IndexManager#getIndex()
      */
     public Index[] getIndex() {
         return (Index[]) this.indexes().values().toArray(new Index[indexes().size()]);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

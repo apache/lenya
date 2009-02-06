@@ -21,19 +21,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
@@ -44,9 +37,10 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
@@ -67,28 +61,12 @@ import org.apache.lenya.util.ServletHelper;
  * @version $Id:$
  * @deprecated Use <code>lenya-document</code> instead (see {@link org.apache.lenya.cms.cocoon.source.DocumentSourceFactory}.
  */
-public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
-        Contextualizable, Serviceable, Configurable {
+public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceFactory {
 
     protected static final String SCHEME = "lenyadoc";
-
-    private Context context;
-    private ServiceManager manager;
-
-    /**
-     * Used for resolving the object model.
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
+    
+    private RepositoryManager repositoryManager;
+    private NodeFactory nodeFactory;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -123,9 +101,16 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
                     + "]");
         }
 
-        Map objectModel = ContextHelper.getObjectModel(this.context);
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+        ProcessInfoProvider processInfoProvider = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = processInfoProvider.getRequest();
+        Session session;
+        try {
+            session = RepositoryUtil.getSession(getRepositoryManager(), request);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
 
         start = end + 1;
         
@@ -162,7 +147,8 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
             end += 1;
             // Relative: get publication id and area from page envelope
             try {
-                pub = PublicationUtil.getPublication(this.manager, objectModel);
+                String id = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
+                pub = factory.getPublication(id);
             } catch (PublicationException e) {
                 throw new SourceException("Error getting publication id / area from page envelope ["
                         + location + "]");
@@ -191,13 +177,6 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         start = end + 1;
         uuid = location.substring(start);
 
-        Session session;
-        try {
-            session = RepositoryUtil.getSession(this.manager, request);
-        } catch (RepositoryException e1) {
-            throw new RuntimeException(e1);
-        }
-
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
@@ -217,7 +196,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
             getLogger().debug("Creating repository source for URI [" + lenyaURL + "]");
         }
 
-        return new RepositorySource(manager, lenyaURL, session, getLogger());
+        return new RepositorySource(getNodeFactory(), lenyaURL, session, getLogger());
     }
 
     /**
@@ -225,5 +204,21 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
      */
     public void release(Source source) {
         // Source will be released by delegated source factory.
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
+    }
+
+    public NodeFactory getNodeFactory() {
+        return nodeFactory;
     }
 }

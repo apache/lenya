@@ -59,6 +59,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
      */
     protected abstract String getTargetArea();
 
+    private DocumentManager documentManager;
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -75,15 +77,14 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
             Document document = getSourceDocument();
 
-            NodeSet subsite = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
+            NodeSet subsite = SiteUtil.getSubSite(document.getLink().getNode());
             Document[] docs = subsite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 if (docs[i].existsAreaVersion(Publication.LIVE_AREA)) {
                     Document liveVersion = docs[i].getAreaVersion(Publication.LIVE_AREA);
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
-                UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), docs[i],
-                        getLogger());
+                UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), docs[i], getLogger());
             }
         }
     }
@@ -94,24 +95,24 @@ public abstract class MoveSubsite extends DocumentUsecase {
     protected abstract String getEvent();
 
     /**
-     * Lock all source documents and the site structure repository nodes because
-     * changes to the site structure would compromise the operation.
+     * Lock all source documents and the site structure repository nodes because changes to the site
+     * structure would compromise the operation.
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         Set nodes = new HashSet();
-  
-        if(getSourceDocument() != null) {
+
+        if (getSourceDocument() != null) {
             try {
 
                 SiteStructure sourceSite = getSourceDocument().area().getSite();
-                SiteStructure targetSite = getSourceDocument().getPublication()
-                        .getArea(getTargetArea()).getSite();
+                SiteStructure targetSite = getSourceDocument().getPublication().getArea(
+                        getTargetArea()).getSite();
 
                 nodes.add(sourceSite.getRepositoryNode());
                 nodes.add(targetSite.getRepositoryNode());
 
-                Document[] docs = SiteUtil.getSubSite(this.manager,
-                        getSourceDocument().getLink().getNode()).getDocuments();
+                Document[] docs = SiteUtil.getSubSite(getSourceDocument().getLink().getNode())
+                        .getDocuments();
                 for (int i = 0; i < docs.length; i++) {
                     nodes.add(docs[i].getRepositoryNode());
                 }
@@ -120,7 +121,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 throw new UsecaseException(e);
             }
         }
- 
+
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
@@ -131,38 +132,26 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
         String targetAreaName = getTargetArea();
         Document doc = getSourceDocument();
-        Document[] sources = SiteUtil.getSubSite(this.manager, doc.getLink().getNode())
-                .getDocuments();
+        Document[] sources = SiteUtil.getSubSite(doc.getLink().getNode()).getDocuments();
         Area targetArea = doc.getPublication().getArea(targetAreaName);
 
         DocumentLocator targetLoc = doc.getLocator().getAreaVersion(targetAreaName);
-        targetLoc = SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), targetLoc);
+        targetLoc = SiteUtil.getAvailableLocator(getDocumentFactory(), targetLoc);
 
         for (int i = 0; i < sources.length; i++) {
-            WorkflowUtil.invoke(this.manager, getLogger(), sources[i], getEvent(),
-                    true);
-            
+            WorkflowUtil.invoke(getLogger(), sources[i], getEvent(), true);
+
             if (this.getClass().getName().equals(Restore.class.getName())) {
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                        getLogger(), sources[i]);
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), sources[i]);
                 String state = workflowable.getLatestVersion().getState();
                 if (!state.equals("authoring")) {
                     addErrorMessage("The state is [" + state + "] instead of [authoring]!");
                 }
             }
-            
+
         }
 
-        DocumentManager docManager = null;
-        try {
-            docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            docManager.moveAll(doc.area(), doc.getPath(), targetArea, targetLoc.getPath());
-
-        } finally {
-            if (docManager != null) {
-                this.manager.release(docManager);
-            }
-        }
+        getDocumentManager().moveAll(doc.area(), doc.getPath(), targetArea, targetLoc.getPath());
 
         setTargetDocument(doc.getAreaVersion(targetAreaName));
 
@@ -179,7 +168,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
         } else {
             try {
                 Document document = getTargetDocument(success);
-                SiteStructure site = document.getPublication().getArea(Publication.AUTHORING_AREA).getSite();
+                SiteStructure site = document.getPublication().getArea(Publication.AUTHORING_AREA)
+                        .getSite();
                 return getTargetUrl(site, document.getPath()) + getExitQueryString();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -198,13 +188,11 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 String defaultLanguage = site.getPublication().getDefaultLanguage();
                 if (node.hasLink(defaultLanguage)) {
                     link = node.getLink(defaultLanguage);
-                }
-                else {
+                } else {
                     link = node.getLink(node.getLanguages()[0]);
                 }
                 return link.getDocument().getCanonicalWebappURL();
-            }
-            else {
+            } else {
                 return getTargetUrl(site, getParentPath(path));
             }
         } else {
@@ -216,6 +204,17 @@ public abstract class MoveSubsite extends DocumentUsecase {
         Assert.notNull("path", path);
         Assert.isTrue("not empty", path.length() > 0);
         return path.substring(0, path.lastIndexOf("/"));
+    }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
     }
 
 }

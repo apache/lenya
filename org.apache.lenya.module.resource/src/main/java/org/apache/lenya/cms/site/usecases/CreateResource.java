@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -42,10 +43,12 @@ public class CreateResource extends CreateDocument {
     protected static final String MESSAGE_UPLOAD_SIZE_EXCEEDED = "upload-size-exceeded";
     protected static final String MESSAGE_UPLOAD_RESET = "upload-reset";
     protected static final String MESSAGE_UPLOAD_MISSING_EXTENSION = "upload-missing-extension";
+    
+    private SourceResolver sourceResolver;
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!ServletHelper.isUploadEnabled(this.manager)) {
+        if (!ServletHelper.isUploadEnabled()) {
             addErrorMessage(MESSAGE_UPLOAD_DISABLED);
             setParameter(PARAMETER_CAN_SUBMIT, Boolean.FALSE);
         }
@@ -112,7 +115,7 @@ public class CreateResource extends CreateDocument {
 
         Part file = getPart(PARAMETER_FILE);
         Document document = getNewDocument();
-        ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
+        ResourceWrapper wrapper = new ResourceWrapper(document, getSourceResolver(), getLogger());
         wrapper.write(file);
     }
 
@@ -128,6 +131,17 @@ public class CreateResource extends CreateDocument {
             addErrorMessage(MESSAGE_UPLOAD_MISSING_EXTENSION);
         }
         return extension.toLowerCase();
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

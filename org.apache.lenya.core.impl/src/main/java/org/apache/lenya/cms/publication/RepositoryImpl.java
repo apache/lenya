@@ -17,20 +17,30 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
+import javax.servlet.http.HttpServletRequest;
 
-/**
- * Specifies selector for resource types.
- */
-public class ResourceTypeSelector {
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.springframework.util.Assert;
 
-    public ResourceType getResourceType(String name) {
-        ResourceType type = (ResourceType) WebAppContextUtils.getCurrentWebApplicationContext()
-                .getBean(ResourceType.ROLE + "/" + name);
-        if (type != null) {
-            type.setName(name);
+public class RepositoryImpl implements Repository {
+
+    private RepositoryManager repositoryManager;
+
+    public Session getSession(HttpServletRequest request) {
+        Assert.notNull(request, "request");
+        try {
+            org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(
+                    this.repositoryManager, request);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
         }
-        return type;
+        return null;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
     }
 
 }

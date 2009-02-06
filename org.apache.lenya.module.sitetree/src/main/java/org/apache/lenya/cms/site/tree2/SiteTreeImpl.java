@@ -21,8 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
@@ -43,22 +42,20 @@ import org.apache.lenya.util.Assert;
 /**
  * Simple site tree implementation.
  */
-public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, SiteTree, Persistable {
+public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, SiteTree,
+        Persistable {
 
     private Area area;
-    protected ServiceManager manager;
     private RootNode root;
     private int revision;
 
     /**
-     * @param manager The service manager.
      * @param area The area.
      * @param logger The logger.
      */
-    public SiteTreeImpl(ServiceManager manager, Area area, Log logger) {
+    public SiteTreeImpl(Area area, Log logger) {
         setLogger(logger);
         this.area = area;
-        this.manager = manager;
         initRoot();
     }
 
@@ -95,20 +92,19 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
         try {
             repoNode.setPersistable(this);
-            
+
             if (repoNode.exists()) {
                 TreeBuilder builder = null;
                 try {
                     this.loading = true;
-                    builder = (TreeBuilder) this.manager.lookup(TreeBuilder.ROLE);
+                    builder = (TreeBuilder) WebAppContextUtils.getCurrentWebApplicationContext()
+                            .getBean(TreeBuilder.ROLE);
                     reset();
                     builder.buildTree(this);
-                    Assert.isTrue("Latest revision loaded", getRevision() == getRevision(getRepositoryNode()));
+                    Assert.isTrue("Latest revision loaded",
+                            getRevision() == getRevision(getRepositoryNode()));
                 } finally {
                     this.loading = false;
-                    if (builder != null) {
-                        this.manager.release(builder);
-                    }
                 }
             }
             this.loaded = true;
@@ -137,17 +133,13 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         }
         TreeWriter writer = null;
         try {
-            writer = (TreeWriter) this.manager.lookup(TreeWriter.ROLE);
+            writer = (TreeWriter) WebAppContextUtils.getCurrentWebApplicationContext().getBean(TreeWriter.ROLE);
             int revision = getRevision(getRepositoryNode()) + 1;
             writer.writeTree(this);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
             throw new RepositoryException(e);
-        } finally {
-            if (writer != null) {
-                this.manager.release(writer);
-            }
         }
 
     }
@@ -321,17 +313,14 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     public Session getSession() {
         return this.area.getPublication().getFactory().getSession();
     }
-    
+
     private NodeFactory nodeFactory;
     private boolean changed = false;
-    
+
     protected NodeFactory getNodeFactory() {
         if (this.nodeFactory == null) {
-            try {
-                this.nodeFactory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException("Creating repository node failed: ", e);
-            }
+            this.nodeFactory = (NodeFactory) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(NodeFactory.ROLE);
         }
         return this.nodeFactory;
     }
@@ -421,7 +410,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     protected int getRevision() {
         return this.revision;
     }
-    
+
     protected void setRevision(int revision) {
         this.revision = revision;
     }

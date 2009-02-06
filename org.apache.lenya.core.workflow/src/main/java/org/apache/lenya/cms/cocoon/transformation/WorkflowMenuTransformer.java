@@ -35,13 +35,12 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowManager;
-import org.apache.lenya.workflow.Workflowable;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -63,6 +62,8 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
      * <code>EVENT_ATTRIBUTE</code> The event attribute
      */
     public static final String EVENT_ATTRIBUTE = "event";
+    
+    private RepositoryManager repositoryManager;
 
     /**
      * (non-Javadoc)
@@ -122,12 +123,10 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
         super.setup(_resolver, _objectModel, src, _parameters);
 
-        WorkflowManager workflowManager = null;
-
         try {
             Request request = ObjectModelHelper.getRequest(_objectModel);
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(session);
 
             String webappUrl = ServletHelper.getWebappURI(request);
             Document document = null;
@@ -136,7 +135,6 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                 ResourceType doctype = document.getResourceType();
                 if (document.getPublication().getWorkflowSchema(doctype) != null) {
                     setHasWorkflow(true);
-                    workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
                 } else {
                     setHasWorkflow(false);
                 }
@@ -145,13 +143,10 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             }
 
             if (hasWorkflow()) {
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                        getLogger(),
-                        document);
-                Workflow workflow = workflowManager.getWorkflowSchema(workflowable);
+                Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), document);
                 String[] events = workflow.getEvents();
                 for (int i = 0; i < events.length; i++) {
-                    if (workflowManager.canInvoke(workflowable, events[i])) {
+                    if (WorkflowUtil.canInvoke(getLogger(), document, events[i])) {
                         this.executableEvents.add(events[i]);
                     }
                 }
@@ -159,10 +154,6 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             }
         } catch (final Exception e) {
             throw new ProcessingException(e);
-        } finally {
-            if (workflowManager != null) {
-                this.manager.release(workflowManager);
-            }
         }
 
     }
@@ -185,6 +176,14 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
      */
     public void setHasWorkflow(boolean _hasWorkflow) {
         this.hasWorkflow = _hasWorkflow;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

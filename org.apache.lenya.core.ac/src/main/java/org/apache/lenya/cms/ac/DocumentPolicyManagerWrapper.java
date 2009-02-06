@@ -20,16 +20,13 @@
 
 package org.apache.lenya.cms.ac;
 
-import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.configuration.Configurable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
@@ -41,33 +38,24 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
- * A PolicyManager which is capable of mapping all URLs of a document to the
- * appropriate canonical URL, e.g. <code>/foo/bar_de.print.html</code> is
- * mapped to <code>/foo/bar</code>.
+ * A PolicyManager which is capable of mapping all URLs of a document to the appropriate canonical
+ * URL, e.g. <code>/foo/bar_de.print.html</code> is mapped to <code>/foo/bar</code>.
  */
 public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
-        InheritingPolicyManager, Serviceable, Configurable, Disposable {
-
-    /**
-     * Ctor.
-     */
-    public DocumentPolicyManagerWrapper() {
-        // do nothing
-    }
+        InheritingPolicyManager {
 
     private InheritingPolicyManager policyManager;
-    private ServiceSelector policyManagerSelector;
+    private RepositoryManager repositoryManager;
 
     /**
      * Returns the URI which is used to obtain the policy for a webapp URL.
@@ -75,19 +63,17 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * @return A string.
      * @throws AccessControlException when something went wrong.
      */
-    protected String getPolicyURL(String webappUrl)
-            throws AccessControlException {
+    protected String getPolicyURL(String webappUrl) throws AccessControlException {
         return getPolicyUrlCorrect(webappUrl);
     }
-    
+
     /**
      * Returns the URI which is used to obtain the policy for a webapp URL.
      * @param webappUrl The web application URL.
      * @return A string.
      * @throws AccessControlException when something went wrong.
      */
-    protected String getPolicyUrlCorrect(String webappUrl)
-            throws AccessControlException {
+    protected String getPolicyUrlCorrect(String webappUrl) throws AccessControlException {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Resolving policy for webapp URL [" + webappUrl + "]");
@@ -97,25 +83,17 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         URLInformation info = new URLInformation(webappUrl);
         String pubId = info.getPublicationId();
         String area = info.getArea();
-        
+
         if (pubId != null && area != null && info.getDocumentUrl().length() > 1) {
-            ContextUtility contextUtility = null;
             try {
-                contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
-                Session session = RepositoryUtil.getSession(this.serviceManager, contextUtility
-                        .getRequest());
-                DocumentFactory map = DocumentUtil.createDocumentFactory(this.serviceManager, session);
+                HttpServletRequest request = getRequest();
+                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+                DocumentFactory map = DocumentUtil.createDocumentFactory(session);
                 Publication pub = map.getPublication(pubId);
                 DocumentLocator loc = pub.getDocumentBuilder().getLocator(map, webappUrl);
                 url = "/" + pubId + "/" + area + loc.getPath();
-            } catch (ServiceException e) {
-                throw new AccessControlException("Error looking up ContextUtility component", e);
             } catch (Exception e) {
                 throw new AccessControlException(e);
-            } finally {
-                if (contextUtility != null) {
-                    serviceManager.release(contextUtility);
-                }
             }
         }
 
@@ -132,8 +110,14 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         return url;
     }
 
-    protected String getPolicyUrlFast(String webappUrl)
-            throws AccessControlException {
+    protected HttpServletRequest getRequest() {
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
+        return request;
+    }
+
+    protected String getPolicyUrlFast(String webappUrl) throws AccessControlException {
         String strippedUrl = strip(strip(webappUrl, '.'), '_');
         return strippedUrl;
     }
@@ -155,36 +139,14 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
     protected Publication getPublication(String url) throws AccessControlException {
         getLogger().debug("Building publication");
 
-        ContextUtility util = null;
         try {
-            util = (ContextUtility) this.serviceManager.lookup(ContextUtility.ROLE);
-            Request request = util.getRequest();
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.serviceManager, request);
-            return PublicationUtil.getPublicationFromUrl(this.serviceManager, factory, url);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), getRequest());
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            String id = new URLInformation(url).getPublicationId();
+            return factory.getPublication(id);
         } catch (Exception e) {
             throw new AccessControlException(e);
-        } finally {
-            if (util != null) {
-                this.serviceManager.release(util);
-            }
         }
-    }
-
-    private ServiceManager serviceManager;
-
-    /**
-     * Returns the service manager.
-     * @return A service manager.
-     */
-    protected ServiceManager getServiceManager() {
-        return this.serviceManager;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.serviceManager = manager;
     }
 
     /**
@@ -248,11 +210,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             try {
                 type = policyManagerConfiguration.getAttribute(this.ATTRIBUTE_TYPE);
 
-                this.policyManagerSelector = (ServiceSelector) getServiceManager().lookup(
-                        PolicyManager.ROLE + "Selector");
-
-                PolicyManager _policyManager = (PolicyManager) this.policyManagerSelector
-                        .select(type);
+                PolicyManager _policyManager = (PolicyManager) WebAppContextUtils
+                        .getCurrentWebApplicationContext().getBean(PolicyManager.ROLE + "/" + type);
 
                 if (!(_policyManager instanceof InheritingPolicyManager)) {
                     throw new AccessControlException("The " + getClass().getName()
@@ -266,9 +225,6 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             } catch (final ConfigurationException e1) {
                 throw new ConfigurationException("Obtaining policy manager for type [" + type
                         + "] failed: ", e1);
-            } catch (final ServiceException e1) {
-                throw new ConfigurationException("Obtaining policy manager for type [" + type
-                        + "] failed: ", e1);
             } catch (final ParameterException e1) {
                 throw new ConfigurationException("Obtaining policy manager for type [" + type
                         + "] failed: ", e1);
@@ -277,22 +233,6 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
                         + "] failed: ", e1);
             }
         }
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        if (this.policyManagerSelector != null) {
-            if (getPolicyManager() != null) {
-                this.policyManagerSelector.release(getPolicyManager());
-            }
-            getServiceManager().release(this.policyManagerSelector);
-        }
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing [" + this + "]");
-        }
-
     }
 
     /**
@@ -312,5 +252,13 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
     public Role[] getGrantedRoles(AccreditableManager accreditableManager, Identity identity,
             String url) throws AccessControlException {
         return getPolicyManager().getGrantedRoles(accreditableManager, identity, getPolicyURL(url));
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

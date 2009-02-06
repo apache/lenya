@@ -21,25 +21,20 @@ package org.apache.lenya.ac.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 
 /**
- * Access controller resolver composed of other access controller resolvers.
- * The member resolvers are called one after the other to resolve the access controllers.
+ * Access controller resolver composed of other access controller resolvers. The member resolvers
+ * are called one after the other to resolve the access controllers.
  * 
  * @version $Id$
  */
-public class ComposableAccessControllerResolver
-    extends AbstractAccessControllerResolver
-    implements Configurable, Disposable {
+public class ComposableAccessControllerResolver extends AbstractAccessControllerResolver {
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
@@ -48,28 +43,18 @@ public class ComposableAccessControllerResolver
 
         AccessController controller = null;
 
-        try {
-            
-            if (this.selector == null) {
-                this.selector =
-                    (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE + "Selector");
-            }
+        String[] types = getResolverTypes();
+        int i = 0;
+        while (controller == null && i < types.length) {
 
-            String[] types = getResolverTypes();
-            int i = 0;
-            while (controller == null && i < types.length) {
-
-                getLogger().debug("Trying to resolve AC resolver for type [" + types[i] + "]");
-                AccessControllerResolver resolver =
-                    (AccessControllerResolver) this.selector.select(types[i]);
-                controller = resolver.resolveAccessController(url);
-                setResolver(controller, resolver);
-                getLogger().debug("Resolved access controller [" + controller + "]");
-                i++;
-            }
-
-        } catch (ServiceException e) {
-            throw new AccessControlException(e);
+            getLogger().debug("Trying to resolve AC resolver for type [" + types[i] + "]");
+            AccessControllerResolver resolver = (AccessControllerResolver) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(
+                            AccessControllerResolver.ROLE + "/" + types[i]);
+            controller = resolver.resolveAccessController(url);
+            setResolver(controller, resolver);
+            getLogger().debug("Resolved access controller [" + controller + "]");
+            i++;
         }
 
         return controller;
@@ -84,24 +69,21 @@ public class ComposableAccessControllerResolver
         assert controller != null;
         AccessControllerResolver resolver = getResolver(controller);
         resolver.release(controller);
-        this.selector.release(resolver);
     }
 
     /**
-     * Returns the access controller resolver that was used to resolve a
-     * specific access controller.
+     * Returns the access controller resolver that was used to resolve a specific access controller.
      * @param controller The access controller.
      * @return An AC resolver.
      */
     protected AccessControllerResolver getResolver(AccessController controller) {
-        AccessControllerResolver resolver =
-            (AccessControllerResolver) this.controllerToResolver.get(controller);
+        AccessControllerResolver resolver = (AccessControllerResolver) this.controllerToResolver
+                .get(controller);
         return resolver;
     }
-    
+
     /**
-     * Sets the access controller resolver that was used to resolve a
-     * specific access controller.
+     * Sets the access controller resolver that was used to resolve a specific access controller.
      * @param controller The access controller.
      * @param resolver An AC resolver.
      */
@@ -113,7 +95,6 @@ public class ComposableAccessControllerResolver
     protected static final String TYPE_ATTRIBUTE = "type";
 
     private String[] resolverTypes;
-    private ServiceSelector selector;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -132,15 +113,6 @@ public class ComposableAccessControllerResolver
      */
     protected String[] getResolverTypes() {
         return this.resolverTypes;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        if (this.selector != null) {
-            getManager().release(this.selector);
-        }
     }
 
 }

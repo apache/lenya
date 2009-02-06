@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceWrapper;
@@ -29,10 +30,12 @@ import org.apache.lenya.util.ServletHelper;
  * 
  */
 public class UploadResource extends InvokeWorkflow {
+    
+    private SourceResolver sourceResolver;
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!ServletHelper.isUploadEnabled(manager)) {
+        if (!ServletHelper.isUploadEnabled()) {
             addErrorMessage("Upload is not enabled. Please check local.build.properties!");
         }
         Document doc = getSourceDocument();
@@ -57,8 +60,19 @@ public class UploadResource extends InvokeWorkflow {
         super.doExecute();
         Part file = getPart("file");
         Document document = getSourceDocument();
-        ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
+        ResourceWrapper wrapper = new ResourceWrapper(document, getSourceResolver(), getLogger());
         wrapper.write(file);
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

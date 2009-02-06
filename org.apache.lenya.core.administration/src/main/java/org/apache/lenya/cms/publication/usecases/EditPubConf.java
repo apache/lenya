@@ -20,8 +20,6 @@ package org.apache.lenya.cms.publication.usecases;
 import java.io.File;
 
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
 /**
@@ -95,13 +93,6 @@ public class EditPubConf extends AbstractUsecase {
             }
         }
         pub.saveConfiguration();
-    }
-
-    protected Publication getPublication() throws PublicationException {
-        URLInformation info = new URLInformation(getSourceURL());
-        String pubId = info.getPublicationId();
-        Publication pub = getDocumentFactory().getPublication(pubId);
-        return pub;
     }
 
 }

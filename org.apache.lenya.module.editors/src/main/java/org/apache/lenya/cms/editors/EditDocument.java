@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.editors;
 
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -59,6 +60,8 @@ public class EditDocument extends DocumentUsecase {
 
     protected static final String EVENT = "event";
     protected static final String DEFAULT_EVENT = "edit";
+    
+    private SourceResolver sourceResolver;
 
     /**
      * The URI to copy the document source from.
@@ -74,16 +77,16 @@ public class EditDocument extends DocumentUsecase {
         Document sourceDoc = getSourceDocument();
 
         String sourceUri = getParameterAsString(SOURCE_URI);
-        org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, this.manager);
+        org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, getSourceResolver());
 
         ResourceType resourceType = sourceDoc.getResourceType();
         Schema schema = resourceType.getSchema();
-        ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+        ValidationUtil.validate(xmlDoc, schema, new UsecaseErrorHandler(this));
 
         if (!hasErrors()) {
             SourceUtil.writeDOM(xmlDoc, sourceDoc.getOutputStream());
             String event = getParameterAsString(EVENT, DEFAULT_EVENT);
-            WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), event);
+            WorkflowUtil.invoke(getLogger(), getSourceDocument(), event);
         }
     }
 
@@ -93,6 +96,17 @@ public class EditDocument extends DocumentUsecase {
     protected Node[] getNodesToLock() throws UsecaseException {
         Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

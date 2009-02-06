@@ -17,7 +17,8 @@
 
 package org.apache.lenya.ac.impl;
 
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
@@ -35,11 +36,7 @@ import org.apache.lenya.ac.User;
 public class AnonymousAuthenticator extends AbstractLogEnabled implements Authenticator {
 
     
-    /**
-     * @see org.apache.lenya.ac.Authenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
-     *      org.apache.cocoon.environment.Request)
-     */
-    public boolean authenticate(AccreditableManager accreditableManager, Request request)
+    public boolean authenticate(AccreditableManager accreditableManager, HttpServletRequest request)
             throws AccessControlException {
 
 	String username = "anonymous";

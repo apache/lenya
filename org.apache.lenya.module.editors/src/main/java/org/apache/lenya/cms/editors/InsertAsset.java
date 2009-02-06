@@ -23,18 +23,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.site.usecases.CreateResource;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.lenya.cms.site.usecases.CreateResource;
 
 /**
  * Usecase to insert an image into a document.
@@ -44,6 +44,8 @@ import org.apache.lenya.cms.site.usecases.CreateResource;
 public class InsertAsset extends CreateResource {
 
     protected static final String DOCUMENT = "document";
+    
+    private UsecaseInvoker usecaseInvoker;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -66,7 +68,7 @@ public class InsertAsset extends CreateResource {
     }
 
     protected void doCheckPreconditions() throws Exception {
-        if (!ServletHelper.isUploadEnabled(manager)) {
+        if (!ServletHelper.isUploadEnabled()) {
             addErrorMessage("Upload is not enabled please check local.build.properties!");
         }
     }
@@ -90,14 +92,12 @@ public class InsertAsset extends CreateResource {
     }
 
     protected void loadResources() {
-        ContextUtility context = null;
         try {
-            context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-            Request request = context.getRequest();
+            HttpServletRequest request = getRequest();
             boolean ssl = request.isSecure();
 
-            LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getSession(),
-                    getSourceURL(), ssl, false, false);
+            LinkRewriter rewriter = new OutgoingLinkRewriter(getSession(), getSourceURL(), ssl,
+                    false, false);
             Map asset2proxyUrl = new HashMap();
             setParameter("asset2proxyUrl", asset2proxyUrl);
 
@@ -118,25 +118,20 @@ public class InsertAsset extends CreateResource {
             setParameter("assets", resources);
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (context != null) {
-                this.manager.release(context);
-            }
         }
     }
 
     /**
-     * Delegates to the main assets usecase; the name of the usecase being
-     * delegated to is set in the configuration parameter "asset-usecase".
+     * Delegates to the main assets usecase; the name of the usecase being delegated to is set in
+     * the configuration parameter "asset-usecase".
      * 
      * @see org.apache.lenya.cms.usecase.Usecase#advance()
      */
     public void advance() throws UsecaseException {
         super.advance();
         if (getParameterAsBoolean("upload", false)) {
-            UsecaseInvoker invoker = null;
+            UsecaseInvoker invoker = getUsecaseInvoker();
             try {
-                invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
                 String usecaseName = getParameterAsString("asset-usecase");
 
                 if (getLogger().isDebugEnabled())
@@ -157,19 +152,25 @@ public class InsertAsset extends CreateResource {
                     }
                 }
                 /*
-                 * The <input type="file"/> value cannot be passed to the next
-                 * screen because the browser doesn't allow this for security
-                 * reasons.
+                 * The <input type="file"/> value cannot be passed to the next screen because the
+                 * browser doesn't allow this for security reasons.
                  */
                 deleteParameter("file");
             } catch (Exception e) {
                 throw new UsecaseException(e);
-            } finally {
-                if (invoker != null) {
-                    this.manager.release(invoker);
-                }
             }
         }
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseInvoker(UsecaseInvoker usecaseInvoker) {
+        this.usecaseInvoker = usecaseInvoker;
+    }
+
+    public UsecaseInvoker getUsecaseInvoker() {
+        return usecaseInvoker;
     }
 
 }

@@ -33,7 +33,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
@@ -41,6 +41,9 @@ import org.apache.lenya.util.ServletHelper;
  * Checkin document
  */
 public class ReservedCheckinAction extends RevisionControllerAction {
+    
+    private RepositoryManager repositoryManager;
+    
     /**
      * Checkin document
      * @return HashMap with checkin parameters
@@ -55,9 +58,9 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
             Identity identity = (Identity) request.getSession().getAttribute(Identity.class.getName());
-            Session session = RepositoryUtil.createSession(this.manager, identity, true);
+            Session session = getRepositoryManager().createSession(identity, true);
             
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             String url = ServletHelper.getWebappURI(request);
             if (factory.isDocument(url)) {
                 Node node = factory.getFromURL(url).getRepositoryNode();
@@ -79,5 +82,13 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         }
 
         return null;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

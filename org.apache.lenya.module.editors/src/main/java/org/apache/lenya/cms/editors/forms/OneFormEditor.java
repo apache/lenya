@@ -29,8 +29,6 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.commons.io.IOUtils;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.linking.LinkConverter;
@@ -88,9 +86,8 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         if (!hasErrors()) {
-            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(),
-                    getSourceDocument(), getLogger());
-            if (!ServletHelper.isUploadEnabled(this.manager)) {
+            UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), getSourceDocument(), getLogger());
+            if (!ServletHelper.isUploadEnabled()) {
                 addErrorMessage("upload-disabled");
             }
         }
@@ -106,8 +103,7 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
     }
 
     protected String getRequestEncoding() {
-        Request request = ContextHelper.getRequest(this.context);
-        return request.getCharacterEncoding();
+        return getRequest().getCharacterEncoding();
     }
 
     protected String getContent() {
@@ -156,7 +152,7 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
             byte bytes[] = xmlString.getBytes(encoding);
             ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
             StreamSource source = new StreamSource(stream);
-            ValidationUtil.validate(this.manager, source, schema, this);
+            ValidationUtil.validate(source, schema, this);
             if (!getValidationErrors().isEmpty()) {
                 addErrorMessage("editors.validationFailed");
             }
@@ -183,8 +179,7 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
      */
     protected void saveDocument(Document content) throws Exception {
         saveXMLFile(content, getSourceDocument());
-
-        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+        WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
     }
 
     /**
@@ -196,7 +191,7 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
     protected void saveXMLFile(Document content, org.apache.lenya.cms.publication.Document document) {
         try {
             SourceUtil.writeDOM(content, document.getOutputStream());
-            LinkConverter converter = new LinkConverter(this.manager, getLogger());
+            LinkConverter converter = new LinkConverter(getLogger());
             converter.convertUrlsToUuids(document, false);
         } catch (Exception e) {
             addErrorMessage(e.getMessage());

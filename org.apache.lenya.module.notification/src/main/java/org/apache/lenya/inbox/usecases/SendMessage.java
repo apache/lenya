@@ -22,7 +22,7 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.inbox.InboxMessage;
 import org.apache.lenya.notification.Message;
-import org.apache.lenya.notification.NotificationUtil;
+import org.apache.lenya.notification.Notifier;
 import org.apache.lenya.util.Assert;
 
 /**
@@ -35,6 +35,8 @@ public class SendMessage extends AbstractInboxUsecase {
     protected static final String PARAM_RECIPIENT = "recipient";
     protected static final String PARAM_USER = "user";
     protected static final String PARAM_REPLY_TO = "replyTo";
+    
+    private Notifier notifier;
 
     protected void prepareView() throws Exception {
         super.prepareView();
@@ -108,8 +110,19 @@ public class SendMessage extends AbstractInboxUsecase {
 
         Message message = new Message(subject, new String[0], body, new String[0], sender,
                 recipients);
-        NotificationUtil.notify(this.manager, message);
+        getNotifier().notify(message);
 
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setNotifier(Notifier notifier) {
+        this.notifier = notifier;
+    }
+
+    public Notifier getNotifier() {
+        return notifier;
     }
 
 }

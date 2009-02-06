@@ -20,8 +20,6 @@ package org.apache.lenya.cms.site;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
@@ -50,8 +48,8 @@ public class SiteUtil {
         SiteNode[] subsite;
         try {
             String hint = node.getStructure().getPublication().getSiteManagerHint();
-            siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
-                    SiteManager.class.getName() + "/" + hint);
+            siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(SiteManager.class.getName() + "/" + hint);
 
             DocumentFactory map = node.getStructure().getPublication().getFactory();
             Set nodes = new HashSet();
@@ -72,30 +70,21 @@ public class SiteUtil {
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getAvailableLocator(DocumentFactory,
      *      DocumentLocator)
-     * @param manager The service manager.
      * @param factory The factory.
      * @param locator The locator.
      * @return A document.
      * @throws SiteException if an error occurs.
      */
-    public static DocumentLocator getAvailableLocator(ServiceManager manager,
-            DocumentFactory factory, DocumentLocator locator) throws SiteException {
-        ServiceSelector selector = null;
+    public static DocumentLocator getAvailableLocator(DocumentFactory factory,
+            DocumentLocator locator) throws SiteException {
         SiteManager siteManager = null;
         try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             Publication pub = factory.getPublication(locator.getPublicationId());
-            siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
+            siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(SiteManager.ROLE + "/" + pub.getSiteManagerHint());
             return siteManager.getAvailableLocator(factory, locator);
         } catch (Exception e) {
             throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
         }
     }
 

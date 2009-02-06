@@ -17,9 +17,6 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -38,7 +35,7 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * 
  * @version $Id: InvokeWorkflow.java 426254 2006-07-27 21:27:04Z andreas $
  */
-public class CheckWorkflow extends DocumentUsecase implements Configurable {
+public class CheckWorkflow extends DocumentUsecase {
 
     private String event;
 
@@ -60,7 +57,7 @@ public class CheckWorkflow extends DocumentUsecase implements Configurable {
         }
 
         Document doc = getSourceDocument();
-        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), doc, getEvent())) {
+        if (!WorkflowUtil.canInvoke(getLogger(), doc, getEvent())) {
             UsecaseWorkflowHelper.addWorkflowError(this, getEvent(), doc);
         }
     }
@@ -68,12 +65,8 @@ public class CheckWorkflow extends DocumentUsecase implements Configurable {
     protected static final String ELEMENT_EVENT = "event";
     protected static final String ATTRIBUTE_ID = "id";
 
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration config) throws ConfigurationException {
-        super.configure(config);
-        this.event = config.getChild(ELEMENT_EVENT).getAttribute(ATTRIBUTE_ID);
+    public void setEvent(String event) {
+        this.event = event;
     }
 
 }

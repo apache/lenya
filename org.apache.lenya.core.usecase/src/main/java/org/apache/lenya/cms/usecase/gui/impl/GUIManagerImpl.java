@@ -22,18 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
@@ -42,11 +36,13 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
@@ -57,8 +53,7 @@ import org.apache.lenya.util.ServletHelper;
 /**
  * GUI manager implementation.
  */
-public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Configurable,
-        Serviceable, Contextualizable {
+public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager {
 
     protected static final String ELEMENT_PARAMETER = "parameter";
     protected static final String ELEMENT_TAB_GROUP = "tab-group";
@@ -69,6 +64,17 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
     protected static final String ATTRIBUTE_USECASE = "usecase";
 
     private Map name2group = new HashMap();
+
+    private UsecaseResolver usecaseResolver;
+    private RepositoryManager repositoryManager;
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -137,24 +143,21 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
     protected UsecaseMessage[] getErrorMessages(Tab tab) {
 
         UsecaseMessage[] messages;
-
-        ServiceSelector selector = null;
-        AccessControllerResolver acResolver = null;
-        AccessController accessController = null;
-        UsecaseResolver usecaseResolver = null;
         UsecaseAuthorizer authorizer = null;
-        
+
         String usecaseName = tab.getUsecase();
         if (usecaseName == null) {
-            throw new IllegalArgumentException("The usecase name of the tab [" + tab.getName() + "] is null.");
+            throw new IllegalArgumentException("The usecase name of the tab [" + tab.getName()
+                    + "] is null.");
         }
-        
+
         try {
 
-            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-            acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
-            accessController = acResolver.resolveAccessController(this.webappUrl);
+            AccessControllerResolver  acResolver = (AccessControllerResolver) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(
+                            AccessControllerResolver.ROLE + "/"
+                                    + AccessControllerResolver.DEFAULT_RESOLVER);
+            AccessController accessController = acResolver.resolveAccessController(this.webappUrl);
 
             Authorizer[] authorizers = accessController.getAuthorizers();
             for (int i = 0; i < authorizers.length; i++) {
@@ -163,30 +166,18 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 }
             }
 
-            usecaseResolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
-
             // filter item if usecase not allowed
             if (tab.getUsecase() != null) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Found usecase [" + tab.getUsecase() + "]");
                 }
 
-                DocumentFactory factory;
-                ContextUtility util = null;
-                try {
-                    util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                    Request request = util.getRequest();
-                    factory = DocumentUtil.getDocumentFactory(this.manager, request);
-                } finally {
-                    if (util != null) {
-                        this.manager.release(util);
-                    }
-                }
-
-                Publication pub = PublicationUtil.getPublicationFromUrl(this.manager,
-                        factory,
-                        this.webappUrl);
-                if (!authorizer.authorizeUsecase(usecaseName, this.roles, pub)) {
+                HttpServletRequest request = getRequest();
+                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+                DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+                String pubId = new URLInformation(this.webappUrl).getPublicationId();
+                Publication pub = factory.getPublication(pubId);
+                if (!authorizer.authorizeUsecase(usecaseName, getRoles(), pub)) {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Usecase not authorized");
                     }
@@ -224,51 +215,41 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
             } else {
                 messages = new UsecaseMessage[1];
                 String[] params = {};
-                messages[0] = new UsecaseMessage("Usecase [" + usecaseName + "] is not registered!", params);
+                messages[0] = new UsecaseMessage(
+                        "Usecase [" + usecaseName + "] is not registered!", params);
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (usecaseResolver != null) {
-                this.manager.release(usecaseResolver);
-            }
-            if (selector != null) {
-                if (acResolver != null) {
-                    if (accessController != null) {
-                        acResolver.release(accessController);
-                    }
-                    selector.release(acResolver);
-                }
-                this.manager.release(selector);
-            }
         }
 
         return messages;
     }
 
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    protected HttpServletRequest getRequest() {
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
+        return request;
     }
 
     private String webappUrl;
     private Role[] roles;
 
-    /**
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context context) throws ContextException {
-        Request request = ContextHelper.getRequest(context);
-        try {
-            this.roles = PolicyUtil.getRoles(request);
-        } catch (AccessControlException e) {
-            throw new ContextException("Obtaining roles failed: ", e);
+    protected Role[] getRoles() throws AccessControlException {
+        if (this.roles == null) {
+            HttpServletRequest request = getRequest();
+            this.roles = PolicyUtil.getRoles(getRequest());
+            this.webappUrl = ServletHelper.getWebappURI(request);
         }
-        this.webappUrl = ServletHelper.getWebappURI(request);
+        return this.roles;
+    }
+
+    public void setUsecaseResolver(UsecaseResolver usecaseResolver) {
+        this.usecaseResolver = usecaseResolver;
+    }
+
+    public UsecaseResolver getUsecaseResolver() {
+        return usecaseResolver;
     }
 
 }

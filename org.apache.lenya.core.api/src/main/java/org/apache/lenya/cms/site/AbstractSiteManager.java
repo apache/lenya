@@ -21,9 +21,6 @@ package org.apache.lenya.cms.site;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.DocumentFactory;
 
@@ -32,23 +29,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
  * 
  * @version $Id$
  */
-public abstract class AbstractSiteManager extends AbstractLogEnabled implements SiteManager, Serviceable {
-
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-    
-    /**
-     * Ctor.
-     * @param manager The service manager.
-     */
-    public AbstractSiteManager() {
-    }
+public abstract class AbstractSiteManager extends AbstractLogEnabled implements SiteManager {
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#sortAscending(org.apache.lenya.cms.publication.util.DocumentSet)
@@ -57,7 +38,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
         if (nodes.length > 0) {
 
             DocumentFactory map = nodes[0].getStructure().getPublication().getFactory();
-            if (!check(map, new NodeSet(this.manager, nodes))) {
+            if (!check(map, new NodeSet(nodes))) {
                 throw new SiteException("The dependence relation is not a strict partial order!");
             }
 

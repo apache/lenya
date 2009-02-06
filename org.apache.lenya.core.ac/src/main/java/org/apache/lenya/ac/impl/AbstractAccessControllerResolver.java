@@ -18,10 +18,6 @@
 
 package org.apache.lenya.ac.impl;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
@@ -34,13 +30,13 @@ import org.apache.lenya.util.CacheMap;
  * Abstract implementation for access controller resolvers.
  * @version $Id$
  */
-public abstract class AbstractAccessControllerResolver
-    extends AbstractLogEnabled
-    implements AccessControllerResolver, Serviceable, ThreadSafe {
+public abstract class AbstractAccessControllerResolver extends AbstractLogEnabled implements
+        AccessControllerResolver {
 
     protected static final int CAPACITY = 1000;
     private CacheMap cache;
-    
+    private SourceResolver sourceResolver;
+
     protected CacheMap getCache() {
         if (this.cache == null) {
             this.cache = new CacheMap(CAPACITY, getLogger());
@@ -51,26 +47,19 @@ public abstract class AbstractAccessControllerResolver
     /**
      * @see org.apache.lenya.ac.AccessControllerResolver#resolveAccessController(java.lang.String)
      */
-    public AccessController resolveAccessController(String webappUrl)
-        throws AccessControlException {
+    public AccessController resolveAccessController(String webappUrl) throws AccessControlException {
 
-        SourceResolver resolver = null;
         AccessController controller = null;
         Object key = null;
 
         try {
-            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
-            key = generateCacheKey(webappUrl, resolver);
+            key = generateCacheKey(webappUrl, getSourceResolver());
             getLogger().debug("Access controller cache key: [" + key + "]");
 
         } catch (Exception e) {
             throw new AccessControlException(e);
-        } finally {
-            if (resolver != null) {
-                getManager().release(resolver);
-            }
         }
-        
+
         CacheMap cache = getCache();
 
         synchronized (cache) {
@@ -95,7 +84,7 @@ public abstract class AbstractAccessControllerResolver
      * @throws AccessControlException when something went wrong.
      */
     protected Object generateCacheKey(String webappUrl, SourceResolver resolver)
-        throws AccessControlException {
+            throws AccessControlException {
         Object key;
         try {
             key = URLKeyUtil.generateKey(resolver, webappUrl);
@@ -112,35 +101,23 @@ public abstract class AbstractAccessControllerResolver
      * @throws AccessControlException when something went wrong.
      */
     protected abstract AccessController doResolveAccessController(String webappUrl)
-        throws AccessControlException;
+            throws AccessControlException;
 
     /**
      * @see org.apache.lenya.ac.AccessControllerResolver#release(org.apache.lenya.ac.AccessController)
      */
     public void release(AccessController controller) {
         /*
-        if (controller != null) {
-            getManager().release(controller);
-        }
-        */
+         * if (controller != null) { getManager().release(controller); }
+         */
     }
 
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        getLogger().debug("Servicing [" + getClass().getName() + "]");
-        this.manager = _manager;
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
-    /**
-     * Returns the service manager of this Serviceable.
-     * @return A service manager.
-     */
-    public ServiceManager getManager() {
-        return this.manager;
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

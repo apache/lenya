@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.templating.Instantiator;
@@ -86,36 +86,21 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
 
         String templateId = getParameterAsString(TEMPLATE);
 
-        ServiceSelector selector = null;
         Instantiator instantiator = null;
 
-        try {
+        Publication template = getDocumentFactory().getPublication(templateId);
+        String name = getParameterAsString(PUBLICATION_NAME);
 
-            Publication template = getDocumentFactory().getPublication(templateId);
-            String name = getParameterAsString(PUBLICATION_NAME);
+        instantiator = (Instantiator) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
+                Instantiator.ROLE + "/" + template.getInstantiatorHint());
 
-            selector = (ServiceSelector) this.manager.lookup(Instantiator.ROLE + "Selector");
-            instantiator = (Instantiator) selector.select(template.getInstantiatorHint());
-
-            instantiator.instantiate(template, getParameterAsString(PUBLICATION_ID), name);
-            
-        } finally {
-            if (selector != null) {
-                if (instantiator != null) {
-                    selector.release(instantiator);
-                }
-                this.manager.release(selector);
-            }
-        }
-
+        instantiator.instantiate(template, getParameterAsString(PUBLICATION_ID), name);
     }
-    /* TODO: enable once we can change configuration options in publication
-             via web interface
-    public String getTargetURL(boolean success) {
-        if (success) {
-            return "/" + getParameterAsString(PUBLICATION_ID) + "/introduction.html";
-        }
-        return super.getTargetURL(success);
-    }
-    */
+    
+    /*
+     * TODO: enable once we can change configuration options in publication via web interface public
+     * String getTargetURL(boolean success) { if (success) { return "/" +
+     * getParameterAsString(PUBLICATION_ID) + "/introduction.html"; } return
+     * super.getTargetURL(success); }
+     */
 }

@@ -47,7 +47,7 @@ public class Assets extends SiteUsecase {
                 throw new RuntimeException(e);
             }
             
-            if (!ServletHelper.isUploadEnabled(this.manager)) {
+            if (!ServletHelper.isUploadEnabled()) {
                 addErrorMessage(MESSAGE_UPLOAD_DISABLED);
                 setParameter(PARAMETER_UPLOAD_ENABLED, Boolean.FALSE);
             }

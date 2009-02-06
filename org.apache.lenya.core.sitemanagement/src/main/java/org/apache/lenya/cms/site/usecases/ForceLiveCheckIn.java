@@ -19,7 +19,6 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
@@ -57,9 +56,5 @@ public class ForceLiveCheckIn extends AbstractUsecase {
 
     private Node getNode() throws PublicationException {
         return getPublication().getArea(Publication.LIVE_AREA).getSite().getRepositoryNode();
-    }
- 
-    private Publication getPublication() throws PublicationException {
-        return PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),getSourceURL());
     }
 }

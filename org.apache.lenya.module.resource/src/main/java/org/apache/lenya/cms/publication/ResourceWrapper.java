@@ -27,8 +27,6 @@ import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.io.IOUtils;
@@ -46,20 +44,20 @@ import org.apache.lenya.cms.repository.RepositoryException;
 public class ResourceWrapper extends AbstractLogEnabled {
 
     protected static final String MEDIA_METADATA_NAMESPACE = "http://apache.org/lenya/metadata/media/1.0";
-    private ServiceManager manager;
     private Document document;
+    private SourceResolver sourceResolver;
 
     private static final String MIME_IMAGE_PJPEG = "image/pjpeg";
     private static final String MIME_IMAGE_JPEG = "image/jpeg";
 
     /**
      * @param document The document to wrap.
-     * @param manager The service manager.
+     * @param resolver The source resolver.
      * @param logger The logger.
      */
-    public ResourceWrapper(Document document, ServiceManager manager, Log logger) {
+    public ResourceWrapper(Document document, SourceResolver resolver, Log logger) {
         this.document = document;
-        this.manager = manager;
+        this.sourceResolver = resolver;
     }
 
     protected Document getDocument() {
@@ -70,12 +68,11 @@ public class ResourceWrapper extends AbstractLogEnabled {
      * @param file The part to write.
      * @throws IOException
      * @throws MetaDataException
-     * @throws ServiceException
      * @throws RepositoryException
      * @throws DocumentException
      */
-    public void write(Part file) throws IOException, MetaDataException, ServiceException,
-            RepositoryException, DocumentException {
+    public void write(Part file) throws IOException, MetaDataException, RepositoryException,
+            DocumentException {
 
         String mimeType = file.getMimeType();
         String fileName = file.getFileName();
@@ -88,30 +85,22 @@ public class ResourceWrapper extends AbstractLogEnabled {
     /**
      * Writes the content of the resource from a source.
      * @param sourceUri The source URI.
-     * @throws ServiceException
      * @throws MalformedURLException
      * @throws IOException
      * @throws RepositoryException
      * @throws DocumentException
      * @throws MetaDataException
      */
-    public void write(String sourceUri) throws ServiceException, MalformedURLException,
-            IOException, RepositoryException, DocumentException, MetaDataException {
-        SourceResolver resolver = null;
+    public void write(String sourceUri) throws MalformedURLException, IOException,
+            RepositoryException, DocumentException, MetaDataException {
         TraversableSource source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (TraversableSource) resolver.resolveURI(sourceUri);
-            write(source.getInputStream(),
-                    source.getMimeType(),
-                    source.getName(),
-                    source.getContentLength());
+            source = (TraversableSource) this.sourceResolver.resolveURI(sourceUri);
+            write(source.getInputStream(), source.getMimeType(), source.getName(), source
+                    .getContentLength());
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
+            if (source != null) {
+                this.sourceResolver.release(source);
             }
         }
     }
@@ -124,14 +113,13 @@ public class ResourceWrapper extends AbstractLogEnabled {
      * @param fileSize The file size.
      * @throws IOException
      * @throws MetaDataException
-     * @throws ServiceException
      * @throws MalformedURLException
      * @throws RepositoryException
      * @throws DocumentException
      */
     public void write(InputStream inputStream, String mimeType, String fileName, long fileSize)
-            throws IOException, MetaDataException, ServiceException, MalformedURLException,
-            RepositoryException, DocumentException {
+            throws IOException, MetaDataException, MalformedURLException, RepositoryException,
+            DocumentException {
         final ByteArrayOutputStream sourceBos = new ByteArrayOutputStream();
         IOUtils.copy(inputStream, sourceBos);
 
@@ -159,17 +147,17 @@ public class ResourceWrapper extends AbstractLogEnabled {
         if (getLogger().isDebugEnabled())
             getLogger().debug("Resource::addResource() done.");
     }
-    
+
     /**
      * Updates the image width and height depending on the content, if possible.
      */
     public void updateImageDimensions() {
         Document doc = getDocument();
         try {
-            updateImageDimensions(doc.getMimeType(), doc.getInputStream(), doc.getMetaData(MEDIA_METADATA_NAMESPACE),
-                    doc.toString() + " (" + doc.getPath() + ")");
-        }
-        catch (Exception e) {
+            updateImageDimensions(doc.getMimeType(), doc.getInputStream(), doc
+                    .getMetaData(MEDIA_METADATA_NAMESPACE), doc.toString() + " (" + doc.getPath()
+                    + ")");
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -182,14 +170,13 @@ public class ResourceWrapper extends AbstractLogEnabled {
         updateImageDimensions(mimeType, stream, customMeta, fileName);
     }
 
-    protected void updateImageDimensions(String mimeType, InputStream stream, MetaData customMeta, String logInfo)
-            throws IOException, MetaDataException {
+    protected void updateImageDimensions(String mimeType, InputStream stream, MetaData customMeta,
+            String logInfo) throws IOException, MetaDataException {
         if (canReadMimeType(mimeType)) {
             BufferedImage input = ImageIO.read(stream);
             if (input == null) {
                 getLogger().warn("Couln't read image information from [" + logInfo + "].");
-            }
-            else {
+            } else {
                 String width = Integer.toString(input.getWidth());
                 String height = Integer.toString(input.getHeight());
                 customMeta.setValue("height", height);
@@ -209,15 +196,14 @@ public class ResourceWrapper extends AbstractLogEnabled {
     }
 
     /**
-     * Translates the mime type if it can be read, but the tools don't think so.
-     * For example, all jpegs from IE are marked as image/pjpeg, which ImageIO
-     * doesn't return a ImageReader for, even though the one for image/jpeg 
-     * works just fine, even for a real image/pjpeg.
+     * Translates the mime type if it can be read, but the tools don't think so. For example, all
+     * jpegs from IE are marked as image/pjpeg, which ImageIO doesn't return a ImageReader for, even
+     * though the one for image/jpeg works just fine, even for a real image/pjpeg.
      * @param mimeType The mime type.
      * @return The translated or original mime type if no translation was applied
      */
     private static String translateMimeType(String mimeType) {
-        if(mimeType.equals(MIME_IMAGE_PJPEG)) {
+        if (mimeType.equals(MIME_IMAGE_PJPEG)) {
             return MIME_IMAGE_JPEG;
         }
         return mimeType;

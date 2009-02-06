@@ -22,13 +22,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -37,9 +36,8 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -70,12 +68,8 @@ public abstract class Create extends AbstractUsecase {
     protected static final String SAMPLE = "sample";
     protected static final String SAMPLES = "samples";
 
-    /**
-     * Ctor.
-     */
-    public Create() {
-        super();
-    }
+    private DocumentManager documentManager;
+    private ResourceTypeResolver resourceTypeResolver;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
@@ -134,10 +128,9 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * This method is used by {@link #doCheckExecutionConditions()} to check if
-     * the path entered by the user is valid. If not, checking the existence of
-     * the new document in the site structure is omitted because this operation
-     * could cause errors.
+     * This method is used by {@link #doCheckExecutionConditions()} to check if the path entered by
+     * the user is valid. If not, checking the existence of the new document in the site structure
+     * is omitted because this operation could cause errors.
      * @return A boolean value.
      */
     protected boolean isPathValid() {
@@ -151,57 +144,37 @@ public abstract class Create extends AbstractUsecase {
         super.doExecute();
 
         // create new document
-        DocumentManager documentManager = null;
-        ServiceSelector selector = null;
         ResourceType resourceType = null;
-        try {
 
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+        String language = getParameterAsString(LANGUAGE);
+        Document initialDocument = getInitialDocument();
 
-            String language = getParameterAsString(LANGUAGE);
-            Document initialDocument = getInitialDocument();
+        Document document;
 
-            Document document;
+        String title = getDublinCoreParameter(DublinCore.ELEMENT_TITLE).trim();
 
-            String title = getDublinCoreParameter(DublinCore.ELEMENT_TITLE).trim();
-
-            if (createVersion()) {
-                document = documentManager.addVersion(initialDocument, getArea(), language, true);
-                document.getLink().setLabel(title);
+        if (createVersion()) {
+            document = documentManager.addVersion(initialDocument, getArea(), language, true);
+            document.getLink().setLabel(title);
+        } else {
+            if (initialDocument == null) {
+                resourceType = getResourceTypeResolver().getResourceType(getDocumentTypeName());
+                String sampleName = getParameterAsString(SAMPLE, resourceType.getSampleNames()[0]);
+                ResourceType.Sample sample = resourceType.getSample(sampleName);
+                document = documentManager.add(getDocumentFactory(), resourceType, sample.getUri(),
+                        getPublication(), getArea(), getNewDocumentPath(), language,
+                        getSourceExtension(), title, getVisibleInNav());
+                document.setMimeType(sample.getMimeType());
             } else {
-                if (initialDocument == null) {
-                    selector = (ServiceSelector) this.manager
-                            .lookup(ResourceType.ROLE + "Selector");
-                    resourceType = (ResourceType) selector.select(getDocumentTypeName());
-                    String sampleName = getParameterAsString(SAMPLE, resourceType.getSampleNames()[0]);
-                    ResourceType.Sample sample = resourceType.getSample(sampleName);
-                    document = documentManager.add(getDocumentFactory(), resourceType, sample.getUri(),
-                            getPublication(), getArea(), getNewDocumentPath(), language,
-                            getSourceExtension(), title, getVisibleInNav());
-                    document.setMimeType(sample.getMimeType());
-                } else {
-                    document = documentManager.add(initialDocument, getArea(),
-                            getNewDocumentPath(), language, getSourceExtension(), title,
-                            getVisibleInNav());
-                }
-            }
-
-            setMetaData(document);
-
-            // the location to navigate to after completion of usecase
-            setDefaultTargetURL(document.getCanonicalWebappURL());
-
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-            if (selector != null) {
-                if (resourceType != null) {
-                    selector.release(resourceType);
-                }
-                this.manager.release(selector);
+                document = documentManager.add(initialDocument, getArea(), getNewDocumentPath(),
+                        language, getSourceExtension(), title, getVisibleInNav());
             }
         }
+
+        setMetaData(document);
+
+        // the location to navigate to after completion of usecase
+        setDefaultTargetURL(document.getCanonicalWebappURL());
     }
 
     protected String getDublinCoreParameter(String name) {
@@ -243,8 +216,8 @@ public abstract class Create extends AbstractUsecase {
     protected abstract String getNewDocumentPath();
 
     /**
-     * If the document created in the usecase shall have initial contents copied
-     * from an existing document, construct that document in this method.
+     * If the document created in the usecase shall have initial contents copied from an existing
+     * document, construct that document in this method.
      * 
      * @return A document.
      */
@@ -288,9 +261,10 @@ public abstract class Create extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Map objectModel = ContextHelper.getObjectModel(getContext());
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getCocoonSession(false);
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
+        HttpSession session = request.getSession(false);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         User user = identity.getUser();
         if (user != null) {
@@ -314,11 +288,9 @@ public abstract class Create extends AbstractUsecase {
     }
 
     protected void initSampleParameters() {
-        ServiceSelector selector = null;
         ResourceType resourceType = null;
         try {
-            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-            resourceType = (ResourceType) selector.select(getDocumentTypeName());
+            resourceType = getResourceTypeResolver().getResourceType(getDocumentTypeName());
             String[] samples = resourceType.getSampleNames();
             if (samples.length == 0) {
                 addErrorMessage("The resource type [" + resourceType.getName()
@@ -339,19 +311,12 @@ public abstract class Create extends AbstractUsecase {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (resourceType != null) {
-                    selector.release(resourceType);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 
     /**
-     * @return The source document or <code>null</code> if the usecase was not
-     *         invoked on a document.
+     * @return The source document or <code>null</code> if the usecase was not invoked on a
+     *         document.
      */
     protected Document getSourceDocument() {
         Document document = null;
@@ -389,31 +354,35 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * Access to the current publication. Use this when the publication is not
-     * yet known in the usecase: e.g. when creating a global asset. When adding
-     * a resource or a child to a document, access the publication via that
-     * document's interface instead.
-     * 
-     * @return the publication in which the use-case is being executed
-     */
-    protected Publication getPublication() {
-        try {
-            return PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
-                    getSourceURL());
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @return the visibleInNav Attribute of the document being created in the
-     *         usecase
+     * @return the visibleInNav Attribute of the document being created in the usecase
      */
     protected boolean getVisibleInNav() {
         if (getParameterAsString(VISIBLEINNAV).equals("false")) {
             return false;
         }
         return true;
+    }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
+    protected ResourceTypeResolver getResourceTypeResolver() {
+        return resourceTypeResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
     }
 
 }

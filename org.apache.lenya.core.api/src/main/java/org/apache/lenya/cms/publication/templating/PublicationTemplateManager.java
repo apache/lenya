@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.publication.templating;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -63,12 +61,10 @@ public interface PublicationTemplateManager {
     /**
      * Returns the hint for the publiation which declares a service.
      * @param publication The original publication.
-     * @param selector The service selector.
+     * @param role The service role.
      * @param originalHint The original hint.
      * @return An object.
-     * @throws ServiceException if an error occurs.
      */
-    Object getSelectableHint(Publication publication, ServiceSelector selector, String originalHint)
-            throws ServiceException;
+    Object getSelectableHint(Publication publication, String role, String originalHint);
 
 }

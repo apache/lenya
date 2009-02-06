@@ -15,30 +15,12 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.workflow.usecases;
+package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.workflow.Workflowable;
+import javax.servlet.http.HttpServletRequest;
 
-/**
- * Display the workflow history tab in the site area
- * 
- * @version $Id$
- */
-public class History extends DocumentUsecase {
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO get wf variables, get
-     *      date and machine ip for versions
-     */
-    protected void initParameters() {
-        super.initParameters();
-
-        if (getSourceDocument() != null) {
-            Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(),
-                    getSourceDocument());
-            setParameter("versions", workflowable.getVersions());
-        }
-    }
+public interface Repository {
+    
+    Session getSession(HttpServletRequest request);
+    
 }

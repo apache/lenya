@@ -29,9 +29,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 
 /**
@@ -39,8 +39,8 @@ import org.xml.sax.SAXException;
  * Proxy transformer.
  * </p>
  * <p>
- * The resulting URLs can either be absolute (default) or relative. You can
- * either configure this when declaring the transformer:
+ * The resulting URLs can either be absolute (default) or relative. You can either configure this
+ * when declaring the transformer:
  * </p>
  * <code><pre>
  *     &lt;map:transformer ... &gt;
@@ -65,9 +65,10 @@ public class ProxyTransformer extends AbstractLinkTransformer {
 
     private boolean relativeUrls = false;
     private LinkRewriter rewriter;
+    private RepositoryManager repositoryManager;
 
-    public void setup(SourceResolver resolver, Map objectModel, String source,
-            Parameters params) throws ProcessingException, SAXException, IOException {
+    public void setup(SourceResolver resolver, Map objectModel, String source, Parameters params)
+            throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, source, params);
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -75,10 +76,10 @@ public class ProxyTransformer extends AbstractLinkTransformer {
             if (params.isParameter(PARAMETER_URLS)) {
                 setUrlType(params.getParameter(PARAMETER_URLS));
             }
-            Session session = RepositoryUtil.getSession(this.manager, request);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
             String webappUrl = getWebappUrl(params, objectModel);
-            this.rewriter = new OutgoingLinkRewriter(this.manager, session, webappUrl,
-                    request.isSecure(), false, this.relativeUrls);
+            this.rewriter = new OutgoingLinkRewriter(session, webappUrl, request.isSecure(), false,
+                    this.relativeUrls);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -111,6 +112,14 @@ public class ProxyTransformer extends AbstractLinkTransformer {
     public void recycle() {
         super.recycle();
         this.rewriter = null;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

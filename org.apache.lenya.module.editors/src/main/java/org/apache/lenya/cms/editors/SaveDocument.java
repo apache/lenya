@@ -29,10 +29,10 @@ import org.apache.lenya.util.Assert;
 
 /**
  * <p>
- * This usecase saves the document from the request stream <em>before</em> the
- * view is displayed using the {@link EditDocument} usecase. That's kind of a
- * hack, since it violates the standard usecase principle, but it is very
- * convenient because you can save and re-load the document without a redirect.
+ * This usecase saves the document from the request stream <em>before</em> the view is displayed
+ * using the {@link EditDocument} usecase. That's kind of a hack, since it violates the standard
+ * usecase principle, but it is very convenient because you can save and re-load the document
+ * without a redirect.
  * </p>
  * 
  * @version $Id: EditDocument.java 495324 2007-01-11 18:44:04Z andreas $
@@ -40,6 +40,7 @@ import org.apache.lenya.util.Assert;
 public class SaveDocument extends DocumentUsecase {
 
     protected static final String USECASE_NAME = "usecaseName";
+    private UsecaseInvoker usecaseInvoker;
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
@@ -47,27 +48,31 @@ public class SaveDocument extends DocumentUsecase {
         String usecase = getParameterAsString(USECASE_NAME);
         Assert.notNull("usecase", usecase);
 
-        UsecaseInvoker invoker = null;
-        try {
-            invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
-            Map params = new HashMap();
-            params.put(EditDocument.SOURCE_URI, getParameter(EditDocument.SOURCE_URI));
-            params.put(EditDocument.EVENT, getParameter(EditDocument.EVENT));
-            invoker.invoke(getSourceURL(), usecase, params);
+        UsecaseInvoker invoker = getUsecaseInvoker();
+        Map params = new HashMap();
+        params.put(EditDocument.SOURCE_URI, getParameter(EditDocument.SOURCE_URI));
+        params.put(EditDocument.EVENT, getParameter(EditDocument.EVENT));
+        invoker.invoke(getSourceURL(), usecase, params);
 
-            if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
-                List messages = invoker.getErrorMessages();
-                for (Iterator i = messages.iterator(); i.hasNext();) {
-                    UsecaseMessage message = (UsecaseMessage) i.next();
-                    addErrorMessage(message.getMessage(), message.getParameters());
-                }
-            }
-        } finally {
-            if (invoker != null) {
-                this.manager.release(invoker);
+        if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
+            List messages = invoker.getErrorMessages();
+            for (Iterator i = messages.iterator(); i.hasNext();) {
+                UsecaseMessage message = (UsecaseMessage) i.next();
+                addErrorMessage(message.getMessage(), message.getParameters());
             }
         }
 
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseInvoker(UsecaseInvoker usecaseInvoker) {
+        this.usecaseInvoker = usecaseInvoker;
+    }
+
+    public UsecaseInvoker getUsecaseInvoker() {
+        return usecaseInvoker;
     }
 
 }

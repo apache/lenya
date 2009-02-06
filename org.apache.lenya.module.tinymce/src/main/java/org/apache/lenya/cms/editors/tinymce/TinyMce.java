@@ -15,7 +15,6 @@
  limitations under the License.
  */
 
-
 package org.apache.lenya.cms.editors.tinymce;
 
 import java.io.FileNotFoundException;
@@ -24,10 +23,9 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -45,8 +43,8 @@ import org.xml.sax.SAXException;
 /**
  * TinyMce Usecase
  * 
- * since there is no really tinymce-specific code in here, most methods should
- * eventually be moved into DocumentUsecase and shared across all editor usecases.
+ * since there is no really tinymce-specific code in here, most methods should eventually be moved
+ * into DocumentUsecase and shared across all editor usecases.
  */
 
 public class TinyMce extends DocumentUsecase {
@@ -65,7 +63,7 @@ public class TinyMce extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Request request = ContextHelper.getRequest(this.context);
+        HttpServletRequest request = getRequest();
         setParameter("host", "http://" + request.getServerName() + ":" + request.getServerPort());
         setParameter("requesturi", request.getRequestURI());
     }
@@ -75,8 +73,7 @@ public class TinyMce extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
-                getLogger());
+        UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), getSourceDocument(), getLogger());
     }
 
     /**
@@ -95,9 +92,7 @@ public class TinyMce extends DocumentUsecase {
     }
 
     protected String getEncoding() {
-        Request request = ContextHelper.getRequest(this.context);
-        String encoding = request.getCharacterEncoding();
-        return encoding;
+        return getRequest().getCharacterEncoding();
     }
 
     protected String getXmlString(String encoding) {
@@ -113,7 +108,6 @@ public class TinyMce extends DocumentUsecase {
                 + getParameterAsString("tinymce.content") + "  </body>\n" + "</html>\n";
         return content;
     }
-
 
     public void advance() throws UsecaseException {
         clearErrorMessages();
@@ -146,7 +140,7 @@ public class TinyMce extends DocumentUsecase {
     protected void validate(Document xml) throws Exception {
         ResourceType resourceType = getSourceDocument().getResourceType();
         Schema schema = resourceType.getSchema();
-        ValidationUtil.validate(this.manager, xml, schema, new UsecaseErrorHandler(this));
+        ValidationUtil.validate(xml, schema, new UsecaseErrorHandler(this));
     }
 
     protected Document getXml() throws ParserConfigurationException, IOException {
@@ -162,11 +156,10 @@ public class TinyMce extends DocumentUsecase {
         return xml;
     }
 
-   /**
-     * Save the content to the document source. After saving, the XML is
-     * validated. If validation errors occur, the usecase transaction is rolled
-     * back, so the changes are not persistent. If the validation succeeded, the
-     * workflow event is invoked.
+    /**
+     * Save the content to the document source. After saving, the XML is validated. If validation
+     * errors occur, the usecase transaction is rolled back, so the changes are not persistent. If
+     * the validation succeeded, the workflow event is invoked.
      * @param encoding The encoding to use.
      * @param content The content to save.
      * @throws Exception if an error occurs.
@@ -174,10 +167,10 @@ public class TinyMce extends DocumentUsecase {
     protected void saveDocument(String encoding, String content) throws Exception {
         org.apache.lenya.cms.publication.Document doc = getSourceDocument();
         saveXMLFile(encoding, content, doc);
-        LinkConverter converter = new LinkConverter(this.manager, getLogger());
+        LinkConverter converter = new LinkConverter(getLogger());
         converter.convertUrlsToUuids(doc, false);
 
-        WorkflowUtil.invoke(this.manager, getLogger(), doc, getEvent());
+        WorkflowUtil.invoke(getLogger(), doc, getEvent());
     }
 
     /**
@@ -190,8 +183,8 @@ public class TinyMce extends DocumentUsecase {
      * @throws IOException if an IO error occurs
      */
     private void saveXMLFile(String encoding, String content,
-            org.apache.lenya.cms.publication.Document document)
-            throws FileNotFoundException, UnsupportedEncodingException, IOException {
+            org.apache.lenya.cms.publication.Document document) throws FileNotFoundException,
+            UnsupportedEncodingException, IOException {
         Writer writer = null;
 
         try {
@@ -237,11 +230,11 @@ public class TinyMce extends DocumentUsecase {
      * @param content The content to add them to
      * @return The content with the added namespaces
      */
-/*    private String addNamespaces(String namespaces, String content) {
-        int i = content.indexOf(">");
-        return content.substring(0, i) + " " + namespaces + content.substring(i);
-    }
-*/
+    /*
+     * private String addNamespaces(String namespaces, String content) { int i =
+     * content.indexOf(">"); return content.substring(0, i) + " " + namespaces +
+     * content.substring(i); }
+     */
 
     protected String getEvent() {
         return "edit";

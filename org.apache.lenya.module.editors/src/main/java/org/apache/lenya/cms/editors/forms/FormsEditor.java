@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
@@ -43,8 +44,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
@@ -70,6 +69,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xmldb.common.xml.queries.XPathQueryConfigurationException;
 import org.xmldb.common.xml.queries.XPathQueryFactory;
 
 /**
@@ -80,6 +80,8 @@ import org.xmldb.common.xml.queries.XPathQueryFactory;
 public class FormsEditor extends DocumentUsecase {
 
     protected static final String VALIDATION_ERRORS = "private.validationErrors";
+
+    private SourceResolver sourceResolver;
 
     private static final class XUpdateAttributes {
         /**
@@ -124,7 +126,7 @@ public class FormsEditor extends DocumentUsecase {
         super.doCheckPreconditions();
         if (!hasErrors()) {
             org.apache.lenya.cms.publication.Document doc = getSourceDocument();
-            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc, getLogger());
+            UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), doc, getLogger());
         }
     }
 
@@ -140,9 +142,8 @@ public class FormsEditor extends DocumentUsecase {
         Source unnumberTagsXslSource = null;
         Source numberTagsXslSource = null;
 
-        SourceResolver resolver = null;
+        SourceResolver resolver = getSourceResolver();
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             unnumberTagsXslSource = resolver.resolveURI(unnumberTagsXslUri);
             numberTagsXslSource = resolver.resolveURI(numberTagsXslUri);
@@ -153,16 +154,15 @@ public class FormsEditor extends DocumentUsecase {
                 return;
             }
 
-            Request request = ContextHelper.getRequest(this.context);
+            HttpServletRequest request = getRequest();
             String encoding = request.getCharacterEncoding();
-            save(resolver, getSourceDocument(), unnumberTagsXslSource, numberTagsXslSource,
-                    encoding);
+            save(getSourceDocument(), unnumberTagsXslSource, numberTagsXslSource, encoding);
 
             if (hasErrors()) {
                 setParameter(VALIDATION_ERRORS, getErrorMessages());
             } else if (!getParameterAsBoolean(WORKFLOW_INVOKED, false)) {
                 deleteParameter(VALIDATION_ERRORS);
-                WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+                WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
                 setParameter(WORKFLOW_INVOKED, Boolean.valueOf(true));
             }
 
@@ -176,7 +176,6 @@ public class FormsEditor extends DocumentUsecase {
                 if (numberTagsXslSource != null) {
                     resolver.release(numberTagsXslSource);
                 }
-                this.manager.release(resolver);
             }
         }
     }
@@ -197,7 +196,6 @@ public class FormsEditor extends DocumentUsecase {
 
     /**
      * Save the Form
-     * @param resolver
      * @param lenyaDocument
      * @param unnumberTagsXslSource
      * @param numberTagsXslSource
@@ -212,9 +210,9 @@ public class FormsEditor extends DocumentUsecase {
      * @throws TransformerConfigurationException
      * @throws TransformerException
      */
-    private void save(SourceResolver resolver,
-            org.apache.lenya.cms.publication.Document lenyaDocument, Source unnumberTagsXslSource,
-            Source numberTagsXslSource, String encoding) throws Exception {
+    private void save(org.apache.lenya.cms.publication.Document lenyaDocument,
+            Source unnumberTagsXslSource, Source numberTagsXslSource, String encoding)
+            throws Exception {
         if (!lenyaDocument.exists()) {
             throw new ProcessingException("The document [" + lenyaDocument + "] does not exist.");
         }
@@ -246,7 +244,7 @@ public class FormsEditor extends DocumentUsecase {
 
         Source validationSource = null;
         Source unnumberTagsSource = null;
-
+        SourceResolver resolver = getSourceResolver();
         try {
             String validationUri = lenyaDocument.getSourceURI() + ".validate";
             validationSource = resolver.resolveURI(validationUri);
@@ -270,8 +268,8 @@ public class FormsEditor extends DocumentUsecase {
             ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
             doc = DocumentHelper.readDocument(in);
 
-            ValidationUtil.validate(this.manager, doc, getSourceDocument().getResourceType()
-                    .getSchema(), new UsecaseErrorHandler(this));
+            ValidationUtil.validate(doc, getSourceDocument().getResourceType().getSchema(),
+                    new UsecaseErrorHandler(this));
 
         } finally {
             if (validationSource != null) {
@@ -752,6 +750,17 @@ public class FormsEditor extends DocumentUsecase {
 
     protected String getEvent() {
         return "edit";
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

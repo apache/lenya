@@ -19,11 +19,13 @@ package org.apache.lenya.cms.export;
 
 import java.io.File;
 
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
@@ -31,18 +33,21 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
  * Import content.
  */
 public class Import extends AbstractUsecase {
+    
+    private SourceResolver sourceResolver;
+    private DocumentManager documentManager;
+    private ResourceTypeResolver resourceTypeResolver;
 
     protected void initParameters() {
         super.initParameters();
-
-        Publication publication;
+        String pubId = new URLInformation(getSourceURL()).getPublicationId();
+        Publication pub;
         try {
-            publication = PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
-                    getSourceURL());
+            pub = getDocumentFactory().getPublication(pubId);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
-        String path = getExampleContentPath(publication);
+        String path = getExampleContentPath(pub);
         if (!new File(path).exists()) {
             path = getExampleContentPath(getDefaultPub());
         }
@@ -91,7 +96,7 @@ public class Import extends AbstractUsecase {
         String path = getParameterAsString("path");
         String baseUri = "file://" + path;
         String sitetreeUri = baseUri + "/sitetree.xml";
-        if (!SourceUtil.exists(sitetreeUri, this.manager)) {
+        if (!SourceUtil.exists(sitetreeUri, getSourceResolver())) {
             addErrorMessage("The sitetree file does not exist in this directory.");
         }
     }
@@ -99,8 +104,44 @@ public class Import extends AbstractUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         String path = getParameterAsString("path");
-        Importer importer = new Importer(this.manager, getLogger());
+        Importer importer = new Importer(getLogger());
+        importer.setDocumentManager(getDocumentManager());
+        importer.setResourceTypeResolver(getResourceTypeResolver());
+        importer.setSourceResolver(getSourceResolver());
         importer.importContent(getDefaultPub(), getArea(), path);
+    }
+
+    protected SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    protected ResourceTypeResolver getResourceTypeResolver() {
+        return resourceTypeResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
+    }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
     }
 
 }

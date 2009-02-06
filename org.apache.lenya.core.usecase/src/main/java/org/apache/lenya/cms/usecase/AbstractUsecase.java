@@ -23,26 +23,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
-import org.apache.avalon.framework.activity.Initializable;
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.transaction.ConcurrentModificationException;
@@ -54,8 +51,7 @@ import org.apache.lenya.transaction.TransactionLock;
  * 
  * @version $Id$
  */
-public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Configurable,
-        Contextualizable, Serviceable, Initializable {
+public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
     protected static final String EVENT_CHECK_POSTCONDITIONS = "checkPostconditions";
 
@@ -87,6 +83,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     protected static final String PARAMETER_CHECKOUT_RESTRICTED_TO_SESSION = "checkoutRestrictedToSession";
 
     protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
+
+    private DocumentFactoryBuilder documentFactoryBuilder;
+    private RepositoryManager repositoryManager;
+    private UsecaseView view;
 
     /**
      * Override to initialize parameters.
@@ -122,14 +122,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public String getSourceURL() {
         return (String) this.parameters.get(SOURCE_URL);
-    }
-
-    /**
-     * Returns the context.
-     * @return A context.
-     */
-    protected Context getContext() {
-        return this.context;
     }
 
     /**
@@ -560,18 +552,20 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         DocumentFactory factory = (DocumentFactory) getParameter(PARAMETER_FACTORY);
         Session session = getSession();
         if (factory == null || factory.getSession() != session) {
-            factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            factory = getDocumentFactoryBuilder().createDocumentFactory(session);
             setParameter(PARAMETER_FACTORY, factory);
         }
         return factory;
     }
 
     /**
-     * @see org.apache.avalon.framework.activity.Initializable#initialize()
+     * TODO: Add init-method to bean.
      */
-    public final void initialize() throws Exception {
-        Request request = ContextHelper.getRequest(this.context);
-        Session session = RepositoryUtil.getSession(this.manager, request);
+    public final void initialize() throws RepositoryException {
+        ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = processInfo.getRequest();
+        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
         setSession(session);
         setParameter(PARAMETER_STATE_MACHINE, new StateMachine(MODEL));
     }
@@ -636,8 +630,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         setParameter(SOURCE_URL, url);
     }
 
-    private UsecaseView view;
-
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getView()
      */
@@ -657,7 +649,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             }
         }
     }
-    
+
     /**
      * Override this method to prepare the view (add information messages etc.).
      * @throws Exception If an error occurs.
@@ -686,57 +678,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         return this.isOptimistic;
     }
 
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration config) throws ConfigurationException {
-
-        Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
-        for (int i = 0; i < parameterConfigs.length; i++) {
-            String name = parameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
-            String value = parameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
-            setParameter(name, value);
-        }
-
-        Configuration viewConfig = config.getChild(ELEMENT_VIEW, false);
-        if (viewConfig != null) {
-            this.view = new UsecaseView();
-            try {
-                view.service(this.manager);
-            } catch (ServiceException e) {
-                throw new ConfigurationException("Couldn't service view: ", e);
-            }
-            view.configure(viewConfig);
-        }
-
-        Configuration transactionConfig = config.getChild(ELEMENT_TRANSACTION, false);
-        if (transactionConfig != null) {
-            String policy = transactionConfig.getAttribute(ATTRIBUTE_POLICY);
-            if (policy.equals(VALUE_PESSIMISTIC)) {
-                this.isOptimistic = false;
-            }
-        }
-
-        Configuration exitConfig = config.getChild(ELEMENT_EXIT, false);
-        if (exitConfig != null) {
-            this.exitUsecaseName = exitConfig.getAttribute(ATTRIBUTE_USECASE);
-            Configuration[] exitParameterConfigs = exitConfig.getChildren(ELEMENT_PARAMETER);
-            for (int i = 0; i < exitParameterConfigs.length; i++) {
-                String name = exitParameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
-                String value = null;
-                String[] attributeNames = exitParameterConfigs[i].getAttributeNames();
-                for (int j = 0; j < attributeNames.length; j++) {
-                    if (attributeNames[j].equals(ATTRIBUTE_VALUE))
-                        value = exitParameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
-                }
-                setExitParameter(name, value);
-            }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setView(org.apache.lenya.cms.usecase.UsecaseView)
-     */
     public void setView(UsecaseView view) {
         this.view = view;
     }
@@ -751,9 +692,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     /**
      * <p>
-     * This method starts the transaction and locks all involved objects immediately.
-     * This way, all changes to the objects in the session occur after the locking,
-     * avoiding overriding changes of other sessions.
+     * This method starts the transaction and locks all involved objects immediately. This way, all
+     * changes to the objects in the session occur after the locking, avoiding overriding changes of
+     * other sessions.
      * </p>
      * <p>
      * This method is locked via the class lock to avoid inter-usecase synchronization issues.
@@ -778,7 +719,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     protected void startTransaction() throws RepositoryException {
         if (this.commitEnabled) {
-            setSession(RepositoryUtil.createSession(this.manager, getSession().getIdentity(), true));
+            setSession(getRepositoryManager().createSession(getSession().getIdentity(), true));
         }
     }
 
@@ -878,21 +819,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         return (Session) getParameter(PARAMETER_SESSION);
     }
 
-    protected Context context;
-
-    /**
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
-    }
-
-    protected ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
     protected void setSession(org.apache.lenya.cms.repository.Session session) {
         setParameter(PARAMETER_SESSION, session);
     }
@@ -903,9 +829,73 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         this.commitEnabled = false;
         setSession(session);
     }
-    
+
     protected boolean checkoutRestrictedToSession() {
         return getParameterAsBoolean(PARAMETER_CHECKOUT_RESTRICTED_TO_SESSION, true);
+    }
+
+    protected DocumentFactoryBuilder getDocumentFactoryBuilder() {
+        return documentFactoryBuilder;
+    }
+
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
+        this.documentFactoryBuilder = documentFactoryBuilder;
+    }
+
+    protected RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public void setParameters(Properties params) {
+        this.parameters = params;
+    }
+
+    public void setIsOptimistic(boolean optimistic) {
+        this.isOptimistic = optimistic;
+    }
+
+    protected String getExitUsecaseName() {
+        return exitUsecaseName;
+    }
+
+    public void setExitUsecaseName(String exitUsecaseName) {
+        this.exitUsecaseName = exitUsecaseName;
+    }
+
+    protected Map getExitUsecaseParameters() {
+        return exitUsecaseParameters;
+    }
+
+    public void setExitUsecaseParameters(Properties params) {
+        this.exitUsecaseParameters = params;
+    }
+
+    protected HttpServletRequest getRequest() {
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
+        return request;
+    }
+
+    private Publication pub;
+
+    /**
+     * @return the publication in which the use-case is being executed
+     */
+    protected Publication getPublication() {
+        if (this.pub == null) {
+            String pubId = new URLInformation(getSourceURL()).getPublicationId();
+            try {
+                this.pub = getDocumentFactory().getPublication(pubId);
+            } catch (PublicationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.pub;
     }
 
 }

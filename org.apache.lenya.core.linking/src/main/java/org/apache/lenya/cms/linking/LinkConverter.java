@@ -17,12 +17,11 @@
  */
 package org.apache.lenya.cms.linking;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -33,20 +32,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Utility class to convert <code>lenya-document:</code> links from and to URL
- * links.
+ * Utility class to convert <code>lenya-document:</code> links from and to URL links.
  */
 public class LinkConverter extends AbstractLogEnabled {
 
-    private ServiceManager manager;
-
     /**
      * Creates a link converter.
-     * @param manager The service manager.
      * @param logger The logger.
      */
-    public LinkConverter(ServiceManager manager, Log logger) {
-        this.manager = manager;
+    public LinkConverter(Log logger) {
+        setLogger(logger);
     }
 
     /**
@@ -59,8 +54,8 @@ public class LinkConverter extends AbstractLogEnabled {
     }
 
     /**
-     * Converts all URL-based links to UUID-based links. The link URLs can
-     * originate from a different publication.
+     * Converts all URL-based links to UUID-based links. The link URLs can originate from a
+     * different publication.
      * @param srcPub The publication where the content comes from.
      * @param examinedDocument The document in the target publication.
      * @param useContextPath If the request's context path should be considered.
@@ -83,7 +78,8 @@ public class LinkConverter extends AbstractLogEnabled {
             } else {
                 Publication pub = examinedDocument.getPublication();
                 LinkRewriter incomingRewriter = new IncomingLinkRewriter(pub);
-                LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument.getFactory());
+                LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument
+                        .getFactory());
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
                         .getInputStream());
@@ -105,7 +101,8 @@ public class LinkConverter extends AbstractLogEnabled {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Convert links: Check URL [" + url + "]");
                         }
-                        final String originalUrl = url.startsWith(prefix) ? url.substring(prefix.length()) : url;
+                        final String originalUrl = url.startsWith(prefix) ? url.substring(prefix
+                                .length()) : url;
                         final String srcPubUrl;
                         if (incomingRewriter.matches(originalUrl)) {
                             srcPubUrl = incomingRewriter.rewrite(originalUrl);
@@ -114,7 +111,8 @@ public class LinkConverter extends AbstractLogEnabled {
                         }
                         final String srcPubPrefix = "/" + srcPub.getId() + "/";
                         if (srcPubUrl.startsWith(srcPubPrefix)) {
-                            final String destPubUrl = "/" + pub.getId() + "/" + srcPubUrl.substring(srcPubPrefix.length());
+                            final String destPubUrl = "/" + pub.getId() + "/"
+                                    + srcPubUrl.substring(srcPubPrefix.length());
                             if (urlToUuidRewriter.matches(destPubUrl)) {
                                 String rewrittenUrl = urlToUuidRewriter.rewrite(destPubUrl);
                                 attribute.setValue(rewrittenUrl);
@@ -134,17 +132,9 @@ public class LinkConverter extends AbstractLogEnabled {
     }
 
     protected String getContextPath() throws ServiceException {
-        String prefix;
-        ContextUtility ctxUtil = null;
-        try {
-            ctxUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-            prefix = ctxUtil.getRequest().getContextPath();
-        } finally {
-            if (ctxUtil != null) {
-                this.manager.release(ctxUtil);
-            }
-        }
-        return prefix;
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
+                ProcessInfoProvider.ROLE);
+        return process.getRequest().getContextPath();
     }
 
 }

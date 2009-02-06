@@ -201,11 +201,6 @@ public interface Usecase {
     UsecaseView getView();
 
     /**
-     * @param view The view of the usecase.
-     */
-    void setView(UsecaseView view);
-
-    /**
      * @return The repository session.
      */
     Session getSession();
@@ -228,4 +223,10 @@ public interface Usecase {
      * @throws UsecaseException if an error occurs.
      */
     void setupView() throws UsecaseException;
+
+    /**
+     * @param view The view
+     * @deprecated The UsecaseProxy concept will hopefully be abandoned soon.
+     */
+    void setView(UsecaseView view);
 }

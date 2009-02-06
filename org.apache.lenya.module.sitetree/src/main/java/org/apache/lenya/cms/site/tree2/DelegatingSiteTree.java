@@ -22,8 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -38,13 +37,11 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
- * Site tree implementation which delegates all operations to a shared site
- * tree.
+ * Site tree implementation which delegates all operations to a shared site tree.
  */
 public class DelegatingSiteTree implements SiteStructure, SiteTree {
 
     private Area area;
-    private ServiceManager manager;
     private Map links = new HashMap();
     private Map nodes = new HashMap();
     private List nodeList;
@@ -56,16 +53,13 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     private SiteTreeFactory factory;
 
     /**
-     * @param manager The service manager.
      * @param area The area which this tree belongs to.
      * @param factory The site tree factory.
      * @param store The shared item store.
      * @param key The key to build the sitetree.
      */
-    public DelegatingSiteTree(ServiceManager manager, Area area, SiteTreeFactory factory, Session session,
-            String key) {
+    public DelegatingSiteTree(Area area, SiteTreeFactory factory, Session session, String key) {
         this.area = area;
-        this.manager = manager;
         this.key = key;
         this.factory = factory;
         this.sharedItemStoreSession = session;
@@ -164,11 +158,8 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
 
     protected NodeFactory getNodeFactory() {
         if (this.nodeFactory == null) {
-            try {
-                this.nodeFactory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException("Creating repository node failed: ", e);
-            }
+            this.nodeFactory = (NodeFactory) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(NodeFactory.ROLE);
         }
         return this.nodeFactory;
     }

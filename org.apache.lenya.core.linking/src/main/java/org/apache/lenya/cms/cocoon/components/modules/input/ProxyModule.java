@@ -23,48 +23,45 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
  * <p>
- * Input module for getting the base URL which may be prepended to internal URLs
- * to construct links. The functionality corresponds to the
- * {@link org.apache.lenya.cms.cocoon.transformation.ProxyTransformer} with one
- * exception: If the <em>webappUrl</em> parameter is an empty string, the root
- * proxy URL (or the context prefix, resp.) is returned.
+ * Input module for getting the base URL which may be prepended to internal URLs to construct links.
+ * The functionality corresponds to the
+ * {@link org.apache.lenya.cms.cocoon.transformation.ProxyTransformer} with one exception: If the
+ * <em>webappUrl</em> parameter is an empty string, the root proxy URL (or the context prefix,
+ * resp.) is returned.
  * </p>
  * <p>
  * Usage: <code>{proxy:{webappUrl}}</code>
  * </p>
  * <p>
- * The module can be configured to use absolute or relative URLs in the same way
- * as the {@link org.apache.lenya.cms.cocoon.transformation.ProxyTransformer}.
+ * The module can be configured to use absolute or relative URLs in the same way as the
+ * {@link org.apache.lenya.cms.cocoon.transformation.ProxyTransformer}.
  * </p>
  */
-public class ProxyModule extends AbstractInputModule implements Serviceable {
+public class ProxyModule extends AbstractInputModule {
 
     protected static final String ATTRIBUTE_TYPE = "type";
     protected static final String URL_TYPE_ABSOLUTE = "absolute";
     protected static final String URL_TYPE_RELATIVE = "relative";
     protected static final String PARAMETER_URLS = "urls";
 
-    private ServiceManager manager;
     private boolean relativeUrls;
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -92,9 +89,9 @@ public class ProxyModule extends AbstractInputModule implements Serviceable {
 
     protected String rewrite(Request request, String url) throws RepositoryException,
             ConfigurationException {
-        Session session = RepositoryUtil.getSession(this.manager, request);
-        LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, session, request
-                .getRequestURI(), request.isSecure(), false, this.relativeUrls);
+        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+        LinkRewriter rewriter = new OutgoingLinkRewriter(session, request.getRequestURI(), request
+                .isSecure(), false, this.relativeUrls);
         if (!rewriter.matches(url)) {
             throw new ConfigurationException("The URL [" + url + "] can't be rewritten!");
         }
@@ -112,20 +109,12 @@ public class ProxyModule extends AbstractInputModule implements Serviceable {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel) };
         return objects;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
     public void configure(Configuration conf) throws ConfigurationException {
@@ -136,7 +125,7 @@ public class ProxyModule extends AbstractInputModule implements Serviceable {
             setUrlType(value);
         }
     }
-    
+
     protected void setUrlType(String value) throws ConfigurationException {
         if (value.equals(URL_TYPE_RELATIVE)) {
             this.relativeUrls = true;
@@ -146,6 +135,14 @@ public class ProxyModule extends AbstractInputModule implements Serviceable {
             throw new ConfigurationException("Invalid URL type [" + value
                     + "], must be relative or absolute.");
         }
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

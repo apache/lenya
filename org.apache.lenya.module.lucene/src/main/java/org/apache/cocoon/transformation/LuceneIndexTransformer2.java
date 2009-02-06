@@ -17,10 +17,11 @@
 package org.apache.cocoon.transformation;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.avalon.excalibur.pool.Recyclable;
 import org.apache.avalon.framework.configuration.Configurable;
@@ -40,11 +41,12 @@ import org.apache.cocoon.components.search.components.Indexer;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.Identifiable;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationUtil;
@@ -657,8 +659,11 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements Recy
         closeIndexer();
 
         try {
-            Session session = RepositoryUtil.getSession(this.manager, this.request);
-            User sender = session.getIdentity().getUser();
+            ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+            HttpSession session = process.getRequest().getSession();
+            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+            User sender = identity.getUser();
             UserManager userManager = (UserManager) sender.getItemManager();
             User recipient = userManager.getUser(this.notificationRecipient);
             Identifiable[] recipients = { recipient };

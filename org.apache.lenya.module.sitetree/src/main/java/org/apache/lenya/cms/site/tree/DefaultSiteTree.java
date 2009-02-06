@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -68,7 +68,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     // exception.
     private String area = "";
     private Publication pub;
-    protected ServiceManager manager;
     private Document document;
     private DocumentFactory factory;
 
@@ -81,12 +80,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @param factory The document factory.
      * @param publication The publication.
      * @param _area The area.
-     * @param manager The service manager.
      * @param logger The logger.
      * @throws SiteException if an error occurs.
      */
     protected DefaultSiteTree(DocumentFactory factory, Publication publication, String _area,
-            ServiceManager manager, Log logger) throws SiteException {
+            Log logger) throws SiteException {
         setLogger(logger);
 
         this.factory = factory;
@@ -94,12 +92,10 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         this.sourceUri = publication.getSourceURI() + "/content/" + _area + "/"
                 + SITE_TREE_FILENAME;
         this.area = _area;
-        this.manager = manager;
         try {
             if (getRepositoryNode().exists()) {
                 this.document = DocumentHelper.readDocument(getRepositoryNode().getInputStream());
-            }
-            else {
+            } else {
                 getLogger().info("Empty sitetree will be created/initialized!");
                 this.document = createDocument();
             }
@@ -117,17 +113,16 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * Checks if the tree file has been modified externally and reloads the site
-     * tree. protected synchronized void checkModified() { if
-     * (this.area.equals(Publication.LIVE_AREA) && this.treefile.lastModified() >
-     * this.lastModified) {
+     * Checks if the tree file has been modified externally and reloads the site tree. protected
+     * synchronized void checkModified() { if (this.area.equals(Publication.LIVE_AREA) &&
+     * this.treefile.lastModified() > this.lastModified) {
      * 
-     * if (getLogger().isDebugEnabled()) { getLogger().debug("Sitetree [" +
-     * this.treefile + "] has changed: reloading."); }
+     * if (getLogger().isDebugEnabled()) { getLogger().debug("Sitetree [" + this.treefile +
+     * "] has changed: reloading."); }
      * 
-     * try { this.document = DocumentHelper.readDocument(this.treefile); } catch
-     * (Exception e) { throw new IllegalStateException(e.getMessage()); }
-     * this.lastModified = this.treefile.lastModified(); } }
+     * try { this.document = DocumentHelper.readDocument(this.treefile); } catch (Exception e) {
+     * throw new IllegalStateException(e.getMessage()); } this.lastModified =
+     * this.treefile.lastModified(); } }
      */
 
     /**
@@ -148,8 +143,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * Find a node in a subtree. The search is started at the given node. The
-     * list of ids contains the document-id split by "/".
+     * Find a node in a subtree. The search is started at the given node. The list of ids contains
+     * the document-id split by "/".
      * @param node where to start the search
      * @param ids list of node ids
      * @return the node that matches the path given in the list of ids
@@ -190,8 +185,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
     }
 
-    protected synchronized void addNode(String parentid, String id, String uuid, boolean visibleInNav)
-            throws SiteException {
+    protected synchronized void addNode(String parentid, String id, String uuid,
+            boolean visibleInNav) throws SiteException {
         addNode(parentid, id, uuid, visibleInNav, null, null, false);
     }
 
@@ -362,8 +357,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * 
      * @param path the document-id of the Node that we're trying to get
      * 
-     * @return the Node if there is a Node for the given document-id, null
-     *         otherwise
+     * @return the Node if there is a Node for the given document-id, null otherwise
      * @throws SiteException
      */
     private synchronized Node getNodeInternal(String path) throws SiteException {
@@ -482,17 +476,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public org.apache.lenya.cms.repository.Node getRepositoryNode() {
         if (this.repositoryNode == null) {
             Session session = this.getPublication().getFactory().getSession();
-            NodeFactory factory = null;
             try {
-                factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
-                this.repositoryNode = (org.apache.lenya.cms.repository.Node)
-                    session.getRepositoryItem(factory, this.sourceUri);
+                NodeFactory factory = (NodeFactory) WebAppContextUtils
+                        .getCurrentWebApplicationContext().getBean(NodeFactory.ROLE);
+                this.repositoryNode = (org.apache.lenya.cms.repository.Node) session
+                        .getRepositoryItem(factory, this.sourceUri);
             } catch (Exception e) {
                 throw new RuntimeException("Creating repository node failed: ", e);
-            } finally {
-                if (factory != null) {
-                    manager.release(factory);
-                }
             }
         }
         return this.repositoryNode;

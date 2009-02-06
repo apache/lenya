@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
@@ -57,16 +56,15 @@ public class UsecaseWorkflowHelper {
 
     /**
      * Adds an error message if the event can not be invoked.
-     * @param manager The service manager.
      * @param usecase The usecase.
      * @param event The event.
      * @param doc The document.
      * @param logger The logger.
      */
-    public static final void checkWorkflow(ServiceManager manager, AbstractUsecase usecase,
-            String event, Document doc, Log logger) {
+    public static final void checkWorkflow(AbstractUsecase usecase, String event, Document doc,
+            Log logger) {
         try {
-            if (!WorkflowUtil.canInvoke(manager, logger, doc, event)) {
+            if (!WorkflowUtil.canInvoke(logger, doc, event)) {
                 UsecaseWorkflowHelper.addWorkflowError(usecase, event, doc);
             }
         } catch (WorkflowException e) {

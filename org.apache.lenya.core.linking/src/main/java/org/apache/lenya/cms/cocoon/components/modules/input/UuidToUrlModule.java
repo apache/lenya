@@ -21,9 +21,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -31,22 +28,26 @@ import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.UuidToUrlRewriter;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
  * Transform lenya-document: URLs to web application URLs.
  * @see UuidToUrlRewriter
  */
-public class UuidToUrlModule extends AbstractInputModule implements Serviceable {
+public class UuidToUrlModule extends AbstractInputModule {
     
-    private ServiceManager manager;
-
+    protected RepositoryManager repositoryManager;
+    protected LinkResolver linkResolver;
+    
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         try {
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            LinkResolver linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             String currentUrl = ServletHelper.getWebappURI(request);
             
             UuidToUrlRewriter rewriter = new UuidToUrlRewriter(currentUrl, linkResolver, factory);
@@ -61,8 +62,12 @@ public class UuidToUrlModule extends AbstractInputModule implements Serviceable 
         }
     }
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public void setLinkResolver(LinkResolver linkResolver) {
+        this.linkResolver = linkResolver;
     }
 
 }

@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.export;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
@@ -30,6 +28,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
@@ -42,16 +41,17 @@ import org.w3c.dom.Element;
  */
 public class Importer extends AbstractLogEnabled {
 
-    private ServiceManager manager;
+    private SourceResolver sourceResolver;
+    private ResourceTypeResolver resourceTypeResolver;
+    private DocumentManager documentManager;
 
     /**
      * Ctor.
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public Importer(ServiceManager manager, Log logger) {
+    public Importer(Log logger) {
         setLogger(logger);
-        this.manager = manager;
     }
 
     /**
@@ -77,13 +77,17 @@ public class Importer extends AbstractLogEnabled {
         String baseUri = "file://" + path;
         String sitetreeUri = baseUri + "/sitetree.xml";
 
-        org.w3c.dom.Document xml = SourceUtil.readDOM(sitetreeUri, this.manager);
+        org.w3c.dom.Document xml = SourceUtil.readDOM(sitetreeUri, getSourceResolver());
         NamespaceHelper helper = new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI, "", xml);
 
         Element siteElement = xml.getDocumentElement();
         importChildren(area, helper, siteElement, baseUri, "");
 
         convertLinks(srcPub, area);
+    }
+
+    protected SourceResolver getSourceResolver() {
+        return this.sourceResolver;
     }
 
     protected void importElement(Area area, NamespaceHelper helper, Element element,
@@ -111,13 +115,9 @@ public class Importer extends AbstractLogEnabled {
         String contentUri = baseUri + path + "/index_" + language;
         String metaUri = contentUri + ".meta";
 
-        DocumentManager docManager = null;
-        ServiceSelector selector = null;
-        ResourceType resourceType = null;
-        SourceResolver resolver = null;
         try {
 
-            org.w3c.dom.Document xml = SourceUtil.readDOM(metaUri, this.manager);
+            org.w3c.dom.Document xml = SourceUtil.readDOM(metaUri, getSourceResolver());
             NamespaceHelper helper = new NamespaceHelper(
                     "http://apache.org/cocoon/lenya/page-envelope/1.0", "", xml);
             Element metaElement = helper.getFirstChild(xml.getDocumentElement(), "meta");
@@ -128,23 +128,19 @@ public class Importer extends AbstractLogEnabled {
             Element mimeTypeElement = helper.getFirstChild(internalElement, "mimeType");
             String mimeType = DocumentHelper.getSimpleElementText(mimeTypeElement);
 
-            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-            resourceType = (ResourceType) selector.select(resourceTypeName);
-
-            docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            ResourceType resourceType = getResourceTypeResolver().getResourceType(resourceTypeName);
             Document newDoc;
             SiteStructure site = area.getSite();
             if (!site.contains(path) || site.getNode(path).getLanguages().length == 0) {
-                newDoc = docManager.add(area.getPublication().getFactory(), resourceType,
+                newDoc = getDocumentManager().add(area.getPublication().getFactory(), resourceType,
                         contentUri, area.getPublication(), area.getName(), path, language, "xml",
                         navigationTitle, visibleInNav);
                 newDoc.setMimeType(mimeType);
             } else {
                 SiteNode node = site.getNode(path);
                 Document doc = node.getLink(node.getLanguages()[0]).getDocument();
-                newDoc = docManager.addVersion(doc, area.getName(), language, true);
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                SourceUtil.copy(resolver, contentUri, newDoc.getOutputStream());
+                newDoc = getDocumentManager().addVersion(doc, area.getName(), language, true);
+                SourceUtil.copy(getSourceResolver(), contentUri, newDoc.getOutputStream());
                 newDoc.getLink().setLabel(navigationTitle);
             }
 
@@ -163,16 +159,6 @@ public class Importer extends AbstractLogEnabled {
             
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (docManager != null) {
-                this.manager.release(docManager);
-            }
-            if (selector != null) {
-                this.manager.release(selector);
-            }
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
     }
 
@@ -187,9 +173,29 @@ public class Importer extends AbstractLogEnabled {
     protected void convertLinks(Publication srcPub, Area area) {
         Document[] docs = area.getDocuments();
         for (int i = 0; i < docs.length; i++) {
-            LinkConverter converter = new LinkConverter(this.manager, getLogger());
+            LinkConverter converter = new LinkConverter(getLogger());
             converter.convertUrlsToUuids(srcPub, docs[i], false);
         }
+    }
+
+    protected ResourceTypeResolver getResourceTypeResolver() {
+        return resourceTypeResolver;
+    }
+
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
+    }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

@@ -21,9 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
@@ -97,27 +94,4 @@ public class FilePropfind extends SiteUsecase {
         }
         return document;
     }
-
-    private Publication publication;
-
-    /**
-     * Access to the current publication. Use this when the publication is not yet known in the
-     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
-     * access the publication via that document's interface instead.
-     * 
-     * @return the publication in which the use-case is being executed
-     */
-    protected Publication getPublication() {
-        if (this.publication == null) {
-            try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                        getDocumentFactory(),
-                        getSourceURL());
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.publication;
-    }
-
 }

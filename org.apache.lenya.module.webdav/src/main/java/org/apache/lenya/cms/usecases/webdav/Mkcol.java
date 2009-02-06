@@ -19,7 +19,6 @@ package org.apache.lenya.cms.usecases.webdav;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
@@ -28,6 +27,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.site.usecases.Create;
 
 /**
@@ -41,8 +41,14 @@ public class Mkcol extends Create {
     protected static final String ATTRIBUTE_TYPE = "resource-type";
     protected static final String ELEMENT_EXTENSION = "extension";
 
+    private SourceResolver sourceResolver;
+    private DocumentManager documentManager;
+    private ResourceTypeResolver resourceTypeResolver;
+
+    /**
+     * TODO: Spring bean config
+     */
     public void configure(Configuration config) throws ConfigurationException {
-        super.configure(config);
         Configuration typeConfig = config.getChild(ELEMENT_EXTENSION, false);
         if (typeConfig != null) {
             this.EXTENSION = typeConfig.getValue();
@@ -55,53 +61,26 @@ public class Mkcol extends Create {
      */
     protected void doExecute() throws Exception {
         // super.doExecute();
-        SourceResolver resolver = null;
+        SourceResolver resolver = getSourceResolver();
         ResourceType resourceType = null;
 
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+        Document doc = getSourceDocument();
+        // sanity check
+        if (doc == null)
+            throw new IllegalArgumentException("illegal usage, source document may not be null");
 
-            Document doc = getSourceDocument();
-            // sanity check
-            if (doc == null)
-                throw new IllegalArgumentException("illegal usage, source document may not be null");
+        if (!doc.exists()) {
 
-            if (!doc.exists()) {
-                DocumentManager documentManager = null;
-                ServiceSelector selector = null;
-                try {
-                    selector = (ServiceSelector) this.manager
-                            .lookup(ResourceType.ROLE + "Selector");
+            DocumentFactory map = getDocumentFactory();
+            String path = doc.getPath();
 
-                    documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            resourceType = getResourceTypeResolver().getResourceType(TYPE);
+            ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
+            doc = getDocumentManager().add(map, resourceType, sample.getUri(), getPublication(),
+                    doc.getArea(), path, doc.getLanguage(), EXTENSION, doc.getName(), true);
+            doc.setMimeType(sample.getMimeType());
 
-                    DocumentFactory map = getDocumentFactory();
-                    String path = doc.getPath();
-
-                    resourceType = (ResourceType) selector.select(TYPE);
-                    ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
-                    doc = documentManager.add(map, resourceType, sample.getUri(), getPublication(), doc
-                            .getArea(), path, doc.getLanguage(), EXTENSION, doc.getName(), true);
-                    doc.setMimeType(sample.getMimeType());
-
-                    setMetaData(doc);
-                } finally {
-                    if (documentManager != null) {
-                        this.manager.release(documentManager);
-                    }
-                    if (selector != null) {
-                        if (resourceType != null) {
-                            selector.release(resourceType);
-                        }
-                        this.manager.release(selector);
-                    }
-                }
-            }
-
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
+            setMetaData(doc);
         }
     }
 
@@ -147,6 +126,39 @@ public class Mkcol extends Create {
 
     protected boolean createVersion() {
         return false;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
+    public ResourceTypeResolver getResourceTypeResolver() {
+        return resourceTypeResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
     }
 
 }

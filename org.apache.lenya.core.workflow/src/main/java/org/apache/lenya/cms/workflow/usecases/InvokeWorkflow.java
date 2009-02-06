@@ -53,7 +53,7 @@ public class InvokeWorkflow extends CheckWorkflow {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+        WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
     }
 
 }

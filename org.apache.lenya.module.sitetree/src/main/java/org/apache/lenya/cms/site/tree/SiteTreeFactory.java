@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.site.tree;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -35,15 +34,11 @@ import org.apache.lenya.cms.repository.Session;
  */
 public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryItemFactory {
 
-    protected ServiceManager manager;
-
     /**
      * Ctor.
-     * @param manager The service manager.
      * @param logger The logger.
      */
-    public SiteTreeFactory(ServiceManager manager, Log logger) {
-        this.manager = manager;
+    public SiteTreeFactory(Log logger) {
         setLogger(logger);
     }
 
@@ -53,9 +48,9 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         String area = snippets[1];
         DefaultSiteTree tree;
         try {
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             Publication publication = factory.getPublication(publicationId);
-            tree = new DefaultSiteTree(factory, publication, area, this.manager, getLogger());
+            tree = new DefaultSiteTree(factory, publication, area, getLogger());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

@@ -20,7 +20,6 @@ package org.apache.lenya.cms.cocoon.transformation;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -31,6 +30,9 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UuidToUrlRewriter;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.xml.sax.SAXException;
 
 /**
@@ -40,10 +42,11 @@ import org.xml.sax.SAXException;
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
-public class UuidToUrlTransformer extends AbstractLinkTransformer implements Disposable {
+public class UuidToUrlTransformer extends AbstractLinkTransformer {
 
     private UuidToUrlRewriter rewriter;
     private LinkResolver linkResolver;
+    protected RepositoryManager repositoryManager;
     
     public void setup(SourceResolver resolver, Map objectModel, String source,
             Parameters params) throws ProcessingException, SAXException, IOException {
@@ -53,7 +56,8 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
         this.useIgnore = true;
         try {
             String currentUrl = getWebappUrl(params, objectModel);
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
             this.rewriter = new UuidToUrlRewriter(currentUrl, this.linkResolver, factory);
             
@@ -82,6 +86,10 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer implements Dis
     public void recycle() {
         super.recycle();
         this.rewriter = null;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
     }
 
 }

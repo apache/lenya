@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -34,7 +33,8 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
@@ -45,30 +45,28 @@ import org.apache.lenya.util.ServletHelper;
 public class DocumentLanguagesHelper {
 
     private DocumentFactory factory;
-    private ServiceManager manager;
     private Publication pub;
     private String url;
     private String contextPath;
+    
+    private RepositoryManager repositoryManager;
 
     /**
      * Create a new DocumentlanguageHelper.
      * @param objectModel the objectModel
-     * @param manager The service manager.
      * @throws ProcessingException if the page envelope could not be created.
      */
-    public DocumentLanguagesHelper(Map objectModel, ServiceManager manager)
+    public DocumentLanguagesHelper(Map objectModel)
             throws ProcessingException {
 
-        this.manager = manager;
         Request request = ObjectModelHelper.getRequest(objectModel);
         this.url = ServletHelper.getWebappURI(request);
         this.contextPath = request.getContextPath();
 
         try {
-            Session session = RepositoryUtil.getSession(manager, request);
-            this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
-
-            this.pub = PublicationUtil.getPublication(manager, objectModel);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            this.factory = DocumentUtil.createDocumentFactory(session);
+            this.pub = this.factory.getPublication(new URLInformation(this.url).getPublicationId());
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
@@ -143,5 +141,13 @@ public class DocumentLanguagesHelper {
     protected DocumentLocator getLocator() throws DocumentBuildException {
         DocumentLocator locator = this.pub.getDocumentBuilder().getLocator(this.factory, this.url);
         return locator;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

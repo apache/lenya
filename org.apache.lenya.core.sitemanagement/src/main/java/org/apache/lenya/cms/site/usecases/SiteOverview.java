@@ -31,19 +31,15 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
@@ -95,7 +91,7 @@ public class SiteOverview extends AbstractUsecase {
         super.prepareView();
         setDefaultParameter(SORT, KEY_PATH);
         setDefaultParameter(ORDER, ASC);
-        
+
         try {
             Document[] documents = getDocuments();
             List entries = new ArrayList();
@@ -104,7 +100,7 @@ public class SiteOverview extends AbstractUsecase {
             }
 
             prepareFilters(entries);
-            
+
             List filteredDocuments = filter(entries);
             sort(filteredDocuments);
             setParameter(DOCUMENTS, filteredDocuments);
@@ -115,7 +111,7 @@ public class SiteOverview extends AbstractUsecase {
             throw new RuntimeException(e);
         }
     }
-    
+
     protected void setDefaultParameter(String name, String value) {
         if (getParameter(name) == null) {
             setParameter(name, value);
@@ -140,16 +136,14 @@ public class SiteOverview extends AbstractUsecase {
         String lastModified = format.format(new Date(doc.getLastModified()));
         entry.setValue(KEY_LAST_MODIFIED, lastModified);
 
-        if (WorkflowUtil.hasWorkflow(this.manager, getLogger(), doc)) {
-            Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                    getLogger(), doc);
+        if (WorkflowUtil.hasWorkflow(getLogger(), doc)) {
+            Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), doc);
             Version latestVersion = workflowable.getLatestVersion();
             String state;
             if (latestVersion != null) {
                 state = latestVersion.getState();
             } else {
-                Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
-                        getLogger(), doc);
+                Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), doc);
                 state = workflow.getInitialState();
             }
             entry.setValue(KEY_WORKFLOW_STATE, state);
@@ -199,8 +193,8 @@ public class SiteOverview extends AbstractUsecase {
             String key = "key" + FILTERS[i].substring("filter".length());
             String filterValue = getParameterAsString(FILTERS[i]);
             if (!filterValue.equals(VALUE_ALL)) {
-                Entry[] allEntries = (Entry[]) filteredDocuments.toArray(new Entry[filteredDocuments
-                        .size()]);
+                Entry[] allEntries = (Entry[]) filteredDocuments
+                        .toArray(new Entry[filteredDocuments.size()]);
                 for (int entryIndex = 0; entryIndex < allEntries.length; entryIndex++) {
                     if (!allEntries[entryIndex].getValue(key).equals(filterValue)) {
                         filteredDocuments.remove(allEntries[entryIndex]);
@@ -217,38 +211,7 @@ public class SiteOverview extends AbstractUsecase {
      * @throws SiteException if an error occurs.
      */
     protected Document[] getDocuments() throws PublicationException, SiteException {
-        Publication publication = getPublication();
-        DocumentFactory identityMap = getDocumentFactory();
-        Document[] documents;
-
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            documents = siteManager.getDocuments(identityMap, publication,
-                    Publication.AUTHORING_AREA);
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-
-        return documents;
-    }
-
-    /**
-     * @return The publication.
-     * @throws PublicationException if an error occurs.
-     */
-    protected Publication getPublication() throws PublicationException {
-        return PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
-                getSourceURL());
+        return getPublication().getArea(Publication.AUTHORING_AREA).getDocuments();
     }
 
     /**

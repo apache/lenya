@@ -26,9 +26,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -37,6 +34,7 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
@@ -60,10 +58,8 @@ import org.apache.lenya.cms.repository.Session;
  * an empty string if the document is not referenced in the site structure.</li>
  * </ul>
  */
-public class DocumentInfoModule extends AbstractInputModule implements Serviceable {
-
-    protected ServiceManager manager;
-
+public class DocumentInfoModule extends AbstractInputModule {
+    
     // Input module parameters:
     protected final static String PARAM_PUBLICATION_ID = "publication-id";
     protected final static String PARAM_AREA = "area";
@@ -95,6 +91,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
     protected SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     
+    private RepositoryManager repositoryManager;
+    
     /**
      * Parse the parameters and return a document.
      * @param publicationId The publication ID.
@@ -113,8 +111,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         Request request = ObjectModelHelper.getRequest(objectModel);
 
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory docFactory = DocumentUtil.createDocumentFactory(session);
             Publication pub = docFactory.getPublication(publicationId);
             document = docFactory.get(pub, area, uuid, language, revision);
         } catch (Exception e) {
@@ -203,7 +201,11 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
     }
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

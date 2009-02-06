@@ -24,18 +24,9 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
 
 /**
  * Module for sitetree access.
@@ -66,58 +57,39 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
 
         Object value = null;
-        ServiceSelector selector = null;
-        TreeSiteManager _manager = null;
 
         try {
             PageEnvelope envelope = getEnvelope(objectModel, name);
-            Publication publication = envelope.getPublication();
-            
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            _manager = (TreeSiteManager) selector.select(publication.getSiteManagerHint());
-            
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
+            Publication pub = envelope.getPublication();
 
+            SiteStructure site = null;
             if (name.equals(AUTHORING_NODE)) {
-                SiteTree authoringTree = _manager.getTree(map,
-                        publication,
-                        Publication.AUTHORING_AREA);
-                value = authoringTree.getNode(envelope.getDocument().getPath());
+                site = pub.getArea(Publication.AUTHORING_AREA).getSite();
             }
 
             if (name.equals(LIVE_NODE)) {
-                SiteTree liveTree = _manager.getTree(map, publication, Publication.LIVE_AREA);
-                value = liveTree.getNode(envelope.getDocument().getPath());
+                site = pub.getArea(Publication.LIVE_AREA).getSite();;
             }
 
             if (name.equals(TRASH_NODE)) {
-                SiteTree trashTree = _manager.getTree(map, publication, Publication.TRASH_AREA);
-                value = trashTree.getNode(envelope.getDocument().getPath());
+                site = pub.getArea(Publication.TRASH_AREA).getSite();;
             }
 
             if (name.equals(ARCHIVE_NODE)) {
-                SiteTree archiveTree = _manager.getTree(map, publication, Publication.ARCHIVE_AREA);
-                value = archiveTree.getNode(envelope.getDocument().getPath());
+                site = pub.getArea(Publication.ARCHIVE_AREA).getSite();;
             }
+            if (site != null) {
+                value = site.getNode(envelope.getDocument().getPath());
+            }
+
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);
-        }
-        finally {
-            if (selector != null) {
-                if (_manager != null) {
-                    selector.release(_manager);
-                }
-                this.manager.release(selector);
-            }
         }
 
         return value;
@@ -134,8 +106,7 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {

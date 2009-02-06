@@ -23,8 +23,6 @@ import java.util.List;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -33,10 +31,8 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -55,7 +51,7 @@ import org.apache.lenya.xml.ValidationUtil;
  * @version $Id: $
  */
 public class Put extends CreateDocument {
-    
+
     // registeredExtensions contain all known extension matching to a certain resource-type.
     private HashMap registeredExtensions = new HashMap();
     // default is xhtml and xml but you can override it with the config
@@ -65,11 +61,16 @@ public class Put extends CreateDocument {
     protected static final String ELEMENT_ROOT = "extensions";
     protected static final String ELEMENT_EXTENSION = "extension";
     protected static final String EVENT = "lenya.event";
-    
-    private boolean fallback = false;
 
+    private boolean fallback = false;
+    private SourceResolver sourceResolver;
+    private ResourceTypeResolver resourceTypeResolver;
+    private DocumentManager documentManager;
+
+    /**
+     * TODO: Spring bean configuration
+     */
     public void configure(Configuration config) throws ConfigurationException {
-        super.configure(config);
         Configuration extensionsConfig = config.getChild(ELEMENT_ROOT, false);
         if (extensionsConfig != null) {
             Configuration[] extensions = extensionsConfig.getChildren(ELEMENT_EXTENSION);
@@ -89,8 +90,7 @@ public class Put extends CreateDocument {
         String event = getParameterAsString(EVENT);
         if (event != null) {
             Document doc = getSourceDocument();
-            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, event, doc,
-                    getLogger());
+            UsecaseWorkflowHelper.checkWorkflow(this, event, doc, getLogger());
         }
     }
 
@@ -98,92 +98,63 @@ public class Put extends CreateDocument {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        SourceResolver resolver = null;
+        SourceResolver resolver = getSourceResolver();
 
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+        Document doc = getSourceDocument();
+        String extension = getSourceExtension();
+        // sanity check
+        if (doc == null)
+            throw new IllegalArgumentException("illegal usage, source document may not be null");
 
-            Document doc = getSourceDocument();
-            String extension = getSourceExtension();
-            // sanity check
-            if (doc == null)
-                throw new IllegalArgumentException("illegal usage, source document may not be null");
+        // create new doc from PUT input
+        if (!doc.exists()) {
+            DocumentFactory map = getDocumentFactory();
+            String path = doc.getPath();
+            ResourceType resourceType = lookUpExtension(extension);
+            ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
+            doc = getDocumentManager().add(map, resourceType, sample.getUri(), getPublication(),
+                    doc.getArea(), path, doc.getLanguage(), extension, doc.getName(), true);
+            doc.setMimeType(sample.getMimeType());
+            setMetaData(doc);
+        }
 
-            // create new doc from PUT input
-            if (!doc.exists()) {
-                DocumentManager documentManager = null;
-                ServiceSelector selector = null;
-                ResourceType resourceType = null;
-                try {
-                    selector = (ServiceSelector) this.manager
-                            .lookup(ResourceType.ROLE + "Selector");
+        String sourceUri = "cocoon:/request/PUT/" + extension;
+        org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, getSourceResolver());
 
-                    documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+        // validate if a schema is provided and we are not using any fallback
+        if (doc.getResourceType().getSchema() != null & fallback == false) {
+            validateDoc(resolver, xmlDoc, doc);
+        }
 
-                    DocumentFactory map = getDocumentFactory();
-                    String path = doc.getPath();
-                    // lookupResourceType(extension)
-                    resourceType = lookUpExtension(extension, selector);
-                    ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
-                    doc = documentManager.add(map, resourceType, sample.getUri(), getPublication(), doc
-                            .getArea(), path, doc.getLanguage(), extension, doc.getName(), true);
-                    doc.setMimeType(sample.getMimeType());
-                    setMetaData(doc);
-                } finally {
-                    if (documentManager != null) {
-                        this.manager.release(documentManager);
-                    }
-                    if (selector != null) {
-                        if (resourceType != null) {
-                            selector.release(resourceType);
-                        }
-                        this.manager.release(selector);
-                    }
-                }
-            }
-
-            String sourceUri = "cocoon:/request/PUT/" + extension;
-            org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, manager);
-
-            // validate if a schema is provided and we are not using any fallback
-            if (doc.getResourceType().getSchema() != null & fallback == false) {
-                validateDoc(resolver, xmlDoc, doc);
-            }
-
-            if (!hasErrors()) {
-                try {
-                    DocumentHelper.writeDocument(xmlDoc, doc.getOutputStream());
-                } catch (Exception e) {
-                    addErrorMessage("invalid source xml. Full exception: " + e);
-                }
-            }
-
-            String event = getParameterAsString(EVENT);
-            if (event != null) {
-                WorkflowUtil.invoke(this.manager, getLogger(), doc, event);
-            }
-
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
+        if (!hasErrors()) {
+            try {
+                DocumentHelper.writeDocument(xmlDoc, doc.getOutputStream());
+            } catch (Exception e) {
+                addErrorMessage("invalid source xml. Full exception: " + e);
             }
         }
+
+        String event = getParameterAsString(EVENT);
+        if (event != null) {
+            WorkflowUtil.invoke(getLogger(), doc, event);
+        }
+
     }
 
-    private ResourceType lookUpExtension(String extension, ServiceSelector selector)
-            throws ServiceException {
+    private ResourceType lookUpExtension(String extension) {
         ResourceType resourceType;
         String resourceTypeName = (String) registeredExtensions.get(extension);
         if (resourceTypeName == null || resourceTypeName.equals("")) {
             resourceTypeName = (String) registeredExtensions.get(this.EXTENSION);
             this.fallback = true;
         }
-        if (selector.isSelectable(resourceTypeName)) {
-            resourceType = (ResourceType) selector.select(resourceTypeName);
+        ResourceTypeResolver resolver = getResourceTypeResolver();
+        if (resolver.existsResourceType(resourceTypeName)) {
+            resourceType = (ResourceType) resolver.getResourceType(resourceTypeName);
         } else {
             // using a fallback resource type
             // FIXME this resource tye should be a more generic one like "media-assets" or "bin"
-            resourceType = (ResourceType) selector.select(this.TYPE);
+            resourceType = (ResourceType) resolver.getResourceType(this.TYPE);
             this.fallback = true;
         }
         return resourceType;
@@ -193,7 +164,7 @@ public class Put extends CreateDocument {
             throws Exception {
         ResourceType resourceType = doc.getResourceType();
         Schema schema = resourceType.getSchema();
-        ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+        ValidationUtil.validate(xmlDoc, schema, new UsecaseErrorHandler(this));
     }
 
     /**
@@ -204,7 +175,7 @@ public class Put extends CreateDocument {
             Document doc = getSourceDocument();
             List nodes = new ArrayList();
 
-            NodeSet set = SiteUtil.getSubSite(this.manager, doc.getLink().getNode());
+            NodeSet set = SiteUtil.getSubSite(doc.getLink().getNode());
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.add(documents[i].getRepositoryNode());
@@ -240,27 +211,6 @@ public class Put extends CreateDocument {
         dcMetaData.setValue(DublinCore.ELEMENT_LANGUAGE, document.getLanguage());
     }
 
-    private Publication publication;
-
-    /**
-     * Access to the current publication. Use this when the publication is not yet known in the
-     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
-     * access the publication via that document's interface instead.
-     * 
-     * @return the publication in which the use-case is being executed
-     */
-    protected Publication getPublication() {
-        if (this.publication == null) {
-            try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                        getDocumentFactory(), getSourceURL());
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.publication;
-    }
-
     protected String getSourceExtension() {
         String destinationUri = getParameterAsString(SOURCE_URL);
         String extension = null;
@@ -288,21 +238,40 @@ public class Put extends CreateDocument {
     }
 
     protected String getDocumentTypeName() {
-        ResourceType resourceType = null;
-        ServiceSelector selector = null;
-        String docType = "";
-        try {
-            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-            resourceType = lookUpExtension(getSourceExtension(), selector);
-            docType = resourceType.getName();
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                this.manager.release(selector);
-            }
-        }
-        return docType;
+        return lookUpExtension(getSourceExtension()).getName();
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public ResourceTypeResolver getResourceTypeResolver() {
+        return resourceTypeResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
+    }
+
+    public DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
     }
 
 }

@@ -60,7 +60,7 @@ public class DocumentURLModule extends AbstractPageEnvelopeModule {
         final String language = attributes[2];
 
         try {
-            DocumentHelper helper = new DocumentHelper(this.manager, objectModel);
+            DocumentHelper helper = new DocumentHelper(objectModel);
             url = helper.getDocumentUrl(uuid, area, language);
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute [" + name + "] failed: ", e);

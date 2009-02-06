@@ -22,32 +22,47 @@ package org.apache.lenya.cms.ac;
 
 import java.io.File;
 
-import org.apache.avalon.framework.activity.Initializable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
- * Resolves the access controller according to the <code>access-control.xml</code> file of a publication.
+ * Resolves the access controller according to the <code>access-control.xml</code> file of a
+ * publication.
  */
-public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
-        Initializable {
+public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver {
 
-    protected static final String AC_CONFIGURATION_FILE
-        = "config/access-control/access-control.xml".replace('/', File.separatorChar);
+    protected static final String AC_CONFIGURATION_FILE = "config/access-control/access-control.xml"
+            .replace('/', File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
+
+    private RepositoryManager repositoryManager;
+    private SourceResolver sourceResolver;
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
 
     /**
      * This implementation uses the publication ID in combination with the context path as cache
@@ -62,8 +77,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
         String publicationId = info.getPublicationId();
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Using first URL step (might be publication ID) as cache key: ["
-                    + publicationId + "]");
+            getLogger().debug(
+                    "Using first URL step (might be publication ID) as cache key: ["
+                            + publicationId + "]");
         }
 
         return super.generateCacheKey(publicationId, resolver);
@@ -105,20 +121,17 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
 
-            ContextUtility util = null;
             try {
-                util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                Request request = util.getRequest();
-                DocumentFactory factory = DocumentUtil.getDocumentFactory(manager, request);
+                ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                        .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+                HttpServletRequest request = process.getRequest();
+                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+                DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
                 if (pubId != null && factory.existsPublication(pubId)) {
                     publication = factory.getPublication(pubId);
                 }
             } catch (Exception e) {
                 throw new AccessControlException(e);
-            } finally {
-                if (util != null) {
-                    this.manager.release(util);
-                }
             }
             if (publication != null) {
                 getLogger().debug("Publication [" + pubId + "] exists.");
@@ -146,7 +159,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
         if (configurationFile.isFile()) {
             try {
-                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                Configuration configuration = new DefaultConfigurationBuilder()
+                        .buildFromFile(configurationFile);
                 return configuration;
             } catch (Exception e) {
                 throw new AccessControlException(e);
@@ -176,8 +190,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             Configuration configuration = getConfiguration(publication);
             String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-            accessController = (AccessController) getManager().lookup(AccessController.ROLE + "/"
-                    + type);
+            accessController = (AccessController) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(AccessController.ROLE + "/" + type);
 
             if (accessController instanceof Configurable) {
                 ((Configurable) accessController).configure(configuration);
@@ -194,11 +208,10 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public void initialize() throws Exception {
-        SourceResolver resolver = null;
         Source contextSource = null;
         File contextDir;
+        SourceResolver resolver = getSourceResolver();
         try {
-            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
             contextSource = resolver.resolveURI("context:///");
             contextDir = SourceUtil.getFile(contextSource);
 
@@ -207,14 +220,19 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             }
 
         } finally {
-            if (resolver != null) {
-                if (contextSource != null) {
-                    resolver.release(contextSource);
-                }
-                getManager().release(resolver);
+            if (contextSource != null) {
+                resolver.release(contextSource);
             }
         }
         this.context = contextDir;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
     }
 
 }

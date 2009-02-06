@@ -22,9 +22,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserType;
@@ -41,22 +43,24 @@ public class Users extends AccessControlUsecase {
     protected static final String USER_TYPES = "userTypes";
 
     protected void prepareView() throws Exception {
-        
+
         User[] users = getUserManager().getUsers();
         List userList = new ArrayList();
         userList.addAll(Arrays.asList(users));
         Collections.sort(userList);
         setParameter(USERS, userList);
-        
-        Request request = ContextHelper.getRequest(getContext());
-        Session session = request.getCocoonSession(false);
+
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
+                ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
+        HttpSession session = request.getSession(false);
         if (session != null) {
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {
                 setParameter(CURRENT_USER, identity.getUser());
             }
         }
-        
+
         UserType[] types = getUserManager().getUserTypes();
         setParameter(USER_TYPES, Arrays.asList(types));
     }

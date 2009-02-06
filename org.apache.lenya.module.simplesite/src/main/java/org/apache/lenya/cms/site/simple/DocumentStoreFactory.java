@@ -17,11 +17,8 @@
  */
 package org.apache.lenya.cms.site.simple;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -42,16 +39,7 @@ import org.apache.lenya.util.Assert;
  */
 public class DocumentStoreFactory extends AbstractLogEnabled implements RepositoryItemFactory {
 
-    protected ServiceManager manager;
-
-    /**
-     * Ctor.
-     * @param manager The service manager.
-     * @param logger The logger.
-     */
-    public DocumentStoreFactory(ServiceManager manager, Log logger) {
-        this.manager = manager;
-    }
+    private DocumentManager documentManager;
 
     /**
      * @see org.apache.lenya.cms.repository.RepositoryItemFactory#getItemType()
@@ -74,7 +62,7 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
         String uuid = snippets[2];
         DocumentStore store;
         try {
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             Publication publication = factory.getPublication(publicationId);
             Area area = publication.getArea(areaName);
             String lang = publication.getDefaultLanguage();
@@ -94,21 +82,24 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
 
     protected void createAreaVersion(Publication publication, String areaName, String uuid,
             String lang) throws PublicationException, ServiceException {
-        DocumentManager docManager = null;
-        try {
-            Area authoring = publication.getArea(Publication.AUTHORING_AREA);
-            Document authoringDoc = authoring.getDocument(uuid, lang);
-            docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            docManager.copyToArea(authoringDoc, areaName);
-        } finally {
-            if (docManager != null) {
-                this.manager.release(docManager);
-            }
-        }
+        Area authoring = publication.getArea(Publication.AUTHORING_AREA);
+        Document authoringDoc = authoring.getDocument(uuid, lang);
+        getDocumentManager().copyToArea(authoringDoc, areaName);
     }
 
     public boolean isSharable() {
         return false;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
+    public DocumentManager getDocumentManager() {
+        return documentManager;
     }
 
 }

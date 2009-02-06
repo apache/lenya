@@ -31,15 +31,12 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -82,6 +79,8 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
 
     private String cacheKey;
     private SourceValidity validity;
+    
+    private Repository repository;
 
     protected static final String PARAM_PUB = "pub";
     protected static final String PARAM_AREA = "area";
@@ -172,8 +171,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
 
         Source source = null;
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = this.repository.getSession(request);
             String pubId = null;
             if (par.isParameter(PARAM_PUB)) {
                 pubId = par.getParameter(PARAM_PUB);
@@ -182,7 +180,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
                 URLInformation info = new URLInformation(webappUrl);
                 pubId = info.getPublicationId();
             }
-            Publication pub = factory.getPublication(pubId);
+            Publication pub = session.getPublication(pubId);
             this.site = pub.getArea(area).getSite();
 
             if (this.path == null) {
@@ -545,6 +543,10 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
             throw new IllegalStateException("setup() has not been called.");
         }
         return this.validity;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

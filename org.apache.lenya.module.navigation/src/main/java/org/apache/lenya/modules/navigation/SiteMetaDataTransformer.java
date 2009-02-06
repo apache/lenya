@@ -39,6 +39,9 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -52,16 +55,18 @@ public class SiteMetaDataTransformer extends AbstractSAXTransformer implements I
 
     private Area area;
     private LinkResolver linkResolver;
+    private RepositoryManager repositoryManager;
 
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters params)
             throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, params);
 
         Request req = ObjectModelHelper.getRequest(objectModel);
-        DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-        String webappUrl = ServletHelper.getWebappURI(req);
-        URLInformation info = new URLInformation(webappUrl);
         try {
+            Session session = RepositoryUtil.getSession(this.repositoryManager, req);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            String webappUrl = ServletHelper.getWebappURI(req);
+            URLInformation info = new URLInformation(webappUrl);
             Publication pub = factory.getPublication(info.getPublicationId());
             this.area = pub.getArea(info.getArea());
         } catch (Exception e) {
@@ -155,6 +160,14 @@ public class SiteMetaDataTransformer extends AbstractSAXTransformer implements I
             link.setPubId(this.area.getPublication().getId());
         }
         return link.getUri();
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

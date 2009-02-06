@@ -25,14 +25,15 @@ import java.io.PipedOutputStream;
 import java.net.MalformedURLException;
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.ModifiableTraversableSource;
 import org.apache.excalibur.source.Source;
@@ -40,10 +41,11 @@ import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceValidity;
 import org.apache.excalibur.source.impl.AbstractSource;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
@@ -59,24 +61,25 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class RepositorySource extends AbstractSource implements ModifiableTraversableSource {
 
-    private ServiceManager manager;
     private ContentHolder content;
     private Session session;
     private Log logger;
     protected static final String SCHEME = "lenya";
 
+    private NodeFactory nodeFactory;
+
     /**
-     * @param manager The service manager.
+     * @param nodeFactory The node factory.
      * @param uri The source URI.
      * @param session The repository session.
      * @param logger The logger.
      * @throws SourceException if an error occurs.
      * @throws MalformedURLException if an error occurs.
      */
-    public RepositorySource(ServiceManager manager, String uri, Session session, Log logger)
+    public RepositorySource(NodeFactory nodeFactory, String uri, Session session, Log logger)
             throws SourceException, MalformedURLException {
-        this.manager = manager;
         this.logger = logger;
+        this.nodeFactory = nodeFactory;
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("Init RepositorySource: " + uri);
@@ -96,8 +99,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         int start = 0;
         int end = uri.indexOf(':');
         if (end == -1)
-            throw new MalformedURLException("Malformed uri for xmodule source (cannot find scheme) : "
-                    + uri);
+            throw new MalformedURLException(
+                    "Malformed uri for xmodule source (cannot find scheme) : " + uri);
 
         String scheme = uri.substring(start, end);
         if (!SCHEME.equals(scheme))
@@ -105,57 +108,42 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
 
         setScheme(scheme);
 
-        NodeFactory factory = null;
         try {
-            factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
-            
+
             String sourceUri;
             int revisionNumber = -1;
-            
+
             int questionMarkIndex = uri.indexOf("?");
             if (questionMarkIndex > -1) {
                 sourceUri = uri.substring(0, questionMarkIndex);
                 Query query = new Query(uri.substring(questionMarkIndex + 1));
                 String revisionString = query.getValue("rev", null);
                 if (revisionString != null) {
-                    
-                    ContextUtility util = null;
-                    try {
-                        util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                        Request request = util.getRequest();
-                        String webappUrl = ServletHelper.getWebappURI(request);
-                        
-                        Publication pub = PublicationUtil.getPublication(this.manager, request);
-                        Document currentDoc = pub.getFactory().getFromURL(webappUrl);
-                        if (currentDoc.getSourceURI().equals(sourceUri)) {
-                            revisionNumber = Integer.valueOf(revisionString).intValue();
-                        }
-                    }
-                    finally {
-                        if (util != null) {
-                            this.manager.release(util);
-                        }
+                    ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                            .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+                    HttpServletRequest request = process.getRequest();
+                    String webappUrl = ServletHelper.getWebappURI(request);
+                    String pubId = new URLInformation(webappUrl).getPublicationId();
+                    DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+                    Publication pub = factory.getPublication(pubId);
+                    Document currentDoc = pub.getFactory().getFromURL(webappUrl);
+                    if (currentDoc.getSourceURI().equals(sourceUri)) {
+                        revisionNumber = Integer.valueOf(revisionString).intValue();
                     }
                 }
-            }
-            else {
+            } else {
                 sourceUri = uri;
             }
-            
+
             if (revisionNumber == -1) {
-                this.content = (ContentHolder) session.getRepositoryItem(factory, sourceUri);
-            }
-            else {
-                Node node = (Node) session.getRepositoryItem(factory, sourceUri);
+                this.content = (ContentHolder) session.getRepositoryItem(nodeFactory, sourceUri);
+            } else {
+                Node node = (Node) session.getRepositoryItem(nodeFactory, sourceUri);
                 this.content = node.getHistory().getRevision(revisionNumber);
             }
-            
+
         } catch (Exception e) {
             throw new SourceException("Creating repository node failed: ", e);
-        } finally {
-            if (factory != null) {
-                this.manager.release(factory);
-            }
         }
     }
 
@@ -163,11 +151,12 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      * @return The repository node which is accessed by this source.
      */
     public Node getNode() {
-        
+
         if (!(this.content instanceof Node)) {
-            throw new RuntimeException("This operation can only be invoked on nodes, not on revisions.");
+            throw new RuntimeException(
+                    "This operation can only be invoked on nodes, not on revisions.");
         }
-        
+
         return (Node) this.content;
     }
 
@@ -254,8 +243,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
                 try {
                     transform(doc, pos);
                 } catch (TransformerException e) {
-                    throw new RuntimeException("Failed to tranform org.w3c.dom.Document to PipedOutputStream",
-                            e);
+                    throw new RuntimeException(
+                            "Failed to tranform org.w3c.dom.Document to PipedOutputStream", e);
                 } finally {
                     try {
                         pos.close();
@@ -264,8 +253,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
                     }
                 }
             }
-        },
-                getClass().getName() + ".convert(org.w3c.dom.Document edoc)")).start();
+        }, getClass().getName() + ".convert(org.w3c.dom.Document edoc)")).start();
 
         return pis;
     }
@@ -281,7 +269,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         transformer.transform(new DOMSource(edoc), new StreamResult(pos));
 
     }
-    
+
     /**
      * @return The content of this source.
      */
@@ -373,10 +361,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 Node child = (Node) iterator.next();
-                newChildren.add(new RepositorySource(this.manager,
-                        child.getSourceURI(),
-                        this.session,
-                        getLogger()));
+                newChildren.add(new RepositorySource(getNodeFactory(), child.getSourceURI(),
+                        this.session, getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -394,7 +380,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
             throw new RuntimeException(e);
         }
     }
-    
+
     private SourceValidity validity;
 
     public SourceValidity getValidity() {
@@ -403,6 +389,9 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         }
         return this.validity;
     }
-    
-    
+
+    public NodeFactory getNodeFactory() {
+        return nodeFactory;
+    }
+
 }

@@ -29,10 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.SourceNotFoundException;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -118,18 +118,18 @@ public final class ServletHelper {
 
     /**
      * Returns the value of enable-uploads in web.xml
-     * @param manager The Service Manager.
      * @return true if enable upload is true or not set in web.xml, else false
      */
-    public static synchronized boolean isUploadEnabled(ServiceManager manager)
-            throws SourceNotFoundException, ServiceException, ParserConfigurationException,
-            SAXException, IOException, TransformerException {
+    public static synchronized boolean isUploadEnabled() throws SourceNotFoundException,
+            ParserConfigurationException, SAXException, IOException, TransformerException {
 
         if (ServletHelper.uploadEnabled == null) {
 
             Node node;
             String webappUrl = "context://WEB-INF/web.xml";
-            Document document = SourceUtil.readDOM(webappUrl, manager);
+            SourceResolver resolver = (SourceResolver) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(SourceResolver.ROLE);
+            Document document = SourceUtil.readDOM(webappUrl, resolver);
             Element root = document.getDocumentElement();
             node = XPathAPI.selectSingleNode(root,
                     "/web-app/servlet/init-param[param-name='enable-uploads']/param-value/text()");

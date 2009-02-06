@@ -49,8 +49,7 @@ public class ChangeVisibility extends DocumentUsecase {
             } catch (DocumentException e) {
                 throw new RuntimeException(e);
             }
-        }
-        else {
+        } else {
             return super.getParameter(name);
         }
     }
@@ -72,8 +71,7 @@ public class ChangeVisibility extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = doc.getTranslation(languages[i]);
-            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), version,
-                    getLogger());
+            UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), version, getLogger());
         }
     }
 
@@ -86,7 +84,7 @@ public class ChangeVisibility extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = doc.getTranslation(languages[i]);
-            WorkflowUtil.invoke(this.manager, getLogger(), version, getEvent());
+            WorkflowUtil.invoke(getLogger(), version, getEvent());
         }
     }
 
@@ -95,7 +93,7 @@ public class ChangeVisibility extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
-        if(getSourceDocument() != null) {
+        if (getSourceDocument() != null) {
             SiteStructure structure = getSourceDocument().area().getSite();
             nodes.add(structure.getRepositoryNode());
         }

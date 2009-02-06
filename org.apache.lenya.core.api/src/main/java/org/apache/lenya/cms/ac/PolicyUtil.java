@@ -23,10 +23,9 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
@@ -45,120 +44,83 @@ public final class PolicyUtil {
 
     /**
      * Fetches the stored roles from the request.
-     * @param request The request.
+     * @param httpServletRequest The request.
      * @return A role array.
-     * @throws AccessControlException If the request does not contain the roles
-     *         list.
+     * @throws AccessControlException If the request does not contain the roles list.
      */
-    public static final Role[] getRoles(Request request) throws AccessControlException {
-        List roleList = (List) request.getAttribute(Role.class.getName());
+    public static final Role[] getRoles(HttpServletRequest httpServletRequest) throws AccessControlException {
+        List roleList = (List) httpServletRequest.getAttribute(Role.class.getName());
 
         if (roleList == null) {
             StringBuffer buf = new StringBuffer();
-            buf.append("    URI: [" + request.getRequestURI() + "]\n");
-            for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+            buf.append("    URI: [" + httpServletRequest.getRequestURI() + "]\n");
+            for (Enumeration e = httpServletRequest.getParameterNames(); e.hasMoreElements();) {
                 String key = (String) e.nextElement();
-                buf.append("    Parameter: [" + key + "] = [" + request.getParameter(key) + "]\n");
+                buf.append("    Parameter: [" + key + "] = [" + httpServletRequest.getParameter(key) + "]\n");
             }
 
-            throw new AccessControlException("Request [" + request + "] does not contain roles: \n"
+            throw new AccessControlException("Request [" + httpServletRequest + "] does not contain roles: \n"
                     + buf.toString());
         }
 
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
         return roles;
     }
-    
+
     /**
-     * @param manager The service manager.
      * @param webappUrl The web application URL.
      * @param userId The user ID.
      * @param logger The logger.
      * @return A user.
      * @throws AccessControlException if an error occurs.
      */
-    public static final User getUser(ServiceManager manager, String webappUrl,
-            String userId, Log logger) throws AccessControlException {
-        ServiceSelector selector = null;
-        AccessControllerResolver resolver = null;
-        AccessController controller = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
-            controller = resolver.resolveAccessController(webappUrl);
+    public static final User getUser(String webappUrl, String userId, Log logger)
+            throws AccessControlException {
+        AccessController controller = getAccessController(webappUrl);
+        AccreditableManager accreditableManager = controller.getAccreditableManager();
+        UserManager userManager = accreditableManager.getUserManager();
 
-            AccreditableManager accreditableManager = controller.getAccreditableManager();
-            UserManager userManager = accreditableManager.getUserManager();
-            
-            return userManager.getUser(userId);
-        } catch (ServiceException e) {
-            throw new AccessControlException(e);
-        } finally {
-            if (selector != null) {
-                if (resolver != null) {
-                    if (controller != null) {
-                        resolver.release(controller);
-                    }
-                    selector.release(resolver);
-                }
-                manager.release(selector);
-            }
-        }
+        return userManager.getUser(userId);
+    }
 
+    protected static AccessController getAccessController(String webappUrl)
+            throws AccessControlException {
+        AccessControllerResolver resolver = (AccessControllerResolver) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(
+                        AccessControllerResolver.ROLE + "/"
+                                + AccessControllerResolver.DEFAULT_RESOLVER);
+        AccessController controller = resolver.resolveAccessController(webappUrl);
+        return controller;
     }
 
     /**
-     * @param manager The service manager.
      * @param webappUrl The web application URL.
      * @param role The ID of the role.
      * @param logger The logger to use.
      * @return All users which have the role on this URL.
      * @throws AccessControlException if an error occurs.
      */
-    public static final User[] getUsersWithRole(ServiceManager manager, String webappUrl,
-            String role, Log logger) throws AccessControlException {
-        ServiceSelector selector = null;
-        AccessControllerResolver resolver = null;
-        AccessController controller = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
-            controller = resolver.resolveAccessController(webappUrl);
+    public static final User[] getUsersWithRole(String webappUrl, String role, Log logger)
+            throws AccessControlException {
+        AccessController controller = getAccessController(webappUrl);
+        AccreditableManager accreditableManager = controller.getAccreditableManager();
+        UserManager userManager = accreditableManager.getUserManager();
+        User[] users = userManager.getUsers();
+        List usersWithRole = new ArrayList();
+        PolicyManager policyManager = controller.getPolicyManager();
 
-            AccreditableManager accreditableManager = controller.getAccreditableManager();
-            UserManager userManager = accreditableManager.getUserManager();
-            User[] users = userManager.getUsers();
-            List usersWithRole = new ArrayList();
-            PolicyManager policyManager = controller.getPolicyManager();
+        Role roleObject = accreditableManager.getRoleManager().getRole(role);
 
-            Role roleObject = accreditableManager.getRoleManager().getRole(role);
-
-            for (int i = 0; i < users.length; i++) {
-                Identity identity = new Identity(logger);
-                identity.addIdentifiable(users[i]);
-                Role[] roles = policyManager.getGrantedRoles(accreditableManager, identity,
-                        webappUrl);
-                if (Arrays.asList(roles).contains(roleObject)) {
-                    usersWithRole.add(users[i]);
-                }
-            }
-
-            return (User[]) usersWithRole.toArray(new User[usersWithRole.size()]);
-        } catch (ServiceException e) {
-            throw new AccessControlException(e);
-        } finally {
-            if (selector != null) {
-                if (resolver != null) {
-                    if (controller != null) {
-                        resolver.release(controller);
-                    }
-                    selector.release(resolver);
-                }
-                manager.release(selector);
+        for (int i = 0; i < users.length; i++) {
+            Identity identity = new Identity(logger);
+            identity.addIdentifiable(users[i]);
+            Role[] roles = policyManager.getGrantedRoles(accreditableManager, identity, webappUrl);
+            if (Arrays.asList(roles).contains(roleObject)) {
+                usersWithRole.add(users[i]);
             }
         }
+
+        return (User[]) usersWithRole.toArray(new User[usersWithRole.size()]);
     }
 
 }

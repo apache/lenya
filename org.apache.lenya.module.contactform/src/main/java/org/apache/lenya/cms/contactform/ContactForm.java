@@ -17,14 +17,14 @@
  */
 package org.apache.lenya.cms.contactform;
 
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.notification.Message;
-import org.apache.lenya.notification.NotificationUtil;
+import org.apache.lenya.notification.Notifier;
 
 /**
  * Contact form. The recipient user ID is set using the "recipient" parameter. The sender user ID is
@@ -37,6 +37,8 @@ public class ContactForm extends AbstractUsecase {
     protected static final String MESSAGE = "message";
     protected static final String NAME = "name";
     protected static final String FROM = "email";
+
+    private Notifier notifier;
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
@@ -77,43 +79,32 @@ public class ContactForm extends AbstractUsecase {
         String from = getParameterAsString(FROM);
 
         Message message = new Message("Contact form submitted by " + name + " (" + from + ")",
-                new String[0],
-                body,
-                new String[0],
-                sender,
-                recipients);
-        
-        NotificationUtil.notify(this.manager, message);
+                new String[0], body, new String[0], sender, recipients);
+
+        getNotifier().notify(message);
 
         setDefaultTargetURL(getSourceURL() + "?sent=true");
     }
 
     protected User getUser(String userId) throws Exception {
-        User user;
-        ServiceSelector selector = null;
-        AccessControllerResolver acResolver = null;
-        AccessController accessController = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-            acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
-            accessController = acResolver.resolveAccessController(getSourceURL());
+        AccessControllerResolver acResolver = (AccessControllerResolver) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(
+                        AccessControllerResolver.ROLE + "/"
+                                + AccessControllerResolver.DEFAULT_RESOLVER);
+        AccessController accessController = acResolver.resolveAccessController(getSourceURL());
+        UserManager userManager = accessController.getAccreditableManager().getUserManager();
+        return userManager.getUser(userId);
+    }
 
-            UserManager userManager = accessController.getAccreditableManager().getUserManager();
-            user = userManager.getUser(userId);
+    protected Notifier getNotifier() {
+        return notifier;
+    }
 
-        } finally {
-            if (selector != null) {
-                if (acResolver != null) {
-                    if (accessController != null) {
-                        acResolver.release(accessController);
-                    }
-                    selector.release(acResolver);
-                }
-                this.manager.release(selector);
-            }
-        }
-        return user;
+    /**
+     * TODO: Bean wiring
+     */
+    public void setNotifier(Notifier notifier) {
+        this.notifier = notifier;
     }
 
 }

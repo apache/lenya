@@ -22,16 +22,10 @@ import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
@@ -43,6 +37,9 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.ServletHelper;
 
@@ -68,35 +65,19 @@ import org.apache.lenya.util.ServletHelper;
  * <li><code>site:/en/news/today</code></li>
  * </ul>
  */
-public class SiteSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
-        Contextualizable, Serviceable {
+public class SiteSourceFactory extends AbstractLogEnabled implements SourceFactory {
 
-    private Context context;
-    private ServiceManager manager;
-    private SourceResolver resolver;
-
-    /**
-     * Used for resolving the object model.
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
+    private SourceResolver sourceResolver;
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(String location, Map parameters) throws MalformedURLException,
             IOException, SourceException {
-        Map objectModel = ContextHelper.getObjectModel(this.context);
-        Request request = ObjectModelHelper.getRequest(objectModel);
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
 
         String areaName = null;
         String pubId;
@@ -106,7 +87,6 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
 
         String relativePath;
         try {
-            this.resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             String scheme = completePath.substring(0, completePath.indexOf(":") + 1);
             final String absolutePath = completePath.substring(scheme.length());
@@ -128,7 +108,8 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
                         + "] must start with at least one slash.");
             }
 
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             Publication pub = factory.getPublication(pubId);
             SiteStructure site = pub.getArea(areaName).getSite();
 
@@ -147,7 +128,7 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
                     String queryString = locationSteps.nextToken();
                     docUri = docUri + "?" + queryString;
                 }
-                return this.resolver.resolveURI(docUri);
+                return this.sourceResolver.resolveURI(docUri);
             } else {
                 throw new SourceNotFoundException("The source [" + location + "] doesn't exist.");
             }
@@ -161,7 +142,23 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
      * @see org.apache.excalibur.source.SourceFactory#release(org.apache.excalibur.source.Source)
      */
     public void release(Source source) {
-        this.resolver.release(source);
+        this.sourceResolver.release(source);
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

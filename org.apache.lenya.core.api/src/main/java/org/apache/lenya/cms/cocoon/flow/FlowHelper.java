@@ -19,6 +19,8 @@ package org.apache.lenya.cms.cocoon.flow;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
@@ -59,7 +61,7 @@ public interface FlowHelper {
      * @param cocoon The FOM_Cocoon object.
      * @return A request object.
      */
-    Request getRequest(FOM_Cocoon cocoon);
+    HttpServletRequest getRequest(FOM_Cocoon cocoon);
 
     /**
      * Returns the Cocoon Object Model

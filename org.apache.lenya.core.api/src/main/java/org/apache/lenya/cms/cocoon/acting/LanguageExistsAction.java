@@ -31,12 +31,17 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
  * Action that checks if the current URL represents an existing document.
  */
 public class LanguageExistsAction extends ServiceableAction {
+    
+    private RepositoryManager repositoryManager;
 
     /**
      * Check if the current URL represents an existing document.
@@ -48,7 +53,8 @@ public class LanguageExistsAction extends ServiceableAction {
             Parameters parameters) throws Exception {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
 
         String url = ServletHelper.getWebappURI(request);
         if (factory.isDocument(url)) {
@@ -57,5 +63,13 @@ public class LanguageExistsAction extends ServiceableAction {
         else {
             return null;
         }
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -37,6 +34,9 @@ import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -81,6 +81,8 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
     private String selectorClass;
     private String path;
     private String selectorPath;
+    
+    private RepositoryManager repositoryManager;
 
     public void setup(org.apache.cocoon.environment.SourceResolver resolver, Map objectModel,
             String src, Parameters params) throws ProcessingException, SAXException, IOException {
@@ -96,7 +98,8 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
             this.path = params.getParameter(PARAM_PATH);
             this.selectorPath = params.getParameter(PARAM_SELECTOR_PATH, "");
 
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             Publication pub = factory.getPublication(pubId);
             this.site = pub.getArea(area).getSite();
 
@@ -233,6 +236,14 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
 
     public void parameterize(Parameters params) throws ParameterException {
         this.selectorClass = params.getParameter(PARAM_SELECTOR);
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

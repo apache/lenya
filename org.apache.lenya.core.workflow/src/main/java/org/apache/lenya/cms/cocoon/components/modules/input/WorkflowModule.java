@@ -26,15 +26,11 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -76,32 +72,27 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             throws ConfigurationException {
 
         Object value = null;
-        WorkflowManager wfManager = null;
 
         try {
             PageEnvelope envelope = getEnvelope(objectModel, name);
             Document document = envelope.getDocument();
             if (document != null && document.exists()) {
-                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                Session session = RepositoryUtil.getSession(this.manager,
-                        ObjectModelHelper.getRequest(objectModel));
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                        getLogger(),
-                        document);
-                if (wfManager.hasWorkflow(workflowable)) {
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), document);
+                if (WorkflowUtil.hasWorkflow(getLogger(), document)) {
 
                     Version latestVersion = workflowable.getLatestVersion();
 
                     if (name.equals(STATE)) {
                         if (latestVersion == null) {
-                            Workflow workflow = wfManager.getWorkflowSchema(workflowable);
+                            Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(),
+                                    document);
                             value = workflow.getInitialState();
                         } else {
                             value = latestVersion.getState();
                         }
                     } else if (name.startsWith(VARIABLE_PREFIX)) {
                         String variableName = name.substring(VARIABLE_PREFIX.length());
-                        Workflow workflow = wfManager.getWorkflowSchema(workflowable);
+                        Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), document);
                         String[] variableNames = workflow.getVariableNames();
                         if (Arrays.asList(variableNames).contains(variableName)) {
                             if (latestVersion == null) {
@@ -120,7 +111,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                         String event = name.substring(LAST_DATE_PREFIX.length());
                         Version latestEventVersion = getLatestVersion(workflowable, event);
                         if (latestEventVersion != null) {
-                            synchronized(lock) {
+                            synchronized (lock) {
                                 value = this.DATE_FORMAT.format(latestEventVersion.getDate());
                             }
                         }
@@ -134,10 +125,6 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             throw e;
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute failed: ", e);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
         }
         return value;
     }

@@ -28,6 +28,8 @@ public abstract class AbstractInboxUsecase extends AbstractUsecase {
 
     protected static final String PARAM_USER = "user";
     protected static final String PARAM_INBOX = "inbox";
+    
+    private InboxManager inboxManager;
 
     protected void prepareView() throws Exception {
         super.prepareView();
@@ -40,20 +42,25 @@ public abstract class AbstractInboxUsecase extends AbstractUsecase {
     protected org.apache.lenya.inbox.Inbox getInbox() {
         org.apache.lenya.inbox.Inbox inbox = (org.apache.lenya.inbox.Inbox) getParameter(PARAM_INBOX);
         if (inbox == null) {
-            InboxManager inboxManager = null;
             try {
-                inboxManager = (InboxManager) this.manager.lookup(InboxManager.ROLE);
-                inbox = inboxManager.getInbox(getUser());
+                inbox = getInboxManager().getInbox(getUser());
                 setParameter(PARAM_INBOX, inbox);
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (inboxManager != null) {
-                    this.manager.release(inboxManager);
-                }
             }
         }
         return inbox;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setInboxManager(InboxManager inboxManager) {
+        this.inboxManager = inboxManager;
+    }
+
+    public InboxManager getInboxManager() {
+        return inboxManager;
     }
 
 }

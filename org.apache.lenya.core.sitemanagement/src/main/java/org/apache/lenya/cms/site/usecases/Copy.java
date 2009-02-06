@@ -17,6 +17,10 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
@@ -42,10 +46,16 @@ public class Copy extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        
+
         Clipboard clipboard = new Clipboard(getSourceDocument(), Clipboard.METHOD_COPY);
         ClipboardHelper helper = new ClipboardHelper();
-        helper.saveClipboard(getContext(), clipboard);
+        helper.saveClipboard(getRequest(), clipboard);
     }
-    
+
+    protected HttpServletRequest getRequest() {
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        return process.getRequest();
+    }
+
 }

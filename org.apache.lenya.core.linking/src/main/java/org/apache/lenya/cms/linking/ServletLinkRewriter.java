@@ -17,40 +17,21 @@
  */
 package org.apache.lenya.cms.linking;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 
 /**
  * Abstract base class for servlet-oriented link rewriters.
  */
 public abstract class ServletLinkRewriter implements LinkRewriter {
-    
-    protected ServiceManager manager;
-
-    /**
-     * @param manager The service manager.
-     */
-    public ServletLinkRewriter(ServiceManager manager) {
-        this.manager = manager;
-    }
 
     private String contextPath;
-    
+
     protected String getContextPath() {
         if (this.contextPath == null) {
-            ContextUtility context = null;
-            try {
-                context = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-                this.contextPath = context.getRequest().getContextPath();
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-            finally {
-                if (context != null) {
-                    this.manager.release(context);
-                }
-            }
+            ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+            this.contextPath = process.getRequest().getContextPath();
         }
         return this.contextPath;
     }

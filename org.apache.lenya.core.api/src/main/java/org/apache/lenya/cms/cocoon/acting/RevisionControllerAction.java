@@ -21,14 +21,14 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.io.File;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
@@ -37,16 +37,17 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Revision controller action.
  * 
- * @version $Id: RevisionControllerAction.java 487290 2006-12-14 18:18:35Z
- *          andreas $
+ * @version $Id$
  */
 public class RevisionControllerAction extends ServiceableAction {
 
@@ -54,11 +55,12 @@ public class RevisionControllerAction extends ServiceableAction {
     private String backupDirectory = null;
     private String username = null;
     private Node node = null;
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
-     *      org.apache.cocoon.environment.SourceResolver, java.util.Map,
-     *      java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
             Parameters parameters) throws Exception {
@@ -71,22 +73,17 @@ public class RevisionControllerAction extends ServiceableAction {
             return null;
         }
 
-        PageEnvelope envelope = null;
-        Publication publication;
-
-        try {
-            publication = PublicationUtil.getPublication(this.manager, request);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
         org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(
-                this.manager, request);
+                getRepositoryManager(), request);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(repoSession);
 
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, repoSession);
+        PageEnvelope envelope = null;
+        String id = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
+        Publication publication = factory.getPublication(id);
+
         Document document = null;
 
         try {
-            publication = PublicationUtil.getPublication(this.manager, objectModel);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(factory, objectModel,
                     publication);
             document = envelope.getDocument();
@@ -105,7 +102,7 @@ public class RevisionControllerAction extends ServiceableAction {
         this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
 
         // Get session
-        Session session = request.getCocoonSession(false);
+        HttpSession session = request.getSession(false);
 
         if (session == null) {
             getLogger().error(".act(): No session object");
@@ -178,6 +175,14 @@ public class RevisionControllerAction extends ServiceableAction {
      */
     protected String getUsername() {
         return this.username;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

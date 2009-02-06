@@ -17,13 +17,8 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.util.Map;
-
-import org.apache.avalon.framework.context.Context;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Helper class for clipboard handling.
@@ -38,10 +33,9 @@ public class ClipboardHelper {
      * @return A clipboard or <code>null</code> if no clipboard is attached to
      *         the session.
      */
-    public Clipboard getClipboard(Context context) {
-        Session session = getSession(context);
-        Clipboard clipboard = (Clipboard) session.getAttribute(getSessionAttributeName());
-        return clipboard;
+    public Clipboard getClipboard(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (Clipboard) session.getAttribute(getSessionAttributeName());
     }
     
     /**
@@ -52,23 +46,12 @@ public class ClipboardHelper {
     }
 
     /**
-     * @param context The context.
-     * @return The session of the context.
-     */
-    protected Session getSession(Context context) {
-        Map objectModel = ContextHelper.getObjectModel(context);
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getCocoonSession(true);
-        return session;
-    }
-
-    /**
      * Saves the clipboard to the session.
      * @param context The context.
      * @param clipboard The clipboard.
      */
-    public void saveClipboard(Context context, Clipboard clipboard) {
-        Session session = getSession(context);
+    public void saveClipboard(HttpServletRequest request, Clipboard clipboard) {
+        HttpSession session = request.getSession();
         session.setAttribute(getSessionAttributeName(), clipboard);
     }
     
@@ -76,8 +59,8 @@ public class ClipboardHelper {
      * Removes the clipboard from the session.
      * @param context The context.
      */
-    public void removeClipboard(Context context) {
-        Session session = getSession(context);
+    public void removeClipboard(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         session.removeAttribute(getSessionAttributeName());
     }
     

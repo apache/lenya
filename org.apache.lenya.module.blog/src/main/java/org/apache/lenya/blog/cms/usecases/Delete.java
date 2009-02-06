@@ -34,6 +34,8 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  */
 public class Delete extends DocumentUsecase {
     
+    private DocumentManager documentManager;
+
     /**
      * Checks if the workflow event is supported and the parent of the document exists in the live
      * area.
@@ -53,10 +55,7 @@ public class Delete extends DocumentUsecase {
                 return;
             }
             String event = getEvent();
-            if (!WorkflowUtil.canInvoke(this.manager,
-                    getLogger(),
-                    getSourceDocument(),
-                    event)) {
+            if (!WorkflowUtil.canInvoke(getLogger(), getSourceDocument(), event)) {
                 addInfoMessage("The document cannot be deactivated because the workflow event cannot be invoked.");
             }
         }
@@ -68,10 +67,11 @@ public class Delete extends DocumentUsecase {
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
-            Document doc = getSourceDocument();           
-            nodes.add(doc.getRepositoryNode());            
-            nodes.add(doc.area().getSite().getRepositoryNode());            
-            return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);            
+            Document doc = getSourceDocument();
+            nodes.add(doc.getRepositoryNode());
+            nodes.add(doc.area().getSite().getRepositoryNode());
+            return (org.apache.lenya.cms.repository.Node[]) nodes
+                    .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -82,8 +82,9 @@ public class Delete extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        delete(getSourceDocument());        
-        setTargetDocument(getDocumentFactory().get(getSourceDocument().getPublication(), Publication.AUTHORING_AREA,"/feeds/all/index"));
+        delete(getSourceDocument());
+        setTargetDocument(getDocumentFactory().get(getSourceDocument().getPublication(),
+                Publication.AUTHORING_AREA, "/feeds/all/index"));
     }
 
     /**
@@ -91,26 +92,11 @@ public class Delete extends DocumentUsecase {
      * @param document The document to delete.
      */
     protected void delete(Document document) {
-        DocumentManager documentManager = null;
-        boolean success = false;
         try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.delete(document);       
-            WorkflowUtil.invoke(this.manager,
-                    getLogger(),
-                    document,
-                    getEvent());
-            success = true;
+            getDocumentManager().delete(document);
+            WorkflowUtil.invoke(getLogger(), document, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Delete document [" + getSourceDocument() + "]. Success: ["
-                        + success + "]");
-            }
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
         }
     }
 
@@ -120,4 +106,17 @@ public class Delete extends DocumentUsecase {
     private String getEvent() {
         return "delete";
     }
+
+    public DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+    
+    
 }

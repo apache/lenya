@@ -38,6 +38,8 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * @version $Id$
  */
 public class Metadata extends SiteUsecase {
+    
+    private MetaDataRegistry metaDataRegistry;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -106,21 +108,18 @@ public class Metadata extends SiteUsecase {
         }
         
 
-        MetaDataRegistry registry = null;
         try {
-            boolean canChange = WorkflowUtil.canInvoke(this.manager, getLogger(), doc, "edit");
+            boolean canChange = WorkflowUtil.canInvoke(getLogger(), doc, "edit");
             
             if (!canChange) {
                 addInfoMessage("cannot-change-metadata");
             }
             
-            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-
             List numbers = new ArrayList();
             Map num2namespace = new HashMap();
             List keyList = new ArrayList();
 
-            String[] namespaces = registry.getNamespaceUris();
+            String[] namespaces = getMetaDataRegistry().getNamespaceUris();
 
             for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
                 MetaData meta = doc.getMetaData(namespaces[nsIndex]);
@@ -145,11 +144,15 @@ public class Metadata extends SiteUsecase {
         } catch (Exception e) {
             getLogger().error("Unable to load meta data.", e);
             addErrorMessage("Unable to load meta data: " + e.getMessage());
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
         }
     }
 
+    protected MetaDataRegistry getMetaDataRegistry() {
+        return metaDataRegistry;
+    }
+
+    public void setMetaDataRegistry(MetaDataRegistry metaDataRegistry) {
+        this.metaDataRegistry = metaDataRegistry;
+    }
+    
 }

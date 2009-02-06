@@ -38,8 +38,13 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
@@ -237,6 +242,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     private Publication publication;
     private AccessControllerResolver acResolver;
     private String sourceUrl;
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -253,14 +259,17 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
         try {
             this.roles = PolicyUtil.getRoles(this.request);
-            this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
+            String webappUrl = ServletHelper.getWebappURI(this.request);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), this.request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            final String id = new URLInformation(webappUrl).getPublicationId();
+            this.publication = factory.getPublication(id);
 
             this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
             this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
             getLogger().debug("Resolved AC resolver [" + this.acResolver + "]");
 
-            String webappUrl = ServletHelper.getWebappURI(this.request);
             AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
 
             Authorizer[] authorizers = accessController.getAuthorizers();
@@ -298,6 +307,14 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         this.acResolver = null;
         this.authorizer = null;
         this.sourceUrl = null;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
     }
 
 }

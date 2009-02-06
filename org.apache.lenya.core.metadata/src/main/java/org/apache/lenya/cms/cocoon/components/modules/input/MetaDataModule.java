@@ -34,22 +34,28 @@ import org.apache.lenya.cms.publication.Document;
 
 /**
  * <p>
- * Input module to access meta data values. Use the name of the element as
- * input module parameter.
+ * Input module to access meta data values. Use the name of the element as input module parameter.
  * </p>
- * <p>Configuration:</p>
+ * <p>
+ * Configuration:
+ * </p>
+ * 
  * <pre>
- *  &lt;component-instance logger="sitemap.modules.input.dublincore" name="[...]"
- *    class="org.apache.lenya.cms.cocoon.components.modules.input.MetaDataModule"
- *    namespace="[namespace URI of the element set]"/&gt;
+ *  &lt;component-instance logger=&quot;sitemap.modules.input.dublincore&quot; name=&quot;[...]&quot;
+ *    class=&quot;org.apache.lenya.cms.cocoon.components.modules.input.MetaDataModule&quot;
+ *    namespace=&quot;[namespace URI of the element set]&quot;/&gt;
  * </pre>
- * <p>Usage examples:</p>
+ * <p>
+ * Usage examples:
+ * </p>
  * <ul>
  * <li><code>{dublincore:title}</code></li>
  * <li><code>{myMetData:myElementName}</code></li>
  * </ul>
  */
 public class MetaDataModule extends AbstractPageEnvelopeModule {
+
+    private MetaDataRegistry metaDataRegistry;
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -81,11 +87,9 @@ public class MetaDataModule extends AbstractPageEnvelopeModule {
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-
-        MetaDataRegistry registry = null;
         try {
-            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-            Element[] elements = registry.getElementSet(this.namespaceUri).getElements();
+            Element[] elements = getMetaDataRegistry().getElementSet(this.namespaceUri)
+                    .getElements();
             String[] keys = new String[elements.length];
             for (int i = 0; i < keys.length; i++) {
                 keys[i] = elements[i].getName();
@@ -93,9 +97,6 @@ public class MetaDataModule extends AbstractPageEnvelopeModule {
             return Arrays.asList(keys).iterator();
         } catch (Exception e) {
             throw new ConfigurationException(e.getMessage(), e);
-        }
-        finally {
-            this.manager.release(registry);
         }
     }
 
@@ -132,19 +133,25 @@ public class MetaDataModule extends AbstractPageEnvelopeModule {
         try {
             metaData = document.getMetaData(this.namespaceUri);
         } catch (MetaDataException e) {
-            throw new ConfigurationException("Obtaining custom meta data value for ["
-                    + document + "] failed: ", e);
+            throw new ConfigurationException("Obtaining custom meta data value for [" + document
+                    + "] failed: ", e);
         }
         return metaData;
     }
 
     private String namespaceUri;
-    
+
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
         this.namespaceUri = conf.getAttribute("namespace");
     }
-    
-    
-    
+
+    public MetaDataRegistry getMetaDataRegistry() {
+        return metaDataRegistry;
+    }
+
+    public void setMetaDataRegistry(MetaDataRegistry metaDataRegistry) {
+        this.metaDataRegistry = metaDataRegistry;
+    }
+
 }

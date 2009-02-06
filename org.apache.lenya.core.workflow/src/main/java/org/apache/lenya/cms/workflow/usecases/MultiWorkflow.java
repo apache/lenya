@@ -53,8 +53,7 @@ public class MultiWorkflow extends AbstractUsecase {
             SortedSet states = new TreeSet();
             for (Iterator i = preOrder.iterator(); i.hasNext();) {
                 Document doc = (Document) i.next();
-                WorkflowableWrapper wrapper = new WorkflowableWrapper(this, this.manager, doc,
-                        getLogger());
+                WorkflowableWrapper wrapper = new WorkflowableWrapper(this, doc, getLogger());
                 wrappers.add(wrapper);
                 states.addAll(Arrays.asList(wrapper.getStates()));
             }
@@ -110,8 +109,10 @@ public class MultiWorkflow extends AbstractUsecase {
     private Map usecase2event = new HashMap();
     private List variables = new ArrayList();
 
+    /**
+     * TODO: Replace with bean properties
+     */
     public void configure(Configuration config) throws ConfigurationException {
-        super.configure(config);
 
         Configuration[] usecaseConfigs = config.getChildren("usecase");
         for (int i = 0; i < usecaseConfigs.length; i++) {

@@ -19,7 +19,6 @@ package org.apache.lenya.cms.workflow.usecases;
 
 import java.util.Arrays;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
@@ -33,31 +32,26 @@ import org.apache.lenya.workflow.Workflowable;
  * Wrap a workflowable for easy evaluation in JX template.
  */
 public class WorkflowableWrapper extends AbstractLogEnabled {
-    
+
     private MultiWorkflow usecase;
     private Workflowable workflowable;
-    private ServiceManager manager;
     private Document document;
 
     /**
      * Ctor.
      * @param usecase The usecase.
-     * @param manager The service manager.
      * @param document The document to wrap.
      * @param logger The logger.
      */
-    public WorkflowableWrapper(MultiWorkflow usecase, ServiceManager manager, Document document,
-            Log logger) {
+    public WorkflowableWrapper(MultiWorkflow usecase, Document document, Log logger) {
         setLogger(logger);
         this.usecase = usecase;
         this.document = document;
-        this.manager = manager;
     }
 
     protected Workflowable getWorkflowable() {
         if (this.workflowable == null) {
-            this.workflowable = WorkflowUtil.getWorkflowable(this.manager, getLogger(),
-                    this.document);
+            this.workflowable = WorkflowUtil.getWorkflowable(getLogger(), this.document);
         }
         return this.workflowable;
     }
@@ -86,9 +80,7 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
     }
 
     protected Workflow getWorkflowSchema() throws WorkflowException {
-        Workflow workflow = WorkflowUtil
-                .getWorkflowSchema(this.manager, getLogger(), this.document);
-        return workflow;
+        return WorkflowUtil.getWorkflowSchema(getLogger(), this.document);
     }
 
     /**
@@ -120,7 +112,7 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
      */
     public boolean canInvoke(String usecaseName) throws WorkflowException {
         String event = this.usecase.getEvent(usecaseName);
-        return WorkflowUtil.canInvoke(this.manager, getLogger(), this.document, event);
+        return WorkflowUtil.canInvoke(getLogger(), this.document, event);
     }
 
     /**
@@ -130,11 +122,9 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
      * @throws WorkflowException if an error occurs.
      */
     public boolean getValue(String variable) throws WorkflowException {
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getLogger(),
-                this.document);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), this.document);
         if (workflowable.getVersions().length == 0) {
-            Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager, getLogger(),
-                    this.document);
+            Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), this.document);
             return workflow.getInitialValue(variable);
         } else {
             return workflowable.getLatestVersion().getValue(variable);

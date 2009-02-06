@@ -42,8 +42,7 @@ public class Rollback extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
-                getLogger());
+        UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), getSourceDocument(), getLogger());
     }
 
     /**
@@ -58,7 +57,7 @@ public class Rollback extends DocumentUsecase {
         Node node = document.getRepositoryNode();
         node.rollback(revision);
 
-        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+        WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
     }
 
     protected String getEvent() {

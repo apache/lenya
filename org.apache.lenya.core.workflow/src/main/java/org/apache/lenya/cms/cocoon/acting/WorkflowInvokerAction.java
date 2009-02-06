@@ -29,15 +29,16 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Action to invoke a workflow transition independently from the request document URL. Parameters:
@@ -66,6 +67,8 @@ public class WorkflowInvokerAction extends ServiceableAction {
      * <code>EVENT</code> The event
      */
     public static final String EVENT = "event";
+    
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
@@ -88,24 +91,27 @@ public class WorkflowInvokerAction extends ServiceableAction {
             getLogger().debug("    Event:       [" + eventName + "]");
         }
 
-        Publication pub;
         Request request = ObjectModelHelper.getRequest(objectModel);
-
-        try {
-            pub = PublicationUtil.getPublication(this.manager, request);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
-        Session session = RepositoryUtil.getSession(this.manager, request);
-        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
-        Document document = map.get(pub, area, documentId, language);
+        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+        String pubId = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
+        Publication pub = factory.getPublication(pubId);
+        Document document = pub.getArea(area).getDocument(documentId, language);
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("    Invoking workflow event");
         }
-        WorkflowUtil.invoke(this.manager, getLogger(), document, eventName);
+        WorkflowUtil.invoke(getLogger(), document, eventName);
 
         return Collections.EMPTY_MAP;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

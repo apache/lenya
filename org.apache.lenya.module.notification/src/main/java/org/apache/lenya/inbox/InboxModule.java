@@ -21,13 +21,11 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
@@ -43,21 +41,21 @@ import org.apache.lenya.cms.repository.Session;
  * string</li>
  * </ul>
  */
-public class InboxModule extends AbstractInputModule implements Serviceable {
+public class InboxModule extends AbstractInputModule {
 
     protected static final String NEW_MESSAGE_COUNT = "newMessageCount";
-    protected ServiceManager manager;
+    
+    private InboxManager inboxManager;
+    private RepositoryManager repositoryManager;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
 
         Object value = null;
         if (name.equals(NEW_MESSAGE_COUNT)) {
-            InboxManager inboxManager = null;
             try {
-                inboxManager = (InboxManager) this.manager.lookup(InboxManager.ROLE);
                 Request request = ObjectModelHelper.getRequest(objectModel);
-                Session session = RepositoryUtil.getSession(manager, request);
+                Session session = RepositoryUtil.getSession(this.repositoryManager, request);
                 User user = session.getIdentity().getUser();
                 if (user == null) {
                     return "0";
@@ -75,10 +73,6 @@ public class InboxModule extends AbstractInputModule implements Serviceable {
 
             } catch (Exception e) {
                 throw new ConfigurationException("Attribute [" + name + "]: ", e);
-            } finally {
-                if (inboxManager != null) {
-                    this.manager.release(inboxManager);
-                }
             }
         }
         else {
@@ -87,8 +81,20 @@ public class InboxModule extends AbstractInputModule implements Serviceable {
         return value;
     }
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void setInboxManager(InboxManager inboxManager) {
+        this.inboxManager = inboxManager;
+    }
+
+    public InboxManager getInboxManager() {
+        return inboxManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

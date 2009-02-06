@@ -21,6 +21,7 @@ package org.apache.lenya.ac.impl;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 
@@ -28,21 +29,20 @@ import org.apache.lenya.ac.AccessController;
  * Configurable access controller resolver.
  * @version $Id$
  */
-public class ConfigurableAccessControllerResolver
-    extends AbstractAccessControllerResolver
-    implements Configurable {
+public class ConfigurableAccessControllerResolver extends AbstractAccessControllerResolver
+        implements Configurable {
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
      */
     public AccessController doResolveAccessController(String webappUrl)
-        throws AccessControlException {
+            throws AccessControlException {
         AccessController accessController = null;
 
         try {
-            accessController =
-                (AccessController) getManager().lookup(
-                    AccessController.ROLE + "/" + this.accessControllerType);
+            accessController = (AccessController) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(
+                            AccessController.ROLE + "/" + this.accessControllerType);
 
             if (accessController instanceof Configurable) {
                 ((Configurable) accessController).configure(this.accessControllerConfiguration);

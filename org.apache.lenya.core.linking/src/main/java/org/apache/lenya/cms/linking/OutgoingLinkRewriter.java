@@ -25,9 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
@@ -63,36 +62,32 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     private boolean considerSslPolicies;
 
     /**
-     * @param manager The service manager to use.
      * @param session The current session.
-     * @param requestUrl The requested web application URL (without servlet context path) where
-     *        the links should be rewritten.
+     * @param requestUrl The requested web application URL (without servlet context path) where the
+     *            links should be rewritten.
      * @param ssl If the current page is SSL-encrypted.
      * @param considerSslPolicies If the SSL protection of policies should be considered when
-     *        resolving the corresponding proxy. Setting this to <code>true</code> leads to a
-     *        substantial performance overhead.
+     *            resolving the corresponding proxy. Setting this to <code>true</code> leads to a
+     *            substantial performance overhead.
      * @param relativeUrls If relative URLs should be created.
      */
-    public OutgoingLinkRewriter(ServiceManager manager, Session session, String requestUrl,
-            boolean ssl, boolean considerSslPolicies, boolean relativeUrls) {
-
-        super(manager);
+    public OutgoingLinkRewriter(Session session, String requestUrl, boolean ssl,
+            boolean considerSslPolicies, boolean relativeUrls) {
         this.requestUrl = requestUrl;
         this.relativeUrls = relativeUrls;
         this.ssl = ssl;
         this.considerSslPolicies = considerSslPolicies;
 
         ServiceSelector serviceSelector = null;
-        AccessControllerResolver acResolver = null;
 
         try {
-            this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            this.factory = DocumentUtil.createDocumentFactory(session);
 
             if (this.considerSslPolicies) {
-                serviceSelector = (ServiceSelector) this.manager
-                        .lookup(AccessControllerResolver.ROLE + "Selector");
-                acResolver = (AccessControllerResolver) serviceSelector
-                        .select(AccessControllerResolver.DEFAULT_RESOLVER);
+                AccessControllerResolver acResolver = (AccessControllerResolver) WebAppContextUtils
+                        .getCurrentWebApplicationContext().getBean(
+                                AccessControllerResolver.ROLE + "/"
+                                        + AccessControllerResolver.DEFAULT_RESOLVER);
                 AccessController accessController = acResolver.resolveAccessController(requestUrl);
                 if (accessController != null) {
                     this.accreditableManager = accessController.getAccreditableManager();
@@ -107,23 +102,13 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
 
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (serviceSelector != null) {
-                if (acResolver != null) {
-                    serviceSelector.release(acResolver);
-                }
-                this.manager.release(serviceSelector);
-            }
         }
     }
 
     protected GlobalProxies getGlobalProxies() {
         if (this.globalProxies == null) {
-            try {
-                this.globalProxies = (GlobalProxies) this.manager.lookup(GlobalProxies.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
+            this.globalProxies = (GlobalProxies) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(GlobalProxies.ROLE);
         }
         return this.globalProxies;
     }
@@ -141,27 +126,25 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     public String rewrite(final String url) {
 
         String rewrittenUrl = "";
-        
+
         String path;
         String suffix;
-        
+
         int numIndex = url.indexOf('#');
         if (numIndex > -1) {
             path = url.substring(0, numIndex);
             suffix = url.substring(numIndex);
-        }
-        else {
+        } else {
             int qmIndex = url.indexOf('?');
             if (qmIndex > -1) {
                 path = url.substring(0, qmIndex);
                 suffix = url.substring(qmIndex);
-            }
-            else {
+            } else {
                 path = url;
                 suffix = "";
             }
         }
-        
+
         try {
             String normalizedUrl = normalizeUrl(path);
             if (this.relativeUrls) {
@@ -258,11 +241,10 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         String relativeUrl;
         if (this.requestUrl.equals(webappUrl)) {
             relativeUrl = getLastStep(webappUrl);
-        }
-        else {
+        } else {
             List sourceSteps = toList(this.requestUrl);
             List targetSteps = toList(webappUrl);
-            
+
             String lastEqualStep = null;
 
             while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
@@ -274,14 +256,11 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
             String prefix = "";
             if (targetSteps.isEmpty()) {
                 prefix = generateUpDots(sourceSteps.size());
-            }
-            else if (sourceSteps.isEmpty()) {
+            } else if (sourceSteps.isEmpty()) {
                 prefix = getLastStep(this.requestUrl) + "/";
-            }
-            else if (sourceSteps.size() > 1) {
+            } else if (sourceSteps.size() > 1) {
                 prefix = generateUpDots(sourceSteps.size() - 1) + "/";
-            }
-            else if (sourceSteps.size() == 1 && targetSteps.get(0).equals("")) {
+            } else if (sourceSteps.size() == 1 && targetSteps.get(0).equals("")) {
                 prefix = generateUpDots(1) + "/" + lastEqualStep + "/";
             }
 

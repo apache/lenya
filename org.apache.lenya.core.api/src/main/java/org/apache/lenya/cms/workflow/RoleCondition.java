@@ -24,8 +24,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
@@ -60,6 +59,13 @@ public class RoleCondition implements Condition {
         }
     }
 
+    protected AccessControllerResolver getAccessControllerResolver() {
+        return (AccessControllerResolver) WebAppContextUtils.getCurrentWebApplicationContext()
+                .getBean(
+                        AccessControllerResolver.ROLE + "/"
+                                + AccessControllerResolver.DEFAULT_RESOLVER);
+    }
+
     /**
      * Returns if the condition is complied in a certain situation. The condition is complied when
      * the current user has the role that is required by the RoleCondition.
@@ -69,17 +75,11 @@ public class RoleCondition implements Condition {
     public boolean isComplied(Workflow workflow, Workflowable instance) {
 
         DocumentWorkflowable workflowable = (DocumentWorkflowable) instance;
-        ServiceManager manager = workflowable.getServiceManager();
         String url = workflowable.getDocument().getCanonicalWebappURL();
 
-        ServiceSelector selector = null;
-        AccessControllerResolver acResolver = null;
+        AccessControllerResolver acResolver = getAccessControllerResolver();
         AccessController accessController = null;
         try {
-
-            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            acResolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
             accessController = acResolver.resolveAccessController(url);
 
             PolicyManager policyManager = accessController.getPolicyManager();
@@ -107,14 +107,8 @@ public class RoleCondition implements Condition {
         } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (selector != null) {
-                if (acResolver != null) {
-                    if (accessController != null) {
-                        acResolver.release(accessController);
-                    }
-                    selector.release(acResolver);
-                }
-                manager.release(selector);
+            if (accessController != null) {
+                acResolver.release(accessController);
             }
         }
 

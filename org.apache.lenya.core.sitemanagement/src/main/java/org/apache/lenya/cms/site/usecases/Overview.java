@@ -49,13 +49,8 @@ public class Overview extends SiteUsecase {
     protected static final String WORKFLOW_VARIABLE_ISLIVE = "is_live";
     protected static final String PARAM_NUMBER_OF_DOCUMENTS = "numberOfDocuments";
     protected static final String PARAM_NUMBER_OF_SITE_NODES = "numberOfSiteNodes";
-
-    /**
-     * Ctor.
-     */
-    public Overview() {
-        super();
-    }
+    
+    private WorkflowManager workflowManager;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -63,7 +58,6 @@ public class Overview extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        WorkflowManager resolver = null;
         try {
             Document doc = getSourceDocument();
             if (doc == null) {
@@ -89,11 +83,9 @@ public class Overview extends SiteUsecase {
                 boolean visible = doc.getLink().getNode().isVisible();
                 setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                        getLogger(), doc);
-                resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                if (resolver.hasWorkflow(workflowable)) {
-                    Workflow workflow = resolver.getWorkflowSchema(workflowable);
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), doc);
+                if (getWorkflowManager().hasWorkflow(workflowable)) {
+                    Workflow workflow = getWorkflowManager().getWorkflowSchema(workflowable);
                     String[] variableNames = workflow.getVariableNames();
                     Version latestVersion = workflowable.getLatestVersion();
                     Boolean isLive = null;
@@ -119,10 +111,6 @@ public class Overview extends SiteUsecase {
         } catch (final Exception e) {
             addErrorMessage("Could not read a value. See log files for details.");
             getLogger().error("Could not read value for Overview usecase. ", e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
     }
 
@@ -131,6 +119,17 @@ public class Overview extends SiteUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         // don't complain if document is null
+    }
+
+    protected WorkflowManager getWorkflowManager() {
+        return workflowManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setWorkflowManager(WorkflowManager workflowManager) {
+        this.workflowManager = workflowManager;
     }
 
 }

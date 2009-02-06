@@ -25,22 +25,20 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 
 /**
  * Edit usecase policies.
  */
 public class Usecases extends AccessControlUsecase {
+    
+    private UsecaseResolver usecaseResolver;
 
     protected void initParameters() {
         super.initParameters();
 
-        UsecaseResolver resolver = null;
         try {
-            resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
-            String[] allUsecases = resolver.getUsecaseNames();
+            String[] allUsecases = getUsecaseResolver().getUsecaseNames();
             SortedSet rootUsecases = new TreeSet();
             for (int i = 0; i < allUsecases.length; i++) {
                 if (allUsecases[i].indexOf("/") == -1) {
@@ -74,18 +72,8 @@ public class Usecases extends AccessControlUsecase {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
 
-    }
-
-    protected Publication getPublication() throws PublicationException {
-        String pubId = new URLInformation(getSourceURL()).getPublicationId();
-        Publication pub = getDocumentFactory().getPublication(pubId);
-        return pub;
     }
 
     protected void doExecute() throws Exception {
@@ -120,6 +108,17 @@ public class Usecases extends AccessControlUsecase {
             }
         }
         return this.authorizer;
+    }
+
+    protected UsecaseResolver getUsecaseResolver() {
+        return usecaseResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseResolver(UsecaseResolver usecaseResolver) {
+        this.usecaseResolver = usecaseResolver;
     }
 
 }

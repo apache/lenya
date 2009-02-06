@@ -17,10 +17,8 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -30,20 +28,16 @@ import org.apache.lenya.cms.repository.Session;
 /**
  * JCR node factory.
  */
-public class JCRNodeFactory extends AbstractLogEnabled implements NodeFactory, Serviceable {
+public class JCRNodeFactory extends AbstractLogEnabled implements NodeFactory {
+    
+    private SourceResolver sourceResolver;
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        return new JCRSourceNode(this.session, key, this.manager, getLogger());
+        return new JCRSourceNode(this.session, key, getSourceResolver(), getLogger());
     }
 
     public String getItemType() {
         return Node.IDENTIFIABLE_TYPE;
-    }
-
-    private ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
     
     private Session session;
@@ -54,6 +48,14 @@ public class JCRNodeFactory extends AbstractLogEnabled implements NodeFactory, S
 
     public boolean isSharable() {
         return false;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

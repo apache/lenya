@@ -17,8 +17,10 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
@@ -75,8 +77,7 @@ public class Reject extends InvokeWorkflow {
         User sender = getSession().getIdentity().getUser();
 
         String reason = getParameterAsString(PARAM_REJECT_REASON);
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getLogger(),
-                authoringDocument);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), authoringDocument);
         Version versions[] = workflowable.getVersions();
         // current version is reject, want originating submit
         Version version = versions[versions.length - 2];
@@ -86,8 +87,8 @@ public class Reject extends InvokeWorkflow {
         if (version.getEvent().equals("submit")) {
 
             String userId = version.getUserId();
-            User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
-                    userId, getLogger());
+            User user = PolicyUtil.getUser(authoringDocument.getCanonicalWebappURL(), userId,
+                    getLogger());
 
             Identifiable[] recipients = { user };
 
@@ -99,7 +100,9 @@ public class Reject extends InvokeWorkflow {
             if (proxy != null) {
                 url = proxy.getURL(authoringVersion);
             } else {
-                Request request = ContextHelper.getRequest(this.context);
+                ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                        .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+                HttpServletRequest request = process.getRequest();
                 final String serverUrl = "http://" + request.getServerName() + ":"
                         + request.getServerPort();
                 final String webappUrl = authoringVersion.getCanonicalWebappURL();
@@ -113,8 +116,8 @@ public class Reject extends InvokeWorkflow {
             Message message = new Message(subject, body, sender, recipients);
 
             NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-            RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
-                    getLogger(), descriptor);
+            RepositoryEvent event = RepositoryEventFactory.createEvent(getSession(), getLogger(),
+                    descriptor);
             getSession().enqueueEvent(event);
         }
     }

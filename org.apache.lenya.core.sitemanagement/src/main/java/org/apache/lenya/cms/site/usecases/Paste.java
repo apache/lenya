@@ -20,7 +20,11 @@ package org.apache.lenya.cms.site.usecases;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.service.ServiceException;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -48,6 +52,8 @@ public class Paste extends AbstractUsecase {
 
     protected static final String CLIPBOARD_LABEL = "clipboardLabel";
 
+    private DocumentManager documentManager;
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -57,19 +63,19 @@ public class Paste extends AbstractUsecase {
         if (hasErrors()) {
             return;
         }
-        
+
         if (!getArea().getName().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("only-in-authoring-area");
         }
 
-        Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
+        Clipboard clipboard = new ClipboardHelper().getClipboard(getRequest());
         if (clipboard == null) {
             addErrorMessage("clipboard-empty");
-        }
-        else {
+        } else {
             Document doc = getSourceDocument();
-            if(doc != null) {
-                Document clippedDoc = clipboard.getDocument(getDocumentFactory(), doc.getPublication());
+            if (doc != null) {
+                Document clippedDoc = clipboard.getDocument(getDocumentFactory(), doc
+                        .getPublication());
                 String uuid = clippedDoc.getUUID();
                 SiteNode node = doc.getLink().getNode();
                 if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
@@ -112,7 +118,7 @@ public class Paste extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
+        Clipboard clipboard = new ClipboardHelper().getClipboard(getRequest());
         if (clipboard != null) {
             String label;
             try {
@@ -143,20 +149,19 @@ public class Paste extends AbstractUsecase {
 
         try {
 
-            Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
+            Clipboard clipboard = new ClipboardHelper().getClipboard(getRequest());
             if (clipboard != null) {
-                
+
                 Node siteNode = getArea().getSite().getRepositoryNode();
                 nodes.add(siteNode);
 
                 DocumentFactory map = getDocumentFactory();
                 Publication pub = getPublication();
                 Document clippedDocument = clipboard.getDocument(map, pub);
-    
-                NodeSet subsite = SiteUtil
-                        .getSubSite(this.manager, clippedDocument.getLink().getNode());
+
+                NodeSet subsite = SiteUtil.getSubSite(clippedDocument.getLink().getNode());
                 Document[] subsiteDocs = subsite.getDocuments();
-    
+
                 for (int i = 0; i < subsiteDocs.length; i++) {
                     if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
                         nodes.add(subsiteDocs[i].getRepositoryNode());
@@ -190,36 +195,28 @@ public class Paste extends AbstractUsecase {
         DocumentFactory identityMap = getDocumentFactory();
         ClipboardHelper helper = new ClipboardHelper();
 
-        Clipboard clipboard = helper.getClipboard(getContext());
+        HttpServletRequest request = getRequest();
+        Clipboard clipboard = helper.getClipboard(request);
         Publication pub = getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
         final String targetPath = getTargetPath();
         final Area area = clippedDocument.area();
-        DocumentManager documentManager = null;
-        try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-
-            if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
-                documentManager.copyAll(area, clippedDocument.getPath(), area, targetPath);
-            } else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-                documentManager.moveAll(area, clippedDocument.getPath(), area, targetPath);
-            } else {
-                throw new RuntimeException("This clipboard method is not supported!");
-            }
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
+        if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
+            getDocumentManager().copyAll(area, clippedDocument.getPath(), area, targetPath);
+        } else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+            getDocumentManager().moveAll(area, clippedDocument.getPath(), area, targetPath);
+        } else {
+            throw new RuntimeException("This clipboard method is not supported!");
         }
 
-        helper.removeClipboard(getContext());
+        helper.removeClipboard(request);
     }
 
     protected String getTargetPath() throws SiteException, DocumentBuildException,
             ServiceException, DocumentException {
         DocumentFactory identityMap = getDocumentFactory();
-        Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
+        Clipboard clipboard = new ClipboardHelper().getClipboard(getRequest());
         Publication pub = getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
@@ -234,7 +231,24 @@ public class Paste extends AbstractUsecase {
 
         DocumentLocator potentialLoc = DocumentLocator.getLocator(getPublication().getId(),
                 targetArea, potentialPath, language);
-        return SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), potentialLoc)
-                .getPath();
+        return SiteUtil.getAvailableLocator(getDocumentFactory(), potentialLoc).getPath();
     }
+
+    protected HttpServletRequest getRequest() {
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        return process.getRequest();
+    }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
 }

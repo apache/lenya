@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.configuration.Configurable;
@@ -79,10 +81,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     private List authorizerKeys = new ArrayList();
     private Authenticator authenticator;
 
-    /**
-     * @see org.apache.lenya.ac.AccessController#authenticate(org.apache.cocoon.environment.Request)
-     */
-    public boolean authenticate(Request request) throws AccessControlException {
+    public boolean authenticate(HttpServletRequest request) throws AccessControlException {
 
         assert request != null;
         boolean authenticated = getAuthenticator().authenticate(getAccreditableManager(), request);

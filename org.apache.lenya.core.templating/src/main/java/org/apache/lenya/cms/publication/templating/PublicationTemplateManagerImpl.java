@@ -22,41 +22,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Manager for publication templates.
  * 
- * @version $Id: PublicationTemplateManagerImpl.java 474729 2006-11-14 11:07:44Z
- *          andreas $
+ * @version $Id$
  */
 public class PublicationTemplateManagerImpl extends AbstractLogEnabled implements
-        PublicationTemplateManager, Serviceable {
+        PublicationTemplateManager {
 
-    /**
-     * Ctor.
-     */
-    public PublicationTemplateManagerImpl() {
-    }
+    private SourceResolver sourceResolver;
 
     /**
      * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String,
-     *      org.apache.lenya.cms.publication.templating.SourceVisitor)
+     *      java.lang.String, org.apache.lenya.cms.publication.templating.SourceVisitor)
      */
     public void visit(Publication publication, String path, SourceVisitor visitor) {
 
-        SourceResolver resolver = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             String[] baseUris = getBaseURIs(publication);
             for (int i = 0; i < baseUris.length; i++) {
@@ -66,32 +56,18 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
                     getLogger().debug("Trying to resolve URI [" + uri + "]");
                 }
 
-                visitor.visit(resolver, uri);
+                visitor.visit(this.sourceResolver, uri);
             }
 
         } catch (Exception e) {
             throw new TemplatingException("Visiting path [" + path + "] failed: ", e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
 
     }
 
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
-
     /**
      * Returns the publication.
-     * @return A publication. protected Publication getPublication1() { return
-     *         this.publication; }
+     * @return A publication. protected Publication getPublication1() { return this.publication; }
      */
 
     /**
@@ -128,10 +104,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
      *      org.apache.lenya.cms.publication.templating.PublicationVisitor)
      */
     public void visit(Publication publication, PublicationVisitor visitor) {
-        SourceResolver resolver = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-
             Publication[] publications = getPublications(publication);
             for (int i = 0; i < publications.length; i++) {
                 if (getLogger().isDebugEnabled()) {
@@ -139,15 +112,9 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
                 }
                 visitor.visit(publications[i]);
             }
-
         } catch (Exception e) {
             throw new TemplatingException("Visiting publications failed: ", e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
-
     }
 
     /**
@@ -162,7 +129,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         publications.add(publication);
 
         String templateId = publication.getTemplateId();
-        if(templateId != null) {
+        if (templateId != null) {
             try {
                 Publication template = publication.getFactory().getPublication(templateId);
                 Publication[] templateTemplates = getPublications(template);
@@ -175,17 +142,11 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         return (Publication[]) publications.toArray(new Publication[publications.size()]);
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#getSelectableHint(org.apache.lenya.cms.publication.Publication,
-     *      org.apache.avalon.framework.service.ServiceSelector,
-     *      java.lang.String)
-     */
-    public Object getSelectableHint(Publication publication, ServiceSelector selector,
-            final String originalHint) throws ServiceException {
+    public Object getSelectableHint(Publication publication, String role, final String originalHint) {
         Object selectableHint = null;
 
         try {
-            ExistingServiceVisitor resolver = new ExistingServiceVisitor(selector, originalHint,
+            ExistingServiceVisitor resolver = new ExistingServiceVisitor(role, originalHint,
                     getLogger());
             visit(publication, resolver);
             selectableHint = resolver.getSelectableHint();
@@ -197,8 +158,16 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
             String message = "Resolving hint [" + originalHint + "] failed: ";
             getLogger().error(message, e);
             throw new RuntimeException(message, e);
-        } 
+        }
         return selectableHint;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
     /**
@@ -212,16 +181,16 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
          * @param hint The hint to check.
          * @param logger The logger.
          */
-        public ExistingServiceVisitor(ServiceSelector selector, Object hint, Log logger) {
-            this.selector = selector;
+        public ExistingServiceVisitor(String role, Object hint, Log logger) {
             this.hint = hint;
             this.logger = logger;
+            this.role = role;
         }
 
-        private ServiceSelector selector;
         private Object hint;
         private Object selectableHint = null;
         private Log logger;
+        private String role;
 
         /**
          * @see org.apache.lenya.cms.publication.templating.PublicationVisitor#visit(org.apache.lenya.cms.publication.Publication)
@@ -229,7 +198,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         public void visit(Publication publication) {
             String publicationHint = publication.getId() + "/" + this.hint;
             boolean success = false;
-            if (this.selector.isSelectable(publicationHint)) {
+            WebApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
+            if (context.containsBean(this.role + "/" + publicationHint)) {
                 this.selectableHint = publicationHint;
                 success = true;
             }
@@ -239,8 +209,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         }
 
         /**
-         * @return The publication hint that could be selected or
-         *         <code>null</code> if no hint could be selected.
+         * @return The publication hint that could be selected or <code>null</code> if no hint could
+         *         be selected.
          */
         public Object getSelectableHint() {
             return this.selectableHint;

@@ -87,7 +87,7 @@ public class UserInfoTransformer extends AbstractSAXTransformer {
         if (name.equals(ELEM_FULLNAME)) {
             String userId = this.userId != null ? this.userId : endTextRecording();
             try {
-                User user = PolicyUtil.getUser(this.manager, this.url, userId, getLogger());
+                User user = PolicyUtil.getUser(this.url, userId, getLogger());
                 String output = user != null ? user.getName() : userId;
                 char[] chars = output.toCharArray();
                 characters(chars, 0, chars.length);

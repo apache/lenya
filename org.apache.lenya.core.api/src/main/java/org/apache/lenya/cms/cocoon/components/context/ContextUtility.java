@@ -30,6 +30,7 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 /**
  * Utility class for getting the context, request, response and
  * object model of the current request.
+ * @deprecated
  */
 public class ContextUtility extends AbstractLogEnabled implements
         Component, Contextualizable {

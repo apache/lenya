@@ -58,8 +58,7 @@ public class ChangeLabel extends DocumentUsecase {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }
 
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc,
-                getLogger());
+        UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), doc, getLogger());
     }
 
     /**
@@ -67,10 +66,10 @@ public class ChangeLabel extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
-        if(getSourceDocument() != null) {
+        if (getSourceDocument() != null) {
             SiteStructure structure = getSourceDocument().area().getSite();
             nodes.add(structure.getRepositoryNode());
-        }    
+        }
 
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
@@ -101,7 +100,6 @@ public class ChangeLabel extends DocumentUsecase {
         }
     }
 
-
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -112,7 +110,7 @@ public class ChangeLabel extends DocumentUsecase {
         String label = getParameterAsString(LABEL).trim();
         document.getLink().setLabel(label);
 
-        WorkflowUtil.invoke(this.manager, getLogger(), document, getEvent());
+        WorkflowUtil.invoke(getLogger(), document, getEvent());
 
     }
 }

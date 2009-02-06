@@ -21,7 +21,6 @@ package org.apache.lenya.cms.site.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -41,7 +40,7 @@ import org.apache.lenya.cms.site.SiteStructure;
  * 
  * @version $Id: TreeSiteManager.java 208766 2005-07-01 16:05:00Z andreas $
  */
-public class TreeSiteManager extends AbstractSiteManager implements Serviceable {
+public class TreeSiteManager extends AbstractSiteManager {
 
     /**
      * Ctor.
@@ -65,7 +64,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         String key = getKey(publication, area);
         DefaultSiteTree sitetree;
-        RepositoryItemFactory factory = new SiteTreeFactory(this.manager, getLogger());
+        RepositoryItemFactory factory = new SiteTreeFactory(getLogger());
         try {
             sitetree = (DefaultSiteTree) map.getSession().getRepositoryItem(factory, key);
         } catch (Exception e) {
@@ -134,7 +133,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             getLogger().debug("Obtaining requiring resources of [" + resource + "]");
         }
 
-        NodeSet nodes = new NodeSet(this.manager);
+        NodeSet nodes = new NodeSet();
         Publication pub = resource.getStructure().getPublication();
         String area = resource.getStructure().getArea();
         SiteTree tree = getTree(map, pub, area);

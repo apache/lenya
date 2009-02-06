@@ -37,6 +37,7 @@ public class CreateUsecaseDocument extends CreateDocument {
 
     protected static final String USECASE = "usecase";
     protected static final String RESOURCE_TYPE_USECASE = "usecase";
+    private UsecaseResolver usecaseResolver;
 
     /**
      * The namespace for usecase document content.
@@ -52,7 +53,7 @@ public class CreateUsecaseDocument extends CreateDocument {
      * The local name of the name attribute.
      */
     public static final String ATTRIBUTE_NAME = "name";
-    
+
     protected void initParameters() {
         super.initParameters();
         setParameter(DOCUMENT_TYPE, RESOURCE_TYPE_USECASE);
@@ -66,16 +67,8 @@ public class CreateUsecaseDocument extends CreateDocument {
         if (usecaseName.equals("")) {
             addErrorMessage("Please enter a usecase name.");
         } else {
-            UsecaseResolver resolver = null;
-            try {
-                resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
-                if (!resolver.isRegistered(getSourceURL(), usecaseName)) {
-                    addErrorMessage("The usecase '" + usecaseName + "' is not registered.");
-                }
-            } finally {
-                if (resolver != null) {
-                    this.manager.release(resolver);
-                }
+            if (!getUsecaseResolver().isRegistered(getSourceURL(), usecaseName)) {
+                addErrorMessage("The usecase '" + usecaseName + "' is not registered.");
             }
         }
     }
@@ -88,6 +81,17 @@ public class CreateUsecaseDocument extends CreateDocument {
         usecaseElement.setAttribute(ATTRIBUTE_NAME, getParameterAsString(USECASE));
         DocumentHelper.writeDocument(helper.getDocument(), getNewDocument().getOutputStream());
 
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseResolver(UsecaseResolver usecaseResolver) {
+        this.usecaseResolver = usecaseResolver;
+    }
+
+    public UsecaseResolver getUsecaseResolver() {
+        return usecaseResolver;
     }
 
 }

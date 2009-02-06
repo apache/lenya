@@ -20,13 +20,10 @@ package org.apache.lenya.cms.site.usecases;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
@@ -34,6 +31,7 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -52,6 +50,9 @@ public class CreateBlogEntry extends DocumentUsecase {
     protected static final String PARENT_ID = "parentId";
     protected static final String DOCUMENT_TYPE = "doctype";
     protected static final String DOCUMENT_ID = "documentId";
+
+    private DocumentManager documentManager;
+    private ResourceTypeResolver resourceTypeResolver;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -108,46 +109,21 @@ public class CreateBlogEntry extends DocumentUsecase {
         // implementation note: since blog does not have a hierarchy,
         // document id (full path) and document id-name (this leaf's id)
         // are the same
-        DocumentManager documentManager = null;
-        ServiceSelector selector = null;
-        ResourceType resourceType = null;
+        ResourceType resourceType = getResourceTypeResolver()
+                .getResourceType(getDocumentTypeName());
 
-        try {
-            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-            resourceType = (ResourceType) selector.select(getDocumentTypeName());
+        DocumentFactory map = getDocumentFactory();
 
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+        String documentId = getDocumentID();
 
-            DocumentFactory map = getDocumentFactory();
+        String sampleName = resourceType.getSampleNames()[0];
+        String sampleUri = resourceType.getSample(sampleName).getUri();
 
-            String documentId = getDocumentID();
-            
-            String sampleName = resourceType.getSampleNames()[0];
-            String sampleUri = resourceType.getSample(sampleName).getUri();
+        Document document = documentManager.add(map, resourceType, sampleUri, getSourceDocument()
+                .getPublication(), getSourceDocument().getArea(), documentId, language, "xml",
+                getParameterAsString(DublinCore.ELEMENT_TITLE), true);
 
-            Document document = documentManager.add(map,
-                    resourceType,
-                    sampleUri,
-                    getSourceDocument().getPublication(),
-                    getSourceDocument().getArea(),
-                    documentId,
-                    language,
-                    "xml",
-                    getParameterAsString(DublinCore.ELEMENT_TITLE),
-                    true);
-
-            transformXML(document);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-            if (selector != null) {
-                if (resourceType != null) {
-                    selector.release(resourceType);
-                }
-                this.manager.release(selector);
-            }
-        }
+        transformXML(document);
     }
 
     /**
@@ -169,9 +145,7 @@ public class CreateBlogEntry extends DocumentUsecase {
      * <li>article-one</li>
      * <li>article-two</li>
      * </ul>
-     * </ul>
-     * </ul>
-     * </ul>
+     * </ul> </ul> </ul>
      * 
      * @return The document ID.
      */
@@ -208,9 +182,8 @@ public class CreateBlogEntry extends DocumentUsecase {
 
     protected void transformXML(Document document) throws Exception {
 
-        Map objectModel = ContextHelper.getObjectModel(getContext());
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getCocoonSession(false);
+        HttpServletRequest request = getRequest();
+        HttpSession session = request.getSession(false);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         String title = getParameterAsString(DublinCore.ELEMENT_TITLE);
 
@@ -280,4 +253,27 @@ public class CreateBlogEntry extends DocumentUsecase {
 
         DocumentHelper.writeDocument(xmlDoc, document.getOutputStream());
     }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
+    protected ResourceTypeResolver getResourceTypeResolver() {
+        return resourceTypeResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
+    }
+
 }

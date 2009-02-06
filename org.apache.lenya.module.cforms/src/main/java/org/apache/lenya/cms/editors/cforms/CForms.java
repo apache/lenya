@@ -15,9 +15,8 @@
  */
 package org.apache.lenya.cms.editors.cforms;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
@@ -27,25 +26,25 @@ import org.apache.lenya.xml.DocumentHelper;
  * Dummy CForms usecase.
  */
 public class CForms extends InvokeWorkflow {
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {
         super.initParameters();
         try {
-            doPreparation(this.manager);
+            HttpServletRequest request = getRequest();
+            Document doc = getSourceDocument();
+            String sourceUri = doc.getSourceURI();
+            setParameter("sourceUri", sourceUri);
+            String pubId = doc.getPublication().getId();
+            setParameter("pubId", pubId);
+            String host = "http://" + request.getServerName() + ":" + request.getServerPort();
+            setParameter("host", host);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        super.doCheckExecutionConditions();
     }
 
     /**
@@ -56,21 +55,10 @@ public class CForms extends InvokeWorkflow {
         org.w3c.dom.Document xml = (org.w3c.dom.Document) getParameter("xml");
         DocumentHelper.writeDocument(xml, getSourceDocument().getOutputStream());
     }
-    
+
     protected Node[] getNodesToLock() {
         Node[] nodes = { getSourceDocument().getRepositoryNode() };
         return nodes;
-    }
-    
-    private void doPreparation(ServiceManager manager) {
-        Request request = ContextHelper.getRequest(this.context);
-        Document doc = getSourceDocument();
-        String sourceUri = doc.getSourceURI();
-        setParameter("sourceUri", sourceUri);
-        String pubId = doc.getPublication().getId();
-        setParameter("pubId", pubId);
-        String host="http://"+request.getServerName()+":"+request.getServerPort()  ;
-        setParameter("host", host);
     }
 
 }

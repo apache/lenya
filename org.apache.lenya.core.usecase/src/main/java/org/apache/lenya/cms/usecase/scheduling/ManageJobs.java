@@ -19,7 +19,6 @@ package org.apache.lenya.cms.usecase.scheduling;
 
 import java.util.Arrays;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.components.cron.JobSchedulerEntry;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
@@ -32,23 +31,26 @@ public class ManageJobs extends DocumentUsecase {
 
     protected static final String JOBS = "jobs";
 
+    private UsecaseScheduler usecaseScheduler;
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {
         super.initParameters();
-
-        UsecaseScheduler scheduler = null;
-        try {
-            scheduler = (UsecaseScheduler) this.manager.lookup(UsecaseScheduler.ROLE);
-            JobSchedulerEntry[] jobs = scheduler.getJobs();
-            setParameter(JOBS, Arrays.asList(jobs));
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (scheduler != null) {
-                this.manager.release(scheduler);
-            }
-        }
+        JobSchedulerEntry[] jobs = getUsecaseScheduler().getJobs();
+        setParameter(JOBS, Arrays.asList(jobs));
     }
+
+    protected UsecaseScheduler getUsecaseScheduler() {
+        return usecaseScheduler;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseScheduler(UsecaseScheduler usecaseScheduler) {
+        this.usecaseScheduler = usecaseScheduler;
+    }
+
 }

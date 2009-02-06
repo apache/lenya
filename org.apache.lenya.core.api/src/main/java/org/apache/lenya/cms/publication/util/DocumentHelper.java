@@ -24,24 +24,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.DocumentLocator;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Helper class to handle documents from XSP.
@@ -49,7 +50,7 @@ import org.apache.lenya.util.ServletHelper;
 public class DocumentHelper {
 
     private Map objectModel;
-    private DocumentFactory identityMap;
+    private DocumentFactory documentFactory;
     private Publication publication;
 
     /**
@@ -57,27 +58,35 @@ public class DocumentHelper {
      * @param manager The service manager.
      * @param _objectModel The Cocoon object model.
      */
-    public DocumentHelper(ServiceManager manager, Map _objectModel) {
-        this.objectModel = _objectModel;
-        try {
-            this.publication = PublicationUtil.getPublication(manager, _objectModel);
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+    public DocumentHelper(Map _objectModel) {
+        WebApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
+        RepositoryManager repoMgr = (RepositoryManager) context.getBean(RepositoryManager.ROLE);
+        DocumentFactoryBuilder builder = (DocumentFactoryBuilder) context
+                .getBean(DocumentFactoryBuilder.class.getName());
+        
         Request request = ObjectModelHelper.getRequest(_objectModel);
         Session session;
         try {
-            session = RepositoryUtil.getSession(manager, request);
+            session = RepositoryUtil.getSession(repoMgr, request);
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
-        this.identityMap = DocumentUtil.createDocumentFactory(manager, session);
+
+        this.documentFactory = builder.createDocumentFactory(session);
+        this.objectModel = _objectModel;
+        try {
+            URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
+            this.publication = this.documentFactory.getPublication(info.getPublicationId());
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Creates a document URL. <br/>If the document ID is null, the current document ID is used.
-     * <br/>If the document area is null, the current area is used. <br/>If the language is null,
-     * the current language is used.
+     * Creates a document URL. <br/>
+     * If the document ID is null, the current document ID is used. <br/>
+     * If the document area is null, the current area is used. <br/>
+     * If the language is null, the current language is used.
      * @param uuid The target document UUID.
      * @param documentArea The target area.
      * @param language The target language.
@@ -92,7 +101,7 @@ public class DocumentHelper {
         try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             String webappUrl = ServletHelper.getWebappURI(request);
-            Document envDocument = this.identityMap.getFromURL(webappUrl);
+            Document envDocument = this.documentFactory.getFromURL(webappUrl);
             if (uuid == null) {
                 uuid = envDocument.getUUID();
             }
@@ -107,7 +116,8 @@ public class DocumentHelper {
                 language = envDocument.getLanguage();
             }
 
-            Document document = this.identityMap.get(this.publication, documentArea, uuid, language);
+            Document document = this.documentFactory
+                    .get(this.publication, documentArea, uuid, language);
             url = document.getCanonicalWebappURL();
 
             String contextPath = request.getContextPath();
@@ -138,12 +148,12 @@ public class DocumentHelper {
         try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             String webappUrl = ServletHelper.getWebappURI(request);
-            Document document = this.identityMap.getFromURL(webappUrl);
+            Document document = this.documentFactory.getFromURL(webappUrl);
 
             contextPath = request.getContextPath();
 
             DocumentLocator parentLocator = document.getLocator().getParent("/index");
-            Document parent = this.identityMap.get(parentLocator);
+            Document parent = this.documentFactory.get(parentLocator);
             parentUrl = parent.getCanonicalWebappURL();
         } catch (final DocumentBuildException e) {
             throw new ProcessingException(e);

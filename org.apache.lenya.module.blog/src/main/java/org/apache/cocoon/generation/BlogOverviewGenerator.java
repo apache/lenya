@@ -34,10 +34,12 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Element;
@@ -107,6 +109,8 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
      * The request
      */
     protected Request request;
+    
+    private RepositoryManager repositoryManager;
     
     /**
      * Set the request parameters. Must be called before the generate method.
@@ -178,10 +182,10 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {            
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
-            Publication publication = PublicationUtil.getPublication(
-                    this.manager, request);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(session);
+            String id = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
+            Publication publication = map.getPublication(id);
             
             
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE
@@ -439,5 +443,13 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
 
         this.contentHandler.endPrefixMapping(PREFIX);
         this.contentHandler.endDocument();
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

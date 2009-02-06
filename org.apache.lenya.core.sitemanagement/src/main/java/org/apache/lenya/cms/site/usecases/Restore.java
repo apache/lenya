@@ -56,28 +56,27 @@ public class Restore extends MoveSubsite {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
 
-        String targetAreaName = getTargetArea(); 
+        String targetAreaName = getTargetArea();
         Document doc = getSourceDocument();
-        if(doc == null) {
+        if (doc == null) {
             return;
         }
         // Check to see if parent node exists in target to prevent ghost nodes
         Area targetArea = doc.getPublication().getArea(targetAreaName);
         DocumentLocator targetLoc = doc.getLocator().getAreaVersion(targetAreaName);
-        targetLoc = SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), targetLoc);
+        targetLoc = SiteUtil.getAvailableLocator(getDocumentFactory(), targetLoc);
         String targetPath = targetLoc.getPath();
-        targetPath = targetPath.substring(0,targetPath.lastIndexOf('/'));
-        if(!targetArea.getSite().contains(targetPath)) {
+        targetPath = targetPath.substring(0, targetPath.lastIndexOf('/'));
+        if (!targetArea.getSite().contains(targetPath)) {
             addErrorMessage("The authoring path [" + targetPath + "] does not exist.");
         }
     }
-  
+
     protected void doCheckPostconditions() throws Exception {
         super.doCheckPostconditions();
 
         Document doc = getTargetDocument(true);
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                getLogger(), doc);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), doc);
         String state = workflowable.getLatestVersion().getState();
         if (!state.equals("authoring")) {
             addErrorMessage("The state is [" + state + "] instead of [authoring]!");

@@ -21,24 +21,19 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
 
 /**
  * Avalon-based element set.
  */
-public class ConfigurableElementSet extends AbstractLogEnabled implements ElementSet, Configurable,
-        ThreadSafe, Initializable, Serviceable {
+public class ConfigurableElementSet extends AbstractLogEnabled implements ElementSet, Configurable {
 
     private String namespaceUri;
     private Map elements = new HashMap();
+    private MetaDataRegistry registry;
 
     public void configure(Configuration config) throws ConfigurationException {
 
@@ -55,15 +50,13 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
             int action;
             if (actionOnCopy.equalsIgnoreCase("copy")) {
                 action = Element.ONCOPY_COPY;
-            }
-            else if (actionOnCopy.equalsIgnoreCase("ignore")) {
+            } else if (actionOnCopy.equalsIgnoreCase("ignore")) {
                 action = Element.ONCOPY_IGNORE;
-            }
-            else if (actionOnCopy.equalsIgnoreCase("delete")) {
+            } else if (actionOnCopy.equalsIgnoreCase("delete")) {
                 action = Element.ONCOPY_DELETE;
-            }
-            else {
-                throw new ConfigurationException("The action [" + actionOnCopy + "] is not supported.");
+            } else {
+                throw new ConfigurationException("The action [" + actionOnCopy
+                        + "] is not supported.");
             }
             try {
                 element.setActionOnCopy(action);
@@ -92,23 +85,9 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
         return this.elements.keySet().contains(name);
     }
 
-    public void initialize() throws Exception {
-        MetaDataRegistry registry = null;
-        try {
-            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-            registry.register(getNamespaceUri(), this);
-        }
-        finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
-    }
-    
-    private ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void setRegistry(MetaDataRegistry registry) throws MetaDataException {
+        this.registry = registry;
+        registry.register(getNamespaceUri(), this);
     }
 
 }

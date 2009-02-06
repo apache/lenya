@@ -19,13 +19,8 @@ package org.apache.lenya.cms.usecase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.usecase.gui.GUIManager;
 import org.apache.lenya.cms.usecase.gui.Tab;
 
@@ -33,9 +28,8 @@ import org.apache.lenya.cms.usecase.gui.Tab;
  * Information about a usecase view.
  * 
  * @version $Id$
- * <p>
- * Example configuration:
- * <code><pre>&lt;view uri="/modules/foo/usecases/foo-mogrify.jx"
+ *          <p>
+ *          Example configuration: <code><pre>&lt;view uri="/modules/foo/usecases/foo-mogrify.jx"
  *     customFlow="/modules/foo/flow/myflow.js"
  *     menu="false|true"
  *     createContinuation="false|true"
@@ -43,48 +37,52 @@ import org.apache.lenya.cms.usecase.gui.Tab;
  *   &lt;tab group="foo" name="bar"/&gt;      // optional
  *   &lt;parameter name="foo" value="bar/&gt; // optional
  * &lt;/view&gt;</pre></code>
- * </p>
- * <p>
- * <code>uri</code> is the relative URL of the page to be sent back to the client. If the URI
- * starts with a slash, it is resolved starting at the root sitemap, otherwise it
- * is resolved relative to the current sitemap. The URI should not contain a
- * scheme (such as cocoon:).
- * </p>
- * <p>
- * <code>menu</code> is a boolean that governs whether the Lenya GUI menu is displayed while
- * the usecase is running. The displaying of the menu is handled by the usecase.xmap sitemap;
- * hence this option is only functional if <code>uri</code> does <em>not</em> start with a slash
- * (or if you implement it yourself based on the <code>showMenu()</code> method of this object).<br>
- * Default is <em>false</em>.
- * </p>
- * <p>
- * <code>customFlow</code> is a javascript file where you can provide custom methods that will override
- * those in the default usecase handler (<code>modules-core/usecase/usecases.js</code>).
- * Currently, it provides support for "customLoopFlow" and "customSubmitFlow". Refer to the default handler
- * for function prototypes and more information.
- * NB: the "menu" and "createContinuation" attributes will have no effect when you use custom flow code, unless
- * you check for them and implement the respective functions yourself.
- * </p>
- * <p>
- * <code>createContinuation</code> can be set to false, in which case the generic flowscript
- * uses "sendPage" instead of "sendPageAndWait" and terminates after the view has been sent.
- * When <code>createContinuation</code> is false, you must not specify <code>submitFlow</code> 
- * or <code>loopFlow</code>.<br>
- * Default is <em>true</em>.
- * </p>
- * <p>
- * For tabbed usecases, you can optionally specify a tab group and name. Additional custom
- * configuration can be passed via the generic "parameter" element. 
- * </p>
- * <p>
- * For backwards compatibility with existing usecases, the constructor looks for a <code>template</code>
- * attribute if no <code>uri</code> is present. It is mapped to the same field, viewUri, internally.
- * </p>
+ *          </p>
+ *          <p>
+ *          <code>uri</code> is the relative URL of the page to be sent back to the client. If the
+ *          URI starts with a slash, it is resolved starting at the root sitemap, otherwise it is
+ *          resolved relative to the current sitemap. The URI should not contain a scheme (such as
+ *          cocoon:).
+ *          </p>
+ *          <p>
+ *          <code>menu</code> is a boolean that governs whether the Lenya GUI menu is displayed
+ *          while the usecase is running. The displaying of the menu is handled by the usecase.xmap
+ *          sitemap; hence this option is only functional if <code>uri</code> does <em>not</em>
+ *          start with a slash (or if you implement it yourself based on the <code>showMenu()</code>
+ *          method of this object).<br>
+ *          Default is <em>false</em>.
+ *          </p>
+ *          <p>
+ *          <code>customFlow</code> is a javascript file where you can provide custom methods that
+ *          will override those in the default usecase handler (
+ *          <code>modules-core/usecase/usecases.js</code>). Currently, it provides support for
+ *          "customLoopFlow" and "customSubmitFlow". Refer to the default handler for function
+ *          prototypes and more information. NB: the "menu" and "createContinuation" attributes will
+ *          have no effect when you use custom flow code, unless you check for them and implement
+ *          the respective functions yourself.
+ *          </p>
+ *          <p>
+ *          <code>createContinuation</code> can be set to false, in which case the generic
+ *          flowscript uses "sendPage" instead of "sendPageAndWait" and terminates after the view
+ *          has been sent. When <code>createContinuation</code> is false, you must not specify
+ *          <code>submitFlow</code> or <code>loopFlow</code>.<br>
+ *          Default is <em>true</em>.
+ *          </p>
+ *          <p>
+ *          For tabbed usecases, you can optionally specify a tab group and name. Additional custom
+ *          configuration can be passed via the generic "parameter" element.
+ *          </p>
+ *          <p>
+ *          For backwards compatibility with existing usecases, the constructor looks for a
+ *          <code>template</code> attribute if no <code>uri</code> is present. It is mapped to the
+ *          same field, viewUri, internally.
+ *          </p>
  */
-public class UsecaseView implements Configurable, Serviceable {
+public class UsecaseView {
 
     protected static final String ATTRIBUTE_URI = "uri";
-    protected static final String ATTRIBUTE_TEMPLATE = "template"; // backwards compatibility, mapped to "uri"
+    protected static final String ATTRIBUTE_TEMPLATE = "template"; // backwards compatibility,
+    // mapped to "uri"
 
     protected static final String ATTRIBUTE_CUSTOM_FLOW = "customFlow";
     protected static final String ATTRIBUTE_SHOW_MENU = "menu";
@@ -96,66 +94,20 @@ public class UsecaseView implements Configurable, Serviceable {
     protected static final String ATTRIBUTE_VALUE = "value";
 
     // tabbed usecases:
-    protected static final String ATTRIBUTE_GROUP = "group"; 
+    protected static final String ATTRIBUTE_GROUP = "group";
     protected static final String ELEMENT_TAB = "tab";
 
-
     private Map parameters = new HashMap();
-    private ServiceManager manager;
 
     private String viewUri;
     private String customFlow;
-    
+
     private boolean showMenu;
     private boolean createContinuation;
     private Tab tab;
-
-
-    
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration config) throws ConfigurationException {
-        // get <view> attributes:
-        this.viewUri = config.getAttribute(ATTRIBUTE_URI, "");
-        if (this.viewUri == "") {
-           // fall back to "template" attribute for backwards compatibility (rip out eventually).
-           this.viewUri = config.getAttribute(ATTRIBUTE_TEMPLATE, "");
-        }
-        this.showMenu = config.getAttributeAsBoolean(ATTRIBUTE_SHOW_MENU, false);
-        this.customFlow = config.getAttribute(ATTRIBUTE_CUSTOM_FLOW, "");
-        this.createContinuation = config.getAttributeAsBoolean(ATTRIBUTE_CREATE_CONT, true);
-
-
-        // get <tab/> configuration:
-        Configuration tabConfig = config.getChild(ELEMENT_TAB, false);
-        if (tabConfig != null) {
-            String tabName = tabConfig.getAttribute(ATTRIBUTE_NAME);
-            String tabGroup = tabConfig.getAttribute(ATTRIBUTE_GROUP);
-            GUIManager guiMgr = null;
-            try {
-                guiMgr = (GUIManager) this.manager.lookup(GUIManager.ROLE);
-                this.tab = guiMgr.getTab(tabGroup, tabName);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (guiMgr != null) {
-                    this.manager.release(guiMgr);
-                }
-            }
-        }
-
-        // get <parameter/> configuration
-        Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
-        for (int i = 0; i < parameterConfigs.length; i++) {
-            String name = parameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
-            String value = parameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
-            this.parameters.put(name, value);
-        }
-
-        checkConfig();
-
-    }
+    private GUIManager guiManager;
+    private String tabName;
+    private String tabGroup;
 
     /**
      * @return The URI of the JX template;
@@ -207,30 +159,58 @@ public class UsecaseView implements Configurable, Serviceable {
         if (getTab() == null) {
             return null;
         } else {
-            GUIManager guiMgr = null;
-            try {
-                guiMgr = (GUIManager) this.manager.lookup(GUIManager.ROLE);
-                return guiMgr.getActiveTabs(getTab().getGroup());
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (guiMgr != null) {
-                    this.manager.release(guiMgr);
-                }
-            }
+            return getGuiManager().getActiveTabs(getTab().getGroup());
         }
     }
 
     /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     * TODO: Add init-method attribute to bean configuration.
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void initialize() {
+        if (this.tab != null && this.viewUri == "") {
+            throw new RuntimeException("When you specify a <tab/>, you must specify a <view uri=\"..\"/> as well!");
+        }
+        this.tab = getGuiManager().getTab(tabGroup, tabName);
     }
 
-    private void checkConfig() throws ConfigurationException {
-        if (this.tab != null && this.viewUri == "") {
-            throw new ConfigurationException("When you specify a <tab/>, you must specify a <view uri=\"..\"/> as well!");
-        }
+    public GUIManager getGuiManager() {
+        return guiManager;
     }
+
+    public void setGuiManager(GUIManager guiManager) {
+        this.guiManager = guiManager;
+    }
+    
+    /**
+     * Bean setter.
+     * @param uri The view URI.
+     */
+    public void setUri(String uri) {
+        this.viewUri = uri;
+    }
+
+    public void setShowMenu(boolean showMenu) {
+        this.showMenu = showMenu;
+    }
+
+    public void setCreateContinuation(boolean createContinuation) {
+        this.createContinuation = createContinuation;
+    }
+
+    public void setTabName(String tabName) {
+        this.tabName = tabName;
+    }
+
+    public void setTabGroup(String tabGroup) {
+        this.tabGroup = tabGroup;
+    }
+    
+    public void setCustomFlow(String customFlow) {
+        this.customFlow = customFlow;
+    }
+    
+    public void setParameters(Properties params) {
+        this.parameters = params;
+    }
+
 }

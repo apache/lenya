@@ -28,10 +28,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.AccessControlException;
@@ -98,6 +97,11 @@ public class Publish extends InvokeWorkflow {
     protected static final String CAN_SEND_NOTIFICATION = "canSendNotification";
     protected static final String UNPUBLISHED_LINKS = "unpublishedLinks";
 
+    private LinkManager linkManager;
+    private LinkResolver linkResolver;
+    private UsecaseScheduler usecaseScheduler;
+    private DocumentManager documentManager;
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
@@ -116,15 +120,14 @@ public class Publish extends InvokeWorkflow {
         setParameter(CAN_SEND_NOTIFICATION, canSendNotification);
         setParameter(PARAM_SEND_NOTIFICATION, canSendNotification);
 
-        setParameter(UNPUBLISHED_LINKS, new LinkList(this.manager, getSourceDocument()));
+        setParameter(UNPUBLISHED_LINKS, new LinkList(getSourceDocument()));
 
     }
 
     protected boolean canNotifySubmitter() {
 
         boolean shallNotifySubmitter = false;
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, logger,
-                getSourceDocument());
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(logger, getSourceDocument());
         Version versions[] = workflowable.getVersions();
 
         // consider the case that there was no submit transition
@@ -140,11 +143,9 @@ public class Publish extends InvokeWorkflow {
     }
 
     protected boolean hasBrokenLinks() {
-        LinkManager linkMgr = null;
-        LinkResolver resolver = null;
+        LinkManager linkMgr = getLinkManager();
+        LinkResolver resolver = getLinkResolver();
         try {
-            linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
-            resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
             org.apache.lenya.cms.linking.Link[] links = linkMgr.getLinksFrom(getSourceDocument());
             for (int i = 0; i < links.length; i++) {
                 LinkTarget target = resolver.resolve(getSourceDocument(), links[i].getUri());
@@ -154,13 +155,6 @@ public class Publish extends InvokeWorkflow {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (linkMgr != null) {
-                this.manager.release(linkMgr);
-            }
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
         }
         return false;
     }
@@ -235,11 +229,10 @@ public class Publish extends InvokeWorkflow {
 
         List missingDocuments = new ArrayList();
 
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
         try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            SiteManager siteManager = (SiteManager) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(
+                            SiteManager.ROLE + "/" + publication.getSiteManagerHint());
 
             if (!liveSite.contains(document.getPath())) {
                 DocumentLocator liveLoc = document.getLocator().getAreaVersion(
@@ -258,13 +251,6 @@ public class Publish extends InvokeWorkflow {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
 
         if (!missingDocuments.isEmpty()) {
@@ -329,17 +315,11 @@ public class Publish extends InvokeWorkflow {
             deleteParameter(SCHEDULE);
             String dateString = getParameterAsString(SCHEDULE_TIME);
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            UsecaseScheduler scheduler = null;
             try {
                 Date date = format.parse(dateString);
-                scheduler = (UsecaseScheduler) this.manager.lookup(UsecaseScheduler.ROLE);
-                scheduler.schedule(this, date);
+                getUsecaseScheduler().schedule(this, date);
             } catch (ParseException e) {
                 addErrorMessage("scheduler-date-format-invalid");
-            } finally {
-                if (scheduler != null) {
-                    this.manager.release(scheduler);
-                }
             }
         } else {
             super.doExecute();
@@ -352,12 +332,8 @@ public class Publish extends InvokeWorkflow {
 
         createAncestorNodes(authoringDocument);
 
-        DocumentManager documentManager = null;
-
         try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-
+            getDocumentManager().copyToArea(authoringDocument, Publication.LIVE_AREA);
             boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(PARAM_SEND_NOTIFICATION))
                     .booleanValue();
             if (notify) {
@@ -366,10 +342,6 @@ public class Publish extends InvokeWorkflow {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
         }
     }
 
@@ -383,16 +355,14 @@ public class Publish extends InvokeWorkflow {
             return;
         }
 
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, logger,
-                authoringDocument);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(logger, authoringDocument);
         Version versions[] = workflowable.getVersions();
 
         // obtain submitted version
         Version version = versions[versions.length - 2];
 
         String userId = version.getUserId();
-        User user = PolicyUtil.getUser(this.manager, authoringDocument.getCanonicalWebappURL(),
-                userId, logger);
+        User user = PolicyUtil.getUser(authoringDocument.getCanonicalWebappURL(), userId, logger);
 
         Identifiable[] recipients = { user };
 
@@ -411,8 +381,8 @@ public class Publish extends InvokeWorkflow {
         Message message = new Message(subject, body, sender, recipients);
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
-                getLogger(), descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(getSession(), getLogger(),
+                descriptor);
         getSession().enqueueEvent(event);
     }
 
@@ -426,7 +396,7 @@ public class Publish extends InvokeWorkflow {
         if (proxy != null) {
             url = proxy.getURL(document);
         } else {
-            Request request = ContextHelper.getRequest(this.context);
+            HttpServletRequest request = getRequest();
             final String serverUrl = "http://" + request.getServerName() + ":"
                     + request.getServerPort();
             final String webappUrl = document.getCanonicalWebappURL();
@@ -453,18 +423,15 @@ public class Publish extends InvokeWorkflow {
     /**
      * A list of links originating from a document. Allows lazy loading from the usecase view.
      */
-    public static class LinkList {
+    public class LinkList {
 
         private Document document;
         private Document[] documents;
-        private ServiceManager manager;
 
         /**
-         * @param manager The manager.
          * @param doc The document to resolve the links from.
          */
-        public LinkList(ServiceManager manager, Document doc) {
-            this.manager = manager;
+        public LinkList(Document doc) {
             this.document = doc;
         }
 
@@ -480,11 +447,9 @@ public class Publish extends InvokeWorkflow {
 
         protected Document[] getUnpublishedLinks() {
             Set docs = new HashSet();
-            LinkManager linkMgr = null;
-            LinkResolver resolver = null;
+            LinkManager linkMgr = Publish.this.getLinkManager();
+            LinkResolver resolver = Publish.this.getLinkResolver();
             try {
-                linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
-                resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
                 org.apache.lenya.cms.linking.Link[] links = linkMgr.getLinksFrom(this.document);
                 for (int i = 0; i < links.length; i++) {
                     LinkTarget target = resolver.resolve(this.document, links[i].getUri());
@@ -497,17 +462,54 @@ public class Publish extends InvokeWorkflow {
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (linkMgr != null) {
-                    this.manager.release(linkMgr);
-                }
-                if (resolver != null) {
-                    this.manager.release(resolver);
-                }
             }
             return (Document[]) docs.toArray(new Document[docs.size()]);
         }
 
+    }
+
+    protected LinkManager getLinkManager() {
+        return linkManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setLinkManager(LinkManager linkManager) {
+        this.linkManager = linkManager;
+    }
+
+    protected LinkResolver getLinkResolver() {
+        return linkResolver;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setLinkResolver(LinkResolver linkResolver) {
+        this.linkResolver = linkResolver;
+    }
+
+    protected UsecaseScheduler getUsecaseScheduler() {
+        return usecaseScheduler;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseScheduler(UsecaseScheduler usecaseScheduler) {
+        this.usecaseScheduler = usecaseScheduler;
+    }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
     }
 
 }

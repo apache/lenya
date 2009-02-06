@@ -28,12 +28,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.modules.input.DefaultsModule;
 import org.apache.cocoon.components.modules.input.InputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -43,9 +38,9 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.module.ModuleManager;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.ServletHelper;
 import org.w3c.dom.Document;
@@ -58,27 +53,21 @@ import org.xml.sax.SAXException;
  * are the locations of the <b>source </b> directories and of the <b>Lenya </b>
  * directories.
  */
-public class PropertiesModule extends DefaultsModule implements InputModule, Initializable,
-        ThreadSafe, Serviceable {
+public class PropertiesModule extends DefaultsModule implements InputModule {
 
     private Map pubId2roperties = new HashMap();
 
+    private final static String LENYA_HOME = "context:/";
+    private final static String DEFAULT_HOME_PROP = "lenya.home";
+    private final static String PROPERTY_FILE_NAME = "lenya.properties.xml";
+    private final static String PROPERTY_FILE_NAME_LOCAL = "local." + PROPERTY_FILE_NAME;
+    
 	// FIXME Use commons-configuration
     private Configuration globalProperties;
-
-    private SourceResolver m_resolver;
-
+    private SourceResolver sourceResolver;
     private ModuleManager moduleManager;
 
-    private ServiceManager serviceManager;
-
-    private final static String LENYA_HOME = "context:/";
-
-    private final static String DEFAULT_HOME_PROP = "lenya.home";
-
-    private final static String PROPERTY_FILE_NAME = "lenya.properties.xml";
-
-    private final static String PROPERTY_FILE_NAME_LOCAL = "local." + PROPERTY_FILE_NAME;
+    protected Repository repository;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -117,10 +106,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         String webappUrl = ServletHelper.getWebappURI(request);
         URLInformation info = new URLInformation(webappUrl);
         String pubId = info.getPublicationId();
-        DocumentFactory factory = DocumentUtil.getDocumentFactory(this.serviceManager, request);
-        if (factory.existsPublication(pubId)) {
+        Session session = this.repository.getSession(request);
+        if (session.existsPublication(pubId)) {
             try {
-                Publication pub = factory.getPublication(pubId);
+                Publication pub = session.getPublication(pubId);
                 properties = getPublicationProperties(pub);
             }
             catch (Exception e) {
@@ -176,10 +165,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         merge(this.globalProperties, lenyaProperties);
         
         // get the values from all modules
-        String[] module2src = moduleManager.getModuleIds();
+        String[] module2src = this.moduleManager.getModuleIds();
         for (int i = 0; i < module2src.length; i++) {
             String moduleName = module2src[i];
-            String moduleBaseUri = moduleManager.getBaseURI(moduleName);
+            String moduleBaseUri = this.moduleManager.getBaseURI(moduleName);
             if (moduleBaseUri != null) {
                 String modulePropsUri = moduleBaseUri + "/" + PROPERTY_FILE_NAME;
                 Configuration moduleProperties = loadXMLPropertiesFromURI(modulePropsUri);
@@ -239,7 +228,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         Source source = null;
         try {
 
-            source = m_resolver.resolveURI(uri);
+            source = this.sourceResolver.resolveURI(uri);
 
             if (source.exists()) {
 
@@ -260,7 +249,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
             }
         } finally {
             if (source != null) {
-                m_resolver.release(source);
+                this.sourceResolver.release(source);
             }
         }
         return properties;
@@ -299,12 +288,6 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
         }
     }
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.serviceManager = manager;
-        m_resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-        moduleManager = (ModuleManager) manager.lookup(ModuleManager.ROLE);
-    }
-
     /**
      * Rocket science
      */
@@ -319,6 +302,18 @@ public class PropertiesModule extends DefaultsModule implements InputModule, Ini
      */
     private final void debug(String debugString) {
         getLogger().debug(debugString);
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public void setModuleManager(ModuleManager moduleManager) {
+        this.moduleManager = moduleManager;
     }
 
 }

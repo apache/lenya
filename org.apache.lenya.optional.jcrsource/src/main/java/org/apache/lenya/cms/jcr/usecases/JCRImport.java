@@ -27,12 +27,12 @@ import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Workspace;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.avalon.framework.CascadingRuntimeException;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.servlet.multipart.MultipartHttpServletRequest;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
+import org.springframework.aop.scope.ScopedObject;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -53,13 +53,18 @@ public class JCRImport extends AbstractUsecase {
     private static final String JCR_LENYA_BASE_NAME = "lenya";
     private static final String JCR_LENYA_PUBLICATON_ROOT = "/lenya/pubs";
     
+    private Repository repository;
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        Request request = ContextHelper.getRequest(this.context);
+        HttpServletRequest request = getRequest();
+        ScopedObject scopedRequest = (ScopedObject) request;
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) scopedRequest
+                .getTargetObject();
         
-        Part jcrImport = (Part)request.get("jcrcontent");
+        Part jcrImport = (Part) multipartRequest.get("jcrcontent");
         
         // Get name of first JCR node ('lenya' or publication name).
         String firstNodeName;
@@ -71,18 +76,11 @@ public class JCRImport extends AbstractUsecase {
         if (firstNodeName == null) {
             throw new JCRImportException("Reading repository import data failed");
         }
-
-        Repository repo = null;
-        try {
-            repo = (Repository)manager.lookup(Repository.class.getName());
-        } catch (Exception e) {
-            throw new CascadingRuntimeException("Cannot lookup repository", e);
-        }
         
         try {
             Session session;
             try {
-                session = repo.login();
+                session = getRepository().login();
             } catch (LoginException e1) {
                 throw new JCRImportException("Login to repository failed", e1);
             } catch (RepositoryException e1) {
@@ -167,6 +165,14 @@ public class JCRImport extends AbstractUsecase {
         return contentHandler.getFirstNodeName();
     }
     
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
     class FirstNodeNameHandler extends DefaultHandler
     {
         private static final String NODE_NAME_Q_ATTR = "sv:name";

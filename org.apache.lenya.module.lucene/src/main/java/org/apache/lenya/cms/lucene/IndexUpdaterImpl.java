@@ -115,7 +115,7 @@ public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater
 
     public void index(Session session, ResourceType resourceType, String pubId, String area,
             String uuid, String language) throws IndexException {
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
         try {
             Publication pub = factory.getPublication(pubId);
             Area areaObj = pub.getArea(area);

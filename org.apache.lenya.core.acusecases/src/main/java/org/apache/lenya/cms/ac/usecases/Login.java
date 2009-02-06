@@ -17,14 +17,14 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
@@ -47,12 +47,12 @@ public class Login extends AccessControlUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Publication publication;
-
         try {
-            publication = PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
-                    getSourceURL());
-            if (publication.exists()) {
+            URLInformation info = new URLInformation(getSourceURL());
+            String pubId = info.getPublicationId();
+            DocumentFactory factory = getDocumentFactory();
+            if (factory.existsPublication(pubId)) {
+                Publication publication = factory.getPublication(pubId);
                 setParameter(PUBLICATION, publication);
             }
             Identity identity = this.getSession().getIdentity();
@@ -62,13 +62,6 @@ public class Login extends AccessControlUsecase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Ctor.
-     */
-    public Login() {
-        super();
     }
 
     /**
@@ -97,8 +90,9 @@ public class Login extends AccessControlUsecase {
         validate();
         
         if (!hasErrors()) {
-            Map objectModel = ContextHelper.getObjectModel(getContext());
-            Request request = ObjectModelHelper.getRequest(objectModel);
+            ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils.getCurrentWebApplicationContext()
+            .getBean(ProcessInfoProvider.ROLE);
+            HttpServletRequest request = process.getRequest();
             request.getSession(true);
             if (getAccessController().authenticate(request)) {
                 request.getSession(false).removeAttribute(HISTORY_SESSION_ATTRIBUTE);

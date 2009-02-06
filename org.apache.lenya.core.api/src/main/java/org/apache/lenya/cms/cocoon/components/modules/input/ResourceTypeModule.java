@@ -17,26 +17,24 @@
  */
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.ResourceTypeResolver;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
@@ -46,10 +44,10 @@ import org.apache.lenya.util.ServletHelper;
  * Resource type module.
  * </p>
  * <p>
- * The syntax is either <code>{resource-type:&lt;attribute&gt;}</code> (which uses the resource
- * type of the currenlty requested document) or
- * <code>{resource-type:&lt;name&gt;:&lt;attribute&gt;}</code> (which allows to access an
- * arbitrary resource type).
+ * The syntax is either <code>{resource-type:&lt;attribute&gt;}</code> (which uses the resource type
+ * of the currenlty requested document) or
+ * <code>{resource-type:&lt;name&gt;:&lt;attribute&gt;}</code> (which allows to access an arbitrary
+ * resource type).
  * </p>
  * <p>
  * Attributes:
@@ -57,19 +55,22 @@ import org.apache.lenya.util.ServletHelper;
  * <ul>
  * <li><strong><code>expires</code></strong> - the expiration date in RFC 822/1123 format, see
  * {@link org.apache.lenya.cms.publication.ResourceType#getExpires()}</li>
- * <li><strong><code>schemaUri</code></strong> - see
- * {@link org.apache.lenya.xml.Schema#getURI()}</li>
- * <li><strong><code>httpSchemaUri</code></strong> - the URI to request the schema over HTTP, without Proxy and context (use {proxy:} around it).</li>
- * <li><strong><code>supportsFormat:{format}</code></strong> - true if the resource type
- * supports this format, false otherwise</li>
+ * <li><strong><code>schemaUri</code></strong> - see {@link org.apache.lenya.xml.Schema#getURI()}</li>
+ * <li><strong><code>httpSchemaUri</code></strong> - the URI to request the schema over HTTP,
+ * without Proxy and context (use {proxy:} around it).</li>
+ * <li><strong><code>supportsFormat:{format}</code></strong> - true if the resource type supports
+ * this format, false otherwise</li>
  * </ul>
  */
-public class ResourceTypeModule extends AbstractInputModule implements Serviceable {
+public class ResourceTypeModule extends AbstractInputModule {
 
     protected static final String SCHEMA_URI = "schemaUri";
     protected static final String HTTP_SCHEMA_URI = "httpSchemaUri";
     protected static final String EXPIRES = "expires";
     protected static final String SUPPORTS_FORMAT = "supportsFormat";
+
+    private RepositoryManager repositoryManager;
+    private ResourceTypeResolver resourceTypeResolver;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -77,7 +78,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
-            Session session = RepositoryUtil.getSession(this.manager, request);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
 
             ResourceType resourceType;
             Publication pub = null;
@@ -85,8 +86,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
             String[] steps = name.split(":");
             if (steps.length == 1) {
-                DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager,
-                        session);
+                DocumentFactory docFactory = DocumentUtil.createDocumentFactory(session);
                 String webappUrl = ServletHelper.getWebappURI(request);
                 Document document = docFactory.getFromURL(webappUrl);
                 pub = document.getPublication();
@@ -96,15 +96,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
             } else {
                 attribute = steps[1];
                 String resourceTypeName = steps[0];
-
-                ServiceSelector selector = null;
-                try {
-                    selector = (ServiceSelector) this.manager
-                            .lookup(ResourceType.ROLE + "Selector");
-                    resourceType = (ResourceType) selector.select(resourceTypeName);
-                } finally {
-                    this.manager.release(selector);
-                }
+                resourceType = getResourceTypeResolver().getResourceType(resourceTypeName);
             }
 
             if (attribute.startsWith("format-")) {
@@ -163,10 +155,20 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
         }
     }
 
-    protected ServiceManager manager;
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
 
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
+    }
+
+    public ResourceTypeResolver getResourceTypeResolver() {
+        return resourceTypeResolver;
     }
 
 }

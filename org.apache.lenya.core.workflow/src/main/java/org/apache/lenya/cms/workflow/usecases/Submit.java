@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.ac.PolicyUtil;
@@ -28,8 +28,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
-// FIXME Dependency on non-core module.
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
 import org.apache.lenya.notification.NotificationException;
@@ -46,20 +44,20 @@ public class Submit extends InvokeWorkflow {
     public static final String PARAM_USER_NOTIFICATION_MESSAGE = "userNotificationMessage";
 
     /**
-     * If a notification message shall be sent. 
+     * If a notification message shall be sent.
      */
     public static final String PARAM_SEND_NOTIFICATION = "sendNotification";
-    
+
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_SUBMITTED = "document-submitted";
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
 
         super.doExecute();
-        
+
         if (Boolean.valueOf(getBooleanCheckboxParameter(PARAM_SEND_NOTIFICATION)).booleanValue()) {
             sendNotification(getSourceDocument());
         }
@@ -70,8 +68,8 @@ public class Submit extends InvokeWorkflow {
 
         User sender = getSession().getIdentity().getUser();
 
-        User[] recipients = PolicyUtil.getUsersWithRole(this.manager, authoringDocument
-                .getCanonicalWebappURL(), "review", getLogger());
+        User[] recipients = PolicyUtil.getUsersWithRole(authoringDocument.getCanonicalWebappURL(),
+                "review", getLogger());
 
         // check to see if current user can review their own submission
         for (int i = 0; i < recipients.length; i++) {
@@ -86,13 +84,13 @@ public class Submit extends InvokeWorkflow {
         if (proxy != null) {
             url = proxy.getURL(authoringVersion);
         } else {
-            Request request = ContextHelper.getRequest(this.context);
+            HttpServletRequest request = getRequest();
             final String serverUrl = "http://" + request.getServerName() + ":"
                     + request.getServerPort();
             final String webappUrl = authoringVersion.getCanonicalWebappURL();
             url = serverUrl + request.getContextPath() + webappUrl;
         }
-        
+
         String userMessage = getParameterAsString(PARAM_USER_NOTIFICATION_MESSAGE, "");
 
         Text[] subjectParams = { new Text(getEvent(), true) };
@@ -101,10 +99,9 @@ public class Submit extends InvokeWorkflow {
         Text body = new Text(MESSAGE_DOCUMENT_SUBMITTED, params);
         Message message = new Message(subject, body, sender, recipients);
 
-
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
-                getLogger(), descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(getSession(), getLogger(),
+                descriptor);
         getSession().enqueueEvent(event);
     }
 }

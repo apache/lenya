@@ -16,6 +16,10 @@
   <name>Apache Lenya Module Usecase Document</name>
   <dependencies>
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
     </dependency>

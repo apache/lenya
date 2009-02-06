@@ -30,6 +30,7 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UrlToUuidRewriter;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.xml.sax.SAXException;
@@ -48,6 +49,7 @@ import org.xml.sax.SAXException;
 public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
     private LinkRewriter rewriter;
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -60,8 +62,8 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
         Request request = ObjectModelHelper.getRequest(_objectModel);
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             this.rewriter = new UrlToUuidRewriter(factory);
         } catch (final Exception e1) {
             throw new ProcessingException(e1);
@@ -75,6 +77,14 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer {
     public void recycle() {
         super.recycle();
         this.rewriter = null;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

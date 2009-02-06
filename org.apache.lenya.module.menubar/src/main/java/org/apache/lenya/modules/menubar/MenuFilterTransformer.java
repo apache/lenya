@@ -34,6 +34,9 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.cms.usecase.gui.Tab;
@@ -51,6 +54,8 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
     private static final String ATTR_AREAS = "areas";
     private static final String ATTR_RESOURCE_TYPES = "resourceTypes";
     private Set attributeHandlers;
+    
+    private RepositoryManager repositoryManager;
 
     public MenuFilterTransformer() {
         this.defaultNamespaceURI = NAMESPACE;
@@ -72,7 +77,8 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
         this.attributeHandlers.add(new AttributeHandler(ATTR_AREAS, area));
         
         try {
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             String resourceType = factory.isDocument(webappUri) ?
                 resourceType = factory.getFromURL(webappUri).getResourceType().getName()
                 : null;
@@ -143,6 +149,14 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
         } else {
             super.endTransformingElement(uri, name, raw);
         }
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
     /**

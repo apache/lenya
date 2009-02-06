@@ -20,7 +20,6 @@ package org.apache.lenya.modules.metadata;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.util.Assert;
@@ -29,29 +28,22 @@ import org.apache.lenya.util.Assert;
  * Save a meta data element.
  */
 public class ChangeMetaData extends InvokeWorkflow {
-    
+
     protected static final String PARAM_NAMESPACE = "namespace";
     protected static final String PARAM_ELEMENT = "element";
     protected static final String PARAM_VALUE = "value";
     protected static final String PARAM_OLD_VALUE = "oldValue";
-    
+
+    private UsecaseInvoker usecaseInvoker;
+
     protected void prepareView() throws Exception {
         super.prepareView();
-        UsecaseInvoker invoker = null;
-        try {
-            invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
-            invoker.invoke(getSourceURL(), getName(), getParameters());
-        }
-        finally {
-            if (invoker != null) {
-                this.manager.release(invoker);
-            }
-        }
+        getUsecaseInvoker().invoke(getSourceURL(), getName(), getParameters());
     }
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+
         Document doc = getSourceDocument();
         if (doc == null) {
             return;
@@ -69,23 +61,23 @@ public class ChangeMetaData extends InvokeWorkflow {
         Assert.notNull("value", value);
         String oldValue = getParameterAsString(PARAM_OLD_VALUE);
         Assert.notNull("old value", oldValue);
-        
+
         MetaData meta = getSourceDocument().getMetaData(namespace);
-        
+
         String currentValue = meta.getFirstValue(element);
         if (currentValue == null) {
             currentValue = "";
         }
-        
+
         if (!oldValue.equals(currentValue)) {
             addErrorMessage("concurrent-change");
         }
     }
 
     protected void doExecute() throws Exception {
-        
+
         super.doExecute();
-        
+
         String namespace = getParameterAsString(PARAM_NAMESPACE);
         Assert.notNull("namespace", namespace);
         String element = getParameterAsString(PARAM_ELEMENT);
@@ -94,8 +86,20 @@ public class ChangeMetaData extends InvokeWorkflow {
         Assert.notNull("value", value);
         String oldValue = getParameterAsString(PARAM_OLD_VALUE);
         Assert.notNull("old value", oldValue);
-        
+
         MetaData meta = getSourceDocument().getMetaData(namespace);
         meta.setValue(element, value);
     }
+
+    protected UsecaseInvoker getUsecaseInvoker() {
+        return usecaseInvoker;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseInvoker(UsecaseInvoker usecaseInvoker) {
+        this.usecaseInvoker = usecaseInvoker;
+    }
+
 }

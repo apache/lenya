@@ -18,6 +18,8 @@
 
 package org.apache.lenya.ac;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.component.Component;
 import org.apache.cocoon.environment.Request;
 
@@ -48,7 +50,7 @@ public interface AccessController extends Component {
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    boolean authenticate(Request request) throws AccessControlException;
+    boolean authenticate(HttpServletRequest request) throws AccessControlException;
 
     /**
      * Authorizes a request inside a publication.

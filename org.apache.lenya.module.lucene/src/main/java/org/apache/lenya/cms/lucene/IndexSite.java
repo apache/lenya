@@ -29,6 +29,8 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
  */
 public class IndexSite extends AbstractUsecase {
 
+    private IndexUpdater indexUpdater;
+
     public void doExecute() throws Exception {
         String url = getSourceURL();
         URLInformation info = new URLInformation(url);
@@ -40,24 +42,27 @@ public class IndexSite extends AbstractUsecase {
 
         Document[] docs = area.getDocuments();
 
-        IndexUpdater updater = null;
-        try {
-            updater = (IndexUpdater) this.manager.lookup(IndexUpdater.ROLE);
-            for (int i = 0; i < docs.length; i++) {
-                try {
-                    updater.index(getSession(), docs[i].getResourceType(), pubId, area.getName(),
-                            docs[i].getUUID(), docs[i].getLanguage());
-                } catch (Exception e) {
-                    String message = "Error indexing document [" + docs[i].getPath() + ":"
-                            + docs[i].getLanguage() + "], UUID=" + docs[i].getUUID();
-                    addErrorMessage(e + ", see logfiles for more information.");
-                    getLogger().error(message, e);
-                }
-            }
-        } finally {
-            if (updater != null) {
-                this.manager.release(updater);
+        for (int i = 0; i < docs.length; i++) {
+            try {
+                getIndexUpdater().index(getSession(), docs[i].getResourceType(), pubId,
+                        area.getName(), docs[i].getUUID(), docs[i].getLanguage());
+            } catch (Exception e) {
+                String message = "Error indexing document [" + docs[i].getPath() + ":"
+                        + docs[i].getLanguage() + "], UUID=" + docs[i].getUUID();
+                addErrorMessage(e + ", see logfiles for more information.");
+                getLogger().error(message, e);
             }
         }
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setIndexUpdater(IndexUpdater indexUpdater) {
+        this.indexUpdater = indexUpdater;
+    }
+
+    public IndexUpdater getIndexUpdater() {
+        return indexUpdater;
     }
 }

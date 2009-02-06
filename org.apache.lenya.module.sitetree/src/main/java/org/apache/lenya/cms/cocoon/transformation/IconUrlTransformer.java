@@ -22,8 +22,6 @@ import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.ProcessingException;
@@ -35,11 +33,10 @@ import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 
 /**
@@ -50,9 +47,10 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
 
     private LinkResolver linkResolver;
     private IconLinkRewriter rewriter = null;
-    private DocumentFactory factory;
     private String pubId;
     private String area;
+    private Repository repository;
+    private Session session;
 
     protected LinkRewriter getLinkRewriter() {
         if (this.rewriter == null) {
@@ -79,7 +77,7 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
                 try {
                     Link link = getLink(linkUri, pubId, area);
                     LinkTarget target = IconUrlTransformer.this.linkResolver.resolve(
-                            IconUrlTransformer.this.factory, link.getUri());
+                            IconUrlTransformer.this.session.getDocumentFactory(), link.getUri());
                     if (target.exists()) {
                         Document doc = target.getDocument();
                         ResourceType type = doc.getResourceType();
@@ -113,7 +111,7 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
         super.setup(resolver, objectModel, src, params);
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
-            this.factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            this.session = this.repository.getSession(request);
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
 
             String webappUrl = getWebappUrl(params, objectModel);
@@ -135,10 +133,14 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
 
     public void recycle() {
         super.recycle();
-        this.factory = null;
+        this.session = null;
         this.pubId = null;
         this.area = null;
         this.linkResolver = null;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

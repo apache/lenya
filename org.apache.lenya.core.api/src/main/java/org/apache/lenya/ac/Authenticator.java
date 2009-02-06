@@ -18,8 +18,9 @@
 
 package org.apache.lenya.ac;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.component.Component;
-import org.apache.cocoon.environment.Request;
 
 /**
  * An authenticator.
@@ -39,6 +40,6 @@ public interface Authenticator extends Component {
      * @return <code>true</code> if the request is authenticated, <code>false</code> otherwise.
      * @throws AccessControlException when something went wrong.
      */
-    boolean authenticate(AccreditableManager accreditableManager, Request request)
+    boolean authenticate(AccreditableManager accreditableManager, HttpServletRequest request)
         throws AccessControlException;
 }

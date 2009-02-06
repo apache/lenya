@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
@@ -34,18 +33,12 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
  */
 public class AccessControlUsecase extends AbstractUsecase {
 
-    /**
-     * Ctor.
-     */
-    public AccessControlUsecase() {
-        super();
-    }
-
     private UserManager userManager;
     private GroupManager groupManager;
     private IPRangeManager ipRangeManager;
     private RoleManager roleManager;
     private AccessController accessController;
+    private AccessControllerResolver accessControllerResolver;
 
     /**
      * Initializes the accreditable managers. FIXME: This method resolves the
@@ -58,16 +51,10 @@ public class AccessControlUsecase extends AbstractUsecase {
             getLogger().debug("initializeAccessController() called");
 
         this.accessController = null;
-        ServiceSelector selector = null;
-        AccessControllerResolver resolver = null;
 
         try {
-            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-            resolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
-            this.accessController = resolver.resolveAccessController(getSourceURL());
+            this.accessController = getAccessControllerResolver().resolveAccessController(getSourceURL());
 
             if (this.accessController == null) {
                 throw new RuntimeException("No access controller could be resolved for URL ["
@@ -84,13 +71,6 @@ public class AccessControlUsecase extends AbstractUsecase {
 
         } catch (Exception e) {
             throw new RuntimeException("Initialization failed: ", e);
-        } finally {
-            if (selector != null) {
-                if (resolver != null) {
-                    selector.release(resolver);
-                }
-                this.manager.release(selector);
-            }
         }
 
     }
@@ -148,4 +128,14 @@ public class AccessControlUsecase extends AbstractUsecase {
         }
         return this.accessController;
     }
+
+    protected AccessControllerResolver getAccessControllerResolver() {
+        return accessControllerResolver;
+    }
+
+    public void setAccessControllerResolver(AccessControllerResolver accessControllerResolver) {
+        this.accessControllerResolver = accessControllerResolver;
+    }
+    
+    
 }

@@ -23,52 +23,66 @@ package org.apache.lenya.cms.cocoon.flow;
 import java.util.Enumeration;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * Flowscript utility class. The FOM_Cocoon object is not passed in the constructor to avoid errors.
  * This way, not the initial, but the current FOM_Cocoon object is used by the methods.
  */
-public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Serviceable {
+public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
+    
+    private RepositoryManager repositoryManager;
+    private DocumentFactoryBuilder documentFactoryBuilder;
 
-    /**
-     * Ctor.
-     */
-    public FlowHelperImpl() {
-        // do nothing
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public DocumentFactoryBuilder getDocumentFactoryBuilder() {
+        return documentFactoryBuilder;
+    }
+
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
+        this.documentFactoryBuilder = documentFactoryBuilder;
     }
 
     /**
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getPageEnvelope(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
      */
     public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
-        Request request = getRequest(cocoon);
+        HttpServletRequest request = getRequest(cocoon);
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory map = getDocumentFactoryBuilder().createDocumentFactory(session);
             PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
-            Publication publication = PublicationUtil.getPublication(this.manager, request);
+            URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
+            Publication publication = map.getPublication(info.getPublicationId());
             return factory.getPageEnvelope(map, cocoon.getObjectModel(), publication);
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
@@ -85,7 +99,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
     /**
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getRequest(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
      */
-    public Request getRequest(FOM_Cocoon cocoon) {
+    public HttpServletRequest getRequest(FOM_Cocoon cocoon) {
         return cocoon.getRequest();
     }
 
@@ -100,7 +114,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getDocumentHelper(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
      */
     public DocumentHelper getDocumentHelper(FOM_Cocoon cocoon) {
-        return new DocumentHelper(this.manager, cocoon.getObjectModel());
+        return new DocumentHelper(cocoon.getObjectModel());
     }
 
     /**
@@ -142,7 +156,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
         Document document = getPageEnvelope(cocoon).getDocument();
-        WorkflowUtil.invoke(this.manager, getLogger(), document, event);
+        WorkflowUtil.invoke(getLogger(), document, event);
     }
 
     /**
@@ -156,12 +170,4 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
         node.checkin();
     }
 
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
 }

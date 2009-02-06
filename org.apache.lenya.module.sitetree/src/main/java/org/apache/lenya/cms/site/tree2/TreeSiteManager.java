@@ -54,7 +54,7 @@ public class TreeSiteManager extends AbstractSiteManager {
 
         String key = getKey(area);
         SiteTree sitetree;
-        RepositoryItemFactory factory = new SiteTreeFactory(this.manager, getLogger());
+        RepositoryItemFactory factory = new SiteTreeFactory(getLogger());
         try {
             sitetree = (SiteTree) area.getPublication().getFactory().getSession()
                     .getRepositoryItem(factory, key);
@@ -230,7 +230,7 @@ public class TreeSiteManager extends AbstractSiteManager {
 
     public SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource)
             throws SiteException {
-        NodeSet nodes = new NodeSet(this.manager);
+        NodeSet nodes = new NodeSet();
         SiteTree tree = (SiteTree) resource.getStructure();
 
         TreeNode node = (TreeNode) tree.getNode(resource.getPath());

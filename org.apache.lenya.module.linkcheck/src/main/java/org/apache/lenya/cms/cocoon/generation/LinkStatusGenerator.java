@@ -32,6 +32,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.regexp.RE;
@@ -197,6 +198,7 @@ public class LinkStatusGenerator extends ServiceableGenerator
     protected Source inputSource;
     String src;
     private DocumentFactory identityMap;
+    private RepositoryManager repositoryManager;
 
     /**
      * Stores links to process and the referrer links
@@ -320,11 +322,11 @@ public class LinkStatusGenerator extends ServiceableGenerator
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session;
         try {
-            session = RepositoryUtil.getSession(this.manager, request);
+            session = RepositoryUtil.getSession(getRepositoryManager(), request);
         } catch (RepositoryException e) {
             throw new ProcessingException(e);
         }
-        this.identityMap = DocumentUtil.createDocumentFactory(this.manager, session);
+        this.identityMap = DocumentUtil.createDocumentFactory(session);
 
         super.setup(resolver, objectModel, src, par);
         this.src = src;
@@ -699,5 +701,13 @@ public class LinkStatusGenerator extends ServiceableGenerator
         this.manager = null;
         this.attributes = null;
         super.recycle();
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

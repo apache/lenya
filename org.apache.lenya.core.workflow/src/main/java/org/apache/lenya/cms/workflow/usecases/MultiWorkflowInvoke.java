@@ -30,10 +30,12 @@ import org.apache.lenya.util.Assert;
  * Invocation usecase for the multi-workflow usecase.
  */
 public class MultiWorkflowInvoke extends AbstractUsecase {
-    
+
     protected static final String URL = "url";
     protected static final String USECASE_NAME = "usecaseName";
-    
+
+    private UsecaseInvoker usecaseInvoker;
+
     protected void doExecute() throws Exception {
         super.doExecute();
 
@@ -42,23 +44,27 @@ public class MultiWorkflowInvoke extends AbstractUsecase {
         String url = getParameterAsString(URL);
         Assert.notNull("url", url);
 
-        UsecaseInvoker invoker = null;
-        try {
-            invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
-            invoker.invoke(url, usecase, new HashMap());
+        UsecaseInvoker invoker = getUsecaseInvoker();
+        invoker.invoke(url, usecase, new HashMap());
 
-            if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
-                List messages = invoker.getErrorMessages();
-                for (Iterator i = messages.iterator(); i.hasNext();) {
-                    UsecaseMessage message = (UsecaseMessage) i.next();
-                    addErrorMessage(message.getMessage(), message.getParameters());
-                }
-            }
-        } finally {
-            if (invoker == null) {
-                this.manager.release(invoker);
+        if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
+            List messages = invoker.getErrorMessages();
+            for (Iterator i = messages.iterator(); i.hasNext();) {
+                UsecaseMessage message = (UsecaseMessage) i.next();
+                addErrorMessage(message.getMessage(), message.getParameters());
             }
         }
+    }
+
+    protected UsecaseInvoker getUsecaseInvoker() {
+        return usecaseInvoker;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setUsecaseInvoker(UsecaseInvoker usecaseInvoker) {
+        this.usecaseInvoker = usecaseInvoker;
     }
 
 }

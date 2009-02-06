@@ -21,13 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
 /**
@@ -55,10 +51,8 @@ public class Propfind extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Publication _publication = this.getPublication();
+        Publication pub = this.getPublication();
 
-        ServiceSelector siteManagerSelector = null;
-        SiteManager siteManager = null;
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
 
@@ -72,12 +66,7 @@ public class Propfind extends SiteUsecase {
         }
         try {
 
-            siteManagerSelector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE
-                    + "Selector");
-            siteManager = (SiteManager) siteManagerSelector.select(_publication.getSiteManagerHint());
-            Document[] documents = siteManager.getDocuments(getDocumentFactory(),
-                    _publication,
-                    Publication.AUTHORING_AREA);
+            Document[] documents = pub.getArea(Publication.AUTHORING_AREA).getDocuments();
 
             for (int i = 0; i < documents.length; i++) {
                 String test = documents[i].getCanonicalWebappURL().replaceFirst("/[^/]*.html", "");
@@ -103,18 +92,11 @@ public class Propfind extends SiteUsecase {
             setParameter(DATEFORMAT, format);
             Date rootModDate = new Date();
             setParameter("rootModDate", rootModDate);
-            String defaultLang = _publication.getDefaultLanguage();
+            String defaultLang = pub.getDefaultLanguage();
             setParameter("defaultLang", defaultLang);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (siteManagerSelector != null) {
-                if (siteManager != null) {
-                    siteManagerSelector.release(siteManager);
-                }
-                this.manager.release(siteManagerSelector);
-            }
         }
     }
 
@@ -123,28 +105,6 @@ public class Propfind extends SiteUsecase {
      */
     public String getArea() {
         return Publication.AUTHORING_AREA;
-    }
-
-    private Publication publication;
-
-    /**
-     * Access to the current publication. Use this when the publication is not yet known in the
-     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
-     * access the publication via that document's interface instead.
-     * 
-     * @return the publication in which the use-case is being executed
-     */
-    protected Publication getPublication() {
-        if (this.publication == null) {
-            try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                        getDocumentFactory(),
-                        getSourceURL());
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.publication;
     }
 
 }

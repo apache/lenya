@@ -30,6 +30,7 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.xml.sax.SAXException;
@@ -41,6 +42,7 @@ import org.xml.sax.SAXException;
 public class IncomingProxyTransformer extends AbstractLinkTransformer {
     
     private LinkRewriter rewriter;
+    private RepositoryManager repositoryManager;
 
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
             Parameters params) throws ProcessingException, SAXException, IOException {
@@ -48,8 +50,8 @@ public class IncomingProxyTransformer extends AbstractLinkTransformer {
         Request request = ObjectModelHelper.getRequest(_objectModel);
 
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             String webappUrl = getWebappUrl(params, objectModel);
             URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
@@ -66,6 +68,14 @@ public class IncomingProxyTransformer extends AbstractLinkTransformer {
     public void recycle() {
         super.recycle();
         this.rewriter = null;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

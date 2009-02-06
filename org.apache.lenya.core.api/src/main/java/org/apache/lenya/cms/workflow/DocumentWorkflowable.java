@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
@@ -55,25 +54,15 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
      * @param document The document.
      * @param logger The logger.
      */
-    public DocumentWorkflowable(ServiceManager manager, Document document, Log logger) {
+    public DocumentWorkflowable(Document document, Log logger) {
         if (session.getIdentity() == null) {
             throw new IllegalArgumentException("The session must have an identity.");
         }
         this.document = document;
         this.session = session;
-        this.manager = manager;
     }
 
     private Session session;
-
-    private ServiceManager manager;
-
-    /**
-     * @return The service manager.
-     */
-    public ServiceManager getServiceManager() {
-        return this.manager;
-    }
 
     /**
      * @return The repository session.
@@ -184,7 +173,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         addToMetaData(string);
 
         WorkflowEventDescriptor descriptor = new WorkflowEventDescriptor(version);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getDocument(),
+        RepositoryEvent event = RepositoryEventFactory.createEvent(getDocument(),
                 getLogger(), descriptor);
         getDocument().getRepositoryNode().getSession().enqueueEvent(event);
     }

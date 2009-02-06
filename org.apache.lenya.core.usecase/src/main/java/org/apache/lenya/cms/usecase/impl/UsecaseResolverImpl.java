@@ -20,20 +20,20 @@ package org.apache.lenya.cms.usecase.impl;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.avalon.framework.activity.Disposable;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 
@@ -42,52 +42,15 @@ import org.apache.lenya.cms.usecase.UsecaseResolver;
  * 
  * @version $Id$
  */
-public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseResolver,
-        Serviceable, Disposable, ThreadSafe {
+public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseResolver {
 
-    /**
-     * Ctor.
-     */
-    public UsecaseResolverImpl() {
-        // do nothing
-    }
-
-    private ServiceSelector selector;
-
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
-
-    protected ServiceSelector getSelector() throws ServiceException {
-        if (this.selector == null) {
-            this.selector = (ServiceSelector) this.manager.lookup(Usecase.ROLE + "Selector");
-        }
-        return this.selector;
-    }
+    private PublicationTemplateManager templateManager;
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#release(org.apache.lenya.cms.usecase.Usecase)
      */
     public void release(Usecase usecase) throws ServiceException {
-        if (usecase == null) {
-            throw new IllegalArgumentException("The usecase to release must not be null.");
-        }
-        getSelector().release(usecase);
-
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        if (this.selector != null) {
-            this.manager.release(this.selector);
-        }
     }
 
     /**
@@ -102,17 +65,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
 
         Publication publication = getPublication(webappUrl);
         if (publication != null) {
-            PublicationTemplateManager templateManager = null;
-            try {
-                templateManager = (PublicationTemplateManager) this.manager
-                        .lookup(PublicationTemplateManager.ROLE);
-                newName = (String) templateManager.getSelectableHint(publication, getSelector(),
-                        name);
-            } finally {
-                if (templateManager != null) {
-                    this.manager.release(templateManager);
-                }
-            }
+            newName = (String) this.templateManager.getSelectableHint(publication, Usecase.ROLE, name);
         } else {
             newName = name;
         }
@@ -126,13 +79,14 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @return A publication.
      */
     protected Publication getPublication(String webappUrl) {
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        HttpServletRequest request = process.getRequest();
         Publication publication = null;
-        ContextUtility util = null;
         try {
-            util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-            Request request = util.getRequest();
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
 
+            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
 
@@ -141,21 +95,17 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (util != null) {
-                this.manager.release(util);
-            }
         }
         return publication;
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String,
-     *      java.lang.String)
+     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String, java.lang.String)
      */
     public Usecase resolve(String webappUrl, String name) throws ServiceException {
         Object usecaseName = getUsecaseName(webappUrl, name);
-        Usecase usecase = (Usecase) getSelector().select(usecaseName);
+        Usecase usecase = (Usecase) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
+                Usecase.ROLE + "/" + usecaseName);
         usecase.setName(name);
         usecase.setSourceURL(webappUrl);
         return usecase;
@@ -167,7 +117,8 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      */
     public boolean isRegistered(String webappUrl, String name) throws ServiceException {
         String usecaseName = getUsecaseName(webappUrl, name);
-        return getSelector().isSelectable(usecaseName);
+        return WebAppContextUtils.getCurrentWebApplicationContext().containsBean(
+                Usecase.ROLE + "/" + usecaseName);
     }
 
     /**
@@ -181,12 +132,28 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
     }
 
     private SortedSet usecaseNames;
-    
+
     public void register(String usecaseName) {
         if (this.usecaseNames == null) {
             this.usecaseNames = new TreeSet();
         }
         this.usecaseNames.add(usecaseName);
+    }
+
+    public void setTemplateManager(PublicationTemplateManager templateManager) {
+        this.templateManager = templateManager;
+    }
+
+    public PublicationTemplateManager getTemplateManager() {
+        return templateManager;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

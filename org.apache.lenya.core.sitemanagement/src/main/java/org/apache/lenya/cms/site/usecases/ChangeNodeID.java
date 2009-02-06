@@ -46,6 +46,7 @@ import org.apache.lenya.transaction.TransactionException;
 public class ChangeNodeID extends DocumentUsecase {
 
     protected static final String NODE_ID = "nodeId";
+    private DocumentManager documentManager;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -66,13 +67,13 @@ public class ChangeNodeID extends DocumentUsecase {
         List nodes = new ArrayList();
 
         try {
-            if(getSourceDocument() != null) {
+            if (getSourceDocument() != null) {
                 Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
                 nodes.add(siteNode);
 
                 Document sourceDocument = getSourceDocument();
-  
-                NodeSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument.getLink().getNode());
+
+                NodeSet subsite = SiteUtil.getSubSite(sourceDocument.getLink().getNode());
                 for (NodeIterator i = subsite.iterator(); i.hasNext();) {
                     SiteNode node = i.next();
                     String[] languages = node.getLanguages();
@@ -156,17 +157,8 @@ public class ChangeNodeID extends DocumentUsecase {
         Document targetDoc;
         Document source = getSourceDocument();
         DocumentLocator target = getTargetLocator();
-        DocumentManager documentManager = null;
-        try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.moveAll(source.area(), source.getPath(), source.area(), target
-                    .getPath());
-            targetDoc = getDocumentFactory().get(target);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-        }
+        getDocumentManager().moveAll(source.area(), source.getPath(), source.area(), target.getPath());
+        targetDoc = getDocumentFactory().get(target);
 
         setTargetDocument(targetDoc);
     }
@@ -190,4 +182,16 @@ public class ChangeNodeID extends DocumentUsecase {
 
         return newDocumentId;
     }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
 }

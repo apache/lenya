@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -37,26 +36,35 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * <p>Meta data transformer.</p>
- * <p>Usage example:</p>
+ * <p>
+ * Meta data transformer.
+ * </p>
+ * <p>
+ * Usage example:
+ * </p>
+ * 
  * <pre>
- * &lt;meta:value xmlns:meta="http://apache.org/lenya/meta/1.0/"
- *   element="title"
- *   ns="http://purl.org/dc/elements/1.1/"
- *   uuid="{$uuid}"
- *   lang="{$language}"
- *   default="default-title"
- *   i18n:attr="default" /&gt;
+ * &lt;meta:value xmlns:meta=&quot;http://apache.org/lenya/meta/1.0/&quot;
+ *   element=&quot;title&quot;
+ *   ns=&quot;http://purl.org/dc/elements/1.1/&quot;
+ *   uuid=&quot;{$uuid}&quot;
+ *   lang=&quot;{$language}&quot;
+ *   default=&quot;default-title&quot;
+ *   i18n:attr=&quot;default&quot; /&gt;
  * </pre>
- * <p>The attribute <em>default</em> is optional.</p>
+ * <p>
+ * The attribute <em>default</em> is optional.
+ * </p>
  */
-public class MetaDataTransformer extends AbstractSAXTransformer implements Disposable {
+public class MetaDataTransformer extends AbstractSAXTransformer {
     /**
      * The namespace for the meta data is http://apache.org/lenya/meta/1.0
      */
@@ -105,6 +113,7 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
     protected String uuid = null;
     protected Publication pub;
     private DocumentFactory factory;
+    protected RepositoryManager repositoryManager;
 
     /**
      * Setup the MetaDataTransformer.
@@ -124,10 +133,11 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
                     "The area is not set! Please set like e.g. <map:parameter name='area' value='{request-param:area}'/>");
         }
         Request request = ObjectModelHelper.getRequest(objectModel);
-        factory = DocumentUtil.getDocumentFactory(this.manager, request);
         try {
+            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+            factory = DocumentUtil.createDocumentFactory(session);
             pub = factory.getPublication(this.publicationId);
-        } catch (PublicationException e) {
+        } catch (Exception e) {
             throw new ProcessingException("Error geting publication id / area from page envelope",
                     e);
         }
@@ -214,6 +224,10 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements Dispo
         this.uuid = null;
         this.pub = null;
         this.factory = null;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
     }
 
 }

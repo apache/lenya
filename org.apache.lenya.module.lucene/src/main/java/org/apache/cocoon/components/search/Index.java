@@ -22,12 +22,11 @@ import java.io.IOException;
 import java.util.Date;
 
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.components.search.components.AnalyzerManager;
 import org.apache.cocoon.components.search.components.Indexer;
 import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
 import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -35,6 +34,7 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Index Class
@@ -73,19 +73,16 @@ public class Index {
      * is the indexer working (not released)
      */
     private boolean indexer_busy;
-    
+
     /**
      * Indexer Role name
      */
     private String indexer_role;
 
-    private ServiceManager manager;
-
     /**
      * Create a lucene document
      * 
-     * @param uid
-     *            String the document uid
+     * @param uid String the document uid
      * @return Document a empty document
      */
     public Document createDocument(String uid) {
@@ -100,17 +97,13 @@ public class Index {
     /**
      * create a lucene field
      * 
-     * @param fieldname
-     *            String fieldname (must existed in the index structure)
-     * @param value
-     *            String value
+     * @param fieldname String fieldname (must existed in the index structure)
+     * @param value String value
      */
-    public Field createField(String fieldname, String value)
-            throws IndexException {
+    public Field createField(String fieldname, String value) throws IndexException {
         FieldDefinition f = structure.getFieldDef(fieldname);
         if (f == null) {
-            throw new IndexException("Field with the name: " + fieldname
-                    + " doesn't exist");
+            throw new IndexException("Field with the name: " + fieldname + " doesn't exist");
         }
         return f.createLField(value);
     }
@@ -118,22 +111,17 @@ public class Index {
     /**
      * create a lucene field for date value
      * 
-     * @param fieldname
-     *            String fieldname (must existed in the index structure)
-     * @param value
-     *            String value
+     * @param fieldname String fieldname (must existed in the index structure)
+     * @param value String value
      */
-    public Field createField(String fieldname, Date value)
-            throws IndexException {
-        DateFieldDefinition f = (DateFieldDefinition) structure
-                .getFieldDef(fieldname);
+    public Field createField(String fieldname, Date value) throws IndexException {
+        DateFieldDefinition f = (DateFieldDefinition) structure.getFieldDef(fieldname);
         if (f == null) {
-            throw new IndexException("Field with the name: " + fieldname
-                    + " doesn't exist");
+            throw new IndexException("Field with the name: " + fieldname + " doesn't exist");
         }
         return f.createLField(value);
     }
-    
+
     /**
      * get the indexer of the index
      * 
@@ -152,18 +140,17 @@ public class Index {
         }
 
         if (indexer_busy) {
-            throw new IndexException(
-                    "Timeout to access to the indexer (the indexer is indexing)");
+            throw new IndexException("Timeout to access to the indexer (the indexer is indexing)");
         }
         AnalyzerManager analyzerM = null;
         try {
 
             indexer_busy = true;
-            Indexer indexer = (Indexer) this.manager.lookup(indexer_role);
+            WebApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
+            Indexer indexer = (Indexer) context.getBean(indexer_role);
 
             // update maybe the analyzer
-            analyzerM = (AnalyzerManager) this.manager
-                    .lookup(AnalyzerManager.ROLE);
+            analyzerM = (AnalyzerManager) context.getBean(AnalyzerManager.ROLE);
 
             String analyzerId = getDefaultAnalyzerID();
             if (analyzerId != null) {
@@ -173,14 +160,8 @@ public class Index {
             indexer.setIndex(directory);
 
             return indexer;
-        } catch (ServiceException ex1) {
-            throw new IndexException(ex1);
         } catch (ConfigurationException ex2) {
             throw new IndexException(ex2);
-        } finally {
-            if (analyzerM != null) {
-                manager.release(analyzerM);
-            }
         }
     }
 
@@ -191,7 +172,6 @@ public class Index {
      */
     public synchronized void releaseIndexer(Indexer indexer) {
         if (indexer != null) {
-            this.manager.release(indexer);
             indexer_busy = false;
         }
         notifyAll();
@@ -209,8 +189,7 @@ public class Index {
     /**
      * Set the index ID
      * 
-     * @param id
-     *            index ID
+     * @param id index ID
      */
     public void setID(String id) {
         this.id = id;
@@ -228,8 +207,7 @@ public class Index {
     /**
      * set the default Analyzer
      * 
-     * @param defaultAnalyzerID
-     *            the id of the default Analyzer
+     * @param defaultAnalyzerID the id of the default Analyzer
      */
     public void setDefaultAnalyzerID(String defaultAnalyzerID) {
         this.defaultAnalyzer = defaultAnalyzerID;
@@ -247,15 +225,10 @@ public class Index {
     /**
      * Set the index structure
      * 
-     * @param structure
-     *            IndexStructure
+     * @param structure IndexStructure
      */
     public void setStructure(IndexStructure structure) {
         this.structure = structure;
-    }
-
-    public void setManager(ServiceManager manager) {
-        this.manager = manager;
     }
 
     /**
@@ -270,8 +243,7 @@ public class Index {
     /**
      * Set the lucene Directory
      * 
-     * @param dir
-     *            lucene Directory
+     * @param dir lucene Directory
      * @return success or not
      * @throws IOException
      */
@@ -297,8 +269,7 @@ public class Index {
     /**
      * Set the index path directory
      * 
-     * @param path
-     *            String
+     * @param path String
      * @throws IOException
      */
     public boolean setDirectory(String path) throws IOException {

@@ -27,15 +27,15 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.Properties;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.stream.StreamResult;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.OutputKeys;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.xml.XMLUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
@@ -54,8 +54,8 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import org.w3c.tidy.Tidy;
+import org.xml.sax.SAXException;
 
 /**
  * Fckeditor Usecase
@@ -65,6 +65,8 @@ public class Fckeditor extends DocumentUsecase {
 
     public static final String TIDY_CONFIG = "tidyConfig";
     public static final String XSLT_CLEAN_FORMAT = "xslt-clean";
+    
+    private SourceResolver sourceResolver;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -80,13 +82,13 @@ public class Fckeditor extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Request request = ContextHelper.getRequest(this.context);
+        HttpServletRequest request = getRequest();
         String requesturi = request.getRequestURI();
         setParameter("requesturi", requesturi);
         URLInformation info = new URLInformation(getSourceURL());
         String pubId = info.getPublicationId();
-        LinkRewriter rewriter = new OutgoingLinkRewriter(this.manager, getSession(),
-                getSourceURL(), request.isSecure(), false, false);
+        LinkRewriter rewriter = new OutgoingLinkRewriter(getSession(), getSourceURL(), request
+                .isSecure(), false, false);
 
         setParameter("proxyUrl", rewriter.rewrite("/" + pubId));
     }
@@ -97,8 +99,7 @@ public class Fckeditor extends DocumentUsecase {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
 
-        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
-                getLogger());
+        UsecaseWorkflowHelper.checkWorkflow(this, getEvent(), getSourceDocument(), getLogger());
     }
 
     /**
@@ -114,7 +115,7 @@ public class Fckeditor extends DocumentUsecase {
         }
 
         // Aggregate content
-        Request request = ContextHelper.getRequest(this.context);
+        HttpServletRequest request = getRequest();
         String encoding = request.getCharacterEncoding();
         String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
                 + addNamespaces(namespaces, getParameterAsString("content"));
@@ -130,13 +131,12 @@ public class Fckeditor extends DocumentUsecase {
      * @throws Exception if an error occurs.
      */
     protected void saveDocument(String encoding, String content) throws Exception {
-        SourceResolver resolver = null;
+        SourceResolver resolver = getSourceResolver();
         Source indexSource = null;
         Source tidySource = null;
         ModifiableSource xsltSource = null;
         Properties properties = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             saveXMLFile(encoding, content, getSourceDocument().getOutputStream());
 
             Document xmlDoc = null;
@@ -228,7 +228,7 @@ public class Fckeditor extends DocumentUsecase {
                 saveXMLFile(encoding, content, getSourceDocument().getOutputStream());
             }
             // Convert URLs back to UUIDs. convert() does a save
-            LinkConverter converter = new LinkConverter(this.manager, getLogger());
+            LinkConverter converter = new LinkConverter(getLogger());
             converter.convertUrlsToUuids(getSourceDocument(), false);
 
             xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
@@ -237,11 +237,10 @@ public class Fckeditor extends DocumentUsecase {
                 ResourceType resourceType = getSourceDocument().getResourceType();
                 Schema schema = resourceType.getSchema();
 
-                ValidationUtil
-                        .validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+                ValidationUtil.validate(xmlDoc, schema, new UsecaseErrorHandler(this));
 
                 if (!hasErrors()) {
-                    WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+                    WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
                 }
             }
 
@@ -256,7 +255,6 @@ public class Fckeditor extends DocumentUsecase {
                 if (xsltSource != null) {
                     resolver.release(xsltSource);
                 }
-                this.manager.release(resolver);
             }
         }
     }
@@ -324,6 +322,17 @@ public class Fckeditor extends DocumentUsecase {
 
     protected String getEvent() {
         return "edit";
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

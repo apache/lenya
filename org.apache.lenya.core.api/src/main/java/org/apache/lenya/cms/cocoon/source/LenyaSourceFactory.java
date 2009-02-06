@@ -20,27 +20,23 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.flow.FlowHelper;
 import org.apache.cocoon.components.modules.input.JXPathHelper;
 import org.apache.cocoon.components.modules.input.JXPathHelperConfiguration;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
@@ -52,8 +48,7 @@ import org.apache.lenya.util.Query;
  * 
  * @version $Id$
  */
-public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
-        Contextualizable, Serviceable {
+public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFactory {
 
     protected static final String SCHEME = "lenya:";
 
@@ -61,24 +56,9 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
     protected static final String DEFAULT_DELEGATION_SCHEME = "context:";
     protected static final String DEFAULT_DELEGATION_PREFIX = "/"
             + Publication.PUBLICATION_PREFIX_URI;
-
-    private Context context;
-    private ServiceManager manager;
-
-    /**
-     * Used for resolving the object model.
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context _context) throws ContextException {
-        this.context = _context;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
+    
+    private NodeFactory nodeFactory;
+    private RepositoryManager repositoryManager;
 
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
@@ -87,7 +67,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
             throws MalformedURLException, IOException, SourceException {
 
         String sessionName = null;
-        
+
         String[] uriAndQuery = location.split("\\?");
         if (uriAndQuery.length > 1) {
             Query query = new Query(uriAndQuery[1]);
@@ -105,18 +85,19 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
 
-        return new RepositorySource(this.manager, location, session, getLogger());
+        return new RepositorySource(getNodeFactory(), location, session, getLogger());
 
     }
 
     protected Session getSession(String sessionName) throws RepositoryException {
-        Map objectModel = ContextHelper.getObjectModel(this.context);
         Session session;
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+        .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
         if (sessionName == null) {
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            session = RepositoryUtil.getSession(this.manager, request);
+            HttpServletRequest request = process.getRequest();
+            session = RepositoryUtil.getSession(getRepositoryManager(), request);
         } else if (sessionName.equals("usecase")) {
-            session = getUsecaseSession(objectModel);
+            session = getUsecaseSession(process.getObjectModel());
         } else {
             throw new RepositoryException("Invalid session: [" + sessionName + "]");
         }
@@ -142,5 +123,21 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
      */
     public void release(Source source) {
         // do nothing
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
+    }
+
+    public NodeFactory getNodeFactory() {
+        return nodeFactory;
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 }

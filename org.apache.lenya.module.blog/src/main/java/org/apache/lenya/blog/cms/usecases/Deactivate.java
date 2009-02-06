@@ -33,6 +33,8 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * @version $Id: Deactivate.java 264805 2005-08-30 16:20:15Z andreas $
  */
 public class Deactivate extends DocumentUsecase {
+    
+    private DocumentManager documentManager;
 
     /**
      * Checks if the workflow event is supported and the parent of the document exists in the live
@@ -48,10 +50,7 @@ public class Deactivate extends DocumentUsecase {
                 return;
             }
             String event = getEvent();
-            if (!WorkflowUtil.canInvoke(this.manager,
-                    getLogger(),
-                    getSourceDocument(),
-                    event)) {
+            if (!WorkflowUtil.canInvoke(getLogger(), getSourceDocument(), event)) {
                 addInfoMessage("The document cannot be deactivated because the workflow event cannot be invoked.");
             }
         }
@@ -64,12 +63,13 @@ public class Deactivate extends DocumentUsecase {
         try {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();
-            Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);            
+            Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
             nodes.add(doc.getRepositoryNode());
-            nodes.add(liveDoc.getRepositoryNode());            
+            nodes.add(liveDoc.getRepositoryNode());
             nodes.add(liveDoc.area().getSite().getRepositoryNode());
-            nodes.add(doc.area().getSite().getRepositoryNode());            
-            return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);            
+            nodes.add(doc.area().getSite().getRepositoryNode());
+            return (org.apache.lenya.cms.repository.Node[]) nodes
+                    .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -89,33 +89,23 @@ public class Deactivate extends DocumentUsecase {
      * @param authoringDocument The authoring document.
      */
     protected void deactivate(Document authoringDocument) {
-
         boolean success = false;
-
-        DocumentManager documentManager = null;
         try {
             Document liveDocument = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
 
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.delete(liveDocument);
-         
-            WorkflowUtil.invoke(this.manager,
-                    getLogger(),
-                    authoringDocument,
-                    getEvent());                  
+            getDocumentManager().delete(liveDocument);
+
+            WorkflowUtil.invoke(getLogger(), authoringDocument, getEvent());
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Deactivate document [" + authoringDocument + "]. Success: ["
-                        + success + "]");
-            }
-            if (documentManager != null) {
-                this.manager.release(documentManager);
+                getLogger().debug(
+                        "Deactivate document [" + authoringDocument + "]. Success: [" + success
+                                + "]");
             }
         }
-
     }
 
     /**
@@ -124,4 +114,16 @@ public class Deactivate extends DocumentUsecase {
     private String getEvent() {
         return "deactivate";
     }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+    
 }

@@ -22,18 +22,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.NodeSet;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 
 /**
  * Deactivate usecase handler.
@@ -49,6 +45,9 @@ public class Deactivate extends InvokeWorkflow {
     public static final String PARAM_CHECK_LIVE_CHILDREN = "checkLiveChildren";
 
     protected static final String LINKS_TO_DOCUMENT = "linksToDocument";
+    
+    private DocumentManager documentManager;
+    private LinkManager linkManager;
 
     /**
      * Checks if the workflow event is supported and the parent of the document exists in the live
@@ -72,7 +71,7 @@ public class Deactivate extends InvokeWorkflow {
                 addErrorMessage("This usecase can only be invoked when the live version exists.");
             } else {
                 checkChildren();
-                setParameter(LINKS_TO_DOCUMENT, new LinkList(this.manager, doc));
+                setParameter(LINKS_TO_DOCUMENT, new LinkList(doc));
             }
         }
     }
@@ -89,7 +88,7 @@ public class Deactivate extends InvokeWorkflow {
 
         Document doc = getSourceDocument();
         Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-        NodeSet subSite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
+        NodeSet subSite = SiteUtil.getSubSite(liveDoc.getLink().getNode());
         SiteNode node = liveDoc.getLink().getNode();
         subSite.remove(node);
 
@@ -133,16 +132,10 @@ public class Deactivate extends InvokeWorkflow {
      * @param authoringDocument The authoring document.
      */
     protected void deactivate(Document authoringDocument) {
-
         boolean success = false;
-
-        DocumentManager documentManager = null;
         try {
             Document liveDocument = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
-
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.delete(liveDocument);
-
+            getDocumentManager().delete(liveDocument);
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -151,11 +144,7 @@ public class Deactivate extends InvokeWorkflow {
                 getLogger().debug("Deactivate document [" + authoringDocument + "]. Success: ["
                         + success + "]");
             }
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
         }
-
     }
 
     protected String getEvent() {
@@ -165,18 +154,15 @@ public class Deactivate extends InvokeWorkflow {
     /**
      * A list of links pointing to a document. Allows lazy loading from the usecase view.
      */
-    public static class LinkList {
+    public class LinkList {
         
         private Document document;
         private Document[] documents;
-        private ServiceManager manager;
         
         /**
-         * @param manager The manager.
          * @param doc The document to resolve the links from.
          */
-        public LinkList(ServiceManager manager, Document doc) {
-            this.manager = manager;
+        public LinkList(Document doc) {
             this.document = doc;
         }
         
@@ -192,9 +178,8 @@ public class Deactivate extends InvokeWorkflow {
         
         protected Document[] getLinksToDocument() {
             Set docs = new HashSet();
-            LinkManager linkMgr = null;
+            LinkManager linkMgr = Deactivate.this.getLinkManager();
             try {
-                linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
                 Document liveVersion = this.document.getAreaVersion(Publication.LIVE_AREA);
                 Document[] referencingDocs = linkMgr.getReferencingDocuments(liveVersion);
                 for (int d = 0; d < referencingDocs.length; d++) {
@@ -206,14 +191,31 @@ public class Deactivate extends InvokeWorkflow {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            finally {
-                if (linkMgr != null) {
-                    this.manager.release(linkMgr);
-                }
-            }
             return (Document[]) docs.toArray(new Document[docs.size()]);
         }
 
+    }
+
+    protected DocumentManager getDocumentManager() {
+        return documentManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
+    protected LinkManager getLinkManager() {
+        return linkManager;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setLinkManager(LinkManager linkManager) {
+        this.linkManager = linkManager;
     }
 
 }

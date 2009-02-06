@@ -17,19 +17,15 @@
  */
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
-import org.apache.avalon.framework.activity.Initializable;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.ContextHelper;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
-import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.processing.ProcessInfoProvider;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
@@ -38,50 +34,42 @@ import org.apache.lenya.cms.repository.Session;
  * 
  * @version $Id$
  */
-public class OperationModule extends AbstractInputModule implements Serviceable,
-        Initializable, Contextualizable {
+public class OperationModule extends AbstractInputModule {
 
-    /**
-     * Ctor.
-     */
-    public OperationModule() {
-        super();
-    }
-
-    private DocumentFactory documentIdentityMap;
-
-    private Request request;
+    private RepositoryManager repositoryManager;
+    private DocumentFactory documentFactory;
+    private DocumentFactoryBuilder documentFactoryBuilder;
 
     protected DocumentFactory getDocumentFactory() {
-        if (this.documentIdentityMap == null) {
+        ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
+        if (this.documentFactory == null) {
+            HttpServletRequest request = processInfo.getRequest();
             try {
-                Session session = RepositoryUtil.getSession(this.manager, this.request);
-                this.documentIdentityMap = DocumentUtil.createDocumentFactory(this.manager, session);
+                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+                this.documentFactory = getDocumentFactoryBuilder().createDocumentFactory(
+                        session);
             } catch (RepositoryException e) {
                 throw new RuntimeException(e);
             }
         }
-        return this.documentIdentityMap;
+        return this.documentFactory;
     }
 
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
-    /**
-     * @see org.apache.avalon.framework.activity.Initializable#initialize()
-     */
-    public void initialize() throws Exception {
-        // do nothing
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
     }
 
-    public void contextualize(Context context) throws ContextException {
-        this.request = ContextHelper.getRequest(context);
+    public DocumentFactoryBuilder getDocumentFactoryBuilder() {
+        return documentFactoryBuilder;
+    }
+
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
+        this.documentFactoryBuilder = documentFactoryBuilder;
     }
 
 }

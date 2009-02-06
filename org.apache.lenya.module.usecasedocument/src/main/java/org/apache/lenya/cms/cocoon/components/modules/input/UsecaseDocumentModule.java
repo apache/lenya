@@ -23,21 +23,24 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.site.usecases.CreateUsecaseDocument;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.xml.DocumentHelper;
 
 /**
  * Module to retrieve information from a usecase resource type document.
  */
-public class UsecaseDocumentModule extends AbstractInputModule implements Serviceable {
+public class UsecaseDocumentModule extends AbstractInputModule {
 
     protected static final String USECASE = "usecase";
+    
+    private Repository repository;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -46,7 +49,9 @@ public class UsecaseDocumentModule extends AbstractInputModule implements Servic
         try {
             if (name.equals(USECASE)) {
                 Request request = ObjectModelHelper.getRequest(objectModel);
-                Document doc = DocumentUtil.getCurrentDocument(this.manager, request);
+                Session session = this.repository.getSession(request);
+                String webappUrl = ServletHelper.getWebappURI(request);
+                Document doc = session.getDocumentFactory().getFromURL(webappUrl);
                 org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(doc.getInputStream());
                 String usecaseName = xmlDoc.getDocumentElement().getAttribute(CreateUsecaseDocument.ATTRIBUTE_NAME);
                 value = usecaseName;
@@ -61,6 +66,10 @@ public class UsecaseDocumentModule extends AbstractInputModule implements Servic
 
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

@@ -17,8 +17,9 @@
 
 package org.apache.lenya.ac.impl;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.codec.binary.Base64;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
@@ -32,13 +33,7 @@ import org.apache.lenya.ac.User;
  */
 public class UserAuthenticator extends AbstractLogEnabled implements Authenticator {
 
-    /**
-     * @see org.apache.lenya.ac.Authenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
-     *      org.apache.cocoon.environment.Request) Note that this implementation first checks if the
-     *      user has authenticated over basic HTTP authentication. If yes, it uses these
-     *      credentials.
-     */
-    public boolean authenticate(AccreditableManager accreditableManager, Request request)
+    public boolean authenticate(AccreditableManager accreditableManager, HttpServletRequest request)
             throws AccessControlException {
 
         String username = null;

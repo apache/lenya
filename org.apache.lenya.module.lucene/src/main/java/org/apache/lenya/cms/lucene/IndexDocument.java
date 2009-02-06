@@ -24,12 +24,13 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.xml.sax.InputSource;
 
 /**
  * Usecase to maintain lucene index.
  */
 public class IndexDocument extends DocumentUsecase {
+
+    private SourceResolver sourceResolver;
 
     /**
      * The URI to copy the document source from.
@@ -46,7 +47,7 @@ public class IndexDocument extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        SourceResolver resolver = null;
+        SourceResolver resolver = getSourceResolver();
         Source source = null;
 
         String action = super.getParameterAsString(INDEX_ACTION);
@@ -55,25 +56,25 @@ public class IndexDocument extends DocumentUsecase {
         try {
             String[] formats = getSourceDocument().getResourceType().getFormats();
             if (!Arrays.asList(formats).contains("luceneIndex")) {
-                getLogger().warn("Document ["+getSourceDocument()+"] is not being indexed because resource type [" + getSourceDocument().getResourceType().getName() + "] does not support indexing!");
+                getLogger().warn(
+                        "Document [" + getSourceDocument()
+                                + "] is not being indexed because resource type ["
+                                + getSourceDocument().getResourceType().getName()
+                                + "] does not support indexing!");
                 return;
             }
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             if (action.equals(INDEX)) {
                 // index
                 source = resolver.resolveURI("cocoon://modules/lucene/index-" + area + ".xml");
-                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
+                org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
             } else if (action.equals(DELETE)) {
                 // delete
                 source = resolver.resolveURI("cocoon://modules/lucene/delete-" + area + ".xml");
-                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
+                org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
             }
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
+            if (source != null) {
+                resolver.release(source);
             }
         }
     }
@@ -83,12 +84,24 @@ public class IndexDocument extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("IndexDocument::getObjectsToLock() called on source document ["
-                    + getSourceDocument() + "]");
+            getLogger().debug(
+                    "IndexDocument::getObjectsToLock() called on source document ["
+                            + getSourceDocument() + "]");
         }
 
         Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
+    }
+
+    /**
+     * TODO: Bean wiring
+     */
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public SourceResolver getSourceResolver() {
+        return sourceResolver;
     }
 
 }

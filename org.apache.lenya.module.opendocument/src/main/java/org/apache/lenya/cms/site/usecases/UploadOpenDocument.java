@@ -33,7 +33,7 @@ public class UploadOpenDocument extends InvokeWorkflow {
 
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!ServletHelper.isUploadEnabled(manager)) {
+        if (!ServletHelper.isUploadEnabled()) {
             addErrorMessage("Upload is not enabled. Please check local.build.properties!");
         }
         Document doc = getSourceDocument();
