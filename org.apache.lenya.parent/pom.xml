@@ -361,6 +361,11 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-module-prettyprinting</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-module-resource</artifactId>
         <version>${project.version}</version>
       </dependency>

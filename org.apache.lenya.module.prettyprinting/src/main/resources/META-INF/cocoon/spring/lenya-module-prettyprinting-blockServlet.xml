@@ -24,11 +24,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                            http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
-  <bean name="org.apache.lenya.welcome.block" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="/" context-path="blockcontext:/lenya-welcome-2.2.0-SNAPSHOT/">
-      <servlet:connections>
-        <entry key="prettyprinting" value-ref="org.apache.lenya.module.prettyprinting.block"/>
-      </servlet:connections>
-    </servlet:context>
+  <bean name="org.apache.lenya.module.prettyprinting.block" class="org.apache.cocoon.sitemap.SitemapServlet">
+    <servlet:context mount-path="/prettyprinting" context-path="blockcontext:/lenya-module-prettyprinting"/>
   </bean>
 </beans>
