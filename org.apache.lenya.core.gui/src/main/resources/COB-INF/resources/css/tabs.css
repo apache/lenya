@@ -1,0 +1,234 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one or more
+* contributor license agreements.  See the NOTICE file distributed with
+* this work for additional information regarding copyright ownership.
+* The ASF licenses this file to You under the Apache License, Version 2.0
+* (the "License"); you may not use this file except in compliance with
+* the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+/* Styles for tabs in Site / Meta Area */
+
+.lenya-tab, .lenya-tab-sitetree {
+  font-family: verdana, sans-serif;
+  font-size: small;
+  background-color: #F5F4E9; 
+  color: black;
+  border: solid 1px #CCCCCC;
+  vertical-align: top;
+  padding: 0 20px 20px 20px;
+  width: inherit;
+  min-height: 400px;
+}
+
+.lenya-tab h1, .lenya-tab-sitetree h1 {
+  font-size: medium;
+  margin-bottom: 10px;
+  border-bottom: solid 1px #CCCCCC;
+  padding: 10px 0px 5px 0px;
+}
+
+.lenya-tab h2, .lenya-tab-sitetree h2 {
+  font-size: medium;
+}
+  
+#contentblock1.lenya-tab-sitetree {
+  position: absolute;
+  left: 30px;
+  margin-left: 410px; 
+}
+  
+#contentblock1.lenya-tab {
+  position: absolute;
+  left: 30px;
+  margin-left: 140px; 
+}
+
+#contentblock1 .lenya-box {
+  position: relative;
+}
+
+.lenya-tabs {
+  float: left;
+  vertical-align: top;
+  width: 140px;
+}
+
+#lenya-info-treecanvas .lenya-tabs {
+  width: 200px; 
+}
+
+#lenya-info-treecanvas .lenya-tablink,
+#lenya-info-treecanvas .lenya-tablink-active {
+  position: relative;
+  left: 0px;
+  top: 1px;
+  float: left;
+  margin: 0em .5em 0em 0em;
+  padding: 0em .5em;
+  border: solid 1px #CCCCCC;
+}
+
+#lenya-info-treecanvas .lenya-tablink {
+  background-color: #DDDCCF;
+}
+
+#lenya-info-treecanvas .lenya-tablink:hover {
+  text-decoration: none;
+}
+
+#lenya-info-treecanvas .lenya-tablink-active {
+  border-bottom: solid 1px #F5F4E9;
+}
+
+.lenya-tablink, .lenya-tablink-active {
+  position: relative;
+  left: 1px;
+  font-size: small;
+  display: block;
+  margin-bottom: .2em;
+  padding: .2em 1em .2em .3em;
+  text-decoration: none;
+  border: solid 1px #CCCCCC;
+  border-right: none;
+}
+
+.lenya-tablink {
+  color: #666666;
+  border: solid 1px white; 
+  border-right: solid 1px #CCCCCC;
+  background-color: white;
+}
+
+.lenya-tablink:hover {
+  text-decoration: underline;
+}
+
+.lenya-tablink-active {
+  color: black;
+  font-weight: normal;
+  background-color: #F5F4E9; 
+  z-index: 1;
+}
+
+#lenya-info-body {
+  padding: 20px;
+}
+
+#lenya-info-treecanvas {
+  float: left;
+  padding-right: 20px;
+  width: 250px;
+}
+  
+#lenya-info-tree {
+  clear: left;
+  padding: 10px;
+  background-color: #F5F4E9; 
+  border: solid 1px #CCCCCC;
+  font-family: verdana,helvetica, sans-serif; 
+  text-decoration: none;
+  color: black;  
+}
+
+#lenya-info-tree span {
+  color: #333333;
+  text-decoration: none;
+  cursor: pointer;
+  /* float: left; */
+  display: block;
+  margin-left: 22px;
+}
+
+#lenya-info-tree div {
+}
+
+#lenya-info-treecanvas .lenya-info-root { cursor: default; }
+#lenya-info-treecanvas .lenya-info-area { font-weight: bold; }
+#lenya-info-treecanvas .lenya-info-nolanguage { color: #AAAAAA; }
+#lenya-info-treecanvas .lenya-info-cut { color: #FFAAAA; font-style: italic; }
+#lenya-info-treecanvas .lenya-info-cut img { opacity: .2; }
+#lenya-info-treecanvas .lenya-info-protected { color: #CC3333; }
+#lenya-info-treecanvas span:hover { text-decoration: underline; }
+#lenya-info-treecanvas span.lenya-info-root:hover { text-decoration: none; }
+
+#lenya-info-tree table { 
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+#lenya-info-tree td {
+  font-size: 70%;
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px; 
+}
+
+#lenya-info-tree td.lenya-info-label-td {
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px 0px 0px 2px; 
+}
+
+#lenya-info-treecanvas .treenode_icon {
+  float: left;
+  padding-right: 5px;
+  vertical-align: middle;
+  background-color: #F5F4E9;
+  text-decoration: none;
+}
+#lenya-info-treecanvas .selected_node span { background-color: rgb(221, 220, 207); }
+#lenya-info-treecanvas .treenode_sign { vertical-align: top; padding: 0px; }
+
+#lenya-info-content {
+  clear: both;
+  float: left;
+/*  margin: 0px 20px; */
+  font-size: small;
+}
+
+.lenyaTabTitle, .lenyaTabTitleActive {
+  float: left;
+  margin: 0 .5em 0 0;
+}
+
+.lenyaTabTitleActive {
+  background: url('/modules/svg/tab-topLeft-5-DDDCCF-DDDCCF.png') left top no-repeat;
+}
+
+.lenyaTabTitleActive a {
+  background: url('/modules/svg/tab-topRight-5-DDDCCF-DDDCCF.png') right top no-repeat;
+}
+
+.lenyaTabTitle a, .lenyaTabTitleActive a {
+  padding: .1em .7em .1em .7em;
+  display: block;
+}
+
+.lenyaTabTitle {
+  cursor: pointer;
+  background: url('/modules/svg/tab-topLeft-5-BBBBBB-BBBBBB.png') left top no-repeat;
+}
+
+.lenyaTabTitle a {
+  background: url('/modules/svg/tab-topRight-5-BBBBBB-BBBBBB.png') right top no-repeat;
+}
+
+
+.lenyaTabBody {
+  display: none;
+}
+  
+.lenyaTabBodyActive {
+  clear: both;
+  background-color: #DDDCCF;
+  margin: 0 0 1em 0;
+  padding: 1em .7em;
+}

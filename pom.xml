@@ -39,6 +39,7 @@
     <module>org.apache.lenya.core.administration</module>
     <module>org.apache.lenya.core.api</module>
     <module>org.apache.lenya.core.cache</module>
+    <module>org.apache.lenya.core.gui</module>
     <module>org.apache.lenya.core.i18n</module>
     <module>org.apache.lenya.core.impl</module>
     <module>org.apache.lenya.core.janitor</module>

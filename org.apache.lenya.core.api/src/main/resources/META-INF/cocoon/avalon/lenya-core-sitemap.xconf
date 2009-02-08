@@ -26,6 +26,17 @@
       <parameter name="localizable" value="true"/>
     </map:generator>
   </map:generators>
+  
+  
+  <transformers>
+    <map:transformer name="servletLinkRewriter-xhtml"
+      src="org.apache.cocoon.transformation.LinkRewriterTransformer">
+      <namespace-uri>http://www.w3.org/1999/xhtml</namespace-uri>
+      <schemes>servlet</schemes>
+      <link-attrs>href src</link-attrs>
+      <input-module name="servlet"/>
+    </map:transformer>
+  </transformers>
 
 
   <!-- Serializers -->

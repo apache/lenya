@@ -1,0 +1,77 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one or more
+* contributor license agreements.  See the NOTICE file distributed with
+* this work for additional information regarding copyright ownership.
+* The ASF licenses this file to You under the Apache License, Version 2.0
+* (the "License"); you may not use this file except in compliance with
+* the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+/* internet explorer 6 hacks
+   the hacks work around the quirks mode
+   it is in effect because ie 6 misinterprets 
+   the xml declaration */
+   
+/* font size fixes */   
+#lenya-info-treecanvas span {
+  font-size: 11px;
+}
+
+.lenya-tabs,
+.lenya-tablink,
+.lenya-tablink-active,
+.lenya-tab, 
+.lenya-tab-sitetree,
+table.lenya-table-noborder td, 
+table.lenya-table-noborder th,
+table.lenya-table-list th, 
+table.lenya-table-list td, 
+table.lenya-table-list-noborder th, 
+table.lenya-table-list-noborder td,
+div.lenya-box,
+p,
+.lenya-body p,
+li {
+  font-size: x-small;
+}
+
+.lenya-tab h1, 
+.lenya-tab-sitetree h1 {
+  font-size: small;
+}
+
+/* hacks for the broken box model */
+#contentblock1.lenya-tab {
+  margin-left: 160px;
+}
+
+.lenya-tabs {
+  width: 160px;
+}
+
+/* fix for some malpositioned svg rounded corners (bottom right) */
+div.lenya-box-bottom {
+  position: relative;
+  right: 2px;
+  background-position: 2px bottom;
+}
+
+#contentblock1 div.lenya-box-bottom {
+  right: 0;
+  background-position: left bottom; 
+}
+
+/* ie 6 does not understand min-width, this is a workaround 
+   sorry for not beeing standards compliant here 
+   possibly this hack needs the quirks mode */
+.lenya-tab, .lenya-tab-sitetree {
+  height: expression(body.offsetHeight>100?'400':'auto');
+}

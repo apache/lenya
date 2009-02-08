@@ -1,0 +1,59 @@
+@import url(listContainer.css);
+
+.lenyaInfoBox {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  background-color: #DDDCCF;
+  margin: .5em 0;
+  padding: .5em .7em;
+}
+
+.lenyaInfoBox h3 {
+  font-size: small;
+  margin: 0 0 .2em 0;
+}
+
+.lenyaButton {
+  cursor: pointer;
+  background: url('/modules/gui/images/button-background.gif') left top repeat-x;
+  border: solid 1px #AAAAAA;
+  -moz-border-radius: .4em;
+  -webkit-border-radius: .4em;
+  color: #333333;
+  padding: .2em .6em;
+  font-family: Arial;
+  font-weight: bold;
+  font-size: 90%;
+}
+
+a.lenyaButton {
+  text-decoration: none;
+}
+
+a.lenyaButton:hover {
+  background: url('/modules/gui/images/button-background-hover.gif') left top repeat-x;
+  color: #222222;
+  border: solid 1px #999999;
+}
+
+a img {
+  border: none;
+}
+
+ul.lenyaMessages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.lenyaMessages li {
+  padding-left: 20px;
+}
+
+li.lenyaErrorMessage {
+  background: url('/modules/gui/icons/sweetie/base/16-circle-red-remove.png') left 1px no-repeat;
+}
+
+li.lenyaInfoMessage {
+  background: url('/modules/gui/icons/sweetie/base/16-message-info.png') left 1px no-repeat;
+}
