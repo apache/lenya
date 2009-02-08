@@ -89,7 +89,7 @@
     <module>org.apache.lenya.module.xopus</module>
     <module>org.apache.lenya.optional.jcrsource</module>
     <module>org.apache.lenya.webapp</module>
-    <module>org.apache.lenya.welcome</module>
+    <module>org.apache.lenya.webapp.welcome</module>
   </modules>
 
 </project>

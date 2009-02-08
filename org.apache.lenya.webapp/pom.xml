@@ -123,7 +123,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-welcome</artifactId>
+      <artifactId>lenya-webapp-welcome</artifactId>
     </dependency>
 
   </dependencies>
