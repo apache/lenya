@@ -38,10 +38,10 @@
         <version>1.0.0-RC1-SNAPSHOT</version>
         <executions>
           <execution>
-            <id>rcl</id>
+            <id>prepare</id>
             <phase>compile</phase>
             <goals>
-              <goal>rcl</goal>
+              <goal>prepare</goal>
             </goals>
           </execution>
         </executions>
