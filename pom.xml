@@ -92,4 +92,10 @@
     <module>org.apache.lenya.webapp.welcome</module>
   </modules>
 
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/lenya/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/lenya/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/lenya/trunk</url>
+  </scm>
+
 </project>
