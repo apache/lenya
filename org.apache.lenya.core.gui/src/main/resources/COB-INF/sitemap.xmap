@@ -30,14 +30,20 @@
         - when making use of servlet services from other blocks
         -->
 
-<!--
-      <map:match pattern="service/blocks/*">
+      <map:match pattern="service/style-cms-page">
         <map:generate src="service-consumer:"/>
-        <map:transform src="blocks/{1}.xsl"/>
-        <map:transform type="servletLinkRewriter"/>
-        <map:serialize type="html"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
+        <map:transform src="xslt/page2xhtml.xsl"/>
+        <map:transform type="servletLinkRewriter-xhtml"/>
+        <map:transform type="proxy-xhtml"/>
+        <map:transform src="xslt/strip_namespaces.xsl"/>
+        <map:transform type="servletService">
+          <map:parameter name="service" value="servlet:prettyprinting:/xml2nicexml"/>
+        </map:transform>
+        <map:serialize type="xhtml"/>
       </map:match>
--->
     </map:pipeline>
 
     <map:pipeline id="resources">
@@ -46,6 +52,9 @@
       </map:match>
       <map:match pattern="**.jpg">
         <map:read src="resources/{1}.jpg"/>
+      </map:match>
+      <map:match pattern="**.png">
+        <map:read src="resources/{1}.png"/>
       </map:match>
       <map:match pattern="**.ico">
         <map:read src="resources/{1}.ico"/>

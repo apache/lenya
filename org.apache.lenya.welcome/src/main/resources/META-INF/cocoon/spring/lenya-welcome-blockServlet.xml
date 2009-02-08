@@ -28,7 +28,6 @@
     <servlet:context mount-path="/" context-path="blockcontext:/lenya-welcome-2.2.0-SNAPSHOT/">
       <servlet:connections>
         <entry key="gui" value-ref="org.apache.lenya.core.gui.block"/>
-        <entry key="prettyprinting" value-ref="org.apache.lenya.module.prettyprinting.block"/>
       </servlet:connections>
     </servlet:context>
   </bean>

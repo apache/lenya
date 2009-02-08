@@ -25,6 +25,10 @@
                            http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
   <bean name="org.apache.lenya.core.gui.block" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="/gui" context-path="blockcontext:/lenya-core-gui-2.2.0-SNAPSHOT/"/>
+    <servlet:context mount-path="/gui" context-path="blockcontext:/lenya-core-gui-2.2.0-SNAPSHOT/">
+      <servlet:connections>
+        <entry key="prettyprinting" value-ref="org.apache.lenya.module.prettyprinting.block"/>
+      </servlet:connections>
+    </servlet:context>
   </bean>
 </beans>

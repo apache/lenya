@@ -33,9 +33,9 @@
     <html>
       <head>
         <title><xsl:apply-templates select="page:title/node()" mode="htmlTitle"/></title>
-        <link rel="stylesheet" type="text/css" href="servlet:gui:/css/default.css" title="default css"/>
+        <link rel="stylesheet" type="text/css" href="servlet:/css/default.css" title="default css"/>
         <xsl:comment>[if IE 6]<![CDATA[>]]>&lt;link rel="stylesheet" type="text/css" href="/modules/gui/css/ie6hacksonly.css" /><![CDATA[<![endif]]]></xsl:comment>
-        <link rel="icon" href="/favicon.ico" type="image/ico"/>
+        <link rel="icon" href="servlet:/icons/favicon.ico" type="image/ico"/>
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
         <xsl:apply-templates select="xhtml:script"/>
         <xsl:copy-of select="page:head/*"/>
@@ -84,7 +84,7 @@
           <h1><xsl:apply-templates select="node()"/></h1>
         </td>
         <td class="lenya-project-logo">
-          <img src="/lenya/images/project-logo-small.png" alt="Apache Lenya Project Logo"/>
+          <img src="servlet:/images/project-logo-small.png" alt="Apache Lenya Project Logo"/>
         </td>
       </tr>
     </table>
