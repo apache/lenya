@@ -51,7 +51,7 @@ public class UsecaseDocumentModule extends AbstractInputModule {
                 Request request = ObjectModelHelper.getRequest(objectModel);
                 Session session = this.repository.getSession(request);
                 String webappUrl = ServletHelper.getWebappURI(request);
-                Document doc = session.getDocumentFactory().getFromURL(webappUrl);
+                Document doc = session.getUriHandler().getDocument(webappUrl);
                 org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(doc.getInputStream());
                 String usecaseName = xmlDoc.getDocumentElement().getAttribute(CreateUsecaseDocument.ATTRIBUTE_NAME);
                 value = usecaseName;

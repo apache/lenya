@@ -160,7 +160,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             String url = ServletHelper.getWebappURI(request);
             DocumentLocator loc;
             try {
-                loc = pub.getDocumentBuilder().getLocator(pub.getFactory(), url);
+                loc = pub.getDocumentBuilder().getLocator(pub.getSession(), url);
             } catch (DocumentBuildException e) {
                 throw new SiteException(e);
             }

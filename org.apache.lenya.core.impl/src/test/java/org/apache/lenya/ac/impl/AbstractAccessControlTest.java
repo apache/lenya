@@ -34,12 +34,9 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.LenyaTestCase;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.SessionImpl;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
@@ -53,15 +50,14 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private AccessController accessController;
-
-    protected org.apache.lenya.cms.repository.Session login(String userId)
+    private Repository repository;
+    
+    protected Session login(String userId)
             throws AccessControlException {
         return login(userId, TEST_PUB_ID);
     }
 
     protected Session login(String userId, String pubId) throws AccessControlException {
-        Session session = new SessionImpl(null, true, logger);
-        getRequest().setAttribute(Session.class.getName(), session);
 
         AccessController ac = getAccessController(session, pubId);
         AccreditableManager acMgr = ac.getAccreditableManager();
@@ -94,7 +90,8 @@ public class AbstractAccessControlTest extends LenyaTestCase {
             getLogger().info("Accreditable: " + accrs[i]);
         }
 
-        session.setIdentity(identity);
+        Session session = getRepository().startSession(identity, true);
+        getRequest().setAttribute(Session.class.getName(), session);
         return session;
     }
 
@@ -117,7 +114,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
                     "Using access controller resolver: ["
                             + this.accessControllerResolver.getClass() + "]");
 
-            Publication pub = getPublication(session, pubId);
+            Publication pub = session.getPublication(pubId);
             getLogger().info("Resolve access controller");
             getLogger().info(
                     "Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
@@ -169,14 +166,6 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         return getAccessController().getAccreditableManager();
     }
 
-    protected DocumentFactory getFactory() {
-        return DocumentUtil.createDocumentFactory(getSession());
-    }
-
-    protected DocumentFactory getFactory(Session session) {
-        return DocumentUtil.createDocumentFactory(session);
-    }
-
     private Session session;
 
     protected Session getSession() {
@@ -194,15 +183,15 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         return USER_ID;
     }
 
-    protected Publication getPublication(Session session, String pubId) throws PublicationException {
-        return getFactory(session).getPublication(pubId);
-    }
-
-    protected Publication getPublication(String id) throws PublicationException {
-        return getFactory().getPublication(id);
-    }
-
     protected Identity getIdentity() {
         return getSession().getIdentity();
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Repository getRepository() {
+        return repository;
     }
 }

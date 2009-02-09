@@ -32,19 +32,6 @@ public interface DocumentManager {
     String ROLE = DocumentManager.class.getName();
 
     /**
-     * Checks if a document exists.
-     * @param factory The document factory.
-     * @param pub The publication.
-     * @param area The area.
-     * @param uuid The UUID.
-     * @param language The language.
-     * @return A boolean value.
-     * @throws PublicationException if an error occurs.
-     */
-    boolean exists(DocumentFactory factory, Publication pub, String area, String uuid,
-            String language) throws PublicationException;
-
-    /**
      * Copies a document from one location to another location.
      * @param sourceDocument The document to copy.
      * @param destination The destination document.
@@ -93,7 +80,6 @@ public interface DocumentManager {
 
     /**
      * Creates a new document with the given parameters:
-     * @param factory The document factory.
      * @param resourceType the document type (aka resource type) of the new document
      * @param contentSourceUri The URI to read the content from.
      * @param pub The publication.
@@ -108,14 +94,13 @@ public interface DocumentManager {
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    Document add(DocumentFactory factory, ResourceType resourceType, String contentSourceUri,
+    Document add(ResourceType resourceType, String contentSourceUri,
             Publication pub, String area, String path, String language, String extension,
             String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
             PublicationException;
 
     /**
      * Creates a new document without adding it to the site structure.
-     * @param factory The document factory.
      * @param resourceType the document type (aka resource type) of the new document
      * @param contentSourceUri The URI to read the content from.
      * @param pub The publication.
@@ -127,7 +112,7 @@ public interface DocumentManager {
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    Document add(DocumentFactory factory, ResourceType resourceType, String contentSourceUri,
+    Document add(ResourceType resourceType, String contentSourceUri,
             Publication pub, String area, String language, String extension)
             throws DocumentBuildException, PublicationException;
 

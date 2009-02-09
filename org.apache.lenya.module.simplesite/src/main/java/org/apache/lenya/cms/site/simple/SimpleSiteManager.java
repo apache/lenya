@@ -19,11 +19,12 @@ package org.apache.lenya.cms.site.simple;
 
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -41,21 +42,12 @@ public class SimpleSiteManager extends AbstractSiteManager {
     private DocumentStoreFactory documentStoreFactory;
     private SourceResolver sourceResolver;
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.SiteNode, org.apache.lenya.cms.site.SiteNode)
-     */
-    public boolean requires(DocumentFactory map, SiteNode dependingResource,
-            SiteNode requiredResource) throws SiteException {
+    public boolean requires(SiteNode dependingResource, SiteNode requiredResource)
+            throws SiteException {
         return false;
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.SiteNode)
-     */
-    public SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource)
-            throws SiteException {
+    public SiteNode[] getRequiringResources(SiteNode resource) throws SiteException {
         return new SiteNode[0];
     }
 
@@ -69,26 +61,21 @@ public class SimpleSiteManager extends AbstractSiteManager {
      * @throws SiteException if an error occurs.
      */
     private DocumentStore getStore(Document document) throws SiteException {
-        Publication publication = document.getPublication();
-        String area = document.getArea();
-        DocumentFactory map = document.getFactory();
-        return getStore(map, publication, area);
+        return getStore(document.area());
     }
 
     /**
-     * @param map The identity map.
-     * @param publication The publication.
      * @param area The area.
      * @return A document store.
      * @throws SiteException if an error occurs.
      */
-    protected DocumentStore getStore(DocumentFactory map, Publication publication, String area)
-            throws SiteException {
-        String key = getKey(publication, area);
+    protected DocumentStore getStore(Area area) throws SiteException {
+        String key = getKey(area);
         DocumentStore store;
         try {
-            store = (DocumentStore) map.getSession().getRepositoryItem(getDocumentStoreFactory(),
-                    key);
+            org.apache.lenya.cms.repository.Session session = (org.apache.lenya.cms.repository.Session) area
+                    .getPublication().getSession();
+            store = (DocumentStore) session.getRepositoryItem(getDocumentStoreFactory(), key);
         } catch (Exception e) {
             throw new SiteException(e);
         }
@@ -123,8 +110,9 @@ public class SimpleSiteManager extends AbstractSiteManager {
      * @param area The area.
      * @return The key to store sitetree objects in the identity map.
      */
-    protected String getKey(Publication publication, String area) {
-        return publication.getId() + ":" + area + ":" + getCollectionUuid(publication);
+    protected String getKey(Area area) {
+        return area.getPublication().getId() + ":" + area.getName() + ":"
+                + getCollectionUuid(area.getPublication());
     }
 
     /**
@@ -182,13 +170,8 @@ public class SimpleSiteManager extends AbstractSiteManager {
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
-     */
-    public Document[] getDocuments(DocumentFactory identityMap, Publication publication, String area)
-            throws SiteException {
-        DocumentStore store = getStore(identityMap, publication, area);
+    public Document[] getDocuments(Publication publication, String area) throws SiteException {
+        DocumentStore store = getStore(publication.getArea(area));
         try {
             return store.getDocuments();
         } catch (DocumentException e) {
@@ -196,20 +179,12 @@ public class SimpleSiteManager extends AbstractSiteManager {
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
-     */
-    public SiteStructure getSiteStructure(DocumentFactory map, Publication publication, String area)
+    public SiteStructure getSiteStructure(Publication publication, String area)
             throws SiteException {
-        return getStore(map, publication, area);
+        return getStore(publication.getArea(area));
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getAvailableLocator(DocumentFactory,
-     *      DocumentLocator)
-     */
-    public DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator document)
+    public DocumentLocator getAvailableLocator(Session session, DocumentLocator document)
             throws SiteException {
         return document;
     }
@@ -226,7 +201,7 @@ public class SimpleSiteManager extends AbstractSiteManager {
         }
     }
 
-    public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator)
+    public DocumentLocator[] getRequiredResources(Session session, DocumentLocator locator)
             throws SiteException {
         return new DocumentLocator[0];
     }

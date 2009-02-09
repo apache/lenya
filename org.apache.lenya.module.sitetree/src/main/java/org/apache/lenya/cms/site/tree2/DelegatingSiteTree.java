@@ -105,8 +105,8 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     protected Link getLink(Link delegate) {
         Link link = (Link) this.links.get(delegate);
         if (link == null) {
-            link = new DelegatingLink(this.area.getPublication().getFactory(), getNode(delegate
-                    .getNode()), delegate.getLabel(), delegate.getLanguage());
+            link = new DelegatingLink(getNode(delegate.getNode()), delegate.getLabel(), delegate
+                    .getLanguage());
         }
         return link;
     }
@@ -150,8 +150,8 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
         return (SiteNode[]) this.topLevelNodes.toArray(new SiteNode[this.topLevelNodes.size()]);
     }
 
-    public Session getSession() {
-        return this.area.getPublication().getSession();
+    public Session getRepositorySession() {
+        return (Session) this.area.getPublication().getSession();
     }
 
     private NodeFactory nodeFactory;
@@ -166,7 +166,8 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
 
     public Node getRepositoryNode() {
         try {
-            return (Node) getSession().getRepositoryItem(getNodeFactory(), getSourceUri());
+            return (Node) getRepositorySession()
+                    .getRepositoryItem(getNodeFactory(), getSourceUri());
         } catch (RepositoryException e) {
             throw new RuntimeException("Creating repository node failed: ", e);
         }

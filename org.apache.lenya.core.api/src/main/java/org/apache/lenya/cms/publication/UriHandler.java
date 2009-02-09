@@ -15,25 +15,21 @@
  *  limitations under the License.
  *
  */
+
 package org.apache.lenya.cms.publication;
 
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
-import org.apache.lenya.cms.repository.Session;
-
-/**
- * Document utility class.
- */
-public final class DocumentUtil {
-
-    /**
-     * Creates a document factory.
-     * @param session The session.
-     * @return a document factory.
-     */
-    public static final DocumentFactory createDocumentFactory(Session session) {
-        DocumentFactoryBuilder builder = (DocumentFactoryBuilder) WebAppContextUtils
-                .getCurrentWebApplicationContext().getBean(DocumentFactoryBuilder.class.getName());
-        return builder.createDocumentFactory(session);
-    }
+public interface UriHandler {
+    
+    boolean isDocument(String webappUri);
+    
+    Document getDocument(String webappUri) throws ResourceNotFoundException;
+    
+    boolean isPublication(String webappUri);
+    
+    Publication getPublication(String webappUri) throws PublicationException;
+    
+    boolean isArea(String webappUri);
+    
+    Area getArea(String webappUri) throws PublicationException;
 
 }

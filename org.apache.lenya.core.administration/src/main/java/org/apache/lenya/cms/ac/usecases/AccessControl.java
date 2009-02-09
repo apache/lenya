@@ -26,7 +26,6 @@ import java.util.TreeSet;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 
@@ -90,9 +89,8 @@ public class AccessControl extends AccessControlUsecase {
             URLInformation info = new URLInformation(getSourceURL());
             setParameter(COMPLETE_AREA, info.getCompleteArea());
 
-            DocumentFactory map = getDocumentFactory();
-            if (map.isDocument(getSourceURL())) {
-                Document sourceDocument = map.getFromURL(getSourceURL());
+            if (getSession().getUriHandler().isDocument(getSourceURL())) {
+                Document sourceDocument = getSession().getUriHandler().getDocument(getSourceURL());
                 setParameter(DOCUMENT, sourceDocument);
             }
 

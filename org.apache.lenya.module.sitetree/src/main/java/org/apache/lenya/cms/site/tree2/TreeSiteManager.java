@@ -23,10 +23,10 @@ import java.util.List;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Link;
@@ -56,8 +56,9 @@ public class TreeSiteManager extends AbstractSiteManager {
         SiteTree sitetree;
         RepositoryItemFactory factory = new SiteTreeFactory(getLogger());
         try {
-            sitetree = (SiteTree) area.getPublication().getFactory().getSession()
-                    .getRepositoryItem(factory, key);
+            org.apache.lenya.cms.repository.Session session = (org.apache.lenya.cms.repository.Session) area
+                    .getPublication().getSession();
+            sitetree = (SiteTree) session.getRepositoryItem(factory, key);
         } catch (Exception e) {
             throw new SiteException(e);
         }
@@ -140,27 +141,27 @@ public class TreeSiteManager extends AbstractSiteManager {
         }
     }
 
-    public DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator locator)
+    public DocumentLocator getAvailableLocator(Session session, DocumentLocator locator)
             throws SiteException {
         return DocumentLocator.getLocator(locator.getPublicationId(), locator.getArea(),
-                computeUniquePath(factory, locator), locator.getLanguage());
+                computeUniquePath(session, locator), locator.getLanguage());
     }
 
     /**
      * compute an unique document id
-     * @param factory The factory.
+     * @param session The session.
      * @param locator The locator.
      * @return the unique documentid
      * @throws SiteException if an error occurs.
      */
-    protected String computeUniquePath(DocumentFactory factory, DocumentLocator locator)
+    protected String computeUniquePath(Session session, DocumentLocator locator)
             throws SiteException {
         String path = locator.getPath();
 
         Publication pub;
         SiteTree tree;
         try {
-            pub = factory.getPublication(locator.getPublicationId());
+            pub = session.getPublication(locator.getPublicationId());
             tree = getTree(pub.getArea(locator.getArea()));
         } catch (PublicationException e) {
             throw new SiteException(e);
@@ -196,14 +197,8 @@ public class TreeSiteManager extends AbstractSiteManager {
         return path;
     }
 
-    public Document[] getDocuments(DocumentFactory factory, Publication pub, String area)
-            throws SiteException {
-        Area areaObj;
-        try {
-            areaObj = pub.getArea(area);
-        } catch (PublicationException e) {
-            throw new SiteException(e);
-        }
+    public Document[] getDocuments(Publication pub, String area) throws SiteException {
+        Area areaObj = pub.getArea(area);
         SiteTree tree = getTree(areaObj);
         SiteNode[] preOrder = tree.preOrder();
         List docs = new ArrayList();
@@ -216,7 +211,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         return (Document[]) docs.toArray(new Document[docs.size()]);
     }
 
-    public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator loc)
+    public DocumentLocator[] getRequiredResources(Session session, DocumentLocator loc)
             throws SiteException {
         List ancestors = new ArrayList();
         DocumentLocator locator = loc;
@@ -228,8 +223,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         return (DocumentLocator[]) ancestors.toArray(new DocumentLocator[ancestors.size()]);
     }
 
-    public SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource)
-            throws SiteException {
+    public SiteNode[] getRequiringResources(SiteNode resource) throws SiteException {
         NodeSet nodes = new NodeSet();
         SiteTree tree = (SiteTree) resource.getStructure();
 
@@ -247,7 +241,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         return nodes.getNodes();
     }
 
-    public SiteStructure getSiteStructure(DocumentFactory map, Publication publication, String area)
+    public SiteStructure getSiteStructure(Publication publication, String area)
             throws SiteException {
         try {
             return getTree(publication.getArea(area));
@@ -264,8 +258,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         }
     }
 
-    public boolean requires(DocumentFactory map, SiteNode depending, SiteNode required)
-            throws SiteException {
+    public boolean requires(SiteNode depending, SiteNode required) throws SiteException {
         return depending.getPath().startsWith(required.getPath() + "/");
     }
 

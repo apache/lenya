@@ -30,9 +30,6 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 
 /**
  * <p>
@@ -88,8 +85,7 @@ public class ProxyModule extends AbstractInputModule {
         return value;
     }
 
-    protected String rewrite(Request request, String url) throws RepositoryException,
-            ConfigurationException {
+    protected String rewrite(Request request, String url) throws ConfigurationException {
         Session session = this.repository.getSession(request);
         LinkRewriter rewriter = new OutgoingLinkRewriter(session, request.getRequestURI(), request
                 .isSecure(), false, this.relativeUrls);

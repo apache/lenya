@@ -67,16 +67,16 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         if (this.language2link.keySet().size() > 0) {
             throw new RuntimeException("Can't set the UUID if the node has links.");
         }
-        
+
         if (this.uuid != null) {
             String[] languages = getLanguages();
             for (int i = 0; i < languages.length; i++) {
                 getTree().linkRemoved(this.uuid, languages[i]);
             }
         }
-        
+
         this.uuid = uuid;
-        
+
         String[] languages = getLanguages();
         for (int i = 0; i < languages.length; i++) {
             try {
@@ -132,8 +132,8 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         return (SiteNode) this.parent;
     }
 
-    public String getPath() { 
-        if(path != null) {
+    public String getPath() {
+        if (path != null) {
             return path;
         }
         String getPath = this.parent.getPath() + "/" + getName();
@@ -176,7 +176,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         SiteNode[] children = this.parent.getChildren();
         int pos = Arrays.asList(children).indexOf(this);
         List siblings = new ArrayList();
-        for (int i = 0; i < pos ; i++) {
+        for (int i = 0; i < pos; i++) {
             siblings.add(children[i]);
         }
         return (SiteTreeNode[]) siblings.toArray(new TreeNodeImpl[siblings.size()]);
@@ -210,8 +210,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         if (this.language2link.containsKey(lang)) {
             throw new RuntimeException("The language [" + lang + "] is already contained.");
         }
-        DocumentFactory factory = getTree().getPublication().getFactory();
-        Link link = new SiteTreeLink(factory, this, label, lang);
+        Link link = new SiteTreeLink(this, label, lang);
         this.language2link.put(lang, link);
         getTree().linkAdded(link);
         return link;
@@ -346,5 +345,5 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     public boolean hasLink() {
         return false;
     }
-    
+
 }

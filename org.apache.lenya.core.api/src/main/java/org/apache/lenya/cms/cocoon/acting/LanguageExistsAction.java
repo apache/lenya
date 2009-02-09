@@ -24,24 +24,21 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.ServiceableAction;
+import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
  * Action that checks if the current URL represents an existing document.
  */
-public class LanguageExistsAction extends ServiceableAction {
+public class LanguageExistsAction extends AbstractAction {
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * Check if the current URL represents an existing document.
@@ -53,11 +50,10 @@ public class LanguageExistsAction extends ServiceableAction {
             Parameters parameters) throws Exception {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+        Session session = this.repository.getSession(request);
 
         String url = ServletHelper.getWebappURI(request);
-        if (factory.isDocument(url)) {
+        if (session.getUriHandler().isDocument(url)) {
             return Collections.unmodifiableMap(Collections.EMPTY_MAP);
         }
         else {
@@ -65,11 +61,12 @@ public class LanguageExistsAction extends ServiceableAction {
         }
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public Repository getRepository() {
+        return repository;
     }
+
 }

@@ -33,7 +33,7 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * @version $Id: Deactivate.java 264805 2005-08-30 16:20:15Z andreas $
  */
 public class Delete extends DocumentUsecase {
-    
+
     private DocumentManager documentManager;
 
     /**
@@ -82,9 +82,11 @@ public class Delete extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        delete(getSourceDocument());
-        setTargetDocument(getDocumentFactory().get(getSourceDocument().getPublication(),
-                Publication.AUTHORING_AREA, "/feeds/all/index"));
+        Document doc = getSourceDocument();
+        delete(doc);
+        setTargetDocument(doc.getPublication().getArea(Publication.AUTHORING_AREA).getSite()
+                .getNode("/feeds/all/index").getLink(doc.getPublication().getDefaultLanguage())
+                .getDocument());
     }
 
     /**
@@ -117,6 +119,5 @@ public class Delete extends DocumentUsecase {
     public void setDocumentManager(DocumentManager documentManager) {
         this.documentManager = documentManager;
     }
-    
-    
+
 }

@@ -42,7 +42,6 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.NodeIterator;
@@ -73,9 +72,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String extension, String navigationTitle, boolean visibleInNav)
             throws DocumentBuildException, PublicationException {
 
-        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
-                sourceDocument.getInputStream(), sourceDocument.getPublication(), area, path,
-                language, extension, navigationTitle, visibleInNav, sourceDocument.getMimeType());
+        Document document = add(sourceDocument.getResourceType(), sourceDocument.getInputStream(),
+                sourceDocument.getPublication(), area, path, language, extension, navigationTitle,
+                visibleInNav, sourceDocument.getMimeType());
 
         copyMetaData(sourceDocument, document);
         return document;
@@ -108,15 +107,27 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.publication.ResourceType, java.lang.String,
-     *      org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String, boolean)
-     */
-    public Document add(DocumentFactory factory, ResourceType documentType,
-            String initialContentsURI, Publication pub, String area, String path, String language,
-            String extension, String navigationTitle, boolean visibleInNav)
+    public Document add(ResourceType documentType, String initialContentsURI, Publication pub,
+            String area, String path, String language, String extension, String navigationTitle,
+            boolean visibleInNav) throws DocumentBuildException, DocumentException,
+            PublicationException {
+
+        Area areaObj = pub.getArea(area);
+        SiteStructure site = areaObj.getSite();
+        if (site.contains(path) && site.getNode(path).hasLink(language)) {
+            throw new DocumentException("The link [" + path + ":" + language
+                    + "] is already contained in site [" + site + "]");
+        }
+
+        Document document = add(documentType, initialContentsURI, pub, area, language, extension);
+
+        addToSiteManager(path, document, navigationTitle, visibleInNav);
+        return document;
+    }
+
+    protected Document add(ResourceType documentType, InputStream initialContentsStream,
+            Publication pub, String area, String path, String language, String extension,
+            String navigationTitle, boolean visibleInNav, String mimeType)
             throws DocumentBuildException, DocumentException, PublicationException {
 
         Area areaObj = pub.getArea(area);
@@ -126,43 +137,23 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     + "] is already contained in site [" + site + "]");
         }
 
-        Document document = add(factory, documentType, initialContentsURI, pub, area, language,
-                extension);
-
-        addToSiteManager(path, document, navigationTitle, visibleInNav);
-        return document;
-    }
-
-    protected Document add(DocumentFactory factory, ResourceType documentType,
-            InputStream initialContentsStream, Publication pub, String area, String path,
-            String language, String extension, String navigationTitle, boolean visibleInNav,
-            String mimeType) throws DocumentBuildException, DocumentException, PublicationException {
-
-        Area areaObj = pub.getArea(area);
-        SiteStructure site = areaObj.getSite();
-        if (site.contains(path) && site.getNode(path).hasLink(language)) {
-            throw new DocumentException("The link [" + path + ":" + language
-                    + "] is already contained in site [" + site + "]");
-        }
-
-        Document document = add(factory, documentType, initialContentsStream, pub, area, language,
+        Document document = add(documentType, initialContentsStream, pub, area, language,
                 extension, mimeType);
 
         addToSiteManager(path, document, navigationTitle, visibleInNav);
         return document;
     }
 
-    public Document add(DocumentFactory factory, ResourceType documentType,
-            String initialContentsURI, Publication pub, String area, String language,
-            String extension) throws DocumentBuildException, DocumentException,
-            PublicationException {
+    public Document add(ResourceType documentType, String initialContentsURI, Publication pub,
+            String area, String language, String extension) throws DocumentBuildException,
+            DocumentException, PublicationException {
 
         String uuid = getUuidGenerator().nextUUID();
         Source source = null;
         try {
             source = getSourceResolver().resolveURI(initialContentsURI);
-            return add(factory, documentType, uuid, source.getInputStream(), pub, area, language,
-                    extension, getMimeType(source));
+            return add(documentType, uuid, source.getInputStream(), pub, area, language, extension,
+                    getMimeType(source));
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -180,27 +171,27 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return mimeType;
     }
 
-    protected Document add(DocumentFactory factory, ResourceType documentType,
-            InputStream initialContentsStream, Publication pub, String area, String language,
-            String extension, String mimeType) throws DocumentBuildException, DocumentException,
-            PublicationException {
+    protected Document add(ResourceType documentType, InputStream initialContentsStream,
+            Publication pub, String area, String language, String extension, String mimeType)
+            throws DocumentBuildException, DocumentException, PublicationException {
 
         String uuid = getUuidGenerator().nextUUID();
-        return add(factory, documentType, uuid, initialContentsStream, pub, area, language,
-                extension, mimeType);
+        return add(documentType, uuid, initialContentsStream, pub, area, language, extension,
+                mimeType);
     }
 
-    protected Document add(DocumentFactory factory, ResourceType documentType, String uuid,
-            InputStream stream, Publication pub, String area, String language, String extension,
-            String mimeType) throws DocumentBuildException {
+    protected Document add(ResourceType documentType, String uuid, InputStream stream,
+            Publication pub, String area, String language, String extension, String mimeType)
+            throws DocumentBuildException {
         try {
 
-            if (exists(factory, pub, area, uuid, language)) {
+            Area areaObj = pub.getArea(area);
+            if (areaObj.contains(uuid, language)) {
                 throw new DocumentBuildException("The document [" + pub.getId() + ":" + area + ":"
                         + uuid + ":" + language + "] already exists!");
             }
 
-            Document document = factory.get(pub, area, uuid, language);
+            Document document = areaObj.getDocument(uuid, language);
             Node node = document.getRepositoryNode();
             node.lock();
 
@@ -676,11 +667,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAllLanguageVersions(org.apache.lenya.cms.publication.Document)
      */
     public void deleteAllLanguageVersions(Document document) throws PublicationException {
-        DocumentFactory identityMap = document.getFactory();
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            DocumentLocator version = document.getLocator().getLanguageVersion(languages[i]);
-            delete(identityMap.get(version));
+            delete(document.getTranslation(languages[i]));
         }
     }
 
@@ -726,7 +715,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         set.reverse();
 
         DocumentVisitor visitor = new DeleteVisitor(this);
-        set.visit(visitor);
+        try {
+            set.visit(visitor);
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        }
 
     }
 
@@ -792,8 +785,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             int n = docs.length;
 
             Publication pub = docs[0].getPublication();
-            SiteManager siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
-                .getBean(SiteManager.class.getName() + "/" + pub.getSiteManagerHint());
+            SiteManager siteManager = (SiteManager) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(
+                            SiteManager.class.getName() + "/" + pub.getSiteManagerHint());
 
             Set nodes = new HashSet();
             for (int i = 0; i < docs.length; i++) {
@@ -834,24 +828,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     public Document addVersion(Document sourceDocument, String area, String language)
             throws DocumentBuildException, DocumentException, PublicationException {
-        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
-                sourceDocument.getUUID(), sourceDocument.getInputStream(), sourceDocument
-                        .getPublication(), area, language, sourceDocument.getSourceExtension(),
-                sourceDocument.getMimeType());
+        Document document = add(sourceDocument.getResourceType(), sourceDocument.getUUID(),
+                sourceDocument.getInputStream(), sourceDocument.getPublication(), area, language,
+                sourceDocument.getSourceExtension(), sourceDocument.getMimeType());
         copyMetaData(sourceDocument, document);
 
         return document;
-    }
-
-    public boolean exists(DocumentFactory factory, Publication pub, String area, String uuid,
-            String language) throws PublicationException {
-        String sourceUri = DocumentImpl.getSourceURI(pub, area, uuid, language);
-        try {
-            Node node = DocumentImpl.getRepositoryNode(getNodeFactory(), factory, sourceUri);
-            return node.exists();
-        } catch (RepositoryException e) {
-            throw new PublicationException(e);
-        }
     }
 
     public SourceResolver getSourceResolver() {

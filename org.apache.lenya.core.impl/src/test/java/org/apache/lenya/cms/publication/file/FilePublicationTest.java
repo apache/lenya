@@ -23,9 +23,9 @@ package org.apache.lenya.cms.publication.file;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.site.SiteException;
 
 /**
@@ -58,18 +58,10 @@ public class FilePublicationTest extends AbstractAccessControlTest {
      * @throws SiteException
      */
     public void testCopyDocument() throws PublicationException, DocumentException, SiteException {
-        testCopyDocument(Publication.AUTHORING_AREA,
-                sourceDocumentId,
-                sourceLanguage,
-                Publication.AUTHORING_AREA,
-                destinationDocumentId,
-                destinationLanguage);
-        testCopyDocument(Publication.AUTHORING_AREA,
-                sourceDocumentId,
-                sourceLanguage,
-                Publication.LIVE_AREA,
-                sourceDocumentId,
-                sourceLanguage);
+        testCopyDocument(Publication.AUTHORING_AREA, sourceDocumentId, sourceLanguage,
+                Publication.AUTHORING_AREA, destinationDocumentId, destinationLanguage);
+        testCopyDocument(Publication.AUTHORING_AREA, sourceDocumentId, sourceLanguage,
+                Publication.LIVE_AREA, sourceDocumentId, sourceLanguage);
     }
 
     /**
@@ -97,33 +89,28 @@ public class FilePublicationTest extends AbstractAccessControlTest {
         getLogger().info("    Destination document ID: [" + _destinationDocumentId + "]");
         getLogger().info("    Destination language:    [" + _destinationLanguage + "]");
 
-        Publication publication = getPublication("test");
-        DocumentFactory map = getFactory();
+        Session session = getSession();
+        Publication publication = session.getPublication("test");
 
-        Document sourceDocument = map.get(publication,
-                sourceArea,
-                _sourceDocumentId,
+        Document sourceDocument = publication.getArea(sourceArea).getDocument(_sourceDocumentId,
                 _sourceLanguage);
-        Document destinationDocument = map.get(publication,
-                destinationArea,
-                _destinationDocumentId,
-                _destinationLanguage);
-/*
-        publication.copyDocument(sourceDocument, destinationDocument);
-
-        assertTrue(destinationDocument.exists());
-
-        TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(map);
-        SiteTree destinationTree = manager.getTree(destinationArea);
-        SiteTreeNode destinationNode = destinationTree.getNode(_destinationDocumentId);
-        assertNotNull(destinationNode);
-        Label destinationLabel = destinationNode.getLabel(_destinationLanguage);
-        assertNotNull(destinationLabel);
-
-        SiteTreeNode sourceNode = destinationTree.getNode(_sourceDocumentId);
-        Label sourceLabel = sourceNode.getLabel(_sourceLanguage);
-
-        assertTrue(destinationLabel.getLabel().equals(sourceLabel.getLabel()));
-*/
+        Document destinationDocument = publication.getArea(destinationArea).getDocument(
+                _destinationDocumentId, _destinationLanguage);
+        /*
+         * publication.copyDocument(sourceDocument, destinationDocument);
+         * 
+         * assertTrue(destinationDocument.exists());
+         * 
+         * TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(map); SiteTree
+         * destinationTree = manager.getTree(destinationArea); SiteTreeNode destinationNode =
+         * destinationTree.getNode(_destinationDocumentId); assertNotNull(destinationNode); Label
+         * destinationLabel = destinationNode.getLabel(_destinationLanguage);
+         * assertNotNull(destinationLabel);
+         * 
+         * SiteTreeNode sourceNode = destinationTree.getNode(_sourceDocumentId); Label sourceLabel =
+         * sourceNode.getLabel(_sourceLanguage);
+         * 
+         * assertTrue(destinationLabel.getLabel().equals(sourceLabel.getLabel()));
+         */
     }
 }

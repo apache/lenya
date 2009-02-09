@@ -42,15 +42,13 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceValidity;
 import org.apache.excalibur.source.impl.AbstractSource;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 
@@ -124,9 +122,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
                     HttpServletRequest request = process.getRequest();
                     String webappUrl = ServletHelper.getWebappURI(request);
                     String pubId = new URLInformation(webappUrl).getPublicationId();
-                    DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-                    Publication pub = factory.getPublication(pubId);
-                    Document currentDoc = pub.getFactory().getFromURL(webappUrl);
+                    Publication pub = this.session.getPublication(pubId);
+                    Document currentDoc = pub.getSession().getUriHandler().getDocument(webappUrl);
                     if (currentDoc.getSourceURI().equals(sourceUri)) {
                         revisionNumber = Integer.valueOf(revisionString).intValue();
                     }
@@ -135,10 +132,11 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
                 sourceUri = uri;
             }
 
+            org.apache.lenya.cms.repository.Session repoSession = (org.apache.lenya.cms.repository.Session) session;
             if (revisionNumber == -1) {
-                this.content = (ContentHolder) session.getRepositoryItem(nodeFactory, sourceUri);
+                this.content = (ContentHolder) repoSession.getRepositoryItem(nodeFactory, sourceUri);
             } else {
-                Node node = (Node) session.getRepositoryItem(nodeFactory, sourceUri);
+                Node node = (Node) repoSession.getRepositoryItem(nodeFactory, sourceUri);
                 this.content = node.getHistory().getRevision(revisionNumber);
             }
 

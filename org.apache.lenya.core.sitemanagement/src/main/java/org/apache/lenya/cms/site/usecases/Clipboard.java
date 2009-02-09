@@ -18,9 +18,8 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.ResourceNotFoundException;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * Clipboard for cut/copy/paste of documents. The clipping method is either {@link #METHOD_CUT} or
@@ -40,7 +39,7 @@ public class Clipboard {
      * The "cut" method.
      */
     public static final int METHOD_CUT = 0;
-    
+
     /**
      * The "copy" method.
      */
@@ -60,15 +59,14 @@ public class Clipboard {
     }
 
     /**
-     * Returns the document for the current identity map.
-     * @param identityMap The identity map.
-     * @param publication The publication.
+     * Returns the document for the current session.
+     * @param session The session.
      * @return A document.
-     * @throws DocumentBuildException if the document could not be built.
+     * @throws ResourceNotFoundException if the document does not exist.
      */
-    public Document getDocument(DocumentFactory identityMap, Publication publication) throws DocumentBuildException {
-        Document document = identityMap.get(publication, this.area, this.uuid, this.language);
-        return document;
+    public Document getDocument(Session session) throws ResourceNotFoundException {
+        return session.getPublication(this.publicationId).getArea(this.area).getDocument(this.uuid,
+                this.language);
     }
 
     /**

@@ -170,10 +170,9 @@ public class CollectionWrapper extends AbstractLogEnabled implements Collection 
      * @throws DocumentBuildException when something went wrong.
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
-        String documentId = documentElement.getAttribute(ATTRIBUTE_UUID);
-        Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
-                getDelegate().getArea(), documentId, getDelegate().getLanguage());
-        return document;
+        String uuid = documentElement.getAttribute(ATTRIBUTE_UUID);
+        Document del = getDelegate();
+        return del.area().getDocument(uuid, del.getLanguage());
     }
 
     /**

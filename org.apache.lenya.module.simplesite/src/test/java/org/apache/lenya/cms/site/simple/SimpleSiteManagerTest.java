@@ -15,27 +15,20 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.site;
+package org.apache.lenya.cms.site.simple;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.cms.site.simple.DocumentStore;
 
 public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
@@ -44,20 +37,14 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
     protected static final String PARENT_PATH = "/foo";
 
     public void testSimpleSiteManager() throws Exception {
-
         Session session = login("lenya");
-
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
-        Publication[] pubs = factory.getPublications();
-
+        Publication[] pubs = session.getPublications();
         for (int i = 0; i < pubs.length; i++) {
-            checkPublication(session, factory, pubs[i]);
+            checkPublication(pubs[i]);
         }
     }
 
-    protected void checkPublication(Session session, DocumentFactory factory, Publication pub)
-            throws ServiceException, SiteException, DocumentBuildException, PublicationException,
-            RepositoryException {
+    protected void checkPublication(Publication pub) throws Exception {
         DocumentManager docManager = null;
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -66,8 +53,7 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
         try {
             selector = (ServiceSelector) getManager().lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(factory, pub,
-                    Publication.AUTHORING_AREA);
+            SiteStructure structure = siteManager.getSiteStructure(pub, Publication.AUTHORING_AREA);
 
             docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
 
@@ -76,8 +62,8 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
             String contentSourceUri = "context://sitemap.xmap";
 
-            Document doc = docManager.add(factory, type, contentSourceUri, pub,
-                    Publication.AUTHORING_AREA, "en", "xml");
+            Document doc = docManager.add(type, contentSourceUri, pub, Publication.AUTHORING_AREA,
+                    "en", "xml");
 
             structure.add(PATH, doc);
             assertTrue(structure.contains(PATH));
@@ -102,12 +88,12 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
                 checkLinks(siteManager, node);
             }
-            
+
             doc.getLink().delete();
             assertFalse(structure.containsByUuid(doc.getUUID(), doc.getLanguage()));
             assertFalse(structure.contains(PATH));
             assertFalse(structure.contains(PARENT_PATH));
-            
+
         } finally {
             if (selector != null) {
                 if (siteManager != null) {
@@ -140,18 +126,18 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             Link link = node.getLink(languages[i]);
             assertEquals(link.getLanguage(), languages[i]);
             assertNotNull(link.getLabel());
-            
+
             if (node.getUuid() != null) {
                 Document doc = link.getDocument();
                 assertNotNull(doc);
-    
+
                 String docUuid = doc.getUUID();
                 String nodeUuid = node.getUuid();
-    
+
                 assertNotNull(doc.getUUID());
                 assertEquals(docUuid, nodeUuid);
                 assertEquals(doc.getLanguage(), link.getLanguage());
-    
+
                 // it may not be allowed to insert the doc twice
                 try {
                     siteManager.add("/sidebar", doc);

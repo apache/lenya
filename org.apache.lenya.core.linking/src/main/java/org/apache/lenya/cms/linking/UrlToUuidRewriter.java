@@ -19,10 +19,9 @@ package org.apache.lenya.cms.linking;
 
 import java.util.Arrays;
 
-import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 
 /**
@@ -36,13 +35,13 @@ import org.apache.lenya.cms.publication.URLInformation;
  */
 public class UrlToUuidRewriter implements LinkRewriter {
 
-    private DocumentFactory factory;
+    private Session session;
 
     /**
-     * @param factory The document factory to use.
+     * @param session The document factory to use.
      */
-    public UrlToUuidRewriter(DocumentFactory factory) {
-        this.factory = factory;
+    public UrlToUuidRewriter(Session session) {
+        this.session = session;
     }
 
     public boolean matches(String url) {
@@ -51,9 +50,9 @@ public class UrlToUuidRewriter implements LinkRewriter {
             String pubId = info.getPublicationId();
             String area = info.getArea();
             if (pubId != null && area != null) {
-                if (this.factory.existsPublication(pubId)) {
+                if (this.session.existsPublication(pubId)) {
                     try {
-                        Publication pub = this.factory.getPublication(pubId);
+                        Publication pub = this.session.getPublication(pubId);
                         if (Arrays.asList(pub.getAreaNames()).contains(area)) {
                             return true;
                         }
@@ -89,8 +88,8 @@ public class UrlToUuidRewriter implements LinkRewriter {
         String rewrittenUrl;
 
         try {
-            if (factory.isDocument(linkUrl)) {
-                Document targetDocument = factory.getFromURL(linkUrl);
+            if (session.getUriHandler().isDocument(linkUrl)) {
+                Document targetDocument = session.getUriHandler().getDocument(linkUrl);
                 rewrittenUrl = getUuidBasedUri(targetDocument, anchor, queryString);
             } else {
                 rewrittenUrl = webappUrl;

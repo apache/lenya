@@ -97,15 +97,11 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         return suffix;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#isDocument(DocumentFactory,
-     *      String)
-     */
-    public boolean isDocument(DocumentFactory factory, String url) throws DocumentBuildException {
+    public boolean isDocument(Session session, String url) throws DocumentBuildException {
         try {
-            DocumentLocator locator = getLocatorWithoutCheck(factory, url);
+            DocumentLocator locator = getLocatorWithoutCheck(session, url);
             if (locator != null) {
-                Publication pub = factory.getPublication(locator.getPublicationId());
+                Publication pub = session.getPublication(locator.getPublicationId());
                 String path = locator.getPath();
                 Area area = pub.getArea(locator.getArea());
                 if (area.getSite().contains(path)) {
@@ -124,41 +120,35 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
     /**
      * Builds the canonical document URL.
-     * @param factory The document factory.
+     * @param session The document factory.
      * @param locator The document locator.
      * @return A string.
      */
-    protected String buildCanonicalDocumentUrl(DocumentFactory factory, DocumentLocator locator) {
+    protected String buildCanonicalDocumentUrl(Session session, DocumentLocator locator) {
 
         String languageSuffix = "";
         String language = locator.getLanguage();
 
-        Publication pub;
-        try {
-            pub = factory.getPublication(locator.getPublicationId());
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+        Publication pub = session.getPublication(locator.getPublicationId());
 
         if (!language.equals(pub.getDefaultLanguage())) {
             languageSuffix = "_" + language;
         }
 
-        String url = locator.getPath() + languageSuffix + ".html";
-        return url;
+        return locator.getPath() + languageSuffix + ".html";
     }
 
-    public String buildCanonicalUrl(DocumentFactory factory, DocumentLocator doc) {
+    public String buildCanonicalUrl(Session session, DocumentLocator doc) {
 
-        String documentUrl = buildCanonicalDocumentUrl(factory, doc);
+        String documentUrl = buildCanonicalDocumentUrl(session, doc);
         String url = "/" + doc.getPublicationId() + "/" + doc.getArea() + documentUrl;
         return url;
     }
 
-    public DocumentLocator getLocator(DocumentFactory factory, String webappUrl)
+    public DocumentLocator getLocator(Session session, String webappUrl)
             throws DocumentBuildException {
 
-        DocumentLocator locator = getLocatorWithoutCheck(factory, webappUrl);
+        DocumentLocator locator = getLocatorWithoutCheck(session, webappUrl);
         if (locator == null) {
             throw new DocumentBuildException("The webapp URL [" + webappUrl
                     + "] does not refer to a document!");
@@ -169,13 +159,13 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     /**
      * Creates a document locator for a webapp URL without checking if the
      * webapp URL refers to a locator first.
-     * @param factory The document factory.
+     * @param session The document factory.
      * @param webappUrl The webapp URL.
      * @return A document locator or <code>null</code> if the URL doesn't
      *         refer to a locator.
      * @throws DocumentBuildException if an error occurs.
      */
-    protected DocumentLocator getLocatorWithoutCheck(DocumentFactory factory, String webappUrl)
+    protected DocumentLocator getLocatorWithoutCheck(Session session, String webappUrl)
             throws DocumentBuildException {
 
         if (!webappUrl.startsWith("/")) {
@@ -187,15 +177,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
         URLInformation info = new URLInformation(webappUrl);
 
-        Publication publication;
-        try {
-            publication = factory.getPublication(info.getPublicationId());
-        } catch (PublicationException e) {
-            throw new DocumentBuildException(e);
-        }
-
+        Publication publication = session.getPublication(info.getPublicationId());
         String documentURL = info.getDocumentUrl();
-
         documentURL = removeExtensions(documentURL);
 
         String language = getLanguage(documentURL);

@@ -84,8 +84,6 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     private Element node = null;
     private DefaultSiteTree tree;
 
-    private DocumentFactory factory;
-
     /**
      * Creates a new SiteTreeNodeImpl object.
      * @param factory The document factory.
@@ -95,11 +93,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      * 
      * @param _node the node which is to be wrapped by this SiteTreeNode
      */
-    protected SiteTreeNodeImpl(DocumentFactory factory, DefaultSiteTree tree, Element node, Log logger) {
+    protected SiteTreeNodeImpl(DefaultSiteTree tree, Element node, Log logger) {
         setLogger(logger);
         this.node = node;
         this.tree = tree;
-        this.factory = factory;
     }
 
     public String getName() {
@@ -175,8 +172,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                     labelLanguage = languageAttribute.getNodeValue();
                 }
 
-                labels.add(new SiteTreeLink(this.factory, this, labelLanguage,
-                        (Element) child));
+                labels.add(new SiteTreeLink(this, labelLanguage, (Element) child));
             }
         }
 
@@ -292,8 +288,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         Element[] elements = helper.getChildren((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i],
-                    getLogger());
+            SiteTreeNode newNode = new SiteTreeNodeImpl(getTree(), elements[i], getLogger());
             childElements.add(newNode);
         }
 
@@ -309,8 +304,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         Element[] elements = helper.getChildren((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
         for (int i = 0; i < elements.length; i++) {
             this.node.removeChild(elements[i]);
-            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i],
-                    getLogger());
+            SiteTreeNode newNode = new SiteTreeNodeImpl(getTree(), elements[i], getLogger());
             childElements.add(newNode);
         }
         return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
@@ -327,8 +321,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                 .getNextSiblings((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i],
-                    getLogger());
+            SiteTreeNode newNode = new SiteTreeNodeImpl(getTree(), elements[i], getLogger());
             siblingElements.add(newNode);
         }
 
@@ -346,8 +339,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                 SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i],
-                    getLogger());
+            SiteTreeNode newNode = new SiteTreeNodeImpl(getTree(), elements[i], getLogger());
             siblingElements.add(newNode);
         }
 
@@ -442,8 +434,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         Node parentNode = this.node.getParentNode();
         if (parentNode.getNodeType() == Node.ELEMENT_NODE
                 && parentNode.getLocalName().equals(NODE_NAME)) {
-            parent = new SiteTreeNodeImpl(this.factory, getTree(), (Element) parentNode,
-                    getLogger());
+            parent = new SiteTreeNodeImpl(getTree(), (Element) parentNode, getLogger());
         } else {
             throw new SiteException("The node [" + this + "] has no parent.");
         }
@@ -595,7 +586,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     public boolean isTopLevel() {
         return getPath().lastIndexOf("/") == 0;
     }
-    
+
     protected void save() {
         try {
             ((DefaultSiteTree) getTree()).saveDocument();

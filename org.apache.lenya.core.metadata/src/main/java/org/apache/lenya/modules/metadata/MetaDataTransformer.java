@@ -33,12 +33,9 @@ import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -112,8 +109,7 @@ public class MetaDataTransformer extends AbstractSAXTransformer {
     protected String language = null;
     protected String uuid = null;
     protected Publication pub;
-    private DocumentFactory factory;
-    protected RepositoryManager repositoryManager;
+    protected Repository repository;
 
     /**
      * Setup the MetaDataTransformer.
@@ -134,9 +130,8 @@ public class MetaDataTransformer extends AbstractSAXTransformer {
         }
         Request request = ObjectModelHelper.getRequest(objectModel);
         try {
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            factory = DocumentUtil.createDocumentFactory(session);
-            pub = factory.getPublication(this.publicationId);
+            Session session = this.repository.getSession(request);
+            pub = session.getPublication(this.publicationId);
         } catch (Exception e) {
             throw new ProcessingException("Error geting publication id / area from page envelope",
                     e);
@@ -223,11 +218,10 @@ public class MetaDataTransformer extends AbstractSAXTransformer {
         this.language = null;
         this.uuid = null;
         this.pub = null;
-        this.factory = null;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

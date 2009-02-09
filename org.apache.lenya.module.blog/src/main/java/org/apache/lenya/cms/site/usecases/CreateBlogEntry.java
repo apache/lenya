@@ -28,7 +28,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
@@ -112,14 +111,12 @@ public class CreateBlogEntry extends DocumentUsecase {
         ResourceType resourceType = getResourceTypeResolver()
                 .getResourceType(getDocumentTypeName());
 
-        DocumentFactory map = getDocumentFactory();
-
         String documentId = getDocumentID();
 
         String sampleName = resourceType.getSampleNames()[0];
         String sampleUri = resourceType.getSample(sampleName).getUri();
 
-        Document document = documentManager.add(map, resourceType, sampleUri, getSourceDocument()
+        Document document = documentManager.add(resourceType, sampleUri, getSourceDocument()
                 .getPublication(), getSourceDocument().getArea(), documentId, language, "xml",
                 getParameterAsString(DublinCore.ELEMENT_TITLE), true);
 

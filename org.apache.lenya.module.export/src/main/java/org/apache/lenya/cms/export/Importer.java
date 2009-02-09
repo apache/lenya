@@ -132,9 +132,8 @@ public class Importer extends AbstractLogEnabled {
             Document newDoc;
             SiteStructure site = area.getSite();
             if (!site.contains(path) || site.getNode(path).getLanguages().length == 0) {
-                newDoc = getDocumentManager().add(area.getPublication().getFactory(), resourceType,
-                        contentUri, area.getPublication(), area.getName(), path, language, "xml",
-                        navigationTitle, visibleInNav);
+                newDoc = getDocumentManager().add(resourceType, contentUri, area.getPublication(),
+                        area.getName(), path, language, "xml", navigationTitle, visibleInNav);
                 newDoc.setMimeType(mimeType);
             } else {
                 SiteNode node = site.getNode(path);
@@ -156,7 +155,7 @@ public class Importer extends AbstractLogEnabled {
                 String value = DocumentHelper.getSimpleElementText(dcElements[i]);
                 meta.setValue(key, value);
             }
-            
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

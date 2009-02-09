@@ -79,7 +79,7 @@ public class LinkConverter extends AbstractLogEnabled {
                 Publication pub = examinedDocument.getPublication();
                 LinkRewriter incomingRewriter = new IncomingLinkRewriter(pub);
                 LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument
-                        .getFactory());
+                        .getSession());
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
                         .getInputStream());
@@ -132,8 +132,8 @@ public class LinkConverter extends AbstractLogEnabled {
     }
 
     protected String getContextPath() throws ServiceException {
-        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
-                ProcessInfoProvider.ROLE);
+        ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
         return process.getRequest().getContextPath();
     }
 

@@ -22,12 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * Super class for operation-based input modules.
@@ -36,40 +32,25 @@ import org.apache.lenya.cms.repository.Session;
  */
 public class OperationModule extends AbstractInputModule {
 
-    private RepositoryManager repositoryManager;
-    private DocumentFactory documentFactory;
-    private DocumentFactoryBuilder documentFactoryBuilder;
+    private Repository repository;
+    private org.apache.lenya.cms.publication.Session session;
 
-    protected DocumentFactory getDocumentFactory() {
-        ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
-                .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
-        if (this.documentFactory == null) {
+    protected Session getSession() {
+        if (this.session == null) {
+            ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
             HttpServletRequest request = processInfo.getRequest();
-            try {
-                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-                this.documentFactory = getDocumentFactoryBuilder().createDocumentFactory(
-                        session);
-            } catch (RepositoryException e) {
-                throw new RuntimeException(e);
-            }
+            this.session = this.getRepository().getSession(request);
         }
-        return this.documentFactory;
+        return this.session;
     }
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public DocumentFactoryBuilder getDocumentFactoryBuilder() {
-        return documentFactoryBuilder;
-    }
-
-    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
-        this.documentFactoryBuilder = documentFactoryBuilder;
+    public Repository getRepository() {
+        return repository;
     }
 
 }

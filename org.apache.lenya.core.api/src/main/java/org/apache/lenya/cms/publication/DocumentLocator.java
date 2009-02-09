@@ -20,6 +20,7 @@ package org.apache.lenya.cms.publication;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+
 /**
  * A DocumentLocator describes a document based on its path in the site structure. The actual
  * document doesn't have to exist.
@@ -194,6 +195,16 @@ public class DocumentLocator {
      */
     public DocumentLocator getAreaVersion(String area) {
         return DocumentLocator.getLocator(getPublicationId(), area, getPath(), getLanguage());
+    }
+
+    public Document getDocument(Session session) throws ResourceNotFoundException {
+        try {
+            Publication pub = session.getPublication(getPublicationId());
+            return pub.getArea(getArea()).getSite().getNode(getPath()).getLink(getLanguage())
+                    .getDocument();
+        } catch (PublicationException e) {
+            throw new ResourceNotFoundException(e);
+        }
     }
 
 }

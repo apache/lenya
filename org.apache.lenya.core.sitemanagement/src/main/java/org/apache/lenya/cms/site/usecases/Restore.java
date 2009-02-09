@@ -64,7 +64,7 @@ public class Restore extends MoveSubsite {
         // Check to see if parent node exists in target to prevent ghost nodes
         Area targetArea = doc.getPublication().getArea(targetAreaName);
         DocumentLocator targetLoc = doc.getLocator().getAreaVersion(targetAreaName);
-        targetLoc = SiteUtil.getAvailableLocator(getDocumentFactory(), targetLoc);
+        targetLoc = SiteUtil.getAvailableLocator(getSession(), targetLoc);
         String targetPath = targetLoc.getPath();
         targetPath = targetPath.substring(0, targetPath.lastIndexOf('/'));
         if (!targetArea.getSite().contains(targetPath)) {

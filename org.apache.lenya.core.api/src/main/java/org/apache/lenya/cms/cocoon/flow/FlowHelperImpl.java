@@ -30,19 +30,17 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.WorkflowException;
@@ -53,15 +51,11 @@ import org.apache.lenya.workflow.WorkflowException;
  */
 public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     private DocumentFactoryBuilder documentFactoryBuilder;
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
-
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     public DocumentFactoryBuilder getDocumentFactoryBuilder() {
@@ -78,12 +72,11 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
     public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
         HttpServletRequest request = getRequest(cocoon);
         try {
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory map = getDocumentFactoryBuilder().createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
             URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
-            Publication publication = map.getPublication(info.getPublicationId());
-            return factory.getPageEnvelope(map, cocoon.getObjectModel(), publication);
+            Publication publication = session.getPublication(info.getPublicationId());
+            return factory.getPageEnvelope(cocoon.getObjectModel(), publication);
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }

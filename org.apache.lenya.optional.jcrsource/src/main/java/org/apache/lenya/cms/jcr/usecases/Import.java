@@ -26,7 +26,6 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -43,7 +42,7 @@ public class Import extends AbstractUsecase {
 
     protected void initParameters() {
         super.initParameters();
-        Publication[] pubs = getDocumentFactory().getPublications();
+        Publication[] pubs = getSession().getPublications();
         List pubList = Arrays.asList(pubs);
         setParameter(PUBLICATIONS, pubList);
     }
@@ -51,8 +50,7 @@ public class Import extends AbstractUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         String pubId = getParameterAsString(PUBLICATION);
-        DocumentFactory factory = getDocumentFactory();
-        Publication pub = factory.getPublication(pubId);
+        Publication pub = getSession().getPublication(pubId);
 
         List nodes = new ArrayList();
 

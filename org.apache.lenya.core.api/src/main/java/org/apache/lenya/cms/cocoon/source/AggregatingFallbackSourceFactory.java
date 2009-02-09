@@ -30,12 +30,10 @@ import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.AllExistingSourceResolver;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -111,13 +109,12 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
                 pubId = info.getPublicationId();
             }
 
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory factory = getDocumentFactoryBuilder().createDocumentFactory(session);
+            Session session = getRepository().getSession(request);
 
             String[] uris;
 
-            if (factory.existsPublication(pubId)) {
-                Publication pub = factory.getPublication(pubId);
+            if (session.existsPublication(pubId)) {
+                Publication pub = session.getPublication(pubId);
                 AllExistingSourceResolver resolver = new AllExistingSourceResolver();
                 getTemplateManager().visit(pub, path, resolver);
                 uris = resolver.getUris();

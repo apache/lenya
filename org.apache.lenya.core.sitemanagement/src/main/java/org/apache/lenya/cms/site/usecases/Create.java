@@ -161,7 +161,7 @@ public abstract class Create extends AbstractUsecase {
                 resourceType = getResourceTypeResolver().getResourceType(getDocumentTypeName());
                 String sampleName = getParameterAsString(SAMPLE, resourceType.getSampleNames()[0]);
                 ResourceType.Sample sample = resourceType.getSample(sampleName);
-                document = documentManager.add(getDocumentFactory(), resourceType, sample.getUri(),
+                document = documentManager.add(resourceType, sample.getUri(),
                         getPublication(), getArea(), getNewDocumentPath(), language,
                         getSourceExtension(), title, getVisibleInNav());
                 document.setMimeType(sample.getMimeType());
@@ -322,8 +322,8 @@ public abstract class Create extends AbstractUsecase {
         Document document = null;
         String url = getSourceURL();
         try {
-            if (getDocumentFactory().isDocument(url)) {
-                document = getDocumentFactory().getFromURL(url);
+            if (getSession().getUriHandler().isDocument(url)) {
+                document = getSession().getUriHandler().getDocument(url);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

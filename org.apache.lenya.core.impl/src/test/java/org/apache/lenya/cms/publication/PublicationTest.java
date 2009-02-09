@@ -34,22 +34,10 @@ public class PublicationTest extends AbstractAccessControlTest {
      * @throws Exception
      */
     public void testPublication() throws Exception {
-
-        PublicationManager pubMgr = null;
-        try {
-            pubMgr = (PublicationManager) getManager().lookup(PublicationManager.ROLE);
-
-            Publication[] pubs = pubMgr.getPublications(getFactory());
-            for (int i = 0; i < pubs.length; i++) {
-                doTestPublication(pubs[i]);
-            }
-
-        } finally {
-            if (pubMgr != null) {
-                getManager().release(pubMgr);
-            }
+        Publication[] pubs = getSession().getPublications();
+        for (int i = 0; i < pubs.length; i++) {
+            doTestPublication(pubs[i]);
         }
-
     }
 
     protected void doTestPublication(Publication pub) throws PublicationException {
@@ -83,7 +71,7 @@ public class PublicationTest extends AbstractAccessControlTest {
 
         String templateId = pub.getTemplateId();
         if (templateId != null) {
-            Publication template = pub.getFactory().getPublication(templateId);
+            Publication template = pub.getSession().getPublication(templateId);
             String[] templateTypes = template.getResourceTypeNames();
             for (int t = 0; t < templateTypes.length; t++) {
                 assertTrue(typeSet.contains(templateTypes[t]));

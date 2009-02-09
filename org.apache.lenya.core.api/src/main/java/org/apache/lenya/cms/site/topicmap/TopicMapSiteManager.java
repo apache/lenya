@@ -18,9 +18,9 @@
 package org.apache.lenya.cms.site.topicmap;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteException;
@@ -31,23 +31,12 @@ import org.apache.lenya.cms.site.SiteStructure;
  */
 public class TopicMapSiteManager extends AbstractSiteManager {
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.SiteNode, org.apache.lenya.cms.site.SiteNode)
-     */
-    public boolean requires(DocumentFactory map, SiteNode dependingResource,
-            SiteNode requiredResource) throws SiteException {
-        // TODO Auto-generated method stub
+    public boolean requires(SiteNode dependingResource, SiteNode requiredResource)
+            throws SiteException {
         return false;
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.SiteNode)
-     */
-    public SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource)
-            throws SiteException {
-        // TODO Auto-generated method stub
+    public SiteNode[] getRequiringResources(SiteNode resource) throws SiteException {
         return null;
     }
 
@@ -55,15 +44,12 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
      */
     public void add(String path, Document document) throws SiteException {
-        // TODO Auto-generated method stub
-
     }
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document resource) throws SiteException {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -71,7 +57,6 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#containsInAnyLanguage(org.apache.lenya.cms.publication.Document)
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -80,8 +65,6 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      *      org.apache.lenya.cms.publication.Document)
      */
     public void copy(Document sourceDocument, Document destinationDocument) throws SiteException {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -91,30 +74,17 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
-     */
-    public Document[] getDocuments(DocumentFactory map, Publication publication, String area)
-            throws SiteException {
+    public Document[] getDocuments(Publication publication, String area) throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
-     */
-    public SiteStructure getSiteStructure(DocumentFactory map, Publication publiation, String area)
-            throws SiteException {
+    public SiteStructure getSiteStructure(Publication publiation, String area) throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
-     */
-    public DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator document)
+    public DocumentLocator getAvailableLocator(Session session, DocumentLocator document)
             throws SiteException {
         return document;
     }
@@ -127,7 +97,7 @@ public class TopicMapSiteManager extends AbstractSiteManager {
         // TODO Auto-generated method stub
     }
 
-    public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator)
+    public DocumentLocator[] getRequiredResources(Session session, DocumentLocator locator)
             throws SiteException {
         return new DocumentLocator[0];
     }

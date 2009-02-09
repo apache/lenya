@@ -136,7 +136,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         Area targetArea = doc.getPublication().getArea(targetAreaName);
 
         DocumentLocator targetLoc = doc.getLocator().getAreaVersion(targetAreaName);
-        targetLoc = SiteUtil.getAvailableLocator(getDocumentFactory(), targetLoc);
+        targetLoc = SiteUtil.getAvailableLocator(getSession(), targetLoc);
 
         for (int i = 0; i < sources.length; i++) {
             WorkflowUtil.invoke(getLogger(), sources[i], getEvent(), true);

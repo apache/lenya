@@ -29,14 +29,11 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -69,7 +66,7 @@ public class ResourceTypeModule extends AbstractInputModule {
     protected static final String EXPIRES = "expires";
     protected static final String SUPPORTS_FORMAT = "supportsFormat";
 
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     private ResourceTypeResolver resourceTypeResolver;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
@@ -78,7 +75,7 @@ public class ResourceTypeModule extends AbstractInputModule {
 
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            Session session = this.repository.getSession(request);
 
             ResourceType resourceType;
             Publication pub = null;
@@ -86,9 +83,8 @@ public class ResourceTypeModule extends AbstractInputModule {
 
             String[] steps = name.split(":");
             if (steps.length == 1) {
-                DocumentFactory docFactory = DocumentUtil.createDocumentFactory(session);
                 String webappUrl = ServletHelper.getWebappURI(request);
-                Document document = docFactory.getFromURL(webappUrl);
+                Document document = session.getUriHandler().getDocument(webappUrl);
                 pub = document.getPublication();
 
                 attribute = name;
@@ -155,20 +151,16 @@ public class ResourceTypeModule extends AbstractInputModule {
         }
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
-
     public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
         this.resourceTypeResolver = resourceTypeResolver;
     }
 
     public ResourceTypeResolver getResourceTypeResolver() {
         return resourceTypeResolver;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

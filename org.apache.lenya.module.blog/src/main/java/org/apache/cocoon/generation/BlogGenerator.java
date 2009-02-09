@@ -30,13 +30,10 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
@@ -79,7 +76,7 @@ public class BlogGenerator extends ServiceableGenerator {
      */
     protected int numrecent;
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * Set the request parameters. Must be called before the generate method.
@@ -124,15 +121,14 @@ public class BlogGenerator extends ServiceableGenerator {
         SiteManager siteManager = null;
         try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             String id = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
-            Publication publication = map.getPublication(id);
+            Publication publication = session.getPublication(id);
 
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
 
-            Document[] docs = siteManager.getDocuments(map, publication, area);
+            Document[] docs = siteManager.getDocuments(publication, area);
             Arrays.sort((Object[]) docs, new Comparator() {
                 public int compare(Object o1, Object o2) {
                     try {
@@ -183,11 +179,4 @@ public class BlogGenerator extends ServiceableGenerator {
         this.contentHandler.endDocument();
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
 }

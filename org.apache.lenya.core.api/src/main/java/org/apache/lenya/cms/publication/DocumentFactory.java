@@ -17,23 +17,20 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.repository.RepositoryItemFactory;
-import org.apache.lenya.cms.repository.Session;
-
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
  * @version $Id$
  */
-public interface DocumentFactory extends RepositoryItemFactory {
+public interface DocumentFactory {
 
     /**
      * Returns a document.
      * @param identifier The identifier of the document.
      * @return A document.
-     * @throws DocumentBuildException if the document does not exist.
+     * @throws ResourceNotFoundException if the document does not exist.
      */
-    Document get(DocumentIdentifier identifier) throws DocumentBuildException;
+    Document get(DocumentIdentifier identifier) throws ResourceNotFoundException;
     
     /**
      * Returns a document.
@@ -42,10 +39,10 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @param uuid The document ID.
      * @param language The language.
      * @return A document.
-     * @throws DocumentBuildException if the document does not exist.
+     * @throws ResourceNotFoundException if the document does not exist.
      */
     Document get(Publication publication, String area, String uuid, String language)
-            throws DocumentBuildException;
+            throws ResourceNotFoundException;
 
     /**
      * Returns a revision of a document.
@@ -55,38 +52,18 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @param language The language.
      * @param revision The revision..
      * @return A document.
-     * @throws DocumentBuildException if the document does not exist.
+     * @throws ResourceNotFoundException if the document does not exist.
      */
     Document get(Publication publication, String area, String uuid, String language, int revision)
-            throws DocumentBuildException;
+            throws ResourceNotFoundException;
 
     /**
      * Returns the document identified by a certain web application URL.
      * @param webappUrl The web application URL.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws ResourceNotFoundException if an error occurs.
      */
-    Document getFromURL(String webappUrl) throws DocumentBuildException;
-
-    /**
-     * Builds a clone of a document for another language.
-     * @param document The document to clone.
-     * @param language The language of the target document.
-     * @return A document.
-     * @throws DocumentBuildException if an error occurs.
-     * @deprecated use {@link DocumentLocator#getLanguageVersion(String)} instead.
-     */
-    Document getLanguageVersion(Document document, String language) throws DocumentBuildException;
-
-    /**
-     * Builds a clone of a document for another area.
-     * @param document The document to clone.
-     * @param area The area of the target document.
-     * @return A document.
-     * @throws DocumentBuildException if an error occurs.
-     * @deprecated use {@link DocumentLocator#getAreaVersion(String)} instead.
-     */
-    Document getAreaVersion(Document document, String area) throws DocumentBuildException;
+    Document getFromURL(String webappUrl) throws ResourceNotFoundException;
 
     /**
      * Builds a document for the default language.
@@ -94,30 +71,22 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @param area The area.
      * @param uuid The document UUID.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws ResourceNotFoundException if an error occurs.
      */
     Document get(Publication publication, String area, String uuid)
-            throws DocumentBuildException;
+            throws ResourceNotFoundException;
 
     /**
      * Checks if a webapp URL represents a document.
      * @param webappUrl A web application URL.
      * @return A boolean value.
-     * @throws DocumentBuildException if an error occurs.
      */
-    boolean isDocument(String webappUrl) throws DocumentBuildException;
+    boolean isDocument(String webappUrl);
     
     /**
      * @return The session.
      */
     Session getSession();
-    
-    /**
-     * @param locator The locator.
-     * @return A document.
-     * @throws DocumentBuildException if an error occurs.
-     */
-    Document get(DocumentLocator locator) throws DocumentBuildException;
     
     /**
      * @param id The publication ID.

@@ -18,40 +18,85 @@
 package org.apache.lenya.cms.publication;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.SharedItemStore;
+import org.apache.lenya.cms.repository.UUIDGenerator;
 
 public class RepositoryImpl implements Repository {
 
-    private RepositoryManager repositoryManager;
-
     public Session getSession(HttpServletRequest request) {
         Validate.notNull(request);
-        try {
-            org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(
-                    this.repositoryManager, request);
-            return new SessionImpl(this, repoSession);
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
+        SessionImpl session = (SessionImpl) request.getAttribute(Session.class.getName());
+        if (session == null) {
+            Identity identity = getIdentity(request);
+            // attach a read-only repository session to the HTTP request
+            session = (SessionImpl) startSession(identity, false);
+            request.setAttribute(Session.class.getName(), session);
+        } else if (session.getIdentity() == null) {
+            Identity identity = getIdentity(request);
+            if (identity != null) {
+                session.setIdentity(identity);
+            }
         }
-    }
-
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+        return session;
     }
 
     public Session startSession(Identity identity, boolean modifiable) {
-        org.apache.lenya.cms.repository.Session repoSession;
+        SessionImpl session = new SessionImpl(identity, modifiable);
         try {
-            repoSession = this.repositoryManager.createSession(identity, modifiable);
+            session.setObservationRegistry(getObservationRegistry());
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
-        return new SessionImpl(this, repoSession);
+        session.setUuidGenerator(getUuidGenerator());
+        session.setSharedItemStore(getSharedItemStore());
+        return session;
+    }
+
+    private SharedItemStore sharedItemStore;
+    private UUIDGenerator uuidGenerator;
+    private ObservationRegistry observationRegistry;
+
+    protected SharedItemStore getSharedItemStore() {
+        return sharedItemStore;
+    }
+
+    public void setSharedItemStore(SharedItemStore sharedItemStore) {
+        this.sharedItemStore = sharedItemStore;
+    }
+
+    protected UUIDGenerator getUuidGenerator() {
+        return uuidGenerator;
+    }
+
+    public void setUuidGenerator(UUIDGenerator uuidGenerator) {
+        this.uuidGenerator = uuidGenerator;
+    }
+
+    protected ObservationRegistry getObservationRegistry() {
+        return observationRegistry;
+    }
+
+    public void setObservationRegistry(ObservationRegistry observationRegistry) {
+        this.observationRegistry = observationRegistry;
+    }
+
+    protected static Identity getIdentity(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (Identity) session.getAttribute(Identity.class.getName());
+    }
+
+    /**
+     * Removes the repository session from the servlet session.
+     * @param request The current request.
+     */
+    public void removeSession(HttpServletRequest request) {
+        request.removeAttribute(Session.class.getName());
     }
 
 }

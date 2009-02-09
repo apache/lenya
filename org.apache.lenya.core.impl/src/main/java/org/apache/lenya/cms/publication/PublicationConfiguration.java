@@ -33,7 +33,6 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * A publication's configuration. Keep in sync with
@@ -546,7 +545,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         return getId();
     }
 
-    public Area getArea(String name) throws PublicationException {
+    public Area getArea(String name) throws ResourceNotFoundException {
         throw new IllegalStateException("Not implemented!");
     }
 
@@ -579,7 +578,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         return this.name;
     }
 
-    public Session getSession() {
+    public Session getRepositorySession() {
         throw new UnsupportedOperationException();
     }
 
@@ -728,6 +727,10 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
     public String[] getModuleNames() {
         return (String[]) this.modules.toArray(new String[this.modules.size()]);
+    }
+
+    public Session getSession() {
+        throw new UnsupportedOperationException();
     }
 
 }

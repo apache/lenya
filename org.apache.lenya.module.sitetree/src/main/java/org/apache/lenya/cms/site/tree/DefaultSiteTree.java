@@ -28,7 +28,8 @@ import javax.xml.transform.TransformerException;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
-import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.commons.logging.LogFactory;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -53,6 +54,8 @@ import org.w3c.dom.NodeList;
  */
 public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
+    private static final Log logger = LogFactory.getLog(DefaultSiteTree.class);
+
     /**
      * The sitetree namespace.
      */
@@ -69,7 +72,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     private String area = "";
     private Publication pub;
     private Document document;
-    private DocumentFactory factory;
 
     private org.apache.lenya.cms.repository.Node repositoryNode;
 
@@ -83,15 +85,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @param logger The logger.
      * @throws SiteException if an error occurs.
      */
-    protected DefaultSiteTree(DocumentFactory factory, Publication publication, String _area,
-            Log logger) throws SiteException {
+    protected DefaultSiteTree(Area area) throws SiteException {
         setLogger(logger);
 
-        this.factory = factory;
-        this.pub = publication;
-        this.sourceUri = publication.getSourceURI() + "/content/" + _area + "/"
+        this.pub = area.getPublication();
+        this.sourceUri = this.pub.getSourceURI() + "/content/" + area.getName() + "/"
                 + SITE_TREE_FILENAME;
-        this.area = _area;
+        this.area = area.getName();
         try {
             if (getRepositoryNode().exists()) {
                 this.document = DocumentHelper.readDocument(getRepositoryNode().getInputStream());
@@ -328,7 +328,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             return null;
         }
 
-        SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, this, (Element) node, getLogger());
+        SiteTreeNode newNode = new SiteTreeNodeImpl(this, (Element) node, getLogger());
         return newNode;
     }
 
@@ -387,7 +387,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             throw new RuntimeException(e);
         }
         if (node != null) {
-            treeNode = new SiteTreeNodeImpl(this.factory, this, (Element) node, getLogger());
+            treeNode = new SiteTreeNodeImpl(this, (Element) node, getLogger());
         } else {
             throw new SiteException("No node contained for path [" + path + "]!");
         }
@@ -475,7 +475,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     public org.apache.lenya.cms.repository.Node getRepositoryNode() {
         if (this.repositoryNode == null) {
-            Session session = this.getPublication().getFactory().getSession();
+            Session session = (Session) this.getPublication().getSession();
             try {
                 NodeFactory factory = (NodeFactory) WebAppContextUtils
                         .getCurrentWebApplicationContext().getBean(NodeFactory.ROLE);
@@ -533,7 +533,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             if (element == null) {
                 return null;
             } else {
-                return new SiteTreeNodeImpl(this.factory, this, element, getLogger());
+                return new SiteTreeNodeImpl(this, element, getLogger());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -546,7 +546,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             SiteNode[] nodes = new SiteNode[list.getLength()];
             for (int i = 0; i < nodes.length; i++) {
                 Element element = (Element) list.item(i);
-                nodes[i] = new SiteTreeNodeImpl(this.factory, this, element, getLogger());
+                nodes[i] = new SiteTreeNodeImpl(this, element, getLogger());
             }
             return nodes;
         } catch (Exception e) {
@@ -561,10 +561,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
                     + "] is not contained!");
         }
         return node.getLink(language);
-    }
-
-    protected DocumentFactory getFactory() {
-        return this.factory;
     }
 
     public Link add(String path, org.apache.lenya.cms.publication.Document doc)
@@ -635,8 +631,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         return false;
     }
 
-    public Session getSession() {
-        return getRepositoryNode().getSession();
+    public Session getRepositorySession() {
+        return getRepositoryNode().getRepositorySession();
     }
 
     public SiteNode[] preOrder() {

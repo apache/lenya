@@ -106,8 +106,7 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure {
         String uuid = documentElement.getAttribute(ATTRIBUTE_UUID);
         String language = documentElement.getAttribute(ATTRIBUTE_LANGUAGE);
         String path = documentElement.getAttribute(ATTRIBUTE_PATH);
-        Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
-                getDelegate().getArea(), uuid, language);
+        Document document = getDelegate().area().getDocument(uuid, language);
         String key = getKey(uuid, language);
         if (!this.doc2path.containsKey(key)) {
             this.doc2path.put(key, path);
@@ -300,7 +299,7 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure {
         return false;
     }
 
-    public Session getSession() {
-        return getRepositoryNode().getSession();
+    public Session getRepositorySession() {
+        return getRepositoryNode().getRepositorySession();
     }
 }

@@ -130,7 +130,7 @@ public class ChangeNodeID extends DocumentUsecase {
             addErrorMessage("The document ID is not valid.");
         } else {
             DocumentLocator target = getTargetLocator();
-            Publication pub = getDocumentFactory().getPublication(target.getPublicationId());
+            Publication pub = getSession().getPublication(target.getPublicationId());
             SiteStructure site = pub.getArea(target.getArea()).getSite();
             if (site.contains(target.getPath(), target.getLanguage())) {
                 addErrorMessage("The document does already exist.");
@@ -158,7 +158,7 @@ public class ChangeNodeID extends DocumentUsecase {
         Document source = getSourceDocument();
         DocumentLocator target = getTargetLocator();
         getDocumentManager().moveAll(source.area(), source.getPath(), source.area(), target.getPath());
-        targetDoc = getDocumentFactory().get(target);
+        targetDoc = target.getDocument(getSession());
 
         setTargetDocument(targetDoc);
     }

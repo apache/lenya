@@ -31,8 +31,6 @@ import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.publication.Area;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Session;
@@ -115,9 +113,9 @@ public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater
 
     public void index(Session session, ResourceType resourceType, String pubId, String area,
             String uuid, String language) throws IndexException {
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
         try {
-            Publication pub = factory.getPublication(pubId);
+            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session;
+            Publication pub = pubSession.getPublication(pubId);
             Area areaObj = pub.getArea(area);
             if (areaObj.contains(uuid, language)) {
                 updateIndex("index", resourceType, pubId, area, uuid, language);

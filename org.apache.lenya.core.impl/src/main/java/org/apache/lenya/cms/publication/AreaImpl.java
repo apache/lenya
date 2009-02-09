@@ -37,16 +37,16 @@ public class AreaImpl implements Area {
 
     private String name;
     private Publication pub;
-    private DocumentFactory factory;
     private NodeFactory nodeFactory;
+    private Session session;
 
     /**
-     * @param factory The factory.
+     * @param session The factory.
      * @param pub The publication.
      * @param name The area name.
      */
-    public AreaImpl(DocumentFactory factory, NodeFactory nodeFactory, Publication pub, String name) {
-        this.factory = factory;
+    public AreaImpl(Session session, NodeFactory nodeFactory, Publication pub, String name) {
+        this.session = session;
         this.pub = pub;
         this.name = name;
         this.nodeFactory = nodeFactory;
@@ -64,8 +64,8 @@ public class AreaImpl implements Area {
         } else {
             String sourceUri = DocumentImpl.getSourceURI(pub, name, uuid, language);
             try {
-                Node node = (Node) getPublication().getSession().getRepositoryItem(
-                        getNodeFactory(), sourceUri);
+                org.apache.lenya.cms.repository.Session repoSession = (org.apache.lenya.cms.repository.Session) this.session;
+                Node node = (Node) repoSession.getRepositoryItem(getNodeFactory(), sourceUri);
                 return node.exists();
             } catch (RepositoryException e) {
                 throw new RuntimeException(e);
@@ -77,8 +77,18 @@ public class AreaImpl implements Area {
         return this.nodeFactory;
     }
 
-    public Document getDocument(String uuid, String language) throws PublicationException {
-        return this.factory.get(getPublication(), getName(), uuid, language);
+    public Document getDocument(String uuid, String language) throws ResourceNotFoundException {
+        return getDocumentFactory().get(getPublication(), getName(), uuid, language);
+    }
+
+    public Document getDocument(String uuid, String language, int revision) throws ResourceNotFoundException {
+        return getDocumentFactory().get(getPublication(), getName(), uuid, language, revision);
+    }
+
+    protected DocumentFactory getDocumentFactory() {
+        SessionImpl sessionImpl = (SessionImpl) this.session;
+        DocumentFactory factory = sessionImpl.getDocumentFactory();
+        return factory;
     }
 
     public String getName() {
@@ -97,7 +107,7 @@ public class AreaImpl implements Area {
             try {
                 siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
                         .getBean(SiteManager.ROLE + "/" + getPublication().getSiteManagerHint());
-                this.site = siteManager.getSiteStructure(this.factory, getPublication(), getName());
+                this.site = siteManager.getSiteStructure(getPublication(), getName());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

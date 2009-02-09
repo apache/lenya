@@ -29,22 +29,22 @@ import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.repository.NodeFactory;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.RepositoryItem;
 
 /**
  * A publication.
  * @version $Id$
  */
-public class PublicationImpl extends AbstractLogEnabled implements Publication {
+public class PublicationImpl extends AbstractLogEnabled implements Publication, RepositoryItem {
 
     private PublicationConfiguration delegate;
-    private DocumentFactory factory;
     private NodeFactory nodeFactory;
+    private Session session;
 
-    protected PublicationImpl(DocumentFactory factory, NodeFactory nodeFactory,
+    protected PublicationImpl(Session session, NodeFactory nodeFactory,
             PublicationConfiguration delegate) {
         this.delegate = delegate;
-        this.factory = factory;
+        this.session = session;
         this.nodeFactory = nodeFactory;
     }
 
@@ -135,13 +135,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
             this.allResourceTypes.addAll(Arrays.asList(this.delegate.getResourceTypeNames()));
             String templateId = getTemplateId();
             if (templateId != null) {
-                try {
-                    Publication template = getFactory().getPublication(templateId);
-                    String[] templateTypes = template.getResourceTypeNames();
-                    this.allResourceTypes.addAll(Arrays.asList(templateTypes));
-                } catch (PublicationException e) {
-                    throw new RuntimeException(e);
-                }
+                Publication template = getSession().getPublication(templateId);
+                String[] templateTypes = template.getResourceTypeNames();
+                this.allResourceTypes.addAll(Arrays.asList(templateTypes));
             }
         }
         return (String[]) this.allResourceTypes.toArray(new String[this.allResourceTypes.size()]);
@@ -167,12 +163,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         String schema = this.delegate.getWorkflowSchema(resourceType);
         if (schema == null && getTemplateId() != null) {
             String templateId = getTemplateId();
-            try {
-                Publication template = getFactory().getPublication(templateId);
-                schema = template.getWorkflowSchema(resourceType);
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
+            Publication template = getSession().getPublication(templateId);
+            schema = template.getWorkflowSchema(resourceType);
         }
         return schema;
     }
@@ -187,9 +179,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     private Map areas = new HashMap();
 
-    public Area getArea(String name) throws PublicationException {
+    public Area getArea(String name) {
         if (!this.areas.containsKey(name)) {
-            Area area = new AreaImpl(this.factory, this.nodeFactory, this, name);
+            Area area = new AreaImpl(this.session, this.nodeFactory, this, name);
             this.areas.put(name, area);
         }
         return (Area) this.areas.get(name);
@@ -197,10 +189,6 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     public String[] getAreaNames() {
         return delegate.getAreaNames();
-    }
-
-    public DocumentFactory getFactory() {
-        return this.factory;
     }
 
     public boolean equals(Object obj) {
@@ -222,8 +210,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return delegate.getName();
     }
 
-    public Session getSession() {
-        return getFactory().getSession();
+    public org.apache.lenya.cms.repository.Session getRepositorySession() {
+        return (org.apache.lenya.cms.repository.Session) getSession();
     }
 
     public void addLanguage(String language) {
@@ -244,6 +232,10 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     public void setName(String name) {
         this.delegate.setName(name);
+    }
+
+    public org.apache.lenya.cms.publication.Session getSession() {
+        return this.session;
     }
 
 }

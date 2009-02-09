@@ -22,7 +22,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -188,17 +187,16 @@ public class PageEnvelope {
 
     /**
      * Creates a page envelope from an object model.
-     * @param map The identity map to use.
+     * @param session The session to use.
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.
      * @param servletContext The servlet context directory.
      * @param publication The publication.
      * @throws PageEnvelopeException when something went wrong.
      */
-    public PageEnvelope(DocumentFactory map, String contextPath,
+    public PageEnvelope(String contextPath,
             String webappUrl, File servletContext, Publication publication)
             throws PageEnvelopeException {
-        this.factory = map;
         this.context = contextPath;
         this.webappUrl = webappUrl;
         this.publication = publication;
@@ -206,14 +204,11 @@ public class PageEnvelope {
 
     private String webappUrl;
 
-    private DocumentFactory factory;
-
     /**
-     * Returns the document factory.
-     * @return A document factory.
+     * @return The session.
      */
-    public DocumentFactory getDocumentFactory() {
-        return this.factory;
+    public Session getSession() {
+        return getPublication().getSession();
     }
 
     /**
@@ -286,7 +281,7 @@ public class PageEnvelope {
             final Document doc = getDocument();
             try {
                 this.path = doc != null ? doc.getPath() :
-                    getPublication().getDocumentBuilder().getLocator(this.factory, this.webappUrl).getPath();
+                    getPublication().getDocumentBuilder().getLocator(getSession(), this.webappUrl).getPath();
             } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
@@ -312,8 +307,8 @@ public class PageEnvelope {
         if (!documentChecked) {
             try {
                 documentChecked = true;
-                if (getDocumentFactory().isDocument(this.webappUrl)) {
-                    this.document = getDocumentFactory().getFromURL(this.webappUrl);
+                if (getSession().getUriHandler().isDocument(this.webappUrl)) {
+                    this.document = getSession().getUriHandler().getDocument(this.webappUrl);
                 }
             } catch (final Exception e) {
                 throw new RuntimeException(e);

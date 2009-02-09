@@ -34,11 +34,10 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 
 /**
@@ -58,7 +57,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
             + Publication.PUBLICATION_PREFIX_URI;
     
     private NodeFactory nodeFactory;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
@@ -95,7 +94,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
         .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
         if (sessionName == null) {
             HttpServletRequest request = process.getRequest();
-            session = RepositoryUtil.getSession(getRepositoryManager(), request);
+            session = this.repository.getSession(request);
         } else if (sessionName.equals("usecase")) {
             session = getUsecaseSession(process.getObjectModel());
         } else {
@@ -133,11 +132,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
         return nodeFactory;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 }

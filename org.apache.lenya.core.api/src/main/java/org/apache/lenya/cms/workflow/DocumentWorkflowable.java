@@ -175,7 +175,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         WorkflowEventDescriptor descriptor = new WorkflowEventDescriptor(version);
         RepositoryEvent event = RepositoryEventFactory.createEvent(getDocument(),
                 getLogger(), descriptor);
-        getDocument().getRepositoryNode().getSession().enqueueEvent(event);
+        getDocument().getRepositoryNode().getRepositorySession().enqueueEvent(event);
     }
 
     protected void addToMetaData(String versionString) {

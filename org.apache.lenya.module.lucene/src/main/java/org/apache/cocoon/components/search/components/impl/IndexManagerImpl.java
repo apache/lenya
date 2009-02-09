@@ -42,13 +42,9 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -144,7 +140,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      * Index configuration file
      */
 
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     private SourceResolver sourceResolver;
 
     private Map indexMap;
@@ -220,10 +216,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
             ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
                     .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
             HttpServletRequest request = process.getRequest();
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
 
-            Publication[] publications = factory.getPublications();
+            Publication[] publications = session.getPublications();
 
             for (int i = 0; i < publications.length; i++) {
                 String uri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
@@ -236,8 +231,6 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
             }
         } catch (IOException e) {
             throw new RuntimeException("Config file error", e);
-        } catch (RepositoryException e) {
-            throw new RuntimeException("Repository access error", e);
         } finally {
             if (confSource != null) {
                 this.sourceResolver.release(confSource);
@@ -421,12 +414,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
         return (Index[]) this.indexes().values().toArray(new Index[indexes().size()]);
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public void setSourceResolver(SourceResolver sourceResolver) {
-        this.sourceResolver = sourceResolver;
+    public void setRepositoryManager(Repository repository) {
+        this.repository = repository;
     }
 
 }

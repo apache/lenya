@@ -21,9 +21,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -62,8 +60,8 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
         String uuid = snippets[2];
         DocumentStore store;
         try {
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            Publication publication = factory.getPublication(publicationId);
+            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session;
+            Publication publication = pubSession.getPublication(publicationId);
             Area area = publication.getArea(areaName);
             String lang = publication.getDefaultLanguage();
 

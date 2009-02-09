@@ -38,14 +38,11 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * A PolicyManager which is capable of mapping all URLs of a document to the appropriate canonical
@@ -55,7 +52,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         InheritingPolicyManager {
 
     private InheritingPolicyManager policyManager;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * Returns the URI which is used to obtain the policy for a webapp URL.
@@ -87,10 +84,9 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         if (pubId != null && area != null && info.getDocumentUrl().length() > 1) {
             try {
                 HttpServletRequest request = getRequest();
-                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-                DocumentFactory map = DocumentUtil.createDocumentFactory(session);
-                Publication pub = map.getPublication(pubId);
-                DocumentLocator loc = pub.getDocumentBuilder().getLocator(map, webappUrl);
+                Session session = this.repository.getSession(request);
+                Publication pub = session.getPublication(pubId);
+                DocumentLocator loc = pub.getDocumentBuilder().getLocator(session, webappUrl);
                 url = "/" + pubId + "/" + area + loc.getPath();
             } catch (Exception e) {
                 throw new AccessControlException(e);
@@ -140,10 +136,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         getLogger().debug("Building publication");
 
         try {
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), getRequest());
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            String id = new URLInformation(url).getPublicationId();
-            return factory.getPublication(id);
+            Session session = this.repository.getSession(getRequest());
+            return session.getUriHandler().getPublication(url);
         } catch (Exception e) {
             throw new AccessControlException(e);
         }
@@ -254,11 +248,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         return getPolicyManager().getGrantedRoles(accreditableManager, identity, getPolicyURL(url));
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
 }

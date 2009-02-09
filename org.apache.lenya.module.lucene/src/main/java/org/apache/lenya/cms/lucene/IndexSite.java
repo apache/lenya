@@ -19,9 +19,9 @@ package org.apache.lenya.cms.lucene;
 
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
 /**
@@ -36,15 +36,14 @@ public class IndexSite extends AbstractUsecase {
         URLInformation info = new URLInformation(url);
         String pubId = info.getPublicationId();
 
-        DocumentFactory factory = getDocumentFactory();
-        Publication pub = factory.getPublication(pubId);
+        Publication pub = getSession().getPublication(pubId);
         Area area = pub.getArea(info.getArea());
 
         Document[] docs = area.getDocuments();
 
         for (int i = 0; i < docs.length; i++) {
             try {
-                getIndexUpdater().index(getSession().getDocumentFactory().getSession(),
+                getIndexUpdater().index((Session) getSession(),
                         docs[i].getResourceType(), pubId, area.getName(), docs[i].getUUID(),
                         docs[i].getLanguage());
             } catch (Exception e) {

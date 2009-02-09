@@ -52,7 +52,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         getLogger().info("Complete URL: " + document.getCanonicalWebappURL());
         getLogger().info("Extension:    " + document.getExtension());
 
-        Publication publication = getPublication("test");
+        Publication publication = getSession().getPublication("test");
         assertEquals(document.getPublication(), publication);
         assertEquals(document.getPath(), testSet.getPath());
         assertEquals(document.getArea(), testSet.getArea());
@@ -83,11 +83,11 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
      */
     protected Document getDocument(DocumentTestSet testSet) throws PublicationException {
 
-        Publication pub = getPublication("test");
+        Publication pub = getSession().getPublication("test");
         String uuid = pub.getArea(testSet.getArea()).getSite().getNode(testSet.getPath()).getUuid();
         DocumentIdentifier id = new DocumentIdentifier(pub.getId(), testSet.getArea(), uuid, testSet
                 .getLanguage());
-        DocumentImpl document = new DocumentImpl(getFactory(), id, -1, logger);
+        DocumentImpl document = new DocumentImpl(getSession(), id, -1);
         document.setExtension(testSet.getExtension());
 
         return document;

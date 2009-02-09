@@ -124,7 +124,7 @@ public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
     }
 
     protected String getMetaSourceUri() {
-        String realSourceUri = SourceWrapper.computeRealSourceUri(getSourceResolver(), this.node.getSession(), 
+        String realSourceUri = SourceWrapper.computeRealSourceUri(getSourceResolver(), this.node.getRepositorySession(), 
                 this.node.getSourceURI(), getLogger());
         return realSourceUri + ".meta." + getTime() + ".bak";
     }

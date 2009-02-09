@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -70,9 +69,8 @@ public class EmptyTrash extends AbstractUsecase {
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
         try {
-            DocumentFactory factory = getDocumentFactory();
             String pubId = new URLInformation(getSourceURL()).getPublicationId();
-            Publication publication = factory.getPublication(pubId);
+            Publication publication = getSession().getPublication(pubId);
             Document[] docs = getTrashDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
@@ -103,8 +101,7 @@ public class EmptyTrash extends AbstractUsecase {
      */
     protected Document[] getTrashDocuments() throws PublicationException, SiteException {
         String pubId = new URLInformation(getSourceURL()).getPublicationId();
-        DocumentFactory factory = getDocumentFactory();
-        Publication pub = factory.getPublication(pubId);
+        Publication pub = getSession().getPublication(pubId);
         return pub.getArea(Publication.TRASH_AREA).getDocuments();
     }
 

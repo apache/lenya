@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.repository.Session;
-
 /**
  * Document factory builder.
  */

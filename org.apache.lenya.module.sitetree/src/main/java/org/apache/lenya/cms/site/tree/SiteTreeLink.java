@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.site.tree;
 
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.site.AbstractLink;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.xml.DocumentHelper;
@@ -28,9 +27,8 @@ import org.w3c.dom.Element;
  */
 public class SiteTreeLink extends AbstractLink {
 
-    protected SiteTreeLink(DocumentFactory factory, SiteNode node, String _language,
-            Element element) {
-        super(factory, node, "", _language);
+    protected SiteTreeLink(SiteNode node, String _language, Element element) {
+        super(node, "", _language);
         this.element = element;
     }
 
@@ -38,7 +36,7 @@ public class SiteTreeLink extends AbstractLink {
         SiteTreeNodeImpl node = (SiteTreeNodeImpl) getNode();
         node.removeLabel(getLanguage());
     }
-    
+
     private Element element;
 
     /**

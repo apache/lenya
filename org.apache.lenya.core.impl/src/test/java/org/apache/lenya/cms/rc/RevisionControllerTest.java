@@ -42,7 +42,7 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         DocumentManager docMgr = null;
         try {
             docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-            Document source = getPublication("test").getArea("authoring").getSite().getNode(
+            Document source = getSession().getPublication("test").getArea("authoring").getSite().getNode(
                     "/links").getLink("en").getDocument();
             Document target = docMgr.addVersion(source, "authoring", "es");
             target.delete();
@@ -52,7 +52,7 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
             }
         }
 
-        getFactory().getSession().commit();
+        getSession().commit();
     }
 
     public void testRevisionController() throws RepositoryException, RevisionControlException {

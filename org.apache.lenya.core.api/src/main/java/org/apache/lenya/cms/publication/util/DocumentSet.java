@@ -123,9 +123,9 @@ public class DocumentSet {
      * Visits the set.
      * 
      * @param visitor The visitor.
-     * @throws PublicationException if an error occurs during visiting.
+     * @throws Exception if an error occurs during visiting.
      */
-    public void visit(DocumentVisitor visitor) throws PublicationException {
+    public void visit(DocumentVisitor visitor) throws Exception {
         Document[] resources = getDocuments();
         for (int i = 0; i < resources.length; i++) {
             resources[i].accept(visitor);

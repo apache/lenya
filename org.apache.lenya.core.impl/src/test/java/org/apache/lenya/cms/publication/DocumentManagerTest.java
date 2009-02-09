@@ -34,39 +34,31 @@ import org.apache.lenya.util.StringUtil;
  * Document manager test.
  */
 public class DocumentManagerTest extends AbstractAccessControlTest {
+    
+    private DocumentManager docManager;
 
     /**
      * Do the test.
      * @throws Exception
      */
     public void testDocumentManager() throws Exception {
-        DocumentManager docManager = null;
-        try {
-            docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-            doTestMoveAll(docManager, "/doctypes", "/tutorial/doctypes");
-            doTestMoveAll(docManager, "/tutorial/doctypes", "/doctypes");
-            doTestCopyAll(docManager, "/doctypes", "/tutorial/doctypes");
+        doTestMoveAll(getDocManager(), "/doctypes", "/tutorial/doctypes");
+        doTestMoveAll(getDocManager(), "/tutorial/doctypes", "/doctypes");
+        doTestCopyAll(getDocManager(), "/doctypes", "/tutorial/doctypes");
 
-            String areaName1 = "authoring";
-            String areaName2 = "live";
-            String path1 = "/tutorial";
-            String path2 = "/doctypes";
+        String areaName1 = "authoring";
+        String areaName2 = "live";
+        String path1 = "/tutorial";
+        String path2 = "/doctypes";
 
-            doTestCopyToArea(docManager, areaName1, areaName2, path1, path2);
-
-        } finally {
-            if (docManager != null) {
-                getManager().release(docManager);
-            }
-        }
+        doTestCopyToArea(getDocManager(), areaName1, areaName2, path1, path2);
     }
 
     protected void doTestCopyToArea(DocumentManager docManager, String sourceAreaName,
             String destAreaName, String path1, String path2) throws PublicationException,
             SiteException {
-        
-        DocumentFactory factory = getFactory();
-        Publication pub = factory.getPublication("test");
+
+        Publication pub = getSession().getPublication("test");
         SiteStructure sourceArea = pub.getArea(sourceAreaName).getSite();
         SiteStructure destArea = pub.getArea(destAreaName).getSite();
 
@@ -76,10 +68,10 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
         if (destArea.contains(path2)) {
             destArea.getNode(path2).delete();
         }
-        
+
         assertFalse(destArea.contains(path1));
         assertFalse(destArea.contains(path2));
-        
+
         // copy second node first to test correct ordering
         doTestCopyToArea(docManager, path2, sourceAreaName, destAreaName);
         doTestCopyToArea(docManager, path1, sourceAreaName, destAreaName);
@@ -109,8 +101,7 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
 
     protected void doTestCopyToArea(DocumentManager docManager, String path, String areaName1,
             String areaName2) throws PublicationException {
-        DocumentFactory factory = getFactory();
-        Publication pub = factory.getPublication("test");
+        Publication pub = getSession().getPublication("test");
         Area area1 = pub.getArea(areaName1);
         Document doc = area1.getSite().getNode(path).getLink("en").getDocument();
         docManager.copyToArea(doc, areaName2);
@@ -118,12 +109,11 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
 
     protected void doTestCopyAll(DocumentManager docManager, String sourcePath, String targetPath)
             throws SiteException, DocumentException, PublicationException {
-        DocumentFactory factory = getFactory();
-        Publication pub = factory.getPublication("test");
+        Publication pub = getSession().getPublication("test");
         Area authoring = pub.getArea("authoring");
 
         SiteNode sourceNode = authoring.getSite().getNode(sourcePath);
-        
+
         NodeSet nodes = SiteUtil.getSubSite(sourceNode);
         Document[] docs = nodes.getDocuments();
         Map doc2path = new HashMap();
@@ -146,26 +136,25 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
             assertEquals(newDoc.getContentLength(), docs[i].getContentLength());
             assertFalse(newDoc.getUUID().equals(docs[i].getUUID()));
         }
-        
+
         String[] sourceNames = getChildNames(sourceNode);
         SiteNode targetNode = authoring.getSite().getNode(targetPath);
         String[] targetNames = getChildNames(targetNode);
         assertEquals(StringUtil.join(sourceNames, ","), StringUtil.join(targetNames, ","));
     }
 
-	protected String[] getChildNames(SiteNode node) {
-		SiteNode[] sourceChildren = node.getChildren();
+    protected String[] getChildNames(SiteNode node) {
+        SiteNode[] sourceChildren = node.getChildren();
         String[] names = new String[sourceChildren.length];
         for (int i = 0; i < names.length; i++) {
-        	names[i] = sourceChildren[i].getName();
+            names[i] = sourceChildren[i].getName();
         }
-		return names;
-	}
+        return names;
+    }
 
     protected void doTestMoveAll(DocumentManager docManager, String sourcePath, String targetPath)
             throws SiteException, DocumentException, PublicationException {
-        DocumentFactory factory = getFactory();
-        Publication pub = factory.getPublication("test");
+        Publication pub = getSession().getPublication("test");
         Area authoring = pub.getArea("authoring");
 
         SiteNode sourceNode = authoring.getSite().getNode(sourcePath);
@@ -189,10 +178,18 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
             String newPath = docs[i].getPath();
             assertEquals(targetBase + oldPath, newPath);
         }
-        
+
         SiteNode targetNode = authoring.getSite().getNode(targetPath);
         String[] targetNames = getChildNames(targetNode);
         assertEquals(StringUtil.join(sourceNames, ","), StringUtil.join(targetNames, ","));
-        
+
+    }
+
+    public void setDocManager(DocumentManager docManager) {
+        this.docManager = docManager;
+    }
+
+    public DocumentManager getDocManager() {
+        return docManager;
     }
 }

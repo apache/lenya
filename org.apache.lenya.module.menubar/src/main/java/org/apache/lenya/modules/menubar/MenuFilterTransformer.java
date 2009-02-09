@@ -30,13 +30,9 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.cms.usecase.gui.Tab;
@@ -45,8 +41,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 /**
- * Filter menu elements (blocks, items, ...) according to the attributes
- * <em>areas</em> and <em>resourceTypes</em>.
+ * Filter menu elements (blocks, items, ...) according to the attributes <em>areas</em> and
+ * <em>resourceTypes</em>.
  */
 public class MenuFilterTransformer extends AbstractSAXTransformer {
 
@@ -54,8 +50,8 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
     private static final String ATTR_AREAS = "areas";
     private static final String ATTR_RESOURCE_TYPES = "resourceTypes";
     private Set attributeHandlers;
-    
-    private RepositoryManager repositoryManager;
+
+    private Repository repository;
 
     public MenuFilterTransformer() {
         this.defaultNamespaceURI = NAMESPACE;
@@ -75,17 +71,17 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
         String area = tabGroup != null ? tabGroup : url.getArea();
 
         this.attributeHandlers.add(new AttributeHandler(ATTR_AREAS, area));
-        
+
+        Session session = this.repository.getSession(request);
+        String resourceType;
         try {
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            String resourceType = factory.isDocument(webappUri) ?
-                resourceType = factory.getFromURL(webappUri).getResourceType().getName()
-                : null;
-            this.attributeHandlers.add(new AttributeHandler(ATTR_RESOURCE_TYPES, resourceType));
-        } catch (RepositoryException e) {
+            resourceType = session.getUriHandler().isDocument(webappUri) ? resourceType = session
+                    .getUriHandler().getDocument(webappUri).getResourceType().getName()
+                    : null;
+        } catch (final Exception e) {
             throw new ProcessingException(e);
         }
+        this.attributeHandlers.add(new AttributeHandler(ATTR_RESOURCE_TYPES, resourceType));
 
     }
 
@@ -151,12 +147,8 @@ public class MenuFilterTransformer extends AbstractSAXTransformer {
         }
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     /**

@@ -32,17 +32,12 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.ResourceNotFoundException;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.NodeFactory;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -65,7 +60,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
 
     protected static final String SCHEME = "lenyadoc";
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     private NodeFactory nodeFactory;
 
     /**
@@ -104,14 +99,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         ProcessInfoProvider processInfoProvider = (ProcessInfoProvider) WebAppContextUtils
                 .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
         HttpServletRequest request = processInfoProvider.getRequest();
-        Session session;
-        try {
-            session = RepositoryUtil.getSession(getRepositoryManager(), request);
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-
+        Session session = this.repository.getSession(request);
         start = end + 1;
         
         // Absolute vs. relative
@@ -125,8 +113,8 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
             }
             String publicationId = location.substring(start, end);
             try {
-                pub = factory.getPublication(publicationId);
-            } catch (PublicationException e) {
+                pub = session.getPublication(publicationId);
+            } catch (ResourceNotFoundException e) {
                 throw new MalformedURLException("Malformed lenyadoc: Publication [" + publicationId
                         + "] does not exist or could not be initialized");
             }
@@ -148,8 +136,8 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
             // Relative: get publication id and area from page envelope
             try {
                 String id = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
-                pub = factory.getPublication(id);
-            } catch (PublicationException e) {
+                pub = session.getPublication(id);
+            } catch (ResourceNotFoundException e) {
                 throw new SourceException("Error getting publication id / area from page envelope ["
                         + location + "]");
             }
@@ -182,8 +170,8 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         }
         Document document;
         try {
-            document = factory.get(pub, area, uuid, language);
-        } catch (DocumentBuildException e) {
+            document = pub.getArea(area).getDocument(uuid, language);
+        } catch (ResourceNotFoundException e) {
             throw new MalformedURLException("Malformed lenyadoc: Document [" + uuid + ":"
                     + language + "] could not be created.");
         }
@@ -206,12 +194,8 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         // Source will be released by delegated source factory.
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     public void setNodeFactory(NodeFactory nodeFactory) {

@@ -27,7 +27,6 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -130,13 +129,9 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
         String templateId = publication.getTemplateId();
         if (templateId != null) {
-            try {
-                Publication template = publication.getFactory().getPublication(templateId);
-                Publication[] templateTemplates = getPublications(template);
-                publications.addAll(Arrays.asList(templateTemplates));
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
+            Publication template = publication.getSession().getPublication(templateId);
+            Publication[] templateTemplates = getPublications(template);
+            publications.addAll(Arrays.asList(templateTemplates));
         }
 
         return (Publication[]) publications.toArray(new Publication[publications.size()]);

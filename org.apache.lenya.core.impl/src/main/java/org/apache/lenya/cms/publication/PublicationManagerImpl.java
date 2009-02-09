@@ -35,6 +35,7 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Factory for creating publication objects.
@@ -42,7 +43,6 @@ import org.apache.lenya.cms.repository.RepositoryException;
 public final class PublicationManagerImpl extends AbstractLogEnabled implements PublicationManager {
 
     private Map id2config;
-    private DocumentFactoryBuilder documentFactoryBuilder;
     private NodeFactory nodeFactory;
 
     protected synchronized Map getId2config() throws PublicationException {
@@ -72,8 +72,7 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
     }
 
     public Publication getPublication(DocumentFactory factory, String id)
-    throws PublicationException
-    {
+            throws PublicationException {
         Validate.notNull(id);
         Map id2config = getId2config();
         if (!id2config.containsKey(id)) {
@@ -81,10 +80,10 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
         }
 
         PublicationConfiguration config = (PublicationConfiguration) id2config.get(id);
-        PublicationFactory pubFactory = new PublicationFactory(getDocumentFactoryBuilder(),
-                getNodeFactory(), config);
+        PublicationFactory pubFactory = new PublicationFactory(getNodeFactory(), config);
         try {
-            return (Publication) factory.getSession().getRepositoryItem(pubFactory, id);
+            org.apache.lenya.cms.repository.Session repoSession = (Session) factory.getSession();
+            return (Publication) repoSession.getRepositoryItem(pubFactory, id);
         } catch (RepositoryException e) {
             throw new PublicationException(e);
         }
@@ -134,14 +133,6 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
     protected String getServletContextPath() {
         return WebAppContextUtils.getCurrentWebApplicationContext().getServletContext()
                 .getRealPath("/");
-    }
-
-    public DocumentFactoryBuilder getDocumentFactoryBuilder() {
-        return documentFactoryBuilder;
-    }
-
-    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
-        this.documentFactoryBuilder = documentFactoryBuilder;
     }
 
     public NodeFactory getNodeFactory() {

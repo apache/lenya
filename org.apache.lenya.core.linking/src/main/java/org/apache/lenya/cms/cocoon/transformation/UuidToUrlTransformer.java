@@ -28,11 +28,8 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UuidToUrlRewriter;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.xml.sax.SAXException;
 
 /**
@@ -46,7 +43,7 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer {
 
     private UuidToUrlRewriter rewriter;
     private LinkResolver linkResolver;
-    protected RepositoryManager repositoryManager;
+    protected Repository repository;
     
     public void setup(SourceResolver resolver, Map objectModel, String source,
             Parameters params) throws ProcessingException, SAXException, IOException {
@@ -56,13 +53,12 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer {
         this.useIgnore = true;
         try {
             String currentUrl = getWebappUrl(params, objectModel);
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
-            this.rewriter = new UuidToUrlRewriter(currentUrl, this.linkResolver, factory);
+            this.rewriter = new UuidToUrlRewriter(currentUrl, this.linkResolver, session);
             
-            if (factory.isDocument(currentUrl)) {
-                this.rewriter.setCurrentDocument(factory.getFromURL(currentUrl));
+            if (session.getUriHandler().isDocument(currentUrl)) {
+                this.rewriter.setCurrentDocument(session.getUriHandler().getDocument(currentUrl));
             }
             
         } catch (final Exception e) {
@@ -88,8 +84,8 @@ public class UuidToUrlTransformer extends AbstractLinkTransformer {
         this.rewriter = null;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

@@ -33,13 +33,9 @@ import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.ServletHelper;
 
@@ -68,7 +64,7 @@ import org.apache.lenya.util.ServletHelper;
 public class SiteSourceFactory extends AbstractLogEnabled implements SourceFactory {
 
     private SourceResolver sourceResolver;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
@@ -108,10 +104,8 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
                         + "] must start with at least one slash.");
             }
 
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            Publication pub = factory.getPublication(pubId);
-            SiteStructure site = pub.getArea(areaName).getSite();
+            Session session = this.repository.getSession(request);
+            SiteStructure site = session.getPublication(pubId).getArea(areaName).getSite();
 
             String[] steps = relativePath.substring(1).split("/");
 
@@ -145,20 +139,16 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
         this.sourceResolver.release(source);
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
-
     public SourceResolver getSourceResolver() {
         return sourceResolver;
     }
 
     public void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

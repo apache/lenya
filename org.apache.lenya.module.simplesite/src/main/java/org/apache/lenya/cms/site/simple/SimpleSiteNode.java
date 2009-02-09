@@ -38,8 +38,7 @@ public class SimpleSiteNode extends AbstractSiteNode {
     }
 
     public Link getLink(String language) throws SiteException {
-        DocumentStore store = (DocumentStore) getStructure();
-        return new SimpleLink(store.getDelegate().getFactory(), this, "", language);
+        return new SimpleLink(this, "", language);
     }
 
     public String getName() {

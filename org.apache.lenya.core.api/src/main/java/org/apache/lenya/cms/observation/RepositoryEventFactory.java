@@ -17,12 +17,9 @@
  */
 package org.apache.lenya.cms.observation;
 
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.Session;
@@ -53,7 +50,7 @@ public class RepositoryEventFactory {
     public static final RepositoryEvent createEvent(Document doc, Log logger, Object descriptor) {
         try {
             Node node = doc.getRepositoryNode();
-            RepositoryEvent event = new DocumentEvent(node.getSession(), doc.getPublication()
+            RepositoryEvent event = new DocumentEvent(node.getRepositorySession(), doc.getPublication()
                     .getId(), doc.getArea(), doc.getUUID(), doc.getLanguage(), doc
                     .getResourceType(), descriptor);
             event.setNodeUri(node.getSourceURI());
@@ -85,7 +82,7 @@ public class RepositoryEventFactory {
         if (doc != null) {
             event = createEvent(doc, logger, descriptor);
         } else {
-            event = new RepositoryEvent(node.getSession(), descriptor);
+            event = new RepositoryEvent(node.getRepositorySession(), descriptor);
             event.setNodeUri(node.getSourceURI());
         }
         return event;
@@ -119,17 +116,14 @@ public class RepositoryEventFactory {
 
         try {
 
-            DocumentFactoryBuilder builder = (DocumentFactoryBuilder) WebAppContextUtils
-                    .getCurrentWebApplicationContext().getBean(
-                            DocumentFactoryBuilder.class.getName());
-            DocumentFactory factory = builder.createDocumentFactory(node.getSession());
-            Publication pub = factory.getPublication(pubId);
+            org.apache.lenya.cms.publication.Session session = (org.apache.lenya.cms.publication.Session) node.getRepositorySession();
+            Publication pub = session.getPublication(pubId);
             String docPath = path.substring((pubId + "/content/" + area).length());
 
             String uuid = docPath.substring(1, docPath.length() - "/en".length());
             String language = docPath.substring(docPath.length() - "en".length());
 
-            doc = factory.get(pub, area, uuid, language);
+            doc = pub.getArea(area).getDocument(uuid, language);
 
             if (doc == null) {
                 // this happens if the node was not a document node

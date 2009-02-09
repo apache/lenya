@@ -26,5 +26,7 @@ public interface Repository {
     Session getSession(HttpServletRequest request);
 
     Session startSession(Identity identity, boolean modifiable);
+
+    void removeSession(HttpServletRequest request);
     
 }

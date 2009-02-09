@@ -45,7 +45,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Publication[] pubs = getDocumentFactory().getPublications();
+        Publication[] pubs = getSession().getPublications();
         List templates = new ArrayList();
         for (int i = 0; i < pubs.length; i++) {
             if (pubs[i].getInstantiatorHint() != null) {
@@ -67,7 +67,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
         if (!PublicationUtil.isValidPublicationID(publicationId)) {
             addErrorMessage("invalid-publication-id");
         } else {
-            if (getDocumentFactory().existsPublication(publicationId)) {
+            if (getSession().existsPublication(publicationId)) {
                 addErrorMessage("publication-already-exists");
             }
         }
@@ -88,7 +88,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
 
         Instantiator instantiator = null;
 
-        Publication template = getDocumentFactory().getPublication(templateId);
+        Publication template = getSession().getPublication(templateId);
         String name = getParameterAsString(PUBLICATION_NAME);
 
         instantiator = (Instantiator) WebAppContextUtils.getCurrentWebApplicationContext().getBean(

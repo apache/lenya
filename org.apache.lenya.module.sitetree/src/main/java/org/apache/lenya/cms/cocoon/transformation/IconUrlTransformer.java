@@ -77,7 +77,7 @@ public class IconUrlTransformer extends AbstractLinkTransformer {
                 try {
                     Link link = getLink(linkUri, pubId, area);
                     LinkTarget target = IconUrlTransformer.this.linkResolver.resolve(
-                            IconUrlTransformer.this.session.getDocumentFactory(), link.getUri());
+                            IconUrlTransformer.this.session, link.getUri());
                     if (target.exists()) {
                         Document doc = target.getDocument();
                         ResourceType type = doc.getResourceType();

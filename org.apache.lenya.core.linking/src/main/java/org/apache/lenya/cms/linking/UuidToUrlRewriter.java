@@ -23,8 +23,8 @@ import java.util.StringTokenizer;
 import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.Query;
 
@@ -65,19 +65,19 @@ public class UuidToUrlRewriter implements LinkRewriter {
     private String currentUrl;
     private Document currentDoc;
     private LinkResolver linkResolver;
-    private DocumentFactory factory;
+    private Session session;
 
     /**
      * @param currentUrl The current request URL.
      * @param linkResolver The link resolver to use.
-     * @param factory The document factory to use.
+     * @param session The document factory to use.
      */
-    public UuidToUrlRewriter(String currentUrl, LinkResolver linkResolver, DocumentFactory factory) {
+    public UuidToUrlRewriter(String currentUrl, LinkResolver linkResolver, Session session) {
         Validate.notNull(currentUrl);
         Validate.notNull(linkResolver);
-        Validate.notNull(factory);
+        Validate.notNull(session);
         this.currentUrl = currentUrl;
-        this.factory = factory;
+        this.session = session;
         this.linkResolver = linkResolver;
     }
 
@@ -128,7 +128,7 @@ public class UuidToUrlRewriter implements LinkRewriter {
                     target = this.linkResolver.resolve(this.currentDoc, linkUri);
                 } else {
                     Link link = getAbsoluteLink(info, linkUri);
-                    target = this.linkResolver.resolve(this.factory, link.getUri());
+                    target = this.linkResolver.resolve(this.session, link.getUri());
                 }
 
                 if (target.exists() && target.getDocument().hasLink()) {

@@ -20,30 +20,28 @@ package org.apache.lenya.cms.publication;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaDataCache;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
-import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.repository.RepositoryItemFactory;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
  * @version $Id: DocumentIdentityMap.java 264153 2005-08-29 15:11:14Z andreas $
  */
-public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentFactory {
+public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFactory {
+
+    private static final Log logger = LogFactory.getLog(DocumentFactoryImpl.class);
 
     private Session session;
     private MetaDataCache metaDataCache;
     private SourceResolver sourceResolver;
-
+    
     /**
      * @return The session.
      */
@@ -54,9 +52,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     /**
      * Ctor.
      * @param session The session to use.
-     * @param logger The logger to use.
      */
-    public DocumentFactoryImpl(Session session, Log logger) {
+    public DocumentFactoryImpl(Session session) {
         this.session = session;
     }
 
@@ -67,46 +64,50 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @param uuid The document UUID.
      * @param language The language.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws ResourceNotFoundException if an error occurs.
      */
     public Document get(Publication publication, String area, String uuid, String language)
-            throws DocumentBuildException {
+            throws ResourceNotFoundException {
         return get(publication, area, uuid, language, -1);
     }
 
     public Document get(Publication publication, String area, String uuid, String language,
-            int revision) throws DocumentBuildException {
-        if (getLogger().isDebugEnabled())
-            getLogger().debug(
+            int revision) throws ResourceNotFoundException {
+        if (logger.isDebugEnabled())
+            logger.debug(
                     "DocumentIdentityMap::get() called on publication [" + publication.getId()
                             + "], area [" + area + "], UUID [" + uuid + "], language [" + language
                             + "]");
 
         String key = getKey(publication, area, uuid, language, revision);
 
-        if (getLogger().isDebugEnabled())
-            getLogger().debug(
+        if (logger.isDebugEnabled())
+            logger.debug(
                     "DocumentIdentityMap::get() got key [" + key + "] from DocumentFactory");
 
         try {
-            return (Document) getSession().getRepositoryItem(this, key);
+            return (Document) getRepositorySession().getRepositoryItem(this, key);
         } catch (RepositoryException e) {
-            throw new DocumentBuildException(e);
+            throw new ResourceNotFoundException(e);
         }
+    }
+
+    protected org.apache.lenya.cms.repository.Session getRepositorySession() {
+        return (org.apache.lenya.cms.repository.Session) this.session;
     }
 
     /**
      * Returns the document identified by a certain web application URL.
      * @param webappUrl The web application URL.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws ResourceNotFoundException if an error occurs.
      */
-    public Document getFromURL(String webappUrl) throws DocumentBuildException {
+    public Document getFromURL(String webappUrl) throws ResourceNotFoundException {
         String key = getKey(webappUrl);
         try {
-            return (Document) getSession().getRepositoryItem(this, key);
+            return (Document) getRepositorySession().getRepositoryItem(this, key);
         } catch (RepositoryException e) {
-            throw new DocumentBuildException(e);
+            throw new ResourceNotFoundException(e);
         }
     }
 
@@ -127,9 +128,9 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @param document The document to clone.
      * @param area The area of the target document.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws ResourceNotFoundException if an error occurs.
      */
-    public Document getAreaVersion(Document document, String area) throws DocumentBuildException {
+    public Document getAreaVersion(Document document, String area) throws ResourceNotFoundException {
         return get(document.getPublication(), area, document.getUUID(), document.getLanguage());
     }
 
@@ -139,10 +140,10 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @param area The area.
      * @param documentId The document ID.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws ResourceNotFoundException if an error occurs.
      */
     public Document get(Publication publication, String area, String documentId)
-            throws DocumentBuildException {
+            throws ResourceNotFoundException {
         return get(publication, area, documentId, publication.getDefaultLanguage());
     }
 
@@ -176,9 +177,9 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * Checks if a webapp URL represents a document.
      * @param webappUrl A web application URL.
      * @return A boolean value.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws ResourceNotFoundException if an error occurs.
      */
-    public boolean isDocument(String webappUrl) throws DocumentBuildException {
+    public boolean isDocument(String webappUrl) throws ResourceNotFoundException {
         Validate.notNull(webappUrl);
         PublicationManager pubMgr = getPublicationManager();
         try {
@@ -187,12 +188,12 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             if (pubId != null && Arrays.asList(pubMgr.getPublicationIds()).contains(pubId)) {
                 Publication pub = pubMgr.getPublication(this, pubId);
                 DocumentBuilder builder = pub.getDocumentBuilder();
-                return builder.isDocument(this, webappUrl);
+                return builder.isDocument(this.session, webappUrl);
             } else {
                 return false;
             }
         } catch (PublicationException e) {
-            throw new DocumentBuildException(e);
+            throw new ResourceNotFoundException(e);
         }
     }
 
@@ -202,11 +203,12 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @param area The area.
      * @param uuid The document UUID.
      * @param language The language.
-     * @param revision 
+     * @param revision
      * @return A key.
      */
-    public String getKey(Publication publication, String area, String uuid, String language, int revision) {
-    	Validate.notNull(publication);
+    public String getKey(Publication publication, String area, String uuid, String language,
+            int revision) {
+        Validate.notNull(publication);
         Validate.notNull(area);
         Validate.notNull(uuid);
         Validate.notNull(language);
@@ -240,7 +242,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             URLInformation info = new URLInformation(webappUrl);
             Publication publication = getPublication(info.getPublicationId());
             DocumentBuilder builder = publication.getDocumentBuilder();
-            locator = builder.getLocator(this, webappUrl);
+            locator = builder.getLocator(this.session, webappUrl);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -252,9 +254,9 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
      *      java.lang.String)
      */
-    public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentFactory::build() called with key [" + key + "]");
+    public RepositoryItem buildItem(org.apache.lenya.cms.repository.Session session, String key) throws RepositoryException {
+        if (logger.isDebugEnabled())
+            logger.debug("DocumentFactory::build() called with key [" + key + "]");
 
         StringTokenizer tokenizer = new StringTokenizer(key, ":");
         String publicationId = tokenizer.nextToken();
@@ -270,63 +272,49 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             DocumentBuilder builder = publication.getDocumentBuilder();
             DocumentIdentifier identifier = new DocumentIdentifier(publicationId, area, uuid,
                     language);
-            document = buildDocument(this, identifier, revision, builder);
+            document = buildDocument(identifier, revision, builder);
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentFactory::build() done.");
+        if (logger.isDebugEnabled())
+            logger.debug("DocumentFactory::build() done.");
 
         return document;
     }
 
-    protected Document buildDocument(DocumentFactory map, DocumentIdentifier identifier,
-            int revision, DocumentBuilder builder) throws DocumentBuildException {
-
-        DocumentImpl document = createDocument(map, identifier, revision, builder);
-        return document;
+    protected Document buildDocument(DocumentIdentifier identifier, int revision,
+            DocumentBuilder builder) throws DocumentBuildException {
+        return createDocument(identifier, revision, builder);
     }
 
     /**
      * Creates a new document object. Override this method to create specific document objects,
      * e.g., for different document IDs.
-     * @param map The identity map.
      * @param identifier The identifier.
      * @param revision The revision or -1 for the latest revision.
      * @param builder The document builder.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    protected DocumentImpl createDocument(DocumentFactory map, DocumentIdentifier identifier,
-            int revision, DocumentBuilder builder) throws DocumentBuildException {
-        DocumentImpl doc = new DocumentImpl(map, identifier, revision, getLogger());
+    protected DocumentImpl createDocument(DocumentIdentifier identifier, int revision,
+            DocumentBuilder builder) throws DocumentBuildException {
+        DocumentImpl doc = new DocumentImpl(session, identifier, revision);
         doc.setMetaDataCache(getMetaDataCache());
         doc.setSourceResolver(getSourceResolver());
         return doc;
     }
 
-    public Document get(DocumentIdentifier identifier) throws DocumentBuildException {
+    public Document get(DocumentIdentifier identifier) throws ResourceNotFoundException {
         try {
             Publication pub = getPublication(identifier.getPublicationId());
             return get(pub, identifier.getArea(), identifier.getUUID(), identifier.getLanguage());
         } catch (PublicationException e) {
-            throw new DocumentBuildException(e);
+            throw new ResourceNotFoundException(e);
         }
     }
 
     public String getItemType() {
         return Document.TRANSACTIONABLE_TYPE;
-    }
-
-    public Document get(DocumentLocator locator) throws DocumentBuildException {
-        try {
-            Publication pub = getPublication(locator.getPublicationId());
-            SiteStructure site = pub.getArea(locator.getArea()).getSite();
-            String uuid = site.getNode(locator.getPath()).getUuid();
-            return get(pub, locator.getArea(), uuid, locator.getLanguage());
-        } catch (PublicationException e) {
-            throw new DocumentBuildException(e);
-        }
     }
 
     public Publication getPublication(String id) throws PublicationException {

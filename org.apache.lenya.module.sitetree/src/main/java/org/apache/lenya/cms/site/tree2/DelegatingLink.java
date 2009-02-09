@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.site.tree2;
 
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.site.AbstractLink;
 
 /**
@@ -26,13 +25,12 @@ import org.apache.lenya.cms.site.AbstractLink;
 public class DelegatingLink extends AbstractLink {
     
     /**
-     * @param factory The document factory.
      * @param node The node which this link belongs to.
      * @param label The label.
      * @param language The language.
      */
-    public DelegatingLink(DocumentFactory factory, DelegatingNode node, String label, String language) {
-        super(factory, node, label, language);
+    public DelegatingLink(DelegatingNode node, String label, String language) {
+        super(node, label, language);
     }
 
     public void delete() {

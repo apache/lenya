@@ -19,9 +19,9 @@
 package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * <p>
@@ -35,8 +35,7 @@ import org.apache.lenya.cms.publication.Publication;
  * </p>
  * <ul>
  * <li><em>irreflexive:</em> d <strong>&lt; </strong>d does not hold for any resource d</li>
- * <li><em>antisymmetric:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>d implies
- * d=e</li>
+ * <li><em>antisymmetric:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>d implies d=e</li>
  * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>f implies d
  * <strong>&lt; </strong>f</li>
  * </ul>
@@ -52,34 +51,32 @@ public interface SiteManager {
 
     /**
      * Checks if a resource requires another one.
-     * @param map The identity map to operate on.
      * @param dependingResource The depending resource.
      * @param requiredResource The required resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
      */
-    boolean requires(DocumentFactory map, SiteNode dependingResource, SiteNode requiredResource)
-            throws SiteException;
+    boolean requires(SiteNode dependingResource, SiteNode requiredResource) throws SiteException;
 
     /**
      * Returns the resources which are required by a certain resource.
      * 
-     * @param map The identity map to operate on.
+     * @param session The session to operate on.
      * @param locator The depending locator.
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator) throws SiteException;
+    DocumentLocator[] getRequiredResources(Session session, DocumentLocator locator)
+            throws SiteException;
 
     /**
      * Returns the resources which require a certain resource.
      * 
-     * @param map The identity map to operate on.
      * @param resource The required resource.
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource) throws SiteException;
+    SiteNode[] getRequiringResources(SiteNode resource) throws SiteException;
 
     /**
      * Adds a document to the site structure.
@@ -124,7 +121,7 @@ public interface SiteManager {
      * @throws SiteException when something went wrong.
      */
     void copy(Document sourceDocument, Document destinationDocument) throws SiteException;
-    
+
     /**
      * Sets the visibility of a node in the navigation. It is meant to hide specific nodes within
      * the "public" navigation whereas the node is visible within the info/site area.
@@ -147,14 +144,12 @@ public interface SiteManager {
     /**
      * Returns all documents in a certain area.
      * 
-     * @param identityMap The identityMap to use.
      * @param publication The publication.
      * @param area The area.
      * @return An array of documents.
      * @throws SiteException if an error occurs.
      */
-    Document[] getDocuments(DocumentFactory identityMap, Publication publication, String area)
-            throws SiteException;
+    Document[] getDocuments(Publication publication, String area) throws SiteException;
 
     /**
      * Sorts a set of nodes using the "requires" relation.
@@ -166,23 +161,22 @@ public interface SiteManager {
     SiteNode[] sortAscending(SiteNode[] nodes) throws SiteException;
 
     /**
-     * @param map The identity map.
      * @param publication The publication.
      * @param area The area.
      * @return The object that holds the site structure information.
      * @throws SiteException if an error occurs.
      */
-    SiteStructure getSiteStructure(DocumentFactory map, Publication publication, String area)
-            throws SiteException;
+    SiteStructure getSiteStructure(Publication publication, String area) throws SiteException;
 
     /**
      * Checks if the document does already exist. If it does, returns a non-existing document with a
      * similar document ID. If it does not, the original document is returned.
-     * @param factory The document factory.
+     * @param session The session.
      * @param locator The locator.
      * @return A locator.
      * @throws SiteException if the new document could not be built.
      */
-    DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator locator) throws SiteException;
-    
+    DocumentLocator getAvailableLocator(Session session, DocumentLocator locator)
+            throws SiteException;
+
 }

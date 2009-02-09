@@ -53,7 +53,7 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             assert node != null;
             assert username != null;
 
-            if (!node.isCheckedOutBySession(node.getSession())) {
+            if (!node.isCheckedOutBySession(node.getRepositorySession())) {
                 node.checkout();
             }
         } catch (RepositoryException e) {

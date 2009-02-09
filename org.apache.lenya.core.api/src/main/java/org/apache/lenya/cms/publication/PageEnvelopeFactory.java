@@ -54,25 +54,23 @@ public class PageEnvelopeFactory {
 
     /**
      * Returns the page envelope for the object model of a Cocoon component.
-     * @param map The document identity map to use.
      * @param objectModel The object model.
      * @param pub The publication.
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(DocumentFactory map, Map objectModel, Publication pub)
+    public PageEnvelope getPageEnvelope(Map objectModel, Publication pub)
             throws PageEnvelopeException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         String contextPath = request.getContextPath();
         Context context = ObjectModelHelper.getContext(objectModel);
         String webappUrl = ServletHelper.getWebappURI(request);
         String servletContextPath = context.getRealPath("");
-        return getPageEnvelope(map, contextPath, webappUrl, new File(servletContextPath), pub);
+        return getPageEnvelope(contextPath, webappUrl, new File(servletContextPath), pub);
     }
 
     /**
      * Creates a page envelope.
-     * @param map The document identity map to use.
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.
      * @param servletContext The servlet context directory.
@@ -80,9 +78,9 @@ public class PageEnvelopeFactory {
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(DocumentFactory map, String contextPath, String webappUrl,
-            File servletContext, Publication pub) throws PageEnvelopeException {
-        PageEnvelope envelope = new PageEnvelope(map, contextPath, webappUrl, servletContext, pub);
+    public PageEnvelope getPageEnvelope(String contextPath, String webappUrl, File servletContext,
+            Publication pub) throws PageEnvelopeException {
+        PageEnvelope envelope = new PageEnvelope(contextPath, webappUrl, servletContext, pub);
         return envelope;
     }
 

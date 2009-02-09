@@ -62,7 +62,7 @@ public class Overview extends SiteUsecase {
             Document doc = getSourceDocument();
             if (doc == null) {
                 URLInformation info = new URLInformation(getSourceURL());
-                Publication pub = getDocumentFactory().getPublication(info.getPublicationId());
+                Publication pub = getSession().getPublication(info.getPublicationId());
                 Area area = pub.getArea(info.getArea());
                 setParameter(PARAM_NUMBER_OF_DOCUMENTS, new Integer(area.getDocuments().length));
                 setParameter(PARAM_NUMBER_OF_SITE_NODES, new Integer(area.getSite().getNodes().length));

@@ -21,8 +21,6 @@
 package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -34,15 +32,13 @@ public abstract class AbstractLink implements Link {
 
     /**
      * Creates a new AbstractLink object.
-     * @param factory The document factory.
      * @param node The site node.
      * @param _label the actual label
      * @param _language the language
      */
-    public AbstractLink(DocumentFactory factory, SiteNode node, String _label, String _language) {
+    public AbstractLink(SiteNode node, String _label, String _language) {
         this.label = _label;
         this.language = _language;
-        this.factory = factory;
         this.node = node;
     }
 
@@ -98,7 +94,6 @@ public abstract class AbstractLink implements Link {
     }
 
     private SiteNode node;
-    private DocumentFactory factory;
 
     public Document getDocument() {
         SiteNode node = getNode();
@@ -108,22 +103,19 @@ public abstract class AbstractLink implements Link {
         }
         Publication pub = node.getStructure().getPublication();
         String area = node.getStructure().getArea();
-        try {
-            return this.factory.get(pub, area, uuid, getLanguage());
-        } catch (DocumentBuildException e) {
-            throw new RuntimeException(e);
-        }
+        return pub.getArea(area).getDocument(uuid, getLanguage());
     }
 
     public SiteNode getNode() {
         return this.node;
     }
-    
+
     public void setLabel(String label) {
         this.label = label;
         save();
     }
 
-    protected void save() {}
-    
+    protected void save() {
+    }
+
 }

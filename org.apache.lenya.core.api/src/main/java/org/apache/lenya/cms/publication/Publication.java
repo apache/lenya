@@ -22,12 +22,10 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-import org.apache.lenya.cms.repository.RepositoryItem;
-
 /**
  * A Lenya publication.
  */
-public interface Publication extends RepositoryItem {
+public interface Publication {
 
     /**
      * <code>AUTHORING_AREA</code> The authoring area
@@ -261,19 +259,14 @@ public interface Publication extends RepositoryItem {
     /**
      * @param name The name.
      * @return An area object.
-     * @throws PublicationException if an error occurs.
+     * @throws ResourceNotFoundException if the area does not exist.
      */
-    Area getArea(String name) throws PublicationException;
+    Area getArea(String name) throws ResourceNotFoundException;
     
     /**
      * @return The names of all available areas.
      */
     String[] getAreaNames();
-    
-    /**
-     * @return The document factory.
-     */
-    public DocumentFactory getFactory();
     
     /**
      * Saves the configuration of this publication.
@@ -284,5 +277,10 @@ public interface Publication extends RepositoryItem {
      * @return The names of all modules which are used by this publication.
      */
     String[] getModuleNames();
+
+    /**
+     * @return The session this publication object belongs to.
+     */
+    Session getSession();
 
 }

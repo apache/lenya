@@ -29,12 +29,12 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -42,7 +42,7 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class ReservedCheckinAction extends RevisionControllerAction {
     
-    private RepositoryManager repositoryManager;
+    protected Repository repository;
     
     /**
      * Checkin document
@@ -58,21 +58,20 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
             Identity identity = (Identity) request.getSession().getAttribute(Identity.class.getName());
-            Session session = getRepositoryManager().createSession(identity, true);
+            Session session = this.repository.startSession(identity, true);
             
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
             String url = ServletHelper.getWebappURI(request);
-            if (factory.isDocument(url)) {
-                Node node = factory.getFromURL(url).getRepositoryNode();
-                if (node.isCheckedOutBySession(session)) {
-                    node.checkin();
+            if (session.getUriHandler().isDocument(url)) {
+                Document document = session.getUriHandler().getDocument(url);
+                if (document.isCheckedOutBySession(session)) {
+                    document.checkin();
                 }
             }
             else {
                 throw new RuntimeException("The URL [" + url + "] doesn't represent a document.");
             }
             
-        } catch (RepositoryException e) {
+        } catch (final Exception e) {
             getLogger().error("Could not check in node: ", e);
             Map actionMap = new HashMap();
             actionMap.put("exception", "genericException");
@@ -84,11 +83,8 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         return null;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
 }

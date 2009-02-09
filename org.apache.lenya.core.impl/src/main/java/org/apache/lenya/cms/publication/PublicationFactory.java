@@ -29,22 +29,19 @@ import org.apache.lenya.cms.repository.Session;
 public class PublicationFactory implements RepositoryItemFactory {
 
     private PublicationConfiguration config;
-    private DocumentFactoryBuilder documentFactoryBuilder;
     private NodeFactory nodeFactory;
 
     /**
      * @param config The publication configuration.
      */
-    public PublicationFactory(DocumentFactoryBuilder builder, NodeFactory nodeFactory,
-            PublicationConfiguration config) {
+    public PublicationFactory(NodeFactory nodeFactory, PublicationConfiguration config) {
         this.config = config;
-        this.documentFactoryBuilder = builder;
         this.nodeFactory = nodeFactory;
     }
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
-        return new PublicationImpl(factory, this.nodeFactory, config);
+        return new PublicationImpl((org.apache.lenya.cms.publication.Session) session,
+                this.nodeFactory, config);
     }
 
     public String getItemType() {

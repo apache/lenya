@@ -23,8 +23,6 @@ package org.apache.lenya.cms.publication;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.SessionImpl;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
@@ -46,9 +44,8 @@ public class TestPageEnvelope extends PageEnvelope {
         setContext("");
 
         try {
-            Session session = new SessionImpl(null, false, logger);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(session);
-            setDocument(map.getFromURL(url));
+            Session session = publication.getSession();
+            setDocument(session.getUriHandler().getDocument(url));
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }

@@ -25,9 +25,8 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * <p>
@@ -46,7 +45,7 @@ public class InboxModule extends AbstractInputModule {
     protected static final String NEW_MESSAGE_COUNT = "newMessageCount";
     
     private InboxManager inboxManager;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -55,7 +54,7 @@ public class InboxModule extends AbstractInputModule {
         if (name.equals(NEW_MESSAGE_COUNT)) {
             try {
                 Request request = ObjectModelHelper.getRequest(objectModel);
-                Session session = RepositoryUtil.getSession(this.repositoryManager, request);
+                Session session = this.repository.getSession(request);
                 User user = session.getIdentity().getUser();
                 if (user == null) {
                     return "0";
@@ -89,12 +88,8 @@ public class InboxModule extends AbstractInputModule {
         return inboxManager;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

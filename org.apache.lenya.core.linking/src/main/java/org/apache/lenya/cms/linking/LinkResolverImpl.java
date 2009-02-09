@@ -25,9 +25,8 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * Link resolver implementation.
@@ -47,13 +46,13 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
         String revisionString = getValue(link.getRevision(), null);
         String area = getValue(link.getArea(), currentDoc.getArea());
         String pubId = getValue(link.getPubId(), currentDoc.getPublication().getId());
-        
+
         String uuid = getValue(link.getUuid(), currentDoc.getUUID());
         if (uuid.length() == 0) {
             uuid = currentDoc.getUUID();
         }
-        
-        return resolve(currentDoc.getFactory(), pubId, area, uuid, language, revisionString);
+
+        return resolve(currentDoc.getSession(), pubId, area, uuid, language, revisionString);
     }
 
     protected String getValue(String value, String defaultValue) {
@@ -88,7 +87,7 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
         }
     }
 
-    public LinkTarget resolve(DocumentFactory factory, String linkUri) throws MalformedURLException {
+    public LinkTarget resolve(Session session, String linkUri) throws MalformedURLException {
 
         Link link = new Link(linkUri);
         String language = link.getLanguage();
@@ -101,11 +100,11 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
         assert pubId != null;
 
         String revisionString = getValue(link.getRevision(), null);
-        
-        return resolve(factory, pubId, area, uuid, language, revisionString);
+
+        return resolve(session, pubId, area, uuid, language, revisionString);
     }
 
-    protected LinkTarget resolve(DocumentFactory factory, String pubId, String area, String uuid,
+    protected LinkTarget resolve(Session session, String pubId, String area, String uuid,
             String language, String revisionString) {
         int revision;
         if (revisionString == null) {
@@ -114,37 +113,33 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
             revision = Integer.valueOf(revisionString).intValue();
         }
 
-        try {
-            Publication pub = factory.getPublication(pubId);
-            Area areaObj = pub.getArea(area);
-            Document doc;
-            if (areaObj.contains(uuid, language)) {
-                doc = areaObj.getDocument(uuid, language);
-            } else {
-                if (this.fallbackMode == MODE_FAIL) {
+        Publication pub = session.getPublication(pubId);
+        Area areaObj = pub.getArea(area);
+        Document doc;
+        if (areaObj.contains(uuid, language)) {
+            doc = areaObj.getDocument(uuid, language);
+        } else {
+            if (this.fallbackMode == MODE_FAIL) {
+                doc = null;
+            } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
+                if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
+                    doc = pub.getArea(area).getDocument(uuid, pub.getDefaultLanguage(), revision);
+                } else {
                     doc = null;
-                } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
-                    if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
-                        doc = factory.get(pub, area, uuid, pub.getDefaultLanguage(), revision);
-                    } else {
-                        doc = null;
-                    }
-                } else {
-                    throw new RuntimeException("The fallback mode [" + this.fallbackMode
-                            + "] is not supported!");
                 }
-            }
-            if (doc == null) {
-                return new LinkTarget();
             } else {
-                if (revision > -1) {
-                    return new LinkTarget(doc, revision);
-                } else {
-                    return new LinkTarget(doc);
-                }
+                throw new RuntimeException("The fallback mode [" + this.fallbackMode
+                        + "] is not supported!");
             }
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
+        }
+        if (doc == null) {
+            return new LinkTarget();
+        } else {
+            if (revision > -1) {
+                return new LinkTarget(doc, revision);
+            } else {
+                return new LinkTarget(doc);
+            }
         }
     }
 

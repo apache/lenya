@@ -31,12 +31,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -82,7 +79,7 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
     private String path;
     private String selectorPath;
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     public void setup(org.apache.cocoon.environment.SourceResolver resolver, Map objectModel,
             String src, Parameters params) throws ProcessingException, SAXException, IOException {
@@ -98,9 +95,8 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
             this.path = params.getParameter(PARAM_PATH);
             this.selectorPath = params.getParameter(PARAM_SELECTOR_PATH, "");
 
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            Publication pub = factory.getPublication(pubId);
+            Session session = this.repository.getSession(request);
+            Publication pub = session.getPublication(pubId);
             this.site = pub.getArea(area).getSite();
 
             this.cacheKey = pubId + "/" + area;
@@ -238,12 +234,8 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
         this.selectorClass = params.getParameter(PARAM_SELECTOR);
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

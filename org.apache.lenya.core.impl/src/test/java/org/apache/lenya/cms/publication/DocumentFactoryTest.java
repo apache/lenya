@@ -36,15 +36,15 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
      */
     public void testDocumentFactory() throws Exception {
         Session session = this.repository.getSession(getRequest());
-        DocumentFactory factoryA = new DocumentFactoryImpl(session.getDocumentFactory().getSession(), logger);
+        DocumentFactory factoryA = new DocumentFactoryImpl(session);
 
-        Publication publication = getPublication("test");
+        Publication publication = getSession().getPublication("test");
         
         Document docA1 = factoryA.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         Document docA2 = factoryA.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         assertSame(docA1, docA2);
         
-        DocumentFactory factoryB = new DocumentFactoryImpl(session.getDocumentFactory().getSession(), logger);
+        DocumentFactory factoryB = new DocumentFactoryImpl(session);
 
         Document docB1 = factoryB.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         

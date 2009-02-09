@@ -43,9 +43,9 @@ public interface Area {
      * @param uuid The UUID.
      * @param language The language.
      * @return A document.
-     * @throws PublicationException if the document is not contained.
+     * @throws ResourceNotFoundException if the document is not contained.
      */
-    Document getDocument(String uuid, String language) throws PublicationException;
+    Document getDocument(String uuid, String language) throws ResourceNotFoundException;
     
     /**
      * Checks if a document is contained.
@@ -59,5 +59,14 @@ public interface Area {
      * @return All documents in this area.
      */
     Document[] getDocuments();
+
+    /**
+     * @param uuid The UUID.
+     * @param language The language.
+     * @param revision The revision.
+     * @return A document.
+     * @throws ResourceNotFoundException if the document is not contained.
+     */
+    Document getDocument(String uuid, String language, int revision) throws ResourceNotFoundException;
     
 }

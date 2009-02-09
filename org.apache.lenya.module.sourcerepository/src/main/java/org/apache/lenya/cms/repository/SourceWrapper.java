@@ -28,15 +28,12 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.Assert;
 
@@ -83,7 +80,7 @@ public class SourceWrapper extends AbstractLogEnabled {
      */
     protected String getRealSourceUri() {
         if (this.realSourceUri == null) {
-            this.realSourceUri = computeRealSourceUri(getSourceResolver(), getNode().getSession(),
+            this.realSourceUri = computeRealSourceUri(getSourceResolver(), getNode().getRepositorySession(),
                     this.sourceUri, getLogger());
         }
         return this.realSourceUri;
@@ -98,10 +95,8 @@ public class SourceWrapper extends AbstractLogEnabled {
             String publicationsPath = sourceUri.substring(pubBase.length());
             int firstSlashIndex = publicationsPath.indexOf("/");
             publicationId = publicationsPath.substring(0, firstSlashIndex);
-            DocumentFactoryBuilder builder = (DocumentFactoryBuilder) WebAppContextUtils.getCurrentWebApplicationContext()
-                    .getBean(DocumentFactoryBuilder.class.getName());
-            DocumentFactory factory = builder.createDocumentFactory(session);
-            Publication pub = factory.getPublication(publicationId);
+            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session;
+            Publication pub = pubSession.getPublication(publicationId);
             contentDir = pub.getContentDir();
         } catch (Exception e) {
             throw new RuntimeException(e);

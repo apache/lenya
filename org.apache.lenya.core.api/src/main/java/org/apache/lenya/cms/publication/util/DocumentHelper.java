@@ -29,18 +29,13 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -50,7 +45,6 @@ import org.springframework.web.context.WebApplicationContext;
 public class DocumentHelper {
 
     private Map objectModel;
-    private DocumentFactory documentFactory;
     private Publication publication;
 
     /**
@@ -60,26 +54,14 @@ public class DocumentHelper {
      */
     public DocumentHelper(Map _objectModel) {
         WebApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
-        RepositoryManager repoMgr = (RepositoryManager) context.getBean(RepositoryManager.ROLE);
-        DocumentFactoryBuilder builder = (DocumentFactoryBuilder) context
-                .getBean(DocumentFactoryBuilder.class.getName());
-        
-        Request request = ObjectModelHelper.getRequest(_objectModel);
-        Session session;
-        try {
-            session = RepositoryUtil.getSession(repoMgr, request);
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
+        Repository repo = (Repository) context.getBean(Repository.class.getName());
 
-        this.documentFactory = builder.createDocumentFactory(session);
+        Request request = ObjectModelHelper.getRequest(_objectModel);
+        Session session = repo.getSession(request);
+
         this.objectModel = _objectModel;
-        try {
-            URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
-            this.publication = this.documentFactory.getPublication(info.getPublicationId());
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+        URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
+        this.publication = session.getPublication(info.getPublicationId());
     }
 
     /**
@@ -98,10 +80,10 @@ public class DocumentHelper {
 
         String url = null;
 
-        try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             String webappUrl = ServletHelper.getWebappURI(request);
-            Document envDocument = this.documentFactory.getFromURL(webappUrl);
+            Document envDocument = this.publication.getSession().getUriHandler().getDocument(
+                    webappUrl);
             if (uuid == null) {
                 uuid = envDocument.getUUID();
             }
@@ -116,8 +98,7 @@ public class DocumentHelper {
                 language = envDocument.getLanguage();
             }
 
-            Document document = this.documentFactory
-                    .get(this.publication, documentArea, uuid, language);
+            Document document = this.publication.getArea(documentArea).getDocument(uuid, language);
             url = document.getCanonicalWebappURL();
 
             String contextPath = request.getContextPath();
@@ -126,9 +107,6 @@ public class DocumentHelper {
             }
 
             url = contextPath + url;
-        } catch (final DocumentBuildException e) {
-            throw new ProcessingException(e);
-        }
 
         return url;
 
@@ -148,14 +126,16 @@ public class DocumentHelper {
         try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             String webappUrl = ServletHelper.getWebappURI(request);
-            Document document = this.documentFactory.getFromURL(webappUrl);
+            Document document = this.publication.getSession().getUriHandler()
+                    .getDocument(webappUrl);
 
             contextPath = request.getContextPath();
 
             DocumentLocator parentLocator = document.getLocator().getParent("/index");
-            Document parent = this.documentFactory.get(parentLocator);
+            Document parent = this.publication.getArea(document.getArea()).getSite().getNode(
+                    parentLocator.getPath()).getLink(document.getLanguage()).getDocument();
             parentUrl = parent.getCanonicalWebappURL();
-        } catch (final DocumentBuildException e) {
+        } catch (final PublicationException e) {
             throw new ProcessingException(e);
         }
         if (contextPath == null) {
@@ -213,14 +193,7 @@ public class DocumentHelper {
             existingLanguage = languages[0];
         }
 
-        Document existingVersion = null;
-        try {
-            existingVersion = document.getTranslation(existingLanguage);
-        } catch (DocumentException e) {
-            throw new DocumentException(e);
-        }
-
-        return existingVersion;
+        return document.getTranslation(existingLanguage);
     }
 
 }

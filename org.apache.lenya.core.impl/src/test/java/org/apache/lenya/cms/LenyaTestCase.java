@@ -44,6 +44,7 @@ import org.apache.lenya.xml.DocumentHelper;
 public class LenyaTestCase extends ContainerTestCase {
 
     protected DefaultContext context;
+    
 /*
     protected void addContext(DefaultContext context) {
         super.addContext(context);

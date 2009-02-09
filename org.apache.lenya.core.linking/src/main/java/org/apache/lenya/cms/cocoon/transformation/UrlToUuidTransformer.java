@@ -28,11 +28,8 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UrlToUuidRewriter;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.xml.sax.SAXException;
 
 /**
@@ -49,7 +46,7 @@ import org.xml.sax.SAXException;
 public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
     private LinkRewriter rewriter;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -62,9 +59,8 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer {
 
         Request request = ObjectModelHelper.getRequest(_objectModel);
         try {
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            this.rewriter = new UrlToUuidRewriter(factory);
+            Session session = this.repository.getSession(request);
+            this.rewriter = new UrlToUuidRewriter(session);
         } catch (final Exception e1) {
             throw new ProcessingException(e1);
         }
@@ -79,12 +75,8 @@ public class UrlToUuidTransformer extends AbstractLinkTransformer {
         this.rewriter = null;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

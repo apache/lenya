@@ -14,6 +14,25 @@
   <artifactId>lenya-core-impl</artifactId>
   <packaging>jar</packaging>
   <name>Apache Lenya Core Implementation</name>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <!-- export our test classes in a separate jar -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+      
   <dependencies>
     <dependency>
       <groupId>org.apache.avalon.framework</groupId>
@@ -27,6 +46,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
     </dependency>
+    
     <!-- Tests -->
     <dependency>
       <groupId>junit</groupId>
@@ -39,11 +59,14 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+    <!-- FIXME: This dependency is transitive and should be obtained automatically
+      see http://jira.codehaus.org/browse/MNG-1378 -->
     <dependency>
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-sitemap-impl</artifactId>
-      <type>test-jar</type>
       <scope>test</scope>
+      <type>test-jar</type>
     </dependency>
+    
   </dependencies>
 </project>

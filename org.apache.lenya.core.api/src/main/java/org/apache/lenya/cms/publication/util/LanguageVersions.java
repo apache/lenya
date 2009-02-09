@@ -21,7 +21,6 @@
 package org.apache.lenya.cms.publication.util;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 
 /**
@@ -41,12 +40,7 @@ public class LanguageVersions extends DocumentSet {
         for (int i = 0; i < languages.length; i++) {
             if (!document.getLanguage().equals(languages[i])) {
                 Document languageVersion;
-                try {
-                    languageVersion = document.getFactory()
-                            .getLanguageVersion(document, languages[i]);
-                } catch (DocumentBuildException e) {
-                    throw new DocumentException(e);
-                }
+                languageVersion = document.getTranslation(languages[i]);
                 add(languageVersion);
             }
         }

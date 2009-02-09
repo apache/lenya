@@ -34,16 +34,13 @@ import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.module.ModuleManager;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -63,8 +60,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
     protected MRUMemoryStore store;
     private SourceResolver resolver;
-    private RepositoryManager repositoryManager;
-    private DocumentFactoryBuilder documentFactoryBuilder;
+    private Repository repository;
     private PublicationTemplateManager templateManager;
     private ModuleManager moduleManager;
 
@@ -91,22 +87,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
     protected SourceResolver getSourceResolver() {
         return this.resolver;
-    }
-
-    public void setRepositoryManager(RepositoryManager repoMgr) {
-        this.repositoryManager = repoMgr;
-    }
-
-    protected RepositoryManager getRepositoryManager() {
-        return this.repositoryManager;
-    }
-
-    public void setDocumentFactoryBuilder(DocumentFactoryBuilder builder) {
-        this.documentFactoryBuilder = builder;
-    }
-
-    protected DocumentFactoryBuilder getDocumentFactoryBuilder() {
-        return this.documentFactoryBuilder;
     }
 
     public void setTemplateManager(PublicationTemplateManager mgr) {
@@ -181,10 +161,9 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         URLInformation info = new URLInformation(webappUri);
         String pubId = null;
         try {
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             String pubIdCandidate = info.getPublicationId();
-            if (pubIdCandidate != null && factory.existsPublication(pubIdCandidate)) {
+            if (pubIdCandidate != null && session.existsPublication(pubIdCandidate)) {
                 pubId = pubIdCandidate;
             }
         } catch (Exception e) {
@@ -215,10 +194,9 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                 pubId = info.getPublicationId();
             }
 
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
-            if (factory.existsPublication(pubId)) {
-                Publication pub = factory.getPublication(pubId);
+            Session session = this.repository.getSession(request);
+            if (session.existsPublication(pubId)) {
+                Publication pub = session.getPublication(pubId);
                 VisitingSourceResolver resolver = getSourceVisitor();
                 this.templateManager.visit(pub, path, resolver);
                 source = resolver.getSource();
@@ -273,6 +251,14 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
      */
     public String absolutize(String baseURI, String location) {
         return SourceUtil.absolutize(baseURI, location, true);
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Repository getRepository() {
+        return repository;
     }
 
 }

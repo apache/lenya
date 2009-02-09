@@ -19,27 +19,22 @@ package org.apache.lenya.cms.janitor;
 
 import java.io.File;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.AbstractRepositoryListener;
 import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * The content janitor cleans up empty directories after a document is removed.
  */
 public class ContentJanitor extends AbstractRepositoryListener {
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     public void eventFired(RepositoryEvent repoEvent) {
         
@@ -55,10 +50,8 @@ public class ContentJanitor extends AbstractRepositoryListener {
         try {
             ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
                     .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
-            HttpServletRequest request = process.getRequest();
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            Publication pub = factory.getPublication(event.getPublicationId());
+            Session session = this.repository.getSession(process.getRequest());
+            Publication pub = session.getPublication(event.getPublicationId());
             File contentFile = pub.getContentDirectory(event.getArea());
             String contentUri = contentFile.toURI().toString();
             SourceUtil.deleteEmptyCollections(contentUri, this.manager);
@@ -67,12 +60,8 @@ public class ContentJanitor extends AbstractRepositoryListener {
         }
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

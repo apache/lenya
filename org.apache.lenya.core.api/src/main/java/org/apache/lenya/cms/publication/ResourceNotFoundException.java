@@ -15,31 +15,26 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.site.simple;
+package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.site.AbstractLink;
+public class ResourceNotFoundException extends RuntimeException {
 
-/**
- * Link for SimpleSiteManager.
- */
-public class SimpleLink extends AbstractLink {
+    private static final long serialVersionUID = 1L;
 
-    protected SimpleLink(SimpleSiteNode node, String _label, String language) {
-        super(node, _label, language);
+    public ResourceNotFoundException() {
+        super();
     }
 
-    public void delete() {
-        SimpleSiteNode node = (SimpleSiteNode) getNode();
-        DocumentStore store = (DocumentStore) node.getStructure();
-        try {
-            store.remove(getDocument());
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
+    public ResourceNotFoundException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
     }
 
-    public void setLabel(String label) {
+    public ResourceNotFoundException(String arg0) {
+        super(arg0);
     }
-    
+
+    public ResourceNotFoundException(Throwable arg0) {
+        super(arg0);
+    }
+
 }

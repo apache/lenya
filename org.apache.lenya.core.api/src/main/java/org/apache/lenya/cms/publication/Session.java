@@ -25,13 +25,16 @@ public interface Session {
     
     Repository getRepository();
 
-    Publication getPublication(String id);
+    /**
+     * @param id The publication ID.
+     * @return A publication.
+     * @throws ResourceNotFoundException If the publication does not exist.
+     */
+    Publication getPublication(String id) throws ResourceNotFoundException;
     
     Publication[] getPublications();
 
     boolean existsPublication(String id);
-
-    DocumentFactory getDocumentFactory();
 
     Identity getIdentity();
 
@@ -40,5 +43,7 @@ public interface Session {
     void rollback() throws RepositoryException;
 
     boolean isModifiable();
+
+    UriHandler getUriHandler();
 
 }

@@ -37,7 +37,7 @@ public interface DocumentBuilder {
      * @return A document identifier.
      * @throws DocumentBuildException if an error occurs.
      */
-    DocumentLocator getLocator(DocumentFactory factory, String webappUrl) throws DocumentBuildException;
+    DocumentLocator getLocator(Session session, String webappUrl) throws DocumentBuildException;
 
     /**
      * Checks if an URL corresponds to a CMS document.
@@ -46,7 +46,7 @@ public interface DocumentBuilder {
      * @return A boolean value.
      * @throws DocumentBuildException when something went wrong.
      */
-    boolean isDocument(DocumentFactory factory, String url) throws DocumentBuildException;
+    boolean isDocument(Session session, String url) throws DocumentBuildException;
 
     /**
      * Builds an URL corresponding to a CMS document.
@@ -54,7 +54,7 @@ public interface DocumentBuilder {
      * @param locator The locator.
      * @return a String The corresponding URL.
      */
-    String buildCanonicalUrl(DocumentFactory factory, DocumentLocator locator);
+    String buildCanonicalUrl(Session session, DocumentLocator locator);
 
     /**
      * Checks if a document name is valid.

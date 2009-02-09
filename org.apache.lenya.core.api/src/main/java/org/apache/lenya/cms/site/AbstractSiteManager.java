@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.cms.publication.DocumentFactory;
 
 /**
  * Abstract base class for site managers.
@@ -37,49 +36,45 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
     public SiteNode[] sortAscending(SiteNode[] nodes) throws SiteException {
         if (nodes.length > 0) {
 
-            DocumentFactory map = nodes[0].getStructure().getPublication().getFactory();
-            if (!check(map, new NodeSet(nodes))) {
+            if (!check(new NodeSet(nodes))) {
                 throw new SiteException("The dependence relation is not a strict partial order!");
             }
 
-            SiteNode[] sortedNodes = (SiteNode[]) Arrays.asList(nodes).toArray(new SiteNode[nodes.length]);
-            Arrays.sort(sortedNodes, new NodeComparator(map));
+            SiteNode[] sortedNodes = (SiteNode[]) Arrays.asList(nodes).toArray(
+                    new SiteNode[nodes.length]);
+            Arrays.sort(sortedNodes, new NodeComparator());
             return sortedNodes;
-        }
-        else {
-            return  nodes;
+        } else {
+            return nodes;
         }
     }
 
     /**
      * Checks if the dependence relation is a strict partial order.
      * 
-     * @param map The identity map to operate on.
      * @param set The document set to check.
      * @return A boolean value.
      * @throws SiteException when something went wrong.
      */
-    protected boolean check(DocumentFactory map, NodeSet set) throws SiteException {
-        boolean isStrictPartialOrder = isIrreflexive(map, set) && isAntisymmetric(map, set)
-                && isTransitive(map, set);
+    protected boolean check(NodeSet set) throws SiteException {
+        boolean isStrictPartialOrder = isIrreflexive(set) && isAntisymmetric(set)
+                && isTransitive(set);
         return isStrictPartialOrder;
     }
 
     /**
      * Checks if the dependence relation is antisymmetric.
      * 
-     * @param map The identity map to operate on.
      * @param set The document set to check.
      * @return A boolean value.
      * @throws SiteException when something went wrong.
      */
-    protected boolean isAntisymmetric(DocumentFactory map, NodeSet set) throws SiteException {
+    protected boolean isAntisymmetric(NodeSet set) throws SiteException {
         SiteNode[] resources = set.getNodes();
         boolean isAntisymmetric = true;
         for (int i = 0; i < resources.length; i++) {
             for (int j = i + 1; j < resources.length; j++) {
-                if (requires(map, resources[i], resources[j])
-                        && requires(map, resources[j], resources[i])
+                if (requires(resources[i], resources[j]) && requires(resources[j], resources[i])
                         && !(resources[i] == resources[j])) {
                     isAntisymmetric = false;
                 }
@@ -91,20 +86,19 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
     /**
      * Checks if the dependence relation is transitive.
      * 
-     * @param map The identity map to operate on.
      * @param set The document set to check.
      * @return A boolean value.
      * @throws SiteException when something went wrong.
      */
-    protected boolean isTransitive(DocumentFactory map, NodeSet set) throws SiteException {
+    protected boolean isTransitive(NodeSet set) throws SiteException {
         SiteNode[] resources = set.getNodes();
         boolean isTransitive = true;
         for (int i = 0; i < resources.length; i++) {
             for (int j = i + 1; j < resources.length; j++) {
                 for (int k = j + 1; k < resources.length; k++) {
-                    if (requires(map, resources[i], resources[j])
-                            && requires(map, resources[j], resources[k])
-                            && !requires(map, resources[i], resources[k])) {
+                    if (requires(resources[i], resources[j])
+                            && requires(resources[j], resources[k])
+                            && !requires(resources[i], resources[k])) {
                         isTransitive = false;
                     }
                 }
@@ -116,16 +110,15 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
     /**
      * Checks if the dependence relation is irreflexive.
      * 
-     * @param map The identity map to operate on.
      * @param set The document set.
      * @return A boolean value
      * @throws SiteException
      */
-    protected boolean isIrreflexive(DocumentFactory map, NodeSet set) throws SiteException {
+    protected boolean isIrreflexive(NodeSet set) throws SiteException {
         SiteNode[] resources = set.getNodes();
         boolean isIrreflexive = true;
         for (int i = 0; i < resources.length; i++) {
-            if (requires(map, resources[i], resources[i])) {
+            if (requires(resources[i], resources[i])) {
                 isIrreflexive = false;
             }
         }
@@ -138,17 +131,6 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
     public class NodeComparator implements Comparator {
 
         /**
-         * Ctor.
-         * 
-         * @param map The identity map to operate on.
-         */
-        public NodeComparator(DocumentFactory map) {
-            this.map = map;
-        }
-
-        private DocumentFactory map;
-
-        /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
         public int compare(Object arg0, Object arg1) {
@@ -158,10 +140,9 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
                 SiteNode doc2 = (SiteNode) arg1;
 
                 try {
-                    if (AbstractSiteManager.this.requires(map, doc1, doc2)) {
+                    if (AbstractSiteManager.this.requires(doc1, doc2)) {
                         result = 1;
-                    }
-                    else if (AbstractSiteManager.this.requires(map, doc2, doc1)) {
+                    } else if (AbstractSiteManager.this.requires(doc2, doc1)) {
                         result = -1;
                     }
                 } catch (SiteException e) {

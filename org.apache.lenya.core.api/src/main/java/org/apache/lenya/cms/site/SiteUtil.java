@@ -21,9 +21,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * Utility to handle site structures.
@@ -51,11 +51,10 @@ public class SiteUtil {
             siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
                     .getBean(SiteManager.class.getName() + "/" + hint);
 
-            DocumentFactory map = node.getStructure().getPublication().getFactory();
             Set nodes = new HashSet();
             nodes.add(node);
 
-            SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
+            SiteNode[] requiringNodes = siteManager.getRequiringResources(node);
             for (int i = 0; i < requiringNodes.length; i++) {
                 nodes.add(requiringNodes[i]);
             }
@@ -75,14 +74,14 @@ public class SiteUtil {
      * @return A document.
      * @throws SiteException if an error occurs.
      */
-    public static DocumentLocator getAvailableLocator(DocumentFactory factory,
+    public static DocumentLocator getAvailableLocator(Session session,
             DocumentLocator locator) throws SiteException {
         SiteManager siteManager = null;
         try {
-            Publication pub = factory.getPublication(locator.getPublicationId());
+            Publication pub = session.getPublication(locator.getPublicationId());
             siteManager = (SiteManager) WebAppContextUtils.getCurrentWebApplicationContext()
                     .getBean(SiteManager.ROLE + "/" + pub.getSiteManagerHint());
-            return siteManager.getAvailableLocator(factory, locator);
+            return siteManager.getAvailableLocator(session, locator);
         } catch (Exception e) {
             throw new SiteException(e);
         }

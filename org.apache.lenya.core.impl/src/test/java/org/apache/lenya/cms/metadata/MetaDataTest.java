@@ -22,7 +22,6 @@ import java.util.Map;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -36,7 +35,7 @@ public class MetaDataTest extends AbstractAccessControlTest {
      */
     public void testMetaData() throws Exception {
 
-        Publication publication = getPublication("test");
+        Publication publication = getSession().getPublication("test");
         Document doc = publication.getArea("authoring").getSite().getNode("/index").getLink("en").getDocument(); 
 
         String namespaceUri = "foobar";
@@ -92,9 +91,8 @@ public class MetaDataTest extends AbstractAccessControlTest {
             getManager().release(registry);
         }
         
-        DocumentFactory factory = getFactory();
-        Document source = factory.get(pub, Publication.AUTHORING_AREA, "/index", "en");
-        Document target = factory.get(pub, Publication.AUTHORING_AREA, "/index", "en");
+        Document source = pub.getArea(Publication.AUTHORING_AREA).getDocument("/index", "en");
+        Document target = pub.getArea(Publication.AUTHORING_AREA).getDocument("/index", "en");
         
         MetaData sourceMeta = source.getMetaData(NAMESPACE);
         sourceMeta.setValue("copy", "sourceCopy");

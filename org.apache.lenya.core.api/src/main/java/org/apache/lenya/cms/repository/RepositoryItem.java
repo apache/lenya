@@ -25,6 +25,6 @@ public interface RepositoryItem {
     /**
      * @return The session this item belongs to.
      */
-    Session getSession();
+    Session getRepositorySession();
     
 }

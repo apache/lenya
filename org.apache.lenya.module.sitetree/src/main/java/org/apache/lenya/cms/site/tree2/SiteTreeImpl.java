@@ -310,8 +310,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         return this.area.getPublication();
     }
 
-    public Session getSession() {
-        return this.area.getPublication().getFactory().getSession();
+    public Session getRepositorySession() {
+        return (Session) this.area.getPublication().getSession();
     }
 
     private NodeFactory nodeFactory;
@@ -327,7 +327,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     public Node getRepositoryNode() {
         try {
-            return (Node) getSession().getRepositoryItem(getNodeFactory(), getSourceUri());
+            return (Node) getRepositorySession().getRepositoryItem(getNodeFactory(), getSourceUri());
         } catch (RepositoryException e) {
             throw new RuntimeException("Creating repository node failed: ", e);
         }

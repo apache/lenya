@@ -108,11 +108,10 @@ public class Put extends CreateDocument {
 
         // create new doc from PUT input
         if (!doc.exists()) {
-            DocumentFactory map = getDocumentFactory();
             String path = doc.getPath();
             ResourceType resourceType = lookUpExtension(extension);
             ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
-            doc = getDocumentManager().add(map, resourceType, sample.getUri(), getPublication(),
+            doc = getDocumentManager().add(resourceType, sample.getUri(), getPublication(),
                     doc.getArea(), path, doc.getLanguage(), extension, doc.getName(), true);
             doc.setMimeType(sample.getMimeType());
             setMetaData(doc);

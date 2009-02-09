@@ -27,20 +27,15 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.cocoon.source.FallbackSourceFactory;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>
@@ -52,17 +47,12 @@ public class FallbackModule extends AbstractInputModule {
 
     private String protocol;
     protected MRUMemoryStore store;
-    private RepositoryManager repositoryManager;
-    private DocumentFactoryBuilder documentFactoryBuilder;
+    private Repository repository;
     private SourceResolver resolver;
     private static Boolean useCache = null;
 
-    public void setRepositoryManager(RepositoryManager manager) {
-        this.repositoryManager = manager;
-    }
-
-    public void setDocumentFactoryBuilder(DocumentFactoryBuilder builder) {
-        this.documentFactoryBuilder = builder;
+    public void setRepository(Repository repo) {
+        this.repository = repo;
     }
 
     protected boolean useCache() {
@@ -84,10 +74,9 @@ public class FallbackModule extends AbstractInputModule {
         URLInformation info = new URLInformation(webappUri);
         String pubId = null;
         try {
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = this.documentFactoryBuilder.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             String pubIdCandidate = info.getPublicationId();
-            if (pubIdCandidate != null && factory.existsPublication(pubIdCandidate)) {
+            if (pubIdCandidate != null && session.existsPublication(pubIdCandidate)) {
                 pubId = pubIdCandidate;
             }
         } catch (Exception e) {

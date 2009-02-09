@@ -79,7 +79,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public SessionImpl(Identity identity, boolean modifiable, Log logger) {
+    protected SessionImpl(Identity identity, boolean modifiable, Log logger) {
 
         this.identityMap = new IdentityMapImpl(logger);
         this.identity = identity;

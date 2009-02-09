@@ -19,8 +19,6 @@ package org.apache.lenya.cms.site.tree;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
@@ -48,9 +46,9 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         String area = snippets[1];
         DefaultSiteTree tree;
         try {
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            Publication publication = factory.getPublication(publicationId);
-            tree = new DefaultSiteTree(factory, publication, area, getLogger());
+            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session;
+            Publication publication = pubSession.getPublication(publicationId);
+            tree = new DefaultSiteTree(publication.getArea(area));
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

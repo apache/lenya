@@ -35,27 +35,21 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * Updates navigation nodes according to the site meta data of the corresponding
- * documents.
+ * Updates navigation nodes according to the site meta data of the corresponding documents.
  */
 public class SiteMetaDataTransformer extends AbstractSAXTransformer implements Initializable {
 
     private Area area;
     private LinkResolver linkResolver;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters params)
             throws ProcessingException, SAXException, IOException {
@@ -63,12 +57,9 @@ public class SiteMetaDataTransformer extends AbstractSAXTransformer implements I
 
         Request req = ObjectModelHelper.getRequest(objectModel);
         try {
-            Session session = RepositoryUtil.getSession(this.repositoryManager, req);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(req);
             String webappUrl = ServletHelper.getWebappURI(req);
-            URLInformation info = new URLInformation(webappUrl);
-            Publication pub = factory.getPublication(info.getPublicationId());
-            this.area = pub.getArea(info.getArea());
+            this.area = session.getUriHandler().getArea(webappUrl);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -112,7 +103,7 @@ public class SiteMetaDataTransformer extends AbstractSAXTransformer implements I
             try {
                 if (href != null && href.startsWith("lenya-document:")) {
                     LinkTarget target = linkResolver.resolve(this.area.getPublication()
-                            .getFactory(), getLinkUri(href));
+                            .getSession(), getLinkUri(href));
                     if (target.exists()) {
                         Document doc = target.getDocument();
                         int hrefIndex = attrs.getIndex(ATTR_HREF);
@@ -162,12 +153,8 @@ public class SiteMetaDataTransformer extends AbstractSAXTransformer implements I
         return link.getUri();
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

@@ -27,12 +27,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.linking.IncomingLinkRewriter;
 import org.apache.lenya.cms.linking.LinkRewriter;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.xml.sax.SAXException;
 
 /**
@@ -42,7 +39,7 @@ import org.xml.sax.SAXException;
 public class IncomingProxyTransformer extends AbstractLinkTransformer {
     
     private LinkRewriter rewriter;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
             Parameters params) throws ProcessingException, SAXException, IOException {
@@ -50,12 +47,11 @@ public class IncomingProxyTransformer extends AbstractLinkTransformer {
         Request request = ObjectModelHelper.getRequest(_objectModel);
 
         try {
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             String webappUrl = getWebappUrl(params, objectModel);
             URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
-            this.rewriter = new IncomingLinkRewriter(factory.getPublication(pubId));
+            this.rewriter = new IncomingLinkRewriter(session.getPublication(pubId));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -70,12 +66,8 @@ public class IncomingProxyTransformer extends AbstractLinkTransformer {
         this.rewriter = null;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

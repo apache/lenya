@@ -37,12 +37,9 @@ import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 
@@ -69,7 +66,7 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
 
     private SourceResolver sourceResolver;
     private LinkResolver linkResolver;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
@@ -91,17 +88,16 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
 
         try {
 
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             String webappUrl = ServletHelper.getWebappURI(request);
             LinkTarget target;
-            if (factory.isDocument(webappUrl)) {
-                Document currentDoc = factory.getFromURL(webappUrl);
+            if (session.getUriHandler().isDocument(webappUrl)) {
+                Document currentDoc = session.getUriHandler().getDocument(webappUrl);
                 target = getLinkResolver().resolve(currentDoc, linkUri);
             } else {
                 Link link = new Link(linkUri);
                 contextualize(link, webappUrl);
-                target = getLinkResolver().resolve(factory, link.getUri());
+                target = getLinkResolver().resolve(session, link.getUri());
             }
 
             if (!target.exists()) {
@@ -178,12 +174,8 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
         return linkResolver;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     public SourceResolver getSourceResolver() {

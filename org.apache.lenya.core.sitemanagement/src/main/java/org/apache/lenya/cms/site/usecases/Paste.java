@@ -29,11 +29,9 @@ import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
@@ -74,8 +72,7 @@ public class Paste extends AbstractUsecase {
         } else {
             Document doc = getSourceDocument();
             if (doc != null) {
-                Document clippedDoc = clipboard.getDocument(getDocumentFactory(), doc
-                        .getPublication());
+                Document clippedDoc = clipboard.getDocument(getSession());
                 String uuid = clippedDoc.getUUID();
                 SiteNode node = doc.getLink().getNode();
                 if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
@@ -100,14 +97,9 @@ public class Paste extends AbstractUsecase {
 
     protected Document getSourceDocument() {
         Document doc = null;
-        try {
-            DocumentFactory factory = getDocumentFactory();
-            String sourceUrl = getParameterAsString(SOURCE_URL);
-            if (factory.isDocument(sourceUrl)) {
-                doc = factory.getFromURL(sourceUrl);
-            }
-        } catch (DocumentBuildException e) {
-            throw new RuntimeException(e);
+        String sourceUrl = getParameterAsString(SOURCE_URL);
+        if (getSession().getUriHandler().isDocument(sourceUrl)) {
+            doc = getSession().getUriHandler().getDocument(sourceUrl);
         }
         return doc;
     }
@@ -122,8 +114,7 @@ public class Paste extends AbstractUsecase {
         if (clipboard != null) {
             String label;
             try {
-                Publication pub = getPublication();
-                label = clipboard.getDocument(getDocumentFactory(), pub).getLink().getLabel();
+                label = clipboard.getDocument(getSession()).getLink().getLabel();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -134,11 +125,7 @@ public class Paste extends AbstractUsecase {
     protected Publication getPublication() {
         URLInformation info = new URLInformation(getSourceURL());
         String pubId = info.getPublicationId();
-        try {
-            return getDocumentFactory().getPublication(pubId);
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+        return getSession().getPublication(pubId);
     }
 
     /**
@@ -155,9 +142,8 @@ public class Paste extends AbstractUsecase {
                 Node siteNode = getArea().getSite().getRepositoryNode();
                 nodes.add(siteNode);
 
-                DocumentFactory map = getDocumentFactory();
                 Publication pub = getPublication();
-                Document clippedDocument = clipboard.getDocument(map, pub);
+                Document clippedDocument = clipboard.getDocument(getSession());
 
                 NodeSet subsite = SiteUtil.getSubSite(clippedDocument.getLink().getNode());
                 Document[] subsiteDocs = subsite.getDocuments();
@@ -179,11 +165,7 @@ public class Paste extends AbstractUsecase {
     protected Area getArea() {
         Publication pub = getPublication();
         URLInformation info = new URLInformation(getSourceURL());
-        try {
-            return pub.getArea(info.getArea());
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+        return pub.getArea(info.getArea());
     }
 
     /**
@@ -192,13 +174,12 @@ public class Paste extends AbstractUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        DocumentFactory identityMap = getDocumentFactory();
         ClipboardHelper helper = new ClipboardHelper();
 
         HttpServletRequest request = getRequest();
         Clipboard clipboard = helper.getClipboard(request);
         Publication pub = getPublication();
-        Document clippedDocument = clipboard.getDocument(identityMap, pub);
+        Document clippedDocument = clipboard.getDocument(getSession());
 
         final String targetPath = getTargetPath();
         final Area area = clippedDocument.area();
@@ -215,10 +196,9 @@ public class Paste extends AbstractUsecase {
 
     protected String getTargetPath() throws SiteException, DocumentBuildException,
             ServiceException, DocumentException {
-        DocumentFactory identityMap = getDocumentFactory();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getRequest());
         Publication pub = getPublication();
-        Document clippedDocument = clipboard.getDocument(identityMap, pub);
+        Document clippedDocument = clipboard.getDocument(getSession());
 
         String targetArea = getArea().getName();
         String language = clippedDocument.getLanguage();
@@ -231,7 +211,7 @@ public class Paste extends AbstractUsecase {
 
         DocumentLocator potentialLoc = DocumentLocator.getLocator(getPublication().getId(),
                 targetArea, potentialPath, language);
-        return SiteUtil.getAvailableLocator(getDocumentFactory(), potentialLoc).getPath();
+        return SiteUtil.getAvailableLocator(getSession(), potentialLoc).getPath();
     }
 
     protected HttpServletRequest getRequest() {

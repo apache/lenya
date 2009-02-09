@@ -27,10 +27,10 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.ServletHelper;
 
@@ -72,14 +72,13 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
             String servletContextPath = context.getRealPath("");
 
             try {
-                DocumentFactory factory = getDocumentFactory();
+                Session session = getSession();
                 Publication pub = null;
                 String pubId = new URLInformation(webappUrl).getPublicationId();
-                if (pubId != null && factory.existsPublication(pubId)) {
-                    pub = factory.getPublication(pubId);
+                if (pubId != null && session.existsPublication(pubId)) {
+                    pub = session.getPublication(pubId);
                 }
                 envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
-                        factory,
                         contextPath,
                         webappUrl,
                         new File(servletContextPath),

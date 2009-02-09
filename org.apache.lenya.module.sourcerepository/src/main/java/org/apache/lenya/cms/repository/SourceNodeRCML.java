@@ -143,7 +143,7 @@ public class SourceNodeRCML implements RCML {
     public synchronized void checkOutIn(Node node, short type, long time, boolean backup,
             boolean newVersion, boolean restrictedToSession) throws RevisionControlException {
 
-        String identity = node.getSession().getIdentity().getUser().getId();
+        String identity = node.getRepositorySession().getIdentity().getUser().getId();
 
         Vector entries = getEntries();
         if (entries.size() == 0) {
@@ -165,7 +165,7 @@ public class SourceNodeRCML implements RCML {
             sessionId = ALL_SESSIONS;
         }
         else {
-            sessionId = node.getSession().getId();
+            sessionId = node.getRepositorySession().getId();
         }
 
         RCMLEntry entry;

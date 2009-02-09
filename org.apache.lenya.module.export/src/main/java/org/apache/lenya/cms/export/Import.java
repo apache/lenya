@@ -24,7 +24,6 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -33,7 +32,7 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
  * Import content.
  */
 public class Import extends AbstractUsecase {
-    
+
     private SourceResolver sourceResolver;
     private DocumentManager documentManager;
     private ResourceTypeResolver resourceTypeResolver;
@@ -41,12 +40,7 @@ public class Import extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
         String pubId = new URLInformation(getSourceURL()).getPublicationId();
-        Publication pub;
-        try {
-            pub = getDocumentFactory().getPublication(pubId);
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+        Publication pub = getSession().getPublication(pubId);
         String path = getExampleContentPath(pub);
         if (!new File(path).exists()) {
             path = getExampleContentPath(getDefaultPub());
@@ -60,13 +54,7 @@ public class Import extends AbstractUsecase {
     }
 
     protected Publication getDefaultPub() {
-        Publication defaultPub;
-        try {
-            defaultPub = getDocumentFactory().getPublication("default");
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
-        return defaultPub;
+        return getSession().getPublication("default");
     }
 
     protected void doCheckPreconditions() throws Exception {
@@ -82,13 +70,7 @@ public class Import extends AbstractUsecase {
         URLInformation info = new URLInformation(url);
         String pubId = info.getPublicationId();
         String areaName = info.getArea();
-        Area area;
-        try {
-            area = getDocumentFactory().getPublication(pubId).getArea(areaName);
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
-        return area;
+        return getSession().getPublication(pubId).getArea(areaName);
     }
 
     protected void doCheckExecutionConditions() throws Exception {

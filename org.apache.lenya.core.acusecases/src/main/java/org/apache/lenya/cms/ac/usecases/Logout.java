@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 
 /**
  * Usecase to log a user out.
@@ -33,7 +32,7 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
  * @version $Id: Logout.java 407305 2006-05-17 16:21:49Z andreas $
  */
 public class Logout extends AccessControlUsecase {
-
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#prepareView()
      */
@@ -60,7 +59,7 @@ public class Logout extends AccessControlUsecase {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.removeAttribute(Identity.class.getName());
-            RepositoryUtil.removeSession(request);
+            getRepository().removeSession(request);
             session.removeAttribute(Login.HISTORY_SESSION_ATTRIBUTE);
         }
     }

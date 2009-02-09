@@ -31,12 +31,9 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * Input module to get document information.
@@ -91,7 +88,7 @@ public class DocumentInfoModule extends AbstractInputModule {
 
     protected SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
     
     /**
      * Parse the parameters and return a document.
@@ -111,10 +108,9 @@ public class DocumentInfoModule extends AbstractInputModule {
         Request request = ObjectModelHelper.getRequest(objectModel);
 
         try {
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory docFactory = DocumentUtil.createDocumentFactory(session);
-            Publication pub = docFactory.getPublication(publicationId);
-            document = docFactory.get(pub, area, uuid, language, revision);
+            Session session = this.repository.getSession(request);
+            Publication pub = session.getPublication(publicationId);
+            document = pub.getArea(area).getDocument(uuid, language, revision);
         } catch (Exception e) {
             throw new ConfigurationException("Error getting document [" + publicationId + ":"
                     + area + ":" + uuid + ":" + language + "]: " + e.getMessage(), e);
@@ -201,11 +197,11 @@ public class DocumentInfoModule extends AbstractInputModule {
 
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public Repository getRepository() {
+        return repository;
     }
 }

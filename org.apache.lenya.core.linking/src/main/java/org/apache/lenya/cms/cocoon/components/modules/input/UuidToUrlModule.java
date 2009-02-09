@@ -26,11 +26,8 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.UuidToUrlRewriter;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -39,20 +36,19 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class UuidToUrlModule extends AbstractInputModule {
     
-    protected RepositoryManager repositoryManager;
+    protected Repository repository;
     protected LinkResolver linkResolver;
     
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         try {
-            Session session = RepositoryUtil.getSession(this.repositoryManager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
             String currentUrl = ServletHelper.getWebappURI(request);
             
-            UuidToUrlRewriter rewriter = new UuidToUrlRewriter(currentUrl, linkResolver, factory);
-            if (factory.isDocument(currentUrl)) {
-                rewriter.setCurrentDocument(factory.getFromURL(currentUrl));
+            UuidToUrlRewriter rewriter = new UuidToUrlRewriter(currentUrl, linkResolver, session);
+            if (session.getUriHandler().isDocument(currentUrl)) {
+                rewriter.setCurrentDocument(session.getUriHandler().getDocument(currentUrl));
             }
             
             return rewriter.rewrite(name);
@@ -62,8 +58,8 @@ public class UuidToUrlModule extends AbstractInputModule {
         }
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     public void setLinkResolver(LinkResolver linkResolver) {

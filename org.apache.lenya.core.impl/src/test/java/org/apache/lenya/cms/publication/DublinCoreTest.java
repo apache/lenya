@@ -49,7 +49,7 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         
         login("lenya");
         
-        Publication publication = getPublication("test");
+        Publication publication = getSession().getPublication("test");
         
         Document doc = publication.getArea(AREA).getSite().getNode(PATH).getLink(LANGUAGE).getDocument();
         

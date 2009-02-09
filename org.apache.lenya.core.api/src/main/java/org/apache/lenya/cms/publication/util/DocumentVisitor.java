@@ -21,7 +21,6 @@
 package org.apache.lenya.cms.publication.util;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PublicationException;
 
 /**
  * Visitor for resources.
@@ -32,8 +31,8 @@ public interface DocumentVisitor {
     /**
      * Visits a resource.
      * @param document The resource.
-     * @throws PublicationException if something went wrong.
+     * @throws Exception if an error occurs.
      */
-    void visitDocument(Document document) throws PublicationException;
+    void visitDocument(Document document) throws Exception;
 
 }

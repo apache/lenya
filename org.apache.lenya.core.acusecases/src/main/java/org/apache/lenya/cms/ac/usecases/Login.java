@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -50,9 +49,8 @@ public class Login extends AccessControlUsecase {
         try {
             URLInformation info = new URLInformation(getSourceURL());
             String pubId = info.getPublicationId();
-            DocumentFactory factory = getDocumentFactory();
-            if (factory.existsPublication(pubId)) {
-                Publication publication = factory.getPublication(pubId);
+            if (getSession().existsPublication(pubId)) {
+                Publication publication = getSession().getPublication(pubId);
                 setParameter(PUBLICATION, publication);
             }
             Identity identity = this.getSession().getIdentity();

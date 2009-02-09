@@ -24,7 +24,6 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
@@ -71,12 +70,11 @@ public class Mkcol extends Create {
 
         if (!doc.exists()) {
 
-            DocumentFactory map = getDocumentFactory();
             String path = doc.getPath();
 
             resourceType = getResourceTypeResolver().getResourceType(TYPE);
             ResourceType.Sample sample = resourceType.getSample(resourceType.getSampleNames()[0]);
-            doc = getDocumentManager().add(map, resourceType, sample.getUri(), getPublication(),
+            doc = getDocumentManager().add(resourceType, sample.getUri(), getPublication(),
                     doc.getArea(), path, doc.getLanguage(), EXTENSION, doc.getName(), true);
             doc.setMimeType(sample.getMimeType());
 

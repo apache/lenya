@@ -32,16 +32,14 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -55,7 +53,7 @@ public class RevisionControllerAction extends ServiceableAction {
     private String backupDirectory = null;
     private String username = null;
     private Node node = null;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
@@ -73,19 +71,16 @@ public class RevisionControllerAction extends ServiceableAction {
             return null;
         }
 
-        org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(
-                getRepositoryManager(), request);
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(repoSession);
+        Session repoSession = this.repository.getSession(request);
 
         PageEnvelope envelope = null;
         String id = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
-        Publication publication = factory.getPublication(id);
+        Publication publication = repoSession.getPublication(id);
 
         Document document = null;
 
         try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(factory, objectModel,
-                    publication);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel, publication);
             document = envelope.getDocument();
         } catch (Exception e) {
             getLogger().error("Resolving page envelope failed: ", e);
@@ -117,28 +112,28 @@ public class RevisionControllerAction extends ServiceableAction {
         // cannot be get from
         // the page-envelope
 
-        String documentid = document.getPath();
-        int bx = documentid.lastIndexOf("-bxe");
+        String path = document.getPath();
+        int bx = path.lastIndexOf("-bxe");
 
         if (bx > 0) {
             String language = document.getLanguage();
 
-            int l = documentid.length();
+            int l = path.length();
             int bxLength = "-bxe".length();
-            int lang = documentid.lastIndexOf("_", bx);
+            int lang = path.lastIndexOf("_", bx);
             int langLength = bx - lang;
 
             if (bx > 0 && bx + bxLength <= l) {
-                documentid = documentid.substring(0, bx) + documentid.substring(bx + bxLength, l);
+                path = path.substring(0, bx) + path.substring(bx + bxLength, l);
 
                 if (lang > 0 && langLength + lang < l) {
-                    language = documentid.substring(lang + 1, lang + langLength);
-                    documentid = documentid.substring(0, lang)
-                            + documentid.substring(lang + langLength, l - bxLength);
+                    language = path.substring(lang + 1, lang + langLength);
+                    path = path.substring(0, lang)
+                            + path.substring(lang + langLength, l - bxLength);
                 }
             }
 
-            Document srcDoc = factory.get(publication, document.getArea(), documentid, language);
+            Document srcDoc = document.area().getSite().getNode(path).getLink(language).getDocument();
             this.node = srcDoc.getRepositoryNode();
 
         } else {
@@ -175,14 +170,6 @@ public class RevisionControllerAction extends ServiceableAction {
      */
     protected String getUsername() {
         return this.username;
-    }
-
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
     }
 
 }

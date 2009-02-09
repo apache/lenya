@@ -26,6 +26,7 @@ import java.util.Date;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.site.Link;
 
@@ -100,10 +101,8 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * document with the same document-uuid is also available in. 
      * 
      * @return An array of strings denoting the languages.
-     * 
-     * @throws DocumentException if an error occurs
      */
-    String[] getLanguages() throws DocumentException;
+    String[] getLanguages();
 
     /**
      * Returns the date of the last modification of this document.
@@ -145,7 +144,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * 
      * @throws DocumentException if an error occurs
      */
-    boolean exists() throws DocumentException;
+    boolean exists();
     
     /**
      * Check if a document exists with the given document-uuid and the given area
@@ -155,13 +154,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * 
      * @throws DocumentException if an error occurs
      */
-    boolean existsInAnyLanguage() throws DocumentException;
-    
-    /**
-     * Returns the identity map this document belongs to.
-     * @return A document identity map.
-     */
-    DocumentFactory getFactory();
+    boolean existsInAnyLanguage();
     
     /**
      * Returns the URI to resolve the document's source.
@@ -179,9 +172,9 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     /**
      * Accepts a document visitor.
      * @param visitor The visitor.
-     * @throws PublicationException if an error occurs.
+     * @throws Exception if an error occurs.
      */
-    void accept(DocumentVisitor visitor) throws PublicationException;
+    void accept(DocumentVisitor visitor) throws Exception;
 
     /**
      * Deletes the document.
@@ -196,7 +189,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
 
     /**
      * @return The resource type of this document (formerly known as doctype)
-     * @throws DocumentException if an error occurs.
+     * @throws DocumentException if the resource type has not been set.
      */
     ResourceType getResourceType() throws DocumentException;
     
@@ -220,19 +213,18 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @param mimeType The mime type.
      * @throws DocumentException if an error occurs.
      */
-    void setMimeType(String mimeType) throws DocumentException;
+    void setMimeType(String mimeType);
     
     /**
      * @return The mime type of this document.
-     * @throws DocumentException if an error occurs.
+     * @throws DocumentException if the mime type has not been set.
      */
     String getMimeType() throws DocumentException;
     
     /**
      * @return The content length of the document.
-     * @throws DocumentException if an error occurs.
      */
-    long getContentLength() throws DocumentException;
+    long getContentLength();
     
     /**
      * @return The document identifier for this document.
@@ -257,9 +249,9 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * Returns a certain translation (language version) of this document.
      * @param language The language.
      * @return A document.
-     * @throws DocumentException if the language version doesn't exist.
+     * @throws ResourceNotFoundException if the language version doesn't exist.
      */
-    Document getTranslation(String language) throws DocumentException;
+    Document getTranslation(String language) throws ResourceNotFoundException;
     
     /**
      * Checks if this document exists in a certain area.
@@ -272,9 +264,9 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * Returns the document in a certain area.
      * @param area The area.
      * @return A document.
-     * @throws DocumentException if the area version doesn't exist.
+     * @throws ResourceNotFoundException if the area version doesn't exist.
      */
-    Document getAreaVersion(String area) throws DocumentException;
+    Document getAreaVersion(String area) throws ResourceNotFoundException;
 
     /**
      * Checks if a translation of this document exists in a certain area.
@@ -289,9 +281,9 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @param area The area.
      * @param language The language.
      * @return A document.
-     * @throws DocumentException if the area version doesn't exist.
+     * @throws ResourceNotFoundException if the area version doesn't exist.
      */
-    Document getVersion(String area, String language) throws DocumentException;
+    Document getVersion(String area, String language) throws ResourceNotFoundException;
     
     /**
      * @return A document locator.
@@ -323,4 +315,10 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @return The revision number of this document.
      */
     int getRevisionNumber();
+
+    boolean isCheckedOutBySession(Session session) throws RepositoryException;
+
+    void checkin() throws RepositoryException;
+
+    Session getSession();
 }

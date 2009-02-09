@@ -26,9 +26,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -48,10 +48,12 @@ import org.apache.lenya.cms.site.SiteStructure;
  * A typical CMS document.
  * @version $Id$
  */
-public class DocumentImpl extends AbstractLogEnabled implements Document {
+public class DocumentImpl implements Document {
+
+    private static final Log logger = LogFactory.getLog(DocumentImpl.class);
 
     private DocumentIdentifier identifier;
-    private DocumentFactory factory;
+    private org.apache.lenya.cms.publication.Session session;
     private NodeFactory nodeFactory;
     private int revision = -1;
 
@@ -89,19 +91,16 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     /**
      * Creates a new instance of DefaultDocument.
-     * @param manager The service manager.
-     * @param map The identity map the document belongs to.
+     * @param session The session the document belongs to.
      * @param identifier The identifier.
      * @param revision The revision number or -1 if the latest revision should be used.
-     * @param _logger a logger
      */
-    protected DocumentImpl(DocumentFactory map, DocumentIdentifier identifier, int revision,
-            Log logger) {
+    protected DocumentImpl(org.apache.lenya.cms.publication.Session session,
+            DocumentIdentifier identifier, int revision) {
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    "DefaultDocument() creating new instance with id [" + identifier.getUUID()
-                            + "], language [" + identifier.getLanguage() + "]");
+        if (logger.isDebugEnabled()) {
+            logger.debug("DefaultDocument() creating new instance with id [" + identifier.getUUID()
+                    + "], language [" + identifier.getLanguage() + "]");
         }
 
         if (identifier.getUUID() == null) {
@@ -109,13 +108,12 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
 
         this.identifier = identifier;
-        this.factory = map;
+        this.session = session;
         this.revision = revision;
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    "DefaultDocument() done building instance with _id [" + identifier.getUUID()
-                            + "], _language [" + identifier.getLanguage() + "]");
+        if (logger.isDebugEnabled()) {
+            logger.debug("DefaultDocument() done building instance with _id ["
+                    + identifier.getUUID() + "], _language [" + identifier.getLanguage() + "]");
         }
     }
 
@@ -169,11 +167,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public Publication getPublication() {
         if (this.publication == null) {
-            try {
-                this.publication = getFactory().getPublication(getIdentifier().getPublicationId());
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
+            this.publication = getSession().getPublication(getIdentifier().getPublicationId());
         }
         return this.publication;
     }
@@ -194,23 +188,17 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                 getLanguage());
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getLanguage()
-     */
     public String getLanguage() {
         return this.identifier.getLanguage();
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getLanguages()
-     */
-    public String[] getLanguages() throws DocumentException {
+    public String[] getLanguages() {
 
         List documentLanguages = new ArrayList();
         String[] allLanguages = getPublication().getLanguages();
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Number of languages of this publication: " + allLanguages.length);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Number of languages of this publication: " + allLanguages.length);
         }
 
         for (int i = 0; i < allLanguages.length; i++) {
@@ -222,9 +210,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return (String[]) documentLanguages.toArray(new String[documentLanguages.size()]);
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getArea()
-     */
     public String getArea() {
         return this.identifier.getArea();
     }
@@ -239,7 +224,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         if (extension == null) {
             String sourceExtension = getSourceExtension();
             if (sourceExtension.equals("xml") || sourceExtension.equals("")) {
-                getLogger().info("Default extension will be used: " + defaultExtension);
+                logger.info("Default extension will be used: " + defaultExtension);
                 return defaultExtension;
             } else {
                 return sourceExtension;
@@ -269,9 +254,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             throw new RuntimeException(e);
         }
         if (sourceExtension == null) {
-            getLogger().warn(
-                    "No source extension for document [" + this + "]. The extension \""
-                            + defaultSourceExtension + "\" will be used as default!");
+            logger.warn("No source extension for document [" + this + "]. The extension \""
+                    + defaultSourceExtension + "\" will be used as default!");
             sourceExtension = defaultSourceExtension;
         }
         return sourceExtension;
@@ -282,34 +266,27 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param _extension A string.
      */
     protected void setExtension(String _extension) {
-    	Validate.notNull(_extension);
+        Validate.notNull(_extension);
         Validate.isTrue(!_extension.startsWith("."), "Extension must start with a dot");
         checkWritability();
         this.extension = _extension;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#exists()
-     */
-    public boolean exists() throws DocumentException {
+    public boolean exists() throws ResourceNotFoundException {
         try {
             return getRepositoryNode().exists();
         } catch (RepositoryException e) {
-            throw new DocumentException(e);
+            throw new ResourceNotFoundException(e);
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
-     */
-    public boolean existsInAnyLanguage() throws DocumentException {
+    public boolean existsInAnyLanguage() throws ResourceNotFoundException {
         String[] languages = getLanguages();
 
         if (languages.length > 0) {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(
-                        "Document (" + this + ") exists in at least one language: "
-                                + languages.length);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Document (" + this + ") exists in at least one language: "
+                        + languages.length);
             }
             String[] allLanguages = getPublication().getLanguages();
             if (languages.length == allLanguages.length)
@@ -317,15 +294,14 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                 // could assume the
                 // languages EN and DE, but the document could exist for the
                 // languages DE and FR!
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(
-                            "Document (" + this
-                                    + ") exists even in all languages of this publication");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Document (" + this
+                            + ") exists even in all languages of this publication");
                 }
             return true;
         } else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Document (" + this + ") does NOT exist in any language");
+            if (logger.isDebugEnabled()) {
+                logger.debug("Document (" + this + ") does NOT exist in any language");
             }
             return false;
         }
@@ -366,13 +342,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getFactory()
-     */
-    public DocumentFactory getFactory() {
-        return this.factory;
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.Document#getCanonicalWebappURL()
      */
     public String getCanonicalWebappURL() {
@@ -385,7 +354,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public String getCanonicalDocumentURL() {
         try {
             DocumentBuilder builder = getPublication().getDocumentBuilder();
-            String webappUrl = builder.buildCanonicalUrl(getFactory(), getLocator());
+            String webappUrl = builder.buildCanonicalUrl(getSession(), getLocator());
             String prefix = "/" + getPublication().getId() + "/" + getArea();
             return webappUrl.substring(prefix.length());
         } catch (Exception e) {
@@ -393,10 +362,11 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#accept(org.apache.lenya.cms.publication.util.DocumentVisitor)
-     */
-    public void accept(DocumentVisitor visitor) throws PublicationException {
+    public org.apache.lenya.cms.publication.Session getSession() {
+        return this.session;
+    }
+
+    public void accept(DocumentVisitor visitor) throws Exception {
         visitor.visitDocument(this);
     }
 
@@ -444,7 +414,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
         MetaData meta = getContentHolder().getMetaData(namespaceUri);
-        if (getSession().isModifiable()) {
+        if (getRepositorySession().isModifiable()) {
             return meta;
         } else {
             String cacheKey = getPublication().getId() + ":" + getArea() + ":" + getUUID() + ":"
@@ -473,20 +443,20 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
-    public long getContentLength() throws DocumentException {
+    public long getContentLength() {
         try {
             return getContentHolder().getContentLength();
         } catch (RepositoryException e) {
-            throw new DocumentException(e);
+            throw new RuntimeException(e);
         }
     }
 
-    public void setMimeType(String mimeType) throws DocumentException {
+    public void setMimeType(String mimeType) {
         checkWritability();
         try {
             getMetaData(METADATA_NAMESPACE).setValue(METADATA_MIME_TYPE, mimeType);
         } catch (MetaDataException e) {
-            throw new DocumentException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -521,20 +491,12 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return area().contains(getUUID(), language);
     }
 
-    public Document getAreaVersion(String area) throws DocumentException {
-        try {
-            return getFactory().get(getPublication(), area, getUUID(), getLanguage());
-        } catch (DocumentBuildException e) {
-            throw new DocumentException(e);
-        }
+    public Document getAreaVersion(String area) throws ResourceNotFoundException {
+        return getPublication().getArea(area).getDocument(getUUID(), getLanguage());
     }
 
-    public Document getTranslation(String language) throws DocumentException {
-        try {
-            return getFactory().get(getPublication(), getArea(), getUUID(), language);
-        } catch (DocumentBuildException e) {
-            throw new DocumentException(e);
-        }
+    public Document getTranslation(String language) throws ResourceNotFoundException {
+        return area().getDocument(getUUID(), language);
     }
 
     private Node repositoryNode;
@@ -544,7 +506,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public Node getRepositoryNode() {
         if (this.repositoryNode == null) {
-            this.repositoryNode = getRepositoryNode(getNodeFactory(), getFactory(), getSourceURI());
+            this.repositoryNode = getRepositoryNode(getNodeFactory(), (Session) getSession(),
+                    getSourceURI());
         }
         return this.repositoryNode;
     }
@@ -562,9 +525,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
-    protected static Node getRepositoryNode(NodeFactory nodeFactory, DocumentFactory docFactory,
+    protected static Node getRepositoryNode(NodeFactory nodeFactory, Session session,
             String sourceUri) {
-        Session session = docFactory.getSession();
         try {
             return (Node) session.getRepositoryItem(nodeFactory, sourceUri);
         } catch (Exception e) {
@@ -593,12 +555,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
-    public Document getVersion(String area, String language) throws DocumentException {
-        try {
-            return getFactory().get(getPublication(), area, getUUID(), language);
-        } catch (DocumentBuildException e) {
-            throw new DocumentException(e);
-        }
+    public Document getVersion(String area, String language) throws ResourceNotFoundException {
+        return getPublication().getArea(area).getDocument(getUUID(), language);
     }
 
     public Link getLink() throws DocumentException {
@@ -620,15 +578,11 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public Area area() {
-        try {
-            return getPublication().getArea(getArea());
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+        return getPublication().getArea(getArea());
     }
 
     public void setResourceType(ResourceType resourceType) {
-    	Validate.notNull(resourceType);
+        Validate.notNull(resourceType);
         checkWritability();
         try {
             MetaData meta = getMetaData(DocumentImpl.METADATA_NAMESPACE);
@@ -639,7 +593,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public void setSourceExtension(String extension) {
-    	Validate.notNull(extension);
+        Validate.notNull(extension);
         Validate.isTrue(!extension.startsWith("."), "Extension must start with a dot");
         checkWritability();
         try {
@@ -677,8 +631,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
-    public Session getSession() {
-        return getFactory().getSession();
+    public Session getRepositorySession() {
+        return (Session) getSession();
     }
 
     public int getRevisionNumber() {
@@ -707,6 +661,15 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public void setNodeFactory(NodeFactory nodeFactory) {
         this.nodeFactory = nodeFactory;
+    }
+
+    public void checkin() throws RepositoryException {
+        getRepositoryNode().checkin();
+    }
+
+    public boolean isCheckedOutBySession(org.apache.lenya.cms.publication.Session session)
+            throws RepositoryException {
+        return getRepositoryNode().isCheckedOutBySession((Session) session);
     }
 
 }

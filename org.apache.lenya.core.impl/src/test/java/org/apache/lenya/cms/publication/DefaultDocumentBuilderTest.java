@@ -32,7 +32,7 @@ public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
      * @see org.apache.lenya.cms.publication.DefaultDocumentTest#getDocument(DocumentTestSet)
      */
     protected Document getDocument(DocumentTestSet set) throws PublicationException {
-        Publication pub = getPublication("test");
-        return getFactory().getFromURL("/" + pub.getId() + "/" + set.getArea() + set.getUrl());
+        Publication pub = getSession().getPublication("test");
+        return getSession().getUriHandler().getDocument("/" + pub.getId() + "/" + set.getArea() + set.getUrl());
     }
 }
