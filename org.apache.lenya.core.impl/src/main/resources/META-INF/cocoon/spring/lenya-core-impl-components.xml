@@ -56,5 +56,5 @@
     <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
   </bean>
   <bean name="org.apache.lenya.cms.repository.UUIDGenerator"
-    class="org.apache.lenya.cms.repository.AxisUUIDGenerator"/>
+    class="org.apache.lenya.cms.repository.LenyaUUIDGenerator"/>
 </beans>

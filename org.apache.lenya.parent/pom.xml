@@ -20,6 +20,39 @@
   <url>http://lenya.apache.org</url>
   <inceptionYear>2003</inceptionYear>
 
+  <mailingLists>
+    <mailingList>
+      <name>Lenya User List</name>
+      <subscribe>user-subscribe@lenya.apache.org</subscribe>
+      <unsubscribe>user-unsubscribe@lenya.apache.org</unsubscribe>
+      <post>user@lenya.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/lenya-user/</archive>
+      <otherArchives>
+        <otherArchive>http://markmail.org/search/list:org.apache.lenya.user</otherArchive>
+      </otherArchives>
+    </mailingList>
+    <mailingList>
+      <name>Lenya Developer List</name>
+      <subscribe>dev-subscribe@lenya.apache.org</subscribe>
+      <unsubscribe>dev-unsubscribe@lenya.apache.org</unsubscribe>
+      <post>dev@lenya.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/lenya-dev/</archive>
+      <otherArchives>
+        <otherArchive>http://markmail.org/search/list:org.apache.lenya.dev/</otherArchive>
+      </otherArchives>
+    </mailingList>
+    <mailingList>
+      <name>Lenya Commits List</name>
+      <subscribe>commits-subscribe@lenya.apache.org</subscribe>
+      <unsubscribe>commits-unsubscribe@lenya.apache.org</unsubscribe>
+      <post>commits@lenya.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/lenya-commits/</archive>
+      <otherArchives>
+        <otherArchive>http://markmail.org/search/list:org.apache.lenya.commits/</otherArchive>
+      </otherArchives>
+    </mailingList>
+  </mailingLists>
+
   <developers>
     <developer>
       <id>chestnut</id>
@@ -355,21 +388,6 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
         <version>${spring.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.axis</groupId>
-        <artifactId>axis</artifactId>
-        <version>1.4</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
       
       <!-- Cocoon -->

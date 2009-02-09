@@ -19,17 +19,18 @@ package org.apache.lenya.inbox.xml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.axis.components.uuid.UUIDGen;
-import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.inbox.Inbox;
 import org.apache.lenya.inbox.InboxMessage;
 import org.apache.lenya.notification.Message;
@@ -65,11 +66,13 @@ public class XmlSourceInbox implements Inbox {
     }
 
     protected String generateId() {
-    	// FIXME Get rid of this absurd dependency on Axis
-    	//       Move code into Lenya to resolve this.
-        UUIDGen generator = UUIDGenFactory.getUUIDGen();
-        String id = generator.nextUUID();
-        return id;
+    	UUIDGenerator uuidGenerator;
+		try {
+			uuidGenerator = (UUIDGenerator) manager.lookup(UUIDGenerator.ROLE);
+		} catch (ServiceException e) {
+			throw new RuntimeException("Error looking up UUID generator", e);
+		}
+    	return uuidGenerator.nextUUID();
     }
 
     public synchronized void remove(InboxMessage message) {

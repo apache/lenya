@@ -24,10 +24,6 @@
       <artifactId>lenya-core-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.axis</groupId>
-      <artifactId>axis</artifactId>
-    </dependency>
-    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
     </dependency>

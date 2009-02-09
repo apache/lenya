@@ -17,27 +17,17 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.axis.components.uuid.UUIDGen;
-import org.apache.axis.components.uuid.UUIDGenFactory;
+import java.util.UUID;
+
 import org.apache.cocoon.util.AbstractLogEnabled;
 
 /**
- * UUID generator based on Apache Axis.
+ * Lenya UUID generator.
  */
-public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator {
-
-	// FIXME Get rid of this absurd dependency on Axis!! - fr
-    private UUIDGen delegate;
-
-    protected UUIDGen getDelegate() {
-        if (this.delegate == null) {
-            this.delegate = UUIDGenFactory.getUUIDGen();
-        }
-        return this.delegate;
-    }
+public class LenyaUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator {
 
     public String nextUUID() {
-        return getDelegate().nextUUID();
+    	return UUID.randomUUID().toString();
     }
 
 }
