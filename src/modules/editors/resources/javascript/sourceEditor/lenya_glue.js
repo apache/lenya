@@ -5,6 +5,7 @@ org.apache.lenya.editors.setObjectData = function(objectData, windowName) {
   editor.replaceSelection(newText);
   usecaseMap[windowName] = undefined; // we're done!
   objectData[windowName] = undefined; // we're done!
+  saveContent();
 }
 
 org.apache.lenya.editors.getObjectData = function(windowName) {
