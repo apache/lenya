@@ -18,24 +18,28 @@
 package org.apache.lenya.transaction;
 
 import org.apache.cocoon.core.container.ContainerTestCase;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.Identity;
 
 public class TransactionTest extends ContainerTestCase {
+    
+    private Log logger = LogFactory.getLog(TransactionTest.class);
 
     public void testTransaction() throws TransactionException {
 
-        Identity lenya = new Identity(getLogger());
+        Identity lenya = new Identity(logger);
         lenya.addIdentifiable(new MockUser("lenya"));
 
-        Identity alice = new Identity(getLogger());
+        Identity alice = new Identity(logger);
         alice.addIdentifiable(new MockUser("alice"));
 
-        IdentityMap lenyaMap = new IdentityMapImpl(getLogger());
-        UnitOfWork lenyaUnit = new UnitOfWorkImpl(lenyaMap, lenya, getLogger());
+        IdentityMap lenyaMap = new IdentityMapImpl(logger);
+        UnitOfWork lenyaUnit = new UnitOfWorkImpl(lenyaMap, lenya, logger);
         IdentifiableFactory lenyaFactory = new MockFactory(lenyaUnit);
 
-        IdentityMap aliceMap = new IdentityMapImpl(getLogger());
-        UnitOfWork aliceUnit = new UnitOfWorkImpl(aliceMap, alice, getLogger());
+        IdentityMap aliceMap = new IdentityMapImpl(logger);
+        UnitOfWork aliceUnit = new UnitOfWorkImpl(aliceMap, alice, logger);
         IdentifiableFactory aliceFactory = new MockFactory(aliceUnit);
 
         MockTransactionable lenyaT1 = (MockTransactionable) lenyaMap.get(lenyaFactory, "t1");

@@ -20,11 +20,15 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.apache.cocoon.core.container.ContainerTestCase;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Inet address util test
  */
 public class InetAddressUtilTest extends ContainerTestCase {
+    
+    private static final Log logger = LogFactory.getLog(InetAddressUtilTest.class);
 
     public void testInetAddressUtil() throws UnknownHostException {
 
@@ -39,7 +43,7 @@ public class InetAddressUtilTest extends ContainerTestCase {
         InetAddress subnet = InetAddress.getByName(args[1]); // "255.255.255.0");
         InetAddress ip = InetAddress.getByName(args[2]); // "195.226.6.70");
         
-        InetAddressUtil util = new InetAddressUtil(getLogger());
+        InetAddressUtil util = new InetAddressUtil(logger);
         System.out.println(util.contains(network, subnet, ip));
     }
 }

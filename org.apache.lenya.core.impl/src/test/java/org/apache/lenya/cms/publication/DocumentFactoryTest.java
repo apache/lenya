@@ -17,22 +17,26 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * Document factory test.
  */
 public class DocumentFactoryTest extends AbstractAccessControlTest {
+    
+    private static final Log logger = LogFactory.getLog(DocumentFactoryTest.class);
+    
+    private Repository repository;
 
     /**
      * Tests the meta data.
      * @throws Exception
      */
     public void testDocumentFactory() throws Exception {
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factoryA = DocumentUtil.createDocumentFactory(getManager(), session);
+        Session session = this.repository.getSession(getRequest());
+        DocumentFactory factoryA = new DocumentFactoryImpl(session.getDocumentFactory().getSession(), logger);
 
         Publication publication = getPublication("test");
         
@@ -40,11 +44,15 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
         Document docA2 = factoryA.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         assertSame(docA1, docA2);
         
-        DocumentFactory factoryB = DocumentUtil.createDocumentFactory(getManager(), session);
+        DocumentFactory factoryB = new DocumentFactoryImpl(session.getDocumentFactory().getSession(), logger);
 
         Document docB1 = factoryB.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         
         assertSame(docA1, docB1);
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

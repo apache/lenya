@@ -20,30 +20,34 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SessionImpl;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
 public class TestPageEnvelope extends PageEnvelope {
+
+    private static final Log logger = LogFactory.getLog(TestPageEnvelope.class);
+
     /**
      * Constructs a test page envelope.
      * @param publication The publication.
      * @param url The document url (starting with a slash).
      * @throws PageEnvelopeException when something goes wrong.
      */
-    public TestPageEnvelope(Publication publication, String url, ServiceManager manager,
-            Logger logger) throws PageEnvelopeException {
+    public TestPageEnvelope(Publication publication, String url, ServiceManager manager)
+            throws PageEnvelopeException {
         super();
         setContext("");
 
         try {
-            Session session = RepositoryUtil.createSession(manager, null, false);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(manager, session);
+            Session session = new SessionImpl(null, false, logger);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(session);
             setDocument(map.getFromURL(url));
         } catch (Exception e) {
             throw new PageEnvelopeException(e);

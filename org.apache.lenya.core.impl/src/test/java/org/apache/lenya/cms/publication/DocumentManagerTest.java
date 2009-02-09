@@ -124,7 +124,7 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
 
         SiteNode sourceNode = authoring.getSite().getNode(sourcePath);
         
-        NodeSet nodes = SiteUtil.getSubSite(getManager(), sourceNode);
+        NodeSet nodes = SiteUtil.getSubSite(sourceNode);
         Document[] docs = nodes.getDocuments();
         Map doc2path = new HashMap();
 
@@ -171,7 +171,7 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
         SiteNode sourceNode = authoring.getSite().getNode(sourcePath);
         String[] sourceNames = getChildNames(sourceNode);
 
-        NodeSet nodes = SiteUtil.getSubSite(getManager(), sourceNode);
+        NodeSet nodes = SiteUtil.getSubSite(sourceNode);
         Document[] docs = nodes.getDocuments();
         Map doc2path = new HashMap();
 

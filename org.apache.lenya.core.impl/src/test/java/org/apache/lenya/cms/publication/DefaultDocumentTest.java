@@ -20,6 +20,8 @@
 
 package org.apache.lenya.cms.publication;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 
 /**
@@ -28,6 +30,8 @@ import org.apache.lenya.ac.impl.AbstractAccessControlTest;
  * Generation>Code and Comments
  */
 public class DefaultDocumentTest extends AbstractAccessControlTest {
+    
+    private static final Log logger = LogFactory.getLog(DefaultDocumentTest.class);
 
     protected static final DocumentTestSet[] testSets = {
             new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
@@ -83,7 +87,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         String uuid = pub.getArea(testSet.getArea()).getSite().getNode(testSet.getPath()).getUuid();
         DocumentIdentifier id = new DocumentIdentifier(pub.getId(), testSet.getArea(), uuid, testSet
                 .getLanguage());
-        DocumentImpl document = new DocumentImpl(getManager(), getFactory(), id, -1, getLogger());
+        DocumentImpl document = new DocumentImpl(getFactory(), id, -1, logger);
         document.setExtension(testSet.getExtension());
 
         return document;
