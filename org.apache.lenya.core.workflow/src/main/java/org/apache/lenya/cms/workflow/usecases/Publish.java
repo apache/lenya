@@ -45,12 +45,12 @@ import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
@@ -224,7 +224,6 @@ public class Publish extends InvokeWorkflow {
 
         Document document = getSourceDocument();
         Publication publication = document.getPublication();
-        DocumentFactory map = document.getFactory();
         SiteStructure liveSite = publication.getArea(Publication.LIVE_AREA).getSite();
 
         List missingDocuments = new ArrayList();
@@ -237,7 +236,7 @@ public class Publish extends InvokeWorkflow {
             if (!liveSite.contains(document.getPath())) {
                 DocumentLocator liveLoc = document.getLocator().getAreaVersion(
                         Publication.LIVE_AREA);
-                DocumentLocator[] requiredNodes = siteManager.getRequiredResources(map, liveLoc);
+                DocumentLocator[] requiredNodes = siteManager.getRequiredResources(getSession(), liveLoc);
                 for (int i = 0; i < requiredNodes.length; i++) {
                     String path = requiredNodes[i].getPath();
                     if (!liveSite.contains(path)) {
@@ -381,9 +380,9 @@ public class Publish extends InvokeWorkflow {
         Message message = new Message(subject, body, sender, recipients);
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(getSession()
-                .getDocumentFactory().getSession(), getLogger(), descriptor);
-        getSession().getDocumentFactory().getSession().enqueueEvent(event);
+        org.apache.lenya.cms.repository.Session repoSession = (Session) getSession();
+        RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, getLogger(), descriptor);
+        repoSession.enqueueEvent(event);
     }
 
     /**

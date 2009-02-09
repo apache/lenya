@@ -32,7 +32,6 @@ import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -71,14 +70,13 @@ public class MultiWorkflow extends AbstractUsecase {
             PublicationException {
         List preOrder;
         String sourceUrl = getSourceURL();
-        DocumentFactory factory = getDocumentFactory();
-        if (getDocumentFactory().isDocument(sourceUrl)) {
-            Document doc = factory.getFromURL(sourceUrl);
+        if (getSession().getUriHandler().isDocument(sourceUrl)) {
+            Document doc = getSession().getUriHandler().getDocument(sourceUrl);
             preOrder = getPreOrder(doc.getLink().getNode());
         } else {
             preOrder = new ArrayList();
             URLInformation info = new URLInformation(getSourceURL());
-            Publication pub = factory.getPublication(info.getPublicationId());
+            Publication pub = getSession().getPublication(info.getPublicationId());
             Area area = pub.getArea(info.getArea());
             SiteStructure site = area.getSite();
             SiteNode[] topLevelNodes = site.getTopLevelNodes();

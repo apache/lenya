@@ -30,13 +30,9 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 
@@ -67,8 +63,8 @@ public class WorkflowInvokerAction extends ServiceableAction {
      * <code>EVENT</code> The event
      */
     public static final String EVENT = "event";
-    
-    private RepositoryManager repositoryManager;
+
+    private Repository repository;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
@@ -92,10 +88,9 @@ public class WorkflowInvokerAction extends ServiceableAction {
         }
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-        String pubId = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
-        Publication pub = factory.getPublication(pubId);
+        Session session = this.repository.getSession(request);
+        Publication pub = session.getUriHandler().getPublication(
+                ServletHelper.getWebappURI(request));
         Document document = pub.getArea(area).getDocument(documentId, language);
 
         if (getLogger().isDebugEnabled()) {
@@ -106,12 +101,8 @@ public class WorkflowInvokerAction extends ServiceableAction {
         return Collections.EMPTY_MAP;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

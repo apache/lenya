@@ -32,12 +32,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.Workflow;
@@ -63,7 +60,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
      */
     public static final String EVENT_ATTRIBUTE = "event";
     
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * (non-Javadoc)
@@ -125,13 +122,12 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
         try {
             Request request = ObjectModelHelper.getRequest(_objectModel);
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory map = DocumentUtil.createDocumentFactory(session);
+            Session session = this.repository.getSession(request);
 
             String webappUrl = ServletHelper.getWebappURI(request);
             Document document = null;
-            if (map.isDocument(webappUrl)) {
-                document = map.getFromURL(webappUrl);
+            if (session.getUriHandler().isDocument(webappUrl)) {
+                document = session.getUriHandler().getDocument(webappUrl);
                 ResourceType doctype = document.getResourceType();
                 if (document.getPublication().getWorkflowSchema(doctype) != null) {
                     setHasWorkflow(true);
@@ -178,12 +174,8 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         this.hasWorkflow = _hasWorkflow;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

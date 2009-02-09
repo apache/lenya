@@ -28,6 +28,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
 import org.apache.lenya.notification.NotificationException;
@@ -100,8 +101,8 @@ public class Submit extends InvokeWorkflow {
         Message message = new Message(subject, body, sender, recipients);
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(getSession()
-                .getDocumentFactory().getSession(), getLogger(), descriptor);
-        getSession().getDocumentFactory().getSession().enqueueEvent(event);
+        org.apache.lenya.cms.repository.Session repoSession = (Session) getSession();
+        RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, getLogger(), descriptor);
+        repoSession.enqueueEvent(event);
     }
 }
