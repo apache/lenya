@@ -26,16 +26,13 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Usecase resolver implementation.
@@ -45,7 +42,7 @@ import org.apache.lenya.cms.usecase.UsecaseResolver;
 public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseResolver {
 
     private PublicationTemplateManager templateManager;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
     /**
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#release(org.apache.lenya.cms.usecase.Usecase)
@@ -85,13 +82,11 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         Publication publication = null;
         try {
 
-            Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
-            URLInformation info = new URLInformation(webappUrl);
-            String pubId = info.getPublicationId();
+            Session session = this.repository.getSession(request);
 
-            if (pubId != null && factory.existsPublication(pubId)) {
-                publication = factory.getPublication(pubId);
+            String uri = ServletHelper.getWebappURI(request);
+            if (session.getUriHandler().isPublication(uri)) {
+                publication = session.getUriHandler().getPublication(uri);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -148,12 +143,8 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         return templateManager;
     }
 
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
-    }
-
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
 }

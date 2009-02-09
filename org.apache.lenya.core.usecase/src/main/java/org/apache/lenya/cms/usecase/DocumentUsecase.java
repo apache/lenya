@@ -19,8 +19,7 @@
 package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * <p>
@@ -56,30 +55,16 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /*
-    public void setParameter(String name, Object value) {
-        if (name.equals(SOURCE_URL)) {
-            setSourceURL((String) value);
-        }
-        else {
-            super.setParameter(name, value);
-        }
-    }
-    */
+     * public void setParameter(String name, Object value) { if (name.equals(SOURCE_URL)) {
+     * setSourceURL((String) value); } else { super.setParameter(name, value); } }
+     */
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setSourceURL(java.lang.String)
-    public void setSourceURL(String url) {
-        try {
-            DocumentFactory factory = getDocumentFactory();
-            if (factory.isDocument(url)) {
-                Document document = factory.getFromURL(url);
-                setParameter(DOCUMENT, document);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        super.setParameter(SOURCE_URL, url);
-    }
+     * @see org.apache.lenya.cms.usecase.Usecase#setSourceURL(java.lang.String) public void
+     *      setSourceURL(String url) { try { DocumentFactory factory = getDocumentFactory(); if
+     *      (factory.isDocument(url)) { Document document = factory.getFromURL(url);
+     *      setParameter(DOCUMENT, document); } } catch (Exception e) { throw new
+     *      RuntimeException(e); } super.setParameter(SOURCE_URL, url); }
      */
 
     /**
@@ -88,24 +73,20 @@ public class DocumentUsecase extends AbstractUsecase {
      */
     protected Document getSourceDocument() {
         Document doc = (Document) getParameter(DOCUMENT);
-        if (doc == null || doc.getFactory().getSession() != getSession()) {
-            try {
-                DocumentFactory factory = getDocumentFactory();
-                String sourceUrl = getParameterAsString(SOURCE_URL);
-                if (factory.isDocument(sourceUrl)) {
-                    doc = factory.getFromURL(sourceUrl);
-                    setParameter(DOCUMENT, doc);
-                }
-            } catch (DocumentBuildException e) {
-                throw new RuntimeException(e);
+        Session session = getSession();
+        if (doc == null || doc.getSession() != session) {
+            String sourceUrl = getParameterAsString(SOURCE_URL);
+            if (session.getUriHandler().isDocument(sourceUrl)) {
+                doc = session.getUriHandler().getDocument(sourceUrl);
+                setParameter(DOCUMENT, doc);
             }
         }
         return doc;
     }
 
     /**
-     * Sets the target document for the case that the usecase execution
-     * succeeded (see {@link #getTargetDocument(boolean)}).
+     * Sets the target document for the case that the usecase execution succeeded (see
+     * {@link #getTargetDocument(boolean)}).
      * @param document A document.
      */
     protected void setTargetDocument(Document document) {
@@ -113,9 +94,9 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * Returns the document to be redirected to after the usecase has been
-     * completed. If the parameter <code>success</code> is false, the source
-     * document is returned (override this method to change this behaviour).
+     * Returns the document to be redirected to after the usecase has been completed. If the
+     * parameter <code>success</code> is false, the source document is returned (override this
+     * method to change this behaviour).
      * @param success If the usecase was successfully completed.
      * @return A document.
      */
@@ -128,8 +109,8 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * If {@link #setTargetDocument(Document)}was not called, the URL of the
-     * source document ( {@link #getSourceDocument()}) is returned.
+     * If {@link #setTargetDocument(Document)}was not called, the URL of the source document (
+     * {@link #getSourceDocument()}) is returned.
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
@@ -155,20 +136,14 @@ public class DocumentUsecase extends AbstractUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#setDefaultTargetURL(java.lang.String)
      */
     protected void setDefaultTargetURL(String url) {
-        try {
-            Document target = getDocumentFactory().getFromURL(url);
-            setParameter(TARGET_DOCUMENT, target);
-        } catch (DocumentBuildException e) {
-            throw new RuntimeException(e);
-        }
+        Document target = getSession().getUriHandler().getDocument(url);
+        setParameter(TARGET_DOCUMENT, target);
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-    protected void initParameters() {
-        super.initParameters();
-
-        setParameter(DOCUMENT, getSourceDocument());
-    }
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() protected void
+     *      initParameters() { super.initParameters();
+     * 
+     *      setParameter(DOCUMENT, getSourceDocument()); }
      */
 }

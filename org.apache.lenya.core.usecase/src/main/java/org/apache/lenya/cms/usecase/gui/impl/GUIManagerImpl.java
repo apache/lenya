@@ -36,13 +36,10 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
@@ -66,14 +63,10 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager {
     private Map name2group = new HashMap();
 
     private UsecaseResolver usecaseResolver;
-    private RepositoryManager repositoryManager;
+    private Repository repository;
 
-    public RepositoryManager getRepositoryManager() {
-        return repositoryManager;
-    }
-
-    public void setRepositoryManager(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     /**
@@ -173,10 +166,9 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager {
                 }
 
                 HttpServletRequest request = getRequest();
-                Session session = RepositoryUtil.getSession(getRepositoryManager(), request);
-                DocumentFactory factory = DocumentUtil.createDocumentFactory(session);
+                Session session = this.repository.getSession(request);
                 String pubId = new URLInformation(this.webappUrl).getPublicationId();
-                Publication pub = factory.getPublication(pubId);
+                Publication pub = session.getPublication(pubId);
                 if (!authorizer.authorizeUsecase(usecaseName, getRoles(), pub)) {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Usecase not authorized");

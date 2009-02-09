@@ -78,7 +78,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
     protected static final String PARAMETER_STATE_MACHINE = "private.stateMachine";
     protected static final String PARAMETER_SESSION = "private.session";
-    protected static final String PARAMETER_FACTORY = "private.factory";
     protected static final String PARAMETER_CHECKOUT_RESTRICTED_TO_SESSION = "checkoutRestrictedToSession";
 
     protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
@@ -546,16 +545,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         return (Part) getParameter(name);
     }
 
-    protected DocumentFactory getDocumentFactory() {
-        DocumentFactory factory = (DocumentFactory) getParameter(PARAMETER_FACTORY);
-        Session session = getSession();
-        if (factory == null || factory != session.getDocumentFactory()) {
-            factory = session.getDocumentFactory();
-            setParameter(PARAMETER_FACTORY, factory);
-        }
-        return factory;
-    }
-
     /**
      * TODO: Add init-method to bean.
      */
@@ -736,9 +725,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
                 if (!objects[i].isLocked()) {
                     objects[i].lock();
                 }
-                if (!isOptimistic()
-                        && !objects[i].isCheckedOutBySession(getSession().getDocumentFactory()
-                                .getSession())) {
+                if (!isOptimistic() && !objects[i].isCheckedOutBySession(getRepositorySession())) {
                     objects[i].checkout(checkoutRestrictedToSession());
                 }
             }
@@ -752,8 +739,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
         for (int i = 0; i < objects.length; i++) {
             if (objects[i].isCheckedOut()
-                    && !objects[i].isCheckedOutBySession(getSession().getDocumentFactory()
-                            .getSession())) {
+                    && !objects[i].isCheckedOutBySession(getRepositorySession())) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
                             "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
@@ -763,6 +749,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             }
         }
         return canExecute;
+    }
+
+    private org.apache.lenya.cms.repository.Session getRepositorySession() {
+        return (org.apache.lenya.cms.repository.Session) getSession();
     }
 
     /**
@@ -879,11 +869,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     protected Publication getPublication() {
         if (this.pub == null) {
             String pubId = new URLInformation(getSourceURL()).getPublicationId();
-            try {
-                this.pub = getDocumentFactory().getPublication(pubId);
-            } catch (PublicationException e) {
-                throw new RuntimeException(e);
-            }
+            this.pub = getSession().getPublication(pubId);
         }
         return this.pub;
     }
