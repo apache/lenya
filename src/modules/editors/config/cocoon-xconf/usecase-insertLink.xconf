@@ -3,10 +3,10 @@
   <component-instance 
       name="editors.insertLink" 
       logger="lenya.publication"
-      class="org.apache.lenya.cms.usecase.DummyUsecase"
+      class="org.apache.lenya.cms.editors.InsertLink"
   >
     <view 
-      uri="cocoon://modules/editors/editors.insertLink" 
+      template="modules/editors/usecases/insertLink.jx"
       menu="false"
       createContinuation="false"
     />

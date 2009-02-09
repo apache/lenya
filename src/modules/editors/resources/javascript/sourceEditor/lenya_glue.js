@@ -1,10 +1,8 @@
 org.apache.lenya.editors.setObjectData = function(objectData, windowName) {
   var currentUsecase = usecaseMap[windowName];
   var snippet = org.apache.lenya.editors.generateContentSnippet(currentUsecase, objectData);
-  org.apache.lenya.editors.insertContent(
-    document.forms['oneform'].elements['content'], 
-    snippet
-  );
+  var newText = snippet.beforeSelection + snippet.replaceSelection + snippet.afterSelection;
+  editor.replaceSelection(newText);
   usecaseMap[windowName] = undefined; // we're done!
   objectData[windowName] = undefined; // we're done!
 }
@@ -15,7 +13,7 @@ org.apache.lenya.editors.getObjectData = function(windowName) {
 
 function triggerUsecase(usecase) {
   var windowName = org.apache.lenya.editors.generateUniqueWindowName();
-  var selectedText = org.apache.lenya.editors.getSelectedText(document.forms[0].elements['content']);
+  var selectedText = editor.selection();
   switch (usecase) {
 
     case org.apache.lenya.editors.USECASE_INSERTLINK:
