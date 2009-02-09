@@ -23,6 +23,7 @@ package org.apache.lenya.ac.impl;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
@@ -31,7 +32,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.util.Assert;
 
 /**
  * A policy at a certain URL. The final policy is computed by merging the
@@ -112,8 +112,8 @@ public class URLPolicy implements Policy {
      * Iterate the policy tree bottom-up.
      */
     public int check(Identity identity, Role role) throws AccessControlException {
-        Assert.notNull("identity", identity);
-        Assert.notNull("role", role);
+        Validate.notNull(identity, "identity");
+        Validate.notNull(role, "role");
         obtainPolicies();
         
         for (int i = 0; i < this.policies.length; i++) {

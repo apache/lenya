@@ -26,6 +26,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
@@ -129,7 +130,9 @@ public class FileGroup extends AbstractGroup implements Item {
     }
 
     protected void setConfigurationDirectory(File _configurationDirectory) {
-        assert (_configurationDirectory != null) && _configurationDirectory.isDirectory();
+        Validate.notNull(_configurationDirectory, "Configuration directory");
+        Validate.isTrue(_configurationDirectory.isDirectory(),
+        		"Configuration directory must be a directory");
         this.configurationDirectory = _configurationDirectory;
     }
 }

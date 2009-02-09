@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
@@ -66,7 +67,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
     public static FileIPRangeManager instance(AccreditableManager mgr, File configurationDirectory, Log logger)
             throws AccessControlException {
 
-        assert configurationDirectory != null;
+        Validate.notNull(configurationDirectory);
         if (!configurationDirectory.isDirectory()) {
             throw new AccessControlException("Configuration directory [" + configurationDirectory
                     + "] does not exist!");

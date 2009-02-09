@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
@@ -68,7 +69,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
     public static FileUserManager instance(AccreditableManager mgr, File configurationDirectory, UserType[] userTypes, Log logger)
             throws AccessControlException {
 
-        assert configurationDirectory != null;
+        Validate.notNull(configurationDirectory);
         if (!configurationDirectory.isDirectory()) {
             throw new AccessControlException("Configuration directory [" + configurationDirectory
                     + "] does not exist!");

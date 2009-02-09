@@ -27,6 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Credential;
@@ -34,7 +35,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.ModifiablePolicy;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.util.Assert;
 
 /**
  * A DefaultPolicy is the own policy of a certain URL (not merged).
@@ -207,8 +207,8 @@ public class DefaultPolicy implements ModifiablePolicy {
     }
 
     public int check(Identity identity, Role role) throws AccessControlException {
-        Assert.notNull("identity", identity);
-        Assert.notNull("role", role);
+        Validate.notNull(identity, "identity");
+        Validate.notNull(role, "role");
         Credential[] credentials = getCredentials();
         for (int i = credentials.length - 1; i >= 0; i--) {
             if (matches(identity, credentials[i].getAccreditable())
@@ -224,8 +224,8 @@ public class DefaultPolicy implements ModifiablePolicy {
     }
 
     protected boolean matches(Identity identity, Accreditable accreditable) {
-        Assert.notNull("identity", identity);
-        Assert.notNull("accreditable", accreditable);
+        Validate.notNull(identity, "identity");
+        Validate.notNull(accreditable, "accreditable");
         Accreditable[] accrs = identity.getAccreditables();
         return Arrays.asList(accrs).contains(accreditable);
     }

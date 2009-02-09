@@ -36,6 +36,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
@@ -72,7 +73,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
      * @throws AccessControlException if the item manager cannot be instantiated
      */
     public void configure(File _configurationDirectory) throws AccessControlException {
-        assert _configurationDirectory != null;
+        Validate.notNull(_configurationDirectory);
 
         if (!_configurationDirectory.exists() || !_configurationDirectory.isDirectory()) {
             throw new AccessControlException("The directory ["
@@ -192,7 +193,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         Configuration config = null;
 
         try {
-            assert file.exists();
+            Validate.isTrue(file.exists(), "file does not exist");
             config = builder.buildFromFile(file);
         } catch (Exception e) {
             String errorMsg = "Exception when reading the configuration from file: "
@@ -244,7 +245,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
      *         exception.
      */
     public void add(Item item) throws AccessControlException {
-        assert item != null;
+        Validate.notNull(item);
         this.items.put(item.getId(), item);
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item [" + item + "] added.");

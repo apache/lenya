@@ -19,7 +19,7 @@ package org.apache.lenya.util;
 
 /**
  * Assertion utility.
- * @deprecated Use {@link org.springframework.util.Assert} instead.
+ * @deprecated Use {@link org.apache.commons.lang.Validate} instead.
  */
 public final class Assert {
 

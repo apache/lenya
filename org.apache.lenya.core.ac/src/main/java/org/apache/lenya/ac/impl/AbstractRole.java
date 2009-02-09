@@ -20,10 +20,10 @@
 
 package org.apache.lenya.ac.impl;
 
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.util.Assert;
 
 
 /**
@@ -48,7 +48,7 @@ public abstract class AbstractRole extends AbstractItem implements Role {
      */
     public AbstractRole(ItemManager itemManager, Log logger, String name) {
         this(itemManager, logger);
-        Assert.notNull("name", name);
+        Validate.notNull(name, "name");
         setName(name);
     }
 

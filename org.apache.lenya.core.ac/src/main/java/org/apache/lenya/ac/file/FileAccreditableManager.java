@@ -29,6 +29,7 @@ import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.util.NetUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -39,7 +40,6 @@ import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.impl.AbstractAccreditableManager;
-import org.apache.lenya.util.Assert;
 
 /**
  * File-based accreditable manager.
@@ -59,10 +59,10 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
             String configurationUri, UserType[] _userTypes) {
         super(logger);
 
-        Assert.notNull("service manager", manager);
+        Validate.notNull(manager, "Service manager");
         this.manager = manager;
 
-        Assert.notNull("configuration directory", configurationUri);
+        Validate.notNull(configurationUri, "configuration directory");
         this.configurationDirectoryUri = configurationUri;
 
         this.userTypes = new HashSet(Arrays.asList(_userTypes));
@@ -194,8 +194,9 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
 
     public String getId() {
         try {
-            Assert.notNull("configuration directory", this.getConfigurationDirectory());
-            return this.getConfigurationDirectory().getCanonicalPath();
+        	File configDir = this.getConfigurationDirectory();
+        	assert configDir != null;
+            return configDir.getCanonicalPath();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -19,12 +19,12 @@
 package org.apache.lenya.ac.impl;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.ItemUtil;
-import org.apache.lenya.util.Assert;
 
 /**
  * Abstract superclass for all access control objects that can be managed by an
@@ -45,9 +45,9 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
      * @param logger The logger.
      */
     public AbstractItem(ItemManager itemManager, Log logger) {
-        Assert.notNull("logger", logger);
+        Validate.notNull(logger, "logger");
         setLogger(logger);
-        Assert.notNull("item manager", itemManager);
+        Validate.notNull(itemManager, "item manager");
         this.itemManager = itemManager;
     }
 

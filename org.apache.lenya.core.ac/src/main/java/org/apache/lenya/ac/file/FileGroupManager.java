@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
@@ -57,7 +58,7 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
      */
     public static FileGroupManager instance(AccreditableManager mgr, File configurationDirectory,
             Log logger) throws AccessControlException {
-        assert configurationDirectory != null;
+        Validate.notNull(configurationDirectory);
 
         if (!instances.containsKey(configurationDirectory)) {
             FileGroupManager manager = new FileGroupManager(mgr);

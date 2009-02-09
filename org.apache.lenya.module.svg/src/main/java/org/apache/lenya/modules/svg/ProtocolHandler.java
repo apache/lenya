@@ -35,9 +35,9 @@ import org.apache.batik.util.ParsedURLData;
 import org.apache.batik.util.ParsedURLProtocolHandler;
 import org.apache.cocoon.CascadingIOException;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.util.Assert;
 
 /**
  * Batik URL protocol handler for protocols which are handled by the SourceResolver.
@@ -75,7 +75,7 @@ public class ProtocolHandler extends AbstractLogEnabled implements ParsedURLProt
         public ParsedUrlData(String protocol, SourceResolver resolver, String url) {
             this.url = url;
             String prefix = protocol + ":";
-            Assert.isTrue("valid URL", url.length() > prefix.length());
+            Validate.isTrue(url.length() > prefix.length(), "URL not valid");
             this.path = url.substring(prefix.length());
             this.protocol = protocol;
             this.resolver = resolver;

@@ -20,10 +20,10 @@
 
 package org.apache.lenya.ac.impl;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.util.Assert;
 
 /**
  * Credential implementation.
@@ -40,9 +40,9 @@ public class CredentialImpl implements Credential {
      * @param role The role.
      */
     public CredentialImpl(Accreditable accreditable, Role role) {
-        Assert.notNull("accreditable", accreditable);
+        Validate.notNull(accreditable, "accreditable");
+        Validate.notNull(role, "role");
         this.accreditable = accreditable;
-        Assert.notNull("role", role);
         this.role = role;
     }
 
