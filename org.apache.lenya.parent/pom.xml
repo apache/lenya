@@ -19,6 +19,186 @@
   </description>
   <url>http://lenya.apache.org</url>
   <inceptionYear>2003</inceptionYear>
+
+  <developers>
+    <developer>
+      <id>chestnut</id>
+      <name>Doug Chestnut</name>
+      <email>chestnut@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>edith</id>
+      <name>Edith Chevrier</name>
+      <email>edith@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>bigdog</id>
+      <name>Dale Christ</name>
+      <email>bigdog@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>egli</id>
+      <name>Christian Egli</name>
+      <email>egli@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>solprovider</id>
+      <name>Paul Ercolino</name>
+      <email>solprovider@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>jann</id>
+      <name>Jann Forrer</name>
+      <email>jann@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>rfrovarp</id>
+      <name>Richard Frovarp</name>
+      <email>rfrovarp@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>antonio</id>
+      <name>Antonio Gallardo</name>
+      <email>antonio@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>bobharner</id>
+      <name>Bob Harner</name>
+      <email>bobharner@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>andreas</id>
+      <name>Andreas Hartmann</name>
+      <email>andreas@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>jwkaltz</id>
+      <name>J. Wolfgang Kaltz</name>
+      <email>jwkaltz@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>aku</id>
+      <name>Andreas Kuckartz</name>
+      <email>aku@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>roku</id>
+      <name>Rolf Kulemann</name>
+      <email>roku@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>nettings</id>
+      <name>Jörn Nettingsmeier</name>
+      <email>nettings@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>ragaller</id>
+      <name>Jürgen Ragaller</name>
+      <email>ragaller@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>renaud</id>
+      <name>Renaud Richardet</name>
+      <email>renaud@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>froethenbacher</id>
+      <name>Felix Röthenbacher</name>
+      <email>froethenbacher@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>gregor</id>
+      <name>Gregor J. Rothfuss</name>
+      <email>gregor@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>tschlabach</id>
+      <name>Torsten Schlabach</name>
+      <email>tschlabach@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>thorsten</id>
+      <name>Thorsten Scherler</name>
+      <email>thorsten@apache.org</email>
+      <roles>
+        <role>PMC</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>josias</id>
+      <name>Josias Thöny</name>
+      <email>josias@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>michi</id>
+      <name>Michael Wechner</name>
+      <email>michi@apache.org</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+  </developers>
+
   <build>
     <pluginManagement>
       <plugins>
@@ -144,7 +324,7 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-beans</artifactId>
-        <version>2.5.5</version>
+        <version>${spring.version}</version>
         <exclusions>
           <exclusion>
             <groupId>avalon-framework</groupId>
@@ -155,7 +335,7 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
-        <version>2.5.5</version>
+        <version>${spring.version}</version>
         <exclusions>
           <exclusion>
             <groupId>avalon-framework</groupId>
@@ -174,7 +354,7 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
-        <version>2.5.5</version>
+        <version>${spring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.axis</groupId>
@@ -449,5 +629,6 @@
   <properties>
     <cocoon.version>2.2.1-SNAPSHOT</cocoon.version>
     <avalon.version>4.3.1</avalon.version>
+    <spring.version>2.5.5</spring.version>
   </properties>
 </project>
