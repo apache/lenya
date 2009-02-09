@@ -1,7 +1,7 @@
 org.apache.lenya.editors.setObjectData = function(objectData, windowName) {
   var currentUsecase = usecaseMap[windowName];
   var snippet = org.apache.lenya.editors.generateContentSnippet(currentUsecase, objectData);
-  var newText = snippet.beforeSelection + snippet.replaceSelection + snippet.afterSelection;
+  var newText = (snippet.beforeSelection || '') + (snippet.replaceSelection || '') + (snippet.afterSelection || '');
   editor.replaceSelection(newText);
   usecaseMap[windowName] = undefined; // we're done!
   objectData[windowName] = undefined; // we're done!
