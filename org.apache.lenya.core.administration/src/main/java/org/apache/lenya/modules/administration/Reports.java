@@ -20,6 +20,7 @@ package org.apache.lenya.modules.administration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.linking.Link;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.linking.LinkResolver;
@@ -28,7 +29,6 @@ import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
-import org.apache.lenya.util.Assert;
 
 /**
  * Various reports about a publication.
@@ -86,8 +86,8 @@ public class Reports extends AbstractUsecase {
         private String targetUrl;
 
         public BrokenLink(String sourceUrl, String targetUrl) {
-            Assert.notNull("source URL", sourceUrl);
-            Assert.notNull("target URL", targetUrl);
+            Validate.notNull(sourceUrl);
+            Validate.notNull(targetUrl);
             this.sourceUrl = sourceUrl;
             this.targetUrl = targetUrl;
         }

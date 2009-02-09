@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.transaction;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 /**
  * Exception which is thrown when a different identity changed a transactionable
@@ -29,7 +29,7 @@ public class ConcurrentModificationException extends TransactionException {
 
     public ConcurrentModificationException(Transactionable t) {
         super();
-        Assert.notNull("transactionable", t);
+        Validate.notNull(t);
         this.transactionable = t;
     }
 

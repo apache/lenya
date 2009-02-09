@@ -31,9 +31,9 @@ import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.Assert;
 
 /**
  * A publication's configuration. Keep in sync with
@@ -365,7 +365,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * @param language the default language
      */
     public void setDefaultLanguage(String language) {
-        Assert.notNull(language);
+        Validate.notNull(language);
         if (!Arrays.asList(getLanguages()).contains(language)) {
             throw new IllegalArgumentException("The publication [" + this +
                     "] doesn't contain the language [" + language + "]!");
@@ -584,12 +584,12 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     }
 
     public void addLanguage(String language) {
-        Assert.notNull("language", language);
+        Validate.notNull(language);
         this.languages.add(language);
     }
 
     public void removeLanguage(String language) {
-        Assert.notNull("language", language);
+        Validate.notNull(language);
         if (!Arrays.asList(getLanguages()).contains(language)) {
             throw new IllegalArgumentException("The publication [" + this +
                     "] doesn't contain the language [" + language + "]!");
@@ -602,8 +602,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     }
 
     public void setName(String name) {
-        Assert.notNull("name", name);
-        Assert.isTrue("name not empty", name.length() > 0);
+        Validate.notNull(name);
+        Validate.isTrue(name.length() > 0, "name must not be empty");
         this.name = name;
     }
     

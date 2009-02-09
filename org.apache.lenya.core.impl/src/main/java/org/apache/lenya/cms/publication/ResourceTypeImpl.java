@@ -34,9 +34,9 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -83,7 +83,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
          * @param uri The uri.
          */
         public Format(String uri) {
-            Assert.notNull("uri", uri);
+            Validate.notNull(uri);
             this.uri = uri;
         }
         /**
@@ -225,7 +225,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     public void setName(String name) {
-        Assert.notNull("name", name);
+        Validate.notNull(name);
         this.name = name;
     }
 

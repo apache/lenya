@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.linking;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.util.Assert;
 
 /**
  * The target of a link.
@@ -43,7 +43,7 @@ public class LinkTarget {
      * @param doc The document.
      */
     protected LinkTarget(Document doc) {
-        Assert.notNull("document", doc);
+        Validate.notNull(doc);
         this.doc = doc;
     }
 

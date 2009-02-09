@@ -52,7 +52,6 @@ import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.util.Assert;
 
 /**
  * DocumentManager implementation.
@@ -497,7 +496,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
             Link link = targetArea.getSite().add(targetPath, targetDoc);
             link.setLabel(label);
-            Assert.isTrue("label set", targetDoc.getLink().getLabel().equals(label));
+            assert targetDoc.getLink().getLabel().equals(label);
         }
         SiteNode targetNode = targetArea.getSite().getNode(targetPath);
         targetNode.setVisible(sourceNode.isVisible());

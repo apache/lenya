@@ -28,6 +28,7 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
@@ -39,7 +40,6 @@ import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
-import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -70,7 +70,7 @@ public class FallbackModule extends AbstractInputModule {
     }
 
     public void setStore(MRUMemoryStore store) {
-        Assert.notNull(store, "store");
+        Validate.notNull(store);
         this.store = store;
     }
 
@@ -145,7 +145,7 @@ public class FallbackModule extends AbstractInputModule {
     }
 
     public void setProtocol(String protocol) {
-        Assert.notNull(protocol, "protocol");
+        Validate.notNull(protocol);
         this.protocol = protocol;
     }
     

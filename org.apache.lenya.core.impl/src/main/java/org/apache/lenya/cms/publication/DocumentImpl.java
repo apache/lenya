@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -42,7 +43,6 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.util.Assert;
 
 /**
  * A typical CMS document.
@@ -282,9 +282,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param _extension A string.
      */
     protected void setExtension(String _extension) {
+    	Validate.notNull(_extension);
+        Validate.isTrue(!_extension.startsWith("."), "Extension must start with a dot");
         checkWritability();
-        assert _extension != null;
-        Assert.isTrue("Extension doesn't start with a dot", !_extension.startsWith("."));
         this.extension = _extension;
     }
 
@@ -628,8 +628,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public void setResourceType(ResourceType resourceType) {
+    	Validate.notNull(resourceType);
         checkWritability();
-        Assert.notNull("resource type", resourceType);
         try {
             MetaData meta = getMetaData(DocumentImpl.METADATA_NAMESPACE);
             meta.setValue(DocumentImpl.METADATA_RESOURCE_TYPE, resourceType.getName());
@@ -639,9 +639,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public void setSourceExtension(String extension) {
+    	Validate.notNull(extension);
+        Validate.isTrue(!extension.startsWith("."), "Extension must start with a dot");
         checkWritability();
-        Assert.notNull("extension", extension);
-        Assert.isTrue("extension doesn't start with a dot", !extension.startsWith("."));
         try {
             MetaData meta = getMetaData(DocumentImpl.METADATA_NAMESPACE);
             meta.setValue(DocumentImpl.METADATA_EXTENSION, extension);

@@ -17,17 +17,18 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.transaction.ConcurrentModificationException;
-import org.springframework.util.Assert;
 
 public class SessionImpl implements Session {
 
     public SessionImpl(RepositoryImpl repository,
-            org.apache.lenya.cms.repository.Session repoSession) {
-        Assert.notNull(repository, "repository");
-        Assert.notNull(repoSession, "repository session");
+            org.apache.lenya.cms.repository.Session repoSession)
+    {
+        Validate.notNull(repository, "repository");
+        Validate.notNull(repoSession, "repository session");
         this.repository = repository;
         this.repositorySession = repoSession;
     }

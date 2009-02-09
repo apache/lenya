@@ -21,9 +21,9 @@ import java.util.Arrays;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.util.Assert;
 
 /**
  * Abstract site node implementation.
@@ -35,16 +35,14 @@ public abstract class AbstractSiteNode extends AbstractLogEnabled implements Sit
     private String uuid;
 
     protected AbstractSiteNode(Publication publication, SiteStructure structure, String path,
-            String uuid, Log logger) {
-        
-        Assert.notNull("structure", structure);
+            String uuid, Log logger)
+    {
+    	Validate.notNull(structure);
+    	Validate.notNull(path);
+        Validate.isTrue(path.startsWith("/"), "Path must start with /");
+        Validate.notNull(uuid);
         this.structure = structure;
-
-        Assert.notNull("path", path);
-        Assert.isTrue("path starts with /", path.startsWith("/"));
         this.path = path;
-
-        Assert.notNull("uuid", uuid);
         this.uuid = uuid;
     }
 

@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 /**
  * <p>
@@ -46,7 +46,7 @@ public class Proxy {
      * @param defaultUrl The default proxy URL.
      */
     public Proxy(String defaultUrl) {
-        Assert.notNull("default URL", defaultUrl);
+        Validate.notNull(defaultUrl);
         this.defaultUrl = defaultUrl;
     }
 
@@ -93,7 +93,7 @@ public class Proxy {
      * @param _url The url to set.
      */
     public void setUrl(String _url) {
-        Assert.notNull("url", _url);
+        Validate.notNull(_url);
         this.url = _url;
     }
 

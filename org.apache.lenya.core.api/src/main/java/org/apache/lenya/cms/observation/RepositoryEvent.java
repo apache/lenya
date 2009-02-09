@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.cms.observation;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.Assert;
 
 /**
  * A repository event provides additional information if a document was added, changed, or removed.
@@ -35,11 +35,9 @@ public class RepositoryEvent {
      * @param descriptor More information about the event.
      */
     public RepositoryEvent(Session session, Object descriptor) {
-        
-        Assert.notNull("session", session);
+        Validate.notNull(session);
+        Validate.notNull(descriptor);
         this.session = session;
-        
-        Assert.notNull("descriptor", descriptor);
         this.descriptor = descriptor;
     }
     

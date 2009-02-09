@@ -20,12 +20,12 @@ package org.apache.lenya.cms.linking;
 import java.net.MalformedURLException;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.util.Query;
 
 /**
@@ -73,16 +73,16 @@ public class UuidToUrlRewriter implements LinkRewriter {
      * @param factory The document factory to use.
      */
     public UuidToUrlRewriter(String currentUrl, LinkResolver linkResolver, DocumentFactory factory) {
-        Assert.notNull("current URL", currentUrl);
-        Assert.notNull("link resolver", linkResolver);
-        Assert.notNull("document factory", factory);
+        Validate.notNull(currentUrl);
+        Validate.notNull(linkResolver);
+        Validate.notNull(factory);
         this.currentUrl = currentUrl;
         this.factory = factory;
         this.linkResolver = linkResolver;
     }
 
     public void setCurrentDocument(Document doc) {
-        Assert.notNull("current document", doc);
+        Validate.notNull(doc);
         this.currentDoc = doc;
     }
 

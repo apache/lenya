@@ -25,9 +25,9 @@ import java.util.Set;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.util.Assert;
 
 /**
  * Default implementation of a unit of work.
@@ -42,9 +42,9 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @param identity The identity.
      * @param logger The logger.
      */
-    public UnitOfWorkImpl(IdentityMap map, Identity identity, Log logger) {
-
-        Assert.notNull(map);
+    public UnitOfWorkImpl(IdentityMap map, Identity identity, Log logger)
+    {
+    	Validate.notNull(map);
         this.identityMap = map;
         this.identityMap.setUnitOfWork(this);
 

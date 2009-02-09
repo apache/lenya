@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.workflow.Version;
 
 /**
@@ -31,7 +31,7 @@ public class WorkflowEventDescriptor {
      * @param version The version.
      */
     public WorkflowEventDescriptor(Version version) {
-        Assert.notNull("version", version);
+        Validate.notNull(version);
         this.version = version;
     }
 

@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 /**
  * Node iterator.
@@ -34,7 +34,7 @@ public class NodeIterator {
      * @param collection The collection to iterate over.
      */
     public NodeIterator(Collection collection) {
-        Assert.notNull("collection", collection);
+        Validate.notNull(collection);
         this.delegate = collection.iterator();
     }
     
@@ -42,7 +42,7 @@ public class NodeIterator {
      * @param nodes The nodes to iterate over.
      */
     public NodeIterator(SiteNode[] nodes) {
-        Assert.notNull("nodes", nodes);
+    	Validate.notNull(nodes);
         this.delegate = Arrays.asList(nodes).iterator();
     }
     

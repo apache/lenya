@@ -32,9 +32,9 @@ import java.util.Set;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.util.Assert;
 
 /**
  * Factory for creating publication objects.
@@ -72,9 +72,9 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
     }
 
     public Publication getPublication(DocumentFactory factory, String id)
-            throws PublicationException {
-
-        Assert.notNull("publication ID", id);
+    throws PublicationException
+    {
+        Validate.notNull(id);
         Map id2config = getId2config();
         if (!id2config.containsKey(id)) {
             throw new PublicationException("The publication [" + id + "] does not exist.");

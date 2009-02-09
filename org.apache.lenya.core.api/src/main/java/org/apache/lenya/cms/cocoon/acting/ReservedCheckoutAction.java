@@ -26,9 +26,9 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.util.Assert;
 
 /**
  * Action doing reserved checkout
@@ -50,8 +50,8 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             Node node = getNode();
             String username = getUsername();
             
-            Assert.notNull("node", node);
-            Assert.notNull("username", username);
+            assert node != null;
+            assert username != null;
 
             if (!node.isCheckedOutBySession(node.getSession())) {
                 node.checkout();

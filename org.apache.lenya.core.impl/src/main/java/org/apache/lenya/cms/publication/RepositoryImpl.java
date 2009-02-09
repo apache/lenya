@@ -19,18 +19,18 @@ package org.apache.lenya.cms.publication;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.springframework.util.Assert;
 
 public class RepositoryImpl implements Repository {
 
     private RepositoryManager repositoryManager;
 
     public Session getSession(HttpServletRequest request) {
-        Assert.notNull(request, "request");
+        Validate.notNull(request);
         try {
             org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(
                     this.repositoryManager, request);

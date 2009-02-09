@@ -28,7 +28,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.util.Assert;
 
 /**
  * Link resolver implementation.
@@ -93,13 +92,13 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
 
         Link link = new Link(linkUri);
         String language = link.getLanguage();
-        Assert.notNull("language", language);
+        assert language != null;
         String uuid = link.getUuid();
-        Assert.notNull("uuid", uuid);
+        assert uuid != null;
         String area = link.getArea();
-        Assert.notNull("area", area);
+        assert area != null;
         String pubId = link.getPubId();
-        Assert.notNull("publication ID", pubId);
+        assert pubId != null;
 
         String revisionString = getValue(link.getRevision(), null);
         

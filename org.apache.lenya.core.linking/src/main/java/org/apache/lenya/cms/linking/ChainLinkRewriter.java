@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 /**
  * A chain of link rewriters. The output of one rewriter serves as the input of the next one. If a
@@ -36,7 +36,7 @@ public class ChainLinkRewriter implements LinkRewriter {
      * @param rewriter The rewriter.
      */
     public void add(LinkRewriter rewriter) {
-        Assert.notNull("rewriter", rewriter);
+        Validate.notNull(rewriter);
         this.rewriters.add(rewriter);
     }
 

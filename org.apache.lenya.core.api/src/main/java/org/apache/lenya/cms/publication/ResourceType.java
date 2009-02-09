@@ -36,7 +36,7 @@ package org.apache.lenya.cms.publication;
 
 import java.util.Date;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -114,11 +114,11 @@ public interface ResourceType {
     public static class Sample {
         
         protected Sample(String name, String mimeType, String uri) {
-            Assert.notNull("name", name);
+        	Validate.notNull(name);
+            Validate.notNull(mimeType);
+            Validate.notNull(uri);
             this.name = name;
-            Assert.notNull("mimeType", mimeType);
             this.mimeType = mimeType;
-            Assert.notNull("uri", uri);
             this.uri = uri;
         }
 

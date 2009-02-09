@@ -24,7 +24,7 @@ import java.io.OutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
@@ -48,10 +48,10 @@ public class NamespaceHelper {
      * @param _namespaceUri The namespace URI.
      * @param _prefix The namespace prefix.
      */
-    public NamespaceHelper(String _namespaceUri, String _prefix, Document _document) {
-
-        Assert.notNull("namespace URI", _namespaceUri);
-        Assert.notNull("DOM", _document);
+    public NamespaceHelper(String _namespaceUri, String _prefix, Document _document)
+    {
+        Validate.notNull(_namespaceUri);
+        Validate.notNull(_document);
 
         this.namespaceUri = _namespaceUri;
         this.prefix = _prefix;

@@ -20,7 +20,7 @@ package org.apache.lenya.cms.linking;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 public class RelativeToAbsoluteLinkRewriter implements LinkRewriter {
 
@@ -30,12 +30,12 @@ public class RelativeToAbsoluteLinkRewriter implements LinkRewriter {
             "mailto:", "file:" };
 
     public RelativeToAbsoluteLinkRewriter(String sourceUri) {
-        Assert.notNull("source URI", sourceUri);
+        Validate.notNull(sourceUri);
         this.sourceUri = sourceUri;
     }
 
     public boolean matches(String url) {
-        Assert.notNull("url", url);
+        Validate.notNull(url);
         for (int i = 0; i < PROTOCOLS.length; i++) {
             if (url.startsWith(PROTOCOLS[i])) {
                 return false;

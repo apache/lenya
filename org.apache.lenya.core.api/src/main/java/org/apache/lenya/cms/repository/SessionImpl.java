@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.ObservationRegistry;
@@ -39,7 +40,6 @@ import org.apache.lenya.transaction.TransactionLock;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.transaction.UnitOfWorkImpl;
-import org.apache.lenya.util.Assert;
 
 /**
  * Repository session.
@@ -247,6 +247,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     private IdentityMap identityMap;
 
     public synchronized void enqueueEvent(RepositoryEvent event) {
+        Validate.isTrue(event.getSession() == this, "event belongs to session");
         if (!isModifiable()) {
             throw new RuntimeException("Can't enqueue event in unmodifiable session!");
         }
@@ -255,7 +256,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
                     "No events can be queued while the session is being committed. Event: ["
                             + event.getDescriptor() + "]");
         }
-        Assert.isTrue("event belongs to session", event.getSession() == this);
         this.events.add(event);
     }
 

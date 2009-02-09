@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -30,7 +30,7 @@ public class ChainErrorHandler implements ErrorHandler {
     private List handlers = new ArrayList();
     
     public void add(ErrorHandler handler) {
-        Assert.notNull("handler", handler);
+        Validate.notNull(handler);
         this.handlers.add(handler);
     }
 

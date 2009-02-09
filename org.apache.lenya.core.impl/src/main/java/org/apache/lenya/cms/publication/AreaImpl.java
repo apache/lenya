@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -28,7 +29,6 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.util.Assert;
 
 /**
  * Area implementation.
@@ -53,8 +53,8 @@ public class AreaImpl implements Area {
     }
 
     public boolean contains(String uuid, String language) {
-        Assert.notNull("uuid", uuid);
-        Assert.notNull("language", language);
+        Validate.notNull(uuid);
+        Validate.notNull(language);
         if (uuid.equals("") || language.equals("")) {
             return false;
         }
