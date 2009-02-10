@@ -17,6 +17,27 @@
  */
 package org.apache.lenya.cms.observation;
 
-public interface Observeable {
+import org.apache.commons.lang.Validate;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
+import org.apache.lenya.cms.publication.ResourceType;
+
+public class DocumentEventSource {
+    
+    private DocumentIdentifier identifier;
+    private ResourceType resourceType;
+
+    public DocumentEventSource(Document doc) {
+        Validate.notNull(doc, "document");
+        this.identifier = doc.getIdentifier();
+    }
+    
+    public DocumentIdentifier getIdentifier() {
+        return this.identifier;
+    }
+
+    public ResourceType getResourceType() {
+        return resourceType;
+    }
 
 }

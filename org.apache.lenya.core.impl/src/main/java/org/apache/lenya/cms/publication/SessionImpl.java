@@ -27,7 +27,6 @@ import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
@@ -152,7 +151,8 @@ public class SessionImpl implements Session {
     }
 
     public void enqueueEvent(Document document, Object descriptor) {
-        DocumentEvent event = RepositoryEventFactory.createEvent(document, descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(document, descriptor);
+        getRepositorySession().enqueueEvent(event);
     }
 
     public boolean isModifiable() {

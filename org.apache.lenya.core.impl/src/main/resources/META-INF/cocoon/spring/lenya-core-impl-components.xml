@@ -31,8 +31,6 @@
   </bean>
   <bean name="org.apache.lenya.cms.publication.PublicationManager"
     class="org.apache.lenya.cms.publication.PublicationManagerImpl">
-    <property name="documentFactoryBuilder"
-      ref="org.apache.lenya.cms.publication.DocumentFactoryBuilder"/>
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
   </bean>
   <bean name="org.apache.lenya.cms.metadata.MetaDataCache"

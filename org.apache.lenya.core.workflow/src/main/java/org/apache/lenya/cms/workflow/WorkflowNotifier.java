@@ -18,7 +18,7 @@
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.observation.AbstractRepositoryListener;
-import org.apache.lenya.cms.observation.DocumentEvent;
+import org.apache.lenya.cms.observation.DocumentEventSource;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.workflow.Version;
 
@@ -28,15 +28,15 @@ import org.apache.lenya.workflow.Version;
 public class WorkflowNotifier extends AbstractRepositoryListener {
 
     public void eventFired(RepositoryEvent event) {
-        if (!(event instanceof DocumentEvent)) {
+        Object source = event.getSource();
+        if (!(source instanceof DocumentEventSource)) {
             return;
         }
-        DocumentEvent docEvent = (DocumentEvent) event;
-        if (!(docEvent.getDescriptor() instanceof WorkflowEventDescriptor)) {
+        if (!(event.getDescriptor() instanceof WorkflowEventDescriptor)) {
             return;
         }
 
-        WorkflowEventDescriptor descriptor = (WorkflowEventDescriptor) docEvent.getDescriptor();
+        WorkflowEventDescriptor descriptor = (WorkflowEventDescriptor) event.getDescriptor();
         Version version = descriptor.getVersion();
     }
 

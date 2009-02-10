@@ -52,7 +52,22 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-observation</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-sourcerepository</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-repository</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.excalibur.components</groupId>
+      <artifactId>excalibur-sourceresolve</artifactId>
+      <version>2.2.3</version>
     </dependency>
     
     <!-- Tests -->
@@ -74,6 +89,11 @@
       <artifactId>cocoon-sitemap-impl</artifactId>
       <scope>test</scope>
       <type>test-jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-ac</artifactId>
+      <scope>test</scope>
     </dependency>
     
   </dependencies>

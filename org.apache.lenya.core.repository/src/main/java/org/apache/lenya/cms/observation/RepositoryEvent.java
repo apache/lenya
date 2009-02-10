@@ -28,7 +28,20 @@ public class RepositoryEvent {
     private Session session;
     private Object descriptor = null;
     private int revision = -1;
+    private Object source;
 
+    /**
+     * Ctor.
+     * @param session The session.
+     * @param source The source of the event.
+     * @param descriptor More information about the event.
+     */
+    public RepositoryEvent(Session session, Object source, Object descriptor) {
+        this(session, descriptor);
+        Validate.notNull(source);
+        this.source = source;
+    }
+    
     /**
      * Ctor.
      * @param session The session.
@@ -40,7 +53,7 @@ public class RepositoryEvent {
         this.session = session;
         this.descriptor = descriptor;
     }
-    
+
     /**
      * @return The session.
      */
@@ -87,6 +100,10 @@ public class RepositoryEvent {
      */
     public int getRevision() {
         return this.revision;
+    }
+
+    public Object getSource() {
+        return source;
     }
 
 }

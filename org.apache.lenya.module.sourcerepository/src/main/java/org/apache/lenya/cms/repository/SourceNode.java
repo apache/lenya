@@ -25,11 +25,8 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
-import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.observation.DocumentEvent;
+import org.apache.lenya.cms.observation.RepositoryEventDescriptor;
 import org.apache.lenya.cms.observation.RepositoryEvent;
-import org.apache.lenya.cms.observation.RepositoryEventFactory;
-import org.apache.lenya.cms.publication.IdentityWrapper;
 import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
@@ -84,15 +81,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     protected String getUserId() {
-        String userId = null;
-        IdentityWrapper identity = (IdentityWrapper) getRepositorySession().getIdentity();
-        if (identity != null) {
-            User user = identity.getIdentity().getUser();
-            if (user != null) {
-                userId = user.getId();
-            }
-        }
-        return userId;
+        return getRepositorySession().getIdentity().getUserId();
     }
 
     /**
@@ -341,7 +330,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         try {
             if (!getRepositorySession().isDirty(this)) {
                 getRepositorySession().registerDirty(this);
-                enqueueEvent(DocumentEvent.CHANGED);
+                enqueueEvent(RepositoryEventDescriptor.CHANGED);
             }
         } catch (TransactionException e) {
             throw new RepositoryException(e);
@@ -349,14 +338,14 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     protected void enqueueEvent(Object descriptor) {
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this, descriptor);
+        RepositoryEvent event = new RepositoryEvent(getRepositorySession(), this, descriptor);
         getRepositorySession().enqueueEvent(event);
     }
 
     public void registerRemoved() throws RepositoryException {
         try {
             getRepositorySession().registerRemoved(this);
-            enqueueEvent(DocumentEvent.REMOVED);
+            enqueueEvent(RepositoryEventDescriptor.REMOVED);
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

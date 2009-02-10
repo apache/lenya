@@ -22,7 +22,6 @@ package org.apache.lenya.ac.impl;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.AccessControlException;
@@ -43,17 +42,15 @@ import org.apache.lenya.cms.publication.Session;
  * Generation>Code and Comments
  */
 public class AbstractAccessControlTest extends LenyaTestCase {
-    
+
     private static final Log logger = LogFactory.getLog(AbstractAccessControlTest.class);
 
     protected static final String TEST_PUB_ID = "test";
-    private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private AccessController accessController;
     private Repository repository;
-    
-    protected Session login(String userId)
-            throws AccessControlException {
+
+    protected Session login(String userId) throws AccessControlException {
         return login(userId, TEST_PUB_ID);
     }
 
@@ -75,8 +72,8 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         if (!identity.contains(user)) {
             User oldUser = identity.getUser();
             if (oldUser != null) {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Removing user [" + oldUser + "] from identity.");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Removing user [" + oldUser + "] from identity.");
                 }
                 identity.removeIdentifiable(oldUser);
             }
@@ -87,7 +84,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
 
         Accreditable[] accrs = identity.getAccreditables();
         for (int i = 0; i < accrs.length; i++) {
-            getLogger().info("Accreditable: " + accrs[i]);
+            logger.info("Accreditable: " + accrs[i]);
         }
 
         Session session = getRepository().startSession(identity, true);
@@ -95,38 +92,24 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         return session;
     }
 
-    protected AccessController getAccessController() {
+    protected AccessController getAccessController() throws AccessControlException {
         return getAccessController(getSession(), TEST_PUB_ID);
     }
 
-    protected AccessController getAccessController(Session session, String pubId) {
+    protected AccessController getAccessController(Session session, String pubId) throws AccessControlException {
         AccessController controller;
-        try {
-            this.accessControllerResolverSelector = (ServiceSelector) getManager().lookup(
-                    AccessControllerResolver.ROLE + "Selector");
-            assertNotNull(this.accessControllerResolverSelector);
+        logger.info("Using access controller resolver: ["
+                getAccessControllerResolver().getClass() + "]");
 
-            this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+        Publication pub = session.getPublication(pubId);
+        logger.info("Resolve access controller");
+        logger.info("Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
 
-            assertNotNull(this.accessControllerResolver);
-            getLogger().info(
-                    "Using access controller resolver: ["
-                            + this.accessControllerResolver.getClass() + "]");
+        String url = "/" + pubId + "/authoring/index.html";
+        controller = this.getAccessControllerResolver().resolveAccessController(url);
 
-            Publication pub = session.getPublication(pubId);
-            getLogger().info("Resolve access controller");
-            getLogger().info(
-                    "Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
-
-            String url = "/" + pubId + "/authoring/index.html";
-            controller = this.accessControllerResolver.resolveAccessController(url);
-
-            assertNotNull(controller);
-            getLogger().info("Resolved access controller: [" + controller.getClass() + "]");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        assertNotNull(controller);
+        logger.info("Resolved access controller: [" + controller.getClass() + "]");
         return controller;
     }
 
@@ -135,15 +118,8 @@ public class AbstractAccessControlTest extends LenyaTestCase {
      * @exception Exception if an error occurs
      */
     public void tearDown() throws Exception {
-
-        if (this.accessControllerResolverSelector != null) {
-            if (this.accessControllerResolver != null) {
-                if (this.accessController != null) {
-                    this.accessControllerResolver.release(this.accessController);
-                }
-                this.accessControllerResolverSelector.release(this.accessControllerResolver);
-            }
-            getManager().release(this.accessControllerResolverSelector);
+        if (this.accessController != null) {
+            this.getAccessControllerResolver().release(this.accessController);
         }
         super.tearDown();
     }
@@ -153,16 +129,18 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     /**
      * Returns the policy manager.
      * @return A policy manager.
+     * @throws AccessControlException 
      */
-    protected PolicyManager getPolicyManager() {
+    protected PolicyManager getPolicyManager() throws AccessControlException {
         return getAccessController().getPolicyManager();
     }
 
     /**
      * Returns the accreditable manager.
      * @return An accreditable manager.
+     * @throws AccessControlException 
      */
-    protected AccreditableManager getAccreditableManager() {
+    protected AccreditableManager getAccreditableManager() throws AccessControlException {
         return getAccessController().getAccreditableManager();
     }
 
@@ -192,6 +170,21 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     }
 
     public Repository getRepository() {
+        if (this.repository == null) {
+            this.repository = (Repository) getBeanFactory().getBean(Repository.class.getName());
+        }
         return repository;
     }
+
+    public void setAccessControllerResolver(AccessControllerResolver accessControllerResolver) {
+        this.accessControllerResolver = accessControllerResolver;
+    }
+
+    protected AccessControllerResolver getAccessControllerResolver() {
+        if (this.accessControllerResolver == null) {
+            this.accessControllerResolver = (AccessControllerResolver) getBeanFactory().getBean(AccessControllerResolver.ROLE);
+        }
+        return this.accessControllerResolver;
+    }
+
 }

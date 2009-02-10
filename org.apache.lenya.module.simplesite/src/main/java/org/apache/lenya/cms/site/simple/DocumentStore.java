@@ -32,7 +32,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentImpl;
-import org.apache.lenya.cms.publication.History;
 import org.apache.lenya.cms.publication.LockException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.RepositoryException;
@@ -212,8 +211,8 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure, R
     public Link add(String path, Document document) throws SiteException {
         Validate.notNull(path);
         Validate.notNull(document);
-        Validate.isTrue(!contains(document), "Document contained already", document);
         try {
+            Validate.isTrue(!contains(document), "Document contained already", document);
             String key = getKey(document.getUUID(), document.getLanguage());
             if (!doc2path().containsKey(key)) {
                 doc2path().put(key, path);

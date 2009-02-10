@@ -20,6 +20,7 @@ package org.apache.lenya.notification;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identifiable;
 
 /**

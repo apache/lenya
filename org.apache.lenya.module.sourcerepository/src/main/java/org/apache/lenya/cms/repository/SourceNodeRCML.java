@@ -32,7 +32,6 @@ import java.util.Vector;
 import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.publication.IdentityWrapper;
 import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
@@ -144,8 +143,7 @@ public class SourceNodeRCML implements RCML {
     public synchronized void checkOutIn(Node node, short type, long time, boolean backup,
             boolean newVersion, boolean restrictedToSession) throws RevisionControlException {
 
-        IdentityWrapper wrapper = (IdentityWrapper) node.getRepositorySession().getIdentity();
-        String identity = wrapper.getIdentity().getUser().getId();
+        String identity = node.getRepositorySession().getIdentity().getUserId();
 
         Vector entries = getEntries();
         if (entries.size() == 0) {

@@ -27,10 +27,12 @@ import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.search.IndexException;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.observation.DocumentEvent;
+import org.apache.lenya.cms.observation.RepositoryEventDescriptor;
+import org.apache.lenya.cms.observation.DocumentEventSource;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Session;
@@ -41,20 +43,23 @@ import org.apache.lenya.cms.repository.Session;
 public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater, Startable,
         Serviceable, ThreadSafe {
 
-    public void eventFired(RepositoryEvent repoEvent) {
+    public void eventFired(RepositoryEvent event) {
 
-        if (!(repoEvent instanceof DocumentEvent)) {
+        Object descriptor = event.getDescriptor();
+        if (!(descriptor instanceof RepositoryEventDescriptor)) {
             return;
         }
-        DocumentEvent event = (DocumentEvent) repoEvent;
+
+        DocumentEventSource source = (DocumentEventSource) event.getSource();
+        DocumentIdentifier id = source.getIdentifier();
 
         try {
-            if (event.getDescriptor().equals(DocumentEvent.CHANGED)) {
-                index(event.getSession(), event.getResourceType(), event.getPublicationId(), event
-                        .getArea(), event.getUuid(), event.getLanguage());
-            } else if (event.getDescriptor().equals(DocumentEvent.REMOVED)) {
-                delete(event.getSession(), event.getResourceType(), event.getPublicationId(), event
-                        .getArea(), event.getUuid(), event.getLanguage());
+            if (descriptor == RepositoryEventDescriptor.CHANGED) {
+                index(event.getSession(), source.getResourceType(), id.getPublicationId(), id
+                        .getArea(), id.getUUID(), id.getLanguage());
+            } else if (event.getDescriptor().equals(RepositoryEventDescriptor.REMOVED)) {
+                delete(event.getSession(), source.getResourceType(), id.getPublicationId(), id
+                        .getArea(), id.getUUID(), id.getLanguage());
             }
 
         } catch (IndexException e) {

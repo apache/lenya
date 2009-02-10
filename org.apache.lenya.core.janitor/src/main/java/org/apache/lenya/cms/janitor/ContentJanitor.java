@@ -24,8 +24,10 @@ import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.AbstractRepositoryListener;
-import org.apache.lenya.cms.observation.DocumentEvent;
+import org.apache.lenya.cms.observation.RepositoryEventDescriptor;
+import org.apache.lenya.cms.observation.DocumentEventSource;
 import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
@@ -40,12 +42,13 @@ public class ContentJanitor extends AbstractRepositoryListener {
 
     public void eventFired(RepositoryEvent repoEvent) {
         
-        if (!(repoEvent instanceof DocumentEvent)) {
+        if (!(repoEvent.getDescriptor() instanceof RepositoryEventDescriptor)) {
             return;
         }
-        DocumentEvent event = (DocumentEvent) repoEvent;
+        DocumentEventSource source = (DocumentEventSource) repoEvent.getSource();
+        DocumentIdentifier id = source.getIdentifier();
         
-        if (!event.getDescriptor().equals(DocumentEvent.REMOVED)) {
+        if (repoEvent.getDescriptor() != RepositoryEventDescriptor.REMOVED) {
             return;
         }
         
@@ -53,8 +56,8 @@ public class ContentJanitor extends AbstractRepositoryListener {
             ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
                     .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
             Session session = this.repository.getSession(process.getRequest());
-            Publication pub = session.getPublication(event.getPublicationId());
-            File contentFile = pub.getContentDirectory(event.getArea());
+            Publication pub = session.getPublication(id.getPublicationId());
+            File contentFile = pub.getContentDirectory(id.getArea());
             String contentUri = contentFile.toURI().toString();
             SourceUtil.deleteEmptyCollections(contentUri, this.sourceResolver);
         } catch (Exception e) {

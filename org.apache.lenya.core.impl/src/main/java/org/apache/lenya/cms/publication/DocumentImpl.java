@@ -35,7 +35,6 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataCache;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataWrapper;
-import org.apache.lenya.cms.observation.Observeable;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
@@ -50,7 +49,7 @@ import org.apache.lenya.cms.site.SiteStructure;
  * A typical CMS document.
  * @version $Id$
  */
-public class DocumentImpl implements Document, RepositoryItem, Observeable {
+public class DocumentImpl implements Document, RepositoryItem {
 
     private static final Log logger = LogFactory.getLog(DocumentImpl.class);
 

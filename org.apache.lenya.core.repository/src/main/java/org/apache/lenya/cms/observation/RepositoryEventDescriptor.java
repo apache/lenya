@@ -17,28 +17,19 @@
  */
 package org.apache.lenya.cms.observation;
 
-/**
- * Observation registry.
- */
-public interface ObservationRegistry extends RepositoryListener {
+public class RepositoryEventDescriptor {
 
-    /**
-     * The Avalon service role.
-     */
-    String ROLE = ObservationRegistry.class.getName();
-
-    /**
-     * @param listener The listener.
-     * @param source The event source to listen to.
-     * @throws ObservationException if the listener is already registered for this event source.
-     */
-    void registerListener(RepositoryListener listener, Object source) throws ObservationException;
+    public static final RepositoryEventDescriptor CHANGED = new RepositoryEventDescriptor("changed");
+    public static final RepositoryEventDescriptor REMOVED = new RepositoryEventDescriptor("removed");
     
-    /**
-     * Registers a listener which is notified for all events.
-     * @param listener The listener.
-     * @throws ObservationException if the listener is already registered.
-     */
-    void registerListener(RepositoryListener listener) throws ObservationException;
+    private String name;
+    
+    private RepositoryEventDescriptor(String name) {
+        this.name = name;
+    }
+    
+    public String toString() {
+        return this.name;
+    }
 
 }

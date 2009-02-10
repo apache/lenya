@@ -45,12 +45,12 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
      */
     protected void doDocumentTest(DocumentTestSet testSet) throws PublicationException {
         Document document = getDocument(testSet);
-        getLogger().info("UUID:         " + document.getUUID());
-        getLogger().info("Area:         " + document.getArea());
-        getLogger().info("Language:     " + document.getLanguage());
-        getLogger().info("Document URL: " + document.getCanonicalDocumentURL());
-        getLogger().info("Complete URL: " + document.getCanonicalWebappURL());
-        getLogger().info("Extension:    " + document.getExtension());
+        logger.info("UUID:         " + document.getUUID());
+        logger.info("Area:         " + document.getArea());
+        logger.info("Language:     " + document.getLanguage());
+        logger.info("Document URL: " + document.getCanonicalDocumentURL());
+        logger.info("Complete URL: " + document.getCanonicalWebappURL());
+        logger.info("Extension:    " + document.getExtension());
 
         Publication publication = getSession().getPublication("test");
         assertEquals(document.getPublication(), publication);
@@ -62,7 +62,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
                 + document.getArea() + testSet.getUrl());
         assertEquals(document.getExtension(), testSet.getExtension());
 
-        getLogger().info("-----------------------------------------------");
+        logger.info("-----------------------------------------------");
     }
 
     /**

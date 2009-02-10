@@ -20,6 +20,8 @@
 
 package org.apache.lenya.cms.publication.file;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -33,6 +35,8 @@ import org.apache.lenya.cms.site.SiteException;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class FilePublicationTest extends AbstractAccessControlTest {
+    
+    private static final Log logger = LogFactory.getLog(FilePublicationTest.class);
 
     /**
      * <code>sourceDocumentId</code> The source document id
@@ -81,13 +85,13 @@ public class FilePublicationTest extends AbstractAccessControlTest {
             String _destinationLanguage) throws PublicationException, DocumentException,
             SiteException {
 
-        getLogger().info("Copy document");
-        getLogger().info("    Source area:             [" + sourceArea + "]");
-        getLogger().info("    Source document ID:      [" + _sourceDocumentId + "]");
-        getLogger().info("    Source language:         [" + _sourceLanguage + "]");
-        getLogger().info("    Destination area:        [" + destinationArea + "]");
-        getLogger().info("    Destination document ID: [" + _destinationDocumentId + "]");
-        getLogger().info("    Destination language:    [" + _destinationLanguage + "]");
+        logger.info("Copy document");
+        logger.info("    Source area:             [" + sourceArea + "]");
+        logger.info("    Source document ID:      [" + _sourceDocumentId + "]");
+        logger.info("    Source language:         [" + _sourceLanguage + "]");
+        logger.info("    Destination area:        [" + destinationArea + "]");
+        logger.info("    Destination document ID: [" + _destinationDocumentId + "]");
+        logger.info("    Destination language:    [" + _destinationLanguage + "]");
 
         Session session = getSession();
         Publication publication = session.getPublication("test");

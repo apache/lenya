@@ -20,7 +20,6 @@ package org.apache.lenya.cms.observation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentImpl;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
@@ -30,11 +29,11 @@ import org.apache.lenya.cms.repository.Session;
  * Factory to create repository events.
  */
 public class RepositoryEventFactory {
-    
+
     private static final Log logger = LogFactory.getLog(RepositoryEventFactory.class);
 
     /**
-     * Creates a repository event for a node.
+     * Creates a repository event without source..
      * @param session The session.
      * @param descriptor The descriptor.
      * @return An event.
@@ -49,21 +48,16 @@ public class RepositoryEventFactory {
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final DocumentEvent createEvent(Document doc, Object descriptor) {
-        try {
-            Node node = ((DocumentImpl) doc).getRepositoryNode();
-            DocumentEvent event = new DocumentEvent(node.getRepositorySession(), doc.getPublication()
-                    .getId(), doc.getArea(), doc.getUUID(), doc.getLanguage(), doc
-                    .getResourceType(), descriptor);
-            event.setNodeUri(node.getSourceURI());
-            int[] revisions = node.getHistory().getRevisionNumbers();
-            if (revisions.length > 0) {
-                event.setRevision(revisions[0]);
-            }
-            return event;
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
+    public static final RepositoryEvent createEvent(Document doc, Object descriptor) {
+        Node node = ((DocumentImpl) doc).getRepositoryNode();
+        RepositoryEvent event = new RepositoryEvent(node.getRepositorySession(),
+                new DocumentEventSource(doc), descriptor);
+        event.setNodeUri(node.getSourceURI());
+        int[] revisions = node.getHistory().getRevisionNumbers();
+        if (revisions.length > 0) {
+            event.setRevision(revisions[0]);
         }
+        return event;
 
     }
 
@@ -115,7 +109,8 @@ public class RepositoryEventFactory {
 
         try {
 
-            org.apache.lenya.cms.publication.Session session = (org.apache.lenya.cms.publication.Session) node.getRepositorySession();
+            org.apache.lenya.cms.publication.Session session = (org.apache.lenya.cms.publication.Session) node
+                    .getRepositorySession();
             Publication pub = session.getPublication(pubId);
             String docPath = path.substring((pubId + "/content/" + area).length());
 

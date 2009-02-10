@@ -36,7 +36,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     private Map identifier2listeners = new HashMap();
     private Set listeners = new HashSet();
 
-    public synchronized void registerListener(RepositoryListener listener, Observeable observeable)
+    public synchronized void registerListener(RepositoryListener listener, Object observeable)
             throws ObservationException {
         Document doc = (Document) observeable;
         Set listeners = getListeners(doc.getIdentifier());
@@ -64,14 +64,6 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         this.listeners.add(listener);
     }
 
-    protected DocumentIdentifier getIdentifier(DocumentEvent event)
-    {
-        Validate.notNull(event);
-        DocumentIdentifier id = new DocumentIdentifier(event.getPublicationId(), event.getArea(),
-                event.getUuid(), event.getLanguage());
-        return id;
-    }
-
     protected Set getAllListeners(DocumentIdentifier doc) {
         Set allListeners = new HashSet();
         synchronized (this) {
@@ -82,17 +74,18 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     }
 
     protected void notify(Set listeners, RepositoryEvent event) {
-            for (Iterator i = listeners.iterator(); i.hasNext();) {
-                RepositoryListener listener = (RepositoryListener) i.next();
-                listener.eventFired(event);
-            }
+        for (Iterator i = listeners.iterator(); i.hasNext();) {
+            RepositoryListener listener = (RepositoryListener) i.next();
+            listener.eventFired(event);
+        }
     }
 
     public void eventFired(RepositoryEvent event) {
         Validate.notNull(event);
         Set listeners;
-        if (event instanceof DocumentEvent) {
-            DocumentIdentifier id = getIdentifier((DocumentEvent) event);
+        Object source = event.getSource();
+        if (source instanceof DocumentEventSource) {
+            DocumentIdentifier id = ((DocumentEventSource) source).getIdentifier();
             listeners = getAllListeners(id);
         } else {
             listeners = this.listeners;

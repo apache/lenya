@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.context.DefaultContext;
+import org.apache.cocoon.AbstractTestCase;
 import org.apache.cocoon.Constants;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.core.container.ContainerTestCase;
@@ -34,6 +35,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.mock.MockEnvironment;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.xml.EntityResolver;
 import org.apache.lenya.xml.DocumentHelper;
@@ -42,6 +45,8 @@ import org.apache.lenya.xml.DocumentHelper;
  * Base class for Lenya tests which need the context information.
  */
 public class LenyaTestCase extends ContainerTestCase {
+    
+    private static final Log logger = LogFactory.getLog(LenyaTestCase.class);
 
     protected DefaultContext context;
     
@@ -168,7 +173,7 @@ public class LenyaTestCase extends ContainerTestCase {
         // buildClassPath.append(File.pathSeparatorChar)
         // .append(getExtraClassPath(context));
 
-        getLogger().info("Context classpath: " + buildClassPath);
+        logger.info("Context classpath: " + buildClassPath);
         return buildClassPath.toString();
     }
     

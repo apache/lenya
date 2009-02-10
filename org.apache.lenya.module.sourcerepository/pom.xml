@@ -19,15 +19,6 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-core</artifactId>
     </dependency>
-    <!-- TODO: remove dependency to Lenya core API and impl -->
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-impl</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-repository</artifactId>
