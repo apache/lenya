@@ -20,15 +20,11 @@
 
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.workflow.Version;
-import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -49,18 +45,13 @@ public class WorkflowTest extends AbstractAccessControlTest {
      * @throws Exception when something went wrong.
      */
     public void testWorkflow() throws Exception {
-        Publication publication = getPublication("test");
+        Publication publication = getSession().getPublication("test");
         String url = "/" + publication.getId() + URL;
-        DocumentFactory map = getFactory();
-        Document document = map.getFromURL(url);
+        Document document = getSession().getUriHandler().getDocument(url);
 
-        document.getRepositoryNode().lock();
+        document.lock();
 
-        Session session = getSession(submitSituation);
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(getManager(),
-                session,
-                getLogger(),
-                document);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(document);
         if (workflowable.getVersions().length > 0) {
             Version version = workflowable.getLatestVersion();
             if (version.getValue(variableName) == true) {
@@ -75,14 +66,12 @@ public class WorkflowTest extends AbstractAccessControlTest {
             invoke(document, situation);
         }
 
-        document.getRepositoryNode().unlock();
+        document.unlock();
 
         getLogger().info("Test completed.");
     }
 
-    protected void invoke(Document document, TestSituation situation)
-            throws AccessControlException, RepositoryException, WorkflowException {
-        Session session = getSession(situation);
+    protected void invoke(Document document, TestSituation situation) throws Exception {
         Workflowable instance = new DocumentWorkflowable(document);
         assertNotNull(instance);
 
@@ -90,7 +79,7 @@ public class WorkflowTest extends AbstractAccessControlTest {
 
         getLogger().info("Event: " + event);
 
-        WorkflowUtil.invoke(getManager(), session, getLogger(), document, event);
+        WorkflowUtil.invoke(document, event);
 
         boolean value = instance.getLatestVersion().getValue(variableName);
 
@@ -100,8 +89,7 @@ public class WorkflowTest extends AbstractAccessControlTest {
         assertEquals(value, situation.getValue());
     }
 
-    protected Session getSession(TestSituation situation) throws AccessControlException,
-            RepositoryException {
+    protected Session getSession(TestSituation situation) throws Exception {
         Session session = login(situation.getUser());
         getLogger().info("User: [" + session.getIdentity().getUser() + "]");
         return session;
@@ -110,10 +98,8 @@ public class WorkflowTest extends AbstractAccessControlTest {
     private static final TestSituation submitSituation = new TestSituation("lenya", "submit", false);
     private static final TestSituation rejectSituation = new TestSituation("alice", "reject", false);
     private static final TestSituation deactivateSituation = new TestSituation("alice",
-            "deactivate",
-            false);
-    private static final TestSituation publishSituation = new TestSituation("alice",
-            "publish",
+            "deactivate", false);
+    private static final TestSituation publishSituation = new TestSituation("alice", "publish",
             true);
 
     private static final TestSituation[] situations = { submitSituation, rejectSituation,
