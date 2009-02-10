@@ -18,10 +18,9 @@
 package org.apache.lenya.cms.workflow;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
-import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowManager;
@@ -37,21 +36,18 @@ public class WorkflowUtil {
     /**
      * Invokes a workflow event on a document. This is the same as
      * <code>invoke(Document, String, true)</code>.
-     * @param logger The logger.
      * @param document The document.
      * @param event The name of the event.
      * @throws WorkflowException if the event could not be invoked in the current situation.
      */
-    public static void invoke(Log logger, Document document, String event) throws WorkflowException {
+    public static void invoke(Document document, String event) throws WorkflowException {
         WorkflowManager wfManager = getWorkflowManager();
-        Workflowable workflowable = getWorkflowable(logger, document);
+        Workflowable workflowable = getWorkflowable(document);
         wfManager.invoke(workflowable, event);
-
     }
 
     /**
      * Invokes a workflow event on a document.
-     * @param logger The logger.
      * @param document The document.
      * @param event The name of the event.
      * @param force If this is set to <code>true</code>, the execution is forced, which means an
@@ -59,16 +55,15 @@ public class WorkflowUtil {
      *            set to <code>false</code>, non-supporting documents are ignored.
      * @throws WorkflowException if the event could not be invoked in the current situation.
      */
-    public static void invoke(Log logger, Document document, String event, boolean force)
+    public static void invoke(Document document, String event, boolean force)
             throws WorkflowException {
         WorkflowManager wfManager = getWorkflowManager();
-        Workflowable workflowable = getWorkflowable(logger, document);
+        Workflowable workflowable = getWorkflowable(document);
         wfManager.invoke(workflowable, event, force);
     }
 
     /**
      * Invokes a workflow event on a document set.
-     * @param logger The logger.
      * @param documentSet The document.
      * @param event The event.
      * @param force If this is set to <code>true</code>, the execution is forced, which means an
@@ -77,12 +72,12 @@ public class WorkflowUtil {
      * @throws WorkflowException if <code>force</code> is set to <code>true</code> and a document
      *             does not support the workflow event.
      */
-    public static void invoke(Log logger, DocumentSet documentSet, String event, boolean force)
+    public static void invoke(DocumentSet documentSet, String event, boolean force)
             throws WorkflowException {
         WorkflowManager wfManager = getWorkflowManager();
         Document[] documents = documentSet.getDocuments();
         for (int i = 0; i < documents.length; i++) {
-            Workflowable workflowable = new DocumentWorkflowable(documents[i], logger);
+            Workflowable workflowable = new DocumentWorkflowable(documents[i]);
             wfManager.invoke(workflowable, event, force);
         }
     }
@@ -94,35 +89,33 @@ public class WorkflowUtil {
 
     /**
      * Checks if an event can be invoked on a document.
-     * @param logger The logger.
      * @param document The document.
      * @param event The event.
      * @return A boolean value.
      * @throws WorkflowException
      */
-    public static boolean canInvoke(Log logger, Document document, String event)
+    public static boolean canInvoke(Document document, String event)
             throws WorkflowException {
-        Workflowable workflowable = new DocumentWorkflowable(document, logger);
+        Workflowable workflowable = new DocumentWorkflowable(document);
         return getWorkflowManager().canInvoke(workflowable, event);
     }
 
     /**
      * Checks if an event can be invoked on all documents in a set.
      * @param session The repository session.
-     * @param logger The logger.
      * @param documents The documents.
      * @param event The event.
      * @return if an error occurs.
      * @throws WorkflowException
      */
-    public static boolean canInvoke(Session session, Log logger, DocumentSet documents, String event)
+    public static boolean canInvoke(Session session, DocumentSet documents, String event)
             throws WorkflowException {
         WorkflowManager wfManager = getWorkflowManager();
 
         boolean canInvoke = true;
         Document[] documentArray = documents.getDocuments();
         for (int i = 0; i < documentArray.length; i++) {
-            Workflowable workflowable = new DocumentWorkflowable(documentArray[i], logger);
+            Workflowable workflowable = new DocumentWorkflowable(documentArray[i]);
             canInvoke = canInvoke && wfManager.canInvoke(workflowable, event);
         }
         return canInvoke;
@@ -135,8 +128,8 @@ public class WorkflowUtil {
      * @return A boolean value.
      * @throws WorkflowException if an error occurs.
      */
-    public static boolean hasWorkflow(Log logger, Document document) throws WorkflowException {
-        Workflowable workflowable = new DocumentWorkflowable(document, logger);
+    public static boolean hasWorkflow(Document document) throws WorkflowException {
+        Workflowable workflowable = new DocumentWorkflowable(document);
         return getWorkflowManager().hasWorkflow(workflowable);
     }
 
@@ -147,10 +140,10 @@ public class WorkflowUtil {
      * @return A workflow schema.
      * @throws WorkflowException if an error occurs.
      */
-    public static Workflow getWorkflowSchema(Log logger, Document document)
+    public static Workflow getWorkflowSchema(Document document)
             throws WorkflowException {
         WorkflowManager wfManager = getWorkflowManager();
-        Workflowable workflowable = getWorkflowable(logger, document);
+        Workflowable workflowable = getWorkflowable(document);
         if (wfManager.hasWorkflow(workflowable)) {
             return wfManager.getWorkflowSchema(workflowable);
         } else {
@@ -164,8 +157,8 @@ public class WorkflowUtil {
      * @param document The document.
      * @return A workflowable.
      */
-    public static Workflowable getWorkflowable(Log logger, Document document) {
-        return new DocumentWorkflowable(document, logger);
+    public static Workflowable getWorkflowable(Document document) {
+        return new DocumentWorkflowable(document);
     }
 
 }

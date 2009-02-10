@@ -18,21 +18,15 @@
 package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryItem;
 
 /**
  * Object to hold a site structure information.
  * 
  * @version $Id$
  */
-public interface SiteStructure extends RepositoryItem {
-
-    /**
-     * @return The repository node the site structure is stored in.
-     */
-    Node getRepositoryNode();
+public interface SiteStructure extends Node {
 
     /**
      * @return The publication.

@@ -18,8 +18,10 @@
 package org.apache.lenya.cms.observation;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentImpl;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.Session;
@@ -28,29 +30,29 @@ import org.apache.lenya.cms.repository.Session;
  * Factory to create repository events.
  */
 public class RepositoryEventFactory {
+    
+    private static final Log logger = LogFactory.getLog(RepositoryEventFactory.class);
 
     /**
      * Creates a repository event for a node.
      * @param session The session.
-     * @param logger The logger.
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(Session session, Log logger, Object descriptor) {
+    public static final RepositoryEvent createEvent(Session session, Object descriptor) {
         return new RepositoryEvent(session, descriptor);
     }
 
     /**
      * Creates a repository event for a node.
      * @param doc The document.
-     * @param logger The logger.
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(Document doc, Log logger, Object descriptor) {
+    public static final DocumentEvent createEvent(Document doc, Object descriptor) {
         try {
-            Node node = doc.getRepositoryNode();
-            RepositoryEvent event = new DocumentEvent(node.getRepositorySession(), doc.getPublication()
+            Node node = ((DocumentImpl) doc).getRepositoryNode();
+            DocumentEvent event = new DocumentEvent(node.getRepositorySession(), doc.getPublication()
                     .getId(), doc.getArea(), doc.getUUID(), doc.getLanguage(), doc
                     .getResourceType(), descriptor);
             event.setNodeUri(node.getSourceURI());
@@ -67,20 +69,18 @@ public class RepositoryEventFactory {
 
     /**
      * Creates a repository event for a node.
-     * @param manager The service manager.
      * @param node The node.
-     * @param logger The logger.
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(Node node, Log logger, Object descriptor) {
+    public static final RepositoryEvent createEvent(Node node, Object descriptor) {
         RepositoryEvent event;
         Document doc = null;
         if (!node.getSourceURI().endsWith("meta")) {
-            doc = getDocument(node, logger);
+            doc = getDocument(node);
         }
         if (doc != null) {
-            event = createEvent(doc, logger, descriptor);
+            event = createEvent(doc, descriptor);
         } else {
             event = new RepositoryEvent(node.getRepositorySession(), descriptor);
             event.setNodeUri(node.getSourceURI());
@@ -90,11 +90,10 @@ public class RepositoryEventFactory {
 
     /**
      * @param node The node.
-     * @param logger The logger.
      * @return The document represented by the node or <code>null</code> if the node doesn't
      *         represent a document.
      */
-    protected static final Document getDocument(Node node, Log logger) {
+    protected static final Document getDocument(Node node) {
 
         final String sourceUri = node.getSourceURI();
         if (sourceUri.endsWith(".xml")) {

@@ -83,7 +83,7 @@ public class RoleCondition implements Condition {
             accessController = acResolver.resolveAccessController(url);
 
             PolicyManager policyManager = accessController.getPolicyManager();
-            Identity identity = workflowable.getSession().getIdentity();
+            Identity identity = workflowable.getDocument().getSession().getIdentity();
             if (identity == null) {
                 throw new IllegalArgumentException("The session of the workflowable "
                         + workflowable + " has no identity.");

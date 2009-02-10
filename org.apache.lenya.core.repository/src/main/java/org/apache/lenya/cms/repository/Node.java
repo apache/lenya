@@ -127,11 +127,12 @@ public interface Node extends RepositoryItem, ContentHolder {
     /**
      * Checks if the node is checked out by a certain session. We pass the session
      * as a parameter to allow the check for nodes from the shared item store.
-     * @param session The session.
+     * @param sessionId The ID of the session.
+     * @param userId The user ID.
      * @return if the node is checked out by a specific session.
      * @throws RepositoryException if an error occurs.
      */
-    boolean isCheckedOutBySession(Session session) throws RepositoryException;
+    boolean isCheckedOutBySession(String sessionId, String userId) throws RepositoryException;
 
     /**
      * @param source The node to copy the revisions from.

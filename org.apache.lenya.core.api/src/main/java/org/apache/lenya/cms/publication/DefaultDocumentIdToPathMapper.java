@@ -83,11 +83,11 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
      * @param area The area.
      * @param file The file representing the document.
      * @return A string.
-     * @throws DocumentDoesNotExistException when the document referenced by the file does not
+     * @throws ResourceNotFoundException when the document referenced by the file does not
      *             exist.
      */
     public String getDocumentId(Publication publication, String area, File file)
-            throws DocumentDoesNotExistException {
+            throws ResourceNotFoundException {
 
         String fileName = file.getAbsolutePath();
         String contentDirName = publication.getContentDirectory(area).getAbsolutePath();
@@ -101,7 +101,7 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
             return relativeFileName.replace(File.separatorChar, '/');
         }
         // Document does not seem to exist
-        throw new DocumentDoesNotExistException("No document associated with file" + fileName);
+        throw new ResourceNotFoundException("No document associated with file" + fileName);
     }
 
     /**

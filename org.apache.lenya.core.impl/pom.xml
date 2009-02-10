@@ -35,16 +35,24 @@
       
   <dependencies>
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.avalon.framework</groupId>
       <artifactId>avalon-framework-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository</artifactId>
     </dependency>
     
     <!-- Tests -->

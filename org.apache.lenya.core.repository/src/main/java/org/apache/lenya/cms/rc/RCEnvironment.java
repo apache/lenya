@@ -21,28 +21,24 @@
 package org.apache.lenya.cms.rc;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
-import org.xml.sax.SAXException;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Helper class that holds the revision controller configuration
  */
-public class RCEnvironment extends AbstractLogEnabled implements Configurable {
-    
+public class RCEnvironment {
+
+    private static final Log logger = LogFactory.getLog(RCEnvironment.class);
+
     /**
      * <code>CONFIGURATION_FILE</code> The configuration file
      */
-    public static final String CONFIGURATION_FILE = "lenya" + File.separator + "config" +
-        File.separator + "rc" + File.separator + "revision-controller.xconf";
+    public static final String CONFIGURATION_FILE = "lenya" + File.separator + "config"
+            + File.separator + "rc" + File.separator + "revision-controller.xconf";
     /**
      * <code>RCML_DIRECTORY</code> The RCML directory
      */
@@ -53,9 +49,9 @@ public class RCEnvironment extends AbstractLogEnabled implements Configurable {
     public static final String BACKUP_DIRECTORY = "backup-directory";
     private String rcmlDirectory;
     private String backupDirectory;
-    
+
     private static Map instances = new HashMap();
-    
+
     /**
      * Returns the singleton RC environment for this context path.
      * @param contextPath The context path (the Lenya webapp directory).
@@ -63,7 +59,7 @@ public class RCEnvironment extends AbstractLogEnabled implements Configurable {
      * @return An RC environment.
      */
     public static RCEnvironment getInstance(String contextPath, Log logger) {
-        RCEnvironment instance = (RCEnvironment) instances.get(contextPath); 
+        RCEnvironment instance = (RCEnvironment) instances.get(contextPath);
         if (instance == null) {
             instance = new RCEnvironment(contextPath, logger);
             instances.put(contextPath, instance);
@@ -77,37 +73,10 @@ public class RCEnvironment extends AbstractLogEnabled implements Configurable {
      * @param logger The logger.
      */
     public RCEnvironment(String contextPath, Log logger) {
-        getLogger().debug("context path:" + contextPath);
+        logger.debug("context path:" + contextPath);
 
         String configurationFilePath = contextPath + "/" + CONFIGURATION_FILE;
-        getLogger().debug("configuration file path:" + configurationFilePath);
-
-        File configurationFile = new File(configurationFilePath);
-
-        try {
-            DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
-            Configuration configuration = builder.buildFromFile(configurationFile);
-            configure(configuration);
-        } catch (final ConfigurationException e) {
-            getLogger().error("Cannot load revision controller configuration! ", e);
-        } catch (final SAXException e) {
-            getLogger().error("Cannot load revision controller configuration! ", e);
-        } catch (final IOException e) {
-            getLogger().error("Cannot load revision controller configuration! ", e);
-        }
-    }
-
-    /**
-     @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)     
-     */
-    public void configure(org.apache.avalon.framework.configuration.Configuration configuration)
-        throws ConfigurationException {
-        // revision controller
-        setRCMLDirectory(configuration.getChild("rcmlDirectory").getAttribute("href"));
-        setBackupDirectory(configuration.getChild("backupDirectory").getAttribute("href"));
-
-        getLogger().debug("CONFIGURATION:\nRCML Directory: href=" + getRCMLDirectory());
-        getLogger().debug("CONFIGURATION:\nBackup Directory: href=" + getBackupDirectory());
+        logger.debug("configuration file path:" + configurationFilePath);
     }
 
     /**
@@ -118,11 +87,12 @@ public class RCEnvironment extends AbstractLogEnabled implements Configurable {
         return this.rcmlDirectory;
     }
 
-	/**
-	 * Set the rcml directory
-	 * @param rcmlDir the path to the rcml directory
-	 */
-    protected void setRCMLDirectory(String rcmlDir) {
+    /**
+     * Set the rcml directory
+     * @param rcmlDir the path to the rcml directory
+     * TODO: Bean wiring
+     */
+    public void setRcmlDirectory(String rcmlDir) {
         this.rcmlDirectory = rcmlDir;
     }
 
@@ -134,11 +104,12 @@ public class RCEnvironment extends AbstractLogEnabled implements Configurable {
         return this.backupDirectory;
     }
 
-	/**
-	 * Set the backup directory
-	 * @param backupDir path to the backup directory
-	 */
-    protected void setBackupDirectory(String backupDir) {
+    /**
+     * Set the backup directory
+     * @param backupDir path to the backup directory
+     * TODO: Bean wiring
+     */
+    public void setBackupDirectory(String backupDir) {
         this.backupDirectory = backupDir;
     }
 }

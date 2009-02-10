@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.transaction;
 
+import org.apache.lenya.cms.publication.IdentityWrapper;
 import org.apache.lenya.cms.repository.RepositoryException;
 
 public class MockTransactionable implements Transactionable {
@@ -80,7 +81,8 @@ public class MockTransactionable implements Transactionable {
     }
     
     private String getUserId() {
-        return ((UnitOfWorkImpl) this.unit).getIdentity().getUser().getId();
+        IdentityWrapper wrapper = (IdentityWrapper) ((UnitOfWorkImpl) this.unit).getIdentity();
+        return wrapper.getIdentity().getUser().getId();
     }
 
     private Lock lock;

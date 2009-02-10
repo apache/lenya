@@ -23,14 +23,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
-import org.apache.lenya.ac.Identity;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.transaction.ConcurrentModificationException;
+import org.apache.lenya.transaction.Identity;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.transaction.Lock;
@@ -44,12 +44,16 @@ import org.apache.lenya.transaction.UnitOfWorkImpl;
 /**
  * Repository session.
  */
-public class SessionImpl extends AbstractLogEnabled implements Session {
+public class SessionImpl implements Session {
+    
+    private static final Log logger = LogFactory.getLog(SessionImpl.class);
 
     protected static final String UNMODIFIABLE_SESSION_ID = "unmodifiable";
     private Identity identity;
     private ObservationRegistry observationRegistry;
     private UUIDGenerator uuidGenerator;
+    private String id;
+    private String userId;
 
     protected ObservationRegistry getObservationRegistry() {
         return observationRegistry;
@@ -76,17 +80,15 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * Ctor.
      * @param identity The identity.
      * @param modifiable Determines if the repository items in this session can be modified.
-     * @param manager The service manager.
-     * @param logger The logger.
      */
-    protected SessionImpl(Identity identity, boolean modifiable, Log logger) {
+    protected SessionImpl(Identity identity, boolean modifiable) {
 
-        this.identityMap = new IdentityMapImpl(logger);
+        this.identityMap = new IdentityMapImpl();
         this.identity = identity;
         this.id = modifiable ? createUuid() : UNMODIFIABLE_SESSION_ID;
 
         if (modifiable) {
-            this.unitOfWork = new UnitOfWorkImpl(this.identityMap, this.identity, getLogger());
+            this.unitOfWork = new UnitOfWorkImpl(this.identityMap, this.identity);
         }
     }
 
@@ -266,8 +268,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     public boolean isModifiable() {
         return this.unitOfWork != null;
     }
-
-    private String id;
 
     public String getId() {
         return this.id;

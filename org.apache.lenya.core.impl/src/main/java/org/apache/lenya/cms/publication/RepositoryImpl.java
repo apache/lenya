@@ -22,12 +22,12 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.SharedItemStore;
-import org.apache.lenya.cms.repository.UUIDGenerator;
+import org.apache.lenya.cms.repository.RepositoryManager;
 
 public class RepositoryImpl implements Repository {
+
+    private RepositoryManager repositoryManager;
 
     public Session getSession(HttpServletRequest request) {
         Validate.notNull(request);
@@ -47,43 +47,17 @@ public class RepositoryImpl implements Repository {
     }
 
     public Session startSession(Identity identity, boolean modifiable) {
-        SessionImpl session = new SessionImpl(identity, modifiable);
+
+        IdentityWrapper wrapper = new IdentityWrapper(identity);
+        org.apache.lenya.cms.repository.Session repoSession;
         try {
-            session.setObservationRegistry(getObservationRegistry());
+            repoSession = this.repositoryManager
+                    .createSession(wrapper, modifiable);
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
-        session.setUuidGenerator(getUuidGenerator());
-        session.setSharedItemStore(getSharedItemStore());
+        SessionImpl session = new SessionImpl(this, repoSession);
         return session;
-    }
-
-    private SharedItemStore sharedItemStore;
-    private UUIDGenerator uuidGenerator;
-    private ObservationRegistry observationRegistry;
-
-    protected SharedItemStore getSharedItemStore() {
-        return sharedItemStore;
-    }
-
-    public void setSharedItemStore(SharedItemStore sharedItemStore) {
-        this.sharedItemStore = sharedItemStore;
-    }
-
-    protected UUIDGenerator getUuidGenerator() {
-        return uuidGenerator;
-    }
-
-    public void setUuidGenerator(UUIDGenerator uuidGenerator) {
-        this.uuidGenerator = uuidGenerator;
-    }
-
-    protected ObservationRegistry getObservationRegistry() {
-        return observationRegistry;
-    }
-
-    public void setObservationRegistry(ObservationRegistry observationRegistry) {
-        this.observationRegistry = observationRegistry;
     }
 
     protected static Identity getIdentity(HttpServletRequest request) {
@@ -97,6 +71,14 @@ public class RepositoryImpl implements Repository {
      */
     public void removeSession(HttpServletRequest request) {
         request.removeAttribute(Session.class.getName());
+    }
+
+    public void setRepositoryManager(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
+    public RepositoryManager getRepositoryManager() {
+        return repositoryManager;
     }
 
 }

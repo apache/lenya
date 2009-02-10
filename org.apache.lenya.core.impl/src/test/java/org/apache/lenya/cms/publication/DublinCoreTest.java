@@ -18,12 +18,9 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * Dublin Core test.
@@ -38,14 +35,9 @@ public class DublinCoreTest extends AbstractAccessControlTest {
 
     /**
      * Test the fetching, modification and refetching of a dc core object.
-     * @throws PublicationException 
-     * @throws MetaDataException
-     * @throws RepositoryException 
-     * @throws AccessControlException 
-     * @throws RepositoryException 
+     * @throws Exception 
      */
-    final public void testModifySaveAndReload() throws PublicationException, MetaDataException,
-            AccessControlException, RepositoryException {
+    final public void testModifySaveAndReload() throws Exception {
         
         login("lenya");
         
@@ -53,7 +45,7 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         
         Document doc = publication.getArea(AREA).getSite().getNode(PATH).getLink(LANGUAGE).getDocument();
         
-        doc.getRepositoryNode().lock();
+        doc.lock();
         
         MetaData dcCore = doc.getMetaData(DublinCore.DC_NAMESPACE);
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
@@ -75,7 +67,7 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         assertFalse(creator.equals(dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR)));
         assertEquals(newCreator, dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR));
         
-        doc.getRepositoryNode().unlock();
+        doc.unlock();
     }
 
 }

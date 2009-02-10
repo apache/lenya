@@ -20,6 +20,8 @@
 
 package org.apache.lenya.cms.publication;
 
+import java.net.MalformedURLException;
+
 /**
  * A document builder builds a document from a URL.
  */
@@ -35,9 +37,9 @@ public interface DocumentBuilder {
      * @param factory The factory.
      * @param webappUrl The web application URL.
      * @return A document identifier.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws MalformedURLException if the URL is not a webapp URL. 
      */
-    DocumentLocator getLocator(Session session, String webappUrl) throws DocumentBuildException;
+    DocumentLocator getLocator(Session session, String webappUrl) throws MalformedURLException;
 
     /**
      * Checks if an URL corresponds to a CMS document.
@@ -46,7 +48,7 @@ public interface DocumentBuilder {
      * @return A boolean value.
      * @throws DocumentBuildException when something went wrong.
      */
-    boolean isDocument(Session session, String url) throws DocumentBuildException;
+    boolean isDocument(Session session, String url);
 
     /**
      * Builds an URL corresponding to a CMS document.

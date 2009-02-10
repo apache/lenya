@@ -18,7 +18,6 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
-import java.io.File;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -38,8 +37,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -49,11 +46,9 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class RevisionControllerAction extends ServiceableAction {
 
-    private String rcmlDirectory = null;
-    private String backupDirectory = null;
     private String username = null;
-    private Node node = null;
     private Repository repository;
+    private Document document;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
@@ -77,24 +72,15 @@ public class RevisionControllerAction extends ServiceableAction {
         String id = new URLInformation(ServletHelper.getWebappURI(request)).getPublicationId();
         Publication publication = repoSession.getPublication(id);
 
-        Document document = null;
+        Document doc = null;
 
         try {
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel, publication);
-            document = envelope.getDocument();
+            doc = envelope.getDocument();
         } catch (Exception e) {
             getLogger().error("Resolving page envelope failed: ", e);
             throw e;
         }
-
-        // get Parameters for RC
-        String publicationPath = publication.getDirectory().getCanonicalPath();
-        RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
-                .getCanonicalPath(), getLogger());
-        this.rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        this.rcmlDirectory = publicationPath + File.separator + this.rcmlDirectory;
-        this.backupDirectory = rcEnvironment.getBackupDirectory();
-        this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
 
         // Get session
         HttpSession session = request.getSession(false);
@@ -112,11 +98,11 @@ public class RevisionControllerAction extends ServiceableAction {
         // cannot be get from
         // the page-envelope
 
-        String path = document.getPath();
+        String path = doc.getPath();
         int bx = path.lastIndexOf("-bxe");
 
         if (bx > 0) {
-            String language = document.getLanguage();
+            String language = doc.getLanguage();
 
             int l = path.length();
             int bxLength = "-bxe".length();
@@ -133,11 +119,10 @@ public class RevisionControllerAction extends ServiceableAction {
                 }
             }
 
-            Document srcDoc = document.area().getSite().getNode(path).getLink(language).getDocument();
-            this.node = srcDoc.getRepositoryNode();
+            this.document = doc.area().getSite().getNode(path).getLink(language).getDocument();
 
         } else {
-            this.node = document.getRepositoryNode();
+            this.document = doc;
         }
 
         this.username = null;
@@ -160,8 +145,8 @@ public class RevisionControllerAction extends ServiceableAction {
      * Get the node.
      * @return the node
      */
-    protected Node getNode() {
-        return this.node;
+    protected Document getDocument() {
+        return this.document;
     }
 
     /**

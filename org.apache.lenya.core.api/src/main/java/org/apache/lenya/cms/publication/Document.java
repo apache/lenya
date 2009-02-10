@@ -25,16 +25,13 @@ import java.util.Date;
 
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.site.Link;
 
 /**
  * A CMS document.
  * @version $Id$
  */
-public interface Document extends MetaDataOwner, RepositoryItem {
+public interface Document extends Node, MetaDataOwner {
     
     /**
      * The document namespace URI.
@@ -141,8 +138,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * area actually exists.
      * 
      * @return true if the document exists, false otherwise
-     * 
-     * @throws DocumentException if an error occurs
      */
     boolean exists();
     
@@ -151,8 +146,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * independently of the given language.
      * 
      * @return true if a document with the given document-uuid and area exists, false otherwise
-     * 
-     * @throws DocumentException if an error occurs
      */
     boolean existsInAnyLanguage();
     
@@ -183,11 +176,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     void delete() throws DocumentException;
     
     /**
-     * @return The repository node that represents this document.
-     */
-    Node getRepositoryNode();
-
-    /**
      * @return The resource type of this document (formerly known as doctype)
      * @throws DocumentException if the resource type has not been set.
      */
@@ -211,7 +199,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     /**
      * Sets the mime type of this document.
      * @param mimeType The mime type.
-     * @throws DocumentException if an error occurs.
      */
     void setMimeType(String mimeType);
     
@@ -312,13 +299,17 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     InputStream getInputStream();
     
     /**
+     * @param i The revision number.
+     * @return A revision.
+     * @throws RepositoryException if the revision doesn't exist.
+     */
+    Document getRevision(int i) throws RepositoryException;
+
+    /**
      * @return The revision number of this document.
      */
     int getRevisionNumber();
+    
+    History getHistory();
 
-    boolean isCheckedOutBySession(Session session) throws RepositoryException;
-
-    void checkin() throws RepositoryException;
-
-    Session getSession();
 }

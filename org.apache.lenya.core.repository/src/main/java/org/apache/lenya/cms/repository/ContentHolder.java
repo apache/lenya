@@ -2,7 +2,7 @@ package org.apache.lenya.cms.repository;
 
 import java.io.InputStream;
 
-import org.apache.lenya.cms.metadata.MetaDataOwner;
+import org.apache.lenya.cms.repository.metadata.MetaDataOwner;
 
 /**
  * Super interface for nodes and revisions.

@@ -38,7 +38,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.publication.RepositoryException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -524,13 +524,13 @@ public final class SourceUtil {
     public static void checkout(String sourceUri, ServiceManager manager)
             throws RepositoryException, ServiceException, MalformedURLException, IOException {
         SourceResolver resolver = null;
-        RepositorySource source = null;
+        DocumentSource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
+            source = (DocumentSource) resolver.resolveURI(sourceUri);
 
-            source.getNode().checkout();
+            source.getDocument().checkout();
 
         } finally {
             if (resolver != null) {
@@ -554,13 +554,13 @@ public final class SourceUtil {
     public static void checkin(String sourceUri, ServiceManager manager)
             throws RepositoryException, ServiceException, MalformedURLException, IOException {
         SourceResolver resolver = null;
-        RepositorySource source = null;
+        DocumentSource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
+            source = (DocumentSource) resolver.resolveURI(sourceUri);
 
-            source.getNode().checkin();
+            source.getDocument().checkin();
 
         } finally {
             if (resolver != null) {
@@ -580,16 +580,14 @@ public final class SourceUtil {
      */
     public static void lock(String sourceUri, ServiceManager manager) throws RepositoryException {
         SourceResolver resolver = null;
-        RepositorySource source = null;
+        DocumentSource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
+            source = (DocumentSource) resolver.resolveURI(sourceUri);
 
-            source.getNode().lock();
+            source.getDocument().lock();
 
-        } catch (RepositoryException e) {
-            throw e;
         } catch (Exception e) {
             throw new RepositoryException(e);
         } finally {
@@ -610,16 +608,14 @@ public final class SourceUtil {
      */
     public static void unlock(String sourceUri, ServiceManager manager) throws RepositoryException {
         SourceResolver resolver = null;
-        RepositorySource source = null;
+        DocumentSource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
+            source = (DocumentSource) resolver.resolveURI(sourceUri);
 
-            source.getNode().unlock();
+            source.getDocument().unlock();
 
-        } catch (RepositoryException e) {
-            throw e;
         } catch (Exception e) {
             throw new RepositoryException(e);
         } finally {
@@ -639,12 +635,12 @@ public final class SourceUtil {
      */
     public static void registerDirty(String sourceUri, ServiceManager manager) {
         SourceResolver resolver = null;
-        RepositorySource source = null;
+        DocumentSource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
-            source.getNode().registerDirty();
+            source = (DocumentSource) resolver.resolveURI(sourceUri);
+            source.getDocument().registerDirty();
 
         } catch (Exception e) {
             throw new RuntimeException(e);

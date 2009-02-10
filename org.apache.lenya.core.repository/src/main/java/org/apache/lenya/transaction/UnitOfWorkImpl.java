@@ -23,26 +23,25 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
-import org.apache.lenya.ac.Identity;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Default implementation of a unit of work.
  * 
  * @version $Id$
  */
-public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
+public class UnitOfWorkImpl implements UnitOfWork {
+    
+    private static final Log logger = LogFactory.getLog(UnitOfWorkImpl.class);
 
     /**
      * Ctor.
      * @param map The identity map to use.
      * @param identity The identity.
-     * @param logger The logger.
      */
-    public UnitOfWorkImpl(IdentityMap map, Identity identity, Log logger)
+    public UnitOfWorkImpl(IdentityMap map, Identity identity)
     {
     	Validate.notNull(map);
         this.identityMap = map;
@@ -93,8 +92,8 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#commit()
      */
     public void commit() throws TransactionException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("UnitOfWorkImpl::commit() called");
+        if (logger.isDebugEnabled()) {
+            logger.debug("UnitOfWorkImpl::commit() called");
         }
 
         Set lockedObjects = this.locks.keySet();
@@ -124,8 +123,8 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             }
             for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
                 Transactionable t = (Transactionable) i.next();
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("UnitOfWorkImpl::commit() calling save on [" + t + "]");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("UnitOfWorkImpl::commit() calling save on [" + t + "]");
                 }
                 t.saveTransactionable();
             }
@@ -182,8 +181,8 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#rollback()
      */
     public synchronized void rollback() throws TransactionException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("UnitOfWorkImpl::rollback() called");
+        if (logger.isDebugEnabled()) {
+            logger.debug("UnitOfWorkImpl::rollback() called");
         }
         if (getIdentityMap() != null) {
             Object[] objects = getIdentityMap().getObjects();

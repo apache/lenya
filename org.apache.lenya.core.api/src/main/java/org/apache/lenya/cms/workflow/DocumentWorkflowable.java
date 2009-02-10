@@ -29,14 +29,12 @@ import java.util.TreeMap;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.observation.RepositoryEvent;
-import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.Workflowable;
@@ -47,6 +45,8 @@ import org.apache.lenya.workflow.Workflowable;
  * @version $Id: DocumentWorkflowable.java 416648 2006-06-23 09:15:28Z andreas $
  */
 class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
+    
+    private static final Log logger = LogFactory.getLog(DocumentWorkflowable.class);
 
     /**
      * Ctor.
@@ -54,21 +54,11 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
      * @param document The document.
      * @param logger The logger.
      */
-    public DocumentWorkflowable(Document document, Log logger) {
-        if (session.getIdentity() == null) {
+    public DocumentWorkflowable(Document document) {
+        if (document.getSession().getIdentity() == null) {
             throw new IllegalArgumentException("The session must have an identity.");
         }
         this.document = document;
-        this.session = session;
-    }
-
-    private Session session;
-
-    /**
-     * @return The repository session.
-     */
-    public Session getSession() {
-        return session;
     }
 
     private Document document;
@@ -99,6 +89,10 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
     protected static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/workflow/1.0";
     protected static final String METADATA_VERSION = "workflowVersion";
+    
+    protected int getLatestRevision(int[] revisions) {
+        return revisions[revisions.length - 1];
+    }
 
     /**
      * @see org.apache.lenya.workflow.Workflowable#getVersions()
@@ -107,11 +101,10 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         try {
             MetaData meta = this.document.getMetaData(METADATA_NAMESPACE);
 
-            org.apache.lenya.cms.repository.History history = this.document.getRepositoryNode()
-                    .getHistory();
-            boolean checkedIn = history.getRevisionNumbers().length > 0;
+            int[] revisions = getDocument().getHistory().getRevisionNumbers();
+            boolean checkedIn = revisions.length > 0;
             if (this.versions == null
-                    || (checkedIn && history.getLatestRevision().getNumber() > this.revision)) {
+                    || (checkedIn && getLatestRevision(revisions) > this.revision)) {
                 String[] versionStrings = meta.getValues(METADATA_VERSION);
                 this.versions = new Version[versionStrings.length];
 
@@ -135,7 +128,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
                 }
 
                 if (checkedIn) {
-                    this.revision = history.getLatestRevision().getNumber();
+                    this.revision = getLatestRevision(revisions);
                 }
             }
         } catch (Exception e) {
@@ -173,9 +166,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         addToMetaData(string);
 
         WorkflowEventDescriptor descriptor = new WorkflowEventDescriptor(version);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(getDocument(),
-                getLogger(), descriptor);
-        getDocument().getRepositoryNode().getRepositorySession().enqueueEvent(event);
+        getDocument().getSession().enqueueEvent(getDocument(), descriptor);
     }
 
     protected void addToMetaData(String versionString) {
@@ -198,7 +189,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         StringBuffer stringBuf = new StringBuffer("event:").append(version.getEvent());
         stringBuf.append(" state:").append(version.getState());
 
-        Identity identity = getSession().getIdentity();
+        Identity identity = getDocument().getSession().getIdentity();
         User user = identity.getUser();
         if (user != null) {
             stringBuf.append(" user:").append(identity.getUser().getId());

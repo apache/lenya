@@ -36,7 +36,7 @@ public interface PathToDocumentIdMapper {
      * @throws DocumentDoesNotExistException if there is no document associated with this file.
      */
     String getDocumentId(Publication publication, String area, File file)
-        throws DocumentDoesNotExistException;
+        throws ResourceNotFoundException;
         
     /**
      * Returns the language for a given file

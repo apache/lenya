@@ -25,7 +25,6 @@ import java.io.File;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.lenya.cms.rc.RCEnvironment;
 
 /**
  * A page envelope carries a set of information that are needed during the presentation of a
@@ -248,17 +247,6 @@ public class PageEnvelope {
             this.area = info.getArea();
         }
         return this.area;
-    }
-
-    /**
-     * Returns the rcEnvironment.
-     * 
-     * @return a <code>RCEnvironment</code> value
-     * @deprecated We should detach the RC environment from the page envelope.
-     */
-    public RCEnvironment getRCEnvironment() {
-        return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath(),
-                logger);
     }
 
     /**

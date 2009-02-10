@@ -65,13 +65,13 @@ public class RCMLTest extends AbstractAccessControlTest {
 
 		try {
             org.apache.lenya.cms.publication.Document doc = null;
-			doc.getRepositoryNode().checkout();
+			doc.checkout();
 
 			(new PrintWriter(System.out)).print(this.document);
 
 			System.out.println("\n");
 
-			if (doc.getRepositoryNode().isCheckedOut()) {
+			if (doc.isCheckedOut()) {
 			    System.out.println("Checked out");
 			} else {
 			    System.out.println("Not checked out");

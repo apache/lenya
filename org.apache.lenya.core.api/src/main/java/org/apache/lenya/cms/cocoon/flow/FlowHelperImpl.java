@@ -39,8 +39,6 @@ import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
-import org.apache.lenya.cms.rc.FileReservedCheckInException;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.WorkflowException;
@@ -50,7 +48,7 @@ import org.apache.lenya.workflow.WorkflowException;
  * This way, not the initial, but the current FOM_Cocoon object is used by the methods.
  */
 public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
-    
+
     private Repository repository;
     private DocumentFactoryBuilder documentFactoryBuilder;
 
@@ -149,18 +147,16 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
         Document document = getPageEnvelope(cocoon).getDocument();
-        WorkflowUtil.invoke(getLogger(), document, event);
+        WorkflowUtil.invoke(document, event);
     }
 
     /**
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#reservedCheckIn(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon,
      *      boolean)
      */
-    public void reservedCheckIn(FOM_Cocoon cocoon, boolean backup)
-            throws FileReservedCheckInException, Exception {
+    public void reservedCheckIn(FOM_Cocoon cocoon, boolean backup) throws Exception {
         final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
-        Node node = pageEnvelope.getDocument().getRepositoryNode();
-        node.checkin();
+        pageEnvelope.getDocument().checkin();
     }
 
 }

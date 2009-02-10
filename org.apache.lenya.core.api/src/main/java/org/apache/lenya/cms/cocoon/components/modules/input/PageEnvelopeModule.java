@@ -20,6 +20,7 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -32,7 +33,6 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
@@ -161,7 +161,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             DocumentLocator loc;
             try {
                 loc = pub.getDocumentBuilder().getLocator(pub.getSession(), url);
-            } catch (DocumentBuildException e) {
+            } catch (MalformedURLException e) {
                 throw new SiteException(e);
             }
             path = loc.getPath();

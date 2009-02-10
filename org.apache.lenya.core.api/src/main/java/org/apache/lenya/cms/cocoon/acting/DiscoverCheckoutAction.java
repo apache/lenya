@@ -24,7 +24,7 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.publication.Document;
 
 
 /**
@@ -41,11 +41,11 @@ public class DiscoverCheckoutAction extends RevisionControllerAction {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
-        Node node = getNode();
-
-        if (node.isCheckedOut()) {
-            actionMap.put("filename", node.getSourceURI());
-            actionMap.put("user", node.getCheckoutUserId());
+        
+        Document document = getDocument();
+        if (document.isCheckedOut()) {
+            actionMap.put("filename", document.getSourceURI());
+            actionMap.put("user", document.getCheckoutUserId());
             return actionMap;
         }
         return null;

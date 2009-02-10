@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.observation;
 
-import org.apache.lenya.cms.publication.Document;
-
 /**
  * Observation registry.
  */
@@ -31,10 +29,10 @@ public interface ObservationRegistry extends RepositoryListener {
 
     /**
      * @param listener The listener.
-     * @param document The document to listen to.
-     * @throws ObservationException if the listener is already registered for this document.
+     * @param observeable The observeable to listen to.
+     * @throws ObservationException if the listener is already registered for this observeable.
      */
-    void registerListener(RepositoryListener listener, Document document) throws ObservationException;
+    void registerListener(RepositoryListener listener, Observeable observeable) throws ObservationException;
     
     /**
      * Registers a listener which is notified for all events.

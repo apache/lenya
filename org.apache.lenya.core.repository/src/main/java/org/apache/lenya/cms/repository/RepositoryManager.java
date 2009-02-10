@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.lenya.ac.Identity;
+import org.apache.lenya.transaction.Identity;
 
 /**
  * Repository manager.

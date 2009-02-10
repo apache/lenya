@@ -17,10 +17,10 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.transaction.ConcurrentModificationException;
+import org.apache.lenya.transaction.Identity;
 import org.apache.lenya.transaction.UnitOfWork;
 
 /**
@@ -88,4 +88,5 @@ public interface Session extends UnitOfWork {
      * @return The ID of this session.
      */
     String getId();
+
 }

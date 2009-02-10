@@ -50,7 +50,7 @@ public class MetaDataTest extends AbstractAccessControlTest {
         namespaceUri = DublinCore.DC_NAMESPACE;
         MetaData dc = doc.getMetaData(namespaceUri);
 
-        doc.getRepositoryNode().lock();
+        doc.lock();
 
         checkSetTitle(dc);
         checkRemoveAllValues(dc);

@@ -30,11 +30,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -63,7 +60,7 @@ public class ReservedCheckinAction extends RevisionControllerAction {
             String url = ServletHelper.getWebappURI(request);
             if (session.getUriHandler().isDocument(url)) {
                 Document document = session.getUriHandler().getDocument(url);
-                if (document.isCheckedOutBySession(session)) {
+                if (document.isCheckedOutBySession(session.getId(), session.getIdentity().getUser().getId())) {
                     document.checkin();
                 }
             }
@@ -75,7 +72,7 @@ public class ReservedCheckinAction extends RevisionControllerAction {
             getLogger().error("Could not check in node: ", e);
             Map actionMap = new HashMap();
             actionMap.put("exception", "genericException");
-            actionMap.put("filename", getNode().getSourceURI());
+            actionMap.put("filename", getDocument().getSourceURI());
             actionMap.put("message", e.getMessage());
             return actionMap;
         }

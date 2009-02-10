@@ -266,7 +266,7 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
         String revisionString = tokenizer.nextToken();
         int revision = Integer.valueOf(revisionString).intValue();
 
-        Document document;
+        DocumentImpl document;
         try {
             Publication publication = getPublication(publicationId);
             DocumentBuilder builder = publication.getDocumentBuilder();
@@ -282,7 +282,7 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
         return document;
     }
 
-    protected Document buildDocument(DocumentIdentifier identifier, int revision,
+    protected DocumentImpl buildDocument(DocumentIdentifier identifier, int revision,
             DocumentBuilder builder) throws DocumentBuildException {
         return createDocument(identifier, revision, builder);
     }

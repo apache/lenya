@@ -22,12 +22,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
-import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -35,7 +33,7 @@ import org.apache.lenya.workflow.WorkflowException;
  * @version $Id$
  */
 public interface FlowHelper {
-	
+
     /**
      * The Avalon Role.
      */
@@ -79,9 +77,9 @@ public interface FlowHelper {
     DocumentHelper getDocumentHelper(FOM_Cocoon cocoon);
 
     /**
-     * Resolves the request parameter value for a specific name. The parameter
-     * names are encoded as <code>{name}:{value}.{axis}</code>. This is a
-     * workaround for the &lt;input type="image"/&gt; bug in Internet Explorer.
+     * Resolves the request parameter value for a specific name. The parameter names are encoded as
+     * <code>{name}:{value}.{axis}</code>. This is a workaround for the &lt;input type="image"/&gt;
+     * bug in Internet Explorer.
      * @param cocoon The FOM_Cocoon object.
      * @param parameterName The request parameter name.
      * @return A string.
@@ -89,8 +87,7 @@ public interface FlowHelper {
     String getImageParameterValue(FOM_Cocoon cocoon, String parameterName);
 
     /**
-     * Trigger a workflow event for the document associated with the current
-     * PageEnvelope.
+     * Trigger a workflow event for the document associated with the current PageEnvelope.
      * @param cocoon The Cocoon Flow Object Model
      * @param event The name of the workflow event to trigger.
      * @throws WorkflowException If an workflow error occurs
@@ -104,9 +101,7 @@ public interface FlowHelper {
      * Checkis in the current document from the PageEnvelope context.
      * @param cocoon The Cocoon Flow Object Model
      * @param backup Wether a new revision should be created.
-     * @throws FileReservedCheckInException
      * @throws Exception
      */
-    void reservedCheckIn(FOM_Cocoon cocoon, boolean backup) throws FileReservedCheckInException,
-            Exception;
+    void reservedCheckIn(FOM_Cocoon cocoon, boolean backup) throws Exception;
 }

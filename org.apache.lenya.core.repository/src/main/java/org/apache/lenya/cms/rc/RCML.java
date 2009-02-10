@@ -23,7 +23,6 @@ package org.apache.lenya.cms.rc;
 import java.util.Vector;
 
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * An object of this class handles the revisions of a node. The node is passed as a parameter so an
@@ -161,10 +160,11 @@ public interface RCML {
     boolean isCheckedOut() throws RevisionControlException;
 
     /**
-     * @param session The session.
+     * @param sessionId The session ID.
+     * @param userId The user ID.
      * @return if the RCML is checked out by this session.
      * @throws RevisionControlException if an error occurs.
      */
-    boolean isCheckedOutBySession(Session session) throws RevisionControlException;
+    boolean isCheckedOutBySession(String sessionId, String userId) throws RevisionControlException;
 
 }

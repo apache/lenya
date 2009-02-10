@@ -18,8 +18,6 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.transaction.ConcurrentModificationException;
 
 public interface Session {
     
@@ -38,12 +36,16 @@ public interface Session {
 
     Identity getIdentity();
 
-    void commit() throws RepositoryException, ConcurrentModificationException;
+    void commit() throws RepositoryException;
 
     void rollback() throws RepositoryException;
 
     boolean isModifiable();
 
     UriHandler getUriHandler();
+
+    void enqueueEvent(Document document, Object descriptor);
+
+    String getId();
 
 }

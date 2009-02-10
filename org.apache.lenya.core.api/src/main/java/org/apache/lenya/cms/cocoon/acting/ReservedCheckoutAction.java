@@ -26,9 +26,9 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.commons.lang.Validate;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.RepositoryException;
+import org.apache.lenya.cms.publication.Session;
 
 /**
  * Action doing reserved checkout
@@ -43,24 +43,25 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
+        Document doc = getDocument();
 
         //check out
         try {
             
-            Node node = getNode();
             String username = getUsername();
             
-            assert node != null;
+            assert doc != null;
             assert username != null;
 
-            if (!node.isCheckedOutBySession(node.getRepositorySession())) {
-                node.checkout();
+            Session session = doc.getSession();
+            if (!doc.isCheckedOutBySession(session.getId(), session.getIdentity().getUser().getId())) {
+                doc.checkout();
             }
         } catch (RepositoryException e) {
             actionMap.put("exception", "genericException");
-            actionMap.put("filename", getNode().getSourceURI());
+            actionMap.put("filename", doc.getSourceURI());
             actionMap.put("message", "" + e.getMessage());
-            getLogger().error("The node " + getNode().getSourceURI() + " couldn't be checked out: ", e);
+            getLogger().error("The document " + doc.getSourceURI() + " couldn't be checked out: ", e);
 
             return actionMap;
         }

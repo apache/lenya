@@ -18,6 +18,8 @@
 
 package org.apache.lenya.cms.publication;
 
+import java.net.MalformedURLException;
+
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
@@ -97,7 +99,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         return suffix;
     }
 
-    public boolean isDocument(Session session, String url) throws DocumentBuildException {
+    public boolean isDocument(Session session, String url) {
         try {
             DocumentLocator locator = getLocatorWithoutCheck(session, url);
             if (locator != null) {
@@ -112,7 +114,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
                 }
             }
         } catch (Exception e) {
-            throw new DocumentBuildException(e);
+            throw new RuntimeException(e);
         }
 
         return false;
@@ -145,12 +147,11 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         return url;
     }
 
-    public DocumentLocator getLocator(Session session, String webappUrl)
-            throws DocumentBuildException {
+    public DocumentLocator getLocator(Session session, String webappUrl) throws MalformedURLException {
 
         DocumentLocator locator = getLocatorWithoutCheck(session, webappUrl);
         if (locator == null) {
-            throw new DocumentBuildException("The webapp URL [" + webappUrl
+            throw new ResourceNotFoundException("The webapp URL [" + webappUrl
                     + "] does not refer to a document!");
         }
         return locator;
@@ -163,10 +164,9 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * @param webappUrl The webapp URL.
      * @return A document locator or <code>null</code> if the URL doesn't
      *         refer to a locator.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws MalformedURLException if the URL is not a webapp URL. 
      */
-    protected DocumentLocator getLocatorWithoutCheck(Session session, String webappUrl)
-            throws DocumentBuildException {
+    protected DocumentLocator getLocatorWithoutCheck(Session session, String webappUrl) throws MalformedURLException {
 
         if (!webappUrl.startsWith("/")) {
             return null;
@@ -192,7 +192,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         String path = documentURL;
 
         if (!path.startsWith("/")) {
-            throw new DocumentBuildException("Path [" + path + "] does not start with '/'!");
+            throw new MalformedURLException("Path [" + path + "] does not start with '/'!");
         }
 
         return DocumentLocator.getLocator(publication.getId(), info.getArea(), path, language);

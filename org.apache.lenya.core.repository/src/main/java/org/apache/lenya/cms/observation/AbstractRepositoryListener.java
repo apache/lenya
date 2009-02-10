@@ -17,39 +17,14 @@
  */
 package org.apache.lenya.cms.observation;
 
-import org.apache.avalon.framework.activity.Startable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.util.AbstractLogEnabled;
-
 /**
- * Abstract repository listener implementation which registeres with the observation
+ * Abstract repository listener implementation which registers with the observation
  * registry at startup.
  */
-public abstract class AbstractRepositoryListener extends AbstractLogEnabled implements Serviceable,
-        Startable, ThreadSafe, RepositoryListener {
+public abstract class AbstractRepositoryListener implements RepositoryListener {
     
-    public void start() throws Exception {
-        ObservationRegistry registry = null;
-        try {
-            registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
-            registry.registerListener(this);
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
-    }
-
-    public void stop() throws Exception {
-    }
-
-    protected ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void setRegistry(ObservationRegistry registry) throws ObservationException {
+        registry.registerListener(this);
     }
 
 }

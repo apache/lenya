@@ -25,6 +25,8 @@ import org.apache.lenya.transaction.TransactionException;
  */
 public class RepositoryException extends TransactionException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Ctor.
      */

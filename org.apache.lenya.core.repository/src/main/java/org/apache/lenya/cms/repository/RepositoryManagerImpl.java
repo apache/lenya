@@ -17,18 +17,21 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.ac.Identity;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.observation.ObservationRegistry;
+import org.apache.lenya.transaction.Identity;
 
 /**
  * Repository manager implementation.
  * @version $Id:$
  */
-public class RepositoryManagerImpl extends AbstractLogEnabled implements RepositoryManager {
-
+public class RepositoryManagerImpl implements RepositoryManager {
+    
+    private static final Log logger = LogFactory.getLog(RepositoryManagerImpl.class);
+    
     public Session createSession(Identity identity, boolean modifiable) throws RepositoryException {
-        SessionImpl session = new SessionImpl(identity, modifiable, getLogger());
+        SessionImpl session = new SessionImpl(identity, modifiable);
         session.setObservationRegistry(getObservationRegistry());
         session.setUuidGenerator(getUuidGenerator());
         session.setSharedItemStore(getSharedItemStore());

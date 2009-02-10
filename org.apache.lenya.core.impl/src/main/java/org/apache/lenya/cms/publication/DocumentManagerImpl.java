@@ -192,8 +192,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
 
             Document document = areaObj.getDocument(uuid, language);
-            Node node = document.getRepositoryNode();
-            node.lock();
+            document.lock();
 
             document.setResourceType(documentType);
             document.setSourceExtension(extension);
@@ -496,8 +495,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     protected void copyRevisions(Document sourceDoc, Document targetDoc)
             throws PublicationException {
         try {
-            Node targetNode = targetDoc.getRepositoryNode();
-            targetNode.copyRevisionsFrom(sourceDoc.getRepositoryNode());
+            Node targetNode = ((DocumentImpl) targetDoc).getRepositoryNode();
+            targetNode.copyRevisionsFrom(((DocumentImpl) sourceDoc).getRepositoryNode());
         } catch (Exception e) {
             throw new PublicationException(e);
         }

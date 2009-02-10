@@ -56,7 +56,7 @@ public class RepositoryEvent {
     }
     
     public String toString() {
-        return "user:" + getSession().getIdentity().getUser() + " " + getNodeUri() + " " + getDescriptor();
+        return "identity:" + getSession().getIdentity().toString() + " " + getNodeUri() + " " + getDescriptor();
     }
     
     private String nodeUri;

@@ -26,46 +26,49 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
-
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.RepositoryException;
 
 /**
- * An action that tests if a document is already checked out by a given user.
- * If it isn't, a check out will be tried.
+ * An action that tests if a document is already checked out by a given user. If it isn't, a check
+ * out will be tried.
  */
 
 public class ReservedCheckoutTestAction extends RevisionControllerAction {
 
     /**
-	 * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
-	 */
-	public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
+     */
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
+            Parameters parameters) throws Exception {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
 
+        Document doc = getDocument();
         try {
-            Node node = getNode();
 
-			if (!node.isCheckedOut() || !node.getCheckoutUserId().equals(getUsername())) {
-				//check out
-			    getNode().checkout();
-			}
-		} catch (RepositoryException e) {
-			actionMap.put("exception", "RepositoryException");
-			actionMap.put("filename", getNode().getSourceURI());
+            if (!doc.isCheckedOut() || !doc.getCheckoutUserId().equals(getUsername())) {
+                // check out
+                doc.checkout();
+            }
+        } catch (RepositoryException e) {
+            actionMap.put("exception", "RepositoryException");
+            actionMap.put("filename", doc.getSourceURI());
 
-			return actionMap;
-		} catch (Exception e) {
-			actionMap.put("exception", "genericException");
-			actionMap.put("filename", getNode().getSourceURI());
-			actionMap.put("message", e.getMessage());
-			getLogger().error(".act(): The node " + getNode().getSourceURI() + " couldn't be checked out: ", e);
+            return actionMap;
+        } catch (Exception e) {
+            actionMap.put("exception", "genericException");
+            actionMap.put("filename", doc.getSourceURI());
+            actionMap.put("message", e.getMessage());
+            getLogger().error(
+                    ".act(): The document " + doc.getSourceURI() + " couldn't be checked out: ",
+                    e);
 
-			return actionMap;
-		}
+            return actionMap;
+        }
         return null;
     }
 }

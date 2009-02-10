@@ -24,25 +24,20 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Identity map implementation.
  * 
  * @version $Id$
  */
-public final class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
+public final class IdentityMapImpl implements IdentityMap {
+    
+    private static final Log logger = LogFactory.getLog(IdentityMapImpl.class);
 
     private Map maps = Collections.synchronizedMap(new HashMap());
     
-    /**
-     * Ctor.
-     * @param logger The logger.
-     */
-    public IdentityMapImpl(Log logger) {
-    }
-
     public Object get(IdentifiableFactory factory, String key) {
         String type = factory.getType();
         Map map = (Map) this.maps.get(type);
@@ -52,8 +47,8 @@ public final class IdentityMapImpl extends AbstractLogEnabled implements Identit
         }
         Object object = map.get(key);
 
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("IdentityMapImpl::get() looked up type [" + type + "], key [" + key
+        if (logger.isDebugEnabled())
+            logger.debug("IdentityMapImpl::get() looked up type [" + type + "], key [" + key
                     + "] in map, is it there ? " + (object != null));
 
         if (object == null) {

@@ -19,6 +19,9 @@ package org.apache.lenya.cms.metadata;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
+import org.apache.lenya.cms.metadata.CacheableMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 
 /**
  * Cache for meta data.

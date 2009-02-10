@@ -21,6 +21,7 @@ import org.apache.cocoon.core.container.ContainerTestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.publication.IdentityWrapper;
 
 public class TransactionTest extends ContainerTestCase {
     
@@ -34,12 +35,12 @@ public class TransactionTest extends ContainerTestCase {
         Identity alice = new Identity(logger);
         alice.addIdentifiable(new MockUser("alice"));
 
-        IdentityMap lenyaMap = new IdentityMapImpl(logger);
-        UnitOfWork lenyaUnit = new UnitOfWorkImpl(lenyaMap, lenya, logger);
+        IdentityMap lenyaMap = new IdentityMapImpl();
+        UnitOfWork lenyaUnit = new UnitOfWorkImpl(lenyaMap, new IdentityWrapper(lenya));
         IdentifiableFactory lenyaFactory = new MockFactory(lenyaUnit);
 
-        IdentityMap aliceMap = new IdentityMapImpl(logger);
-        UnitOfWork aliceUnit = new UnitOfWorkImpl(aliceMap, alice, logger);
+        IdentityMap aliceMap = new IdentityMapImpl();
+        UnitOfWork aliceUnit = new UnitOfWorkImpl(aliceMap,  new IdentityWrapper(alice));
         IdentifiableFactory aliceFactory = new MockFactory(aliceUnit);
 
         MockTransactionable lenyaT1 = (MockTransactionable) lenyaMap.get(lenyaFactory, "t1");
