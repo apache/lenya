@@ -23,7 +23,6 @@ import java.util.Vector;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
 /**
@@ -74,10 +73,8 @@ public class Propfind extends SiteUsecase {
                     test = test + "/";
                 if (test.equals(request)) {
                     docs.add(documents[i]);
-
-                    Node node = documents[i].getRepositoryNode();
-                    if (node.isCheckedOut()) {
-                        checkedOut.add(node.getCheckoutUserId());
+                    if (documents[i].isCheckedOut()) {
+                        checkedOut.add(documents[i].getCheckoutUserId());
                     }
                     else {
                         checkedOut.add(null);

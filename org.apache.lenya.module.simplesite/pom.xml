@@ -24,6 +24,16 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
     </dependency>
+    <!-- TODO: remove after refactoring -->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-impl</artifactId>
+    </dependency>
+    <!-- TODO: remove after refactoring -->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-module-collection</artifactId>

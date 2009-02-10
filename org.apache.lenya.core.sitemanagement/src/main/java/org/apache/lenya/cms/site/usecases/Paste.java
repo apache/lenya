@@ -31,9 +31,9 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -139,7 +139,7 @@ public class Paste extends AbstractUsecase {
             Clipboard clipboard = new ClipboardHelper().getClipboard(getRequest());
             if (clipboard != null) {
 
-                Node siteNode = getArea().getSite().getRepositoryNode();
+                Node siteNode = getArea().getSite();
                 nodes.add(siteNode);
 
                 Publication pub = getPublication();
@@ -150,7 +150,7 @@ public class Paste extends AbstractUsecase {
 
                 for (int i = 0; i < subsiteDocs.length; i++) {
                     if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-                        nodes.add(subsiteDocs[i].getRepositoryNode());
+                        nodes.add(subsiteDocs[i]);
                     }
                 }
             }

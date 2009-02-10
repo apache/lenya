@@ -35,11 +35,11 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -88,7 +88,7 @@ public abstract class Create extends AbstractUsecase {
     protected Node[] getNodesToLock() throws UsecaseException {
         try {
             SiteStructure structure = getPublication().getArea(getArea()).getSite();
-            Node[] nodes = { structure.getRepositoryNode() };
+            Node[] nodes = { structure };
             return nodes;
         } catch (Exception e) {
             throw new UsecaseException(e);

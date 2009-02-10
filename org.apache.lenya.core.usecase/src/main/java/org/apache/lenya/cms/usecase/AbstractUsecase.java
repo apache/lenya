@@ -32,18 +32,14 @@ import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
+import org.apache.lenya.cms.publication.LockException;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.Repository;
+import org.apache.lenya.cms.publication.RepositoryException;
 import org.apache.lenya.cms.publication.Session;
+import org.apache.lenya.cms.publication.TransactionLock;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.transaction.ConcurrentModificationException;
-import org.apache.lenya.transaction.LockException;
-import org.apache.lenya.transaction.TransactionLock;
 
 /**
  * Abstract usecase implementation.
@@ -322,7 +318,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
                 } else {
                     getSession().rollback();
                 }
-            } catch (ConcurrentModificationException e) {
+            } catch (RepositoryException e) {
                 getLogger()
                         .error("Could not commit usecase [" + getName() + "]: " + e.getMessage());
                 addErrorMessage(e.getMessage());
@@ -673,7 +669,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * @return The objects that could be changed during the usecase.
      * @throws UsecaseException if an error occurs.
      */
-    protected Node[] getNodesToLock() throws UsecaseException {
+    protected org.apache.lenya.cms.publication.Node[] getNodesToLock() throws UsecaseException {
         return new Node[0];
     }
 
@@ -725,7 +721,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
                 if (!objects[i].isLocked()) {
                     objects[i].lock();
                 }
-                if (!isOptimistic() && !objects[i].isCheckedOutBySession(getRepositorySession())) {
+                if (!isOptimistic()
+                        && !objects[i].isCheckedOutBySession(getSession().getId(), getSession()
+                                .getIdentity().getUser().getId())) {
                     objects[i].checkout(checkoutRestrictedToSession());
                 }
             }
@@ -739,7 +737,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
         for (int i = 0; i < objects.length; i++) {
             if (objects[i].isCheckedOut()
-                    && !objects[i].isCheckedOutBySession(getRepositorySession())) {
+                    && !objects[i].isCheckedOutBySession(getSession().getId(), getSession()
+                            .getIdentity().getUser().getId())) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
                             "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
@@ -749,10 +748,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             }
         }
         return canExecute;
-    }
-
-    private org.apache.lenya.cms.repository.Session getRepositorySession() {
-        return (org.apache.lenya.cms.repository.Session) getSession();
     }
 
     /**

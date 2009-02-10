@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -89,7 +89,7 @@ public class IndexDocument extends DocumentUsecase {
                             + getSourceDocument() + "]");
         }
 
-        Node[] objects = { getSourceDocument().getRepositoryNode() };
+        Node[] objects = { getSourceDocument() };
         return objects;
     }
 

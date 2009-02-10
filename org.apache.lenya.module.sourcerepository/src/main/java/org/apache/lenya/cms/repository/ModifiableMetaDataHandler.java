@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.repository.metadata.MetaDataException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;

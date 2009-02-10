@@ -25,17 +25,17 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
-import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
+import org.apache.lenya.cms.publication.IdentityWrapper;
 import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
+import org.apache.lenya.cms.repository.metadata.MetaData;
+import org.apache.lenya.cms.repository.metadata.MetaDataException;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
@@ -85,9 +85,9 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     protected String getUserId() {
         String userId = null;
-        Identity identity = getRepositorySession().getIdentity();
+        IdentityWrapper identity = (IdentityWrapper) getRepositorySession().getIdentity();
         if (identity != null) {
-            User user = identity.getUser();
+            User user = identity.getIdentity().getUser();
             if (user != null) {
                 userId = user.getId();
             }
@@ -102,7 +102,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         RCML rcml = getRcml();
         synchronized (rcml) {
             try {
-                if (!rcml.isCheckedOutBySession(getRepositorySession())) {
+                if (!rcml.isCheckedOutBySession(getRepositorySession().getId(),
+                        getRepositorySession().getIdentity().getUserId())) {
                     throw new RepositoryException("Cannot check in node [" + getSourceURI()
                             + "]: not checked out by this session!");
                 }
@@ -139,9 +140,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
     }
 
-    public boolean isCheckedOutBySession(Session session) throws RepositoryException {
+    public boolean isCheckedOutBySession(String sessionId, String userId)
+            throws RepositoryException {
         try {
-            return getRcml().isCheckedOutBySession(session);
+            return getRcml().isCheckedOutBySession(sessionId, userId);
         } catch (RevisionControlException e) {
             throw new RepositoryException(e);
         }
@@ -155,7 +157,9 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         RCML rcml = getRcml();
         synchronized (rcml) {
             try {
-                if (rcml.isCheckedOut() && !rcml.isCheckedOutBySession(getRepositorySession())) {
+                if (rcml.isCheckedOut()
+                        && !rcml.isCheckedOutBySession(getRepositorySession().getId(),
+                                getRepositorySession().getIdentity().getUserId())) {
                     throw new RepositoryException("The node [" + this
                             + "] is already checked out by another session!");
                 }
@@ -294,8 +298,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
-                newChildren.add(new SourceNode(getRepositorySession(),
-                        getSourceURI() + "/" + child.getName(), getSourceResolver(), getLogger()));
+                newChildren.add(new SourceNode(getRepositorySession(), getSourceURI() + "/"
+                        + child.getName(), getSourceResolver(), getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -345,8 +349,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     protected void enqueueEvent(Object descriptor) {
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this, getLogger(),
-                descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(this, descriptor);
         getRepositorySession().enqueueEvent(event);
     }
 
@@ -492,7 +495,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public boolean isCheckedOutBySession() throws TransactionException {
-        return isCheckedOutBySession(getRepositorySession());
+        return isCheckedOutBySession(getRepositorySession().getId(), getRepositorySession()
+                .getIdentity().getUserId());
     }
 
     public void setPersistable(Persistable item) throws RepositoryException {

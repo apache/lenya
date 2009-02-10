@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -33,7 +34,7 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * @version $Id: Deactivate.java 264805 2005-08-30 16:20:15Z andreas $
  */
 public class Deactivate extends DocumentUsecase {
-    
+
     private DocumentManager documentManager;
 
     /**
@@ -50,7 +51,7 @@ public class Deactivate extends DocumentUsecase {
                 return;
             }
             String event = getEvent();
-            if (!WorkflowUtil.canInvoke(getLogger(), getSourceDocument(), event)) {
+            if (!WorkflowUtil.canInvoke(getSourceDocument(), event)) {
                 addInfoMessage("The document cannot be deactivated because the workflow event cannot be invoked.");
             }
         }
@@ -59,17 +60,16 @@ public class Deactivate extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();
             Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-            nodes.add(doc.getRepositoryNode());
-            nodes.add(liveDoc.getRepositoryNode());
-            nodes.add(liveDoc.area().getSite().getRepositoryNode());
-            nodes.add(doc.area().getSite().getRepositoryNode());
-            return (org.apache.lenya.cms.repository.Node[]) nodes
-                    .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+            nodes.add(doc);
+            nodes.add(liveDoc);
+            nodes.add(liveDoc.area().getSite());
+            nodes.add(doc.area().getSite());
+            return (Node[]) nodes.toArray(new Node[nodes.size()]);
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -95,7 +95,7 @@ public class Deactivate extends DocumentUsecase {
 
             getDocumentManager().delete(liveDocument);
 
-            WorkflowUtil.invoke(getLogger(), authoringDocument, getEvent());
+            WorkflowUtil.invoke(authoringDocument, getEvent());
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -125,5 +125,5 @@ public class Deactivate extends DocumentUsecase {
     public void setDocumentManager(DocumentManager documentManager) {
         this.documentManager = documentManager;
     }
-    
+
 }

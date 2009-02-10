@@ -25,6 +25,7 @@ import java.util.Set;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteNode;
@@ -100,18 +101,18 @@ public class Deactivate extends InvokeWorkflow {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
 
             Document doc = getSourceDocument();
             if (doc != null) {
-                nodes.add(doc.getRepositoryNode());
+                nodes.add(doc);
                 Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-                nodes.add(liveDoc.getRepositoryNode());
-                nodes.add(liveDoc.area().getSite().getRepositoryNode());
+                nodes.add(liveDoc);
+                nodes.add(liveDoc.area().getSite());
             }
-            return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+            return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);

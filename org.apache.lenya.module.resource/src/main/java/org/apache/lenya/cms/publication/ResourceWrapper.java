@@ -36,7 +36,6 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * Wrapper to handle resource documents.

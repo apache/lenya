@@ -30,9 +30,12 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.History;
+import org.apache.lenya.cms.publication.LockException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -52,7 +55,7 @@ import org.w3c.dom.NodeList;
  * 
  * @version $Id: DefaultSiteTree.java 208764 2005-07-01 15:57:21Z andreas $
  */
-public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
+public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree, RepositoryItem {
 
     private static final Log logger = LogFactory.getLog(DefaultSiteTree.class);
 
@@ -642,6 +645,112 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     public void changed() {
         this.changed = true;
+    }
+
+    public void checkin() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().checkin();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public void checkout() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().checkout();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public void checkout(boolean restrictedToSession)
+            throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().checkout(restrictedToSession);
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public void forceCheckIn() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().forceCheckIn();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public String getCheckoutUserId() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            return getRepositoryNode().getCheckoutUserId();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public org.apache.lenya.cms.publication.Session getSession() {
+        return this.pub.getSession();
+    }
+
+    public String getSourceURI() {
+        return getRepositoryNode().getSourceURI();
+    }
+
+    public boolean isCheckedOut() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            return getRepositoryNode().isCheckedOut();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public boolean isCheckedOutBySession(String sessionId, String userId)
+            throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            return getRepositoryNode().isCheckedOutBySession(sessionId, userId);
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public boolean isLocked() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            return getRepositoryNode().isLocked();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public void lock() throws LockException, org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().lock();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public void registerDirty() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().registerDirty();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public void rollback(int revision) throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().rollback(revision);
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
+    }
+
+    public void unlock() throws org.apache.lenya.cms.publication.RepositoryException {
+        try {
+            getRepositoryNode().unlock();
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        }
     }
 
 }

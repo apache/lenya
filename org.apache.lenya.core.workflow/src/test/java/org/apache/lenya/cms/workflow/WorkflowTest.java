@@ -83,10 +83,7 @@ public class WorkflowTest extends AbstractAccessControlTest {
     protected void invoke(Document document, TestSituation situation)
             throws AccessControlException, RepositoryException, WorkflowException {
         Session session = getSession(situation);
-        Workflowable instance = new DocumentWorkflowable(getManager(),
-                session,
-                document,
-                getLogger());
+        Workflowable instance = new DocumentWorkflowable(document);
         assertNotNull(instance);
 
         String event = situation.getEvent();

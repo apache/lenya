@@ -28,12 +28,11 @@ import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.excalibur.source.impl.validity.TimeStampValidity;
 import org.apache.excalibur.xml.dom.DOMParser;
-import org.apache.lenya.cms.cocoon.source.RepositorySource;
+import org.apache.lenya.cms.cocoon.source.DocumentSource;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.repository.ContentHolder;
+import org.apache.lenya.cms.publication.Document;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -86,7 +85,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     private String src;
     
     /** The repository content holder to generate the meta data for */
-    private ContentHolder content;
+    private Document document;
     
     private SourceValidity validity;
 
@@ -94,7 +93,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
      * Recycle this component. All instance variables are set to <code>null</code>.
      */
     public void recycle() {
-        this.content = null;
+        this.document = null;
         this.src = null;
         this.parser = null;
         this.validity = null;
@@ -123,10 +122,10 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         super.setup(resolver, objectModel, src, par);
         this.src = src;
         
-        RepositorySource source = null;
+        DocumentSource source = null;
         try {
-            source = (RepositorySource) resolver.resolveURI(src);
-            this.content = source.getContent();
+            source = (DocumentSource) resolver.resolveURI(src);
+            this.document = source.getDocument();
             this.validity = source.getValidity();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -169,7 +168,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     private void performIncludesMeta() throws SAXException, ProcessingException {
 
         try {
-            String[] namespaces = this.content.getMetaDataNamespaceUris();
+            String[] namespaces = this.document.getMetaDataNamespaceUris();
             for (int i = 0; i < namespaces.length; i++) {
                 this.contentHandler.startPrefixMapping("", namespaces[i]);
                 startNodeMeta(namespaces[i]);
@@ -226,9 +225,9 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
 
     protected MetaData getMetaData(String namespaceUri) throws ProcessingException {
         try {
-            return this.content.getMetaData(namespaceUri);
+            return this.document.getMetaData(namespaceUri);
         } catch (Exception e1) {
-            throw new ProcessingException("Obtaining meta data value for [" + this.content
+            throw new ProcessingException("Obtaining meta data value for [" + this.document
                     + "] failed: ", e1);
         }
     }

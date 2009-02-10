@@ -36,8 +36,9 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     private Map identifier2listeners = new HashMap();
     private Set listeners = new HashSet();
 
-    public synchronized void registerListener(RepositoryListener listener, Document doc)
+    public synchronized void registerListener(RepositoryListener listener, Observeable observeable)
             throws ObservationException {
+        Document doc = (Document) observeable;
         Set listeners = getListeners(doc.getIdentifier());
         if (listeners.contains(listener)) {
             throw new ObservationException("The listener [" + listener

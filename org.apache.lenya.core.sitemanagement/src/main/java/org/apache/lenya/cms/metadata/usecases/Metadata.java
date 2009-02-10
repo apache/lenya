@@ -27,7 +27,7 @@ import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -47,7 +47,7 @@ public class Metadata extends SiteUsecase {
     protected Node[] getNodesToLock() throws UsecaseException {
         Node[] objects = new Node[0];
         if(getSourceDocument() != null) {
-            objects = new Node[] { getSourceDocument().getRepositoryNode() };
+            objects = new Node[] { getSourceDocument() };
         }
         return objects;
     }
@@ -109,7 +109,7 @@ public class Metadata extends SiteUsecase {
         
 
         try {
-            boolean canChange = WorkflowUtil.canInvoke(getLogger(), doc, "edit");
+            boolean canChange = WorkflowUtil.canInvoke(doc, "edit");
             
             if (!canChange) {
                 addInfoMessage("cannot-change-metadata");

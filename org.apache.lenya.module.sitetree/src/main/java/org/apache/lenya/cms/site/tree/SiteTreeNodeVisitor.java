@@ -23,18 +23,17 @@ package org.apache.lenya.cms.site.tree;
 import org.apache.lenya.cms.publication.DocumentException;
 
 /**
- * Visitor interface to define operations performed on SiteTreeNode
- * (Visitor pattern)
- *
+ * Visitor interface to define operations performed on SiteTreeNode (Visitor pattern)
+ * 
  */
 public interface SiteTreeNodeVisitor {
 
-	/**
-	 * Operation performed on a SiteTreeNode
-	 * @param node The SiteTreeNode.
+    /**
+     * Operation performed on a SiteTreeNode
+     * @param node The SiteTreeNode.
      * 
      * @throws DocumentException if an error occurs
-	 */
-	void visitSiteTreeNode(SiteTreeNode node) throws DocumentException;
+     */
+    void visitSiteTreeNode(SiteTreeNode node) throws DocumentException;
 
 }

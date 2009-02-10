@@ -60,14 +60,14 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+    protected org.apache.lenya.cms.publication.Node[] getNodesToLock() throws UsecaseException {
         org.apache.lenya.cms.publication.Document doc = getSourceDocument();
         Set nodes = new HashSet();
         if (doc != null) {
-            nodes.add(doc.getRepositoryNode());
+            nodes.add(doc);
         }
-        return (org.apache.lenya.cms.repository.Node[]) nodes
-                .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+        return (org.apache.lenya.cms.publication.Node[]) nodes
+                .toArray(new org.apache.lenya.cms.publication.Node[nodes.size()]);
     }
 
     protected void prepareView() throws Exception {
@@ -179,7 +179,7 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
      */
     protected void saveDocument(Document content) throws Exception {
         saveXMLFile(content, getSourceDocument());
-        WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
+        WorkflowUtil.invoke(getSourceDocument(), getEvent());
     }
 
     /**

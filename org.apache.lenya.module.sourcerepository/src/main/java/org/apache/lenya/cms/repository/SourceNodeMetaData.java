@@ -22,11 +22,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.lenya.cms.metadata.Element;
-import org.apache.lenya.cms.metadata.ElementSet;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.metadata.MetaDataRegistry;
+import org.apache.lenya.cms.repository.metadata.Element;
+import org.apache.lenya.cms.repository.metadata.ElementSet;
+import org.apache.lenya.cms.repository.metadata.MetaData;
+import org.apache.lenya.cms.repository.metadata.MetaDataException;
+import org.apache.lenya.cms.repository.metadata.MetaDataRegistry;
 
 /**
  * Source-node-based meta data.

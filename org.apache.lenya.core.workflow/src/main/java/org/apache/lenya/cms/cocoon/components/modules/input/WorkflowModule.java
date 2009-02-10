@@ -77,22 +77,21 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             PageEnvelope envelope = getEnvelope(objectModel, name);
             Document document = envelope.getDocument();
             if (document != null && document.exists()) {
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), document);
-                if (WorkflowUtil.hasWorkflow(getLogger(), document)) {
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(document);
+                if (WorkflowUtil.hasWorkflow(document)) {
 
                     Version latestVersion = workflowable.getLatestVersion();
 
                     if (name.equals(STATE)) {
                         if (latestVersion == null) {
-                            Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(),
-                                    document);
+                            Workflow workflow = WorkflowUtil.getWorkflowSchema(document);
                             value = workflow.getInitialState();
                         } else {
                             value = latestVersion.getState();
                         }
                     } else if (name.startsWith(VARIABLE_PREFIX)) {
                         String variableName = name.substring(VARIABLE_PREFIX.length());
-                        Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), document);
+                        Workflow workflow = WorkflowUtil.getWorkflowSchema(document);
                         String[] variableNames = workflow.getVariableNames();
                         if (Arrays.asList(variableNames).contains(variableName)) {
                             if (latestVersion == null) {

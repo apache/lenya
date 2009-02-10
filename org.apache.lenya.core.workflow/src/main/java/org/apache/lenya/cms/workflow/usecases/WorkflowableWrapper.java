@@ -51,7 +51,7 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
 
     protected Workflowable getWorkflowable() {
         if (this.workflowable == null) {
-            this.workflowable = WorkflowUtil.getWorkflowable(getLogger(), this.document);
+            this.workflowable = WorkflowUtil.getWorkflowable(this.document);
         }
         return this.workflowable;
     }
@@ -80,7 +80,7 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
     }
 
     protected Workflow getWorkflowSchema() throws WorkflowException {
-        return WorkflowUtil.getWorkflowSchema(getLogger(), this.document);
+        return WorkflowUtil.getWorkflowSchema(this.document);
     }
 
     /**
@@ -112,7 +112,7 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
      */
     public boolean canInvoke(String usecaseName) throws WorkflowException {
         String event = this.usecase.getEvent(usecaseName);
-        return WorkflowUtil.canInvoke(getLogger(), this.document, event);
+        return WorkflowUtil.canInvoke(this.document, event);
     }
 
     /**
@@ -122,9 +122,9 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
      * @throws WorkflowException if an error occurs.
      */
     public boolean getValue(String variable) throws WorkflowException {
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), this.document);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.document);
         if (workflowable.getVersions().length == 0) {
-            Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), this.document);
+            Workflow workflow = WorkflowUtil.getWorkflowSchema(this.document);
             return workflow.getInitialValue(variable);
         } else {
             return workflowable.getLatestVersion().getValue(variable);

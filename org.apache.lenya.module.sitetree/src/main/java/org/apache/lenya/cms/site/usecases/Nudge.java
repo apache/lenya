@@ -18,8 +18,8 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -91,7 +91,7 @@ public class Nudge extends DocumentUsecase {
     protected Node[] getNodesToLock() throws UsecaseException {
         Node[] nodes = new Node[0];
         if (getSourceDocument() != null) {
-            Node node = getSourceDocument().area().getSite().getRepositoryNode();
+            Node node = getSourceDocument().area().getSite();
             nodes = new Node[] { node };
         }
         return nodes;

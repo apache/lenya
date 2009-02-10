@@ -100,7 +100,7 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
             this.site = pub.getArea(area).getSite();
 
             this.cacheKey = pubId + "/" + area;
-            source = resolver.resolveURI(this.site.getRepositoryNode().getSourceURI());
+            source = resolver.resolveURI(this.site.getSourceURI());
             this.validity = source.getValidity();
 
         } catch (Exception e) {

@@ -18,7 +18,7 @@ package org.apache.lenya.cms.editors.cforms;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.xml.DocumentHelper;
 
@@ -57,7 +57,7 @@ public class CForms extends InvokeWorkflow {
     }
 
     protected Node[] getNodesToLock() {
-        Node[] nodes = { getSourceDocument().getRepositoryNode() };
+        Node[] nodes = { getSourceDocument() };
         return nodes;
     }
 

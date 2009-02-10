@@ -83,7 +83,7 @@ public class Overview extends SiteUsecase {
                 boolean visible = doc.getLink().getNode().isVisible();
                 setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), doc);
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(doc);
                 if (getWorkflowManager().hasWorkflow(workflowable)) {
                     Workflow workflow = getWorkflowManager().getWorkflowSchema(workflowable);
                     String[] variableNames = workflow.getVariableNames();

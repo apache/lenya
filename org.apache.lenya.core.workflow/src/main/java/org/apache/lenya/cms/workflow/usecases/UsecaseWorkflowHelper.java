@@ -64,7 +64,7 @@ public class UsecaseWorkflowHelper {
     public static final void checkWorkflow(AbstractUsecase usecase, String event, Document doc,
             Log logger) {
         try {
-            if (!WorkflowUtil.canInvoke(logger, doc, event)) {
+            if (!WorkflowUtil.canInvoke(doc, event)) {
                 UsecaseWorkflowHelper.addWorkflowError(usecase, event, doc);
             }
         } catch (WorkflowException e) {

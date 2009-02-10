@@ -102,7 +102,7 @@ public class Submit extends InvokeWorkflow {
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
         org.apache.lenya.cms.repository.Session repoSession = (Session) getSession();
-        RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, getLogger(), descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, descriptor);
         repoSession.enqueueEvent(event);
     }
 }

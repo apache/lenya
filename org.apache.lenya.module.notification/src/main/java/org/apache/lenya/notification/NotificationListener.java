@@ -24,6 +24,8 @@ import org.apache.lenya.cms.observation.RepositoryEvent;
  * Repository listener to distribute notification events.
  */
 public class NotificationListener extends AbstractRepositoryListener {
+    
+    private Notifier notifier;
 
     public void eventFired(RepositoryEvent event) {
 
@@ -36,18 +38,16 @@ public class NotificationListener extends AbstractRepositoryListener {
 
         Message message = descriptor.getMessage();
 
-        Notifier notifier = null;
         try {
-            notifier = (Notifier) this.manager.lookup(Notifier.ROLE);
-            notifier.notify(message);
-        } catch (Exception e) {
+            this.notifier.notify(message);
+        } catch (NotificationException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (notifier != null) {
-                this.manager.release(notifier);
-            }
         }
 
+    }
+
+    public void setNotifier(Notifier notifier) {
+        this.notifier = notifier;
     }
 
 }

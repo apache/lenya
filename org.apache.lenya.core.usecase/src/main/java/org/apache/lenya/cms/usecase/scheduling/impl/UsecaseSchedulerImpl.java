@@ -20,15 +20,13 @@ package org.apache.lenya.cms.usecase.scheduling.impl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.cron.CronJob;
 import org.apache.cocoon.components.cron.JobScheduler;
@@ -40,7 +38,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 
@@ -54,10 +51,7 @@ import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
  * 
  * @version $Id$
  */
-public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseScheduler,
-        Serviceable, Contextualizable, Disposable {
-
-    private UUIDGenerator uuidGenerator;
+public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseScheduler {
 
     /**
      * @see org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler#schedule(org.apache.lenya.cms.usecase.Usecase,
@@ -118,19 +112,8 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
         }
     }
     
-    protected UUIDGenerator getUuidGenerator() {
-        if (this.uuidGenerator == null) {
-            try {
-                this.uuidGenerator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.uuidGenerator;
-    }
-
     protected String getJobName() {
-        return getUuidGenerator().nextUUID();
+        return UUID.randomUUID().toString();
     }
 
     protected ServiceManager manager;
@@ -184,9 +167,4 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
         return info.getPublicationId();
     }
 
-    public void dispose() {
-        if (this.uuidGenerator != null) {
-            this.manager.release(this.uuidGenerator);
-        }
-    }
 }

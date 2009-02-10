@@ -49,7 +49,6 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String areaName = snippets[1];
-        SiteTree tree;
         try {
             org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session;
             Publication publication = pubSession.getPublication(publicationId);
@@ -57,14 +56,13 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
 
             Session storeSession = getSharedItemStore().getSession();
             if (session.isModifiable() || session == storeSession) {
-                tree = new SiteTreeImpl(area, getLogger());
+                return new SiteTreeImpl(area, getLogger());
             } else {
-                tree = new DelegatingSiteTree(area, this, storeSession, key);
+                return new DelegatingSiteTree(area, this, storeSession, key);
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
-        return tree;
     }
 
     public String getItemType() {

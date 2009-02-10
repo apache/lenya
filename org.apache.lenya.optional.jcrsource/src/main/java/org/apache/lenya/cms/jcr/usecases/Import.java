@@ -60,7 +60,7 @@ public class Import extends AbstractUsecase {
             Area area = pub.getArea(areas[i]);
             Document[] docs = area.getDocuments();
             for (int j = 0; j < docs.length; j++) {
-                nodes.add(docs[j].getRepositoryNode());
+                nodes.add(docs[j]);
                 /*
                  * final String lenyaUri = docs[j].getSourceURI(); final String sourcePath =
                  * lenyaUri.substring("lenya://".length()); final String contextUri = "context://" +
@@ -68,7 +68,7 @@ public class Import extends AbstractUsecase {
                  * this.manager, getLogger()); uri2meta.put(docs[j].getSourceURI(), meta);
                  */
             }
-            nodes.add(area.getSite().getRepositoryNode());
+            nodes.add(area.getSite());
         }
 
         for (Iterator i = nodes.iterator(); i.hasNext();) {

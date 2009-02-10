@@ -26,9 +26,9 @@ import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
@@ -108,13 +108,13 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 SiteStructure targetSite = getSourceDocument().getPublication().getArea(
                         getTargetArea()).getSite();
 
-                nodes.add(sourceSite.getRepositoryNode());
-                nodes.add(targetSite.getRepositoryNode());
+                nodes.add(sourceSite);
+                nodes.add(targetSite);
 
                 Document[] docs = SiteUtil.getSubSite(getSourceDocument().getLink().getNode())
                         .getDocuments();
                 for (int i = 0; i < docs.length; i++) {
-                    nodes.add(docs[i].getRepositoryNode());
+                    nodes.add(docs[i]);
                 }
 
             } catch (PublicationException e) {
@@ -139,10 +139,10 @@ public abstract class MoveSubsite extends DocumentUsecase {
         targetLoc = SiteUtil.getAvailableLocator(getSession(), targetLoc);
 
         for (int i = 0; i < sources.length; i++) {
-            WorkflowUtil.invoke(getLogger(), sources[i], getEvent(), true);
+            WorkflowUtil.invoke(sources[i], getEvent(), true);
 
             if (this.getClass().getName().equals(Restore.class.getName())) {
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), sources[i]);
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(sources[i]);
                 String state = workflowable.getLatestVersion().getState();
                 if (!state.equals("authoring")) {
                     addErrorMessage("The state is [" + state + "] instead of [authoring]!");

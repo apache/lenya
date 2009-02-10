@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -68,7 +68,7 @@ public class ChangeLabel extends DocumentUsecase {
         List nodes = new ArrayList();
         if (getSourceDocument() != null) {
             SiteStructure structure = getSourceDocument().area().getSite();
-            nodes.add(structure.getRepositoryNode());
+            nodes.add(structure);
         }
 
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
@@ -110,7 +110,7 @@ public class ChangeLabel extends DocumentUsecase {
         String label = getParameterAsString(LABEL).trim();
         document.getLink().setLabel(label);
 
-        WorkflowUtil.invoke(getLogger(), document, getEvent());
+        WorkflowUtil.invoke(document, getEvent());
 
     }
 }

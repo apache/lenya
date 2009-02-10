@@ -23,8 +23,8 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.AbstractGenerator;
-import org.apache.lenya.cms.cocoon.source.RepositorySource;
-import org.apache.lenya.cms.repository.ContentHolder;
+import org.apache.lenya.cms.cocoon.source.DocumentSource;
+import org.apache.lenya.cms.publication.Document;
 import org.pdfbox.pdfparser.PDFParser;
 import org.pdfbox.pdmodel.PDDocument;
 import org.pdfbox.util.PDFTextStripper;
@@ -50,17 +50,17 @@ public class PdfToTextGenerator extends AbstractGenerator {
     protected static final String PREFIX = "pdf";
     protected static final String NAMESPACE = "http://apache.org/lenya/pdf/1.0";
     
-    private ContentHolder content;
+    private Document content;
 
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
             throws ProcessingException, SAXException, IOException {
 
         super.setup(resolver, objectModel, src, par);
 
-        RepositorySource source = null;
+        DocumentSource source = null;
         try {
-            source = (RepositorySource) resolver.resolveURI(src);
-            this.content = source.getContent();
+            source = (DocumentSource) resolver.resolveURI(src);
+            this.content = source.getDocument();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

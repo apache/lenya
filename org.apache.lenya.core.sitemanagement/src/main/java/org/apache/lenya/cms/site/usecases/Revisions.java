@@ -18,8 +18,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.History;
-import org.apache.lenya.cms.repository.Revision;
+import org.apache.lenya.cms.publication.History;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -41,28 +40,27 @@ public class Revisions extends SiteUsecase {
         Document sourceDoc = getSourceDocument();
         if (sourceDoc != null) {
             try {
-                History history = sourceDoc.getRepositoryNode().getHistory();
+                History history = sourceDoc.getHistory();
 
                 int[] numbers = history.getRevisionNumbers();
-                Revision[] revisions = new Revision[numbers.length];
+                Document[] revisions = new Document[numbers.length];
                 for (int i = 0; i < numbers.length; i++) {
-                    revisions[i] = history.getRevision(numbers[i]);
+                    revisions[i] = sourceDoc.getRevision(numbers[i]);
                 }
                 setParameter("revisions", revisions);
 
-                Boolean canRollback = Boolean.valueOf(WorkflowUtil.canInvoke(getLogger(),
-                        sourceDoc, getEvent()));
+                Boolean canRollback = Boolean
+                        .valueOf(WorkflowUtil.canInvoke(sourceDoc, getEvent()));
                 setParameter("canRollback", canRollback);
 
-                if (WorkflowUtil.hasWorkflow(getLogger(), sourceDoc)) {
-                    Workflowable workflowable = WorkflowUtil
-                            .getWorkflowable(getLogger(), sourceDoc);
+                if (WorkflowUtil.hasWorkflow(sourceDoc)) {
+                    Workflowable workflowable = WorkflowUtil.getWorkflowable(sourceDoc);
                     Version latestVersion = workflowable.getLatestVersion();
                     String state;
                     if (latestVersion != null) {
                         state = latestVersion.getState();
                     } else {
-                        Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), sourceDoc);
+                        Workflow workflow = WorkflowUtil.getWorkflowSchema(sourceDoc);
                         state = workflow.getInitialState();
                     }
                     setParameter("workflowState", state);

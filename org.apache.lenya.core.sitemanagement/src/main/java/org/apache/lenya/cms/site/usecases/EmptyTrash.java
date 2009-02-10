@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -66,22 +67,21 @@ public class EmptyTrash extends AbstractUsecase {
      * </ul>
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
         try {
             String pubId = new URLInformation(getSourceURL()).getPublicationId();
             Publication publication = getSession().getPublication(pubId);
             Document[] docs = getTrashDocuments();
             for (int i = 0; i < docs.length; i++) {
-                nodes.add(docs[i].getRepositoryNode());
+                nodes.add(docs[i]);
             }
             SiteStructure structure = publication.getArea(Publication.TRASH_AREA).getSite();
-            nodes.add(structure.getRepositoryNode());
+            nodes.add(structure);
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
-        return (org.apache.lenya.cms.repository.Node[]) nodes
-                .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+        return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
     /**

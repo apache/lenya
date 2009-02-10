@@ -109,14 +109,14 @@ public class FormsEditor extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+    protected org.apache.lenya.cms.publication.Node[] getNodesToLock() throws UsecaseException {
         org.apache.lenya.cms.publication.Document doc = getSourceDocument();
         Set nodes = new HashSet();
         if (doc != null) {
-            nodes.add(doc.getRepositoryNode());
+            nodes.add(doc);
         }
-        return (org.apache.lenya.cms.repository.Node[]) nodes
-                .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+        return (org.apache.lenya.cms.publication.Node[]) nodes
+                .toArray(new org.apache.lenya.cms.publication.Node[nodes.size()]);
     }
 
     /**
@@ -162,7 +162,7 @@ public class FormsEditor extends DocumentUsecase {
                 setParameter(VALIDATION_ERRORS, getErrorMessages());
             } else if (!getParameterAsBoolean(WORKFLOW_INVOKED, false)) {
                 deleteParameter(VALIDATION_ERRORS);
-                WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
+                WorkflowUtil.invoke(getSourceDocument(), getEvent());
                 setParameter(WORKFLOW_INVOKED, Boolean.valueOf(true));
             }
 

@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 
@@ -43,7 +43,7 @@ public class InvokeWorkflow extends CheckWorkflow {
     protected Node[] getNodesToLock() throws UsecaseException {
         Node[] objects = new Node[0];
         if (getSourceDocument() != null) {
-            objects = new Node[] { getSourceDocument().getRepositoryNode() };
+            objects = new Node[] { getSourceDocument() };
         }
         return objects;
     }
@@ -53,7 +53,7 @@ public class InvokeWorkflow extends CheckWorkflow {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
+        WorkflowUtil.invoke(getSourceDocument(), getEvent());
     }
 
 }

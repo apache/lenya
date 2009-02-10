@@ -57,7 +57,7 @@ public class CheckWorkflow extends DocumentUsecase {
         }
 
         Document doc = getSourceDocument();
-        if (!WorkflowUtil.canInvoke(getLogger(), doc, getEvent())) {
+        if (!WorkflowUtil.canInvoke(doc, getEvent())) {
             UsecaseWorkflowHelper.addWorkflowError(this, getEvent(), doc);
         }
     }

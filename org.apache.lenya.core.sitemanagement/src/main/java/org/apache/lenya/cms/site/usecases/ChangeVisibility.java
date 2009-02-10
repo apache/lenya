@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -84,7 +84,7 @@ public class ChangeVisibility extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = doc.getTranslation(languages[i]);
-            WorkflowUtil.invoke(getLogger(), version, getEvent());
+            WorkflowUtil.invoke(version, getEvent());
         }
     }
 
@@ -95,7 +95,7 @@ public class ChangeVisibility extends DocumentUsecase {
         List nodes = new ArrayList();
         if (getSourceDocument() != null) {
             SiteStructure structure = getSourceDocument().area().getSite();
-            nodes.add(structure.getRepositoryNode());
+            nodes.add(structure);
         }
 
         return (Node[]) nodes.toArray(new Node[nodes.size()]);

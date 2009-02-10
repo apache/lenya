@@ -139,10 +139,10 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             }
 
             if (hasWorkflow()) {
-                Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), document);
+                Workflow workflow = WorkflowUtil.getWorkflowSchema(document);
                 String[] events = workflow.getEvents();
                 for (int i = 0; i < events.length; i++) {
-                    if (WorkflowUtil.canInvoke(getLogger(), document, events[i])) {
+                    if (WorkflowUtil.canInvoke(document, events[i])) {
                         this.executableEvents.add(events[i]);
                     }
                 }

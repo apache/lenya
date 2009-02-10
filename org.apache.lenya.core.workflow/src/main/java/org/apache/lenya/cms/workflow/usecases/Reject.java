@@ -78,7 +78,7 @@ public class Reject extends InvokeWorkflow {
         User sender = getSession().getIdentity().getUser();
 
         String reason = getParameterAsString(PARAM_REJECT_REASON);
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), authoringDocument);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(authoringDocument);
         Version versions[] = workflowable.getVersions();
         // current version is reject, want originating submit
         Version version = versions[versions.length - 2];
@@ -118,7 +118,7 @@ public class Reject extends InvokeWorkflow {
 
             NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
             org.apache.lenya.cms.repository.Session repoSession = (Session) getSession();
-            RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, getLogger(), descriptor);
+            RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, descriptor);
             repoSession.enqueueEvent(event);
         }
     }

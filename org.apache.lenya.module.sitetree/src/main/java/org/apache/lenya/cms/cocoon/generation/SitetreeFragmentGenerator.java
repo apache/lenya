@@ -194,7 +194,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
             }
             
             this.cacheKey = pubId + "/" + area + this.path;
-            source = this.resolver.resolveURI(this.site.getRepositoryNode().getSourceURI());
+            source = this.resolver.resolveURI(this.site.getSourceURI());
             this.validity = source.getValidity();
             
         } catch (ProcessingException e) {

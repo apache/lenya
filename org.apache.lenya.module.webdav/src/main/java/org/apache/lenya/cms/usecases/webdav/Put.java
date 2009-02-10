@@ -31,9 +31,9 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -135,7 +135,7 @@ public class Put extends CreateDocument {
 
         String event = getParameterAsString(EVENT);
         if (event != null) {
-            WorkflowUtil.invoke(getLogger(), doc, event);
+            WorkflowUtil.invoke(doc, event);
         }
 
     }
@@ -177,11 +177,11 @@ public class Put extends CreateDocument {
             NodeSet set = SiteUtil.getSubSite(doc.getLink().getNode());
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                nodes.add(documents[i].getRepositoryNode());
+                nodes.add(documents[i]);
             }
 
             SiteStructure structure = getSourceDocument().area().getSite();
-            nodes.add(structure.getRepositoryNode());
+            nodes.add(structure);
             return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {

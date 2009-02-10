@@ -35,10 +35,8 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.RepositoryException;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -136,14 +134,14 @@ public class SiteOverview extends AbstractUsecase {
         String lastModified = format.format(new Date(doc.getLastModified()));
         entry.setValue(KEY_LAST_MODIFIED, lastModified);
 
-        if (WorkflowUtil.hasWorkflow(getLogger(), doc)) {
-            Workflowable workflowable = WorkflowUtil.getWorkflowable(getLogger(), doc);
+        if (WorkflowUtil.hasWorkflow(doc)) {
+            Workflowable workflowable = WorkflowUtil.getWorkflowable(doc);
             Version latestVersion = workflowable.getLatestVersion();
             String state;
             if (latestVersion != null) {
                 state = latestVersion.getState();
             } else {
-                Workflow workflow = WorkflowUtil.getWorkflowSchema(getLogger(), doc);
+                Workflow workflow = WorkflowUtil.getWorkflowSchema(doc);
                 state = workflow.getInitialState();
             }
             entry.setValue(KEY_WORKFLOW_STATE, state);
@@ -151,9 +149,8 @@ public class SiteOverview extends AbstractUsecase {
             entry.setValue(KEY_WORKFLOW_STATE, "");
         }
 
-        Node node = doc.getRepositoryNode();
-        if (node.isCheckedOut()) {
-            entry.setValue(KEY_CHECKED_OUT, node.getCheckoutUserId());
+        if (doc.isCheckedOut()) {
+            entry.setValue(KEY_CHECKED_OUT, doc.getCheckoutUserId());
         } else {
             entry.setValue(KEY_CHECKED_OUT, "");
         }

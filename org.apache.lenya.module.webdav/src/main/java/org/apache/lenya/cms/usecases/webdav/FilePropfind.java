@@ -22,7 +22,6 @@ import java.util.Vector;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
 /**
@@ -53,9 +52,8 @@ public class FilePropfind extends SiteUsecase {
             Document doc = getTargetDocument(false);
             docs.add(doc);
             
-            Node node = doc.getRepositoryNode();
-            if (node.isCheckedOut()) {
-                checkedOut.add(node.getCheckoutUserId());
+            if (doc.isCheckedOut()) {
+                checkedOut.add(doc.getCheckoutUserId());
             }
             else {
                 checkedOut.add(null);

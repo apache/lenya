@@ -28,6 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.linking.LinkConverter;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -52,8 +53,8 @@ public class TinyMce extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
-        org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
+    protected Node[] getNodesToLock() throws UsecaseException {
+        Node[] objects = { getSourceDocument() };
         return objects;
     }
 
@@ -170,7 +171,7 @@ public class TinyMce extends DocumentUsecase {
         LinkConverter converter = new LinkConverter(getLogger());
         converter.convertUrlsToUuids(doc, false);
 
-        WorkflowUtil.invoke(getLogger(), doc, getEvent());
+        WorkflowUtil.invoke(doc, getEvent());
     }
 
     /**

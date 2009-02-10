@@ -21,6 +21,7 @@ import java.io.File;
 
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.AbstractRepositoryListener;
 import org.apache.lenya.cms.observation.DocumentEvent;
@@ -35,6 +36,7 @@ import org.apache.lenya.cms.publication.Session;
 public class ContentJanitor extends AbstractRepositoryListener {
     
     private Repository repository;
+    private SourceResolver sourceResolver;
 
     public void eventFired(RepositoryEvent repoEvent) {
         
@@ -54,7 +56,7 @@ public class ContentJanitor extends AbstractRepositoryListener {
             Publication pub = session.getPublication(event.getPublicationId());
             File contentFile = pub.getContentDirectory(event.getArea());
             String contentUri = contentFile.toURI().toString();
-            SourceUtil.deleteEmptyCollections(contentUri, this.manager);
+            SourceUtil.deleteEmptyCollections(contentUri, this.sourceResolver);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -62,6 +64,10 @@ public class ContentJanitor extends AbstractRepositoryListener {
 
     public void setRepository(Repository repository) {
         this.repository = repository;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

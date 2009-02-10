@@ -29,9 +29,9 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -58,7 +58,7 @@ public class CreateBlogEntry extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         SiteStructure structure = getSourceDocument().area().getSite();
-        Node[] nodes = { structure.getRepositoryNode() };
+        Node[] nodes = { structure };
         return nodes;
     }
 

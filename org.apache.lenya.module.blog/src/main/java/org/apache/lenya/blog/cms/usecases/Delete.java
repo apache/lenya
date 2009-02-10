@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -55,7 +56,7 @@ public class Delete extends DocumentUsecase {
                 return;
             }
             String event = getEvent();
-            if (!WorkflowUtil.canInvoke(getLogger(), getSourceDocument(), event)) {
+            if (!WorkflowUtil.canInvoke(getSourceDocument(), event)) {
                 addInfoMessage("The document cannot be deactivated because the workflow event cannot be invoked.");
             }
         }
@@ -64,14 +65,13 @@ public class Delete extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();
-            nodes.add(doc.getRepositoryNode());
-            nodes.add(doc.area().getSite().getRepositoryNode());
-            return (org.apache.lenya.cms.repository.Node[]) nodes
-                    .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+            nodes.add(doc);
+            nodes.add(doc.area().getSite());
+            return (Node[]) nodes.toArray(new Node[nodes.size()]);
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -96,7 +96,7 @@ public class Delete extends DocumentUsecase {
     protected void delete(Document document) {
         try {
             getDocumentManager().delete(document);
-            WorkflowUtil.invoke(getLogger(), document, getEvent());
+            WorkflowUtil.invoke(document, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

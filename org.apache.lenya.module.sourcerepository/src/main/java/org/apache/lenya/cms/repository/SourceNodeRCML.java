@@ -29,14 +29,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.publication.IdentityWrapper;
 import org.apache.lenya.cms.rc.CheckInEntry;
 import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -118,7 +119,7 @@ public class SourceNodeRCML implements RCML {
      */
     public synchronized void write() throws RevisionControlException {
         NamespaceHelper helper = saveToXml();
-        Assert.notNull("XML document", helper);
+        Validate.notNull(helper, "XML document");
         try {
             SourceUtil.writeDOM(helper.getDocument(), getRcmlSourceUri(), getSourceResolver());
         } catch (Exception e) {
@@ -143,7 +144,8 @@ public class SourceNodeRCML implements RCML {
     public synchronized void checkOutIn(Node node, short type, long time, boolean backup,
             boolean newVersion, boolean restrictedToSession) throws RevisionControlException {
 
-        String identity = node.getRepositorySession().getIdentity().getUser().getId();
+        IdentityWrapper wrapper = (IdentityWrapper) node.getRepositorySession().getIdentity();
+        String identity = wrapper.getIdentity().getUser().getId();
 
         Vector entries = getEntries();
         if (entries.size() == 0) {
@@ -609,7 +611,7 @@ public class SourceNodeRCML implements RCML {
         write();
     }
 
-    public boolean isCheckedOutBySession(Session session) throws RevisionControlException {
+    public boolean isCheckedOutBySession(String sessionId, String userId) throws RevisionControlException {
         Vector entries = getEntries();
         if (entries.size() > 0) {
             RCMLEntry entry = (RCMLEntry) entries.get(0);
@@ -618,11 +620,10 @@ public class SourceNodeRCML implements RCML {
                 // not restricted to session
                 if (otherSessionId.equals(ALL_SESSIONS)) {
                     String otherUserId = entry.getIdentity();
-                    String userId = session.getIdentity().getUser().getId();
                     return userId.equals(otherUserId);
                 }
                 // restricted to session
-                if (otherSessionId.equals(session.getId())) {
+                if (otherSessionId.equals(sessionId)) {
                     return true;
                 }
             }

@@ -26,8 +26,8 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeIterator;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
@@ -36,7 +36,6 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.TransactionException;
 
 /**
  * Change the node ID of a document.
@@ -68,7 +67,7 @@ public class ChangeNodeID extends DocumentUsecase {
 
         try {
             if (getSourceDocument() != null) {
-                Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
+                Node siteNode = getSourceDocument().area().getSite();
                 nodes.add(siteNode);
 
                 Document sourceDocument = getSourceDocument();
@@ -79,7 +78,7 @@ public class ChangeNodeID extends DocumentUsecase {
                     String[] languages = node.getLanguages();
                     for (int l = 0; l < languages.length; l++) {
                         Document doc = node.getLink(languages[l]).getDocument();
-                        nodes.add(doc.getRepositoryNode());
+                        nodes.add(doc);
                     }
                 }
             }
@@ -90,12 +89,11 @@ public class ChangeNodeID extends DocumentUsecase {
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
-    protected List getAllLanguageVersionNodes(Document doc) throws DocumentException,
-            TransactionException, DocumentBuildException {
+    protected List getAllLanguageVersionNodes(Document doc) throws DocumentException, DocumentBuildException {
         String[] languages = doc.getLanguages();
         List nodes = new ArrayList();
         for (int i = 0; i < languages.length; i++) {
-            nodes.add(doc.getTranslation(languages[i]).getRepositoryNode());
+            nodes.add(doc.getTranslation(languages[i]));
         }
         return nodes;
     }

@@ -20,8 +20,8 @@ package org.apache.lenya.cms.editors;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
@@ -86,7 +86,7 @@ public class EditDocument extends DocumentUsecase {
         if (!hasErrors()) {
             SourceUtil.writeDOM(xmlDoc, sourceDoc.getOutputStream());
             String event = getParameterAsString(EVENT, DEFAULT_EVENT);
-            WorkflowUtil.invoke(getLogger(), getSourceDocument(), event);
+            WorkflowUtil.invoke(getSourceDocument(), event);
         }
     }
 
@@ -94,7 +94,7 @@ public class EditDocument extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        Node[] objects = { getSourceDocument().getRepositoryNode() };
+        Node[] objects = { getSourceDocument() };
         return objects;
     }
 

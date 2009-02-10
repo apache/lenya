@@ -43,6 +43,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -71,8 +72,8 @@ public class Fckeditor extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
-        org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
+    protected Node[] getNodesToLock() throws UsecaseException {
+        Node[] objects = { getSourceDocument() };
         return objects;
     }
 
@@ -240,7 +241,7 @@ public class Fckeditor extends DocumentUsecase {
                 ValidationUtil.validate(xmlDoc, schema, new UsecaseErrorHandler(this));
 
                 if (!hasErrors()) {
-                    WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
+                    WorkflowUtil.invoke(getSourceDocument(), getEvent());
                 }
             }
 

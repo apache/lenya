@@ -30,8 +30,13 @@ import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentImpl;
+import org.apache.lenya.cms.publication.History;
+import org.apache.lenya.cms.publication.LockException;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.RepositoryException;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -48,7 +53,7 @@ import org.w3c.dom.Element;
  * 
  * @version $Id$
  */
-public class DocumentStore extends CollectionWrapper implements SiteStructure {
+public class DocumentStore extends CollectionWrapper implements SiteStructure, RepositoryItem {
 
     /**
      * The identifiable type.
@@ -127,7 +132,7 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure {
     }
 
     public Node getRepositoryNode() {
-        return getDelegate().getRepositoryNode();
+        return ((DocumentImpl) getDelegate()).getRepositoryNode();
     }
 
     public boolean contains(String path) {
@@ -301,5 +306,61 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure {
 
     public Session getRepositorySession() {
         return getRepositoryNode().getRepositorySession();
+    }
+
+    public void checkin() throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public void checkout() throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public void checkout(boolean checkoutRestrictedToSession) throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public void forceCheckIn() throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public String getCheckoutUserId() throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public org.apache.lenya.cms.publication.Session getSession() {
+        throw new UnsupportedOperationException();
+    }
+
+    public String getSourceURI() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean isCheckedOut() throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean isCheckedOutBySession(String sessionId, String userId) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean isLocked() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void lock() throws LockException, RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public void registerDirty() throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public void rollback(int revision) throws RepositoryException {
+        throw new UnsupportedOperationException();
+    }
+
+    public void unlock() throws RepositoryException {
+        throw new UnsupportedOperationException();
     }
 }

@@ -28,7 +28,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.modules.monitoring.SessionListener;
 
@@ -48,7 +48,7 @@ public class ForceCheckIn extends DocumentUsecase {
             return;
         }
         
-        Node node = doc.getRepositoryNode();
+        Node node = doc;
         if (!node.isCheckedOut()) {
             String[] params = { DublinCoreHelper.getTitle(doc, true) };
             addErrorMessage("not-checked-out", params);
@@ -56,7 +56,7 @@ public class ForceCheckIn extends DocumentUsecase {
     }
 
     protected void prepareView() throws Exception {
-        Node node = getSourceDocument().getRepositoryNode();
+        Node node = getSourceDocument();
         if (node.isCheckedOut()) {
             String userId = node.getCheckoutUserId();
             User currentUser = getSession().getIdentity().getUser();
@@ -101,11 +101,7 @@ public class ForceCheckIn extends DocumentUsecase {
 
     protected void doExecute() throws Exception {
         super.doExecute();
-
-        Document doc = getSourceDocument();
-        Node node = doc.getRepositoryNode();
-
-        node.forceCheckIn();
+        getSourceDocument().forceCheckIn();
     }
 
     /**

@@ -19,9 +19,9 @@ package org.apache.lenya.cms.repository;
 
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.metadata.MetaDataOwner;
+import org.apache.lenya.cms.repository.metadata.MetaData;
+import org.apache.lenya.cms.repository.metadata.MetaDataException;
+import org.apache.lenya.cms.repository.metadata.MetaDataOwner;
 
 /**
  * Provides access to a meta data source.

@@ -24,9 +24,8 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.RepositoryException;
 import org.apache.lenya.cms.publication.ResourceWrapper;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -103,12 +102,10 @@ public class CreateResource extends CreateDocument {
      * Adds the ressource. If asset upload is not enabled, an error message is added.
      * @throws IOException
      * @throws ServiceException
-     * @throws DocumentException
      * @throws MetaDataException
      * @throws RepositoryException
      */
-    protected void addResource() throws ServiceException, IOException, DocumentException,
-            RepositoryException, MetaDataException {
+    protected void addResource() throws ServiceException, IOException, MetaDataException, RepositoryException {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("Assets::addAsset() called");

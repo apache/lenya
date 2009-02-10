@@ -26,9 +26,9 @@ import java.util.List;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -66,11 +66,11 @@ public class Publish extends DocumentUsecase {
 
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                nodes.add(documents[i].getRepositoryNode());
+                nodes.add(documents[i]);
             }
 
             Area live = doc.getPublication().getArea(Publication.LIVE_AREA);
-            nodes.add(live.getSite().getRepositoryNode());
+            nodes.add(live.getSite());
             return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {
@@ -111,7 +111,7 @@ public class Publish extends DocumentUsecase {
             }
             updateFeed();
             getDocumentManager().copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(getLogger(), authoringDocument, getEvent());
+            WorkflowUtil.invoke(authoringDocument, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -168,7 +168,7 @@ public class Publish extends DocumentUsecase {
         DocumentHelper.setSimpleElementText(element, datestr);
 
         // set issued date on first time publish
-        Workflowable dw = WorkflowUtil.getWorkflowable(this.getLogger(), doc);
+        Workflowable dw = WorkflowUtil.getWorkflowable(doc);
         Version versions[] = dw.getVersions();
         boolean wasLive = false;
         for (int i = 0; i < versions.length; i++) {

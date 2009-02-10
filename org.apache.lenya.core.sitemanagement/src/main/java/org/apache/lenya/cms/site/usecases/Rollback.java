@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -32,8 +30,8 @@ public class Rollback extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
-        org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
+    protected org.apache.lenya.cms.publication.Node[] getNodesToLock() throws UsecaseException {
+        org.apache.lenya.cms.publication.Node[] objects = { getSourceDocument() };
         return objects;
     }
 
@@ -53,11 +51,9 @@ public class Rollback extends DocumentUsecase {
 
         int revision = getParameterAsInteger("rollbackRevision", -1);
 
-        Document document = getSourceDocument();
-        Node node = document.getRepositoryNode();
-        node.rollback(revision);
+        getSourceDocument().rollback(revision);
 
-        WorkflowUtil.invoke(getLogger(), getSourceDocument(), getEvent());
+        WorkflowUtil.invoke(getSourceDocument(), getEvent());
     }
 
     protected String getEvent() {

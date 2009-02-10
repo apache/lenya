@@ -47,6 +47,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Node;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -127,7 +128,7 @@ public class Publish extends InvokeWorkflow {
     protected boolean canNotifySubmitter() {
 
         boolean shallNotifySubmitter = false;
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(logger, getSourceDocument());
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(getSourceDocument());
         Version versions[] = workflowable.getVersions();
 
         // consider the case that there was no submit transition
@@ -162,26 +163,26 @@ public class Publish extends InvokeWorkflow {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
 
             Document doc = getSourceDocument();
             if (doc != null) {
-                nodes.add(doc.getRepositoryNode());
+                nodes.add(doc);
 
                 // lock the authoring site to avoid having live nodes for which no corresponding
                 // authoring node exists
-                nodes.add(doc.area().getSite().getRepositoryNode());
+                nodes.add(doc.area().getSite());
 
                 // lock the live site to avoid overriding changes made by others
                 SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA)
                         .getSite();
-                nodes.add(liveSite.getRepositoryNode());
+                nodes.add(liveSite);
             }
 
-            return (org.apache.lenya.cms.repository.Node[]) nodes
-                    .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+            return (Node[]) nodes
+                    .toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -354,7 +355,7 @@ public class Publish extends InvokeWorkflow {
             return;
         }
 
-        Workflowable workflowable = WorkflowUtil.getWorkflowable(logger, authoringDocument);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(authoringDocument);
         Version versions[] = workflowable.getVersions();
 
         // obtain submitted version
@@ -381,7 +382,7 @@ public class Publish extends InvokeWorkflow {
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
         org.apache.lenya.cms.repository.Session repoSession = (Session) getSession();
-        RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, getLogger(), descriptor);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, getLogger());
         repoSession.enqueueEvent(event);
     }
 
