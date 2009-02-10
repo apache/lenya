@@ -21,6 +21,6 @@
   xmlns="http://www.springframework.org/schema/beans">
   
   <bean name="org.apache.lenya.cms.repository.metadata.MetaDataRegistry"
-    class="org.apache.lenya.cms.repository.metadata.MetaDataRegistryImpl"/>
+    class="org.apache.lenya.cms.repository.metadata.impl.MetaDataRegistryImpl"/>
   
 </beans>

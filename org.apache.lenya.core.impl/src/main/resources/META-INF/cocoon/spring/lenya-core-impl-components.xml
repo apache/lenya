@@ -19,57 +19,92 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
-  
+
   <bean name="org.apache.lenya.cms.publication.Repository"
     class="org.apache.lenya.cms.publication.RepositoryImpl">
     <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
-    <property name="documentFactoryBuilder" ref="org.apache.lenya.cms.publication.DocumentFactoryBuilder"/>
+    <property name="documentFactoryBuilder"
+      ref="org.apache.lenya.cms.publication.DocumentFactoryBuilder"/>
   </bean>
-  
+
   <bean name="org.apache.lenya.cms.repository.RepositoryManager"
     class="org.apache.lenya.cms.repository.RepositoryManagerImpl">
     <property name="observationRegistry" ref="org.apache.lenya.cms.observation.ObservationRegistry"/>
     <property name="uuidGenerator" ref="org.apache.lenya.cms.repository.UUIDGenerator"/>
     <property name="sharedItemStore" ref="org.apache.lenya.cms.repository.SharedItemStore"/>
   </bean>
-  
+
   <bean name="org.apache.lenya.cms.publication.PublicationManager"
     class="org.apache.lenya.cms.publication.PublicationManagerImpl">
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
     <property name="pubBaseUri" value="resource://pubs"/>
   </bean>
-  
+
+  <bean name="org.apache.lenya.cms.metadata.MetaDataRegistry"
+    class="org.apache.lenya.cms.metadata.MetaDataRegistryWrapper">
+    <property name="repositoryMetaDataRegistry"
+      ref="org.apache.lenya.cms.repository.metadata.MetaDataRegistry"/>
+  </bean>
+
   <bean name="org.apache.lenya.cms.metadata.MetaDataCache"
-  class="org.apache.lenya.cms.metadata.MetaDataCache"/>
-  
+    class="org.apache.lenya.cms.metadata.MetaDataCache"/>
+
   <bean name="org.apache.lenya.cms.publication.DocumentFactoryBuilder"
     class="org.apache.lenya.cms.publication.DocumentFactoryBuilderImpl">
     <property name="publicationManager" ref="org.apache.lenya.cms.publication.PublicationManager"/>
     <property name="metaDataCache" ref="org.apache.lenya.cms.metadata.MetaDataCache"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
+    <property name="resourceTypeResolver"
+      ref="org.apache.lenya.cms.publication.ResourceTypeResolver"/>
   </bean>
-  
+
+  <bean name="org.apache.lenya.cms.publication.ResourceTypeResolver"
+    class="org.apache.lenya.cms.publication.ResourceTypeResolverImpl"/>
+
   <bean name="org.apache.lenya.cms.publication.DocumentManager"
     class="org.apache.lenya.cms.publication.DocumentManagerImpl">
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
     <property name="uuidGenerator" ref="org.apache.lenya.cms.repository.UUIDGenerator"/>
   </bean>
-  
+
   <bean name="org.apache.lenya.cms.module.ModuleManager"
-  class="org.apache.lenya.cms.module.ModuleManagerImpl"/>
-  
+    class="org.apache.lenya.cms.module.ModuleManagerImpl"/>
+
   <bean name="org.apache.lenya.cms.repository.SharedItemStore"
     class="org.apache.lenya.cms.repository.SharedItemStoreImpl">
     <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
   </bean>
-  
+
   <bean name="org.apache.lenya.cms.repository.UUIDGenerator"
-  class="org.apache.lenya.cms.repository.LenyaUUIDGenerator"/>
-  
+    class="org.apache.lenya.cms.repository.LenyaUUIDGenerator"/>
+
   <bean name="org.apache.lenya.cms.publication.DocumentBuilder/default"
     class="org.apache.lenya.cms.publication.DefaultDocumentBuilder"/>
+
+  <!-- Meta Data -->
+  <bean init-method="register"
+    name="org.apache.lenya.cms.repository.metadata.ElementSet/http://apache.org/lenya/metadata/document/1.0"
+    class="org.apache.lenya.cms.repository.metadata.impl.ConfigurableElementSet">
+    <property name="configUri" value="resource://META-INF/lenya/metadata/document.xml"/>
+    <property name="registry" ref="org.apache.lenya.cms.repository.metadata.MetaDataRegistry"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  </bean>
+  <bean init-method="register"
+    name="org.apache.lenya.cms.repository.metadata.ElementSet/http://purl.org/dc/elements/1.1/"
+    class="org.apache.lenya.cms.repository.metadata.impl.ConfigurableElementSet">
+    <property name="configUri" value="resource://META-INF/lenya/metadata/dc-elements.xml"/>
+    <property name="registry" ref="org.apache.lenya.cms.repository.metadata.MetaDataRegistry"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  </bean>
+  <bean init-method="register"
+    name="org.apache.lenya.cms.repository.metadata.ElementSet/http://purl.org/dc/terms/"
+    class="org.apache.lenya.cms.repository.metadata.impl.ConfigurableElementSet">
+    <property name="configUri" value="resource://META-INF/lenya/metadata/dc-terms.xml"/>
+    <property name="registry" ref="org.apache.lenya.cms.repository.metadata.MetaDataRegistry"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  </bean>
   
 </beans>

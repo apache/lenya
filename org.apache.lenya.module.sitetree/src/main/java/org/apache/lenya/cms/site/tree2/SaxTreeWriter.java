@@ -19,11 +19,7 @@ package org.apache.lenya.cms.site.tree2;
 
 import java.io.OutputStream;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.serialization.Serializer;
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.xml.sax.XMLizable;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.Link;
@@ -32,7 +28,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-public class SaxTreeWriter extends AbstractLogEnabled implements TreeWriter, XMLizable, Serviceable {
+public class SaxTreeWriter implements TreeWriter, XMLizable {
 
     protected static final String NS = SiteTreeImpl.NAMESPACE;
     protected static final String TYPE_CDATA = "CDATA";
@@ -46,24 +42,23 @@ public class SaxTreeWriter extends AbstractLogEnabled implements TreeWriter, XML
     protected static final String ELEM_LABEL = SaxTreeBuilder.ELEM_LABEL;
 
     private SiteTreeImpl tree;
-    private ServiceManager manager;
+    private Serializer serializer;
+
+    public void setSerializer(Serializer serializer) {
+        this.serializer = serializer;
+    }
 
     public void writeTree(SiteTreeImpl tree) throws Exception {
         this.tree = tree;
 
-        Serializer serializer = null;
         OutputStream stream = null;
         try {
-            serializer = (Serializer) this.manager.lookup(ROLE + "Serializer");
             stream = tree.getRepositoryNode().getOutputStream();
-            serializer.setOutputStream(stream);
+            this.serializer.setOutputStream(stream);
             toSAX(serializer);
         } finally {
             if (stream != null) {
                 stream.close();
-            }
-            if (serializer != null) {
-                this.manager.release(serializer);
             }
         }
     }
@@ -125,10 +120,6 @@ public class SaxTreeWriter extends AbstractLogEnabled implements TreeWriter, XML
         char[] chars = link.getLabel().toCharArray();
         handler.characters(chars, 0, chars.length);
         handler.endElement(NS, ELEM_LABEL, ELEM_LABEL);
-    }
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
 }

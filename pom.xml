@@ -50,6 +50,7 @@
     <module>org.apache.lenya.core.observation</module>
     <module>org.apache.lenya.core.properties</module>
     <module>org.apache.lenya.core.repository</module>
+    <module>org.apache.lenya.core.resourcetype</module>
     <module>org.apache.lenya.core.sitemanagement</module>
     <module>org.apache.lenya.core.templating</module>
     <module>org.apache.lenya.core.usecase</module>

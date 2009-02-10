@@ -21,10 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.LockException;
@@ -46,19 +43,21 @@ import org.apache.lenya.cms.site.tree.SiteTree;
  * Simple site tree implementation.
  */
 public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, RepositoryItem {
-    
+
     private Area area;
     private RootNode root;
     private int revision;
     private TreeBuilder builder;
+    private TreeWriter writer;
+    private NodeFactory nodeFactory;
+    private boolean changed = false;
 
     /**
      * @param area The area.
      * @param logger The logger.
      */
-    public SiteTreeImpl(TreeBuilder builder, Area area) {
+    public SiteTreeImpl(Area area) {
         this.area = area;
-        this.builder = builder;
         initRoot();
     }
 
@@ -97,13 +96,10 @@ public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, Repos
             repoNode.setPersistable(this);
 
             if (repoNode.exists()) {
-                TreeBuilder builder = null;
                 try {
                     this.loading = true;
-                    builder = (TreeBuilder) WebAppContextUtils.getCurrentWebApplicationContext()
-                            .getBean(TreeBuilder.ROLE);
                     reset();
-                    builder.buildTree(this);
+                    this.builder.buildTree(this);
                     assert getRevision() == getRevision(getRepositoryNode());
                 } finally {
                     this.loading = false;
@@ -111,7 +107,6 @@ public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, Repos
             }
             this.loaded = true;
             if (!repoNode.exists()) {
-                if (true) throw new RuntimeException("node doesn't exist: " + repoNode);
                 reset();
             }
         } catch (Exception e) {
@@ -134,12 +129,8 @@ public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, Repos
         if (loading || !changed) {
             return;
         }
-        TreeWriter writer = null;
         try {
-            writer = (TreeWriter) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
-                    TreeWriter.ROLE);
-            int revision = getRevision(getRepositoryNode()) + 1;
-            writer.writeTree(this);
+            this.writer.writeTree(this);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -317,21 +308,10 @@ public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, Repos
         return holder.getRepositorySession();
     }
 
-    private NodeFactory nodeFactory;
-    private boolean changed = false;
-
-    protected NodeFactory getNodeFactory() {
-        if (this.nodeFactory == null) {
-            this.nodeFactory = (NodeFactory) WebAppContextUtils.getCurrentWebApplicationContext()
-                    .getBean(NodeFactory.ROLE);
-        }
-        return this.nodeFactory;
-    }
-
     public Node getRepositoryNode() {
         try {
             return (Node) getRepositorySession()
-                    .getRepositoryItem(getNodeFactory(), getSourceUri());
+                    .getRepositoryItem(this.nodeFactory, getSourceUri());
         } catch (RepositoryException e) {
             throw new RuntimeException("Creating repository node failed: ", e);
         }
@@ -523,6 +503,18 @@ public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, Repos
         } catch (RepositoryException e) {
             throw new org.apache.lenya.cms.publication.RepositoryException(e);
         }
+    }
+
+    public void setBuilder(TreeBuilder treeBuilder) {
+        this.builder = treeBuilder;
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
+    }
+
+    public void setWriter(TreeWriter treeWriter) {
+        this.writer = treeWriter;
     }
 
 }

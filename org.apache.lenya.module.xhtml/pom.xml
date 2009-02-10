@@ -15,5 +15,9 @@
   <packaging>jar</packaging>
   <name>Apache Lenya Module XHTML</name>
   <dependencies>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-resourcetype</artifactId>
+    </dependency>
   </dependencies>
 </project>

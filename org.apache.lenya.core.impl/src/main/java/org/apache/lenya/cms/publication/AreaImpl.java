@@ -25,6 +25,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
@@ -64,7 +65,8 @@ public class AreaImpl implements Area {
         } else {
             String sourceUri = DocumentImpl.getSourceURI(pub, name, uuid, language);
             try {
-                org.apache.lenya.cms.repository.Session repoSession = (org.apache.lenya.cms.repository.Session) this.session;
+                org.apache.lenya.cms.repository.Session repoSession = ((SessionHolder) this.session)
+                        .getRepositorySession();
                 Node node = (Node) repoSession.getRepositoryItem(getNodeFactory(), sourceUri);
                 return node.exists();
             } catch (RepositoryException e) {
@@ -81,7 +83,8 @@ public class AreaImpl implements Area {
         return getDocumentFactory().get(getPublication(), getName(), uuid, language);
     }
 
-    public Document getDocument(String uuid, String language, int revision) throws ResourceNotFoundException {
+    public Document getDocument(String uuid, String language, int revision)
+            throws ResourceNotFoundException {
         return getDocumentFactory().get(getPublication(), getName(), uuid, language, revision);
     }
 

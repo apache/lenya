@@ -35,10 +35,22 @@
     <property name="parser" ref="org.apache.excalibur.xml.sax.SAXParser"/>
   </bean>
   
+  <bean name="org.apache.lenya.cms.site.tree2.TreeWriterSerializer"
+    class="org.apache.cocoon.components.serializers.XMLSerializer">
+    <property name="encoding" value="UTF-8"/>
+  </bean>
+  
+  <bean name="org.apache.lenya.cms.site.tree2.TreeWriter"
+    class="org.apache.lenya.cms.site.tree2.SaxTreeWriter">
+    <property name="serializer" ref="org.apache.lenya.cms.site.tree2.TreeWriterSerializer"/>
+  </bean>
+  
   <bean name="org.apache.lenya.cms.site.tree2.SiteTreeFactory"
     class="org.apache.lenya.cms.site.tree2.SiteTreeFactory">
     <property name="sharedItemStore" ref="org.apache.lenya.cms.repository.SharedItemStore"/>
     <property name="treeBuilder" ref="org.apache.lenya.cms.site.tree2.TreeBuilder"/>
+    <property name="treeWriter" ref="org.apache.lenya.cms.site.tree2.TreeWriter"/>
+    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
   </bean>
   
 </beans>

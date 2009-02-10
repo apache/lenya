@@ -44,6 +44,7 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
     private MetaDataCache metaDataCache;
     private SourceResolver sourceResolver;
     private NodeFactory nodeFactory;
+    private ResourceTypeResolver resourceTypeResolver;
     
     /**
      * @return The session.
@@ -306,6 +307,7 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
         doc.setMetaDataCache(getMetaDataCache());
         doc.setSourceResolver(getSourceResolver());
         doc.setNodeFactory(this.nodeFactory);
+        doc.setResourceTypeResolver(this.resourceTypeResolver);
         return doc;
     }
 
@@ -363,6 +365,10 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
     public void setNodeFactory(NodeFactory nodeFactory) {
         Validate.notNull(nodeFactory, "node factory");
         this.nodeFactory = nodeFactory;
+    }
+
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
     }
 
 }

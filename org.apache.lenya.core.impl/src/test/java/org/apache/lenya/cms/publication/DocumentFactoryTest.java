@@ -27,15 +27,13 @@ import org.apache.lenya.cms.AbstractAccessControlTest;
 public class DocumentFactoryTest extends AbstractAccessControlTest {
     
     private static final Log logger = LogFactory.getLog(DocumentFactoryTest.class);
-    
-    private Repository repository;
 
     /**
      * Tests the meta data.
      * @throws Exception
      */
     public void testDocumentFactory() throws Exception {
-        Session session = this.repository.getSession(getRequest());
+        Session session = getSession();
         DocumentFactory factoryA = new DocumentFactoryImpl(session);
 
         Publication publication = getSession().getPublication("test");
@@ -49,10 +47,6 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
         Document docB1 = factoryB.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         
         assertSame(docA1, docB1);
-    }
-
-    public void setRepository(Repository repository) {
-        this.repository = repository;
     }
 
 }

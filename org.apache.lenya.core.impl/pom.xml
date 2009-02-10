@@ -127,6 +127,26 @@
       <artifactId>lenya-module-sourcerepository</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-xhtml</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-links</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-opendocument</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-cforms</artifactId>
+      <scope>runtime</scope>
+    </dependency>
     
   </dependencies>
 </project>

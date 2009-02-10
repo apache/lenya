@@ -18,19 +18,23 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
+import org.springframework.web.context.WebApplicationContext;
 
-/**
- * Specifies selector for resource types.
- */
-public class ResourceTypeSelector {
+public class ResourceTypeResolverImpl implements ResourceTypeResolver {
 
-    public ResourceType getResourceType(String name) {
-        ResourceType type = (ResourceType) WebAppContextUtils.getCurrentWebApplicationContext()
-                .getBean(ResourceType.ROLE + "/" + name);
-        if (type != null) {
-            type.setName(name);
-        }
-        return type;
+    public boolean existsResourceType(String name) {
+        return getAppContext().containsBean(getBeanName(name));
     }
 
+    public ResourceType getResourceType(String name) {
+        return (ResourceType) getAppContext().getBean(getBeanName(name));
+    }
+
+    protected String getBeanName(String name) {
+        return ResourceType.class.getName() + "/" + name;
+    }
+
+    protected WebApplicationContext getAppContext() {
+        return WebAppContextUtils.getCurrentWebApplicationContext();
+    }
 }

@@ -585,6 +585,11 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-resourcetype</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-sitemanagement</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -607,12 +612,27 @@
       <!-- Modules -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-module-cforms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-module-collection</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-module-links</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-module-notification</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-module-opendocument</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -642,9 +662,18 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-module-xhtml</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      
+      <!-- Optional -->
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-optional-jcrsource</artifactId>
         <version>${project.version}</version>
       </dependency>
+      
+      <!-- Web Application -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-webapp</artifactId>

@@ -19,13 +19,5 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-  
-  <import resource="classpath:META-INF/cocoon/spring/lenya-core-ac-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-core-impl-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-core-observation-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-core-repository-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-module-sourcerepository-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-module-sitetree-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/cocoon-xml-impl.xml"/>
-  
+  <import resource="classpath:test-components.xml"/>
 </beans>

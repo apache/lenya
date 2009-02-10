@@ -32,6 +32,7 @@ public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
     private MetaDataCache metaDataCache;
     private SourceResolver sourceResolver;
     private NodeFactory nodeFactory;
+    private ResourceTypeResolver resourceTypeResolver;
 
     public DocumentFactory createDocumentFactory(Session session) {
         DocumentFactoryImpl factory = new DocumentFactoryImpl(session);
@@ -39,6 +40,7 @@ public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
         factory.setPublicationManager(getPublicationManager());
         factory.setSourceResolver(getSourceResolver());
         factory.setNodeFactory(this.nodeFactory);
+        factory.setResourceTypeResolver(this.resourceTypeResolver);
         return factory;
     }
 
@@ -70,5 +72,8 @@ public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
         this.nodeFactory = nodeFactory;
     }
 
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
+    }
 
 }

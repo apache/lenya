@@ -23,6 +23,7 @@ import org.apache.lenya.cms.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.metadata.Element;
 
 /**
  * Meta data test.
@@ -36,7 +37,8 @@ public class MetaDataTest extends AbstractAccessControlTest {
     public void testMetaData() throws Exception {
 
         Publication publication = getSession().getPublication("test");
-        Document doc = publication.getArea("authoring").getSite().getNode("/index").getLink("en").getDocument(); 
+        Document doc = publication.getArea("authoring").getSite().getNode("/index").getLink("en")
+                .getDocument();
 
         String namespaceUri = "foobar";
         Exception e = null;
@@ -81,36 +83,35 @@ public class MetaDataTest extends AbstractAccessControlTest {
     String NAMESPACE = "http://apache.org/lenya/test/metadata";
 
     protected void checkOnCopy(Publication pub) throws Exception {
-        MetaDataRegistry registry = null;
+        MetaDataRegistryWrapper registry = null;
         try {
-            registry = (MetaDataRegistry) getManager().lookup(MetaDataRegistry.ROLE);
-            ElementSet set = new TestElementSet();
-            registry.register(NAMESPACE, set);
-        }
-        finally {
+            registry = (MetaDataRegistryWrapper) getManager().lookup(MetaDataRegistry.ROLE);
+            org.apache.lenya.cms.repository.metadata.ElementSet set = new TestElementSet();
+            registry.getRepositoryMetaDataRegistry().register(NAMESPACE, set);
+        } finally {
             getManager().release(registry);
         }
-        
+
         Document source = pub.getArea(Publication.AUTHORING_AREA).getDocument("/index", "en");
         Document target = pub.getArea(Publication.AUTHORING_AREA).getDocument("/index", "en");
-        
+
         MetaData sourceMeta = source.getMetaData(NAMESPACE);
         sourceMeta.setValue("copy", "sourceCopy");
         sourceMeta.setValue("ignore", "sourceIgnore");
         sourceMeta.setValue("delete", "sourceDelete");
-        
+
         MetaData targetMeta = target.getMetaData(NAMESPACE);
         targetMeta.setValue("ignore", "targetIgnore");
         targetMeta.setValue("delete", "targetDelete");
-        
+
         targetMeta.replaceBy(sourceMeta);
-        
+
         assertTrue(targetMeta.getValues("copy").length == 1);
         assertEquals(sourceMeta.getValues("copy"), targetMeta.getValues("copy"));
-        
+
         assertTrue(targetMeta.getValues("ignore").length == 1);
         assertEquals(targetMeta.getFirstValue("ignore"), "targetIgnore");
-        
+
         assertTrue(targetMeta.getValues("delete").length == 0);
     }
 
@@ -119,7 +120,7 @@ public class MetaDataTest extends AbstractAccessControlTest {
         assertTrue(dc.getValues("title").length == 0);
     }
 
-    protected class TestElement implements Element {
+    protected class TestElement implements org.apache.lenya.cms.repository.metadata.Element {
 
         private String name;
         private int actionOnCopy;
@@ -155,13 +156,14 @@ public class MetaDataTest extends AbstractAccessControlTest {
 
     }
 
-    protected class TestElementSet implements ElementSet {
+    protected class TestElementSet implements org.apache.lenya.cms.repository.metadata.ElementSet {
 
-        private Element[] elements = { new TestElement("copy", Element.ONCOPY_COPY),
+        private org.apache.lenya.cms.repository.metadata.Element[] elements = {
+                new TestElement("copy", Element.ONCOPY_COPY),
                 new TestElement("ignore", Element.ONCOPY_IGNORE),
                 new TestElement("delete", Element.ONCOPY_DELETE) };
-        
-        private Map name2element;
+
+        private Map<String, org.apache.lenya.cms.repository.metadata.Element> name2element;
 
         protected TestElementSet() {
             for (int i = 0; i < elements.length; i++) {
@@ -173,11 +175,12 @@ public class MetaDataTest extends AbstractAccessControlTest {
             return true;
         }
 
-        public Element getElement(String name) throws MetaDataException {
-            return (Element) this.name2element.get(name);
+        public org.apache.lenya.cms.repository.metadata.Element getElement(String name)
+                throws org.apache.lenya.cms.repository.metadata.MetaDataException {
+            return (org.apache.lenya.cms.repository.metadata.Element) this.name2element.get(name);
         }
 
-        public Element[] getElements() {
+        public org.apache.lenya.cms.repository.metadata.Element[] getElements() {
             return elements;
         }
 

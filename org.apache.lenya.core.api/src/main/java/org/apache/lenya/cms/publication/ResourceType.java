@@ -93,11 +93,6 @@ public interface ResourceType {
     Sample getSample(String name);
 
     /**
-     * @param name The name of the resource type.
-     */
-    void setName(String name);
-
-    /**
      * @return All supported formats.
      */
     String[] getFormats();

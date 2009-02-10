@@ -57,7 +57,7 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
     protected void doTestCopyToArea(DocumentManager docManager, String sourceAreaName,
             String destAreaName, String path1, String path2) throws Exception {
 
-        Publication pub = getSession().addPublication("test");
+        Publication pub = getSession().getPublication("test");
         SiteStructure sourceArea = pub.getArea(sourceAreaName).getSite();
         SiteStructure destArea = pub.getArea(destAreaName).getSite();
 

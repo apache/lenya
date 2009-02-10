@@ -23,5 +23,15 @@
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
     </dependency>
+    <!-- TODO: remove dependencies on Avalon and Excalibur -->
+    <dependency>
+      <groupId>org.apache.avalon.framework</groupId>
+      <artifactId>avalon-framework-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.excalibur.components</groupId>
+      <artifactId>excalibur-sourceresolve</artifactId>
+      <version>2.2.3</version>
+    </dependency>
   </dependencies>
 </project>

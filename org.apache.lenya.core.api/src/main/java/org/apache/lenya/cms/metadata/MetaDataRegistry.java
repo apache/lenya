@@ -43,14 +43,6 @@ public interface MetaDataRegistry {
     boolean isRegistered(String namespaceUri) throws MetaDataException;
     
     /**
-     * Register an element set.
-     * @param namespaceUri The namespace URI.
-     * @param elementSet The element set.
-     * @throws MetaDataException if a set is already registered for this name.
-     */
-    void register(String namespaceUri, ElementSet elementSet) throws MetaDataException;
-    
-    /**
      * @return The registered namespace URIs.
      * @throws MetaDataException if an error occurs.
      */

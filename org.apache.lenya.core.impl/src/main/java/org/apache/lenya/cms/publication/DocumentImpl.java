@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,6 +56,7 @@ public class DocumentImpl implements Document, RepositoryItem {
     private DocumentIdentifier identifier;
     private org.apache.lenya.cms.publication.Session session;
     private NodeFactory nodeFactory;
+    private ResourceTypeResolver resourceTypeResolver;
     private int revision = -1;
 
     /**
@@ -408,8 +408,7 @@ public class DocumentImpl implements Document, RepositoryItem {
             if (name == null) {
                 throw new DocumentException("No resource type defined for document [" + this + "]!");
             }
-            this.resourceType = (ResourceType) WebAppContextUtils.getCurrentWebApplicationContext()
-                    .getBean(ResourceType.class.getName() + "/" + name);
+            this.resourceType = this.resourceTypeResolver.getResourceType(name);
         }
         return this.resourceType;
     }
@@ -512,9 +511,6 @@ public class DocumentImpl implements Document, RepositoryItem {
 
     private Node repositoryNode;
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
-     */
     public Node getRepositoryNode() {
         if (this.repositoryNode == null) {
             SessionHolder holder = (SessionHolder) getSession();
@@ -644,7 +640,7 @@ public class DocumentImpl implements Document, RepositoryItem {
     }
 
     public Session getRepositorySession() {
-        return (Session) getSession();
+        return ((SessionHolder) getSession()).getRepositorySession();
     }
 
     public int getRevisionNumber() {
@@ -780,6 +776,10 @@ public class DocumentImpl implements Document, RepositoryItem {
         } catch (org.apache.lenya.cms.repository.RepositoryException e) {
             throw new RepositoryException(e);
         }
+    }
+
+    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
+        this.resourceTypeResolver = resourceTypeResolver;
     }
 
 }

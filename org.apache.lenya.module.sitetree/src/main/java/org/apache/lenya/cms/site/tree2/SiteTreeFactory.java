@@ -17,11 +17,11 @@
  */
 package org.apache.lenya.cms.site.tree2;
 
-import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
@@ -40,6 +40,8 @@ public class SiteTreeFactory implements RepositoryItemFactory {
 
     private SharedItemStore sharedItemStore;
     private TreeBuilder treeBuilder;
+    private TreeWriter treeWriter;
+    private NodeFactory nodeFactory;
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         String[] snippets = key.split(":");
@@ -53,7 +55,11 @@ public class SiteTreeFactory implements RepositoryItemFactory {
 
             Session storeSession = this.sharedItemStore.getSession();
             if (session.isModifiable() || session == storeSession) {
-                return new SiteTreeImpl(this.treeBuilder, area);
+                SiteTreeImpl tree = new SiteTreeImpl(area);
+                tree.setBuilder(this.treeBuilder);
+                tree.setWriter(this.treeWriter);
+                tree.setNodeFactory(this.nodeFactory);
+                return tree;
             } else {
                 return new DelegatingSiteTree(area, this, storeSession, key);
             }
@@ -72,6 +78,14 @@ public class SiteTreeFactory implements RepositoryItemFactory {
 
     public void setTreeBuilder(TreeBuilder treeBuilder) {
         this.treeBuilder = treeBuilder;
+    }
+
+    public void setTreeWriter(TreeWriter treeWriter) {
+        this.treeWriter = treeWriter;
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
     }
 
 }
