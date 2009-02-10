@@ -22,7 +22,7 @@ package org.apache.lenya.cms.publication;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.AbstractAccessControlTest;
 
 /**
  * 

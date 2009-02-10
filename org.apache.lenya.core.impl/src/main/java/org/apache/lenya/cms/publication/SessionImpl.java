@@ -17,64 +17,42 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
-import org.apache.lenya.cms.observation.RepositoryListener;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.Persistable;
-import org.apache.lenya.cms.repository.RepositoryItem;
-import org.apache.lenya.cms.repository.RepositoryItemFactory;
-import org.apache.lenya.cms.repository.RepositoryItemFactoryWrapper;
-import org.apache.lenya.cms.repository.SharedItemStore;
-import org.apache.lenya.cms.repository.UUIDGenerator;
-import org.apache.lenya.transaction.ConcurrentModificationException;
-import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.IdentityMapImpl;
-import org.apache.lenya.transaction.Lock;
-import org.apache.lenya.transaction.Lockable;
-import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.TransactionLock;
-import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.transaction.UnitOfWork;
-import org.apache.lenya.transaction.UnitOfWorkImpl;
 
-public class SessionImpl implements Session {
+public class SessionImpl implements Session, SessionHolder {
 
     private static final Log logger = LogFactory.getLog(SessionImpl.class);
-    
+
     private org.apache.lenya.cms.repository.Session repositorySession;
     private RepositoryImpl repository;
     private DocumentFactory documentFactory;
     private DocumentFactoryBuilder documentFactoryBuilder;
 
-    
-    public SessionImpl(RepositoryImpl repository, org.apache.lenya.cms.repository.Session repoSession) {
+    public SessionImpl(RepositoryImpl repository,
+            org.apache.lenya.cms.repository.Session repoSession) {
         Validate.notNull(repository, "repository");
         Validate.notNull(repoSession, "repository session");
         this.repository = repository;
         this.repositorySession = repoSession;
+        this.repositorySession.setHolder(this);
     }
 
-    protected org.apache.lenya.cms.repository.Session getRepositorySession() {
+    public org.apache.lenya.cms.repository.Session getRepositorySession() {
         return this.repositorySession;
     }
 
-    public Publication getPublication(String id) {
+    public Publication getPublication(String id) throws ResourceNotFoundException {
         try {
             return getDocumentFactory().getPublication(id);
         } catch (PublicationException e) {
-            throw new RuntimeException(e);
+            throw new ResourceNotFoundException(e);
         }
     }
 
@@ -82,7 +60,7 @@ public class SessionImpl implements Session {
         return this.repository;
     }
 
-    public DocumentFactory getDocumentFactory() {
+    protected DocumentFactory getDocumentFactory() {
         if (this.documentFactory == null) {
             this.documentFactory = this.documentFactoryBuilder.createDocumentFactory(this);
         }
@@ -102,7 +80,6 @@ public class SessionImpl implements Session {
     }
 
     private UnitOfWork unitOfWork;
-    private SharedItemStore sharedItemStore;
 
     /**
      * @return The unit of work.
@@ -157,6 +134,19 @@ public class SessionImpl implements Session {
 
     public boolean isModifiable() {
         return getRepositorySession().isModifiable();
+    }
+
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
+        this.documentFactoryBuilder = documentFactoryBuilder;
+    }
+
+    public Publication addPublication(String id) throws RepositoryException {
+        if (existsPublication(id)) {
+            throw new RepositoryException("The publication '" + id + "' already exists.");
+        }
+        DocumentFactoryImpl factory = (DocumentFactoryImpl) getDocumentFactory();
+        factory.getPublicationManager().addPublication(id);
+        return getPublication(id);
     }
 
 }

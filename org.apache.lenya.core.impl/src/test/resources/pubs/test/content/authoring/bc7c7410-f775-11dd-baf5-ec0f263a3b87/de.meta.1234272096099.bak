@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata xmlns="http://apache.org/lenya/metadata/1.0">
+<element-set namespace="http://apache.org/lenya/metadata/media/1.0"/>
+<element-set namespace="http://purl.org/dc/terms/"/>
+<element-set namespace="http://purl.org/dc/elements/1.1/">
+<element key="title">
+<value>Lenya erfolgreich installiert</value>
+</element>
+<element key="rights">
+<value>All rights reserved</value>
+</element>
+<element key="publisher">
+<value>Apache Software Foundation</value>
+</element>
+<element key="date">
+<value>2007-03-22 15:54:35</value>
+</element>
+<element key="language">
+<value>de</value>
+</element>
+<element key="creator">
+<value>Lenya Development Team</value>
+</element>
+<element key="description">
+<value>A news message.</value>
+</element>
+<element key="subject">
+<value>Lenya erfolgreich installiert</value>
+</element>
+</element-set>
+<element-set namespace="http://apache.org/lenya/metadata/site/1.0"/>
+<element-set namespace="http://apache.org/lenya/metadata/workflow/1.0"/>
+<element-set namespace="http://apache.org/lenya/metadata/document/1.0">
+<element key="mimeType">
+<value>application/xhtml+xml</value>
+</element>
+<element key="extension">
+<value>xml</value>
+</element>
+<element key="resourceType">
+<value>xhtml</value>
+</element>
+<element key="contentType">
+<value>xml</value>
+</element>
+</element-set>
+</metadata>

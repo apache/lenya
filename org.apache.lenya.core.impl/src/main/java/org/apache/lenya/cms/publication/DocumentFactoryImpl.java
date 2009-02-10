@@ -25,9 +25,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaDataCache;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
+import org.apache.lenya.cms.repository.SessionHolder;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
@@ -41,6 +43,7 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
     private Session session;
     private MetaDataCache metaDataCache;
     private SourceResolver sourceResolver;
+    private NodeFactory nodeFactory;
     
     /**
      * @return The session.
@@ -93,7 +96,8 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
     }
 
     protected org.apache.lenya.cms.repository.Session getRepositorySession() {
-        return (org.apache.lenya.cms.repository.Session) this.session;
+        SessionHolder holder = (SessionHolder) this.session;
+        return holder.getRepositorySession();
     }
 
     /**
@@ -301,6 +305,7 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
         DocumentImpl doc = new DocumentImpl(session, identifier, revision);
         doc.setMetaDataCache(getMetaDataCache());
         doc.setSourceResolver(getSourceResolver());
+        doc.setNodeFactory(this.nodeFactory);
         return doc;
     }
 
@@ -353,6 +358,11 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
 
     public void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        Validate.notNull(nodeFactory, "node factory");
+        this.nodeFactory = nodeFactory;
     }
 
 }

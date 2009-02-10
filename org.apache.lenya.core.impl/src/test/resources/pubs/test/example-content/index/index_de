@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index_de 528434 2007-04-13 10:42:52Z andreas $ -->
+  <head>
+    <title>Willkommen zur Default-Publikation!</title>
+  </head>
+  <body>
+    <h1>Hallo und herzlich Willkommen bei der Lenya Default-Publikation!</h1>
+    
+    <p>
+      Apache Lenya ist ein in Java implementiertes Open-Source Content Management System,
+      das auf offenen Standards wie XML und XSLT sowie dem bewährten Apache
+      Software-Stack basiert. Sein Fundament bildet das XML-Publishing-Framework
+      Apache Cocoon.
+    </p>
+
+    <p>
+      Im Artikel <a href="/default/authoring/concepts_de.html">Konzepte</a> erhalten Sie
+      einen Überblick über die in Lenya verwendeteen Konzepte und Begriffe.
+      Der Artikel <a href="/default/authoring/features_de.html">Features</a> bietet
+      einen Überblick über die in Lenya verfügbaren Funktionen.
+    </p>
+    
+    <p>
+      Für eine schnelle Einführung in die Verwendung des Apache Lenya CMS empfehlen
+      wir das <a href="/default/authoring/tutorial_de.html">Tutorial</a>.
+    </p>
+
+    <p>Der Zweck dieser Publikation ist es,</p>
+
+    <ul>
+      <li>
+        die Grundfunktionalität des Apache Lenya CMS zu präsentieren,
+      </li>
+      <li>
+        eine Publikation "von der Stange" anzubieten, die auf einfache
+        Weise angepasst und genutzt werden kann,  und
+      </li>
+      <li>
+        eine Basis für Referenzimplementation neuer Konzepte und Best-Practises
+        zur Verfügung zu stellen.
+      </li>
+    </ul>
+    
+    <p>
+      Diese Publikation reizt die Möglichkeiten von Apache Lenya nicht aus;
+      es gibt keine Spielereien, die Sie verwirren könnten. Diese Publikation enthält
+      nur, was Sie für einen schnellen Einstieg benötigen.
+    </p>
+    
+  </body>
+</html>

@@ -28,6 +28,7 @@ import java.util.Map;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryItem;
 
@@ -82,9 +83,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication, 
         if (this.documentBuilder == null) {
             try {
                 this.documentBuilder = (DocumentBuilder) WebAppContextUtils
-                        .getCurrentWebApplicationContext()
-                        .getBean(
-                                DocumentBuilder.class.getName() + delegate.getDocumentBuilderHint());
+                        .getCurrentWebApplicationContext().getBean(
+                                DocumentBuilder.class.getName() + "/"
+                                        + delegate.getDocumentBuilderHint());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -143,8 +144,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication, 
         return (String[]) this.allResourceTypes.toArray(new String[this.allResourceTypes.size()]);
     }
 
-    public File getServletContext() {
-        return delegate.getServletContext();
+    public String getPubBaseUri() {
+        return delegate.getPubBaseUri();
     }
 
     public String getSiteManagerHint() {

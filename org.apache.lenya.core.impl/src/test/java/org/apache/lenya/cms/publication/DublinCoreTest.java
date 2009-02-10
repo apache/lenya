@@ -18,7 +18,7 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 

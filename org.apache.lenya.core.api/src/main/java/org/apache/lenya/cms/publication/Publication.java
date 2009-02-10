@@ -52,14 +52,6 @@ public interface Publication {
      */
     String TRASH_AREA = "trash";
     /**
-     * <code>PUBLICATION_PREFIX</code> The publication prefix
-     */
-    String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
-    /**
-     * <code>PUBLICATION_PREFIX_URI</code> The publication prefix URI
-     */
-    String PUBLICATION_PREFIX_URI = "lenya/pubs";
-    /**
      * <code>CONFIGURATION_PATH</code> The configuration path
      */
     String CONFIGURATION_PATH = "config";
@@ -80,6 +72,11 @@ public interface Publication {
      * The item type.
      */
     String ITEM_TYPE = "publication";
+    
+    /**
+     * @deprecated
+     */
+    String PUBLICATION_PREFIX_URI = "lenya/pubs";
 
     /**
      * Returns the publication ID.
@@ -98,11 +95,9 @@ public interface Publication {
     void setName(String name);
 
     /**
-     * Returns the servlet context this publication belongs to (usually, the
-     * <code>webapps/lenya</code> directory).
-     * @return A <code>File</code> object.
+     * @return The URI of the directory where publications are located.
      */
-    File getServletContext();
+    String getPubBaseUri();
 
     /**
      * @return if this publication exists.

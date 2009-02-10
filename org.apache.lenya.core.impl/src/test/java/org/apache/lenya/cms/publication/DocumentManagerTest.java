@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.AbstractAccessControlTest;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -34,7 +34,7 @@ import org.apache.lenya.util.StringUtil;
  * Document manager test.
  */
 public class DocumentManagerTest extends AbstractAccessControlTest {
-    
+
     private DocumentManager docManager;
 
     /**
@@ -55,10 +55,9 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
     }
 
     protected void doTestCopyToArea(DocumentManager docManager, String sourceAreaName,
-            String destAreaName, String path1, String path2) throws PublicationException,
-            SiteException {
+            String destAreaName, String path1, String path2) throws Exception {
 
-        Publication pub = getSession().getPublication("test");
+        Publication pub = getSession().addPublication("test");
         SiteStructure sourceArea = pub.getArea(sourceAreaName).getSite();
         SiteStructure destArea = pub.getArea(destAreaName).getSite();
 
@@ -185,11 +184,10 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
 
     }
 
-    public void setDocManager(DocumentManager docManager) {
-        this.docManager = docManager;
-    }
-
     public DocumentManager getDocManager() {
+        if (this.docManager == null) {
+            this.docManager = (DocumentManager) getBeanFactory().getBean(DocumentManager.ROLE);
+        }
         return docManager;
     }
 }

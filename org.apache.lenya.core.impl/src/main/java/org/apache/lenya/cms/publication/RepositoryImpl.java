@@ -28,6 +28,7 @@ import org.apache.lenya.cms.repository.RepositoryManager;
 public class RepositoryImpl implements Repository {
 
     private RepositoryManager repositoryManager;
+    private DocumentFactoryBuilder documentFactoryBuilder;
 
     public Session getSession(HttpServletRequest request) {
         Validate.notNull(request);
@@ -47,7 +48,6 @@ public class RepositoryImpl implements Repository {
     }
 
     public Session startSession(Identity identity, boolean modifiable) {
-
         IdentityWrapper wrapper = new IdentityWrapper(identity);
         org.apache.lenya.cms.repository.Session repoSession;
         try {
@@ -57,6 +57,7 @@ public class RepositoryImpl implements Repository {
             throw new RuntimeException(e);
         }
         SessionImpl session = new SessionImpl(this, repoSession);
+        session.setDocumentFactoryBuilder(this.documentFactoryBuilder);
         return session;
     }
 
@@ -79,6 +80,10 @@ public class RepositoryImpl implements Repository {
 
     public RepositoryManager getRepositoryManager() {
         return repositoryManager;
+    }
+
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
+        this.documentFactoryBuilder = documentFactoryBuilder;
     }
 
 }

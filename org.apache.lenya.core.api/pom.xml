@@ -14,6 +14,44 @@
   <artifactId>lenya-core-api</artifactId>
   <packaging>jar</packaging>
   <name>Apache Lenya Core API</name>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <!-- export our test classes in a separate jar -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*TestCase.class</include>
+            <include>**/*Test.class</include>
+          </includes>
+          <excludes>
+            <exclude>**/Abstract*.class</exclude>
+          </excludes>
+          <!-- currently triggers NPE in surefire plugin
+            <systemProperties>
+            <property>
+            <name>junit.test.loglevel</name>
+            <value>3</value>
+            </property>
+            </systemProperties>
+          -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -46,6 +84,27 @@
     <dependency>
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-chaperon-impl</artifactId>
+    </dependency>
+    
+    <!-- Tests -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-core</artifactId>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <!-- FIXME: This dependency is transitive and should be obtained automatically
+      see http://jira.codehaus.org/browse/MNG-1378 -->
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-sitemap-impl</artifactId>
+      <scope>test</scope>
+      <type>test-jar</type>
     </dependency>
   </dependencies>
 </project>

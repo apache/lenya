@@ -21,7 +21,6 @@ import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * Publication factory.
@@ -30,18 +29,19 @@ public class PublicationFactory implements RepositoryItemFactory {
 
     private PublicationConfiguration config;
     private NodeFactory nodeFactory;
+    private Session session;
 
     /**
      * @param config The publication configuration.
      */
-    public PublicationFactory(NodeFactory nodeFactory, PublicationConfiguration config) {
+    public PublicationFactory(Session session, NodeFactory nodeFactory, PublicationConfiguration config) {
         this.config = config;
         this.nodeFactory = nodeFactory;
+        this.session = session;
     }
 
-    public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        return new PublicationImpl((org.apache.lenya.cms.publication.Session) session,
-                this.nodeFactory, config);
+    public RepositoryItem buildItem(org.apache.lenya.cms.repository.Session session, String key) throws RepositoryException {
+        return new PublicationImpl(this.session, this.nodeFactory, config);
     }
 
     public String getItemType() {

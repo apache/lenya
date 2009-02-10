@@ -20,6 +20,7 @@ package org.apache.lenya.cms.publication;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaDataCache;
+import org.apache.lenya.cms.repository.NodeFactory;
 
 /**
  * Document factory builder implementation.
@@ -30,12 +31,14 @@ public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
     private PublicationManager pubManager;
     private MetaDataCache metaDataCache;
     private SourceResolver sourceResolver;
+    private NodeFactory nodeFactory;
 
     public DocumentFactory createDocumentFactory(Session session) {
         DocumentFactoryImpl factory = new DocumentFactoryImpl(session);
         factory.setMetaDataCache(getMetaDataCache());
         factory.setPublicationManager(getPublicationManager());
         factory.setSourceResolver(getSourceResolver());
+        factory.setNodeFactory(this.nodeFactory);
         return factory;
     }
 
@@ -61,6 +64,10 @@ public class DocumentFactoryBuilderImpl extends AbstractLogEnabled implements
 
     public void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
+    }
+
+    public void setNodeFactory(NodeFactory nodeFactory) {
+        this.nodeFactory = nodeFactory;
     }
 
 

@@ -41,6 +41,7 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -329,7 +330,7 @@ public class DocumentImpl implements Document, RepositoryItem {
      */
     public int hashCode() {
 
-        String key = getPublication().getId() + ":" + getPublication().getServletContext() + ":"
+        String key = getPublication().getId() + ":" + getPublication().getPubBaseUri() + ":"
                 + getArea() + ":" + getUUID() + ":" + getLanguage();
 
         return key.hashCode();
@@ -516,8 +517,9 @@ public class DocumentImpl implements Document, RepositoryItem {
      */
     public Node getRepositoryNode() {
         if (this.repositoryNode == null) {
-            this.repositoryNode = getRepositoryNode(getNodeFactory(), (Session) getSession(),
-                    getSourceURI());
+            SessionHolder holder = (SessionHolder) getSession();
+            this.repositoryNode = getRepositoryNode(getNodeFactory(),
+                    holder.getRepositorySession(), getSourceURI());
         }
         return this.repositoryNode;
     }
@@ -681,7 +683,8 @@ public class DocumentImpl implements Document, RepositoryItem {
         }
     }
 
-    public boolean isCheckedOutBySession(String sessionId, String userId) throws RepositoryException {
+    public boolean isCheckedOutBySession(String sessionId, String userId)
+            throws RepositoryException {
         try {
             return getRepositoryNode().isCheckedOutBySession(sessionId, userId);
         } catch (org.apache.lenya.cms.repository.RepositoryException e) {

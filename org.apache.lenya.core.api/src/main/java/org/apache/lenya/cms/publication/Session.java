@@ -31,6 +31,13 @@ public interface Session {
     Publication getPublication(String id) throws ResourceNotFoundException;
     
     Publication[] getPublications();
+    
+    /**
+     * @param id The publication ID.
+     * @return A publication.
+     * @throws RepositoryException if the publication already exists.
+     */
+    Publication addPublication(String id) throws RepositoryException;
 
     boolean existsPublication(String id);
 

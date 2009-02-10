@@ -54,19 +54,19 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
     }
 
     public void addListener(RepositoryListener listener) throws RepositoryException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public void commit() throws RepositoryException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public void enqueueEvent(RepositoryEvent event) {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public Identity getIdentity() {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
@@ -83,15 +83,15 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
     }
 
     public void rollback() throws RepositoryException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public void setIdentity(Identity identity) {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public Lock createLock(Lockable lockable, int version) throws TransactionException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public boolean isDirty(Transactionable transactionable) {
@@ -99,19 +99,19 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
     }
 
     public void registerDirty(Transactionable object) throws TransactionException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public void registerNew(Transactionable object) throws TransactionException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public void registerRemoved(Transactionable object) throws TransactionException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public void removeLock(Lockable lockable) throws TransactionException {
-        throw new IllegalStateException("Operation not permitted.");
+        throw new UnsupportedOperationException();
     }
 
     public synchronized void clear() {
@@ -120,6 +120,14 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
 
     public String getId() {
         return getClass().getName();
+    }
+
+    public SessionHolder getHolder() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setHolder(SessionHolder holder) {
+        throw new UnsupportedOperationException();
     }
 
 }

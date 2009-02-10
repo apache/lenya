@@ -29,9 +29,28 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*TestCase.class</include>
+            <include>**/*Test.class</include>
+          </includes>
+          <excludes>
+            <exclude>**/Abstract*.class</exclude>
+          </excludes>
+          <!-- currently triggers NPE in surefire plugin
+            <systemProperties>
+            <property>
+            <name>junit.test.loglevel</name>
+            <value>3</value>
+            </property>
+            </systemProperties>
+          -->
+        </configuration>
+      </plugin>
     </plugins>
   </build>
-  
       
   <dependencies>
     <dependency>
@@ -53,11 +72,6 @@
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-observation</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-sourcerepository</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -92,8 +106,26 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-ac</artifactId>
+      <artifactId>lenya-core-api</artifactId>
       <scope>test</scope>
+      <type>test-jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-ac</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    
+    <!-- FIXME: maybe the tests can be organized with less dependencies -->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-sitetree</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-module-sourcerepository</artifactId>
+      <scope>runtime</scope>
     </dependency>
     
   </dependencies>

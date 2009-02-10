@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: doctypes.xmap 179488 2005-06-02 02:29:39Z gregor $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:pipelines>
+
+    <map:pipeline>
+      <!-- View Revision? -->
+      <map:match pattern="*.xml">
+        <map:match type="step" pattern="view-revision">
+          <map:generate type="serverpages" src="fallback://lenya/content/rc/view.xsp">
+          </map:generate>
+          <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
+          <map:transform src="fallback://lenya/modules/homepage/xslt/homepage2xhtml.xsl">
+            <map:parameter name="rendertype" value="{1}"/>
+            <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
+            <map:parameter name="language" value="{page-envelope:document-language}"/>
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:match>
+      </map:match>
+      
+      <map:match pattern="news-*_*.xml">
+        <map:select type="resource-exists">
+          <map:when test="site:/{2}/news?format={1}">
+            <map:generate src="site:/{2}/news?format={1}"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="fallback://lenya/content/util/empty.xml"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- parametrized doctype matcher -->
+      <!-- pattern="{format}.xml" -->
+      <map:match pattern="*.xml">
+        <map:generate src="cocoon:/{1}.xml/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-uuid}/{page-envelope:document-language}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- {format}.xml/{pubId}/{area}/{uuid}/{language} -->
+      <map:match pattern="*.xml/*/*/*/*">
+        <map:generate src="lenya-document:{4},pub={2},area={3},lang={5}{link:rev}"/>
+        <map:transform src="fallback://lenya/modules/homepage/xslt/homepage2xhtml.xsl">
+          <map:parameter name="rendertype" value="{request-param:rendertype}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+          <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
+        </map:transform>
+        <map:transform type="include"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+    </map:pipeline>
+    
+  </map:pipelines>
+</map:sitemap>

@@ -23,7 +23,7 @@ package org.apache.lenya.cms.rc;
 import java.io.PrintWriter;
 
 import org.w3c.dom.Document;
-import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.AbstractAccessControlTest;
 import org.apache.lenya.xml.DocumentHelper;
 
 /**

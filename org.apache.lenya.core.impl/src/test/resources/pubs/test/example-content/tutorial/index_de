@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index_de 528434 2007-04-13 10:42:52Z andreas $ -->
+  <head>
+    <title>Lenya Tutorial</title>
+  </head>
+  <body>
+    <h1>Tutorial</h1>
+
+    <p>Das folgende Tutorial gibt eine kurze Einführung in das Content Management
+    System Apache Lenya. Wir betrachten typische Anwendungsfälle,
+    wie zum Beispiel ein neues Dokument erstellen, bearbeiten und publizieren.</p>
+
+    <h2>Ein neues Dokument erstellen</h2>
+    
+    <p>
+      Um ein neues Dokument zu erstellen, klicken Sie auf den Menüpunkt
+      <em>Datei -> Neues XHTML-Dokument</em>. Sie erhalten ein Formular,
+      das Sie auffordert, einen Knoten-Namen und Navigationstitel für das
+      neue Dokument einzugeben. Der Knoten-Name wird zur Identifikation des
+      Dokumentes in der URL verwendet. Der Navigationstitel wird links im
+      Menü erscheinen.
+    </p>
+    <p>
+      Geben Sie "helloworld" als Knoten-Name und "Hello World" als Navigationstitel
+      ein und klicken Sie auf den "Erstellen"-Button. Sie werden zur neu erstellten
+      "Hello World"-Seite weitergeleitet. Links im Navigationsmenü können Sie
+      den neuen Eintrag sehen. Da Sie im "Erstellen"-Formular die Standard-Einstellung
+      "child" gewählt haben, wurde das neue Dokument als Kind-Dokument des
+      Ausgangs-Dokumentes eingefügt.
+    </p>
+
+    <h2>Ein Dokument bearbeiten</h2>
+    
+    <p>
+      Wie Sie sehen enthält das "Hello World"-Dokument bereits ein wenig
+      Beispiel-Inhalt. Um diesen zu ändern, können Sie das Dokument mit einem
+      der eingebauten Editoren bearbeiten:
+    </p>
+
+    <ul>
+      <li>Kupu: Eine gute Wahl für Internet-Explorer-Nutzer.</li>
+      <li>BXE: Eine gute Wahl für Firefox-Nutzer.</li>
+      <li>Formwizard: Eine gute Wahl für Mosaic-Nutzer. ;-)</li>
+      <li>Formulareditor: Für Nutzer, die die volle Kontrolle benötigen.</li>
+    </ul>
+    
+    <p>
+      Wählen Sie einen Editor aus dem "Bearbeiten"-Menü (abhängig von Ihrer Plattform)
+      und beginnen Sie, das neu erstellte Dokument zu bearbeiten.
+      In diesem Beispiel verwenden wir den BXE-Editor.
+      Das Lenya-Menü wird verschwinden und der BXE-Toolbar erscheint stattdessen.
+      Mit der rechten Maustaste erhalten Sie ein Kontext-Menü,
+      mit Hilfe dessen Sie Textbausteine kopieren, ausschneiden und einfügen können.
+      Sie können auch neue Elemente mittels des Kontext-Menüs in das Dokument
+      einfügen. Sobald Sie ihre Änderungen abgeschlossen haben, klicken Sie auf
+      "Save &amp; Exit" um zurück zur Lenya-Ansicht des Dokumentes zu gelangen.
+      Dort können Sie Ihre Änderungen betrachten.
+    </p>
+
+    <h2>Ein Dokument veröffentlichen</h2>
+    
+    <p>
+      Sobald Sie mit dem Inhalt Ihres Dokumentes zufrieden sind, können Sie
+      es publizieren, um es in der Live-Umgebung sichtbar zu machen.
+    </p>
+
+    <h3>Workflow</h3>
+    
+    <p>
+      Die Default-Publikation verwendet einen einfachen Workflow, der die Rollen
+      eines Editors und einen Prüfers involviert. Der Editor erstellt und
+      bearbeitet neue Dokumente und reicht sie zur Prüfung ein. Der Prüfer
+      überprüft das Dokument und publiziert es, so dass es auf der Live-Website
+      erscheint. 
+    </p>
+    
+    <p>
+      Der Nutzer <em>lenya</em>, mit dem Sie sich wahrscheinlich eingeloggt
+      haben, besitzt die Editor-Rolle, d.h. er kann neue Dokumente erstellen und
+      zur Prüfung einreichen. Die Nutzerin <em>alice</em> besitzt die Prüfer-Rolle,
+      die es ihr erlaubt, Dokumente zu prüfen und zu publizieren.
+    </p>
+    
+    <p>
+      Um Ihr neu erstelltes Dokument zu veröffentlichen, loggen Sie sich (falls
+      nötig) als Nutzer <em>lenya</em> ein und klicken Sie auf den Menüpunkt
+      <em>Arbeitsfluss -> Einreichen</em>. Loggen Sie sich nun aus (<em>Datei
+      -> Abmelden</em>) und loggen Sie sich als Nutzer <em>alice</em> ein.
+      Nun können Sie das Dokument mittels des Menüpunkts <em>Arbeitsfluss ->
+      Publizieren</em> veröffentlichen. Gegebenenfalls werden Sie auf dem
+      Bestätigungs-Bildschirm darauf hingewiesen, dass die zuerst das übergeordnete
+      Dokument publizieren müssen, da es sich noch nicht in der Live-Area
+      befindet. Um zu sehen, wie das Dokument in der Live-Ansicht aussieht,
+      klicken Sie auf den "Live"-Reiter im Lenya-Menü. Dieser wird ein neues
+      Browser-Fenster bzw. -Tab öffnen, das Ihnen die Seite in der Live-Area
+      zeigt.
+    </p>
+
+    <h2>Zeitsteuerung</h2>
+    
+    <p>
+      Apache Lenya erlaubt es, ein Dokument zu einem spezifischen Zeitpunkt zu
+      veröffentlichen. Wählen Sie dazu den Menüpunkt <em>Arbeitsfluss ->
+      Publizieren</em>. Anstatt jedoch unmittelbar auf "Publizieren" zu klicken,
+      geben Sie zunächst eine Zeit ein, zu der das Dokument veröffentlicht werden
+      soll. Im Reiter "Zeitsteuerung" in der Site-Area erhalten Sie einen Überblick
+      über die anstehenden Aufträge und deren Status. 
+    </p>
+    
+    <h2>Versionierung</h2>
+    
+    <p>
+      Jedes Mal wenn Sie ein Dokument editieren und den Editor verlassen, wird
+      eine neue Revision des Dokumentes angelegt. Alte Revisionen werden
+      aufbewahrt, Sie können sie auf dem Reiter "Revisionen" in der Site-Area
+      betrachten und ggf. das Dokument durch eine ältere Revision ersetzen.
+    </p>
+
+  </body>
+</html>

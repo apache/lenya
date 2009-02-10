@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<site xmlns="http://apache.org/cocoon/lenya/sitetree/1.0" revision="1">
+  <node id="index" uuid="bc6c4770-f775-11dd-baf5-ec0f263a3b87">
+    <label xml:lang="de">Home</label>
+    <label xml:lang="en">Home</label>
+  </node>
+  <node id="tutorial" uuid="bc703f10-f775-11dd-baf5-ec0f263a3b87">
+    <label xml:lang="de">Tutorial</label>
+    <label xml:lang="en">Tutorial</label>
+  </node>
+  <node id="concepts" uuid="bc719ea0-f775-11dd-baf5-ec0f263a3b87">
+    <label xml:lang="de">Konzepte</label>
+    <label xml:lang="en">Concepts</label>
+  </node>
+  <node id="links" uuid="bc72b010-f775-11dd-baf5-ec0f263a3b87">
+    <label xml:lang="de">Links zu Apache Lenya</label>
+    <label xml:lang="en">Apache Lenya Links</label>
+  </node>
+  <node id="features" uuid="bc73e890-f775-11dd-baf5-ec0f263a3b87">
+    <label xml:lang="de">Funktionen</label>
+    <label xml:lang="en">Features</label>
+  </node>
+  <node id="doctypes" uuid="bc752110-f775-11dd-baf5-ec0f263a3b87">
+    <label xml:lang="de">Beispiele für Ressource-Typen</label>
+    <label xml:lang="en">Resource Type Examples</label>
+    <node id="xhtml-document" uuid="bc765990-f775-11dd-baf5-ec0f263a3b87">
+      <label xml:lang="de">XHTML-Ressource-Typ</label>
+      <label xml:lang="en">XHTML Resource Type</label>
+    </node>
+    <node id="links" uuid="bc7743f0-f775-11dd-baf5-ec0f263a3b87">
+      <label xml:lang="de">Links-Ressource-Typ</label>
+      <label xml:lang="en">Links Resource Type</label>
+    </node>
+    <node id="opendocument" uuid="bc785560-f775-11dd-baf5-ec0f263a3b87">
+      <label xml:lang="de">OpenDocument-Ressource-Typ</label>
+      <label xml:lang="en">OpenDocument Resource Type</label>
+    </node>
+    <node id="cforms" uuid="bc7966d0-f775-11dd-baf5-ec0f263a3b87">
+      <label xml:lang="de">CForms-Ressource-Typ</label>
+      <label xml:lang="en">CForms Resource Type</label>
+    </node>
+  </node>
+  <node id="search" uuid="bc7a9f50-f775-11dd-baf5-ec0f263a3b87" visibleinnav="false">
+    <label xml:lang="de">Suche</label>
+    <label xml:lang="en">Search</label>
+  </node>
+  <node id="news" uuid="bc7bb0c0-f775-11dd-baf5-ec0f263a3b87">
+    <label xml:lang="de">News</label>
+    <label xml:lang="en">News</label>
+    <node id="installed" uuid="bc7c7410-f775-11dd-baf5-ec0f263a3b87" visibleinnav="false">
+      <label xml:lang="de">Lenya installiert</label>
+      <label xml:lang="en">Lenya installed</label>
+    </node>
+  </node>
+</site>

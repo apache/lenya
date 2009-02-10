@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.AbstractAccessControlTest;
 
 /**
  * Publication test.

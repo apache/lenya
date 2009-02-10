@@ -20,9 +20,8 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,9 +32,12 @@ import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.TraversableSource;
+import org.apache.excalibur.source.impl.ResourceSource;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * Factory for creating publication objects.
@@ -44,28 +46,42 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
 
     private Map id2config;
     private NodeFactory nodeFactory;
+    private String publicationBaseUri;
+    private SourceResolver sourceResolver;
 
     protected synchronized Map getId2config() throws PublicationException {
         if (this.id2config == null) {
             this.id2config = new HashMap();
-            File servletContext = new File(getServletContextPath());
-            File publicationsDirectory = new File(servletContext, Publication.PUBLICATION_PREFIX);
-            if (publicationsDirectory.isDirectory()) {
-                File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
-                    public boolean accept(File file) {
-                        File configFile = new File(file,
-                                PublicationConfiguration.CONFIGURATION_FILE);
-                        return configFile.exists();
+            ResourceSource res;
+            Source source = null;
+            try {
+                source = this.sourceResolver.resolveURI(getPubBaseUri());
+                if (source instanceof TraversableSource) {
+                    TraversableSource pubsSource = (TraversableSource) source;
+                    if (pubsSource.isCollection()) {
+                        Collection pubSources = pubsSource.getChildren();
+                        for (Iterator i = pubSources.iterator(); i.hasNext();) {
+                            TraversableSource pubSource = (TraversableSource) i.next();
+                            TraversableSource configSource = (TraversableSource) this.sourceResolver
+                                    .resolveURI(pubSource.getURI() + "/"
+                                            + PublicationConfiguration.CONFIGURATION_URI);
+                            if (configSource.exists()) {
+                                String id = pubSource.getName();
+                                addPublication(id);
+                            }
+                        }
+                    } else {
+                        getLogger().warn(
+                                "The publications directory " + pubsSource
+                                        + " does not exist.");
                     }
-                });
-                for (int i = 0; i < publicationDirectories.length; i++) {
-                    String id = publicationDirectories[i].getName();
-                    addPublication(id);
                 }
-            } else {
-                getLogger().warn(
-                        "The publications directory " + publicationsDirectory.getAbsolutePath()
-                                + " does not exist.");
+            } catch (final Exception e) {
+                throw new PublicationException(e);
+            } finally {
+                if (source != null) {
+                    this.sourceResolver.release(source);
+                }
             }
         }
         return this.id2config;
@@ -80,9 +96,11 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
         }
 
         PublicationConfiguration config = (PublicationConfiguration) id2config.get(id);
-        PublicationFactory pubFactory = new PublicationFactory(getNodeFactory(), config);
+        PublicationFactory pubFactory = new PublicationFactory(factory.getSession(),
+                getNodeFactory(), config);
         try {
-            org.apache.lenya.cms.repository.Session repoSession = (Session) factory.getSession();
+            org.apache.lenya.cms.repository.Session repoSession = ((SessionImpl) factory
+                    .getSession()).getRepositorySession();
             return (Publication) repoSession.getRepositoryItem(pubFactory, id);
         } catch (RepositoryException e) {
             throw new PublicationException(e);
@@ -125,12 +143,17 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
         }
         ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils
                 .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
-        PublicationConfiguration config = new PublicationConfiguration(pubId,
-                getServletContextPath(), process.getRequest().getContextPath());
+        PublicationConfiguration config = new PublicationConfiguration(pubId, getPubBaseUri(),
+                process.getRequest().getContextPath());
+        config.setSourceResolver(this.sourceResolver);
         id2config.put(pubId, config);
     }
 
-    protected String getServletContextPath() {
+    protected String getPubBaseUri() throws PublicationException {
+        return this.publicationBaseUri == null ? getServletContext() : this.publicationBaseUri;
+    }
+
+    private String getServletContext() {
         return WebAppContextUtils.getCurrentWebApplicationContext().getServletContext()
                 .getRealPath("/");
     }
@@ -141,6 +164,14 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
 
     public void setNodeFactory(NodeFactory nodeFactory) {
         this.nodeFactory = nodeFactory;
+    }
+
+    public void setPubBaseUri(String uri) {
+        this.publicationBaseUri = uri;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }
