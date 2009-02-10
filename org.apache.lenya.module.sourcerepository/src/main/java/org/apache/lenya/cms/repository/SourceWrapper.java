@@ -29,13 +29,13 @@ import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.util.Assert;
 
 /**
  * Provide access to a source.
@@ -52,15 +52,13 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @param sourceUri
      * @param logger
      */
-    public SourceWrapper(SourceNode node, String sourceUri, SourceResolver resolver, Log logger) {
-
-        Assert.notNull("node", node);
+    public SourceWrapper(SourceNode node, String sourceUri, SourceResolver resolver, Log logger)
+    {
+        Validate.notNull(node);
+        Validate.notNull(sourceUri);
+        Validate.notNull(resolver);
         this.node = node;
-
-        Assert.notNull("source URI", sourceUri);
         this.sourceUri = sourceUri;
-
-        Assert.notNull("source resolver", resolver);
         this.sourceResolver = resolver;
     }
 

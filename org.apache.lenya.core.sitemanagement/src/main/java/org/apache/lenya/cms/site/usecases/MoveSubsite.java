@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentLocator;
@@ -39,7 +40,6 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -201,8 +201,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
     }
 
     protected static String getParentPath(String path) {
-        Assert.notNull("path", path);
-        Assert.isTrue("not empty", path.length() > 0);
+        Validate.notNull(path);
+        Validate.notEmpty(path);
         return path.substring(0, path.lastIndexOf("/"));
     }
 

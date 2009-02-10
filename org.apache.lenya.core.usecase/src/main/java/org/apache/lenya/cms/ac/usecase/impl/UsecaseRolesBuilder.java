@@ -27,7 +27,6 @@ import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.cache.BuildException;
 import org.apache.lenya.ac.cache.InputStreamBuilder;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -58,8 +57,8 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
         } catch (Exception e) {
             throw new BuildException(e);
         }
-        Assert.isTrue("Correct usecase policies XML", document.getDocumentElement().getLocalName()
-                .equals(USECASES_ELEMENT));
+        assert document.getDocumentElement().getLocalName()
+            .equals(USECASES_ELEMENT);
 
         NamespaceHelper helper = new NamespaceHelper(AccessController.NAMESPACE,
                 AccessController.DEFAULT_PREFIX, document);

@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
-import org.apache.lenya.util.Assert;
 
 /**
  * <p>
@@ -46,7 +45,7 @@ public class SaveDocument extends DocumentUsecase {
         super.doCheckPreconditions();
 
         String usecase = getParameterAsString(USECASE_NAME);
-        Assert.notNull("usecase", usecase);
+        assert usecase != null;
 
         UsecaseInvoker invoker = getUsecaseInvoker();
         Map params = new HashMap();

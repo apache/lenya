@@ -19,7 +19,7 @@ package org.apache.lenya.notification;
 
 import java.util.Arrays;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 /**
  * A translatable text with optional i18n parameters.
@@ -35,7 +35,7 @@ public class Text {
      * @param translate if the text should be translated.
      */
     public Text(String text, boolean translate) {
-        Assert.notNull("text", text);
+        Validate.notNull(text);
         this.text = text;
         this.translate = translate;
     }

@@ -23,7 +23,6 @@ import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.inbox.InboxMessage;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.Notifier;
-import org.apache.lenya.util.Assert;
 
 /**
  * Show and manage an inbox.
@@ -99,7 +98,7 @@ public class SendMessage extends AbstractInboxUsecase {
         try {
             UserManager userManager = sender.getAccreditableManager().getUserManager();
             recipient = userManager.getUser(recipientId);
-            Assert.notNull("user " + recipientId, recipient);
+            assert recipient != null;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

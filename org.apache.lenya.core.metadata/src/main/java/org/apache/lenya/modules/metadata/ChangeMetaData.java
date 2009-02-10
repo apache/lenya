@@ -22,7 +22,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
-import org.apache.lenya.util.Assert;
 
 /**
  * Save a meta data element.
@@ -54,13 +53,13 @@ public class ChangeMetaData extends InvokeWorkflow {
         }
 
         String namespace = getParameterAsString(PARAM_NAMESPACE);
-        Assert.notNull("namespace", namespace);
+        assert namespace != null;
         String element = getParameterAsString(PARAM_ELEMENT);
-        Assert.notNull("element", element);
+        assert element != null;
         String value = getParameterAsString(PARAM_VALUE);
-        Assert.notNull("value", value);
+        assert value != null;
         String oldValue = getParameterAsString(PARAM_OLD_VALUE);
-        Assert.notNull("old value", oldValue);
+        assert oldValue != null;
 
         MetaData meta = getSourceDocument().getMetaData(namespace);
 
@@ -79,13 +78,13 @@ public class ChangeMetaData extends InvokeWorkflow {
         super.doExecute();
 
         String namespace = getParameterAsString(PARAM_NAMESPACE);
-        Assert.notNull("namespace", namespace);
+        assert namespace != null;
         String element = getParameterAsString(PARAM_ELEMENT);
-        Assert.notNull("element", element);
+        assert element != null;
         String value = getParameterAsString(PARAM_VALUE);
-        Assert.notNull("value", value);
+        assert value != null;
         String oldValue = getParameterAsString(PARAM_OLD_VALUE);
-        Assert.notNull("old value", oldValue);
+        assert oldValue != null;
 
         MetaData meta = getSourceDocument().getMetaData(namespace);
         meta.setValue(element, value);

@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.site.Link;
@@ -32,7 +33,6 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.util.StringUtil;
 
 /**
@@ -52,7 +52,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
      * @param logger The logger.
      */
     public TreeNodeImpl(TreeNode parent, String name, boolean visible, Log logger) {
-        Assert.notNull("name", name);
+        Validate.notNull(name);
         this.name = name;
         this.parent = parent;
         this.isVisible = visible;
@@ -63,7 +63,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
      * @param uuid The UUID.
      */
     protected void setUuid(String uuid) {
-        Assert.notNull("uuid", uuid);
+        Validate.notNull(uuid);
         if (this.language2link.keySet().size() > 0) {
             throw new RuntimeException("Can't set the UUID if the node has links.");
         }
@@ -114,7 +114,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     public Link getLink(String language) throws SiteException {
-        Assert.notNull("language", language);
+        Validate.notNull(language);
         if (!this.language2link.containsKey(language)) {
             throw new SiteException("No link contained for language [" + language + "]");
         }
@@ -150,7 +150,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     public boolean hasLink(String language) {
-        Assert.notNull("language", language);
+        Validate.notNull(language);
         return this.language2link.containsKey(language);
     }
 
@@ -197,16 +197,16 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     protected Link addLink(String lang, String label) {
-        Assert.notNull("language", lang);
-        Assert.notNull("label", label);
+        Validate.notNull(lang);
+        Validate.notNull("label", label);
         Link link = addLinkInternal(lang, label);
         changed();
         return link;
     }
 
     protected Link addLinkInternal(String lang, String label) {
-        Assert.notNull("language", lang);
-        Assert.notNull("label", label);
+        Validate.notNull("language", lang);
+        Validate.notNull("label", label);
         if (this.language2link.containsKey(lang)) {
             throw new RuntimeException("The language [" + lang + "] is already contained.");
         }
@@ -223,7 +223,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     protected void removeLinkInternal(String language) {
-        Assert.notNull("language", language);
+        Validate.notNull(language);
         this.language2link.remove(language);
         getTree().linkRemoved(getUuid(), language);
     }
@@ -260,7 +260,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     protected void removeChild(String name) {
-        Assert.notNull("name", name);
+        Validate.notNull(name);
         if (!this.name2child.containsKey(name)) {
             throw new RuntimeException("The node [" + name + "] is not contained!");
         }
@@ -274,20 +274,20 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     private Map name2child = new HashMap();
 
     public SiteNode addChild(String name, boolean visible) {
-        Assert.notNull("name", name);
+        Validate.notNull(name);
         return addChild(name, this.children.size(), visible);
     }
 
     public SiteNode addChild(String name, String followingNodeName, boolean visible) {
-        Assert.notNull("name", name);
-        Assert.notNull("following node name", followingNodeName);
+        Validate.notNull(name);
+        Validate.notNull(followingNodeName);
         SiteNode followingSibling = getChild(followingNodeName);
         int pos = this.children.indexOf(followingSibling);
         return addChild(name, pos, visible);
     }
 
     protected SiteNode addChild(String name, int pos, boolean visible) {
-        Assert.notNull("name", name);
+        Validate.notNull(name);
 
         if (this.name2child.containsKey(name)) {
             throw new RuntimeException("The child [" + name + "] is already contained.");
@@ -302,7 +302,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     protected SiteNode getChild(String name) {
-        Assert.notNull("name", name);
+        Validate.notNull(name);
         if (this.name2child.containsKey(name)) {
             return (SiteNode) this.name2child.get(name);
         } else {
@@ -311,15 +311,15 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     }
 
     protected int getPosition(SiteNode child) {
-        Assert.notNull("child", child);
-        Assert.isTrue("contains", this.children.contains(child));
+        Validate.notNull(child);
+        Validate.isTrue(this.children.contains(child), "Child not found", child);
         return this.children.indexOf(child);
     }
 
     public void moveDown(String name) {
         SiteNode child = getChild(name);
         int pos = getPosition(child);
-        Assert.isTrue("not last", pos < this.children.size() - 1);
+        assert pos < this.children.size() - 1;
         this.children.remove(child);
         this.children.add(pos + 1, child);
         changed();
@@ -328,7 +328,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
     public void moveUp(String name) {
         SiteNode child = getChild(name);
         int pos = getPosition(child);
-        Assert.isTrue("not first", pos > 0);
+        assert pos > 0;
         this.children.remove(child);
         this.children.add(pos - 1, child);
         changed();

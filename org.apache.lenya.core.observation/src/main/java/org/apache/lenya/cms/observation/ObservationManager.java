@@ -24,9 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
-import org.apache.lenya.util.Assert;
 
 /**
  * Observation manager. Works as an observation registry and sends the notifications.
@@ -64,9 +64,9 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         this.listeners.add(listener);
     }
 
-    protected DocumentIdentifier getIdentifier(DocumentEvent event) {
-
-        Assert.notNull("event", event);
+    protected DocumentIdentifier getIdentifier(DocumentEvent event)
+    {
+        Validate.notNull(event);
         DocumentIdentifier id = new DocumentIdentifier(event.getPublicationId(), event.getArea(),
                 event.getUuid(), event.getLanguage());
         return id;
@@ -89,7 +89,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     }
 
     public void eventFired(RepositoryEvent event) {
-        Assert.notNull("event", event);
+        Validate.notNull(event);
         Set listeners;
         if (event instanceof DocumentEvent) {
             DocumentIdentifier id = getIdentifier((DocumentEvent) event);

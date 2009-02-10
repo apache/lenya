@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.notification;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 /**
  * Descriptor for notification events.
@@ -30,7 +30,7 @@ public class NotificationEventDescriptor {
      * @param message The message.
      */
     public NotificationEventDescriptor(Message message) {
-        Assert.notNull("message", message);
+        Validate.notNull(message);
         this.message = message;
     }
     

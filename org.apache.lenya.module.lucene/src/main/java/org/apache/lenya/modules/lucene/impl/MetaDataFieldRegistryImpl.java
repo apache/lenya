@@ -26,11 +26,11 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
-import org.apache.lenya.util.Assert;
 
 public class MetaDataFieldRegistryImpl extends AbstractLogEnabled implements MetaDataFieldRegistry,
         ThreadSafe, Serviceable {
@@ -40,11 +40,11 @@ public class MetaDataFieldRegistryImpl extends AbstractLogEnabled implements Met
     private Map namespace2prefix;
 
     public String getFieldName(String namespace, String elementName) {
-        Assert.notNull("namespace", namespace);
-        Assert.notNull("element name", elementName);
+        Validate.notNull(namespace);
+        Validate.notNull(elementName);
         initPrefixes();
-        Assert.isTrue("namespace [" + namespace + "] exists", this.namespace2prefix
-                .containsKey(namespace));
+        Validate.isTrue(this.namespace2prefix
+                .containsKey(namespace), "Namespace not found", namespace);
         String prefix = (String) this.namespace2prefix.get(namespace);
         return prefix + elementName;
     }

@@ -42,7 +42,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.cocoon.generation.SitetreeFragmentGenerator;
-import org.apache.lenya.util.Assert;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -137,7 +136,7 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
 
         if (isFragmentElement(uri, localName)) {
             this.pubId = attr.getValue(SitetreeFragmentGenerator.ATTR_PUBLICATION);
-            Assert.notNull("publication attribute", this.pubId);
+            assert this.pubId != null;
 
             String area = attr.getValue("area");
             if (area != null) {
@@ -158,10 +157,10 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
 
         } else if (isSiteElement(uri, localName)) {
             this.area = attr.getValue("area");
-            Assert.notNull("area attribute", this.area);
+            assert this.area != null;
         } else if (isNodeElement(uri, localName)) {
             String id = attr.getValue(SitetreeFragmentGenerator.ATTR_ID);
-            Assert.notNull("id attribute", id);
+            assert id != null;
             this.pathElements.push(id);
 
             try {
@@ -182,9 +181,9 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
     }
 
     protected String getUrl() {
-        Assert.notNull("pub ID", this.pubId);
-        Assert.notNull("area", this.area);
-        Assert.notNull("base path", this.basePath);
+        assert this.pubId != null;
+        assert this.area != null;
+        assert this.basePath != null;
         StringBuffer path = new StringBuffer();
         for (Iterator i = this.pathElements.iterator(); i.hasNext();) {
             path.append("/").append(i.next());

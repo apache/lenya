@@ -25,6 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identifiable;
@@ -35,7 +36,6 @@ import org.apache.lenya.inbox.Inbox;
 import org.apache.lenya.inbox.InboxMessage;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.Notifier;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -76,7 +76,7 @@ public class XmlSourceInbox implements Inbox {
     }
 
     public synchronized void remove(InboxMessage message) {
-        Assert.isTrue("contained", messages().contains(message));
+        Validate.isTrue(messages().contains(message));
         messages().remove(message);
         save();
     }
@@ -106,8 +106,7 @@ public class XmlSourceInbox implements Inbox {
                 this.lastModified = SourceUtil.getLastModified(getSourceUri(), this.manager);
                 Document xml = SourceUtil.readDOM(getSourceUri(), this.manager);
 
-                Assert.isTrue("document element is <inbox>", xml.getDocumentElement()
-                        .getLocalName().equals("inbox"));
+                assert xml.getDocumentElement().getLocalName().equals("inbox");
                 NamespaceHelper helper = new NamespaceHelper(Notifier.NAMESPACE, "", xml);
 
                 Element[] messageElements = helper.getChildren(xml.getDocumentElement(), "message");

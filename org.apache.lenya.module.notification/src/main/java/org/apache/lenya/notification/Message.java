@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.lenya.ac.Identifiable;
-import org.apache.lenya.util.Assert;
 
 /**
  * A notification message.
@@ -42,10 +41,10 @@ public class Message {
      * @param recipients The recipients.
      */
     public Message(Text subject, Text body, Identifiable sender, Identifiable[] recipients) {
-        Assert.notNull("subject", subject);
-        Assert.notNull("body", body);
-        Assert.notNull("sender", sender);
-        Assert.notNull("recipients", recipients);
+        Validate.notNull(subject);
+        Validate.notNull(body);
+        Validate.notNull(sender);
+        Validate.notNull(recipients);
         this.subject = subject;
         this.body = body;
         this.sender = sender;
@@ -61,7 +60,7 @@ public class Message {
      * @param bodyParams The body parameters.
      * @param sender The sender.
      * @param recipients The recipients.
-     * @deprecated Use {@link #Message(Text, Text, Identifiable, Identifiable[])}Êinstead.
+     * @deprecated Use {@link #Message(Text, Text, Identifiable, Identifiable[])}ï¿½instead.
      */
     public Message(String subject, String[] subjectParams, String body, String[] bodyParams,
             Identifiable sender, Identifiable[] recipients) {

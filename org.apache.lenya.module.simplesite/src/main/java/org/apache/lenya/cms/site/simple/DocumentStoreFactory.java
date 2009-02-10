@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.simple;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -28,7 +29,6 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.Assert;
 
 /**
  * Factory for sitetree objects.
@@ -53,7 +53,7 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         String[] snippets = key.split(":");
 
-        Assert.isTrue("key [" + key + "] is invalid!", snippets.length == 3);
+        Validate.isTrue(snippets.length == 3, "key invalid: ", key);
 
         String publicationId = snippets[0];
         String areaName = snippets[1];

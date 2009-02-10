@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -29,7 +30,6 @@ import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -180,7 +180,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     }
 
     public void addLabel(String language, String label) throws SiteException {
-        Assert.isTrue("not contains " + language, !hasLink(language));
+        Validate.isTrue(!hasLink(language), "Language label exists already: ", language);
 
         NamespaceHelper helper = getNamespaceHelper();
         Element labelElem = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, label);

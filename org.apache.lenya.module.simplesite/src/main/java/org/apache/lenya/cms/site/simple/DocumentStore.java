@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -44,7 +45,6 @@ import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.modules.collection.CollectionWrapper;
 import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
@@ -170,7 +170,7 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure, R
 
     protected String getPath(String uuid, String language) {
         String key = getKey(uuid, language);
-        Assert.isTrue("contains [" + key + "]", containsByUuid(uuid, language));
+        Validate.isTrue(containsByUuid(uuid, language), "Doesn't contain key: ", key);
         return (String) doc2path().get(key);
     }
 
@@ -210,11 +210,10 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure, R
     }
 
     public Link add(String path, Document document) throws SiteException {
-        Assert.notNull("path", path);
-        Assert.notNull("document", document);
-
+        Validate.notNull(path);
+        Validate.notNull(document);
+        Validate.isTrue(!contains(document), "Document contained already", document);
         try {
-            Assert.isTrue("document [" + document + "] is already contained!", !contains(document));
             String key = getKey(document.getUUID(), document.getLanguage());
             if (!doc2path().containsKey(key)) {
                 doc2path().put(key, path);
@@ -235,8 +234,8 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure, R
      * @throws TransactionException
      */
     public void setPath(Document document, String path) throws TransactionException {
-        Assert.notNull("path", path);
-        Assert.notNull("document", document);
+        Validate.notNull(path);
+        Validate.notNull(document);
         String key = getKey(document.getUUID(), document.getLanguage());
         doc2path().put(key, path);
         save();

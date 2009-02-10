@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
@@ -39,7 +40,6 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.util.Assert;
 
 /**
  * Simple site tree implementation.
@@ -103,8 +103,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
                             .getBean(TreeBuilder.ROLE);
                     reset();
                     builder.buildTree(this);
-                    Assert.isTrue("Latest revision loaded",
-                            getRevision() == getRevision(getRepositoryNode()));
+                    assert getRevision() == getRevision(getRepositoryNode());
                 } finally {
                     this.loading = false;
                 }
@@ -215,10 +214,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     protected void nodeAdded(SiteNode node) {
         String path = node.getPath();
-        Assert.notNull("path", path);
-        if (node != this.root) {
-            Assert.isTrue("path not empty", path.length() > 0);
-        }
+        assert path != null;
+        assert node == this.root || path.length() > 0;
         this.path2node.put(path, node);
     }
 
@@ -230,21 +227,21 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     protected String getKey(Link link) {
         String uuid = link.getNode().getUuid();
-        Assert.notNull("uuid", uuid);
+        assert uuid != null;
         String language = link.getLanguage();
-        Assert.notNull("language", language);
+        assert language != null;
         return getKey(uuid, language);
     }
 
     protected String getKey(String uuid, String language) {
-        Assert.notNull("uuid", uuid);
-        Assert.notNull("language", language);
+        Validate.notNull(uuid);
+        Validate.notNull(language);
         return uuid + ":" + language;
     }
 
     protected void nodeRemoved(String path) {
-        Assert.notNull("path", path);
-        Assert.isTrue("path [" + path + "] contained", this.path2node.containsKey(path));
+        Validate.notNull(path);
+        Validate.isTrue(this.path2node.containsKey(path), "Path not found: ", path);
         this.path2node.remove(path);
     }
 
@@ -259,19 +256,19 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     public boolean contains(String path) {
+        Validate.notNull(path);
         load();
-        Assert.notNull("path", path);
         return this.path2node.containsKey(path);
     }
 
     public boolean containsByUuid(String uuid, String language) {
-        Assert.notNull("uuid", uuid);
-        Assert.notNull("language", language);
+        Validate.notNull(uuid);
+        Validate.notNull(language);
         return getUuidLanguage2Link().containsKey(getKey(uuid, language));
     }
 
     public boolean containsInAnyLanguage(String uuid) {
-        Assert.notNull("uuid", uuid);
+        Validate.notNull(uuid);
         Set set = getUuidLanguage2Link().keySet();
         String[] keys = (String[]) set.toArray(new String[set.size()]);
         for (int i = 0; i < keys.length; i++) {
@@ -287,8 +284,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     public Link getByUuid(String uuid, String language) throws SiteException {
-        Assert.notNull("uuid", uuid);
-        Assert.notNull("language", language);
+        Validate.notNull(uuid);
+        Validate.notNull(language);
         String key = getKey(uuid, language);
         if (!getUuidLanguage2Link().containsKey(key)) {
             throw new SiteException("No link for [" + key + "]");
@@ -297,7 +294,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     public SiteNode getNode(String path) throws SiteException {
-        Assert.notNull("path", path);
+        Validate.notNull(path);
         if (!getPath2Node().containsKey(path)) {
             throw new SiteException("No node for path [" + path + "]");
         }
@@ -340,10 +337,10 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     protected void linkRemoved(String uuid, String language) {
-        Assert.notNull("uuid", uuid);
-        Assert.notNull("language", language);
+        Validate.notNull(uuid);
+        Validate.notNull(language);
         String key = getKey(uuid, language);
-        Assert.isTrue("contained", this.uuidLanguage2link.containsKey(key));
+        assert this.uuidLanguage2link.containsKey(key);
         this.uuidLanguage2link.remove(key);
     }
 

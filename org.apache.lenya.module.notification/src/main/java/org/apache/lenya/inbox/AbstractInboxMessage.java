@@ -17,8 +17,8 @@
  */
 package org.apache.lenya.inbox;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.notification.Message;
-import org.apache.lenya.util.Assert;
 
 /**
  * Inbox message implementation.
@@ -35,9 +35,9 @@ public abstract class AbstractInboxMessage implements InboxMessage {
      * @param markedAsRead if the message is marked as read.
      */
     public AbstractInboxMessage(String id, Message message, boolean markedAsRead) {
-        Assert.notNull("id", id);
+        Validate.notNull(id);
+        Validate.notNull(message);
         this.id = id;
-        Assert.notNull("message", message);
         this.message = message;
         this.markedAsRead = markedAsRead;
     }

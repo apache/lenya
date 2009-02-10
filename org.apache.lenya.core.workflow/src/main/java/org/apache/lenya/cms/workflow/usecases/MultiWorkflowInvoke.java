@@ -24,7 +24,6 @@ import java.util.List;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
-import org.apache.lenya.util.Assert;
 
 /**
  * Invocation usecase for the multi-workflow usecase.
@@ -40,9 +39,9 @@ public class MultiWorkflowInvoke extends AbstractUsecase {
         super.doExecute();
 
         String usecase = getParameterAsString(USECASE_NAME);
-        Assert.notNull("usecase", usecase);
+        assert usecase != null;
         String url = getParameterAsString(URL);
-        Assert.notNull("url", url);
+        assert url != null;
 
         UsecaseInvoker invoker = getUsecaseInvoker();
         invoker.invoke(url, usecase, new HashMap());

@@ -27,6 +27,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Area;
@@ -40,7 +41,6 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
-import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -342,7 +342,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree, Rep
      * @throws SiteException
      */
     private synchronized Node removeNodeInternal(String path) throws SiteException {
-        Assert.isTrue("contains " + path, contains(path));
+        Validate.isTrue(contains(path), "Path not found: ", path);
         Node node = this.getNodeInternal(path);
         Node parentNode = node.getParentNode();
         Node newNode = parentNode.removeChild(node);

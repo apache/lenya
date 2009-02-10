@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.usecase;
 
-import org.apache.lenya.util.Assert;
+import org.apache.commons.lang.Validate;
 
 /**
  * A simple state machine.
@@ -42,7 +42,7 @@ public class StateMachine {
     }
 
     protected Transition getTransition(String event) {
-        Assert.notNull("event", event);
+        Validate.notNull(event);
         Transition[] transitions = this.model.getTransitions();
         Transition transition = null;
         for (int i = 0; i < transitions.length; i++) {

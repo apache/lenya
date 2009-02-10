@@ -119,7 +119,7 @@ public class SourceNodeRCML implements RCML {
      */
     public synchronized void write() throws RevisionControlException {
         NamespaceHelper helper = saveToXml();
-        Validate.notNull(helper, "XML document");
+        assert helper != null;
         try {
             SourceUtil.writeDOM(helper.getDocument(), getRcmlSourceUri(), getSourceResolver());
         } catch (Exception e) {
