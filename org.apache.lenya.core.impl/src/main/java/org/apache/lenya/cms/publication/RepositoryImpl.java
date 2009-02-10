@@ -48,11 +48,16 @@ public class RepositoryImpl implements Repository {
     }
 
     public Session startSession(Identity identity, boolean modifiable) {
+
+        if (modifiable && identity == null) {
+            throw new IllegalArgumentException(
+                    "Can't start a modifiable session without an identity.");
+        }
+
         IdentityWrapper wrapper = new IdentityWrapper(identity);
         org.apache.lenya.cms.repository.Session repoSession;
         try {
-            repoSession = this.repositoryManager
-                    .createSession(wrapper, modifiable);
+            repoSession = this.repositoryManager.createSession(wrapper, modifiable);
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }

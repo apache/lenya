@@ -271,12 +271,16 @@ public final class SourceUtil {
     public static void writeDOM(Document document, String sourceUri, SourceResolver resolver)
             throws TransformerConfigurationException, TransformerException, ServiceException,
             MalformedURLException, IOException {
-        ModifiableSource source = null;
+        Source source = null;
         try {
-            source = (ModifiableSource) resolver.resolveURI(sourceUri);
-
-            OutputStream oStream = source.getOutputStream();
-            writeDOM(document, oStream);
+            source = resolver.resolveURI(sourceUri);
+            if (source instanceof ModifiableSource) {
+                ModifiableSource modifiableSource = (ModifiableSource) source;
+                OutputStream oStream = modifiableSource.getOutputStream();
+                writeDOM(document, oStream);
+            } else {
+                throw new IOException("The source " + sourceUri + " is not modifiable.");
+            }
         } finally {
             if (source != null) {
                 resolver.release(source);

@@ -57,8 +57,8 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
 
     protected Session login(String userId, String pubId) throws AccessControlException {
         
-        Session session = getRepository().startSession(null, true);
-        AccessController ac = getAccessController(session, pubId);
+        final Session anonymousSession = getRepository().startSession(null, false);
+        AccessController ac = getAccessController(anonymousSession, pubId);
         AccreditableManager acMgr = ac.getAccreditableManager();
         User user = acMgr.getUserManager().getUser(userId);
 
@@ -70,6 +70,7 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
 
         HttpSession cocoonSession = getRequest().getSession();
         Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
+        final Session userSession = getRepository().startSession(identity, true);
 
         if (!identity.contains(user)) {
             User oldUser = identity.getUser();
@@ -89,8 +90,8 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
             logger.info("Accreditable: " + accrs[i]);
         }
 
-        getRequest().setAttribute(Session.class.getName(), session);
-        return session;
+        getRequest().setAttribute(Session.class.getName(), userSession);
+        return userSession;
     }
 
     protected AccessController getAccessController() throws AccessControlException {
