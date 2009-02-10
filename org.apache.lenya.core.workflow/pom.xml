@@ -69,6 +69,12 @@
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-api</artifactId>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
     
   </dependencies>
 </project>
