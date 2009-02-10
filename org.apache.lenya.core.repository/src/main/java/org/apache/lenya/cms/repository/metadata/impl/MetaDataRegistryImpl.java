@@ -15,11 +15,15 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository.metadata;
+package org.apache.lenya.cms.repository.metadata.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.lenya.cms.repository.metadata.ElementSet;
+import org.apache.lenya.cms.repository.metadata.MetaDataException;
+import org.apache.lenya.cms.repository.metadata.MetaDataRegistry;
 
 /**
  * Meta data registry implementation.
