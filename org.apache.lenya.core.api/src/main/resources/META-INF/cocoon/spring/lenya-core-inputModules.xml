@@ -23,7 +23,7 @@
     class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule">
     <property name="protocol" value="fallback"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-    <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
   </bean>
   <bean name="org.apache.cocoon.components.modules.input.InputModule/page-envelope"
     class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>

@@ -22,8 +22,7 @@
   <bean name="org.apache.excalibur.source.SourceFactory/fallback"
     class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory">
     <property name="moduleManager" ref="org.apache.lenya.cms.module.ModuleManager"/>
-    <property name="documentFactoryBuilder" ref="org.apache.lenya.cms.publication.DocumentFactoryBuilder"/>
-    <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
     <property name="templateManager" ref="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
   </bean>
