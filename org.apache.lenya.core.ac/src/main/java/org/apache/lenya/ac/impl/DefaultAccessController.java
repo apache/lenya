@@ -23,11 +23,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -36,12 +37,11 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.Accreditable;
@@ -57,14 +57,14 @@ import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.util.ServletHelper;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Default access controller implementation.
- * @version $Id: DefaultAccessController.java 563459 2007-08-07 12:00:20Z
- *          nettings $
+ * @version $Id$
  */
 public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
-        Configurable, Serviceable, Disposable, ItemManagerListener {
+        ItemManagerListener, Configurable {
 
     protected static final String AUTHORIZER_ELEMENT = "authorizer";
     protected static final String TYPE_ATTRIBUTE = "type";
@@ -72,9 +72,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     protected static final String POLICY_MANAGER_ELEMENT = "policy-manager";
 
     private static final String VALID_IP = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
-    private ServiceManager manager;
-    private ServiceSelector authorizerSelector;
-    private ServiceSelector policyManagerSelector;
     private AccreditableManager accreditableManager;
     private PolicyManager policyManager;
     private Map authorizers = new HashMap();
@@ -135,13 +132,15 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     }
 
     protected void resolveRoles(Request request) throws AccessControlException {
+        Validate.notNull(request, "request");
         String webappUrl = ServletHelper.getWebappURI(request);
-        Session session = request.getCocoonSession(true);
+        HttpSession session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
 
         Role[] roles;
         if (identity.belongsTo(this.accreditableManager)) {
-            roles = this.policyManager.getGrantedRoles(this.accreditableManager, identity, webappUrl);
+            roles = this.policyManager.getGrantedRoles(this.accreditableManager, identity,
+                    webappUrl);
         } else {
             roles = new Role[0];
             getLogger().debug(
@@ -157,10 +156,10 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * @param roles The roles.
      */
     protected void saveRoles(Request request, Role[] roles) {
-         if(getLogger().isDebugEnabled()) {
+        if (getLogger().isDebugEnabled()) {
             StringBuffer rolesBuffer = new StringBuffer();
             for (int i = 0; i < roles.length; i++) {
-               rolesBuffer.append(" ").append(roles[i]);
+                rolesBuffer.append(" ").append(roles[i]);
             }
             getLogger().debug("Adding roles [" + rolesBuffer + " ] to request [" + request + "]");
         }
@@ -168,8 +167,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     }
 
     /**
-     * Configures or parameterizes a component, depending on the implementation
-     * as Configurable or Parameterizable.
+     * Configures or parameterizes a component, depending on the implementation as Configurable or
+     * Parameterizable.
      * @param component The component.
      * @param configuration The configuration to use.
      * @throws ConfigurationException when an error occurs during configuration.
@@ -188,6 +187,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     * @deprecated Replace with different configuration mechanism, e.g. commons configuration.
      */
     public void configure(Configuration conf) throws ConfigurationException {
 
@@ -215,17 +215,11 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             throws ConfigurationException, ServiceException, ParameterException {
         Configuration config = configuration.getChild(ACCREDITABLE_MANAGER_ELEMENT, false);
         if (config != null) {
-            AccreditableManagerFactory factory = null;
-            try {
-                factory = (AccreditableManagerFactory) this.manager
-                        .lookup(AccreditableManagerFactory.ROLE);
-                this.accreditableManager = factory.getAccreditableManager(config);
-                this.accreditableManager.addItemManagerListener(this);
-            } finally {
-                if (factory != null) {
-                    this.manager.release(factory);
-                }
-            }
+            ApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
+            AccreditableManagerFactory factory = (AccreditableManagerFactory) context
+                    .getBean(AccreditableManagerFactory.ROLE);
+            this.accreditableManager = factory.getAccreditableManager(config);
+            this.accreditableManager.addItemManagerListener(this);
         }
     }
 
@@ -241,8 +235,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             ConfigurationException, ParameterException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
         if (authorizerConfigurations.length > 0) {
-            this.authorizerSelector = (ServiceSelector) this.manager.lookup(Authorizer.ROLE
-                    + "Selector");
+            ApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
 
             for (int i = 0; i < authorizerConfigurations.length; i++) {
                 String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
@@ -250,7 +243,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
                     getLogger().debug("Adding authorizer [" + type + "]");
                 }
 
-                Authorizer authorizer = (Authorizer) this.authorizerSelector.select(type);
+                Authorizer authorizer = (Authorizer) context.getBean(Authorizer.ROLE + "/" + type);
                 this.authorizerKeys.add(type);
                 this.authorizers.put(type, authorizer);
                 configureOrParameterize(authorizer, authorizerConfigurations[i]);
@@ -275,10 +268,9 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Adding policy manager type: [" + policyManagerType + "]");
             }
-            this.policyManagerSelector = (ServiceSelector) this.manager.lookup(PolicyManager.ROLE
-                    + "Selector");
-            this.policyManager = (PolicyManager) this.policyManagerSelector
-                    .select(policyManagerType);
+            ApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
+            this.policyManager = (PolicyManager) context.getBean(PolicyManager.ROLE + "/"
+                    + policyManagerType);
             configureOrParameterize(this.policyManager, policyManagerConfiguration);
         }
     }
@@ -288,25 +280,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * @throws ServiceException when something went wrong.
      */
     protected void setupAuthenticator() throws ServiceException {
-        this.authenticator = (Authenticator) this.manager.lookup(Authenticator.ROLE);
-    }
-
-    /**
-     * Set the global component manager.
-     * 
-     * @param _manager The global component manager
-     * @throws ServiceException when something went wrong.
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
-
-    /**
-     * Returns the service manager.
-     * @return A service manager.
-     */
-    protected ServiceManager getManager() {
-        return this.manager;
+        this.authenticator = (Authenticator) WebAppContextUtils.getCurrentWebApplicationContext()
+                .getBean(Authenticator.ROLE);
     }
 
     /**
@@ -329,39 +304,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      */
     protected boolean hasAuthorizers() {
         return !this.authorizers.isEmpty();
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-
-       if (this.accreditableManager != null) {
-            this.accreditableManager.removeItemManagerListener(this);
-        }
-
-        if (this.policyManagerSelector != null) {
-            if (this.policyManager != null) {
-                this.policyManagerSelector.release(this.policyManager);
-            }
-            getManager().release(this.policyManagerSelector);
-        }
-
-        if (this.authorizerSelector != null) {
-            Authorizer[] _authorizers = getAuthorizers();
-            for (int i = 0; i < _authorizers.length; i++) {
-                this.authorizerSelector.release(_authorizers[i]);
-            }
-            getManager().release(this.authorizerSelector);
-        }
-
-        if (this.authenticator != null) {
-            getManager().release(this.authenticator);
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing [" + this + "]");
-        }
     }
 
     /**
@@ -403,7 +345,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * @see org.apache.lenya.ac.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
      */
     public void setupIdentity(Request request) throws AccessControlException {
-        Session session = request.getCocoonSession(true);
+        HttpSession session = request.getSession(true);
         if (!hasValidIdentity(session)) {
             Identity identity = new Identity(getLogger());
             identity.initialize();
@@ -435,14 +377,15 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     }
 
     /**
-     * Checks if the session contains an identity that is not null and belongs
-     * to the used access controller.
+     * Checks if the session contains an identity that is not null and belongs to the used access
+     * controller.
      * 
      * @param session The current session.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    protected boolean hasValidIdentity(Session session) throws AccessControlException {
+    protected boolean hasValidIdentity(HttpSession session) throws AccessControlException {
+        Validate.notNull(session, "session");
         boolean valid = true;
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         if (identity == null || !ownsIdenity(identity)) {

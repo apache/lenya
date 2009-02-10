@@ -89,4 +89,14 @@ public interface Session extends UnitOfWork {
      */
     String getId();
 
+    /**
+     * @return The holder of this session.
+     */
+    SessionHolder getHolder();
+    
+    /**
+     * @param holder The holder of this session.
+     */
+    void setHolder(SessionHolder holder);
+
 }

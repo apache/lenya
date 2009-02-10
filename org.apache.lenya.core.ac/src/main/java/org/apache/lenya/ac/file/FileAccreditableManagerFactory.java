@@ -24,11 +24,8 @@ import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.AccreditableManagerFactory;
 import org.apache.lenya.ac.UserType;
@@ -37,7 +34,9 @@ import org.apache.lenya.ac.UserType;
  * Factory for file-based accreditable managers.
  */
 public class FileAccreditableManagerFactory extends AbstractLogEnabled implements
-        AccreditableManagerFactory, ThreadSafe, Serviceable {
+        AccreditableManagerFactory {
+
+    private SourceResolver sourceResolver;
 
     private Map id2manager = new HashMap();
 
@@ -82,8 +81,8 @@ public class FileAccreditableManagerFactory extends AbstractLogEnabled implement
                     userTypes.add(FileAccreditableManager.getDefaultUserType());
                 }
                 UserType[] types = (UserType[]) userTypes.toArray(new UserType[userTypes.size()]);
-                AccreditableManager mgr = new FileAccreditableManager(this.manager, getLogger(),
-                        configUri, types);
+                FileAccreditableManager mgr = new FileAccreditableManager(configUri, types);
+                mgr.setSourceResolver(this.sourceResolver);
                 this.id2manager.put(configUri, mgr);
                 return mgr;
             }
@@ -93,10 +92,8 @@ public class FileAccreditableManagerFactory extends AbstractLogEnabled implement
         }
     }
 
-    protected ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

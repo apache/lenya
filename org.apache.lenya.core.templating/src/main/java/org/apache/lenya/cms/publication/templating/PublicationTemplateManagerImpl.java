@@ -83,7 +83,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
             uris.add(getBaseURI(publications[i]));
         }
 
-        String coreBaseURI = publication.getServletContext().getAbsolutePath() + "/";
+        String coreBaseURI = publication.getPubBaseUri() + "/";
         uris.add(coreBaseURI);
 
         return (String[]) uris.toArray(new String[uris.size()]);

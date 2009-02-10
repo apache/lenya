@@ -18,11 +18,10 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
@@ -41,29 +40,30 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
      * Return the <code>RoleManager</code> for this configuration directory. The
      * <code>RoleManager</code> is a singleton.
      * @param mgr The accreditable manager.
+     * @param sourceResolver
      */
-    protected FileRoleManager(AccreditableManager mgr) {
-        super(mgr);
+    protected FileRoleManager(AccreditableManager mgr, SourceResolver sourceResolver) {
+        super(mgr, sourceResolver);
     }
 
     /**
      * Returns the role manager for this configuration directory.
      * @param mgr The accreditable manager.
-     * @param configurationDirectory The configuration directory.
+     * @param configUri The configuration directory.
      * @param logger The logger.
+     * @param sourceResolver
      * @return A role manager.
      * @throws AccessControlException when something went wrong.
      */
-    public static FileRoleManager instance(AccreditableManager mgr, File configurationDirectory, Log logger)
-            throws AccessControlException {
-        if (!instances.containsKey(configurationDirectory)) {
-            FileRoleManager manager = new FileRoleManager(mgr);
-            manager.setLogger(logger);
-            manager.configure(configurationDirectory);
-            instances.put(configurationDirectory, manager);
+    public static FileRoleManager instance(AccreditableManager mgr, String configUri,
+            SourceResolver sourceResolver) throws AccessControlException {
+        if (!instances.containsKey(configUri)) {
+            FileRoleManager manager = new FileRoleManager(mgr, sourceResolver);
+            manager.configure(configUri);
+            instances.put(configUri, manager);
         }
 
-        return (FileRoleManager) instances.get(configurationDirectory);
+        return (FileRoleManager) instances.get(configUri);
     }
 
     /**

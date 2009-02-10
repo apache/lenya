@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.repository;
 
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.transaction.IdentifiableFactory;
 import org.apache.lenya.transaction.IdentityMap;
 
@@ -34,6 +35,8 @@ public class RepositoryItemFactoryWrapper implements IdentifiableFactory {
      * @param session The session.
      */
     public RepositoryItemFactoryWrapper(RepositoryItemFactory delegate, Session session) {
+        Validate.notNull(delegate, "factory");
+        Validate.notNull(session, "session");
         this.delegate = delegate;
         this.session = session;
     }

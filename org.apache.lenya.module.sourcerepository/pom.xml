@@ -23,5 +23,10 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-repository</artifactId>
     </dependency>
+    <!-- FIXME: only necessary because of XML handling helper classes -->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-api</artifactId>
+    </dependency>
   </dependencies>
 </project>

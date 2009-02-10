@@ -38,7 +38,7 @@ import org.apache.lenya.util.StringUtil;
 /**
  * Site tree node.
  */
-public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
+public class TreeNodeImpl implements TreeNode {
 
     private TreeNode parent;
     private String name;
@@ -49,9 +49,8 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
      * @param parent The parent.
      * @param name The name.
      * @param visible The navigation visibility.
-     * @param logger The logger.
      */
-    public TreeNodeImpl(TreeNode parent, String name, boolean visible, Log logger) {
+    public TreeNodeImpl(TreeNode parent, String name, boolean visible) {
         Validate.notNull(name);
         this.name = name;
         this.parent = parent;
@@ -293,7 +292,7 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
             throw new RuntimeException("The child [" + name + "] is already contained.");
         }
 
-        SiteNode node = new TreeNodeImpl(this, name, visible, getLogger());
+        SiteNode node = new TreeNodeImpl(this, name, visible);
         this.children.add(pos, node);
         this.name2child.put(name, node);
         getTree().nodeAdded(node);

@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker;
 

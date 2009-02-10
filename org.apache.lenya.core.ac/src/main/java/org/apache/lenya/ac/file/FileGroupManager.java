@@ -20,12 +20,11 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
@@ -43,31 +42,30 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
      * Ctor.
      * @param mgr The accreditable manager.
      */
-    private FileGroupManager(AccreditableManager mgr) {
-        super(mgr);
+    private FileGroupManager(AccreditableManager mgr, SourceResolver resolver) {
+        super(mgr, resolver);
     }
 
     /**
-     * Return the <code>GroupManager</code> for the given publication. The
-     * <code>GroupManager</code> is a singleton.
+     * Return the <code>GroupManager</code> for the given publication. The <code>GroupManager</code>
+     * is a singleton.
      * @param mgr The accreditable manager.
      * @param configurationDirectory for which the GroupManager is requested
      * @param logger The logger.
      * @return a <code>GroupManager</code>
      * @throws AccessControlException if no GroupManager could be instanciated
      */
-    public static FileGroupManager instance(AccreditableManager mgr, File configurationDirectory,
-            Log logger) throws AccessControlException {
-        Validate.notNull(configurationDirectory);
+    public static FileGroupManager instance(AccreditableManager mgr, String configUri,
+            SourceResolver resolver) throws AccessControlException {
+        Validate.notNull(configUri);
 
-        if (!instances.containsKey(configurationDirectory)) {
-            FileGroupManager manager = new FileGroupManager(mgr);
-            manager.setLogger(logger);
-            manager.configure(configurationDirectory);
-            instances.put(configurationDirectory, manager);
+        if (!instances.containsKey(configUri)) {
+            FileGroupManager manager = new FileGroupManager(mgr, resolver);
+            manager.configure(configUri);
+            instances.put(configUri, manager);
         }
 
-        return (FileGroupManager) instances.get(configurationDirectory);
+        return (FileGroupManager) instances.get(configUri);
     }
 
     /**
@@ -107,8 +105,7 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
      * Get the group with the given group name.
      * 
      * @param groupId the id of the requested group
-     * @return a <code>Group</code> or null if there is no group with the
-     *         given name
+     * @return a <code>Group</code> or null if there is no group with the given name
      */
     public Group getGroup(String groupId) {
         return (Group) getItem(groupId);

@@ -26,8 +26,9 @@ import org.apache.excalibur.source.SourceResolver;
  * @version $Id$
  */
 public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory {
-    
+
     private SourceResolver sourceResolver;
+    private SourceNodeRcmlFactory rcmlFactory;
 
     /**
      * Ctor.
@@ -36,7 +37,9 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
     }
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
-        return new SourceNode(session, key, getSourceResolver(), getLogger());
+        SourceNode node = new SourceNode(session, key, getSourceResolver(), getLogger());
+        node.setRcmlFactory(this.rcmlFactory);
+        return node;
     }
 
     public String getItemType() {
@@ -49,6 +52,10 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
 
     public void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
+    }
+
+    public void setRcmlFactory(SourceNodeRcmlFactory rcmlFactory) {
+        this.rcmlFactory = rcmlFactory;
     }
 
 }

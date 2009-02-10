@@ -20,12 +20,10 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.IPRange;
@@ -40,9 +38,10 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
     /**
      * Ctor.
      * @param mgr The accreditable manager.
+     * @param resolver 
      */
-    private FileIPRangeManager(AccreditableManager mgr) {
-        super(mgr);
+    private FileIPRangeManager(AccreditableManager mgr, SourceResolver resolver) {
+        super(mgr, resolver);
     }
 
     protected static final String SUFFIX = ".ipml";
@@ -60,27 +59,20 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
      * Return an instance of FileIPRangeManager
      * @param mgr The accreditable manager.
      * @param configurationDirectory a directory
-     * @param logger The logger.
+     * @param sourceResolver
      * @return an <code>IPRangeManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileIPRangeManager instance(AccreditableManager mgr, File configurationDirectory, Log logger)
+    public static FileIPRangeManager instance(AccreditableManager mgr, String configUri, SourceResolver sourceResolver)
             throws AccessControlException {
 
-        Validate.notNull(configurationDirectory);
-        if (!configurationDirectory.isDirectory()) {
-            throw new AccessControlException("Configuration directory [" + configurationDirectory
-                    + "] does not exist!");
+        if (!instances.containsKey(configUri)) {
+            FileIPRangeManager manager = new FileIPRangeManager(mgr, sourceResolver);
+            manager.configure(configUri);
+            instances.put(configUri, manager);
         }
 
-        if (!instances.containsKey(configurationDirectory)) {
-            FileIPRangeManager manager = new FileIPRangeManager(mgr);
-            manager.setLogger(logger);
-            manager.configure(configurationDirectory);
-            instances.put(configurationDirectory, manager);
-        }
-
-        return (FileIPRangeManager) instances.get(configurationDirectory);
+        return (FileIPRangeManager) instances.get(configUri);
     }
 
     /**

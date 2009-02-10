@@ -19,7 +19,6 @@ package org.apache.lenya.cms.repository;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,6 +31,7 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -52,8 +52,7 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @param sourceUri
      * @param logger
      */
-    public SourceWrapper(SourceNode node, String sourceUri, SourceResolver resolver, Log logger)
-    {
+    public SourceWrapper(SourceNode node, String sourceUri, SourceResolver resolver, Log logger) {
         Validate.notNull(node);
         Validate.notNull(sourceUri);
         Validate.notNull(resolver);
@@ -78,26 +77,28 @@ public class SourceWrapper extends AbstractLogEnabled {
      */
     protected String getRealSourceUri() {
         if (this.realSourceUri == null) {
-            this.realSourceUri = computeRealSourceUri(getSourceResolver(), getNode().getRepositorySession(),
-                    this.sourceUri, getLogger());
+            this.realSourceUri = computeRealSourceUri(getSourceResolver(), getNode()
+                    .getRepositorySession(), this.sourceUri, getLogger());
         }
         return this.realSourceUri;
     }
 
     protected static final String computeRealSourceUri(SourceResolver sourceResolver,
             Session session, String sourceUri, Log logger) {
-        String contentDir = null;
+        String pubContentUri = null;
         String publicationId = null;
         try {
-            String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
+            final String pubBase = Node.LENYA_PROTOCOL + "/";
             String publicationsPath = sourceUri.substring(pubBase.length());
+
             int firstSlashIndex = publicationsPath.indexOf("/");
             publicationId = publicationsPath.substring(0, firstSlashIndex);
-            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session;
+            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session
+                    .getHolder();
             Publication pub = pubSession.getPublication(publicationId);
-            contentDir = pub.getContentDir();
+            pubContentUri = pub.getContentDir();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not compute real URI of " + sourceUri, e);
         }
 
         String contentBaseUri = null;
@@ -108,16 +109,13 @@ public class SourceWrapper extends AbstractLogEnabled {
         String tempString = urlID.substring(filePrefix.length() + 1);
         String fileMiddle = tempString.substring(0, tempString.indexOf("/"));
         String fileSuffix = tempString.substring(fileMiddle.length() + 1, tempString.length());
-        String uriSuffix;
-        if (new File(contentDir).isAbsolute()) {
-            // Absolute
-            contentBaseUri = FILE_PREFIX + contentDir;
-            uriSuffix = File.separator + fileSuffix;
-        } else {
-            // Relative
-            contentBaseUri = CONTEXT_PREFIX + contentDir;
-            uriSuffix = "/" + fileSuffix;
-        }
+        String uriSuffix = "/" + fileSuffix;
+        contentBaseUri = pubContentUri;
+        /*
+         * if (new File(pubContentUri).isAbsolute()) { // Absolute contentBaseUri =
+         * repo.getBaseUri() + pubContentUri; uriSuffix = File.separator + fileSuffix; } else { //
+         * Relative contentBaseUri = CONTEXT_PREFIX + pubContentUri; uriSuffix = "/" + fileSuffix; }
+         */
 
         String realSourceUri = contentBaseUri + uriSuffix;
 
@@ -212,11 +210,13 @@ public class SourceWrapper extends AbstractLogEnabled {
 
         ByteArrayOutputStream out = null;
         InputStream in = null;
-        TraversableSource source = null;
+        Source source = null;
         try {
-            source = (TraversableSource) getSourceResolver().resolveURI(getRealSourceUri());
+            source = getSourceResolver().resolveURI(getRealSourceUri());
 
-            if (source.exists() && !source.isCollection()) {
+            if (source.exists()
+                    && !(source instanceof TraversableSource && ((TraversableSource) source)
+                            .isCollection())) {
                 byte[] buf = new byte[4096];
                 out = new ByteArrayOutputStream();
                 in = source.getInputStream();

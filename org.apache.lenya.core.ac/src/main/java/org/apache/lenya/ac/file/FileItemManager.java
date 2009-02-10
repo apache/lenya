@@ -35,9 +35,16 @@ import java.util.Set;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.TraversableSource;
+import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
@@ -48,42 +55,63 @@ import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
 /**
- * Abstract superclass for classes that manage items loaded from configuration
- * files.
+ * Abstract superclass for classes that manage items loaded from configuration files.
  */
 public abstract class FileItemManager extends AbstractLogEnabled implements ItemManager {
 
+    private static final Log logger = LogFactory.getLog(FileItemManager.class);
+
     private Map items = new HashMap();
-    private File configurationDirectory;
+    private String configUri;
     private DirectoryChangeNotifier notifier;
 
     private AccreditableManager accreditableManager;
+    private SourceResolver sourceResolver;
 
     /**
      * Create a new ItemManager.
      * @param accreditableManager The {@link AccreditableManager}.
      */
-    protected FileItemManager(AccreditableManager accreditableManager) {
+    protected FileItemManager(AccreditableManager accreditableManager, SourceResolver resolver) {
         this.accreditableManager = accreditableManager;
+        this.sourceResolver = resolver;
     }
+
+    private boolean canLoadItems = false;
 
     /**
      * Configures the item manager.
-     * @param _configurationDirectory where the items are fetched from
+     * @param configUri where the items are fetched from
      * @throws AccessControlException if the item manager cannot be instantiated
      */
-    public void configure(File _configurationDirectory) throws AccessControlException {
-        Validate.notNull(_configurationDirectory);
+    public void configure(String configUri) throws AccessControlException {
+        Validate.notNull(configUri);
+        this.configUri = configUri;
 
-        if (!_configurationDirectory.exists() || !_configurationDirectory.isDirectory()) {
-            throw new AccessControlException("The directory ["
-                    + _configurationDirectory.getAbsolutePath() + "] does not exist!");
+        Source source = null;
+        try {
+            source = this.sourceResolver.resolveURI(configUri);
+            if (source instanceof TraversableSource) {
+                TraversableSource dirSource = (TraversableSource) source;
+                if (dirSource.isCollection()) {
+                    this.notifier = new DirectoryChangeNotifier(configUri, getFileFilter());
+                    this.notifier.setLogger(getLogger());
+                    loadItems();
+                    this.canLoadItems = true;
+                }
+            }
+        } catch (final Exception e) {
+            throw new AccessControlException(e);
+        } finally {
+            if (source != null) {
+                this.sourceResolver.release(source);
+            }
         }
 
-        this.configurationDirectory = _configurationDirectory;
-        this.notifier = new DirectoryChangeNotifier(_configurationDirectory, getFileFilter());
-        this.notifier.setLogger(getLogger());
-        loadItems();
+        if (!this.canLoadItems) {
+            logger.warn("Could not load configuration from " + configUri);
+        }
+
     }
 
     /**
@@ -91,6 +119,10 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
      * @throws AccessControlException when something went wrong.
      */
     protected void loadItems() throws AccessControlException {
+
+        if (!this.canLoadItems) {
+            return;
+        }
 
         boolean changed;
         try {
@@ -183,6 +215,46 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
     }
 
     /**
+     * Loads an item from a source.
+     * @param source The source.
+     * @return An item.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected Item loadItem(Source source, String fileName) throws AccessControlException {
+        Validate.notNull(source, "source");
+        Configuration config = getItemConfiguration(source);
+
+        String id = fileName.substring(0, fileName.length() - getSuffix().length());
+        Item item = (Item) this.items.get(id);
+
+        String klass = ItemConfiguration.getItemClass(config);
+        if (item == null) {
+            try {
+                Class[] paramTypes = { ItemManager.class, Log.class };
+                Constructor ctor = Class.forName(klass).getConstructor(paramTypes);
+                Object[] params = { this, getLogger() };
+                item = (Item) ctor.newInstance(params);
+            } catch (Exception e) {
+                String errorMsg = "Exception when trying to instanciate: " + klass
+                        + " with exception: " + e.fillInStackTrace();
+
+                // an exception occured when trying to instanciate
+                // a user.
+                getLogger().error(errorMsg);
+                throw new AccessControlException(errorMsg, e);
+            }
+        }
+
+        try {
+            item.configure(config);
+        } catch (ConfigurationException e) {
+            String errorMsg = "Exception when trying to configure: " + klass;
+            throw new AccessControlException(errorMsg, e);
+        }
+        return item;
+    }
+
+    /**
      * Loads teh configuration of an item from a file.
      * @param file The file.
      * @return A configuration.
@@ -207,6 +279,31 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         return config;
     }
 
+    /**
+     * Loads teh configuration of an item from a file.
+     * @param file The file.
+     * @return A configuration.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected Configuration getItemConfiguration(Source source) throws AccessControlException {
+        Validate.notNull(source, "source");
+        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+        Configuration config = null;
+
+        try {
+            config = builder.build(source.getInputStream());
+        } catch (Exception e) {
+            String errorMsg = "Exception when reading the configuration from source: "
+                    + source.getURI();
+
+            // an exception occured when trying to read the configuration
+            // from the identity file.
+            getLogger().error(errorMsg);
+            throw new AccessControlException(errorMsg, e);
+        }
+        return config;
+    }
+
     protected void removeItem(File file) {
         // do nothing
     }
@@ -217,10 +314,25 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
      * @return An item.
      */
     public Item getItem(String id) {
+        Validate.notNull(id, "id");
         try {
             loadItems();
-        } catch (AccessControlException e) {
-            throw new IllegalStateException(e.getMessage());
+            if (!this.items.containsKey(id)) {
+                String fileName = id + getSuffix();
+                String itemUri = getConfigurationUri() + "/" + fileName;
+                Source source = null;
+                try {
+                    source = this.sourceResolver.resolveURI(itemUri);
+                    Item item = loadItem(source, fileName);
+                    update(item);
+                } finally {
+                    if (source != null) {
+                        this.sourceResolver.release(source);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
         }
         return (Item) this.items.get(id);
     }
@@ -241,8 +353,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
     /**
      * Add an Item to this manager
      * @param item to be added
-     * @throws AccessControlException when the notification threw this
-     *         exception.
+     * @throws AccessControlException when the notification threw this exception.
      */
     public void add(Item item) throws AccessControlException {
         Validate.notNull(item);
@@ -256,8 +367,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
     /**
      * Remove an item from this manager
      * @param item to be removed
-     * @throws AccessControlException when the notification threw this
-     *         exception.
+     * @throws AccessControlException when the notification threw this exception.
      */
     public void remove(Item item) throws AccessControlException {
         this.items.remove(item.getId());
@@ -270,8 +380,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
     /**
      * Update an item.
      * @param newItem The new version of the item.
-     * @throws AccessControlException when the notification threw this
-     *         exception.
+     * @throws AccessControlException when the notification threw this exception.
      */
     public void update(Item newItem) throws AccessControlException {
         this.items.remove(newItem.getId());
@@ -299,8 +408,9 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
      * Get the directory where the items are located.
      * @return a <code>File</code>
      */
-    public File getConfigurationDirectory() {
-        return this.configurationDirectory;
+    public String getConfigurationUri() {
+        assert this.configUri != null;
+        return this.configUri;
     }
 
     /**
@@ -387,15 +497,23 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
     /**
      * Helper class to observe a directory for changes.
      */
-    public static class DirectoryChangeNotifier extends AbstractLogEnabled {
+    public class DirectoryChangeNotifier extends AbstractLogEnabled {
 
         /**
          * Ctor.
-         * @param _directory The directory to observe.
+         * @param configUri The directory to observe.
          * @param _filter A filter to specify the file type to observe.
+         * @throws AccessControlException
          */
-        public DirectoryChangeNotifier(File _directory, FileFilter _filter) {
-            this.directory = _directory;
+        public DirectoryChangeNotifier(String configUri, FileFilter _filter)
+                throws AccessControlException {
+            FileSource source;
+            try {
+                source = (FileSource) FileItemManager.this.sourceResolver.resolveURI(configUri);
+            } catch (Exception e) {
+                throw new AccessControlException(e);
+            }
+            this.directory = source.getFile();
             this.filter = _filter;
         }
 
@@ -408,8 +526,8 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         private Set changedFiles = new HashSet();
 
         /**
-         * Checks if the directory has changed (a new file was added, a file was
-         * removed, a file has changed).
+         * Checks if the directory has changed (a new file was added, a file was removed, a file has
+         * changed).
          * @return A boolean value.
          * @throws IOException when something went wrong.
          */
@@ -493,6 +611,35 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
 
     public AccreditableManager getAccreditableManager() {
         return this.accreditableManager;
+    }
+
+    public void serialize(String itemUri, Configuration config) throws AccessControlException {
+        DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
+        ModifiableSource source = null;
+        try {
+            source = (ModifiableSource) this.sourceResolver.resolveURI(itemUri);
+            serializer.serialize(source.getOutputStream(), config);
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        } finally {
+            if (source != null) {
+                this.sourceResolver.release(source);
+            }
+        }
+    }
+
+    public void delete(String itemUri) throws AccessControlException {
+        ModifiableSource source = null;
+        try {
+            source = (ModifiableSource) this.sourceResolver.resolveURI(itemUri);
+            source.delete();
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        } finally {
+            if (source != null) {
+                this.sourceResolver.release(source);
+            }
+        }
     }
 
 }

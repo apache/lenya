@@ -42,7 +42,6 @@ import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.observation.RepositoryEvent;
-import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentLocator;
@@ -382,7 +381,7 @@ public class Publish extends InvokeWorkflow {
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
         org.apache.lenya.cms.repository.Session repoSession = (Session) getSession();
-        RepositoryEvent event = RepositoryEventFactory.createEvent(repoSession, getLogger());
+        RepositoryEvent event = new RepositoryEvent(repoSession, getLogger());
         repoSession.enqueueEvent(event);
     }
 

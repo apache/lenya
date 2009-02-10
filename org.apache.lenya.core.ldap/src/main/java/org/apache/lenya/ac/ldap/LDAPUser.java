@@ -335,8 +335,7 @@ public class LDAPUser extends FileUser {
 
         Hashtable env = new Hashtable();
 
-        System.setProperty("javax.net.ssl.trustStore", getConfigurationDirectory()
-                .getAbsolutePath()
+        System.setProperty("javax.net.ssl.trustStore", getConfigurationUri()
                 + File.separator + defaultProperties.getProperty(KEY_STORE_PROP));
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, LdapCtxFactory.class.getName());
@@ -386,7 +385,7 @@ public class LDAPUser extends FileUser {
      */
     private void readProperties() throws IOException {
         // create and load default properties
-        File propertiesFile = new File(getConfigurationDirectory(), LDAP_PROPERTIES_FILE);
+        File propertiesFile = new File(getConfigurationUri(), LDAP_PROPERTIES_FILE);
 
         if (defaultProperties == null) {
             defaultProperties = new Properties();

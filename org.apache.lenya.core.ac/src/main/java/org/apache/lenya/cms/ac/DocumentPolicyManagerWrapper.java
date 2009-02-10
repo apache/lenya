@@ -22,6 +22,7 @@ package org.apache.lenya.cms.ac;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
@@ -49,7 +50,7 @@ import org.apache.lenya.cms.publication.URLInformation;
  * URL, e.g. <code>/foo/bar_de.print.html</code> is mapped to <code>/foo/bar</code>.
  */
 public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
-        InheritingPolicyManager {
+        InheritingPolicyManager, Configurable {
 
     private InheritingPolicyManager policyManager;
     private Repository repository;

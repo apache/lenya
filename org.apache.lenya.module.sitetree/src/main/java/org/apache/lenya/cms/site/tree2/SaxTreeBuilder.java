@@ -1,8 +1,5 @@
 package org.apache.lenya.cms.site.tree2;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.lenya.cms.repository.Node;
@@ -13,8 +10,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-public class SaxTreeBuilder extends AbstractLogEnabled implements TreeBuilder, Serviceable,
-        ContentHandler {
+public class SaxTreeBuilder extends AbstractLogEnabled implements TreeBuilder, ContentHandler {
 
     protected static final String ATTR_XML_LANG = "xml:lang";
     protected static final String ELEM_SITE = "site";
@@ -25,30 +21,19 @@ public class SaxTreeBuilder extends AbstractLogEnabled implements TreeBuilder, S
     protected static final String ATTR_VISIBLE_IN_NAV = "visibleinnav";
     protected static final String ATTR_REVISION = "revision";
 
-    private ServiceManager manager;
     private TreeNodeImpl currentNode;
     private StringBuffer text = new StringBuffer();
     private Link currentLink;
+    private SAXParser parser;
 
     public void buildTree(SiteTreeImpl tree) throws Exception {
         SAXParser parser = null;
-        try {
-            this.currentNode = tree.getRoot();
-            Node node = tree.getRepositoryNode();
+        this.currentNode = tree.getRoot();
+        Node node = tree.getRepositoryNode();
 
-            if (node.exists() && node.getContentLength() > 0) {
-                parser = (SAXParser) this.manager.lookup(SAXParser.ROLE);
-                parser.parse(new InputSource(node.getInputStream()), this);
-            }
-        } finally {
-            if (parser != null) {
-                this.manager.release(parser);
-            }
+        if (node.exists() && node.getContentLength() > 0) {
+            this.parser.parse(new InputSource(node.getInputStream()), this);
         }
-    }
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
     public void characters(char[] chars, int start, int length) throws SAXException {
@@ -130,6 +115,10 @@ public class SaxTreeBuilder extends AbstractLogEnabled implements TreeBuilder, S
     }
 
     public void startPrefixMapping(String arg0, String arg1) throws SAXException {
+    }
+
+    public void setParser(SAXParser parser) {
+        this.parser = parser;
     }
 
 }

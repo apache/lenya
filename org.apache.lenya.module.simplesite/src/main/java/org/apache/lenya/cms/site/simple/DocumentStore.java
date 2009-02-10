@@ -31,11 +31,9 @@ import org.apache.commons.logging.Log;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentImpl;
 import org.apache.lenya.cms.publication.LockException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.RepositoryException;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
@@ -128,10 +126,6 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure, R
         } catch (Exception e) {
             throw new DocumentException(e);
         }
-    }
-
-    public Node getRepositoryNode() {
-        return ((DocumentImpl) getDelegate()).getRepositoryNode();
     }
 
     public boolean contains(String path) {
@@ -303,7 +297,7 @@ public class DocumentStore extends CollectionWrapper implements SiteStructure, R
     }
 
     public Session getRepositorySession() {
-        return getRepositoryNode().getRepositorySession();
+        throw new UnsupportedOperationException();
     }
 
     public void checkin() throws RepositoryException {

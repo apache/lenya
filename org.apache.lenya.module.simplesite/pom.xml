@@ -27,11 +27,6 @@
     <!-- TODO: remove after refactoring -->
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-impl</artifactId>
-    </dependency>
-    <!-- TODO: remove after refactoring -->
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-repository</artifactId>
     </dependency>
     <dependency>
@@ -49,17 +44,6 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-core</artifactId>
       <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-impl</artifactId>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-api</artifactId>
       <scope>test</scope>
     </dependency>
     <!-- FIXME: This dependency is transitive and should be obtained automatically

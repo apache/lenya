@@ -20,7 +20,6 @@
 
 package org.apache.lenya.ac.impl;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -111,18 +110,18 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
         setId(id);
     }
 
-    private File configurationDirectory;
+    private String configurationUri;
 
     /**
      * Returns the configuration directory.
      * @return A file object.
      */
-    public File getConfigurationDirectory() {
-        return this.configurationDirectory;
+    public String getConfigurationUri() {
+        return this.configurationUri;
     }
 
-    protected void setConfigurationDirectory(File _configurationDirectory) {
-        this.configurationDirectory = _configurationDirectory;
+    protected void setConfigurationUri(String _configurationDirectory) {
+        this.configurationUri = _configurationDirectory;
     }
 
     /**

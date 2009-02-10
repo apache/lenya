@@ -20,15 +20,25 @@
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
   
-  <bean name="org.apache.lenya.cms.repository.SourceNodeRcmlFactory"
-    class="org.apache.lenya.cms.repository.SourceNodeRcmlFactory">
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  <bean name="org.apache.lenya.cms.site.SiteManager/tree"
+    class="org.apache.lenya.cms.site.tree2.TreeSiteManager">
+    <property name="siteTreeFactory" ref="org.apache.lenya.cms.site.tree2.SiteTreeFactory"/>
   </bean>
   
-  <bean name="org.apache.lenya.cms.repository.NodeFactory"
-    class="org.apache.lenya.cms.repository.SourceNodeFactory">
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-    <property name="rcmlFactory" ref="org.apache.lenya.cms.repository.SourceNodeRcmlFactory"/>
+  <bean name="org.apache.excalibur.xml.sax.SAXParser"
+    class="org.apache.cocoon.core.xml.avalon.DefaultSAXParser">
+    <property name="parser" ref="org.apache.cocoon.core.xml.SAXParser"/>
+  </bean>
+  
+  <bean name="org.apache.lenya.cms.site.tree2.TreeBuilder"
+    class="org.apache.lenya.cms.site.tree2.SaxTreeBuilder">
+    <property name="parser" ref="org.apache.excalibur.xml.sax.SAXParser"/>
+  </bean>
+  
+  <bean name="org.apache.lenya.cms.site.tree2.SiteTreeFactory"
+    class="org.apache.lenya.cms.site.tree2.SiteTreeFactory">
+    <property name="sharedItemStore" ref="org.apache.lenya.cms.repository.SharedItemStore"/>
+    <property name="treeBuilder" ref="org.apache.lenya.cms.site.tree2.TreeBuilder"/>
   </bean>
   
 </beans>

@@ -20,15 +20,7 @@
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
   
-  <bean name="org.apache.lenya.cms.repository.SourceNodeRcmlFactory"
-    class="org.apache.lenya.cms.repository.SourceNodeRcmlFactory">
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-  </bean>
-  
-  <bean name="org.apache.lenya.cms.repository.NodeFactory"
-    class="org.apache.lenya.cms.repository.SourceNodeFactory">
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-    <property name="rcmlFactory" ref="org.apache.lenya.cms.repository.SourceNodeRcmlFactory"/>
-  </bean>
+  <bean name="org.apache.lenya.cms.repository.metadata.MetaDataRegistry"
+    class="org.apache.lenya.cms.repository.metadata.MetaDataRegistryImpl"/>
   
 </beans>

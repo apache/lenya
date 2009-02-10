@@ -27,9 +27,5 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-repository</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-impl</artifactId>
-    </dependency>
   </dependencies>
 </project>

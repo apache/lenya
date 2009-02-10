@@ -33,7 +33,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
     public Session createSession(Identity identity, boolean modifiable) throws RepositoryException {
         SessionImpl session = new SessionImpl(identity, modifiable);
         session.setObservationRegistry(getObservationRegistry());
-        session.setUuidGenerator(getUuidGenerator());
         session.setSharedItemStore(getSharedItemStore());
         return session;
     }

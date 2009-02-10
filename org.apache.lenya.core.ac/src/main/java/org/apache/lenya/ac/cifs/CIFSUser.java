@@ -87,10 +87,10 @@ public class CIFSUser extends FileUser {
      */
     protected void initialize() throws ConfigurationException {
         try {
-            readProperties(super.getConfigurationDirectory());
+            readProperties(super.getConfigurationUri());
         } catch (final IOException ioe) {
             throw new ConfigurationException("Reading cifs.properties file in ["
-                    + super.getConfigurationDirectory() + "] failed", ioe);
+                    + super.getConfigurationUri() + "] failed", ioe);
         }
     }
 
@@ -142,9 +142,10 @@ public class CIFSUser extends FileUser {
      * @param configurationDirectory The configuration directory.
      * @throws IOException if the properties cannot be found.
      */
-    private void readProperties(File configurationDirectory) throws IOException {
+    private void readProperties(String configurationUri) throws IOException {
+        
         // create and load default properties
-        File propertiesFile = new File(configurationDirectory, "cifs.properties");
+        File propertiesFile = new File(configurationUri + "/cifs.properties");
 
         if (defaultProperties == null) {
             defaultProperties = new Properties();

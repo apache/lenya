@@ -82,6 +82,7 @@
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-impl</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>

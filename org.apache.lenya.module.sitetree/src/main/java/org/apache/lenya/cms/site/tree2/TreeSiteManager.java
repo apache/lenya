@@ -28,6 +28,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
+import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.NodeSet;
@@ -42,6 +43,8 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
  */
 public class TreeSiteManager extends AbstractSiteManager {
 
+    private SiteTreeFactory siteTreeFactory;
+
     /**
      * Returns the sitetree for a specific area of this publication. Sitetrees are created on demand
      * and are cached.
@@ -54,11 +57,10 @@ public class TreeSiteManager extends AbstractSiteManager {
 
         String key = getKey(area);
         SiteTree sitetree;
-        RepositoryItemFactory factory = new SiteTreeFactory(getLogger());
         try {
-            org.apache.lenya.cms.repository.Session session = (org.apache.lenya.cms.repository.Session) area
-                    .getPublication().getSession();
-            sitetree = (SiteTree) session.getRepositoryItem(factory, key);
+            SessionHolder sessionHolder = (SessionHolder) area.getPublication().getSession();
+            sitetree = (SiteTree) sessionHolder.getRepositorySession().getRepositoryItem(
+                    this.siteTreeFactory, key);
         } catch (Exception e) {
             throw new SiteException(e);
         }
@@ -278,6 +280,10 @@ public class TreeSiteManager extends AbstractSiteManager {
         } catch (DocumentException e) {
             throw new SiteException(e);
         }
+    }
+
+    public void setSiteTreeFactory(SiteTreeFactory siteTreeFactory) {
+        this.siteTreeFactory = siteTreeFactory;
     }
 
 }

@@ -46,8 +46,7 @@ import org.apache.lenya.cms.publication.URLInformation;
  */
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver {
 
-    protected static final String AC_CONFIGURATION_FILE = "config/access-control/access-control.xml"
-            .replace('/', File.separatorChar);
+    protected static final String AC_CONFIGURATION_URI = "config/access-control/access-control.xml";
     protected static final String TYPE_ATTRIBUTE = "type";
 
     private Repository repository;
@@ -151,18 +150,23 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
      * @throws AccessControlException when something went wrong.
      */
     public Configuration getConfiguration(Publication publication) throws AccessControlException {
-        File configurationFile = new File(publication.getDirectory(), AC_CONFIGURATION_FILE);
+        String uri = publication.getPubBaseUri() + "/" + publication.getId() + "/"
+                + AC_CONFIGURATION_URI;
+        Source source = null;
+        try {
+            source = this.sourceResolver.resolveURI(uri);
+            if (source.exists()) {
 
-        if (configurationFile.isFile()) {
-            try {
-                Configuration configuration = new DefaultConfigurationBuilder()
-                        .buildFromFile(configurationFile);
+                Configuration configuration = new DefaultConfigurationBuilder().build(source
+                        .getInputStream());
                 return configuration;
-            } catch (Exception e) {
-                throw new AccessControlException(e);
+            } else {
+                throw new AccessControlException("No such file or directory: " + uri);
             }
-        } else {
-            throw new AccessControlException("No such file or directory: " + configurationFile);
+        } catch (AccessControlException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AccessControlException(e);
         }
     }
 

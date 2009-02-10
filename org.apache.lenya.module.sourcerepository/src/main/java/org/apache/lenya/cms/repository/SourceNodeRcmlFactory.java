@@ -28,15 +28,7 @@ import org.apache.lenya.cms.rc.RCML;
  */
 public class SourceNodeRcmlFactory {
 
-    private static SourceNodeRcmlFactory instance = new SourceNodeRcmlFactory();
     private SourceResolver sourceResolver;
-
-    /**
-     * @return The singleton instance.
-     */
-    public static SourceNodeRcmlFactory getInstance() {
-        return instance;
-    }
 
     private Map uri2rcml = new HashMap();
 

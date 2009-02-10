@@ -20,7 +20,6 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -95,7 +94,7 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
     public FileIPRange(ItemManager itemManager, Log logger, String id) {
         super(itemManager, logger, id);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
-        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
+        setConfigurationUri(fileItemManager.getConfigurationUri());
     }
 
     /**
@@ -103,23 +102,15 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
      */
     public void save() throws AccessControlException {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
-        Configuration config = createConfiguration();
-
-        try {
-            serializer.serializeToFile(getFile(), config);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
+        ((FileItemManager) getItemManager()).serialize(getItemUri(), createConfiguration());
     }
 
     /**
      * Returns the configuration file.
      * @return A file object.
      */
-    protected File getFile() {
-        File xmlPath = getConfigurationDirectory();
-        File xmlFile = new File(xmlPath, getId() + FileIPRangeManager.SUFFIX);
-        return xmlFile;
+    protected String getItemUri() {
+        return getConfigurationUri() + "/" + getId() + FileIPRangeManager.SUFFIX;
     }
 
     /**

@@ -18,15 +18,12 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
 import java.io.Serializable;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
-import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
@@ -63,7 +60,7 @@ public class FileUser extends AbstractUser implements Item, Serializable {
     public FileUser(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
-        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
+        setConfigurationUri(fileItemManager.getConfigurationUri());
     }
 
     /**
@@ -79,7 +76,7 @@ public class FileUser extends AbstractUser implements Item, Serializable {
             String email, String password) {
         super(itemManager, logger, id, fullName, email, password);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
-        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
+        setConfigurationUri(fileItemManager.getConfigurationUri());
     }
 
     /**
@@ -179,14 +176,7 @@ public class FileUser extends AbstractUser implements Item, Serializable {
      * @see org.apache.lenya.ac.User#save()
      */
     public void save() throws AccessControlException {
-        DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
-        Configuration config = createConfiguration();
-
-        try {
-            serializer.serializeToFile(getFile(), config);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
+        ((FileItemManager) getItemManager()).serialize(getItemUri(), createConfiguration());
     }
 
     /**
@@ -194,33 +184,30 @@ public class FileUser extends AbstractUser implements Item, Serializable {
      */
     public void delete() throws AccessControlException {
         super.delete();
-        getFile().delete();
+        ((FileItemManager) getItemManager()).delete(getItemUri());
     }
 
     /**
      * Returns the configuration file.
      * @return A file object.
      */
-    protected File getFile() {
-        File xmlPath = getConfigurationDirectory();
-        File xmlFile = new File(xmlPath, getId() + FileUserManager.SUFFIX);
-        return xmlFile;
+    protected String getItemUri() {
+        return getConfigurationUri() + "/" + getId() + FileUserManager.SUFFIX;
     }
 
-    private File configurationDirectory;
+    private String configUri;
 
     /**
      * Returns the configuration directory.
      * @return A file object.
      */
-    protected File getConfigurationDirectory() {
-        return this.configurationDirectory;
+    protected String getConfigurationUri() {
+        return this.configUri;
     }
 
-    protected void setConfigurationDirectory(File _configurationDirectory) {
+    protected void setConfigurationUri(String _configurationDirectory) {
         Validate.notNull(_configurationDirectory);
-        Validate.isTrue(_configurationDirectory.isDirectory());
-        this.configurationDirectory = _configurationDirectory;
+        this.configUri = _configurationDirectory;
     }
 
 }

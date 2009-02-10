@@ -73,6 +73,8 @@
   
   <!-- Accreditable Managers -->
   <bean name="org.apache.lenya.ac.AccreditableManagerFactory"
-    class="org.apache.lenya.ac.file.FileAccreditableManagerFactory"/>
+    class="org.apache.lenya.ac.file.FileAccreditableManagerFactory">
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  </bean>
   
 </beans>

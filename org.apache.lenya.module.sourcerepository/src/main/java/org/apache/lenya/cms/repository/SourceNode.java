@@ -48,17 +48,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     private MetaSourceWrapper metaSource;
     private NodeFactory nodeFactory;
     private SourceResolver sourceResolver;
+    private SourceNodeRcmlFactory rcmlFactory;
 
     /**
      * Ctor.
+     * @param sourceNodeRepository
      * 
      * @param session
      * @param sourceUri
      * @param logger
      */
     public SourceNode(Session session, String sourceUri, SourceResolver resolver, Log logger) {
-        this.session = session;
 
+        this.session = session;
         this.contentSource = new ContentSourceWrapper(this, sourceUri, resolver, logger);
         this.metaSource = new MetaSourceWrapper(this, sourceUri, resolver, logger);
     }
@@ -271,7 +273,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "node " + getSourceURI();
+        return "node " + getSourceURI() + " (" + getContentSource().getRealSourceUri() + ")";
     }
 
     /**
@@ -287,8 +289,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
-                newChildren.add(new SourceNode(getRepositorySession(), getSourceURI() + "/"
-                        + child.getName(), getSourceResolver(), getLogger()));
+                SourceNode node = new SourceNode(getRepositorySession(), getSourceURI() + "/"
+                        + child.getName(), getSourceResolver(), getLogger());
+                node.setRcmlFactory(this.rcmlFactory);
+                newChildren.add(node);
             }
             return newChildren;
         } catch (Exception e) {
@@ -356,8 +360,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     protected synchronized RCML getRcml() {
         if (this.rcml == null) {
-            SourceNodeRcmlFactory factory = SourceNodeRcmlFactory.getInstance();
-            this.rcml = factory.getRcml(this);
+            this.rcml = this.rcmlFactory.getRcml(this);
         }
         return this.rcml;
     }
@@ -514,6 +517,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     protected void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
+    }
+
+    public void setRcmlFactory(SourceNodeRcmlFactory rcmlFactory) {
+        this.rcmlFactory = rcmlFactory;
     }
 
 }

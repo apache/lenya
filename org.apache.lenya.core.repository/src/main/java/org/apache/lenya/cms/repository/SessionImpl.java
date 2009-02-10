@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
@@ -51,7 +52,6 @@ public class SessionImpl implements Session {
     protected static final String UNMODIFIABLE_SESSION_ID = "unmodifiable";
     private Identity identity;
     private ObservationRegistry observationRegistry;
-    private UUIDGenerator uuidGenerator;
     private String id;
     private String userId;
 
@@ -66,14 +66,6 @@ public class SessionImpl implements Session {
         }
         this.observationRegistry = observationRegistry;
         addListener(observationRegistry);
-    }
-
-    protected UUIDGenerator getUuidGenerator() {
-        return uuidGenerator;
-    }
-
-    protected void setUuidGenerator(UUIDGenerator uuidGenerator) {
-        this.uuidGenerator = uuidGenerator;
     }
 
     /**
@@ -93,7 +85,7 @@ public class SessionImpl implements Session {
     }
 
     protected String createUuid() {
-        return getUuidGenerator().nextUUID();
+        return UUID.randomUUID().toString();
     }
 
     public Identity getIdentity() {
@@ -248,6 +240,8 @@ public class SessionImpl implements Session {
     private List events = new ArrayList();
     private IdentityMap identityMap;
 
+    private SessionHolder holder;
+
     public synchronized void enqueueEvent(RepositoryEvent event) {
         Validate.isTrue(event.getSession() == this, "event belongs to session");
         if (!isModifiable()) {
@@ -275,6 +269,14 @@ public class SessionImpl implements Session {
 
     public String toString() {
         return "Session " + getId();
+    }
+
+    public SessionHolder getHolder() {
+        return this.holder;
+    }
+    
+    public void setHolder(SessionHolder holder) {
+        this.holder = holder;
     }
 
 }

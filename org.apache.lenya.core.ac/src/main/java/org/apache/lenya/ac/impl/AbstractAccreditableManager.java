@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.GroupManager;
@@ -42,13 +43,8 @@ public abstract class AbstractAccreditableManager
     extends AbstractLogEnabled
     implements AccreditableManager, ItemManagerListener {
     
-    /**
-     * @param logger The logger.
-     */
-    public AbstractAccreditableManager(Log logger) {
-        setLogger(logger);
-    }
-
+    private static final Log logger = LogFactory.getLog(AbstractAccreditableManager.class);
+    
     private UserManager userManager = null;
     private GroupManager groupManager = null;
     private IPRangeManager ipRangeManager = null;

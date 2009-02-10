@@ -85,6 +85,7 @@ public class SourceNodeRCML implements RCML {
      * @param manager The service manager.
      */
     public SourceNodeRCML(String contentSourceUri, String metaSourceUri, SourceResolver resolver) {
+        Validate.notNull(resolver, "source resolver");
         this.maximalNumberOfEntries = 200;
         this.maximalNumberOfEntries = (2 * this.maximalNumberOfEntries) + 1;
         this.contentSourceUri = contentSourceUri;

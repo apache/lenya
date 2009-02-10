@@ -19,6 +19,7 @@
 package org.apache.lenya.ac.impl;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
@@ -48,6 +49,7 @@ public abstract class AbstractAccessControllerResolver extends AbstractLogEnable
      * @see org.apache.lenya.ac.AccessControllerResolver#resolveAccessController(java.lang.String)
      */
     public AccessController resolveAccessController(String webappUrl) throws AccessControlException {
+        Validate.notNull(webappUrl, "webapp URL");
 
         AccessController controller = null;
         Object key = null;
@@ -85,6 +87,8 @@ public abstract class AbstractAccessControllerResolver extends AbstractLogEnable
      */
     protected Object generateCacheKey(String webappUrl, SourceResolver resolver)
             throws AccessControlException {
+        Validate.notNull(webappUrl, "webapp URL");
+        Validate.notNull(resolver, "resolver");
         Object key;
         try {
             key = URLKeyUtil.generateKey(resolver, webappUrl);

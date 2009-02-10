@@ -18,12 +18,9 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
-
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
-import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.commons.logging.Log;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
@@ -60,7 +57,7 @@ public class FileRole extends AbstractRole implements Item {
     public FileRole(ItemManager itemManager, Log logger) {
         super(itemManager, logger);
         FileItemManager fileItemManager = (FileItemManager) itemManager;
-        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
+        setConfigurationUri(fileItemManager.getConfigurationUri());
     }
 
     /**
@@ -79,16 +76,8 @@ public class FileRole extends AbstractRole implements Item {
      * @throws AccessControlException if the save fails
      */
     public void save() throws AccessControlException {
-        DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
-        Configuration config = createConfiguration();
-        File xmlPath = getConfigurationDirectory();
-        File xmlfile = new File(xmlPath, getId() + FileRoleManager.SUFFIX);
-
-        try {
-            serializer.serializeToFile(xmlfile, config);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
+        String uri = this.configUri + "/" + getId() + FileRoleManager.SUFFIX;
+        ((FileItemManager) getItemManager()).serialize(uri, createConfiguration());
     }
 
     /**
@@ -101,19 +90,11 @@ public class FileRole extends AbstractRole implements Item {
         return config;
     }
 
-    private File configurationDirectory;
+    private String configUri;
     private boolean isAssignable;
 
-    /**
-     * Returns the configuration directory.
-     * @return A file object.
-     */
-    public File getConfigurationDirectory() {
-        return this.configurationDirectory;
-    }
-
-    protected void setConfigurationDirectory(File file) {
-        this.configurationDirectory = file;
+    protected void setConfigurationUri(String uri) {
+        this.configUri = uri;
     }
 
     public boolean isAssignable() {

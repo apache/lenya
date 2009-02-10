@@ -20,18 +20,13 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.util.NetUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
-import org.apache.excalibur.source.Source;
+import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.GroupManager;
@@ -46,7 +41,8 @@ import org.apache.lenya.ac.impl.AbstractAccreditableManager;
  */
 public class FileAccreditableManager extends AbstractAccreditableManager {
 
-    private ServiceManager manager;
+    private static final Log logger = LogFactory.getLog(FileAccreditableManager.class);
+    private SourceResolver sourceResolver;
 
     /**
      * Creates a new FileAccessController based on a configuration directory.
@@ -55,20 +51,15 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
      * @param configurationUri The configuration directory URI.
      * @param _userTypes The supported user types.
      */
-    public FileAccreditableManager(ServiceManager manager, Log logger,
-            String configurationUri, UserType[] _userTypes) {
-        super(logger);
-
-        Validate.notNull(manager, "Service manager");
-        this.manager = manager;
+    public FileAccreditableManager(String configurationUri, UserType[] _userTypes) {
 
         Validate.notNull(configurationUri, "configuration directory");
-        this.configurationDirectoryUri = configurationUri;
+        this.configUri = configurationUri;
 
         this.userTypes = new HashSet(Arrays.asList(_userTypes));
     }
 
-    private File configurationDirectory;
+    private String configUri;
     private Set userTypes;
 
     /**
@@ -80,48 +71,6 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
         if (this.userTypes == null)
             throw new AccessControlException("User types not initialized");
         return (UserType[]) this.userTypes.toArray(new UserType[this.userTypes.size()]);
-    }
-
-    /**
-     * Returns the configuration directory.
-     * @return The configuration directory.
-     * @throws AccessControlException when something went wrong.
-     */
-    public File getConfigurationDirectory() throws AccessControlException {
-
-        if (this.configurationDirectory == null) {
-
-            if (this.configurationDirectoryUri == null) {
-                throw new AccessControlException("Configuration directory not set!");
-            }
-
-            Source source = null;
-            SourceResolver resolver = null;
-            File directory;
-            try {
-
-                getLogger().debug(
-                        "Configuration directory Path: [" + this.configurationDirectoryUri + "]");
-
-                resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
-                source = resolver.resolveURI(this.configurationDirectoryUri);
-
-                getLogger().debug("Configuration directory URI: " + source.getURI());
-                directory = new File(new URI(NetUtils.encodePath(source.getURI())));
-            } catch (Exception e) {
-                throw new AccessControlException(e);
-            } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    getManager().release(resolver);
-                }
-            }
-            this.configurationDirectory = directory;
-        }
-
-        return this.configurationDirectory;
     }
 
     // provided for backward compatibility
@@ -138,31 +87,25 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
                 DEFAULT_USER_CREATE_USE_CASE);
     }
 
-    private String configurationDirectoryUri;
-
-    /**
-     * Returns the service manager.
-     * @return A service manager.
-     */
-    protected ServiceManager getManager() {
-        return this.manager;
-    }
-
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
      */
     protected GroupManager initializeGroupManager() throws AccessControlException {
-        FileGroupManager _manager = FileGroupManager.instance(this, getConfigurationDirectory(),
-                getLogger());
+        FileGroupManager _manager = FileGroupManager.instance(this, getConfigurationUri(),
+                this.sourceResolver);
         return _manager;
+    }
+
+    private String getConfigurationUri() {
+        return this.configUri;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
      */
     protected IPRangeManager initializeIPRangeManager() throws AccessControlException {
-        FileIPRangeManager _manager = FileIPRangeManager.instance(this,
-                getConfigurationDirectory(), getLogger());
+        FileIPRangeManager _manager = FileIPRangeManager.instance(this, getConfigurationUri(),
+                this.sourceResolver);
         return _manager;
     }
 
@@ -170,8 +113,8 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
      */
     protected RoleManager initializeRoleManager() throws AccessControlException {
-        FileRoleManager _manager = FileRoleManager.instance(this, getConfigurationDirectory(),
-                getLogger());
+        FileRoleManager _manager = FileRoleManager.instance(this, getConfigurationUri(),
+                this.sourceResolver);
         return _manager;
     }
 
@@ -179,30 +122,21 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
      */
     protected UserManager initializeUserManager() throws AccessControlException {
-        FileUserManager _manager = FileUserManager.instance(this, getConfigurationDirectory(),
-                getUserTypes(), getLogger());
+        FileUserManager _manager = FileUserManager.instance(this, getConfigurationCollectionUri(),
+                getUserTypes(), this.sourceResolver);
         return _manager;
     }
 
-    public String getConfigurationCollectionUri() {
-        try {
-            return "file://" + getConfigurationDirectory().getCanonicalPath();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public String getId() {
+        return this.configUri;
     }
 
-    public String getId() {
-        try {
-        	File configDir = this.getConfigurationDirectory();
-        	assert configDir != null;
-            return configDir.getCanonicalPath();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        catch(AccessControlException e) {
-            throw new RuntimeException(e);
-        }
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
+    }
+
+    public String getConfigurationCollectionUri() {
+        return getConfigurationUri();
     }
 
 }

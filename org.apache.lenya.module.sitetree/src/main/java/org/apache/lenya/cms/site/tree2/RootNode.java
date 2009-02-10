@@ -33,10 +33,9 @@ public class RootNode extends TreeNodeImpl {
 
     /**
      * @param tree The tree.
-     * @param logger The logger.
      */
-    public RootNode(SiteTreeImpl tree, Log logger) {
-        super(null, "", false, logger);
+    public RootNode(SiteTreeImpl tree) {
+        super(null, "", false);
         this.tree = tree;
     }
 

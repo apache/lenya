@@ -35,6 +35,7 @@ import org.apache.lenya.cms.repository.Persistable;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -44,25 +45,25 @@ import org.apache.lenya.cms.site.tree.SiteTree;
 /**
  * Simple site tree implementation.
  */
-public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, SiteTree,
-        Persistable, RepositoryItem {
-
+public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, RepositoryItem {
+    
     private Area area;
     private RootNode root;
     private int revision;
+    private TreeBuilder builder;
 
     /**
      * @param area The area.
      * @param logger The logger.
      */
-    public SiteTreeImpl(Area area, Log logger) {
-        setLogger(logger);
+    public SiteTreeImpl(TreeBuilder builder, Area area) {
         this.area = area;
+        this.builder = builder;
         initRoot();
     }
 
     protected void initRoot() {
-        this.root = new RootNode(this, getLogger());
+        this.root = new RootNode(this);
         nodeAdded(root);
     }
 
@@ -110,6 +111,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             }
             this.loaded = true;
             if (!repoNode.exists()) {
+                if (true) throw new RuntimeException("node doesn't exist: " + repoNode);
                 reset();
             }
         } catch (Exception e) {
@@ -134,7 +136,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         }
         TreeWriter writer = null;
         try {
-            writer = (TreeWriter) WebAppContextUtils.getCurrentWebApplicationContext().getBean(TreeWriter.ROLE);
+            writer = (TreeWriter) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
+                    TreeWriter.ROLE);
             int revision = getRevision(getRepositoryNode()) + 1;
             writer.writeTree(this);
         } catch (RuntimeException e) {
@@ -310,7 +313,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     public Session getRepositorySession() {
-        return (Session) this.area.getPublication().getSession();
+        SessionHolder holder = (SessionHolder) this.area.getPublication().getSession();
+        return holder.getRepositorySession();
     }
 
     private NodeFactory nodeFactory;
@@ -326,7 +330,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     public Node getRepositoryNode() {
         try {
-            return (Node) getRepositorySession().getRepositoryItem(getNodeFactory(), getSourceUri());
+            return (Node) getRepositorySession()
+                    .getRepositoryItem(getNodeFactory(), getSourceUri());
         } catch (RepositoryException e) {
             throw new RuntimeException("Creating repository node failed: ", e);
         }

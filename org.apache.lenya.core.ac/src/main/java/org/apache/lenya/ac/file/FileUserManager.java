@@ -18,7 +18,6 @@
 
 package org.apache.lenya.ac.file;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +26,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
@@ -40,6 +41,8 @@ import org.apache.lenya.ac.UserType;
  */
 public class FileUserManager extends FileItemManager implements UserManager {
 
+    private static final Log logger = LogFactory.getLog(FileUserManager.class);
+
     private static Map instances = new HashMap();
     private Set userTypes;
 
@@ -50,9 +53,9 @@ public class FileUserManager extends FileItemManager implements UserManager {
      * @param _userTypes The supported user types.
      * @throws AccessControlException if the UserManager could not be instantiated.
      */
-    private FileUserManager(AccreditableManager mgr, UserType[] _userTypes)
+    private FileUserManager(AccreditableManager mgr, UserType[] _userTypes, SourceResolver resolver)
             throws AccessControlException {
-        super(mgr);
+        super(mgr, resolver);
         this.userTypes = new HashSet(Arrays.asList(_userTypes));
     }
 
@@ -66,23 +69,17 @@ public class FileUserManager extends FileItemManager implements UserManager {
      * @return an <code>UserManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileUserManager instance(AccreditableManager mgr, File configurationDirectory, UserType[] userTypes, Log logger)
-            throws AccessControlException {
+    public static FileUserManager instance(AccreditableManager mgr, String configUri,
+            UserType[] userTypes, SourceResolver resolver) throws AccessControlException {
 
-        Validate.notNull(configurationDirectory);
-        if (!configurationDirectory.isDirectory()) {
-            throw new AccessControlException("Configuration directory [" + configurationDirectory
-                    + "] does not exist!");
+        Validate.notNull(configUri);
+        if (!instances.containsKey(configUri)) {
+            FileUserManager manager = new FileUserManager(mgr, userTypes, resolver);
+            manager.configure(configUri);
+            instances.put(configUri, manager);
         }
 
-        if (!instances.containsKey(configurationDirectory)) {
-            FileUserManager manager = new FileUserManager(mgr, userTypes);
-            manager.setLogger(logger);
-            manager.configure(configurationDirectory);
-            instances.put(configurationDirectory, manager);
-        }
-
-        return (FileUserManager) instances.get(configurationDirectory);
+        return (FileUserManager) instances.get(configUri);
     }
 
     /**

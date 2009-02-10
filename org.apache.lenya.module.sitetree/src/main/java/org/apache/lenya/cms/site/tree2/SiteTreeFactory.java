@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.tree2;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -33,30 +34,26 @@ import org.apache.lenya.cms.site.tree.SiteTree;
  * 
  * @version $Id: SiteTreeFactory.java 179568 2005-06-02 09:27:26Z jwkaltz $
  */
-public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryItemFactory {
-    
-    private SharedItemStore sharedItemStore;
+public class SiteTreeFactory implements RepositoryItemFactory {
 
-    /**
-     * Ctor.
-     * @param logger The logger.
-     */
-    public SiteTreeFactory(Log logger) {
-        setLogger(logger);
-    }
+    private static final Log logger = LogFactory.getLog(SiteTreeFactory.class);
+
+    private SharedItemStore sharedItemStore;
+    private TreeBuilder treeBuilder;
 
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String areaName = snippets[1];
         try {
-            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session;
+            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session
+                    .getHolder();
             Publication publication = pubSession.getPublication(publicationId);
             Area area = publication.getArea(areaName);
 
-            Session storeSession = getSharedItemStore().getSession();
+            Session storeSession = this.sharedItemStore.getSession();
             if (session.isModifiable() || session == storeSession) {
-                return new SiteTreeImpl(area, getLogger());
+                return new SiteTreeImpl(this.treeBuilder, area);
             } else {
                 return new DelegatingSiteTree(area, this, storeSession, key);
             }
@@ -69,15 +66,12 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         return SiteTree.IDENTIFIABLE_TYPE;
     }
 
-    /**
-     * TODO: Bean wiring
-     */
     public void setSharedItemStore(SharedItemStore sharedItemStore) {
         this.sharedItemStore = sharedItemStore;
     }
 
-    public SharedItemStore getSharedItemStore() {
-        return sharedItemStore;
+    public void setTreeBuilder(TreeBuilder treeBuilder) {
+        this.treeBuilder = treeBuilder;
     }
 
 }
