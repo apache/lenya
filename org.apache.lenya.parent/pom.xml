@@ -276,6 +276,13 @@
           <artifactId>maven-jetty-plugin</artifactId>
           <version>6.1.12</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <forkMode>never</forkMode>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
