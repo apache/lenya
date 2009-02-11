@@ -548,6 +548,11 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-impl-tests</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-impl</artifactId>
         <version>${project.version}</version>
         <type>test-jar</type>

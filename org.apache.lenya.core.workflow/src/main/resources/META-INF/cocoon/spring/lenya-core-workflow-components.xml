@@ -19,17 +19,19 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
-
-  <bean name="org.apache.lenya.cms.publication.ResourceTypeFactory"
-    class="org.apache.lenya.cms.publication.ResourceTypeFactory">
+  
+  <bean name="org.apache.lenya.workflow.WorkflowManager"
+    class="org.apache.lenya.workflow.impl.WorkflowManagerImpl">
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
   </bean>
-  
-  <!-- Mock resource type, used for tests. -->
-  <bean name="org.apache.lenya.cms.publication.ResourceType/mock"
-    factory-bean="org.apache.lenya.cms.publication.ResourceTypeFactory"
-    factory-method="createResourceType">
-    <constructor-arg value="resource://META-INF/lenya/resourcetypes/mock.xml"/>
+
+  <!-- Meta Data -->
+  <bean init-method="register"
+    name="org.apache.lenya.cms.repository.metadata.ElementSet/http://apache.org/lenya/metadata/workflow/1.0"
+    class="org.apache.lenya.cms.repository.metadata.impl.ConfigurableElementSet">
+    <property name="configUri" value="resource://META-INF/lenya/metadata/workflow.xml"/>
+    <property name="registry" ref="org.apache.lenya.cms.repository.metadata.MetaDataRegistry"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
   </bean>
   
 </beans>

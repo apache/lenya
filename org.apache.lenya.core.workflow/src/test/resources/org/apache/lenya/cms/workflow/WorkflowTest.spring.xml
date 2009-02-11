@@ -15,21 +15,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
-  xmlns="http://www.springframework.org/schema/beans">
 
-  <bean name="org.apache.lenya.cms.publication.ResourceTypeFactory"
-    class="org.apache.lenya.cms.publication.ResourceTypeFactory">
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-  </bean>
-  
-  <!-- Mock resource type, used for tests. -->
-  <bean name="org.apache.lenya.cms.publication.ResourceType/mock"
-    factory-bean="org.apache.lenya.cms.publication.ResourceTypeFactory"
-    factory-method="createResourceType">
-    <constructor-arg value="resource://META-INF/lenya/resourcetypes/mock.xml"/>
-  </bean>
-  
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+  <import resource="classpath:META-INF/cocoon/spring/lenya-core-workflow-components.xml"/>
+  <import resource="classpath:test-components.xml"/>
 </beans>

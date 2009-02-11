@@ -16,40 +16,6 @@
   <name>Apache Lenya Core Implementation</name>
   
   <build>
-    <plugins>
-      <plugin>
-        <!-- export our test classes in a separate jar -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <includes>
-            <include>**/*TestCase.class</include>
-            <include>**/*Test.class</include>
-          </includes>
-          <excludes>
-            <exclude>**/Abstract*.class</exclude>
-          </excludes>
-          <!-- currently triggers NPE in surefire plugin
-            <systemProperties>
-            <property>
-            <name>junit.test.loglevel</name>
-            <value>3</value>
-            </property>
-            </systemProperties>
-          -->
-        </configuration>
-      </plugin>
-    </plugins>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -103,70 +69,5 @@
       <artifactId>excalibur-sourceresolve</artifactId>
       <version>2.2.3</version>
     </dependency>
-    
-    <!-- Tests -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cocoon</groupId>
-      <artifactId>cocoon-core</artifactId>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <!-- FIXME: This dependency is transitive and should be obtained automatically
-      see http://jira.codehaus.org/browse/MNG-1378 -->
-    <dependency>
-      <groupId>org.apache.cocoon</groupId>
-      <artifactId>cocoon-sitemap-impl</artifactId>
-      <scope>test</scope>
-      <type>test-jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-api</artifactId>
-      <scope>test</scope>
-      <type>test-jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-ac</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    
-    <!-- FIXME: maybe the tests can be organized with less dependencies -->
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-sitetree</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-sourcerepository</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-xhtml</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-links</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-opendocument</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-cforms</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    
   </dependencies>
 </project>

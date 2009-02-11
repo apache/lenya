@@ -20,11 +20,8 @@ package org.apache.lenya.workflow.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.excalibur.pool.Poolable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowEngine;
@@ -38,10 +35,10 @@ import org.w3c.dom.Document;
  * 
  * @version $Id: WorkflowManagerImpl.java 179751 2005-06-03 09:13:35Z andreas $
  */
-public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager,
-        Serviceable, Poolable {
+public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager {
 
     private Map uri2workflow = new HashMap();
+    private SourceResolver sourceResolver;
 
     /**
      * @see org.apache.lenya.workflow.WorkflowManager#invoke(org.apache.lenya.workflow.Workflowable,
@@ -87,15 +84,6 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
         return canInvoke;
     }
 
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
     /**
      * @see org.apache.lenya.workflow.WorkflowManager#getWorkflowSchema(org.apache.lenya.workflow.Workflowable)
      */
@@ -108,7 +96,7 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
             if (uri != null) {
                 workflow = (WorkflowImpl) this.uri2workflow.get(uri);
                 if (workflow == null) {
-                    Document document = SourceUtil.readDOM(uri, this.manager);
+                    Document document = SourceUtil.readDOM(uri, this.sourceResolver);
                     if (document == null) {
                         throw new WorkflowException("Could not read workflow schema from URI ["
                                 + uri + "]!");
@@ -132,6 +120,10 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
      */
     public boolean hasWorkflow(Workflowable workflowable) {
         return workflowable.getWorkflowSchemaURI() != null;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

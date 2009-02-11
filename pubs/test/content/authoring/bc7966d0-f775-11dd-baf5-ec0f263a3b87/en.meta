@@ -24,7 +24,7 @@
 <value>xml</value>
 </element>
 <element key="resourceType">
-<value>cforms</value>
+<value>mock</value>
 </element>
 <element key="contentType">
 <value>xml</value>

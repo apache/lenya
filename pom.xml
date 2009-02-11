@@ -42,6 +42,7 @@
     <module>org.apache.lenya.core.gui</module>
     <module>org.apache.lenya.core.i18n</module>
     <module>org.apache.lenya.core.impl</module>
+    <module>org.apache.lenya.core.impl.tests</module>
     <module>org.apache.lenya.core.janitor</module>
     <module>org.apache.lenya.core.ldap</module>
     <module>org.apache.lenya.core.linking</module>
