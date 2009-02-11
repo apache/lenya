@@ -36,8 +36,18 @@
     </p>
 -->
     
-    <h2>Important notes for beta testers of development versions</h2>
+    <h2>Important notes for users of 2.0 SVN versions</h2>
 
+    <h3>2009-02-10: Language catalogues must have proper namespace</h3>
+    <p>
+      Since some update in late 2008, all your custom I18n catalogues must be in the namespace  
+      xmlns="http://apache.org/cocoon/i18n/2.1", otherwise localization
+      will break globally when you migrate to a recent version.
+      Thanks to user Gerd for
+      <a
+      href="http://marc.info/?l=lenya-dev&amp;m=122558896606926&amp;w=2">finding
+      this out</a>.
+    </p>
     <h3>2007-11-08: Redirection changes</h3>
     <p>
       Most of our sitemap redirects have been changed to make them work with
