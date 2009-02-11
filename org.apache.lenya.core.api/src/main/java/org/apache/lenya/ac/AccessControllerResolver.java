@@ -32,11 +32,6 @@ public interface AccessControllerResolver extends Component {
      * The Avalon role.
      */
     String ROLE = AccessControllerResolver.class.getName();
-    
-    /**
-     * The name of the default resolver to use.
-     */
-    String DEFAULT_RESOLVER = "publication";
 
     /**
      * Resolves an access controller for a certain URL.
@@ -46,10 +41,4 @@ public interface AccessControllerResolver extends Component {
      */
     AccessController resolveAccessController(String webappUrl) throws AccessControlException;
     
-    /**
-     * Releases a resolved access controller. 
-     * @param controller The access controller to release.
-     */
-    void release(AccessController controller);
-
 }

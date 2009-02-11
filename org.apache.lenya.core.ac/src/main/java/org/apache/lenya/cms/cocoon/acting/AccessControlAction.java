@@ -62,13 +62,8 @@ public abstract class AccessControlAction extends ConfigurableServiceableAction 
 
         Map result = null;
 
-        getLogger().debug(
-                "Resolving AC resolver for type [" + AccessControllerResolver.DEFAULT_RESOLVER
-                        + "]");
         AccessControllerResolver resolver = (AccessControllerResolver) WebAppContextUtils
-                .getCurrentWebApplicationContext().getBean(
-                        AccessControllerResolver.ROLE + "/"
-                                + AccessControllerResolver.DEFAULT_RESOLVER);
+                .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
         getLogger().debug("Resolved AC resolver [" + resolver + "]");
 
         String webappUrl = ServletHelper.getWebappURI(request);

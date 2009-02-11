@@ -25,14 +25,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
@@ -50,14 +46,13 @@ import org.xml.sax.helpers.AttributesImpl;
  * This transformer is applied to the sitetree. It marks the site element and all node elements the
  * current identity is not allowed to access with a <code>protected="true"</code> attribute.
  */
-public class AccessControlSitetreeTransformer extends AbstractSAXTransformer implements Disposable {
+public class AccessControlSitetreeTransformer extends AbstractSAXTransformer {
 
     /**
      * <code>ATTRIBUTE_PROTECTED</code> The attribute for protected
      */
     public static final String ATTRIBUTE_PROTECTED = "protected";
 
-    private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
     private AccessControllerResolver acResolver;
     private AccreditableManager accreditableManager;
@@ -76,44 +71,21 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
             throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, src, par);
 
-        this.serviceSelector = null;
         this.acResolver = null;
         this.policyManager = null;
 
         this.identity = Identity.getIdentity(this.request.getSession(false));
 
-        try {
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Setting up transformer");
-                getLogger().debug("    Identity:       [" + this.identity + "]");
-            }
-
-            this.serviceSelector = (ServiceSelector) this.manager
-                    .lookup(AccessControllerResolver.ROLE + "Selector");
-
-            this.acResolver = (AccessControllerResolver) this.serviceSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
-            }
-
-        } catch (final ServiceException e) {
-            throw new ProcessingException(e);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Setting up transformer");
+            getLogger().debug("    Identity:       [" + this.identity + "]");
         }
 
-    }
+        this.acResolver = (AccessControllerResolver) WebAppContextUtils
+                .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
 
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        if (this.serviceSelector != null) {
-            if (this.acResolver != null) {
-                this.serviceSelector.release(this.acResolver);
-            }
-            this.manager.release(this.serviceSelector);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
         }
     }
 

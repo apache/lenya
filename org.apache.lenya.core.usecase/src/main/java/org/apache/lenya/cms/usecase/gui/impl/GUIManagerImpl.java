@@ -146,10 +146,8 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager {
 
         try {
 
-            AccessControllerResolver  acResolver = (AccessControllerResolver) WebAppContextUtils
-                    .getCurrentWebApplicationContext().getBean(
-                            AccessControllerResolver.ROLE + "/"
-                                    + AccessControllerResolver.DEFAULT_RESOLVER);
+            AccessControllerResolver acResolver = (AccessControllerResolver) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
             AccessController accessController = acResolver.resolveAccessController(this.webappUrl);
 
             Authorizer[] authorizers = accessController.getAuthorizers();

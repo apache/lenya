@@ -48,7 +48,8 @@ public final class PolicyUtil {
      * @return A role array.
      * @throws AccessControlException If the request does not contain the roles list.
      */
-    public static final Role[] getRoles(HttpServletRequest httpServletRequest) throws AccessControlException {
+    public static final Role[] getRoles(HttpServletRequest httpServletRequest)
+            throws AccessControlException {
         List roleList = (List) httpServletRequest.getAttribute(Role.class.getName());
 
         if (roleList == null) {
@@ -56,11 +57,12 @@ public final class PolicyUtil {
             buf.append("    URI: [" + httpServletRequest.getRequestURI() + "]\n");
             for (Enumeration e = httpServletRequest.getParameterNames(); e.hasMoreElements();) {
                 String key = (String) e.nextElement();
-                buf.append("    Parameter: [" + key + "] = [" + httpServletRequest.getParameter(key) + "]\n");
+                buf.append("    Parameter: [" + key + "] = ["
+                        + httpServletRequest.getParameter(key) + "]\n");
             }
 
-            throw new AccessControlException("Request [" + httpServletRequest + "] does not contain roles: \n"
-                    + buf.toString());
+            throw new AccessControlException("Request [" + httpServletRequest
+                    + "] does not contain roles: \n" + buf.toString());
         }
 
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
@@ -86,9 +88,7 @@ public final class PolicyUtil {
     protected static AccessController getAccessController(String webappUrl)
             throws AccessControlException {
         AccessControllerResolver resolver = (AccessControllerResolver) WebAppContextUtils
-                .getCurrentWebApplicationContext().getBean(
-                        AccessControllerResolver.ROLE + "/"
-                                + AccessControllerResolver.DEFAULT_RESOLVER);
+                .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
         AccessController controller = resolver.resolveAccessController(webappUrl);
         return controller;
     }

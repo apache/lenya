@@ -61,16 +61,12 @@ public class RoleCondition implements Condition {
 
     protected AccessControllerResolver getAccessControllerResolver() {
         return (AccessControllerResolver) WebAppContextUtils.getCurrentWebApplicationContext()
-                .getBean(
-                        AccessControllerResolver.ROLE + "/"
-                                + AccessControllerResolver.DEFAULT_RESOLVER);
+                .getBean(AccessControllerResolver.ROLE);
     }
 
     /**
      * Returns if the condition is complied in a certain situation. The condition is complied when
      * the current user has the role that is required by the RoleCondition.
-     * 
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Workflowable)
      */
     public boolean isComplied(Workflow workflow, Workflowable instance) {
 
@@ -106,10 +102,6 @@ public class RoleCondition implements Condition {
 
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (accessController != null) {
-                acResolver.release(accessController);
-            }
         }
 
     }

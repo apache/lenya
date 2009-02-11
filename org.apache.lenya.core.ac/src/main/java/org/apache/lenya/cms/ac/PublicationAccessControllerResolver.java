@@ -29,6 +29,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
@@ -48,6 +49,7 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
     protected static final String AC_CONFIGURATION_URI = "config/access-control/access-control.xml";
     protected static final String TYPE_ATTRIBUTE = "type";
+    protected static final String GLOBAL_CACHE_KEY = "";
 
     private Repository repository;
     private SourceResolver sourceResolver;
@@ -68,17 +70,20 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
      */
     protected Object generateCacheKey(String webappUrl, SourceResolver resolver)
             throws AccessControlException {
+        Validate.isTrue(webappUrl.startsWith("/"), "Webapp URL must start with a slash.");
 
         URLInformation info = new URLInformation(webappUrl);
 
         String publicationId = info.getPublicationId();
+        String cacheKey = publicationId == null ? GLOBAL_CACHE_KEY : publicationId;
+
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(
                     "Using first URL step (might be publication ID) as cache key: ["
                             + publicationId + "]");
         }
 
-        return super.generateCacheKey(publicationId, resolver);
+        return super.generateCacheKey(cacheKey, resolver);
     }
 
     /**
@@ -106,9 +111,10 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
      * @throws AccessControlException when something went wrong.
      */
     protected Publication getPublication(String webappUrl) throws AccessControlException {
+        Validate.isTrue(webappUrl.startsWith("/"), "Webapp URL must start with a slash.");
+
         Publication publication = null;
 
-        assert webappUrl.startsWith("/");
         // remove leading slash
         String url = webappUrl.substring(1);
 

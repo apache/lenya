@@ -107,15 +107,6 @@ public abstract class AbstractAccessControllerResolver extends AbstractLogEnable
     protected abstract AccessController doResolveAccessController(String webappUrl)
             throws AccessControlException;
 
-    /**
-     * @see org.apache.lenya.ac.AccessControllerResolver#release(org.apache.lenya.ac.AccessController)
-     */
-    public void release(AccessController controller) {
-        /*
-         * if (controller != null) { getManager().release(controller); }
-         */
-    }
-
     public void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
     }

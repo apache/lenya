@@ -48,7 +48,6 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
 
     protected static final String TEST_PUB_ID = "test";
     private AccessControllerResolver accessControllerResolver;
-    private AccessController accessController;
     private Repository repository;
 
     protected Session login(String userId) throws AccessControlException {
@@ -120,17 +119,6 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
         assertNotNull(controller);
         logger.info("Resolved access controller: [" + controller.getClass() + "]");
         return controller;
-    }
-
-    /**
-     * The teardown method for JUnit
-     * @exception Exception if an error occurs
-     */
-    public void tearDown() throws Exception {
-        if (this.accessController != null) {
-            this.getAccessControllerResolver().release(this.accessController);
-        }
-        super.tearDown();
     }
 
     protected static final String USER_ID = "lenya";

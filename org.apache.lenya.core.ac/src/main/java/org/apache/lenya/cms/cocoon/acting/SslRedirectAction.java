@@ -63,9 +63,7 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
         if (!request.isSecure()) {
 
             resolver = (AccessControllerResolver) WebAppContextUtils
-                    .getCurrentWebApplicationContext().getBean(
-                            AccessControllerResolver.ROLE + "/"
-                                    + AccessControllerResolver.DEFAULT_RESOLVER);
+                    .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
 
             String url = ServletHelper.getWebappURI(request);
             accessController = resolver.resolveAccessController(url);

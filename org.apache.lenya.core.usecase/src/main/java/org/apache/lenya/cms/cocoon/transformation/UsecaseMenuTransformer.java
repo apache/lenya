@@ -26,11 +26,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -53,7 +52,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * This transformer disables menu items (by removing the href attribute) which are not allowed with
  * respect to the usecase policies.
  */
-public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Disposable {
+public class UsecaseMenuTransformer extends AbstractSAXTransformer {
 
     /**
      * <code>MENU_ELEMENT</code> The menu element
@@ -71,12 +70,12 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
      * <code>USECASE_ATTRIBUTE</code> The usecase attribute
      */
     public static final String USECASE_ATTRIBUTE = "usecase";
-    
+
     /**
      * The value of the <em>checked</em> attribute can either be <em>true</em> or <em>false</em>.
      */
     public static final String CHECKED_ATTRIBUTE = "checked";
-    
+
     /**
      * Comment for <code>HREF_ATTRIBUTE</code> The href attribute
      */
@@ -110,9 +109,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Found usecase [" + usecaseName + "]");
                     }
-                    if (!this.authorizer.authorizeUsecase(usecaseName,
-                            this.roles,
-                            this.publication)) {
+                    if (!this.authorizer
+                            .authorizeUsecase(usecaseName, this.roles, this.publication)) {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Usecase not authorized");
                         }
@@ -139,9 +137,9 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                             }
                             removeHrefAttribute(attributes);
                             messages = usecase.getErrorMessages();
-                        }
-                        else if (hrefAttribute == null) {
-                            attributes.addAttribute("", HREF_ATTRIBUTE, HREF_ATTRIBUTE, "CDATA", this.sourceUrl);
+                        } else if (hrefAttribute == null) {
+                            attributes.addAttribute("", HREF_ATTRIBUTE, HREF_ATTRIBUTE, "CDATA",
+                                    this.sourceUrl);
                         }
                         setItemState(attributes, usecase);
                     } finally {
@@ -171,7 +169,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         Object itemState = usecase.getParameter(Usecase.PARAMETER_ITEM_STATE);
         if (itemState != null && itemState instanceof Boolean) {
             Boolean state = (Boolean) itemState;
-            attributes.addAttribute("", CHECKED_ATTRIBUTE, CHECKED_ATTRIBUTE, "CDATA", state.toString());
+            attributes.addAttribute("", CHECKED_ATTRIBUTE, CHECKED_ATTRIBUTE, "CDATA", state
+                    .toString());
         }
     }
 
@@ -197,9 +196,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             if (message.hasParameters()) {
                 String[] parameters = message.getParameters();
                 for (int p = 0; p < parameters.length; p++) {
-                    super.startElement(MENU_NAMESPACE,
-                            "parameter",
-                            "parameter",
+                    super.startElement(MENU_NAMESPACE, "parameter", "parameter",
                             new AttributesImpl());
                     super.characters(parameters[p].toCharArray(), 0, parameters[p].length());
                     super.endElement(MENU_NAMESPACE, "parameter", "parameter");
@@ -233,7 +230,6 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     }
 
     private UsecaseAuthorizer authorizer;
-    private ServiceSelector serviceSelector = null;
     private Role[] roles;
     private Publication publication;
     private AccessControllerResolver acResolver;
@@ -259,9 +255,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             Session session = this.repository.getSession(this.request);
             this.publication = session.getUriHandler().getPublication(webappUrl);
 
-            this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-            this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+            this.acResolver = (AccessControllerResolver) WebAppContextUtils
+                    .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
             getLogger().debug("Resolved AC resolver [" + this.acResolver + "]");
 
             AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
@@ -280,24 +275,10 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
     }
 
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        getLogger().debug("Disposing transformer");
-        if (this.serviceSelector != null) {
-            if (this.acResolver != null) {
-                this.serviceSelector.release(this.acResolver);
-            }
-            this.manager.release(this.serviceSelector);
-        }
-    }
-
     public void recycle() {
         super.recycle();
         this.publication = null;
         this.roles = null;
-        this.serviceSelector = null;
         this.acResolver = null;
         this.authorizer = null;
         this.sourceUrl = null;

@@ -57,15 +57,6 @@ public class ComposableAccessControllerResolver extends AbstractAccessController
     private Map controllerToResolver = new HashMap();
 
     /**
-     * @see org.apache.lenya.ac.AccessControllerResolver#release(org.apache.lenya.ac.AccessController)
-     */
-    public void release(AccessController controller) {
-        assert controller != null;
-        AccessControllerResolver resolver = getResolver(controller);
-        resolver.release(controller);
-    }
-
-    /**
      * Returns the access controller resolver that was used to resolve a specific access controller.
      * @param controller The access controller.
      * @return An AC resolver.

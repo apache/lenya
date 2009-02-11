@@ -76,7 +76,7 @@ public class SessionImpl implements Session, SessionHolder {
     }
 
     public Identity getIdentity() {
-        return ((IdentityWrapper) getRepositorySession()).getIdentity();
+        return ((IdentityWrapper) getRepositorySession().getIdentity()).getIdentity();
     }
 
     private UnitOfWork unitOfWork;

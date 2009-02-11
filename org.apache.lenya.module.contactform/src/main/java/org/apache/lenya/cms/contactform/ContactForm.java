@@ -88,9 +88,7 @@ public class ContactForm extends AbstractUsecase {
 
     protected User getUser(String userId) throws Exception {
         AccessControllerResolver acResolver = (AccessControllerResolver) WebAppContextUtils
-                .getCurrentWebApplicationContext().getBean(
-                        AccessControllerResolver.ROLE + "/"
-                                + AccessControllerResolver.DEFAULT_RESOLVER);
+                .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
         AccessController accessController = acResolver.resolveAccessController(getSourceURL());
         UserManager userManager = accessController.getAccreditableManager().getUserManager();
         return userManager.getUser(userId);

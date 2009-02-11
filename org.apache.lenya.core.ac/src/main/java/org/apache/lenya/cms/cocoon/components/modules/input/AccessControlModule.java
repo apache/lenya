@@ -24,16 +24,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -60,10 +57,12 @@ import org.apache.lenya.util.ServletHelper;
  * <li><strong><code>user-id</code></strong> - the ID of the currently logged-in user</li>
  * <li><strong><code>user-name</code></strong> - the full name of the currently logged-in user</li>
  * <li><strong><code>user-name:{user-id}</code></strong> - the full name of a specific user</li>
- * <li><strong><code>user-email</code></strong> - the e-mail address of the currently logged-in user</li>
+ * <li><strong><code>user-email</code></strong> - the e-mail address of the currently logged-in user
+ * </li>
  * <li><strong><code>user-email:{user-id}</code></strong> - the e-mail address of a specific user</li>
  * <li><strong><code>ip-address</code></strong> - the IP address of the client machine</li>
- * <li><strong><code>role-ids</code></strong> - the role IDs which are granted to the current identity</li>
+ * <li><strong><code>role-ids</code></strong> - the role IDs which are granted to the current
+ * identity</li>
  * <li><strong><code>user-manager</code></strong> - the user manager object</li>
  * <li><strong><code>group-manager</code></strong> - the group manager object</li>
  * <li><strong><code>iprange-manager</code></strong> - the IP range manager object</li>
@@ -71,7 +70,7 @@ import org.apache.lenya.util.ServletHelper;
  * </ul>
  * 
  */
-public class AccessControlModule extends AbstractInputModule implements Serviceable {
+public class AccessControlModule extends AbstractInputModule {
 
     /**
      * <code>USER_ID</code> The user id
@@ -120,6 +119,8 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     static final String[] PARAMETER_NAMES = { IP_ADDRESS, USER_ID, USER_NAME, USER_EMAIL, ROLE_IDS,
             USER_MANAGER, GROUP_MANAGER, ROLE_MANAGER, IP_RANGE_MANAGER, SSL };
 
+    private AccessControllerResolver accessControllerResolver;
+
     /**
      * 
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -129,7 +130,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             throws ConfigurationException {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getCocoonSession();
+        HttpSession session = request.getSession();
         Object value = null;
 
         String[] parameters = attribute.split(":", 2);
@@ -140,7 +141,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         }
 
         Identity identity = null;
-        
+
         if (session != null) {
             identity = (Identity) session.getAttribute(Identity.class.getName());
         }
@@ -187,38 +188,19 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                 || name.equals(IP_RANGE_MANAGER)) {
             value = getItemManager(request, name);
         }
-        
+
         if (name.equals(SSL)) {
-            ServiceSelector selector = null;
-            AccessControllerResolver acResolver = null;
             AccessController accessController = null;
             try {
-                selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                        + "Selector");
-                acResolver
-                    = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
-    
                 String url = ServletHelper.getWebappURI(request);
-                accessController = acResolver.resolveAccessController(url);
+                accessController = this.accessControllerResolver.resolveAccessController(url);
                 AccreditableManager accreditableManager = accessController.getAccreditableManager();
                 PolicyManager policyManager = accessController.getPolicyManager();
-    
+
                 Policy policy = policyManager.getPolicy(accreditableManager, url);
                 value = Boolean.toString(policy.isSSLProtected());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new ConfigurationException("Resolving attribute [" + name + "] failed: ", e);
-            }
-            finally {
-                if (selector != null) {
-                    if (acResolver != null) {
-                        if (accessController != null) {
-                            acResolver.release(accessController);
-                        }
-                        selector.release(acResolver);
-                    }
-                    this.manager.release(selector);
-                }
             }
         }
 
@@ -281,23 +263,16 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     protected ItemManager getItemManager(Request request, String name)
             throws ConfigurationException {
         AccessController accessController = null;
-        ServiceSelector selector = null;
-        AccessControllerResolver resolver = null;
         ItemManager itemManager = null;
 
         try {
-            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-            resolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
-
             String requestURI = request.getRequestURI();
             String context = request.getContextPath();
             if (context == null) {
                 context = "";
             }
             String url = requestURI.substring(context.length());
-            accessController = resolver.resolveAccessController(url);
+            accessController = this.accessControllerResolver.resolveAccessController(url);
 
             AccreditableManager accreditableManager = accessController.getAccreditableManager();
 
@@ -313,28 +288,13 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
 
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining item manager failed: ", e);
-        } finally {
-            if (selector != null) {
-                if (resolver != null) {
-                    if (accessController != null) {
-                        resolver.release(accessController);
-                    }
-                    selector.release(resolver);
-                }
-                this.manager.release(selector);
-            }
         }
 
         return itemManager;
     }
 
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
+    public void setAccessControllerResolver(AccessControllerResolver accessControllerResolver) {
+        this.accessControllerResolver = accessControllerResolver;
     }
 
 }

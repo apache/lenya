@@ -83,9 +83,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
 
             if (this.considerSslPolicies) {
                 AccessControllerResolver acResolver = (AccessControllerResolver) WebAppContextUtils
-                        .getCurrentWebApplicationContext().getBean(
-                                AccessControllerResolver.ROLE + "/"
-                                        + AccessControllerResolver.DEFAULT_RESOLVER);
+                        .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
                 AccessController accessController = acResolver.resolveAccessController(requestUrl);
                 if (accessController != null) {
                     this.accreditableManager = accessController.getAccreditableManager();

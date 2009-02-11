@@ -65,8 +65,7 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
         AccessControllerResolver acResolver = null;
         AccessController accessController = null;
         WebApplicationContext context = WebAppContextUtils.getCurrentWebApplicationContext();
-        acResolver = (AccessControllerResolver) context.getBean(AccessControllerResolver.ROLE + "/"
-                + AccessControllerResolver.DEFAULT_RESOLVER);
+        acResolver = (AccessControllerResolver) context.getBean(AccessControllerResolver.ROLE);
         accessController = acResolver.resolveAccessController(webappUrl);
 
         ProcessInfoProvider process = (ProcessInfoProvider) context
