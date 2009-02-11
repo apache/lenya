@@ -38,7 +38,7 @@
     class="org.apache.lenya.cms.publication.PublicationManagerImpl">
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-    <property name="pubBaseUri" value="resource://pubs"/>
+    <property name="pubBaseUri" value="file://${lenya.home}/pubs"/>
   </bean>
 
   <bean name="org.apache.lenya.cms.metadata.MetaDataRegistry"

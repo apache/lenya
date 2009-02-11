@@ -18,6 +18,10 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -333,7 +337,25 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * @see org.apache.lenya.cms.publication.Publication#getContentDirectory(String)
      */
     public File getContentDirectory(String area) {
-        return new File(getContentDir(), area);
+        String urlString = getContentDir();
+        File contentDir = getFileFromUrl(urlString);
+        return new File(contentDir, area);
+    }
+
+    protected File getFileFromUrl(String urlString) {
+        if (urlString.startsWith("/")) {
+            return new File(urlString);
+        }
+        File contentDir;
+        try {
+            URL url = new URL(urlString);
+            contentDir = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return contentDir;
     }
 
     /**
@@ -522,7 +544,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     }
 
     protected String getDefaultContentDir() {
-        return getPubBaseUri() + "/" + getId() + "/" + CONTENT_PATH;
+        File baseDir = getFileFromUrl(getPubBaseUri());
+        return baseDir.getAbsolutePath() + File.separator + getId() + File.separator + CONTENT_PATH;
     }
 
     /**

@@ -40,7 +40,7 @@ public class PublicationTest extends AbstractAccessControlTest {
         }
     }
 
-    protected void doTestPublication(Publication pub) throws PublicationException {
+    protected void doTestPublication(Publication pub) throws Exception {
         String contentDirPath = pub.getContentDir();
         assertNotNull(contentDirPath);
 
@@ -53,8 +53,11 @@ public class PublicationTest extends AbstractAccessControlTest {
             Area area = pub.getArea(areaNames[i]);
             if (area.getDocuments().length > 0) {
                 File areaContentDir = pub.getContentDirectory(areaNames[i]);
+                if (!areaContentDir.isDirectory())
+                    throw new RuntimeException("" + areaContentDir);
                 assertTrue(areaContentDir.isDirectory());
-                assertEquals(new File(contentDir, areaNames[i]), areaContentDir);
+                assertEquals(new File(contentDir, areaNames[i]).getCanonicalFile(), areaContentDir
+                        .getCanonicalFile());
             }
         }
 

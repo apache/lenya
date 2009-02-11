@@ -50,7 +50,27 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/lenya-core-impl-components.xml</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/lenya-core-impl-components.xml</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
+  
+  <properties>
+    <lenya.home>${basedir}/..</lenya.home>
+  </properties>
       
   <dependencies>
     <dependency>
