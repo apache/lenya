@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.context.DefaultContext;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.AbstractTestCase;
 import org.apache.cocoon.Constants;
 import org.apache.cocoon.components.ContextHelper;
@@ -175,6 +176,11 @@ public class AbstractLenyaTestCase extends ContainerTestCase {
 
         logger.info("Context classpath: " + buildClassPath);
         return buildClassPath.toString();
+    }
+
+    @Override
+    protected ServiceManager getManager() {
+        throw new UnsupportedOperationException("Use getBeanFactory() instead.");
     }
     
 }
