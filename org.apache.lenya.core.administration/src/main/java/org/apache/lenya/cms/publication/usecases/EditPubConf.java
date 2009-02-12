@@ -17,8 +17,9 @@
  */
 package org.apache.lenya.cms.publication.usecases;
 
-import java.io.File;
-
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
@@ -31,12 +32,14 @@ public class EditPubConf extends AbstractUsecase {
     private static final String PUB = "publication";
     private static final String CONTENT_DIR = "contentDir";
 
+    private SourceResolver sourceResolver;
+
     protected void prepareView() throws Exception {
         super.prepareView();
         Publication pub = getPublication();
         setParameter(PUB, pub);
         setParameter(PUB_NAME, pub.getName());
-        setParameter(CONTENT_DIR, pub.getContentDir());
+        setParameter(CONTENT_DIR, pub.getContentUri());
         Boolean[] booleans = { Boolean.FALSE, Boolean.TRUE };
         String[] areas = pub.getAreaNames();
         for (int b = 0; b < booleans.length; b++) {
@@ -63,14 +66,23 @@ public class EditPubConf extends AbstractUsecase {
         if (contentPath.equals("")) {
             addErrorMessage("content-dir-missing");
         } else {
-            File contentDir;
+            String contentUri;
             if (contentPath.startsWith("/")) {
-                contentDir = new File(contentPath);
+                contentUri = "file://" + contentPath;
             } else {
-                contentDir = new File(pub.getDirectory(), contentPath);
+                contentUri = pub.getSourceUri() + "/" + contentPath;
             }
-            if (!contentDir.isDirectory()) {
-                addErrorMessage("content-dir-does-not-exist");
+            Source source = null;
+            try {
+                source = this.sourceResolver.resolveURI(contentUri);
+                if (!(source instanceof TraversableSource && ((TraversableSource) source)
+                        .isCollection())) {
+                    addErrorMessage("content-dir-does-not-exist");
+                }
+            } finally {
+                if (source != null) {
+                    this.sourceResolver.release(source);
+                }
             }
         }
     }
@@ -93,6 +105,10 @@ public class EditPubConf extends AbstractUsecase {
             }
         }
         pub.saveConfiguration();
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

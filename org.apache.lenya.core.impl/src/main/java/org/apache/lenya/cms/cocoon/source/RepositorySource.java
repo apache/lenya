@@ -49,6 +49,7 @@ import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.util.Query;
 import org.apache.lenya.util.ServletHelper;
 
@@ -132,9 +133,11 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
                 sourceUri = uri;
             }
 
-            org.apache.lenya.cms.repository.Session repoSession = (org.apache.lenya.cms.repository.Session) session;
+            org.apache.lenya.cms.repository.Session repoSession = ((SessionHolder) session)
+                    .getRepositorySession();
             if (revisionNumber == -1) {
-                this.content = (ContentHolder) repoSession.getRepositoryItem(nodeFactory, sourceUri);
+                this.content = (ContentHolder) repoSession
+                        .getRepositoryItem(nodeFactory, sourceUri);
             } else {
                 Node node = (Node) repoSession.getRepositoryItem(nodeFactory, sourceUri);
                 this.content = node.getHistory().getRevision(revisionNumber);

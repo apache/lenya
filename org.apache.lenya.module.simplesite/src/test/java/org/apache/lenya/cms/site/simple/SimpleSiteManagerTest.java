@@ -38,9 +38,9 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
     public void testSimpleSiteManager() throws Exception {
         Session session = login("lenya");
-        Publication[] pubs = session.getPublications();
-        for (int i = 0; i < pubs.length; i++) {
-            checkPublication(pubs[i]);
+        String[] pubIds = session.getPublicationIds();
+        for (String id : pubIds) {
+            checkPublication(session.getPublication(id));
         }
     }
 

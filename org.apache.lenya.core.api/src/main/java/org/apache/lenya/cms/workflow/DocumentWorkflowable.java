@@ -260,7 +260,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
             if (schema.indexOf("://") != -1) {
                 return schema;
             } else {
-                uri = this.document.getPublication().getSourceURI() + "/config/workflow/" + schema;
+                uri = this.document.getPublication().getSourceUri() + "/config/workflow/" + schema;
                 uri = uri.substring("lenya://".length());
                 uri = "context://" + uri;
             }

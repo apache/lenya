@@ -96,9 +96,9 @@ public interface DocumentFactory {
     Publication getPublication(String id) throws PublicationException;
     
     /**
-     * @return All publications.
+     * @return All publication IDs.
      */
-    Publication[] getPublications();
+    String[] getPublicationIds();
     
     /**
      * @param id The publication ID.

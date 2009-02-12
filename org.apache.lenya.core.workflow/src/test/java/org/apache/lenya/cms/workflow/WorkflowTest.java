@@ -20,6 +20,8 @@
 
 package org.apache.lenya.cms.workflow;
 
+import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -45,9 +47,16 @@ public class WorkflowTest extends AbstractAccessControlTest {
      * @throws Exception when something went wrong.
      */
     public void testWorkflow() throws Exception {
-        Publication publication = getSession().getPublication("test");
+        
+        User lenya = getAccreditableManager().getUserManager().getUser("lenya");
+        Group reviewers = getAccreditableManager().getGroupManager().getGroup("reviewer");
+        reviewers.add(lenya);
+        
+        
+        Session session = getSession();
+        Publication publication = session.getPublication("test");
         String url = "/" + publication.getId() + URL;
-        Document document = getSession().getUriHandler().getDocument(url);
+        Document document = session.getUriHandler().getDocument(url);
 
         document.lock();
 
@@ -61,8 +70,7 @@ public class WorkflowTest extends AbstractAccessControlTest {
             }
         }
 
-        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
-            TestSituation situation = situations[situationIndex];
+        for (TestSituation situation : situations) {
             invoke(document, situation);
         }
 

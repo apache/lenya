@@ -49,8 +49,7 @@ public class Import extends AbstractUsecase {
     }
 
     protected String getExampleContentPath(Publication publication) {
-        return publication.getDirectory().getAbsolutePath().replace(File.separatorChar, '/')
-                + "/example-content";
+        return publication.getSourceUri() + "/example-content";
     }
 
     protected Publication getDefaultPub() {

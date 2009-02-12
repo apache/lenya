@@ -84,7 +84,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
 
-        return new RepositorySource(getNodeFactory(), location, session, getLogger());
+        return new RepositorySource(this.nodeFactory, location, session, getLogger());
 
     }
 
@@ -126,10 +126,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
 
     public void setNodeFactory(NodeFactory nodeFactory) {
         this.nodeFactory = nodeFactory;
-    }
-
-    public NodeFactory getNodeFactory() {
-        return nodeFactory;
     }
 
     public void setRepository(Repository repository) {

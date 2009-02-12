@@ -92,7 +92,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree, Rep
         setLogger(logger);
 
         this.pub = area.getPublication();
-        this.sourceUri = this.pub.getSourceURI() + "/content/" + area.getName() + "/"
+        this.sourceUri = this.pub.getSourceUri() + "/content/" + area.getName() + "/"
                 + SITE_TREE_FILENAME;
         this.area = area.getName();
         try {

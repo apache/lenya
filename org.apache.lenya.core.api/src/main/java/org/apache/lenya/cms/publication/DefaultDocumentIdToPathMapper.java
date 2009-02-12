@@ -25,30 +25,12 @@ import java.io.File;
  * 
  * @version $Id$
  */
-public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
-        PathToDocumentIdMapper {
+public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
 
     /**
      * The file name.
      */
     public static final String BASE_FILENAME_PREFIX = "index";
-
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String, java.lang.String, java.lang.String)
-     */
-    public File getFile(Publication publication, String area, String uuid, String language) {
-        File file = new File(getDirectory(publication, area), getPath(uuid, language));
-        return file;
-    }
-
-    protected File getDirectory(Publication publication, String area) {
-
-        File file = new File(publication.getDirectory(), Publication.CONTENT_PATH + File.separator
-                + area);
-
-        return file;
-    }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String,
@@ -75,33 +57,6 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
             languageSuffix = "_" + language;
         }
         return BASE_FILENAME_PREFIX + languageSuffix;
-    }
-
-    /**
-     * Returns the document ID for a certain file.
-     * @param publication The publication.
-     * @param area The area.
-     * @param file The file representing the document.
-     * @return A string.
-     * @throws ResourceNotFoundException when the document referenced by the file does not
-     *             exist.
-     */
-    public String getDocumentId(Publication publication, String area, File file)
-            throws ResourceNotFoundException {
-
-        String fileName = file.getAbsolutePath();
-        String contentDirName = publication.getContentDirectory(area).getAbsolutePath();
-        if (fileName.startsWith(contentDirName)) {
-            // trim everything up to the documentId
-            String relativeFileName = fileName.substring(contentDirName.length());
-            // trim everything after the documentId
-            relativeFileName = relativeFileName.substring(0,
-                    relativeFileName.lastIndexOf(File.separator));
-            // and replace the os specific separator by '/'
-            return relativeFileName.replace(File.separatorChar, '/');
-        }
-        // Document does not seem to exist
-        throw new ResourceNotFoundException("No document associated with file" + fileName);
     }
 
     /**

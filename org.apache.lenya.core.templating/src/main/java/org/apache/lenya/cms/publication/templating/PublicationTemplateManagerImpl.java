@@ -95,7 +95,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
      * @return A string.
      */
     public static String getBaseURI(Publication publication) {
-        return publication.getDirectory().getAbsolutePath() + "/";
+        return publication.getSourceUri();
     }
 
     /**
@@ -159,10 +159,6 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
     public void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
-    }
-
-    public SourceResolver getSourceResolver() {
-        return sourceResolver;
     }
 
     /**

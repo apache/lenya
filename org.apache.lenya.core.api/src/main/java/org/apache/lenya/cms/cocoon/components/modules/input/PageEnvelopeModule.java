@@ -110,8 +110,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                         value = document.getCanonicalDocumentURL();
                     } else if (name.equals(PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE)) {
                         value = document.getCanonicalWebappURL();
-                    } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
-                        value = document.getFile();
                     } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
                         value = document.getExtension();
                     } else if (name.equals(PageEnvelope.DOCUMENT_SOURCE_EXTENSION)) {

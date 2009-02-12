@@ -17,11 +17,6 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,7 +34,6 @@ import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.repository.Node;
 
 /**
  * A publication's configuration. Keep in sync with src/resources/build/publication.rng!
@@ -60,7 +54,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
     private String instantiatorHint = null;
-    private String contentDir = null;
+    private String contentUri = null;
     private SortedSet modules = new TreeSet();
     private String contextPath;
     private SourceResolver sourceResolver;
@@ -257,9 +251,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
 
             Configuration contentDirConfig = config.getChild(ELEMENT_CONTENT_DIR, false);
             if (contentDirConfig != null) {
-                this.contentDir = contentDirConfig.getAttribute(ATTRIBUTE_SRC);
+                this.contentUri = contentDirConfig.getAttribute(ATTRIBUTE_SRC);
                 getLogger().info(
-                        "Content directory loaded from pub configuration: " + this.contentDir);
+                        "Content directory loaded from pub configuration: " + this.contentUri);
             } else {
                 getLogger().info("No content directory specified within pub configuration!");
             }
@@ -323,39 +317,6 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      */
     public String getPubBaseUri() {
         return this.pubBaseUri;
-    }
-
-    /**
-     * Returns the publication directory.
-     * @return A <code>File</code> object.
-     */
-    public File getDirectory() {
-        return new File(getPubBaseUri(), getId());
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#getContentDirectory(String)
-     */
-    public File getContentDirectory(String area) {
-        String urlString = getContentDir();
-        File contentDir = getFileFromUrl(urlString);
-        return new File(contentDir, area);
-    }
-
-    protected File getFileFromUrl(String urlString) {
-        if (urlString.startsWith("/")) {
-            return new File(urlString);
-        }
-        File contentDir;
-        try {
-            URL url = new URL(urlString);
-            contentDir = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-        return contentDir;
     }
 
     /**
@@ -532,34 +493,27 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         return this.instantiatorHint;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#getContentDir()
-     */
-    public String getContentDir() {
+    public String getContentUri() {
         loadConfiguration();
-        if (this.contentDir == null) {
-            this.contentDir = getDefaultContentDir();
+        if (this.contentUri == null) {
+            this.contentUri = getDefaultContentUri();
         }
-        return this.contentDir;
+        return this.contentUri;
     }
 
-    protected String getDefaultContentDir() {
-        File baseDir = getFileFromUrl(getPubBaseUri());
-        return baseDir.getAbsolutePath() + File.separator + getId() + File.separator + CONTENT_PATH;
+    protected String getDefaultContentUri() {
+        return getSourceUri() + "/" + CONTENT_PATH;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#getSourceURI()
-     */
-    public String getSourceURI() {
-        return Node.LENYA_PROTOCOL + "/" + this.id;
+    public String getSourceUri() {
+        return getPubBaseUri() + "/" + this.id;
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#getContentURI(java.lang.String)
+     * @see org.apache.lenya.cms.publication.Publication#getContentUri(java.lang.String)
      */
-    public String getContentURI(String area) {
-        return getSourceURI() + "/" + CONTENT_PATH + "/" + area;
+    public String getContentUri(String area) {
+        return "lenya://" + getId() + "/" + CONTENT_PATH + "/" + area;
     }
 
     private Map resourceType2workflow = new HashMap();
@@ -727,9 +681,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                     instantiatorHint));
         }
 
-        String contentDir = getContentDir();
-        if (!contentDir.equals(getDefaultContentDir())) {
-            config.addChild(createConfig(ELEMENT_CONTENT_DIR, ATTRIBUTE_SRC, this.contentDir));
+        String contentUri = getContentUri();
+        if (!contentUri.equals(getDefaultContentUri())) {
+            config.addChild(createConfig(ELEMENT_CONTENT_DIR, ATTRIBUTE_SRC, this.contentUri));
         }
 
         DefaultConfiguration resourceTypesConf = createConfig(ELEMENT_RESOURCE_TYPES);

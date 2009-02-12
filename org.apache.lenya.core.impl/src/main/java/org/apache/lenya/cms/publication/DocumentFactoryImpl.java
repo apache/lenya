@@ -186,12 +186,12 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
      */
     public boolean isDocument(String webappUrl) throws ResourceNotFoundException {
         Validate.notNull(webappUrl);
-        PublicationManager pubMgr = getPublicationManager();
         try {
             URLInformation info = new URLInformation(webappUrl);
             String pubId = info.getPublicationId();
-            if (pubId != null && Arrays.asList(pubMgr.getPublicationIds()).contains(pubId)) {
-                Publication pub = pubMgr.getPublication(this, pubId);
+            String[] pubIds = getPublicationIds();
+            if (pubId != null && Arrays.asList(pubIds).contains(pubId)) {
+                Publication pub = getPublication(pubId);
                 DocumentBuilder builder = pub.getDocumentBuilder();
                 return builder.isDocument(this.session, webappUrl);
             } else {
@@ -328,8 +328,8 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
         return getPublicationManager().getPublication(this, id);
     }
 
-    public Publication[] getPublications() {
-        return getPublicationManager().getPublications(this);
+    public String[] getPublicationIds() {
+        return getPublicationManager().getPublicationIds();
     }
 
     private PublicationManager pubManager;

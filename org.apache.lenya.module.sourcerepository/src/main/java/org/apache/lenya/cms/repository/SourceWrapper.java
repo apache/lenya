@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.service.ServiceException;
@@ -50,6 +51,7 @@ public class SourceWrapper extends AbstractLogEnabled {
      * Ctor.
      * @param node
      * @param sourceUri
+     * @param resolver 
      * @param logger
      */
     public SourceWrapper(SourceNode node, String sourceUri, SourceResolver resolver, Log logger) {
@@ -85,44 +87,28 @@ public class SourceWrapper extends AbstractLogEnabled {
 
     protected static final String computeRealSourceUri(SourceResolver sourceResolver,
             Session session, String sourceUri, Log logger) {
-        String pubContentUri = null;
-        String publicationId = null;
-        try {
-            final String pubBase = Node.LENYA_PROTOCOL + "/";
-            String publicationsPath = sourceUri.substring(pubBase.length());
+        Validate.isTrue(sourceUri.startsWith(Node.LENYA_PROTOCOL));
+        String pathInPubs = sourceUri.substring(Node.LENYA_PROTOCOL.length());
+        StringTokenizer tokens = new StringTokenizer(pathInPubs, "/");
+        String pubId = tokens.nextToken();
+        org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session
+                .getHolder();
+        Publication pub = pubSession.getPublication(pubId);
+        String pubContentUri = pub.getContentUri();
 
-            int firstSlashIndex = publicationsPath.indexOf("/");
-            publicationId = publicationsPath.substring(0, firstSlashIndex);
-            org.apache.lenya.cms.publication.Session pubSession = (org.apache.lenya.cms.publication.Session) session
-                    .getHolder();
-            Publication pub = pubSession.getPublication(publicationId);
-            pubContentUri = pub.getContentDir();
-        } catch (Exception e) {
-            throw new RuntimeException("Could not compute real URI of " + sourceUri, e);
-        }
-
-        String contentBaseUri = null;
-        String urlID = sourceUri.substring(Node.LENYA_PROTOCOL.length());
-
-        // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
-        String filePrefix = urlID.substring(0, urlID.indexOf(publicationId)) + publicationId;
-        String tempString = urlID.substring(filePrefix.length() + 1);
-        String fileMiddle = tempString.substring(0, tempString.indexOf("/"));
-        String fileSuffix = tempString.substring(fileMiddle.length() + 1, tempString.length());
-        String uriSuffix = "/" + fileSuffix;
-        contentBaseUri = pubContentUri;
+        String absPathInPub = pathInPubs.substring((pubId + "/content").length());
         /*
          * if (new File(pubContentUri).isAbsolute()) { // Absolute contentBaseUri =
          * repo.getBaseUri() + pubContentUri; uriSuffix = File.separator + fileSuffix; } else { //
          * Relative contentBaseUri = CONTEXT_PREFIX + pubContentUri; uriSuffix = "/" + fileSuffix; }
          */
 
-        String realSourceUri = contentBaseUri + uriSuffix;
+        String realSourceUri = pubContentUri + absPathInPub;
 
         if (logger.isDebugEnabled()) {
             try {
-                if (!SourceUtil.exists(contentBaseUri, sourceResolver)) {
-                    logger.debug("The content directory [" + contentBaseUri + "] does not exist. "
+                if (!SourceUtil.exists(pubContentUri, sourceResolver)) {
+                    logger.debug("The content directory [" + pubContentUri + "] does not exist. "
                             + "It will be created as soon as documents are added.");
                 }
             } catch (ServiceException e) {
@@ -251,7 +237,7 @@ public class SourceWrapper extends AbstractLogEnabled {
     /**
      * Store the source URLs which are currently written.
      */
-    private static Map lockedUris = new WeakHashMap();
+    private static Map<String, Object> lockedUris = new WeakHashMap<String, Object>();
 
     /**
      * @throws RepositoryException if an error occurs.

@@ -70,7 +70,7 @@ public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, Repos
 
     protected String getSourceUri() {
         if (this.sourceUri == null) {
-            String baseUri = this.area.getPublication().getContentURI(this.area.getName());
+            String baseUri = this.area.getPublication().getContentUri(this.area.getName());
             this.sourceUri = baseUri + "/sitetree.xml";
         }
         return this.sourceUri;

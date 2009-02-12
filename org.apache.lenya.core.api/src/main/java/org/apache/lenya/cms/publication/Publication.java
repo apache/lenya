@@ -105,19 +105,6 @@ public interface Publication {
     boolean exists();
 
     /**
-     * Returns the publication directory.
-     * @return A <code>File</code> object.
-     */
-    File getDirectory();
-
-    /**
-     * Return the directory of a specific area.
-     * @param area a <code>File</code> representing the root of the area content directory.
-     * @return the directory of the given content area.
-     */
-    File getContentDirectory(String area);
-
-    /**
      * Set the path mapper
      * @param mapper The path mapper
      */
@@ -188,11 +175,11 @@ public interface Publication {
     String getInstantiatorHint();
 
     /**
-     * Returns the content dir.
+     * Returns the content directory source URI.
      * If the publication does not specify a content dir, then <code>null</code> is returned.
      * @return A base directory where all the content is located.
      */
-    String getContentDir();
+    String getContentUri();
 
     /**
      * Returns the proxy which is used for a particular document's area
@@ -229,15 +216,10 @@ public interface Publication {
     String getTemplateId();
 
     /**
-     * @return the URI base for this publication
-     */
-    String getSourceURI();
-
-    /**
      * @param area The area.
      * @return the URI base under which contents in this publication are accessed
      */
-    String getContentURI(String area);
+    String getContentUri(String area);
 
     /**
      * @param resourceType The resource type or <code>null</code> if no workflow is registered for
@@ -277,5 +259,10 @@ public interface Publication {
      * @return The session this publication object belongs to.
      */
     Session getSession();
+
+    /**
+     * @return The source URI of the publication directory.
+     */
+    String getSourceUri();
 
 }

@@ -71,8 +71,8 @@ public class SessionImpl implements Session, SessionHolder {
         return getDocumentFactory().existsPublication(id);
     }
 
-    public Publication[] getPublications() {
-        return getDocumentFactory().getPublications();
+    public String[] getPublicationIds() {
+        return getDocumentFactory().getPublicationIds();
     }
 
     public Identity getIdentity() {

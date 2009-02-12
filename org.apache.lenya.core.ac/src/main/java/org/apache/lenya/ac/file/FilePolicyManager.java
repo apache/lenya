@@ -40,6 +40,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.cocoon.util.NetUtils;
 import org.apache.excalibur.source.Source;
@@ -97,18 +98,15 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     }
 
     /**
-     * Creates a new FilePolicyManager.
-     */
-    public FilePolicyManager() {
-        // do nothing
-    }
-
-    /**
      * Returns the source cache.
      * 
      * @return A source cache.
      */
     protected SourceCache getCache() {
+        if (this.cache == null) {
+            this.cache = (SourceCache) WebAppContextUtils.getCurrentWebApplicationContext()
+                    .getBean(SourceCache.ROLE);
+        }
         return this.cache;
     }
 
@@ -117,8 +115,8 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
 
     /**
-     * Builds a subtree policy from a file. When the file is not present, an
-     * empty policy is returned.
+     * Builds a subtree policy from a file. When the file is not present, an empty policy is
+     * returned.
      * 
      * @param controller The access controller to use.
      * @param url The URL inside the web application.
@@ -131,8 +129,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     }
 
     /**
-     * Builds a policy from a file. When the file is not present, an empty
-     * policy is returned.
+     * Builds a policy from a file. When the file is not present, an empty policy is returned.
      * 
      * @param controller The access controller to use.
      * @param url The url.
@@ -184,12 +181,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
-        
+
         // remove publication ID
         if (url.indexOf("/") > -1) {
             url = url.substring(url.indexOf("/") + 1);
-        }
-        else {
+        } else {
             url = "";
         }
 
@@ -218,8 +214,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             return SourceUtil.getFile(source);
         } catch (final Exception e) {
             throw new AccessControlException(e);
-        }
-        finally {
+        } finally {
             if (resolver != null) {
                 if (source != null) {
                     resolver.release(source);
@@ -375,11 +370,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      */
     public Policy[] getPolicies(AccreditableManager controller, String url)
             throws AccessControlException {
-        
+
         if (!url.startsWith("/")) {
             throw new IllegalArgumentException("The URL [" + url + "] doesn't start with a slash!");
         }
-        
+
         url = url.substring(1);
 
         List policies = new LinkedList();
@@ -416,8 +411,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     }
 
     /**
-     * Removes an accreditable from all policies within a certain directory
-     * tree.
+     * Removes an accreditable from all policies within a certain directory tree.
      * 
      * @param manager The accreditable manager which owns the accreditable.
      * @param accreditable The accreditable to remove.
@@ -497,7 +491,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         if (!url.startsWith("/")) {
             throw new IllegalArgumentException("The URL [" + url + "] doesn't start with a slash!");
         }
-        
+
         url = url.substring(1);
 
         HashMap orderedCredential = new LinkedHashMap();

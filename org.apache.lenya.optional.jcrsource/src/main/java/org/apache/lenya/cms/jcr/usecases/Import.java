@@ -42,7 +42,7 @@ public class Import extends AbstractUsecase {
 
     protected void initParameters() {
         super.initParameters();
-        Publication[] pubs = getSession().getPublications();
+        String[] pubs = getSession().getPublicationIds();
         List pubList = Arrays.asList(pubs);
         setParameter(PUBLICATIONS, pubList);
     }

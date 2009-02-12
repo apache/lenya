@@ -83,6 +83,11 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-cache</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-impl</artifactId>
       <scope>runtime</scope>
     </dependency>
@@ -95,6 +100,11 @@
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-resourcetype</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-templating</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>

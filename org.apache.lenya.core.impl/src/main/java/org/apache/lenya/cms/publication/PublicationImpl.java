@@ -18,7 +18,6 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,7 +27,6 @@ import java.util.Map;
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
-import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryItem;
 
@@ -57,24 +55,16 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication, 
         return delegate.getBreadcrumbPrefix();
     }
 
-    public String getContentDir() {
-        return delegate.getContentDir();
+    public String getContentUri() {
+        return delegate.getContentUri();
     }
 
-    public File getContentDirectory(String area) {
-        return delegate.getContentDirectory(area);
-    }
-
-    public String getContentURI(String area) {
-        return delegate.getContentURI(area);
+    public String getContentUri(String area) {
+        return delegate.getContentUri(area);
     }
 
     public String getDefaultLanguage() {
         return delegate.getDefaultLanguage();
-    }
-
-    public File getDirectory() {
-        return delegate.getDirectory();
     }
 
     private DocumentBuilder documentBuilder;
@@ -152,8 +142,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication, 
         return delegate.getSiteManagerHint();
     }
 
-    public String getSourceURI() {
-        return delegate.getSourceURI();
+    public String getSourceUri() {
+        return delegate.getSourceUri();
     }
 
     public String getTemplateId() {

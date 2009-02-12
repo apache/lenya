@@ -69,7 +69,6 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
 
         HttpSession cocoonSession = getRequest().getSession();
         Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
-        final Session userSession = getRepository().startSession(identity, true);
 
         if (!identity.contains(user)) {
             User oldUser = identity.getUser();
@@ -89,6 +88,7 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
             logger.info("Accreditable: " + accrs[i]);
         }
 
+        final Session userSession = getRepository().startSession(identity, true);
         getRequest().setAttribute(Session.class.getName(), userSession);
         return userSession;
     }
@@ -108,7 +108,7 @@ public class AbstractAccessControlTest extends AbstractLenyaTestCase {
             Publication pub = session.existsPublication(pubId) ? session.getPublication(pubId)
                     : session.addPublication(pubId);
             logger.info("Resolve access controller");
-            logger.info("Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
+            logger.info("Publication directory: [" + pub.getSourceUri() + "]");
         } catch (RepositoryException e) {
             throw new AccessControlException(e);
         }

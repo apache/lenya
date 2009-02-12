@@ -30,7 +30,7 @@ public interface Session {
      */
     Publication getPublication(String id) throws ResourceNotFoundException;
     
-    Publication[] getPublications();
+    String[] getPublicationIds();
     
     /**
      * @param id The publication ID.

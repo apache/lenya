@@ -84,7 +84,7 @@ public class SimpleSiteManager extends AbstractSiteManager {
     }
 
     protected String getCollectionUuid(Publication pub) {
-        String sourceUri = pub.getContentURI(Publication.AUTHORING_AREA) + DOCUMENT_PATH;
+        String sourceUri = pub.getContentUri(Publication.AUTHORING_AREA) + DOCUMENT_PATH;
         try {
 
             if (!SourceUtil.exists(sourceUri, getSourceResolver())) {

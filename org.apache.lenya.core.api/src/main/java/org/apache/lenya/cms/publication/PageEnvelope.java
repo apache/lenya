@@ -110,11 +110,6 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     /**
-     * <code>DOCUMENT_FILE</code> The file of the current document
-     * @deprecated Reference a document via the lenya-document: URI instead.
-     */
-    public static final String DOCUMENT_FILE = "document-file";
-    /**
      * <code>DOCUMENT_PATH</code> The path of the current document
      */
     public static final String DOCUMENT_PATH = "document-path";

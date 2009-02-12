@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.janitor;
 
-import java.io.File;
-
 import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.SourceResolver;
@@ -57,8 +55,7 @@ public class ContentJanitor extends AbstractRepositoryListener {
                     .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
             Session session = this.repository.getSession(process.getRequest());
             Publication pub = session.getPublication(id.getPublicationId());
-            File contentFile = pub.getContentDirectory(id.getArea());
-            String contentUri = contentFile.toURI().toString();
+            String contentUri = pub.getContentUri(id.getArea());
             SourceUtil.deleteEmptyCollections(contentUri, this.sourceResolver);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -218,11 +218,11 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
             HttpServletRequest request = process.getRequest();
             Session session = this.repository.getSession(request);
 
-            Publication[] publications = session.getPublications();
+            String[] pubIds = session.getPublicationIds();
 
-            for (int i = 0; i < publications.length; i++) {
+            for (String pubId : pubIds) {
                 String uri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
-                        + publications[i].getId() + "/" + Publication.CONFIGURATION_PATH + "/"
+                        + pubId+ "/" + Publication.CONFIGURATION_PATH + "/"
                         + INDEX_CONF_FILE;
                 confSource = this.sourceResolver.resolveURI(uri);
                 if (confSource.exists()) {

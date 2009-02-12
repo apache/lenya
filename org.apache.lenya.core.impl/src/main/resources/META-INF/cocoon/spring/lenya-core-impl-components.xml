@@ -107,4 +107,12 @@
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
   </bean>
   
+  <!-- Source Factories -->
+  <bean name="org.apache.excalibur.source.SourceFactory/lenya"
+    class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory">
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
+    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
+  </bean>
+  
+  
 </beans>

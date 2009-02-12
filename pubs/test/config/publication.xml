@@ -45,14 +45,7 @@
   
   <!-- Resource types need to be listed because of the workflow resp. because the workflow depends on the publication and not on the resource type -->
   <resource-types>
-    <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
-    <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
-    <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
-    <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
-    <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
-    <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
-    <resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/>
-    <resource-type name="news" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="mock" workflow="fallback://config/workflow/workflow.xml"/>
   </resource-types>
   
   <!-- Modules need to be listed because of the menu and i18n -->

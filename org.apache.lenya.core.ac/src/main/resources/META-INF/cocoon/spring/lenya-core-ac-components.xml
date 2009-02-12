@@ -65,7 +65,9 @@
   
   <!-- Policy Managers -->
   <bean name="org.apache.lenya.ac.PolicyManager/document"
-    class="org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper"/>
+    class="org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper">
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
+  </bean>
   <bean name="org.apache.lenya.ac.PolicyManager/file"
     class="org.apache.lenya.ac.file.FilePolicyManager"/>
   <bean name="org.apache.lenya.ac.PolicyManager/sitemap"

@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -76,8 +75,6 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         this.ssl = ssl;
         this.considerSslPolicies = considerSslPolicies;
 
-        ServiceSelector serviceSelector = null;
-
         try {
             this.session = session;
 
@@ -91,9 +88,9 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
                 }
             }
 
-            Publication[] pubs = this.session.getPublications();
-            for (int i = 0; i < pubs.length; i++) {
-                this.publicationCache.put(pubs[i].getId(), pubs[i]);
+            String[] pubIds = this.session.getPublicationIds();
+            for (String pubId : pubIds) {
+                this.publicationCache.put(pubId, this.session.getPublication(pubId));
             }
 
         } catch (final Exception e) {
@@ -113,7 +110,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
         return url.startsWith("/");
     }
 
-    private Map publicationCache = new HashMap();
+    private Map<String, Publication> publicationCache = new HashMap<String, Publication>();
 
     protected Publication getPublication(String pubId) throws PublicationException {
         return (Publication) this.publicationCache.get(pubId);

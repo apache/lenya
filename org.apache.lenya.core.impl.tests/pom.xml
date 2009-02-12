@@ -89,6 +89,10 @@
       <artifactId>lenya-core-ac</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-impl</artifactId>
+    </dependency>
     
     <!-- FIXME: maybe the tests can be organized with less dependencies -->
     <dependency>

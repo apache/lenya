@@ -59,8 +59,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @param logger
      */
     public SourceNode(Session session, String sourceUri, SourceResolver resolver, Log logger) {
-
         this.session = session;
+        this.sourceResolver = resolver;
         this.contentSource = new ContentSourceWrapper(this, sourceUri, resolver, logger);
         this.metaSource = new MetaSourceWrapper(this, sourceUri, resolver, logger);
     }
@@ -282,7 +282,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public Collection getChildren() throws RepositoryException {
         TraversableSource source = null;
         try {
-            source = (TraversableSource) getSourceResolver().resolveURI(
+            source = (TraversableSource) this.sourceResolver.resolveURI(
                     this.contentSource.getRealSourceUri());
             Collection children = source.getChildren();
             java.util.Iterator iterator = children.iterator();
@@ -290,7 +290,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
                 SourceNode node = new SourceNode(getRepositorySession(), getSourceURI() + "/"
-                        + child.getName(), getSourceResolver(), getLogger());
+                        + child.getName(), this.sourceResolver, getLogger());
                 node.setRcmlFactory(this.rcmlFactory);
                 newChildren.add(node);
             }
@@ -306,7 +306,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public boolean isCollection() throws RepositoryException {
         TraversableSource source = null;
         try {
-            source = (TraversableSource) getSourceResolver().resolveURI(
+            source = (TraversableSource) this.sourceResolver.resolveURI(
                     this.contentSource.getRealSourceUri());
             return source.isCollection();
         } catch (Exception e) {
@@ -366,7 +366,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public History getHistory() {
-        return new SourceNodeHistory(this, getSourceResolver(), getLogger());
+        return new SourceNodeHistory(this, this.sourceResolver, getLogger());
     }
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
@@ -509,14 +509,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     protected void setNodeFactory(NodeFactory nodeFactory) {
         this.nodeFactory = nodeFactory;
-    }
-
-    protected SourceResolver getSourceResolver() {
-        return sourceResolver;
-    }
-
-    protected void setSourceResolver(SourceResolver sourceResolver) {
-        this.sourceResolver = sourceResolver;
     }
 
     public void setRcmlFactory(SourceNodeRcmlFactory rcmlFactory) {

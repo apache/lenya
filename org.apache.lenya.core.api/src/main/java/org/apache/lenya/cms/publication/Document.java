@@ -115,13 +115,6 @@ public interface Document extends Node, MetaDataOwner {
     String getArea();
 
     /**
-     * Returns the file for this document.
-     * @return A file object.
-     * @deprecated This implies the usage of a filesystem based storage. Use {@link #getSourceURI()} instead.
-     */
-    File getFile();
-
-    /**
      * Returns the extension in the URL without the dot.
      * @return A string.
      */

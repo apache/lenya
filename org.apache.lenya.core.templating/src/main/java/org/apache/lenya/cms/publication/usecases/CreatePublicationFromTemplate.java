@@ -45,11 +45,11 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Publication[] pubs = getSession().getPublications();
+        String[] pubIds = getSession().getPublicationIds();
         List templates = new ArrayList();
-        for (int i = 0; i < pubs.length; i++) {
-            if (pubs[i].getInstantiatorHint() != null) {
-                templates.add(pubs[i].getId());
+        for (String pubId : pubIds) {
+            if (getSession().getPublication(pubId).getInstantiatorHint() != null) {
+                templates.add(pubId);
             }
         }
         Collections.sort(templates);

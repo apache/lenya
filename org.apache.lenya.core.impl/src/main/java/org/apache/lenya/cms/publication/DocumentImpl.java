@@ -18,7 +18,6 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -183,11 +182,6 @@ public class DocumentImpl implements Document, RepositoryItem {
         } catch (org.apache.lenya.cms.repository.RepositoryException e) {
             throw new DocumentException(e);
         }
-    }
-
-    public File getFile() {
-        return getPublication().getPathMapper().getFile(getPublication(), getArea(), getUUID(),
-                getLanguage());
     }
 
     public String getLanguage() {
@@ -551,7 +545,7 @@ public class DocumentImpl implements Document, RepositoryItem {
 
     protected static String getSourceURI(Publication pub, String area, String uuid, String language) {
         String path = pub.getPathMapper().getPath(uuid, language);
-        return pub.getSourceURI() + "/content/" + area + "/" + path;
+        return pub.getContentUri(area) + "/" + path;
     }
 
     public boolean existsVersion(String area, String language) {
