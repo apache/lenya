@@ -17,11 +17,12 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.AbstractAccessControlTest;
 
 /**
@@ -34,30 +35,38 @@ public class PublicationTest extends AbstractAccessControlTest {
      * @throws Exception
      */
     public void testPublication() throws Exception {
-        Publication[] pubs = getSession().getPublications();
-        for (int i = 0; i < pubs.length; i++) {
-            doTestPublication(pubs[i]);
+        String[] pubIds = getSession().getPublicationIds();
+        for (String id : pubIds) {
+            doTestPublication(getSession().getPublication(id));
         }
     }
 
     protected void doTestPublication(Publication pub) throws Exception {
-        String contentDirPath = pub.getContentDir();
-        assertNotNull(contentDirPath);
-
-        File contentDir = new File(contentDirPath);
+        String contentUri = pub.getContentUri();
+        assertNotNull(contentUri);
 
         assertTrue(pub.exists());
 
-        String[] areaNames = pub.getAreaNames();
-        for (int i = 0; i < areaNames.length; i++) {
-            Area area = pub.getArea(areaNames[i]);
+        SourceResolver sourceResolver = (SourceResolver) getBeanFactory().getBean(
+                SourceResolver.ROLE);
+
+        for (String areaName : pub.getAreaNames()) {
+            Area area = pub.getArea(areaName);
             if (area.getDocuments().length > 0) {
-                File areaContentDir = pub.getContentDirectory(areaNames[i]);
-                if (!areaContentDir.isDirectory())
-                    throw new RuntimeException("" + areaContentDir);
-                assertTrue(areaContentDir.isDirectory());
-                assertEquals(new File(contentDir, areaNames[i]).getCanonicalFile(), areaContentDir
-                        .getCanonicalFile());
+                String areaContentUri = pub.getContentUri(areaName);
+
+                TraversableSource source = null;
+                try {
+                    source = (TraversableSource) sourceResolver.resolveURI(areaContentUri);
+                    assertTrue(source.isCollection());
+                } finally {
+                    if (source != null) {
+                        sourceResolver.release(source);
+                    }
+                }
+
+                // TODO: Resolve absolute vs. lenya:// URIs in content handling
+                // assertEquals(contentUri + "/" + areaName, areaContentUri);
             }
         }
 
