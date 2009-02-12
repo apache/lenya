@@ -31,26 +31,18 @@ import org.apache.lenya.cms.repository.RepositoryException;
 public class RevisionControllerTest extends AbstractAccessControlTest {
 
     /**
-     * @see <a
-     *      href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug
-     *      41005</a>
+     * @see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug 41005</a>
      * @throws Exception
      */
     public void testCheckIn() throws Exception {
         login("lenya");
 
         DocumentManager docMgr = null;
-        try {
-            docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-            Document source = getSession().getPublication("test").getArea("authoring").getSite().getNode(
-                    "/links").getLink("en").getDocument();
-            Document target = docMgr.addVersion(source, "authoring", "es");
-            target.delete();
-        } finally {
-            if (docMgr != null) {
-                getManager().release(docMgr);
-            }
-        }
+        docMgr = (DocumentManager) getBeanFactory().getBean(DocumentManager.ROLE);
+        Document source = getSession().getPublication("test").getArea("authoring").getSite()
+                .getNode("/links").getLink("en").getDocument();
+        Document target = docMgr.addVersion(source, "authoring", "es");
+        target.delete();
 
         getSession().commit();
     }
@@ -77,8 +69,8 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         String source = args[1];
         String identityD = args[2];
         String destination = args[3];
-        //doc1.getRepositoryNode().checkout();
-        //doc2.getRepositoryNode().checkin();
+        // doc1.getRepositoryNode().checkout();
+        // doc2.getRepositoryNode().checkin();
     }
 
 }
