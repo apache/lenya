@@ -22,11 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 
-import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -38,32 +33,9 @@ import org.apache.lenya.util.CacheMap;
  * Basic implementation of a source cache.
  * @version $Id$
  */
-public class SourceCacheImpl
-    extends AbstractLogEnabled
-    implements SourceCache, Serviceable, Disposable, ThreadSafe {
+public class SourceCacheImpl extends AbstractLogEnabled implements SourceCache {
 
-    /**
-     * Returns the service manager.
-     * @return A service manager.
-     */
-    public ServiceManager getManager() {
-        return this.manager;
-    }
-
-    /**
-     * Returns the source resolver.
-     * @return A source resolver.
-     */
-    public SourceResolver getResolver() {
-        return this.resolver;
-    }
-
-    /**
-     * Ctor.
-     */
-    public SourceCacheImpl() {
-    }
-
+    private SourceResolver sourceResolver;
     protected static final int CAPACITY = 1000;
     private CacheMap cache;
 
@@ -79,9 +51,11 @@ public class SourceCacheImpl
     }
 
     /**
-     * @see org.apache.lenya.ac.cache.SourceCache#get(java.lang.String, org.apache.lenya.ac.cache.InputStreamBuilder)
+     * @see org.apache.lenya.ac.cache.SourceCache#get(java.lang.String,
+     *      org.apache.lenya.ac.cache.InputStreamBuilder)
      */
-    public synchronized Object get(String sourceUri, InputStreamBuilder builder) throws CachingException {
+    public synchronized Object get(String sourceUri, InputStreamBuilder builder)
+            throws CachingException {
 
         String key = sourceUri;
         Object value = null;
@@ -92,8 +66,8 @@ public class SourceCacheImpl
 
         try {
             if (cachedObject != null) {
-                if (getLogger().isDebugEnabled()){
-                    getLogger().debug("Found cached object [" + cachedObject + "]"); 
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Found cached object [" + cachedObject + "]");
                 }
                 SourceValidity cachedValidity = cachedObject.getValidityObject();
 
@@ -119,15 +93,15 @@ public class SourceCacheImpl
 
                 if (valid) {
                     if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger().debug(
-                            "Using valid cached source for '" + sourceUri + "'.");
+                        this.getLogger()
+                                .debug("Using valid cached source for '" + sourceUri + "'.");
                     }
                     usedCache = true;
                     value = cachedObject.getValue();
                 } else {
                     if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger().debug(
-                            "Cached content is invalid for '" + sourceUri + "'.");
+                        this.getLogger()
+                                .debug("Cached content is invalid for '" + sourceUri + "'.");
                     }
                     // remove invalid cached object
                     getCache().remove(key);
@@ -161,11 +135,8 @@ public class SourceCacheImpl
                 if (key != null) {
                     if (this.getLogger().isDebugEnabled()) {
                         this.getLogger().debug(
-                            "Caching object ["
-                                + value
-                                + "] for further requests of ["
-                                + sourceUri
-                                + "].");
+                                "Caching object [" + value + "] for further requests of ["
+                                        + sourceUri + "].");
                     }
                     getCache().put(key, new CachedObject(sourceValidity, value));
                 }
@@ -194,18 +165,18 @@ public class SourceCacheImpl
      * @throws BuildException if an error occurs.
      */
     protected synchronized Object buildObject(String sourceUri, InputStreamBuilder builder)
-        throws MalformedURLException, IOException, SourceNotFoundException, BuildException {
+            throws MalformedURLException, IOException, SourceNotFoundException, BuildException {
         Object value = null;
         Source source = null;
         try {
-            source = getResolver().resolveURI(sourceUri);
+            source = this.sourceResolver.resolveURI(sourceUri);
             if (source.exists()) {
                 InputStream stream = source.getInputStream();
                 value = builder.build(stream);
             }
         } finally {
             if (source != null) {
-                getResolver().release(source);
+                this.sourceResolver.release(source);
             }
         }
         return value;
@@ -219,38 +190,22 @@ public class SourceCacheImpl
      * @throws IOException when an error occurs.
      */
     protected synchronized SourceValidity getSourceValidity(String sourceUri)
-        throws MalformedURLException, IOException {
+            throws MalformedURLException, IOException {
         SourceValidity sourceValidity;
         Source source = null;
         try {
-            source = getResolver().resolveURI(sourceUri);
+            source = this.sourceResolver.resolveURI(sourceUri);
             sourceValidity = source.getValidity();
         } finally {
             if (source != null) {
-                getResolver().release(source);
+                this.sourceResolver.release(source);
             }
         }
         return sourceValidity;
     }
 
-    private ServiceManager manager;
-    private SourceResolver resolver;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-        this.resolver = (SourceResolver) _manager.lookup(SourceResolver.ROLE);
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        if (getResolver() != null) {
-            getManager().release(getResolver());
-        }
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }
