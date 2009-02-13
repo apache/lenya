@@ -36,8 +36,20 @@
     </p>
 -->
     
-    <h2>Important notes for beta testers of development versions</h2>
+    <h2>Important notes for users updating from an earlier 2.0 release</h2>
 
+    <h3>2009-09-13: I18n catalogues require proper namespace</h3>
+    <p>
+      Ever since some update in late 2008, all your custom I18n catalogues
+      <strong>must</strong> be in the namespace
+      <em>xmlns="http://apache.org/cocoon/i18n/2.1"</em>, otherwise
+      localization transformation will break globally when you migrate to a recent
+      version.<br/>
+      Symptoms are "untranslated" buttons and message keys displayed in
+      place of the actual translation.<br />
+      Thanks to user Gerd for
+      <a href="http://marc.info/?l=lenya-dev&amp;m=122558896606926&amp;w=2">finding this out</a>.
+    </p>
     <h3>2007-11-08: Redirection changes</h3>
     <p>
       Most of our sitemap redirects have been changed to make them work with
