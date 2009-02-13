@@ -93,12 +93,6 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-impl</artifactId>
-      <type>test-jar</type>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-resourcetype</artifactId>
       <scope>runtime</scope>
     </dependency>
