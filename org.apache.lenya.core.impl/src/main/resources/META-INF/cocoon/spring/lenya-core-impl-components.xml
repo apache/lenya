@@ -114,5 +114,10 @@
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
   </bean>
   
+  <!-- Sitemap Components -->
+  <bean name="org.apache.cocoon.generation.Generator/publications"
+    class="org.apache.lenya.cms.publication.PublicationsGenerator">
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
+  </bean>
   
 </beans>

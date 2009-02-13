@@ -68,8 +68,15 @@
     class="org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper">
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
   </bean>
+  
+  <bean name="org.apache.lenya.ac.file.FilePolicyManagerFactory"
+    class="org.apache.lenya.ac.file.FilePolicyManagerFactory"/>
+  
   <bean name="org.apache.lenya.ac.PolicyManager/file"
-    class="org.apache.lenya.ac.file.FilePolicyManager"/>
+    class="org.apache.lenya.ac.file.FilePolicyManager" scope="prototype"
+    factory-bean="org.apache.lenya.ac.file.FilePolicyManagerFactory"
+    factory-method="create"/>
+  
   <bean name="org.apache.lenya.ac.PolicyManager/sitemap"
     class="org.apache.lenya.cms.ac.SitemapPolicyManager"/>
   

@@ -18,25 +18,21 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
-  <map:resources>
-    <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
-      <map:transform type="proxy"/>
-      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
-    </map:resource>
-  </map:resources>
-  
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="**">
         <map:generate type="notifying"/>
+        <map:serialize type="xml"/>
+        <!--
         <map:transform src="fallback://lenya/xslt/exception/generic.xsl"/>
-        <map:call resource="style-cms-page" />
-        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+        -->
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:gui:/service/style-cms-page"/>
+        </map:serialize>
+        <!-- FIXME: serialize with custom status code -->
+        <!--
         <map:serialize type="xhtml" status-code="500" />
+        -->
       </map:match>
     </map:pipeline>
   </map:pipelines>

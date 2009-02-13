@@ -74,8 +74,8 @@
     <!-- create a list of publications for the global welcome page: -->  
     <map:pipeline>
       <map:match pattern="aggregate-publications">
-        <map:generate type="directory" src="lenya/pubs"/>
-        <map:transform src="lenya/xslt/util/aggregate-publications.xsl"/>
+        <map:generate type="publications"/>
+        <map:transform src="xslt/aggregate-publications.xsl"/>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
@@ -208,9 +208,7 @@
       <!-- the Lenya welcome page with a list of available publications -->
       <map:match pattern="index.html">
         <map:aggregate element="aggregation-wrapper" label="aggregate">
-          <!--
           <map:part src="cocoon:/aggregate-publications"/>
-          -->
           <map:part src="content/welcome.xml"/>
           <map:part src="content/readme.xml"/>
         </map:aggregate>

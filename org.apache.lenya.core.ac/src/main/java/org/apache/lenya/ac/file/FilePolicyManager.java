@@ -33,14 +33,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.cocoon.util.NetUtils;
 import org.apache.excalibur.source.Source;
@@ -69,7 +64,9 @@ import org.w3c.dom.Document;
  * A PolicyBuilder is used to build policies.
  */
 public class FilePolicyManager extends AbstractLogEnabled implements InheritingPolicyManager,
-        Parameterizable, Disposable, Serviceable {
+        Parameterizable {
+
+    private SourceResolver sourceResolver;
 
     private static final class SubtreeFileFilter implements FileFilter {
 
@@ -103,11 +100,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @return A source cache.
      */
     protected SourceCache getCache() {
-        if (this.cache == null) {
-            this.cache = (SourceCache) WebAppContextUtils.getCurrentWebApplicationContext()
-                    .getBean(SourceCache.ROLE);
-        }
         return this.cache;
+    }
+
+    public void setCache(SourceCache cache) {
+        this.cache = cache;
     }
 
     private SourceCache cache;
@@ -206,20 +203,15 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      */
     protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
         String fileUri = getPolicySourceURI(url, policyFilename);
-        SourceResolver resolver = null;
         Source source = null;
         try {
-            resolver = (SourceResolver) this.serviceManager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(fileUri);
+            source = this.sourceResolver.resolveURI(fileUri);
             return SourceUtil.getFile(source);
         } catch (final Exception e) {
             throw new AccessControlException(e);
         } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.serviceManager.release(resolver);
+            if (source != null) {
+                this.sourceResolver.release(source);
             }
         }
     }
@@ -313,23 +305,18 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     public File getPoliciesDirectory() throws AccessControlException {
 
         if (this.policiesDirectory == null) {
-            SourceResolver resolver = null;
             Source source = null;
             File directory;
 
             try {
-                resolver = (SourceResolver) getServiceManager().lookup(SourceResolver.ROLE);
-                source = resolver.resolveURI(this.policiesDirectoryUri);
+                source = this.sourceResolver.resolveURI(this.policiesDirectoryUri);
                 getLogger().debug("Policies directory source: [" + source.getURI() + "]");
                 directory = new File(new URI(NetUtils.encodePath(source.getURI())));
             } catch (final Exception e) {
                 throw new AccessControlException("Resolving policies directory failed: ", e);
             } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    getServiceManager().release(resolver);
+                if (source != null) {
+                    this.sourceResolver.release(source);
                 }
             }
 
@@ -339,14 +326,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         }
 
         return this.policiesDirectory;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.serviceManager = manager;
-        this.cache = (SourceCache) manager.lookup(SourceCache.ROLE);
     }
 
     /**
@@ -394,20 +373,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             policies.add(orderedPolicies.get(String.valueOf(i)));
         }
         return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-
-        if (getCache() != null) {
-            getServiceManager().release(getCache());
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing [" + this + "]");
-        }
     }
 
     /**
@@ -466,17 +431,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         removeAccreditable(manager, accreditable, getPoliciesDirectory());
     }
 
-    private ServiceManager serviceManager;
-
-    /**
-     * Returns the service manager.
-     * 
-     * @return A service manager.
-     */
-    protected ServiceManager getServiceManager() {
-        return this.serviceManager;
-    }
-
     /**
      * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager,
      *      org.apache.lenya.ac.Accreditable)
@@ -533,6 +487,10 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             }
         }
         return (Role[]) grantedRoles.toArray(new Role[grantedRoles.size()]);
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }
