@@ -21,7 +21,7 @@
 <access-controller type="bypassable">
   
   <accreditable-manager type="file">
-    <parameter name="directory" value="context:///lenya/pubs/default/config/access-control/passwd"/>
+    <parameter name="directory" value="pub:default:/config/access-control/passwd"/>
     
     <user-manager>
       <user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="admin.addUser">Local User</user-type>
@@ -32,7 +32,7 @@
   
   <policy-manager type="document">
     <policy-manager type="file">
-      <parameter name="directory" value="context:///lenya/pubs/default/config/access-control/policies"/>
+      <parameter name="directory" value="pub:default:/config/access-control/policies"/>
     </policy-manager>
   </policy-manager>
   

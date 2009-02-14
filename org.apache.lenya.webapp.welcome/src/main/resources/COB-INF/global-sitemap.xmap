@@ -267,11 +267,12 @@
       <map:match pattern="*/introduction.html">
         <map:aggregate element="aggregation-wrapper">
           <map:part src="aggregate-fallback://readme.xml"/>
-          <map:part src="lenya/pubs/{1}/config/publication.xml"/>
+          <map:part src="pub:{1}:/config/publication.xml"/>
         </map:aggregate>
-        <map:transform src="lenya/xslt/util/introduction.xsl"/>
-        <map:call resource="style-cms-page"/>
-        <map:serialize />
+        <map:transform src="xslt/introduction.xsl"/>
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:gui:/service/style-cms-page"/>
+        </map:serialize>
       </map:match>
      
     </map:pipeline>
@@ -325,7 +326,9 @@
            <map:transform type="i18n">
              <map:parameter name="locale" value="{request:locale}"></map:parameter>
            </map:transform>
-           <map:call resource="style-cms-page"/>
+           <map:serialize type="servletService">
+             <map:parameter name="service" value="servlet:gui:/service/style-cms-page"/>
+           </map:serialize>
            <map:serialize status-code="404" />
          </map:when>
          <map:otherwise>

@@ -21,7 +21,7 @@
   xmlns="http://www.springframework.org/schema/beans">
   
   <bean name="org.apache.lenya.ac.Authorizer/usecase"
-    class="org.apache.lenya.cms.ac.usecase.impl.UsecaseAuthorizerIMpl">
+    class="org.apache.lenya.cms.ac.usecase.impl.UsecaseAuthorizerImpl">
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
     <property name="cache" ref="org.apache.lenya.ac.cache.SourceCache"/>
   </bean>

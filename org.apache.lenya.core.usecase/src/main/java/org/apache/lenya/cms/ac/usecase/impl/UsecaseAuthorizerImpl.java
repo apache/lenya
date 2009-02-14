@@ -92,7 +92,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         if (usecaseRoles.hasRoles(usecase)) {
             getLogger().debug("Roles for usecase found.");
 
-            List usecaseRoleIds = Arrays.asList(usecaseRoles.getRoles(usecase));
+            List<String> usecaseRoleIds = Arrays.asList(usecaseRoles.getRoles(usecase));
 
             int i = 0;
             while (!authorized && i < roles.length) {
@@ -132,7 +132,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
             configUri = configUri.substring("aggregate-".length());
         }
         UsecaseRoles usecaseRoles = getUsecaseRoles(configUri);
-        List roles = Arrays.asList(usecaseRoles.getRoles(usecase));
+        List<String> roles = Arrays.asList(usecaseRoles.getRoles(usecase));
         String roleId = role.getId();
         if (granted) {
             if (!roles.contains(roleId)) {
@@ -178,8 +178,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
     /**
      * Returns the source URI of the usecase role configuration file for a certain publication.
-     * 
-     * @param publication The publication.
+     * @param pubId The publication ID.
      * @return A string representing a URI.
      */
     protected String getConfigurationUri(String pubId) {
@@ -211,6 +210,10 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
     public void setSourceResolver(SourceResolver sourceResolver) {
         this.sourceResolver = sourceResolver;
+    }
+
+    public void setCache(SourceCache cache) {
+        this.cache = cache;
     }
 
 }

@@ -31,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
  * document.
  */
 public class PageEnvelope {
-	private final static Log logger = LogFactory.getLog(PageEnvelope.class);
+    private final static Log logger = LogFactory.getLog(PageEnvelope.class);
     /**
      * The names of the page envelope parameters.
      */
@@ -60,8 +60,7 @@ public class PageEnvelope {
      */
     public static final String IS_PUBLICATION = "is-publication";
     /**
-     * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's languages,
-     * comma-seperated
+     * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's languages, comma-seperated
      */
     public static final String PUBLICATION_LANGUAGES_CSV = "publication-languages-csv";
     /**
@@ -105,8 +104,8 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_URL = "document-url";
     /**
-     * <code>DOCUMENT_URL_WITHOUT_LANGUAGE</code> The URL of the current document without a
-     * language extension.
+     * <code>DOCUMENT_URL_WITHOUT_LANGUAGE</code> The URL of the current document without a language
+     * extension.
      */
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     /**
@@ -134,8 +133,8 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_LANGUAGE = "document-language";
     /**
-     * This attribute returns the document language if the document exists, or the
-     * default language otherwise. This makes it suitable for 404 pages.
+     * This attribute returns the document language if the document exists, or the default language
+     * otherwise. This makes it suitable for 404 pages.
      */
     public static final String LANGUAGE = "language";
     /**
@@ -152,8 +151,7 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
     /**
-     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix of the publication, used for
-     * navigation
+     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix of the publication, used for navigation
      */
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
     /**
@@ -184,12 +182,10 @@ public class PageEnvelope {
      * @param session The session to use.
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.
-     * @param servletContext The servlet context directory.
      * @param publication The publication.
      * @throws PageEnvelopeException when something went wrong.
      */
-    public PageEnvelope(String contextPath,
-            String webappUrl, File servletContext, Publication publication)
+    public PageEnvelope(String contextPath, String webappUrl, Publication publication)
             throws PageEnvelopeException {
         this.context = contextPath;
         this.webappUrl = webappUrl;
@@ -251,7 +247,7 @@ public class PageEnvelope {
     public String getContext() {
         return this.context;
     }
-    
+
     private String path;
 
     /**
@@ -263,8 +259,8 @@ public class PageEnvelope {
         if (this.path == null) {
             final Document doc = getDocument();
             try {
-                this.path = doc != null ? doc.getPath() :
-                    getPublication().getDocumentBuilder().getLocator(getSession(), this.webappUrl).getPath();
+                this.path = doc != null ? doc.getPath() : getPublication().getDocumentBuilder()
+                        .getLocator(getSession(), this.webappUrl).getPath();
             } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
@@ -307,7 +303,7 @@ public class PageEnvelope {
     public void setDocument(Document _document) {
         this.document = _document;
     }
-    
+
     /**
      * @return The document language or the default language if the document doesn't exist.
      * @see #LANGUAGE
@@ -317,7 +313,8 @@ public class PageEnvelope {
         if (document == null) {
             Publication pub = getPublication();
             if (pub == null) {
-                throw new RuntimeException("The language attribute can't be used outside a publication.");
+                throw new RuntimeException(
+                        "The language attribute can't be used outside a publication.");
             }
             return pub.getDefaultLanguage();
         } else {

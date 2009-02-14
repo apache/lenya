@@ -19,18 +19,26 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
+  
   <bean name="org.apache.cocoon.components.modules.input.InputModule/fallback"
     class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule">
     <property name="protocol" value="fallback"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
   </bean>
+  
   <bean name="org.apache.cocoon.components.modules.input.InputModule/page-envelope"
-    class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
+    class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule">
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
+  </bean>
+  
   <bean name="org.apache.cocoon.components.modules.input/resource-type"
-    class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceTypeModule"/>
+  class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceTypeModule"/>
+  
   <bean name="org.apache.cocoon.components.modules.input/doc-info"
-    class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentInfoModule"/>
+  class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentInfoModule"/>
+  
   <bean name="org.apache.cocoon.components.modules.input/document-url"
-    class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentURLModule"/>
+  class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentURLModule"/>
+  
 </beans>

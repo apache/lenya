@@ -20,11 +20,9 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
-import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -68,8 +66,6 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
             }
 
             String contextPath = request.getContextPath();
-            Context context = ObjectModelHelper.getContext(objectModel);
-            String servletContextPath = context.getRealPath("");
 
             try {
                 Session session = getSession();
@@ -81,7 +77,6 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
                 envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
                         contextPath,
                         webappUrl,
-                        new File(servletContextPath),
                         pub);
             } catch (Exception e) {
                 throw new ConfigurationException("Resolving page envelope failed: ", e);

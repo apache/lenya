@@ -113,6 +113,11 @@
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
   </bean>
+  <bean name="org.apache.excalibur.source.SourceFactory/pub"
+    class="org.apache.lenya.cms.cocoon.source.PublicationSourceFactory">
+    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+  </bean>
   
   <!-- Sitemap Components -->
   <bean name="org.apache.cocoon.generation.Generator/publications"

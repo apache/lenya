@@ -20,10 +20,8 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
 import java.util.Map;
 
-import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.util.ServletHelper;
@@ -35,7 +33,7 @@ public class PageEnvelopeFactory {
     /**
      * Creates a new PageEnvelopeFactory.
      */
-    protected PageEnvelopeFactory() {
+    private PageEnvelopeFactory() {
         // do nothing
     }
 
@@ -63,24 +61,21 @@ public class PageEnvelopeFactory {
             throws PageEnvelopeException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         String contextPath = request.getContextPath();
-        Context context = ObjectModelHelper.getContext(objectModel);
         String webappUrl = ServletHelper.getWebappURI(request);
-        String servletContextPath = context.getRealPath("");
-        return getPageEnvelope(contextPath, webappUrl, new File(servletContextPath), pub);
+        return getPageEnvelope(contextPath, webappUrl, pub);
     }
 
     /**
      * Creates a page envelope.
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.
-     * @param servletContext The servlet context directory.
      * @param pub The publication.
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(String contextPath, String webappUrl, File servletContext,
-            Publication pub) throws PageEnvelopeException {
-        PageEnvelope envelope = new PageEnvelope(contextPath, webappUrl, servletContext, pub);
+    public PageEnvelope getPageEnvelope(String contextPath, String webappUrl, Publication pub)
+            throws PageEnvelopeException {
+        PageEnvelope envelope = new PageEnvelope(contextPath, webappUrl, pub);
         return envelope;
     }
 
