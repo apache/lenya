@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   
+   Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   
+   $Id$
+   @translators Giampaolo Trapasso  <trapo at trapo dot it>
+-->
+<catalogue xml:lang="it" xmlns="http://apache.org/cocoon/i18n/2.1">
+	<message key="default.createdoc.idtaken">L'ID scelto è già utilizzato. Scegliere un altro ID.</message>
+	<message key="Create new language version">Crea nuova lingua</message>
+	<message key="New language for existing Document">Nuova lingua per un Documento esistente</message>
+	<message key="default.createdoc.info.all-language-versions-exists">Esistono già versioni di questo documento per tutte le lingue.</message>
+</catalogue>

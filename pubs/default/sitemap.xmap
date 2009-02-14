@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:serializers default="xhtml">
+      <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
+    </map:serializers>
+  </map:components>
+
+  <map:views>
+    <map:view from-position="last" name="links">
+      <map:serialize type="links" />
+    </map:view>
+  </map:views>
+
+
+  <map:pipelines>
+
+    <!-- This pipeline handles helper requests and metadata, not the actual publication documents -->
+    <map:pipeline>
+
+      <!--
+         FIXME: the whole webdav shebang should be handled by the webdav module sitemap.
+      -->
+      <!-- catch webdav GET requests. -->
+      <map:match pattern="*/webdav**">
+        <map:mount uri-prefix="{1}/" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>    
+      </map:match>
+
+      <!-- catch PUT requests (used by webdav clients) -->
+      <map:select type="request-method">
+        <!-- many client editors like to PUT changes -->
+        <map:when test="PUT">
+          <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+        </map:when>
+      </map:select>
+      
+      <!-- Requests ending in a slash are redirected to the corresponding index.html page to mimic
+           standard web browser behaviour. -->
+      <!-- FIXME: this will trigger a HTTP redirect. Maybe it's more effective to do an internal redirect using
+           a cocoon:/ URI? An apache httpd server will not send a HTTP redirect when a directory is requested, but
+           serve the index.html file implicitly IIRC. -->
+      <map:match pattern="**/">
+        <map:redirect-to uri="{proxy:/{page-envelope:publication-id}/{1}/index.html}"/>
+      </map:match>
+
+    </map:pipeline>
+    
+
+    <map:pipeline type="caching">
+
+      <!-- RSS formatting. 
+           FIXME: this should be handled by an RSS feed module!
+      -->
+      <map:match pattern="**.rss">
+        <map:generate src="{resource-type:format-rss}"/>
+        <map:serialize type="xml" mime-type="application/rss+xml"/>
+      </map:match>
+
+      <!-- FIXME: either this should be moved into a metadata module, or at least we need to establish
+           some standard for magic extra suffixes and stick to it.
+           Here we use .html.meta, bxe uses .bxe.html.
+      -->
+      <map:match pattern="*/**.html.meta">
+        <map:generate type="lenyaMetaData" src="lenya-document:{page-envelope:document-uuid},area={1}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="**meta">
+        <map:generate type="lenyaMetaData" src="lenya-document:{request-param:uuid},lang={request-param:lang},pubid={request-param:pubid},area={request-param:area}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- {1:rendertype}/{2:pub}/{3:area}/{4:path} -->
+      <map:match pattern="document-content/*/*/*/**">
+        <map:act type="language-exists">
+          <map:generate src="{resource-type:format-xhtml}?rendertype={../1}"/>
+          <map:serialize type="xml"/>
+        </map:act>
+        <!-- if the action fails (i.e. the document does not exist), create a nice error page. -->
+        <map:generate type="serverpages" src="fallback://lenya/content/exception/document-does-not-exist.xsp"/>
+        <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
+          <map:parameter name="requestUrl" value="{request:requestURI}"/>
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+          <map:parameter name="pub" value="{2}"/>
+          <map:parameter name="path" value="/{4}"/>
+          <map:parameter name="area" value="{3}"/>
+        </map:transform>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{page-envelope:language}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- 
+         This matcher aggregates the Lenya page: breadcrumbs, tabs, menu etc. and the actual document content.
+         /lenyabody-raw-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:default-language}/{6:language}/{7:path} 
+      -->
+      <map:match pattern="lenyabody-raw-*/*/*/*/*/*/**">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon://modules/sitetree/breadcrumb/{2}/{3}/{5}/{6}/{7}.xml"/>
+          <map:part src="cocoon://modules/sitetree/tabs/{2}/{3}/{5}/{6}/{7}.xml"/>
+          <map:part src="cocoon://modules/sitetree/menu/{2}/{3}/{5}/{6}/{7}.xml"/>
+          <map:part src="cocoon://modules/sitetree/search/{2}/{3}/{5}/{6}/{7}.xml"/>
+          <map:part src="cocoon://modules/languageselector/text-none/flagsize-13"/>
+          <map:part src="cocoon:/document-content/{1}/{2}/{3}/{7}"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!--
+        This match provides the XSLT to render a given doctype to XHTML
+        It checks for the existence of a doctype-specific one, and if none
+        exists, falls back to the default one.
+        /getDoctypeXSLT-{1:doctype}
+      -->
+      <map:match pattern="getDoctypeXSLT-*">
+        <map:select type="resource-exists">
+          <map:parameter name="prefix" value="fallback://"/>
+          <map:when test="xslt/page2xhtml-{1}.xsl">
+            <map:generate src="fallback://xslt/page2xhtml-{1}.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="fallback://xslt/page2xhtml.xsl"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="xml"/>
+      </map:match>
+
+    </map:pipeline>
+
+    <!-- This is the pipeline that ultimately builds the page. -->
+    <map:pipeline type="noncaching">
+
+      <!-- 
+         This matcher takes the raw aggregated page content and applies SVG rendering and a doctype-specific
+         XSL transformation. It makes some meta information available to the XSLT, and demonstrates the use
+         of the LenyaMetaDataTransformer (see below).
+         /lenyabody-{1:rendertype}/{2:publication-id}/{3:area}/{4:doctype}/{5:path} 
+      -->
+      <map:match pattern="lenyabody-*/*/*/*/**">
+        <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{4}/{page-envelope:default-language}/{page-envelope:language}/{5}"/>
+        <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
+        <map:transform src="cocoon:/getDoctypeXSLT-{4}">
+          <map:parameter name="publication-id" value="{2}"/>
+          <map:parameter name="area" value="{3}"/>
+          <map:parameter name="uuid" value="{page-envelope:document-uuid}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+          <map:parameter name="document-path" value="{page-envelope:document-path}"/>
+          <map:parameter name="document-type" value="{4}"/>
+          <map:parameter name="lastPublishedUser" value="{access-control:user-name:{workflow:lastUser.publish}}"/>
+          <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
+          <!-- Following is a show off to explain lenya.properties.xml -->
+          <map:parameter name="author" value="{properties:pubs.default.author}"/>
+          <map:parameter name="lenyaVersion" value="{properties:lenya.version}"/>
+          <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
+        </map:transform>
+        <map:transform type="i18n">      
+          <map:parameter name="locale" value="{page-envelope:language}"/>
+        </map:transform>
+        
+        <!-- This is a demonstration of the generic meta data transformer
+          described in bug 39891.
+
+          1) define the ns: xmlns:meta="http://apache.org/lenya/meta/1.0/"
+          2) use it in above xsl like e.g.
+          <meta:value ns="http://purl.org/dc/elements/1.1/" element="date" uuid="{@uuid}"/>
+
+          Where @ns is the namespace for which you want to retrieve the @element for.
+          If there is more then one element registered then the transformer returns:
+          <value xmlns="http://apache.org/lenya/meta/1.0/" value="2005-09-11 12:44:05" element="date" />
+          <value xmlns="http://apache.org/lenya/meta/1.0/" value="2006-09-11 12:44:05" element="date" />
+
+          Otherwise it will return the value as characters.
+        -->
+        <map:transform type="metaData">
+          <map:parameter name='pubid' value='{page-envelope:publication-id}'/>
+          <map:parameter name='area' value='{page-envelope:area}'/>
+        </map:transform>
+        <map:transform type="uuid2url"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+    </map:pipeline>
+
+    <!-- This is the main entry point into the publication. This
+    pipeline uses the uriparametrizer to determine the doctype of this
+    request. It then aggregates the lenya menu (for the given area) and
+    the lenya body, the actual document. -->
+    <map:pipeline>
+
+      <!-- 
+         FIXME: this is a BXE-specific hack that should be handled by BXE's module sitemap. The publication 
+         should not be concerned with BXE-specific pre-processing of documents.
+      -->
+      <map:match pattern="**.bxe.html">
+        <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-path}"/>
+        <map:transform type="proxy"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- 
+        Finally: this matcher handles requests for publication documents. 
+        /{1:area}/{2:document-path}.html
+      -->
+      <map:match pattern="*/**.html">
+        <!-- 
+          The default publication does not have content by default. 
+          This check provides the user with a dialog to import example content. 
+          It should be removed in production systems.
+        --> 
+
+        <map:select type="resource-exists">
+          <map:when test="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
+          <map:otherwise>
+            <map:redirect-to uri="{proxy:/{page-envelope:publication-id}/{1}/{2}.html}?lenya.usecase=export.importExampleContent"/>
+          </map:otherwise>
+        </map:select>
+
+        <!-- If the requested language version of the document exists, we set a last-modified header. -->
+        <map:act type="language-exists">
+          <map:act type="set-header">
+            <map:parameter name="Last-Modified" value="{date-iso8601-rfc822:{page-envelope:document-lastmodified}}" />
+          </map:act>
+        </map:act>
+            
+        <!-- 
+          HEAD requests shouldn't have all the xslt overhead, all the user wants is the HTTP header information.
+          So the actual content generation is bypassed.
+        -->
+        <map:select type="request-method">
+          <map:when test="HEAD">
+            <map:generate src="context://lenya/content/util/empty.xml" />
+            <map:serialize type="xhtml"/>
+          </map:when>
+        </map:select>          
+
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{request-param:rendertype}"/>
+          <map:when test="edit">
+            <!-- put the bxe_xpath attribute into the page -->
+            <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-path}"/>
+          </map:when>
+          <map:otherwise>
+            <!-- sane page w/o hacks -->
+            <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-path}"/>
+          </map:otherwise>
+        </map:select>
+
+        <!-- Menu generation -->
+        <map:select type="parameter">
+          <!-- you remember that {1} is the area, right? -->
+          <map:parameter name="parameter-selector-test" value="{1}"/>
+          <map:when test="live">
+            <!-- do nothing for live -->
+          </map:when>
+          <map:otherwise>
+            <!-- for all other areas, we want a GUI menu (handled by global-sitemap.xmap -->
+            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/{2}.xml"/>
+            <!-- 
+                external broken link reporting (pretty much untested) 
+                TODO: External Links checking should be optional on a document by document basis.
+            -->
+            <!--
+            <map:transform src="fallback://lenya/xslt/authoring/addJavaScript.xsl">
+              <map:parameter name="scriptSRC" value="/modules/linkcheck/linkreporter.js"/>
+            </map:transform>
+            -->
+          </map:otherwise>
+        </map:select>
+
+        <!-- 
+            strip xhtml namespace prefix to ensure compatibility with non-XML conformant browsers
+            workaround to avoid empty script, style and textarea tags (firefox chokes on those)
+        -->
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+
+        <!-- client cache expiration settings -->
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{1}"/>
+          <!-- for live area: -->
+          <map:when test="live">
+            <!-- set cache expiration header according to resource type configuration (<expires/>) -->
+            <map:act type="language-exists">
+              <map:act type="set-header">
+                <map:parameter name="Expires" value="{date-iso8601-rfc822:{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}}"/>
+              </map:act>
+            </map:act>
+          </map:when>
+          <!-- for other areas -->
+          <map:otherwise>
+            <!-- tell the browser not to cache stuff so that the user always sees up-to-date content -->
+            <map:act type="set-header">
+              <map:parameter name="Cache-Control" value="no-cache" />
+              <map:parameter name="Pragma" value="no-cache"/>
+            </map:act>
+          </map:otherwise> 
+        </map:select>
+
+        <!-- pretty-print output for easier debugging and for the benefit of new users 
+              NOTE: you may want to disable this in production for performance reasons,
+              but it's on by default in the default publication to make the generated code 
+              easier to work with for new users. -->
+        <map:transform src="fallback://lenya/modules/prettyprinting/xslt/xml2nicexml.xsl"/>
+
+        <!-- the proxy transformer handles proxy-related URL rewriting -->
+        <map:transform type="proxy"/>
+
+        <map:act type="language-exists">
+          <map:serialize type="xhtml"/>
+        </map:act>
+        <!-- 
+            When the requested document does not exist, we generate a nice error page.
+            Still, it's not what the user wants, so make sure we send a 404 "not found".
+        -->
+        <map:serialize type="xhtml" status-code="404"/>
+
+      </map:match>
+
+    </map:pipeline>
+
+    <!--
+       This pipeline handles all requests that do *not* end in ".html".
+    -->
+    <map:pipeline>
+      <map:match pattern="*/**">
+        <map:act type="language-exists">
+          <!--
+             A workaround for a byte-range issue with PDFs,
+             see http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 .
+             FIXME: still necessary?
+          -->
+          <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
+            <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}" mime-type="application/pdf">
+              <map:parameter name="byte-ranges" value="false"/>
+            </map:read>
+          </map:match>      
+          <!-- Documents other than *.html are served as-is and do not require processing: -->
+          <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}"
+            mime-type="{page-envelope:document-mime-type}"/>
+        </map:act>
+
+        <!-- 
+          If the action above fails (e.g. the document does not exist), call into the lenyabody pipeline.
+          It will generate a nice document-does-not-exist page for us.
+        -->
+        <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-path}"/>
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{1}"/>
+          <map:when test="live"/>
+          <map:otherwise>
+            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/{2}?doctype={page-envelope:document-type}"/>
+          </map:otherwise>
+        </map:select>
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+        <map:transform type="proxy"/>
+        <map:serialize type="xhtml" status-code="404"/>
+
+      </map:match>
+
+    </map:pipeline>
+
+
+  </map:pipelines>
+</map:sitemap>

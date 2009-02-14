@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<publication xmlns="http://apache.org/cocoon/lenya/publication/1.1" >
+
+  <name>Default</name>
+  <description>This publication is a best practice, getting started publication.</description>
+  <!-- the @...@ macros are evaluated by ant at build time -->
+  <version>@lenya.version@</version>
+  <lenya-version>@lenya.version@</lenya-version>
+  <lenya-revision>@lenya.revision@</lenya-revision>
+  <cocoon-version>2.1.10-dev</cocoon-version>
+
+  <!-- The various languages need to be listed for verification and widget building -->
+  <languages>
+    <language default="true">en</language>
+    <language>de</language>
+    <language>he</language>
+    <language>es</language>
+    <language>fr</language>
+  </languages>
+  <!-- A template instantiator is used to create new publications based on this one. -->
+  <template-instantiator name="default"/>
+  <!-- A publication can inherit from another publication. "id" corresponds to the publication id 
+       of that template (and thus to the name of the directory it's stored in) -->
+  <!--
+     <template id="some-pub-id"/>
+  -->
+  <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
+  <document-builder name="default"/>
+  <breadcrumb-prefix/>
+  <site-manager name="tree"/>
+  
+  <!-- Resource types need to be listed because of the workflow resp. because the workflow depends on the publication and not on the resource type -->
+  <resource-types>
+    <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="usecase" workflow="fallback://config/workflow/workflow.xml"/>
+    <resource-type name="news" workflow="fallback://config/workflow/workflow.xml"/>
+  </resource-types>
+  
+  <!-- Modules need to be listed because of the menu and i18n -->
+  <modules>
+    <module name="usecase"/>
+    <module name="editors"/>
+    <module name="xhtml"/>
+    <module name="links"/>
+    <module name="opendocument"/>
+    <module name="cforms"/>
+    <module name="homepage"/>
+    <module name="resource"/>
+    <module name="sitemanagement"/>
+    <module name="sitetree"/>
+    <module name="export"/>
+    <module name="workflow"/>
+    <module name="notification"/>
+    <module name="svg"/>
+    <module name="lucene"/>
+    <module name="development"/>
+    <module name="profiling"/>
+    <module name="languageselector"/>
+    <module name="administration"/>
+    <module name="acusecases"/>
+    <module name="news"/>
+    <module name="prettyprinting"/>
+    <module name="usecasedocument"/>
+    <module name="monitoring"/>
+    <module name="navigation"/>
+  </modules>
+  <!-- TODO: The goal is to have a blog module ;-) -->
+  <!--
+  <module name="blog"/>
+  -->
+
+  <!-- You can specify a custom location for your content, outside the Lenya build tree. Note that you will probably also want
+       to specify custom locations for access control (see access-control/access-control.xml), so that all your dynamically generated data is in one place
+       for easy backup. -->
+  <!--
+       Relative to webapp context: 
+          <content-dir src="lenya/pubs/default"/>
+       Absolute:
+          <content-dir src="/home/USERNAME/data/default"/>
+          <content-dir src="D:/tmp/default"/>
+  -->
+  
+  <proxies>
+    <!-- 
+       Lenya can rewrite the links to cater to special proxy setups.
+       Make sure to update the GlobalProxies configuration in cocoon.xconf as well.
+       For information about these settings, read
+       http://lenya.apache.org/docs/2_0_x/tutorials/proxy.html
+      
+       This example setting simulates the following situation:
+       * A customer wants a company hostname and URLs without Lenya-specific
+         path components for his live site.
+       * The server uses name-based virtual hosting with just one IP, i.e.
+         there can only be one SSL vhost, which is shared among several
+         customers. This implies the need for sub-directories in the proxy
+         URL.
+       * "authoring" should be ssl-protected. There is no need for a
+         customer hostname here, since it's not publicly visible.
+       * Any SSL-protected documents in "live" can be handled by the SSL
+         vhost (not using the company hostname is ok in this case, because
+         the customer does not want to pay for an additional IP address).
+         
+       The desired customer hostname is customer.example.com.
+       The SSL vhost is called https://www.example.com.
+       The Lenya CMS for our customer is reachable as
+       http[s]://www.example.com/lenya/customer/authoring.
+       The global proxy for non-publication-specific resources shall be
+       http://www.example.com/lenya.
+     -->
+<!--
+    <proxy area="live" ssl="true" url="https://www.example.com/lenya/customer/live"/>
+    <proxy area="live" ssl="false" url="http://customer.example.com"/>
+    <proxy area="authoring" ssl="true" url="https://www.example.com/lenya/customer/authoring"/>
+    <proxy area="authoring" ssl="false" url="http://www.example.com/lenya/customer/authoring"/>
+    <proxy area="archive" ssl="true" url="https://www.example.com/lenya/customer/archive"/>
+    <proxy area="archive" ssl="false" url="http://www.example.com/lenya/customer/archive"/>
+    <proxy area="trash" ssl="true" url="https://www.example.com/lenya/customer/trash"/>
+    <proxy area="trash" ssl="false" url="http://www.example.com/lenya/customer/trash"/>
+-->
+  </proxies>
+  
+</publication>
