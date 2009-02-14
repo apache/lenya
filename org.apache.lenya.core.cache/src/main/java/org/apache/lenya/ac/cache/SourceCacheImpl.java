@@ -22,7 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 
-import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
@@ -33,7 +34,9 @@ import org.apache.lenya.util.CacheMap;
  * Basic implementation of a source cache.
  * @version $Id$
  */
-public class SourceCacheImpl extends AbstractLogEnabled implements SourceCache {
+public class SourceCacheImpl implements SourceCache {
+    
+    private static final Log logger = LogFactory.getLog(SourceCacheImpl.class);
 
     private SourceResolver sourceResolver;
     protected static final int CAPACITY = 1000;
@@ -45,7 +48,7 @@ public class SourceCacheImpl extends AbstractLogEnabled implements SourceCache {
      */
     protected CacheMap getCache() {
         if (this.cache == null) {
-            this.cache = new CacheMap(CAPACITY, getLogger());
+            this.cache = new CacheMap(CAPACITY, logger);
         }
         return this.cache;
     }
@@ -66,8 +69,8 @@ public class SourceCacheImpl extends AbstractLogEnabled implements SourceCache {
 
         try {
             if (cachedObject != null) {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Found cached object [" + cachedObject + "]");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Found cached object [" + cachedObject + "]");
                 }
                 SourceValidity cachedValidity = cachedObject.getValidityObject();
 
@@ -92,15 +95,15 @@ public class SourceCacheImpl extends AbstractLogEnabled implements SourceCache {
                 }
 
                 if (valid) {
-                    if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger()
+                    if (logger.isDebugEnabled()) {
+                        logger
                                 .debug("Using valid cached source for '" + sourceUri + "'.");
                     }
                     usedCache = true;
                     value = cachedObject.getValue();
                 } else {
-                    if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger()
+                    if (logger.isDebugEnabled()) {
+                        logger
                                 .debug("Cached content is invalid for '" + sourceUri + "'.");
                     }
                     // remove invalid cached object
@@ -108,22 +111,22 @@ public class SourceCacheImpl extends AbstractLogEnabled implements SourceCache {
                 }
 
             } else {
-                getLogger().debug("Did not find cached object.");
+                logger.debug("Did not find cached object.");
             }
 
             if (!usedCache) {
-                getLogger().debug("Did not use cache.");
+                logger.debug("Did not use cache.");
                 if (key != null) {
                     if (sourceValidity == null) {
                         sourceValidity = getSourceValidity(sourceUri);
                     }
                     if (sourceValidity != null) {
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("Source validity is not null.");
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("Source validity is not null.");
                         }
                     } else {
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("Source validity is null - not caching.");
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("Source validity is null - not caching.");
                         }
                         key = null;
                     }
@@ -133,8 +136,8 @@ public class SourceCacheImpl extends AbstractLogEnabled implements SourceCache {
 
                 // store the response
                 if (key != null) {
-                    if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger().debug(
+                    if (logger.isDebugEnabled()) {
+                        logger.debug(
                                 "Caching object [" + value + "] for further requests of ["
                                         + sourceUri + "].");
                     }

@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.cache.BuildException;
 import org.apache.lenya.ac.cache.InputStreamBuilder;
@@ -57,8 +57,7 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
         } catch (Exception e) {
             throw new BuildException(e);
         }
-        assert document.getDocumentElement().getLocalName()
-            .equals(USECASES_ELEMENT);
+        assert document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
 
         NamespaceHelper helper = new NamespaceHelper(AccessController.NAMESPACE,
                 AccessController.DEFAULT_PREFIX, document);
@@ -71,7 +70,7 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
             // add roles only if not overridden by child publication
             if (!usecaseRoles.hasRoles(usecaseId)) {
                 Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
-                Set roleIds = new HashSet();
+                Set<String> roleIds = new HashSet<String>();
                 for (int j = 0; j < roleElements.length; j++) {
                     String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
                     roleIds.add(roleId);
@@ -87,10 +86,11 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
      * Saves the usecase roles.
      * @param usecaseRoles The roles.
      * @param sourceUri The source to save to.
-     * @param manager The service manager.
+     * @param sourceResolver The source resolver.
      * @throws BuildException if an error occurs.
      */
-    public void save(UsecaseRoles usecaseRoles, String sourceUri, ServiceManager manager) throws BuildException {
+    public void save(UsecaseRoles usecaseRoles, String sourceUri, SourceResolver sourceResolver)
+            throws BuildException {
         try {
             NamespaceHelper helper = new NamespaceHelper(AccessController.NAMESPACE,
                     AccessController.DEFAULT_PREFIX, USECASES_ELEMENT);
@@ -106,7 +106,7 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
                     roleElement.setAttribute(ID_ATTRIBUTE, roles[r]);
                 }
             }
-            SourceUtil.writeDOM(helper.getDocument(), sourceUri, manager);
+            SourceUtil.writeDOM(helper.getDocument(), sourceUri, sourceResolver);
         } catch (Exception e) {
             throw new BuildException(e);
         }

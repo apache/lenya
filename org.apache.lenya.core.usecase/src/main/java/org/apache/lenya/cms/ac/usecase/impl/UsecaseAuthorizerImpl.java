@@ -21,15 +21,12 @@ package org.apache.lenya.cms.ac.usecase.impl;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.util.AbstractLogEnabled;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.cache.BuildException;
@@ -47,13 +44,13 @@ import org.apache.lenya.util.ServletHelper;
  * Supported parameters via {@link Parameterizable}:
  * </p>
  * <ul>
- * <li> {@link #PARAMETER_CONFIGURATION} - location of the usecase policies file
- * (parameterizable for testing purposes) </li>
+ * <li> {@link #PARAMETER_CONFIGURATION} - location of the usecase policies file (parameterizable for
+ * testing purposes)</li>
  * </ul>
  * @version $Id: UsecaseAuthorizer.java 392449 2006-04-07 23:20:38Z michi $
  */
 public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements UsecaseAuthorizer,
-        Serviceable, Disposable, Parameterizable {
+        Parameterizable {
 
     /**
      * The name of the pseudo-usecase that governs access to pages.
@@ -68,12 +65,12 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
      * the configuration URI for this component
      */
     private String configurationUri;
-    private ServiceManager manager;
+
+    private SourceResolver sourceResolver;
 
     /**
      * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#authorizeUsecase(java.lang.String,
-     *      org.apache.lenya.ac.Role[],
-     *      org.apache.lenya.cms.publication.Publication)
+     *      org.apache.lenya.ac.Role[], org.apache.lenya.cms.publication.Publication)
      */
     public boolean authorizeUsecase(String usecase, Role[] roles, Publication pub)
             throws AccessControlException {
@@ -114,8 +111,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
     /**
      * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#isPermitted(java.lang.String,
-     *      org.apache.lenya.cms.publication.Publication,
-     *      org.apache.lenya.ac.Role)
+     *      org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role)
      */
     public boolean isPermitted(String usecase, Publication publication, Role role)
             throws AccessControlException {
@@ -127,8 +123,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
     /**
      * @see org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer#setPermission(java.lang.String,
-     *      org.apache.lenya.cms.publication.Publication,
-     *      org.apache.lenya.ac.Role, boolean)
+     *      org.apache.lenya.cms.publication.Publication, org.apache.lenya.ac.Role, boolean)
      */
     public void setPermission(String usecase, Publication publication, Role role, boolean granted)
             throws AccessControlException {
@@ -150,15 +145,15 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
         UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
         try {
-            builder.save(usecaseRoles, configUri, this.manager);
+            builder.save(usecaseRoles, configUri, this.sourceResolver);
         } catch (BuildException e) {
             throw new AccessControlException(e);
         }
     }
 
     /**
-     * This method will substitute VISIT_USECASE if no USECASE_PARAMETER is set,
-     * so that it can be used to authorize plain page access as well.
+     * This method will substitute VISIT_USECASE if no USECASE_PARAMETER is set, so that it can be
+     * used to authorize plain page access as well.
      * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
      */
     public boolean authorize(Request request) throws AccessControlException {
@@ -182,16 +177,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     }
 
     /**
-     * Returns the configuration source cache.
-     * @return A source cache.
-     */
-    private SourceCache getCache() {
-        return this.cache;
-    }
-
-    /**
-     * Returns the source URI of the usecase role configuration file for a
-     * certain publication.
+     * Returns the source URI of the usecase role configuration file for a certain publication.
      * 
      * @param publication The publication.
      * @return A string representing a URI.
@@ -204,39 +190,27 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
         UsecaseRoles usecaseRoles;
         try {
-            usecaseRoles = (UsecaseRoles) getCache().get(_configurationUri, builder);
+            usecaseRoles = (UsecaseRoles) this.cache.get(_configurationUri, builder);
         } catch (CachingException e) {
             throw new AccessControlException(e);
         }
         return usecaseRoles;
     }
 
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        getLogger().debug("Servicing [" + getClass().getName() + "]");
-        this.manager = _manager;
-        this.cache = (SourceCache) _manager.lookup(SourceCache.ROLE);
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        if (getCache() != null) {
-            this.manager.release(getCache());
-        }
-    }
-
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(PARAMETER_CONFIGURATION)) {
-            getLogger().warn("Configuring the location of the usecase policies file is not supported anymore.");
+            getLogger()
+                    .warn(
+                            "Configuring the location of the usecase policies file is not supported anymore.");
         }
     }
 
     private String getConfigurationURI() {
         return this.configurationUri;
+    }
+
+    public void setSourceResolver(SourceResolver sourceResolver) {
+        this.sourceResolver = sourceResolver;
     }
 
 }

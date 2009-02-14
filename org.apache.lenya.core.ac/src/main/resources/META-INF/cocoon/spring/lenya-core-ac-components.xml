@@ -70,7 +70,10 @@
   </bean>
   
   <bean name="org.apache.lenya.ac.file.FilePolicyManagerFactory"
-    class="org.apache.lenya.ac.file.FilePolicyManagerFactory"/>
+    class="org.apache.lenya.ac.file.FilePolicyManagerFactory">
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+    <property name="cache" ref="org.apache.lenya.ac.cache.SourceCache"/>
+  </bean>
   
   <bean name="org.apache.lenya.ac.PolicyManager/file"
     class="org.apache.lenya.ac.file.FilePolicyManager" scope="prototype"
