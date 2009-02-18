@@ -19,9 +19,9 @@ var editor;
 
 function insertEditor() {
     editor = CodeMirror.fromTextArea('editorContent', {
-        path: "/modules/editors/codemirror/0.60/js/",
+        path: WEBAPP_BASE_URI + "modules/editors/codemirror/0.60/js/",
         parserfile: "parsexml.js",
-        stylesheet: "/modules/editors/css/codemirror.css",
+        stylesheet: WEBAPP_BASE_URI + "modules/editors/css/codemirror.css",
         height: "400px",
         onChange: saveContent
     });
