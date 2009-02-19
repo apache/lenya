@@ -350,7 +350,6 @@ function executeUsecase() {
     
     var preconditionsOK;
 
-    try {
         usecaseName = cocoon.parameters["usecaseName"];
         usecase = getUsecase(usecaseName);
         passRequestParameters(usecase);
@@ -366,6 +365,7 @@ function executeUsecase() {
         }
         proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
         log("debug", "Successfully prepared usecase.", usecaseName);
+    try {
     } catch (exception) {
         log("error", "Could not prepare usecase: " + exception, usecaseName);
         throw exception;

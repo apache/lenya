@@ -30,7 +30,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -50,18 +49,9 @@ import org.apache.lenya.workflow.WorkflowException;
 public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
 
     private Repository repository;
-    private DocumentFactoryBuilder documentFactoryBuilder;
 
     public void setRepository(Repository repository) {
         this.repository = repository;
-    }
-
-    public DocumentFactoryBuilder getDocumentFactoryBuilder() {
-        return documentFactoryBuilder;
-    }
-
-    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
-        this.documentFactoryBuilder = documentFactoryBuilder;
     }
 
     /**

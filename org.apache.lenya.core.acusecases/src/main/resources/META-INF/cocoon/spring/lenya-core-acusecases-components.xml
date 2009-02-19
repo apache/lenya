@@ -20,22 +20,16 @@
   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
   xmlns="http://www.springframework.org/schema/beans">
   
-  <bean name="org.apache.lenya.ac.Authorizer/usecase"
-    class="org.apache.lenya.cms.ac.usecase.impl.UsecaseAuthorizerImpl">
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-    <property name="cache" ref="org.apache.lenya.ac.cache.SourceCache"/>
-  </bean>
-  
-  <bean name="org.apache.lenya.cms.usecase.UsecaseResolver"
-    class="org.apache.lenya.cms.usecase.impl.UsecaseResolverImpl">
+  <bean name="org.apache.lenya.cms.usecase.Usecase/ac.login"
+    class="org.apache.lenya.cms.ac.usecases.Login" scope="prototype" init-method="initialize">
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
-    <property name="templateManager" ref="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"/>
+    <property name="accessControllerResolver" ref="org.apache.lenya.ac.AccessControllerResolver"/>
+    <property name="view" ref="loginView">
+    </property>
   </bean>
-  
-  <bean name="org.apache.lenya.cms.usecase.gui.GUIManager"
-    class="org.apache.lenya.cms.usecase.gui.impl.GUIManagerImpl">
-    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
-    <property name="usecaseResolver" ref="org.apache.lenya.cms.usecase.UsecaseResolver"/>
+
+  <bean name="loginView" class="org.apache.lenya.cms.usecase.UsecaseView">
+    <property name="guiManager" ref="org.apache.lenya.cms.usecase.gui.GUIManager"/>
   </bean>
   
 </beans>

@@ -74,6 +74,12 @@
           -->
           <webAppSourceDirectory>${project.build.directory}/rcl/webapp</webAppSourceDirectory>
           <contextPath>${jetty.context}</contextPath>
+          <systemProperties>
+            <systemProperty>
+              <name>org.mortbay.jetty.webapp.parentLoaderPriority</name>
+              <value>true</value>
+            </systemProperty>
+          </systemProperties>
         </configuration>
       </plugin>
       <!--
@@ -115,7 +121,12 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-block-deployment</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-forms-impl</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    
     <!-- Lenya -->
     <dependency>
       <groupId>org.apache.lenya</groupId>

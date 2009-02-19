@@ -423,6 +423,11 @@
       </dependency>
       <dependency>
         <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-ajax-impl</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
         <artifactId>cocoon-mail-impl</artifactId>
         <version>1.1.0-SNAPSHOT</version>
       </dependency>
@@ -507,6 +512,11 @@
         <groupId>org.apache.cocoon</groupId>
         <artifactId>cocoon-chaperon-impl</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-forms-impl</artifactId>
+        <version>1.2.0-SNAPSHOT</version>
       </dependency>
       
       <!-- Lenya -->
