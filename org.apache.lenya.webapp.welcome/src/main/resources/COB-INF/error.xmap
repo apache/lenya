@@ -21,7 +21,7 @@
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="**">
-        <map:generate type="notifying"/>
+        <map:generate type="exception"/>
         <map:serialize type="xml"/>
         <!--
         <map:transform src="fallback://lenya/xslt/exception/generic.xsl"/>
