@@ -15,21 +15,28 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
-  xmlns="http://www.springframework.org/schema/beans">
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:configurator="http://cocoon.apache.org/schema/configurator"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+  http://cocoon.apache.org/schema/configurator http://cocoon.apache.org/schema/configurator/cocoon-configurator-1.0.1.xsd">
+  
+  <bean name="org.apache.lenya.cms.module.Module/acusecases"
+    class="org.apache.lenya.cms.module.ModuleImpl">
+    <property name="baseUri" value="file://${lenya.home}/org.apache.lenya.core.acusecases/target/classes/COB-INF"/>
+  </bean>
   
   <bean name="org.apache.lenya.cms.usecase.Usecase/ac.login"
     class="org.apache.lenya.cms.ac.usecases.Login" scope="prototype" init-method="initialize">
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
     <property name="accessControllerResolver" ref="org.apache.lenya.ac.AccessControllerResolver"/>
-    <property name="view" ref="loginView">
+    <property name="view">
+      <bean class="org.apache.lenya.cms.usecase.UsecaseView">
+        <property name="guiManager" ref="org.apache.lenya.cms.usecase.gui.GUIManager"/>
+        <property name="uri" value="fallback://lenya/modules/acusecases/jx/login.jx"/>
+      </bean>
     </property>
   </bean>
 
-  <bean name="loginView" class="org.apache.lenya.cms.usecase.UsecaseView">
-    <property name="guiManager" ref="org.apache.lenya.cms.usecase.gui.GUIManager"/>
-  </bean>
   
 </beans>

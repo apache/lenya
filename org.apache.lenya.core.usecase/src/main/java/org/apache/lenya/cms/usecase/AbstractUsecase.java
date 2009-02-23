@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.usecase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -77,6 +78,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     protected static final String PARAMETER_CHECKOUT_RESTRICTED_TO_SESSION = "checkoutRestrictedToSession";
 
     protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
+
+    protected static final String[] TRANSACTION_POLICIES = { TRANSACTION_POLICY_OPTIMISTIC,
+            TRANSACTION_POLICY_PESSIMISTIC, TRANSACTION_POLICY_READONLY };
+    protected static final String DEFAULT_TRANSACTION_POLICY = TRANSACTION_POLICY_READONLY;
 
     private Repository repository;
     private UsecaseView view;
@@ -651,14 +656,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     protected static final String ELEMENT_EXIT = "exit";
     protected static final String ATTRIBUTE_USECASE = "usecase";
 
-    private boolean isOptimistic = true;
+    private String transactionPolicy = DEFAULT_TRANSACTION_POLICY;
 
-    /**
-     * @return <code>true</code> if the transaction policy is optimistic offline lock,
-     *         <code>false</code> if it is pessimistic offline lock.
-     */
-    public boolean isOptimistic() {
-        return this.isOptimistic;
+    public String getTransactionPolicy() {
+        return this.transactionPolicy;
     }
 
     public void setView(UsecaseView view) {
@@ -697,7 +698,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * @throws RepositoryException if an error occurs.
      */
     protected void startTransaction() {
-        if (this.commitEnabled) {
+        if (this.commitEnabled && !this.getTransactionPolicy().equals(TRANSACTION_POLICY_READONLY)) {
             setSession(this.repository.startSession(getSession().getIdentity(), true));
         }
     }
@@ -721,7 +722,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
                 if (!objects[i].isLocked()) {
                     objects[i].lock();
                 }
-                if (!isOptimistic()
+                if (!getTransactionPolicy().equals(TRANSACTION_POLICY_OPTIMISTIC)
                         && !objects[i].isCheckedOutBySession(getSession().getId(), getSession()
                                 .getIdentity().getUser().getId())) {
                     objects[i].checkout(checkoutRestrictedToSession());
@@ -829,8 +830,13 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         this.parameters = params;
     }
 
-    public void setIsOptimistic(boolean optimistic) {
-        this.isOptimistic = optimistic;
+    public void setTransactionPolicy(String policy) {
+        if (!Arrays.asList(TRANSACTION_POLICIES).contains(policy)) {
+            throw new IllegalArgumentException("Invalid transaction policy '" + policy
+                    + ", must be one of " + TRANSACTION_POLICY_OPTIMISTIC + ", "
+                    + TRANSACTION_POLICY_PESSIMISTIC + ", " + TRANSACTION_POLICY_READONLY);
+        }
+        this.transactionPolicy = policy;
     }
 
     protected String getExitUsecaseName() {

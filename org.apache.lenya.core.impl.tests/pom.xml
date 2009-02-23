@@ -51,10 +51,6 @@
       </plugin>
     </plugins>
   </build>
-  
-  <properties>
-    <lenya.home>${basedir}/..</lenya.home>
-  </properties>
       
   <dependencies>
     

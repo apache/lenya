@@ -18,17 +18,6 @@
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
-  <map:resources>
-    <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
-      <map:transform type="proxy-xhtml"/>
-      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
-    </map:resource>
-  </map:resources>
-  
   <map:pipelines>
     
     <map:pipeline internal-only="true">
@@ -49,7 +38,7 @@
       
       <map:match pattern="ac.login" type="usecase">
         <map:generate src="servlet:usecase:/service/usecase/ac.login"/>
-        <map:serialize type="xhtml"/>
+        <map:serialize type="html"/>
       </map:match>
       <map:match pattern="ac.logout" type="usecase">
         <map:mount check-reload="yes" reload-method="synchron" src="{fallback:lenya/modules/usecase/usecase.xmap}" uri-prefix=""/>

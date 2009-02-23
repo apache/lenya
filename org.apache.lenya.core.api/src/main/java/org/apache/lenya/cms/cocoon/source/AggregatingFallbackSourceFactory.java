@@ -30,6 +30,7 @@ import org.apache.cocoon.processing.ProcessInfoProvider;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
+import org.apache.lenya.cms.module.Module;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -128,10 +129,10 @@ public class AggregatingFallbackSourceFactory extends FallbackSourceFactory {
             String contextSourceUri = null;
             if (path.startsWith("lenya/modules/")) {
                 final String moduleShortcut = path.split("/")[2];
-                String baseUri = getModuleManager().getBaseURI(moduleShortcut);
+                Module module = (Module) getModules().get(moduleShortcut);
                 final String modulePath = path.substring(("lenya/modules/" + moduleShortcut)
                         .length());
-                contextSourceUri = baseUri + modulePath;
+                contextSourceUri = module.getBaseUri() + modulePath;
             } else {
                 contextSourceUri = "context://" + path;
             }

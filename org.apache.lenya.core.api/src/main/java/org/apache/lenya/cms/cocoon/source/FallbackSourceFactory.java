@@ -33,7 +33,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.excalibur.store.impl.MRUMemoryStore;
-import org.apache.lenya.cms.module.ModuleManager;
+import org.apache.lenya.cms.module.Module;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
@@ -62,7 +62,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     private SourceResolver resolver;
     private Repository repository;
     private PublicationTemplateManager templateManager;
-    private ModuleManager moduleManager;
+    private Map modules;
 
     /**
      * Configure the spring bean accordingly if you want to use a store.
@@ -97,12 +97,12 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         return this.templateManager;
     }
 
-    public void setModuleManager(ModuleManager mgr) {
-        this.moduleManager = mgr;
+    public void setModules(Map modules) {
+        this.modules = modules;
     }
 
-    protected ModuleManager getModuleManager() {
-        return this.moduleManager;
+    protected Map getModules() {
+        return this.modules;
     }
 
     /**
@@ -205,7 +205,11 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             if (source == null) {
                 if (path.startsWith("lenya/modules/")) {
                     final String moduleShortcut = path.split("/")[2];
-                    String baseUri = this.moduleManager.getBaseURI(moduleShortcut);
+                    if (!this.modules.containsKey(moduleShortcut)) {
+                        throw new RuntimeException("The module '" + moduleShortcut + "' is not registered.");
+                    }
+                    Module module = (Module) this.modules.get(moduleShortcut);
+                    String baseUri = module.getBaseUri();
                     final String modulePath = path.substring(("lenya/modules/" + moduleShortcut)
                             .length());
                     source = this.resolver.resolveURI(baseUri + modulePath);

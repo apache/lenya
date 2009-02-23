@@ -27,7 +27,9 @@
   <bean name="org.apache.lenya.webapp.welcome.block" class="org.apache.cocoon.sitemap.SitemapServlet">
     <servlet:context mount-path="/" context-path="blockcontext:/lenya-welcome-2.2.0-SNAPSHOT/">
       <servlet:connections>
+        <entry key="acusecases" value-ref="org.apache.lenya.core.acusecases.block"/>
         <entry key="gui" value-ref="org.apache.lenya.core.gui.block"/>
+        <entry key="style" value-ref="org.apache.cocoon.samples.style.default.servlet"/>
         <entry key="usecase" value-ref="org.apache.lenya.core.usecase.block"/>
       </servlet:connections>
     </servlet:context>

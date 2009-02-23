@@ -18,9 +18,11 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -37,7 +39,7 @@ import org.apache.commons.configuration.BaseConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.module.ModuleManager;
+import org.apache.lenya.cms.module.Module;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
@@ -65,7 +67,7 @@ public class PropertiesModule extends DefaultsModule implements InputModule {
 	// FIXME Use commons-configuration
     private Configuration globalProperties;
     private SourceResolver sourceResolver;
-    private ModuleManager moduleManager;
+    private Map modules;
 
     protected Repository repository;
 
@@ -165,10 +167,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule {
         merge(this.globalProperties, lenyaProperties);
         
         // get the values from all modules
-        String[] module2src = this.moduleManager.getModuleIds();
-        for (int i = 0; i < module2src.length; i++) {
-            String moduleName = module2src[i];
-            String moduleBaseUri = this.moduleManager.getBaseURI(moduleName);
+        Collection modules = this.modules.values();
+        for (Iterator i = modules.iterator(); i.hasNext(); ) {
+            Module module = (Module) i.next();
+            String moduleBaseUri = module.getBaseUri();
             if (moduleBaseUri != null) {
                 String modulePropsUri = moduleBaseUri + "/" + PROPERTY_FILE_NAME;
                 Configuration moduleProperties = loadXMLPropertiesFromURI(modulePropsUri);
@@ -312,8 +314,8 @@ public class PropertiesModule extends DefaultsModule implements InputModule {
         this.sourceResolver = sourceResolver;
     }
 
-    public void setModuleManager(ModuleManager moduleManager) {
-        this.moduleManager = moduleManager;
+    public void setModules(Map modules) {
+        this.modules = modules;
     }
 
 }

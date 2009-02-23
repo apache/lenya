@@ -15,11 +15,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
-  xmlns="http://www.springframework.org/schema/beans">
-
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:configurator="http://cocoon.apache.org/schema/configurator"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+  http://cocoon.apache.org/schema/configurator http://cocoon.apache.org/schema/configurator/cocoon-configurator-1.0.1.xsd">
+  
   <bean name="org.apache.lenya.cms.publication.Repository"
     class="org.apache.lenya.cms.publication.RepositoryImpl">
     <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
@@ -69,9 +70,6 @@
     <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
     <property name="uuidGenerator" ref="org.apache.lenya.cms.repository.UUIDGenerator"/>
   </bean>
-
-  <bean name="org.apache.lenya.cms.module.ModuleManager"
-    class="org.apache.lenya.cms.module.ModuleManagerImpl"/>
 
   <bean name="org.apache.lenya.cms.repository.SharedItemStore"
     class="org.apache.lenya.cms.repository.SharedItemStoreImpl">

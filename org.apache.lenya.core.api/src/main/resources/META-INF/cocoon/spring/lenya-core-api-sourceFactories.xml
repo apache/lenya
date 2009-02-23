@@ -19,18 +19,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+  
   <bean name="org.apache.excalibur.source.SourceFactory/fallback"
     class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory">
-    <property name="moduleManager" ref="org.apache.lenya.cms.module.ModuleManager"/>
+    <property name="modules" ref="org.apache.lenya.cms.module.Modules"/>
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
     <property name="templateManager" ref="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
   </bean>
+  
   <bean name="org.apache.excalibur.source.SourceFactory/aggregate-fallback"
     class="org.apache.lenya.cms.cocoon.source.AggregatingFallbackSourceFactory">
-    <property name="moduleManager" ref="org.apache.lenya.cms.module.ModuleManager"/>
+    <property name="modules" ref="org.apache.lenya.cms.module.Modules"/>
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
     <property name="templateManager" ref="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"/>
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
   </bean>
+  
 </beans>

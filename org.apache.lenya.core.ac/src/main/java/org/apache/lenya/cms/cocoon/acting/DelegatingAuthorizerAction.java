@@ -80,7 +80,8 @@ public class DelegatingAuthorizerAction extends AccessControlAction implements P
      * <code>HISTORY</code> Name of the session attribute that holds the history
      */
     public static final String HISTORY =
-        DelegatingAuthorizerAction.class.getPackage().getName() + ".History";
+        "org.apache.lenya.cms.cocoon.acting.History";
+//        DelegatingAuthorizerAction.class.getPackage().getName() + ".History";
 
     /**
      * Adds the current URL to the history.

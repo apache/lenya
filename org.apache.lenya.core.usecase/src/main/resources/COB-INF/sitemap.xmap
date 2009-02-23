@@ -27,10 +27,6 @@
   <map:components>
     <map:transformers default="xslt">    
       <map:transformer name="browser-update" src="org.apache.cocoon.ajax.BrowserUpdateTransformer"/>
-      <map:transformer name="usecase-proxy" logger="lenya.sitemap.transformer.proxy"
-        src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
-        <transform namespace="http://apache.org/lenya/proxy/1.0" element="url" attribute="href"/>
-      </map:transformer>
     </map:transformers>
     <map:selectors>
       <map:selector name="ajax-request" src="org.apache.cocoon.ajax.AjaxRequestSelector"/>
@@ -53,14 +49,18 @@
         executeUsecase() flowscript has completed and issued a redirect,
         which is matched here.
       -->
-      <map:match pattern="usecases-view/*/**">
+      <map:match pattern="usecases-view/*">
         
-        <map:generate type="jx" src="fallback://lenya/{2}"/>
+        <map:generate type="jx" src="{flow-attr:usecase/view/viewURI}"/>
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:gui:/service/style-cms-page"/>
+        </map:serialize>
+        
         <map:transform type="browser-update"/>
         <map:transform type="cinclude"/>
         <map:transform type="forms" />
         
-        <map:transform type="usecase-proxy"/>
+        <map:transform type="proxy-usecase"/>
         <map:transform src="xslt/proxyUrl2text.xsl"/>
         
         <map:transform src="cocoon://lenya-screen.xsl"/>
@@ -115,6 +115,14 @@
       </map:match>
       
     </map:pipeline>
+    
+    <map:handle-errors>
+      <map:generate type="exception"/>
+      <map:transform src="servlet:style:/stylesheets/system/exception2html.xslt">
+        <map:parameter name="realPath" value="{realpath:}"/>
+      </map:transform>
+      <map:serialize type="xml" status-code="200"/>
+    </map:handle-errors>
     
   </map:pipelines>
   

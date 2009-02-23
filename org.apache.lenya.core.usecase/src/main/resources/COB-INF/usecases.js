@@ -18,6 +18,7 @@
 /* $Id$ */
  
 cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
+importClass(org.apache.lenya.cms.usecase.Usecase);
 
 //placeholders for custom flow code:
 var customLoopFlow = undefined;
@@ -35,7 +36,6 @@ function getUsecase(usecaseName) {
     var sourceUrl;
     var usecaseResolver;
     var usecase;
-    try {
         flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
         request = flowHelper.getRequest(cocoon);
         sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
@@ -43,6 +43,7 @@ function getUsecase(usecaseName) {
         usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
         usecase.setSourceURL(sourceUrl);
         usecase.setName(usecaseName);
+    try {
     } catch (exception) {
         log("error", "Error in getUsecase(): " + exception);
         log("debug", "usecaseName = " + usecaseName);
@@ -84,6 +85,7 @@ function releaseUsecase(usecase) {
  */
 function passRequestParameters(usecase) {
     var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
+    var request = flowHelper.getRequest(cocoon);
     var names = cocoon.request.getParameterNames();
     while (names.hasMoreElements()) {
         var name = names.nextElement();
@@ -97,7 +99,7 @@ function passRequestParameters(usecase) {
             var vector = new Packages.java.util.Vector();
             if (string.getClass().isInstance(value) || vector.getClass().isInstance(value)) {
                 // use getParameters() to avoid character encoding problems
-                var values = flowHelper.getRequest(cocoon).getParameterValues(name);
+                var values = request.getParameterValues(name);
                 if (values.length < 2) {
                     usecase.setParameter(name, values[0]);
                 } else {
@@ -171,24 +173,21 @@ function log(level, message, usecaseName) {
 
 /**
  * The Loop stage of the flow, in which a view is displayed. 
- * <em>Note:</em> All Avalon components should be released before calling
- * this function! This means that you cannot hold a usecase object,
- * hence the proxy.
  * 
  * @param view, a org.apache.lenya.cms.usecase.UsecaseView object
- * @param proxy, a org.apache.lenya.cms.usecase.UsecaseProxy object
+ * @param usecase, a org.apache.lenya.cms.usecase.Usecase object
  * @param generic, a generic Javascript object for custom flow code to preserve state information (currently not used by the default code)
  * @return A WebContinuation object or null if no continuation was created.
  *
  * This function invokes customLoopFlow if it exists.
  * Otherwise it falls back to defaultLoopFlow.
  */
-function loopFlow(view, proxy, generic) {
+function loopFlow(view, usecase, generic) {
     if (customLoopFlow != undefined) {
-        log("info", "Using customLoopFlow function", proxy.getName());
-        return customLoopFlow(view, proxy, generic);
+        log("info", "Using customLoopFlow function", usecase.getName());
+        return customLoopFlow(view, usecase, generic);
     } else{
-        return defaultLoopFlow(view, proxy);
+        return defaultLoopFlow(view, usecase);
     }
 }
 
@@ -217,7 +216,7 @@ function submitFlow(usecase, generic) {
 /**
  * @see loopFlow.
  */
-function defaultLoopFlow(view, proxy) {
+function defaultLoopFlow(view, usecase) {
     var viewUri = view.getViewURI();
     // we used to allow a cocoon:/ and cocoon:// prefix (which sendPageXXX does not handle),
     // but it is now deprecated!
@@ -229,16 +228,14 @@ function defaultLoopFlow(view, proxy) {
     if (! viewUri.startsWith("/")) {
         // a local URI must be handled by usecase.xmap, which assumes a prefix "usecases-view/[menu|nomenu]/
         // that determines whether the menu is to be displayed. this mechanism is used by most lenya core usecases.
-        viewUri = "usecases-view/" 
-            + (view.showMenu() ? "menu" : "nomenu")
-            + "/" + viewUri;
+        viewUri = "usecases-view/" + (view.showMenu() ? "menu" : "nomenu");
     }
     if (view.createContinuation()) {
         log("debug", "Creating view and continuation, calling Cocoon with viewUri = [" + viewUri + "]");
-        return cocoon.sendPageAndWait(viewUri, { "usecase" : proxy });
+        return cocoon.sendPageAndWait(viewUri, { "usecase" : usecase });
     } else {
         log("debug", "Creating view without continuation (!), calling Cocoon with viewUri = [" + viewUri + "]");
-        cocoon.sendPage(viewUri, { "usecase" : proxy});
+        cocoon.sendPage(viewUri, { "usecase" : usecase});
         cocoon.exit(); // we're done.
         return null;
     }
@@ -250,12 +247,12 @@ function defaultLoopFlow(view, proxy) {
 function defaultSubmitFlow(usecase) {
     var preconditionsOk = true;
     if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")=="ok") {
-        if (usecase.isOptimistic()) {
+        if (usecase.getTransactionPolicy().equals(Usecase.TRANSACTION_POLICY_OPTIMISTIC)) {
             usecase.checkPreconditions();
             preconditionsOk = !usecase.hasErrors();
         }
         if (preconditionsOk) {
-            if (usecase.isOptimistic()) {
+            if (usecase.getTransactionPolicy().equals(Usecase.TRANSACTION_POLICY_OPTIMISTIC)) {
                 usecase.lockInvolvedObjects();
             }
             usecase.checkExecutionConditions();
@@ -333,16 +330,11 @@ function redirect(targetUrl) {
  * Uses request parameter "lenya.usecase" to determine what
  * usecase to execute.
  * 
- * Since "usecase" and "flowHelper" are avalon components, 
- * they must be released before a continuation is created.
- * In order to preserve state information, a "proxy" object
- * is used.
  */
 function executeUsecase() {
 
     var usecaseName;
     var usecase; // the Usecase object
-    var proxy; // a UsecaseProxy to make the usecase state persistent across continuations
     var view; // the UsecaseView object that belongs to our usecase.
     var state; // the state of the usecase ("continue"|"success"|"cancel");
     var targetUrl; // URL to redirect to after completion.
@@ -355,15 +347,13 @@ function executeUsecase() {
         passRequestParameters(usecase);
         usecase.checkPreconditions();
         preconditionsOK = !usecase.hasErrors();
-        if (preconditionsOK && !usecase.isOptimistic()) {
+        if (preconditionsOK && !usecase.getTransactionPolicy().equals(Usecase.TRANSACTION_POLICY_OPTIMISTIC)) {
             usecase.lockInvolvedObjects();
         }
-        // create proxy object to save usecase state
         view = usecase.getView();
         if (view) {
             usecase.setupView();
         }
-        proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
         log("debug", "Successfully prepared usecase.", usecaseName);
     try {
     } catch (exception) {
@@ -381,14 +371,13 @@ function executeUsecase() {
         var continuation = null;
         do {
             // show the view:
+                continuation = loopFlow(view, usecase, generic); //usecase must be released here!
             try {
-                continuation = loopFlow(view, proxy, generic); //usecase must be released here!
             } catch (exception) {
                 // if something went wrong, try and rollback the usecase:
                 log("error", "Exception during loopFlow(): " + exception, usecaseName);
                 try {
                     usecase = getUsecase(usecaseName);
-                    proxy.setup(usecase);
                     usecase.cancel();
                     throw exception;
                 } finally {
@@ -399,12 +388,8 @@ function executeUsecase() {
                 log("debug", "Advancing in usecase.", usecaseName);
                 // restore the usecase state and handle the user input:
                 usecase = getUsecase(usecaseName);
-                proxy.setup(usecase);
                 passRequestParameters(usecase);
                 state = submitFlow(usecase, generic);
-                // create a new proxy with the updated usecase state
-                proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
-                releaseUsecase(usecase);
             }
         } while (state == "continue");
         if (continuation != null) {
@@ -414,16 +399,15 @@ function executeUsecase() {
     // executeFlow().
     } else {
         usecase = getUsecase(usecaseName);
-        proxy.setup(usecase);
         passRequestParameters(usecase);
         
-        if (usecase.isOptimistic()) {
+        if (usecase.getTransactionPolicy().equals(Usecase.TRANSACTION_POLICY_OPTIMISTIC)) {
             usecase.checkPreconditions();
             preconditionsOK = !usecase.hasErrors();
         }
         
         if (preconditionsOK) {
-            if (usecase.isOptimistic()) {
+            if (usecase.getTransactionPolicy().equals(Usecase.TRANSACTION_POLICY_OPTIMISTIC)) {
                 usecase.lockInvolvedObjects();
             }
             usecase.checkExecutionConditions();
@@ -435,8 +419,7 @@ function executeUsecase() {
         }
         releaseUsecase(usecase);
         if (hasErrors) {
-            proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
-            cocoon.sendPage("usecases-view/nomenu/modules/usecase/templates/error.jx", { "usecase" : proxy});
+            cocoon.sendPage("usecases-view/nomenu/modules/usecase/templates/error.jx", { "usecase" : usecase });
             return;
         }
     }

@@ -18,27 +18,13 @@
 package org.apache.lenya.cms.module;
 
 /**
- * Module manager.
+ * A Lenya module.
  */
-public interface ModuleManager {
-
-    /**
-     * The Avalon role.
-     */
-    String ROLE = ModuleManager.class.getName();
+public interface Module {
     
     /**
-     * Returns the base URI of a module directory.
-     * @param moduleShortcut The module shortcut.
-     * @return A string.
-     * @throws ModuleException if there is no module for this shortcut.
+     * @return The base URI to resolve resources.
      */
-    String getBaseURI(String moduleShortcut) throws ModuleException;
+    String getBaseUri();
 
-    /**
-     * Returns a listing of all module id (shortcuts)
-     * @return Map
-     */
-    String[] getModuleIds();
-    
 }
