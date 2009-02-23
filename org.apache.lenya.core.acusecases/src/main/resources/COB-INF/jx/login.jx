@@ -89,7 +89,7 @@
 
       <div class="lenya-box-body">
         <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
-        <form name="login" id="login" method="post" action="?lenya.continuation=${continuation.id}&amp;lenya.usecase=${request.getParameter('lenya.usecase')}">
+        <form name="login" id="login" method="post" action="?lenya.continuation=${continuation.id}&amp;lenya.usecase=${usecase.getName()}">
           <table class="lenya-table-noborder">
             <tr>
               <td><label for="name"><i18n:text>Username</i18n:text>: </label></td>

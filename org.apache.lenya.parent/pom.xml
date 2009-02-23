@@ -364,11 +364,13 @@
         <artifactId>avalon-framework-impl</artifactId>
         <version>${avalon.version}</version>
       </dependency>
+      <!--
       <dependency>
         <groupId>batik</groupId>
         <artifactId>batik-util</artifactId>
         <version>1.6-1</version>
       </dependency>
+      -->
       <dependency>
         <groupId>xmldb</groupId>
         <artifactId>xmldb-common</artifactId>

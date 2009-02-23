@@ -16,17 +16,22 @@
   <packaging>jar</packaging>
   <name>Apache Lenya Module SVG</name>
   <dependencies>
+    
+    <!-- Cocoon -->
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-batik-impl</artifactId>
+    </dependency>
+    
+    <!-- Lenya -->
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>batik</groupId>
-      <artifactId>batik-util</artifactId>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-metadata</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.cocoon</groupId>
-      <artifactId>cocoon-batik-impl</artifactId>
-    </dependency>
+    
   </dependencies>
 </project>

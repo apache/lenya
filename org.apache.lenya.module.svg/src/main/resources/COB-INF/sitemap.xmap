@@ -27,7 +27,9 @@
     
     <map:pipeline>
       <!-- enable client side caching of resources -->
+      <!-- FIXME: declaration missing?
       <map:parameter name="expires" value="{global:pipeline-expiration}"/>
+      -->
       
       <!--
         Views for shape flowscripts.

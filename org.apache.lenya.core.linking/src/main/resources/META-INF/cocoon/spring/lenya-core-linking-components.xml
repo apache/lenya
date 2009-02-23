@@ -28,6 +28,8 @@
   </bean>
   <bean name="org.apache.cocoon.components.modules.input.InputModule/uuid2url"
     class="org.apache.lenya.cms.cocoon.components.modules.input.UuidToUrlModule"/>
+  <bean name="org.apache.cocoon.components.modules.input.InputModule/link"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.LinkingModule"/>
   
   <!-- Lenya can rewrite the links to cater to special proxy setups.
     Make sure to update the proxy configuration in publication.xml as well.
