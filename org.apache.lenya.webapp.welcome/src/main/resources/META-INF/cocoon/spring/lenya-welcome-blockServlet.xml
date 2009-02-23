@@ -25,7 +25,7 @@
                            http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
   <bean name="org.apache.lenya.webapp.welcome.block" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="/" context-path="blockcontext:/lenya-welcome-2.2.0-SNAPSHOT/">
+    <servlet:context mount-path="/" context-path="blockcontext:/lenya-webapp-welcome-2.2.0-SNAPSHOT/">
       <servlet:connections>
         <entry key="acusecases" value-ref="org.apache.lenya.core.acusecases.block"/>
         <entry key="gui" value-ref="org.apache.lenya.core.gui.block"/>

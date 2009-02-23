@@ -25,6 +25,6 @@
                            http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
   <bean name="org.apache.lenya.module.prettyprinting.block" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="/prettyprinting" context-path="blockcontext:/lenya-module-prettyprinting"/>
+    <servlet:context mount-path="/prettyprinting" context-path="blockcontext:/lenya-module-prettyprinting-2.2.0-SNAPSHOT/"/>
   </bean>
 </beans>
