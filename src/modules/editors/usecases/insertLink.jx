@@ -42,7 +42,7 @@
       PUBLICATION_ID = "${doc.getPublication().getId()}";
       CHOSEN_LANGUAGE = "${doc.getLanguage()}";
       DEFAULT_LANGUAGE = "${doc.getPublication().getDefaultLanguage()}";
-      IMAGE_PATH = "/lenya/images/tree/";
+      IMAGE_PATH = '<proxy:url href="/lenya/images/tree/"/>';
       CUT_DOCUMENT_ID = '';
       ALL_AREAS = "authoring";
       PIPELINE_PATH = 'modules/sitetree/sitetree-fragment.xml';
