@@ -27,14 +27,14 @@ import org.apache.lenya.util.Assert;
  * A notification message.
  */
 public class Message {
-    
+
     private Text subject;
     private Text body;
 
     private Identifiable sender;
     private Identifiable[] recipients;
     private Date time;
-    
+
     /**
      * @param subject The subject.
      * @param body The body.
@@ -61,7 +61,7 @@ public class Message {
      * @param bodyParams The body parameters.
      * @param sender The sender.
      * @param recipients The recipients.
-     * @deprecated Use {@link #Message(Text, Text, Identifiable, Identifiable[])}Êinstead.
+     * @deprecated Use {@link #Message(Text, Text, Identifiable, Identifiable[])} instead.
      */
     public Message(String subject, String[] subjectParams, String body, String[] bodyParams,
             Identifiable sender, Identifiable[] recipients) {
@@ -130,14 +130,14 @@ public class Message {
     public String[] getSubjectParameters() {
         return convert(this.subject.getParameters());
     }
-    
+
     /**
      * @return The sender.
      */
     public Identifiable getSender() {
         return this.sender;
     }
-    
+
     /**
      * @return The recipients.
      */
@@ -146,21 +146,21 @@ public class Message {
         return (Identifiable[]) Arrays.asList(this.recipients).toArray(
                 new Identifiable[this.recipients.length]);
     }
-    
+
     /**
      * @return The time when the message was sent.
      */
     public Date getTime() {
         return (Date)this.time.clone();
     }
-    
+
     /**
      * @return The message subject.
      */
     public Text getSubjectText() {
         return this.subject;
     }
-    
+
     /**
      * @return The message body.
      */
