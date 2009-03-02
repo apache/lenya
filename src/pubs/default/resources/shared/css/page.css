@@ -202,27 +202,27 @@ td.tab-post-separator {
 .menuitem-1, .menuitem-selected-1 {
   margin: 10px 0px 0px 0px;
   padding: 2px 5px 2px 30px;
-  background: url('/default/live/images/bullet.png') 16px .4em no-repeat;
+  background: url('../images/bullet.png') 16px .4em no-repeat;
 }
 
 .menuitem-2, .menuitem-selected-2 {
   padding: 2px 5px 2px 50px;
-  background: url('/default/live/images/bullet.png') 36px .4em no-repeat;
+  background: url('../images/bullet.png') 36px .4em no-repeat;
 }
 
 .menuitem-3, .menuitem-selected-3 {
   padding: 2px 5px 2px 70px;
-  background: url('/default/live/images/bullet.png') 56px .4em no-repeat;
+  background: url('../images/bullet.png') 56px .4em no-repeat;
 }
   
 .menuitem-4, .menuitem-selected-4 {
   padding: 2px 5px 2px 90px;
-  background: url('/default/live/images/bullet.png') 76px .4em no-repeat;
+  background: url('../images/bullet.png') 76px .4em no-repeat;
 }
   
 .menuitem-5, .menuitem-selected-5 {
   padding: 2px 5px 2px 110px;
-  background: url('/default/live/images/bullet.png') 96px .4em no-repeat;
+  background: url('../images/bullet.png') 96px .4em no-repeat;
 }
   
 
