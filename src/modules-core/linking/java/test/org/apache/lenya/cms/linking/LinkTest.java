@@ -19,10 +19,11 @@ package org.apache.lenya.cms.linking;
 
 import java.util.Arrays;
 
+import org.apache.excalibur.source.SourceNotFoundException;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteStructure;
 
@@ -75,6 +76,10 @@ public class LinkTest extends AbstractAccessControlTest {
 
     }
 
+    protected String getWebappUrl() {
+        return "/default/authoring/index.html";
+    }
+
     /**
      * Test links across publications.
      * @throws Exception
@@ -98,9 +103,10 @@ public class LinkTest extends AbstractAccessControlTest {
         final String queryString = "?format=xhtml";
         final String baseLink = "lenya-document:" + target.getUUID() + ",lang="
                 + target.getLanguage();
-        final String relativeLink = baseLink + queryString;
-        final String absoluteLink = relativeLink + ",pub=test" + queryString;
+        final String relativeLink = baseLink;
+        final String absoluteLink = relativeLink + ",pub=test";
 
+        SourceResolver sourceResolver = null;
         LinkResolver resolver = null;
         try {
             resolver = (LinkResolver) getManager().lookup(LinkResolver.ROLE);
@@ -108,9 +114,27 @@ public class LinkTest extends AbstractAccessControlTest {
             assertFalse(resolver.resolve(source, relativeLink).exists());
             assertTrue(resolver.resolve(source, absoluteLink).exists());
 
+            sourceResolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
+
+            String relativeUri = relativeLink + queryString;
+            String absoluteUri = absoluteLink + queryString;
+
+            Exception e = null;
+            try {
+                sourceResolver.resolveURI(relativeUri);
+            } catch (SourceNotFoundException ex) {
+                e = ex;
+            }
+            assertNotNull("SourceNotFoundException thrown", e);
+            
+            sourceResolver.resolveURI(absoluteUri);
+
         } finally {
             if (resolver != null) {
                 getManager().release(resolver);
+            }
+            if (sourceResolver != null) {
+                getManager().release(sourceResolver);
             }
         }
 
