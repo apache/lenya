@@ -22,6 +22,7 @@ import java.util.Arrays;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteStructure;
 
@@ -29,28 +30,28 @@ import org.apache.lenya.cms.site.SiteStructure;
  * Test for link functionality.
  */
 public class LinkTest extends AbstractAccessControlTest {
-    
+
     /**
      * Link test.
      * @throws Exception
      */
     public void testLinks() throws Exception {
-        
+
         Publication pub = getPublication("test");
         Area area = pub.getArea("authoring");
         SiteStructure site = area.getSite();
-        
+
         Document source = site.getNode("/index").getLink("en").getDocument();
         Document target = site.getNode("/tutorial").getLink("en").getDocument();
-        
+
         LinkManager linkManager = null;
         LinkResolver resolver = null;
         try {
             linkManager = (LinkManager) getManager().lookup(LinkManager.ROLE);
             resolver = (LinkResolver) getManager().lookup(LinkResolver.ROLE);
-            
+
             Link[] links = linkManager.getLinksFrom(source);
-            
+
             boolean matched = false;
             for (int i = 0; i < links.length; i++) {
                 LinkTarget linkTarget = resolver.resolve(source, links[i].getUri());
@@ -58,13 +59,12 @@ public class LinkTest extends AbstractAccessControlTest {
                     matched = true;
                 }
             }
-            
+
             assertTrue(matched);
-            
+
             Document[] references = linkManager.getReferencingDocuments(target);
             assertTrue(Arrays.asList(references).contains(source));
-        }
-        finally {
+        } finally {
             if (linkManager != null) {
                 getManager().release(linkManager);
             }
@@ -72,7 +72,45 @@ public class LinkTest extends AbstractAccessControlTest {
                 getManager().release(resolver);
             }
         }
-        
+
+    }
+
+    /**
+     * Test links across publications.
+     * @throws Exception
+     */
+    public void testInterPublicationLinks() throws Exception {
+
+        final Publication defaultPub = getPublication("default");
+        final Document[] docs = defaultPub.getArea(Publication.AUTHORING_AREA).getDocuments();
+        if (docs.length == 0) {
+            getLogger().warn("To run this test, the default publication has to contain documents.");
+        }
+
+        final Document source = docs[0];
+
+        final Publication pub = getPublication("test");
+        final Area area = pub.getArea("authoring");
+        final SiteStructure site = area.getSite();
+
+        final Document target = site.getNode("/index").getLink("en").getDocument();
+        final String relativeLink = "lenya-document:" + target.getUUID() + ",lang="
+                + target.getLanguage();
+        final String absoluteLink = relativeLink + ",pub=test";
+
+        LinkResolver resolver = null;
+        try {
+            resolver = (LinkResolver) getManager().lookup(LinkResolver.ROLE);
+
+            assertFalse(resolver.resolve(source, relativeLink).exists());
+            assertTrue(resolver.resolve(source, absoluteLink).exists());
+
+        } finally {
+            if (resolver != null) {
+                getManager().release(resolver);
+            }
+        }
+
     }
 
 }
