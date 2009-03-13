@@ -95,9 +95,11 @@ public class LinkTest extends AbstractAccessControlTest {
         final SiteStructure site = area.getSite();
 
         final Document target = site.getNode("/index").getLink("en").getDocument();
-        final String relativeLink = "lenya-document:" + target.getUUID() + ",lang="
+        final String queryString = "?format=xhtml";
+        final String baseLink = "lenya-document:" + target.getUUID() + ",lang="
                 + target.getLanguage();
-        final String absoluteLink = relativeLink + ",pub=test";
+        final String relativeLink = baseLink + queryString;
+        final String absoluteLink = relativeLink + ",pub=test" + queryString;
 
         LinkResolver resolver = null;
         try {
