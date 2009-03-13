@@ -85,6 +85,7 @@ public class LinkTest extends AbstractAccessControlTest {
         final Document[] docs = defaultPub.getArea(Publication.AUTHORING_AREA).getDocuments();
         if (docs.length == 0) {
             getLogger().warn("To run this test, the default publication has to contain documents.");
+            return;
         }
 
         final Document source = docs[0];
