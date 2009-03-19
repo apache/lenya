@@ -18,7 +18,7 @@
 
 <project name="lenya_webtest_macros">
 
-  <import file="${webtest.home}/lib/taskdef.xml"/>
+  <import file="${webtest.home}/webtest.xml"/>
 
   <macrodef name="doLogin" description="perform a login to Lenya">
     <attribute name="username"/>
