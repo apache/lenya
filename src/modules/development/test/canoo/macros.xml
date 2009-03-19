@@ -30,7 +30,7 @@
       <invoke url="@{url}"/>
       <ifStep description="login if we are asked for">
         <condition>
-          <verifyTitle text="Login to the Default Publication" />
+          <verifyTitle text="Login to the" />
         </condition>
         <setInputField name="username" value="@{username}"/>
         <setInputField name="password" value="@{password}"/>
