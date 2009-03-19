@@ -24,13 +24,14 @@
     <attribute name="username"/>
     <attribute name="password"/>
     <attribute name="url" default="index.html"/>
+    <attribute name="pubName" default="Default"/>
     <sequential>
 
       <!-- login -->
       <invoke url="@{url}"/>
       <ifStep description="login if we are asked for">
         <condition>
-          <verifyTitle text="Login to the" />
+          <verifyTitle text="Login to the ${pubTitle} Publication" />
         </condition>
         <setInputField name="username" value="@{username}"/>
         <setInputField name="password" value="@{password}"/>
