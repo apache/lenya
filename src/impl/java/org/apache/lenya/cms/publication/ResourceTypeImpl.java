@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -64,6 +65,8 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String ELEMENT_FORMAT = "format";
     protected static final String ELEMENT_EXPIRES = "expires";
     protected static final String ATTRIBUTE_SECONDS = "seconds";
+    protected static final String ELEMENT_SUPPORTS = "supports";
+    protected static final String ELEMENT_MIME_TYPE = "mime-type";
 
     private Schema schema = null;
     private String[] linkAttributeXPaths;
@@ -73,6 +76,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     private long expires = 0;
     private String name;
     private ServiceManager manager;
+    private String[] mimeTypes;
 
     /**
      * A format.
@@ -138,6 +142,16 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             Configuration expiresConf = config.getChild(ELEMENT_EXPIRES, false);
             if (expiresConf != null) {
                 this.expires = expiresConf.getAttributeAsLong(ATTRIBUTE_SECONDS);
+            }
+            
+            Configuration supportsConf = config.getChild(ELEMENT_SUPPORTS, false);
+            if (supportsConf != null) {
+                Configuration[] mimeTypeConfigs = supportsConf.getChildren(ELEMENT_MIME_TYPE);
+                this.mimeTypes = new String[mimeTypeConfigs.length];
+                List types = new ArrayList();
+                for (int i = 0; i < mimeTypeConfigs.length; i++) {
+                    this.mimeTypes[i] = mimeTypeConfigs[i].getValue();
+                }
             }
             
         } catch (Exception e) {
@@ -254,6 +268,10 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     
     public String toString() {
         return getName();
+    }
+
+    public String[] getMimeTypes() {
+        return this.mimeTypes;
     }
     
 }

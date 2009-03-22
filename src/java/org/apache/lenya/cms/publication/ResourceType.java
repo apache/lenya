@@ -107,6 +107,11 @@ public interface ResourceType {
      * @return The URI to get the formatted content at.
      */
     String getFormatURI(String format);
+    
+    /**
+     * @return An array of all MIME types which are accepted by this resource type.
+     */
+    String[] getMimeTypes();
 
     /**
      * A resource type sample.

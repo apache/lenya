@@ -35,6 +35,12 @@
     <format name="downloadLink" uri="cocoon://modules/resource/downloadLink.xml"/>
     <format name="icon" uri="cocoon://modules/resource/icon"/>
     <format name="luceneIndex" uri="cocoon://modules/resource/lucene-index"/>
+    <supports>
+      <mime-type>application/pdf</mime-type>
+      <mime-type>image/gif</mime-type>
+      <mime-type>image/jpeg</mime-type>
+      <mime-type>image/png</mime-type>
+    </supports>
   </component-instance>
 
 </xconf>
