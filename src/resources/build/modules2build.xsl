@@ -424,7 +424,9 @@
     <available file="{$src}/test/canoo/test.xml" property="canoo.module.{$id}"/>
     
     <target name="canoo-module-{$id}" if="canoo.module.{$id}">
-      <ant dir="{$src}/test/canoo" antfile="test.xml" inheritall="true"/>
+      <ant dir="{$src}/test/canoo" antfile="test.xml" inheritall="true">
+        <property name="moduleDir" value="{$src}"/>
+      </ant>
     </target>
       
   </xsl:template>
