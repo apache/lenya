@@ -57,6 +57,21 @@
     </map:pipeline>
  
     <!-- =================================================================== -->
+    <!-- Usecases that are served by modules -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      <map:match type="usecase" pattern="*.*">
+        <map:select type="resource-exists">
+          <map:when test="fallback://lenya/modules/{1}/sitemap.xmap">
+            <map:mount pass-through="true" uri-prefix="" src="fallback://lenya/modules/{1}/sitemap.xmap"
+              check-reload="yes" reload-method="synchron"/>
+          </map:when>
+        </map:select>
+      </map:match>
+    </map:pipeline>
+    
+    <!-- =================================================================== -->
     <!-- Notification Pipelines -->
     <!-- =================================================================== -->
     
