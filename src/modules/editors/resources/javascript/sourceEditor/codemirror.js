@@ -17,6 +17,11 @@
 
 var editor;
 
+function isBrowser(name){  
+  var agent = navigator.userAgent.toLowerCase();  
+  return agent.indexOf(name.toLowerCase()) > -1;  
+}  
+
 function insertEditor() {
     editor = CodeMirror.fromTextArea('editorContent', {
         path: WEBAPP_BASE_URI + "modules/editors/codemirror/0.60/js/",
@@ -28,10 +33,11 @@ function insertEditor() {
 }
 
 function saveContent() {
-    // Firefox
-    document.forms.oneform.content.innerHTML = editor.getCode();
-    // Safari
-    document.forms.oneform.content.value = editor.getCode();
+    if (isBrowser("Firefox") || isBrowser("MSIE")) {
+      document.forms.oneform.content.value = editor.getCode();
+    } else {
+      document.forms.oneform.content.innerHTML = editor.getCode();
+    }
     
     document.getElementById("save1").disabled = null;
     document.getElementById("save2").disabled = null;
