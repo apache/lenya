@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: basic-table.rng 42702 2004-03-13 12:34:18Z gregor $ -->
+    
+<!-- Basic Tables Module -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<define name="table">
+  <element name="table">
+    <ref name="table.attlist"/>
+    <optional>
+      <ref name="caption"/>
+    </optional>
+    <oneOrMore>
+      <ref name="tr"/>
+    </oneOrMore>
+  </element>
+</define>
+
+<define name="table.attlist">
+  <ref name="Common.attrib"/>
+  <optional>
+    <attribute name="summary">
+      <ref name="Text.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="caption">
+  <element name="caption">
+    <ref name="caption.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="caption.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="tr">
+  <element name="tr">
+    <ref name="tr.attlist"/>
+    <oneOrMore>
+      <choice>
+        <ref name="th"/>
+        <ref name="td"/>
+      </choice>
+    </oneOrMore>
+  </element>
+</define>
+
+<define name="tr.attlist">
+  <ref name="Common.attrib"/>
+  <ref name="CellHAlign.attrib"/>
+  <ref name="CellVAlign.attrib"/>
+</define>
+
+<define name="th">
+  <element name="th">
+    <ref name="th.attlist"/>
+    <ref name="Flow.model"/>
+  </element>
+</define>
+
+<define name="th.attlist">
+  <ref name="Cell.attrib"/>
+</define>
+
+<define name="td">
+  <element name="td">
+    <ref name="td.attlist"/>
+    <ref name="Flow.model"/>
+  </element>
+</define>
+
+<define name="td.attlist">
+  <ref name="Cell.attrib"/>
+</define>
+
+<define name="Cell.attrib">
+  <ref name="Common.attrib"/>
+  <optional>
+    <attribute name="abbr">
+      <ref name="Text.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="axis"/>
+  </optional>
+  <optional>
+    <attribute name="headers">
+      <ref name="IDREFS.datatype"/>
+    </attribute>
+  </optional>
+  <ref name="scope.attrib"/>
+  <optional>
+    <attribute name="rowspan">
+      <ref name="Number.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="colspan">
+      <ref name="Number.datatype"/>
+    </attribute>
+  </optional>
+  <ref name="CellHAlign.attrib"/>
+  <ref name="CellVAlign.attrib"/>
+</define>
+
+<define name="CellHAlign.attrib">
+  <optional>
+    <attribute name="align">
+      <choice>
+	<value>left</value>
+	<value>center</value>
+	<value>right</value>
+      </choice>
+    </attribute>
+  </optional>
+</define>
+
+<define name="CellVAlign.attrib">
+  <optional>
+    <attribute name="valign">
+      <choice>
+	<value>top</value>
+	<value>middle</value>
+	<value>bottom</value>
+      </choice>
+    </attribute>
+  </optional>
+</define>
+
+<define name="scope.attrib">
+  <optional>
+    <attribute name="scope">
+      <choice>
+	<value>row</value>
+	<value>col</value>
+      </choice>
+    </attribute>
+  </optional>
+</define>
+
+<define name="Block.class" combine="choice">
+  <ref name="table"/>
+</define>
+<!-- supporting tables made by kupu  -->
+<define name="Inline.class" combine="choice">
+  <ref name="table"/>
+</define>
+
+
+</grammar>
