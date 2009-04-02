@@ -158,6 +158,12 @@
       <jing rngfile="{$module-schema}" file="{$src}{$configFile}"/>
     </target>
     
+    <available file="{$src}/build.xml" property="custombuild.module.{$id}"/>
+    <target name="custombuild-module-{$id}" if="custombuild.module.{$id}">
+      <echo>Invoking custom build process for module '<xsl:value-of select="$id"/>'</echo>
+      <ant dir="{$src}" antfile="{$src}/build.xml"/>
+    </target>
+    
     <xsl:text>
       
     </xsl:text>
@@ -292,7 +298,7 @@
     </xsl:variable>
     
     <target name="deploy-module-{$id}"
-      depends="{$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+      depends="{$dependencyList} validate-module-{$id}, custombuild-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
     
     <!-- ============================================================ -->
     <!-- Javadocs -->
