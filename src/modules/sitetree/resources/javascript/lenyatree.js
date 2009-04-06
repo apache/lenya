@@ -171,7 +171,15 @@ LenyaTree.prototype.init = function(id) {
 };
 
 LenyaTree.prototype.createElement = function(name) {
-    return this.doc.createElementNS("http://www.w3.org/1999/xhtml", name);
+    if (typeof this.doc.createElementNS != 'undefined') {
+        return this.doc.createElementNS('http://www.w3.org/1999/xhtml', name);
+    }
+		if (typeof this.doc.createElement != 'undefined') {
+				return this.doc.createElement(name);
+		}
+		return false;
+
+/*    return this.doc.createElementNS("http://www.w3.org/1999/xhtml", name); */
 };
 
 
