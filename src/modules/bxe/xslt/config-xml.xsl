@@ -26,7 +26,6 @@
 <xsl:param name="BX_xhtmlfile"/>
 <xsl:param name="BX_xslfile"/>
 <xsl:param name="BX_validationfile"/>
-<xsl:param name="css"/>
 <xsl:param name="script"/>
 <xsl:param name="callbackscript"/>
 <xsl:param name="BX_exitdestination"/>
@@ -69,9 +68,7 @@
   <file name="BX_exitdestination"><xsl:value-of select="$BX_exitdestination"/></file>
 </xsl:template>
 
-<xsl:template match="files/css/file">
-  <file><xsl:value-of select="$css"/></file>
-</xsl:template>
+<xsl:template match="files/css/file"/>
 
   <xsl:template match="files/scripts/file[position()=last()]">
     <file><xsl:value-of select="."/></file>

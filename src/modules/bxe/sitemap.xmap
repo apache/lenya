@@ -106,7 +106,6 @@
             -->
             <map:parameter name="BX_xhtmlfile" value="{proxy:/{../1}/{../2}/{../3}.bxe.html}?rendertype=edit"/>
             <map:parameter name="BX_validationfile" value="{proxy:{resource-type:httpSchemaUri}}"/>
-            <map:parameter name="css" value="{proxy:/lenya/css/default.css}"/>
             <!-- The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
               for the checkin while we redirect to the document
             -->
