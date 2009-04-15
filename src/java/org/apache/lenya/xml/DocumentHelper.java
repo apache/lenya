@@ -274,7 +274,7 @@ public class DocumentHelper {
             throws TransformerConfigurationException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.INDENT, "no");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 
         if (documentType != null) {
