@@ -88,6 +88,7 @@
           </map:when>
         </map:select>
         
+        <map:transform type="uuid2url"/>
         <map:transform type="proxy"/>
         <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xhtml"/>
