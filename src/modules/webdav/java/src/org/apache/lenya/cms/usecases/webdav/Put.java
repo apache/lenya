@@ -151,17 +151,13 @@ public class Put extends CreateDocument {
             }
 
             if (!hasErrors()) {
-                try {
-                    DocumentHelper.writeDocument(xmlDoc, doc.getOutputStream());
-                } catch (Exception e) {
-                    addErrorMessage("invalid source xml. Full exception: " + e);
+            	DocumentHelper.writeDocument(xmlDoc, doc.getOutputStream());
+                String event = getParameterAsString(EVENT);
+                if (event != null) {
+                    WorkflowUtil.invoke(this.manager, getSession(), getLogger(), doc, event);
                 }
             }
 
-            String event = getParameterAsString(EVENT);
-            if (event != null) {
-                WorkflowUtil.invoke(this.manager, getSession(), getLogger(), doc, event);
-            }
 
         } finally {
             if (resolver != null) {
