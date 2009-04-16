@@ -99,10 +99,7 @@
                 <div id="main">
                   <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
                   <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
-                  <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
-                  <xsl:if test="xhtml:html">
-                    <xsl:apply-templates select="xhtml:html/xhtml:body/*"/>
-                  </xsl:if>
+                  <xsl:apply-templates select="xhtml:html/xhtml:body"/>
                   <xsl:call-template name="footer"/>
                 </div>
               </td>
@@ -111,6 +108,20 @@
         </div>
       </body>
     </html>
+  </xsl:template>
+  
+  
+  <xsl:template match="xhtml:body">
+    <xsl:choose>
+      <xsl:when test="xhtml:div[@id = 'body']">
+        <xsl:apply-templates select="node()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <div id="body">
+          <xsl:apply-templates select="node()"/>
+        </div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   

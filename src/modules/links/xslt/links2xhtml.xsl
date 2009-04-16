@@ -10,12 +10,14 @@
   <xsl:param name="rendertype" select="''"/>
 
   <xsl:template match="default:links">
-    <div id="body">
-      <h1><xsl:value-of select="default:title"/></h1>
-      <ul>
-        <xsl:apply-templates select="default:link"/>
-      </ul>
-    </div>
+    <html>
+      <body>
+        <h1><xsl:value-of select="default:title"/></h1>
+        <ul>
+          <xsl:apply-templates select="default:link"/>
+        </ul>
+      </body>
+    </html>
   </xsl:template>
 
   <xsl:template match="default:link">

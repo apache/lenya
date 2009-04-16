@@ -28,7 +28,7 @@
     >
 
   <xsl:template match="/">
-    <div id="body">
+    <html>
       <body>
         <h1>CForms/Ajax Example</h1>
         <p>
@@ -37,7 +37,7 @@
         </p>
         <xsl:apply-templates select="data"/>
       </body>
-    </div>
+    </html>
 
  </xsl:template>
 
@@ -46,20 +46,18 @@
   </xsl:template>
 
   <xsl:template match="contacts">
+    <h3>Contacts:</h3>
     <p>
-      <strong>Contacts:</strong>
-      <p>
-        <xsl:choose>
-          <xsl:when test="contact">
-            <ul>
-              <xsl:apply-templates/>
-            </ul>
-           </xsl:when>
-          <xsl:otherwise>
-            <i>No contacts to display.</i>
-          </xsl:otherwise>
-        </xsl:choose>
-      </p>
+      <xsl:choose>
+        <xsl:when test="contact">
+          <ul>
+            <xsl:apply-templates/>
+          </ul>
+         </xsl:when>
+        <xsl:otherwise>
+          <i>No contacts to display.</i>
+        </xsl:otherwise>
+      </xsl:choose>
     </p>
   </xsl:template>
 
