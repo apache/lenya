@@ -57,7 +57,7 @@
               <a id="${language}" class="lenya-tablink-active"><jx:out value="${language}"/></a>
             </jx:when>
             <jx:otherwise>
-              <a id="${language}" class="lenya-tablink" href="${usecase.getSourceURL()}?lenya.usecase=editors.insertLink">
+              <a id="${language}" class="lenya-tablink" href="lenya-document:,lang=${language}?lenya.usecase=editors.insertLink">
                 <jx:out value="${language}"/>
               </a>
             </jx:otherwise>
