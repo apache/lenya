@@ -151,7 +151,7 @@ public class Put extends CreateDocument {
             }
 
             if (!hasErrors()) {
-            	DocumentHelper.writeDocument(xmlDoc, doc.getOutputStream());
+                DocumentHelper.writeDocument(xmlDoc, doc.getOutputStream());
                 String event = getParameterAsString(EVENT);
                 if (event != null) {
                     WorkflowUtil.invoke(this.manager, getSession(), getLogger(), doc, event);
