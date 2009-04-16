@@ -53,25 +53,27 @@
   </xsl:variable>
   
   <xsl:template match="search:results">  
-    <div id="body">
-      <h1><i18n:text>Search</i18n:text></h1>
-      <form class="search-results-form" action="" method="get">
-        <p>
-          <input name="queryString" type="text" style="width: 400px" value="{$queryString}"
-          />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
-        </p>
-        <p>
-          <xsl:call-template name="type">
-            <xsl:with-param name="searchType">documents</xsl:with-param>
-          </xsl:call-template>
-          &#160;&#160;&#160;
-          <xsl:call-template name="type">
-            <xsl:with-param name="searchType">images</xsl:with-param>
-          </xsl:call-template>
-        </p>
-      </form>
-      <xsl:apply-templates select="search:hits"/>
-    </div>
+    <html>
+      <body>
+        <h1><i18n:text>Search</i18n:text></h1>
+        <form class="search-results-form" action="" method="get">
+          <p>
+            <input name="queryString" type="text" style="width: 400px" value="{$queryString}"
+            />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
+          </p>
+          <p>
+            <xsl:call-template name="type">
+              <xsl:with-param name="searchType">documents</xsl:with-param>
+            </xsl:call-template>
+            &#160;&#160;&#160;
+            <xsl:call-template name="type">
+              <xsl:with-param name="searchType">images</xsl:with-param>
+            </xsl:call-template>
+          </p>
+        </form>
+        <xsl:apply-templates select="search:hits"/>
+      </body>
+    </html>
   </xsl:template>
   
   
