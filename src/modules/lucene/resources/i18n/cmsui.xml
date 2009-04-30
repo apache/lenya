@@ -34,7 +34,9 @@
   
   <message key="New Search Page">New Search Page</message>
   <message key="Re-Index Site">Re-Index Site</message>
-  <message key="re-index site?">Do you want to re-index all documents of this publication in the current area?</message>
+  <message key="re-index site?">Do you want to re-index all documents of this publication?</message>
+  <message key="lucene-index-all-areas">all areas</message>
+  <message key="lucene-index-current-area">{0} area</message>
   
   <message key="documents">Documents</message>
   <message key="images">Images</message>

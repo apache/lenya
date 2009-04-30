@@ -35,8 +35,10 @@
   <message key="New Search Page">Neue Suchseite</message>
   <message key="Re-Index Site">Website neu indexieren</message>
   <message key="re-index site?">
-    Wollen Sie alle Dokumente dieser Publikation in der aktuellen Area neu indexieren?
+    Wollen Sie alle Dokumente dieser Publikation neu indexieren?
   </message>
+  <message key="lucene-index-all-areas">Alle Areas</message>
+  <message key="lucene-index-current-area"><xhtml:span style="text-transform: capitalize;">{0}</xhtml:span>-Area</message>
 
   <message key="documents">Dokumente</message>
   <message key="images">Bilder</message>

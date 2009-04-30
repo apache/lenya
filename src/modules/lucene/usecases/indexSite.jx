@@ -37,6 +37,19 @@
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <p>
+        <jx:set var="indexArea" value="${usecase.getParameter('indexArea')}"/>
+        <input id="allAreas" type="radio" name="indexArea" value="all" checked="checked"/>
+        <label for="allAreas"><i18n:text>lucene-index-all-areas</i18n:text></label>
+        <jx:set var="area" value="${usecase.getParameter('area')}"/>
+        <input id="allAreas" type="radio" name="indexArea" value="${area}"/>
+        <label for="allAreas">
+          <i18n:translate>
+            <i18n:text>lucene-index-current-area</i18n:text>
+            <i18n:param>${area}</i18n:param>
+          </i18n:translate>
+        </label>
+      </p>
+      <p>
         <input i18n:attr="value" name="submit" type="submit" value="Submit"/>
         <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
       </p>
