@@ -35,6 +35,10 @@
   <xsl:param name="queryString"/>
   <xsl:param name="type"/>
   
+  <xsl:variable name="start-index" select="/search:results/@start-index"/>
+  <xsl:variable name="page-length" select="/search:results/@page-length"/>
+  <xsl:variable name="query-string" select="/search:results/@query-string"/>
+  
   <xsl:variable name="selectedType">
     <xsl:choose>
       <xsl:when test="$type = 'images' or $type = 'documents'">
@@ -129,42 +133,42 @@
       <p>
         <i18n:text>Pages</i18n:text><xsl:text>: </xsl:text>
   
+        <xsl:variable name="has-previous" select="/search:results/search:navigation/@has-previous"/>
+        <xsl:if test="$has-previous = 'true'">
+          <xsl:variable name="previous-index" select="/search:results/search:navigation/@previous-index"/>
+          <xsl:call-template name="navigation-link">
+            <xsl:with-param name="page-length"><xsl:value-of select="$page-length"/></xsl:with-param>
+            <xsl:with-param name="start-index"><xsl:value-of select="$previous-index"/></xsl:with-param>
+            <xsl:with-param name="link-text">&lt;</xsl:with-param>
+          </xsl:call-template>
+          <xsl:text> </xsl:text>
+        </xsl:if>
+        
         <xsl:for-each select="$pages">
           <xsl:call-template name="navigation-link"> 
-            <xsl:with-param name="query-string" select="/search:results/@query-string"/>
-            <xsl:with-param name="page-length" select="/search:results/@page-length"/>
             <xsl:with-param name="start-index" select="@start-index"/>
             <xsl:with-param name="link-text" select="position()"/>
+            <xsl:with-param name="isCurrent" select="@start-index = $start-index"/>
           </xsl:call-template>
         </xsl:for-each>
         
-        <xsl:call-template name="navigation-paging-link">
-          <xsl:with-param name="query-string" select="/search:results/@query-string"/>
-          <xsl:with-param name="page-length" select="/search:results/@page-length"/>
-          <xsl:with-param name="has-previous" select="/search:results/search:navigation/@has-previous"/>
-          <xsl:with-param name="has-next" select="/search:results/search:navigation/@has-next"/>
-          <xsl:with-param name="previous-index" select="/search:results/search:navigation/@previous-index"/>
-          <xsl:with-param name="next-index" select="/search:results/search:navigation/@next-index"/>
-        </xsl:call-template>
+        <xsl:variable name="has-next" select="/search:results/search:navigation/@has-next"/>
+        <xsl:if test="$has-next = 'true'">
+          <xsl:text> </xsl:text>
+          <xsl:variable name="next-index" select="/search:results/search:navigation/@next-index"/>
+          <a href="?{$usecaseParam}startIndex={$next-index}&amp;queryString={$queryString}&amp;pageLength={$page-length}&amp;type={$selectedType}">
+            <xsl:text>&gt;</xsl:text>
+          </a>
+        </xsl:if>
+        
       </p>
     </xsl:if>
     
   </xsl:template>
 
-  <xsl:template match="search:navigation">
-    <!--
-    <p>
-    <xsl:call-template name="navigation-paging-form">
-      <xsl:with-param name="query-string"><xsl:value-of select="/search:results/@query-string"/></xsl:with-param>
-      <xsl:with-param name="page-length"><xsl:value-of select="/search:results/@page-length"/></xsl:with-param>
-      <xsl:with-param name="has-previous"><xsl:value-of select="@has-previous"/></xsl:with-param>
-      <xsl:with-param name="has-next"><xsl:value-of select="@has-next"/></xsl:with-param>
-      <xsl:with-param name="previous-index"><xsl:value-of select="@previous-index"/></xsl:with-param>
-      <xsl:with-param name="next-index"><xsl:value-of select="@next-index"/></xsl:with-param>
-    </xsl:call-template>
-    </p>
-    -->
-  </xsl:template>
+
+  <xsl:template match="search:navigation"/>
+  
   
   
   <xsl:template match="search:hit" mode="image">
@@ -204,72 +208,25 @@
   </xsl:template>
   
 
-  <xsl:template name="navigation-paging-form">
-    <xsl:param name="page-length"/>
-    <xsl:param name="has-previous"/>
-    <xsl:param name="has-next"/>
-    <xsl:param name="previous-index"/>
-    <xsl:param name="next-index"/>
-
-    <xsl:if test="$has-previous = 'true'">
-      <form action="" id="form-previous">
-        <xsl:if test="$lenya.usecase != ''">
-          <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
-        </xsl:if>
-        <input type="hidden" name="startIndex" value="{$previous-index}"/>
-        <input type="hidden" name="queryString" value="{$queryString}"/>
-        <input type="hidden" name="pageLength" value="{$page-length}"/>
-        <input type="submit" name="previous" value="Previous" i18n:attr="value"/>
-      </form>
-    </xsl:if>
-    
-    <xsl:if test="$has-next = 'true'">
-      <form action="" id="form-next">
-        <xsl:if test="lenya.usecase != ''">
-          <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
-        </xsl:if>
-        <input type="hidden" name="startIndex" value="{$next-index}"/>
-        <input type="hidden" name="queryString" value="{$queryString}"/>
-        <input type="hidden" name="pageLength" value="{$page-length}"/>
-        <input type="submit" name="next" value="Next" i18n:attr="value"/>
-      </form>
-    </xsl:if>
-    
-  </xsl:template>
-
-  <xsl:template name="navigation-paging-link">
-    <xsl:param name="page-length"/>
-    <xsl:param name="has-previous"/>
-    <xsl:param name="has-next"/>
-    <xsl:param name="previous-index"/>
-    <xsl:param name="next-index"/>
-
-    <xsl:if test="$has-previous = 'true'">
-      <xsl:call-template name="navigation-link">
-        <xsl:with-param name="page-length"><xsl:value-of select="$page-length"/></xsl:with-param>
-        <xsl:with-param name="start-index"><xsl:value-of select="$previous-index"/></xsl:with-param>
-        <xsl:with-param name="link-text">&lt;</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
-    <xsl:text> </xsl:text>
-    <xsl:if test="$has-next = 'true'">
-      <a href="?{$usecaseParam}startIndex={$next-index}&amp;queryString={$queryString}&amp;pageLength={$page-length}">
-        <xsl:text>&gt;</xsl:text>
-      </a>
-    </xsl:if>
-  </xsl:template>
-  
   <xsl:template name="navigation-link">
     <xsl:param name="query-string"/>
     <xsl:param name="page-length"/>
     <xsl:param name="start-index"/>
     <xsl:param name="link-text"/>
-
-    <a href="?{$usecaseParam}startIndex={$start-index}&amp;queryString={$queryString}&amp;pageLength={$page-length}">
-      <xsl:value-of select="$link-text"/>
-    </a>
+    <xsl:param name="isCurrent" select="false()"/>
+    <xsl:choose>
+      <xsl:when test="$isCurrent">
+        <strong><xsl:value-of select="$link-text"/></strong>
+      </xsl:when>
+      <xsl:otherwise>
+        <a href="?{$usecaseParam}startIndex={$start-index}&amp;queryString={$queryString}&amp;pageLength={$page-length}&amp;type={$selectedType}">
+          <xsl:value-of select="$link-text"/>
+        </a>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text> </xsl:text>
   </xsl:template>
+  
 
   <xsl:template match="@*|node()" priority="-2"><xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy></xsl:template>
   <xsl:template match="text()" priority="-1"><xsl:value-of select="."/></xsl:template>
