@@ -83,7 +83,9 @@ public class LinkConverter extends AbstractLogEnabled {
                 }
             } else {
                 Publication pub = examinedDocument.getPublication();
-                LinkRewriter incomingRewriter = new IncomingLinkRewriter(pub);
+                ChainLinkRewriter incomingRewriter = new ChainLinkRewriter();
+                incomingRewriter.add(new RelativeToAbsoluteLinkRewriter(examinedDocument.getCanonicalWebappURL()));
+                incomingRewriter.add(new IncomingLinkRewriter(pub));
                 LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument.getFactory());
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
