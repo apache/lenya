@@ -49,7 +49,7 @@
     window.open(
         '?lenya.revision=' + revision,
         'Lenya_ViewRevision',
-        'menubar=no,addressbar=no,toolbar=no,statusbar=no'
+        'menubar=no,addressbar=no,toolbar=no,statusbar=no,scrollbars=yes'
     );
   }
 
