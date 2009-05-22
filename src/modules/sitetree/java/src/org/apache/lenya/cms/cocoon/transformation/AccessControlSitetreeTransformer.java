@@ -133,15 +133,24 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
 
         Attributes attributes = attr;
 
-        if (isFragmentElement(uri, localName)) {
-            this.pubId = attr.getValue(SitetreeFragmentGenerator.ATTR_PUBLICATION);
-            Assert.notNull("publication attribute", this.pubId);
-
-            String area = attr.getValue("area");
-            if (area != null) {
-                this.area = area;
+        if (isFragmentElement(uri, localName) || isSiteElement(uri, localName)) {
+            
+            String pubIdAttr = attr.getValue(SitetreeFragmentGenerator.ATTR_PUBLICATION);
+            if (isFragmentElement(uri, localName)) {
+                Assert.notNull(SitetreeFragmentGenerator.ATTR_PUBLICATION + " attribute", pubIdAttr);
+            }
+            if (pubIdAttr != null) {
+                this.pubId = pubIdAttr;
             }
 
+            String areaAttr = attr.getValue(SitetreeFragmentGenerator.ATTR_AREA);
+            if (isSiteElement(uri, localName)) {
+                Assert.notNull(SitetreeFragmentGenerator.ATTR_AREA + " attribute", areaAttr);
+            }
+            if (areaAttr != null) {
+                this.area = areaAttr;
+            }
+            
             String basePath = attr.getValue(SitetreeFragmentGenerator.ATTR_BASE);
             this.basePath = basePath == null ? "" : basePath;
 
@@ -154,9 +163,6 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
                 throw new SAXException(e);
             }
 
-        } else if (isSiteElement(uri, localName)) {
-            this.area = attr.getValue("area");
-            Assert.notNull("area attribute", this.area);
         } else if (isNodeElement(uri, localName)) {
             String id = attr.getValue(SitetreeFragmentGenerator.ATTR_ID);
             Assert.notNull("id attribute", id);
