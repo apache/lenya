@@ -56,6 +56,16 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
      */
     public static final String ATTRIBUTE_PROTECTED = "protected";
 
+    /**
+     * @deprecated, subject to removal in the next release.
+     */
+    public static final String PARAM_PUB_ID = "publication-id";
+
+    /**
+     * @deprecated, subject to removal in the next release.
+     */
+    public static final String PARAM_AREA = "area";
+
     private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
     private AccessControllerResolver acResolver;
@@ -87,6 +97,9 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
                 getLogger().debug("Setting up transformer");
                 getLogger().debug("    Identity:       [" + this.identity + "]");
             }
+
+            this.area = par.getParameter(PARAM_AREA, null);
+            this.pubId = par.getParameter(PARAM_PUB_ID, null);
 
             this.serviceSelector = (ServiceSelector) this.manager
                     .lookup(AccessControllerResolver.ROLE + "Selector");
@@ -134,36 +147,16 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         Attributes attributes = attr;
 
         if (isFragmentElement(uri, localName)) {
-            this.pubId = attr.getValue(SitetreeFragmentGenerator.ATTR_PUBLICATION);
-            Assert.notNull("publication attribute", this.pubId);
-
-            String area = attr.getValue("area");
-            if (area != null) {
-                this.area = area;
-            }
-
-            String basePath = attr.getValue(SitetreeFragmentGenerator.ATTR_BASE);
-            this.basePath = basePath == null ? "" : basePath;
-
-            try {
-                AccessController accessController = this.acResolver.resolveAccessController("/"
-                        + this.pubId + "/");
-                this.accreditableManager = accessController.getAccreditableManager();
-                this.policyManager = accessController.getPolicyManager();
-            } catch (AccessControlException e) {
-                throw new SAXException(e);
-            }
-
+            extractContext(attr);
         } else if (isSiteElement(uri, localName)) {
-            this.area = attr.getValue("area");
-            Assert.notNull("area attribute", this.area);
+            extractContext(attr);
         } else if (isNodeElement(uri, localName)) {
             String id = attr.getValue(SitetreeFragmentGenerator.ATTR_ID);
             Assert.notNull("id attribute", id);
             this.pathElements.push(id);
 
             try {
-                Role[] roles = this.policyManager.getGrantedRoles(this.accreditableManager,
+                Role[] roles = getPolicyManager().getGrantedRoles(getAccreditableManager(),
                         this.identity, getUrl());
                 if (roles.length == 0 || roles.length == 1 && roles[0].getId().equals("session")) {
                     AttributesImpl attributesImpl = new AttributesImpl(attributes);
@@ -177,6 +170,54 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         }
 
         super.startElement(uri, localName, raw, attributes);
+    }
+
+    protected AccreditableManager getAccreditableManager() throws SAXException {
+        initAccessController();
+        return this.accreditableManager;
+    }
+
+    protected void extractContext(Attributes attr) {
+        extractPubId(attr);
+        extractArea(attr);
+        extractBasePath(attr);
+    }
+
+    protected void extractBasePath(Attributes attr) {
+        String basePath = attr.getValue(SitetreeFragmentGenerator.ATTR_BASE);
+        this.basePath = basePath == null ? "" : basePath;
+    }
+
+    protected void extractPubId(Attributes attr) {
+        String pubIdAttr = attr.getValue(SitetreeFragmentGenerator.ATTR_PUBLICATION);
+        if (pubIdAttr != null) {
+            this.pubId = pubIdAttr;
+        }
+    }
+
+    protected void initAccessController() throws SAXException {
+        if (this.accreditableManager == null) {
+            try {
+                AccessController accessController = this.acResolver.resolveAccessController("/"
+                        + this.pubId + "/");
+                this.accreditableManager = accessController.getAccreditableManager();
+                this.policyManager = accessController.getPolicyManager();
+            } catch (AccessControlException e) {
+                throw new SAXException(e);
+            }
+        }
+    }
+
+    protected void extractArea(Attributes attr) {
+        String area = attr.getValue(SitetreeFragmentGenerator.ATTR_AREA);
+        if (area != null) {
+            this.area = area;
+        }
+    }
+
+    protected PolicyManager getPolicyManager() throws SAXException {
+        initAccessController();
+        return this.policyManager;
     }
 
     protected String getUrl() {
