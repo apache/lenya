@@ -79,7 +79,6 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
     private SiteStructure site;
 
     private String path;
-    private String documentElement;
 
     private String cacheKey;
     private SourceValidity validity;
@@ -92,12 +91,6 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
     protected static final String PARAM_INITIAL = "initial";
     protected static final String PARAM_TYPE = "mimetype";
     protected static final String PARAM_AREAS = "areas";
-    
-    /**
-     * The local name of the document element to be generated.
-     * Optional, defaults to {@link #NODE_FRAGMENT}. 
-     */
-    protected static final String PARAM_DOCUMENT_ELEMENT = "document-element";
 
     /** The URI of the namespace of this generator. */
     public static final String URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
@@ -163,12 +156,6 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
         } else {
             String temp[] = { "authoring", "archive", "trash" };
             this.areas = temp;
-        }
-        
-        if (par.isParameter(PARAM_DOCUMENT_ELEMENT)) {
-            this.documentElement = par.getParameter(PARAM_DOCUMENT_ELEMENT, null);
-        } else {
-            this.documentElement = NODE_FRAGMENT;
         }
 
         if (this.getLogger().isDebugEnabled()) {
@@ -257,7 +244,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
                 this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.path);
             }
 
-            this.contentHandler.startElement(URI, this.documentElement, PREFIX + ':' + this.documentElement,
+            this.contentHandler.startElement(URI, NODE_FRAGMENT, PREFIX + ':' + NODE_FRAGMENT,
                     this.attributes);
 
             if (this.initialTree) {
@@ -268,7 +255,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
                 generateFragment();
             }
 
-            this.contentHandler.endElement(URI, this.documentElement, PREFIX + ':' + this.documentElement);
+            this.contentHandler.endElement(URI, NODE_FRAGMENT, PREFIX + ':' + NODE_FRAGMENT);
 
             this.contentHandler.endPrefixMapping(PREFIX);
             this.contentHandler.endDocument();
