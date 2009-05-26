@@ -197,6 +197,9 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
 
     protected void initAccessController() throws AccessControlException {
         if (this.accreditableManager == null) {
+            if (this.pubId == null) {
+                throw new IllegalStateException("The publication ID could not yet be determined.");
+            }
             AccessController accessController = this.acResolver.resolveAccessController("/"
                     + this.pubId + "/");
             this.accreditableManager = accessController.getAccreditableManager();
