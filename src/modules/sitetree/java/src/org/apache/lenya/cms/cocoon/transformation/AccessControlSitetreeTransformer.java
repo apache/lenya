@@ -172,7 +172,7 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         super.startElement(uri, localName, raw, attributes);
     }
 
-    protected AccreditableManager getAccreditableManager() throws SAXException {
+    protected AccreditableManager getAccreditableManager() throws AccessControlException {
         initAccessController();
         return this.accreditableManager;
     }
@@ -195,16 +195,12 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         }
     }
 
-    protected void initAccessController() throws SAXException {
+    protected void initAccessController() throws AccessControlException {
         if (this.accreditableManager == null) {
-            try {
-                AccessController accessController = this.acResolver.resolveAccessController("/"
-                        + this.pubId + "/");
-                this.accreditableManager = accessController.getAccreditableManager();
-                this.policyManager = accessController.getPolicyManager();
-            } catch (AccessControlException e) {
-                throw new SAXException(e);
-            }
+            AccessController accessController = this.acResolver.resolveAccessController("/"
+                    + this.pubId + "/");
+            this.accreditableManager = accessController.getAccreditableManager();
+            this.policyManager = accessController.getPolicyManager();
         }
     }
 
@@ -215,7 +211,7 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         }
     }
 
-    protected PolicyManager getPolicyManager() throws SAXException {
+    protected PolicyManager getPolicyManager() throws AccessControlException {
         initAccessController();
         return this.policyManager;
     }
