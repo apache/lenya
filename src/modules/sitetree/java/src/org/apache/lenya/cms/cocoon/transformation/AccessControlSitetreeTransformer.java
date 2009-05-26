@@ -280,6 +280,8 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
         this.pubId = null;
         this.area = null;
         this.pathElements.clear();
+        this.accreditableManager = null;
+        this.policyManager = null;
     }
 
 }
