@@ -81,11 +81,7 @@
         <map:serialize type="xml"/>
       </map:match>
 
-      <map:match pattern="icon/*/*/*/*">
-        <map:read src="fallback://lenya/modules/xhtml/resources/icons/xhtml.gif" mime-type="image/gif"/>
-      </map:match>
-      
-      <map:match pattern="icon">
+      <map:match pattern="icon**">
         <map:read src="fallback://lenya/modules/xhtml/resources/icons/xhtml.gif" mime-type="image/gif"/>
       </map:match>
 
