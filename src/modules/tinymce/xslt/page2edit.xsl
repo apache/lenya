@@ -173,7 +173,7 @@
  messages.)
 -->
 <xsl:template match="xhtml:html/xhtml:head/xhtml:*[1]">
-  <link rel="stylesheet" type="text/css" href="/lenya/css/default.css"/>
+  <link rel="stylesheet" type="text/css" href="/modules/gui/css/default.css"/>
   <xsl:call-template name="identity"/>
 </xsl:template>
 
