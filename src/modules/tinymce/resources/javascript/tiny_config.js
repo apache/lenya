@@ -23,9 +23,26 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
 
 
 currentURL = location.href.replace(/\?.*$/,"");
-
+  
+ function cleanup(type, value) {
+   switch (type) {
+       case "get_from_editor":
+           value = value.replace(/<a (class="mceItemAnchor" )?name="([^"]+)"/gi,'<a $1id="$2"');
+           break;
+       case "insert_to_editor":
+           value = value.replace(/<a (class="mceItemAnchor" )?id="([^"]+)"/gi,'<a $1name="$2"');
+           break;
+       case "submit_content":
+           // Do custom cleanup code here
+           break;
+   }
+ 
+   return value;
+}
+ 
 config = {
-
+  
+    cleanup_callback : "cleanup",
     /* enable customizable theme */
     theme : "advanced",
     
