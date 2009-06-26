@@ -39,7 +39,7 @@
       <map:match pattern="tinymce.getUsecaseMessages">
         <map:generate type="jx" src="fallback://lenya/modules/usecase/templates/messages.jx"/>
         <map:transform type="i18n">
-          <map:param name="locale" value="[request:locale}"/>
+          <map:param name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xml"/>
