@@ -30,7 +30,7 @@
    <xsl:template match="/">
     <html>
       <head>
-        <link href="{$contextprefix}/lenya/css/default.css" rel="stylesheet" type="text/css"/>
+        <link href="{$contextprefix}/modules/gui/css/default.css" rel="stylesheet" type="text/css"/>
       </head>
 
       <body>

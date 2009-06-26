@@ -33,7 +33,7 @@
       <head>
         <title><xsl:value-of select="page:page/page:title"/></title>
         <link rel="stylesheet" type="text/css"
-          href="{$contextprefix}/lenya/css/admin.css" title="admin css"/>
+          href="{$contextprefix}/modules/gui/css/admin.css" title="admin css"/>
       </head>
       <body>
         <xsl:apply-templates/>

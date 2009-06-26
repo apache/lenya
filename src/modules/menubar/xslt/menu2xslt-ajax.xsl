@@ -64,7 +64,7 @@
             <script src="/modules/menubar/javascript/menu.js" type="text/javascript">&#160;</script>
             <!--
             -->
-            <link href="/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
+            <link href="/modules/gui/css/menu.css" rel="stylesheet" type="text/css"/>
             <link rel="icon" href="/favicon.ico" type="image/ico"/>
             <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
             
