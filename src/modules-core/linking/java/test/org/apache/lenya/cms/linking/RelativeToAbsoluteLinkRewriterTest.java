@@ -17,24 +17,32 @@
  */
 package org.apache.lenya.cms.linking;
 
-import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import junit.framework.TestCase;
 
 /**
  * Test case for relative-to-absolute link rewriting.
  */
-public class RelativeToAbsoluteLinkRewriterTest extends AbstractAccessControlTest {
+public class RelativeToAbsoluteLinkRewriterTest extends TestCase {
 
     private static final String SOURCE_URI = "/foo/bar";
+    private final LinkRewriter rewriter = new RelativeToAbsoluteLinkRewriter(SOURCE_URI);
 
     /**
      * Test case for relative-to-absolute link rewriting.
      */
     public void testLinks() {
-        RelativeToAbsoluteLinkRewriter rewriter = new RelativeToAbsoluteLinkRewriter(SOURCE_URI);
-        assertEquals(rewriter.rewrite("baz"), "/foo/baz");
-        assertEquals(rewriter.rewrite("bar/baz"), "/foo/bar/baz");
-        assertEquals(rewriter.rewrite("../baz"), "/baz");
-        assertEquals(rewriter.rewrite(".."), "/");
+        assertEquals(rewrite("baz"), "/foo/baz");
+        assertEquals(rewrite("bar/baz"), "/foo/bar/baz");
+        assertEquals(rewrite("../baz"), "/baz");
+        assertEquals(rewrite(".."), "/");
+        
+        assertEquals(rewrite("/foo/bar"), "/foo/bar");
+        assertEquals(rewrite("lenya-document:123"), "lenya-document:123");
+        assertEquals(rewrite("http://apache.org"), "http://apache.org");
+    }
+    
+    protected String rewrite(String input) {
+        return this.rewriter.matches(input) ? this.rewriter.rewrite(input) : input;
     }
 
 }

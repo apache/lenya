@@ -19,16 +19,16 @@ package org.apache.lenya.cms.linking;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.regex.Pattern;
 
 import org.apache.lenya.util.Assert;
 
 public class RelativeToAbsoluteLinkRewriter implements LinkRewriter {
 
     private String sourceUri;
-
-    protected static final String[] PROTOCOLS = { "/", "http:", "https:", "ftp:", "ftps:",
-            "mailto:", "file:" };
-
+    
+    protected static final Pattern PROTOCOL_REGEX = Pattern.compile("[A-Za-z0-9\\-]+\\:");
+    
     public RelativeToAbsoluteLinkRewriter(String sourceUri) {
         Assert.notNull("source URI", sourceUri);
         this.sourceUri = sourceUri;
@@ -36,12 +36,7 @@ public class RelativeToAbsoluteLinkRewriter implements LinkRewriter {
 
     public boolean matches(String url) {
         Assert.notNull("url", url);
-        for (int i = 0; i < PROTOCOLS.length; i++) {
-            if (url.startsWith(PROTOCOLS[i])) {
-                return false;
-            }
-        }
-        return true;
+        return !url.startsWith("/") && !PROTOCOL_REGEX.matcher(url).find();
     }
 
     public String rewrite(final String url) {
