@@ -41,8 +41,8 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.SessionImpl;
 
 /**
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * To change the template for this generated type comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
 public class AbstractAccessControlTest extends LenyaTestCase {
 
@@ -50,8 +50,6 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
-    
-        
 
     protected org.apache.lenya.cms.repository.Session login(String userId)
             throws AccessControlException {
@@ -61,13 +59,14 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     protected Session login(String userId, String pubId) throws AccessControlException {
         Session session = new SessionImpl(null, true, getManager(), getLogger());
         getRequest().setAttribute(Session.class.getName(), session);
-        
+
         DefaultAccessController ac = getAccessController(session, pubId);
         AccreditableManager acMgr = ac.getAccreditableManager();
         User user = acMgr.getUserManager().getUser(userId);
 
         if (user == null) {
-            throw new AccessControlException("The user [" + userId + "] does not exist!");
+            throw new AccessControlException("The user [" + userId
+                    + "] does not exist in the accreditable manager [" + acMgr.getId() + "]!");
         }
 
         ac.setupIdentity(getRequest());
@@ -206,7 +205,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     protected Publication getPublication(String id) throws PublicationException {
         return getFactory().getPublication(id);
     }
-    
+
     protected Identity getIdentity() {
         return getSession().getIdentity();
     }
