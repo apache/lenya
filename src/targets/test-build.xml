@@ -116,7 +116,7 @@
     
     <!-- Copy test resources -->
     <copy todir="${build.test}" filtering="on">
-      <fileset dir="${build.java.test}" excludes="**.java"/>
+      <fileset dir="${build.java.test}" excludes="**/*.java"/>
     </copy>
     
     <!-- Generate the xtest file -->
