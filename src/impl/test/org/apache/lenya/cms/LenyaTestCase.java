@@ -18,7 +18,7 @@
 package org.apache.lenya.cms;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,17 +91,10 @@ public class LenyaTestCase extends ContainerTestCase {
     }
 
     protected void prepare() throws Exception {
-        File testPath = new File("build/test");
         final String resourceName = LenyaTestCase.class.getName().replace('.', '/') + ".xtest";
-        File resourceFile = new File(testPath, resourceName.replace('/', File.separatorChar));
+        URL resourceUrl = ClassLoader.getSystemResource(resourceName);
+        prepare(resourceUrl.openStream());
         
-        if (resourceFile.isFile()) {
-            getLogger().debug("Loading resource " + resourceFile.getAbsolutePath());
-            prepare(new FileInputStream(resourceFile));
-        } else {
-            getLogger().debug("Resource not found " + resourceName);
-        }
-
         SourceResolver resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
         MockEnvironment env = new MockEnvironment(resolver);
 

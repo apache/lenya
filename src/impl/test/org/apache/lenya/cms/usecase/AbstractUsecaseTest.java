@@ -22,7 +22,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Authorizer;
+import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker;
 
@@ -97,6 +102,27 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
     protected abstract String getUsecaseName();
 
     protected void checkPostconditions() throws Exception {
+    }
+
+    private UsecaseAuthorizer authorizer;
+
+    protected UsecaseAuthorizer getUsecaseAuthorizer() {
+        if (this.authorizer == null) {
+            Authorizer[] authorizers = getAccessController().getAuthorizers();
+            for (int i = 0; i < authorizers.length; i++) {
+                if (authorizers[i] instanceof UsecaseAuthorizer) {
+                    this.authorizer = (UsecaseAuthorizer) authorizers[i];
+                }
+            }
+        }
+        return this.authorizer;
+    }
+
+    protected void setUsecasePermission(String usecase, Publication pub, String roleName,
+            boolean value) throws AccessControlException {
+        Role role = getAccessController().getAccreditableManager().getRoleManager().getRole(
+                roleName);
+        getUsecaseAuthorizer().setPermission(usecase, pub, role, value);
     }
 
 }
