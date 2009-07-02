@@ -40,13 +40,14 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 
 /**
- * Resolves the access controller according to the <code>access-control.xml</code> file of a publication.
+ * Resolves the access controller according to the <code>access-control.xml</code> file of a
+ * publication.
  */
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
         Initializable {
 
-    protected static final String AC_CONFIGURATION_FILE
-        = "config/access-control/access-control.xml".replace('/', File.separatorChar);
+    protected static final String AC_CONFIGURATION_FILE = "config/access-control/access-control.xml"
+            .replace('/', File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
 
     /**
@@ -62,8 +63,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
         String publicationId = info.getPublicationId();
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Using first URL step (might be publication ID) as cache key: ["
-                    + publicationId + "]");
+            getLogger().debug(
+                    "Using first URL step (might be publication ID) as cache key: ["
+                            + publicationId + "]");
         }
 
         return super.generateCacheKey(publicationId, resolver);
@@ -146,7 +148,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
         if (configurationFile.isFile()) {
             try {
-                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                Configuration configuration = new DefaultConfigurationBuilder()
+                        .buildFromFile(configurationFile);
                 return configuration;
             } catch (Exception e) {
                 throw new AccessControlException(e);
@@ -176,8 +179,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             Configuration configuration = getConfiguration(publication);
             String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-            accessController = (AccessController) getManager().lookup(AccessController.ROLE + "/"
-                    + type);
+            accessController = (AccessController) getManager().lookup(
+                    AccessController.ROLE + "/" + type);
 
             if (accessController instanceof Configurable) {
                 ((Configurable) accessController).configure(configuration);
@@ -203,7 +206,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             contextDir = SourceUtil.getFile(contextSource);
 
             if (contextDir == null || !contextDir.isDirectory()) {
-                throw new AccessControlException("The servlet context is not a directory!");
+                throw new AccessControlException("The servlet context ["
+                        + contextDir.getAbsolutePath() + "] is not a directory!");
             }
 
         } finally {
