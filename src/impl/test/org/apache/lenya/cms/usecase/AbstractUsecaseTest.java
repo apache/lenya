@@ -45,8 +45,13 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
             invoker = (UsecaseInvoker) getManager().lookup(TestUsecaseInvoker.ROLE);
             invoker.setTestSession(session);
             invoker.invoke(getRequest().getPathInfo(), getUsecaseName(), getParameters());
-            
-            this.targetUrl = invoker.getTargetUrl();
+
+            int result = invoker.getResult();
+            if (result != UsecaseInvoker.PRECONDITIONS_FAILED
+                    && result != UsecaseInvoker.EXECUTION_CONDITIONS_FAILED
+                    && result != UsecaseInvoker.AUTHORIZATION_FAILED) {
+                this.targetUrl = invoker.getTargetUrl();
+            }
 
             List errorMessages = invoker.getErrorMessages();
             for (Iterator i = errorMessages.iterator(); i.hasNext();) {
@@ -72,9 +77,9 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
         checkPostconditions();
 
     }
-    
+
     private String targetUrl;
-    
+
     protected String getTargetUrl() {
         if (this.targetUrl == null) {
             throw new IllegalStateException("The usecase has not yet been executed.");
