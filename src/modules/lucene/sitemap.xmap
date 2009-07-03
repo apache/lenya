@@ -100,6 +100,12 @@
               <map:parameter name="query" value="{imageQueryString:queryString}"/>
             </map:generate>
           </map:when>
+          <map:when test="raw">
+            <map:generate type="search">
+              <map:parameter name="index" value="{index-path:{1}-{2}}"/>
+              <map:parameter name="query" value="{request-param:queryString}"/>
+            </map:generate>
+          </map:when>
           <map:otherwise>
             <map:generate type="search">
               <map:parameter name="index" value="{index-path:{1}-{2}}"/>
