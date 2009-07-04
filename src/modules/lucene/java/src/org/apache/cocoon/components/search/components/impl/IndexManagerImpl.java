@@ -43,14 +43,10 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
-import org.apache.lenya.cms.metadata.Element;
-import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.modules.lucene.MetaDataFieldRegistry;
 
@@ -111,8 +107,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /**
      * type of the field: "text, "keyword", "date" (see
      * 
-     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition
-     *      class)
+     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition class)
      */
     public static final String TYPE_ATTRIBUTE = "type";
 
@@ -132,8 +127,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     public static final String INDEX_CONF_FILE = "search/lucene_index.xml";
 
     /**
-     * check the config file each time the getIndex is called to update if
-     * necessary the configuration
+     * check the config file each time the getIndex is called to update if necessary the
+     * configuration
      */
     // public static final String CHECK_ATTRIBUTE = "check";
     /**
@@ -141,8 +136,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      */
     // public static final String CONFIG_ATTRIBUTE = "config";
     /**
-     * Check or not the configuration file (automatic update if the file is
-     * changed)
+     * Check or not the configuration file (automatic update if the file is changed)
      */
     // private boolean check;
     /**
@@ -198,7 +192,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.cocoon.components.search.components.IndexManager#addIndex(org.apache.cocoon.components.search.Index)
+     * @see
+     * org.apache.cocoon.components.search.components.IndexManager#addIndex(org.apache.cocoon.components
+     * .search.Index)
      */
     public void addIndex(Index base) {
         this.indexes().put(base.getID(), base);
@@ -263,7 +259,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     * @see
+     * org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework
+     * .configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
         this.indexerRole = configuration.getChild(INDEXER_ELEMENT).getAttribute(
@@ -317,12 +315,13 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
                 IndexStructure docdecl = new IndexStructure();
 
                 addMetaDataFieldDefinitions(registry, docdecl);
-                
+
                 FieldDefinition uuidDef = FieldDefinition.create("uuid", FieldDefinition.KEYWORD);
                 uuidDef.setStore(true);
                 docdecl.addFieldDef(uuidDef);
 
-                FieldDefinition langDef = FieldDefinition.create("language", FieldDefinition.KEYWORD);
+                FieldDefinition langDef = FieldDefinition.create("language",
+                        FieldDefinition.KEYWORD);
                 langDef.setStore(true);
                 docdecl.addFieldDef(langDef);
 
@@ -400,11 +399,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
 
     protected void addMetaDataFieldDefinitions(MetaDataFieldRegistry registry,
             IndexStructure indexStructure) throws MetaDataException {
-        String[] fieldNames = registry.getFieldNames();
-        for (int i = 0; i < fieldNames.length; i++) {
-            FieldDefinition fieldDef = FieldDefinition.create(fieldNames[i], FieldDefinition.TEXT);
-            fieldDef.setStore(false);
-            indexStructure.addFieldDef(fieldDef);
+        for (FieldDefinition def : registry.getFieldDefinitions()) {
+            indexStructure.addFieldDef(def);
         }
     }
 
@@ -435,6 +431,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.apache.cocoon.components.search.components.IndexManager#getIndex()
      */
     public Index[] getIndex() {
@@ -443,7 +440,10 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
 
     /*
      * (non-Javadoc)
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     * 
+     * @see
+     * org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service
+     * .ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;

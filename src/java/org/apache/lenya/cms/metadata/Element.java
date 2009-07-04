@@ -22,6 +22,10 @@ package org.apache.lenya.cms.metadata;
  */
 public interface Element {
 
+    enum IndexType {
+        KEYWORD, TEXT, DATE
+    }
+
     /**
      * @return the name of the element.
      */
@@ -46,7 +50,7 @@ public interface Element {
      * Copy all values if the meta data are copied.
      */
     int ONCOPY_COPY = 0;
-    
+
     /**
      * Don't copy the values of this element if the meta data are copied.
      */
@@ -61,10 +65,12 @@ public interface Element {
      * @return The action to be taken when meta data are copied from one owner to another.
      */
     int getActionOnCopy();
-    
+
     /**
      * @return If this element shall be included in search queries.
      */
     boolean isSearchable();
+    
+    IndexType getIndexType();
 
 }

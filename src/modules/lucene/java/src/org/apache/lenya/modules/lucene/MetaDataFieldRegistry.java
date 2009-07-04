@@ -16,6 +16,10 @@
  */
 package org.apache.lenya.modules.lucene;
 
+import java.util.Set;
+
+import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
+
 /**
  * Map meta data elements to Lucene index fields.
  */
@@ -37,5 +41,7 @@ public interface MetaDataFieldRegistry {
      * @return All field names.
      */
     String[] getFieldNames();
+    
+    Set<FieldDefinition> getFieldDefinitions();
 
 }

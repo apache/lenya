@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.metadata;
 
+import org.apache.lenya.util.Assert;
+
 /**
  * Element implementation.
  */
@@ -28,6 +30,7 @@ public class ElementImpl implements Element {
     private boolean editable;
     private int actionOnCopy;
     private boolean searchable;
+    private IndexType indexType;
     
     /**
      * Ctor.
@@ -86,6 +89,15 @@ public class ElementImpl implements Element {
 
     public boolean isSearchable() {
         return this.searchable;
+    }
+    
+    public void setIndexType(IndexType indexType) {
+        Assert.notNull("index type", indexType);
+        this.indexType = indexType;
+    }
+
+    public IndexType getIndexType() {
+        return this.indexType;
     }
 
 }

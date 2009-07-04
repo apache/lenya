@@ -30,6 +30,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.lenya.cms.metadata.Element.IndexType;
 
 /**
  * Avalon-based element set.
@@ -38,20 +39,23 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
         ThreadSafe, Initializable, Serviceable {
 
     private String namespaceUri;
-    private Map elements = new HashMap();
+    private Map<String, Element> elements = new HashMap<String, Element>();
 
     public void configure(Configuration config) throws ConfigurationException {
 
         this.namespaceUri = config.getAttribute("name");
 
-        Configuration[] attributeConfigs = config.getChildren("element");
-        for (int i = 0; i < attributeConfigs.length; i++) {
-            String name = attributeConfigs[i].getAttribute("name");
-            boolean isMultiple = attributeConfigs[i].getAttributeAsBoolean("multiple", false);
-            boolean isEditable = attributeConfigs[i].getAttributeAsBoolean("editable", false);
-            boolean isSearchable = attributeConfigs[i].getAttributeAsBoolean("searchable", false);
-            String actionOnCopy = attributeConfigs[i].getAttribute("onCopy", "copy");
+        for (Configuration elemConfig : config.getChildren("element")) {
+            String name = elemConfig.getAttribute("name");
+            boolean isMultiple = elemConfig.getAttributeAsBoolean("multiple", false);
+            boolean isEditable = elemConfig.getAttributeAsBoolean("editable", false);
+            boolean isSearchable = elemConfig.getAttributeAsBoolean("searchable", false);
+            String actionOnCopy = elemConfig.getAttribute("onCopy", "copy");
             ElementImpl element = new ElementImpl(name, isMultiple, isEditable, isSearchable);
+            
+            String indexTypeString = elemConfig.getAttribute("indexType", "text");
+            element.setIndexType(getIndexType(indexTypeString));
+            
             int action;
             if (actionOnCopy.equalsIgnoreCase("copy")) {
                 action = Element.ONCOPY_COPY;
@@ -75,8 +79,23 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
 
     }
 
+    protected IndexType getIndexType(String indexTypeString) throws ConfigurationException {
+        if (indexTypeString.equals("text")) {
+            return IndexType.TEXT;
+        }
+        else if (indexTypeString.equals("keyword")) {
+            return IndexType.KEYWORD;
+        }
+        else if (indexTypeString.equals("date")) {
+            return IndexType.DATE;
+        }
+        else {
+            throw new ConfigurationException("Unsupported index type: '" + indexTypeString + "'");
+        }
+    }
+
     public Element[] getElements() {
-        Collection values = this.elements.values();
+        Collection<Element> values = this.elements.values();
         return (Element[]) values.toArray(new Element[values.size()]);
     }
 
