@@ -155,10 +155,6 @@ public class MetaDataTest extends AbstractAccessControlTest {
             return false;
         }
 
-        public IndexType getIndexType() {
-            return IndexType.TEXT;
-        }
-
     }
 
     protected class TestElementSet implements ElementSet {

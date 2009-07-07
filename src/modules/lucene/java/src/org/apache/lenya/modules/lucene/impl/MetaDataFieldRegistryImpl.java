@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.modules.lucene.impl;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,7 +26,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
 import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
@@ -99,41 +97,6 @@ public class MetaDataFieldRegistryImpl extends AbstractLogEnabled implements Met
             throw new RuntimeException(e);
         }
         return (String[]) fieldNames.toArray(new String[fieldNames.size()]);
-    }
-
-    public Set<FieldDefinition> getFieldDefinitions() {
-        final MetaDataRegistry registry = getRegistry();
-        final Set<FieldDefinition> fieldDefs = new HashSet<FieldDefinition>();
-        try {
-            final String[] namespaces = registry.getNamespaceUris();
-            for (int n = 0; n < namespaces.length; n++) {
-                final ElementSet elementSet = registry.getElementSet(namespaces[n]);
-                final Element[] elements = elementSet.getElements();
-                for (int e = 0; e < elements.length; e++) {
-                    final String fieldName = getFieldName(namespaces[n], elements[e].getName());
-                    final FieldDefinition fieldDef = FieldDefinition.create(fieldName,
-                            getFieldType(elements[e].getIndexType()));
-                    fieldDef.setStore(false);
-                    fieldDefs.add(fieldDef);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return Collections.unmodifiableSet(fieldDefs);
-    }
-
-    protected int getFieldType(Element.IndexType indexType) {
-        switch (indexType) {
-        case TEXT:
-            return FieldDefinition.TEXT;
-        case KEYWORD:
-            return FieldDefinition.KEYWORD;
-        case DATE:
-            return FieldDefinition.DATE;
-        default:
-            throw new IllegalArgumentException("Unsupported index type: " + indexType);
-        }
     }
 
 }
