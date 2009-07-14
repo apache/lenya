@@ -11,22 +11,23 @@
   </head>
   <body>
 
-<div style="float: right; padding-left: 10px;"><img src="css/people.jpg" alt=""/></div>
 <div class="top">
   <h1>CodeMirror</h1>
-  <h2>In-browser code editing made slightly less painful</h2>
+  <h2 class="underline">In-browser code editing made slightly less painful</h2>
 </div>
+<div style="float: right; padding-left: 10px;"><img src="css/people.jpg" alt=""/></div>
 
 <p>CodeMirror is a JavaScript program that can be used to create a
-relatively pleasant editor interface for code-like content &#x2015; computer
-programs, HTML markup, and similar. If a parser has been written for
-the language you are editing (we currently have <a
+relatively pleasant editor interface for code-like content &#x2015;
+computer programs, HTML markup, and similar. If a parser has been
+written for the language you are editing (we currently have <a
 href="jstest.html">JavaScript</a>, <a href="htmltest.html">XML</a>, <a
-href="csstest.html">CSS</a>, and <a href="sparqltest.html">SPARQL</a>
-covered), the code will be prettily coloured, and indentation will be
-taken care of for you, meaning the cursor will be placed at the right
-position when you press enter, and it is possible to re-indent blocks
-of code automatically.</p>
+href="csstest.html">CSS</a>, <a href="contrib/php/index.html">PHP</a>,
+and <a href="sparqltest.html">SPARQL</a> covered), the code will be
+prettily coloured, and indentation will be taken care of for you,
+meaning the cursor will be placed at the right position when you press
+enter, and it is possible to re-indent blocks of code
+automatically.</p>
 
 <p>To get a look at CodeMirror, see the test pages for the various
 parsers...</p>
@@ -37,20 +38,35 @@ parsers...</p>
   <li><a href="csstest.html">CSS</a></li>
   <li><a href="sparqltest.html">SPARQL</a></li>
   <li><a href="mixedtest.html">HTML mixed-mode</a></li>
+  <li><a href="contrib/php/index.html">HTML+PHP mixed-mode</a> (courtesy of <a href="contrib/php/license.txt">Yahoo!</a>)</li>
 </ul>
 
 <p>Or take a look at some real-world uses of the system...</p>
 
 <ul>
-  <li><a href="http://code.google.com/p/rainbow4firebug/">Rainbow for Firebug</a></li>
+  <li><a href="http://github.com/darwin/firerainbow">FireRainbow: syntax colouring for Firebug</a></li>
   <li><a href="http://dev.freebaseapps.com/">Freebase's Acre IDE</a></li>
   <li><a href="http://kml-samples.googlecode.com/svn/trunk/interactive/index.html">Google Earth KML sampler</a></li>
   <li><a href="http://eloquentjavascript.net/chapter1.html">Eloquent JavaScript's console</a></li>
+  <li><a href="http://demo.qooxdoo.org/current/playground/#Hello_World">The qooxdoo playground</a></li>
   <li><a href="http://billmill.org/static/canvastutorial/index.html">A cool tutorial about the &lt;canvas> element</a></li>
   <li><a href="http://orc.csres.utexas.edu/tryorc.shtml">An online IDE for the Orc programming language</a></li>
+  <li><a href="http://code.google.com/apis/ajax/playground">Google's API playground</a></li>
 </ul>
 
 <h2>Releases</h2>
+
+<p class="rel"><em>04-03-2008</em>: <a
+href="http://marijn.haverbeke.nl/codemirror/codemirror-0.61.zip">Version
+0.61</a>: Add line numbers support (see <code>lineNumbers</code>
+option in <a href="manual.html">manual</a>). Support a mode where tab
+'shifts' indentation instead of resetting it (see
+<code>tabMode="shift"</code>). Add <code>indentUnit</code> option to
+configure indentation depths. Make it possible to grab the editor's
+keyboard input, which is useful when popping up dialogs (see
+<code>grabKeys</code>/<code>ungrabKeys</code>). Fix a lot of small
+bugs, among which the various issues related to pasting in Internet
+Explorer.</p>
 
 <p class="rel"><em>29-12-2008</em>: <a
 href="http://marijn.haverbeke.nl/codemirror/codemirror-0.60.zip">Version

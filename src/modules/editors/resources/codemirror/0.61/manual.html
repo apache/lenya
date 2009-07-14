@@ -4,9 +4,19 @@
     <link rel="stylesheet" type="text/css" href="css/docs.css"/>
   </head>
   <body>
-    <h1>CodeMirror user manual</h1>
+    <h1 class="underline">CodeMirror user manual</h1>
 
-    <h2>Basic Usage</h2>
+    <h2>Contents</h2>
+
+    <ul>
+      <li><a href="#useage">Basic Useage</a></li>
+      <li><a href="#configuration">Configuration</a></li>
+      <li><a href="#parsers">Parsers</a></li>
+      <li><a href="#programming">Programming Interface</a></li>
+      <li><a href="#writeparser">Writing a Parser</a></li>
+    </ul>
+
+    <h2 id="useage">Basic Usage</h2>
 
     <p>Inside the editor, the tab key is used to re-indent the current
     selection (or the current line when nothing is selected), and
@@ -141,7 +151,7 @@
     parsers. These all start with either <code>parse</code> or
     <code>tokenize</code>.</p>
 
-    <h2>Configuration</h2>
+    <h2 id="configuration">Configuration</h2>
 
     <p>There are three ways to configure CodeMirror:</p>
 
@@ -191,7 +201,7 @@
       <dt><code>linesPerPass</code></dt><dd>Specifies the maximum
       amount of lines that the highlighter tries to colour in one
       shot. Setting this too high will cause the code to 'freeze' the
-      browser for noticeable intervals. Defaults to 15.</dd>
+      browser for noticeable intervals. Defaults to 30.</dd>
 
       <dt><code>passDelay</code></dt><dd>Gives the amount of
       milliseconds between colouring passes. Defaults to 200.</dd>
@@ -219,11 +229,11 @@
       'save page' dialog. Defaults to <code>null</code>.</dd>
 
       <dt><code>undoDepth</code></dt><dd>Maximum length of the undo
-      history. Default is 20.</dd>
+      history. Default is 50.</dd>
 
       <dt><code>onChange</code></dt><dd>An optional function of zero
       arguments that gets called whenever the document is changed.
-      Happens at undo-commit time, it is not instantanious.</dd>
+      Happens at undo-commit time, not instantaniously.</dd>
 
       <dt><code>undoDelay</code></dt><dd>When nothing is done in the
       editor for this amount of milliseconds, pending changes get
@@ -243,17 +253,46 @@
       enable text-wrapping in the editor frame. Default is
       <code>true</code>.</dd>
 
-      <dt><code>dumbTabs</code></dt><dd>When this is set to
-      <code>true</code>, pressing tab will insert four spaces rather
-      than re-indenting the selected lines. Default
-      <code>false</code>.</dd>
+      <dt><code>lineNumbers</code></dt><dd>Show line numbers to the
+      left of the editor. This requires you to specify a style for the
+      <code>CodeMirror-line-numbers</code> CSS class (in the outer
+      document) to configure the width, font, colors, etcetera for the
+      line-number DIV. You have to make sure that lines in the
+      numbering element have the same height as lines in the editor.
+      This is most easily done by giving them both the same font and
+      an absolute ('pt' or 'px') font size. This option defaults to
+      <code>false</code>. When enabling this, you have to disable
+      <code>textWrapping</code>, since the line numbers don't take
+      wrapped lines into account.</dd>
+
+      <dt><code>indentUnit</code></dt><dd>An integer that specifies
+      the amount of spaces one 'level' of indentation should add.
+      Default is <code>2</code>.</dd>
+
+      <dt><code>tabMode</code></dt><dd>Determines what the effect of
+      pressing tab is. Possibilities are:
+      <dl>
+        <dt><code>"indent"</code></dt><dd>The default. Causes tab to
+        adjust the indentation of the selection or current line using
+        the parser's rules.</dd>
+        <dt><code>"spaces"</code></dt><dd>Pressing tab simply inserts
+        four spaces.</dd>
+        <dt><code>"default"</code></dt><dd>CodeMirror does not
+        interfere with the tab key, but leaves it to the browser to
+        handle it. Binds shift-space to regular indentation
+        behaviour.</dd>
+        <dt><code>"shift"</code></dt><dd>Pressing tab indents the
+        current line (or selection) one <code>indentUnit</code>
+        deeper, pressing shift-tab or ctrl-tab (whichever your browser
+        does not interfere with), un-indents it.</dd>
+      </dl></dd>
 
       <dt><code>readOnly</code></dt><dd>When set to <code>true</code>,
       the document is not editable.</dd>
 
       <dt><code>initCallback</code></dt><dd>If set to a function, this
-      will be called (without arguments) after the editor has finished
-      initialising.</dd>
+      will be called (with the editor object as its argument) after
+      the editor has finished initialising.</dd>
       
       <dt><code>cursorActivity</code></dt><dd>A function that is
       called every time the cursor moves, with the top-level node that
@@ -268,9 +307,10 @@
       of the node (so no turning the span into a link), since this
       will greatly confuse the editor.</dd>
 
-      <dt><code>parserConfig</code></dt><dd>A value that is passed
-      along to the parser to configure it. What this value may look
-      like depends on the parser used.</dd>
+      <dt id="parserConfig"><code>parserConfig</code></dt><dd>An
+      object value that is passed along to the parser to configure it.
+      What this object should look like depends on the parser
+      used.</dd>
 
       <dt><code>content</code></dt><dd>The starting content of the
       editor. You'll probably not want to provide a global default for
@@ -279,7 +319,51 @@
 
     </dl>
 
-    <h2>Programming interface</h2>
+    <h2 id="parsers">Parsers</h2>
+
+    <p>The following parsers come with the distribution of CodeMirror:</p>
+
+    <dl>
+      <dt><code><a
+      href="js/parsexml.js">parsexml.js</a></code></dt><dd>A HTML/XML
+      parser. Takes a <code>useHTMLKludges</code> configuration option
+      (see the <code><a href="#parserConfig">parserConfig</a></code>
+      option above), which specifies whether the content of the editor
+      is HTML or XML, and things like self-closing tags
+      (<code>br</code>, <code>img</code>) exist. This defaults to
+      <code>true</code>. Example colours for the styles that this
+      parser uses are defined in <code><a
+      href="css/xmlcolors.css">css/xmlcolors.css</a></code>.</dd>
+
+      <dt><code><a
+      href="js/tokenizejavascript.js">tokenizejavascript.js</a></code>,
+      <code><a
+      href="js/parsejavascript.js">parseejavascript.js</a></code></dt><dd>The
+      JavaScript parser. Example colours in <code><a
+      href="css/jscolors.css">css/jscolors.css</a></code></dd>
+
+      <dt><code><a
+      href="js/parsecss.js">parsecss.js</a></code></dt><dd>A CSS
+      parser. Styles in <code><a
+      href="css/csscolors.css">css/csscolors.css</a></code></dd>
+
+      <dt><code><a
+      href="js/parsehtmlmixed.js">parsehtmlmixed.js</a></code></dt><dd>A
+      mixed-mode HTML parser. Requires the XML, JavaScript, and CSS
+      parsers to also be loaded, so your <code>parserfile</code>
+      option looks something like <code>["parsexml.js", "parsecss.js",
+      "tokenizejavascript.js", "parsejavascript.js",
+      "parsehtmlmixed.js"]</code>.</dd>
+
+      <dt><code><a
+      href="js/parsesparql.js">parsesparql.js</a></code></dt><dd>Parses
+      the <a href="http://en.wikipedia.org/wiki/SPARQL">SPARQL</a>
+      query language. Example styles in <code><a
+      href="css/sparqlcolors.css">css/sparqlcolors.css</a></code></dd>
+
+    </dl>
+
+    <h2 id="programming">Programming Interface</h2>
 
     <p>To be as flexible as possible, CodeMirror implements a very
     plain editable field, without any accompanying buttons, bells, and
@@ -337,6 +421,26 @@
       programmatically changing it in any way except for calling
       <code>replace</code> on the cursor itself, might cause a cursor
       object to skip back to the beginning of the document.</dd>
+
+      <dt><code>undo()</code></dt><dd>Undo one changeset, if available.</dd>
+      <dt><code>redo()</code></dt><dd>Redo one changeset, if available.</dd>
+      <dt><code>historySize() &#8594; object</code></dt><dd>Get a
+      <code>{undo, redo}</code> object holding the sizes of the undo
+      and redo histories.</dd>
+
+      <dt><code>grabKeys(callback, filter)</code></dt><dd>Route
+      keyboard input in the editor to a callback function. This
+      function is given a slightly normalised (see
+      <code>normalizeEvent</code> in <a
+      href="js/util.js"><code>util.js</code></a>) <code>keydown</code>
+      event object. If a second argument is given, this will be used
+      to determine which events to apply the callback to. It should
+      take a key code (as in <code>event.keyCode</code>), and return a
+      boolean, where <code>true</code> means the event should be
+      routed to the callback, and <code>false</code> leaves the key to
+      perform its normal behaviour.</dd>
+      <dt><code>ungrabKeys()</code></dt><dd>Revert the effect of
+      <code>grabKeys</code>.</dd>
     </dl>
 
     <p>For detailed interaction with the content of the editor,
@@ -353,44 +457,46 @@
 
     <dl>
       <dt><code>cursorPosition(start)</code> &#8594;
-      object</dt><dd>Retrieve a {line, character} object representing
-      the cursor position. <code>start</code> defaults to
-      <code>true</code> and determines if the startpoint or the
-      endpoint of the selection is used.</dd>
-      <dt><code>firstLine()</code> &#8594; handle</dt><dd>Get the
-      first line of the document.</dd>
-      <dt><code>lastLine()</code> &#8594; handle</dt><dd>The
-      last line.</dd>
-      <dt><code>nextLine(line)</code> &#8594; handle</dt><dd>Get the
-      line after the given one, or <code>false</code> if that was the
-      last line.</dd>
-      <dt><code>prevLine(line)</code> &#8594; handle</dt><dd>Find the
-      line before the given one, return <code>false</code> if that was
-      the first line.</dd>
-      <dt><code>nthLine(number)</code> &#8594; handle</dt><dd>Find the
-      Nth line of the document. Note that the first line counts as
-      one, not zero. Returns <code>false</code> if there is no such
+      <code>object</code></dt><dd>Retrieve a <code>{line,
+      character}</code> object representing the cursor position.
+      <code>start</code> defaults to <code>true</code> and determines
+      if the startpoint or the endpoint of the selection is used.</dd>
+      <dt><code>firstLine()</code> &#8594;
+      <code>handle</code></dt><dd>Get the first line of the
+      document.</dd>
+      <dt><code>lastLine()</code> &#8594;
+      <code>handle</code></dt><dd>The last line.</dd>
+      <dt><code>nextLine(handle)</code> &#8594;
+      <code>handle</code></dt><dd>Get the line after the given one, or
+      <code>false</code> if that was the last line.</dd>
+      <dt><code>prevLine(handle)</code> &#8594;
+      <code>handle</code></dt><dd>Find the line before the given one,
+      return <code>false</code> if that was the first line.</dd>
+      <dt><code>nthLine(number)</code> &#8594;
+      <code>handle</code></dt><dd>Find the Nth line of the document.
+      Note that the first line counts as one, not zero. Returns
+      <code>false</code> if there is no such line.</dd>
+      <dt><code>lineContent(handle)</code> &#8594;
+      <code>string</code></dt><dd>Retrieve the content of the
       line.</dd>
-      <dt><code>prevLine(line)</code> &#8594; handle</dt><dd>Find the
-      line before the given one, return <code>false</code> if that was
-      the first line.</dd>
-      <dt><code>lineContent(line)</code> &#8594;
-      string</dt><dd>Retrieve the content of the line.</dd>
-      <dt><code>setLineContent(line, string)</code></dt><dd>Replace
+      <dt><code>setLineContent(handle, string)</code></dt><dd>Replace
       the content of the line with the given string.</dd>
-      <dt><code>selectLines(startLine, startOffset, endLine,
-      endOffset)</code></dt><dd>Move the selection to a specific
-      point. <code>endLine</code> and <code>endOffset</code> can be
-      omitted to just place the cursor somewhere without selecting any
-      text.</dd>
-      <dt><code>insertIntoLine(line, position,
+      <dt><code>lineNumber(handle)</code> &#8594;
+      <code>number</code></dt><dd>Ask which line of the document
+      (1-based) the given line is.</dd>
+      <dt><code>selectLines(startHandle, startOffset,
+      endHandle, endOffset)</code></dt><dd>Move the selection to a
+      specific point. <code>endHandle</code> and
+      <code>endOffset</code> can be omitted to just place the cursor
+      somewhere without selecting any text.</dd>
+      <dt><code>insertIntoLine(handle, position,
       text)</code></dt><dd>Insert a piece of text into a line.
       <code>position</code> can be an integer, specifying the position
       in the line where the text should be inserted, or the string
       <code>"end"</code>, for the end of the line.</dd>
     </dl>
 
-    <h2>Writing a parser</h2>
+    <h2 id="writeparser">Writing a Parser</h2>
 
     <p>A parser is implemented by one or more files (see
     <code>parserfile</code> above) which, when loaded, add a

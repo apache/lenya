@@ -3,8 +3,8 @@
     <title>Implementing a syntax-higlighting JavaScript editor in JavaScript</title>
     <style type="text/css">
       body {
-        font-family: tahoma, arial, sans-serif;
-        padding: 3em 8em;
+        padding: 3em 6em;
+        max-width: 50em;
       }
       h1 {
         text-align: center;
@@ -16,7 +16,7 @@
       code {
         font-family: courier, monospace;
         font-size: 80%;
-        color: #448888;
+        color: #144;
       }
       p {
         margin: 1em 0;
@@ -42,6 +42,11 @@
       <b>Date</b>: May 24th 2007
     </p>
 
+    <p style="color: #811; font-size: 90%; font-style: italic">Note: some of the details given here no
+    longer apply to the current <a
+    href="http://marijn.haverbeke.nl/codemirror">CodeMirror</a>
+    codebase, which has evolved quite a bit in the meantime.</p>
+
     <p>In one of his (very informative) <a
     href="http://video.yahoo.com/?t=t&amp;p=douglascrockford">video
     lectures</a>, Douglas Crockford remarks that writing JavaScript for
@@ -58,7 +63,7 @@
     <p>In this document I describe the story of implementing this, for your
     education and amusement. A demonstration of the resulting program,
     along with the source code, can be found at <a
-    href="index.html">my website</a>.</p>
+    href="http://marijn.haverbeke.nl/codemirror">my website</a>.</p>
 
     <h2>Take one: Only indentation</h2>
 
@@ -148,7 +153,7 @@
     myself waiting for over four seconds every time I pressed enter. That
     seemed a little slow.</p>
 
-    <h2><code>designMode</code> it is</h2>
+    <h2>designMode it is</h2>
 
     <p>The solution was obvious: Since the text inside a textarea can only be
     manipulated as one single big string, I had to spread it out over
@@ -230,30 +235,34 @@
 
     <h2>The DOM nodes underfoot</h2>
 
-    <p>Of course, when working inside an editable frame we don't just have to
-    deal with text. The code will be represented by some kind of DOM tree.
-    My first idea was to set the <code>whitespace: pre</code> style for the frame and
-    try to work with mostly text, with the occasional coloured <code>span</code>
-    element. It turned out that support for <code>whitespace: pre</code> in browsers,
-    especially in editable frames, is so hopelessly glitchy that this was
-    unworkable.</p>
+    <p>Of course, when working inside an editable frame we don't just
+    have to deal with text. The code will be represented by some kind
+    of DOM tree. My first idea was to set the <code>white-space:
+    pre</code> style for the frame and try to work with mostly text,
+    with the occasional coloured <code>span</code> element. It turned
+    out that support for <code>white-space: pre</code> in browsers,
+    especially in editable frames, is so hopelessly glitchy that this
+    was unworkable.</p>
 
-    <p>Next I tried a series of <code>div</code> elements, one per line, with <code>span</code>
-    elements inside them. This seemed to nicely reflect the structure of
-    the code in a shallowly hierarchical way. I soon realized, however,
-    that my code would be much more straightfoward when using no hierarchy
-    whatsoever &#x2015; a series of <code>span</code>s, with <code>br</code> tags at the end of every
-    line. This way, the DOM nodes form a flat sequence that corresponds to
-    the sequence of the text &#x2015; just extract text from <code>span</code> nodes and
-    substitute newlines for <code>br</code> nodes.</p>
+    <p>Next I tried a series of <code>div</code> elements, one per
+    line, with <code>span</code> elements inside them. This seemed to
+    nicely reflect the structure of the code in a shallowly
+    hierarchical way. I soon realized, however, that my code would be
+    much more straightfoward when using no hierarchy whatsoever
+    &#x2015; a series of <code>span</code>s, with <code>br</code> tags
+    at the end of every line. This way, the DOM nodes form a flat
+    sequence that corresponds to the sequence of the text &#x2015;
+    just extract text from <code>span</code> nodes and substitute
+    newlines for <code>br</code> nodes.</p>
 
-    <p>It would be a shame if the editor would fall apart as soon as someone
-    pastes some complicated HTML into it. I wanted it to be able to deal
-    with whatever mess it finds. This means using some kind of
-    HTML-normalizer that takes arbitrary HTML and flattens it into a
-    series of <code>br</code>s and <code>span</code> elements that contain a single text node.
-    Just like the parsing process, it would be best if this did not have
-    to done to the entire buffer every time something changes.</p>
+    <p>It would be a shame if the editor would fall apart as soon as
+    someone pastes some complicated HTML into it. I wanted it to be
+    able to deal with whatever mess it finds. This means using some
+    kind of HTML-normalizer that takes arbitrary HTML and flattens it
+    into a series of <code>br</code>s and <code>span</code> elements
+    that contain a single text node. Just like the parsing process, it
+    would be best if this did not have to done to the entire buffer
+    every time something changes.</p>
 
     <p>It took some banging my head against my keyboard, but I found a very
     nice way to model this. It makes heavy use of generators, for which I

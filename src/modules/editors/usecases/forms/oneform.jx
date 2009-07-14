@@ -33,7 +33,7 @@
     <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js"/>
     <script type="text/javascript" src="/modules/editors/javascript/sourceEditor/lenya_glue.js"/>
     <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js"/>
-    <script type="text/javascript" src="/modules/editors/codemirror/0.60/js/codemirror.js"/>
+    <script type="text/javascript" src="/modules/editors/codemirror/0.61/js/codemirror.js"/>
     <script type="text/javascript" src="/modules/editors/javascript/sourceEditor/codemirror.js"/>
     <link rel="stylesheet" type="text/css" href="/modules/editors/css/sourceEditor.css"/>
   </page:head>
