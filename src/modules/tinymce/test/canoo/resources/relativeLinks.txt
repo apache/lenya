@@ -12,6 +12,9 @@ Content-Disposition: form-data; name="tinymce.namespaces"
 Content-Disposition: form-data; name="tinymce.content"
 <h1>Hello and welcome to the Lenya default publication!</h1>
 <p>
+<object data="index/testimage.png"/>
+</p>
+<p>
 Apache Lenya is a Java Open-Source Content Management System based on open standards such as XML and
 XSLT and the Apache Software Stack, in particular the XML publishing framework Apache Cocoon.
 </p>

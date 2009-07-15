@@ -28,11 +28,46 @@
       <steps>
         <doLogin username="lenya" password="levi"/>
         
-        <invoke url="index.html?lenya.usecase=tinymce.edit" method="POST" contentFile="resources/relativeLinks.txt"/>
+        <invoke url="index.html?doctype=resource&amp;lenya.usecase=editors.createResource&amp;lenya.exitUsecase=editors.insertImage"/>
+        <setFileField name="file" fileName="resources/project-logo.png"/>
+        <setInputField name="nodeName" value="testimage"/>
+        <setInputField name="dublincore.title" value="Test Image"/>
+        <setSelectField name="visibleInNav" value="true"/>
+        <setRadioButton name="relation" value="child"/>
+        <setSelectField name="language" value="en"/>
+        <setInputField name="dublincore.creator" value="lenya"/>
+        <setRadioButton name="sample" value="Default Sample"/>
+        <clickButton name="submit"/>
+        
+        <invoke url="index.html?lenya.usecase=tinymce.edit"/>
+        <setInputField name="tinymce.content">
+          &lt;p&gt;
+          &lt;object data="index/testimage.png"/&gt;
+          &lt;/p&gt;
+        </setInputField>
+        <clickButton name="submit"/>
+        
+        <invoke url="index.xml"/>
+        <verifyXPath xpath="//object"/>
+        
+        <invoke url="index/testimage.html?lenya.usecase=tab.overview"/>
+        <storeRegEx property="uuid" text="[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"/>
+        
+        <invoke url="index.xml"/>
+        <verifyXPath xpath="//object[@data = 'lenya-document:#{uuid}']"/>
+        
+        <!--
+        <storeXPath property="continuationId" xpath="//input[@name = 'lenya.continuation']/@value"/>
+        
+        <invoke url="index.html" method="POST" contentFile="resources/relativeLinks.txt"/>
         <invoke url="tutorial.html?lenya.usecase=tab.overview"/>
         <storeRegEx property="uuid" text="[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"/>
         <invoke url="index.xml"/>
-        <verifyText text="#{uuid}"/>        
+        <verifyText text="#{uuid}"/>
+        -->
+        
+        
+        
       </steps>
     </webtest>
   </target>
