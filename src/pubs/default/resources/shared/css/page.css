@@ -38,7 +38,7 @@
 
 #tabs table {
     font-family: Verdana, Arial, Sans-serif;
-    font-size: 80%;
+    font-size: small;
 }
 
 #tabs td {
@@ -115,7 +115,7 @@ td.tab-post-separator {
 }
 
 #languageselector {
-    font-size: 80%;
+    font-size: small;
     padding-top: 10px;
     padding-left: 15px;
     /*
@@ -196,7 +196,7 @@ td.tab-post-separator {
 .menuitem-3, .menuitem-selected-3,
 .menuitem-4, .menuitem-selected-4,
 .menuitem-5, .menuitem-selected-5 {
-  font-size: 80%;
+  font-size: small;
 }
   
 .menuitem-1, .menuitem-selected-1 {
@@ -247,7 +247,7 @@ td.tab-post-separator {
     border-top: solid 1px #BB9999;
     border-bottom: solid 1px #BB9999;
     font-family: Verdana, Arial, Sans-serif;
-    font-size: 80%;
+    font-size: small;
 }
 
 #breadcrumb a {
@@ -257,7 +257,7 @@ td.tab-post-separator {
 
 #search {
     font-family: Verdana, Arial, Sans-serif;
-    font-size: 100%;
+    font-size: medium;
     margin-right: 10px;
     float: right;
     position:relative;
@@ -265,13 +265,13 @@ td.tab-post-separator {
 }
 
 input.searchfield {
-    font-size: 80%;
+    font-size: small;
     background-color: #ffffff;
     border: 1px solid #BB9999;
 }
 
 input.searchsubmit {
-    font-size: 80%;
+    font-size: small;
     color: Maroon;
     background-color: #FFEEEE;
     border: 1px solid #BB9999;
@@ -316,13 +316,13 @@ body {
 */
 }
 
-h1 { font-size: 140%; }
-h2 { font-size: 100%; }
-h3 { font-size: 80%; }
-p { font-size: 80%; }
-li { font-size: 80%; }
+h1 { font-size: large; }
+h2 { font-size: medium; }
+h3 { font-size: small; }
+p { font-size: small; }
+li { font-size: small; }
 
-.crossheading { font-weight: bold; font-size: 110%; }
+.crossheading { font-weight: bold; font-size: medium; }
 
 table.simple {
     border-collapse: collapse;
@@ -338,7 +338,7 @@ div#body td {
 }
 
 td.simple {
-    font-size: 80%;
+    font-size: small;
     padding: 3px;
     background-color: White;
     border: solid 1px Navy;
@@ -380,7 +380,7 @@ img.simple {
     padding: 5px;
     text-align: center;
     font-style: italic;
-    font-size: 80%;
+    font-size: small;
 }
 
 .abstract {
@@ -388,12 +388,12 @@ img.simple {
 }
 
 h1 {
-    font-size: 120%;
+    font-size: large;
     color: Maroon;
 }
 
 h2 {
-    font-size: 100%;
+    font-size: medium;
     color: Maroon;
     border-bottom: solid 1px #BB9999;
     margin-top: 30px;
@@ -513,7 +513,7 @@ ul.images div.imageTitle {
 }
 
 .search-result-score {
-    font-size: 90%;
+    font-size: small;
     font-weight: normal;
 }
 
