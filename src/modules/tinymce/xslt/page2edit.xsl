@@ -17,6 +17,7 @@
 <xsl:param name="usecaseName" select="'tinymce.ERROR'"/>
 <xsl:param name="publicationId" select="'tinymce.ERROR'" />
 <xsl:param name="locale" select="'tinymce.ERROR'"/>
+<xsl:param name="content" select="''"/>
 
 
 <!--
@@ -191,7 +192,7 @@
   </xsl:for-each>
     <!-- insert usecase messages, if any -->
     <xsl:apply-templates select="/tinymceWrapper/xhtml:div[@class='lenyaInfoBox']"/>
-  <xsl:if test="not(/tinymceWrapper/xhtml:div[@class = 'lenyaInfoBox']/*)">
+<!--    <xsl:if test="not(/tinymceWrapper/xhtml:div[@class = 'lenyaInfoBox']/*)">-->
     <!-- insert tinymce form hook -->
       <xsl:comment>special code for the tinymce.edit usecase view</xsl:comment>
       <xsl:text>
@@ -211,6 +212,9 @@
           <textarea id="tinymce.content" name="tinymce.content" style="width:100%">
             <xsl:choose>
               <!-- firefox bug workaround: prevent <textarea/> from collapsing if empty -->
+              <xsl:when test="$content!='' and /tinymceWrapper/xhtml:div[@class = 'lenyaInfoBox']/*">
+                <xsl:value-of select="$content" />
+              </xsl:when>
               <xsl:when test=".//*">
                 <xsl:apply-templates/>
               </xsl:when>
@@ -228,7 +232,7 @@
           <xsl:text>
       </xsl:text>
       </form>
-    </xsl:if>
+<!--    </xsl:if>-->
     <xsl:text>
     </xsl:text>
 </xsl:copy>
