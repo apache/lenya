@@ -221,10 +221,10 @@
           </textarea>
           <xsl:text>
           </xsl:text>
-          <input i18n:attr="value" type="submit" name="submit" value="Save"/>		
+          <input i18n:attr="value" type="submit" name="submit" value="Save" onclick="javascript:window.onbeforeunload = true;"/>        
           <xsl:text>
           </xsl:text>
-          <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>		
+          <input i18n:attr="value" type="submit" name="cancel" value="Cancel" onclick="javascript:window.onbeforeunload = true;"/>      
           <xsl:text>
       </xsl:text>
       </form>
