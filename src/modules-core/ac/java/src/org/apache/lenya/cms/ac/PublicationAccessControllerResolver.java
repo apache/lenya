@@ -205,7 +205,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             contextSource = resolver.resolveURI("context:///");
             contextDir = SourceUtil.getFile(contextSource);
 
-            if (contextDir == null || !contextDir.isDirectory()) {
+            if (contextDir == null) {
+                throw new AccessControlException("The servlet context is null!");
+            } else if(!contextDir.isDirectory()) {
                 throw new AccessControlException("The servlet context ["
                         + contextDir.getAbsolutePath() + "] is not a directory!");
             }
