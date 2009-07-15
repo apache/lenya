@@ -190,8 +190,8 @@
     <xsl:copy/>
   </xsl:for-each>
     <!-- insert usecase messages, if any -->
-    <xsl:apply-templates select="/tinymceWrapper/xhtml:div[@class='lenya-error']"/>
-  <xsl:if test="not(/tinymceWrapper/xhtml:div[@class = 'lenya-error']/*)">
+    <xsl:apply-templates select="/tinymceWrapper/xhtml:div[@class='lenyaInfoBox']"/>
+  <xsl:if test="not(/tinymceWrapper/xhtml:div[@class = 'lenyaInfoBox']/*)">
     <!-- insert tinymce form hook -->
       <xsl:comment>special code for the tinymce.edit usecase view</xsl:comment>
       <xsl:text>
@@ -234,7 +234,7 @@
 </xsl:copy>
 </xsl:template>
 
-<xsl:template match="/tinymceWrapper/xhtml:div[@class='lenya-error']">
+<xsl:template match="/tinymceWrapper/xhtml:div[@class='lenyaInfoBox']">
   <xsl:copy>
     <xsl:for-each select="@*">
       <xsl:copy/>
