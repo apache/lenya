@@ -1,0 +1,1 @@
+Unload handler for lenya/tinymce
