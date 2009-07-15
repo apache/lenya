@@ -53,9 +53,11 @@ limitations under the License.
   <xsl:variable name="mediaUrl" select="concat(substring-before($documentUrl, '.html'), '.', $sourceExtension, $revisionSuffix)"/>
   
   <xsl:template match="/">
-    <xhtml:div id="body">
-      <xsl:apply-templates select="//meta:metadata" mode="media"/>
-    </xhtml:div>
+    <html>
+      <body>
+        <xsl:apply-templates select="//meta:metadata" mode="media"/>
+      </body>
+    </html>
   </xsl:template>
     
   <xsl:template match="meta:metadata" mode="media">
