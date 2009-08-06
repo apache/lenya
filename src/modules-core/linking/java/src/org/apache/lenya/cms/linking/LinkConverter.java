@@ -24,8 +24,12 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
@@ -86,7 +90,14 @@ public class LinkConverter extends AbstractLogEnabled {
                 ChainLinkRewriter incomingRewriter = new ChainLinkRewriter();
                 incomingRewriter.add(new RelativeToAbsoluteLinkRewriter(examinedDocument.getCanonicalWebappURL()));
                 incomingRewriter.add(new IncomingLinkRewriter(pub));
-                LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument.getFactory());
+
+                // Workaround:
+                // We create a new session because the sitetree of the transaction doesn't yet contain
+                // references to any new documents that were uploaded during the transaction.
+                // See https://issues.apache.org/bugzilla/show_bug.cgi?id=47621
+                Session readOnlySession = RepositoryUtil.createSession(this.manager, examinedDocument.getSession().getIdentity(), false);
+                DocumentFactory newFactory = DocumentUtil.createDocumentFactory(this.manager, readOnlySession);
+                LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(newFactory);
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
                         .getInputStream());
