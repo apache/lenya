@@ -46,6 +46,7 @@ import org.apache.lenya.util.Assert;
  */
 public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, SiteTree, Persistable {
 
+    protected static final String SITETREE_FILE_NAME = "sitetree.xml";
     private Area area;
     protected ServiceManager manager;
     private RootNode root;
@@ -73,7 +74,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     protected String getSourceUri() {
         if (this.sourceUri == null) {
             String baseUri = this.area.getPublication().getContentURI(this.area.getName());
-            this.sourceUri = baseUri + "/sitetree.xml";
+            this.sourceUri = baseUri + "/" + SITETREE_FILE_NAME;
         }
         return this.sourceUri;
     }
@@ -420,6 +421,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     protected int getRevision() {
+        load();
         return this.revision;
     }
     
