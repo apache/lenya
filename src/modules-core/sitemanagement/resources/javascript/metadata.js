@@ -27,7 +27,7 @@
         namespace: namespace,
         element: element,
         oldValue: dojo.byId("oldValue_" + id).value,
-        value: dojo.byId("input_" + id).value,
+        value: dojo.byId("input_" + id).value
       },
       method: "post",
       encoding: "utf-8",
