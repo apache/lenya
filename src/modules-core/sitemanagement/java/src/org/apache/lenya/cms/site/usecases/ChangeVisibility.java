@@ -95,11 +95,16 @@ public class ChangeVisibility extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
-        if(getSourceDocument() != null) {
-            SiteStructure structure = getSourceDocument().area().getSite();
-            nodes.add(structure.getRepositoryNode());
+				try {				
+					  SiteNode node = getSourceDocument().getLink().getNode();
+					  String[] languages = node.getLanguages();
+					  for (int l = 0; l < languages.length; l++) {
+						    Document doc = node.getLink(languages[l]).getDocument();
+                nodes.add(doc.getRepositoryNode());
+					  }
+				} catch (Exception e) {
+            throw new UsecaseException(e);
         }
-
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 

@@ -67,11 +67,7 @@ public class ChangeLabel extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
-        if(getSourceDocument() != null) {
-            SiteStructure structure = getSourceDocument().area().getSite();
-            nodes.add(structure.getRepositoryNode());
-        }    
-
+        nodes.add(getSourceDocument().getRepositoryNode());
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
