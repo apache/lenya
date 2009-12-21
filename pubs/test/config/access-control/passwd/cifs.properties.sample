@@ -1,5 +1,0 @@
-# the name of the domain controller (or samba sever) to authenticate against
-domain-controller=my-domain-controller
-
-# domain/workgroup name to use
-domain=WORKGROUP

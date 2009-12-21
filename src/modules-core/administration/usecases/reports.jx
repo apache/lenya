@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: emptyTrash.jx 164233 2005-04-22 13:01:45Z jwkaltz $ -->
+
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:body>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+      <h1><i18n:text>Reports</i18n:text></h1>
+      
+      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+      
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('brokenLinks')}">
+          <h2><i18n:text>broken-links</i18n:text></h2>
+          <jx:set var="brokenLinks" value="${usecase.getParameter('brokenLinks')}"/>
+          <jx:choose>
+            <jx:when test="${brokenLinks.isEmpty()}">
+              <i18n:text>no-broken-links</i18n:text>
+            </jx:when>
+            <jx:otherwise>
+              <table class="lenya-table-list">
+                <tr>
+                  <th><i18n:text>Source</i18n:text></th>
+                  <th><i18n:text>Target</i18n:text></th>
+                </tr>
+                <jx:forEach var="brokenLink" items="${brokenLinks}">
+                  <tr>
+                    <td><a href="${brokenLink.getSourceUrl()}">${brokenLink.getSourceUrl()}</a></td>
+                    <td>${brokenLink.getTargetUrl()}</td>
+                  </tr>
+                </jx:forEach>
+              </table>
+            </jx:otherwise>
+          </jx:choose>
+        </jx:when>
+        <jx:otherwise>
+          <p>
+            <a href="${usecase.getSourceURL()}?lenya.usecase=${usecase.getName()}&amp;report=brokenLinks" class="lenyaButton">
+              <i18n:text>find-broken-links</i18n:text>
+            </a>
+          </p>
+        </jx:otherwise>
+      </jx:choose>
+      
+    </div>
+  </page:body>
+</page:page>

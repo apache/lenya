@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<xmap xpath="/sitemap/components/transformers" 
+  unless="/sitemap/components/transformers/transformer[@name = 'uuid2url']"
+  xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <map:transformer name="uuid2url" logger="lenya.sitemap.transformer.uuid2url"
+    src="org.apache.lenya.cms.cocoon.transformation.UuidToUrlTransformer">
+    <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="object" attribute="data"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="img" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="link" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="form" attribute="action"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="script" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="input" attribute="src"/>
+    <markBrokenLinks attribute="class" value="brokenlink" messageAttribute="title"/>
+  </map:transformer>
+    
+  <map:transformer name="url2uuid" logger="lenya.sitemap.transformer.url2uuid"
+    src="org.apache.lenya.cms.cocoon.transformation.UrlToUuidTransformer">
+    <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="object" attribute="data"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="img" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="link" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="form" attribute="action"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="script" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="input" attribute="src"/>
+  </map:transformer>
+    
+  <map:transformer name="proxy" logger="lenya.sitemap.transformer.proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.ProxyTransformer">
+    <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="object" attribute="data"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="img" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="link" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="form" attribute="action"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="script" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="input" attribute="src"/>
+  </map:transformer>
+
+  <map:transformer name="incoming-proxy" logger="lenya.sitemap.transformer.incoming-proxy"
+    src="org.apache.lenya.cms.cocoon.transformation.IncomingProxyTransformer">
+    <transform namespace="http://www.w3.org/1999/xhtml" element="a" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="object" attribute="data"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="img" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="link" attribute="href"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="form" attribute="action"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="script" attribute="src"/>
+    <transform namespace="http://www.w3.org/1999/xhtml" element="input" attribute="src"/>
+  </map:transformer>
+  
+</xmap>

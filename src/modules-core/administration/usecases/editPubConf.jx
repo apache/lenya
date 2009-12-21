@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: addGroup.jx 496697 2007-01-16 14:12:36Z andreas $ -->
+
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:body>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+      <h1><i18n:text>show-pub-conf</i18n:text></h1>
+      
+      <form method="post" action="${usecase.getSourceURL()}">
+        <p>
+          <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        </p>
+        
+        <jx:set var="pub" value="${usecase.getParameter('publication')}"/>
+        
+        <table class="lenya-table-noborder">
+          <tr>
+            <td colspan="2">
+              <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><i18n:text>id</i18n:text>:</td>
+            <td>${pub.getId()}</td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="name"><i18n:text>name</i18n:text>:</label></td>
+            <td><input type="text" name="name" value="${usecase.getParameter('name')}"/></td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="contentDir"><i18n:text>content-directory</i18n:text>:</label></td>
+            <td><input type="text" size="60" name="contentDir" value="${usecase.getParameter('contentDir')}"/></td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption" style="vertical-align: top">
+              <p>
+                <i18n:text>proxies</i18n:text>:
+              </p>
+            </td>
+            <td>
+              <p>
+                <i18n:text>warning-change-proxy-settings</i18n:text>
+              </p>
+              <jx:set var="areas" value="${pub.getAreaNames()}"/>
+              <table class="lenya-table-list-noborder">
+                <jx:forEach var="area" items="${areas}">
+                  <tr>
+                    <td class="lenya-entry-caption">${area}:</td>
+                    <td>
+                      <jx:set var="name" value="${'proxy-' + area + '-false'}"/>
+                      <input type="text" size="40" name="${name}" value="${usecase.getParameter(name)}"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="lenya-entry-caption">${area} (SSL):</td>
+                    <td>
+                      <jx:set var="name" value="${'proxy-' + area + '-true'}"/>
+                      <input type="text" size="40" name="${name}" value="${usecase.getParameter(name)}"/>
+                    </td>
+                  </tr>
+                </jx:forEach>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td/>
+            <td>
+              <br/>
+              <input i18n:attr="value" type="submit" name="submit" value="Save"/>
+              <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+            </td>
+          </tr>
+        </table>
+        
+      </form>
+    </div>
+  </page:body>
+</page:page>

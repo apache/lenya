@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: renameLabel.jx 123364 2004-12-26 16:11:27Z gregor $ -->
+<page:page xmlns:c="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+           xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+           >
+           
+  <page:title>
+    <i18n:text>Create Publication from Template</i18n:text>
+  </page:title>
+  <page:body>
+    <div class="lenya-box">
+      <div class="lenya-box-title">
+        <i18n:text>Create Publication from Template</i18n:text>
+      </div>
+      <div class="lenya-box-body">
+        <form method="get" action="" id="form-create_pub_from_template">
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+          <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+          <table class="lenya-table-noborder">
+            <tr>
+              <td colspan="2">
+                <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><label for="publicationId"><i18n:text>Publication ID</i18n:text>:</label></td>
+              <td><input type="text" class="lenya-form-element" name="publicationId" value="${usecase.getParameter('publicationId')}"/></td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><label for="publicationName"><i18n:text>Publication Name</i18n:text>:</label></td>
+              <td><input type="text" class="lenya-form-element" name="publicationName" value="${usecase.getParameter('publicationName')}"/></td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><label for="template"><i18n:text>Template</i18n:text>:</label></td>
+              <td>
+                <select name="template" class="lenya-form-element">
+                  <jx:forEach var="template" items="${usecase.getParameter('availableTemplates')}">
+                    <jx:choose>
+                      <jx:when test="${template.equals(usecase.getParameter('template'))}">
+                        <option value="${template}" selected="selected"><jx:out value="${template}"/></option>
+                      </jx:when>
+                      <jx:otherwise>
+                        <option value="${template}"><jx:out value="${template}"/></option>
+                      </jx:otherwise>
+                    </jx:choose>
+                  </jx:forEach>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td/>
+              <td>
+                <br/>
+                <input i18n:attr="value" type="submit" name="submit" value="Create"/>
+                &#160;
+                <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </page:body>
+</page:page>

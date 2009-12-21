@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: cmsui.xml 446542 2006-09-15 08:14:39Z andreas $ -->
+
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://apache.org/cocoon/i18n/2.1">
+
+  <message key="resourceType-resource">Media</message>
+  <message key="http://apache.org/lenya/metadata/media/1.0">Media</message>
+  <message key="filename">File name</message>
+  <message key="Insert Image">Insert Image</message>
+  <message key="Insert Asset">Insert Asset</message>
+  <message key="Asset Upload">Asset Upload</message>
+  <message key="Insert a new Image">Insert a new Image</message>
+  <message key="Upload an Asset">Upload an Asset</message>
+  <message key="upload-size-exceeded">The file is too big ({0}).</message>
+  <message key="upload-enter-title">Please enter a title.</message>
+  <message key="upload-choose-file">Please choose a file to upload.</message>
+  <message key="upload-missing-extension">Please upload a file with an extension.</message>
+  <message key="upload-disabled">Upload is not enabled. Please check local.build.properties!</message>
+  <message key="upload-reset">
+    The browser can't set the value of the file upload widget for security reasons.
+    Please select the file again.
+  </message>
+  <message key="width">Width</message>
+  <message key="height">Height</message>
+  <message key="Preview">Preview</message>
+  <message key="Available Assets">Available Assets</message>
+  <message key="Upload Asset">Upload Asset</message>
+  <message key="Media Document">Media Document</message>
+  <message key="Title">Title</message>
+  <message key="Description">Description</message>
+  <message key="Content">Content</message>
+  <message key="Size">Size</message>
+  <message key="MimeType">Mime Type</message>
+  <message key="Dimension (w x h)">Dimension (width&#160;&#215;&#160;height)</message>
+  <message key="Width">Width</message>
+  <message key="Height">Height</message>
+  <message key="Upload File">Upload File</message>
+  <message key="Warning">Warning</message>
+  <message key="document-will-be-overwritten">The existing document will be overwritten!</message>
+  <message key="no-preview-available">No preview available for this resource.</message>
+  
+</catalogue>

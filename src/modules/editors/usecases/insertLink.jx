@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+  $Id: link.xsl 555656 2007-07-12 15:17:47Z nettings $
+-->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns:proxy="http://apache.org/lenya/proxy/1.0"
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  
+  <jx:set var="doc" value="${usecase.getParameter('document')}"/>
+  
+  <page:title><i18n:text>insertLink.heading</i18n:text></page:title>
+  <page:body style="width:auto;">
+    
+    <script type="text/javascript" src="/modules/sitetree/javascript/tree.js">&#160;</script>
+    <script type="text/javascript" src="/modules/sitetree/javascript/lenyatree.js">&#160;</script>
+    <script type="text/javascript" src="/modules/sitetree/javascript/navtree.js">&#160;</script>
+    <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js">&#160;</script>
+    <script type="text/javascript" src="/modules/editors/javascript/insertLink.js">&#160;</script>
+    <script type="text/javascript">
+      AREA = "${doc.getArea()}";
+      DOCUMENT_ID = "${doc.getPath()}";
+      PUBLICATION_ID = "${doc.getPublication().getId()}";
+      CHOSEN_LANGUAGE = "${doc.getLanguage()}";
+      DEFAULT_LANGUAGE = "${doc.getPublication().getDefaultLanguage()}";
+      IMAGE_PATH = '<proxy:url href="/lenya/images/tree/"/>';
+      CUT_DOCUMENT_ID = '';
+      ALL_AREAS = "authoring";
+      PIPELINE_PATH = 'modules/sitetree/sitetree-fragment.xml';
+      WEBAPP_BASE_PATH = '<proxy:url href="/"/>';
+    </script>
+    
+    <div id="lenya-info-treecanvas" style="width: 250px;">
+      <div class="lenya-tabs">
+        <jx:forEach var="language" items="${doc.getPublication().getLanguages()}">
+          <jx:choose>
+            <jx:when test="${doc.getLanguage().equals(language)}">
+              <a id="${language}" class="lenya-tablink-active"><jx:out value="${language}"/></a>
+            </jx:when>
+            <jx:otherwise>
+              <a id="${language}" class="lenya-tablink" href="lenya-document:,lang=${language}?lenya.usecase=editors.insertLink">
+                <jx:out value="${language}"/>
+              </a>
+            </jx:otherwise>
+          </jx:choose>
+        </jx:forEach>
+      </div>
+      <div id="lenya-info-tree">
+        <div id="tree">&#160;
+        </div>
+      </div>
+    </div>
+    <div class="lenya-box" style="margin-left: 260px;">
+      <div class="lenya-box-title"><i18n:text>insertLink.heading</i18n:text></div>
+      <div class="lenya-box-body">
+        
+        <form name="insertLink">
+          
+          <table class="lenya-table-noborder">
+            <tr>
+              <td colspan="2" class="lenya-form-caption">
+                <i18n:text>insertLink.clickTreeOrType</i18n:text>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">&#160;</td>
+            </tr>
+            <tr>
+              <td class="lenya-form-caption">
+                <i18n:text>insertLink.URL</i18n:text>:
+              </td>
+              <td>
+                <input class="lenya-form-element" type="text" name="url"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-form-caption">
+                <i18n:text>insertLink.title</i18n:text>:
+              </td>
+              <td>
+                <input class="lenya-form-element" type="text" name="title"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-form-caption">
+                <i18n:text>insertLink.text</i18n:text>:</td>
+              <td>
+                <input class="lenya-form-element" type="text" name="text"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">&#160;</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input 
+                  i18n:attr="value" 
+                  type="submit" 
+                  value="insertLink.submit" 
+                  onclick="org.apache.lenya.editors.handleFormSubmit('insertLink')"
+                />
+                &#160;
+                <input 
+                  i18n:attr="value"
+                  type="submit"
+                  value="Cancel" 
+                  name="cancel"
+                  onclick="window.close()"
+                />
+                &#160;
+                <input 
+                  i18n:attr="value" 
+                  type="button" 
+                  value="insertAsset.createResource" 
+                  onclick="location.href='?lenya.usecase=editors.createResource&amp;doctype=resource&amp;lenya.exitUsecase=editors.insertLink'"
+                />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </page:body>
+  
+</page:page>

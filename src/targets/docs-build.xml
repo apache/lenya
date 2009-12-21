@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<project name="lenya-documentation">
+
+  <description>
+    Documentation Targets
+  </description>
+
+  <!-- Set a variable if javadoc is already up-to-date -->
+  <target name="javadocs_check">
+    <uptodate property="javadocs.notrequired" targetfile="${dist.bin.javadocs}/packages.html" >
+      <srcfiles dir="${src.java.api.dir}" includes="**/*.java"/>
+    </uptodate>
+  </target>
+
+  <!-- If javadoc is already up-to-date, print a message saying so -->
+  <target name="javadocs_done" if="javadocs.notrequired">
+    <echo message="-------------------------------------------------------------"/>
+    <echo message="  Not rebuilding Javadocs, as they are up-to-date:"/>
+    <echo message="  ${dist.bin.javadocs}/packages.html is more recent than"/>
+    <echo message="  ${src.java.dir}/**/*.java"/>
+    <echo message="-------------------------------------------------------------"/>
+  </target>
+  
+  <target name="javadocs-api">
+    <mkdir dir="${dist.bin.javadocs}"/>
+    <javadoc packagenames="${packages}"
+      destdir="${dist.bin.javadocs}"
+      author="true"
+      version="true"
+      use="false"
+      noindex="true"
+      breakiterator="true"
+      windowtitle="${Name} API - Version ${version}"
+      doctitle="${Name}"
+      bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
+      stylesheetfile="${src.resource.dir}/javadoc.css"
+      source="${src.java.version}">
+      <!-- sources -->
+      <sourcepath>
+        <pathelement path="${src.java.api.dir}"/>
+        <!--
+          <pathelement path="${build.java.src}"/>
+        -->
+      </sourcepath>
+      
+      <!-- pass ant in the classpath to avoid class not found errors -->
+      <classpath>
+        <fileset dir="${lib.dir}">
+          <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${cocoon.webapp.dir}/WEB-INF/lib">
+          <include name="*.jar"/>
+        </fileset>
+        <fileset dir="tools/jetty/lib">
+          <include name="servlet-*.jar"/>
+        </fileset>
+        <fileset dir="tools/lib">
+          <include name="*.jar"/>
+        </fileset>
+      </classpath>
+    </javadoc>
+  </target>
+
+  <!-- Creates the API documentation -->
+  <target name="javadocs"
+    depends="prepare-src, javadocs_check, javadocs_done, javadocs-api, javadocs-modules"
+    unless="javadocs.notrequired"
+    description="Generates the API documentation"/>
+  
+</project>

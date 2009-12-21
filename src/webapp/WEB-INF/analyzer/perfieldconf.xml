@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- allow to analyze multi-langage documents> -->
+  <config defaultAnalyzer="stopword_fr">
+		<field name="description_en" analyzer="stopword_en"/>
+		<field name="subject" analyzer="stopword_en"/>
+  </config>

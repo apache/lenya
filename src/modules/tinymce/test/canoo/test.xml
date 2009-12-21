@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!DOCTYPE project SYSTEM "../../../../modules/development/test/canoo/lenya_webtest.dtd">
+
+<project name="TinyMCE test" basedir=".">
+  
+  <import file="../../../../modules/development/test/canoo/macros.xml"/>
+  
+  <target name="wt.testInWork">
+    <webtest name="link-rewriting">
+      &doConfig;
+      <steps>
+        <doLogin username="lenya" password="levi"/>
+        
+        <invoke url="index.html?doctype=resource&amp;lenya.usecase=editors.createResource&amp;lenya.exitUsecase=editors.insertImage"/>
+        <setFileField name="file" fileName="resources/project-logo.png"/>
+        <setInputField name="nodeName" value="testimage"/>
+        <setInputField name="dublincore.title" value="Test Image"/>
+        <setSelectField name="visibleInNav" value="true"/>
+        <setRadioButton name="relation" value="child"/>
+        <setSelectField name="language" value="en"/>
+        <setInputField name="dublincore.creator" value="lenya"/>
+        <setRadioButton name="sample" value="Default Sample"/>
+        <clickButton name="submit"/>
+        
+        <invoke url="index.html?lenya.usecase=tinymce.edit"/>
+        <setInputField name="tinymce.content">
+          &lt;p&gt;
+          &lt;object data="index/testimage.png"/&gt;
+          &lt;/p&gt;
+        </setInputField>
+        <clickButton name="submit"/>
+        
+        <invoke url="index.xml"/>
+        <verifyXPath xpath="//object"/>
+        
+        <invoke url="index/testimage.html?lenya.usecase=tab.overview"/>
+        <storeRegEx property="uuid" text="[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"/>
+        
+        <invoke url="index.xml"/>
+        <verifyXPath xpath="//object[@data = 'lenya-document:#{uuid}']"/>
+        
+        <!--
+        <storeXPath property="continuationId" xpath="//input[@name = 'lenya.continuation']/@value"/>
+        
+        <invoke url="index.html" method="POST" contentFile="resources/relativeLinks.txt"/>
+        <invoke url="tutorial.html?lenya.usecase=tab.overview"/>
+        <storeRegEx property="uuid" text="[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"/>
+        <invoke url="index.xml"/>
+        <verifyText text="#{uuid}"/>
+        -->
+        
+        
+        
+      </steps>
+    </webtest>
+  </target>
+</project>

@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: introduction.xml 473861 2006-11-12 03:51:14Z gregor $ -->
+
+<page:page 
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+>
+  <page:head/>
+  <page:body>
+    <h1>README: Apache Lenya</h1>
+<!--
+    <h2>Note to developers</h2>
+    <p>
+      Please use this new README to inform users
+      about changes in the code or behaviour of Lenya, particularly those
+      that require custom code or publications to be modified. This file is located under
+      <code>src/webapp/readme.xml</code>. Its contents will be shown on the global 
+      welcome page, and also on the introduction page of every publication.
+    </p>
+-->
+    
+    <h2>Important notes for users updating from an earlier 2.0 release</h2>
+
+    <h3>2009-09-13: I18n catalogues require proper namespace</h3>
+    <p>
+      Ever since some update in late 2008, all your custom I18n catalogues
+      <strong>must</strong> be in the namespace
+      <em>xmlns="http://apache.org/cocoon/i18n/2.1"</em>, otherwise
+      localization transformation will break globally when you migrate to a recent
+      version.<br/>
+      Symptoms are "untranslated" buttons and message keys displayed in
+      place of the actual translation.<br />
+      Thanks to user Gerd for
+      <a href="http://marc.info/?l=lenya-dev&amp;m=122558896606926&amp;w=2">finding this out</a>.
+    </p>
+    <h3>2007-11-08: Redirection changes</h3>
+    <p>
+      Most of our sitemap redirects have been changed to make them work with
+      proxy environments. If you notice any regressions, please complain to
+      the dev list immediately.
+    </p>
+    <h3>2007-11-08: New Proxy test scaffold</h3>
+    <p>
+      If you are a developer or a user interested in proxying, please take a
+      look at the proxy test scaffold in tools/proxytest and read the
+      README. It's important to regularly test new code in proxied
+      environments and non-root contexts.
+    </p>
+    
+    <h3>2007-08-22: User names are now case insensitive</h3>
+    <p>
+      User names are now case insensitive to better support Windows, user assumptions, auto form 
+      completion, and support. This is done by converting all user names to lower case. Any
+      previously created accounts with upper case characters will no longer work. To fix
+      delete and recreate the account using the built in tools. Or optionally, rename any
+      *.iml files in your publication's <code>config/access-control/passwd</code> directory
+      so that the file names are all lower case. You will also have to edit the <code>id</code> 
+      attribute of the <code>identity</code> element to make it lower case in those files as well.
+    </p>
+
+    <h3>2007-08-13: Workflow schema validation fixed</h3>
+    <p>
+      The old XSD-based schema validation in <code>workflow.xml</code> was
+    never used. It has now been ported to RNG for consistency and is applied to your custom
+      workflows during deployment. You will need to remove the
+    <code>xsi:schemaLocation</code> attribute (and you can then also remove
+      the <code>xmlns:xsi</code> declaration) from your custom publications'
+      <code>config/workflow/workflow.xml</code> if you have defined one.
+    </p>    
+    
+    <h3>2007-08-12: Resource type configuration changed</h3>
+    <p>
+      The configuration syntax of resource types has been changed for consistency. 
+      Please apply the following changes to your custom resource type configurations:
+    </p>
+    <ul>
+      <li>
+        <code>&lt;sample-name mime-type="baz" name="bar"&gt;fallback://foo&lt;/sample-name&gt;</code>
+        becomes
+        <code>&lt;sample mime-type="baz" name="bar" uri="fallback://foo"/&gt;</code>
+      </li>
+      <li>
+        <code>&lt;schema src="fallback://foo.rng" language="http://relaxng.org/ns/structure/0.9"/&gt;</code>
+        becomes
+        <code>&lt;schema uri="fallback://foo.rng" namespace="http://relaxng.org/ns/structure/0.9"/&gt;</code>
+      </li>
+    </ul>
+    <p>
+      After that, you need to delete
+    <code>build/lenya/webapp/WEB-INF/cocoon.xconf</code> and rebuild Lenya
+      to deploy the changes.
+    </p>
+    
+    <h3>2007-07-27: PolicyAuthorizer removed</h3>
+    <p>
+      The access control for Lenya documents is now also handled by the
+    UsecaseAuthorizer via a newly introduced usecase "ac.visit". For your
+      custom publications, you will need to give your users the appropriate
+    permissions. We suggest copying the <code>visit.rml</code> role from the default
+      publication.<br />
+      Moreover, be sure to remove the <code>&lt;authorizer
+      type="policy"/&gt;</code> line from your publications'
+    <code>config/access-control/access-control.xml</code>.
+    </p>
+    <h3>2007-07-27: new generic editor usecases</h3>
+    <p>
+      A new generic set of editor helper usecases has been introduced:
+    </p>
+    <ul>
+      <li>editors.insertLink</li>
+      <li>editors.insertImage</li>
+      <li>editors.insertAsset</li>
+      <li>editors.createResource</li>
+    </ul>
+    <p>
+      These are now re-used by all editors, which got us rid of a lot of
+      code duplication. Internet Explorer users watch out: if you have
+      problems with selections not working properly when using those new
+      usecases, please complain on the dev list.
+    </p>
+    
+    <h3>2007-07-19: <code>mime-type</code> attribute for resource type samples</h3>
+    <p>
+      The <code>&lt;sample-name&gt;</code> elements of the resource type declaration
+      must have a <code>mime-type</code> attribute. This allows the Create usecase to initialize
+      the MIME type of the document correctly.
+    </p>
+    
+    <h3>2007-07-12: <code>publication.xml/proxies</code> wrapper element re-introduced</h3>
+    <p>
+      The <code>&lt;proxies&gt;</code> wrapper element is now required again for consistency reasons.
+    </p>
+    
+    <h3>
+      2007-07-03: <code>publication.xml/proxies</code> replaced by <code>cocoon.xconf/GlobalProxies</code>
+    </h3>
+    <p>
+      The <code>&lt;proxies&gt;</code> element in <code>publication.xml</code> is not
+      supported anymore. Instead, you have to configure the <code>GlobalProxies</code>
+      service entry in <code>cocoon.xconf</code>. For more information, see
+      <a href="http://www.nabble.com/-1.4---Proposal--Global-proxy-configuration-tf3999411.html">[Proposal] Global proxy configuration</a>.
+    </p>
+    
+    <h3>
+      2007-06-26: <code>base-url</code> and <code>proxy-url</code> input modules
+      replaced by <code>proxy</code> module
+    </h3>
+    <p>
+      The <code>base-url</code> and <code>proxy-url</code> input modules have been replaced by the
+      <code>proxy</code> module. The functionality of this module corresponds to the ProxyTransformer
+      with one exception: If the <em>webappUrl</em> parameter is an empty string, the root
+      proxy URL (or the context prefix, resp.) is returned.
+    </p>
+    <p>
+      Usage: <code>{proxy:{webappUrl}}</code>.
+    </p>
+    
+    <h3>2007-06-13: Apply ProxyTransformer after UuidToUrlTransformer</h3>
+    <p>
+      The uuid2url and proxy transformers now complement each other. You have
+      to apply the proxy transformer right after the uuid2url transformer:
+    </p>
+    <p><code><![CDATA[<map:transform type="uuid2url"/>
+<map:transform type="proxy"/>
+...]]></code></p>
+    <p>
+      Internal links (to documents, CSS, etc.) don't need to contain the context path
+      anymore, this is now handled by the proxy transformer.
+    </p>
+    
+    <h3>2007-05-29: Using UUID-based URLs for navigation elements</h3>
+    <p>
+      Now the sitetree module uses <code>lenya-document:{uuid}</code> URLs for navigation elements.
+      Because no HTTP URLs are evaluated anymore, you need to pass the document's path instead
+      of URL to the navigation element calls, i.e. the step <code>/{6}</code> in the following call
+      has to be the document's path in the site structure: 
+    </p>
+    <p><code><![CDATA[<map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml>]]></code></p>
+    
+    <h3>2007-05-25: Converted "About Lenya" page to usecase</h3>
+    <p>
+      To enable the "About Lenya" usecase, please set the permissions for the <code>admin.aboutLenya</code>
+      usecase in your <code>config/access-control/usecase-policies.xml</code> file, or use the
+      tab "Usecases" in the administration GUI.
+    </p>
+    
+    <h3>2007-05-08: Fixed <code>create-use-case</code> attribute</h3>
+    <p>
+      The value of the <code>create-use-case</code> attribute of the <code>user-type</code>
+      element in <code>access-control.xml</code> was invalid. The admin area didn't use
+      this attribute yet. Since this has been fixed, you have to update your
+      <code>$PUB_HOME/config/access-control/access-control.xml</code> files:
+    </p>
+    <p><code><![CDATA[<user-type class="org.apache.lenya.ac.file.FileUser"
+    create-use-case="admin.addUser">Local User</user-type>]]></code></p>
+    
+    <h3>2007-05-05: Introduced <code>workflow.multiWorkflowInvoke</code> usecase</h3>
+    <p>
+      Please add the permissions for this usecase to your
+      <code>config/access-control/usecase-policies.xml</code> file, or use the
+      tab "Usecases" in the administration GUI.
+    </p>
+    
+    <h3>2007-04-30: Renamed
+      <code>$PUB_HOME/config/publication.xconf</code> to <code>publication.xml</code></h3>
+    
+    <p>
+      Please rename your <code>$PUB_HOME/config/publication.xconf</code> file to
+      <code>$PUB_HOME/config/publication.xml</code>.
+      This change was done to preserve consistency with the other configuration file names.
+    </p>
+    
+    <h3>2007-04-23: Moved and renamed
+    <code>$PUB_HOME/config/lucene_index.xconf</code></h3>
+    
+    <p>
+      Please move and rename your <code>$PUB_HOME/config/lucene_index.xconf</code> file to
+      <code>$PUB_HOME/config/search/lucene_index.xml</code>.
+      This change was done to preserve consistency with the other configuration file names and locations.
+    </p>
+    
+    <h3>2007-04-23: Moved <code>$MODULE_HOME/module.xml</code></h3>
+    
+    <p>
+      If you are using custom modules, please move your <code>module.xml</code> file into the
+      <code>config/</code> directory of the module (create one if necessary).
+      This change was done to preserve consistency with the <code>publication.xml</code> location.
+    </p>
+    
+    <h3>2007-04-18: <code>ac/</code> is now <code>access-control/</code></h3>
+    <p>
+      In order to make the Lenya publication configuration more
+      self-explanatory, the directory <code>$PUB_HOME/config/ac</code> has
+      been renamed to <code>$PUB_HOME/config/access-control</code>.
+      Additionally, the access control configuration file has been renamed
+      from <code>ac.xconf</code> to <code>access-control.xml</code>.<br />
+      You will have to change your custom publications accordingly. Don't
+      forget to change the path settings in <code>access-control.xml</code> as well!
+    </p>
+    <p>
+      <em>Note the new suffix! From now on, "xconf" will only be used for patchfiles
+      that are integrated into cocoon.xconf at build time. All other
+      configuration files that are parsed directly should end in .xml.</em>
+    </p>
+    
+    <h3>2007-04-13: You need to update your custom <code>publication.xconf</code> files!</h3>
+    <p>
+      As of revision 528490, the file <code>$PUB_HOME/publication.xml</code>
+      is no longer used. Its contents should be merged into <code>$PUB_HOME/config/publication.xconf.</code>
+      To accomodate this, the format of <code>publication.xconf</code> has changed a bit (see
+      below).<br />
+      Sorry for the breakage, but we were able to eliminate a lot of old ad-hoc code
+      and duplication with this change, and the new xconf file looks a lot nicer and more intuitive.
+    </p>
+    <p>
+      <em>Most important changes:</em> All elements in <code>publication.xconf</code> 
+      must now be in the namespace <code>http://apache.org/cocoon/lenya/publication/1.1</code>,
+      and <code>&lt;module/&gt;</code>, <code>&lt;proxy/&gt;</code>, and 
+      <code>&lt;resource-type&gt;</code> elements must now be grouped 
+      in <code>&lt;modules/&gt;</code>, <code>&lt;proxies/&gt;</code>, 
+      and <code>&lt;resource-types/&gt;</code>. See the default publication
+      for an example.<br />
+      You can use the RNG schema at <code>src/resources/build/publication.rng</code>
+      to verify that your file is correct:
+    </p>
+    <p>
+      <code>
+        cd $LENYA_HOME<br />
+        java -jar lib/jing-20030619.jar \<br />
+        &#160;&#160;src/resources/build/publication.rng \<br />
+        &#160;&#160;$YOURPUB/config/publication.xconf
+      </code>
+    </p>
+    <h3>New per-publication <code>readme.xml</code></h3>
+    <p>
+      If you want to provide a custom README for your publication (maybe you
+      have used the old &lt;lenya:readme/&gt; in the now gone
+      publication.xconf), you can put it in <code>$YOURPUB/readme.xml</code>. 
+      It is now a standard Lenya CMS page in the
+      <code>http://apache.org/cocoon/lenya/cms-page/1.0</code> namespace.
+    </p>  
+  </page:body>
+</page:page>

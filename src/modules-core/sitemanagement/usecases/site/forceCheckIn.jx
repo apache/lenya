@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: delete.jx 499060 2007-01-23 15:50:56Z andreas $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  
+  <page:title><i18n:text>force-checkin</i18n:text></page:title>
+  <page:body>
+    <p>
+      <i18n:translate>
+        <i18n:text key="force-checkin-question"/>
+        <jx:set var="document" value="${usecase.getParameter('document')}"/>
+        <i18n:param><jx:out value="${document.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></i18n:param>
+      </i18n:translate>
+    </p>
+    
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+    
+    <form method="post" action="" id="form-force_checkin">
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+      
+      <p>
+        <jx:if test="${!usecase.hasErrors()}">
+          <input i18n:attr="value" type="submit" name="submit" value="Submit"/>
+          &#160;
+        </jx:if>
+        <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+      </p>
+    </form>
+  </page:body>
+</page:page>

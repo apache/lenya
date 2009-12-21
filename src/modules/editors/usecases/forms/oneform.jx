@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id$ -->
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:proxy="http://apache.org/lenya/proxy/1.0"
+  >
+  
+  <page:title><i18n:text>Edit</i18n:text></page:title>
+  <page:head>
+    <script type="text/javascript">
+      WEBAPP_BASE_URI = '<proxy:url href="/"/>';
+    </script>
+    <script type="text/javascript" src="/modules/editors/javascript/org.apache.lenya.editors.js"/>
+    <script type="text/javascript" src="/modules/editors/javascript/sourceEditor/lenya_glue.js"/>
+    <script type="text/javascript" src="/modules/editors/javascript/disablebackspace.js"/>
+    <script type="text/javascript" src="/modules/editors/codemirror/0.61/js/codemirror.js"/>
+    <script type="text/javascript" src="/modules/editors/javascript/sourceEditor/codemirror.js"/>
+    <link rel="stylesheet" type="text/css" href="/modules/editors/css/sourceEditor.css"/>
+  </page:head>
+  <page:body onload="insertEditor();">
+    
+
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+    
+    <form method="post" action="${usecase.getSourceURL()}" name="oneform" enctype="multipart/form-data">
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('executable').booleanValue()}">
+          <div class="lenyaInfoBox">
+            <jx:set var="doc" value="${usecase.getParameter('document')}"/>
+            <strong><i18n:text>Document</i18n:text>:</strong>
+            <q>${doc.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}</q>,
+            <strong><i18n:text>UUID</i18n:text>:</strong> ${doc.getUUID()},
+            <strong><i18n:text>Language</i18n:text>:</strong> ${doc.getLanguage()}
+            (<i18n:text>${doc.getLanguage()}</i18n:text>)
+          </div>
+          
+          <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
+            <div class="lenya-box-title">
+              <a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>
+            </div>
+            <div class="lenya-box-body">
+              <ul>
+                <li>&amp;lt; instead of &lt; (left angle bracket <strong>must</strong> be escaped)</li>
+                <li>&amp;amp; instead of &amp; (ampersand <strong>must</strong> be escaped)</li>
+                <li>&amp;gt; instead of &gt; (right angle bracket)</li>
+                <li>&amp;apos; instead of ' (single-quote)</li>
+                <li>&amp;quot; instead of " (double-quote)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div style="clear: both;">
+            <input id="save1" disabled="disabled" type="submit" value="Save" name="submit" i18n:attr="value"/>
+            <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
+            <!--
+            <input type="submit" value="Reformat" name="reformat" i18n:attr="value"/>
+            -->
+            <input type="button" value="Reformat" name="reformat" i18n:attr="value"
+              onclick="indent()"/>
+            <input type="button" value="insertLink.submit" i18n:attr="value"
+              onclick="triggerUsecase('insertLink')"/>
+            <input type="button" value="insertAsset.insertImage" i18n:attr="value"
+              onclick="triggerUsecase('insertImage')"/>
+            <input type="button" value="insertAsset.insertAsset" i18n:attr="value"
+              onclick="triggerUsecase('insertAsset')"/>
+          </div>
+
+          <jx:set var="validationErrors" value="${usecase.getParameter('validationErrors')}"/>
+          <jx:if test="${validationErrors.size() != 0}">
+            <div class="lenyaInfoBox">
+              <h3><i18n:text>editors.validationFailed</i18n:text></h3>
+              <ul class="lenyaMessages">
+                <jx:forEach var="error" items="${validationErrors}">
+                  <li class="lenyaErrorMessage">
+                    ${error.getMessage()}
+                    <a onclick="gotoPosition(${error.getLine()}, ${error.getColumn()})" href="#">
+                      (<i18n:text>editors.validationErrorLine</i18n:text> ${error.getLine()},
+                      <i18n:text>editors.validationErrorColumn</i18n:text> ${error.getColumn()})
+                    </a>
+                  </li>
+                </jx:forEach>
+              </ul>
+            </div>
+          </jx:if>
+          
+          <div class="editorContentContainer">
+            <textarea name="content" style="display: none"/>
+            <textarea id="editorContent" cols="120" rows="80">${usecase.getParameter('content')}</textarea>
+          </div>
+
+          <div>
+            <input id="save2" disabled="disabled" type="submit" value="Save" name="submit" i18n:attr="value"/>
+            <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
+          </div>
+          
+        </jx:when>
+        <jx:otherwise>
+          <input type="submit" name="cancel" value="Cancel" i18n:attr="value"/>
+        </jx:otherwise>
+      </jx:choose>
+    </form>
+    
+  </page:body>
+</page:page>

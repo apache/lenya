@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<components>
+  <!-- Include dependencies -->
+  <include src="context://WEB-INF/xconf/cocoon-xsp.xconf"/>
+
+  <!-- Include roles -->
+  <include src="resource://org/apache/cocoon/components/search/lucene2.roles"/>
+
+  <!-- Search:
+    These are the components that handle the search. 
+    
+   -->
+	<analyzer_manager logger="core.search.analyzer_manager">
+		<analyzer id="standard" class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
+		<analyzer id="stopword_en" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/English_en.xml" checkupdate="true"/>
+		<analyzer id="stopword_fr" class="org.apache.cocoon.components.search.analyzer.ConfigurableStopwordAnalyzer" configfile="context://WEB-INF/analyzer/stopword/French_fr.xml" checkupdate="true"/>
+		<analyzer id="analyzer_research" class="org.apache.cocoon.components.search.analyzer.ConfigurablePerFieldAnalyzer" configfile="context://WEB-INF/analyzer/perfieldconf.xml" checkupdate="false"/>
+	</analyzer_manager>
+	
+	<index_manager logger="core.search.index_manager">
+		
+		<indexer role="org.apache.cocoon.components.search.components.Indexer/default" />
+		
+		<!-- ALL indexes (BE CAREFUL: 	Change the directory attribute) 		-->
+		<indexes>
+		
+			<!--
+			id attribute : the index id 
+			defaultAnalyzer: the id of the default analyzer (registered in AnalyzerManager)
+			directory: the location of the physical index 
+			-->
+			<index id="research" analyzer="analyzer_research" directory="d:\\index">
+				<structure>
+					<!--
+					type text:  tokenized , indexed   (with the additional attribute "storeText"  : stored/ unstored)
+					type keyword:  no tokenized , indexed, stored
+					type date = type keyword  but for specific date type
+					-->
+					<field id="title" type="text" storetext="true"/>
+					<field id="author" type="text"/>
+					<field id="description_fr" type="text" storetext="true"/>
+					<field id="description_en" type="text" storetext="true"/>
+					<field id="date" type="date" dateformat="yyyy-MM-dd"/> 
+					<field id="subject" type="keyword"/>
+					<field id="level" type="keyword"/> 
+					<field id="type" type="keyword" />
+					<field id="format" type="keyword" />
+					<field id="topic" type="keyword" />
+				</structure>
+			</index>
+			
+			<!-- STANDARD HTML INDEX  -->
+			<index id="HTML" analyzer="stopword_en" directory="d:\\index2" >
+				<structure>
+					<field id="url" type="keyword" />
+					<field id="title" type="text" storetext="true"/>
+					<field id="body" type="text" storetext="false"/>
+				</structure>
+			</index>
+		</indexes>
+	</index_manager>
+
+<!-- default indexer component -->	
+	<default_indexer logger="core.search.default_indexer">
+		<!-- number of lucene documents in the buffer -->
+		<buffersize>200</buffersize>
+	</default_indexer>
+	
+<!-- parallel indexer component -->		
+	<parallel_indexer logger="core.search.parallel_indexer">
+		<!-- number of thread (normaly = number of CPUs) -->
+		<numthread>2</numthread>
+	</parallel_indexer>
+	
+	
+</components>

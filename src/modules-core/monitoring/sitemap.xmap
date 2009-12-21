@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: admin.xmap 160670 2005-04-09 09:12:12Z andreas $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    
+    <map:serializers>
+      <map:serializer name="svg2png"
+        src="org.apache.cocoon.serialization.SVGSerializer"
+        mime-type="image/png"
+        logger="sitemap.serializer.svg2png"
+      />
+    </map:serializers>
+    
+  </map:components>
+  
+  <map:pipelines>
+    <map:pipeline type="noncaching">
+
+      <map:match pattern="sessionLogs.xml">
+        <map:generate type="directory" src="context://WEB-INF/logs">
+          <map:parameter name="include" value="sessions(.*)\.log"/>
+          <map:parameter name="sort" value="lastmodified"/>
+          <map:parameter name="reverse" value="true"/>
+        </map:generate>
+        <map:transform src="fallback://lenya/modules/monitoring/xslt/sessions2xhtml.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="sessionLogs/*.svg">
+        <map:generate type="text" src="context://WEB-INF/logs/{1}"/>
+        <map:transform type="pattern" src="fallback://lenya/modules/monitoring/resources/grammars/sessionLog.xlex"/>
+        <map:transform src="fallback://lenya/modules/monitoring/xslt/lexemes2log.xsl"/>
+        <map:transform src="fallback://lenya/modules/monitoring/xslt/log2svg.xsl">
+          <map:parameter name="title" value="{1}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="sessionLogs/*.png">
+        <map:generate src="cocoon:/sessionLogs/{1}.svg"/>
+        <map:serialize type="svg2png"/>
+      </map:match>
+      
+      <map:match pattern="sessionLogs/*.pdf">
+        <map:generate src="cocoon:/sessionLogs/{1}.svg"/>
+        <map:transform src="fallback://lenya/modules/monitoring/xslt/svg2pdf.xsl"/>
+        <map:serialize type="fo2pdf"/>
+      </map:match>
+    
+    </map:pipeline>
+  </map:pipelines>
+  
+</map:sitemap>

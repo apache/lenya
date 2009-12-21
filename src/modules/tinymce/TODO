@@ -1,0 +1,13 @@
+TinyMCE integration: TODO
+
+* make java usecase handler generic and share with other editors
+* when done, move these generic usecases into the editors module
+* fix wysiwyg: some of the css styles are not properly passed to the editor
+content (font-size and font-family)
+* add onunload handler to avoid data loss if the user accidentally clicks
+on a link or closes the window (confirmation dialog like bxe) - done by
+jragaller (patch in bugzilla), needs to be made generic
+* allow multiple resource types to be edited with different valid_elements
+settings.
+* allow multiple editable areas.
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<testcase>
+  
+  <annotation>
+    Test Cases
+  </annotation>
+  
+  <roles>
+    
+    <role name="org.apache.excalibur.source.SourceFactorySelector"
+      shorthand="source-factories"
+      default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector"/>
+    <role name="org.apache.excalibur.source.SourceResolver"
+      shorthand="source-resolver"
+      default-class="org.apache.excalibur.source.impl.SourceResolverImpl"/>
+      
+    <role name="org.apache.cocoon.components.search.LuceneCocoonSearcher"
+      shorthand="cocoon-searcher"
+      default-class="org.apache.cocoon.components.search.SimpleLuceneCocoonSearcherImpl"/>
+    
+    <role name="org.apache.excalibur.store.StoreJanitor"
+      shorthand="store-janitor"
+      default-class="org.apache.cocoon.components.store.impl.CocoonStoreJanitor"/>
+    <role name="org.apache.cocoon.components.thread.RunnableManager"
+      shorthand="runnable-manager"
+      default-class="org.apache.cocoon.components.thread.DefaultRunnableManager"/>
+    <role name="org.apache.excalibur.xml.EntityResolver"
+      shorthand="entity-resolver"
+      default-class="org.apache.cocoon.components.resolver.DefaultResolver"/>
+    <role name="org.apache.cocoon.Processor"
+      shorthand="sitemap"
+      default-class="org.apache.cocoon.components.treeprocessor.TreeProcessor"/>
+    <role name="org.apache.excalibur.xmlizer.XMLizer"
+      shorthand="xmlizer"
+      default-class="org.apache.excalibur.xmlizer.DefaultXMLizer"/>
+    <role name="org.apache.excalibur.xml.sax.SAXParser"
+      shorthand="xml-parser"
+      default-class="org.apache.excalibur.xml.impl.JaxpParser"/>
+  </roles>
+  
+  <components/>
+  
+</testcase>
+    

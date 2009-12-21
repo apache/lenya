@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: usecase.xmap 45963 2004-09-13 10:05:56Z andreas $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <!-- =========================== Views ================================= -->
+
+  <map:views>
+    <map:view from-label="aggregation" name="aggregation">
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view from-label="xsp" name="xsp">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+  
+  <!-- =========================== Resources ================================= -->
+
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
+      <map:transform type="i18n">
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
+    </map:resource>
+  </map:resources>
+  
+  <!-- =========================== Pipelines ================================ -->
+  <map:pipelines>
+  
+    <!-- =================================================================== -->
+    <!-- Usecases that use the Usecase Framework -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      <map:match type="registered-usecase">
+        <map:mount src="fallback://lenya/modules/usecase/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+ 
+    <!-- =================================================================== -->
+    <!-- Usecases that are served by modules -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      <map:match type="usecase" pattern="*.*">
+        <map:select type="resource-exists">
+          <map:when test="fallback://lenya/modules/{1}/sitemap.xmap">
+            <map:mount pass-through="true" uri-prefix="" src="fallback://lenya/modules/{1}/sitemap.xmap"
+              check-reload="yes" reload-method="synchron"/>
+          </map:when>
+        </map:select>
+      </map:match>
+    </map:pipeline>
+    
+    <!-- =================================================================== -->
+    <!-- Notification Pipelines -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      
+      <!-- notification/{publication-id}/{usecase}.xml -->
+      <map:match pattern="notification/*/*.xml">
+        <map:select type="resource-exists">
+          <map:when test="fallback://config/notification/notification.xconf">
+            <map:generate src="fallback://config/notification/notification.xconf"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="config/notification/notification.xconf"/>
+          </map:otherwise>      
+        </map:select>
+        <map:transform src="fallback://lenya/xslt/notification/notification2message.xsl">
+          <map:parameter name="usecase" value="{2}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- notification/{publication-id}/{usecase}.xsl -->
+      <map:match pattern="notification/*/*.xsl">
+        <map:generate src="cocoon:/notification/{1}/{2}.xml"/>
+        <map:transform src="fallback://lenya/xslt/notification/message2xslt.xsl">
+          <map:parameter name="usecase" value="{2}"/>
+          <map:parameter name="server-uri" value="http://{request:serverName}:{request:serverPort}"/>
+          <map:parameter name="document-url" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+    </map:pipeline>
+
+    <!-- =================================================================== -->
+    <!-- Usecase Pipelines -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline type="noncaching">
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <!-- mount publication-specific usecase sitemap -->
+        <map:match type="usecase" pattern="*">
+          <map:act src="fallback://usecase-{1}.xmap" type="resource-exists">
+            <map:mount check-reload="true" reload-method="synchron" src="{fallback://usecase-{../1}.xmap}" uri-prefix="{../../1}"/>
+          </map:act>
+        </map:match>
+        
+        <!-- Mount separate usecase sitemap if it exists. -->
+        <map:match type="usecase" pattern="*">
+          <map:act src="usecases/{1}/usecase-{1}.xmap" type="resource-exists">
+            <map:mount check-reload="true" reload-method="synchron" src="usecases/{../1}/usecase-{../1}.xmap" uri-prefix=""/>
+          </map:act>
+        </map:match>
+
+        
+        <!-- CheckOut -->
+        <map:match pattern="checkout" type="usecase">
+          
+          <map:match pattern="checkout" type="step">
+            <map:act type="reserved-checkout">
+              <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                <map:parameter name="user" value="{user}"/>
+                <map:parameter name="filename" value="{filename}"/>
+                <map:parameter name="date" value="{date}"/>
+              </map:generate>
+              <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
+              <map:call resource="style-cms-page"/>
+              <map:serialize />
+            </map:act>
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:match>
+          
+        </map:match>
+        
+        
+        <!-- CheckIn -->
+        <map:match pattern="checkin" type="usecase">
+          
+          <map:match pattern="checkin" type="step">
+            <map:act type="reserved-checkin">
+              <map:parameter name="backup" value="{request-param:backup}"/>
+              <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                <map:parameter name="user" value="{user}"/>
+                <map:parameter name="filename" value="{filename}"/>
+                <map:parameter name="checkType" value="{checkType}"/>
+                <map:parameter name="date" value="{date}"/>
+              </map:generate>
+              <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
+              <map:call resource="style-cms-page"/>
+              <map:serialize />
+            </map:act>
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:match>
+          
+        </map:match>
+
+        <!-- To use this code, you need to add the legacy modules to your local.build.properties. -->
+        <!-- initialize the workflow -->
+        <!--
+        <map:match type="usecase" pattern="initworkflow">
+          <map:act type="task">
+            <map:parameter name="task-id" value="ant"/>
+            <map:parameter name="target" value="initworkflow"/>
+            <map:parameter name="properties.initworkflow.document-uuid" value="{page-envelope:document-uuid}"/>
+            <map:parameter name="properties.initworkflow.document-type" value="{page-envelope:document-type}"/>
+            <map:parameter name="properties.initworkflow.language" value="{page-envelope:document-language}"/>
+            <map:parameter name="properties.initworkflow.user-id" value="{access-control:user-id}"/>
+            <map:parameter name="properties.initworkflow.machine-ip" value="{access-control:ip-address}"/>
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:act>
+        </map:match>
+
+        <map:match pattern="transition" type="usecase">
+          <map:act type="task">
+            <map:parameter name="publication-id" value="{../1}"/>
+            <map:parameter name="task-id" value="empty"/>
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:act>
+        </map:match>
+        -->
+        
+      </map:match>
+      
+    </map:pipeline>
+    
+  </map:pipelines>
+  
+</map:sitemap>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id:$ -->
+
+<xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.linking.GlobalProxies']">
+
+  <!-- Lenya can rewrite the links to cater to special proxy setups.
+    Make sure to update the proxy configuration in publication.xml as well.
+    For information about these settings, read
+    http://lenya.apache.org/docs/2_0_x/tutorials/proxy.html
+
+    The example setting below describes a test setup that corresponds to the example 
+    in src/pubs/default/config/publication.xml.
+  -->
+  <component logger="lenya.proxy"
+    role="org.apache.lenya.cms.linking.GlobalProxies"
+    class="org.apache.lenya.cms.linking.impl.GlobalProxiesImpl">
+<!--
+    <proxy ssl="false" url="http://www.example.com/lenya"/>
+    <proxy ssl="true" url="https://www.example.com/lenya"/>
+-->
+  </component>
+  
+</xconf>
