@@ -1,0 +1,16 @@
+About Apache Lenya 2.0.3
+========================
+
+Subversion repository URL: https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0_3
+Cocoon version: 2.1.x r 805799 
+
+Bugfixes
+========
+
+* Miscellaneous smaller bugfixes
+* UsecaseInvoker checks usecase policies
+
+New Features
+============
+
+* Add CodeMirror to source editor
