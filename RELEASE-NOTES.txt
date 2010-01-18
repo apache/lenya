@@ -7,10 +7,17 @@ Cocoon version: 2.1.x r 805799
 Bugfixes
 ========
 
-* Miscellaneous smaller bugfixes
 * UsecaseInvoker checks usecase policies
+* I18N catalogues require proper namespace
+* Fixed reindexing issue
+* Source editor no longer indents code
+* Miscellaneous smaller bugfixes
+
 
 New Features
 ============
 
 * Add CodeMirror to source editor
+* Can configure the accepted mime-types of a resource type.
+* TinyMCE and FCKEditor can edit pages with textareas in them
+
