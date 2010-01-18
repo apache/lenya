@@ -21,6 +21,6 @@
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>GUI</name>
-  <lenya-version>2.0.3-dev</lenya-version>
+  <lenya-version>2.0.3</lenya-version>
   <description>GUI resources</description>
 </module>
