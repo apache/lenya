@@ -73,9 +73,11 @@
     <gzip zipfile="${dist.bin.dir}.tar.gz" src="${dist.bin.dir}.tar"/>
     <delete file="${dist.bin.dir}.tar"/>
     <checksum file="${dist.bin.dir}.tar.gz" fileext=".md5"/>
-    
+    <checksum file="${dist.bin.dir}.tar.gz" fileext=".sha" algorithm="SHA-512" />
+
     <zip zipfile="${dist.bin.dir}.zip" basedir="${dist.root}" includes="${distname}-bin/**"/>
     <checksum file="${dist.bin.dir}.zip" fileext=".md5"/>
+    <checksum file="${dist.bin.dir}.zip" fileext=".sha" algorithm="SHA-512" />
   </target>
 
   <!--
@@ -143,9 +145,11 @@
     <gzip zipfile="${dist.src.dir}.tar.gz" src="${dist.src.dir}.tar"/>
     <delete file="${dist.src.dir}.tar"/>
     <checksum file="${dist.src.dir}.tar.gz" fileext=".md5"/>
+    <checksum file="${dist.src.dir}.tar.gz" fileext=".sha" algorithm="SHA-512" />
 
     <zip zipfile="${dist.src.dir}.zip" basedir="${dist.root}" includes="${distname}-src/**"/>
     <checksum file="${dist.src.dir}.zip" fileext=".md5"/>
+    <checksum file="${dist.src.dir}.zip" fileext=".sha" algorithm="SHA-512" />
   </target>
 
   <!--
