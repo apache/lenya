@@ -19,15 +19,8 @@ Prerequisites
 
 
     * Java 2 Platform, Standard Edition
-      Recommended version: JDK 1.5 (used by most developers). Java 1.4.2 or later should also
-      work, and people are using Java 1.6 successfully in day-to-day operation.
-      Get the JDK at http://java.sun.com/javase/downloads/index_jdk5.jsp.
-
-      WARNING: There have been numerous reports of spurious VM crashes with Java versions from 
-      1.5.0-07 to 1.5.0-11 both on Windows and Linux. Make sure you are using the latest available Java
-      5 package for your operating system (-13 as of this writing). 
-      If you encounter such crashes with more current revisions, please re-open 
-      http://issues.apache.org/bugzilla/show_bug.cgi?id=42493 .
+      Required version: JDK 1.6
+      Get the JDK at http://java.sun.com
 
     * Apache Cocoon
       Apache Cocoon is included in the Lenya distribution. In the SVN version of Lenya, Cocoon is

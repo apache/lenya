@@ -60,16 +60,18 @@
         <equals arg1="1.1" arg2="${ant.java.version}"/>
         <equals arg1="1.2" arg2="${ant.java.version}"/>
         <equals arg1="1.3" arg2="${ant.java.version}"/>
+        <equals arg1="1.4" arg2="${ant.java.version}"/>
+        <equals arg1="1.5" arg2="${ant.java.version}"/>
       </or>
     </not>
   </condition>
-  <fail unless="target.vm">Please use a JVM 1.4 or superior to compile lenya ${version}</fail>
+  <fail unless="target.vm">Please use a JVM 1.6 or superior to compile lenya ${version}</fail>
   
   <!--
   The minimal supported Java version. The class files we ship with Lenya (e.g., build tasks)
   are compiled for this version.
   -->
-  <property name="target.vm.minimal" value="1.4"/>
+  <property name="target.vm.minimal" value="1.6"/>
 
   <property name="packages"      value="*.*"/>
 
