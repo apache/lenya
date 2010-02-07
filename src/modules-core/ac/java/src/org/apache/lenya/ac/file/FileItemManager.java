@@ -444,7 +444,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
                         }
                     }
                 }
-                Long lastModified = new Long(files[i].lastModified());
+                Long lastModified = Long.valueOf(files[i].lastModified());
                 this.canonicalPath2LastModified.put(canonicalPath, lastModified);
             }
 

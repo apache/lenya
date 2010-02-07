@@ -70,8 +70,8 @@ public class Overview extends SiteUsecase {
                 URLInformation info = new URLInformation(getSourceURL());
                 Publication pub = getDocumentFactory().getPublication(info.getPublicationId());
                 Area area = pub.getArea(info.getArea());
-                setParameter(PARAM_NUMBER_OF_DOCUMENTS, new Integer(area.getDocuments().length));
-                setParameter(PARAM_NUMBER_OF_SITE_NODES, new Integer(area.getSite().getNodes().length));
+                setParameter(PARAM_NUMBER_OF_DOCUMENTS, Integer.valueOf(area.getDocuments().length));
+                setParameter(PARAM_NUMBER_OF_SITE_NODES, Integer.valueOf(area.getSite().getNodes().length));
             }
             else {
                 // read parameters from Dublin Core meta-data

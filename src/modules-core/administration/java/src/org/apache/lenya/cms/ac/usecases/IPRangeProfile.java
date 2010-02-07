@@ -116,7 +116,7 @@ public class IPRangeProfile extends AccessControlUsecase {
                 setParameter(NETWORK_ADDRESS + "-" + i, new Part(i, addrPart));
                 String maskPart = Integer.toString(0xFF & subnetMask.getAddress()[i]);
                 setParameter(SUBNET_MASK + "-" + i, new Part(i, maskPart));
-                partNumbers.add(new Integer(i));
+                partNumbers.add(Integer.valueOf(i));
             }
             setParameter(IPRangeProfile.PART_NUMBERS, partNumbers);
 

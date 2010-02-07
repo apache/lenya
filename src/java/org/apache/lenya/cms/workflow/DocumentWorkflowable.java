@@ -138,7 +138,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
                     int number = Integer.parseInt(numberString);
                     String versionString = string.substring(spaceIndex + 1);
                     Version version = decodeVersion(versionString);
-                    number2version.put(new Integer(number), version);
+                    number2version.put(Integer.valueOf(number), version);
                 }
                 
                 int number = 0;

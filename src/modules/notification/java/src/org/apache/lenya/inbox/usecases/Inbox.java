@@ -51,8 +51,8 @@ public class Inbox extends AbstractInboxUsecase {
                 nofUnreadMessages++;
             }
         }
-        setParameter(PARAM_NOF_MESSAGES, new Integer(messages.length));
-        setParameter(PARAM_NOF_UNREAD_MESSAGES, new Integer(nofUnreadMessages));
+        setParameter(PARAM_NOF_MESSAGES, Integer.valueOf(messages.length));
+        setParameter(PARAM_NOF_UNREAD_MESSAGES, Integer.valueOf(nofUnreadMessages));
     }
 
 }

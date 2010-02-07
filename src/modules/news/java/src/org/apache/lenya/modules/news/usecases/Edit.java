@@ -44,14 +44,14 @@ public class Edit extends InvokeWorkflow {
             NewsWrapper news = new NewsWrapper(doc, getLogger());
             setParameter(NEWS_WRAPPER, news);
             
-            setParameter(INCLUDE_ITEM_NUMBER, new Short(news.getIncludeItemNumber()));
+            setParameter(INCLUDE_ITEM_NUMBER, Short.valueOf(news.getIncludeItemNumber()));
             setParameter(SHOW_ALL_LANGUAGES, Boolean.valueOf(news.showAllLanguages()));
             setParameter(TYPE, news.getType());
             setParameter(HREF, news.getHref());
             
             List numbers = new ArrayList();
             for (int i = 1; i <= 10; i++) {
-                numbers.add(new Integer(i));
+                numbers.add(Integer.valueOf(i));
             }
             setParameter(NUMBERS, numbers);
         }

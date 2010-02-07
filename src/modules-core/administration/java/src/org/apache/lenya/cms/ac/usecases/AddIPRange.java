@@ -99,7 +99,7 @@ public class AddIPRange extends AccessControlUsecase {
         for (byte i = 0; i < 4; i++) {
             setParameter(IPRangeProfile.NETWORK_ADDRESS + "-" + i, new Part(i));
             setParameter(IPRangeProfile.SUBNET_MASK + "-" + i, new Part(i));
-            partNumbers.add(new Integer(i));
+            partNumbers.add(Integer.valueOf(i));
         }
         setParameter(IPRangeProfile.PART_NUMBERS, partNumbers);
     }

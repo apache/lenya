@@ -76,8 +76,8 @@ public class SourceNodeRCML implements RCML {
     protected static final String ATTR_SESSION = "session";
 
     {
-        ELEMENTS.put(new Short(ci), ELEMENT_CHECKIN);
-        ELEMENTS.put(new Short(co), ELEMENT_CHECKOUT);
+        ELEMENTS.put(Short.valueOf(ci), ELEMENT_CHECKIN);
+        ELEMENTS.put(Short.valueOf(co), ELEMENT_CHECKOUT);
     }
 
     /**
@@ -154,7 +154,7 @@ public class SourceNodeRCML implements RCML {
         } else {
             RCMLEntry latestEntry = getLatestEntry();
             if (type == latestEntry.getType()) {
-                String elementName = (String) ELEMENTS.get(new Short(type));
+                String elementName = (String) ELEMENTS.get(Short.valueOf(type));
                 throw new IllegalStateException("RCML entry type <" + elementName
                         + "> not allowed twice in a row. Before: [" + latestEntry.getIdentity()
                         + "], now: [" + identity + "], node: [" + this.contentSourceUri + "]");
@@ -195,7 +195,7 @@ public class SourceNodeRCML implements RCML {
 
     protected Element saveToXml(NamespaceHelper helper, RCMLEntry entry)
             throws RevisionControlException {
-        String elementName = (String) ELEMENTS.get(new Short(entry.getType()));
+        String elementName = (String) ELEMENTS.get(Short.valueOf(entry.getType()));
         Element entryElement = helper.createElement(elementName);
 
         entryElement.setAttribute(ATTR_IDENTITY, entry.getIdentity());
