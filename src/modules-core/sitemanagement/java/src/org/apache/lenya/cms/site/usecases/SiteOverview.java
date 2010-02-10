@@ -90,6 +90,12 @@ public class SiteOverview extends AbstractUsecase {
 
     protected static final String DESC = "desc";
     protected static final String ASC = "asc";
+    
+    protected static final String TYPE = "type";
+    protected static final String ALPHA = "alpha";
+    protected static final String NUMERIC = "numeric";
+    protected static final String[] NUMERIC_KEYS = { KEY_CONTENT_LENGTH };
+    protected static final String PARAMETER_NUMERIC_TYPES = "numericTypes";
 
     protected void prepareView() throws Exception {
         super.prepareView();
@@ -107,10 +113,13 @@ public class SiteOverview extends AbstractUsecase {
             
             List filteredDocuments = filter(entries);
             sort(filteredDocuments);
+            
             setParameter(DOCUMENTS, filteredDocuments);
 
             setParameter(PARAMETER_KEYS, Arrays.asList(KEYS));
 
+            setParameter(PARAMETER_NUMERIC_TYPES, Arrays.asList(NUMERIC_KEYS));
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -186,8 +195,9 @@ public class SiteOverview extends AbstractUsecase {
     protected void sort(List documents) {
         String sort = getParameterAsString(SORT);
         String order = getParameterAsString(ORDER, ASC);
+        String type = getParameterAsString(TYPE,ALPHA);
         if (sort != null) {
-            Comparator comparator = new EntryComparator(sort, order);
+            Comparator comparator = new EntryComparator(sort, order,type);
             Collections.sort(documents, comparator);
         }
     }
@@ -258,14 +268,26 @@ public class SiteOverview extends AbstractUsecase {
 
         private String key;
         private String order;
+        private String type;
 
         /**
          * @param key The key to compare.
          * @param order The order string ({@link SiteOverview#ASC} or {@link SiteOverview#DESC}).
          */
         public EntryComparator(String key, String order) {
-            this.key = key;
-            this.order = order;
+            this(key, order, ALPHA);
+        }
+        
+        /**
+         * @param key The key to compare.
+         * @param order The order string ({@link SiteOverview#ASC} or {@link SiteOverview#DESC}).
+         * @param type The type ({@link SiteOverview#ALPHA} or {@link SiteOverview#NUMERIC}).
+         */
+        public EntryComparator(String key, String order, String type)
+        {
+          this.key = key;
+          this.order = order;
+          this.type = type;
         }
 
         /**
@@ -274,17 +296,25 @@ public class SiteOverview extends AbstractUsecase {
         public int compare(Object arg0, Object arg1) {
             Entry e1 = (Entry) arg0;
             Entry e2 = (Entry) arg1;
-
-            String value1 = e1.getValue(this.key);
-            String value2 = e2.getValue(this.key);
-            if (this.order.equals(DESC))
-                return value2.compareTo(value1);
-            else
-                return value1.compareTo(value2);
+            
+            if(type.equals(NUMERIC)) {
+                Double value1 = e1.getDouble(this.key);
+                Double value2 = e2.getDouble(this.key);
+                if (this.order.equals(DESC))
+                    return value2.compareTo(value1);
+                else
+                    return value1.compareTo(value2);
+            } else {
+                String value1 = e1.getValue(this.key);
+                String value2 = e2.getValue(this.key);
+                if (this.order.equals(DESC))
+                    return value2.compareTo(value1);
+                else
+                    return value1.compareTo(value2);
+            }
         }
 
     }
-
     /**
      * Stores document-related information.
      */
@@ -312,6 +342,10 @@ public class SiteOverview extends AbstractUsecase {
          */
         public String getValue(String key) {
             return (String) this.values.get(key);
+        }
+        
+        public Double getDouble(String key) {
+          return Double.valueOf(getValue(key));
         }
 
     }

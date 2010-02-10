@@ -33,6 +33,14 @@
         <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
         <input type="hidden" name="sort" value="${key}"/>
         <input type="hidden" name="order" value="${order}"/>
+        <jx:choose>
+          <jx:when test="${usecase.getParameter('numericTypes').contains(key)}">
+            <input type="hidden" name="type" value="numeric"/>
+          </jx:when>
+          <jx:otherwise>
+            <input type="hidden" name="type" value="alpha"/>
+          </jx:otherwise>
+        </jx:choose>
         <jx:forEach var="filter" items="${usecase.getParameter('filters')}">
           <input type="hidden" name="${filter}" value="${usecase.getParameter(filter)}"/>
         </jx:forEach>
