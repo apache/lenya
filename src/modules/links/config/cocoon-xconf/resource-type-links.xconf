@@ -28,10 +28,11 @@
       uri="fallback://lenya/modules/links/resources/schema/links.rng"
     />
     <sample 
-      mime-type="application/xml" 
+      mime-type="application/lenya-links+xml" 
       uri="fallback://lenya/modules/links/samples/links.xml"
     />
     <format name="xhtml" uri="cocoon://modules/links/xhtml.xml"/>
+    <format name="xhtml.xsl" uri="/modules/links/xslt/links2xhtml.xsl"/>
     <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index"/>
     <format name="webdavGET" uri="cocoon://modules/xhtml/davget.xml"/>
   </component-instance>
