@@ -59,6 +59,7 @@
           <map:parameter name="catalogue" value="{2}"/>
         </map:transform>
         <map:transform type="include"/>
+        <map:transform src="xslt/flattenCatalogue.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       

@@ -30,15 +30,15 @@
   
   <xsl:template match="lenya:publication">
     <i18n:catalogue>
-      <i:include src="aggregate-fallback://lenya/resources/i18n/{$catalogue}" strip-root="true"/>
+      <i:include src="aggregate-fallback://lenya/resources/i18n/{$catalogue}"/>
       <xsl:apply-templates select="lenya:modules/lenya:module"/>
     </i18n:catalogue>
   </xsl:template>
   
   <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
-      <i:include src="cocoon:/modules/{@name}/{$catalogue}" strip-root="true"/>
+      <i:include src="cocoon:/modules/{@name}/{$catalogue}"/>
     </xsl:if>
   </xsl:template>
-
+  
 </xsl:stylesheet>
