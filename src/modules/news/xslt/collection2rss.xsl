@@ -49,8 +49,10 @@
           uuid="{@uuid}" lang="{$language}"/></description>
         <language><xsl:value-of select="$language"/></language>
         <copyright><meta:value ns="http://purl.org/dc/elements/1.1/" element="rights"
-          uuid="{@uuid}" lang="{$language}"/></copyright>
-        <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{col:document[1]/dc:date}"/></pubDate>
+        uuid="{@uuid}" lang="{$language}"/></copyright>
+        <xsl:if test="col:document">
+          <pubDate><i18n:date-time locale="en" src-pattern="yyyy-MM-dd hh:mm:ss" pattern="EEE, dd MMM yyyy HH:mm:ss Z" value="{col:document[1]/dc:date}"/></pubDate>
+        </xsl:if>
         
         <!--
           <image>

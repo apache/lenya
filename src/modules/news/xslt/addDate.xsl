@@ -38,7 +38,7 @@
   </xsl:template>
   
   
-  <xsl:template match="@*|node()">
+  <xsl:template match="@*|node()" priority="-2">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
