@@ -13,20 +13,6 @@ The modules in Lenya are currently split up into the following categories:
   editors, document types, the nifty new feature of the day, etc.
 
 
-* modules-optional
-  The scratchpad. Modules in here do not necessarily have to work or even
-  compile, nor have a stable API. (FIXME: should modules that require 
-  external code to be useful also be moved here, such as tinymce or
-  fckeditor?
-
-
-* modules-legacy
-  This is the place for modules that do not adhere to the programming 
-  conventions of the trunk, but are still needed as no updated version is
-  available. For instance, modules that use the 1.2 way of handling usecases
-  without using the usecase framework should go here. (FIXME: does that make
-  the kupu module a candidate?)
-
 Directory Layout:
 =================
 
