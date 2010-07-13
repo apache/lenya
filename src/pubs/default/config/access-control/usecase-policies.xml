@@ -50,10 +50,6 @@
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="fckeditor.edit">
-    <role id="sitemanager" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
   <usecase id="linkcheck.getLinks">
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
@@ -410,10 +406,6 @@
     <role id="edit" method="grant"/>
   </usecase>
   <usecase id="tinymce.edit">
-    <role id="sitemanager" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
-  <usecase id="fckeditor.edit">
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
