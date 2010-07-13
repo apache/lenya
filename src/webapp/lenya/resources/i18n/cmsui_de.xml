@@ -159,9 +159,6 @@
   <message key="User Documentation">Benutzerdokumentation</message>
   <message key="About Apache Lenya">Über Apache Lenya</message>
   <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
-  <message key="With Kupu">
-    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>-Editor&#160;(Kupu)
-  </message>
   <message key="With BXE">
     <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>-Editor&#160;(BXE)
   </message>

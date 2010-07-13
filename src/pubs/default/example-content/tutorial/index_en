@@ -58,7 +58,6 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     editors:</p>
 
     <ul>
-      <li>Kupu: This is a good choice for users of Internet Explorer.</li>
       <li>BXE: This is a good choice for users of Mozilla.</li>
       <li>HTML Forms: This is a good choice for users of Mosaic ;-)</li>
       <li>One Form: For the power user who needs all the control</li>

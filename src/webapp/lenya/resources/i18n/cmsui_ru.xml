@@ -150,7 +150,6 @@
 <message key="About Apache Lenya">О проекте Apache Lenya</message>
 <message key="Apache Lenya Homepage">Сайт проекта Apache Lenya</message>
 
-<message key="Edit with Kupu">Редактор <xhtml:abbr title="What You See Is What You Get">WYSIWYG</xhtml:abbr> (Kupu)</message>
 <message key="Edit with BXE">Редактор <xhtml:abbr title="What You See Is What You Get">WYSIWYG</xhtml:abbr> (BXE)</message>
 <message key="Edit with one Form">Редактор исходных текстов</message>
 <message key="Edit with Forms">Редактор форм</message>

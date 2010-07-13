@@ -32,7 +32,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="prepare-dist-bin" depends="clean,kupu,war">
+  <target name="prepare-dist-bin" depends="clean,war">
 
     <copy todir="${dist.bin.dir}">
       <fileset dir="${basedir}">

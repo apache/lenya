@@ -52,8 +52,6 @@
   <import file="src/targets/test-build.xml" />
   <!-- Distribution targets    -->
   <import file="src/targets/dist-build.xml" />
-  <!-- Kupu targets            -->
-  <import file="src/targets/kupu-build.xml" />
   <!-- Export targets          -->
   <import file="src/targets/export-build.xml" />
   <!-- module targets          -->

@@ -59,7 +59,6 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     </p>
 
     <ul>
-      <li>Kupu: Eine gute Wahl für Internet-Explorer-Nutzer.</li>
       <li>BXE: Eine gute Wahl für Firefox-Nutzer.</li>
       <li>Formwizard: Eine gute Wahl für Mosaic-Nutzer. ;-)</li>
       <li>Formulareditor: Für Nutzer, die die volle Kontrolle benötigen.</li>

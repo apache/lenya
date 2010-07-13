@@ -23,7 +23,6 @@
     xmlns="http://www.w3.org/1999/xhtml"
     >
 
-  <xsl:import href="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupusave.xsl"/>
   <xsl:import href="fallback://lenya/modules/bxe/xslt/change-object-path-back.xsl"/>
 
   <xsl:template match="@*|node()">

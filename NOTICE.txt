@@ -13,9 +13,6 @@ This product includes software developed by the XML:DB Initiative
 This product includes software developed by the BXE Project
 (http://bxe.oscom.org/).
 
-This product includes software developed by the Kupu Project
-(http://kupu.oscom.org/).
-
 Portions are Copyright (c) 1998-2000 World Wide Web Consortium 
 (Massachusetts Institute of Technology, Institut National de Recherche en
 Informatique et en Automatique, Keio University). All Rights Reserved.

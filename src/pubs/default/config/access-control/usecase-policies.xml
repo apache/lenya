@@ -341,10 +341,6 @@
     <role id="review" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="kupu.edit">
-    <role id="sitemanager" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
   <usecase id="resource.upload">
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
