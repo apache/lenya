@@ -298,10 +298,6 @@
   <usecase id="admin.reports">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="editors.forms">
-    <role id="sitemanager" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
   <usecase id="editors.oneform">
     <role id="sitemanager" method="grant"/>
     <role id="edit" method="grant"/>
