@@ -1,7 +1,7 @@
 Index: tools/pom.xml
 ===================================================================
---- tools/pom.xml	(revision 998209)
-+++ tools/pom.xml	(working copy)
+--- cocoon-rev-959219/tools/pom.xml	(revision 998209)
++++ cocoon-rev-959219/tools/pom.xml	(working copy)
 @@ -44,7 +44,7 @@
      <module>cocoon-maven-javadocs-script-report</module>
      <module>cocoon-rcl/cocoon-rcl-webapp-wrapper</module>
@@ -13,8 +13,8 @@ Index: tools/pom.xml
    <scm>
 Index: parent/pom.xml
 ===================================================================
---- parent/pom.xml	(revision 998209)
-+++ parent/pom.xml	(working copy)
+--- cocoon-rev-959219/parent/pom.xml	(revision 998209)
++++ cocoon-rev-959219/parent/pom.xml	(working copy)
 @@ -3754,10 +3754,10 @@
                  </execution>
                </executions>
@@ -41,8 +41,8 @@ Index: parent/pom.xml
        </build>
 Index: pom.xml
 ===================================================================
---- pom.xml	(revision 998209)
-+++ pom.xml	(working copy)
+--- cocoon-rev-959219/pom.xml	(revision 998209)
++++ cocoon-rev-959219/pom.xml	(working copy)
 @@ -62,25 +62,25 @@
    </build>  
  

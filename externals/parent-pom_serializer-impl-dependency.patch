@@ -1,7 +1,7 @@
 Index: parent/pom.xml
 ===================================================================
---- cocoon-rev-964648/parent/pom.xml	(revision 964648)
-+++ cocoon-rev-964648/parent/pom.xml	(working copy)
+--- cocoon-rev-959219/parent/pom.xml	(revision 964648)
++++ cocoon-rev-959219/parent/pom.xml	(working copy)
 @@ -2868,7 +2868,7 @@
        <dependency>
          <groupId>org.apache.cocoon</groupId>
