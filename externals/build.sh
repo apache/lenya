@@ -40,7 +40,7 @@ patch -p0 < cocoon-sitemaptags2daisy-plugin.patch
 
 
 # Invoke maven
-cd cocoon-rev-964648
+cd cocoon-rev-959219
 echo "============================================="
 echo "Install cocoon" 
 echo "============================================="
