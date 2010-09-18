@@ -1,0 +1,90 @@
+Index: tools/pom.xml
+===================================================================
+--- tools/pom.xml	(revision 998209)
++++ tools/pom.xml	(working copy)
+@@ -44,7 +44,7 @@
+     <module>cocoon-maven-javadocs-script-report</module>
+     <module>cocoon-rcl/cocoon-rcl-webapp-wrapper</module>
+     <module>cocoon-rcl/cocoon-rcl-spring-reloader</module>        
+-    <module>cocoon-sitemaptags2daisy-plugin</module> 
++    <!-- <module>cocoon-sitemaptags2daisy-plugin</module>  -->
+   </modules>
+ 
+   <scm>
+Index: parent/pom.xml
+===================================================================
+--- parent/pom.xml	(revision 998209)
++++ parent/pom.xml	(working copy)
+@@ -3754,10 +3754,10 @@
+                 </execution>
+               </executions>
+             </plugin>
+-            <plugin>
+-              <groupId>org.apache.cocoon</groupId>
+-              <artifactId>cocoon-sitemaptags2daisy-plugin</artifactId>
+-              <version>1.0.0-SNAPSHOT</version>
++            <!-- <plugin> -->
++            <!--   <groupId>org.apache.cocoon</groupId> -->
++            <!--   <artifactId>cocoon-sitemaptags2daisy-plugin</artifactId> -->
++            <!--   <version>1.0.0-SNAPSHOT</version> -->
+               <!-- the plugins default configuration
+               <configuration>
+                 <simulateInput>false</simulateInput>
+@@ -3765,7 +3765,7 @@
+                 <repoUrl>http://cocoon.zones.apache.org:9263</repoUrl>
+               </configuration>
+               -->
+-            </plugin>
++            <!-- </plugin> -->
+           </plugins>
+         </pluginManagement>
+       </build>
+Index: pom.xml
+===================================================================
+--- pom.xml	(revision 998209)
++++ pom.xml	(working copy)
+@@ -62,25 +62,25 @@
+   </build>  
+ 
+   <profiles>
+-    <profile>
+-      <id>daisy</id>
+-      <build>
+-        <plugins>
+-	  <plugin>
+-	    <groupId>org.apache.cocoon</groupId>
+-	    <artifactId>cocoon-sitemaptags2daisy-plugin</artifactId>
+-	    <executions>
+-	      <execution>
+-	        <phase>install</phase>
+-		<goals>
+-		  <goal>sitemaptags2daisy</goal>
+-		</goals>
+-	      </execution>
+-	    </executions>
+-	  </plugin>
+-	</plugins>
+-      </build>
+-    </profile>
++    <!-- <profile> -->
++    <!--   <id>daisy</id> -->
++    <!--   <build> -->
++    <!--     <plugins> -->
++    <!-- 	  <plugin> -->
++    <!-- 	    <groupId>org.apache.cocoon</groupId> -->
++    <!-- 	    <artifactId>cocoon-sitemaptags2daisy-plugin</artifactId> -->
++    <!-- 	    <executions> -->
++    <!-- 	      <execution> -->
++    <!-- 	        <phase>install</phase> -->
++    <!-- 		<goals> -->
++    <!-- 		  <goal>sitemaptags2daisy</goal> -->
++    <!-- 		</goals> -->
++    <!-- 	      </execution> -->
++    <!-- 	    </executions> -->
++    <!-- 	  </plugin> -->
++    <!-- 	</plugins> -->
++    <!--   </build> -->
++    <!-- </profile> -->
+   </profiles>
+ 
+ </project>

@@ -23,11 +23,22 @@ MAVEN_OPTS="-Xmx256m"
 export MAVEN_OPTS
 
 # Invoke patch
+echo ""
+echo ""
 echo "============================================="
-echo "Apply patch to cocoon still issue COCOON-2294 not solve (https://issues.apache.org/jira/browse/COCOON-2294)"
+echo "Apply patch to cocoon issue COCOON-2294 not still solve (https://issues.apache.org/jira/browse/COCOON-2294)"
 echo "============================================="
-
 patch -p0 < parent-pom_serializer-impl-dependency.patch
+
+# Invoke patch
+echo ""
+echo ""
+echo "============================================="
+echo "Apply patch to cocoon issue COCOON-2302 not still solve (https://issues.apache.org/jira/browse/COCOON-2302)"
+echo "============================================="
+patch -p0 < cocoon-sitemaptags2daisy-plugin.patch
+
+
 # Invoke maven
 cd cocoon-rev-964648
 echo "============================================="
