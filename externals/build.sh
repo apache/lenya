@@ -28,7 +28,7 @@ echo ""
 echo "============================================="
 echo "Apply patch to cocoon issue COCOON-2294 not still solve (https://issues.apache.org/jira/browse/COCOON-2294)"
 echo "============================================="
-patch -p0 < parent-pom_serializer-impl-dependency.patch
+patch -N -p0 < parent-pom_serializer-impl-dependency.patch
 
 # Invoke patch
 echo ""
@@ -36,7 +36,7 @@ echo ""
 echo "============================================="
 echo "Apply patch to cocoon issue COCOON-2302 not still solve (https://issues.apache.org/jira/browse/COCOON-2302)"
 echo "============================================="
-patch -p0 < cocoon-sitemaptags2daisy-plugin.patch
+patch -N -p0 < cocoon-sitemaptags2daisy-plugin.patch
 
 
 # Invoke maven
@@ -44,5 +44,11 @@ cd cocoon-rev-959219
 echo "============================================="
 echo "Install cocoon" 
 echo "============================================="
-mvn install
-#mvn -P allblocks $ARGS
+
+export MAVEN_OPTS="-Xmx1024m -Xms512m"
+
+#"-Xmx256m"
+#mvn install
+mvn -P allblocks -Dmaven.test.skip=true install
+
+echo $MAVEN_OPTS
