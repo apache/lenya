@@ -660,6 +660,11 @@
         <artifactId>lenya-core-workflow</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-properties</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       
       <!-- Modules -->
       <dependency>

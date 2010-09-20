@@ -116,5 +116,9 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-module-sourcerepository</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-properties</artifactId>
+    </dependency>
   </dependencies>
 </project>
