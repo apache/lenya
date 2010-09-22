@@ -410,7 +410,7 @@ public class Publish extends InvokeWorkflow {
         Message message = new Message(subject, body, sender, recipients);
 
         NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, getSession(),
+        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, liveVersion,
                 getLogger(), descriptor);
         getSession().enqueueEvent(event);
     }
