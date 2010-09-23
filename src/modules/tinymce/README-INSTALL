@@ -1,33 +1,6 @@
 
 ****************************
-** Please follow theses steps for intall a working TinyMCE editor : 
+
+TinymMCE install is describe here : http://lenya.apache.org/docu20/standardmodules/tinymcemodulesection/tinymcemoduleoverview.html
+
 ****************************
-
-1)download the TinyMCE 3.3.9 version here :
-	   http://sourceforge.net/projects/tinymce/files/TinyMCE/3.3.9/tinymce_3_3_9.zip/download [1]
-	    and unzip in the tinymce/resources folder. 
-
-2)select languages you want here :
-	  http://tinymce.moxiecode.com/download_i18n.php
-	  and unzip here tinymce/resources folder. FIXME : really the good folder ? 
-
-3) Add (without cotes) in the menu.xml of resource-type you want tiny can edit :
-       "<item uc:usecase="tinymce.edit" href="?"><i18n:text>With TinyMCE</i18n:text></item>" 
-       example patch for xhtml resource type : 
-
-****** Begin patch ******
-  Index: xhtml/config/menu.xml
-===================================================================
---- xhtml/config/menu.xml	(revision 1000343)
-+++ xhtml/config/menu.xml	(working copy)
-@@ -39,6 +39,7 @@
-         <item uc:usecase="bxe.edit"><i18n:text>With BXE</i18n:text></item>
-         <item uc:usecase="editors.forms" href="?form=xhtml"><i18n:text>With Forms</i18n:text></item>
-         <item uc:usecase="editors.oneform"><i18n:text>editors.sourceEditor</i18n:text></item>
-+	<item uc:usecase="tinymce.edit" href="?"><i18n:text>With TinyMCE</i18n:text></item>
-       </block>
-     </menu>
-****** END patch *******
-
-
-[1] You can find - at your own risk - a more recent version of this here : http://sourceforge.net/projects/tinymce/files/
