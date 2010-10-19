@@ -131,6 +131,12 @@
       <artifactId>cocoon-forms-impl</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <!-- for continuations -->
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-flowscript-impl</artifactId>
+      <scope>runtime</scope>
+    </dependency>
     
     <!-- Lenya -->
     <dependency>
