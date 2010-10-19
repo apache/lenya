@@ -5,12 +5,13 @@
     * go to externals/
     * run build.sh : this script will apply a non-solve - for now - dependencie bug and install cocoon
     * return to your lenya parent folder
-    * build with maven install -Dmaven.test.skip=true
-          o some tests are falling for now 
+    * build with 
+      * mvn install -Dmaven.test.skip=true
+          o one tests is falling for now 
 
 == Run lenya ==
 
-    * go to org.apache.lenya.webapp
-    * do maven jetty:run
+    * go to org.apache.lenya.webapp and execute :
+      * mvn jetty:run
     * open browser and go to localhost:8888/
     * help us to build this version !
