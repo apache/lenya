@@ -1,17 +1,24 @@
 == Build current trunk ==
 
     * checkout the current lenya trunk
-    * an svn:external propertie will checkout for you a version of cocoon2.2
+    * an svn:external property will checkout for you a version of cocoon2.2
     * go to externals/
-    * run build.sh : this script will apply a non-solve - for now - dependencie bug and install cocoon
+    * run build.sh : this script will apply a non-solve - for now - dependencie bug in cocoon and install it
     * return to your lenya parent folder
     * build with 
-      * mvn install -Dmaven.test.skip=true
-          o one tests is falling for now 
+      * mvn install 
+          o add "-Dmaven.test.skip=true" if you want to skip tests
 
-== Run lenya ==
+== Run into Jetty ==
 
     * go to org.apache.lenya.webapp and execute :
       * mvn jetty:run
     * open browser and go to localhost:8888/
     * help us to build this version !
+
+== Run into eclipse ==
+
+   * prepare the folder structure : 
+     * go into your lenya root folder and type : 
+       * mvn org.apache.maven.plugins:maven-eclipse-plugin:2.6:eclipse
+       * This command is a workaround for a bug describe here : http://forums.atlassian.com/thread.jspa?threadID=34952&tstart=30
