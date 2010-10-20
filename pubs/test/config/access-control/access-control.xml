@@ -16,12 +16,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: access-control.xml 666714 2008-06-11 15:42:59Z andreas $ -->
-
 <access-controller type="bypassable">
   
   <accreditable-manager type="file">
-    <parameter name="directory" value="/Users/nobby/apache/lenya/trunk/pubs/test/config/access-control/passwd"/>
+    <!-- TODO : try to solve this workaround with a more "clean" protocol (like blockcontext, context,...) 
+	        Do the same for the policy-manager parameter behind
+      -->
+    <parameter name="directory" value="../pubs/test/config/access-control/passwd"/>
+    <!-- <parameter name="directory" value="context:///lenya/pubs/test/config/access-control/passwd"/> -->
     
     <user-manager>
       <user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="admin.addUser">Local User</user-type>
@@ -32,7 +34,8 @@
   
   <policy-manager type="document">
     <policy-manager type="file">
-      <parameter name="directory" value="/Users/nobby/apache/lenya/trunk/pubs/test/config/access-control/policies"/>
+      <parameter name="directory" value="../pubs/test/config/access-control/policies"/>
+      <!-- <parameter name="directory" value="context:///lenya/pubs/test/config/access-control/policies"/> -->
     </policy-manager>
   </policy-manager>
   <!--
