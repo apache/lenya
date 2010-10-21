@@ -20,6 +20,12 @@
 
 package org.apache.lenya.cms.publication;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 /**
  * This class resolves all Lenya-specific information from a webapp URL.
  */
@@ -32,6 +38,35 @@ public class URLInformation {
 
     private String url;
 
+    public URLInformation(){
+    	String webappUrl = getCurrentURI();
+    	setSourceURL(webappUrl);
+    }
+	/**
+     * Ctor.
+     * @param webappUrl A webapp URL (without context prefix).
+     */
+    public URLInformation(String webappUrl) {
+    	setSourceURL(webappUrl);
+    }
+	
+    private String getCurrentURI(){
+    	String currentURI = "";
+    	RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+    	if (requestAttributes instanceof ServletRequestAttributes) {
+    		HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+    		currentURI = request.getRequestURI(); // ==> /default/authoring/
+		}
+    	return currentURI;
+    }
+    	
+    private void setSourceURL(String webappUrl){
+    	if (!webappUrl.startsWith("/")) {
+            throw new RuntimeException("The URL [" + webappUrl + "] doesn't start with a slash!");
+        }
+        this.url = webappUrl.substring(1);
+    }
+    
     /**
      * Returns the area (without the "webdav" prefix).
      * @return A string.
@@ -108,16 +143,5 @@ public class URLInformation {
         return step;
     }
 
-    /**
-     * Ctor.
-     * @param webappUrl A webapp URL (without context prefix).
-     */
-    public URLInformation(String webappUrl) {
-
-        if (!webappUrl.startsWith("/")) {
-            throw new RuntimeException("The URL [" + webappUrl + "] doesn't start with a slash!");
-        }
-
-        this.url = webappUrl.substring(1);
-    }
+    
 }
