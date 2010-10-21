@@ -34,6 +34,7 @@
       <bean class="org.apache.lenya.cms.usecase.UsecaseView">
         <property name="guiManager" ref="org.apache.lenya.cms.usecase.gui.GUIManager"/>
         <property name="uri" value="fallback://lenya/modules/acusecases/jx/login.jx"/>
+        <property name="createContinuation" value="true"/>
       </bean>
     </property>
   </bean>

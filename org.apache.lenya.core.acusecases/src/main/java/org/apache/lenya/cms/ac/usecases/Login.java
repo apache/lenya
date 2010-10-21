@@ -47,7 +47,7 @@ public class Login extends AccessControlUsecase {
         super.initParameters();
 
         try {
-            URLInformation info = new URLInformation(getSourceURL());
+            URLInformation info = new URLInformation();
             String pubId = info.getPublicationId();
             if (getSession().existsPublication(pubId)) {
                 Publication publication = getSession().getPublication(pubId);
