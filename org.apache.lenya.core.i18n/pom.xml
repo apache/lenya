@@ -14,4 +14,25 @@
   <artifactId>lenya-core-i18n</artifactId>
   <packaging>jar</packaging>
   <name>Apache Lenya Core I18N</name>
+  
+   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-maven-plugin</artifactId>
+        <version>1.0.0-RC1-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>rcl</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>rcl</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+  
 </project>
