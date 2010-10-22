@@ -27,5 +27,9 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-module-prettyprinting</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-i18n</artifactId>
+    </dependency>
   </dependencies>
 </project>

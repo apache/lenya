@@ -27,6 +27,7 @@
   <bean name="org.apache.lenya.core.gui.block" class="org.apache.cocoon.sitemap.SitemapServlet">
     <servlet:context mount-path="/gui" context-path="blockcontext:/lenya-core-gui-2.2.0-SNAPSHOT/">
       <servlet:connections>
+		<entry key="i18n" value-ref="org.apache.lenya.core.i18n.block"/>
         <entry key="prettyprinting" value-ref="org.apache.lenya.module.prettyprinting.block"/>
       </servlet:connections>
     </servlet:context>
