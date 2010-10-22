@@ -32,6 +32,15 @@
 
   <name>Apache Lenya Project</name>
 
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+    </plugins>
+  </reporting>
   <modules>
     <module>org.apache.lenya.parent</module>
     <module>org.apache.lenya.core.ac</module>
