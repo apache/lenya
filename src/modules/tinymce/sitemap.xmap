@@ -75,7 +75,7 @@
             <!-- Check for language pack to render TinyMCE according to the 
                  requested locale. If it does not exist, fall back to English. --> 
             <map:select type="resource-exists">
-              <map:when test="fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/langs/{request:locale}.js">
+              <map:when test="fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/langs/{request:locale/language}.js">
                 <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
                   <!-- the proxy path is set manually, since the document has already been
                        though the proxy transformer in the publication sitemap, and we can't
@@ -95,6 +95,7 @@
                   <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
                   <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
                   <map:parameter name="locale" value="en"/>
+                  <map:parameter name="content" value="{request-param:tinymce.content}"/>
                 </map:transform>
               </map:otherwise>
             </map:select>
