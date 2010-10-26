@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.lenya</groupId>
+    <artifactId>lenya-parent</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+    <relativePath>../org.apache.lenya.parent/pom.xml</relativePath>
+  </parent>
+  <groupId>org.apache.lenya</groupId>
+  <artifactId>lenya-core-utils</artifactId>
+  <packaging>jar</packaging>
+  <name>Apache Lenya Utilities</name>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <!-- export our test classes in a separate jar -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*TestCase.class</include>
+            <include>**/*Test.class</include>
+          </includes>
+          <excludes>
+            <exclude>**/Abstract*.class</exclude>
+          </excludes>
+          <!-- currently triggers NPE in surefire plugin
+            <systemProperties>
+            <property>
+            <name>junit.test.loglevel</name>
+            <value>3</value>
+            </property>
+            </systemProperties>
+          -->
+        </configuration>
+      </plugin>
+    </plugins>
+    <!-- <resources> -->
+    <!--   <resource> -->
+    <!--     <directory>src/main/resources</directory> -->
+    <!--     <filtering>false</filtering> -->
+    <!--     <excludes> -->
+    <!--       <exclude>META-INF/cocoon/properties/lenya.properties</exclude> -->
+    <!--     </excludes> -->
+    <!--   </resource> -->
+    <!--   <resource> -->
+    <!--     <directory>src/main/resources</directory> -->
+    <!--     <filtering>true</filtering> -->
+    <!--     <includes> -->
+    <!--       <include>META-INF/cocoon/properties/lenya.properties</include> -->
+    <!--     </includes> -->
+    <!--   </resource> -->
+    <!-- </resources> -->
+  </build>
+  
+  <properties>
+    <lenya.home>${basedir}/..</lenya.home>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.avalon.framework</groupId>
+      <artifactId>avalon-framework-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-flowscript-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-validator</groupId>
+      <artifactId>commons-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-validation-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-serializers-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-chaperon-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-xsp-impl</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-api</artifactId>
+    </dependency>
+    <!-- Tests -->
+     <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-mock</artifactId>
+        <scope>test</scope>
+      </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-core</artifactId>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <!-- FIXME: This dependency is transitive and should be obtained automatically
+      see http://jira.codehaus.org/browse/MNG-1378 -->
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-sitemap-impl</artifactId>
+      <scope>test</scope>
+      <type>test-jar</type>
+    </dependency>
+  </dependencies>
+</project>
