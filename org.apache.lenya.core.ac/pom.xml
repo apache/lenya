@@ -33,6 +33,10 @@
       <artifactId>lenya-core-cache</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-utils</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.samba.jcifs</groupId>
       <artifactId>jcifs</artifactId>
       <version>1.2.15</version>
