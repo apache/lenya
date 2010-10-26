@@ -21,18 +21,9 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
   http://cocoon.apache.org/schema/configurator http://cocoon.apache.org/schema/configurator/cocoon-configurator-1.0.1.xsd">
   
-  <bean name="org.apache.lenya.cms.usecase.Usecase/ac.login"
-    class="org.apache.lenya.cms.ac.usecases.Login" scope="session" init-method="initialize">
-    <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
-    <property name="accessControllerResolver" ref="org.apache.lenya.ac.AccessControllerResolver"/>
-    <property name="view">
-      <bean class="org.apache.lenya.cms.usecase.UsecaseView">
-        <property name="guiManager" ref="org.apache.lenya.cms.usecase.gui.GUIManager"/>
-        <property name="uri" value="fallback://lenya/modules/acusecases/jx/login.jx"/>
-        <property name="createContinuation" value="true"/>
-      </bean>
-    </property>
+  <bean name="org.apache.lenya.cms.module.Module/acusecases"
+    class="org.apache.lenya.cms.module.ModuleImpl">
+    <property name="baseUri" value="file://${lenya.home}/org.apache.lenya.core.acusecases/target/classes/COB-INF"/>
   </bean>
-
   
 </beans>
