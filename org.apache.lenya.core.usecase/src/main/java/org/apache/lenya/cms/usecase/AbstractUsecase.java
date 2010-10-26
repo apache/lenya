@@ -20,8 +20,6 @@ package org.apache.lenya.cms.usecase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -40,7 +38,7 @@ import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.RepositoryException;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.TransactionLock;
-import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 
 /**
  * Abstract usecase implementation.
@@ -49,24 +47,25 @@ import org.apache.lenya.cms.publication.URLInformation;
  */
 public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
-    protected static final String EVENT_CHECK_POSTCONDITIONS = "checkPostconditions";
+	protected static final String EVENT_CHECK_PRECONDITIONS = "checkPreconditions";
+	
+	protected static final String EVENT_LOCK_NODES = "lockInvolvedObjects";
+	
+	protected static final String EVENT_CHECK_EXECUTION_CONDITIONS = "checkExecutionConditions";
 
-    protected static final String EVENT_EXECUTE = "execute";
+	protected static final String EVENT_EXECUTE = "execute";
 
-    protected static final String EVENT_CHECK_PRECONDITIONS = "checkPreconditions";
-
-    protected static final String EVENT_CHECK_EXECUTION_CONDITIONS = "checkExecutionConditions";
-
+	protected static final String EVENT_CHECK_POSTCONDITIONS = "checkPostconditions";
+    
     protected static final String ERROR_OBJECTS_CHECKED_OUT = "objects-checked-out";
+    
 
     protected static final StateMachine.Transition[] TRANSITIONS = {
             new StateMachine.Transition("start", "preChecked", EVENT_CHECK_PRECONDITIONS),
             new StateMachine.Transition("preChecked", "preChecked", EVENT_CHECK_PRECONDITIONS),
-            new StateMachine.Transition("preChecked", "nodesLocked", "lockInvolvedObjects"),
-            new StateMachine.Transition("nodesLocked", "execChecked",
-                    EVENT_CHECK_EXECUTION_CONDITIONS),
-            new StateMachine.Transition("execChecked", "execChecked",
-                    EVENT_CHECK_EXECUTION_CONDITIONS),
+            new StateMachine.Transition("preChecked", "nodesLocked", EVENT_LOCK_NODES),
+            new StateMachine.Transition("nodesLocked", "execChecked",EVENT_CHECK_EXECUTION_CONDITIONS),
+            new StateMachine.Transition("execChecked", "execChecked",EVENT_CHECK_EXECUTION_CONDITIONS),
             new StateMachine.Transition("nodesLocked", "preChecked", EVENT_CHECK_PRECONDITIONS),
             new StateMachine.Transition("execChecked", "executed", EVENT_EXECUTE),
             new StateMachine.Transition("executed", "postChecked", EVENT_CHECK_POSTCONDITIONS) };
@@ -155,20 +154,20 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * prevent the operation from being executed.
      * @return A boolean value.
      */
-    public List getErrorMessages() {
-        return Collections.unmodifiableList(new ArrayList(this.errorMessages));
+    public List<UsecaseMessage> getErrorMessages() {
+        return Collections.unmodifiableList(new ArrayList<UsecaseMessage>(this.errorMessages));
     }
 
     /**
      * Returns the information messages to show on the confirmation screen.
      * @return An array of strings. Info messages do not prevent the operation from being executed.
      */
-    public List getInfoMessages() {
-        return Collections.unmodifiableList(new ArrayList(this.infoMessages));
+    public List<UsecaseMessage> getInfoMessages() {
+        return Collections.unmodifiableList(new ArrayList<UsecaseMessage>(this.infoMessages));
     }
 
-    private List errorMessages = new ArrayList();
-    private List infoMessages = new ArrayList();
+    private List<UsecaseMessage> errorMessages = new ArrayList<UsecaseMessage>();
+    private List<UsecaseMessage> infoMessages = new ArrayList<UsecaseMessage>();
 
     /**
      * Adds an error message.
@@ -223,7 +222,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             clearErrorMessages();
             clearInfoMessages();
             doCheckExecutionConditions();
-            dumpErrorMessages();
+            dumpErrorMessagesToLog();
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
@@ -259,10 +258,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             }
             doCheckPreconditions();
 
-            List _errorMessages = getErrorMessages();
-            for (int i = 0; i < _errorMessages.size(); i++) {
-                getLogger().info(_errorMessages.get(i).toString());
-            }
+            dumpErrorMessagesToLog();
+            
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
@@ -272,6 +269,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         }
         if (!hasErrors()) {
             advanceState(EVENT_CHECK_PRECONDITIONS);
+            //flo
+            //advanceState(EVENT_LOCK_NODES);
         }
     }
 
@@ -307,7 +306,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             clearErrorMessages();
             clearInfoMessages();
             doExecute();
-            dumpErrorMessages();
+            dumpErrorMessagesToLog();
         } catch (LockException e) {
             exception = e;
             addErrorMessage("The operation could not be completed because an involved object was changed by another user.");
@@ -340,14 +339,22 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
     /**
      * Dumps the error messages to the log.
+     * @deprecated use dumpErrorMessagesToLog instead
      */
     protected void dumpErrorMessages() {
-        List _errorMessages = getErrorMessages();
+        List<UsecaseMessage> _errorMessages = getErrorMessages();
         for (int i = 0; i < _errorMessages.size(); i++) {
             getLogger().error(_errorMessages.get(i).toString());
         }
     }
-
+    
+    protected void dumpErrorMessagesToLog() {
+    	List<UsecaseMessage> _errorMessages = getErrorMessages();
+      for (UsecaseMessage um : _errorMessages){
+      	getLogger().info(um.toString());
+      }
+  }
+    
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#checkPostconditions()
      */
@@ -357,7 +364,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             clearErrorMessages();
             clearInfoMessages();
             doCheckPostconditions();
-            dumpErrorMessages();
+            dumpErrorMessagesToLog();
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
@@ -386,7 +393,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         // do nothing
     }
 
-    private Map parameters = new HashMap();
+    private Properties parameters = new Properties();
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
@@ -477,7 +484,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * Return a map of all parameters
      * @return the map
      */
-    public Map getParameters() {
+    public Map<Object,Object> getParameters() {
         initializeParametersIfNotDone();
         return Collections.unmodifiableMap(this.parameters);
     }
@@ -600,8 +607,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      */
     public String[] getParameterNames() {
         initializeParametersIfNotDone();
-        Set keys = this.parameters.keySet();
-        return (String[]) keys.toArray(new String[keys.size()]);
+        Set<String> keys = this.parameters.stringPropertyNames();
+        return keys.toArray(new String[keys.size()]);
     }
 
     protected void initializeParametersIfNotDone() {
@@ -765,8 +772,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     }
 
     private String exitUsecaseName = null;
-    private Map exitUsecaseParameters = new HashMap();
-
+    //private Map<String,String> exitUsecaseParameters = new HashMap<String,String>();
+    //private Map exitUsecaseParameters = new HashMap();
+    private Properties exitUsecaseParameters = new Properties();
     /**
      * Sets a parameter to pass to the exit usecase.
      * @param name The parameter name.
@@ -785,10 +793,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         StringBuffer queryBuffer = new StringBuffer();
         if (this.exitUsecaseName != null) {
             queryBuffer.append("?lenya.usecase=").append(this.exitUsecaseName);
-            for (Iterator i = this.exitUsecaseParameters.keySet().iterator(); i.hasNext();) {
-                String key = (String) i.next();
-                String value = (String) this.exitUsecaseParameters.get(key);
-                queryBuffer.append("&").append(key).append("=").append(value);
+            for (String key : this.exitUsecaseParameters.stringPropertyNames()){
+            	String value = (String) this.exitUsecaseParameters.get(key);
+              queryBuffer.append("&").append(key).append("=").append(value);
             }
         } else {
             String exitUsecase = getParameterAsString("lenya.exitUsecase");
@@ -847,7 +854,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         this.exitUsecaseName = exitUsecaseName;
     }
 
-    protected Map getExitUsecaseParameters() {
+    protected Properties getExitUsecaseParameters() {
         return exitUsecaseParameters;
     }
 
@@ -868,8 +875,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * @return the publication in which the use-case is being executed
      */
     protected Publication getPublication() {
-        if (this.pub == null) {
-            String pubId = new URLInformation(getSourceURL()).getPublicationId();
+        if (this.pub == null) {	
+            String pubId = new URLInformation().getPublicationId();
             this.pub = getSession().getPublication(pubId);
         }
         return this.pub;
