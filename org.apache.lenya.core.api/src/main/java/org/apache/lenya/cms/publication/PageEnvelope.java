@@ -20,18 +20,14 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
-
 import org.apache.cocoon.environment.Request;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 
 /**
  * A page envelope carries a set of information that are needed during the presentation of a
  * document.
  */
 public class PageEnvelope {
-    private final static Log logger = LogFactory.getLog(PageEnvelope.class);
     /**
      * The names of the page envelope parameters.
      */
