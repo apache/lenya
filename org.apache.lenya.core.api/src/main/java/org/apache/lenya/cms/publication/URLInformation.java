@@ -28,7 +28,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * This class resolves all Lenya-specific information from a webapp URL.
+ * 
+ * @Deprecated use org.apache.lenya.utils.URLInformation instead
  */
+@Deprecated
 public class URLInformation {
 
     private String publicationId = null;
