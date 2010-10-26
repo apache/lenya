@@ -144,14 +144,14 @@ public interface Usecase {
      * from being executed.
      * @return A list of {@link UsecaseMessage} objects.
      */
-    List getErrorMessages();
+    List<UsecaseMessage> getErrorMessages();
 
     /**
      * Returns the info messages from the previous operation. Info messages do not prevent the
      * operation from being executed.
      * @return A list of {@link UsecaseMessage} objects.
      */
-    List getInfoMessages();
+    List<UsecaseMessage> getInfoMessages();
 
     /**
      * Determine if the usecase has error messages. Provides a way of checking for errors without
