@@ -20,11 +20,10 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
-
 /**
  * A Lenya publication.
  */
+
 public interface Publication {
 
     /**
