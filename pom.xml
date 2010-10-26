@@ -65,6 +65,7 @@
     <module>org.apache.lenya.core.templating</module>
     <module>org.apache.lenya.core.usecase</module>
     <module>org.apache.lenya.core.workflow</module>
+    <module>org.apache.lenya.core.utils</module>
     <module>org.apache.lenya.module.blog</module>
     <module>org.apache.lenya.module.bxe</module>
     <module>org.apache.lenya.module.cforms</module>
