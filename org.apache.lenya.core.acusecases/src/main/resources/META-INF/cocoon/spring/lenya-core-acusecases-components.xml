@@ -26,13 +26,12 @@
     <property name="repository" ref="org.apache.lenya.cms.publication.Repository"/>
     <property name="accessControllerResolver" ref="org.apache.lenya.ac.AccessControllerResolver"/>
     <property name="view">
-      <bean class="org.apache.lenya.cms.usecase.UsecaseView">
+      <bean class="org.apache.lenya.cms.usecase.UsecaseViewImpl">
         <property name="guiManager" ref="org.apache.lenya.cms.usecase.gui.GUIManager"/>
-        <property name="uri" value="fallback://lenya/modules/acusecases/jx/login.jx"/>
+        <property name="viewUri" value="fallback://lenya/modules/acusecases/jx/login.jx"/>
         <property name="createContinuation" value="true"/>
       </bean>
     </property>
   </bean>
 
-  
 </beans>

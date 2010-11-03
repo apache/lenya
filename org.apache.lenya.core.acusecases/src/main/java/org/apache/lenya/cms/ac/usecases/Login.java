@@ -19,17 +19,16 @@ package org.apache.lenya.cms.ac.usecases;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.cocoon.processing.ProcessInfoProvider;
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.publication.Session;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Usecase to login a user.
  * 
- * @version $Id: Login.java 407305 2006-05-17 16:21:49Z andreas $
  */
 public class Login extends AccessControlUsecase {
 
@@ -39,16 +38,16 @@ public class Login extends AccessControlUsecase {
     protected static final String REFERRER_QUERY_STRING = "referrerQueryString";
     protected static final String PUBLICATION = "publication";
     protected static final String CURRENT_USER = "currentUser";
-
+    
+    //private Repository repository;
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {
         super.initParameters();
-
+        
         try {
-            URLInformation info = new URLInformation();
-            String pubId = info.getPublicationId();
+        	String pubId = new URLInformation().getPublicationId();
             if (getSession().existsPublication(pubId)) {
                 Publication publication = getSession().getPublication(pubId);
                 setParameter(PUBLICATION, publication);
@@ -88,13 +87,17 @@ public class Login extends AccessControlUsecase {
         validate();
         
         if (!hasErrors()) {
-            ProcessInfoProvider process = (ProcessInfoProvider) WebAppContextUtils.getCurrentWebApplicationContext()
-            .getBean(ProcessInfoProvider.ROLE);
-            HttpServletRequest request = process.getRequest();
+        	HttpServletRequest request = ServletHelper.getRequest();
             request.getSession(true);
+            
             if (getAccessController().authenticate(request)) {
-                request.getSession(false).removeAttribute(HISTORY_SESSION_ATTRIBUTE);
-                setDefaultTargetURL(request.getPathInfo());
+            	//we have an authenticated user, so we create a modifiable repository session
+            	Identity identity = (Identity) request.getSession().getAttribute(Identity.class.getName());
+            	Session s = this.repository.startSession(identity, true);
+            	this.setSession(s);
+            	//TODO : see if this remove attribute is still valid
+            	request.getSession(false).removeAttribute(HISTORY_SESSION_ATTRIBUTE);
+              setDefaultTargetURL(request.getPathInfo());
             } else {
                 addErrorMessage("Authentication failed");
             }
