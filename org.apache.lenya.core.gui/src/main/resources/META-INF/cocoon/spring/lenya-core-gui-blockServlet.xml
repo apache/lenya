@@ -27,9 +27,19 @@
   <bean name="org.apache.lenya.core.gui.block" class="org.apache.cocoon.sitemap.SitemapServlet">
     <servlet:context mount-path="/gui" context-path="blockcontext:/lenya-core-gui-2.2.0-SNAPSHOT/">
       <servlet:connections>
-		<entry key="i18n" value-ref="org.apache.lenya.core.i18n.block"/>
+	     	<entry key="i18n" value-ref="org.apache.lenya.core.i18n.block"/>
         <entry key="prettyprinting" value-ref="org.apache.lenya.module.prettyprinting.block"/>
       </servlet:connections>
     </servlet:context>
   </bean>
+  
+  <bean name="org.apache.cocoon.reading.Reader/servletLinkRewriter"
+          class="org.apache.cocoon.servletservice.components.LinkRewriterReader">
+        <property name="inputModule" ref="org.apache.cocoon.components.modules.input.InputModule/servlet"/>
+        <!-- Set character encoding of processed files. Defaults to "UTF-8" -->
+        <!-- <property name="encoding" value="UTF-8"/> -->
+        <!-- Set HTTP expires. Defaults to -1 -->
+        <!-- <property name="expires" value="-1" -->
+    </bean>
+    
 </beans>
