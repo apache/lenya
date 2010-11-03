@@ -44,6 +44,8 @@ import org.apache.lenya.transaction.UnitOfWorkImpl;
 
 /**
  * Repository session.
+ * 
+ * @deprecated solve the concurrency beetween lenya-core-repository/o.a.l.cms.repository.SessionImpl and lenya-core-impl/o.a.l.cms.publication.SEssionImpl 
  */
 public class SessionImpl implements Session {
     
