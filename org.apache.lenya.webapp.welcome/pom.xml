@@ -71,6 +71,7 @@
     </dependency>
     
     <!-- Lenya -->
+    <!-- core -->
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-ac</artifactId>
@@ -114,11 +115,16 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-properties</artifactId>
+    </dependency>
+    <!-- modules -->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-module-sourcerepository</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-properties</artifactId>
+      <artifactId>lenya-module-export</artifactId>
     </dependency>
   </dependencies>
 </project>

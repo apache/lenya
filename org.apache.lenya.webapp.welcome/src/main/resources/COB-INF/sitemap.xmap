@@ -37,17 +37,25 @@
     <map:pipeline>
       
       <map:match pattern="ac.login" type="usecase">
-        <map:generate src="servlet:usecase:/service/usecase/ac.login"/>
-        <map:serialize type="html"/>
+        <map:mount check-reload="yes" reload-method="synchron" src="{fallback:lenya/modules/usecase/sitemap.xmap}" uri-prefix=""/>
       </map:match>
       <map:match pattern="ac.logout" type="usecase">
-        <map:mount check-reload="yes" reload-method="synchron" src="{fallback:lenya/modules/usecase/usecase.xmap}" uri-prefix=""/>
+        <map:mount check-reload="yes" reload-method="synchron" src="{fallback:lenya/modules/usecase/sitemap.xmap}" uri-prefix=""/>
       </map:match>
       
       <!-- favicon -->
       <map:match pattern="favicon.ico">
         <map:read mime-type="image/x-icon" src="lenya/resources/images/lenya.ico"/>
       </map:match>
+    </map:pipeline>
+    
+     <map:pipeline id="getResources">
+    
+    	<map:match pattern="getResources/getI18nCatalogue/*">
+    		<map:generate src="resources/i18n/cmsui.xml"/>
+    		<map:serialize type="xml"/>
+    	</map:match>
+    
     </map:pipeline>
     
     <map:pipeline>

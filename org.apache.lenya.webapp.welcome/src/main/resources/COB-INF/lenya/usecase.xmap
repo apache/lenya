@@ -52,7 +52,7 @@
     
     <map:pipeline>
       <map:match type="registered-usecase">
-        <map:mount src="fallback://lenya/modules/usecase/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+        <map:mount src="fallback://lenya/modules/usecase/sitemap.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
  
