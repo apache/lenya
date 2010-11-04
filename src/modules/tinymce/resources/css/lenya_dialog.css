@@ -1,0 +1,49 @@
+
+/* Disables the advanced tab in the table plugin. */
+
+#table #advanced_tab, #table #advanced_panel {
+	display: none;
+}
+
+#tablecell #advanced_tab {
+	display: none;
+}
+
+#tablerow #advanced_tab {
+        display: none;
+}
+
+/* Disables the border input field and label in the table plugin. */
+
+#table #cellpadding, #table #cellpaddinglabel, #table #cellspacing, #table #cellspacinglabel {
+	display: none;
+}
+
+#table #align, #table #alignlabel {
+	display: none;
+}
+
+#table #border, #table #borderlabel {
+	display: none;
+}
+
+#table td.column1, #table input#caption {
+	display: none;
+}
+
+#tablerow label[for="rowtype"], #tablerow #rowtype {
+	display: none;
+}
+
+#tablerow label[for="height"], #tablerow #height {
+	display: none;
+}
+
+#image #align, #image label[for="align"], #image input#border, #image label[for="border"] {
+	display: none;
+}
+
+#image label[for="hspace"], #image input#hspace, #image label[for="vspace"], #image input#vspace {
+        display: none;
+}
+
