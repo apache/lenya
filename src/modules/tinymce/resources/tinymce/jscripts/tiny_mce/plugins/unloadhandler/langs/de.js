@@ -17,6 +17,6 @@
 
 // DE lang variables
 
-tinyMCE.addToLang('',{
-unloadhandler_unload_msg : 'Achtung: wenn Sie den Editor mit OK verlassen verlieren Sie alle Änderungen und das Dokument verbleibt «checked out».'
+tinyMCE.addI18n('de.unloadhandler',{
+    unload_msg : 'Achtung: wenn Sie den Editor mit OK verlassen verlieren Sie alle Änderungen und das Dokument verbleibt «checked out».'
 });
