@@ -22,11 +22,6 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
   http://cocoon.apache.org/schema/configurator http://cocoon.apache.org/schema/configurator/cocoon-configurator-1.0.1.xsd">
   
-  <bean name="org.apache.lenya.cms.module.Module/usecase"
-    class="org.apache.lenya.cms.module.ModuleImpl">
-    <property name="baseUri" value="file://${lenya.home}/org.apache.lenya.core.usecase/target/classes/COB-INF"/>
-  </bean>
-  
   <bean name="org.apache.lenya.ac.Authorizer/usecase"
     class="org.apache.lenya.cms.ac.usecase.impl.UsecaseAuthorizerImpl">
     <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
