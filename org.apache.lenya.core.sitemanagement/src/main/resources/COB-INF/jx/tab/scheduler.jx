@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: scheduler.jx 615291 2008-01-25 18:06:50Z rfrovarp $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
+  <page:body>
+    <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+
+    <jx:set var="url" value="${usecase.getParameter('private.sourceUrl')}"/>
+    <jx:set var="steps" value="${url.split('/')}"/>
+    <jx:set var="currentPublicationId" value="${steps[1]}"/>
+
+    <div id="contentblock1" class="lenya-tab-sitetree">
+      
+      <h1><i18n:text>Scheduler</i18n:text></h1>
+      
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('jobs').size() == 0}">
+          <i18n:text>no-jobs-scheduled</i18n:text>
+        </jx:when>
+        <jx:otherwise>
+          <table class="lenya-table-list-noborder">
+            <tr>
+              <th><i18n:text>Job</i18n:text></th>
+              <th><i18n:text>User</i18n:text></th>
+              <th><i18n:text>Time</i18n:text></th>
+            </tr>
+            <jx:forEach var="job" items="${usecase.getParameter('jobs')}">
+              <!-- see UsecaseSchedulerImpl for job name encoding -->
+              <jx:set var="name" value="${job.getName()}"/>
+              <jx:set var="parts" value="${name.split(':')}"/>
+              <jx:set var="usecaseName" value="${parts[0]}"/>
+              <jx:set var="userId" value="${parts[1]}"/>
+              <jx:set var="pubId" value="${parts[2]}"/>
+              <jx:if test="${pubId == currentPublicationId}">
+                <tr>
+                  <td>
+                    <jx:out value="${usecaseName}"/>
+                  </td>
+                  <td>
+                    <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${userId}"><jx:out value="${userId}"/></a>
+                  </td>
+                  <td>
+                    <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss Z">
+                      <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss Z" value="${job.getNextTime()}"/>
+                    </i18n:date-time>
+                  </td>
+                </tr>
+              </jx:if>
+            </jx:forEach>
+          </table>
+        </jx:otherwise>
+      </jx:choose>
+      
+    </div>
+  </page:body>
+</page:page>

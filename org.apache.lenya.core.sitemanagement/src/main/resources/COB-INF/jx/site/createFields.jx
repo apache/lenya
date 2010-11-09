@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: create.jx 486213 2006-12-12 16:14:30Z andreas $ -->
+
+<jx:template xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  
+  <jx:set var="newLanguageVersion" value="${usecase.getName().equals('sitemanagement.createLanguage')}"/>
+  
+  <jx:choose>
+    <jx:when test="${usecase.getParameter('pathProvided')}">
+      <tr>
+        <td class="lenya-entry-caption">
+          <label for="nodeName"><i18n:text>Path</i18n:text>: </label>
+        </td>
+        <td>
+          <input class="lenya-form-element" type="text" name="path" value="${usecase.getParameter('path')}"/>
+        </td>
+      </tr>
+    </jx:when>
+    <jx:when test="${newLanguageVersion}">
+      <tr>
+        <td class="lenya-entry-caption">
+          <label for="nodeName"><i18n:text>Path</i18n:text>: </label>
+        </td>
+        <td>
+          <jx:out value="${usecase.getParameter('path')}"/>
+        </td>
+      </tr>
+    </jx:when>
+    <jx:otherwise>
+      <tr>
+        <td class="lenya-entry-caption">
+          <label for="nodeName"><i18n:text>Parent Path</i18n:text>: </label>
+        </td>
+        <td>
+          <jx:out value="${usecase.getParameter('parentPath')}"/>
+        </td>
+      </tr>
+      <tr>
+        <td class="lenya-entry-caption">
+          <label for="nodeName"><i18n:text>Node Name</i18n:text>*: </label>
+        </td>
+        <td>
+          <input class="lenya-form-element" type="text" name="nodeName" value="${usecase.getParameter('nodeName')}"/>
+          <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)
+        </td>
+      </tr>
+    </jx:otherwise>
+  </jx:choose>
+  <tr>
+    <td class="lenya-entry-caption">
+      <label for="dublincore.title"><i18n:text>Navigation Title</i18n:text>*: </label></td>
+    <td>
+      <input class="lenya-form-element" type="text"
+        name="dublincore.title" value="${usecase.getParameter('dublincore.title')}"/>
+    </td>
+  </tr>
+  <jx:if test="${!newLanguageVersion}">
+    <tr>
+      <td class="lenya-entry-caption">
+        <label for="visibleinnav"><i18n:text>Document visible in Navigation</i18n:text>*: </label></td>
+      <jx:set var="visible" value="yes"/>
+      <jx:if test="${usecase.getParameter('visibleInNav').equals('false')}">
+        <jx:set var="visible" value="no"/>
+      </jx:if> 
+      <td>
+        <select class="lenya-form-element" name="visibleInNav">
+          <jx:choose>
+            <jx:when test="${visible.equals('yes')}">
+              <option value="true" selected="selected"><i18n:text>yes</i18n:text></option>
+              <option value="false"><i18n:text>no</i18n:text></option>
+            </jx:when>
+            <jx:otherwise>
+              <option value="true"><i18n:text>yes</i18n:text></option>
+              <option value="false" selected="selected"><i18n:text>no</i18n:text></option>
+            </jx:otherwise>
+          </jx:choose>
+        </select>
+      </td>
+    </tr>
+  </jx:if>
+  <jx:set var="relations" value="${usecase.getParameter('relations')}"/>
+  <jx:if test="${relations.size() &gt; 1}">
+    <tr>
+      <td class="lenya-entry-caption">
+        <label for="relation"><i18n:text>Relation</i18n:text>*: </label>
+      </td>
+      <td>
+        <jx:forEach var="relation" items="${relations}">
+          <jx:choose>
+            <jx:when test="${relation.equals(usecase.getParameter('relation'))}">
+              <input type="radio" name="relation" value="${relation}" checked="checked"/><i18n:text>${relation}</i18n:text>
+            </jx:when>
+            <jx:otherwise>
+              <input type="radio" name="relation" value="${relation}"/><i18n:text>${relation}</i18n:text>
+            </jx:otherwise>
+          </jx:choose>
+        </jx:forEach>
+      </td>
+    </tr>
+  </jx:if>
+  <jx:set var="languages" value="${usecase.getParameter('languages')}"/>
+  <jx:choose>
+    <jx:when test="${languages.size() &gt; 1}">            
+      <tr>
+        <td class="lenya-entry-caption">
+          <label for="language"><i18n:text>Language</i18n:text>*: </label></td>
+        <td>
+          <select class="lenya-form-element" name="language">
+            <jx:forEach var="language" items="${usecase.getParameter('languages')}">
+              <jx:choose>
+                <jx:when test="${language.equals(usecase.getParameter('language'))}">
+                  <option value="${language}" selected="selected">${language} (<i18n:text>${language}</i18n:text>)</option>
+                </jx:when>
+                <jx:otherwise>
+                  <option value="${language}">${language} (<i18n:text>${language}</i18n:text>)</option>
+                </jx:otherwise>
+              </jx:choose>
+            </jx:forEach>
+          </select>
+        </td>
+      </tr>
+    </jx:when>
+    <jx:otherwise>
+      <tr>
+        <td class="lenya-entry-caption">
+          <label for="language"><i18n:text>Language</i18n:text>: </label></td>
+        <td>
+          <jx:set var="language" value="${languages[0]}"/>
+          <input type="hidden" name="language" value="${language}"/>
+          <jx:out value="${language}"/>
+        </td>
+      </tr>
+    </jx:otherwise>
+  </jx:choose>
+  <tr>
+    <td class="lenya-entry-caption">
+      <label for="dublincore.creator"><i18n:text>Creator</i18n:text>:</label></td>
+    <td>
+      <input class="lenya-form-element" type="text" name="dublincore.creator" value="${usecase.getParameter('dublincore.creator')}"/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lenya-entry-caption">
+      <label for="dublincore.subject"><i18n:text>Subject</i18n:text>:</label></td>
+    <td>
+      <input class="lenya-form-element" type="text" name="dublincore.subject" value="${usecase.getParameter('dublincore.subject')}"/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lenya-entry-caption">
+      <label for="dublincore.publisher"><i18n:text>Publisher</i18n:text>:</label></td>
+    <td>
+      <input class="lenya-form-element" type="text" name="dublincore.publisher" value="${usecase.getParameter('dublincore.publisher')}"/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lenya-entry-caption">
+      <i18n:text>Date</i18n:text>:</td>
+    <td>
+      <jx:out value="${usecase.getParameter('dublincore.date')}"/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lenya-entry-caption">
+      <label for="dublincore.rights"><i18n:text>Rights</i18n:text>:</label></td>
+    <td>
+      <input class="lenya-form-element" type="text" name="dublincore.rights" value="${usecase.getParameter('dublincore.rights')}"/>
+    </td>
+  </tr>
+  <jx:set var="resourceTypes" value="${usecase.getParameter('resourceTypes')}"/>
+  <jx:if test="${resourceTypes.size()  &gt; 0}">
+    <tr>
+      <td class="lenya-entry-caption">
+        <label for="sample"><i18n:text>Resource Type</i18n:text>:</label></td>
+      <td>
+        <select name="doctype">
+          <jx:forEach var="item" items="${resourceTypes}">
+            <jx:choose>
+              <jx:when test="${usecase.getParameter('doctype').equals(item)}">
+                <option value="${item}" selected="selected">${item}</option>
+              </jx:when>
+              <jx:otherwise>
+                <option value="${item}">${item}</option>
+              </jx:otherwise>
+            </jx:choose>
+          </jx:forEach>
+        </select>
+      </td>
+    </tr>
+  </jx:if>
+  <jx:set var="samples" value="${usecase.getParameter('samples')}"/>
+  <jx:if test="${samples.size() &gt; 0 &amp;&amp; !newLanguageVersion}">
+    <tr>
+      <td class="lenya-entry-caption" style="vertical-align: top">
+        <label for="sample"><i18n:text>Page Layout</i18n:text>:</label></td>
+      <td>
+        <jx:forEach var="item" items="${samples}">
+          <jx:choose>
+            <jx:when test="${usecase.getParameter('sample').equals(item)}">
+              <input type="radio" name="sample" value="${item}" checked="checked"/><i18n:text>${item}</i18n:text><br />
+            </jx:when>
+            <jx:otherwise>
+              <input type="radio" name="sample" value="${item}"/><i18n:text>${item}</i18n:text><br />
+            </jx:otherwise>
+          </jx:choose>
+        </jx:forEach>
+      </td>
+    </tr>
+  </jx:if>  
+  <tr>
+    <td class="lenya-entry-caption">* <i18n:text>required fields</i18n:text>
+    </td>
+  </tr>
+  
+</jx:template>

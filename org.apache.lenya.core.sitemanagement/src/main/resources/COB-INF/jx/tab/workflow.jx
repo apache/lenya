@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: workflow.jx 738926 2009-01-29 16:50:39Z andreas $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
+  <page:body>
+    <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab-sitetree">
+      <h1><i18n:text>Workflow</i18n:text></h1>
+      <!--
+      <table class="lenya-table-list-noborder">
+        <tr><th><i18n:text>Name</i18n:text></th><th><i18n:text>Value</i18n:text></th></tr>
+        <jx:forEach var="item" items="${usecase.getParameter('variables')}">
+          <tr>
+            <td>
+              <jx:out value="${item.name}"/>
+            </td>
+            <td>
+              <jx:out value="${item.value}"/>
+            </td>
+          </tr>
+        </jx:forEach>
+      </table>
+      -->
+      <table class="lenya-table-list-noborder">
+      <tr>
+          <th><i18n:text>Date</i18n:text></th>
+          <th><i18n:text>Event</i18n:text></th>
+          <th><i18n:text>State</i18n:text></th>
+          <th><i18n:text>User</i18n:text></th>
+          <th><i18n:text>IP Address</i18n:text></th>
+        </tr>
+        <jx:forEach var="item" items="${usecase.getParameter('versions')}" varStatus="status">
+          <tr>
+            <td><jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${item.getDate()}"/></td>
+            <td><i18n:text><jx:out value="${item.event}"/></i18n:text></td>
+            <td><i18n:text><jx:out value="${item.state}"/></i18n:text></td>
+            <td>
+              <span style="white-space: nobreak">
+                <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${item.userId}">${item.userId}</a>
+              </span>
+            </td>
+            <td>${item.iPAddress}</td>
+          </tr>
+        </jx:forEach>
+      </table>
+    </div>
+  </page:body>
+</page:page>

@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: revisions.jx 774444 2009-05-13 17:31:05Z rfrovarp $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+
+  <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
+
+  <!-- if the usecase cannot be invoked, find the cause: -->
+  <jx:choose>
+    <jx:when test="${usecase.getParameter('canRollback') == 'true'}">
+      <jx:set var="rollbackMessage" value="rollback-ok"/>
+    </jx:when>
+    <jx:otherwise>
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('workflowState') == 'review'}">
+          <jx:set var="rollbackMessage" value="no-rollback-in-review"/>
+        </jx:when>
+        <jx:otherwise>
+          <jx:set var="rollbackMessage" value="no-rollback-no-privileges"/>
+        </jx:otherwise>
+      </jx:choose>
+    </jx:otherwise>
+  </jx:choose>
+
+  <page:head>
+    <script type="text/javascript">
+
+  function showRevision(revision) {
+    window.open(
+        '?lenya.revision=' + revision,
+        'Lenya_ViewRevision',
+        'menubar=no,addressbar=no,toolbar=no,statusbar=no,scrollbars=yes'
+    );
+  }
+
+  function rollback(toRevision) {
+    window.location.href="?lenya.usecase=sitemanagement.rollback"
+        + String.fromCharCode(38)  // an &amp; does not work, since it's not being decoded
+        + "rollbackRevision=" + toRevision;
+  }
+
+    </script>
+  </page:head>
+  <page:body>
+
+    <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+
+    <div id="contentblock1" class="lenya-tab-sitetree">
+      <h1><i18n:text>Revisions</i18n:text></h1>
+  
+      <form name="revisions">
+  
+        <table class="lenya-table-list-noborder">
+
+          <tr>
+            <th><i18n:text>No.</i18n:text></th>
+            <th><i18n:text>Time</i18n:text></th>
+            <th><i18n:text>Editor</i18n:text></th>
+            <th><i18n:text>Actions</i18n:text></th>
+          </tr>
+  
+          <jx:set var="count" value="${usecase.getParameter('revisions').size()}"/>
+          <jx:set var="isFirstItem" value="true"/>
+          <jx:forEach var="revision" items="${usecase.getParameter('revisions')}" begin="0">
+            <tr>
+              <td align="right">
+                <input 
+                  type="button" 
+                  i18n:attr="title" 
+                  onclick="showRevision(${revision.getNumber()});"
+                  title="view-revision-in-new-window"
+                  value="${revision.getNumber()}"
+                />
+              </td>
+              <td align="right"><i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss"><jx:formatDate value="${revision.getTime()}" pattern="yyyy-MM-dd HH:mm:ss"/></i18n:date-time></td>
+              <td>
+                <jx:set var="userId" value="${revision.getUserId()}"/>
+                <a href="${usecase.getSourceURL()}?lenya.usecase=admin.user&amp;userId=${userId}">${userId}</a></td>
+              <td>
+                <input 
+                  type="button" 
+                  i18n:attr="value title" 
+                  onclick="showRevision(${revision.getNumber()});"
+                  title="view-revision-in-new-window"
+                  value="view-revision"
+                />
+                <jx:choose>
+                  <jx:when test="${isFirstItem == 'true'}">
+                    <jx:set var="isFirstItem" value="false"/>
+                    <i18n:text key="is-current-version"/>
+                  </jx:when>
+                  <jx:when test="${usecase.getParameter('canRollback') == 'true'}">
+                    &#160;
+                    <input type="button" i18n:attr="value title" title="${rollbackMessage}" value="rollback" 
+                      onclick="void rollback(${revision.getNumber()});" 
+                    />
+                  </jx:when>
+                  <jx:otherwise>
+                    <input type="button" i18n:attr="value title" title="${rollbackMessage}" disabled="disabled" value="rollback"/>
+                  </jx:otherwise>
+                </jx:choose>
+              </td>
+            </tr>
+          </jx:forEach>
+  
+          <jx:if test="${usecase.getParameter('canRollback') != 'true'}">
+            <tr>
+              <td/>
+              <td colspan="3">
+                <strong><i18n:text key="${rollbackMessage}"/></strong>
+              </td>
+            </tr>
+          </jx:if>
+
+        </table>
+  
+      </form>
+  
+    </div>
+  </page:body>
+</page:page>

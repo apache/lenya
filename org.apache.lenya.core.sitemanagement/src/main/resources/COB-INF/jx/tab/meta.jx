@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: meta.jx 641125 2008-03-26 02:57:48Z andreas $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
+  
+  <jx:set var="count" value="${usecase.getParameter('numbers').size()}"/>
+  <page:body onload="lenyaInitTabs(${count})">
+    <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab-sitetree">
+      <h1 id="form-meta" style="width: 600px"><i18n:text>Meta Data</i18n:text></h1>
+      
+      <jx:set var="num2namespace" value="${usecase.getParameter('namespaces')}"/>
+      
+      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+      
+      <jx:set var="count" value="${usecase.getParameter('numbers').size()}"/>
+      <jx:forEach var="num" items="${usecase.getParameter('numbers')}">
+        <div class="lenyaTabTitle" id="lenyaTabTitle${num}" onclick="lenyaToggleTab(${count}, ${num})">
+          <!--<i18n:text>Namespace</i18n:text>:-->
+          <a><i18n:text><jx:out value="${num2namespace.get(num)}"/></i18n:text></a>
+        </div>
+      </jx:forEach>
+      <jx:forEach var="num" items="${usecase.getParameter('numbers')}">
+        <jx:set var="namespace" value="${num2namespace.get(num)}"/>
+        <div class="lenyaTabBody" id="lenyaTabBody${num}">
+          <table class="lenya-table-list-noborder">
+            <jx:forEach var="key" items="${usecase.getParameter('keys')}">
+              <jx:set var="element" value="${key.substring(key.indexOf('.')).substring(1)}"/>
+              <jx:if test="${key.startsWith('ns' + num + '.')}">
+                <tr>
+                  <td class="lenya-entry-caption">
+                    <label for="${key}"><i18n:text><jx:out value="${element}"/></i18n:text>:</label>
+                  </td>
+                  <td>
+                    <jx:set var="wrapper" value="${usecase.getParameter(key)}"/>
+                    <jx:set var="values" value="${wrapper.getValues()}"/>
+                    <jx:set var="id" value="${element + '@' + namespace}"/>
+                    <jx:choose>
+                      <jx:when test="${wrapper.isEditable()}">
+                        <jx:choose>
+                          <jx:when test="${values.size() &gt; 0}">
+                            <input type="hidden" id="oldValue_${id}" value="${values[0]}"/>
+                            <input type="text" id="input_${id}" name="value" class="lenya-form-element" value="${values[0]}"
+                              onchange="javascript:saveMetaData('${namespace}', '${element}');"
+                              onfocus="javascript:document.getElementById('saved_${id}').style.visibility = 'hidden';"/>
+                          </jx:when>
+                          <jx:otherwise>
+                            <input type="hidden" id="oldValue_${id}" value=""/>
+                            <input type="text" id="input_${id}" name="value" class="lenya-form-element" value=""
+                              onchange="javascript:saveMetaData('${namespace}', '${element}');"
+                              onfocus="javascript:document.getElementById('saved_${id}').style.visibility = 'hidden';"/>
+                          </jx:otherwise>
+                        </jx:choose>
+                        <span id="saved_${id}" style="visibility: hidden;"><i18n:text>saved</i18n:text></span>
+                      </jx:when>
+                      <jx:otherwise>
+                        <jx:set var="value" value="${wrapper.getValue()}"/>
+                        <jx:choose>
+                          <jx:when test="${values.size() == 0}"><em style="color: #999999"><i18n:text>value-not-set</i18n:text></em></jx:when>
+                          <jx:otherwise>
+                            <jx:forEach var="value" items="${values}">
+                              ${value}<br/>
+                            </jx:forEach>
+                          </jx:otherwise>
+                        </jx:choose>
+                      </jx:otherwise>
+                    </jx:choose>
+                  </td>
+                </tr>
+              </jx:if>
+            </jx:forEach>
+          </table>
+        </div>
+      </jx:forEach>
+      
+    </div>
+  </page:body>
+</page:page>

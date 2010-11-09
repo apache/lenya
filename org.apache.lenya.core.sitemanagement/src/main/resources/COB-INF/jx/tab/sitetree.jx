@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: overview.jx 123960 2005-01-03 12:39:05Z andreas $ -->
+
+<jx:template
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:proxy="http://apache.org/lenya/proxy/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  name="">
+  
+  <jx:set var="url" value="${usecase.getParameter('private.sourceUrl')}"/>
+  <jx:set var="steps" value="${url.split('/')}"/>
+  <jx:set var="area" value="${steps[2]}"/>
+  <jx:set var="publicationId" value="${steps[1]}"/>
+  <jx:set var="factory" value="${usecase.getParameter('private.factory')}"/>
+  <jx:set var="publication" value="${factory.getPublication(publicationId)}"/>
+  
+  <jx:set var="document" value="${usecase.getParameter('document')}"/>
+  <jx:set var="docExists" value="${java.lang.Boolean.valueOf(document.getClass().getName().equals('org.apache.lenya.cms.publication.DocumentImpl'))}"/>
+  
+  <div id="lenya-info-treecanvas">
+    <div class="lenya-tabs">
+      <jx:forEach var="language" items="${publication.getLanguages()}">
+        <jx:choose>
+          <jx:when test="${!docExists.booleanValue() &amp;&amp; url.endsWith('_' + language)}">
+            <a id="${language}" class="lenya-tablink-active"><jx:out value="${language}"/></a>
+          </jx:when>
+          <jx:when test="${!docExists.booleanValue() &amp;&amp; url.endsWith('/') &amp;&amp; language.equals(publication.getDefaultLanguage())}">
+            <a id="${language}" class="lenya-tablink-active"><jx:out value="${language}"/></a>
+          </jx:when>
+          <jx:when test="${document != null &amp;&amp; document.existsTranslation(language)}">
+            <jx:set var="languageVersion" value="${document.getFactory().getLanguageVersion(document, language)}"/>
+            <jx:set var="languageUrl" value="${'/' + publicationId + '/' + area + languageVersion.getCanonicalDocumentURL()}"/>
+            <jx:choose>
+              <jx:when test="${language.equals(document.getLanguage())}">
+                <a id="${language}" class="lenya-tablink-active" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
+              </jx:when>
+              <jx:otherwise>
+                <a id="${language}" class="lenya-tablink" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
+              </jx:otherwise>
+            </jx:choose>
+          </jx:when>
+          <jx:otherwise>
+            <a id="${language}" class="lenya-tablink" title="This language version doesn't exist.">
+              <jx:out value="${language}"/>
+            </a>
+          </jx:otherwise>
+        </jx:choose>
+      </jx:forEach>
+    </div>
+    
+    <div id="lenya-info-tree">
+      <div id="tree">
+        <script type="text/javascript">
+          WEBAPP_BASE_PATH = '<proxy:url href="/"/>';
+          USECASE = '${usecase.getName()}';
+          
+          PUBLICATION_ID = '<jx:out value="${publicationId}"/>';
+          <jx:choose>
+            <jx:when test="${docExists.booleanValue()}">
+              CHOSEN_LANGUAGE = '<jx:out value="${document.getLanguage()}"/>';
+            </jx:when>
+            <jx:otherwise>
+              CHOSEN_LANGUAGE = '<jx:out value="${publication.getDefaultLanguage()}"/>';
+            </jx:otherwise>
+          </jx:choose>
+          DEFAULT_LANGUAGE = '<jx:out value="${publication.getDefaultLanguage()}"/>';
+          IMAGE_PATH = '<proxy:url href="/lenya/images/tree/"/>';
+          
+          
+          <jx:set var="clipboard" value="${request.getSession().getAttribute('org.apache.lenya.cms.site.usecases.Clipboard')}"/>
+          <jx:choose>
+            <jx:when test="${clipboard != null &amp;&amp; clipboard.getMethod() == Packages.org.apache.lenya.cms.site.usecases.Clipboard.METHOD_CUT}">
+              <jx:set var="cutDocument" value="${clipboard.getDocument(publication.getFactory(), publication)}"/>
+              CUT_DOCUMENT_ID = '<jx:out value="${cutDocument.getPath()}"/>';
+            </jx:when>
+            <jx:otherwise>
+              CUT_DOCUMENT_ID = '';
+            </jx:otherwise>
+          </jx:choose>
+          
+          ALL_AREAS = 'authoring,trash,archive';
+          PIPELINE_PATH = 'modules/sitetree/sitetree-fragment.xml';
+          SHOW_LOADING_HINT = true;
+          SHOW_ICONS = true;
+          
+          <jx:set var="pubName" value="${publication.getName()}"/>
+          var pubName = '<i18n:translate><i18n:text>... Publication</i18n:text><i18n:param><jx:out value="${pubName}"/></i18n:param></i18n:translate>';
+          
+          var tree = new NavTree(document, document.getElementById('tree'));
+          
+          tree.init(PUBLICATION_ID, pubName);
+          tree.render();
+          <jx:choose>
+            <jx:when test="${docExists.booleanValue()}">
+              tree.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getPath()}"/>');
+            </jx:when>
+            <jx:otherwise>
+              tree.loadInitialTree('<jx:out value="${area}"/>', '');
+            </jx:otherwise>
+          </jx:choose>
+        </script>
+      </div>
+    </div>
+  </div>
+</jx:template>
