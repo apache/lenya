@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.lenya.cms.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker;
+import org.junit.Test;
 
 /**
  * Usecase test base class.
@@ -35,6 +36,7 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
      * The test.
      * @throws Exception
      */
+	@Test
     public void testUsecase() throws Exception {
 
         Session session = getSession();
@@ -72,7 +74,7 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
         checkPostconditions();
 
     }
-    
+    	
     private String targetUrl;
     
     protected String getTargetUrl() {
