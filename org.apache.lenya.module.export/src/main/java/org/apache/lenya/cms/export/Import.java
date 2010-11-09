@@ -19,27 +19,23 @@ package org.apache.lenya.cms.export;
 
 import java.io.File;
 
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Area;
-import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.ResourceTypeResolver;
-import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
-
+import org.apache.lenya.utils.URLInformation;
 /**
  * Import content.
  */
 public class Import extends AbstractUsecase {
 
-    private SourceResolver sourceResolver;
-    private DocumentManager documentManager;
-    private ResourceTypeResolver resourceTypeResolver;
-
-    protected void initParameters() {
+    private Importer importer;
+    
+		protected void initParameters() {
+			
         super.initParameters();
-        String pubId = new URLInformation(getSourceURL()).getPublicationId();
+        //String pubId = new URLInformation(getSourceURL()).getPublicationId();
+        String pubId = new URLInformation().getPublicationId();
         Publication pub = getSession().getPublication(pubId);
         String path = getExampleContentPath(pub);
         if (!new File(path).exists()) {
@@ -59,14 +55,17 @@ public class Import extends AbstractUsecase {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         Area area = getArea();
+        Document[] doc = area.getDocuments();
+        String test = "test";
         if (area.getDocuments().length > 0) {
             addErrorMessage("You can't import anything because this publication already contains content.");
         }
     }
 
     protected Area getArea() {
-        String url = getSourceURL();
-        URLInformation info = new URLInformation(url);
+        /*String url = getSourceURL();
+        URLInformation info = new URLInformation(url);*/
+    	URLInformation info = new URLInformation();
         String pubId = info.getPublicationId();
         String areaName = info.getArea();
         return getSession().getPublication(pubId).getArea(areaName);
@@ -77,52 +76,30 @@ public class Import extends AbstractUsecase {
         String path = getParameterAsString("path");
         String baseUri = "file://" + path;
         String sitetreeUri = baseUri + "/sitetree.xml";
-        if (!SourceUtil.exists(sitetreeUri, getSourceResolver())) {
-            addErrorMessage("The sitetree file does not exist in this directory.");
+        if (!importer.checkSitetreeUri(sitetreeUri)){
+        	addErrorMessage("The sitetree file does not exist in this directory.");
         }
+        
     }
 
     protected void doExecute() throws Exception {
         super.doExecute();
         String path = getParameterAsString("path");
-        Importer importer = new Importer(getLogger());
+        /*Importer importer = new Importer(getLogger());
         importer.setDocumentManager(getDocumentManager());
         importer.setResourceTypeResolver(getResourceTypeResolver());
-        importer.setSourceResolver(getSourceResolver());
+        importer.setSourceResolver(getSourceResolver());*/
+        
+        importer.setLogger(getLogger());
         importer.importContent(getDefaultPub(), getArea(), path);
     }
+    
+    public Importer getImporter() {
+			return importer;
+		}
 
-    protected SourceResolver getSourceResolver() {
-        return sourceResolver;
-    }
-
-    /**
-     * TODO: Bean wiring
-     */
-    public void setSourceResolver(SourceResolver sourceResolver) {
-        this.sourceResolver = sourceResolver;
-    }
-
-    protected ResourceTypeResolver getResourceTypeResolver() {
-        return resourceTypeResolver;
-    }
-
-    /**
-     * TODO: Bean wiring
-     */
-    public void setResourceTypeResolver(ResourceTypeResolver resourceTypeResolver) {
-        this.resourceTypeResolver = resourceTypeResolver;
-    }
-
-    protected DocumentManager getDocumentManager() {
-        return documentManager;
-    }
-
-    /**
-     * TODO: Bean wiring
-     */
-    public void setDocumentManager(DocumentManager documentManager) {
-        this.documentManager = documentManager;
-    }
+		public void setImporter(Importer importer) {
+			this.importer = importer;
+		}
 
 }

@@ -53,7 +53,14 @@ public class Importer extends AbstractLogEnabled {
     public Importer(Log logger) {
         setLogger(logger);
     }
-
+    
+    public Importer(){
+    	
+    }
+    
+    public boolean checkSitetreeUri(String sitetreeUri) throws Exception {
+    	return SourceUtil.exists(sitetreeUri, getSourceResolver());
+    }
     /**
      * Imports content into an area.
      * @param area The area.
