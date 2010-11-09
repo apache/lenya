@@ -63,6 +63,7 @@
   <!-- Modules need to be listed because of the menu and i18n -->
   <modules>
     <module name="usecase"/>
+    <module name="i18n"/>
     <module name="editors"/>
     <module name="xhtml"/>
     <module name="links"/>
