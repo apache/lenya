@@ -26,6 +26,9 @@ import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.transaction.UnitOfWork;
 
+/**
+ * @deprecated solve the concurrency beetween lenya-core-repository/o.a.l.cms.repository.SessionImpl and lenya-core-impl/o.a.l.cms.publication.SEssionImpl
+ */
 public class SessionImpl implements Session, SessionHolder {
 
     private static final Log logger = LogFactory.getLog(SessionImpl.class);
@@ -79,16 +82,14 @@ public class SessionImpl implements Session, SessionHolder {
         return ((IdentityWrapper) getRepositorySession().getIdentity()).getIdentity();
     }
 
-    private UnitOfWork unitOfWork;
-
     /**
      * @return The unit of work.
      */
     protected UnitOfWork getUnitOfWork() {
-        if (this.unitOfWork == null) {
-            throw new RuntimeException("This session [" + getId() + "] is not modifiable!");
-        }
-        return this.unitOfWork;
+      if (repositorySession == null){
+        throw new RuntimeException("This session [" + getId() + "] is not modifiable!");
+      }  
+      return repositorySession;
     }
 
     public String getId() {
