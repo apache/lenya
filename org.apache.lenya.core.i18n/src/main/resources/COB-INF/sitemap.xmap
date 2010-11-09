@@ -24,10 +24,9 @@
   in sitemap.xmap and global-sitemap.xmap.
 -->
 
-<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-  
-  <map:pipelines>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">  
 
+  <map:pipelines>
   <map:pipeline id="service">
 
     <map:match pattern="translation">
@@ -42,13 +41,13 @@
   </map:pipeline>
     
     <map:pipeline type="noncaching">
-      
+            
       <!-- This pipeline is decoupled from the one below because the page-envelope input module
         call prevents it from being cached. -->
       <!-- catalogue/{1:catalogue} -->
       <map:match pattern="catalogue/*">
         <map:select type="resource-exists">
-          <map:when test="context://lenya/resources/i18n/{1}">
+          <map:when test="fallback://lenya/resources/i18n/{1}">
             <map:select type="parameter">
               <map:parameter name="parameter-selector-test" value="{page-envelope:is-publication}"/>
               <map:when test="true">

@@ -16,14 +16,43 @@
   limitations under the License.
 -->
 
-<!-- <catalogue id="cmsui" name="cmsui" location="cocoon://modules/i18n/catalogue/"/> -->
+<!-- TODO : use the "dynamic" catalogue pipeline ie with this catalogue definition (that refer to a pipeline in this sitemap) :
+				 <catalogue id="cmsui" name="cmsui" location="servlet:i18n:/catalogue/" />
+				 
+	There is a strange behaviour : when the i18n transformer is use in this context
+	<map:match pattern="thatworks">
+		<map:generate src="alocalFile.xml"/>
+		<map:transform type="i18n"/>
+		<map:serialize type="xml"/>
+	</map:match>
+	
+	This works
+	
+	But this don't works when used in this context : 
+	 <map:match pattern="translation">
+      <map:generate src="service-consumer:" />
+      <map:transform type="i18n">
+        <map:parameter name="locale" value="{request:locale}" />
+      </map:transform>
+      <map:serialize type="xml" />
+    </map:match>
+	
+	
+	I also try       <catalogue id="cmsui" name="cmsui" location="servlet:i18n:/catalogue" />
+	with no success...
+ 	
+
+-->        
 <map:components xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:transformers>
     <map:transformer name="i18n" logger="sitemap.transformer.i18n" src="org.apache.cocoon.transformation.I18nTransformer">
       <catalogues default="cmsui">
-        <catalogue id="cmsui" name="cmsui" location="resources/i18n"/>
+      	<catalogue id="cmsui" name="cmsui" location="resources/i18n" />
+      	<!-- this under seems to not work too... and this is not a good approch because all module have to be referenced here -->
+      	<catalogue id="export-module" name="cmsui" location="fallback://lenya/modules/export/resources/i18n" />
       </catalogues>
-      <untranslated-text>untranslated</untranslated-text>
+      <!-- commented while translation not solve 
+      <untranslated-text>untranslated</untranslated-text> -->
       <cache-at-startup>true</cache-at-startup>
     </map:transformer>
   </map:transformers>

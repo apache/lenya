@@ -16,6 +16,13 @@
   limitations under the License.
 -->
 
-<catalogue xmlns="http://apache.org/cocoon/i18n/2.1"/>
+<catalogue xmlns="http://apache.org/cocoon/i18n/2.1">
+  <!-- add this message because the directive
+    <i:include src="path/file" strip-root="true" /> throw an error if the file is just composed by root
+    TODO : solve this bug in the cocoon include transformer and clean this workaround here
+    -->
+  <message key="empty.catalogue">Empty Catalogue</message>
+
+</catalogue>
 
 
