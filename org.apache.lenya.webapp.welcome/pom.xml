@@ -117,6 +117,10 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-properties</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-sitemanagement</artifactId>
+    </dependency>
     <!-- modules -->
     <dependency>
       <groupId>org.apache.lenya</groupId>

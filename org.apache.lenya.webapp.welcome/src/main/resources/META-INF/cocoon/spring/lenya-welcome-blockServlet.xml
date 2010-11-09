@@ -32,6 +32,7 @@
         <entry key="style" value-ref="org.apache.cocoon.samples.style.default.servlet"/>
         <entry key="usecase" value-ref="org.apache.lenya.core.usecase.block"/>
         <entry key="export" value-ref="org.apache.lenya.module.export.block"/>
+        <entry key="sitemanagement" value-ref="org.apache.lenya.core.sitemanagement.block"/>
       </servlet:connections>
     </servlet:context>
   </bean>
