@@ -26,6 +26,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.cms.repository.SharedItemStore;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
@@ -54,6 +55,8 @@ public class SiteTreeFactory implements RepositoryItemFactory {
             Area area = publication.getArea(areaName);
 
             Session storeSession = this.sharedItemStore.getSession();
+            storeSession.setHolder((SessionHolder)pubSession);
+            
             if (session.isModifiable() || session == storeSession) {
                 SiteTreeImpl tree = new SiteTreeImpl(area);
                 tree.setBuilder(this.treeBuilder);
