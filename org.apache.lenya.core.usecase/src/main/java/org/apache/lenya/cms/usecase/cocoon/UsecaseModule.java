@@ -25,12 +25,10 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.cms.usecase.gui.Tab;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 
 /**
  * Input module to obtain information about usecases.
@@ -47,8 +45,7 @@ public class UsecaseModule extends AbstractInputModule implements Serviceable {
             String[] steps = name.split(":");
             String usecaseName = steps[1];
             
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            String webappUrl = ServletHelper.getWebappURI(request);
+            String webappUrl = new URLInformation().getWebappUrl();
             
             UsecaseResolver resolver = null;
             Usecase usecase = null;

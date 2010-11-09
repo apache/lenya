@@ -39,14 +39,12 @@ import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.cms.usecase.gui.GUIManager;
 import org.apache.lenya.cms.usecase.gui.Tab;
-import org.apache.lenya.util.ServletHelper;
-
+import org.apache.lenya.utils.URLInformation;
 /**
  * GUI manager implementation.
  */
@@ -165,7 +163,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager {
 
                 HttpServletRequest request = getRequest();
                 Session session = this.repository.getSession(request);
-                String pubId = new URLInformation(this.webappUrl).getPublicationId();
+                String pubId = new URLInformation().getPublicationId();
                 Publication pub = session.getPublication(pubId);
                 if (!authorizer.authorizeUsecase(usecaseName, getRoles(), pub)) {
                     if (getLogger().isDebugEnabled()) {
@@ -229,7 +227,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager {
         if (this.roles == null) {
             HttpServletRequest request = getRequest();
             this.roles = PolicyUtil.getRoles(getRequest());
-            this.webappUrl = ServletHelper.getWebappURI(request);
+            this.webappUrl = new URLInformation().getWebappUrl();
         }
         return this.roles;
     }

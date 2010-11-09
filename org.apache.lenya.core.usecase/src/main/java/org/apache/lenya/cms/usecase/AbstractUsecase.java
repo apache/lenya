@@ -82,7 +82,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             TRANSACTION_POLICY_PESSIMISTIC, TRANSACTION_POLICY_READONLY };
     protected static final String DEFAULT_TRANSACTION_POLICY = TRANSACTION_POLICY_READONLY;
 
-    private Repository repository;
+    protected Repository repository;
     private UsecaseView view;
 
     /**
@@ -118,7 +118,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      *      initParameters().
      */
     public String getSourceURL() {
-        return (String) this.parameters.get(SOURCE_URL);
+    	String webappUrl = new URLInformation().getWebappUrl();
+    	return webappUrl;
     }
 
     /**
@@ -256,8 +257,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
             if (!canCheckOut(nodes)) {
                 addErrorMessage(ERROR_OBJECTS_CHECKED_OUT);
             }
+            
             doCheckPreconditions();
-
+            
             dumpErrorMessagesToLog();
             
         } catch (Exception e) {
@@ -269,8 +271,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
         }
         if (!hasErrors()) {
             advanceState(EVENT_CHECK_PRECONDITIONS);
-            //flo
-            //advanceState(EVENT_LOCK_NODES);
         }
     }
 
@@ -677,7 +677,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      * @return The objects that could be changed during the usecase.
      * @throws UsecaseException if an error occurs.
      */
-    protected org.apache.lenya.cms.publication.Node[] getNodesToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         return new Node[0];
     }
 
@@ -772,8 +772,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     }
 
     private String exitUsecaseName = null;
-    //private Map<String,String> exitUsecaseParameters = new HashMap<String,String>();
-    //private Map exitUsecaseParameters = new HashMap();
     private Properties exitUsecaseParameters = new Properties();
     /**
      * Sets a parameter to pass to the exit usecase.

@@ -32,7 +32,7 @@ import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 
 /**
  * Usecase resolver implementation.
@@ -84,7 +84,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
 
             Session session = this.repository.getSession(request);
 
-            String uri = ServletHelper.getWebappURI(request);
+            String uri = new URLInformation().getWebappUrl();
             if (session.getUriHandler().isPublication(uri)) {
                 publication = session.getUriHandler().getPublication(uri);
             }
@@ -102,7 +102,11 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         Usecase usecase = (Usecase) WebAppContextUtils.getCurrentWebApplicationContext().getBean(
                 Usecase.ROLE + "/" + usecaseName);
         usecase.setName(name);
-        usecase.setSourceURL(webappUrl);
+        /**The "webappUrl pass to this function is not always the "real" webappUrl cause of "servlet" protocol
+         * TODO : be sure to always pass a "real" url to resolve and suppress code behond.
+         */
+        String realWebappUrl = new URLInformation().getWebappUrl();
+        usecase.setSourceURL(realWebappUrl);
         return usecase;
     }
 
