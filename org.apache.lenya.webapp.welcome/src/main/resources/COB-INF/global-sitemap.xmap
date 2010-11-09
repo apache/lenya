@@ -19,13 +19,7 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:resources>
-
-    <map:resource name="i18n">
-      <map:transform type="i18n">
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>
-    </map:resource>
-
+  
     <!-- do proxy transformation on css files for url('') links -->
     <map:resource name="proxy-css">
       <map:act type="resource-exists"
@@ -323,6 +317,7 @@
            <map:generate type="jx" src="lenya/content/exception/publication-does-not-exist.jx">
              <map:parameter name="publicationId" value="{1}"/>
            </map:generate>
+           <!-- TODO : see if we keep this i18n transformation as it's now a part of gui servlet service -->
            <map:transform type="i18n">
              <map:parameter name="locale" value="{request:locale}"></map:parameter>
            </map:transform>
