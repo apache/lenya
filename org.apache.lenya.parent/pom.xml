@@ -573,12 +573,6 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
-        <artifactId>lenya-core-api</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-cache</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -601,13 +595,6 @@
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-impl-tests</artifactId>
         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.lenya</groupId>
-        <artifactId>lenya-core-impl</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
@@ -674,7 +661,27 @@
         <artifactId>lenya-core-utils</artifactId>
         <version>${project.version}</version>
       </dependency>
-      
+      <!-- Tests -->
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-api</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-impl</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-utils</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
       <!-- Modules -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
@@ -736,7 +743,11 @@
         <artifactId>lenya-module-xhtml</artifactId>
         <version>${project.version}</version>
       </dependency>
-      
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-module-export</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <!-- Optional -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
