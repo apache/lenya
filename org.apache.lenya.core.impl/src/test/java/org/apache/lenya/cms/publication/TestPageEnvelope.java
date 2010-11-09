@@ -23,11 +23,10 @@ package org.apache.lenya.cms.publication;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Ignore;
 
-/**
- * To change the template for this generated type comment go to Window>Preferences>Java>Code
- * Generation>Code and Comments
- */
+
+@Ignore ("this class don't perform a test")
 public class TestPageEnvelope extends PageEnvelope {
 
     private static final Log logger = LogFactory.getLog(TestPageEnvelope.class);
