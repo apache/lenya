@@ -45,6 +45,8 @@ import org.xml.sax.SAXException;
 
 /**
  * @version $Id$
+ * @deprecated use o.a.l.utils.SourceUtil instead see the usage of sourceutils.checkin and checkout functions not keep in o.a.l.utils.SourceUtil
+ * because they are related to lenyaDocument and not really to sources
  */
 public final class SourceUtil {
 

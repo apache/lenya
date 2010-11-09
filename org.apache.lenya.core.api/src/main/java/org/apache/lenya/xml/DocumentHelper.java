@@ -54,6 +54,8 @@ import org.xml.sax.SAXException;
 /**
  * Various utility methods to work with JAXP.
  * @version $Id$
+ * 
+ * @deprecated use o.a.l.utils.xml.DocumentHelper instead
  */
 public class DocumentHelper {
     
