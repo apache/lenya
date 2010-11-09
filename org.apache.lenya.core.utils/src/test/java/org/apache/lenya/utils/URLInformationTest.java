@@ -2,6 +2,7 @@ package org.apache.lenya.utils;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.lenya.utils.test.SpringEnv;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -11,22 +12,18 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class URLInformationTest {
 	
-	String testUrl = "/test/authoring/DocumentTest.html";
+	String mockURL = "/test/authoring/DocumentTest.html";
 	
 	@Before
 	public void setMockURL(){
-		String mockURL = testUrl;
-		MockHttpServletRequest request = new MockHttpServletRequest("GET", mockURL);
-		MockHttpSession session = new MockHttpSession();
-		request.setSession(session);
-		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+		SpringEnv.setMockRequestContextHolder(mockURL);
 	}
 	
 	@Test
 	public void getWebappUrl(){
 		URLInformation urli = new URLInformation();
 		String pubId = urli.getWebappUrl();
-		assertEquals(pubId,testUrl);
+		assertEquals(pubId,mockURL);
 		
 	}
 	

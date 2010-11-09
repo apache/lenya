@@ -18,15 +18,11 @@
 
 package org.apache.lenya.utils;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.lenya.cms.publication.Publication;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+
 
 /**
- * This class resolves all Lenya-specific information from a webapp URL.
+ * This class provides all Lenya-specific information from a webapp URL.
  */
 public class URLInformation {
 
@@ -40,19 +36,11 @@ public class URLInformation {
     private String webappUrl = null;
 
     public URLInformation(){
-    	webappUrl = getCurrentURI();
+    	webappUrl = ServletHelper.getCurrentURI();
     	setSourceURL(webappUrl);
     }
 	
-    private String getCurrentURI(){
-    	String currentURI = "";
-    	RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-    	if (requestAttributes instanceof ServletRequestAttributes) {
-    		HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
-    		currentURI = request.getRequestURI(); // ==> /default/authoring/
-		}
-    	return currentURI;
-    }
+
     	
     private void setSourceURL(String webappUrl){
     	if (!webappUrl.startsWith("/")) {
@@ -63,10 +51,10 @@ public class URLInformation {
     
     
     /**
-     * Return the webapp url (with a / at the beginning
+     * Return the webapp url (with a / at the beginning)
      */
     public String getWebappUrl(){
-    	return this.webappUrl;
+    	return webappUrl;
     }
     /**
      * Returns the publication ID.
