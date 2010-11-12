@@ -24,6 +24,14 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-impl</artifactId>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-metadata</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-sitemanagement</artifactId>-->
+<!--    </dependency>-->
   <!-- TODO : see if all theses dependencies are required -->
     <dependency>
       <groupId>org.apache.cocoon</groupId>
