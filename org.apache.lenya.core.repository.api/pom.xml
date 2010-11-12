@@ -10,13 +10,16 @@
   </parent>
   
   <groupId>org.apache.lenya</groupId>
-  <artifactId>lenya-CHANGE-ME</artifactId>
+  <artifactId>lenya-core-repository-api</artifactId>
   <packaging>jar</packaging>
-  <name>Apache CHANGE ME</name>
-  <description>CHANGE ME</description>
+  <name>Apache Lenya repository API</name>
+  <description>API that define a repository</description>
   
   <dependencies>
-  
+  <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-transaction</artifactId>
+    </dependency>
   <!-- TODO : see if all theses dependencies are required -->
     <dependency>
       <groupId>org.apache.cocoon</groupId>
