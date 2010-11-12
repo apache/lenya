@@ -15,19 +15,43 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
 
-import java.util.UUID;
+/* $Id$  */
 
-import org.apache.cocoon.util.AbstractLogEnabled;
+package org.apache.lenya.util;
+
+import java.util.Vector;
+
 
 /**
- * Lenya UUID generator.
+ * A helper class to implement a stack. Unlike java.util.Stack, this stack
+ * discards old elements once maxsize is reached.
+ * @see java.util.Stack
  */
-public class LenyaUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator {
+public class Stack extends Vector {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	int maxsize = 0;
 
-    public String nextUUID() {
-    	return UUID.randomUUID().toString();
+    /**
+     * Creates a new Stack object.
+     * @param _maxsize The maximum size of the stack
+     */
+    public Stack(int _maxsize) {
+        this.maxsize = _maxsize;
     }
 
+    /**
+     * Push an object on the stack
+     * @param object The object
+     */
+    public void push(Object object) {
+        insertElementAt(object, 0);
+
+        if (size() == (this.maxsize + 1)) {
+            removeElementAt(this.maxsize);
+        }
+    }
 }

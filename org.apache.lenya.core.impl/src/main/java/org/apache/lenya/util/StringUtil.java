@@ -15,26 +15,28 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.util;
 
-import org.apache.cocoon.spring.configurator.WebAppContextUtils;
-import org.springframework.web.context.WebApplicationContext;
-
-public class ResourceTypeResolverImpl implements ResourceTypeResolver {
-
-    public boolean existsResourceType(String name) {
-        return getAppContext().containsBean(getBeanName(name));
+/**
+ * String utility.
+ */
+public final class StringUtil {
+    
+    /**
+     * Joins an array of objects into a string.
+     * @param objects The objects.
+     * @param delimiter The delimiter to use.
+     * @return A string.
+     */
+    public static final String join(Object[] objects, String delimiter) {
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < objects.length; i++) {
+            if (i > 0) {
+                buffer.append(delimiter);
+            }
+            buffer.append(objects[i].toString());
+        }
+        return buffer.toString();
     }
 
-    public ResourceType getResourceType(String name) {
-        return (ResourceType) getAppContext().getBean(getBeanName(name));
-    }
-
-    protected String getBeanName(String name) {
-        return ResourceType.class.getName() + "/" + name;
-    }
-
-    protected WebApplicationContext getAppContext() {
-        return WebAppContextUtils.getCurrentWebApplicationContext();
-    }
 }
