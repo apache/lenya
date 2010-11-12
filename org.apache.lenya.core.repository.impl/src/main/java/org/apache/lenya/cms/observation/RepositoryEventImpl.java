@@ -23,7 +23,7 @@ import org.apache.lenya.cms.repository.Session;
 /**
  * A repository event provides additional information if a document was added, changed, or removed.
  */
-public class RepositoryEvent {
+public class RepositoryEventImpl implements RepositoryEvent {
 
     private Session session;
     private Object descriptor = null;
@@ -36,7 +36,7 @@ public class RepositoryEvent {
      * @param source The source of the event.
      * @param descriptor More information about the event.
      */
-    public RepositoryEvent(Session session, Object source, Object descriptor) {
+    public RepositoryEventImpl(Session session, Object source, Object descriptor) {
         this(session, descriptor);
         Validate.notNull(source);
         this.source = source;
@@ -47,7 +47,7 @@ public class RepositoryEvent {
      * @param session The session.
      * @param descriptor More information about the event.
      */
-    public RepositoryEvent(Session session, Object descriptor) {
+    public RepositoryEventImpl(Session session, Object descriptor) {
         Validate.notNull(session);
         Validate.notNull(descriptor);
         this.session = session;
@@ -68,6 +68,9 @@ public class RepositoryEvent {
         return this.descriptor;
     }
     
+    /* (non-Javadoc)
+		 * @see org.apache.lenya.cms.observation.RepositoryEvent#toString()
+		 */
     public String toString() {
         return "identity:" + getSession().getIdentity().toString() + " " + getNodeUri() + " " + getDescriptor();
     }

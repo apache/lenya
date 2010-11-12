@@ -15,36 +15,26 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.transaction;
+package org.apache.lenya.cms.publication;
 
-/**
- * Object that can be locked.
- *
- * @version $Id$
- */
-public interface Lockable {
-    
-    /**
-     * Locks this object.
-     * @throws TransactionException if an error occurs.
-     */
-    void lock() throws TransactionException;
+public class RepositoryException extends Exception {
 
-    /**
-     * Unlocks this object.
-     * @throws TransactionException if an error occurs.
-     */
-    void unlock() throws TransactionException;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * @return if this object is locked.
-     * @throws TransactionException if an error occurs.
-     */
-    boolean isLocked() throws TransactionException;
+    public RepositoryException() {
+        super();
+    }
 
-    /**
-     * @return The lock which is held by this object.
-     */
-    Lock getLock();
+    public RepositoryException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+    }
+
+    public RepositoryException(String arg0) {
+        super(arg0);
+    }
+
+    public RepositoryException(Throwable arg0) {
+        super(arg0);
+    }
 
 }
