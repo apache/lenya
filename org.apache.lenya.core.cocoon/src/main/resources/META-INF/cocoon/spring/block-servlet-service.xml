@@ -25,8 +25,8 @@
                            http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
   <!--  exemple from the archetype -->
-  <bean name="org.apache.lenya.lenya-core-cocoon-components.service" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="/lenya-core-cocoon-components" context-path="blockcontext:/lenya-core-cocoon-components/"/>
+  <bean name="org.apache.lenya.core.cocoon.block" class="org.apache.cocoon.sitemap.SitemapServlet">
+    <servlet:context mount-path="/lenya.core.cocoon" context-path="blockcontext:/lenya.core.cocoon/"/>
   </bean>
 
 </beans>
