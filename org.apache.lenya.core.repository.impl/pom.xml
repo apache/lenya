@@ -11,7 +11,7 @@
     <relativePath>../org.apache.lenya.parent/pom.xml</relativePath>
   </parent>
   <groupId>org.apache.lenya</groupId>
-  <artifactId>lenya-core-repository</artifactId>
+  <artifactId>lenya-core-repository-impl</artifactId>
   <packaging>jar</packaging>
   <name>Apache Lenya Core Repository API</name>
   <dependencies>
@@ -22,6 +22,10 @@
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
+    </dependency>
+        <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-util</artifactId>
     </dependency>
     <!-- TODO: remove dependencies on Avalon and Excalibur -->
     <dependency>
