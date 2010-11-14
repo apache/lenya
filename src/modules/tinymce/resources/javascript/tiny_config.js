@@ -58,6 +58,10 @@ config = {
     /* grey out the "save" button unless there are unsaved changes: */
     //save_enablewhendirty : false,
     
+    /* disable editing of attributes forbidden by lenya schema */
+    /* TyniMCE 3.x */
+    popup_css_add : "../modules/tinymce/css/lenya_dialog.css",
+
     /* some special settings for fullscreen mode (they override the 
        settings further down) */
 /*

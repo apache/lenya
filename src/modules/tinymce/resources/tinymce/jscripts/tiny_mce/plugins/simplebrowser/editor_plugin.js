@@ -15,77 +15,82 @@
   limitations under the License.
 */
 
-tinyMCE.importPluginLanguagePack('simplebrowser', 'en');
-
-var TinyMCE_SimpleBrowserPlugin = {
+(function() {
+    tinymce.create('tinymce.plugins.SimpleBrowserPlugin',{
 	options : {},
-	getInfo : function() {
-		return {
-			longname : '',
-			author : '',
-			authorurl : '',
-			infourl : '',
-			version : ""
-		};
-	},
 
-	initInstance : function(inst) {
-		// You can take out plugin specific parameters
-		//alert("Initialization parameter:" + tinyMCE.getParam("template_someparam", false));
-		tinyMCE.settings['file_browser_callback'] = "TinyMCE_SimpleBrowserPlugin_browse";
-		TinyMCE_SimpleBrowserPlugin.options = {
-			width : tinyMCE.getParam("plugin_simplebrowser_width", '800'),
-			height : tinyMCE.getParam("plugin_simplebrowser_height", '600'),
-			browseimageurl : tinyMCE.getParam("plugin_simplebrowser_browseimageurl", false),
-			browselinkurl : tinyMCE.getParam("plugin_simplebrowser_browselinkurl", false),
-			browseflashurl : tinyMCE.getParam("plugin_simplebrowser_browseflashurl", false)
-		}
-	},
+        init : function(ed, url) {
+		var t = this;
+		TinyMCE_SimpleBrowserPlugin = t;
+		t.editor = ed;
+
+		ed.settings.file_browser_callback = this.browse;
+
+		// settings
+		tinymce.each({
+			openServerBrowser : this.openServerBrowser,
+			width : ed.getParam("plugin_simplebrowser_width", '800'),
+			height : ed.getParam("plugin_simplebrowser_height", '600'),
+			browseimageurl : ed.getParam("plugin_simplebrowser_browseimageurl", false),
+			browselinkurl : ed.getParam("plugin_simplebrowser_browselinkurl", false),
+			browseflashurl : ed.getParam("plugin_simplebrowser_browseflashurl", false),
+		      }, function(value, key) {
+			key = 'simplebrowser_' + key;
+			
+			if (ed.settings[key] === undefined)
+			    ed.settings[key] = value;
+		 });
+
+	    },
+
+	openServerBrowser : function(field_name, current_url, link_type, win, browse_url)
+		{
+			this.options['field'] = field_name;
+			this.options['curl'] = current_url;
+			this.options['type'] = link_type;
+			this.options['target'] = win;
+
+			var sOptions = "toolbar=no,scrollbars=yes,status=no,resizable=yes,dependent=yes";
+			sOptions += ",width=" + this.options['width'];
+			sOptions += ",height=" + this.options['height'];
+			if (tinymce.isIE)	{
+			    // The following change has been made otherwise IE will open the file 
+			    // browser on a different server session (on some cases):
+			    // http://support.microsoft.com/default.aspx?scid=kb;en-us;831678
+			    // by Simone Chiaretta.
+			    var oWindow = window.open(browse_url, "TinyMCESimpleBrowserWindow", sOptions ) ;
+			    oWindow.opener = window;
+			} else {
+			    window.open(browse_url, "TinyMCESimpleBrowserWindow", sOptions );
+			}
+		},
 
 	browse : function(field_name, current_url, type, win) {
+
+		var ed = tinyMCE.activeEditor;
+		var pl = ed.plugins['simplebrowser'];
+
 		switch(type.toLowerCase()) {
 			case 'image':
-				if(TinyMCE_SimpleBrowserPlugin.options['browseimageurl']) {
-					TinyMCE_SimpleBrowserPlugin.openServerBrowser(field_name, current_url, type, win, TinyMCE_SimpleBrowserPlugin.options['browseimageurl']);
+				if(ed.settings['simplebrowser_browseimageurl']) {
+					pl.openServerBrowser(field_name, current_url, type, win, ed.settings['simplebrowser_browseimageurl']);
 				} else {
 					alert("Image browser URL not set.");
 				}
 				break;
 			case 'flash':
-				if(TinyMCE_SimpleBrowserPlugin.options['browseflashurl']) {
-					TinyMCE_SimpleBrowserPlugin.openServerBrowser(field_name, current_url, type, win, TinyMCE_SimpleBrowserPlugin.options['browseflashurl']);
+				if(ed.settings['simplebrowser_browseflashurl']) {
+					pl.openServerBrowser(field_name, current_url, type, win, ed.settings['simplebrowser_browseflashurl']);
 				} else {
 					alert("Flash browser URL not set.");
 				}
 				break;
 			default:
-				if(TinyMCE_SimpleBrowserPlugin.options['browselinkurl']) {
-					TinyMCE_SimpleBrowserPlugin.openServerBrowser(field_name, current_url, type, win, TinyMCE_SimpleBrowserPlugin.options['browselinkurl']);
+				if(ed.settings['simplebrowser_browselinkurl']) {
+					pl.openServerBrowser(field_name, current_url, type, win, ed.settings['simplebrowser_browselinkurl']);
 				} else {
 					alert("Link browser URL not set.");
 				}
-		}
-	},
-
-	openServerBrowser : function(field_name, current_url, link_type, win, browse_url)
-	{
-			TinyMCE_SimpleBrowserPlugin.options['field'] = field_name;
-			TinyMCE_SimpleBrowserPlugin.options['curl'] = current_url;
-			TinyMCE_SimpleBrowserPlugin.options['type'] = link_type;
-			TinyMCE_SimpleBrowserPlugin.options['target'] = win;
-
-		var sOptions = "toolbar=no,scrollbars=yes,status=no,resizable=yes,dependent=yes";
-		sOptions += ",width=" + TinyMCE_SimpleBrowserPlugin.options['width'];
-		sOptions += ",height=" + TinyMCE_SimpleBrowserPlugin.options['height'];
-		if (tinyMCE.isMSIE)	{
-			// The following change has been made otherwise IE will open the file 
-			// browser on a different server session (on some cases):
-			// http://support.microsoft.com/default.aspx?scid=kb;en-us;831678
-			// by Simone Chiaretta.
-			var oWindow = window.open(browse_url, "TinyMCESimpleBrowserWindow", sOptions ) ;
-			oWindow.opener = window;
-		} else {
-			window.open(browse_url, "TinyMCESimpleBrowserWindow", sOptions );
 		}
 	},
 
@@ -104,11 +109,22 @@ var TinyMCE_SimpleBrowserPlugin = {
 		if ((returnValue.title != null) && (TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.alt != null)) {    		
     		TinyMCE_SimpleBrowserPlugin.options['target'].document.forms[0].elements.alt.value = returnValue.title;
 		}
+
+	},
+
+	getInfo : function() {
+		return {
+		    longname : 'Simple Browser Plugin for Lenya / TinyMCE',
+		    author : 'lenya',
+		    authorurl : 'http://lenya.apache.org',
+		    infourl : 'http://lenya.apache.org',
+		    version : '2.0.X'
+		       };
 	}
-};
 
-function TinyMCE_SimpleBrowserPlugin_browse(field_name, current_url, type, win) {
-	TinyMCE_SimpleBrowserPlugin.browse(field_name, current_url, type, win)
-};
+	});
 
-tinyMCE.addPlugin("simplebrowser", TinyMCE_SimpleBrowserPlugin);
+    tinymce.PluginManager.add('simplebrowser', tinymce.plugins.SimpleBrowserPlugin);
+
+})();
+

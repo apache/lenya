@@ -32,7 +32,7 @@
   <p>
     Please <a href="http://tinymce.moxiecode.com/download.php">download the 
     TinyMCE editor from moxiecode.com</a>.<br />
-    Lenya's TinyMCE module is compatible with TinyMCE 2.1.x.
+    Lenya's TinyMCE module is compatible with TinyMCE 3.0.x.
     Unpack the zip archive or tarball in your Lenya source tree under
     <code>$LENYA-SRC/src/modules/tinymce/resources</code>. Alternatively, you can
     install it to <code>$PUB_HOME/lenya/modules/tinymce/resources</code> 
@@ -43,7 +43,10 @@
     By default, TinyMCE comes with an English localization only. If you prefer
     another language, you can 
     <a href="http://tinymce.moxiecode.com/language.php">download additional
-    language catalogues</a>. Unpack them in the same location.
+    language catalogues</a>. Unpack them in your Lenya source tree under
+    <code>$LENYA-SRC/src/modules/tinymce/resources/tinymce/jscripts/tiny_mce</code>,
+    or <code>$PUB_HOME/lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce</code>,
+    respectively.    
   </p>
   <p>
     Depending on the setting of the "modules.copy" option in 

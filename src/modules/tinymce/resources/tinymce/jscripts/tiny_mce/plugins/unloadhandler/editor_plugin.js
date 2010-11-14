@@ -16,28 +16,34 @@
 */
 
 /* Import plugin specific language pack 
- * this could be written in a more generic way (possibly in the editors module) */
-tinyMCE.importPluginLanguagePack('unloadhandler');
+ * this could be written in a more generic way (possibly in the editors module)
+ */
 
-var TinyMCE_UnloadHandlerPlugin = {
-  getInfo : function() {
-    return {
-      longname : 'Unload Handler Plugin for Lenya / TinyMCE',
-      author : 'lenya',
-      authorurl : 'http://lenya.apache.org',
-      infourl : 'http://lenya.apache.org',
-      version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
-    };
-  },
+(function() {
 
-  // Private plugin internal methods
+    tinymce.create('tinymce.plugins.UnloadPlugin', {
 
-  _beforeUnloadHandler : function() {
-    var msg = tinyMCE.getLang("lang_unloadhandler_unload_msg");
-    return msg;
-  }
-};
+	    init : function(ed, url) {
+		tinymce.DOM.win.onbeforeunload = function() {
+		    var msg = ed.getLang("unloadhandler.unload_msg");
+		    return msg;
+		}
+	    },
 
-window.onbeforeunload = TinyMCE_UnloadHandlerPlugin._beforeUnloadHandler;
+	    getInfo : function() {
+		return {
+		    longname : 'Unload Handler Plugin for Lenya / TinyMCE',
+		    author : 'lenya',
+		    authorurl : 'http://lenya.apache.org',
+		    infourl : 'http://lenya.apache.org',
+		    version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+		       };
+	    }
 
-tinyMCE.addPlugin("unloadhandler", TinyMCE_UnloadHandlerPlugin);
+	});
+	
+    tinymce.PluginManager.add("unloadhandler", tinymce.plugins.UnloadPlugin);
+    tinymce.PluginManager.requireLangPack('unloadhandler');
+})();
+
+

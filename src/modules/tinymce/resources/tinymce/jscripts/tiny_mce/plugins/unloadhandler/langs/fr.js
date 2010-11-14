@@ -15,4 +15,9 @@
   limitations under the License.
 */
 
-tinyMCE.addToLang('simplebrowser',{});
+// FR lang variables
+
+tinyMCE.addI18n('fr.unloadhandler',{
+    unload_msg : 'Attention: si vous sortez de l'éditeur en cliquant sur OK modifications seront perdues et le document sera laissée «checked out».'
+});
+}
