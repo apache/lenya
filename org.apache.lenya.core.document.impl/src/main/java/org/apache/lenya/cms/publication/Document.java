@@ -28,7 +28,6 @@ import org.apache.lenya.cms.site.Link;
 
 /**
  * A CMS document.
- * @version $Id$
  */
 public interface Document extends Node, MetaDataOwner {
     
