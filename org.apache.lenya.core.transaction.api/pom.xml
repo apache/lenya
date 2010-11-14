@@ -10,10 +10,10 @@
   </parent>
   
   <groupId>org.apache.lenya</groupId>
-  <artifactId>lenya-core-transaction</artifactId>
+  <artifactId>lenya-core-transaction-api</artifactId>
   <packaging>jar</packaging>
-  <name>Apache Lenya Transactions</name>
-  <description>Deals with transactions</description>
+  <name>Apache Lenya Transaction API</name>
+  <description>API for Lenya Transactions</description>
   
   <dependencies>
   
