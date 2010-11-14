@@ -208,7 +208,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             throw new LockException("A lock is already placed on [" + lockable
                     + "]. A new lock could lead to inconsistent data.");
         }
-        Lock lock = new Lock(version);
+        Lock lock = new LockImpl(version);
         this.locks.put(lockable, lock);
         return lock;
     }

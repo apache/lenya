@@ -22,13 +22,13 @@ package org.apache.lenya.transaction;
  *
  * @version $Id$
  */
-public class Lock {
+public class LockImpl implements Lock {
 
     /**
      * Ctor.
      * @param version The version of the transactionable when it was locked.
      */
-    protected Lock(int version) {
+    protected LockImpl(int version) {
         this.version = version;
     }
     
