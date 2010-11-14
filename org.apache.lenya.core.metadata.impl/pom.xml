@@ -11,9 +11,9 @@
     <relativePath>../org.apache.lenya.parent/pom.xml</relativePath>
   </parent>
   <groupId>org.apache.lenya</groupId>
-  <artifactId>lenya-core-metadata</artifactId>
+  <artifactId>lenya-core-metadata-impl</artifactId>
   <packaging>jar</packaging>
-  <name>Apache Lenya Core Metadata</name>
+  <name>Apache Lenya Core Metadata Implementation</name>
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -23,6 +23,9 @@
       <groupId>org.apache.avalon.framework</groupId>
       <artifactId>avalon-framework-api</artifactId>
     </dependency>
+    
+    <!-- Lenya -->
+    
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
@@ -31,17 +34,13 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-usecase</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-workflow</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-workflow</artifactId>-->
+<!--    </dependency>-->
         <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-cocoon</artifactId>
-    </dependency>
-        <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-publication</artifactId>
     </dependency>
   </dependencies>
 </project>
