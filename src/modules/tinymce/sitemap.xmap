@@ -84,7 +84,7 @@
                   <map:parameter name="continuationId" value="{flow-continuation:id}"/>
                   <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
                   <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
-                  <map:parameter name="locale" value="{request:locale}"/>
+                  <map:parameter name="locale" value="{request:locale/language}"/>
                   <map:parameter name="content" value="{request-param:tinymce.content}"/>
                 </map:transform>
               </map:when>
