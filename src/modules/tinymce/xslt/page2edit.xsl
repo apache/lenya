@@ -225,10 +225,10 @@
           </textarea>
           <xsl:text>
           </xsl:text>
-          <input i18n:attr="value" type="submit" name="submit" value="Save" onclick="javascript:tinymce.DOM.win.onbeforeunload = null;"/>        
+          <input i18n:attr="value" type="submit" name="submit" value="Save" onclick="tinymce.DOM.win.onbeforeunload = null;"/>        
           <xsl:text>
           </xsl:text>
-          <input i18n:attr="value" type="submit" name="cancel" value="Cancel" onclick="javascript:tinymce.DOM.win.onbeforeunload = null;"/>      
+          <input i18n:attr="value" type="submit" name="cancel" value="Cancel" onclick="tinymce.DOM.win.onbeforeunload = null;"/>      
           <xsl:text>
       </xsl:text>
       </form>
