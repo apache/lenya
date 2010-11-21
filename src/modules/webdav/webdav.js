@@ -238,7 +238,7 @@ function executeUsecase(usecaseName) {
             catch (exception) {
                 /* if an exception was thrown by the view, allow the usecase to rollback the transition */
 		if (cocoon.log.isDebugEnabled())
-		    cocoon.log.debug("webdav.js::executeUsecase() in usecase " + usecaseName + ": exception " + exception.name + "caught, message is '" + exception.message +"'");
+		    cocoon.log.debug("webdav.js::executeUsecase() in usecase " + usecaseName + ": exception " + exception.name + " caught, message is:\n" + exception.message);
 
                 try {
                     usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
