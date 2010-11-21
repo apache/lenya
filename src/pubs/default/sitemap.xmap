@@ -43,8 +43,8 @@
          FIXME: the whole webdav shebang should be handled by the webdav module sitemap.
       -->
       <!-- catch webdav GET requests. -->
-      <map:match pattern="*/webdav**">
-        <map:mount uri-prefix="{1}/" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>    
+      <map:match pattern="webdav**">
+        <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>    
       </map:match>
 
       <!-- catch PUT requests (used by webdav clients) -->

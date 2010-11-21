@@ -219,9 +219,9 @@ function executeUsecase(usecaseName) {
         while (!ready) {
 
             try {
-                var templateUri = view.getTemplateURI();
+                var templateUri = view.getViewURI();
                 if (templateUri) {
-                    var viewUri = "view/" + menu + "/" + view.getTemplateURI();
+                    var viewUri = "view/" + menu + "/" + view.getViewURI();
                     if (cocoon.log.isDebugEnabled())
                         cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
 

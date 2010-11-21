@@ -29,6 +29,8 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 
+import org.apache.lenya.ac.AccessControlException;
+
 /**
  * Authenticator action that delegates the authentication to an access controller.
  */
@@ -49,13 +51,19 @@ public class DelegatingAuthenticatorAction extends AccessControlAction {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         Map result = null;
-        if (getAccessController().authenticate(request)) {
-            getLogger().debug("Authentication successful.");
-            result = Collections.EMPTY_MAP;
-        }
-        else {
-            getLogger().debug("Authentication failed.");
-        }
+
+	try {
+	    if (getAccessController().authenticate(request)) {
+		getLogger().debug("Authentication successful.");
+		result = Collections.EMPTY_MAP;
+	    }
+	    else {
+		getLogger().debug("Authentication failed.");
+	    }
+	}
+	catch (AccessControlException e) {
+	    getLogger().debug("Authentication failed due to AccessControlException: " + e.getMessage());
+	}
         return result;
     }
 

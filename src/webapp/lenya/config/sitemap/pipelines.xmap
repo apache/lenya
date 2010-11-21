@@ -80,6 +80,7 @@
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
               <map:parameter name="area" value="{page-envelope:area}"/>
             </map:transform>
+            <map:call resource="style-cms-page"/>
             <map:serialize type="xhtml" status-code="401"/>
           </map:act>
         </map:act>
@@ -91,6 +92,7 @@
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
               <map:parameter name="area" value="{page-envelope:area}"/>
           </map:transform>
+          <map:call resource="style-cms-page"/>
           <map:serialize type="xhtml" status-code="401"/>
         </map:act>
       </map:match>
