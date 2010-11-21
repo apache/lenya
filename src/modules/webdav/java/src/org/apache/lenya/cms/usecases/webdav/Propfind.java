@@ -96,6 +96,13 @@ public class Propfind extends SiteUsecase {
                 }
             }
 
+	    //FIXME: This is a workaround for the error
+	    //  "This usecase can only be invoked on documents!"
+	    // triggered in (superclass) DocumentUsecase.doCheckPreconditions()
+	    // when the usecase parameter "document" is not set properly.
+	    if (docs.size() > 0) {
+		setParameter(DOCUMENT, docs.get(0));
+	    }
             setParameter(DOCUMENTS, docs);
             setParameter(RC, checkedOut);
             setParameter(SOURCEURL, request);
