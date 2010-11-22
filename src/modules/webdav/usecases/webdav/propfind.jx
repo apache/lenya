@@ -56,8 +56,13 @@
       varStatus="status">
       <jx:if test="${doc.getIdentifier()}">
       <jx:set var="fileExtension" value="${doc.getSourceExtension()}"/>
+      <jx:set var="resourceType" value="${doc.getResourceType().getName()}"/>
+      <jx:set var="mimeType" value="${doc.getMimeType()}"/>
       <jx:if test="${doc.getSourceExtension().equals('xml')}">
           <jx:set var="fileExtension" value="html"/>
+      </jx:if>
+      <jx:if test="${doc.getResourceType().getName().equals('opendocument')}">
+          <jx:set var="fileExtension" value="odt"/>
       </jx:if>
        <!-- create a file for each document, the href is the path to the file and the 
         display name is what will appear in the webdav folder -->
@@ -68,7 +73,7 @@
               <D:displayname>${doc.getName()}_${doc.getLanguage()}.${fileExtension}</D:displayname>
               <D:getlastmodified>${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
               <D:creationdate/>
-              <D:getcontenttype>application/xml</D:getcontenttype>
+              <D:getcontenttype>${mimeType}</D:getcontenttype>
               <D:getcontentlength>${doc.getFile().length()}</D:getcontentlength>
               <D:resourcetype/>
               <D:lockdiscovery>
