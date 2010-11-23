@@ -120,6 +120,11 @@
     <groupId>org.apache.lenya</groupId>
     <artifactId>lenya-core-api</artifactId>
   </dependency>
+  <dependency>
+    <!--  this dependency is added because the urlinformation class. See if we can remove this dependencie -->
+    <groupId>org.apache.lenya</groupId>
+    <artifactId>lenya-core-publication-api</artifactId>
+  </dependency>
     <!-- Tests -->
     <dependency>
       <groupId>junit</groupId>
