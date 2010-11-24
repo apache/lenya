@@ -16,7 +16,34 @@
   <description>API for publications</description>
   
   <dependencies>
-  
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-api</artifactId>
+    </dependency>
+      <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-api</artifactId>
+    </dependency>
+    <!-- TODO : normally core-transaction-api could be a dependencie or repository-api and not transaction...
+      maybe it's because exception are impl and not api ?
+     -->
+          <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-transaction-api</artifactId>
+    </dependency>
+<!--      <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-sitemanagement</artifactId>-->
+<!--    </dependency>-->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-document-api</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-proxy</artifactId>
+    </dependency>
+    
   <!-- TODO : see if all theses dependencies are required -->
     <dependency>
       <groupId>org.apache.cocoon</groupId>
