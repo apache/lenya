@@ -15,18 +15,10 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.repository;
 
-import javax.servlet.http.HttpServletRequest;
-import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.ac.Identity;
-
-public interface Repository {
+public interface SessionHolder {
     
-    Session getSession(HttpServletRequest request);
+    Session getRepositorySession();
 
-    Session startSession(Identity identity, boolean modifiable);
-
-    void removeSession(HttpServletRequest request);
-    
 }
