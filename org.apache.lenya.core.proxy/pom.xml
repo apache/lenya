@@ -16,7 +16,10 @@
   <description>Implements proxy capabilities in Lenya</description>
   
   <dependencies>
-  
+  <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-document-api</artifactId>
+    </dependency>
   <!-- TODO : see if all theses dependencies are required -->
     <dependency>
       <groupId>org.apache.cocoon</groupId>
