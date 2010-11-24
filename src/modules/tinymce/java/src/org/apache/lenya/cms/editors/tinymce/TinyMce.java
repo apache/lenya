@@ -52,6 +52,8 @@ import org.xml.sax.SAXException;
 
 public class TinyMce extends DocumentUsecase {
 
+    private final String tinymceCodeURI = "fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/tiny_mce.js";
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -76,6 +78,9 @@ public class TinyMce extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
+        if (!SourceUtil.exists(tinymceCodeURI, this.manager)) {
+            addErrorMessage("tinymce-not-installed");
+        }
         UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
                 getLogger());
         if (!ServletHelper.isUploadEnabled(this.manager)) {

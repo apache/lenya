@@ -22,10 +22,8 @@
   xmlns="http://apache.org/cocoon/lenya/menubar/1.0">
   <menus>
     <menu i18n:attr="name" name="Edit">
-      <!-- <block  areas="authoring" resourceTypes="xhtml homepage"> -->
-            <block  areas="authoring" resourceTypes="xhtml">
-	      <item uc:usecase="tinymce.edit" href="?"><i18n:text>With TinyMCE</i18n:text></item>
-        <!-- <item wf:event="edit" uc:usecase="tinymce.edit" href="?"><i18n:text>With TinyMCE</i18n:text></item> -->
+      <block  areas="authoring" resourceTypes="xhtml homepage">
+        <item wf:event="edit" uc:usecase="tinymce.edit" href="?"><i18n:text>With TinyMCE</i18n:text></item>
       </block>
     </menu>
     

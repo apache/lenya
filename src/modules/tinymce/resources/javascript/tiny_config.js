@@ -52,8 +52,8 @@ config = {
     
     /* enable plugins for custom save function, fullscreen editing
        and search-and-replace. */
-    //plugins : "save,fullscreen,searchreplace,table,contextmenu,simplebrowser,xhtmlxtras",
-    plugins : "searchreplace,table,contextmenu,simplebrowser,unloadhandler",
+    //plugins : "save,fullscreen,searchreplace,table,contextmenu,autoresize,simplebrowser,xhtmlxtras",
+    plugins : "searchreplace,table,contextmenu,autoresize,simplebrowser,unloadhandler",
         
     /* grey out the "save" button unless there are unsaved changes: */
     //save_enablewhendirty : false,

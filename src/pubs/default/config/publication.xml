@@ -87,6 +87,7 @@
     <module name="usecasedocument"/>
     <module name="monitoring"/>
     <module name="navigation"/>
+    <module name="tinymce"/>
   </modules>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
