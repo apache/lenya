@@ -18,7 +18,7 @@
 
 <catalogue xml:lang="fr" xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns="http://apache.org/cocoon/i18n/2.1">
-  <message key="tinymce.edit">Rédacteur&#160;TinyMCE</message>
+  <message key="tinymce.edit">Editeur TinyMCE</message>
   <message key="With TinyMCE">Avec TinyMCE</message>
   <message key="tinymce-not-installed">TinyMCE n'est pas installé</message>
 </catalogue>
