@@ -15,12 +15,7 @@
   <packaging>jar</packaging>
   <name>Apache Lenya Core AC</name>
   <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
+  <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-api</artifactId>
     </dependency>
@@ -38,7 +33,21 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-publication</artifactId>
+      <artifactId>lenya-core-publication-api</artifactId>
+    </dependency>
+        <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-proxy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-api</artifactId>
+    </dependency>
+    <!-- TODO : see if theses dependencies are required -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.samba.jcifs</groupId>

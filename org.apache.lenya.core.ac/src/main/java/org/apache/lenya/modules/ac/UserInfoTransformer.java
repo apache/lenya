@@ -28,7 +28,9 @@ import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.ac.PolicyUtil;
-import org.apache.lenya.util.ServletHelper;
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -66,7 +68,9 @@ public class UserInfoTransformer extends AbstractSAXTransformer {
             throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, params);
         Request request = ObjectModelHelper.getRequest(objectModel);
-        this.url = ServletHelper.getWebappURI(request);
+      //TODO : florent : remove comment when ok 
+        //this.url = ServletHelper.getWebappURI(request);
+        this.url = new URLInformation().getWebappUrl();
         
     }
 

@@ -44,7 +44,9 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.cms.ac.PolicyUtil;
-import org.apache.lenya.util.ServletHelper;
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 
 /**
  * <p>
@@ -192,7 +194,9 @@ public class AccessControlModule extends AbstractInputModule {
         if (name.equals(SSL)) {
             AccessController accessController = null;
             try {
-                String url = ServletHelper.getWebappURI(request);
+            //TODO : florent : remove comment when ok 
+              //String url = ServletHelper.getWebappURI(request);
+              String url = new URLInformation().getWebappUrl();
                 accessController = this.accessControllerResolver.resolveAccessController(url);
                 AccreditableManager accreditableManager = accessController.getAccreditableManager();
                 PolicyManager policyManager = accessController.getPolicyManager();

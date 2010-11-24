@@ -35,8 +35,9 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.OutgoingLinkRewriter;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.util.ServletHelper;
-
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 /**
  * Returns a map if the current request needs a redirect to the <code>https://</code> protocol. This
  * is the case if the policy requires SSL protection and the current request is not secure. The map
@@ -64,8 +65,10 @@ public class SslRedirectAction extends ConfigurableServiceableAction {
 
             resolver = (AccessControllerResolver) WebAppContextUtils
                     .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
-
-            String url = ServletHelper.getWebappURI(request);
+          //TODO : florent : remove comment when ok 
+            //String url = ServletHelper.getWebappURI(request);
+            String url = new URLInformation().getWebappUrl();
+            
             accessController = resolver.resolveAccessController(url);
 
             if (accessController != null) {

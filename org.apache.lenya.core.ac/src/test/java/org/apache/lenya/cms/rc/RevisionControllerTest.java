@@ -20,57 +20,59 @@
 
 package org.apache.lenya.cms.rc;
 
-import org.apache.lenya.cms.AbstractAccessControlTest;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.repository.RepositoryException;
+//TODO : see how to reimplement theses tests
 
-/**
- * Revision Controller test
- */
-public class RevisionControllerTest extends AbstractAccessControlTest {
-
-    /**
-     * @see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug 41005</a>
-     * @throws Exception
-     */
-    public void testCheckIn() throws Exception {
-        login("lenya");
-
-        DocumentManager docMgr = null;
-        docMgr = (DocumentManager) getBeanFactory().getBean(DocumentManager.ROLE);
-        Document source = getSession().getPublication("test").getArea("authoring").getSite()
-                .getNode("/links").getLink("en").getDocument();
-        Document target = docMgr.addVersion(source, "authoring", "es");
-        target.delete();
-
-        getSession().commit();
-    }
-
-    public void testRevisionController() throws RepositoryException, RevisionControlException {
-
-        String[] args = { "", "", "", "" };
-
-        // TestRunner.run(getSuite());
-
-        if (args.length != 4) {
-            System.out
-                    .println("Usage: "
-                            + RevisionControllerTest.class.getName()
-                            + " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
-
-            return;
-        }
-
-        Document doc1 = null;
-        Document doc2 = null;
-
-        String identityS = args[0];
-        String source = args[1];
-        String identityD = args[2];
-        String destination = args[3];
-        // doc1.getRepositoryNode().checkout();
-        // doc2.getRepositoryNode().checkin();
-    }
-
-}
+//import org.apache.lenya.cms.AbstractAccessControlTest;
+//import org.apache.lenya.cms.publication.Document;
+//import org.apache.lenya.cms.publication.DocumentManager;
+//import org.apache.lenya.cms.repository.RepositoryException;
+//
+///**
+// * Revision Controller test
+// */
+//public class RevisionControllerTest extends AbstractAccessControlTest {
+//
+//    /**
+//     * @see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug 41005</a>
+//     * @throws Exception
+//     */
+//    public void testCheckIn() throws Exception {
+//        login("lenya");
+//
+//        DocumentManager docMgr = null;
+//        docMgr = (DocumentManager) getBeanFactory().getBean(DocumentManager.ROLE);
+//        Document source = getSession().getPublication("test").getArea("authoring").getSite()
+//                .getNode("/links").getLink("en").getDocument();
+//        Document target = docMgr.addVersion(source, "authoring", "es");
+//        target.delete();
+//
+//        getSession().commit();
+//    }
+//
+//    public void testRevisionController() throws RepositoryException, RevisionControlException {
+//
+//        String[] args = { "", "", "", "" };
+//
+//        // TestRunner.run(getSuite());
+//
+//        if (args.length != 4) {
+//            System.out
+//                    .println("Usage: "
+//                            + RevisionControllerTest.class.getName()
+//                            + " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
+//
+//            return;
+//        }
+//
+//        Document doc1 = null;
+//        Document doc2 = null;
+//
+//        String identityS = args[0];
+//        String source = args[1];
+//        String identityD = args[2];
+//        String destination = args[3];
+//        // doc1.getRepositoryNode().checkout();
+//        // doc2.getRepositoryNode().checkin();
+//    }
+//
+//}

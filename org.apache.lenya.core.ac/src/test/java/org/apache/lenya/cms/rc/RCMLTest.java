@@ -20,89 +20,92 @@
 
 package org.apache.lenya.cms.rc;
 
-import java.io.PrintWriter;
 
-import org.w3c.dom.Document;
-import org.apache.lenya.cms.AbstractAccessControlTest;
-import org.apache.lenya.xml.DocumentHelper;
+//TODO : see how to reimplement theses tests
 
-/**
- * RCML Test
- */
-public class RCMLTest extends AbstractAccessControlTest {
-
-	/**
-	 * <code>co</code> Checkout
-	 */
-	public static final short co = 0;
-	/**
-	 * <code>ci</code> Checkin
-	 */
-	public static final short ci = 1;
-    
-	private Document document = null;
-
-    /**
-     * Constructor.
-     * @param test The test to execute.
-     */
-    public RCMLTest() {
-        super();
-    }
-    
-    public void testRCML() {
-        String[] args = { "", "", "" };
-        testRCML(args);
-    }
-
-    public void testRCML(String[] args) {
-
-		if (args.length != 1) {
-			System.out.println("Usage: java RCML rcmlDirectory datafilename rootDirectory");
-
-			return;
-		}
-
-		try {
-            org.apache.lenya.cms.publication.Document doc = null;
-			doc.checkout();
-
-			(new PrintWriter(System.out)).print(this.document);
-
-			System.out.println("\n");
-
-			if (doc.isCheckedOut()) {
-			    System.out.println("Checked out");
-			} else {
-			    System.out.println("Not checked out");
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	    }
-
-/*    protected static final Class[] classes = {
-    };
-
-    /**
-     * Creates a test suite.
-     * @return a test suite.
-     */
-/*    public static Test getSuite() {
-        TestSuite suite = new TestSuite();
-
-        for (int i = 0; i < classes.length; i++) {
-            suite.addTestSuite(classes[i]);
-        }
-
-        return suite;
-    }
-*/
-    /** @see junit.framework.TestCase#setUp() */
-    protected void setUp() throws Exception {
-		/**
-		 * initialise the RCML-document. Delete all entries
-		 */
-        this.document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
-    }
-}
+//import java.io.PrintWriter;
+//
+//import org.w3c.dom.Document;
+//import org.apache.lenya.cms.AbstractAccessControlTest;
+//import org.apache.lenya.xml.DocumentHelper;
+//
+///**
+// * RCML Test
+// */
+//public class RCMLTest extends AbstractAccessControlTest {
+//
+//	/**
+//	 * <code>co</code> Checkout
+//	 */
+//	public static final short co = 0;
+//	/**
+//	 * <code>ci</code> Checkin
+//	 */
+//	public static final short ci = 1;
+//    
+//	private Document document = null;
+//
+//    /**
+//     * Constructor.
+//     * @param test The test to execute.
+//     */
+//    public RCMLTest() {
+//        super();
+//    }
+//    
+//    public void testRCML() {
+//        String[] args = { "", "", "" };
+//        testRCML(args);
+//    }
+//
+//    public void testRCML(String[] args) {
+//
+//		if (args.length != 1) {
+//			System.out.println("Usage: java RCML rcmlDirectory datafilename rootDirectory");
+//
+//			return;
+//		}
+//
+//		try {
+//            org.apache.lenya.cms.publication.Document doc = null;
+//			doc.checkout();
+//
+//			(new PrintWriter(System.out)).print(this.document);
+//
+//			System.out.println("\n");
+//
+//			if (doc.isCheckedOut()) {
+//			    System.out.println("Checked out");
+//			} else {
+//			    System.out.println("Not checked out");
+//			}
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
+//	    }
+//
+///*    protected static final Class[] classes = {
+//    };
+//
+//    /**
+//     * Creates a test suite.
+//     * @return a test suite.
+//     */
+///*    public static Test getSuite() {
+//        TestSuite suite = new TestSuite();
+//
+//        for (int i = 0; i < classes.length; i++) {
+//            suite.addTestSuite(classes[i]);
+//        }
+//
+//        return suite;
+//    }
+//*/
+//    /** @see junit.framework.TestCase#setUp() */
+//    protected void setUp() throws Exception {
+//		/**
+//		 * initialise the RCML-document. Delete all entries
+//		 */
+//        this.document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
+//    }
+//}

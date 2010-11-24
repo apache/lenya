@@ -39,7 +39,8 @@ import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 
 /**
  * Resolves the access controller according to the <code>access-control.xml</code> file of a
@@ -72,7 +73,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             throws AccessControlException {
         Validate.isTrue(webappUrl.startsWith("/"), "Webapp URL must start with a slash.");
 
-        URLInformation info = new URLInformation(webappUrl);
+        //TODO : florent : remove comment when ok 
+        //URLInformation info = new URLInformation(webappUrl);
+        URLInformation info = new URLInformation();
 
         String publicationId = info.getPublicationId();
         String cacheKey = publicationId == null ? GLOBAL_CACHE_KEY : publicationId;
@@ -120,7 +123,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
         if (url.length() > 0) {
 
-            URLInformation info = new URLInformation(webappUrl);
+        	//TODO : florent : remove comment when ok 
+          //URLInformation info = new URLInformation(webappUrl);
+          URLInformation info = new URLInformation();
             String pubId = info.getPublicationId();
 
             try {

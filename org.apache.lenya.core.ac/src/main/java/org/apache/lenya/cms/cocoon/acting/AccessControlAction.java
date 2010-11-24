@@ -30,8 +30,9 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
-import org.apache.lenya.util.ServletHelper;
-
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 /**
  * Super class for access control actions.
  * 
@@ -66,7 +67,9 @@ public abstract class AccessControlAction extends ConfigurableServiceableAction 
                 .getCurrentWebApplicationContext().getBean(AccessControllerResolver.ROLE);
         getLogger().debug("Resolved AC resolver [" + resolver + "]");
 
-        String webappUrl = ServletHelper.getWebappURI(request);
+        //TODO : florent : remove comments when ok
+        //String webappUrl = ServletHelper.getWebappURI(request);
+        String webappUrl = new URLInformation().getWebappUrl();
         this.accessController = resolver.resolveAccessController(webappUrl);
 
         if (this.accessController == null) {

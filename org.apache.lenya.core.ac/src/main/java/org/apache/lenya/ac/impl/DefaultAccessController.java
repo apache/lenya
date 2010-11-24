@@ -56,7 +56,9 @@ import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.util.ServletHelper;
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -133,7 +135,9 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     protected void resolveRoles(Request request) throws AccessControlException {
         Validate.notNull(request, "request");
-        String webappUrl = ServletHelper.getWebappURI(request);
+      //TODO : florent : remove comment when ok 
+        //String webappUrl = ServletHelper.getWebappURI(request);
+        String webappUrl = new URLInformation().getWebappUrl();
         HttpSession session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
 

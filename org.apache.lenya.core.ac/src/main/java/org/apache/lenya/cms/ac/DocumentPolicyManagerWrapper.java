@@ -43,7 +43,8 @@ import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 
 /**
  * A PolicyManager which is capable of mapping all URLs of a document to the appropriate canonical
@@ -78,7 +79,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         }
 
         String url = null;
-        URLInformation info = new URLInformation(webappUrl);
+        //URLInformation info = new URLInformation(webappUrl);
+        URLInformation info = new URLInformation();
         String pubId = info.getPublicationId();
         String area = info.getArea();
 

@@ -35,154 +35,157 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
-import org.apache.lenya.cms.publication.RepositoryException;
+//import org.apache.lenya.cms.publication.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.publication.Session;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class AbstractAccessControlTest extends AbstractLenyaTestCase {
+//TODO : florent : see how to rewrite this tests
 
-    private static final Log logger = LogFactory.getLog(AbstractAccessControlTest.class);
-
-    protected static final String TEST_PUB_ID = "test";
-    private AccessControllerResolver accessControllerResolver;
-    private Repository repository;
-
-    protected Session login(String userId) throws AccessControlException {
-        return login(userId, TEST_PUB_ID);
-    }
-
-    protected Session login(String userId, String pubId) throws AccessControlException {
-        
-        final Session anonymousSession = getRepository().startSession(null, false);
-        AccessController ac = getAccessController(anonymousSession, pubId);
-        AccreditableManager acMgr = ac.getAccreditableManager();
-        User user = acMgr.getUserManager().getUser(userId);
-
-        if (user == null) {
-            throw new AccessControlException("The user [" + userId + "] does not exist!");
-        }
-        getRequest().setRequestURI("/" + pubId + "/");
-        ac.setupIdentity(getRequest());
-
-        HttpSession cocoonSession = getRequest().getSession();
-        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
-
-        if (!identity.contains(user)) {
-            User oldUser = identity.getUser();
-            if (oldUser != null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Removing user [" + oldUser + "] from identity.");
-                }
-                identity.removeIdentifiable(oldUser);
-            }
-            identity.addIdentifiable(user);
-        }
-
-        ac.authorize(getRequest());
-
-        Accreditable[] accrs = identity.getAccreditables();
-        for (int i = 0; i < accrs.length; i++) {
-            logger.info("Accreditable: " + accrs[i]);
-        }
-
-        final Session userSession = getRepository().startSession(identity, true);
-        getRequest().setAttribute(Session.class.getName(), userSession);
-        return userSession;
-    }
-
-    protected AccessController getAccessController() throws AccessControlException {
-        return getAccessController(getSession(), TEST_PUB_ID);
-    }
-
-    protected AccessController getAccessController(Session session, String pubId)
-            throws AccessControlException {
-        Validate.notNull(session, "session");
-        AccessController controller;
-        logger.info("Using access controller resolver: ["
-                + getAccessControllerResolver().getClass() + "]");
-
-        try {
-            Publication pub = session.existsPublication(pubId) ? session.getPublication(pubId)
-                    : session.addPublication(pubId);
-            logger.info("Resolve access controller");
-            logger.info("Publication directory: [" + pub.getSourceUri() + "]");
-        } catch (RepositoryException e) {
-            throw new AccessControlException(e);
-        }
-
-        String url = "/" + pubId + "/authoring/index.html";
-        controller = this.getAccessControllerResolver().resolveAccessController(url);
-
-        assertNotNull(controller);
-        logger.info("Resolved access controller: [" + controller.getClass() + "]");
-        return controller;
-    }
-
-    protected static final String USER_ID = "lenya";
-
-    /**
-     * Returns the policy manager.
-     * @return A policy manager.
-     * @throws AccessControlException
-     */
-    protected PolicyManager getPolicyManager() throws AccessControlException {
-        return getAccessController().getPolicyManager();
-    }
-
-    /**
-     * Returns the accreditable manager.
-     * @return An accreditable manager.
-     * @throws AccessControlException
-     */
-    protected AccreditableManager getAccreditableManager() throws AccessControlException {
-        return getAccessController().getAccreditableManager();
-    }
-
-    private Session session;
-
-    protected Session getSession() {
-        if (this.session == null) {
-            try {
-                this.session = login(getUserId());
-            } catch (AccessControlException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.session;
-    }
-
-    protected String getUserId() {
-        return USER_ID;
-    }
-
-    protected Identity getIdentity() {
-        return getSession().getIdentity();
-    }
-
-    public void setRepository(Repository repository) {
-        this.repository = repository;
-    }
-
-    public Repository getRepository() {
-        if (this.repository == null) {
-            this.repository = (Repository) getBeanFactory().getBean(Repository.class.getName());
-        }
-        return repository;
-    }
-
-    public void setAccessControllerResolver(AccessControllerResolver accessControllerResolver) {
-        this.accessControllerResolver = accessControllerResolver;
-    }
-
-    protected AccessControllerResolver getAccessControllerResolver() {
-        if (this.accessControllerResolver == null) {
-            this.accessControllerResolver = (AccessControllerResolver) getBeanFactory().getBean(
-                    AccessControllerResolver.ROLE);
-        }
-        return this.accessControllerResolver;
-    }
-
-}
+//public class AbstractAccessControlTest extends AbstractLenyaTestCase {
+//
+//    private static final Log logger = LogFactory.getLog(AbstractAccessControlTest.class);
+//
+//    protected static final String TEST_PUB_ID = "test";
+//    private AccessControllerResolver accessControllerResolver;
+//    private Repository repository;
+//
+//    protected Session login(String userId) throws AccessControlException {
+//        return login(userId, TEST_PUB_ID);
+//    }
+//
+//    protected Session login(String userId, String pubId) throws AccessControlException {
+//        
+//        final Session anonymousSession = getRepository().startSession(null, false);
+//        AccessController ac = getAccessController(anonymousSession, pubId);
+//        AccreditableManager acMgr = ac.getAccreditableManager();
+//        User user = acMgr.getUserManager().getUser(userId);
+//
+//        if (user == null) {
+//            throw new AccessControlException("The user [" + userId + "] does not exist!");
+//        }
+//        getRequest().setRequestURI("/" + pubId + "/");
+//        ac.setupIdentity(getRequest());
+//
+//        HttpSession cocoonSession = getRequest().getSession();
+//        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
+//
+//        if (!identity.contains(user)) {
+//            User oldUser = identity.getUser();
+//            if (oldUser != null) {
+//                if (logger.isDebugEnabled()) {
+//                    logger.debug("Removing user [" + oldUser + "] from identity.");
+//                }
+//                identity.removeIdentifiable(oldUser);
+//            }
+//            identity.addIdentifiable(user);
+//        }
+//
+//        ac.authorize(getRequest());
+//
+//        Accreditable[] accrs = identity.getAccreditables();
+//        for (int i = 0; i < accrs.length; i++) {
+//            logger.info("Accreditable: " + accrs[i]);
+//        }
+//
+//        final Session userSession = getRepository().startSession(identity, true);
+//        getRequest().setAttribute(Session.class.getName(), userSession);
+//        return userSession;
+//    }
+//
+//    protected AccessController getAccessController() throws AccessControlException {
+//        return getAccessController(getSession(), TEST_PUB_ID);
+//    }
+//
+//    protected AccessController getAccessController(Session session, String pubId)
+//            throws AccessControlException {
+//        Validate.notNull(session, "session");
+//        AccessController controller;
+//        logger.info("Using access controller resolver: ["
+//                + getAccessControllerResolver().getClass() + "]");
+//
+//        try {
+//            Publication pub = session.existsPublication(pubId) ? session.getPublication(pubId)
+//                    : session.addPublication(pubId);
+//            logger.info("Resolve access controller");
+//            logger.info("Publication directory: [" + pub.getSourceUri() + "]");
+//        } catch (RepositoryException e) {
+//            throw new AccessControlException(e);
+//        }
+//
+//        String url = "/" + pubId + "/authoring/index.html";
+//        controller = this.getAccessControllerResolver().resolveAccessController(url);
+//
+//        assertNotNull(controller);
+//        logger.info("Resolved access controller: [" + controller.getClass() + "]");
+//        return controller;
+//    }
+//
+//    protected static final String USER_ID = "lenya";
+//
+//    /**
+//     * Returns the policy manager.
+//     * @return A policy manager.
+//     * @throws AccessControlException
+//     */
+//    protected PolicyManager getPolicyManager() throws AccessControlException {
+//        return getAccessController().getPolicyManager();
+//    }
+//
+//    /**
+//     * Returns the accreditable manager.
+//     * @return An accreditable manager.
+//     * @throws AccessControlException
+//     */
+//    protected AccreditableManager getAccreditableManager() throws AccessControlException {
+//        return getAccessController().getAccreditableManager();
+//    }
+//
+//    private Session session;
+//
+//    protected Session getSession() {
+//        if (this.session == null) {
+//            try {
+//                this.session = login(getUserId());
+//            } catch (AccessControlException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        return this.session;
+//    }
+//
+//    protected String getUserId() {
+//        return USER_ID;
+//    }
+//
+//    protected Identity getIdentity() {
+//        return getSession().getIdentity();
+//    }
+//
+//    public void setRepository(Repository repository) {
+//        this.repository = repository;
+//    }
+//
+//    public Repository getRepository() {
+//        if (this.repository == null) {
+//            this.repository = (Repository) getBeanFactory().getBean(Repository.class.getName());
+//        }
+//        return repository;
+//    }
+//
+//    public void setAccessControllerResolver(AccessControllerResolver accessControllerResolver) {
+//        this.accessControllerResolver = accessControllerResolver;
+//    }
+//
+//    protected AccessControllerResolver getAccessControllerResolver() {
+//        if (this.accessControllerResolver == null) {
+//            this.accessControllerResolver = (AccessControllerResolver) getBeanFactory().getBean(
+//                    AccessControllerResolver.ROLE);
+//        }
+//        return this.accessControllerResolver;
+//    }
+//
+//}
