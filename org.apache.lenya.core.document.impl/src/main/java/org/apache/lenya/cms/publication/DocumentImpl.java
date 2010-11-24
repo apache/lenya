@@ -172,6 +172,13 @@ public class DocumentImpl implements Document, RepositoryItem {
         }
         return this.publication;
     }
+    
+    public String getPublicationId(){
+    	if (this.publication == null) {
+        this.publication = getSession().getPublication(getIdentifier().getPublicationId());
+    }
+    return this.publication.getId();
+    }
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getLastModified()
@@ -276,6 +283,8 @@ public class DocumentImpl implements Document, RepositoryItem {
         }
     }
 
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public boolean existsInAnyLanguage() throws ResourceNotFoundException {
         String[] languages = getLanguages();
 
@@ -302,7 +311,7 @@ public class DocumentImpl implements Document, RepositoryItem {
             return false;
         }
 
-    }
+    }*/
 
     public DocumentIdentifier getIdentifier() {
         return this.identifier;
@@ -482,6 +491,8 @@ public class DocumentImpl implements Document, RepositoryItem {
         return getLink().getNode().getPath();
     }
 
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public boolean existsAreaVersion(String area) {
         String sourceUri = getSourceURI(getPublication(), area, getUUID(), getLanguage());
         try {
@@ -489,15 +500,17 @@ public class DocumentImpl implements Document, RepositoryItem {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public boolean existsTranslation(String language) {
         return area().contains(getUUID(), language);
     }
 
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public Document getAreaVersion(String area) throws ResourceNotFoundException {
         return getPublication().getArea(area).getDocument(getUUID(), getLanguage());
-    }
+    }*/
 
     public Document getTranslation(String language) throws ResourceNotFoundException {
         return area().getDocument(getUUID(), language);
@@ -548,6 +561,8 @@ public class DocumentImpl implements Document, RepositoryItem {
         return pub.getContentUri(area) + "/" + path;
     }
 
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public boolean existsVersion(String area, String language) {
         String sourceUri = getSourceURI(getPublication(), area, getUUID(), language);
         try {
@@ -555,7 +570,7 @@ public class DocumentImpl implements Document, RepositoryItem {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public Document getVersion(String area, String language) throws ResourceNotFoundException {
         return getPublication().getArea(area).getDocument(getUUID(), language);
@@ -579,9 +594,11 @@ public class DocumentImpl implements Document, RepositoryItem {
         return area().getSite().containsByUuid(getUUID(), getLanguage());
     }
 
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public Area area() {
         return getPublication().getArea(getArea());
-    }
+    }*/
 
     public void setResourceType(ResourceType resourceType) {
         Validate.notNull(resourceType);

@@ -123,10 +123,12 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public Document getLanguageVersion(Document document, String language)
             throws DocumentBuildException {
         return get(document.getPublication(), document.getArea(), document.getUUID(), language);
-    }
+    }*/
 
     /**
      * Builds a clone of a document for another area.
@@ -135,9 +137,11 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
      * @return A document.
      * @throws ResourceNotFoundException if an error occurs.
      */
+    //florent : seems never use, imply cyclic dependencies
+    /*
     public Document getAreaVersion(Document document, String area) throws ResourceNotFoundException {
         return get(document.getPublication(), area, document.getUUID(), document.getLanguage());
-    }
+    }*/
 
     /**
      * Builds a document for the default language.
@@ -275,7 +279,7 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
         try {
             Publication publication = getPublication(publicationId);
             DocumentBuilder builder = publication.getDocumentBuilder();
-            DocumentIdentifier identifier = new DocumentIdentifier(publicationId, area, uuid,
+            DocumentIdentifier identifier = new DocumentIdentifierImpl(publicationId, area, uuid,
                     language);
             document = buildDocument(identifier, revision, builder);
         } catch (Exception e) {

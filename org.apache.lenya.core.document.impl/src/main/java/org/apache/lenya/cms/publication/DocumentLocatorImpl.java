@@ -25,7 +25,7 @@ import java.util.WeakHashMap;
  * A DocumentLocator describes a document based on its path in the site structure. The actual
  * document doesn't have to exist.
  */
-public class DocumentLocator {
+public class DocumentLocatorImpl implements DocumentLocator {
 
     private static Map locators = new WeakHashMap();
 
@@ -41,7 +41,7 @@ public class DocumentLocator {
         String key = DocumentLocator.getKey(pubId, area, path, language);
         DocumentLocator locator = (DocumentLocator) locators.get(key);
         if (locator == null) {
-            locator = new DocumentLocator(pubId, area, path, language);
+            locator = new DocumentLocatorImpl(pubId, area, path, language);
             locators.put(key, locator);
         }
         return locator;
@@ -56,7 +56,7 @@ public class DocumentLocator {
     private String path;
     private String language;
 
-    protected DocumentLocator(String pubId, String area, String path, String language) {
+    protected DocumentLocatorImpl(String pubId, String area, String path, String language) {
         this.path = path;
         this.pubId = pubId;
         this.area = area;
@@ -197,6 +197,10 @@ public class DocumentLocator {
         return DocumentLocator.getLocator(getPublicationId(), area, getPath(), getLanguage());
     }
 
+    /*
+     * florent : seems not used, and introduce a cyclic dependencie with publication
+     */
+    /*
     public Document getDocument(Session session) throws ResourceNotFoundException {
         try {
             Publication pub = session.getPublication(getPublicationId());
@@ -205,6 +209,6 @@ public class DocumentLocator {
         } catch (PublicationException e) {
             throw new ResourceNotFoundException(e);
         }
-    }
+    }*/
 
 }

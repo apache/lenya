@@ -16,6 +16,11 @@
   <description>This module implements Documents in Lenya</description>
   
   <dependencies>
+  <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-document-api</artifactId>
+    </dependency>
+
   <!-- <dependency> -->
   <!--     <groupId>org.apache.lenya</groupId> -->
   <!--     <artifactId>lenya-core-api</artifactId> -->
