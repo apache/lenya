@@ -16,8 +16,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication.util;
 
 import java.util.ArrayList;
@@ -30,12 +28,12 @@ import org.apache.lenya.cms.publication.PublicationException;
 /**
  * An ordered set of documents without duplicates.
  */
-public class DocumentSet {
+public class DocumentSetImpl {
 
     /**
      * Ctor.
      */
-    public DocumentSet() {
+    public DocumentSetImpl() {
         // do nothing
     }
 
@@ -44,7 +42,7 @@ public class DocumentSet {
      * 
      * @param _documents The initial documents.
      */
-    public DocumentSet(Document[] _documents) {
+    public DocumentSetImpl(Document[] _documents) {
         for (int i = 0; i < _documents.length; i++) {
             add(_documents[i]);
         }

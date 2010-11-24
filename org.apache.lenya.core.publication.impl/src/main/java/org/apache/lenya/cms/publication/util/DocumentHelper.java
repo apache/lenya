@@ -154,9 +154,11 @@ public class DocumentHelper {
      * @return A document.
      * @throws DocumentException when an error occurs.
      */
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public static Document getExistingLanguageVersion(Document document) throws DocumentException {
         return getExistingLanguageVersion(document, document.getPublication().getDefaultLanguage());
-    }
+    }*/
 
     /**
      * Returns an existing language version of a document. If the document exists in the preferred
@@ -169,6 +171,8 @@ public class DocumentHelper {
      * @return A document.
      * @throws DocumentException when an error occurs.
      */
+  //florent : seems never use, imply cyclic dependencies
+    /*
     public static Document getExistingLanguageVersion(final Document document,
             String preferredLanguage) throws DocumentException {
 
@@ -194,6 +198,6 @@ public class DocumentHelper {
         }
 
         return document.getTranslation(existingLanguage);
-    }
+    }*/
 
 }
