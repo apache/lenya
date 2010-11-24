@@ -28,7 +28,8 @@ import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.UuidToUrlRewriter;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.util.ServletHelper;
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * Transform lenya-document: URLs to web application URLs.
@@ -44,7 +45,8 @@ public class UuidToUrlModule extends AbstractInputModule {
         Request request = ObjectModelHelper.getRequest(objectModel);
         try {
             Session session = this.repository.getSession(request);
-            String currentUrl = ServletHelper.getWebappURI(request);
+            //String currentUrl = ServletHelper.getWebappURI(request);
+            String currentUrl = new URLInformation().getWebappUrl();
             
             UuidToUrlRewriter rewriter = new UuidToUrlRewriter(currentUrl, linkResolver, session);
             if (session.getUriHandler().isDocument(currentUrl)) {

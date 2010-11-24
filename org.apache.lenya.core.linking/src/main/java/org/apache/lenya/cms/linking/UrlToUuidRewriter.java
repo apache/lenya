@@ -22,8 +22,8 @@ import java.util.Arrays;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
-
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 /**
  * <p>
  * Converts webapp URLs to UUID-based internal links. If the URL doesn't refer to a document, the
@@ -46,7 +46,8 @@ public class UrlToUuidRewriter implements LinkRewriter {
 
     public boolean matches(String url) {
         if (url.startsWith("/")) {
-            URLInformation info = new URLInformation(url);
+           // URLInformation info = new URLInformation(url);
+        	 URLInformation info = new URLInformation();
             String pubId = info.getPublicationId();
             String area = info.getArea();
             if (pubId != null && area != null) {

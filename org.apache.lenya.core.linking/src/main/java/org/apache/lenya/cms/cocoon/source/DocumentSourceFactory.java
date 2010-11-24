@@ -39,9 +39,11 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 import org.apache.lenya.util.Query;
-import org.apache.lenya.util.ServletHelper;
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * <p>
@@ -89,11 +91,12 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
         try {
 
             Session session = this.repository.getSession(request);
-            String webappUrl = ServletHelper.getWebappURI(request);
+            //String webappUrl = ServletHelper.getWebappURI(request);
+            String webappUrl = new URLInformation().getWebappUrl();
             LinkTarget target;
             if (session.getUriHandler().isDocument(webappUrl)) {
                 Document currentDoc = session.getUriHandler().getDocument(webappUrl);
-                target = getLinkResolver().resolve(currentDoc, linkUri);
+                target = getLinkResolver().resolve(session, currentDoc, linkUri);
             } else {
                 Link link = new Link(linkUri);
                 contextualize(link, webappUrl);
@@ -141,7 +144,8 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
      * @param webappUrl The web application URL to extract the context information from..
      */
     protected void contextualize(Link link, String webappUrl) {
-        URLInformation url = new URLInformation(webappUrl);
+        //URLInformation url = new URLInformation(webappUrl);
+    	URLInformation url = new URLInformation();
         if (link.getPubId() == null) {
             link.setPubId(url.getPublicationId());
         }
@@ -153,7 +157,7 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
     protected Source getFormatSource(Document doc, String format) throws DocumentException,
             ServiceException, IOException {
         String formatBaseUri = doc.getResourceType().getFormatURI(format);
-        String formatUri = formatBaseUri + "/" + doc.getPublication().getId() + "/" + doc.getArea()
+        String formatUri = formatBaseUri + "/" + doc.getPublicationId() + "/" + doc.getArea()
                 + "/" + doc.getUUID() + "/" + doc.getLanguage();
 
         return this.sourceResolver.resolveURI(formatUri);

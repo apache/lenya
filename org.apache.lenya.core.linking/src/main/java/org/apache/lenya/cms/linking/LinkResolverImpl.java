@@ -38,21 +38,27 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
      */
     public static final String ROLE = LinkResolverImpl.class.getName();
 
-    public LinkTarget resolve(Document currentDoc, String linkUri) throws MalformedURLException {
+    //TODO : florent : change the method signature by adding a session attribute because document don't still handle his session
+    // remove comments when ok
+    public LinkTarget resolve(Session session, Document currentDoc, String linkUri) throws MalformedURLException {
 
         Link link = new Link(linkUri);
 
         String language = getValue(link.getLanguage(), currentDoc.getLanguage());
         String revisionString = getValue(link.getRevision(), null);
         String area = getValue(link.getArea(), currentDoc.getArea());
-        String pubId = getValue(link.getPubId(), currentDoc.getPublication().getId());
-
+        //TODO : florent : remove it when ok
+        //String pubId = getValue(link.getPubId(), currentDoc.getPublication().getId());
+        String pubId = getValue(link.getPubId(), currentDoc.getPublicationId());
+        
         String uuid = getValue(link.getUuid(), currentDoc.getUUID());
         if (uuid.length() == 0) {
             uuid = currentDoc.getUUID();
         }
 
-        return resolve(currentDoc.getSession(), pubId, area, uuid, language, revisionString);
+        //TODO : florent : remove comment when ok
+        //return resolve(currentDoc.getSession(), pubId, area, uuid, language, revisionString);
+        return resolve(session, pubId, area, uuid, language, revisionString);
     }
 
     protected String getValue(String value, String defaultValue) {

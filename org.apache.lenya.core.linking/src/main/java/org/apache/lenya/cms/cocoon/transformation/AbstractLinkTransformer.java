@@ -34,13 +34,14 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-import org.apache.lenya.ac.AccessControlException;
+//import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.linking.LinkRewriteAttribute;
 import org.apache.lenya.cms.linking.LinkRewriteAttributes;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.ServletHelper;
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
+import org.apache.lenya.utils.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -76,8 +77,11 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters params)
             throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, params);
-        String webappUrl = getWebappUrl(params, objectModel);
-        URLInformation url = new URLInformation(webappUrl);
+        /* TODO : florent : remove it when ok, change of urlinformation apî
+         * 	String webappUrl = getWebappUrl(params, objectModel);
+         * URLInformation url = new URLInformation(webappUrl);
+         */
+        URLInformation url = new URLInformation();
         this.area = url.getArea();
     }
 
@@ -98,7 +102,8 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
             }
         } else {
             Request request = ObjectModelHelper.getRequest(objectModel);
-            webappUrl = ServletHelper.getWebappURI(request);
+            //webappUrl = ServletHelper.getWebappURI(request);
+            webappUrl = new URLInformation().getWebappUrl();
         }
         return webappUrl;
     }
@@ -330,7 +335,9 @@ public abstract class AbstractLinkTransformer extends AbstractSAXTransformer {
      * @throws AccessControlException when something went wrong.
      */
     protected void markBrokenLink(AttributesImpl newAttrs, String attrName, String brokenLinkUri)
-            throws AccessControlException {
+      //TODO : remove this accessControlException in order to solve cyclic dependencies. See how to clean this
+    	//throws AccessControlException {
+    	{
         if (this.brokenLinkAttribute != null) {
             if (newAttrs.getIndex(this.brokenLinkAttribute) > -1) {
                 newAttrs.removeAttribute(newAttrs.getIndex(this.brokenLinkAttribute));

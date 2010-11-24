@@ -43,6 +43,7 @@ public interface LinkManager {
      * @param target The target document.
      * @return An array of documents.
      */
-    Document[] getReferencingDocuments(Document target);
+    //TODO : florent : remove as it don't seem to be used (see o.a.l.c.linking.ContentLinkManager : supress when ok
+    //Document[] getReferencingDocuments(Document target);
 
 }

@@ -98,6 +98,9 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
         return uri.startsWith(LinkResolver.SCHEME + ":");
     }
 
+    //TODO : florent : first just used in core-workflow o.a.l.c.workflow.usecase, but seem that Deactivate d'ont need to use it
+    //so, func commented, suppress when ok. This use the suppressed document.area func
+    /*
     public Document[] getReferencingDocuments(Document target) {
 
         Document[] allDocs = target.area().getDocuments();
@@ -124,7 +127,7 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
             }
         }
         return (Document[]) docs.toArray(new Document[docs.size()]);
-    }
+    }*/
 
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;

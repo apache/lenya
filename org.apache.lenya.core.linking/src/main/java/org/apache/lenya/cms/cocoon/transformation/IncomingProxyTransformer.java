@@ -29,7 +29,8 @@ import org.apache.lenya.cms.linking.IncomingLinkRewriter;
 import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 import org.xml.sax.SAXException;
 
 /**
@@ -48,8 +49,9 @@ public class IncomingProxyTransformer extends AbstractLinkTransformer {
 
         try {
             Session session = this.repository.getSession(request);
-            String webappUrl = getWebappUrl(params, objectModel);
-            URLInformation info = new URLInformation(webappUrl);
+            //String webappUrl = getWebappUrl(params, objectModel);
+            //URLInformation info = new URLInformation(webappUrl);
+            URLInformation info = new URLInformation();
             String pubId = info.getPublicationId();
             this.rewriter = new IncomingLinkRewriter(session.getPublication(pubId));
         } catch (final Exception e) {

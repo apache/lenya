@@ -21,11 +21,12 @@ import java.net.MalformedURLException;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.Validate;
-import org.apache.lenya.ac.AccessControlException;
+//import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 import org.apache.lenya.util.Query;
 
 /**
@@ -96,7 +97,8 @@ public class UuidToUrlRewriter implements LinkRewriter {
 
         String rewrittenUrl = null;
 
-        URLInformation info = new URLInformation(this.currentUrl);
+        //URLInformation info = new URLInformation(this.currentUrl);
+        URLInformation info = new URLInformation();
         if (linkUrl.startsWith(SCHEME)) {
 
             String anchor = null;
@@ -125,7 +127,7 @@ public class UuidToUrlRewriter implements LinkRewriter {
             LinkTarget target;
             try {
                 if (this.currentDoc != null) {
-                    target = this.linkResolver.resolve(this.currentDoc, linkUri);
+                    target = this.linkResolver.resolve(this.session, this.currentDoc, linkUri);
                 } else {
                     Link link = getAbsoluteLink(info, linkUri);
                     target = this.linkResolver.resolve(this.session, link.getUri());
@@ -178,7 +180,10 @@ public class UuidToUrlRewriter implements LinkRewriter {
      * @throws AccessControlException when something went wrong.
      */
     protected String getWebappUrl(Document targetDocument, String anchor, String queryString,
-            String extension) throws AccessControlException {
+            String extension) {
+    	//TODO : exception removed for cyclic dependencies. See if create another exception
+    	//throws AccessControlException {
+    
 
         String webappUrl = targetDocument.getCanonicalWebappURL();
 
