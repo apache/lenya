@@ -24,7 +24,7 @@ package org.apache.lenya.cms.rc;
 /**
  * A checkin entry
  */
-public class CheckInEntry extends RCMLEntry {
+public class CheckInEntry extends RCMLEntryImpl {
     /**
      * Creates a new CheckInEntry object.
      * @param sessionId The session ID.

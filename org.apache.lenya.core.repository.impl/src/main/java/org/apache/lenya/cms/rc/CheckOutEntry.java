@@ -23,7 +23,7 @@ package org.apache.lenya.cms.rc;
 /**
  * A Checkout entry
  */
-public class CheckOutEntry extends RCMLEntry {
+public class CheckOutEntry extends RCMLEntryImpl {
     /**
      * Creates a new CheckOutEntry object.
      * @param sessionId The session ID.
