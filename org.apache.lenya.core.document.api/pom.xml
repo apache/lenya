@@ -16,7 +16,22 @@
   <description>API for Lenya Document</description>
   
   <dependencies>
-  
+   <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-api</artifactId>
+    </dependency>
+   <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-transaction-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-metadata-api</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-api</artifactId>
+    </dependency>
   <!-- TODO : see if all theses dependencies are required -->
     <dependency>
       <groupId>org.apache.cocoon</groupId>
