@@ -23,7 +23,8 @@ function insertEditor() {
         parserfile: "parsexml.js",
         stylesheet: WEBAPP_BASE_URI + "modules/editors/css/codemirror.css",
         height: "400px",
-        onChange: saveContent
+        onChange: saveContent,
+        lineNumbers: true
     });
 }
 
