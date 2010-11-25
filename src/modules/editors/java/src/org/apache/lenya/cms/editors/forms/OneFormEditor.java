@@ -22,8 +22,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -58,6 +60,11 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
     protected static final String PARAM_VALIDATION_ERRORS = "validationErrors";
     protected static final String PARAM_CONTENT = "content";
     protected static final String DEFAULT_ENCODING = "utf-8";
+    protected static final Map<String, String> ESCAPE_CHARS = new HashMap<String, String>();
+    
+    static {
+        ESCAPE_CHARS.put("\u00A0", "&#160;");
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -78,6 +85,9 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
         StringWriter writer = new StringWriter();
         IOUtils.copy(getSourceDocument().getInputStream(), writer, DEFAULT_ENCODING);
         String xmlString = writer.toString();
+        for (final String key : ESCAPE_CHARS.keySet()) {
+            xmlString = xmlString.replaceAll(key, ESCAPE_CHARS.get(key));
+        }
         setParameter(PARAM_CONTENT, xmlString);
         validate(xmlString, DEFAULT_ENCODING);
     }
