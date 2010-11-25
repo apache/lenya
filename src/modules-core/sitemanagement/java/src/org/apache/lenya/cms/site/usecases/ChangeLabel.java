@@ -24,7 +24,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -66,8 +65,11 @@ public class ChangeLabel extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        List nodes = new ArrayList();
-        nodes.add(getSourceDocument().getRepositoryNode());
+        List<Node> nodes = new ArrayList<Node>();
+        final Document doc = getSourceDocument();
+        if (doc != null) {
+            nodes.add(doc.getRepositoryNode());
+        }
         return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
