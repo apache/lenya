@@ -25,6 +25,15 @@
   </xsl:template>
   
   
+  <xsl:template match="i18n:message">
+    <xsl:if test="not(preceding::i18n:message[@key = current()/@key])">
+      <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+  
   <xsl:template match="@*|node()|comment()" priority="-2">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
