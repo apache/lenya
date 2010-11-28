@@ -26,7 +26,7 @@
   <jx:if test="${request.getHeader('depth') &gt; 0}">
     <jx:forEach var="doc" items="${usecase.getParameter('documents')}">
       <!-- FIXME: shouldn't this conditional be doc.exists()? -->
-      <jx:if test="${doc.getId()}">
+      <jx:if test="${doc.getIdentifier()}">
         <jx:if test="${doc.getLanguage().equals(defaultLang)}">
          <!-- create a directory for each document;
           the language check is to prevent multiple folders appearing with the same name
@@ -54,10 +54,15 @@
     <jx:set var="checkedOut" value="${usecase.getParameter('rc')}"/>
     <jx:forEach var="doc" items="${usecase.getParameter('documents')}"
       varStatus="status">
-      <jx:if test="${doc.getId()}">
+      <jx:if test="${doc.getIdentifier()}">
       <jx:set var="fileExtension" value="${doc.getSourceExtension()}"/>
+      <jx:set var="resourceType" value="${doc.getResourceType().getName()}"/>
+      <jx:set var="mimeType" value="${doc.getMimeType()}"/>
       <jx:if test="${doc.getSourceExtension().equals('xml')}">
           <jx:set var="fileExtension" value="html"/>
+      </jx:if>
+      <jx:if test="${doc.getResourceType().getName().equals('opendocument')}">
+          <jx:set var="fileExtension" value="odt"/>
       </jx:if>
        <!-- create a file for each document, the href is the path to the file and the 
         display name is what will appear in the webdav folder -->
@@ -68,7 +73,7 @@
               <D:displayname>${doc.getName()}_${doc.getLanguage()}.${fileExtension}</D:displayname>
               <D:getlastmodified>${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
               <D:creationdate/>
-              <D:getcontenttype>application/xml</D:getcontenttype>
+              <D:getcontenttype>${mimeType}</D:getcontenttype>
               <D:getcontentlength>${doc.getFile().length()}</D:getcontentlength>
               <D:resourcetype/>
               <D:lockdiscovery>

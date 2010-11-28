@@ -6,10 +6,15 @@
   <jx:set var="checkedOut" value="${usecase.getParameter('rc')}"/>
   <jx:forEach var="doc" items="${usecase.getParameter('documents')}"
     varStatus="status">
-    <jx:if test="${doc.getId()}">
+    <jx:if test="${doc.getIdentifier()}">
     <jx:set var="fileExtension" value="${doc.getSourceExtension()}"/>
+    <jx:set var="resourceType" value="${doc.getResourceType().getName()}"/>
+    <jx:set var="mimeType" value="${doc.getMimeType()}"/>
     <jx:if test="${doc.getSourceExtension().equals('xml')}">
         <jx:set var="fileExtension" value="html"/>
+    </jx:if>
+    <jx:if test="${doc.getResourceType().getName().equals('opendocument')}">
+        <jx:set var="fileExtension" value="odt"/>
     </jx:if>
       <D:response>
         <D:href>${request.getContextPath()}/${doc.getPublication().getId()}/webdav${doc.getPath()}_${doc.getLanguage()}.${fileExtension}</D:href>
@@ -18,7 +23,7 @@
             <D:displayname>${doc.getName()}_${doc.getLanguage()}.${fileExtension}</D:displayname>
             <D:getlastmodified>${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
             <D:creationdate/>
-            <D:getcontenttype>application/xml</D:getcontenttype>
+            <D:getcontenttype>${mimeType}</D:getcontenttype>
             <D:getcontentlength>${doc.getFile().length()}</D:getcontentlength>
             <D:resourcetype/>
             <D:lockdiscovery>

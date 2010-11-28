@@ -76,7 +76,7 @@
         <map:transform type="xslt" src="fallback://lenya/modules/webdav/xslt/NSclean.xsl"/>
         <map:select type="request-method">
           <map:when test="PROPFIND">
-            <map:transform src="cocoon:/limitResponse.xsl" />
+<!--            <map:transform src="cocoon:/limitResponse.xsl" />-->
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:otherwise>
@@ -173,15 +173,17 @@
       </map:match>
 
       <map:match pattern="PROPFIND/**.*">
+<!--
         <map:match pattern="PROPFIND/**_*.html">
-          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
+          <map:act type="resource-exists" src="site://{page-envelope:publication-id}/authoring/{2}/{1}">
             <map:call function="filePropfind" >
               <map:parameter name="last-modified" value="{page-envelope:document-lastmodified}"/>
             </map:call>
           </map:act>
         </map:match>
+-->
         <map:match pattern="PROPFIND/**_*.*">
-          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.{3}">
+          <map:act type="resource-exists" src="site://{page-envelope:publication-id}/authoring/{2}/{1}">
             <map:call function="filePropfind" >
               <map:parameter name="last-modified" value="{page-envelope:document-lastmodified}"/>
             </map:call>
@@ -189,7 +191,10 @@
         </map:match>
         <!-- does not exist -->
         <map:generate src="context://lenya/content/util/empty.xml"/>
-        <map:serialize status-code="404"/>
+        <map:transform src="fallback://lenya/xslt/exception/generic.xsl"/>
+        <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xhtml" status-code="404"/>
       </map:match>
  
       <map:match pattern="PROPFIND/**">        
@@ -275,18 +280,21 @@
                         
       <map:match pattern="LOCK/**">
         <map:select type="resource-exists">
-          <map:parameter name="prefix" value="lenya://"/>
-          <map:when test="lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}">
+          <map:parameter name="prefix" value="site://"/>
+          <map:when test="{page-envelope:publication-id}/authoring/{page-envelope:document-language}{page-envelope:document-path}">
             <map:act type="reserved-checkout">
               <map:generate src="context://lenya/content/util/empty.xml"/>
               <map:serialize type="xml"  status-code="423"/>
             </map:act>
+           <map:act type="set-header">
+            <map:parameter name="Lock-Token" value="{page-envelope:document-uuid}"/>
             <map:generate type="file" src="cocoon:/request/generate"/>
             <map:transform type="xslt" src="fallback://lenya/modules/webdav/xslt/lock.xsl">
               <map:parameter name="userid" value="{access-control:user-id}"/>
               <map:parameter name="docid" value="{page-envelope:document-uuid}"/>
             </map:transform>
             <map:serialize type="xml" status-code="200" />
+            </map:act> 
           </map:when>
           <map:otherwise>
             <map:generate src="context://lenya/content/util/empty.xml"/>

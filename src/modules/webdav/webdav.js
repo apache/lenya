@@ -104,8 +104,9 @@ function propfind() {
   sendStatus(500);
 }
 
-function options(type) {
+function options() {
   cocoon.response.setHeader("DAV","1");
+  var type = "";
   var options = "";
   if (type == "file") {
     options = "OPTIONS,GET,HEAD,POST,DELETE,TRACE,PROPFIND,PROPPATCH,COPY,MOVE,PUT,LOCK,UNLOCK";
@@ -165,7 +166,7 @@ function executeUsecase(usecaseName) {
     var preconditionsOk;
     
     if (cocoon.log.isDebugEnabled())
-       cocoon.log.debug("usecases.js::executeUsecase() called, parameter lenya.usecase = [" + usecaseName + "]");
+       cocoon.log.debug("webdav.js::executeUsecase() called, parameter lenya.usecase = [" + usecaseName + "]");
     
     try {
 
@@ -219,11 +220,11 @@ function executeUsecase(usecaseName) {
         while (!ready) {
 
             try {
-                var templateUri = view.getTemplateURI();
+                var templateUri = view.getViewURI();
                 if (templateUri) {
-                    var viewUri = "view/" + menu + "/" + view.getTemplateURI();
+                    var viewUri = "view/" + menu + "/" + view.getViewURI();
                     if (cocoon.log.isDebugEnabled())
-                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
+                        cocoon.log.debug("webdav.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
 
                     cocoon.sendPageAndWait(viewUri, {"usecase" : proxy});
                     
@@ -236,6 +237,9 @@ function executeUsecase(usecaseName) {
             }
             catch (exception) {
                 /* if an exception was thrown by the view, allow the usecase to rollback the transition */
+		if (cocoon.log.isDebugEnabled())
+		    cocoon.log.debug("webdav.js::executeUsecase() in usecase " + usecaseName + ": exception " + exception.name + " caught, message is:\n" + exception.message);
+
                 try {
                     usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
                     usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
@@ -255,7 +259,7 @@ function executeUsecase(usecaseName) {
             }
             
             if (cocoon.log.isDebugEnabled())
-                cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", after view, now advancing in usecase");
+                cocoon.log.debug("webdav.js::executeUsecase() in usecase " + usecaseName + ", after view, now advancing in usecase");
         
             try {
                 usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
