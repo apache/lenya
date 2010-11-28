@@ -52,13 +52,14 @@ config = {
     
     /* enable plugins for custom save function, fullscreen editing
        and search-and-replace. */
-    //plugins : "save,fullscreen,searchreplace,table,contextmenu,simplebrowser,xhtmlxtras",
-    plugins : "searchreplace,table,contextmenu,simplebrowser,unloadhandler",
+    //plugins : "save,fullscreen,searchreplace,table,contextmenu,autoresize,simplebrowser,xhtmlxtras",
+    plugins : "searchreplace,table,contextmenu,autoresize,simplebrowser,unloadhandler",
         
     /* grey out the "save" button unless there are unsaved changes: */
     //save_enablewhendirty : false,
     
     /* disable editing of attributes forbidden by lenya schema */
+    /* TyniMCE 3.x */
     popup_css_add : "../modules/tinymce/css/lenya_dialog.css",
 
     /* some special settings for fullscreen mode (they override the 

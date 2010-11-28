@@ -20,4 +20,5 @@
   xmlns="http://apache.org/cocoon/i18n/2.1">
   <message key="tinymce.edit">Edit with TinyMCE</message>
   <message key="With TinyMCE">With TinyMCE</message>
+  <message key="tinymce-not-installed">TinyMCE is not installed</message>
 </catalogue>
