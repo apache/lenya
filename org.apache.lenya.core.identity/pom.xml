@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.lenya</groupId>
+    <artifactId>lenya-parent</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+    <relativePath>../org.apache.lenya.parent/pom.xml</relativePath>
+  </parent>
+  
+  <groupId>org.apache.lenya</groupId>
+  <artifactId>lenya-core-identity</artifactId>
+  <packaging>jar</packaging>
+  <name>Apache Lenya core Identity</name>
+  <description>Define and deal with identities (users, machine, ...) in Lenya </description>
+  
+  <dependencies>
+  
+  <!-- TODO : see if all theses dependencies are required -->
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-servlet-service-components</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-template-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-flowscript-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>
