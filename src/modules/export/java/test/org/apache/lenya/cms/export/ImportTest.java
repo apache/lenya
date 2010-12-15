@@ -54,8 +54,7 @@ public class ImportTest extends AbstractAccessControlTest {
             importer.importContent(defaultPub, area, path);
             
             assertTrue(area.getSite().contains("/tutorial"));
-            checkLinks(area);
-            
+                        
             session.commit();
         }
         
@@ -65,22 +64,5 @@ public class ImportTest extends AbstractAccessControlTest {
         
     }
 
-    protected void checkLinks(Area area) throws PublicationException, ServiceException {
-        SiteStructure site = area.getSite();
-        Document source = site.getNode("/index").getLink("en").getDocument();
-        
-        LinkManager linkManager = null;
-        try {
-            linkManager = (LinkManager) getManager().lookup(LinkManager.ROLE);
-            Link[] links = linkManager.getLinksFrom(source);
-            assertTrue(links.length > 0);
-        }
-        finally {
-            if (linkManager != null) {
-                getManager().release(linkManager);
-            }
-        }
-        
-    }
     
 }
