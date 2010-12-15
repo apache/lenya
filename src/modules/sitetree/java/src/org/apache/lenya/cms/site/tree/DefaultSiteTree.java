@@ -52,7 +52,6 @@ import org.w3c.dom.NodeList;
  * 
  * @version $Id: DefaultSiteTree.java 208764 2005-07-01 15:57:21Z andreas $
  */
-@Deprecated
 public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**

@@ -34,7 +34,6 @@ import org.apache.lenya.cms.repository.Session;
  * 
  * @version $Id: SiteTreeFactory.java 179568 2005-06-02 09:27:26Z jwkaltz $
  */
-@Deprecated
 public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryItemFactory {
 
     protected ServiceManager manager;

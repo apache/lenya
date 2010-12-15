@@ -26,7 +26,6 @@ import org.w3c.dom.Element;
 /**
  * SiteTree link.
  */
-@Deprecated
 public class SiteTreeLink extends AbstractLink {
 
     protected SiteTreeLink(DocumentFactory factory, SiteNode node, String _language,
