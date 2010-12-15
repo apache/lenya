@@ -43,6 +43,7 @@ import org.w3c.dom.NodeList;
  * @see org.apache.lenya.cms.site.tree.SiteTreeNode
  * @version $Id: SiteTreeNodeImpl.java 155316 2005-02-25 10:53:29Z andreas $
  */
+@Deprecated
 public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode {
 
     /**
