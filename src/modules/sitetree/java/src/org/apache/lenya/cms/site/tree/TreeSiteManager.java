@@ -41,6 +41,7 @@ import org.apache.lenya.cms.site.SiteStructure;
  * 
  * @version $Id: TreeSiteManager.java 208766 2005-07-01 16:05:00Z andreas $
  */
+@Deprecated
 public class TreeSiteManager extends AbstractSiteManager implements Serviceable {
 
     /**
