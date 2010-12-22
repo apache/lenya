@@ -65,6 +65,7 @@
       <!-- Cocoon libs -->
       <fileset dir="${cocoon.src.dir}/${lib.dir}">
         <include name="core/*.jar"/>
+        <exclude name="core/commons-io-*.jar"/>
         <!-- Currently, we have no JVM dependent libraries       
           <include name="core/jvm${target.vm}/*.jar"/>
         -->
