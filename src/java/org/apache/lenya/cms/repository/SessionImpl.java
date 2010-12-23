@@ -22,11 +22,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.ObservationRegistry;
@@ -44,6 +44,8 @@ import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.transaction.UnitOfWorkImpl;
 import org.apache.lenya.util.Assert;
 
+import com.google.common.collect.MapMaker;
+
 /**
  * Repository session.
  */
@@ -52,6 +54,10 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     protected static final String UNMODIFIABLE_SESSION_ID = "unmodifiable";
     private ServiceManager manager;
     private Identity identity;
+    private boolean modifiable;
+    // Cache repository items if session is not modifiable.
+    private ConcurrentMap<String, RepositoryItem> itemCache =
+        new MapMaker().softValues().makeMap();
 
     /**
      * Ctor.
@@ -67,7 +73,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         Assert.notNull("service manager", manager);
         this.manager = manager;
 
-        this.identityMap = new IdentityMapImpl(logger);
         this.identity = identity;
         this.id = modifiable ? createUuid() : UNMODIFIABLE_SESSION_ID;
 
@@ -82,9 +87,10 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
                 this.manager.release(registry);
             }
         }
-
+        this.modifiable = modifiable;
         if (modifiable) {
-            this.unitOfWork = new UnitOfWorkImpl(this.identityMap, this.identity, getLogger());
+            this.unitOfWork = new UnitOfWorkImpl(new IdentityMapImpl(logger),
+                    this.identity, getLogger());
         }
     }
 
@@ -109,14 +115,13 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         return this.identity;
     }
 
-    private UnitOfWork unitOfWork;
-    private SharedItemStore sharedItemStore;
+    private UnitOfWorkImpl unitOfWork;
 
     /**
      * @return The unit of work.
      */
     protected UnitOfWork getUnitOfWork() {
-        if (this.unitOfWork == null) {
+        if (!isModifiable()) {
             throw new RuntimeException("This session [" + getId() + "] is not modifiable!");
         }
         return this.unitOfWork;
@@ -140,7 +145,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
             synchronized (TransactionLock.LOCK) {
                 
                 getUnitOfWork().commit();
-                getSharedItemStore().clear();
             }
         } catch (ConcurrentModificationException e) {
             throw e;
@@ -164,7 +168,9 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @throws RepositoryException if an error occurs.
      */
     protected void savePersistables() throws RepositoryException {
-        Object[] objects = getIdentityMap().getObjects();
+        if (!isModifiable())
+            throw new RepositoryException("Session not modifiable.");
+        Object[] objects = unitOfWork.getIdentityMap().getObjects();
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] instanceof Node) {
                 Node node = (Node) objects[i];
@@ -191,25 +197,35 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         this.events.clear();
     }
 
-    protected SharedItemStore getSharedItemStore() {
-        if (this.sharedItemStore == null) {
-            try {
-                this.sharedItemStore = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.sharedItemStore;
-    }
-
     /**
      * @see org.apache.lenya.cms.repository.Session#getRepositoryItem(org.apache.lenya.cms.repository.RepositoryItemFactory,
      *      java.lang.String)
      */
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
-        RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
-        return (RepositoryItem) getIdentityMap().get(wrapper, key);
+        RepositoryItem repositoryItem;
+        if (isModifiable()) {
+            IdentityMap identityMap = unitOfWork.getIdentityMap();
+            RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
+            repositoryItem = (RepositoryItem) identityMap.get(wrapper, key);
+        } else {
+            repositoryItem = itemCache.get(key);
+            if (repositoryItem == null) {
+                repositoryItem = factory.buildItem(this, key);
+                itemCache.put(key, repositoryItem);
+            }
+        }
+        return repositoryItem;
+    }
+
+    @Override
+    public void invalidateRepositoryItem(String key) {
+        itemCache.remove(key);
+    }
+
+    @Override
+    public void invalidateAllRepositoryItems() {
+        itemCache.clear();
     }
 
     public void registerNew(Transactionable object) throws TransactionException {
@@ -258,7 +274,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     }
 
     private List events = new ArrayList();
-    private IdentityMap identityMap;
 
     public synchronized void enqueueEvent(RepositoryEvent event) {
         if (!isModifiable()) {
@@ -273,12 +288,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         this.events.add(event);
     }
 
-    protected IdentityMap getIdentityMap() {
-        return this.identityMap;
-    }
-
     public boolean isModifiable() {
-        return this.unitOfWork != null;
+        return modifiable;
     }
 
     private String id;

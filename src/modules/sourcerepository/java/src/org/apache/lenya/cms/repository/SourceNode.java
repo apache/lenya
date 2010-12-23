@@ -35,7 +35,6 @@ import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.rc.CheckInEntry;
-import org.apache.lenya.cms.rc.CheckOutEntry;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
@@ -375,15 +374,12 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
     }
 
-    private RCML rcml;
     private Persistable persistable;
 
     protected synchronized RCML getRcml() {
-        if (this.rcml == null) {
-            SourceNodeRcmlFactory factory = SourceNodeRcmlFactory.getInstance();
-            this.rcml = factory.getRcml(this, this.manager);
-        }
-        return this.rcml;
+        // RCML is cached by factory. So don't cache it here.
+        SourceNodeRcmlFactory factory = SourceNodeRcmlFactory.getInstance();
+        return factory.getRcml(this, this.manager);
     }
 
     public History getHistory() {

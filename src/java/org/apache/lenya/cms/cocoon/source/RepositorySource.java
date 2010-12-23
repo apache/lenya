@@ -96,12 +96,12 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         int start = 0;
         int end = uri.indexOf(':');
         if (end == -1)
-            throw new MalformedURLException("Malformed uri for xmodule source (cannot find scheme) : "
+            throw new MalformedURLException("Malformed uri for lenya source (cannot find scheme) : "
                     + uri);
 
         String scheme = uri.substring(start, end);
         if (!SCHEME.equals(scheme))
-            throw new MalformedURLException("Malformed uri for a xmodule source : " + uri);
+            throw new MalformedURLException("Malformed uri for a lenya source : " + uri);
 
         setScheme(scheme);
 

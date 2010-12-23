@@ -29,7 +29,6 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.SharedItemStore;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
@@ -56,25 +55,19 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         String publicationId = snippets[0];
         String areaName = snippets[1];
         SiteTree tree;
-        SharedItemStore store = null;
         try {
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication publication = factory.getPublication(publicationId);
             Area area = publication.getArea(areaName);
-            store = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
 
-            Session storeSession = store.getSession();
-            if (session.isModifiable() || session == storeSession) {
+            if (session.isModifiable()) {
                 tree = new SiteTreeImpl(this.manager, area, getLogger());
             } else {
-                tree = new DelegatingSiteTree(this.manager, area, this, storeSession, key);
+                SiteTree delegate = new SiteTreeImpl(this.manager, area, getLogger());
+                tree = new DelegatingSiteTree(this.manager, area, delegate, key);
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
-        } finally {
-            if (store != null) {
-                this.manager.release(store);
-            }
         }
         return tree;
     }

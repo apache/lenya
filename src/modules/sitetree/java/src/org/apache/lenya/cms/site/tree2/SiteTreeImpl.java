@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.site.tree2;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -51,6 +52,15 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     protected ServiceManager manager;
     private RootNode root;
     private int revision;
+    /**
+     * Last modification date of site tree file.
+     */
+    private Date lastModified;
+    /**
+     * Site tree file has been modified on file system and site
+     * tree should be reloaded.
+     */
+    private boolean reload; 
 
     /**
      * @param manager The service manager.
@@ -117,6 +127,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
             if (!repoNode.exists()) {
                 reset();
             }
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Site tree loaded [" + getSourceUri() + "]");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -429,4 +441,10 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         this.revision = revision;
     }
 
+    public void reload() {
+        reset();
+        loaded = false;
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Site tree marked for reloading");
+    }
 }

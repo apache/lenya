@@ -17,11 +17,17 @@
  */
 package org.apache.lenya.cms.repository;
 
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
+
+import com.google.common.collect.MapMaker;
 
 /**
  * Repository manager implementation.
@@ -31,6 +37,9 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
         Serviceable {
 
     protected ServiceManager manager;
+    // Cache unmodifiable sessions per identity.
+    protected ConcurrentMap<Identity, Session> sharedSessions =
+        new MapMaker().softKeys().softValues().expiration(30, TimeUnit.MINUTES).makeMap();
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
@@ -39,8 +48,35 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
         this.manager = manager;
     }
 
+    @Override
     public Session createSession(Identity identity, boolean modifiable) throws RepositoryException {
-        return new SessionImpl(identity, modifiable, this.manager, getLogger());
+        Validate.notNull(identity, "identity must not be null");
+        if (modifiable) {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Created modifiable session.");
+            return new SessionImpl(identity, modifiable, this.manager, getLogger());
+        } else {
+            // If session is not modifiable then get a shared session.
+            return getSharedSession(identity);
+        }
     }
 
+    /**
+     * Get a shared session for identity.
+     * @param identity Identity
+     * @return Shared session for identity.
+     */
+    protected Session getSharedSession(Identity identity) {
+        Session session = sharedSessions.get(identity);
+        if (session == null) {
+            session = new SessionImpl(identity, false, manager, getLogger());
+            sharedSessions.put(identity, session);
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Created new shared session.");
+        } else {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Using cached shared session.");
+        }
+        return session;
+    }
 }

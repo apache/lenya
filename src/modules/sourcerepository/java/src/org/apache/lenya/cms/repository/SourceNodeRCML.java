@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -42,6 +43,8 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import sun.security.action.GetLongAction;
 
 /**
  * Handle with the RCML file
@@ -58,6 +61,7 @@ public class SourceNodeRCML implements RCML {
 
     private String contentSourceUri;
     private String metaSourceUri;
+    private long lastModified;
 
     private static Map ELEMENTS = new HashMap();
     protected static final String ELEMENT_CHECKIN = "CheckIn";
@@ -122,6 +126,7 @@ public class SourceNodeRCML implements RCML {
         Assert.notNull("XML document", helper);
         try {
             SourceUtil.writeDOM(helper.getDocument(), getRcmlSourceUri(), this.manager);
+            lastModified = SourceUtil.getLastModified(getRcmlSourceUri(), manager);
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
@@ -636,5 +641,15 @@ public class SourceNodeRCML implements RCML {
         }
         return false;
     }
-    
+
+    public boolean isModifiedExternally() {
+        boolean isModified = false;
+        try {
+            long sourceLastModified = SourceUtil.getLastModified(getRcmlSourceUri(), manager);
+            isModified = (sourceLastModified != lastModified);
+        } catch (Exception e) {
+        }
+        return isModified;
+    }
+
 }

@@ -136,7 +136,7 @@ public final class PolicyUtil {
             Role roleObject = accreditableManager.getRoleManager().getRole(role);
 
             for (int i = 0; i < users.length; i++) {
-                Identity identity = new Identity(logger);
+                Identity identity = new Identity();
                 identity.addIdentifiable(users[i]);
                 Role[] roles = policyManager.getGrantedRoles(accreditableManager, identity,
                         webappUrl);

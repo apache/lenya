@@ -38,6 +38,8 @@ public class RepositoryUtil {
         Session session = (Session) request.getAttribute(Session.class.getName());
         if (session == null) {
             Identity identity = getIdentity(request);
+            if (identity == null)
+                identity = Identity.ANONYMOUS;
             // attach a read-only repository session to the HTTP request
             session = createSession(manager, identity, false);
             request.setAttribute(Session.class.getName(), session);
@@ -52,8 +54,7 @@ public class RepositoryUtil {
 
     protected static Identity getIdentity(Request request) {
         org.apache.cocoon.environment.Session cocoonSession = request.getSession();
-        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
-        return identity;
+        return Identity.getIdentity(cocoonSession);
     }
 
     /**

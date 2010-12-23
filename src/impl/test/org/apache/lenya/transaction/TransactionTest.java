@@ -24,10 +24,10 @@ public class TransactionTest extends ContainerTestCase {
 
     public void testTransaction() throws TransactionException {
 
-        Identity lenya = new Identity(getLogger());
+        Identity lenya = new Identity();
         lenya.addIdentifiable(new MockUser("lenya"));
 
-        Identity alice = new Identity(getLogger());
+        Identity alice = new Identity();
         alice.addIdentifiable(new MockUser("alice"));
 
         IdentityMap lenyaMap = new IdentityMapImpl(getLogger());

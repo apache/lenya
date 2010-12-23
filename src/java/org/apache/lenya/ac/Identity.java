@@ -36,27 +36,22 @@ import org.apache.cocoon.environment.Session;
 /**
  * Identity object. Used to store the authenticated accreditables in the session.
  */
-public class Identity extends AbstractLogEnabled implements Identifiable, Serializable {
+public class Identity implements Identifiable, Serializable {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Set identifiables = new HashSet();
 
-    /**
-     * Ctor.
-     * @param logger The logger.
-     */
-    public Identity(Logger logger) {
-        ContainerUtil.enableLogging(this, logger);
-    }
-    
-    /**
-     * Initializes this identity.
-     */
-    public void initialize() {
+	public static Identity ANONYMOUS = new Identity();
+
+	/**
+	 * C'tor.
+	 * Adds World identifiable by default.
+	 */
+	public Identity() {
         addIdentifiable(World.getInstance());
-    }
+	}
 
     /**
      * In the case of Tomcat the object will be serialized to TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
@@ -95,10 +90,6 @@ public class Identity extends AbstractLogEnabled implements Identifiable, Serial
         assert identifiable != null;
         assert identifiable != this;
         assert !this.identifiables.contains(identifiable);
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Adding identifiable: [" + identifiable + "]");
-        }
 
         this.identifiables.add(identifiable);
     }

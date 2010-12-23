@@ -37,7 +37,7 @@ public class IdentityTest extends AbstractAccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     public void testIdentity() throws AccessControlException {
-        Identity identity = new Identity(getLogger());
+        Identity identity = new Identity();
         User user = getAccessController().getAccreditableManager().getUserManager().getUser(USER_ID);
         getLogger().info("Adding user to identity: [" + user + "]");
         identity.addIdentifiable(user);
@@ -57,10 +57,10 @@ public class IdentityTest extends AbstractAccessControlTest {
         User testUser = testMgr.getUserManager().getUser(userId);
         User defaultUser = defaultMgr.getUserManager().getUser(userId);
         
-        Identity testIdentity = new Identity(getLogger());
+        Identity testIdentity = new Identity();
         testIdentity.addIdentifiable(testUser);
         
-        Identity defaultIdentity = new Identity(getLogger());
+        Identity defaultIdentity = new Identity();
         defaultIdentity.addIdentifiable(defaultUser);
         
         assertTrue(testIdentity.belongsTo(testMgr));

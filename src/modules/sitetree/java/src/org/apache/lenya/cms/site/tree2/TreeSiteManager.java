@@ -18,8 +18,11 @@
 package org.apache.lenya.cms.site.tree2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -40,7 +43,13 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 /**
  * Tree-based site manager.
  */
-public class TreeSiteManager extends AbstractSiteManager {
+public class TreeSiteManager extends AbstractSiteManager
+implements SiteTreeMonitorListener
+{
+    
+    private SiteTreeMonitor siteTreeMonitor;
+    private static HashMap<String, SiteTree> siteTreeMap =
+        new HashMap<String, SiteTree>();
 
     /**
      * Returns the sitetree for a specific area of this publication. Sitetrees are created on demand
@@ -51,7 +60,6 @@ public class TreeSiteManager extends AbstractSiteManager {
      * @throws SiteException if an error occurs.
      */
     protected SiteTree getTree(Area area) throws SiteException {
-
         String key = getKey(area);
         SiteTree sitetree;
         RepositoryItemFactory factory = new SiteTreeFactory(this.manager, getLogger());
@@ -61,7 +69,13 @@ public class TreeSiteManager extends AbstractSiteManager {
         } catch (Exception e) {
             throw new SiteException(e);
         }
-
+        // Only support site tree reloading for live area.
+        if (area.getName().equals(Publication.LIVE_AREA)) {
+            if (!siteTreeMap.containsKey(key)) {
+                siteTreeMonitor.addListener(sitetree, this);
+                siteTreeMap.put(key, sitetree);
+            }
+        }
         return sitetree;
     }
 
@@ -284,6 +298,34 @@ public class TreeSiteManager extends AbstractSiteManager {
             document.getLink().getNode().setVisible(visibleInNav);
         } catch (DocumentException e) {
             throw new SiteException(e);
+        }
+    }
+
+    @Override
+    public void service(ServiceManager manager) throws ServiceException {
+        super.service(manager);
+        siteTreeMonitor = (SiteTreeMonitor) manager.lookup(SiteTreeMonitor.ROLE);
+    }
+
+    @Override
+    public void siteTreeModified(SiteTree siteTree) {
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Site tree modified [" +
+                    siteTree.getPublication().getId() + ":" +
+                    siteTree.getArea() + "]");
+        }
+        if (siteTree instanceof DelegatingSiteTree) {
+            // Invalidate cached repository items when site was modified.
+            siteTree.getSession().invalidateAllRepositoryItems();
+            // Notify site tree to reload next time when accessed.
+            DelegatingSiteTree delegatingSiteTree =
+                (DelegatingSiteTree) siteTree;
+            delegatingSiteTree.notifySiteTreeModified();
+        } else {
+            if (getLogger().isWarnEnabled())
+                getLogger().warn("Unknown site tree implementation [" +
+                        siteTree.getClass().getName() + "]. " +
+                        "Reloading skipped.");
         }
     }
 

@@ -22,8 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.lang.Validate;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -41,7 +43,9 @@ import org.apache.lenya.cms.site.tree.SiteTree;
  * Site tree implementation which delegates all operations to a shared site
  * tree.
  */
-public class DelegatingSiteTree implements SiteStructure, SiteTree {
+public class DelegatingSiteTree extends AbstractLogEnabled
+implements SiteStructure, SiteTree
+{
 
     private Area area;
     private ServiceManager manager;
@@ -51,9 +55,7 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     private List topLevelNodes;
     private List preOrder;
     private String sourceUri;
-    private Session sharedItemStoreSession;
-    private String key;
-    private SiteTreeFactory factory;
+    private SiteTree delegate;
 
     /**
      * @param manager The service manager.
@@ -62,13 +64,14 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
      * @param store The shared item store.
      * @param key The key to build the sitetree.
      */
-    public DelegatingSiteTree(ServiceManager manager, Area area, SiteTreeFactory factory, Session session,
-            String key) {
+    public DelegatingSiteTree(ServiceManager manager, Area area, SiteTree delegate, String key) {
+        Validate.notNull(manager, "manager must not be null");
+        Validate.notNull(area, "area must not be null");
+        Validate.notNull(delegate, "delegate must not be null");
+        Validate.notNull(key, "key must not be null");
         this.area = area;
         this.manager = manager;
-        this.key = key;
-        this.factory = factory;
-        this.sharedItemStoreSession = session;
+        this.delegate = delegate;
     }
 
     public Link add(String path, Document doc) throws SiteException {
@@ -209,15 +212,26 @@ public class DelegatingSiteTree implements SiteStructure, SiteTree {
     }
 
     protected SiteTree getTree() {
-        try {
-            return (SiteTree) this.sharedItemStoreSession.getRepositoryItem(this.factory, this.key);
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
+        return delegate;
     }
 
     public void save() throws RepositoryException {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Reload site tree delegate.
+     */
+    public void notifySiteTreeModified() {
+        SiteTree siteTree = getTree();
+        if (siteTree instanceof SiteTreeImpl) {
+            SiteTreeImpl siteTreeImpl = (SiteTreeImpl) getTree();
+            siteTreeImpl.reload();
+        } else {
+            if (getLogger().isWarnEnabled())
+                getLogger().warn("Unknown site tree implementation [" +
+                        siteTree.getClass().getName() +
+                        "]. Reloading skipped.");
+        }
+    }
 }

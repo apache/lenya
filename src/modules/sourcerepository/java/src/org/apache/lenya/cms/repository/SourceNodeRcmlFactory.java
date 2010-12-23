@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.repository;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.rc.RCML;
@@ -37,7 +36,8 @@ public class SourceNodeRcmlFactory {
         return instance;
     }
 
-    private Map uri2rcml = new HashMap();
+    private HashMap<String, SourceNodeRCML> uri2rcml =
+        new HashMap<String, SourceNodeRCML>();
 
     private SourceNodeRcmlFactory() {
     }
@@ -49,8 +49,8 @@ public class SourceNodeRcmlFactory {
      */
     public synchronized RCML getRcml(SourceNode node, ServiceManager manager) {
         String uri = node.getSourceURI();
-        RCML rcml = (RCML) this.uri2rcml.get(uri);
-        if (rcml == null) {
+        SourceNodeRCML rcml = uri2rcml.get(uri);
+        if (rcml == null || (rcml != null && rcml.isModifiedExternally())) {
             rcml = new SourceNodeRCML(node.getContentSource().getRealSourceUri(), node
                     .getMetaSource().getRealSourceUri(), manager);
             this.uri2rcml.put(uri, rcml);

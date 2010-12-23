@@ -57,6 +57,17 @@ public interface Session extends UnitOfWork {
             throws RepositoryException;
 
     /**
+     * Invalidate repository item if cached for a non-modifiable session.
+     * @param key Repository item key.
+     */
+    void invalidateRepositoryItem(String key);
+
+    /**
+     * Invalidate all repository items a non-modifiable session.
+     */
+    void invalidateAllRepositoryItems();
+
+    /**
      * @param listener The listener to add.
      * @throws RepositoryException if the listener is already registered.
      */

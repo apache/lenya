@@ -406,8 +406,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     public void setupIdentity(Request request) throws AccessControlException {
         Session session = request.getSession(true);
         if (!hasValidIdentity(session)) {
-            Identity identity = new Identity(getLogger());
-            identity.initialize();
+            Identity identity = new Identity();
             String remoteAddress = request.getRemoteAddr();
             String clientAddress = request.getHeader("x-forwarded-for");
 
