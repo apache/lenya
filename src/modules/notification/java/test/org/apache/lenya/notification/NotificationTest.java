@@ -51,17 +51,19 @@ public class NotificationTest extends AbstractNotificationTest {
         NotificationEventDescriptor descr = new NotificationEventDescriptor(message);
         RepositoryEvent event = RepositoryEventFactory.createEvent(getManager(), session,
                 getLogger(), descr);
+        event.setNodeUri(getFactory().getPublication("default").getArea("authoring").getSite()
+                .getNode("/index").getLink("en").getDocument().getRepositoryNode().getSourceURI());
 
         session.enqueueEvent(event);
-        
+
         Inbox inbox = getInbox(alice);
         cleanUp(inbox, SUBJECT);
-        
+
         assertFalse(containsMessage(inbox, SUBJECT));
         session.commit();
         Thread.sleep(100);
         assertTrue(containsMessage(inbox, SUBJECT));
-        
+
         cleanUp(inbox, SUBJECT);
 
     }
