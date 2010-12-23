@@ -37,8 +37,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Utility class to convert <code>lenya-document:</code> links from and to URL
- * links.
+ * Utility class to convert <code>lenya-document:</code> links from and to URL links.
  */
 public class LinkConverter extends AbstractLogEnabled {
 
@@ -64,8 +63,8 @@ public class LinkConverter extends AbstractLogEnabled {
     }
 
     /**
-     * Converts all URL-based links to UUID-based links. The link URLs can
-     * originate from a different publication.
+     * Converts all URL-based links to UUID-based links. The link URLs can originate from a
+     * different publication.
      * @param srcPub The publication where the content comes from.
      * @param examinedDocument The document in the target publication.
      * @param useContextPath If the request's context path should be considered.
@@ -88,16 +87,21 @@ public class LinkConverter extends AbstractLogEnabled {
             } else {
                 Publication pub = examinedDocument.getPublication();
                 ChainLinkRewriter incomingRewriter = new ChainLinkRewriter();
-                incomingRewriter.add(new RelativeToAbsoluteLinkRewriter(examinedDocument.getCanonicalWebappURL()));
+                incomingRewriter.add(new RelativeToAbsoluteLinkRewriter(examinedDocument
+                        .getCanonicalWebappURL()));
                 incomingRewriter.add(new IncomingLinkRewriter(pub));
 
                 // Workaround:
-                // We create a new session because the sitetree of the transaction doesn't yet contain
+                // We create a new session because the sitetree of the transaction doesn't yet
+                // contain
                 // references to any new documents that were uploaded during the transaction.
                 // See https://issues.apache.org/bugzilla/show_bug.cgi?id=47621
-                Session readOnlySession = RepositoryUtil.createSession(this.manager, examinedDocument.getSession().getIdentity(), false);
-                DocumentFactory newFactory = DocumentUtil.createDocumentFactory(this.manager, readOnlySession);
-                LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(newFactory);
+                Session readOnlySession = RepositoryUtil.createSession(this.manager,
+                        examinedDocument.getSession().getIdentity(), false);
+                DocumentFactory newFactory = DocumentUtil.createDocumentFactory(this.manager,
+                        readOnlySession);
+                final LinkRewriter[] rewriters = { new UrlToUuidRewriter(pub.getFactory()),
+                        new UrlToUuidRewriter(newFactory) };
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
                         .getInputStream());
@@ -119,7 +123,8 @@ public class LinkConverter extends AbstractLogEnabled {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Convert links: Check URL [" + url + "]");
                         }
-                        final String originalUrl = url.startsWith(prefix) ? url.substring(prefix.length()) : url;
+                        final String originalUrl = url.startsWith(prefix) ? url.substring(prefix
+                                .length()) : url;
                         final String srcPubUrl;
                         if (incomingRewriter.matches(originalUrl)) {
                             srcPubUrl = incomingRewriter.rewrite(originalUrl);
@@ -128,11 +133,16 @@ public class LinkConverter extends AbstractLogEnabled {
                         }
                         final String srcPubPrefix = "/" + srcPub.getId() + "/";
                         if (srcPubUrl.startsWith(srcPubPrefix)) {
-                            final String destPubUrl = "/" + pub.getId() + "/" + srcPubUrl.substring(srcPubPrefix.length());
-                            if (urlToUuidRewriter.matches(destPubUrl)) {
-                                String rewrittenUrl = urlToUuidRewriter.rewrite(destPubUrl);
-                                attribute.setValue(rewrittenUrl);
-                                linksRewritten = true;
+                            final String destPubUrl = "/" + pub.getId() + "/"
+                                    + srcPubUrl.substring(srcPubPrefix.length());
+                            boolean rewritten = false;
+                            for (final LinkRewriter rewriter : rewriters) {
+                                if (!rewritten && rewriter.matches(destPubUrl)) {
+                                    String rewrittenUrl = rewriter.rewrite(destPubUrl);
+                                    attribute.setValue(rewrittenUrl);
+                                    linksRewritten = true;
+                                    rewritten = !rewrittenUrl.equals(destPubUrl);
+                                }
                             }
                         }
                     }
