@@ -17,29 +17,17 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.axis.components.uuid.UUIDGen;
-import org.apache.axis.components.uuid.UUIDGenFactory;
+import java.util.UUID;
 
 /**
- * UUID generator based on Apache Axis.
- *
- * @deprecated
+ * UUID generator based on Java random UUID's.
  */
-public class AxisUUIDGenerator extends AbstractLogEnabled implements UUIDGenerator, ThreadSafe {
+public class RandomUuidGenerator implements UUIDGenerator {
 
-    private UUIDGen delegate;
-
-    protected UUIDGen getDelegate() {
-        if (this.delegate == null) {
-            this.delegate = UUIDGenFactory.getUUIDGen();
-        }
-        return this.delegate;
-    }
-
+    @Override
     public String nextUUID() {
-        return getDelegate().nextUUID();
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
     }
 
 }
