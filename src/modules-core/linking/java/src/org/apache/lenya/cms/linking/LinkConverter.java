@@ -136,7 +136,8 @@ public class LinkConverter extends AbstractLogEnabled {
                             final String destPubUrl = "/" + pub.getId() + "/"
                                     + srcPubUrl.substring(srcPubPrefix.length());
                             boolean rewritten = false;
-                            for (final LinkRewriter rewriter : rewriters) {
+                            for (int i=0; i<rewriters.length; i++) {
+                                final LinkRewriter rewriter = rewriters[i];
                                 if (!rewritten && rewriter.matches(destPubUrl)) {
                                     String rewrittenUrl = rewriter.rewrite(destPubUrl);
                                     attribute.setValue(rewrittenUrl);
