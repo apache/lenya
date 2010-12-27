@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.site.tree2;
 
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.AbstractRepositoryListener;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.publication.Area;
@@ -36,7 +37,8 @@ public class SiteTreeRevisionVerifier extends AbstractRepositoryListener {
             String pubId = steps[steps.length - 4];
             String areaName = steps[steps.length - 2];
             try {
-                Session session = RepositoryUtil.createSession(this.manager, null, false);
+                Session session = RepositoryUtil.createSession(this.manager,
+                        Identity.ANONYMOUS, false);
                 DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
                 Area area = factory.getPublication(pubId).getArea(areaName);
                 SiteTreeImpl tree = new SiteTreeImpl(this.manager, area, getLogger());
