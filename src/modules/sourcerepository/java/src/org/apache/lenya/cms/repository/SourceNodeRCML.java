@@ -44,8 +44,6 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import sun.security.action.GetLongAction;
-
 /**
  * Handle with the RCML file
  */
