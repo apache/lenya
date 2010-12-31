@@ -31,7 +31,7 @@ public class SiteTreeRevisionVerifier extends AbstractRepositoryListener {
 
     public void eventFired(RepositoryEvent event) {
         String uri = event.getNodeUri();
-        if (uri.endsWith("/" + SiteTreeImpl.SITETREE_FILE_NAME)) {
+        if (uri != null && uri.endsWith("/" + SiteTreeImpl.SITETREE_FILE_NAME)) {
             // pubs/{pubId}/content/{area}/sitetree.xml
             String[] steps = uri.split("/");
             String pubId = steps[steps.length - 4];
