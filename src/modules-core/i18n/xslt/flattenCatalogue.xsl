@@ -20,8 +20,19 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
   
-  <xsl:template match="i18n:catalogue/i18n:catalogue">
+  <xsl:template match="*/i18n:catalogue">
     <xsl:apply-templates/>
+  </xsl:template>
+  
+  
+  <xsl:template match="i18n:catalogue-wrapper">
+    <xsl:if test="catalogue">
+      <xsl:message terminate="yes">
+        <xsl:text>The i18n catalogue of the </xsl:text><xsl:value-of select="@name"/> <xsl:text> </xsl:text>
+        <xsl:text>is missing the i18n namespace (http://apache.org/cocoon/i18n/2.1).</xsl:text>
+      </xsl:message>
+    </xsl:if>
+    <xsl:apply-templates select="i18n:catalogue"/>
   </xsl:template>
   
   

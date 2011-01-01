@@ -30,14 +30,18 @@
   
   <xsl:template match="lenya:publication">
     <i18n:catalogue>
-      <i:include src="aggregate-fallback://lenya/resources/i18n/{$catalogue}"/>
+      <i18n:catalogue-wrapper name="'{lenya:name}' publication">
+        <i:include src="aggregate-fallback://lenya/resources/i18n/{$catalogue}"/>
+      </i18n:catalogue-wrapper>
       <xsl:apply-templates select="lenya:modules/lenya:module"/>
     </i18n:catalogue>
   </xsl:template>
   
   <xsl:template match="lenya:module">
     <xsl:if test="not(preceding-sibling::lenya:module[@name = current()/@name])">
-      <i:include src="cocoon:/modules/{@name}/{$catalogue}"/>
+      <i18n:catalogue-wrapper name="'{@name}' module">
+        <i:include src="cocoon:/modules/{@name}/{$catalogue}"/>
+      </i18n:catalogue-wrapper>
     </xsl:if>
   </xsl:template>
   
