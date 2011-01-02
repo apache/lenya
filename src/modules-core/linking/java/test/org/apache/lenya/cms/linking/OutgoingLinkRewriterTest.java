@@ -23,26 +23,32 @@ import org.apache.lenya.cms.repository.Session;
 public class OutgoingLinkRewriterTest extends AbstractAccessControlTest {
 
     public void testRelativeUrls() throws Exception {
-        Session session = login("lenya");
-        String url = "/aaa/bbb/ccc";
+        final Session session = login("lenya");
+        final String url = "/aaa/bbb/ccc";
 
         boolean ssl = false;
         boolean considerSslPolicies = false;
-        boolean relativeUrls = true;
 
-        OutgoingLinkRewriter rewriter = new OutgoingLinkRewriter(getManager(), session, url, ssl,
-                considerSslPolicies, relativeUrls);
+        final OutgoingLinkRewriter relativeRewriter = new OutgoingLinkRewriter(getManager(),
+                session, url, ssl, considerSslPolicies, true);
 
-        assertEquals(rewriter.rewrite("/aaa/bbb/foo"), "foo");
-        assertEquals(rewriter.rewrite("/aaa/bbb"), "..");
-        assertEquals(rewriter.rewrite("/aaa/bbb/ccc/ddd"), "ccc/ddd");
-        assertEquals(rewriter.rewrite("/aaa/foo"), "../foo");
-        assertEquals(rewriter.rewrite("/aaa/foo/bar"), "../foo/bar");
-        assertEquals(rewriter.rewrite("/foo/bar"), "../../foo/bar");
-        assertEquals(rewriter.rewrite("/aaa/foo/bar/baz"), "../foo/bar/baz");
-        assertEquals(rewriter.rewrite("/aaa/bbb/?hello"), "../bbb/?hello");
-        assertEquals(rewriter.rewrite("/aaa/?hello"), "../?hello");
-        assertEquals(rewriter.rewrite("/?hello"), "../../?hello");
+        assertEquals(relativeRewriter.rewrite("") + "/index", "../../index");
+        assertEquals(relativeRewriter.rewrite("/aaa/bbb/foo"), "foo");
+        assertEquals(relativeRewriter.rewrite("/aaa/bbb"), "../bbb");
+        assertEquals(relativeRewriter.rewrite("/aaa/bbb/ccc/ddd"), "ccc/ddd");
+        assertEquals(relativeRewriter.rewrite("/aaa/foo"), "../foo");
+        assertEquals(relativeRewriter.rewrite("/aaa/foo/bar"), "../foo/bar");
+        assertEquals(relativeRewriter.rewrite("/foo/bar"), "../../foo/bar");
+        assertEquals(relativeRewriter.rewrite("/aaa/foo/bar/baz"), "../foo/bar/baz");
+        assertEquals(relativeRewriter.rewrite("/aaa/bbb/?hello"), "?hello");
+        assertEquals(relativeRewriter.rewrite("/aaa/?hello"), "../?hello");
+        assertEquals(relativeRewriter.rewrite("/?hello"), "../../?hello");
+
+        final OutgoingLinkRewriter absoluteRewriter = new OutgoingLinkRewriter(getManager(),
+                session, url, ssl, considerSslPolicies, false);
+
+        assertEquals(absoluteRewriter.rewrite("") + "/index", "/index");
+
     }
 
 }

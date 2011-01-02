@@ -19,7 +19,6 @@ package org.apache.lenya.cms.linking;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +39,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.StringUtil;
 
 /**
  * <p>
@@ -65,12 +63,12 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     /**
      * @param manager The service manager to use.
      * @param session The current session.
-     * @param requestUrl The requested web application URL (without servlet context path) where
-     *        the links should be rewritten.
+     * @param requestUrl The requested web application URL (without servlet context path) where the
+     *            links should be rewritten.
      * @param ssl If the current page is SSL-encrypted.
      * @param considerSslPolicies If the SSL protection of policies should be considered when
-     *        resolving the corresponding proxy. Setting this to <code>true</code> leads to a
-     *        substantial performance overhead.
+     *            resolving the corresponding proxy. Setting this to <code>true</code> leads to a
+     *            substantial performance overhead.
      * @param relativeUrls If relative URLs should be created.
      */
     public OutgoingLinkRewriter(ServiceManager manager, Session session, String requestUrl,
@@ -129,43 +127,41 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     }
 
     public boolean matches(String url) {
-        return url.startsWith("/");
+        return url.equals("") || url.startsWith("/");
     }
 
-    private Map publicationCache = new HashMap();
+    private Map<String, Publication> publicationCache = new HashMap<String, Publication>();
 
     protected Publication getPublication(String pubId) throws PublicationException {
-        return (Publication) this.publicationCache.get(pubId);
+        return this.publicationCache.get(pubId);
     }
 
     public String rewrite(final String url) {
 
         String rewrittenUrl = "";
-        
+
         String path;
         String suffix;
-        
+
         int numIndex = url.indexOf('#');
         if (numIndex > -1) {
             path = url.substring(0, numIndex);
             suffix = url.substring(numIndex);
-        }
-        else {
+        } else {
             int qmIndex = url.indexOf('?');
             if (qmIndex > -1) {
                 path = url.substring(0, qmIndex);
                 suffix = url.substring(qmIndex);
-            }
-            else {
+            } else {
                 path = url;
                 suffix = "";
             }
         }
-        
+
         try {
             String normalizedUrl = normalizeUrl(path);
             if (this.relativeUrls) {
-                rewrittenUrl = getRelativeUrlTo(normalizedUrl);
+                rewrittenUrl = UriUtil.getRelativeUri(this.requestUrl, normalizedUrl);
             } else {
                 boolean useSsl = this.ssl;
                 if (!useSsl && this.policyManager != null) {
@@ -200,18 +196,12 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     }
 
     protected String normalizeUrl(final String url) throws URISyntaxException {
-        String normalizedUrl;
-        if (url.indexOf("..") > -1) {
-            normalizedUrl = new URI(url).normalize().toString();
-        } else {
-            normalizedUrl = url;
-        }
-        return normalizedUrl;
+        return url.indexOf("..") > -1 ? new URI(url).normalize().toString() : url;
     }
 
     private String requestUrl;
 
-    private Map pubId2areaList = new HashMap();
+    private Map<String, List<String>> pubId2areaList = new HashMap<String, List<String>>();
 
     /**
      * Checks if a publication has an area by using a cache for performance reasons.
@@ -221,7 +211,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
      */
     protected boolean hasArea(Publication pub, String area) {
         String pubId = pub.getId();
-        List areas = (List) this.pubId2areaList.get(pubId);
+        List<String> areas = this.pubId2areaList.get(pubId);
         if (areas == null) {
             areas = Arrays.asList(pub.getAreaNames());
             this.pubId2areaList.put(pubId, areas);
@@ -252,60 +242,6 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
             rewrittenUrl = proxy.getUrl() + linkUrl;
         }
         return rewrittenUrl;
-    }
-
-    protected String getRelativeUrlTo(String webappUrl) {
-        String relativeUrl;
-        if (this.requestUrl.equals(webappUrl)) {
-            relativeUrl = getLastStep(webappUrl);
-        }
-        else {
-            List sourceSteps = toList(this.requestUrl);
-            List targetSteps = toList(webappUrl);
-            
-            String lastEqualStep = null;
-
-            while (!sourceSteps.isEmpty() && !targetSteps.isEmpty()
-                    && sourceSteps.get(0).equals(targetSteps.get(0))) {
-                lastEqualStep = (String) sourceSteps.remove(0);
-                targetSteps.remove(0);
-            }
-
-            String prefix = "";
-            if (targetSteps.isEmpty()) {
-                prefix = generateUpDots(sourceSteps.size());
-            }
-            else if (sourceSteps.isEmpty()) {
-                prefix = getLastStep(this.requestUrl) + "/";
-            }
-            else if (sourceSteps.size() > 1) {
-                prefix = generateUpDots(sourceSteps.size() - 1) + "/";
-            }
-            else if (sourceSteps.size() == 1 && targetSteps.get(0).equals("")) {
-                prefix = generateUpDots(1) + "/" + lastEqualStep + "/";
-            }
-
-            String[] targetArray = (String[]) targetSteps.toArray(new String[targetSteps.size()]);
-            String targetPath = StringUtil.join(targetArray, "/");
-            relativeUrl = prefix + targetPath;
-        }
-        return relativeUrl;
-    }
-
-    protected String getLastStep(String url) {
-        return url.substring(url.lastIndexOf("/") + 1);
-    }
-
-    protected String generateUpDots(int length) {
-        String upDots;
-        String[] upDotsArray = new String[length];
-        Arrays.fill(upDotsArray, "..");
-        upDots = StringUtil.join(upDotsArray, "/");
-        return upDots;
-    }
-
-    protected List toList(String url) {
-        return new ArrayList(Arrays.asList(url.substring(1).split("/", -1)));
     }
 
 }
