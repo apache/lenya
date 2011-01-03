@@ -15,26 +15,23 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
-
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.cms.rc.RCML;
+package org.apache.lenya.cms.cluster;
 
 /**
- * Source node RCML factory interface.
- * Implementations must be thread safe.
+ * Cluster mode enumeration.
  */
-public interface SourceNodeRcmlFactory extends ThreadSafe {
+public enum ClusterMode {
 
-    /**
-     * Role org.apache.lenya.cms.repository.SourceNodeRcmlFactory
-     */
-    String ROLE = SourceNodeRcmlFactory.class.getName();
+    MASTER("master"),
+    SLAVE("slave");
+    
+    private String text;
 
-    /**
-     * Get RCML object.
-     * @param node Source node.
-     * @return An RCML object.
-     */
-    RCML getRcml(SourceNode node);
+    private ClusterMode(String text) {
+        this.text = text;
+    }
+    
+    public String getText() {
+        return text;
+    }
 }

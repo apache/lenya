@@ -19,6 +19,7 @@ package org.apache.lenya.cms.repository;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -297,19 +298,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     /**
      * 
      */
-    public Collection getChildren() throws RepositoryException {
+    public Collection<SourceNode> getChildren() throws RepositoryException {
         SourceResolver resolver = null;
         TraversableSource source = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = (TraversableSource) resolver.resolveURI(this.contentSource.getRealSourceUri());
-            Collection children = source.getChildren();
-            java.util.Iterator iterator = children.iterator();
-            java.util.Vector newChildren = new java.util.Vector();
-            while (iterator.hasNext()) {
-                TraversableSource child = (TraversableSource) iterator.next();
+            @SuppressWarnings("unchecked")
+            Collection<TraversableSource> children = source.getChildren();
+            ArrayList<SourceNode> newChildren = new ArrayList<SourceNode>();
+            for (TraversableSource child : children) {
                 newChildren.add(new SourceNode(getSession(),
-                        getSourceURI() + "/" + child.getName(), this.manager, getLogger()));
+                        getSourceURI() + "/" + child.getName(),
+                        this.manager, getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -377,9 +378,13 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     private Persistable persistable;
 
     protected synchronized RCML getRcml() {
-        // RCML is cached by factory. So don't cache it here.
-        SourceNodeRcmlFactory factory = SourceNodeRcmlFactory.getInstance();
-        return factory.getRcml(this, this.manager);
+        try {
+            SourceNodeRcmlFactory factory = (SourceNodeRcmlFactory)
+                    manager.lookup(SourceNodeRcmlFactory.ROLE);
+            return factory.getRcml(this);
+        } catch (ServiceException e) {
+            throw new RuntimeException("Error getting RCML", e);
+        }
     }
 
     public History getHistory() {

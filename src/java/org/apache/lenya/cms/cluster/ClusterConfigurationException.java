@@ -15,26 +15,44 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
-
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.cms.rc.RCML;
+package org.apache.lenya.cms.cluster;
 
 /**
- * Source node RCML factory interface.
- * Implementations must be thread safe.
+ * Cluster configuration exception.
  */
-public interface SourceNodeRcmlFactory extends ThreadSafe {
+public class ClusterConfigurationException extends Exception {
+
+    private static final long serialVersionUID = 197229761264754299L;
 
     /**
-     * Role org.apache.lenya.cms.repository.SourceNodeRcmlFactory
+     * C'tor.
      */
-    String ROLE = SourceNodeRcmlFactory.class.getName();
+    public ClusterConfigurationException() {
+    }
 
     /**
-     * Get RCML object.
-     * @param node Source node.
-     * @return An RCML object.
+     * C'tor.
+     * @param message Message.
      */
-    RCML getRcml(SourceNode node);
+    public ClusterConfigurationException(String message) {
+        super(message);
+    }
+
+    /**
+     * C'tor.
+     * @param cause Cause.
+     */
+    public ClusterConfigurationException(Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * C'tor.
+     * @param message Message.
+     * @param cause Cause.
+     */
+    public ClusterConfigurationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

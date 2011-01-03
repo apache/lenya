@@ -15,26 +15,38 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
+package org.apache.lenya.cms.cluster;
 
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.cms.rc.RCML;
 
 /**
- * Source node RCML factory interface.
- * Implementations must be thread safe.
+ * Cluster manager interface.
+ * Classes implementing ClusterManager must be ThreadSafe i.e.
+ * are setup as singletons.
  */
-public interface SourceNodeRcmlFactory extends ThreadSafe {
+public interface ClusterManager extends ThreadSafe
+{
+    /**
+     * Role org.apache.lenya.cms.cluster.ClusterManager
+     */
+    String ROLE = ClusterManager.class.getName();
 
     /**
-     * Role org.apache.lenya.cms.repository.SourceNodeRcmlFactory
+     * Is clustering enabled.
+     * @return true if clustering is enabled, otherwise false.
      */
-    String ROLE = SourceNodeRcmlFactory.class.getName();
+    public boolean isClusterEnabled();
 
     /**
-     * Get RCML object.
-     * @param node Source node.
-     * @return An RCML object.
+     * Is Lenya instance in master mode.
+     * @return true if instance is master or clustering disabled, otherwise false.
      */
-    RCML getRcml(SourceNode node);
+    public boolean isMaster();
+
+    /**
+     * Is Lenya instance in slave mode.
+     * @return true if clustering is enabled and instance is slave, otherwise false.
+     */
+    public boolean isSlave();
+
 }

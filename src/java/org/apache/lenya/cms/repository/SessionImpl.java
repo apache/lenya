@@ -19,7 +19,6 @@ package org.apache.lenya.cms.repository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
@@ -98,7 +97,6 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         String id;
         UUIDGenerator generator = null;
         try {
-
             generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
             id = generator.nextUUID();
         } catch (Exception e) {
@@ -152,10 +150,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
             throw new RepositoryException(e);
         }
 
-        for (Iterator i = this.events.iterator(); i.hasNext();) {
-            RepositoryEvent event = (RepositoryEvent) i.next();
-            for (Iterator l = this.listeners.iterator(); l.hasNext();) {
-                RepositoryListener listener = (RepositoryListener) l.next();
+        for (RepositoryEvent event : events) {
+            for (RepositoryListener listener : listeners) {
                 listener.eventFired(event);
             }
         }
@@ -259,7 +255,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         getUnitOfWork().removeLock(lockable);
     }
 
-    private Set listeners = new HashSet();
+    private Set<RepositoryListener> listeners = new HashSet<RepositoryListener>();
 
     public void addListener(RepositoryListener listener) throws RepositoryException {
         if (this.listeners.contains(listener)) {
@@ -273,7 +269,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         return this.listeners.contains(listener);
     }
 
-    private List events = new ArrayList();
+    private List<RepositoryEvent> events = new ArrayList<RepositoryEvent>();
 
     public synchronized void enqueueEvent(RepositoryEvent event) {
         if (!isModifiable()) {

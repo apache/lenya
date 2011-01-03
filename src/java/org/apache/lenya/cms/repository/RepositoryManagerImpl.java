@@ -26,6 +26,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.cluster.ClusterManager;
 
 import com.google.common.collect.MapMaker;
 
@@ -37,6 +38,7 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
         Serviceable {
 
     protected ServiceManager manager;
+    private ClusterManager cluster;
     // Cache unmodifiable sessions per identity.
     protected ConcurrentMap<Identity, Session> sharedSessions =
         new MapMaker().softKeys().softValues().expiration(30, TimeUnit.MINUTES).makeMap();
@@ -46,11 +48,18 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+        cluster = (ClusterManager) manager.lookup(ClusterManager.ROLE);
     }
 
     @Override
     public Session createSession(Identity identity, boolean modifiable) throws RepositoryException {
         Validate.notNull(identity, "identity must not be null");
+        // Check that instance is not running in cluster slave mode
+        // if session is modifiable.
+        if (modifiable == true && cluster.isSlave()) {
+            throw new RepositoryException("Can't create a modifiable session. " +
+            		"Instance is running in clustered mode as slave.");
+        }
         if (modifiable) {
             if (getLogger().isDebugEnabled())
                 getLogger().debug("Created modifiable session.");

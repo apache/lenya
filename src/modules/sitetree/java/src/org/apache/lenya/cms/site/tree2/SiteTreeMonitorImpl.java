@@ -31,6 +31,7 @@ import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.commons.lang.Validate;
+import org.apache.lenya.cms.cluster.ClusterManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
@@ -41,45 +42,61 @@ import org.apache.lenya.cms.site.tree.SiteTree;
 public class SiteTreeMonitorImpl extends AbstractLogEnabled
 implements SiteTreeMonitor, Serviceable, Startable, Initializable, ThreadSafe
 {
-    private ServiceManager serviceManager;
-    private FileAlterationMonitor fileAlterationMonitor;
+    private FileAlterationMonitor fileAlterationMonitor =
+        new FileAlterationMonitor();
+    private ClusterManager cluster;
+    private boolean monitorEnabled = false;
     private HashMap<String, SiteTree> siteTreeMap =
         new HashMap<String, SiteTree>();
     private HashMap<String, SiteTreeMonitorListener> listenerMap =
         new HashMap<String, SiteTreeMonitorListener>();
 
     @Override
-    public void service(ServiceManager serviceManager) throws ServiceException {
-        this.serviceManager = serviceManager;
+    public void service(ServiceManager manager) throws ServiceException {
+        cluster = (ClusterManager) manager.lookup(ClusterManager.ROLE);
     }
 
     @Override
     public void start() throws Exception {
-        Validate.notNull(fileAlterationMonitor, "Not initialized.");
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Site tree monitor started.");
-        fileAlterationMonitor.start();
+        // Only start site tree monitor if running as slave in clustered mode.
+        if (monitorEnabled) {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Site tree monitor started.");
+            fileAlterationMonitor.start();
+        }
     }
 
     @Override
     public void stop() throws Exception {
-        Validate.notNull(fileAlterationMonitor, "Not initialized.");
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Site tree monitor stopped.");
-        fileAlterationMonitor.stop();
+        if (monitorEnabled) {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Site tree monitor stopped.");
+            fileAlterationMonitor.stop();
+        }
     }
 
     @Override
     public void initialize() throws Exception {
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Site tree monitor initialized.");
-        fileAlterationMonitor = new FileAlterationMonitor();
+        if (cluster.isClusterEnabled() && cluster.isSlave()) {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Site tree monitor initialized.");
+            monitorEnabled = true;
+        } else {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Site tree monitor not enabled as not" +
+                        "running as slave in cluster mode.");
+        }
     }
 
     @Override
     public void addListener(SiteTree siteTree,
             SiteTreeMonitorListener listener)
     {
+        Validate.notNull(siteTree, "siteTree must not be null");
+        Validate.notNull(listener, "listener must not be null");
+        if (!monitorEnabled) {
+            return;
+        }
         // Publication/area content directory.
         File contentDir = siteTree.getPublication().getContentDirectory(
                 siteTree.getArea());

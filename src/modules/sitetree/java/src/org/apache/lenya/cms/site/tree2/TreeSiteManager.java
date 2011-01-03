@@ -23,6 +23,9 @@ import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.commons.lang.Validate;
+import org.apache.lenya.cms.cluster.ClusterManager;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -44,10 +47,12 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
  * Tree-based site manager.
  */
 public class TreeSiteManager extends AbstractSiteManager
-implements SiteTreeMonitorListener
+implements SiteTreeMonitorListener, ThreadSafe
 {
     
     private SiteTreeMonitor siteTreeMonitor;
+    private ClusterManager cluster;
+
     private static HashMap<String, SiteTree> siteTreeMap =
         new HashMap<String, SiteTree>();
 
@@ -60,6 +65,7 @@ implements SiteTreeMonitorListener
      * @throws SiteException if an error occurs.
      */
     protected SiteTree getTree(Area area) throws SiteException {
+        Validate.notNull(area, "area must not be null");
         String key = getKey(area);
         SiteTree sitetree;
         RepositoryItemFactory factory = new SiteTreeFactory(this.manager, getLogger());
@@ -69,8 +75,9 @@ implements SiteTreeMonitorListener
         } catch (Exception e) {
             throw new SiteException(e);
         }
-        // Only support site tree reloading for live area.
-        if (area.getName().equals(Publication.LIVE_AREA)) {
+        // Only support site tree reloading for live area
+        // and in clustered mode as slave.
+        if (cluster.isSlave() && area.getName().equals(Publication.LIVE_AREA)) {
             if (!siteTreeMap.containsKey(key)) {
                 siteTreeMonitor.addListener(sitetree, this);
                 siteTreeMap.put(key, sitetree);
@@ -220,7 +227,7 @@ implements SiteTreeMonitorListener
         }
         SiteTree tree = getTree(areaObj);
         SiteNode[] preOrder = tree.preOrder();
-        List docs = new ArrayList();
+        List<Document> docs = new ArrayList<Document>();
         for (int i = 0; i < preOrder.length; i++) {
             String[] langs = preOrder[i].getLanguages();
             for (int l = 0; l < langs.length; l++) {
@@ -232,7 +239,7 @@ implements SiteTreeMonitorListener
 
     public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator loc)
             throws SiteException {
-        List ancestors = new ArrayList();
+        List<DocumentLocator> ancestors = new ArrayList<DocumentLocator>();
         DocumentLocator locator = loc;
         while (locator.getParent() != null) {
             DocumentLocator parent = locator.getParent();
@@ -305,6 +312,7 @@ implements SiteTreeMonitorListener
     public void service(ServiceManager manager) throws ServiceException {
         super.service(manager);
         siteTreeMonitor = (SiteTreeMonitor) manager.lookup(SiteTreeMonitor.ROLE);
+        cluster = (ClusterManager) manager.lookup(ClusterManager.ROLE);
     }
 
     @Override
@@ -328,5 +336,5 @@ implements SiteTreeMonitorListener
                         "Reloading skipped.");
         }
     }
-
+    
 }

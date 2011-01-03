@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.site.tree2;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -52,15 +51,6 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     protected ServiceManager manager;
     private RootNode root;
     private int revision;
-    /**
-     * Last modification date of site tree file.
-     */
-    private Date lastModified;
-    /**
-     * Site tree file has been modified on file system and site
-     * tree should be reloaded.
-     */
-    private boolean reload; 
 
     /**
      * @param manager The service manager.
@@ -152,7 +142,7 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         TreeWriter writer = null;
         try {
             writer = (TreeWriter) this.manager.lookup(TreeWriter.ROLE);
-            int revision = getRevision(getRepositoryNode()) + 1;
+            revision = getRevision(getRepositoryNode()) + 1;
             writer.writeTree(this);
         } catch (RuntimeException e) {
             throw e;
@@ -230,8 +220,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         return parentPath;
     }
 
-    private Map path2node = new HashMap();
-    private Map uuidLanguage2link = new HashMap();
+    private Map<String, SiteNode> path2node = new HashMap<String, SiteNode>();
+    private Map<String, Link> uuidLanguage2link = new HashMap<String, Link>();
 
     protected void nodeAdded(SiteNode node) {
         String path = node.getPath();
@@ -268,12 +258,12 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         this.path2node.remove(path);
     }
 
-    protected Map getUuidLanguage2Link() {
+    protected Map<String, Link> getUuidLanguage2Link() {
         load();
         return this.uuidLanguage2link;
     }
 
-    protected Map getPath2Node() {
+    protected Map<String, SiteNode> getPath2Node() {
         load();
         return this.path2node;
     }
@@ -292,8 +282,8 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     public boolean containsInAnyLanguage(String uuid) {
         Assert.notNull("uuid", uuid);
-        Set set = getUuidLanguage2Link().keySet();
-        String[] keys = (String[]) set.toArray(new String[set.size()]);
+        Set<String> set = getUuidLanguage2Link().keySet();
+        String[] keys = set.toArray(new String[set.size()]);
         for (int i = 0; i < keys.length; i++) {
             if (keys[i].startsWith(uuid + ":")) {
                 return true;
