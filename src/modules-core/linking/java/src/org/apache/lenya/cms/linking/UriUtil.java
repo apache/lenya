@@ -24,6 +24,7 @@ public class UriUtil {
 
         while (!basePath.isEmpty() && targetPath.size() > 1
                 && basePath.first().equals(targetPath.first())) {
+            basePath.removeFirst();
             targetPath.removeFirst();
         }
 
