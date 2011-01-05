@@ -63,6 +63,15 @@
       <map:act type="ssl-redirect">
         <map:redirect-to uri="{redirectUri}" session="true"/>
       </map:act>
+
+      <map:act type="cluster">
+        <map:generate type="jx" src="lenya/content/exception/cluster-authoring-disabled.jx"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"></map:parameter>
+        </map:transform>
+        <map:call resource="style-cms-page"/>
+        <map:serialize status-code="403" />
+      </map:act>
       
       <map:match pattern="*/webdav**">
         <map:act type="authorizer">

@@ -411,6 +411,9 @@
   
   <message key="publication-does-not-exist">Die Publikation existiert nicht</message>
   <message key="publication-...-does-not-exist">Die Publikation mit der ID "{0}" existiert nicht.</message>
+
+  <message key="cluster-authoring-disabled">Bearbeitung deaktiviert</message>
+  <message key="cluster-authoring-disabled-explanation">Lenya-Instanz läuft als Slave im Cluster-Modus. Bearbeitung ist deaktiviert für diese Instanz. Bitte benutzen Sie eine Master-Instanz für die Bearbeitung.</message>
   
   <message key="configure-content-repository">
     <xhtml:strong>Hinweis:</xhtml:strong> Überprüfen Sie, ob das Content-Repository

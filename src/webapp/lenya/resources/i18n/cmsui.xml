@@ -398,6 +398,9 @@
   
   <message key="publication-does-not-exist">The publication does not exist</message>
   <message key="publication-...-does-not-exist">The publication with the ID "{0}" does not exist.</message>
+
+  <message key="cluster-authoring-disabled">Authoring disabled</message>
+  <message key="cluster-authoring-disabled-explanation">Lenya instance is running as slave in cluster mode. Authoring is disabled for this instance. Please use master instance for authoring.</message>
   
   <message key="configure-content-repository">
     <xhtml:strong>Note:</xhtml:strong> Make sure that your content repository

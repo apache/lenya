@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jx:template xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  
+  <page:page
+    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+    xmlns="http://www.w3.org/1999/xhtml">
+    
+    <page:title><i18n:text>cluster-authoring-disabled</i18n:text></page:title>
+    
+    <page:body>
+      <p>
+        <i18n:text>cluster-authoring-disabled-explanation</i18n:text>
+      </p>
+      <p>
+        <a href="/index.html"><i18n:text>Back</i18n:text></a>
+      </p>
+    </page:body>
+    
+  </page:page>
+  
+</jx:template>
