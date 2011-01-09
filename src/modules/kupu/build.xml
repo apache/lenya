@@ -18,6 +18,7 @@
 <project default="patch" basedir="." name="Kupu module">
 
   <target name="patch">
+        <fixcrlf srcdir="patches" includes="*.patch"/>
   	<patch strip="0" patchfile="patches/bug45488.patch"/>
   </target>
 
