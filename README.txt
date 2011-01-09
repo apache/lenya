@@ -18,8 +18,6 @@
   Installation Instructions and Documentation
   -------------------------------------------
 
-  For the binary distribution read INSTALL-BIN.txt.
-
   For the source distribution read INSTALL-SRC.txt.
 
   The documentation available as of the date of this release is included
