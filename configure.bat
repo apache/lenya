@@ -33,11 +33,11 @@ if "%1" == "gui" goto javaGui
 goto javaCmd
 
 :javaGui
-java -classpath %CP% org.apache.lenya.config.impl.ConfigureGUI %LENYA_HOME%
+java -classpath "%CP%" org.apache.lenya.config.impl.ConfigureGUI "%LENYA_HOME%"
 goto end
 
 :javaCmd
-java -classpath %CP% org.apache.lenya.config.impl.ConfigureCommandLine %LENYA_HOME%
+java -classpath "%CP%" org.apache.lenya.config.impl.ConfigureCommandLine "%LENYA_HOME%"
 goto end
 
 :help
