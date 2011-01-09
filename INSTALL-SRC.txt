@@ -37,6 +37,13 @@ Prerequisites
       the Cocoon webapp to be installed. See the FAQ for details of configuration changes 
       required when running multiple Cocoon based applications.
 
+    * The patch utility
+      Patch takes a patch file containing a difference listing produced by
+      the diff program and applies those differences to one or more original
+      files, producing patched versions. 
+      All Linux distributions come with patch. Under Windows, you can download
+      the utility from http://gnuwin32.sourceforge.net/packages/patch.htm .
+
     * (optional) An SVN client
       SVN (or subversion) is a software revision control system that is used by the Lenya community to 
       manage the development tree. If you want to use the latest development version, you will need to
