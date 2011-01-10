@@ -76,7 +76,15 @@ Standalone Installation (using the built-in Jetty)
       Then visit http://people.apache.org/~henkp/cgi-bin/md5.cgi and follow the instructions
       to verify the integrity of the file you have downloaded.
 
-      Change into the directory where you want your Lenya sources to be, and unpack the source:
+      Change into the directory where you want your Lenya sources to be.
+      IMPORTANT: The pathname of this directory must not contain spaces
+      or other special characters (more precisely: characters that must be
+      encoded in a URL must be avoided). This is because of the following
+      bug in xalan 2.7.1:
+
+        https://issues.apache.org/jira/browse/XALANJ-2461
+
+      Unpack the source:
  
         tar xvzf <apache-lenya>.tar.gz (for the tarball)
         unzip <apache-lenya>.zip (for the zip archive)
@@ -156,10 +164,8 @@ Installation with Apache Tomcat
       with Java 2 SDK, Tomcat, Cocoon and Lenya.
 
       The following libraries must be placed in the endorsed library directory for your deployment.
-          * xalan-2.7.0.jar
-          * xalan-2.7.0-serializer.jar
-          * xerces-2.9.0-xercesImpl.jar
-          * xerces-2.9.0-xml-apis.jar
+          * xalan-2.7.1.jar
+          * xerces-2.9.1-xercesImpl.jar
 
       They are placed by the build process in the directory specified by tomcat.endorsed.dir in 
       build.properties. You should validate that these files are indeed in the proper location 
@@ -215,7 +221,3 @@ Performing automated tests
   ./build.sh test    (to run the junit tests, requires a successful build), and
   ./build.sh modules.test.canoo  (to run the canoo web tests, requires a running servlet engine).
 
-  For Windows users : 
-  please note that Running the test suite in a directory whose pathname contains whitespace triggers a xalan bug :
-  https://issues.apache.org/jira/browse/XALANJ-2461
-  
