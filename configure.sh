@@ -27,8 +27,9 @@ fi
 JAVA_HOME="$JAVA_HOME"
 if [ "$JAVA_HOME" = "" ];then
   echo "ERROR: No JAVA_HOME set yet!"
-  echo "       Have you installed JDK 1.6.0 or higher?"
+  echo "       Have you installed JDK 1.4.2 or higher?"
   echo ""
+  echo "NOTE:  Apache Lenya does not work properly with JDK 1.5!"
   exit 1
 fi
                                                                                                                                                              
@@ -50,9 +51,9 @@ fi
 
 PWD=`pwd`
 if [ "$UI_TYPE" = "cmd" ];then
-  java org.apache.lenya.config.impl.ConfigureCommandLine $PWD
+  java org.apache.lenya.config.impl.ConfigureCommandLine "$PWD"
 elif [ "$UI_TYPE" = "gui" ]; then
-  java org.apache.lenya.config.impl.ConfigureGUI $PWD
+  java org.apache.lenya.config.impl.ConfigureGUI "$PWD"
 else
   echo "ERROR: No such User Interface: $UI_TYPE"
   exit 1
