@@ -51,7 +51,7 @@ public class NotificationTest extends AbstractNotificationTest {
         NotificationEventDescriptor descr = new NotificationEventDescriptor(message);
         RepositoryEvent event = RepositoryEventFactory.createEvent(getManager(), session,
                 getLogger(), descr);
-        event.setNodeUri(getFactory().getPublication("default").getArea("authoring").getSite()
+        event.setNodeUri(getFactory().getPublication("test").getArea("authoring").getSite()
                 .getNode("/index").getLink("en").getDocument().getRepositoryNode().getSourceURI());
 
         session.enqueueEvent(event);
