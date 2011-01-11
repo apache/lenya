@@ -26,6 +26,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.cluster.ClusterManager;
 import org.apache.lenya.cms.cluster.ClusterConfigurationException;
 import org.apache.lenya.cms.cluster.ClusterMode;
@@ -46,6 +47,11 @@ implements ClusterManager, Initializable, Serviceable
 
     private boolean isClusterEnabled = false;
     private ClusterMode clusterMode = ClusterMode.MASTER;
+    private boolean isRsyncSynchronizationEnabled = false;
+    private String rsyncCommand;
+    private String rsyncOptions;
+    private String[] rsyncTargets;
+    private String rsyncBaseDir;
 
     @Override
     public boolean isClusterEnabled() {
@@ -60,6 +66,32 @@ implements ClusterManager, Initializable, Serviceable
     @Override
     public boolean isSlave() {
         return isClusterEnabled() && ClusterMode.SLAVE.equals(clusterMode);
+    }
+
+    @Override
+    public boolean isRsyncSynchronizationEnabled() {
+        return isClusterEnabled() && isMaster() &&
+                isRsyncSynchronizationEnabled;
+    }
+
+    @Override
+    public String getRsyncCommand() {
+        return rsyncCommand;
+    }
+
+    @Override
+    public String getRsyncOptions() {
+        return rsyncOptions;
+    }
+
+    @Override
+    public String[] getRsyncTargets() {
+        return rsyncTargets;
+    }
+
+    @Override
+    public String getRsyncBaseDir() {
+        return rsyncBaseDir;
     }
 
     @Override
@@ -117,10 +149,55 @@ implements ClusterManager, Initializable, Serviceable
                 }
                 clusterMode = ClusterMode.MASTER;
             }
+            // Read rsync settings.
+            Configuration rsyncConfig = config.getChild("rsync");
+            Configuration rsyncEnabledElem = rsyncConfig.getChild("enabled");
+            isRsyncSynchronizationEnabled = rsyncEnabledElem.getValueAsBoolean(false);
+            Configuration rsyncCommandElem = rsyncConfig.getChild("command");
+            rsyncCommand = rsyncCommandElem.getValue("/usr/bin/rsync");
+            Configuration rsyncOptionsElem = rsyncConfig.getChild("options");
+            rsyncOptions = rsyncOptionsElem.getValue("-av");
+            Configuration rsyncTargetsElem = rsyncConfig.getChild("targets");
+            Configuration[] rsyncTargetElems = rsyncTargetsElem.getChildren("target");
+            rsyncTargets = new String[rsyncTargetElems.length];
+            for (int i=0; i<rsyncTargets.length; i++) {
+                rsyncTargets[i] = rsyncTargetElems[i].getValue();
+            }
+            Configuration rsyncBaseDirElem = rsyncConfig.getChild("baseDir");
+            if (rsyncBaseDirElem == null) {
+                rsyncBaseDir = getDefaultRsyncBaseDir();
+            } else {
+                rsyncBaseDir = rsyncBaseDirElem.getValue(
+                        getDefaultRsyncBaseDir());
+            }
         } catch (Exception e) {
             throw new ClusterConfigurationException(
                     "Error reading cluster configuration", e);
         }
+    }
+
+    /**
+     * Get default rsync base directory.
+     * This is the servlet context directory.
+     * @return Rsync default base directory.
+     */
+    private String getDefaultRsyncBaseDir() {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI("context:///");
+            return SourceUtil.getFile(source).getCanonicalPath();
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting servlet context");
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }        
     }
 
     @Override

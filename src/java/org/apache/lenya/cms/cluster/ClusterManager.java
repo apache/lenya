@@ -49,4 +49,13 @@ public interface ClusterManager extends ThreadSafe
      */
     public boolean isSlave();
 
+    boolean isRsyncSynchronizationEnabled();
+
+    String getRsyncCommand();
+
+    String getRsyncOptions();
+
+    String[] getRsyncTargets();
+
+    String getRsyncBaseDir();
 }

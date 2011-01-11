@@ -16,12 +16,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
+<!-- $Id: $ -->
 
-  <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.cluster.ClusterManager']">
+  <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.cluster.RsyncRepositoryListener']">
 
-    <component class="org.apache.lenya.cms.cluster.impl.ClusterManagerImpl"
+    <component class="org.apache.lenya.cms.cluster.impl.RsyncRepositoryListenerImpl"
         logger="lenya.cluster"
-        role="org.apache.lenya.cms.cluster.ClusterManager"/>
+        role="org.apache.lenya.cms.cluster.RsyncRepositoryListener"/>
 
   </xconf>

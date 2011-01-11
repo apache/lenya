@@ -23,4 +23,23 @@
   <!-- Cluster mode [master|slave] -->
   <mode>master</mode>
 
+  <!-- rsync clustered content synchronization. -->
+  <!-- This is an alternative approach to storing content on a -->
+  <!-- shared file system (i.e. NFS) in a clustered environment. -->
+  <rsync>
+    <enabled>false</enabled>
+    <command>/usr/bin/rsync</command>
+    <options>-Rrav --delete</options>
+    <!-- Base directory [optional]. Default is Lenya webapp directory. -->
+    <!-- Note: all paths will be relative to the base directory. --> 
+    <!--
+    <baseDir>/opt/lenya/data</baseDir>
+      -->
+    <targets>
+      <!-- Test destination on local file system.
+      <target>/tmp</target>
+        -->
+    </targets>
+  </rsync>
+
 </cluster>
