@@ -15,6 +15,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<!-- Cluster configuration file.                                         -->
+<!--                                                                     -->
+<!-- The location of this file can also be defined by a system property: -->
+<!-- -Dlenya.cluster.configFile=<LOCATION_OF_FILE>                       -->
+<!-- If the system property is not defined the default configuration     -->
+<!-- file will be used.                                                  -->
 <cluster>
 
   <!-- Cluster enabled [true|false] -->
