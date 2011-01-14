@@ -40,6 +40,8 @@ public class ClusterManagerImpl extends AbstractLogEnabled
 implements ClusterManager, Initializable, Serviceable
 {
 
+    private final static String SYS_PROP_CONFIG_URI =
+        "lenya.cluster.configFile";
     private final static String CONFIG_URI =
         "context:/lenya/config/cluster/cluster.xconf";
 
@@ -72,6 +74,20 @@ implements ClusterManager, Initializable, Serviceable
     public boolean isRsyncSynchronizationEnabled() {
         return isClusterEnabled() && isMaster() &&
                 isRsyncSynchronizationEnabled;
+    }
+
+    /**
+     * Get configuration URI.
+     * @return Configuration URI.
+     */
+    private String getConfigurationUri() {
+        String configUri = System.getProperty(SYS_PROP_CONFIG_URI);
+        if (configUri != null) {
+            configUri = "file://" + configUri;
+        } else {
+            configUri = CONFIG_URI;
+        }
+        return configUri;
     }
 
     @Override
@@ -127,7 +143,16 @@ implements ClusterManager, Initializable, Serviceable
     throws ClusterConfigurationException
     {
         try {
-            Source configSource = resolver.resolveURI(CONFIG_URI);
+            String configUri = getConfigurationUri();
+            Source configSource = resolver.resolveURI(configUri);
+            if (!configSource.exists()) {
+                throw new ClusterConfigurationException("Cluster " +
+                        "configuration file not found [" + configUri + "]");
+            }
+            if (getLogger().isInfoEnabled()) {
+                getLogger().info("Using cluster configuration file [" +
+                        configUri + "]");
+            }
             DefaultConfigurationBuilder builder =
                 new DefaultConfigurationBuilder();
             Configuration config =
