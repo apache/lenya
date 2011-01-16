@@ -1,0 +1,15 @@
+About Apache Lenya 2.0.4========================
+
+Subversion repository URL: https://svn.apache.org/repos/asf/lenya/tags/RELEASE_2_0_4
+Cocoon version: 2.1.x r 1059605
+
+Bugfixes
+========
+
+* Miscellaneous smaller bugfixes
+* Fixes for WebDAV
+
+New Features
+============
+
+* TinyMCE module updated for TinyMCE 3.0.X, improved editor integration.
