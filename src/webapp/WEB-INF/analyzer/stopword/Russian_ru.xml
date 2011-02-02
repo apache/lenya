@@ -1,101 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <stopwords>
-<stopword>а</stopword>
-<stopword>без</stopword>
-<stopword>более</stopword>
-<stopword>бы</stopword>
-<stopword>был</stopword>
-<stopword>была</stopword>
-<stopword>были</stopword>
-<stopword>было</stopword>
-<stopword>быть</stopword>
-<stopword>в</stopword>
-<stopword>вам</stopword>
-<stopword>ва�?</stopword>
-<stopword>ве�?ь</stopword>
-<stopword>во</stopword>
-<stopword>вот</stopword>
-<stopword>в�?е</stopword>
-<stopword>в�?его</stopword>
-<stopword>в�?ех</stopword>
-<stopword>вы</stopword>
-<stopword>где</stopword>
-<stopword>да</stopword>
-<stopword>даже</stopword>
-<stopword>дл�?</stopword>
-<stopword>до</stopword>
-<stopword>его</stopword>
-<stopword>ее</stopword>
-<stopword>е�?ли</stopword>
-<stopword>е�?ть</stopword>
-<stopword>еще</stopword>
-<stopword>же</stopword>
-<stopword>за</stopword>
-<stopword>зде�?ь</stopword>
-<stopword>и</stopword>
-<stopword>из</stopword>
-<stopword>или</stopword>
-<stopword>им</stopword>
-<stopword>их</stopword>
-<stopword>к</stopword>
-<stopword>как</stopword>
-<stopword>ко</stopword>
-<stopword>когда</stopword>
-<stopword>кто</stopword>
-<stopword>ли</stopword>
-<stopword>либо</stopword>
-<stopword>мне</stopword>
-<stopword>может</stopword>
-<stopword>мы</stopword>
-<stopword>на</stopword>
-<stopword>надо</stopword>
-<stopword>наш</stopword>
-<stopword>не</stopword>
-<stopword>него</stopword>
-<stopword>нее</stopword>
-<stopword>нет</stopword>
-<stopword>ни</stopword>
-<stopword>них</stopword>
-<stopword>но</stopword>
-<stopword>ну</stopword>
-<stopword>о</stopword>
-<stopword>об</stopword>
-<stopword>однако</stopword>
-<stopword>он</stopword>
-<stopword>она</stopword>
-<stopword>они</stopword>
-<stopword>оно</stopword>
-<stopword>от</stopword>
-<stopword>очень</stopword>
-<stopword>по</stopword>
-<stopword>под</stopword>
-<stopword>при</stopword>
-<stopword>�?</stopword>
-<stopword>�?о</stopword>
-<stopword>так</stopword>
-<stopword>также</stopword>
-<stopword>такой</stopword>
-<stopword>там</stopword>
-<stopword>те</stopword>
-<stopword>тем</stopword>
-<stopword>то</stopword>
-<stopword>того</stopword>
-<stopword>тоже</stopword>
-<stopword>той</stopword>
-<stopword>только</stopword>
-<stopword>том</stopword>
-<stopword>ты</stopword>
-<stopword>у</stopword>
-<stopword>уже</stopword>
-<stopword>хот�?</stopword>
-<stopword>чего</stopword>
-<stopword>чей</stopword>
-<stopword>чем</stopword>
-<stopword>что</stopword>
-<stopword>чтобы</stopword>
-<stopword>чье</stopword>
-<stopword>чь�?</stopword>
-<stopword>�?та</stopword>
-<stopword>�?ти</stopword>
-<stopword>�?то</stopword>
-<stopword>�?</stopword></stopwords>
+	<stopword>и</stopword>
+	<stopword>в</stopword>
+	<stopword>во</stopword>
+	<stopword>не</stopword>
+	<stopword>что</stopword>
+	<stopword>он</stopword>
+	<stopword>на</stopword>
+	<stopword>я</stopword>
+	<stopword>с</stopword>
+	<stopword>со</stopword>
+	<stopword>как</stopword>
+	<stopword>а</stopword>
+	<stopword>то</stopword>
+	<stopword>все</stopword>
+	<stopword>она</stopword>
+	<stopword>так</stopword>
+	<stopword>его</stopword>
+	<stopword>но</stopword>
+	<stopword>да</stopword>
+	<stopword>ты</stopword>
+	<stopword>к</stopword>
+	<stopword>у</stopword>
+	<stopword>же</stopword>
+	<stopword>вы</stopword>
+	<stopword>за</stopword>
+	<stopword>бы</stopword>
+	<stopword>по</stopword>
+	<stopword>только</stopword>
+	<stopword>ее</stopword>
+	<stopword>мне</stopword>
+	<stopword>было</stopword>
+	<stopword>вот</stopword>
+	<stopword>от</stopword>
+	<stopword>меня</stopword>
+	<stopword>еще</stopword>
+	<stopword>нет</stopword>
+	<stopword>о</stopword>
+	<stopword>из</stopword>
+	<stopword>ему</stopword>
+	<stopword>теперь</stopword>
+	<stopword>когда</stopword>
+	<stopword>даже</stopword>
+	<stopword>ну</stopword>
+	<stopword>вдруг</stopword>
+	<stopword>ли</stopword>
+	<stopword>если</stopword>
+	<stopword>уже</stopword>
+	<stopword>или</stopword>
+	<stopword>ни</stopword>
+	<stopword>быть</stopword>
+	<stopword>был</stopword>
+	<stopword>него</stopword>
+	<stopword>до</stopword>
+	<stopword>вас</stopword>
+	<stopword>нибудь</stopword>
+	<stopword>опять</stopword>
+	<stopword>уж</stopword>
+	<stopword>вам</stopword>
+	<stopword>сказал</stopword>
+	<stopword>ведь</stopword>
+	<stopword>там</stopword>
+	<stopword>потом</stopword>
+	<stopword>себя</stopword>
+	<stopword>ничего</stopword>
+	<stopword>ей</stopword>
+	<stopword>может</stopword>
+	<stopword>они</stopword>
+	<stopword>тут</stopword>
+	<stopword>где</stopword>
+	<stopword>есть</stopword>
+	<stopword>надо</stopword>
+	<stopword>ней</stopword>
+	<stopword>для</stopword>
+	<stopword>мы</stopword>
+	<stopword>тебя</stopword>
+	<stopword>их</stopword>
+	<stopword>чем</stopword>
+	<stopword>была</stopword>
+	<stopword>сам</stopword>
+	<stopword>чтоб</stopword>
+	<stopword>без</stopword>
+	<stopword>будто</stopword>
+	<stopword>человек</stopword>
+	<stopword>чего</stopword>
+	<stopword>раз</stopword>
+	<stopword>тоже</stopword>
+	<stopword>себе</stopword>
+	<stopword>под</stopword>
+	<stopword>жизнь</stopword>
+	<stopword>будет</stopword>
+	<stopword>ж</stopword>
+  <stopword>тогда</stopword>
+	<stopword>кто</stopword>
+	<stopword>этот</stopword>
+	<stopword>говорил</stopword>
+	<stopword>того</stopword>
+	<stopword>потому</stopword>
+	<stopword>этого</stopword>
+	<stopword>какой</stopword>
+	<stopword>совсем</stopword>
+	<stopword>ним</stopword>
+	<stopword>здесь</stopword>
+	<stopword>этом</stopword>
+	<stopword>один</stopword>
+	<stopword>почти</stopword>
+	<stopword>мой</stopword>
+	<stopword>тем</stopword>
+	<stopword>чтобы</stopword>
+	<stopword>нее</stopword>
+	<stopword>кажется</stopword>
+	<stopword>сейчас</stopword>
+	<stopword>были</stopword>
+	<stopword>куда</stopword>
+	<stopword>зачем</stopword>
+	<stopword>сказать</stopword>
+	<stopword>всех</stopword>
+	<stopword>никогда</stopword>
+	<stopword>сегодня</stopword>
+	<stopword>можно</stopword>
+	<stopword>при</stopword>
+	<stopword>наконец</stopword>
+	<stopword>два</stopword>
+	<stopword>об</stopword>
+	<stopword>другой</stopword>
+	<stopword>хоть</stopword>
+	<stopword>после</stopword>
+	<stopword>над</stopword>
+	<stopword>больше</stopword>
+	<stopword>тот</stopword>
+	<stopword>через</stopword>
+	<stopword>эти</stopword>
+	<stopword>нас</stopword>
+	<stopword>про</stopword>
+	<stopword>всего</stopword>
+	<stopword>них</stopword>
+	<stopword>какая</stopword>
+	<stopword>много</stopword>
+	<stopword>разве</stopword>
+	<stopword>сказала</stopword>
+	<stopword>три</stopword>
+	<stopword>эту</stopword>
+  <stopword>моя</stopword>
+	<stopword>впрочем</stopword>
+	<stopword>хорошо</stopword>
+	<stopword>свою</stopword>
+	<stopword>этой</stopword>
+	<stopword>перед</stopword>
+	<stopword>иногда</stopword>
+	<stopword>лучше</stopword>
+	<stopword>чуть</stopword>
+	<stopword>том</stopword>
+	<stopword>нельзя</stopword>
+	<stopword>такой</stopword>
+	<stopword>им</stopword>
+	<stopword>более</stopword>
+	<stopword>всегда</stopword>
+	<stopword>конечно</stopword>
+	<stopword>всю</stopword>
+	<stopword>между</stopword>
+</stopwords>
+
