@@ -25,7 +25,7 @@
 
 <project name="Lenya webtest tests" default="tests">
 
-  <taskdef file="${webtest.home}/webtestTaskdefs.properties">
+  <taskdef file="${webtest.home}/webtest.xml">
     <classpath>
       <fileset dir="${webtest.home}" includes="**/lib/*.jar"/>
     </classpath>
