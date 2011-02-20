@@ -72,12 +72,7 @@
               <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${message.getMessage().getTime()}"/>
             </td>
             <td style="text-align: center;">
-              <form method="POST">
-                <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-                <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-                <input type="hidden" name="deleteMessageId" value="${message.getId()}"/>
-                <input type="image" src="/modules/gui/icons/sweetie/base/16-square-red-delete.png" name="submit" value="Delete" i18n:attr="value"/>
-              </form>
+              <a href="?lenya.usecase=notification.deleteMessage&amp;messageId=${message.getId()}"><img src="/modules/gui/icons/sweetie/base/16-square-red-delete.png" alt="Delete"/></a>
             </td>
           </tr>
         </jx:forEach>

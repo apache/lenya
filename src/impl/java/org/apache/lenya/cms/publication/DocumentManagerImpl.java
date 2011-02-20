@@ -788,7 +788,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
          * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
          */
         public void visitDocument(Document document) throws PublicationException {
-            getDocumentManager().deleteAllLanguageVersions(document);
+            getDocumentManager().delete(document);
         }
 
     }
