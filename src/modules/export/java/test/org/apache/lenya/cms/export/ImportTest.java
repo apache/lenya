@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.export;
 
 import java.io.File;
+import java.io.InputStreamReader;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
@@ -29,6 +30,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.xpath.XPathAPI;
 
 /**
  * Import example content into test publication.
@@ -39,12 +42,12 @@ public class ImportTest extends AbstractAccessControlTest {
      * @throws Exception if an error occurs.
      */
     public void testImport() throws Exception {
-        
+
         Session session = login("lenya");
-        
+
         Publication pub = getPublication(session, "test");
         Area area = pub.getArea("authoring");
-        
+
         if (area.getDocuments().length == 0) {
             Publication defaultPub = getPublication(session, "default");
             Area defaultArea = defaultPub.getArea("authoring");
@@ -52,17 +55,23 @@ public class ImportTest extends AbstractAccessControlTest {
             String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
             Importer importer = new Importer(getManager(), getLogger());
             importer.importContent(defaultPub, area, path);
-            
+
             assertTrue(area.getSite().contains("/tutorial"));
-                        
+
             session.commit();
         }
-        
+
         Session aliceSession = login("alice");
         Publication alicePub = getPublication(aliceSession, "test");
-        assertTrue(alicePub.getArea("authoring").getSite().contains("/tutorial"));
-        
+        final SiteStructure authSite = alicePub.getArea("authoring").getSite();
+        assertTrue(authSite.contains("/tutorial"));
+        final Document index = authSite.getNode("/index").getLink("en").getDocument();
+        final org.w3c.dom.Document indexDoc = DocumentHelper.readDocument(index.getRepositoryNode()
+                .getInputStream());
+
+        // https://issues.apache.org/bugzilla/show_bug.cgi?id=50493
+        assertNotNull("No rewritten links found.",
+                XPathAPI.selectSingleNode(indexDoc, "//*[starts-with(@href, 'lenya-document:')]"));
     }
 
-    
 }
