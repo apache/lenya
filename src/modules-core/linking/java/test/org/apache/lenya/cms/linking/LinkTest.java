@@ -52,7 +52,8 @@ public class LinkTest extends AbstractAccessControlTest {
             resolver = (LinkResolver) getManager().lookup(LinkResolver.ROLE);
 
             Link[] links = linkManager.getLinksFrom(source);
-
+	    assertTrue(links.length > 0);
+	    
             boolean matched = false;
             for (int i = 0; i < links.length; i++) {
                 LinkTarget linkTarget = resolver.resolve(source, links[i].getUri());
