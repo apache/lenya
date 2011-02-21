@@ -36,7 +36,7 @@
     
     <menu i18n:attr="name" name="Edit">
       <block areas="authoring" resourceTypes="links">
-        <item uc:usecase="editors.oneform"><i18n:text>With one Form</i18n:text></item>
+        <item uc:usecase="editors.oneform"><i18n:text>editors.sourceEditor</i18n:text></item>
       </block>
     </menu>
     
