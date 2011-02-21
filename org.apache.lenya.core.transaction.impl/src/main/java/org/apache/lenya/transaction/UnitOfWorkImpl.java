@@ -26,6 +26,7 @@ import java.util.Set;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.lenya.ac.Identity;
 
 /**
  * Default implementation of a unit of work.

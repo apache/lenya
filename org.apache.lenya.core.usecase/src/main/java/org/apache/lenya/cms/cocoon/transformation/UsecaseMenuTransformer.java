@@ -43,7 +43,8 @@ import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -247,11 +248,13 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer {
 
         getLogger().debug("Setting up transformer");
 
-        this.sourceUrl = ServletHelper.getWebappURI(this.request);
+        //flo : remove when ok this.sourceUrl = ServletHelper.getWebappURI(this.request);
+        this.sourceUrl = new URLInformation().getWebappUrl();
 
         try {
             this.roles = PolicyUtil.getRoles(this.request);
-            String webappUrl = ServletHelper.getWebappURI(this.request);
+            //flo : remove when ok String webappUrl = ServletHelper.getWebappURI(this.request);
+            String webappUrl = new URLInformation().getWebappUrl();
             Session session = this.repository.getSession(this.request);
             this.publication = session.getUriHandler().getPublication(webappUrl);
 

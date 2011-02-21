@@ -15,6 +15,16 @@
   <packaging>jar</packaging>
   <name>Apache Lenya Core Implementation</name>
   
+    <build>
+     <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+  
+  
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -33,23 +43,11 @@
       <artifactId>lenya-core-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-observation</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-repository</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-utils</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.excalibur.components</groupId>
       <artifactId>excalibur-sourceresolve</artifactId>
       <version>2.2.3</version>
     </dependency>
+    
     <!-- for tests -->
     <dependency>
       <groupId>junit</groupId>
@@ -76,46 +74,6 @@
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-ac</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-impl</artifactId>
-    </dependency>
-    
-    <!-- FIXME: maybe the tests can be organized with less dependencies -->
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-sitetree</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-sourcerepository</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-xhtml</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-links</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-opendocument</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-cforms</artifactId>
-      <scope>runtime</scope>
-    </dependency>
+
   </dependencies>
 </project>

@@ -27,14 +27,15 @@ package org.apache.lenya.cms.publication;
  * such as the "blog" publication.
  * @version $Id$
  */
+/*florent comment as it create dependencie with document-impl. See how to enable or remove this
 public class SingleLanguageIdentityMapper extends IdentityDocumentIdToPathMapper {
-
+/*
     /**
      * The parameter <code>language</code> is ignored, since this mapper is used for situations where only one language version of a document exists
      * @see org.apache.lenya.cms.publication.IdentityDocumentIdToPathMapper#getSuffix(java.lang.String)
      */
-    protected String getSuffix(String language) {
+  /*  protected String getSuffix(String language) {
         return "";
     }
 
-}
+}*/

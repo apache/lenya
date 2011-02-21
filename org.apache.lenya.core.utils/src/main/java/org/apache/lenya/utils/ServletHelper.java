@@ -47,7 +47,6 @@ import org.xml.sax.SAXException;
 /**
  * Servlet utility class
  * 
- * TODO : remove the lenya-core-api/o.a.l.util.ServletHelper
  */
 public final class ServletHelper {
 

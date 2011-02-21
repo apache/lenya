@@ -24,6 +24,7 @@ import java.util.WeakHashMap;
 /**
  * A DocumentLocator describes a document based on its path in the site structure. The actual
  * document doesn't have to exist.
+ * It helps to locate a document inside a publication
  */
 public class DocumentLocatorImpl implements DocumentLocator {
 
@@ -38,7 +39,7 @@ public class DocumentLocatorImpl implements DocumentLocator {
      * @return A document locator.
      */
     public static DocumentLocator getLocator(String pubId, String area, String path, String language) {
-        String key = DocumentLocator.getKey(pubId, area, path, language);
+        String key = getKey(pubId, area, path, language);
         DocumentLocator locator = (DocumentLocator) locators.get(key);
         if (locator == null) {
             locator = new DocumentLocatorImpl(pubId, area, path, language);
@@ -98,7 +99,7 @@ public class DocumentLocatorImpl implements DocumentLocator {
      * @return A document locator.
      */
     public DocumentLocator getPathVersion(String path) {
-        return DocumentLocator.getLocator(getPublicationId(), getArea(), path, getLanguage());
+        return getLocator(getPublicationId(), getArea(), path, getLanguage());
     }
 
     /**
@@ -164,18 +165,18 @@ public class DocumentLocatorImpl implements DocumentLocator {
      * @return A document locator.
      */
     public DocumentLocator getLanguageVersion(String language) {
-        return DocumentLocator.getLocator(getPublicationId(), getArea(), getPath(), language);
+        return getLocator(getPublicationId(), getArea(), getPath(), language);
     }
 
     protected String getKey() {
-        return DocumentLocator.getKey(getPublicationId(), getArea(), getPath(), getLanguage());
+        return getKey(getPublicationId(), getArea(), getPath(), getLanguage());
     }
 
     public boolean equals(Object obj) {
         if (!(obj instanceof DocumentLocator)) {
             return false;
         }
-        DocumentLocator locator = (DocumentLocator) obj;
+        DocumentLocatorImpl locator = (DocumentLocatorImpl) obj;
         return locator.getKey().equals(getKey());
     }
 
@@ -194,7 +195,7 @@ public class DocumentLocatorImpl implements DocumentLocator {
      * @return A document locator.
      */
     public DocumentLocator getAreaVersion(String area) {
-        return DocumentLocator.getLocator(getPublicationId(), area, getPath(), getLanguage());
+        return getLocator(getPublicationId(), area, getPath(), getLanguage());
     }
 
     /*

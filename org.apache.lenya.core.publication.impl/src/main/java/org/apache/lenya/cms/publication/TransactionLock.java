@@ -20,6 +20,7 @@ package org.apache.lenya.cms.publication;
 /**
  * Global transaction lock.
  */
+//@Deprecated duplicate with o.a.l.transaction.TransactionLock. Use this instead.
 public class TransactionLock {
 
     /**

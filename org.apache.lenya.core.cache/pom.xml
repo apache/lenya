@@ -27,7 +27,7 @@
   	</dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-api</artifactId>
+      <artifactId>lenya-core-impl</artifactId>
     </dependency>
   </dependencies>
 </project>

@@ -20,7 +20,6 @@ package org.apache.lenya.cms.publication;
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
- * @version $Id$
  */
 public interface DocumentFactory {
 
@@ -105,4 +104,9 @@ public interface DocumentFactory {
      * @return If a publication with this ID exists.
      */
     boolean existsPublication(String id);
+    
+    void setPublicationManager(PublicationManager pubManager);
+    
+    PublicationManager getPublicationManager();
+
 }

@@ -38,6 +38,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentSetImpl;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
@@ -55,7 +56,6 @@ import org.apache.lenya.cms.site.SiteUtil;
 /**
  * DocumentManager implementation.
  * 
- * @version $Id$
  */
 public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentManager {
 
@@ -68,17 +68,19 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      java.lang.String, java.lang.String, java.lang.String, java.lang.String,
      *      java.lang.String, boolean)
      */
+    //florent : comment cause of document.getPublication() not still in api
+    /*
     public Document add(Document sourceDocument, String area, String path, String language,
             String extension, String navigationTitle, boolean visibleInNav)
             throws DocumentBuildException, PublicationException {
-
+    		
         Document document = add(sourceDocument.getResourceType(), sourceDocument.getInputStream(),
                 sourceDocument.getPublication(), area, path, language, extension, navigationTitle,
                 visibleInNav, sourceDocument.getMimeType());
 
         copyMetaData(sourceDocument, document);
         return document;
-    }
+    }*/
 
     /**
      * Copies meta data from one document to another. If the destination document is a different
@@ -106,11 +108,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throw new PublicationException(e);
         }
     }
-
+    
+    //florent : comment cause of document.getPublication() not still in api
+    /*
     public Document add(ResourceType documentType, String initialContentsURI, Publication pub,
             String area, String path, String language, String extension, String navigationTitle,
-            boolean visibleInNav) throws DocumentBuildException, DocumentException,
-            PublicationException {
+            boolean visibleInNav) 
+    			throws DocumentBuildException, PublicationException {
 
         Area areaObj = pub.getArea(area);
         SiteStructure site = areaObj.getSite();
@@ -123,8 +127,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         addToSiteManager(path, document, navigationTitle, visibleInNav);
         return document;
-    }
-
+    }*/
+    
+    //florent : comment cause of document.getPublication() not still in api
+    /*
     protected Document add(ResourceType documentType, InputStream initialContentsStream,
             Publication pub, String area, String path, String language, String extension,
             String navigationTitle, boolean visibleInNav, String mimeType)
@@ -142,11 +148,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         addToSiteManager(path, document, navigationTitle, visibleInNav);
         return document;
-    }
+    }*/
 
     public Document add(ResourceType documentType, String initialContentsURI, Publication pub,
             String area, String language, String extension) throws DocumentBuildException,
-            DocumentException, PublicationException {
+            PublicationException {
 
         String uuid = getUuidGenerator().nextUUID();
         Source source = null;
@@ -173,7 +179,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     protected Document add(ResourceType documentType, InputStream initialContentsStream,
             Publication pub, String area, String language, String extension, String mimeType)
-            throws DocumentBuildException, DocumentException, PublicationException {
+            throws DocumentBuildException, PublicationException {
 
         String uuid = getUuidGenerator().nextUUID();
         return add(documentType, uuid, initialContentsStream, pub, area, language, extension,
@@ -199,8 +205,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             document.setMimeType(mimeType);
 
             // Write Lenya-internal meta-data
-            MetaData lenyaMetaData = document.getMetaData(DocumentImpl.METADATA_NAMESPACE);
-            lenyaMetaData.setValue(DocumentImpl.METADATA_CONTENT_TYPE, "xml");
+            //florent remove document-impl dependencie
+            //MetaData lenyaMetaData = document.getMetaData(DocumentImpl.METADATA_NAMESPACE);
+            // lenyaMetaData.setValue(DocumentImpl.METADATA_CONTENT_TYPE, "xml");
+            MetaData lenyaMetaData = document.getMetaData(Document.METADATA_NAMESPACE);
+            lenyaMetaData.setValue(Document.METADATA_CONTENT_TYPE, "xml");
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Create");
@@ -252,11 +261,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
+    //florent commented cause of change in document api
+    /*
     protected void addToSiteManager(String path, Document document, String navigationTitle,
             boolean visibleInNav) throws PublicationException {
         addToSiteManager(path, document, navigationTitle, visibleInNav, null);
-    }
-
+    }*/
+    
+    //florent commented cause of change in document api
+    /*
     protected void addToSiteManager(String path, Document document, String navigationTitle,
             boolean visibleInNav, String followingSiblingPath) throws PublicationException {
         SiteStructure site = document.area().getSite();
@@ -266,7 +279,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         site.add(path, document);
         document.getLink().setLabel(navigationTitle);
         document.getLink().getNode().setVisible(visibleInNav);
-    }
+    }*/
 
     /**
      * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
@@ -274,12 +287,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.DocumentLocator)
      */
+    //florent commented cause of change in document api
+    /*
     public void copy(Document sourceDoc, DocumentLocator destination) throws PublicationException {
 
         if (!destination.getPublicationId().equals(sourceDoc.getPublication().getId())) {
             throw new PublicationException("Can't copy to a different publication!");
         }
-
+        
         SiteStructure destSite = sourceDoc.getPublication().getArea(destination.getArea())
                 .getSite();
         String destPath = destination.getPath();
@@ -294,8 +309,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     .isVisible());
         }
 
-    }
-
+    }*/
+    
+    //florent commented cause of change in document api
+    /*
     protected void copyInSiteStructure(Document sourceDoc, Document destDoc, String destPath)
             throws PublicationException, DocumentException, SiteException {
 
@@ -352,11 +369,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 }
             }
         }
-    }
+    }*/
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#delete(org.apache.lenya.cms.publication.Document)
      */
+    //florent commented cause of change in document api
+    /*
     public void delete(Document document) throws PublicationException {
         if (!document.exists()) {
             throw new PublicationException("Document [" + document + "] does not exist!");
@@ -367,12 +386,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
 
         document.delete();
-    }
+    }*/
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#move(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.DocumentLocator)
      */
+    //florent commented cause of change in document api
+    /*
     public void move(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
 
@@ -394,19 +415,21 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         sourceDocument.getLink().setLabel(label);
         sourceDocument.getLink().getNode().setVisible(visible);
 
-    }
+    }*/
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#copyToArea(org.apache.lenya.cms.publication.Document,
      *      java.lang.String)
-     */
-  //florent : seems never use, imply cyclic dependencies
+     */    
+    //florent commented cause of change in document api
     /*
     public void copyToArea(Document sourceDoc, String destinationArea) throws PublicationException {
         String language = sourceDoc.getLanguage();
         copyToVersion(sourceDoc, destinationArea, language);
-    }
-
+    }*/
+    
+    //florent commented cause of change in document api
+    /*
     protected void copyToVersion(Document sourceDoc, String destinationArea, String language)
             throws DocumentException, DocumentBuildException, PublicationException, SiteException {
 
@@ -427,7 +450,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#copyToArea(org.apache.lenya.cms.publication.util.DocumentSet,
      *      java.lang.String)
      */
-  //florent : seems never use, imply cyclic dependencies
+    //florent commented cause of change in document api
     /*
     public void copyToArea(DocumentSet documentSet, String destinationArea)
             throws PublicationException {
@@ -437,6 +460,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }*/
 
+    //florent commented cause of change in document api
+    /*
     public void moveAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
             throws PublicationException {
         SiteStructure site = sourceArea.getSite();
@@ -456,7 +481,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             moveAllLanguageVersions(sourceArea, sourcePath + subPath, targetArea, targetPath
                     + subPath);
         }
-    }
+    }*/
 
     protected List preOrder(SiteNode node) {
         List list = new ArrayList();
@@ -468,6 +493,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return list;
     }
 
+    //florent commented cause of change in document api
+    /*
     public void moveAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
             String targetPath) throws PublicationException {
 
@@ -504,8 +531,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } catch (Exception e) {
             throw new PublicationException(e);
         }
-    }
-
+    }*/
+    
+    //florent commented cause of change in document api
+    /*
     public void copyAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
             throws PublicationException {
 
@@ -519,8 +548,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String nodeTargetPath = targetPath + nodeSourcePath.substring(sourcePath.length());
             copyAllLanguageVersions(sourceArea, nodeSourcePath, targetArea, nodeTargetPath);
         }
-    }
+    }*/
 
+    //florent commented cause of change in document api
+    /*
     public void copyAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
             String targetPath) throws PublicationException {
         Publication pub = sourceArea.getPublication();
@@ -545,7 +576,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 copyDocumentSource(sourceVersion, targetDoc);
             }
         }
-    }
+    }*/
 
     /**
      * Copies a document source.
@@ -654,6 +685,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAll(org.apache.lenya.cms.publication.Document)
      */
+    //florent commented cause of change in document api
+    /*
     public void deleteAll(Document document) throws PublicationException {
         NodeSet subsite = SiteUtil.getSubSite(document.getLink().getNode());
         for (NodeIterator i = subsite.descending(); i.hasNext();) {
@@ -664,17 +697,19 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 delete(doc);
             }
         }
-    }
+    }*/
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAllLanguageVersions(org.apache.lenya.cms.publication.Document)
      */
+    //florent commented cause of change in document api
+    /*
     public void deleteAllLanguageVersions(Document document) throws PublicationException {
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             delete(document.getTranslation(languages[i]));
         }
-    }
+    }*/
 
     /**
      * Visitor to delete documents.
@@ -698,8 +733,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         /**
          * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
          */
+        //florent : comment cause of document.getPublication() not still in api
+        /*
         public void visitDocument(Document document) throws PublicationException {
             getDocumentManager().deleteAllLanguageVersions(document);
+        }*/
+        public void visitDocument(Document document) throws PublicationException {
         }
 
     }
@@ -707,6 +746,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#delete(org.apache.lenya.cms.publication.util.DocumentSet)
      */
+    //florent commented cause of change in document api
+    /*
     public void delete(DocumentSet documents) throws PublicationException {
 
         if (documents.isEmpty()) {
@@ -724,38 +765,25 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throw new PublicationException(e);
         }
 
-    }
+    }*/
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#move(org.apache.lenya.cms.publication.util.DocumentSet,
      *      org.apache.lenya.cms.publication.util.DocumentSet)
      */
+    //florent commented cause of change in document api
+    /*
     public void move(DocumentSet sources, DocumentSet destinations) throws PublicationException {
         copy(sources, destinations);
         delete(sources);
-        /*
-         * Document[] sourceDocs = sources.getDocuments(); Document[] targetDocs =
-         * destinations.getDocuments();
-         * 
-         * if (sourceDocs.length != targetDocs.length) { throw new PublicationException( "The number
-         * of source and destination documents must be equal!"); }
-         * 
-         * Map source2target = new HashMap(); for (int i = 0; i < sourceDocs.length; i++) {
-         * source2target.put(sourceDocs[i], targetDocs[i]); }
-         * 
-         * DocumentSet sortedSources = new DocumentSet(sourceDocs);
-         * SiteUtil.sortAscending(this.manager, sortedSources); Document[] sortedSourceDocs =
-         * sortedSources.getDocuments();
-         * 
-         * for (int i = 0; i < sortedSourceDocs.length; i++) { move(sortedSourceDocs[i], (Document)
-         * source2target.get(sortedSourceDocs[i])); }
-         */
-    }
+    }*/
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.util.DocumentSet,
      *      org.apache.lenya.cms.publication.util.DocumentSet)
      */
+    //florent commented cause of change in document api
+    /*
     public void copy(DocumentSet sources, DocumentSet destinations) throws PublicationException {
         Document[] sourceDocs = sources.getDocuments();
         Document[] targetDocs = destinations.getDocuments();
@@ -778,8 +806,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             copy(sortedSourceDocs[i], ((Document) source2target.get(sortedSourceDocs[i]))
                     .getLocator());
         }
-    }
-
+    }*/
+    
+    //florent commented cause of change in document api
+    /*
     protected void sortAscending(DocumentSet set) throws PublicationException {
 
         if (!set.isEmpty()) {
@@ -814,8 +844,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
 
         }
-    }
-
+    }*/
+    
+    //florent commented cause of change in document api
+    /*
     public Document addVersion(Document sourceDocument, String area, String language,
             boolean addToSiteStructure) throws DocumentBuildException, PublicationException {
         Document document = addVersion(sourceDocument, area, language);
@@ -828,16 +860,16 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         return document;
     }
-
+    
     public Document addVersion(Document sourceDocument, String area, String language)
-            throws DocumentBuildException, DocumentException, PublicationException {
+            throws DocumentBuildException, PublicationException {
         Document document = add(sourceDocument.getResourceType(), sourceDocument.getUUID(),
                 sourceDocument.getInputStream(), sourceDocument.getPublication(), area, language,
                 sourceDocument.getSourceExtension(), sourceDocument.getMimeType());
         copyMetaData(sourceDocument, document);
 
         return document;
-    }
+    }*/
 
     public SourceResolver getSourceResolver() {
         return sourceResolver;

@@ -43,6 +43,10 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-repository-api</artifactId>
     </dependency>
+     <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-identity</artifactId>
+    </dependency>
     <!-- TODO : see if theses dependencies are required -->
     <dependency>
       <groupId>javax.servlet</groupId>

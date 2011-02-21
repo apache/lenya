@@ -26,7 +26,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.components.validation.Validator;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.xml.dom.DOMStreamer;
-import org.apache.lenya.cms.publication.Document;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 
@@ -40,11 +39,13 @@ public class ValidationUtil {
      * @param handler The SAX error handler.
      * @throws Exception if an error occurs.
      */
+	/* never used
     public static void validate(Document document, ErrorHandler handler) throws Exception {
         org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(document.getInputStream());
         validate(xmlDoc, document.getResourceType().getSchema(), handler);
 
     }
+    */
 
     /**
      * @param xmlDoc The XML document.

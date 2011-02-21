@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.transaction;
 
+/*
 import org.apache.lenya.cms.publication.IdentityWrapper;
 import org.apache.lenya.cms.repository.RepositoryException;
 
@@ -79,10 +80,10 @@ public class MockTransactionable implements Transactionable {
         String user = MockRevisionController.getHistory(this).getCheckOutUser();
         return user != null && user.equals(getUserId());
     }
-    
+     
     private String getUserId() {
-        IdentityWrapper wrapper = (IdentityWrapper) ((UnitOfWorkImpl) this.unit).getIdentity();
-        return wrapper.getIdentity().getUser().getId();
+    	IdentityWrapper wrapper = (IdentityWrapper) ((UnitOfWorkImpl) this.unit).getIdentity();
+      return wrapper.getIdentity().getUser().getId();
     }
 
     private Lock lock;
@@ -110,4 +111,4 @@ public class MockTransactionable implements Transactionable {
         return this.id;
     }
 
-}
+}*/

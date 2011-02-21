@@ -28,7 +28,8 @@ import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
-import org.apache.lenya.cms.publication.Session;
+//import org.apache.lenya.cms.publication.Session;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * The content janitor cleans up empty directories after a document is removed.

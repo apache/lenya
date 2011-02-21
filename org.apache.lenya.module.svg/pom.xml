@@ -30,7 +30,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-metadata</artifactId>
+      <artifactId>lenya-core-metadata-api</artifactId>
     </dependency>
     
   </dependencies>

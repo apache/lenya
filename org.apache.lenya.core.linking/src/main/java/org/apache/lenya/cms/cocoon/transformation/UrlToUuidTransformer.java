@@ -30,6 +30,7 @@ import org.apache.lenya.cms.linking.LinkRewriter;
 import org.apache.lenya.cms.linking.UrlToUuidRewriter;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
+
 import org.xml.sax.SAXException;
 
 /**

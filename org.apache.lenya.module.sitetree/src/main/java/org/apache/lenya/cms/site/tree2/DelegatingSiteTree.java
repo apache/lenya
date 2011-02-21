@@ -35,13 +35,12 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
-import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
  * Site tree implementation which delegates all operations to a shared site tree.
  */
-public class DelegatingSiteTree implements SiteStructure, SiteTree, RepositoryItem {
+public class DelegatingSiteTree implements SiteTree, RepositoryItem {
 
     private Area area;
     private Map links = new HashMap();

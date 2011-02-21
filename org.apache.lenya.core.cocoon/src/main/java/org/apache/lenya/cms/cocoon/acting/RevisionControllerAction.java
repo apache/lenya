@@ -37,7 +37,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * Revision controller action.

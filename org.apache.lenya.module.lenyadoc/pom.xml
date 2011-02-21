@@ -33,7 +33,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-repository</artifactId>
+      <artifactId>lenya-core-repository-api</artifactId>
     </dependency>
   </dependencies>
 </project>

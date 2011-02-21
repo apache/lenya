@@ -230,7 +230,9 @@ public class Fckeditor extends DocumentUsecase {
             }
             // Convert URLs back to UUIDs. convert() does a save
             LinkConverter converter = new LinkConverter(getLogger());
-            converter.convertUrlsToUuids(getSourceDocument(), false);
+            //florent : cause changes in linkconverter
+            //converter.convertUrlsToUuids(getSourceDocument(), false);
+            converter.convertUrlsToUuids(getPublication(),getSourceDocument(), false);
 
             xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
 

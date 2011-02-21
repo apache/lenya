@@ -63,6 +63,9 @@ public class AreaImpl implements Area {
         if (getSite().containsByUuid(uuid, language)) {
             return true;
         } else {
+        	return false;
+        	//florent : comment as is create dependencie to document-impl and seems not useful as the containsbyUuid has to give the result
+        	/*
             String sourceUri = DocumentImpl.getSourceURI(pub, name, uuid, language);
             try {
                 org.apache.lenya.cms.repository.Session repoSession = ((SessionHolder) this.session)
@@ -71,7 +74,7 @@ public class AreaImpl implements Area {
                 return node.exists();
             } catch (RepositoryException e) {
                 throw new RuntimeException(e);
-            }
+            }*/
         }
     }
 

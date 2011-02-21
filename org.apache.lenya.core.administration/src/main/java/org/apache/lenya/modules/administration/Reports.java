@@ -69,7 +69,9 @@ public class Reports extends AbstractUsecase {
                 Link[] links = linkManager.getLinksFrom(docs[d]);
                 for (int l = 0; l < links.length; l++) {
                     String uri = links[l].getUri();
-                    LinkTarget target = linkResolver.resolve(docs[d], uri);
+                    //florent : change due to change in linkResolver
+                    //LinkTarget target = linkResolver.resolve(docs[d], uri);
+                    LinkTarget target = linkResolver.resolve(getSession(),docs[d], uri);
                     if (!target.exists()) {
                         BrokenLink brokenLink = new BrokenLink(docs[d].getCanonicalWebappURL(), uri);
                         brokenLinks.add(brokenLink);

@@ -3,11 +3,14 @@ package org.apache.lenya.cms.metadata;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.lenya.cms.repository.metadata.MetaDataException;
+//florent import org.apache.lenya.cms.repository.metadata.MetaDataException;
+import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.metadata.MetaDataRegistry;
 
 public class MetaDataRegistryWrapper implements MetaDataRegistry {
 
-    private org.apache.lenya.cms.repository.metadata.MetaDataRegistry metaDataRegistry;
+    //florent private org.apache.lenya.cms.repository.metadata.MetaDataRegistry metaDataRegistry;
+	private MetaDataRegistry metaDataRegistry;
 
     private Map<String, ElementSetWrapper> elementSets = new HashMap<String, ElementSetWrapper>();
 
@@ -42,13 +45,21 @@ public class MetaDataRegistryWrapper implements MetaDataRegistry {
         }
     }
 
-    public void setRepositoryMetaDataRegistry(
-            org.apache.lenya.cms.repository.metadata.MetaDataRegistry metaDataRegistry) {
+    public void setRepositoryMetaDataRegistry(MetaDataRegistry metaDataRegistry) {
+            //florent org.apache.lenya.cms.repository.metadata.MetaDataRegistry metaDataRegistry) {
+    		
         this.metaDataRegistry = metaDataRegistry;
     }
 
-    public org.apache.lenya.cms.repository.metadata.MetaDataRegistry getRepositoryMetaDataRegistry() {
+    //florent public org.apache.lenya.cms.repository.metadata.MetaDataRegistry getRepositoryMetaDataRegistry() {
+    public MetaDataRegistry getRepositoryMetaDataRegistry() {
         return this.metaDataRegistry;
     }
+
+		public void register(String namespaceUri, ElementSet elementSet)
+				throws MetaDataException {
+			// TODO Auto-generated method stub
+			
+		}
 
 }

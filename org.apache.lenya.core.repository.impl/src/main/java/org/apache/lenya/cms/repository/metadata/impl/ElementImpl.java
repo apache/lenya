@@ -17,8 +17,11 @@
  */
 package org.apache.lenya.cms.repository.metadata.impl;
 
-import org.apache.lenya.cms.repository.metadata.Element;
-import org.apache.lenya.cms.repository.metadata.MetaDataException;
+import org.apache.lenya.cms.metadata.Element;
+import org.apache.lenya.cms.metadata.MetaDataException;
+//florent : remove deprecated classes cause of duplications 
+/*import org.apache.lenya.cms.repository.metadata.Element;
+import org.apache.lenya.cms.repository.metadata.MetaDataException;*/
 
 /**
  * Element implementation.

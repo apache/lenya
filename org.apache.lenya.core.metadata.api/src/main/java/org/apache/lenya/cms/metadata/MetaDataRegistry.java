@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.metadata;
 
+
 /**
  * Meta data registry.
  */
@@ -41,6 +42,14 @@ public interface MetaDataRegistry {
      * @throws MetaDataException if an error occurs.
      */
     boolean isRegistered(String namespaceUri) throws MetaDataException;
+    
+    /**
+     * Register an element set.
+     * @param namespaceUri The namespace URI.
+     * @param elementSet The element set.
+     * @throws MetaDataException if a set is already registered for this name.
+     */
+    void register(String namespaceUri, ElementSet elementSet) throws MetaDataException;
     
     /**
      * @return The registered namespace URIs.

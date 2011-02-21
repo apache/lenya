@@ -21,7 +21,7 @@ import java.net.MalformedURLException;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Session;
-
+import org.apache.lenya.cms.linking.LinkTarget;
 /**
  * <p>
  * Resolve a link from a document to another document using it's
@@ -88,8 +88,12 @@ public interface LinkResolver {
      * @return A link target.
      * @throws MalformedURLException if the URI is invalid.
      */
-    LinkTarget resolve(Document currentDocument, String linkUri) throws MalformedURLException;
-
+  //florent : change the method signature by adding a session attribute because document don't still handle his session
+    //TODO : see if session have to be inside the implementation of linkTarget
+    //TODO :  remove comments when ok
+    //LinkTarget resolve(Document currentDocument, String linkUri) throws MalformedURLException;
+    LinkTarget resolve(Session session, Document currentDocument, String linkUri) throws MalformedURLException;
+    
     /**
      * Resolve a link. The link URI has to contain the UUID, language, area and publication ID.
      * @param session The session to use.

@@ -16,7 +16,7 @@
  *
  */
 package org.apache.lenya.cms.publication;
-
+/*
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -29,19 +29,19 @@ import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.util.StringUtil;
-
+*/
 /**
  * Document manager test.
  */
-public class DocumentManagerTest extends AbstractAccessControlTest {
+/*public class DocumentManagerTest extends AbstractAccessControlTest {
 
     private DocumentManager docManager;
-
+*/
     /**
      * Do the test.
      * @throws Exception
      */
-    public void testDocumentManager() throws Exception {
+/*    public void testDocumentManager() throws Exception {
         doTestMoveAll(getDocManager(), "/doctypes", "/tutorial/doctypes");
         doTestMoveAll(getDocManager(), "/tutorial/doctypes", "/doctypes");
         doTestCopyAll(getDocManager(), "/doctypes", "/tutorial/doctypes");
@@ -190,4 +190,4 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
         }
         return docManager;
     }
-}
+}*/

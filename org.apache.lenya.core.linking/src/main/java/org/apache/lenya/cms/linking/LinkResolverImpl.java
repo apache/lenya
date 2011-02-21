@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.cocoon.ResourceNotFoundException;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
@@ -38,8 +39,8 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
      */
     public static final String ROLE = LinkResolverImpl.class.getName();
 
-    //TODO : florent : change the method signature by adding a session attribute because document don't still handle his session
-    // remove comments when ok
+    //florent : change the method signature by adding a session attribute because document don't still handle his session
+    //TODO :  remove comments when ok
     public LinkTarget resolve(Session session, Document currentDoc, String linkUri) throws MalformedURLException {
 
         Link link = new Link(linkUri);
@@ -123,13 +124,21 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
         Area areaObj = pub.getArea(area);
         Document doc;
         if (areaObj.contains(uuid, language)) {
-            doc = areaObj.getDocument(uuid, language);
+            try {
+							doc = areaObj.getDocument(uuid, language);
+						} catch (ResourceNotFoundException e) {
+								throw new RuntimeException(e);
+						}
         } else {
             if (this.fallbackMode == MODE_FAIL) {
                 doc = null;
             } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
                 if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
-                    doc = pub.getArea(area).getDocument(uuid, pub.getDefaultLanguage(), revision);
+                    try {
+											doc = pub.getArea(area).getDocument(uuid, pub.getDefaultLanguage(), revision);
+										} catch (ResourceNotFoundException e) {
+												throw new RuntimeException(e);
+										}
                 } else {
                     doc = null;
                 }

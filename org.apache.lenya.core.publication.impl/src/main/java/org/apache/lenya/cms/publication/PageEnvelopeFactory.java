@@ -24,7 +24,9 @@ import java.util.Map;
 
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.util.ServletHelper;
+//florent import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 
 /**
  * Common entry point for creating page envelopes.
@@ -61,7 +63,8 @@ public class PageEnvelopeFactory {
             throws PageEnvelopeException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         String contextPath = request.getContextPath();
-        String webappUrl = ServletHelper.getWebappURI(request);
+        //florent String webappUrl = ServletHelper.getWebappURI(request);
+        String webappUrl = new URLInformation().getWebappUrl();
         return getPageEnvelope(contextPath, webappUrl, pub);
     }
 

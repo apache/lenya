@@ -17,9 +17,11 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.transaction.Identity;
+//florent : remove deprecated import org.apache.lenya.transaction.Identity;
+import org.apache.lenya.ac.Identity;
 
-public class IdentityWrapper implements Identity {
+public class IdentityWrapper {
+//florent : create a interface of ac.Identity and add this statement implements Identity {
     
     private org.apache.lenya.ac.Identity identity;
     

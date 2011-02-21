@@ -34,8 +34,9 @@ import org.apache.cocoon.matching.Matcher;
 import org.apache.cocoon.sitemap.PatternException;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
-import org.apache.lenya.util.ServletHelper;
-
+//flo : remove when ok import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 /**
  * Matches if the request calls a usecase which is registered for the Usecase Framework.
  */
@@ -66,7 +67,8 @@ public class UsecaseRegistrationMatcher extends AbstractLogEnabled implements Ma
             UsecaseResolver resolver = null;
             try {
                resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
-               String url = ServletHelper.getWebappURI(request);
+               //florent : String url = ServletHelper.getWebappURI(request);
+               String url = new URLInformation().getWebappUrl();
                if (resolver.isRegistered(url, usecaseName)) {
                    result = Collections.EMPTY_MAP;
                }

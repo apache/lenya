@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.Identity;
 
 /**
  * Usecase to change a user's password. The old password is checked.
@@ -30,7 +31,10 @@ public class ChangePassword extends AbstractChangePassword {
      * @return Always returns the currently logged in user.
      */
     protected User getUser() {
-        return getSession().getIdentity().getUser();
+    	
+    	return Identity.getIdentity(this.request.getSession(false)).getUser();
+        //florent:  modifications due to session interface changes
+    		//return getSession().getIdentity().getUser();
     }
 
     /**

@@ -17,45 +17,45 @@
  */
 package org.apache.lenya.cms.publication;
 
-import junit.framework.TestCase;
-
-/**
- *
- */
-public class DocumentLocatorTest extends TestCase {
-
-    /**
-     * 
-     */
-    public void testDocumentLocator() {
-        
-        String pubId = "pub";
-        String area = "area";
-        String area2 = "area2";
-        String languageDe = "de";
-        String languageEn = "en";
-        
-        DocumentLocator root = DocumentLocator.getLocator(pubId, area, "", languageDe);
-        DocumentLocator foo = DocumentLocator.getLocator(pubId, area, "/foo", languageDe);
-        DocumentLocator fooBar = DocumentLocator.getLocator(pubId, area, "/foo/bar", languageDe);
-        DocumentLocator fooBarBaz = DocumentLocator.getLocator(pubId, area, "/foo/bar/baz", languageDe);
-
-        DocumentLocator fooEn = DocumentLocator.getLocator(pubId, area, "/foo", languageEn);
-        DocumentLocator foo2 = DocumentLocator.getLocator(pubId, area2, "/foo", languageDe);
-
-        assertEquals(foo.getParent(), root);
-        assertEquals(fooBar.getParent(), foo);
-        assertEquals(fooBarBaz.getParent(), fooBar);
-        
-        assertEquals(root.getDescendant("foo"), foo);
-        assertEquals(foo.getDescendant("bar/baz"), fooBarBaz);
-        
-        assertEquals(foo.getChild("bar"), fooBar);
-        
-        assertEquals(foo.getLanguageVersion(languageEn), fooEn);
-        
-        assertEquals(foo.getAreaVersion(area2), foo2);
-        
-    }
-    
-}
+//import junit.framework.TestCase;
+//
+///**
+// *
+// */
+//public class DocumentLocatorTest extends TestCase {
+//
+//    /**
+//     * 
+//     */
+//    public void testDocumentLocator() {
+//        
+//        String pubId = "pub";
+//        String area = "area";
+//        String area2 = "area2";
+//        String languageDe = "de";
+//        String languageEn = "en";
+//        
+//        DocumentLocator root = DocumentLocator.getLocator(pubId, area, "", languageDe);
+//        DocumentLocator foo = DocumentLocator.getLocator(pubId, area, "/foo", languageDe);
+//        DocumentLocator fooBar = DocumentLocator.getLocator(pubId, area, "/foo/bar", languageDe);
+//        DocumentLocator fooBarBaz = DocumentLocator.getLocator(pubId, area, "/foo/bar/baz", languageDe);
+//
+//        DocumentLocator fooEn = DocumentLocator.getLocator(pubId, area, "/foo", languageEn);
+//        DocumentLocator foo2 = DocumentLocator.getLocator(pubId, area2, "/foo", languageDe);
+//
+//        assertEquals(foo.getParent(), root);
+//        assertEquals(fooBar.getParent(), foo);
+//        assertEquals(fooBarBaz.getParent(), fooBar);
+//        
+//        assertEquals(root.getDescendant("foo"), foo);
+//        assertEquals(foo.getDescendant("bar/baz"), fooBarBaz);
+//        
+//        assertEquals(foo.getChild("bar"), fooBar);
+//        
+//        assertEquals(foo.getLanguageVersion(languageEn), fooEn);
+//        
+//        assertEquals(foo.getAreaVersion(area2), foo2);
+//        
+//    }
+//    
+//}

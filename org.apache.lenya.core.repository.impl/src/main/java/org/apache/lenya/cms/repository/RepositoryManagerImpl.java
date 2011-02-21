@@ -20,8 +20,10 @@ package org.apache.lenya.cms.repository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.observation.ObservationRegistry;
-import org.apache.lenya.transaction.Identity;
-
+//florent import org.apache.lenya.transaction.Identity;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.repository.SessionImpl;
+import org.apache.lenya.cms.repository.Session;
 /**
  * Repository manager implementation.
  * @version $Id:$

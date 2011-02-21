@@ -27,7 +27,8 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.RepositoryException;
+//import org.apache.lenya.cms.publication.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * An action that tests if a document is already checked out by a given user. If it isn't, a check

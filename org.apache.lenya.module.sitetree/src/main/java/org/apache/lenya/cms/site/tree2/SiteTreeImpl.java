@@ -42,7 +42,7 @@ import org.apache.lenya.cms.site.tree.SiteTree;
 /**
  * Simple site tree implementation.
  */
-public class SiteTreeImpl implements SiteStructure, SiteTree, Persistable, RepositoryItem {
+public class SiteTreeImpl implements SiteTree, Persistable, RepositoryItem {
 
     private Area area;
     private RootNode root;

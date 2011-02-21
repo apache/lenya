@@ -34,7 +34,7 @@ import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.ResourceTypeResolver;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * <p>

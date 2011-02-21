@@ -20,13 +20,14 @@
 
 package org.apache.lenya.cms.publication.util;
 
+import org.apache.cocoon.ResourceNotFoundException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 
 /**
  * Document set containing all language versions of a document.
  */
-public class LanguageVersions extends DocumentSet {
+public class LanguageVersions extends DocumentSetImpl {
 
     /**
      * Ctor.
@@ -40,7 +41,11 @@ public class LanguageVersions extends DocumentSet {
         for (int i = 0; i < languages.length; i++) {
             if (!document.getLanguage().equals(languages[i])) {
                 Document languageVersion;
-                languageVersion = document.getTranslation(languages[i]);
+                try {
+									languageVersion = document.getTranslation(languages[i]);
+								} catch (ResourceNotFoundException rnfe) {
+									throw new DocumentException(rnfe);
+								}
                 add(languageVersion);
             }
         }

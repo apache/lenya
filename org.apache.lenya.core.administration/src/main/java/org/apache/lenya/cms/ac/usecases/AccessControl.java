@@ -27,7 +27,8 @@ import java.util.TreeSet;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
+//florent : import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
@@ -86,7 +87,8 @@ public class AccessControl extends AccessControlUsecase {
         super.initParameters();
 
         try {
-            URLInformation info = new URLInformation(getSourceURL());
+            //URLInformation info = new URLInformation(getSourceURL());
+        	URLInformation info = new URLInformation();
             setParameter(COMPLETE_AREA, info.getCompleteArea());
 
             if (getSession().getUriHandler().isDocument(getSourceURL())) {
@@ -150,7 +152,8 @@ public class AccessControl extends AccessControlUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        URLInformation info = new URLInformation(getSourceURL());
+        //URLInformation info = new URLInformation(getSourceURL());
+        URLInformation info = new URLInformation();
         String acArea = getParameterAsString(AC_AREA);
         if (!acArea.equals(Publication.LIVE_AREA) && !info.getArea().equals(acArea)) {
             addErrorMessage("This usecase can only be invoked in the configured area.");
@@ -449,7 +452,8 @@ public class AccessControl extends AccessControlUsecase {
 
     protected String getPolicyURL() {
         String infoUrl = getSourceURL();
-        URLInformation info = new URLInformation(infoUrl);
+        //URLInformation info = new URLInformation(infoUrl);
+        URLInformation info = new URLInformation();
 
         String area = getParameterAsString(AC_AREA);
         String url = "/" + info.getPublicationId() + "/" + area + info.getDocumentUrl();

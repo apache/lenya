@@ -35,8 +35,10 @@ import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.ServletHelper;
+//flo : remove when ok import org.apache.lenya.cms.publication.URLInformation;
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * Authorizer for usecases.
@@ -167,8 +169,10 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         // Check if the service has been parameterized with a
         // configuration URI. This can be used for testing purposes etc.
         if (configurationUri == null) {
-            String webappUrl = ServletHelper.getWebappURI(request);
-            URLInformation info = new URLInformation(webappUrl);
+            //florent : change on url information
+        		/*String webappUrl = ServletHelper.getWebappURI(request);
+            URLInformation info = new URLInformation(webappUrl);*/
+        	URLInformation info = new URLInformation();
             configurationUri = getConfigurationUri(info.getPublicationId());
         }
 

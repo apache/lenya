@@ -23,11 +23,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.transaction.UnitOfWork;
 
 /**
- * @deprecated solve the concurrency beetween lenya-core-repository/o.a.l.cms.repository.SessionImpl and lenya-core-impl/o.a.l.cms.publication.SEssionImpl
+ * @deprecated have to solve the concurrency beetween lenya-core-repository/o.a.l.cms.repository.SessionImpl and lenya-publication-impl/o.a.l.cms.publication.SEssionImpl
  */
 public class SessionImpl implements Session, SessionHolder {
 
@@ -79,7 +80,8 @@ public class SessionImpl implements Session, SessionHolder {
     }
 
     public Identity getIdentity() {
-        return ((IdentityWrapper) getRepositorySession().getIdentity()).getIdentity();
+        //return ((IdentityWrapper) getRepositorySession().getIdentity()).getIdentity();
+    	return getRepositorySession().getIdentity();
     }
 
     /**
@@ -116,7 +118,9 @@ public class SessionImpl implements Session, SessionHolder {
      * @param identity The identity.
      */
     public void setIdentity(Identity identity) {
-        getRepositorySession().setIdentity(new IdentityWrapper(identity));
+        //florent : now we only use one identity class
+    	//getRepositorySession().setIdentity(new IdentityWrapper(identity));
+    	getRepositorySession().setIdentity(identity);
     }
 
     private UriHandler uriHandler;
@@ -145,7 +149,9 @@ public class SessionImpl implements Session, SessionHolder {
         if (existsPublication(id)) {
             throw new RepositoryException("The publication '" + id + "' already exists.");
         }
-        DocumentFactoryImpl factory = (DocumentFactoryImpl) getDocumentFactory();
+        //florent : remove document-impl dependencie 
+        //DocumentFactoryImpl factory = (DocumentFactoryImpl) getDocumentFactory();
+        DocumentFactory factory = (DocumentFactory) getDocumentFactory();
         factory.getPublicationManager().addPublication(id);
         return getPublication(id);
     }

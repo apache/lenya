@@ -17,11 +17,11 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.lenya.transaction.Identity;
+//florent import org.apache.lenya.transaction.Identity;
+import org.apache.lenya.ac.Identity;
 
 /**
  * Repository manager.
- * @version $Id:$
  */
 public interface RepositoryManager {
 

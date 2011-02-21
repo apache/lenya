@@ -31,7 +31,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * Action that checks if the current URL represents an existing document.

@@ -169,7 +169,9 @@ public class TinyMce extends DocumentUsecase {
         org.apache.lenya.cms.publication.Document doc = getSourceDocument();
         saveXMLFile(encoding, content, doc);
         LinkConverter converter = new LinkConverter(getLogger());
-        converter.convertUrlsToUuids(doc, false);
+      //florent : cause changes in linkconverter
+        //converter.convertUrlsToUuids(doc, false);
+        converter.convertUrlsToUuids(getPublication(),doc, false);
 
         WorkflowUtil.invoke(doc, getEvent());
     }

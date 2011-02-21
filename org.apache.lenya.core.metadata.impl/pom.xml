@@ -19,17 +19,44 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.avalon.framework</groupId>
-      <artifactId>avalon-framework-api</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.avalon.framework</groupId>-->
+<!--      <artifactId>avalon-framework-api</artifactId>-->
+<!--    </dependency>-->
     
     <!-- Lenya -->
-    
-    <dependency>
+        <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-api</artifactId>
+      <artifactId>lenya-core-metadata-api</artifactId>
     </dependency>
+      <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-document-api</artifactId>
+    </dependency>
+      <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-publication-api</artifactId>
+    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-publication-impl</artifactId>-->
+<!--    </dependency>-->
+        <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-api</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-impl</artifactId>
+    </dependency>
+      <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-identity</artifactId>
+    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-api</artifactId>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-usecase</artifactId>
@@ -37,10 +64,10 @@
 <!--    <dependency>-->
 <!--      <groupId>org.apache.lenya</groupId>-->
 <!--      <artifactId>lenya-core-workflow</artifactId>-->
+<!--    </dependency> -->
+<!--        <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-cocoon</artifactId>-->
 <!--    </dependency>-->
-        <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-cocoon</artifactId>
-    </dependency>
   </dependencies>
 </project>

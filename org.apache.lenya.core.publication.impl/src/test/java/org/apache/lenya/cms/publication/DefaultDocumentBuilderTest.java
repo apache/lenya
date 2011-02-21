@@ -16,23 +16,17 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
-/**
- * 
- * To change the template for this generated type comment go to Window>Preferences>Java>Code
- * Generation>Code and Comments
- */
-public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
 
-    /**
-     * @throws PublicationException 
-     * @see org.apache.lenya.cms.publication.DefaultDocumentTest#getDocument(DocumentTestSet)
-     */
-    protected Document getDocument(DocumentTestSet set) throws PublicationException {
-        Publication pub = getSession().getPublication("test");
-        return getSession().getUriHandler().getDocument("/" + pub.getId() + "/" + set.getArea() + set.getUrl());
-    }
-}
+//public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
+//
+//    /**
+//     * @throws PublicationException 
+//     * @see org.apache.lenya.cms.publication.DefaultDocumentTest#getDocument(DocumentTestSet)
+//     */
+//    protected Document getDocument(DocumentTestSet set) throws PublicationException {
+//        Publication pub = getSession().getPublication("test");
+//        return getSession().getUriHandler().getDocument("/" + pub.getId() + "/" + set.getArea() + set.getUrl());
+//    }
+//}

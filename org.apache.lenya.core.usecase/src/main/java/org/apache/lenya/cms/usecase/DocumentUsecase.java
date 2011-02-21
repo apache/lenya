@@ -74,7 +74,10 @@ public class DocumentUsecase extends AbstractUsecase {
     protected Document getSourceDocument() {
         Document doc = (Document) getParameter(DOCUMENT);
         Session session = getSession();
-        if (doc == null || doc.getSession() != session) {
+        //florent : remove a part of this test because document don't still handle his session...
+        //really not sure of consequences, have to understand and find a test
+        //if (doc == null || doc.getSession() != session) {
+        if (doc == null) {
             String sourceUrl = getParameterAsString(SOURCE_URL);
             if (session.getUriHandler().isDocument(sourceUrl)) {
                 doc = session.getUriHandler().getDocument(sourceUrl);
@@ -116,8 +119,11 @@ public class DocumentUsecase extends AbstractUsecase {
     public String getTargetURL(boolean success) {
         Document document = getTargetDocument(success);
         String documentUrl = document.getCanonicalDocumentURL();
-        String url = "/" + document.getPublication().getId() + "/" + document.getArea()
-                + documentUrl;
+        /*	florent : cause of changes in document api, remove when ok
+         * 	String url = "/" + document.getPublication().getId() + "/" + document.getArea()
+                + documentUrl;*/
+        String url = "/" + document.getPublicationId() + "/" + document.getArea()
+        + documentUrl;
         return url + getExitQueryString();
     }
 

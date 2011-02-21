@@ -250,6 +250,10 @@
           <version>2.1-alpha-2</version>
           -->
         </plugin>
+        <plugin>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
         <!--
         <plugin>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -553,6 +557,16 @@
         <artifactId>cocoon-sitemap-components</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-util</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-pipeline-api</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </dependency>
       <!-- Lenya -->
       
       <!-- Core -->
@@ -593,7 +607,27 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
-        <artifactId>lenya-core-impl-tests</artifactId>
+        <artifactId>lenya-core-cocoon</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-publication-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-publication-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-document-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-document-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -608,7 +642,12 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
-        <artifactId>lenya-core-metadata</artifactId>
+        <artifactId>lenya-core-metadata-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-metadata-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -623,7 +662,22 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lenya</groupId>
-        <artifactId>lenya-core-repository</artifactId>
+        <artifactId>lenya-core-repository-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-repository-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-transaction-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-transaction-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -659,6 +713,16 @@
       <dependency>
         <groupId>org.apache.lenya</groupId>
         <artifactId>lenya-core-utils</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-proxy</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-core-identity</artifactId>
         <version>${project.version}</version>
       </dependency>
       <!-- Tests -->

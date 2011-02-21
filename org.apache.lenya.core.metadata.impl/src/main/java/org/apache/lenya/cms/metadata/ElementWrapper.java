@@ -17,11 +17,13 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.cms.repository.metadata.Element;
+//florent import org.apache.lenya.cms.repository.metadata.Element;
+import org.apache.lenya.cms.metadata.Element;
 
 public class ElementWrapper implements org.apache.lenya.cms.metadata.Element {
     
-    private org.apache.lenya.cms.repository.metadata.Element delegate;
+    //private org.apache.lenya.cms.repository.metadata.Element delegate;
+	private org.apache.lenya.cms.metadata.Element delegate;
 
     public ElementWrapper(Element delegate) {
         this.delegate = delegate;

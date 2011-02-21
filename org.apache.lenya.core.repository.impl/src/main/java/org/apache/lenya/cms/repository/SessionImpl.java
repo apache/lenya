@@ -30,8 +30,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
+import org.apache.lenya.cms.publication.DocumentFactoryBuilder;
 import org.apache.lenya.transaction.ConcurrentModificationException;
-import org.apache.lenya.transaction.Identity;
+//florent : change this clase with the core-ac one in order to remove duplications
+//import org.apache.lenya.transaction.Identity;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.transaction.Lock;
@@ -45,7 +48,7 @@ import org.apache.lenya.transaction.UnitOfWorkImpl;
 /**
  * Repository session.
  * 
- * @deprecated solve the concurrency beetween lenya-core-repository/o.a.l.cms.repository.SessionImpl and lenya-core-impl/o.a.l.cms.publication.SEssionImpl 
+ * @deprecated have to solve the concurrency beetween lenya-core-repository/o.a.l.cms.repository.SessionImpl and lenya-publication-impl/o.a.l.cms.publication.SEssionImpl 
  */
 public class SessionImpl implements Session {
     
@@ -75,7 +78,8 @@ public class SessionImpl implements Session {
      * @param identity The identity.
      * @param modifiable Determines if the repository items in this session can be modified.
      */
-    protected SessionImpl(Identity identity, boolean modifiable) {
+    //florent protected SessionImpl(Identity identity, boolean modifiable) {
+    public SessionImpl(Identity identity, boolean modifiable) {
 
         this.identityMap = new IdentityMapImpl();
         this.identity = identity;
@@ -281,4 +285,10 @@ public class SessionImpl implements Session {
         this.holder = holder;
     }
 
+    //florent : add for use the repository session inside the repository module...
+    private DocumentFactoryBuilder documentFactoryBuilder;
+
+    public void setDocumentFactoryBuilder(DocumentFactoryBuilder documentFactoryBuilder) {
+      this.documentFactoryBuilder = documentFactoryBuilder;
+  }
 }

@@ -32,13 +32,19 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.LockException;
-import org.apache.lenya.cms.publication.Node;
+//flo : to suppress when ok import org.apache.lenya.cms.publication.Node;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
-import org.apache.lenya.cms.publication.RepositoryException;
+//flo : import org.apache.lenya.cms.publication.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.TransactionLock;
+//flo : import org.apache.lenya.cms.publication.TransactionLock;
+import org.apache.lenya.transaction.TransactionLock;
 import org.apache.lenya.utils.URLInformation;
+//flo : add identity dependencie
+import org.apache.lenya.ac.Identity;
+
 
 /**
  * Abstract usecase implementation.
@@ -59,6 +65,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     
     protected static final String ERROR_OBJECTS_CHECKED_OUT = "objects-checked-out";
     
+    //florent : deal with the retrieve of identity
+    protected HttpServletRequest request;
 
     protected static final StateMachine.Transition[] TRANSITIONS = {
             new StateMachine.Transition("start", "preChecked", EVENT_CHECK_PRECONDITIONS),
@@ -559,7 +567,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
     public final void initialize() {
         ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
                 .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
-        HttpServletRequest request = processInfo.getRequest();
+        //florent : deal with identity
+        //HttpServletRequest request = processInfo.getRequest();
+        this.request = processInfo.getRequest();
         Session session = this.repository.getSession(request);
         setSession(session);
         setParameter(PARAMETER_STATE_MACHINE, new StateMachine(MODEL));
@@ -706,7 +716,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
      */
     protected void startTransaction() {
         if (this.commitEnabled && !this.getTransactionPolicy().equals(TRANSACTION_POLICY_READONLY)) {
-            setSession(this.repository.startSession(getSession().getIdentity(), true));
+            //florent : deal with identity 
+        		//setSession(this.repository.startSession(getSession().getIdentity(), true));
+        	//this under don't work as startSession was suppress from repository api
+        	//setSession(this.repository.startSession(Identity.getIdentity(this.request.getSession(false)), true));
+        	setSession(this.repository.getSession(this.request));
+        	
         }
     }
 
@@ -729,9 +744,16 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
                 if (!objects[i].isLocked()) {
                     objects[i].lock();
                 }
-                if (!getTransactionPolicy().equals(TRANSACTION_POLICY_OPTIMISTIC)
+                //florent : remove the .getIdentity
+                /*if (!getTransactionPolicy().equals(TRANSACTION_POLICY_OPTIMISTIC)
                         && !objects[i].isCheckedOutBySession(getSession().getId(), getSession()
-                                .getIdentity().getUser().getId())) {
+                                .getIdentity().getUser().getId())) {*/
+                
+                if (!getTransactionPolicy().equals(TRANSACTION_POLICY_OPTIMISTIC)
+                    && !objects[i].isCheckedOutBySession(
+                    				getSession().getId(), 
+                    				Identity.getIdentity(this.request.getSession(false)).getUser().getId())
+                    				) {
                     objects[i].checkout(checkoutRestrictedToSession());
                 }
             }
@@ -742,11 +764,17 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase {
 
     protected boolean canCheckOut(Node[] objects) throws RepositoryException {
         boolean canExecute = true;
-
+        
         for (int i = 0; i < objects.length; i++) {
-            if (objects[i].isCheckedOut()
+        	//florent : change for workaround session.getIdentity
+            /*if (objects[i].isCheckedOut()
                     && !objects[i].isCheckedOutBySession(getSession().getId(), getSession()
-                            .getIdentity().getUser().getId())) {
+                            .getIdentity().getUser().getId())) {*/
+        	if (objects[i].isCheckedOut()
+              && !objects[i].isCheckedOutBySession(
+              			getSession().getId(), 
+              			Identity.getIdentity(this.request.getSession(false)).getUser().getId())
+              			) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
                             "AbstractUsecase::lockInvolvedObjects() can not execute, object ["

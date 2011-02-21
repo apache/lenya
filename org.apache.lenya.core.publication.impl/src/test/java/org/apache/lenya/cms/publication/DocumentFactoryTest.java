@@ -17,22 +17,23 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.commons.logging.Log;
+/*import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lenya.cms.AbstractAccessControlTest;
+*/
 
 /**
  * Document factory test.
  */
-public class DocumentFactoryTest extends AbstractAccessControlTest {
+/*public class DocumentFactoryTest extends AbstractAccessControlTest {
     
     private static final Log logger = LogFactory.getLog(DocumentFactoryTest.class);
-
+*/
     /**
      * Tests the meta data.
      * @throws Exception
      */
-    public void testDocumentFactory() throws Exception {
+ /*   public void testDocumentFactory() throws Exception {
         Session session = getSession();
         
         DocumentFactoryBuilder builder = (DocumentFactoryBuilder) getBeanFactory().getBean(DocumentFactoryBuilder.class.getName());
@@ -52,4 +53,4 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
         assertSame(docA1, docB1);
     }
 
-}
+}*/

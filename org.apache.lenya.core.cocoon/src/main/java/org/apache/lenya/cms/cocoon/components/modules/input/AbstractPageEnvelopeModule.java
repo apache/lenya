@@ -29,7 +29,7 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 import org.apache.lenya.utils.URLInformation;
 /**
  * Abstract superclass for classes which need access to the page envelope.

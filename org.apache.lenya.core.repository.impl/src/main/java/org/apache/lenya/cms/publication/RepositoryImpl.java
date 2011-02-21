@@ -24,6 +24,9 @@ import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.SessionImpl;
+import org.apache.lenya.cms.repository.Session;
+
 
 public class RepositoryImpl implements Repository {
 
@@ -33,6 +36,7 @@ public class RepositoryImpl implements Repository {
     public Session getSession(HttpServletRequest request) {
         Validate.notNull(request);
         SessionImpl session = (SessionImpl) request.getAttribute(Session.class.getName());
+        
         if (session == null) {
             Identity identity = getIdentity(request);
             // attach a read-only repository session to the HTTP request
@@ -54,6 +58,7 @@ public class RepositoryImpl implements Repository {
                     "Can't start a modifiable session without an identity.");
         }
 
+        /*florent : user the repository session 
         IdentityWrapper wrapper = new IdentityWrapper(identity);
         org.apache.lenya.cms.repository.Session repoSession;
         try {
@@ -61,7 +66,8 @@ public class RepositoryImpl implements Repository {
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
-        SessionImpl session = new SessionImpl(this, repoSession);
+        SessionImpl session = new SessionImpl(this, repoSession);*/
+        SessionImpl session = new SessionImpl(identity,modifiable);
         session.setDocumentFactoryBuilder(this.documentFactoryBuilder);
         return session;
     }

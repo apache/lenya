@@ -20,27 +20,31 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-document-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-utils</artifactId>
+    </dependency>
 
-  <!-- <dependency> -->
-  <!--     <groupId>org.apache.lenya</groupId> -->
-  <!--     <artifactId>lenya-core-api</artifactId> -->
-  <!--   </dependency> -->
+   <dependency> 
+       <groupId>org.apache.lenya</groupId> 
+       <artifactId>lenya-core-publication-api</artifactId> 
+     </dependency> 
   <!--   <dependency> -->
   <!--     <groupId>org.apache.lenya</groupId> -->
   <!--     <artifactId>lenya-core-impl</artifactId> -->
   <!--   </dependency> -->
-<!--     <dependency> -->
-<!--       <groupId>org.apache.lenya</groupId> -->
-<!--       <artifactId>lenya-core-metadata</artifactId> -->
-<!--     </dependency> -->
+     <dependency> 
+       <groupId>org.apache.lenya</groupId> 
+       <artifactId>lenya-core-metadata-impl</artifactId> 
+     </dependency> 
 <!--     <dependency> -->
 <!--       <groupId>org.apache.lenya</groupId> -->
 <!--       <artifactId>lenya-core-sitemanagement</artifactId> -->
 <!--     </dependency> -->
-<!--     <dependency> -->
-<!--       <groupId>org.apache.lenya</groupId> -->
-<!--       <artifactId>lenya-core-repository-api</artifactId> -->
-<!--     </dependency> -->
+     <dependency> 
+       <groupId>org.apache.lenya</groupId> 
+       <artifactId>lenya-core-repository-api</artifactId> 
+     </dependency> 
   
 <!--    <dependency>-->
 <!--      <groupId>org.apache.cocoon</groupId>-->

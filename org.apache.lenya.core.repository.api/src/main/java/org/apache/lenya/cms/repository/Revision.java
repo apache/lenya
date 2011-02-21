@@ -20,7 +20,10 @@ package org.apache.lenya.cms.repository;
 /**
  * A revision.
  */
-public interface Revision extends ContentHolder {
+public interface Revision extends ContentHolder{
+//florent : remove while not implement abstract method of contenHolder
+// sourceNodeRevision implement it, but have to implement them in RevisionWrapper.java
+//extends ContentHolder {
     
     /**
      * @return The revision number.

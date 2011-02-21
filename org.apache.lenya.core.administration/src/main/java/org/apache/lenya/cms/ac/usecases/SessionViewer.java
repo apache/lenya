@@ -29,7 +29,9 @@ import javax.servlet.http.*;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.ac.usecases.AccessControlUsecase;
-import org.apache.lenya.cms.publication.URLInformation;
+//florent 
+//import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 import org.apache.lenya.modules.monitoring.SessionListener;
 
 /**
@@ -99,7 +101,8 @@ public class SessionViewer extends AccessControlUsecase {
      * @return The publicationID from an URL.
      */
     private String getPublicationIDfromURL() {
-        URLInformation info = new URLInformation(getSourceURL());
+        //florent : URLInformation info = new URLInformation(getSourceURL());
+    	URLInformation info = new URLInformation();
         return info.getPublicationId();
     }
 }

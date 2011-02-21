@@ -16,7 +16,7 @@
  *
  */
 package org.apache.lenya.cms.publication;
-
+/*
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,17 +24,17 @@ import java.util.Set;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.AbstractAccessControlTest;
-
+*/
 /**
  * Publication test.
  */
-public class PublicationTest extends AbstractAccessControlTest {
+//public class PublicationTest extends AbstractAccessControlTest {
 
     /**
      * Tests the publication functionality.
      * @throws Exception
      */
-    public void testPublication() throws Exception {
+/*    public void testPublication() throws Exception {
         String[] pubIds = getSession().getPublicationIds();
         for (String id : pubIds) {
             doTestPublication(getSession().getPublication(id));
@@ -93,3 +93,4 @@ public class PublicationTest extends AbstractAccessControlTest {
     }
 
 }
+*/

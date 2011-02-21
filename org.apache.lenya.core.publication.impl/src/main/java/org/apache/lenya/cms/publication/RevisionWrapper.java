@@ -17,6 +17,13 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.InputStream;
+
+import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.Revision;
+
 public class RevisionWrapper implements Revision {
     
     private org.apache.lenya.cms.repository.Revision delegate;
@@ -36,5 +43,47 @@ public class RevisionWrapper implements Revision {
     public String getUserId() {
         return this.delegate.getUserId();
     }
+    
+    /*** begin unimplemented method */
+    //florent : this method are added unimplemented due to the use of repository.Revision and not still of publication.Revision
+		public long getLastModified() throws RepositoryException {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		public long getContentLength() throws RepositoryException {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		public String getSourceURI() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public boolean exists() throws RepositoryException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		public InputStream getInputStream() throws RepositoryException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public String getMimeType() throws RepositoryException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public MetaData getMetaData(String namespaceUri) throws MetaDataException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public String[] getMetaDataNamespaceUris() throws MetaDataException {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 }

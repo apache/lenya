@@ -49,9 +49,13 @@ public class LinkConverter extends AbstractLogEnabled {
      * @param doc The document to convert.
      * @param useContextPath If the request's context path should be considered.
      */
-    public void convertUrlsToUuids(Document doc, boolean useContextPath) {
+    /*Florent : remove because document.getPublication create a cyclic dependency between document and publication
+     * use usecase.getpublicationId in the next method
+     * TODO : remove comment when ok
+     */
+    /*public void convertUrlsToUuids(Document doc, boolean useContextPath) {
         convertUrlsToUuids(doc.getPublication(), doc, useContextPath);
-    }
+    }*/
 
     /**
      * Converts all URL-based links to UUID-based links. The link URLs can originate from a
@@ -76,10 +80,13 @@ public class LinkConverter extends AbstractLogEnabled {
                             "Convert links: No XPaths for resource type [" + type.getName() + "]");
                 }
             } else {
-                Publication pub = examinedDocument.getPublication();
-                LinkRewriter incomingRewriter = new IncomingLinkRewriter(pub);
-                LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument
-                        .getSession());
+                //florent : remove cause of cyclic dependency document - publication
+            		//Publication pub = examinedDocument.getPublication();
+            		//LinkRewriter incomingRewriter = new IncomingLinkRewriter(pub);
+            	LinkRewriter incomingRewriter = new IncomingLinkRewriter(srcPub);
+                //florent : session is not still accessible throw document, so use publication instead
+            	//LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(examinedDocument.getSession());
+            	LinkRewriter urlToUuidRewriter = new UrlToUuidRewriter(srcPub.getSession());
 
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(examinedDocument
                         .getInputStream());
@@ -111,8 +118,12 @@ public class LinkConverter extends AbstractLogEnabled {
                         }
                         final String srcPubPrefix = "/" + srcPub.getId() + "/";
                         if (srcPubUrl.startsWith(srcPubPrefix)) {
-                            final String destPubUrl = "/" + pub.getId() + "/"
-                                    + srcPubUrl.substring(srcPubPrefix.length());
+                            //florent : modification cause pub was remplaced by srcpub at the function beginning
+                        		//check concequences of this modification
+                        		// final String destPubUrl = "/" + pub.getId() + "/"
+                            //        + srcPubUrl.substring(srcPubPrefix.length());
+                        	final String destPubUrl = "/" + srcPub.getId() + "/"
+                                  + srcPubUrl.substring(srcPubPrefix.length());
                             if (urlToUuidRewriter.matches(destPubUrl)) {
                                 String rewrittenUrl = urlToUuidRewriter.rewrite(destPubUrl);
                                 attribute.setValue(rewrittenUrl);

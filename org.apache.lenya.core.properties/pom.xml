@@ -32,6 +32,14 @@
       <artifactId>lenya-core-api</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-publication-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-utils</artifactId>
+    </dependency>
+    <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
     </dependency>

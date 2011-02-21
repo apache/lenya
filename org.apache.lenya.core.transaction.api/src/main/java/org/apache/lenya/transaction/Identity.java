@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.transaction;
 
+/**
+ * @deprecated use of /lenya-core-ac/src/main/java/org/apache/lenya/ac/Identity.java is more clean
+ */
 public interface Identity {
     
     String getUserId();

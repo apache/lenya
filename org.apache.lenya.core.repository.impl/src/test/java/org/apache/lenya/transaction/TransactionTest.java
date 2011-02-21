@@ -16,7 +16,7 @@
  *
  */
 package org.apache.lenya.transaction;
-
+/*
 import org.apache.cocoon.core.container.ContainerTestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -73,4 +73,4 @@ public class TransactionTest extends ContainerTestCase {
         lenyaT1.unlock();
     }
 
-}
+}*/

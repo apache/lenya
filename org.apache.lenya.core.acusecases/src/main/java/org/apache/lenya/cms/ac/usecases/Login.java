@@ -52,9 +52,12 @@ public class Login extends AccessControlUsecase {
                 Publication publication = getSession().getPublication(pubId);
                 setParameter(PUBLICATION, publication);
             }
-            Identity identity = this.getSession().getIdentity();
+            //florent : Identity identity = this.getSession().getIdentity();
+            Identity identity = Identity.getIdentity(this.request.getSession(false));
             if (identity != null && identity.getUser() != null) {
-                setParameter(CURRENT_USER, this.getSession().getIdentity().getUser());
+                //florent : use the just define identity, move when ok
+            	//setParameter(CURRENT_USER, this.getSession().getIdentity().getUser());
+            	setParameter(CURRENT_USER, identity.getUser());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -87,13 +90,17 @@ public class Login extends AccessControlUsecase {
         validate();
         
         if (!hasErrors()) {
+        	//TODO : remove this part for retrive the request and use the other technique for identity as the request is in the abstract
+        	//usecase now
         	HttpServletRequest request = ServletHelper.getRequest();
             request.getSession(true);
             
             if (getAccessController().authenticate(request)) {
             	//we have an authenticated user, so we create a modifiable repository session
             	Identity identity = (Identity) request.getSession().getAttribute(Identity.class.getName());
-            	Session s = this.repository.startSession(identity, true);
+            	//florent : see if ok, startsession remove from repository
+            	//Session s = this.repository.startSession(identity, true);
+            	Session s = this.repository.getSession(this.request);
             	this.setSession(s);
             	//TODO : see if this remove attribute is still valid
             	request.getSession(false).removeAttribute(HISTORY_SESSION_ATTRIBUTE);

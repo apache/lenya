@@ -35,8 +35,10 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.ServletHelper;
+//florent import org.apache.lenya.cms.publication.URLInformation;
+// import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
+import org.apache.lenya.utils.ServletHelper;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -60,7 +62,8 @@ public class DocumentHelper {
         Session session = repo.getSession(request);
 
         this.objectModel = _objectModel;
-        URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
+        //florent URLInformation info = new URLInformation(ServletHelper.getWebappURI(request));
+        URLInformation info = new URLInformation();
         this.publication = session.getPublication(info.getPublicationId());
     }
 
@@ -81,7 +84,8 @@ public class DocumentHelper {
         String url = null;
 
             Request request = ObjectModelHelper.getRequest(this.objectModel);
-            String webappUrl = ServletHelper.getWebappURI(request);
+            //florent String webappUrl = ServletHelper.getWebappURI(request);
+            String webappUrl = new URLInformation().getWebappUrl();
             Document envDocument = this.publication.getSession().getUriHandler().getDocument(
                     webappUrl);
             if (uuid == null) {
@@ -89,7 +93,8 @@ public class DocumentHelper {
             }
 
             if (documentArea == null) {
-                URLInformation info = new URLInformation(webappUrl);
+                //florent URLInformation info = new URLInformation(webappUrl);
+            	URLInformation info = new URLInformation();
                 String completeArea = info.getCompleteArea();
                 documentArea = completeArea;
             }
@@ -125,7 +130,8 @@ public class DocumentHelper {
         String contextPath;
         try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
-            String webappUrl = ServletHelper.getWebappURI(request);
+            //florent String webappUrl = ServletHelper.getWebappURI(request);
+            String webappUrl = new URLInformation().getWebappUrl();
             Document document = this.publication.getSession().getUriHandler()
                     .getDocument(webappUrl);
 

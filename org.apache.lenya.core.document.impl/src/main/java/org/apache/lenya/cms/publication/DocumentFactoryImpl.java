@@ -30,7 +30,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.repository.SessionHolder;
-
+import org.apache.lenya.utils.URLInformation;
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
@@ -191,7 +191,8 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
     public boolean isDocument(String webappUrl) throws ResourceNotFoundException {
         Validate.notNull(webappUrl);
         try {
-            URLInformation info = new URLInformation(webappUrl);
+            //florent URLInformation info = new URLInformation(webappUrl);
+        	URLInformation info = new URLInformation();
             String pubId = info.getPublicationId();
             String[] pubIds = getPublicationIds();
             if (pubId != null && Arrays.asList(pubIds).contains(pubId)) {
@@ -248,7 +249,8 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
     protected DocumentLocator getLocator(String webappUrl) {
         DocumentLocator locator;
         try {
-            URLInformation info = new URLInformation(webappUrl);
+            //florent URLInformation info = new URLInformation(webappUrl);
+        	URLInformation info = new URLInformation();
             Publication publication = getPublication(info.getPublicationId());
             DocumentBuilder builder = publication.getDocumentBuilder();
             locator = builder.getLocator(this.session, webappUrl);
@@ -338,11 +340,11 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
 
     private PublicationManager pubManager;
 
-    protected void setPublicationManager(PublicationManager pubManager) {
+    public void setPublicationManager(PublicationManager pubManager) {
         this.pubManager = pubManager;
     }
 
-    protected PublicationManager getPublicationManager() {
+    public PublicationManager getPublicationManager() {
         return this.pubManager;
     }
 

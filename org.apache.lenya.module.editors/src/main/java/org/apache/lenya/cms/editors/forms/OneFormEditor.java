@@ -192,7 +192,9 @@ public class OneFormEditor extends DocumentUsecase implements ErrorHandler {
         try {
             SourceUtil.writeDOM(content, document.getOutputStream());
             LinkConverter converter = new LinkConverter(getLogger());
-            converter.convertUrlsToUuids(document, false);
+          //florent : cause changes in linkconverter
+            //converter.convertUrlsToUuids(getSourceDocument(), false);
+            converter.convertUrlsToUuids(getPublication(),getSourceDocument(), false);
         } catch (Exception e) {
             addErrorMessage(e.getMessage());
         }

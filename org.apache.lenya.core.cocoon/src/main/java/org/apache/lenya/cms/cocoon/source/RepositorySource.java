@@ -44,15 +44,14 @@ import org.apache.excalibur.source.impl.AbstractSource;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.SessionHolder;
 import org.apache.lenya.util.Query;
-import org.apache.lenya.util.ServletHelper;
-
+import org.apache.lenya.utils.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
 /**
  * Repository source.
  * 

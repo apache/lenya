@@ -53,6 +53,38 @@ public interface Document extends Node, MetaDataOwner {
     String TRANSACTIONABLE_TYPE = "document";
     
     /**
+     * The meta data namespace.
+     */
+    public static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
+    
+    /**
+     * The name of the resource type attribute. A resource has a resource type; this information can
+     * be used e.g. for different rendering of different types.
+     */
+    public static final String METADATA_RESOURCE_TYPE = "resourceType";
+
+    /**
+     * The name of the mime type attribute.
+     */
+    public static final String METADATA_MIME_TYPE = "mimeType";
+
+    /**
+     * The name of the content type attribute. Any content managed by Lenya has a type; this
+     * information can be used e.g. to provide an appropriate management interface.
+     */
+    public static final String METADATA_CONTENT_TYPE = "contentType";
+
+    /**
+     * The number of seconds from the request that a document can be cached before it expires
+     */
+    public static final String METADATA_EXPIRES = "expires";
+
+    /**
+     * The extension to use for the document source.
+     */
+    public static final String METADATA_EXTENSION = "extension";
+
+    /**
      * <code>DOCUMENT_META_SUFFIX</code> The suffix for document meta Uris
      */
     final String DOCUMENT_META_SUFFIX = ".meta";
@@ -143,7 +175,7 @@ public interface Document extends Node, MetaDataOwner {
      * 
      * @return true if the document exists, false otherwise
      */
-    boolean exists();
+    boolean exists() throws DocumentException;
     
     /**
      * Check if a document exists with the given document-uuid and the given area

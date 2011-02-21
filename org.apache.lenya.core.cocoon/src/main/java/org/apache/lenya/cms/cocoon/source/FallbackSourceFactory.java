@@ -36,12 +36,14 @@ import org.apache.excalibur.store.impl.MRUMemoryStore;
 import org.apache.lenya.cms.module.Module;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
-import org.apache.lenya.cms.publication.Session;
+//florent import org.apache.lenya.cms.publication.Session;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
-import org.apache.lenya.util.ServletHelper;
+//florent import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * <p>
@@ -53,7 +55,6 @@ import org.apache.lenya.util.ServletHelper;
  * this is necessary as a workaround for bug 40564.
  * </p>
  * 
- * @version $Id$
  */
 public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
         URIAbsolutizer {
@@ -156,9 +157,11 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     protected String getPublicationId() {
         final ProcessInfoProvider processInfo = (ProcessInfoProvider) WebAppContextUtils
                 .getCurrentWebApplicationContext().getBean(ProcessInfoProvider.ROLE);
-        HttpServletRequest request = processInfo.getRequest();
+        /*florent HttpServletRequest request = processInfo.getRequest();
         String webappUri = ServletHelper.getWebappURI(request);
-        URLInformation info = new URLInformation(webappUri);
+        URLInformation info = new URLInformation(webappUri);*/
+        HttpServletRequest request = processInfo.getRequest();
+        URLInformation info = new URLInformation();
         String pubId = null;
         try {
             Session session = this.repository.getSession(request);

@@ -28,10 +28,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.repository.metadata.Element;
+//florent : remove deprecated import, cause duplicate classes
+/*import org.apache.lenya.cms.repository.metadata.Element;
 import org.apache.lenya.cms.repository.metadata.ElementSet;
 import org.apache.lenya.cms.repository.metadata.MetaDataException;
-import org.apache.lenya.cms.repository.metadata.MetaDataRegistry;
+import org.apache.lenya.cms.repository.metadata.MetaDataRegistry;*/
+import org.apache.lenya.cms.metadata.Element;
+import org.apache.lenya.cms.metadata.ElementSet;
+import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.metadata.MetaDataRegistry;
 
 /**
  * Avalon-based element set.

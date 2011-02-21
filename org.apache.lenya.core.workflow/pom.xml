@@ -50,9 +50,12 @@
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-repository</artifactId>
+      <artifactId>lenya-core-repository-api</artifactId>
     </dependency>
-
+  <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-publication-impl</artifactId>
+    </dependency>
     <!-- Tests -->
     <dependency>
       <groupId>junit</groupId>
@@ -105,11 +108,11 @@
       <artifactId>lenya-module-sitetree</artifactId>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-module-sourcerepository</artifactId>
-      <scope>runtime</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-module-sourcerepository</artifactId>-->
+<!--      <scope>runtime</scope>-->
+<!--    </dependency>-->
     
   </dependencies>
 </project>

@@ -32,7 +32,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * Checkin document

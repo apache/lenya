@@ -37,7 +37,8 @@ import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
+//flo : remove when ok import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
@@ -72,7 +73,8 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
                 .getBean(ProcessInfoProvider.ROLE);
         HttpServletRequest request = process.getRequest();
         Session session = this.repository.getSession(request);
-        URLInformation info = new URLInformation(webappUrl);
+        //florent : URLInformation info = new URLInformation(webappUrl);
+        URLInformation info = new URLInformation();
         Publication pub = session.getPublication(info.getPublicationId());
         Role[] roles = PolicyUtil.getRoles(request);
 

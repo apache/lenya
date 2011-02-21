@@ -17,22 +17,28 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.cms.repository.metadata.MetaDataException;
+//florent import org.apache.lenya.cms.repository.metadata.MetaDataException;
+import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.metadata.MetaData;
 
 public class MetaDataWrapper implements MetaData {
 
-    private org.apache.lenya.cms.repository.metadata.MetaData delegate;
+    //florent private org.apache.lenya.cms.repository.metadata.MetaData delegate;
+	private MetaData delegate;
 
-    public MetaDataWrapper(org.apache.lenya.cms.repository.metadata.MetaData delegate) {
+    //florent public MetaDataWrapper(org.apache.lenya.cms.repository.metadata.MetaData delegate) {
+	public MetaDataWrapper(MetaData delegate) {
         this.delegate = delegate;
     }
 
-    protected org.apache.lenya.cms.repository.metadata.MetaData getDelegate() {
+    //florent protected org.apache.lenya.cms.repository.metadata.MetaData getDelegate() {
+	protected MetaData getDelegate() {
         return this.delegate;
     }
 
     public void addValue(String key, String value)
-            throws org.apache.lenya.cms.metadata.MetaDataException {
+            //florent throws org.apache.lenya.cms.metadata.MetaDataException {
+    throws MetaDataException {
         try {
             this.delegate.addValue(key, value);
         } catch (MetaDataException e) {
@@ -41,7 +47,8 @@ public class MetaDataWrapper implements MetaData {
     }
 
     public void forcedReplaceBy(MetaData other)
-            throws org.apache.lenya.cms.metadata.MetaDataException {
+            //florent throws org.apache.lenya.cms.metadata.MetaDataException {
+    throws MetaDataException {
         MetaDataWrapper wrapper = (MetaDataWrapper) other;
         try {
             this.delegate.forcedReplaceBy(wrapper.getDelegate());

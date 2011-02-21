@@ -16,7 +16,7 @@
  *
  */
 package org.apache.lenya.transaction;
-
+/*
 public class MockFactory implements IdentifiableFactory {
     
     private UnitOfWork unit;
@@ -33,4 +33,4 @@ public class MockFactory implements IdentifiableFactory {
         return "mock";
     }
 
-}
+}*/

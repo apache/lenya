@@ -32,6 +32,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.xml.Schema;
+import org.apache.lenya.xml.SchemaImpl;
 
 /**
  * Resource type.
@@ -99,7 +100,7 @@ public class ResourceTypeImpl implements ResourceType {
         if (schemaConf != null) {
             String uri = schemaConf.getAttribute(ATTRIBUTE_URI);
             String language = schemaConf.getAttribute(ATTRIBUTE_NAMESPACE);
-            this.schema = new Schema(language, uri);
+            this.schema = new SchemaImpl(language, uri);
         }
 
         // determine the sample content locations.

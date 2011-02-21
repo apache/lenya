@@ -32,7 +32,6 @@ import org.apache.lenya.cms.repository.RepositoryItem;
 
 /**
  * A publication.
- * @version $Id$
  */
 public class PublicationImpl extends AbstractLogEnabled implements Publication, RepositoryItem {
 
@@ -164,7 +163,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication, 
         delegate.setDefaultLanguage(language);
     }
 
-    public void setPathMapper(DefaultDocumentIdToPathMapper mapper) {
+    //florent : to remove dependencie with document-impl 
+    //public void setPathMapper(DefaultDocumentIdToPathMapper mapper) {
+    public void setPathMapper(DocumentIdToPathMapper mapper) {
         delegate.setPathMapper(mapper);
     }
 

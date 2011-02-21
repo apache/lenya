@@ -20,12 +20,16 @@ package org.apache.lenya.cms.metadata;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.lenya.cms.repository.metadata.ElementSet;
-import org.apache.lenya.cms.repository.metadata.MetaDataException;
+//florent : 
+/*import org.apache.lenya.cms.repository.metadata.ElementSet;
+import org.apache.lenya.cms.repository.metadata.MetaDataException;*/
+import org.apache.lenya.cms.metadata.ElementSet;
+import org.apache.lenya.cms.metadata.MetaDataException;
 
 public class ElementSetWrapper implements org.apache.lenya.cms.metadata.ElementSet {
 
-    private org.apache.lenya.cms.repository.metadata.ElementSet delegate;
+    //florent private org.apache.lenya.cms.repository.metadata.ElementSet delegate;
+	private ElementSet delegate;
     private Map<String, ElementWrapper> elements = new HashMap<String, ElementWrapper>();
 
     public ElementSetWrapper(ElementSet delegate) {
@@ -51,7 +55,8 @@ public class ElementSetWrapper implements org.apache.lenya.cms.metadata.ElementS
     }
 
     public Element[] getElements() {
-        org.apache.lenya.cms.repository.metadata.Element[] elements = this.delegate.getElements();
+        //florent org.apache.lenya.cms.repository.metadata.Element[] elements = this.delegate.getElements();
+    	Element[] elements = this.delegate.getElements();
         Element[] wrappers = new Element[elements.length];
         for (int i = 0; i < elements.length; i++) {
             try {

@@ -72,7 +72,9 @@ public class Deactivate extends InvokeWorkflow {
                 addErrorMessage("This usecase can only be invoked when the live version exists.");
             } else {
                 checkChildren();
-                setParameter(LINKS_TO_DOCUMENT, new LinkList(doc));
+                //TODO : Florent : seems not to be used, and create cyclic, remove this code when compile ok
+                //if remove ok, suppress LINKS_TO_DOCUMENT declaration, just use here seems
+                //setParameter(LINKS_TO_DOCUMENT, new LinkList(doc));
             }
         }
     }
@@ -155,47 +157,48 @@ public class Deactivate extends InvokeWorkflow {
     /**
      * A list of links pointing to a document. Allows lazy loading from the usecase view.
      */
-    public class LinkList {
-        
-        private Document document;
-        private Document[] documents;
-        
-        /**
-         * @param doc The document to resolve the links from.
-         */
-        public LinkList(Document doc) {
-            this.document = doc;
-        }
-        
-        /**
-         * @return The link documents.
-         */
-        public Document[] getDocuments() {
-            if (this.documents == null) {
-                this.documents = getLinksToDocument();
-            }
-            return this.documents;
-        }
-        
-        protected Document[] getLinksToDocument() {
-            Set docs = new HashSet();
-            LinkManager linkMgr = Deactivate.this.getLinkManager();
-            try {
-                Document liveVersion = this.document.getAreaVersion(Publication.LIVE_AREA);
-                Document[] referencingDocs = linkMgr.getReferencingDocuments(liveVersion);
-                for (int d = 0; d < referencingDocs.length; d++) {
-                    Document doc = referencingDocs[d];
-                    if (doc.getArea().equals(Publication.LIVE_AREA)) {
-                        docs.add(doc);
-                    }
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            return (Document[]) docs.toArray(new Document[docs.size()]);
-        }
-
-    }
+    //TODO : Florent : seems not to be used, and create cyclic, remove this code when compile ok
+//    public class LinkList {
+//        
+//        private Document document;
+//        private Document[] documents;
+//        
+//        /**
+//         * @param doc The document to resolve the links from.
+//         */
+//        public LinkList(Document doc) {
+//            this.document = doc;
+//        }
+//        
+//        /**
+//         * @return The link documents.
+//         */
+//        public Document[] getDocuments() {
+//            if (this.documents == null) {
+//                this.documents = getLinksToDocument();
+//            }
+//            return this.documents;
+//        }
+//        
+//        protected Document[] getLinksToDocument() {
+//            Set docs = new HashSet();
+//            LinkManager linkMgr = Deactivate.this.getLinkManager();
+//            try {
+//                Document liveVersion = this.document.getAreaVersion(Publication.LIVE_AREA);
+//                Document[] referencingDocs = linkMgr.getReferencingDocuments(liveVersion);
+//                for (int d = 0; d < referencingDocs.length; d++) {
+//                    Document doc = referencingDocs[d];
+//                    if (doc.getArea().equals(Publication.LIVE_AREA)) {
+//                        docs.add(doc);
+//                    }
+//                }
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//            return (Document[]) docs.toArray(new Document[docs.size()]);
+//        }
+//
+//    }
 
     protected DocumentManager getDocumentManager() {
         return documentManager;

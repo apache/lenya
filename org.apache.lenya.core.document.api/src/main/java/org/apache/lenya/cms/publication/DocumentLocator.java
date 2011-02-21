@@ -1,5 +1,10 @@
 package org.apache.lenya.cms.publication;
 
+/**
+ * A DocumentLocator describes a document based on its path in the site structure. The actual
+ * document doesn't have to exist.
+ * It helps to locate a document inside a publication
+ */
 public interface DocumentLocator {
 
 	/**

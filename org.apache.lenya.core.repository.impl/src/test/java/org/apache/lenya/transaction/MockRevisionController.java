@@ -16,7 +16,7 @@
  *
  */
 package org.apache.lenya.transaction;
-
+/*
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,4 +70,4 @@ public class MockRevisionController {
         
     }
 
-}
+}*/

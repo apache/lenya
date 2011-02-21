@@ -43,8 +43,10 @@ import org.apache.lenya.cms.module.Module;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Repository;
 import org.apache.lenya.cms.publication.Session;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.ServletHelper;
+//import org.apache.lenya.cms.publication.URLInformation;
+//import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.URLInformation;
+import org.apache.lenya.utils.ServletHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -105,8 +107,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule {
     protected Configuration getProperties(Map objectModel) throws ConfigurationException {
         Configuration properties;
         Request request = ObjectModelHelper.getRequest(objectModel);
-        String webappUrl = ServletHelper.getWebappURI(request);
-        URLInformation info = new URLInformation(webappUrl);
+        //florent 
+        //String webappUrl = ServletHelper.getWebappURI(request);
+        //URLInformation info = new URLInformation(webappUrl);
+        URLInformation info = new URLInformation();
         String pubId = info.getPublicationId();
         Session session = this.repository.getSession(request);
         if (session.existsPublication(pubId)) {

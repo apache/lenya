@@ -20,7 +20,7 @@ package org.apache.lenya.cms.repository.metadata;
 /**
  * Definition of a set of meta data elements.
  * 
- * @deprecated duplicate of o.a.l.cms.metadata
+ * @deprecated duplicate of o.a.l.cms.metadata in module lenya-core-metadata-api
  */
 public interface ElementSet {
     

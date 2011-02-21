@@ -18,6 +18,8 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.History;
+import org.apache.lenya.cms.repository.Revision;
 
 public class HistoryWrapper implements History {
 
@@ -28,15 +30,21 @@ public class HistoryWrapper implements History {
     }
 
     public Revision getLatestRevision() {
-        return new RevisionWrapper(this.delegate.getLatestRevision());
+        //florent : don't know where this come...
+    	//return new RevisionWrapper(this.delegate.getLatestRevision());
+    	return this.delegate.getLatestRevision();
     }
 
     public Revision getRevision(int number)
-            throws org.apache.lenya.cms.publication.RepositoryException {
+            //florent throws org.apache.lenya.cms.publication.RepositoryException {
+    throws RepositoryException {
         try {
-            return new RevisionWrapper(this.delegate.getRevision(number));
+        //florent : don't know where this come...
+        	//return new RevisionWrapper(this.delegate.getLatestRevision());
+            return this.delegate.getRevision(number);
         } catch (RepositoryException e) {
-            throw new org.apache.lenya.cms.publication.RepositoryException(e);
+            //florent throw new org.apache.lenya.cms.publication.RepositoryException(e);
+        	throw new RepositoryException(e);
         }
     }
 

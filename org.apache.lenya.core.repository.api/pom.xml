@@ -23,7 +23,11 @@
   <dependency>
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-metadata-api</artifactId>
-    </dependency>  
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-identity</artifactId>
+    </dependency>    
     
   <!-- TODO : see if all theses dependencies are required -->
     <dependency>

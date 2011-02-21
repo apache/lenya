@@ -15,17 +15,25 @@
   <packaging>jar</packaging>
   <name>Apache Lenya Core Observation</name>
   <dependencies>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.avalon.framework</groupId>-->
+<!--      <artifactId>avalon-framework-api</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-api</artifactId>-->
+<!--    </dependency>-->
     <dependency>
-      <groupId>org.apache.avalon.framework</groupId>
-      <artifactId>avalon-framework-api</artifactId>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-api</artifactId>
+      <artifactId>lenya-core-document-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-repository</artifactId>
-    </dependency>
+<!--        <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-publication</artifactId>-->
+<!--    </dependency>-->
   </dependencies>
 </project>

@@ -227,7 +227,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
 
                 Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
-                Proxy proxy = new Proxy(getDefaultProxyUrl(area));
+                Proxy proxy = new ProxyImpl(getDefaultProxyUrl(area));
                 proxy.setUrl(url);
                 this.areaSsl2proxy.put(key, proxy);
                 if (getLogger().isDebugEnabled()) {
@@ -323,7 +323,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * Set the path mapper
      * @param _mapper The path mapper
      */
-    public void setPathMapper(DefaultDocumentIdToPathMapper _mapper) {
+    //florent : use interface instead of impl
+    //public void setPathMapper(DefaultDocumentIdToPathMapper _mapper) {
+    public void setPathMapper(DocumentIdToPathMapper _mapper) {
         assert _mapper != null;
         this.mapper = _mapper;
     }
@@ -442,7 +444,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         String key = getProxyKey(area, isSslProtected);
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
         if (proxy == null) {
-            proxy = new Proxy(getDefaultProxyUrl(area));
+            proxy = new ProxyImpl(getDefaultProxyUrl(area));
             this.areaSsl2proxy.put(key, proxy);
         }
         return proxy;

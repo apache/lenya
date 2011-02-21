@@ -28,6 +28,36 @@
       <groupId>org.apache.lenya</groupId>
       <artifactId>lenya-core-publication-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-document-api</artifactId>
+    </dependency>
+    <!-- This dependencie is just cause by call to static DocumentLocator.getLocator
+      in DefaultDocumentBuilder -->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-document-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-utils</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-proxy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-identity</artifactId>
+    </dependency>
 <!--    <dependency>-->
 <!--      <groupId>org.apache.lenya</groupId>-->
 <!--      <artifactId>lenya-core-metadata</artifactId>-->

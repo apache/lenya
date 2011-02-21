@@ -38,7 +38,7 @@ import org.apache.lenya.cms.publication.ResourceNotFoundException;
 import org.apache.lenya.cms.publication.Session;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.NodeFactory;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.utils.ServletHelper;
 
 /**
  * A factory for the "lenyadoc" scheme (virtual protocol), which is used to resolve any

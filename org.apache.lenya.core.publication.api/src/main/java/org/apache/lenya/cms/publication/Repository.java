@@ -19,6 +19,8 @@ package org.apache.lenya.cms.publication;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.lenya.cms.publication.Session;
+
+
 //import org.apache.lenya.ac.Identity;
 
 public interface Repository {
@@ -26,6 +28,7 @@ public interface Repository {
     Session getSession(HttpServletRequest request);
     
     //florent : remove as it create cycliq dependencies.
+    //note : can be re-enable now as identity is in lenya-core-identity
     // suppress this comment when ok
     //Session startSession(Identity identity, boolean modifiable);
 

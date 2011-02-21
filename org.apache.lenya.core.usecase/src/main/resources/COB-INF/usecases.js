@@ -33,16 +33,49 @@ var customSubmitFlow = undefined;
 function getUsecase(usecaseName) {
     var flowHelper;
     var request;
+    //var urlInformation;
     var sourceUrl;
     var usecaseResolver;
     var usecase;
+    	log("error", "==================================== test =============================================");
+    	
+    	log("error", "usecaseName = " + usecaseName);
+    	
         flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
+        
+        log("error", "flowHelper = " + flowHelper);
+        
         request = flowHelper.getRequest(cocoon);
-        sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+        
+        log("error", "request = " + request);
+        
+        //sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+        sourceUrl = Packages.org.apache.lenya.utils.ServletHelper.getCurrentURI();
+        
+        //urlInformation = cocoon.getComponent("org.apache.lenya.utils.URLInformation");
+        //sourceURL = urlInformation.getWebappUrl();
+        
+        log("error", "sourceUrl = " + sourceUrl);
+        
         usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
+        
+        log("error", "usecaseResolver = " + usecaseResolver);
+        
         usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
-        usecase.setSourceURL(sourceUrl);
-        usecase.setName(usecaseName);
+        
+        /**
+         * TODO : remove this code : duplicate from usecaseResolver.resolve
+         */
+        /*usecase.setSourceURL(sourceUrl);
+        usecase.setName(usecaseName);*/
+        
+        log("error", "usecase = " + usecase);
+        
+        
+        
+        
+        
+        log("error", "==================================== FIN test =============================================");
     try {
     } catch (exception) {
         log("error", "Error in getUsecase(): " + exception);
@@ -228,7 +261,9 @@ function defaultLoopFlow(view, usecase) {
     if (! viewUri.startsWith("/")) {
         // a local URI must be handled by usecase.xmap, which assumes a prefix "usecases-view/[menu|nomenu]/
         // that determines whether the menu is to be displayed. this mechanism is used by most lenya core usecases.
-        viewUri = "usecases-view/" + (view.showMenu() ? "menu" : "nomenu");
+        //viewUri = "usecases-view/" + (view.showMenu() ? "menu" : "nomenu");
+    	viewUri = "lenya/modules/usecase/usecases-view/" + (view.showMenu() ? "menu" : "nomenu");
+    	
     }
     if (view.createContinuation()) {
         log("debug", "Creating view and continuation, calling Cocoon with viewUri = [" + viewUri + "]");
@@ -342,18 +377,42 @@ function executeUsecase() {
     
     var preconditionsOK;
 
+    log("error", "==================================== IN EXecute usecase =============================================");
+
+    
         usecaseName = cocoon.parameters["usecaseName"];
+        
+        log("error", "usecasename = " + usecaseName);
+        
         usecase = getUsecase(usecaseName);
+        
+        log("error", "get usecase ok");
+        
         passRequestParameters(usecase);
+        
+        log("error", "requestParamaters ok");
+        
         usecase.checkPreconditions();
+        
+        log("error", "checkPreconditions");
+        
         preconditionsOK = !usecase.hasErrors();
+        
+        log("error", "No Errors ? " + preconditionsOK);
+        
         if (preconditionsOK && !usecase.getTransactionPolicy().equals(Usecase.TRANSACTION_POLICY_OPTIMISTIC)) {
             usecase.lockInvolvedObjects();
         }
+        
+        log("error", "get the view");
+        
         view = usecase.getView();
         if (view) {
             usecase.setupView();
         }
+        
+        log("error", "view is OK");
+        
         log("debug", "Successfully prepared usecase.", usecaseName);
     try {
     } catch (exception) {
@@ -367,6 +426,9 @@ function executeUsecase() {
     // If the usecase has a view uri, this means we want to display something 
     // to the user before proceeding. This also means the usecase can consist
     // of several steps; repeated until the user chooses to submit or cancel.
+	log("error", "new test %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+	log("error", "valeur de view" + view.getViewURI());
+	log("error", "new test %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     if (view != null && view.getViewURI()) {
         var continuation = null;
         do {
@@ -426,6 +488,9 @@ function executeUsecase() {
     //getTargetURL takes a boolean that is true on success:
     targetUrl = usecase.getTargetURL(state == "success");
     log("debug", "Completed, redirecting to url = [" + targetUrl + "]", usecaseName);
+    
+    log("error", "==================================== FIN execute usecase =============================================");
+    
     // jump to the appropriate URL:
     redirect(targetUrl);
 }

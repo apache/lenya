@@ -195,7 +195,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             throw new MalformedURLException("Path [" + path + "] does not start with '/'!");
         }
 
-        return DocumentLocator.getLocator(publication.getId(), info.getArea(), path, language);
+        return DocumentLocatorImpl.getLocator(publication.getId(), info.getArea(), path, language);
     }
 
     /**

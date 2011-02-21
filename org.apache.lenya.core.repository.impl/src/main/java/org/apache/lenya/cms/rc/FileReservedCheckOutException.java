@@ -46,7 +46,7 @@ public class FileReservedCheckOutException extends Exception {
         this.source = _source;
 
         try {
-            CheckOutEntry coe = rcml.getLatestCheckOutEntry();
+            CheckOutEntry coe = (CheckOutEntry)rcml.getLatestCheckOutEntry();
 
             this.checkOutUsername = coe.getIdentity();
             this.checkOutDate = new Date(coe.getTime());

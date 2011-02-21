@@ -37,7 +37,8 @@ import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.publication.URLInformation;
+//flo : remove when ok import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.utils.URLInformation;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 
@@ -163,7 +164,8 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
     }
 
     protected String getPublicationName(Usecase usecase) {
-        URLInformation info = new URLInformation(usecase.getSourceURL());
+        //florent URLInformation info = new URLInformation(usecase.getSourceURL());
+    	URLInformation info = new URLInformation();
         return info.getPublicationId();
     }
 

@@ -26,12 +26,9 @@
   <import resource="classpath:META-INF/cocoon/spring/lenya-core-observation-components.xml"/>
   <import resource="classpath:META-INF/cocoon/spring/lenya-core-repository-components.xml"/>
   <import resource="classpath:META-INF/cocoon/spring/lenya-core-resourcetype-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-module-cforms-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-module-links-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-module-opendocument-components.xml"/>
+<!--  <import resource="classpath:META-INF/cocoon/spring/lenya-module-opendocument-components.xml"/>-->
   <import resource="classpath:META-INF/cocoon/spring/lenya-module-sitetree-components.xml"/>
   <import resource="classpath:META-INF/cocoon/spring/lenya-module-sourcerepository-components.xml"/>
-  <import resource="classpath:META-INF/cocoon/spring/lenya-module-xhtml-components.xml"/>
   <import resource="classpath:META-INF/cocoon/spring/cocoon-xml-impl.xml"/>
   
 </beans>

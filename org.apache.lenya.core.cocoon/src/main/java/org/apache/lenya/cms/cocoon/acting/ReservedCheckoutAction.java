@@ -27,7 +27,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.publication.Session;
 
 /**

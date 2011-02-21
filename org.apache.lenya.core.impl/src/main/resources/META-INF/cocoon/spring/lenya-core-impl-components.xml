@@ -21,6 +21,23 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
   http://cocoon.apache.org/schema/configurator http://cocoon.apache.org/schema/configurator/cocoon-configurator-1.0.1.xsd">
   
+  <bean name="org.apache.lenya.cms.publication.PublicationManager"
+    class="org.apache.lenya.cms.publication.PublicationManagerImpl">
+    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+    <property name="pubBaseUri" value="file://${lenya.home}/pubs"/>
+  </bean>
+  
+  <bean name="org.apache.lenya.cms.publication.DocumentFactoryBuilder"
+    class="org.apache.lenya.cms.publication.DocumentFactoryBuilderImpl">
+    <property name="publicationManager" ref="org.apache.lenya.cms.publication.PublicationManager"/>
+    <property name="metaDataCache" ref="org.apache.lenya.cms.metadata.MetaDataCache"/>
+    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
+    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
+    <property name="resourceTypeResolver"
+      ref="org.apache.lenya.cms.publication.ResourceTypeResolver"/>
+  </bean>
+  
   <bean name="org.apache.lenya.cms.publication.Repository"
     class="org.apache.lenya.cms.publication.RepositoryImpl">
     <property name="repositoryManager" ref="org.apache.lenya.cms.repository.RepositoryManager"/>
@@ -35,12 +52,7 @@
     <property name="sharedItemStore" ref="org.apache.lenya.cms.repository.SharedItemStore"/>
   </bean>
 
-  <bean name="org.apache.lenya.cms.publication.PublicationManager"
-    class="org.apache.lenya.cms.publication.PublicationManagerImpl">
-    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-    <property name="pubBaseUri" value="file://${lenya.home}/pubs"/>
-  </bean>
+  
 
   <bean name="org.apache.lenya.cms.metadata.MetaDataRegistry"
     class="org.apache.lenya.cms.metadata.MetaDataRegistryWrapper">
@@ -51,15 +63,7 @@
   <bean name="org.apache.lenya.cms.metadata.MetaDataCache"
     class="org.apache.lenya.cms.metadata.MetaDataCache"/>
 
-  <bean name="org.apache.lenya.cms.publication.DocumentFactoryBuilder"
-    class="org.apache.lenya.cms.publication.DocumentFactoryBuilderImpl">
-    <property name="publicationManager" ref="org.apache.lenya.cms.publication.PublicationManager"/>
-    <property name="metaDataCache" ref="org.apache.lenya.cms.metadata.MetaDataCache"/>
-    <property name="sourceResolver" ref="org.apache.excalibur.source.SourceResolver"/>
-    <property name="nodeFactory" ref="org.apache.lenya.cms.repository.NodeFactory"/>
-    <property name="resourceTypeResolver"
-      ref="org.apache.lenya.cms.publication.ResourceTypeResolver"/>
-  </bean>
+  
 
   <bean name="org.apache.lenya.cms.publication.ResourceTypeResolver"
     class="org.apache.lenya.cms.publication.ResourceTypeResolverImpl"/>

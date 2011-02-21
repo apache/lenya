@@ -21,9 +21,11 @@ package org.apache.lenya.cms.publication;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.cocoon.ResourceNotFoundException;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,16 +39,18 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.Persistable;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.SessionHolder;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.History;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 
 /**
  * A typical CMS document.
- * @version $Id$
  */
 public class DocumentImpl implements Document, RepositoryItem {
 
@@ -58,37 +62,38 @@ public class DocumentImpl implements Document, RepositoryItem {
     private ResourceTypeResolver resourceTypeResolver;
     private int revision = -1;
 
+    //florent : extract propertie from document impl to document (api)
     /**
      * The meta data namespace.
      */
-    public static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
+   // public static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
 
     /**
      * The name of the resource type attribute. A resource has a resource type; this information can
      * be used e.g. for different rendering of different types.
      */
-    protected static final String METADATA_RESOURCE_TYPE = "resourceType";
+    //protected static final String METADATA_RESOURCE_TYPE = "resourceType";
 
     /**
      * The name of the mime type attribute.
      */
-    protected static final String METADATA_MIME_TYPE = "mimeType";
+    //protected static final String METADATA_MIME_TYPE = "mimeType";
 
     /**
      * The name of the content type attribute. Any content managed by Lenya has a type; this
      * information can be used e.g. to provide an appropriate management interface.
      */
-    protected static final String METADATA_CONTENT_TYPE = "contentType";
+    //protected static final String METADATA_CONTENT_TYPE = "contentType";
 
     /**
      * The number of seconds from the request that a document can be cached before it expires
      */
-    protected static final String METADATA_EXPIRES = "expires";
+    //protected static final String METADATA_EXPIRES = "expires";
 
     /**
      * The extension to use for the document source.
      */
-    protected static final String METADATA_EXTENSION = "extension";
+    //protected static final String METADATA_EXTENSION = "extension";
 
     /**
      * Creates a new instance of DefaultDocument.
@@ -98,7 +103,7 @@ public class DocumentImpl implements Document, RepositoryItem {
      */
     protected DocumentImpl(org.apache.lenya.cms.publication.Session session,
             DocumentIdentifier identifier, int revision) {
-
+    	
         if (logger.isDebugEnabled()) {
             logger.debug("DefaultDocument() creating new instance with id [" + identifier.getUUID()
                     + "], language [" + identifier.getLanguage() + "]");
@@ -275,17 +280,15 @@ public class DocumentImpl implements Document, RepositoryItem {
         this.extension = _extension;
     }
 
-    public boolean exists() throws ResourceNotFoundException {
+    public boolean exists()throws DocumentException{
         try {
             return getRepositoryNode().exists();
         } catch (org.apache.lenya.cms.repository.RepositoryException e) {
-            throw new ResourceNotFoundException(e);
+        	throw new DocumentException(e);
         }
     }
 
-  //florent : seems never use, imply cyclic dependencies
-    /*
-    public boolean existsInAnyLanguage() throws ResourceNotFoundException {
+    public boolean existsInAnyLanguage() {
         String[] languages = getLanguages();
 
         if (languages.length > 0) {
@@ -311,7 +314,7 @@ public class DocumentImpl implements Document, RepositoryItem {
             return false;
         }
 
-    }*/
+    }
 
     public DocumentIdentifier getIdentifier() {
         return this.identifier;
@@ -420,7 +423,7 @@ public class DocumentImpl implements Document, RepositoryItem {
         MetaData meta;
         try {
             meta = new MetaDataWrapper(getContentHolder().getMetaData(namespaceUri));
-        } catch (org.apache.lenya.cms.repository.metadata.MetaDataException e) {
+        } catch (org.apache.lenya.cms.metadata.MetaDataException e) {
             throw new MetaDataException(e);
         }
         if (getRepositorySession().isModifiable()) {
@@ -439,7 +442,7 @@ public class DocumentImpl implements Document, RepositoryItem {
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
         try {
             return getContentHolder().getMetaDataNamespaceUris();
-        } catch (org.apache.lenya.cms.repository.metadata.MetaDataException e) {
+        } catch (org.apache.lenya.cms.metadata.MetaDataException e) {
             throw new MetaDataException(e);
         }
     }
@@ -480,7 +483,7 @@ public class DocumentImpl implements Document, RepositoryItem {
                     + "] is not referenced in the site structure.");
         }
         try {
-            return DocumentLocator.getLocator(getPublication().getId(), getArea(), structure
+            return DocumentLocatorImpl.getLocator(getPublication().getId(), getArea(), structure
                     .getByUuid(getUUID(), getLanguage()).getNode().getPath(), getLanguage());
         } catch (SiteException e) {
             throw new RuntimeException(e);
@@ -490,9 +493,7 @@ public class DocumentImpl implements Document, RepositoryItem {
     public String getPath() throws DocumentException {
         return getLink().getNode().getPath();
     }
-
-  //florent : seems never use, imply cyclic dependencies
-    /*
+    
     public boolean existsAreaVersion(String area) {
         String sourceUri = getSourceURI(getPublication(), area, getUUID(), getLanguage());
         try {
@@ -500,17 +501,15 @@ public class DocumentImpl implements Document, RepositoryItem {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
     public boolean existsTranslation(String language) {
         return area().contains(getUUID(), language);
     }
 
-  //florent : seems never use, imply cyclic dependencies
-    /*
     public Document getAreaVersion(String area) throws ResourceNotFoundException {
         return getPublication().getArea(area).getDocument(getUUID(), getLanguage());
-    }*/
+    }
 
     public Document getTranslation(String language) throws ResourceNotFoundException {
         return area().getDocument(getUUID(), language);
@@ -561,8 +560,7 @@ public class DocumentImpl implements Document, RepositoryItem {
         return pub.getContentUri(area) + "/" + path;
     }
 
-  //florent : seems never use, imply cyclic dependencies
-    /*
+    
     public boolean existsVersion(String area, String language) {
         String sourceUri = getSourceURI(getPublication(), area, getUUID(), language);
         try {
@@ -570,7 +568,7 @@ public class DocumentImpl implements Document, RepositoryItem {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
     public Document getVersion(String area, String language) throws ResourceNotFoundException {
         return getPublication().getArea(area).getDocument(getUUID(), language);
@@ -594,11 +592,9 @@ public class DocumentImpl implements Document, RepositoryItem {
         return area().getSite().containsByUuid(getUUID(), getLanguage());
     }
 
-  //florent : seems never use, imply cyclic dependencies
-    /*
     public Area area() {
         return getPublication().getArea(getArea());
-    }*/
+    }
 
     public void setResourceType(ResourceType resourceType) {
         Validate.notNull(resourceType);
@@ -751,7 +747,8 @@ public class DocumentImpl implements Document, RepositoryItem {
 
     public History getHistory() {
         if (this.history == null) {
-            this.history = new HistoryWrapper(getRepositoryNode().getHistory());
+            //florent : wrapper not still usefull this.history = new HistoryWrapper(getRepositoryNode().getHistory());
+        	this.history = getRepositoryNode().getHistory();
         }
         return this.history;
     }
@@ -761,8 +758,13 @@ public class DocumentImpl implements Document, RepositoryItem {
         return false;
     }
 
-    public Document getRevision(int i) {
+    public Document getRevision(int i) throws RepositoryException{
+    	try{
         return area().getDocument(getUUID(), getLanguage(), i);
+    	}
+    	catch (ResourceNotFoundException rnfe){
+    		throw new RepositoryException(rnfe);
+    	}
     }
 
     public void forceCheckIn() throws RepositoryException {
@@ -793,4 +795,39 @@ public class DocumentImpl implements Document, RepositoryItem {
         this.resourceTypeResolver = resourceTypeResolver;
     }
 
+    /*** BEGIN unimplemented methods **/
+    //Florent : 
+    //This methods come from the remove of o.a.l.cms.publication.Node and the use of o.a.l.cms.repository.Node
+    
+		public boolean isCollection() throws RepositoryException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		public Collection getChildren() throws RepositoryException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public void copyRevisionsFrom(Node source) throws RepositoryException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void registerRemoved() throws RepositoryException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void setPersistable(Persistable persistable)
+				throws RepositoryException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public Persistable getPersistable() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		/*** END unimplemented methods **/
 }
