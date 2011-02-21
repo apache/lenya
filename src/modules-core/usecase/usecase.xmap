@@ -106,6 +106,16 @@
           <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
         </map:call>
       </map:match>
+      <map:handle-errors>
+        <map:select type="exception">
+          <map:when test="invalid-continuation">
+<!--            <map:match pattern="**">-->
+              <map:mount uri-prefix="" src="{fallback:fallback-to-login.xmap}" check-reload="true" reload-method="synchron" />
+<!--              <map:generate src="{1}"/>
+            </map:match>-->
+          </map:when>
+        </map:select>
+      </map:handle-errors>
     </map:pipeline>
     
   </map:pipelines>
