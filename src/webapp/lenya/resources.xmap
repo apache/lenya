@@ -23,7 +23,7 @@
   <map:resources>
     <map:resource name="proxy-css">
       <map:act type="set-header">
-        <map:parameter name="Last-Modified" value="{date-iso8601-rfc822:{last-modified:{url}}}"/>
+        <map:parameter name="Last-Modified" value="{date-iso8601-rfc822:{last-modified:{url}.css}}"/>
       </map:act>
       <map:generate type="text" src="{url}.css"/>
       <map:transform type="pattern" src="fallback://lenya/chaperon/grammars/link.xlex"/>
