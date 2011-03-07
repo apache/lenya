@@ -16,14 +16,10 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
-<!--
-    This file defines the publication specific use-cases
--->
-
   <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'date-iso8601-rfc822']">
     <component-instance name="date-iso8601-rfc822" logger="core.modules.input" class="org.apache.lenya.cms.cocoon.components.modules.input.DateConverterModule">
       <src-pattern>yyyy-MM-dd HH:mm:ss Z</src-pattern>
-      <pattern>EEE, dd MMM yyyy HH:mm:ss Z</pattern>
+      <pattern>EEE, d MMM yyyy HH:mm:ss Z</pattern>
+      <locale>en_US</locale>
     </component-instance>
   </xconf>
