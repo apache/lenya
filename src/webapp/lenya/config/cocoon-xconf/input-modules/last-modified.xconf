@@ -17,9 +17,5 @@
 -->
 
   <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'last-modified']">
-    <component-instance name="last-modified" logger="core.modules.input" class="org.apache.lenya.cms.cocoon.components.modules.input.LastModifiedModule">
-      <src-pattern>yyyy-MM-dd HH:mm:ss Z</src-pattern>
-      <pattern>EEE, d MMM yyyy HH:mm:ss Z</pattern>
-      <locale>en_US</locale>
-    </component-instance>
+    <component-instance name="last-modified" logger="core.modules.input" class="org.apache.lenya.cms.cocoon.components.modules.input.LastModifiedModule"/>
   </xconf>
