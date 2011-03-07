@@ -37,24 +37,22 @@ import org.apache.cocoon.environment.Session;
  * Identity object. Used to store the authenticated accreditables in the session.
  */
 public class Identity implements Identifiable, Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    private Set identifiables = new HashSet();
+
+    public static Identity ANONYMOUS = new Identity();
+
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Set identifiables = new HashSet();
-
-	public static Identity ANONYMOUS = new Identity();
-
-	/**
-	 * C'tor.
-	 * Adds World identifiable by default.
-	 */
-	public Identity() {
+     * C'tor. Adds World identifiable by default.
+     */
+    public Identity() {
         addIdentifiable(World.getInstance());
-	}
+    }
 
     /**
-     * In the case of Tomcat the object will be serialized to TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * In the case of Tomcat the object will be serialized to
+     * TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
      * @param out OutputStream to hold the serialized identity
      * @throws IOException
      */
@@ -64,7 +62,8 @@ public class Identity implements Identifiable, Serializable {
     }
 
     /**
-     * In case of Tomcat the object will be restored from TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * In case of Tomcat the object will be restored from
+     * TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
      * @param in InputStream that holds the serialized identity
      * @throws IOException
      * @throws ClassNotFoundException
@@ -79,7 +78,8 @@ public class Identity implements Identifiable, Serializable {
      * @return An array of identifiables.
      */
     public Identifiable[] getIdentifiables() {
-        return (Identifiable[]) this.identifiables.toArray(new Identifiable[this.identifiables.size()]);
+        return (Identifiable[]) this.identifiables.toArray(new Identifiable[this.identifiables
+                .size()]);
     }
 
     /**
@@ -135,8 +135,7 @@ public class Identity implements Identifiable, Serializable {
         User user = getUser();
         if (user == null) {
             return true;
-        }
-        else {
+        } else {
             String thisId = user.getAccreditableManager().getId();
             String otherId = manager.getId();
             return thisId.equals(otherId);
