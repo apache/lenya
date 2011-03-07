@@ -20,17 +20,14 @@
 
 package org.apache.lenya.ac;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.cocoon.environment.Session;
 
 /**
@@ -39,7 +36,7 @@ import org.apache.cocoon.environment.Session;
 public class Identity implements Identifiable, Serializable {
     
     private static final long serialVersionUID = 1L;
-    private Set identifiables = new HashSet();
+    private Set<Identifiable> identifiables = new HashSet<Identifiable>();
 
     public static Identity ANONYMOUS = new Identity();
 
@@ -68,9 +65,10 @@ public class Identity implements Identifiable, Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        this.identifiables = (Set) in.readObject();
+        this.identifiables = (Set<Identifiable>) in.readObject();
     }
 
     /**
@@ -98,7 +96,7 @@ public class Identity implements Identifiable, Serializable {
      * @see Accreditable#getAccreditables()
      */
     public Accreditable[] getAccreditables() {
-        Set accreditables = new HashSet();
+        Set<Accreditable> accreditables = new HashSet<Accreditable>();
         Identifiable[] _identifiables = getIdentifiables();
 
         for (int i = 0; i < _identifiables.length; i++) {
