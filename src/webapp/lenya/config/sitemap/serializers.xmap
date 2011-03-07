@@ -31,6 +31,7 @@
     pool-min="4" src="org.apache.cocoon.components.serializers.HTMLSerializer">
       <doctype-default>loose</doctype-default>
       <encoding>UTF-8</encoding>
+      <setContentLength>true</setContentLength>
     </map:serializer>
     
     <map:serializer name="html-no-dtd" logger="sitemap.serializer.html-no-dtd" mime-type="text/html; charset=utf-8" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
@@ -47,10 +48,12 @@
     <map:serializer name="xhtml" src="org.apache.cocoon.components.serializers.XHTMLSerializer" mime-type="text/html; charset=utf-8" logger="sitemap.serializer.xhtml" pool-grow="2" pool-max="64" pool-min="2"> 
       <doctype-default>strict</doctype-default>
       <encoding>UTF-8</encoding>
+      <setContentLength>true</setContentLength>
     </map:serializer>
     
     <map:serializer name="xml" logger="sitemap.serializer.xml" mime-type="text/xml; charset=utf-8" src="org.apache.cocoon.components.serializers.XMLSerializer">
-       <encoding>UTF-8</encoding>
+      <encoding>UTF-8</encoding>
+      <setContentLength>true</setContentLength>
     </map:serializer>
     
     <map:serializer name="links" logger="sitemap.serializer.links" src="org.apache.cocoon.serialization.LinkSerializer"/>
