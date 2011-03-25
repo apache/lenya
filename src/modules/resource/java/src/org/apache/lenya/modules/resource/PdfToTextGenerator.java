@@ -25,9 +25,9 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.AbstractGenerator;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.repository.ContentHolder;
-import org.pdfbox.pdfparser.PDFParser;
-import org.pdfbox.pdmodel.PDDocument;
-import org.pdfbox.util.PDFTextStripper;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
