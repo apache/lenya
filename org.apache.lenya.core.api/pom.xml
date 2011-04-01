@@ -15,58 +15,6 @@
   <packaging>jar</packaging>
   <name>Apache Lenya Core API</name>
   
-  <build>
-    <plugins>
-      <plugin>
-        <!-- export our test classes in a separate jar -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <includes>
-            <include>**/*TestCase.class</include>
-            <include>**/*Test.class</include>
-          </includes>
-          <excludes>
-            <exclude>**/Abstract*.class</exclude>
-          </excludes>
-          <!-- currently triggers NPE in surefire plugin
-            <systemProperties>
-            <property>
-            <name>junit.test.loglevel</name>
-            <value>3</value>
-            </property>
-            </systemProperties>
-          -->
-        </configuration>
-      </plugin>
-    </plugins>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>false</filtering>
-        <excludes>
-          <exclude>META-INF/cocoon/properties/lenya.properties</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>META-INF/cocoon/properties/lenya.properties</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
   
   <properties>
     <lenya.home>${basedir}/..</lenya.home>
