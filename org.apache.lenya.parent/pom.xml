@@ -725,6 +725,16 @@
         <artifactId>lenya-core-identity</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-session-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lenya</groupId>
+        <artifactId>lenya-session-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <!-- Tests -->
       <dependency>
         <groupId>org.apache.lenya</groupId>
@@ -835,12 +845,6 @@
 
   <repositories>
     <repository>
-      <id>java.net</id>
-      <name>java.net Maven 1 Repository</name>
-      <url>http://download.java.net/maven/1</url>
-      <layout>legacy</layout>
-    </repository>
-    <repository>
       <id>java.net.2</id>
       <name>java.net Maven 2 Repository</name>
       <url>http://download.java.net/maven/2</url>
@@ -852,6 +856,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
+	<version>2.1</version>
         <reportSets>
           <reportSet>
             <reports>
@@ -867,12 +872,14 @@
       </plugin>
       <plugin>
         <artifactId>maven-changes-plugin</artifactId>
+	<version>2.4</version>
         <configuration>
           <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-changelog-plugin</artifactId>
+	<version>2.2</version>
       </plugin>
     </plugins>
   </reporting>
