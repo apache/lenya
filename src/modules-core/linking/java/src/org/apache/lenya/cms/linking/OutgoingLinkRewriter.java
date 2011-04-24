@@ -127,7 +127,7 @@ public class OutgoingLinkRewriter extends ServletLinkRewriter {
     }
 
     public boolean matches(String url) {
-        return url.equals("") || url.startsWith("/");
+        return url.startsWith("/");
     }
 
     private Map<String, Publication> publicationCache = new HashMap<String, Publication>();
