@@ -18,7 +18,7 @@
 package org.apache.lenya.cms.repository;
 
 //florent import org.apache.lenya.transaction.Identity;
-import org.apache.lenya.ac.Identity;
+//import org.apache.lenya.ac.Identity;
 
 /**
  * Repository manager.
@@ -36,6 +36,6 @@ public interface RepositoryManager {
      * @return A session.
      * @throws RepositoryException if an error occurs.
      */
-    Session createSession(Identity identity, boolean modifiable) throws RepositoryException;
+    //Session createSession(Identity identity, boolean modifiable) throws RepositoryException;
     
 }

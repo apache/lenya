@@ -30,7 +30,7 @@ public interface Node extends RepositoryItem, ContentHolder {
     /**
      * @return The session this node belongs to.
      */
-    Session getRepositorySession();
+    //Session getRepositorySession();
 
     /**
      * The protocol with which to find Lenya nodes

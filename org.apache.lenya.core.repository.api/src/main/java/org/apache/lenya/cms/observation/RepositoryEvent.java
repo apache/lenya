@@ -1,13 +1,13 @@
 package org.apache.lenya.cms.observation;
 
-import org.apache.lenya.cms.repository.Session;
+//florent remove session import org.apache.lenya.cms.repository.Session;
 
 public interface RepositoryEvent {
 
 	/**
 	 * @return The session.
 	 */
-	public abstract Session getSession();
+	//public abstract Session getSession();
 
 	/**
 	 * @return The descriptor.

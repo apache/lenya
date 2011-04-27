@@ -33,6 +33,8 @@ public interface RepositoryItemFactory {
      * @return A repository item.
      * @throws RepositoryException if an error occurs.
      */
-    RepositoryItem buildItem(Session session, String key) throws RepositoryException;
+   //florent : remove session
+    //RepositoryItem buildItem(Session session, String key) throws RepositoryException;
+    RepositoryItem buildItem(String key) throws RepositoryException;
     
 }
