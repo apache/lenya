@@ -39,7 +39,7 @@ function updateInfos(url){
         var extension;
         var height;
         var width;
-		var mimeType;
+        var mimeType;
         var i;    
         var j;
         for (i = 0; i < children.length; i++) {
@@ -56,24 +56,24 @@ function updateInfos(url){
                  if (childrenElement[j].tagName === "width") {
                      width=childrenElement[j].textContent;
                  }
-				 if (childrenElement[j].tagName === "mimeType") {
+                 if (childrenElement[j].tagName === "mimeType") {
                      mimeType=childrenElement[j].textContent;
                  }
               }
            }
         }
        if (MODE_INSERT!=='Asset') {
-	   	document.forms.insertAsset.width.value = width;
+           document.forms.insertAsset.width.value = width;
         document.forms.insertAsset.height.value = height;
         var result = returnObjById('preview');
-		result.innerHTML = "";
-		var newImg = document.createElement('img');
+        result.innerHTML = "";
+        var newImg = document.createElement('img');
         newImg.setAttribute('src', param[1].replace('.html.meta','.'+extension));
-		newImg.setAttribute('width','450');
-		result.appendChild(newImg);
-	   } else {
-	   	 $('#preview').html(mimeType);
-	   }
+        newImg.setAttribute('width','450');
+        result.appendChild(newImg);
+       } else {
+            $('#preview').html(mimeType);
+       }
 
     };
     loadAsyncXML(url, callback, param);
@@ -90,7 +90,7 @@ function buildTree() {
     tree.init(PUBLICATION_ID);
     tree.render();
     tree.loadInitialTree(AREA, DOCUMENT_ID);
-	//$(".lenya-info-nolanguage").parent("div").unbind();
+    //$(".lenya-info-nolanguage").parent("div").unbind();
 }
 
 LinkTree.prototype = new NavTree();
