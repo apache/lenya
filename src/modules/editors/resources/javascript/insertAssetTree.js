@@ -69,7 +69,9 @@ function updateInfos(url){
         result.innerHTML = "";
         var newImg = document.createElement('img');
         newImg.setAttribute('src', param[1].replace('.html.meta','.'+extension));
-        newImg.setAttribute('width','450');
+        if (width>450) {
+         newImg.setAttribute('width','450');
+        }
         result.appendChild(newImg);
        } else {
             $('#preview').html(mimeType);
