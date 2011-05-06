@@ -33,7 +33,9 @@ function NavNode(id, parent) {
     this.label = '';
     this.area = '';
     this.path = '';
+    this.isresource = false;
     this.isprotected = true;
+    this.mimetype = '';
     this.existsChosenLanguage = true;
     this.langSuffix = '';
 };
@@ -50,6 +52,8 @@ NavNode.prototype.createNewNode = function(node)
     newItem.path = node.getAttribute('path');
     newItem.uuid = node.getAttribute('uuid');
     newItem.isprotected = isNodeProtected(node);
+    newItem.mimetype = getMimeType(node);
+    newItem.isresource =isResource(node);
     newItem.href = node.getAttribute('href');
     newItem.icon = node.getAttribute('icon');
     newItem.label = getLabel(node);
@@ -71,6 +75,7 @@ NavNode.prototype.getLoadSubTreeURL = function() {
         + '?pub=' + PUBLICATION_ID
         + '&area=' + area
         + '&path=' + path
+        + '&mimetype=true' 
         + '&language=' + CHOSEN_LANGUAGE
         + '&defaultLanguage=' + DEFAULT_LANGUAGE
         + '&areas=' + ALL_AREAS);
@@ -113,6 +118,18 @@ function getLabel(node) {
 function isNodeProtected(node) {
     var prot = node.getAttribute('protected');
     if (prot == 'true') return true;
+    return false;
+}
+
+function getMimeType(node) {
+    var prot = node.getAttribute('mimetype');
+    if (prot === null) return '';
+    return prot;
+}
+
+function isResource(node) {
+    var prot = node.getAttribute('resourceType');
+    if (prot === "resource") return true;
     return false;
 }
 
@@ -164,7 +181,8 @@ NavTree.prototype.loadInitialTree = function(area, path) {
     var url = encodeURI(WEBAPP_BASE_PATH + PIPELINE_PATH + '?'
         + 'pub=' + PUBLICATION_ID
         + '&area=' + area
-        + '&path=' + path
+        + '&path=' + path 
+        + '&mimetype=true' 
         + '&defaultLanguage=' + DEFAULT_LANGUAGE
         + '&language=' + CHOSEN_LANGUAGE
         + '&initial=true'
@@ -215,10 +233,11 @@ NavTree.prototype.addLoadedSite = function(site)
   newSite.area = siteArea;
   newSite.path = '/';
   newSite.isprotected = isNodeProtected(site);
+  newSite.mimetype = getMimeType(site);
+  newSite.isresource =isResource(site);
   newSite.href = site.getAttribute('href') + "/" + langSuffix;
   newSite.langSuffix = langSuffix;
   newSite.label = site.getAttribute('label');
-  
   return newSite;
 }
 

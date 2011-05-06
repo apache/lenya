@@ -21,7 +21,7 @@
   <component-instance 
       name="editors.insertImage"
       logger="lenya.publication"
-      class="org.apache.lenya.cms.editors.InsertAsset"
+      class="org.apache.lenya.cms.editors.InsertLink"
   >
     <view 
       template="modules/editors/usecases/insertAsset.jx" 

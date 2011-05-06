@@ -82,7 +82,7 @@
            Here we use .html.meta, bxe uses .bxe.html.
       -->
       <map:match pattern="*/**.html.meta">
-        <map:generate type="lenyaMetaData" src="lenya-document:"/>
+        <map:generate type="lenyaMetaData" src="lenya-document:{page-envelope:document-uuid},area={1},lang={page-envelope:document-language}"/>
         <map:serialize type="xml"/>
       </map:match>
 

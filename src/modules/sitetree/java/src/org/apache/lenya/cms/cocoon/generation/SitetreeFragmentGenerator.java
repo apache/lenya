@@ -33,10 +33,12 @@ import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceValidity;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -118,6 +120,8 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
     public static final String ATTR_UUID = "uuid";
     public static final String ATTR_LANG = "lang";
     public static final String ATTR_TYPE = "mimetype";
+
+    public static final String ATTR_RESOURCE_TYPE = "resourceType";
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -464,9 +468,19 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
             try {
                 Publication pub = this.site.getPublication();
                 String area = this.site.getArea();
-                String type = pub.getArea(area).getDocument(node.getUuid(),
-                        pub.getDefaultLanguage()).getMimeType();
+                Document document = pub.getArea(area).getDocument(node.getUuid(),
+                        pub.getDefaultLanguage());
+                String type = document.getMimeType();
                 this.attributes.addAttribute("", ATTR_TYPE, ATTR_TYPE, "CDATA", type);
+                try {
+                    ResourceType resourceType = document.getResourceType();
+                    if(resourceType!=null){
+                        String resource = resourceType.getName();
+                        this.attributes.addAttribute("", ATTR_RESOURCE_TYPE, ATTR_RESOURCE_TYPE, "CDATA", resource);
+                    }
+                } catch (Exception e) {
+                    getLogger().fatalError("ResourceType is null, which should not happen!", e);
+                }
             } catch (PublicationException e) {
                 throw new SiteException(e);
             }

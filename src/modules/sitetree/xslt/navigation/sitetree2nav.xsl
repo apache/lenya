@@ -158,6 +158,13 @@ Apply nodes recursively
           <xsl:value-of select="@mimetype"/>
         </xsl:attribute>
       </xsl:if>
+      
+      <xsl:if test="@resourceType">
+        <xsl:attribute name="resourceType">
+          <xsl:value-of select="@resourceType"/>
+        </xsl:attribute>
+      </xsl:if>
+      
 
       <xsl:choose>
         <xsl:when test="tree:label[lang($existinglanguage)]">

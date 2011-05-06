@@ -88,6 +88,7 @@
     <module name="monitoring"/>
     <module name="navigation"/>
     <module name="tinymce"/>
+    <module name="jquery"/>
   </modules>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
