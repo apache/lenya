@@ -30,6 +30,7 @@ import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.generation.ServiceableGenerator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceValidity;
@@ -85,6 +86,8 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
     private String cacheKey;
     private SourceValidity validity;
 
+    private String language;
+
     protected static final String PARAM_PUB = "pub";
     protected static final String PARAM_AREA = "area";
     protected static final String PARAM_PATH = "path";
@@ -139,7 +142,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
         String area = par.getParameter(PARAM_AREA, null);
         this.path = par.getParameter(PARAM_PATH, null);
         String uuid = par.getParameter(PARAM_UUID, null);
-        String language = par.getParameter(PARAM_LANGUAGE, null);
+        language = par.getParameter(PARAM_LANGUAGE, null);
 
         if (par.isParameter(PARAM_INITIAL)) {
             this.initialTree = Boolean.valueOf(par.getParameter(PARAM_INITIAL, null))
@@ -467,19 +470,41 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
         if (this.showType) {
             try {
                 Publication pub = this.site.getPublication();
+                if (null==language) {
+                    language=pub.getDefaultLanguage();
+                }
                 String area = this.site.getArea();
                 Document document = pub.getArea(area).getDocument(node.getUuid(),
-                        pub.getDefaultLanguage());
+                        language);
                 String type = document.getMimeType();
-                this.attributes.addAttribute("", ATTR_TYPE, ATTR_TYPE, "CDATA", type);
-                try {
-                    ResourceType resourceType = document.getResourceType();
-                    if(resourceType!=null){
-                        String resource = resourceType.getName();
-                        this.attributes.addAttribute("", ATTR_RESOURCE_TYPE, ATTR_RESOURCE_TYPE, "CDATA", resource);
+                /*
+                 * curtsey fallback trough all languages 
+                 * even if we request two time the same language
+                 * in case that prior null==language. This way we make 
+                 * sure that we get the mime type even if the doc 
+                 * only exist in a third language.
+                 * 
+                 * e.g. you request language=en&defaultLanguage=en
+                 * and the doc only exist in "de" we will still get
+                 * the mimetype.
+                 */
+                if (StringUtils.isEmpty(type)) {
+                    for (String lang : pub.getLanguages()) {
+                        document = pub.getArea(area).getDocument(node.getUuid(),
+                                lang);
+                        type = document.getMimeType();
+                        if (StringUtils.isNotEmpty(type)){
+                            break;
+                        }
                     }
-                } catch (Exception e) {
-                    getLogger().fatalError("ResourceType is null, which should not happen!", e);
+                    
+                }
+                this.attributes.addAttribute("", ATTR_TYPE, ATTR_TYPE, "CDATA", type);
+                ResourceType resourceType = document.getResourceType();
+                if (resourceType != null) {
+                    String resource = resourceType.getName();
+                    this.attributes.addAttribute("", ATTR_RESOURCE_TYPE,
+                            ATTR_RESOURCE_TYPE, "CDATA", resource);
                 }
             } catch (PublicationException e) {
                 throw new SiteException(e);
