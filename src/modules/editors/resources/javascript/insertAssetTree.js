@@ -81,22 +81,24 @@ function updateInfos(url){
     loadAsyncXML(url, callback, param);
 }
 
-/*
- * <a href="lenya-document:fe2dd613-b772-44fa-a3ab-cf89e185020c,lang=en" title="test" class="lenya.asset">test</a>
-<img src="/default/authoring/index/test.png" title="test" alt="test" width="1056" height="946"/>
- */
-
 function buildTree() {
     var placeholder = document.getElementById('tree');
     var tree = new LinkTree(document, placeholder);
     tree.init(PUBLICATION_ID);
     tree.render();
     tree.loadInitialTree(AREA, DOCUMENT_ID);
-    //$(".lenya-info-nolanguage").parent("div").unbind();
 }
 
 LinkTree.prototype = new NavTree();
 LinkTree.prototype.handleItemClick = function(item, event) {
+	var className = item.getStyle();
+	/* 
+	 * Here we disable all onclick events for disabled nodes
+	 * (early exist)
+	 */
+	if(className!=='treenode_label'){
+		return;
+	}
     setLink(item.uuid);
     document.forms.insertAsset.title.value = item.label;
     document.forms.insertAsset.text.value = item.label;
@@ -134,7 +136,11 @@ NavNode.prototype.getStyle = function() {
     } else if (!this.existsChosenLanguage || !this.isresource) {
         return 'lenya-info-nolanguage';
     } else {
-        return 'treenode_label';
+		if(MODE_INSERT!=='Asset' && this.mimetype.indexOf('image')){
+			return 'lenya-info-nolanguage';
+		}else{
+            return 'treenode_label';
+		}   
     }
 };
 
