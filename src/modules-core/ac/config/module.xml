@@ -22,6 +22,7 @@
   <id>org.apache.lenya.modules.ac</id>
   <export package="org.apache.lenya.ac.file"/>
   <export package="org.apache.lenya.ac.impl"/>
+  <export package="org.apache.lenya.cms.ac"/>
   <depends module="org.apache.lenya.modules.cache"/>
   <depends module="org.apache.lenya.modules.linking"/>
   <package>org.apache.lenya.modules</package>
