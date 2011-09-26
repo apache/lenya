@@ -467,7 +467,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator implements
             this.attributes.addAttribute("", ATTR_UUID, ATTR_UUID, "CDATA", uuid);
         this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
 
-        if (this.showType) {
+        if (this.showType && uuid != null) {
             try {
                 Publication pub = this.site.getPublication();
                 if (null==language) {
