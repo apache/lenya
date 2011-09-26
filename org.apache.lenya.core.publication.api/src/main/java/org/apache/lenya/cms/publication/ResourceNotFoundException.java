@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.publication;
 
+//@deprecated use lenya-core-api o.a.l.exceptions.ResourceNotFoundException
 public class ResourceNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

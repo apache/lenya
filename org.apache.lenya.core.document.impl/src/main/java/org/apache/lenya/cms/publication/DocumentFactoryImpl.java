@@ -265,7 +265,8 @@ public class DocumentFactoryImpl implements DocumentFactory, RepositoryItemFacto
      * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
      *      java.lang.String)
      */
-    public RepositoryItem buildItem(org.apache.lenya.cms.repository.Session session, String key) throws RepositoryException {
+    //florent : public RepositoryItem buildItem(org.apache.lenya.cms.repository.Session session, String key) throws RepositoryException {
+    public RepositoryItem buildItem(String key) throws RepositoryException {
         if (logger.isDebugEnabled())
             logger.debug("DocumentFactory::build() called with key [" + key + "]");
 

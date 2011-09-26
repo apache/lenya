@@ -12,7 +12,7 @@
   <groupId>org.apache.lenya</groupId>
   <artifactId>lenya-core-transaction-impl</artifactId>
   <packaging>jar</packaging>
-  <name>Apache Lenya Transactions</name>
+  <name>Apache Lenya Transaction implementation</name>
   <description>Deals with transactions</description>
   
   <dependencies>

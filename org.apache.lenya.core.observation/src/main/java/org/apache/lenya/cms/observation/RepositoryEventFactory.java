@@ -19,15 +19,16 @@ package org.apache.lenya.cms.observation;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.lenya.cms.publication.Document;
+//import org.apache.lenya.cms.publication.Document;
 //florent import org.apache.lenya.cms.publication.DocumentImpl;
-import org.apache.lenya.cms.publication.Publication;
+/*import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.Session;*/
 
 /**
  * Factory to create repository events.
  */
+//public class RepositoryEventFactory implements RepositoryEventFactory {
 public class RepositoryEventFactory {
 
     private static final Log logger = LogFactory.getLog(RepositoryEventFactory.class);
@@ -38,8 +39,11 @@ public class RepositoryEventFactory {
      * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(Session session, Object descriptor) {
+    /*public static final RepositoryEvent createEvent(Session session, Object descriptor) {
         return new RepositoryEventImpl(session, descriptor);
+    }*/
+    public static final RepositoryEvent createEvent(Object descriptor) {
+        return new RepositoryEventImpl(descriptor);
     }
 
     /**
@@ -68,6 +72,7 @@ public class RepositoryEventFactory {
      * @param descriptor The descriptor.
      * @return An event.
      */
+    /*
     public static final RepositoryEvent createEvent(Node node, Object descriptor) {
         RepositoryEvent event;
         Document doc = null;
@@ -81,13 +86,14 @@ public class RepositoryEventFactory {
             event.setNodeUri(node.getSourceURI());
         }
         return event;
-    }
+    }*/
 
     /**
      * @param node The node.
      * @return The document represented by the node or <code>null</code> if the node doesn't
      *         represent a document.
      */
+    /*
     protected static final Document getDocument(Node node) {
 
         final String sourceUri = node.getSourceURI();
@@ -131,6 +137,6 @@ public class RepositoryEventFactory {
             throw new RuntimeException(e);
         }
         return doc;
-    }
+    }*/
 
 }

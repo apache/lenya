@@ -223,6 +223,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
+    //Florent : move to repositoryimpl. this is the place to save a document
+    /*
     protected void create(InputStream stream, Document document) throws Exception {
 
         // Read initial contents as DOM
@@ -232,8 +234,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                             + "]");
 
         copy(getSourceResolver(), stream, document);
-    }
-
+    }*/
+    //Florent : move to repositoryimpl. this is the place to save a document
+    /*
     protected void copy(SourceResolver resolver, InputStream sourceInputStream, Document destination)
             throws IOException {
 
@@ -259,7 +262,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 sourceInputStream.close();
             }
         }
-    }
+    }*/
 
     //florent commented cause of change in document api
     /*
@@ -870,15 +873,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         return document;
     }*/
-
-    public SourceResolver getSourceResolver() {
-        return sourceResolver;
-    }
-
-    public void setSourceResolver(SourceResolver sourceResolver) {
-        this.sourceResolver = sourceResolver;
-    }
-
+    
     public UUIDGenerator getUuidGenerator() {
         return uuidGenerator;
     }

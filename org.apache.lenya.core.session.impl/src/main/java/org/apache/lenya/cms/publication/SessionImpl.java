@@ -35,11 +35,12 @@ public class SessionImpl implements Session, SessionHolder {
     private static final Log logger = LogFactory.getLog(SessionImpl.class);
 
     private org.apache.lenya.cms.repository.Session repositorySession;
-    private RepositoryImpl repository;
+    //florent private RepositoryImpl repository;
+    private Repository repository;
     private DocumentFactory documentFactory;
     private DocumentFactoryBuilder documentFactoryBuilder;
 
-    public SessionImpl(RepositoryImpl repository,
+    public SessionImpl(Repository repository,
             org.apache.lenya.cms.repository.Session repoSession) {
         Validate.notNull(repository, "repository");
         Validate.notNull(repoSession, "repository session");

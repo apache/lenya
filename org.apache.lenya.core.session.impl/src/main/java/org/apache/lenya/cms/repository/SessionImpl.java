@@ -36,7 +36,7 @@ import org.apache.lenya.transaction.ConcurrentModificationException;
 //import org.apache.lenya.transaction.Identity;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.IdentityMapImpl;
+//import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.Lockable;
 import org.apache.lenya.transaction.TransactionException;
@@ -129,7 +129,7 @@ public class SessionImpl implements Session {
             synchronized (TransactionLock.LOCK) {
 
                 getUnitOfWork().commit();
-                getSharedItemStore().clear();
+                //florent : remove session getSharedItemStore().clear();
             }
         } catch (ConcurrentModificationException e) {
             throw e;
@@ -194,7 +194,8 @@ public class SessionImpl implements Session {
      */
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
-        RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
+        //florent remove session RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
+    	RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory);
         return (RepositoryItem) getIdentityMap().get(wrapper, key);
     }
 
@@ -249,7 +250,7 @@ public class SessionImpl implements Session {
     private SessionHolder holder;
 
     public synchronized void enqueueEvent(RepositoryEvent event) {
-        Validate.isTrue(event.getSession() == this, "event belongs to session");
+        //florent : remove session Validate.isTrue(event.getSession() == this, "event belongs to session");
         if (!isModifiable()) {
             throw new RuntimeException("Can't enqueue event in unmodifiable session!");
         }

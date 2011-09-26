@@ -25,8 +25,9 @@ import java.util.Set;
 
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.commons.lang.Validate;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
+//florent : change observation 
+//import org.apache.lenya.cms.publication.Document;
+//import org.apache.lenya.cms.publication.DocumentIdentifier;
 
 /**
  * Observation manager. Works as an observation registry and sends the notifications.
@@ -38,23 +39,26 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
 
     public synchronized void registerListener(RepositoryListener listener, Object observeable)
             throws ObservationException {
-        Document doc = (Document) observeable;
+        //florent
+    	/*Document doc = (Document) observeable;
         Set listeners = getListeners(doc.getIdentifier());
         if (listeners.contains(listener)) {
             throw new ObservationException("The listener [" + listener
                     + "] is already registered for the document [" + doc + "].");
         }
-        listeners.add(listener);
+        listeners.add(listener);*/
     }
-
-    protected Set getListeners(DocumentIdentifier doc) {
+    
+   //florent : change observation management
+    /*
+   protected Set getListeners(DocumentIdentifier doc) {
         Set listeners = (Set) this.identifier2listeners.get(doc);
         if (listeners == null) {
             listeners = new HashSet();
             this.identifier2listeners.put(doc, listeners);
         }
         return listeners;
-    }
+    }*/
 
     public synchronized void registerListener(RepositoryListener listener)
             throws ObservationException {
@@ -64,6 +68,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         this.listeners.add(listener);
     }
 
+    	/*
     protected Set getAllListeners(DocumentIdentifier doc) {
         Set allListeners = new HashSet();
         synchronized (this) {
@@ -71,7 +76,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             allListeners.addAll(getListeners(doc));
         }
         return allListeners;
-    }
+    }*/
 
     protected void notify(Set listeners, RepositoryEvent event) {
         for (Iterator i = listeners.iterator(); i.hasNext();) {
@@ -82,13 +87,14 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
 
     public void eventFired(RepositoryEvent event) {
         Validate.notNull(event);
-        Set listeners;
+        Set listeners = this.listeners;
         Object source = event.getSource();
         if (source instanceof DocumentEventSource) {
+        	//florent
+        	/*
             DocumentIdentifier id = ((DocumentEventSource) source).getIdentifier();
             listeners = getAllListeners(id);
-        } else {
-            listeners = this.listeners;
+            */
         }
         notify(listeners, event);
     }

@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.exceptions.ResourceNotFoundException;
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
@@ -40,7 +41,9 @@ public interface DocumentFactory {
      * @return A document.
      * @throws ResourceNotFoundException if the document does not exist.
      */
-    Document get(Publication publication, String area, String uuid, String language)
+    //florent : document don't depend on a publication or area
+    //Document get(Publication publication, String area, String uuid, String language)
+    Document get(String uuid, String language)
             throws ResourceNotFoundException;
 
     /**
@@ -53,7 +56,8 @@ public interface DocumentFactory {
      * @return A document.
      * @throws ResourceNotFoundException if the document does not exist.
      */
-    Document get(Publication publication, String area, String uuid, String language, int revision)
+    //florent Document get(Publication publication, String area, String uuid, String language, int revision)
+    Document get(String uuid, String language, int revision)
             throws ResourceNotFoundException;
 
     /**
@@ -72,7 +76,8 @@ public interface DocumentFactory {
      * @return A document.
      * @throws ResourceNotFoundException if an error occurs.
      */
-    Document get(Publication publication, String area, String uuid)
+    //florent Document get(Publication publication, String area, String uuid)
+    Document get(String uuid)
             throws ResourceNotFoundException;
 
     /**
@@ -85,28 +90,28 @@ public interface DocumentFactory {
     /**
      * @return The session.
      */
-    Session getSession();
+    //Session getSession();
     
     /**
      * @param id The publication ID.
      * @return A publication.
      * @throws PublicationException if the publication does not exist.
      */
-    Publication getPublication(String id) throws PublicationException;
+    //Publication getPublication(String id) throws PublicationException;
     
     /**
      * @return All publication IDs.
      */
-    String[] getPublicationIds();
+    //String[] getPublicationIds();
     
     /**
      * @param id The publication ID.
      * @return If a publication with this ID exists.
      */
-    boolean existsPublication(String id);
+    /*boolean existsPublication(String id);
     
     void setPublicationManager(PublicationManager pubManager);
     
-    PublicationManager getPublicationManager();
+    PublicationManager getPublicationManager();*/
 
 }

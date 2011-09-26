@@ -22,7 +22,9 @@ package org.apache.lenya.cms.repository;
 /**
  * Store for read-only items which are shared by all sessions for performance reasons.
  */
-public interface SharedItemStore extends Session {
+//florent : public interface SharedItemStore extends Session {
+public interface SharedItemStore {
+	
 
     /**
      * The service role.

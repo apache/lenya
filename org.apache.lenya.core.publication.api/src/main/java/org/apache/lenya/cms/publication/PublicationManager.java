@@ -34,6 +34,13 @@ public interface PublicationManager {
     Publication[] getPublications(DocumentFactory factory);
     
     /**
+     * get a publication from his id from spring
+     * @param pubID the publication id
+     * @return a publication
+     */
+    Publication getPublication(String pubID);
+    
+    /**
      * @param factory The factory.
      * @param id The publication ID.
      * @return A publication.

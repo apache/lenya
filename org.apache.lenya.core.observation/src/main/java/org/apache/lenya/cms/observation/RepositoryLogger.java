@@ -35,7 +35,7 @@ public class RepositoryLogger extends AbstractLogEnabled implements RepositoryLi
     public void eventFired(RepositoryEvent event) {
         getLogger().info(event.toString());
     }
-
+    
     public void start() throws Exception {
         ObservationRegistry registry = null;
         try {

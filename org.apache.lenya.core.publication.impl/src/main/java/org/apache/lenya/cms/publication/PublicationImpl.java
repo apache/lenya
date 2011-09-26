@@ -37,7 +37,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication, 
 
     private PublicationConfiguration delegate;
     private NodeFactory nodeFactory;
-    private Session session;
+    //private Session session;
+    //florent : TODO : bean wiring for pubmanager
+    private PublicationManager pubmanager;
 
     protected PublicationImpl(Session session, NodeFactory nodeFactory,
             PublicationConfiguration delegate) {
@@ -153,7 +155,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication, 
         String schema = this.delegate.getWorkflowSchema(resourceType);
         if (schema == null && getTemplateId() != null) {
             String templateId = getTemplateId();
-            Publication template = getSession().getPublication(templateId);
+            //Publication template = getSession().getPublication(templateId);
+            Publication template = pubmanager.getPublication(templateId);
             schema = template.getWorkflowSchema(resourceType);
         }
         return schema;

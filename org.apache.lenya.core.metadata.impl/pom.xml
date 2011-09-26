@@ -13,7 +13,7 @@
   <groupId>org.apache.lenya</groupId>
   <artifactId>lenya-core-metadata-impl</artifactId>
   <packaging>jar</packaging>
-  <name>Apache Lenya Core Metadata Implementation</name>
+  <name>Apache Lenya Metadata Implementation</name>
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>

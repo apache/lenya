@@ -23,13 +23,12 @@ import java.net.MalformedURLException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.spring.configurator.WebAppContextUtils;
 import org.apache.cocoon.util.AbstractLogEnabled;
 import org.apache.lenya.cms.site.SiteNode;
-
+import org.apache.lenya.utils.URLInformation;
 /**
  * Default document builder implementation.
- * 
- * @version $Id$
  */
 public class DefaultDocumentBuilder extends AbstractLogEnabled implements DocumentBuilder,
         Serviceable, ThreadSafe {
@@ -99,11 +98,14 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         return suffix;
     }
 
-    public boolean isDocument(Session session, String url) {
+    //florent : public boolean isDocument(Session session, String url) {
+    public boolean isDocument(String url) {
         try {
-            DocumentLocator locator = getLocatorWithoutCheck(session, url);
+            //DocumentLocator locator = getLocatorWithoutCheck(session, url);
+        	DocumentLocator locator = getLocatorWithoutCheck(url);
             if (locator != null) {
-                Publication pub = session.getPublication(locator.getPublicationId());
+                //Publication pub = session.getPublication(locator.getPublicationId());
+            	Publication pub = (Publication)WebAppContextUtils.getCurrentWebApplicationContext().getBean(Publication.class.getName()+"/"+locator.getPublicationId());
                 String path = locator.getPath();
                 Area area = pub.getArea(locator.getArea());
                 if (area.getSite().contains(path)) {
@@ -126,12 +128,14 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * @param locator The document locator.
      * @return A string.
      */
-    protected String buildCanonicalDocumentUrl(Session session, DocumentLocator locator) {
+    //florent : protected String buildCanonicalDocumentUrl(Session session, DocumentLocator locator) {
+    protected String buildCanonicalDocumentUrl(DocumentLocator locator) {
 
         String languageSuffix = "";
         String language = locator.getLanguage();
 
-        Publication pub = session.getPublication(locator.getPublicationId());
+        //florent : Publication pub = session.getPublication(locator.getPublicationId());
+        Publication pub = (Publication)WebAppContextUtils.getCurrentWebApplicationContext().getBean(Publication.class.getName()+"/"+locator.getPublicationId());
 
         if (!language.equals(pub.getDefaultLanguage())) {
             languageSuffix = "_" + language;
@@ -140,16 +144,20 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         return locator.getPath() + languageSuffix + ".html";
     }
 
-    public String buildCanonicalUrl(Session session, DocumentLocator doc) {
+    //florent public String buildCanonicalUrl(Session session, DocumentLocator doc) {
+    public String buildCanonicalUrl(DocumentLocator doc) {
 
-        String documentUrl = buildCanonicalDocumentUrl(session, doc);
+        //String documentUrl = buildCanonicalDocumentUrl(session, doc);
+    	String documentUrl = buildCanonicalDocumentUrl(doc);
         String url = "/" + doc.getPublicationId() + "/" + doc.getArea() + documentUrl;
         return url;
     }
 
-    public DocumentLocator getLocator(Session session, String webappUrl) throws MalformedURLException {
+    //florent public DocumentLocator getLocator(Session session, String webappUrl) throws MalformedURLException {
+    public DocumentLocator getLocator(String webappUrl) throws MalformedURLException {
 
-        DocumentLocator locator = getLocatorWithoutCheck(session, webappUrl);
+        //DocumentLocator locator = getLocatorWithoutCheck(session, webappUrl);
+    	DocumentLocator locator = getLocatorWithoutCheck(webappUrl);
         if (locator == null) {
             throw new ResourceNotFoundException("The webapp URL [" + webappUrl
                     + "] does not refer to a document!");
@@ -166,7 +174,9 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      *         refer to a locator.
      * @throws MalformedURLException if the URL is not a webapp URL. 
      */
-    protected DocumentLocator getLocatorWithoutCheck(Session session, String webappUrl) throws MalformedURLException {
+    //florent : protected DocumentLocator getLocatorWithoutCheck(Session session, String webappUrl) throws MalformedURLException {
+    //TODO : remove the webappUrl param, not used
+    protected DocumentLocator getLocatorWithoutCheck(String webappUrl) throws MalformedURLException {
 
         if (!webappUrl.startsWith("/")) {
             return null;
@@ -175,9 +185,10 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             return null;
         }
 
-        URLInformation info = new URLInformation(webappUrl);
+        URLInformation info = new URLInformation();
 
-        Publication publication = session.getPublication(info.getPublicationId());
+        //Publication publication = session.getPublication(info.getPublicationId());
+        Publication publication = (Publication)WebAppContextUtils.getCurrentWebApplicationContext().getBean(Publication.class.getName()+"/"+info.getPublicationId());
         String documentURL = info.getDocumentUrl();
         documentURL = removeExtensions(documentURL);
 

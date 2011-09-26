@@ -20,7 +20,6 @@ package org.apache.lenya.cms.metadata;
 /**
  * Owner of meta-data.
  *
- * @version $Id$
  */
 public interface MetaDataOwner {
 

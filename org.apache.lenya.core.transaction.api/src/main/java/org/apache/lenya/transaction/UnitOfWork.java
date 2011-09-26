@@ -27,7 +27,6 @@ package org.apache.lenya.transaction;
  *
  * <p>This interface may be extended in the future to allow for access to further types of business objects.</p>
  * 
- * @version $Id$
  */
 public interface UnitOfWork {
 

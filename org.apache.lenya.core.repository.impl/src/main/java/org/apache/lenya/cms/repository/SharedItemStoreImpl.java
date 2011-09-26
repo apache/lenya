@@ -22,7 +22,7 @@ import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
 //florent remove this identity as duplication of the core-ac one 
 //import org.apache.lenya.transaction.Identity;
-import org.apache.lenya.ac.Identity;
+//import org.apache.lenya.ac.Identity;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.Lockable;
 import org.apache.lenya.transaction.TransactionException;
@@ -33,7 +33,7 @@ import org.apache.lenya.transaction.Transactionable;
  */
 public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedItemStore {
 
-    private Session session;
+    //florent : remove session private Session session;
     private RepositoryManager repositoryManager;
 
     public RepositoryManager getRepositoryManager() {
@@ -44,16 +44,16 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         this.repositoryManager = repositoryManager;
     }
 
-    public synchronized Session getSession() {
-        if (this.session == null) {
-            try {
-                this.session = getRepositoryManager().createSession(null, false);
-            } catch (RepositoryException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.session;
-    }
+//    public synchronized Session getSession() {
+//        if (this.session == null) {
+//            try {
+//                this.session = getRepositoryManager().createSession(null, false);
+//            } catch (RepositoryException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        return this.session;
+//    }
 
     public void addListener(RepositoryListener listener) throws RepositoryException {
         throw new UnsupportedOperationException();
@@ -67,13 +67,14 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         throw new UnsupportedOperationException();
     }
 
-    public Identity getIdentity() {
+    /*public Identity getIdentity() {
         throw new UnsupportedOperationException();
-    }
+    }*/
 
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
-        return (RepositoryItem) getSession().getRepositoryItem(factory, key);
+        //florent remove session return (RepositoryItem) getSession().getRepositoryItem(factory, key);
+    	throw new UnsupportedOperationException();
     }
 
     public boolean isListenerRegistered(RepositoryListener listener) {
@@ -88,9 +89,9 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         throw new UnsupportedOperationException();
     }
 
-    public void setIdentity(Identity identity) {
+    /*public void setIdentity(Identity identity) {
         throw new UnsupportedOperationException();
-    }
+    }*/
 
     public Lock createLock(Lockable lockable, int version) throws TransactionException {
         throw new UnsupportedOperationException();
@@ -116,20 +117,20 @@ public class SharedItemStoreImpl extends AbstractLogEnabled implements SharedIte
         throw new UnsupportedOperationException();
     }
 
-    public synchronized void clear() {
-        this.session = null;
-    }
+//    public synchronized void clear() {
+//        this.session = null;
+//    }
 
     public String getId() {
         return getClass().getName();
     }
 
-    public SessionHolder getHolder() {
+    /*public SessionHolder getHolder() {
         throw new UnsupportedOperationException();
     }
 
     public void setHolder(SessionHolder holder) {
         throw new UnsupportedOperationException();
-    }
+    }*/
 
 }

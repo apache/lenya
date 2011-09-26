@@ -18,7 +18,7 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.repository.RepositoryException;
+//import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * Document build exception.
@@ -26,7 +26,9 @@ import org.apache.lenya.cms.repository.RepositoryException;
  */
 //florent : change exceptions extension in order to repect dependencies
 //public class DocumentBuildException extends PublicationException {
-public class DocumentBuildException extends RepositoryException {
+//florent : now remove dependency to repository
+//public class DocumentBuildException extends RepositoryException {
+public class DocumentBuildException extends DocumentException {
 	
     /**
 	 * 

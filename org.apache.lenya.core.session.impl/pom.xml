@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.lenya</groupId>
+    <artifactId>lenya-parent</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+    <relativePath>../org.apache.lenya.parent/pom.xml</relativePath>
+  </parent>
+  
+  <groupId>org.apache.lenya</groupId>
+  <artifactId>lenya-session-impl</artifactId>
+  <packaging>jar</packaging>
+  <name>Apache Lenya session implementation</name>
+  <description>Implementation of the session interface</description>
+  
+  <dependencies>
+
+	<dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-session-api</artifactId>
+    </dependency>  
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-repository-api</artifactId>
+    </dependency>
+	<dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-observation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-identity</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-transaction-impl</artifactId>
+    </dependency>
+    <!--  TODO : see to have just a dependency with publication-api and not with impl -->
+    <dependency>
+      <groupId>org.apache.lenya</groupId>
+      <artifactId>lenya-core-publication-impl</artifactId>
+    </dependency>
+  <!-- TODO : see if all theses dependencies are required -->
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-servlet-service-components</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-template-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-flowscript-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

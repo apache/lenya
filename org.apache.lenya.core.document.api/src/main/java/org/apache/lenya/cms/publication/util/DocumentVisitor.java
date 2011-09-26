@@ -16,8 +16,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication.util;
 
 import org.apache.lenya.cms.publication.Document;

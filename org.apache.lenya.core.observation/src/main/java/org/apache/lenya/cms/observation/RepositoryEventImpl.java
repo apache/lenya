@@ -18,14 +18,14 @@
 package org.apache.lenya.cms.observation;
 
 import org.apache.commons.lang.Validate;
-import org.apache.lenya.cms.repository.Session;
+//florent session remove import org.apache.lenya.cms.repository.Session;
 
 /**
  * A repository event provides additional information if a document was added, changed, or removed.
  */
 public class RepositoryEventImpl implements RepositoryEvent {
 
-    private Session session;
+    //private Session session;
     private Object descriptor = null;
     private int revision = -1;
     private Object source;
@@ -36,8 +36,10 @@ public class RepositoryEventImpl implements RepositoryEvent {
      * @param source The source of the event.
      * @param descriptor More information about the event.
      */
-    public RepositoryEventImpl(Session session, Object source, Object descriptor) {
-        this(session, descriptor);
+    //florent public RepositoryEventImpl(Session session, Object source, Object descriptor) {
+    public RepositoryEventImpl(Object source, Object descriptor) {
+        //this(session, descriptor);
+    	this(descriptor);
         Validate.notNull(source);
         this.source = source;
     }
@@ -47,19 +49,22 @@ public class RepositoryEventImpl implements RepositoryEvent {
      * @param session The session.
      * @param descriptor More information about the event.
      */
-    public RepositoryEventImpl(Session session, Object descriptor) {
-        Validate.notNull(session);
+    //florent public RepositoryEventImpl(Session session, Object descriptor) {
+    public RepositoryEventImpl(Object descriptor) {
+        //Validate.notNull(session);
         Validate.notNull(descriptor);
-        this.session = session;
+        //this.session = session;
         this.descriptor = descriptor;
     }
 
     /**
      * @return The session.
      */
+    //florent
+    /*
     public Session getSession() {
         return this.session;
-    }
+    }*/
 
     /**
      * @return The descriptor.
@@ -72,7 +77,9 @@ public class RepositoryEventImpl implements RepositoryEvent {
 		 * @see org.apache.lenya.cms.observation.RepositoryEvent#toString()
 		 */
     public String toString() {
-        return "identity:" + getSession().getIdentity().toString() + " " + getNodeUri() + " " + getDescriptor();
+    	//florent : peut être qu'il faudrait passer l'identity en paramètre plutot que la session ?
+       // return "identity:" + getSession().getIdentity().toString() + " " + getNodeUri() + " " + getDescriptor();
+    	 return "identity:" + "TODO see repositoryEventImpl Classe" + " " + getNodeUri() + " " + getDescriptor();
     }
     
     private String nodeUri;

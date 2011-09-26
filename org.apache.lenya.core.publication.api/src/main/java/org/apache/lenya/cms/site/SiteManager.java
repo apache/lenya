@@ -21,7 +21,7 @@ package org.apache.lenya.cms.site;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.Session;
+//import org.apache.lenya.cms.publication.Session;
 
 /**
  * <p>
@@ -40,7 +40,6 @@ import org.apache.lenya.cms.publication.Session;
  * <strong>&lt; </strong>f</li>
  * </ul>
  * 
- * @version $Id$
  */
 public interface SiteManager {
 
@@ -66,7 +65,8 @@ public interface SiteManager {
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    DocumentLocator[] getRequiredResources(Session session, DocumentLocator locator)
+    //florent DocumentLocator[] getRequiredResources(Session session, DocumentLocator locator)
+    DocumentLocator[] getRequiredResources(DocumentLocator locator)
             throws SiteException;
 
     /**
@@ -176,7 +176,8 @@ public interface SiteManager {
      * @return A locator.
      * @throws SiteException if the new document could not be built.
      */
-    DocumentLocator getAvailableLocator(Session session, DocumentLocator locator)
+    //florent : DocumentLocator getAvailableLocator(Session session, DocumentLocator locator)
+    DocumentLocator getAvailableLocator(DocumentLocator locator)
             throws SiteException;
 
 }

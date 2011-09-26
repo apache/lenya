@@ -320,6 +320,7 @@
     </plugins>
   </build>
 
+	<!--  TODO : see if all dependencies have to be here. Maybe just all application shared one -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -333,6 +334,11 @@
         <artifactId>mail</artifactId>
         <version>1.4</version>
       </dependency>
+      <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.0.1</version>
+	</dependency>
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
@@ -368,6 +374,13 @@
         <artifactId>avalon-framework-impl</artifactId>
         <version>${avalon.version}</version>
       </dependency>
+      
+      <dependency>
+		<groupId>org.apache.excalibur.components</groupId>
+		<artifactId>excalibur-sourceresolve</artifactId>
+		<version>2.2.3</version>
+	  </dependency>
+      
       <!--
       <dependency>
         <groupId>batik</groupId>

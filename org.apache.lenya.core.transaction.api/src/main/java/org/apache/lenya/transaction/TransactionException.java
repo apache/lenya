@@ -20,7 +20,6 @@ package org.apache.lenya.transaction;
 /**
  * Transaction exception.
  *
- * @version $Id$
  */
 public class TransactionException extends Exception {
 

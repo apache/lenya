@@ -18,13 +18,14 @@
 package org.apache.lenya.cms.observation;
 
 import org.apache.commons.lang.Validate;
-import org.apache.lenya.cms.publication.Document;
+//florent : change concept of observation
+/*import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.ResourceType;
-
+*/
 public class DocumentEventSource {
     
-    private DocumentIdentifier identifier;
+  /*  private DocumentIdentifier identifier;
     private ResourceType resourceType;
 
     public DocumentEventSource(Document doc) {
@@ -39,5 +40,5 @@ public class DocumentEventSource {
     public ResourceType getResourceType() {
         return resourceType;
     }
-
+	*/
 }

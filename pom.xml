@@ -31,7 +31,7 @@
   <groupId>org.apache.lenya</groupId>
   <artifactId>lenya</artifactId>
 
-  <name>Apache Lenya Project</name>
+  <name>Apache Lenya</name>
 
   <reporting>
     <plugins>
@@ -44,79 +44,89 @@
   </reporting>
   <modules>
     <module>org.apache.lenya.parent</module>
-    <module>org.apache.lenya.core.ac</module>
-    <module>org.apache.lenya.core.acusecases</module>
-    <module>org.apache.lenya.core.administration</module>
+    <!-- foundation modules -->
     <module>org.apache.lenya.core.api</module>
-    <module>org.apache.lenya.core.cache</module>
-    <module>org.apache.lenya.core.gui</module>
-    <module>org.apache.lenya.core.i18n</module>
-    <module>org.apache.lenya.core.impl</module>
-    <!-- <module>org.apache.lenya.core.janitor</module> -->
-    <module>org.apache.lenya.core.ldap</module>
-    <module>org.apache.lenya.core.linking</module>
+    <module>org.apache.lenya.core.transaction.api</module>
+    <!--    <module>org.apache.lenya.core.transaction.impl</module>-->
     <module>org.apache.lenya.core.metadata.api</module>
-    <module>org.apache.lenya.core.metadata.impl</module>
-    <module>org.apache.lenya.core.monitoring</module>
+    <!--    <module>org.apache.lenya.core.metadata.impl</module>-->
     <module>org.apache.lenya.core.observation</module>
-    <module>org.apache.lenya.core.properties</module>
+    <!-- document and repository layers -->
+    <module>org.apache.lenya.core.document.api</module>
+    <!--    <module>org.apache.lenya.core.document.impl</module>-->
     <module>org.apache.lenya.core.repository.api</module>
     <module>org.apache.lenya.core.repository.impl</module>
-    <module>org.apache.lenya.core.resourcetype</module>
-    <module>org.apache.lenya.core.sitemanagement</module>
-    <module>org.apache.lenya.core.templating</module>
-    <module>org.apache.lenya.core.usecase</module>
-    <module>org.apache.lenya.core.workflow</module>
-    <module>org.apache.lenya.core.utils</module>
-    <module>org.apache.lenya.core.cocoon</module>
-    <module>org.apache.lenya.core.publication.api</module>
-    <module>org.apache.lenya.core.publication.impl</module>
-    <module>org.apache.lenya.core.document.api</module>
-    <module>org.apache.lenya.core.document.impl</module>
-    <module>org.apache.lenya.core.transaction.api</module>
-    <module>org.apache.lenya.core.transaction.impl</module>
-    <module>org.apache.lenya.core.identity</module>
-    <module>org.apache.lenya.core.proxy</module>
-    <module>org.apache.lenya.core.session.api</module>
-    <module>org.apache.lenya.core.session.impl</module>
-    <module>org.apache.lenya.module.blog</module>
-    <module>org.apache.lenya.module.bxe</module>
-    <module>org.apache.lenya.module.cforms</module>
-    <module>org.apache.lenya.module.collection</module>
-    <module>org.apache.lenya.module.contactform</module>
-    <module>org.apache.lenya.module.development</module>
-    <module>org.apache.lenya.module.editors</module>
-    <module>org.apache.lenya.module.export</module>
-    <module>org.apache.lenya.module.fckeditor</module>
-    <module>org.apache.lenya.module.kupu</module>
-    <module>org.apache.lenya.module.languageselector</module>
-    <module>org.apache.lenya.module.lenyadoc</module>
-    <module>org.apache.lenya.module.linkcheck</module>
-    <module>org.apache.lenya.module.links</module>
-    <module>org.apache.lenya.module.lucene</module>
-    <module>org.apache.lenya.module.menubar</module>
-    <module>org.apache.lenya.module.migration</module>
-    <module>org.apache.lenya.module.navigation</module>
-    <module>org.apache.lenya.module.neutron</module>
-    <module>org.apache.lenya.module.news</module>
-    <module>org.apache.lenya.module.notification</module>
-    <module>org.apache.lenya.module.opendocument</module>
-    <module>org.apache.lenya.module.prettyprinting</module>
-    <module>org.apache.lenya.module.profiling</module>
-    <module>org.apache.lenya.module.resource</module>
-    <module>org.apache.lenya.module.simplesite</module>
-    <module>org.apache.lenya.module.sitetree</module>
-    <module>org.apache.lenya.module.sourcerepository</module>
-    <module>org.apache.lenya.module.svg</module>
-    <module>org.apache.lenya.module.tinymce</module>
-    <module>org.apache.lenya.module.usecasedocument</module>
-    <module>org.apache.lenya.module.webdav</module>
-    <module>org.apache.lenya.module.xhtml</module>
-    <module>org.apache.lenya.module.xopus</module>
-    <module>org.apache.lenya.optional.jcrsource</module>
-    <module>org.apache.lenya.webapp</module>
-    <module>org.apache.lenya.webapp.welcome</module>
-    <module>org.apache.lenya.deprecated</module>
+    
+    
+
+<!--    <module>org.apache.lenya.core.identity</module>	    -->
+<!--    <module>org.apache.lenya.core.ac</module>-->
+<!--    <module>org.apache.lenya.core.acusecases</module>-->
+<!--    <module>org.apache.lenya.core.administration</module>-->
+<!--    <module>org.apache.lenya.core.api</module>-->
+<!--    <module>org.apache.lenya.core.cache</module>-->
+<!--    <module>org.apache.lenya.core.gui</module>-->
+<!--    <module>org.apache.lenya.core.i18n</module>-->
+<!--    <module>org.apache.lenya.core.impl</module>-->
+    <!-- <module>org.apache.lenya.core.janitor</module> -->
+<!--    <module>org.apache.lenya.core.ldap</module>-->
+<!--    <module>org.apache.lenya.core.linking</module>-->
+
+<!--    <module>org.apache.lenya.core.monitoring</module>-->
+<!--    <module>org.apache.lenya.core.observation</module>-->
+<!--    <module>org.apache.lenya.core.properties</module>-->
+<!--    <module>org.apache.lenya.core.resourcetype</module>-->
+<!--    <module>org.apache.lenya.core.sitemanagement</module>-->
+<!--    <module>org.apache.lenya.core.templating</module>-->
+<!--    <module>org.apache.lenya.core.usecase</module>-->
+<!--    <module>org.apache.lenya.core.workflow</module>-->
+<!--    <module>org.apache.lenya.core.utils</module>-->
+<!--    <module>org.apache.lenya.core.cocoon</module>-->
+<!--    <module>org.apache.lenya.core.publication.api</module>-->
+<!--    <module>org.apache.lenya.core.publication.impl</module>-->
+
+
+<!--    <module>org.apache.lenya.core.proxy</module>-->
+<!--    <module>org.apache.lenya.core.session.api</module>-->
+<!--    <module>org.apache.lenya.core.session.impl</module>-->
+<!--    <module>org.apache.lenya.module.blog</module>-->
+<!--    <module>org.apache.lenya.module.bxe</module>-->
+<!--    <module>org.apache.lenya.module.cforms</module>-->
+<!--    <module>org.apache.lenya.module.collection</module>-->
+<!--    <module>org.apache.lenya.module.contactform</module>-->
+<!--    <module>org.apache.lenya.module.development</module>-->
+<!--    <module>org.apache.lenya.module.editors</module>-->
+<!--    <module>org.apache.lenya.module.export</module>-->
+<!--    <module>org.apache.lenya.module.fckeditor</module>-->
+<!--    <module>org.apache.lenya.module.kupu</module>-->
+<!--    <module>org.apache.lenya.module.languageselector</module>-->
+<!--    <module>org.apache.lenya.module.lenyadoc</module>-->
+<!--    <module>org.apache.lenya.module.linkcheck</module>-->
+<!--    <module>org.apache.lenya.module.links</module>-->
+<!--    <module>org.apache.lenya.module.lucene</module>-->
+<!--    <module>org.apache.lenya.module.menubar</module>-->
+<!--    <module>org.apache.lenya.module.migration</module>-->
+<!--    <module>org.apache.lenya.module.navigation</module>-->
+<!--    <module>org.apache.lenya.module.neutron</module>-->
+<!--    <module>org.apache.lenya.module.news</module>-->
+<!--    <module>org.apache.lenya.module.notification</module>-->
+<!--    <module>org.apache.lenya.module.opendocument</module>-->
+<!--    <module>org.apache.lenya.module.prettyprinting</module>-->
+<!--    <module>org.apache.lenya.module.profiling</module>-->
+<!--    <module>org.apache.lenya.module.resource</module>-->
+<!--    <module>org.apache.lenya.module.simplesite</module>-->
+<!--    <module>org.apache.lenya.module.sitetree</module>-->
+<!--    <module>org.apache.lenya.module.sourcerepository</module>-->
+<!--    <module>org.apache.lenya.module.svg</module>-->
+<!--    <module>org.apache.lenya.module.tinymce</module>-->
+<!--    <module>org.apache.lenya.module.usecasedocument</module>-->
+<!--    <module>org.apache.lenya.module.webdav</module>-->
+<!--    <module>org.apache.lenya.module.xhtml</module>-->
+<!--    <module>org.apache.lenya.module.xopus</module>-->
+<!--    <module>org.apache.lenya.optional.jcrsource</module>-->
+<!--    <module>org.apache.lenya.webapp</module>-->
+<!--    <module>org.apache.lenya.webapp.welcome</module>-->
+<!--    <module>org.apache.lenya.deprecated</module>-->
   </modules>
   
   <scm>

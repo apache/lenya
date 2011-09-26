@@ -87,6 +87,12 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
         return this.id2config;
     }
 
+    //florent : to get publication from spring
+    public Publication getPublication(String pubID){
+    	return (Publication)WebAppContextUtils.getCurrentWebApplicationContext().getBean(Publication.class.getName()+"/"+pubID);
+    }
+    	
+    
     public Publication getPublication(DocumentFactory factory, String id)
             throws PublicationException {
         Validate.notNull(id);

@@ -28,7 +28,6 @@ import org.apache.lenya.cms.metadata.MetaData;
  * The descriptions are citing the <a href="http://www.dublincore.org">Dublin Core website </a>.
  * </p>
  * 
- * @version $Id$
  */
 public interface DublinCore extends MetaData {
 

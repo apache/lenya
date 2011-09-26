@@ -199,7 +199,7 @@ public class DocumentImpl implements Document, RepositoryItem {
     public String getLanguage() {
         return this.identifier.getLanguage();
     }
-
+    
     public String[] getLanguages() {
 
         List documentLanguages = new ArrayList();

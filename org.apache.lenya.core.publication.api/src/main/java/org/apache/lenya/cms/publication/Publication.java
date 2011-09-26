@@ -257,7 +257,7 @@ public interface Publication {
     /**
      * @return The session this publication object belongs to.
      */
-    Session getSession();
+    //Session getSession();
 
     /**
      * @return The source URI of the publication directory.

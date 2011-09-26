@@ -26,6 +26,7 @@ import java.util.WeakHashMap;
  * document doesn't have to exist.
  * It helps to locate a document inside a publication
  */
+//@deprecated move this locator outside of document, have to move in "publication"
 public class DocumentLocatorImpl implements DocumentLocator {
 
     private static Map locators = new WeakHashMap();

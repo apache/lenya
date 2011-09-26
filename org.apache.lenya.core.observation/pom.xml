@@ -13,7 +13,7 @@
   <groupId>org.apache.lenya</groupId>
   <artifactId>lenya-core-observation</artifactId>
   <packaging>jar</packaging>
-  <name>Apache Lenya Core Observation</name>
+  <name>Apache Lenya Observation</name>
   <dependencies>
 <!--    <dependency>-->
 <!--      <groupId>org.apache.avalon.framework</groupId>-->
@@ -23,17 +23,25 @@
 <!--      <groupId>org.apache.lenya</groupId>-->
 <!--      <artifactId>lenya-core-api</artifactId>-->
 <!--    </dependency>-->
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-repository-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lenya</groupId>
-      <artifactId>lenya-core-document-api</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-repository-api</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.lenya</groupId>-->
+<!--      <artifactId>lenya-core-document-api</artifactId>-->
+<!--    </dependency>-->
 <!--        <dependency>-->
 <!--      <groupId>org.apache.lenya</groupId>-->
 <!--      <artifactId>lenya-core-publication</artifactId>-->
 <!--    </dependency>-->
+  <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-util</artifactId>
+    </dependency>
+     <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+      </dependency>
   </dependencies>
 </project>

@@ -27,22 +27,24 @@ import org.apache.lenya.transaction.IdentityMap;
 public class RepositoryItemFactoryWrapper implements IdentifiableFactory {
     
     private RepositoryItemFactory delegate;
-    private Session session;
+    //florent : remove session private Session session;
     
     /**
      * Ctor.
      * @param delegate The factory to wrap.
      * @param session The session.
      */
-    public RepositoryItemFactoryWrapper(RepositoryItemFactory delegate, Session session) {
+    //public RepositoryItemFactoryWrapper(RepositoryItemFactory delegate, Session session) {
+    public RepositoryItemFactoryWrapper(RepositoryItemFactory delegate) {
         Validate.notNull(delegate, "factory");
-        Validate.notNull(session, "session");
+        //Validate.notNull(session, "session");
         this.delegate = delegate;
-        this.session = session;
+        //this.session = session;
     }
 
     public Object build(IdentityMap map, String key) throws Exception {
-        return delegate.buildItem(this.session, key);
+        //return delegate.buildItem(this.session, key);
+    	return delegate.buildItem(key);
     }
 
     public String getType() {

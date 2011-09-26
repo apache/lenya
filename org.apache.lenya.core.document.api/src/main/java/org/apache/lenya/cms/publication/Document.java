@@ -27,16 +27,20 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 //florent : removed import as they create cyclic dependencies
 /*import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.publication.Node;*/
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.History;
-import org.apache.lenya.cms.repository.RepositoryException;
+//florent remove to change way of dependency : it's now repository that depend to document
+//import org.apache.lenya.cms.repository.Node;
+//import org.apache.lenya.cms.repository.History;
+//import org.apache.lenya.cms.repository.RepositoryException;
+
+//TODO : this include a dependency to cocoon-pipeline-api... see how to remove it as it a lot for a less...
 import org.apache.cocoon.ResourceNotFoundException;
 
 /**
  * A CMS document.
  */
-public interface Document extends Node, MetaDataOwner {
-    
+//florent : not still repository dependent
+//public interface Document extends Node, MetaDataOwner {
+public interface Document extends MetaDataOwner {
     /**
      * The document namespace URI.
      */
@@ -343,13 +347,14 @@ public interface Document extends Node, MetaDataOwner {
      * @return A revision.
      * @throws RepositoryException if the revision doesn't exist.
      */
-    Document getRevision(int i) throws RepositoryException;
+    //florent Document getRevision(int i) throws RepositoryException;
+    Document getRevision(int i) throws DocumentException;
 
     /**
      * @return The revision number of this document.
      */
     int getRevisionNumber();
     
-    History getHistory();
+    //History getHistory();
 
 }

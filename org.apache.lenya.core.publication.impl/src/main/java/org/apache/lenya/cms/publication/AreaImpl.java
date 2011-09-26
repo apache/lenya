@@ -39,15 +39,16 @@ public class AreaImpl implements Area {
     private String name;
     private Publication pub;
     private NodeFactory nodeFactory;
-    private Session session;
+    //florent : private Session session;
 
     /**
      * @param session The factory.
      * @param pub The publication.
      * @param name The area name.
      */
-    public AreaImpl(Session session, NodeFactory nodeFactory, Publication pub, String name) {
-        this.session = session;
+    /* florent public AreaImpl(Session session, NodeFactory nodeFactory, Publication pub, String name) {
+        this.session = session;*/
+    public AreaImpl(NodeFactory nodeFactory, Publication pub, String name) {
         this.pub = pub;
         this.name = name;
         this.nodeFactory = nodeFactory;

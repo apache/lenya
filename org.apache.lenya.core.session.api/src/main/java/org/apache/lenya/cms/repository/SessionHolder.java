@@ -15,18 +15,10 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.repository;
 
-/**
- * Document factory builder.
- */
-public interface DocumentFactoryBuilder {
-
-    /**
-     * Creates a new document factory.
-     * @param session The session.
-     * @return A document identity map.
-     */
-    DocumentFactory createDocumentFactory(Session session);
+public interface SessionHolder {
+    
+    Session getRepositorySession();
 
 }

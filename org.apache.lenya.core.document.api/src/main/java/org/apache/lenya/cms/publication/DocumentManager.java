@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.publication.util.DocumentSet;
+//import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
  * Helper to manage documents. It takes care of attachments etc.

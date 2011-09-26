@@ -21,7 +21,7 @@
 package org.apache.lenya.cms.publication;
 
 import java.net.MalformedURLException;
-import org.apache.lenya.cms.publication.Session;
+//import org.apache.lenya.cms.publication.Session;
 //import from core-document-api
 import org.apache.lenya.cms.publication.DocumentLocator;
 /**
@@ -41,7 +41,8 @@ public interface DocumentBuilder {
      * @return A document identifier.
      * @throws MalformedURLException if the URL is not a webapp URL. 
      */
-    DocumentLocator getLocator(Session session, String webappUrl) throws MalformedURLException;
+    //florent DocumentLocator getLocator(Session session, String webappUrl) throws MalformedURLException;
+    DocumentLocator getLocator(String webappUrl) throws MalformedURLException;
 
     /**
      * Checks if an URL corresponds to a CMS document.
@@ -50,7 +51,8 @@ public interface DocumentBuilder {
      * @return A boolean value.
      * @throws DocumentBuildException when something went wrong.
      */
-    boolean isDocument(Session session, String url);
+    //boolean isDocument(Session session, String url);
+    boolean isDocument(String url);
 
     /**
      * Builds an URL corresponding to a CMS document.
@@ -58,7 +60,8 @@ public interface DocumentBuilder {
      * @param locator The locator.
      * @return a String The corresponding URL.
      */
-    String buildCanonicalUrl(Session session, DocumentLocator locator);
+    //String buildCanonicalUrl(Session session, DocumentLocator locator);
+    String buildCanonicalUrl(DocumentLocator locator);
 
     /**
      * Checks if a document name is valid.

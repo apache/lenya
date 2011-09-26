@@ -23,7 +23,6 @@ import java.util.Collection;
 /**
  * A repository node is used to persist a {@link Persistable}.
  * 
- * @version $Id$
  */
 public interface Node extends RepositoryItem, ContentHolder {
 
