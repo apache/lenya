@@ -25,6 +25,11 @@
     <map:serializers default="xhtml">
       <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
     </map:serializers>
+    <map:selectors>
+      <map:selector name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+	<exception name="resourceNotFound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>
+      </map:selector>
+    </map:selectors>
   </map:components>
 
   <map:views>
@@ -32,6 +37,7 @@
       <map:serialize type="links" />
     </map:view>
   </map:views>
+
 
 
   <map:pipelines>
@@ -349,12 +355,15 @@
             <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}" mime-type="application/pdf">
               <map:parameter name="byte-ranges" value="false"/>
             </map:read>
-          </map:match>      
-          <!-- Documents other than *.html are served as-is and do not require processing: -->
-          <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}"
-            mime-type="{page-envelope:document-mime-type}"/>
+          </map:match>
+	  <!-- try delegate others formats to the resource module. 
+	       If the resource module don't implement the format, a ResourceNotFound exception was thrown and catch at the end of this pipeline : the content is served as-is with no processing -->
+	  <map:match pattern="**/*.*">
+	    <map:generate src="cocoon://lenya/modules/{page-envelope:document-type}/{3}.xml"/>
+	    <map:serialize type="xml"/>
+	  </map:match>
         </map:act>
-
+	
         <!-- 
           If the action above fails (e.g. the document does not exist), call into the lenyabody pipeline.
           It will generate a nice document-does-not-exist page for us.
@@ -372,9 +381,17 @@
         <map:serialize type="xhtml" status-code="404"/>
 
       </map:match>
-
+      
     </map:pipeline>
-
+    <map:handle-errors>
+	<map:select type="exception">
+	  <map:when test="resourceNotFound">
+	    <!-- Documents other than *.html and not processed by the resource module are served as-is and do not require processing: -->
+	    <map:read src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}"
+		      mime-type="{page-envelope:document-mime-type}"/>
+	  </map:when>
+	</map:select>
+      </map:handle-errors>
 
   </map:pipelines>
 </map:sitemap>
