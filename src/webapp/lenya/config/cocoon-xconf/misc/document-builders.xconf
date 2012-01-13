@@ -28,6 +28,6 @@
       <component-instance name="no-extension" logger="lenya.publication"
         class="org.apache.lenya.cms.publication.DefaultDocumentBuilder">
         <parameter name="extension" value=""/>
-      </component>
+      </component-instance>
     </document-builders>
   </xconf>
