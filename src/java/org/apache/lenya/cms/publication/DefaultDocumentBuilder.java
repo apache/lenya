@@ -19,6 +19,9 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.avalon.framework.parameters.Parameterizable;
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
@@ -30,7 +33,12 @@ import org.apache.lenya.cms.site.SiteNode;
  * @version $Id$
  */
 public class DefaultDocumentBuilder extends AbstractLogEnabled implements DocumentBuilder,
-        Serviceable, ThreadSafe {
+        Serviceable, ThreadSafe, Parameterizable {
+
+    /**
+     * The extension, optionally including the leading dot. Defaults to ".html".
+     */
+    private static final String PARAM_EXTENSION = "extension";
 
     /**
      * Ctor.
@@ -46,6 +54,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     protected ServiceManager manager;
+    private String extension;
 
     /**
      * Removes all "."-separated extensions from a URL (e.g.,
@@ -144,7 +153,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             languageSuffix = "_" + language;
         }
 
-        return locator.getPath() + languageSuffix + ".html";
+        return locator.getPath() + languageSuffix + this.extension;
     }
 
     public String buildCanonicalUrl(DocumentFactory factory, DocumentLocator doc) {
@@ -217,6 +226,12 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      */
     public boolean isValidDocumentName(String documentName) {
         return documentName.matches("[a-zA-Z0-9\\-]+");
+    }
+
+    @Override
+    public void parameterize(final Parameters params) throws ParameterException {
+        final String ext = params.getParameter(PARAM_EXTENSION, "html");
+        this.extension = "".equals(ext) || ext.startsWith(".") ? ext : "." + ext;
     }
 
 }

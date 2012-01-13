@@ -25,5 +25,9 @@
     <document-builders>
       <component-instance name="default" logger="lenya.publication"
         class="org.apache.lenya.cms.publication.DefaultDocumentBuilder"/>
+      <component-instance name="no-extension" logger="lenya.publication"
+        class="org.apache.lenya.cms.publication.DefaultDocumentBuilder">
+        <parameter name="extension" value=""/>
+      </component>
     </document-builders>
   </xconf>
