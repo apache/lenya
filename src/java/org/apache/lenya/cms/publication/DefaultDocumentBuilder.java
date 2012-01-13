@@ -144,15 +144,12 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             languageSuffix = "_" + language;
         }
 
-        String url = locator.getPath() + languageSuffix + ".html";
-        return url;
+        return locator.getPath() + languageSuffix + ".html";
     }
 
     public String buildCanonicalUrl(DocumentFactory factory, DocumentLocator doc) {
-
         String documentUrl = buildCanonicalDocumentUrl(factory, doc);
-        String url = "/" + doc.getPublicationId() + "/" + doc.getArea() + documentUrl;
-        return url;
+        return "/" + doc.getPublicationId() + "/" + doc.getArea() + documentUrl;
     }
 
     public DocumentLocator getLocator(DocumentFactory factory, String webappUrl)
