@@ -56,6 +56,7 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
     protected static final String PARAM_PATH = "path";
     protected static final String PARAM_SELECTOR_PATH = "selectorPath";
     protected static final String PARAM_SELECTOR = "selector";
+    protected static final String PARAM_INVISIBLE = "invisible";
 
     protected static final String PREFIX = "site";
     protected static final String NAMESPACE = "http://apache.org/lenya/site/1.0";
@@ -81,6 +82,7 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
     private String selectorClass;
     private String path;
     private String selectorPath;
+    private Boolean invisible;
 
     public void setup(org.apache.cocoon.environment.SourceResolver resolver, Map objectModel,
             String src, Parameters params) throws ProcessingException, SAXException, IOException {
@@ -95,6 +97,7 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
             this.language = params.getParameter(PARAM_LANG);
             this.path = params.getParameter(PARAM_PATH);
             this.selectorPath = params.getParameter(PARAM_SELECTOR_PATH, "");
+            invisible = "true".equalsIgnoreCase(params.getParameter(PARAM_INVISIBLE,"false"));
 
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
             Publication pub = factory.getPublication(pubId);
@@ -193,7 +196,7 @@ public class SiteFragmentGenerator extends ServiceableGenerator implements
     }
 
     public void generateLink(SiteNode node, String language) throws SAXException {
-        if (node.isVisible() && node.hasLink(language)) {
+        if ((node.isVisible() || invisible) && node.hasLink(language)) {
             Link link = getLink(node, language);
             AttributesImpl attrs = new AttributesImpl();
             attrs.addAttribute(XML_NAMESPACE, ATTR_LANG, XML_PREFIX + ":" + ATTR_LANG, "CDATA",
