@@ -52,5 +52,7 @@
   <message key="fr">Français</message>
   <message key="es">Español</message>
   <message key="he">עברית</message>
+  <message key="cn">中国的</message>
+  <message key="ar">العربية</message>
   
 </catalogue>

@@ -46,6 +46,8 @@
     <map:match pattern="text-*/flagsize-*">
       <map:generate src="context://lenya/content/util/empty.xml"/>
       <map:transform src="fallback://lenya/modules/languageselector/xslt/languageselector.xsl">
+			  <map:parameter name="pub" value="{page-envelope:publication-id}"/>
+			  <map:parameter name="area" value="{page-envelope:area}"/>
         <map:parameter name="currentLanguage" value="{page-envelope:document-language}"/>
         <map:parameter name="publication-languages-csv" value="{page-envelope:publication-languages-csv}"/>
         <map:parameter name="document-languages-csv" value="{page-envelope:document-languages-csv}"/>
