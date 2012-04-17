@@ -28,30 +28,41 @@
   thus, we need only one catalogue - all other languages will fall back
   to this one.
 -->
-     
+  <message key="en">English</message>     
   <message key="en-isCurrent">English is your currently selected language.</message>
   <message key="en-isUnavailable">Sorry, no English translation is available for this document.</message>
   <message key="en-isAvailable">switch to English translation</message>
+
+  <message key="de">Deutsch</message>	
   <message key="de-isCurrent">Deutsch ist die aktuell gewählte Sprache.</message>
   <message key="de-isUnavailable">Leider ist für diese Seite keine deutsche Übersetzung verfügbar.</message>
   <message key="de-isAvailable">zur deutschen Übersetzung</message>
   <!-- sorry, my french sucks. anyone? -->
+  <message key="fr">Français</message>	
   <message key="fr-isCurrent">Vous lisez la version française.</message>
   <message key="fr-isUnavailable">Nous regrettons qu'il n'y a pas de traduction française.</message>
   <message key="fr-isAvailable">vers la version française</message>
   <!-- my spanish either. -->
+  <message key="es">Español</message>	
   <message key="es-isCurrent">Eso es castellano.</message>
   <message key="es-isUnavailable">Desafortunadamente no hay una traducción castellana.</message>
   <message key="es-isAvailable">para la traducción castellana</message>
   <!-- my hebrew is even worse. -->
+  <message key="he">עברית</message>	
   <message key="he-isCurrent">.זה בספה עברית</message>
   <message key="he-isUnavailable">.אנלנו העמוד הזה בעברית</message>
   <message key="he-isAvailable">.לעמוד עברית</message>
-  <message key="en">English</message>
-  <message key="de">Deutsch</message>
-  <message key="fr">Français</message>
-  <message key="es">Español</message>
-  <message key="he">עברית</message>
+	<!-- italian -->
+  <message key="it">Italiano</message>	
+  <message key="it-isCurrent">La lingua selezionata è italiano</message>
+  <message key="it-isUnavailable">Spiacenti, questo contenuto non è disponibile nella lingua selezionata</message>
+  <message key="it-isAvailable">Passare alla lingua italiana</message>
+	<!-- russian -->
+	<message key="ru">русский</message>
+  <message key="ru-isCurrent">Выбран русский язык</message>
+  <message key="ru-isUnavailable">К сожалению, данная страница недоступна на русском языке</message>
+  <message key="ru-isAvailable">Перейти к русской версии</message>
+	
   <message key="cn">中国的</message>
   <message key="ar">العربية</message>
   
