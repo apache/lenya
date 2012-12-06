@@ -66,8 +66,8 @@ public class IdentityTest extends AbstractAccessControlTest {
         assertTrue(testIdentity.belongsTo(testMgr));
         assertTrue(defaultIdentity.belongsTo(defaultMgr));
         
-        assertTrue(testIdentity.belongsTo(defaultMgr));
-        assertTrue(defaultIdentity.belongsTo(testMgr));
+        assertFalse(testIdentity.belongsTo(defaultMgr));
+        assertFalse(defaultIdentity.belongsTo(testMgr));
     }
 
 }

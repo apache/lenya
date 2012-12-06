@@ -25,9 +25,9 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,7 +52,7 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  */
 public abstract class FileItemManager extends AbstractLogEnabled implements ItemManager {
 
-    private Map items = new HashMap();
+    private Map<String, Item> items = new HashMap<String, Item>();
     private File configurationDirectory;
     private DirectoryChangeNotifier notifier;
 
@@ -157,16 +157,15 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         String klass = ItemConfiguration.getItemClass(config);
         if (item == null) {
             try {
-                Class[] paramTypes = { ItemManager.class, Logger.class };
-                Constructor ctor = Class.forName(klass).getConstructor(paramTypes);
+                Class<?>[] paramTypes = { ItemManager.class, Logger.class };
+                Constructor<?> ctor = Class.forName(klass).getConstructor(paramTypes);
                 Object[] params = { this, getLogger() };
                 item = (Item) ctor.newInstance(params);
             } catch (Exception e) {
                 String errorMsg = "Exception when trying to instanciate: " + klass
                         + " with exception: " + e.fillInStackTrace();
 
-                // an exception occured when trying to instanciate
-                // a user.
+                // an exception occurred when trying to instantiate a user.
                 getLogger().error(errorMsg);
                 throw new AccessControlException(errorMsg, e);
             }
@@ -322,7 +321,8 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
      */
     protected abstract String getSuffix();
 
-    private List itemManagerListeners = new ArrayList();
+    private List<ItemManagerListener> itemManagerListeners =
+            new ArrayList<ItemManagerListener>();
 
     /**
      * Attaches an item manager listener to this item manager.
@@ -357,9 +357,9 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item was added: [" + item + "]");
         }
-        List clone = new ArrayList(this.itemManagerListeners);
-        for (Iterator i = clone.iterator(); i.hasNext();) {
-            ItemManagerListener listener = (ItemManagerListener) i.next();
+        List<ItemManagerListener> clone =
+                new ArrayList<ItemManagerListener>(this.itemManagerListeners);
+        for (final ItemManagerListener listener : clone) {
             listener.itemAdded(item);
         }
     }
@@ -373,9 +373,9 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item was removed: [" + item + "]");
         }
-        List clone = new ArrayList(this.itemManagerListeners);
-        for (Iterator i = clone.iterator(); i.hasNext();) {
-            ItemManagerListener listener = (ItemManagerListener) i.next();
+        List<ItemManagerListener> clone =
+                new ArrayList<ItemManagerListener>(this.itemManagerListeners);
+        for (final ItemManagerListener listener : clone) {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Notifying listener: [" + listener + "]");
             }
@@ -400,11 +400,11 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
 
         private File directory;
         private FileFilter filter;
-        private Map canonicalPath2LastModified = new HashMap();
+        private Map<String, Long> canonicalPath2LastModified = new HashMap<String, Long>();
 
-        private Set addedFiles = new HashSet();
-        private Set removedFiles = new HashSet();
-        private Set changedFiles = new HashSet();
+        private Set<File> addedFiles = new HashSet<File>();
+        private Set<File> removedFiles = new HashSet<File>();
+        private Set<File> changedFiles = new HashSet<File>();
 
         /**
          * Checks if the directory has changed (a new file was added, a file was
@@ -420,7 +420,7 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
 
             File[] files = this.directory.listFiles(this.filter);
 
-            Set newPathSet = new HashSet();
+            Set<String> newPathSet = new HashSet<String>();
 
             for (int i = 0; i < files.length; i++) {
                 String canonicalPath = files[i].getCanonicalPath();
@@ -448,14 +448,13 @@ public abstract class FileItemManager extends AbstractLogEnabled implements Item
                 this.canonicalPath2LastModified.put(canonicalPath, lastModified);
             }
 
-            Set oldPathSet = this.canonicalPath2LastModified.keySet();
-            String[] oldPaths = (String[]) oldPathSet.toArray(new String[oldPathSet.size()]);
-            for (int i = 0; i < oldPaths.length; i++) {
-                if (!newPathSet.contains(oldPaths[i])) {
-                    this.removedFiles.add(new File(oldPaths[i]));
-                    this.canonicalPath2LastModified.remove(oldPaths[i]);
+            final Set<String> oldPaths = new HashSet<String>(this.canonicalPath2LastModified.keySet());
+            for (final String path : oldPaths) {
+                if (!newPathSet.contains(path)) {
+                    this.removedFiles.add(new File(path));
+                    this.canonicalPath2LastModified.remove(path);
                     if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("File removed: [" + oldPaths[i] + "]");
+                        getLogger().debug("File removed: [" + path + "]");
                     }
                 }
             }

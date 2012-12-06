@@ -39,8 +39,8 @@ import org.apache.lenya.ac.UserType;
  */
 public class FileUserManager extends FileItemManager implements UserManager {
 
-    private static Map instances = new HashMap();
-    private Set userTypes;
+    private static Map<File, FileUserManager> instances = new HashMap<File, FileUserManager>();
+    private Set<UserType> userTypes;
 
     /**
      * Create a UserManager
@@ -49,10 +49,10 @@ public class FileUserManager extends FileItemManager implements UserManager {
      * @param _userTypes The supported user types.
      * @throws AccessControlException if the UserManager could not be instantiated.
      */
-    private FileUserManager(AccreditableManager mgr, UserType[] _userTypes)
+    protected FileUserManager(AccreditableManager mgr, UserType[] _userTypes)
             throws AccessControlException {
         super(mgr);
-        this.userTypes = new HashSet(Arrays.asList(_userTypes));
+        this.userTypes = new HashSet<UserType>(Arrays.asList(_userTypes));
     }
 
     /**
@@ -81,7 +81,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
             instances.put(configurationDirectory, manager);
         }
 
-        return (FileUserManager) instances.get(configurationDirectory);
+        return instances.get(configurationDirectory);
     }
 
     /**

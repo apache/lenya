@@ -20,6 +20,7 @@
 
 package org.apache.lenya.ac.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,14 +57,25 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
         setId(id);
     }
 
-    private Set members = new HashSet();
-
     /**
      * Returns the members of this group.
      * @return An array of {@link Groupable}s.
      */
     public Groupable[] getMembers() {
-        return (Groupable[]) this.members.toArray(new Groupable[this.members.size()]);
+        final Set<Groupable> groupables = new HashSet<Groupable>();
+        try {
+            groupables.addAll(Arrays.asList(getAccreditableManager().getUserManager().getUsers()));
+            groupables.addAll(Arrays.asList(getAccreditableManager().getIPRangeManager().getIPRanges()));
+        } catch (final AccessControlException e) {
+            throw new RuntimeException(e);
+        }
+        final Set<Groupable> members = new HashSet<Groupable>();
+        for (final Groupable groupable: groupables) {
+            if (groupable.belongsToGroup(this)) {
+                members.add(groupable);
+            }
+        }
+        return members.toArray(new Groupable[members.size()]);
     }
 
     /**
@@ -71,8 +83,6 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param member The member to add.
      */
     public void add(Groupable member) {
-        assert (member != null) && !this.members.contains(member);
-        this.members.add(member);
         member.addedToGroup(this);
     }
 
@@ -81,8 +91,6 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param member The member to remove.
      */
     public void remove(Groupable member) {
-        assert (member != null) && this.members.contains(member);
-        this.members.remove(member);
         member.removedFromGroup(this);
     }
     
@@ -102,7 +110,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @return A boolean value.
      */
     public boolean contains(Groupable member) {
-        return this.members.contains(member);
+        return member.belongsToGroup(this);
     }
 
     /**

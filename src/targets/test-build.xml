@@ -73,15 +73,18 @@
         <exclude name="config/publication.xml"/>
       </fileset>
     </copy>
-  	<xslt
-  	  in="${build.webapp}/lenya/pubs/${test.pub.source.id}/config/publication.xml"
+    <xslt
+      in="${build.webapp}/lenya/pubs/${test.pub.source.id}/config/publication.xml"
       out="${build.webapp}/lenya/pubs/${test.pub.id}/config/publication.xml"
-  	  style="${src.resource.dir}/test/changePublicationConfig.xsl">
-  	  <param name="pubName" expression="Test Publication"/>
+      style="${src.resource.dir}/test/changePublicationConfig.xsl">
+      <param name="pubName" expression="Test Publication"/>
     </xslt>
     <replace encoding="utf-8"
       file="${build.webapp}/lenya/pubs/${test.pub.id}/config/search/lucene_index.xml"
       token="default" value="test"/>
+    <replace encoding="utf-8"
+      file="${build.webapp}/lenya/pubs/${test.pub.id}/config/access-control/access-control.xml"
+      token="/pubs/default/" value="/pubs/test/"/>
   </target>
   
   <!-- prepares the tests. -->

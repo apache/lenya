@@ -36,7 +36,7 @@ import org.apache.lenya.cms.ac.PolicyUtil;
  */
 public class PolicyManagerTest extends AbstractAccessControlTest {
 
-    private static String[] URLS = { "/default/authoring/index.html" };
+    private static String[] URLS = { "/test/authoring/index.html" };
 
     /**
      * The test.

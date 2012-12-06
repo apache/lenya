@@ -46,4 +46,10 @@ public interface Groupable {
      * Removes this Groupable from all groups.
      */
     void removeFromAllGroups();
+
+    /**
+     * @param group A group.
+     * @return If the groupable belongs to the group.
+     */
+    boolean belongsToGroup(Group group);
 }
