@@ -61,6 +61,7 @@
           </xsl:if>
           
           <xsl:apply-templates select="col:document"/>
+          <xsl:apply-templates select="col:page"/>
         </div>
       </body>
     </html>
@@ -93,14 +94,21 @@
   
   
   <xsl:template match="xhtml:p" mode="excerpt">
-    <xsl:copy>
+    <p xmlns="http://www.w3.org/1999/xhtml">
       <xsl:copy-of select="@*"/>
       <xsl:variable name="content" select="."/>
       <xsl:value-of select="substring($content, 1, $maxChars)"/>
       <xsl:if test="string-length($content) &gt; $maxChars">
         <xsl:text>&#x2026;</xsl:text>
       </xsl:if>
-    </xsl:copy>
+    </p>
+  </xsl:template>
+  
+  
+  <xsl:template match="col:page">
+    <div id="pagination">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
   
   

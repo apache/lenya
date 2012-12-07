@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<pagesheet xmlns="http://apache.org/cocoon/paginate/1.0">
+  <rules>
+    <count type="element" name="document" num="3" />
+  </rules>
+</pagesheet>

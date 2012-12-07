@@ -18,24 +18,45 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:col="http://apache.org/cocoon/lenya/collection/1.0"
     xmlns:meta="http://apache.org/lenya/meta/1.0/"
     xmlns:doc="http://apache.org/lenya/metadata/document/1.0"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:page="http://apache.org/cocoon/paginate/1.0" 
+    xmlns:col="http://apache.org/cocoon/lenya/collection/1.0" 
+    exclude-result-prefixes="page"
     >
     
+  <xsl:template match="page:page">
   
-  <xsl:template match="col:document[col:document]">
-    <xsl:apply-templates select="col:document"/>
+    <col:page id="pagination">
+      <!-- create 'previous' link -->
+      <xsl:if test="@current &gt; 1">
+      <a>
+        <xsl:attribute name="href">
+          <xsl:value-of select="@current-uri" />
+          <xsl:text>?page=</xsl:text>
+          <xsl:value-of select="number(@current)-1" />
+        </xsl:attribute>
+        <xsl:text>&lt;</xsl:text>
+      </a>
+      </xsl:if>
+      <!-- show current page of total pages -->
+      <span id="current"><xsl:value-of select="@current"/></span>
+      <span><xsl:text> of </xsl:text></span>
+      <span id="total"><xsl:value-of select="@total"/></span>
+      <!-- create 'next' link -->
+      <xsl:if test="@current &lt; @total">
+        <a>
+          <xsl:attribute name="href">
+            <xsl:value-of select="@current-uri" />
+            <xsl:text>?page=</xsl:text>
+            <xsl:value-of select="number(@current)+1" />
+          </xsl:attribute>
+          <xsl:text>&gt;</xsl:text>
+        </a>
+      </xsl:if>
+    </col:page>
   </xsl:template>
   
-  
-  <xsl:template match="col:page">
-    <xsl:copy>
-      <xsl:apply-templates/>
-    </xsl:copy>
-  </xsl:template>
- 
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>

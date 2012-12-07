@@ -31,6 +31,10 @@
         <encoding>UTF-8</encoding>
       </map:serializer>
     </map:serializers>
+    <map:transformers default="xslt">
+      <map:transformer logger="sitemap.transformer.paginator"
+        name="paginator" src="org.apache.cocoon.transformation.pagination.Paginator"/>
+    </map:transformers>
  
   </map:components>
 
@@ -67,6 +71,21 @@
           <map:parameter name="area" value="{3}"/>
           <map:parameter name="format" value="{1}"/>
         </map:transform>
+
+        <map:select type="request-parameter">
+          <map:parameter name="parameter-name" value="page"/>
+          <!-- comparing against the same request-param to check for existence 
+            as C2.1 does not allow to do it -->
+          <map:when test="{request-param:page}">
+            <map:transform src="pagesheets/news.xml" type="paginator">
+              <map:parameter name="page" value="{request-param:page}"/>
+            </map:transform>
+            <map:transform src="fallback://lenya/modules/news/xslt/createPaginationLinks.xsl"/>
+          </map:when>
+          <map:otherwise>
+          </map:otherwise>
+        </map:select>
+
         <map:transform type="include"/>
         <map:transform src="fallback://lenya/modules/news/xslt/flatten.xsl"/>
         <map:transform src="fallback://lenya/modules/news/xslt/sort.xsl"/>

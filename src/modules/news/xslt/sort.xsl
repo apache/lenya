@@ -31,6 +31,7 @@
       <xsl:apply-templates select="col:document">
         <xsl:sort select="dc:date" order="descending"/>
       </xsl:apply-templates>
+      <xsl:apply-templates select="col:page" />
     </xsl:copy>
   </xsl:template>
   
