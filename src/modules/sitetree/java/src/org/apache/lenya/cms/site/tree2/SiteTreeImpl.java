@@ -105,7 +105,11 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
                     builder = (TreeBuilder) this.manager.lookup(TreeBuilder.ROLE);
                     reset();
                     builder.buildTree(this);
-                    Assert.isTrue("Latest revision loaded", getRevision() == getRevision(getRepositoryNode()));
+                    final int treeRev = getRevision();
+                    final int nodeRev = getRevision(getRepositoryNode());
+                    Assert.isTrue(
+                            String.format("sitetree revision %d == node revision %d", treeRev, nodeRev),
+                            treeRev == nodeRev);
                 } finally {
                     this.loading = false;
                     if (builder != null) {
