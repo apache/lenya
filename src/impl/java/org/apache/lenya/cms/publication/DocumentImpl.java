@@ -389,14 +389,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public String getCanonicalDocumentURL() {
         try {
             DocumentBuilder builder = getPublication().getDocumentBuilder();
-            final String webappUrl = builder.buildCanonicalUrl(getFactory(), getLocator());
-            final String prefix = "/" + getPublication().getId() + "/" + getArea();
-            String url = webappUrl.substring(prefix.length());
-            final String sourceExt = getSourceExtension();
-            if (!sourceExt.equals("xml") && !sourceExt.equals("")) {
-                url = url + "." + sourceExt;
-            }
-            return url;
+            String webappUrl = builder.buildCanonicalUrl(getFactory(), getLocator());
+            String prefix = "/" + getPublication().getId() + "/" + getArea();
+            return webappUrl.substring(prefix.length());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
