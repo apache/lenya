@@ -166,4 +166,10 @@ public class MockUser implements User {
         return false;
     }
 
+    @Override
+    public boolean belongsToGroup(Group group) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }
