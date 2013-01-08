@@ -226,9 +226,11 @@ public final class MediaTypeParser {
     public static Optional<String> bestMatch(Collection<String> supported, String header, boolean excludeAllType) {
         List<ParseResults> parseResults = new LinkedList<ParseResults>();
         List<FitnessAndQuality> weightedMatches = new LinkedList<FitnessAndQuality>();
-        for (String r : StringUtils.split(header, ',')) {
+        final String[] mediaTypes = StringUtils.split(header, ',');
+        final boolean exclude = excludeAllType && mediaTypes.length > 1;
+        for (String r : mediaTypes) {
             ParseResults result = parseMediaRange(r);
-            if (!(excludeAllType && result.type.equals("*") && result.subType.equals("*"))) {
+            if (!(exclude && result.type.equals("*") && result.subType.equals("*"))) {
                 parseResults.add(result);
             }
         }

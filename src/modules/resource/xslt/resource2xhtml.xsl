@@ -50,7 +50,17 @@ limitations under the License.
     </xsl:if>
   </xsl:variable>
   
-  <xsl:variable name="mediaUrl" select="concat(substring-before($documentUrl, '.html'), '.', $sourceExtension, $revisionSuffix)"/>
+  <xsl:variable name="mediaBaseUrl">
+    <xsl:choose>
+      <xsl:when test="contains($documentUrl, '.html')">
+        <xsl:value-of select="substring-before($documentUrl, '.html')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$documentUrl"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:variable name="mediaUrl" select="concat($mediaBaseUrl, '.', $sourceExtension, $revisionSuffix)"/>
   
   <xsl:template match="/">
     <html>

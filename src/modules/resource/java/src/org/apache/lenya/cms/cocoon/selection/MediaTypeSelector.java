@@ -31,9 +31,15 @@ import org.apache.lenya.modules.resource.MediaTypeParser;
 import com.google.common.base.Optional;
 
 /**
+ * <p>
  * Compares the media type passed as expression to the Accept header of the HTTP request.
- * Returns true if the media type matches. Matches with the double-wildcard (universal)
- * media type are ignored.
+ * Returns true if the media type matches.
+ * </p>
+ * <p>
+ * If the Accept header contains specific media types and additional the double-wildcard
+ * (universal) media type, and only the universal media type is matched, this match is
+ * ignored.
+ * </p>
  */
 public class MediaTypeSelector extends AbstractLogEnabled implements Selector {
 
@@ -48,10 +54,11 @@ public class MediaTypeSelector extends AbstractLogEnabled implements Selector {
                 Arrays.asList(expression.split("\\s,\\s")),
                 request.getHeader("Accept"),
                 true);
-        getLogger().info(
-                    "Accepted: " + expression
-                + "\nHeader:   " + request.getHeader("Accept")
-                + "\nDetected: " + type.or("-"));
+        getLogger().debug(
+                  request.getRequestURI()
+                + "\n  Accepted: " + expression
+                + "\n  Header:   " + request.getHeader("Accept")
+                + "\n  Detected: " + type.or("-"));
         return type.isPresent() && !type.equals("*/*");
     }
 
