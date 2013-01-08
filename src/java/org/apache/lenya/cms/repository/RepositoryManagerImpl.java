@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.repository;
 
-import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -28,7 +28,9 @@ import org.apache.commons.lang.Validate;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.cluster.ClusterManager;
 
-import com.google.common.collect.MapMaker;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 /**
  * Repository manager implementation.
@@ -39,9 +41,18 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
 
     protected ServiceManager manager;
     private ClusterManager cluster;
+    
     // Cache unmodifiable sessions per identity.
-    protected ConcurrentMap<Identity, Session> sharedSessions =
-        new MapMaker().softKeys().softValues().expiration(30, TimeUnit.MINUTES).makeMap();
+    protected LoadingCache<Identity, Session> sharedSessions = CacheBuilder.newBuilder()
+            .weakKeys()
+            .weakValues()
+            .expireAfterAccess(30, TimeUnit.MINUTES)
+            .build(new CacheLoader<Identity, Session>() {
+                @Override
+                public Session load(final Identity identity) throws Exception {
+                    return new SessionImpl(identity, false, manager, getLogger());
+                }
+            });
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
@@ -74,18 +85,13 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
      * Get a shared session for identity.
      * @param identity Identity
      * @return Shared session for identity.
+     * @throws ExecutionException 
      */
-    protected Session getSharedSession(Identity identity) {
-        Session session = sharedSessions.get(identity);
-        if (session == null) {
-            session = new SessionImpl(identity, false, manager, getLogger());
-            sharedSessions.put(identity, session);
-            if (getLogger().isDebugEnabled())
-                getLogger().debug("Created new shared session.");
-        } else {
-            if (getLogger().isDebugEnabled())
-                getLogger().debug("Using cached shared session.");
+    protected Session getSharedSession(Identity identity) throws RepositoryException {
+        try {
+            return sharedSessions.get(identity);
+        } catch (ExecutionException e) {
+            throw new RepositoryException(e);
         }
-        return session;
     }
 }
