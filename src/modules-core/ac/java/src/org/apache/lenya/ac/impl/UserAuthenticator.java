@@ -83,8 +83,7 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
             throw new AccessControlException("The session does not contain the identity!");
         }
 
-        boolean authenticated = authenticate(accreditableManager, username, password, identity);
-        return authenticated;
+        return authenticate(accreditableManager, username, password, identity);
     }
 
     /**
