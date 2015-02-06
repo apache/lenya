@@ -36,7 +36,7 @@ public class RelativeToAbsoluteLinkRewriter implements LinkRewriter {
 
     public boolean matches(String url) {
         Assert.notNull("url", url);
-        return !url.startsWith("/") && !PROTOCOL_REGEX.matcher(url).find();
+        return !url.startsWith("/") && !url.startsWith("#") && !PROTOCOL_REGEX.matcher(url).find();
     }
 
     public String rewrite(final String url) {
