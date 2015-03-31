@@ -169,6 +169,10 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
 
     }

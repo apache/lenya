@@ -75,7 +75,7 @@ public class SiteMetaDataTransformer extends AbstractSAXTransformer implements I
 
     public void dispose() {
         super.dispose();
-        if (this.linkResolver == null) {
+        if (this.linkResolver != null) {
             this.manager.release(linkResolver);
         }
     }

@@ -44,9 +44,10 @@ public class UuidToUrlModule extends AbstractInputModule implements Serviceable 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         Request request = ObjectModelHelper.getRequest(objectModel);
+        LinkResolver linkResolver = null;
         try {
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
-            LinkResolver linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
+            linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
             String currentUrl = ServletHelper.getWebappURI(request);
             
             UuidToUrlRewriter rewriter = new UuidToUrlRewriter(currentUrl, linkResolver, factory);
@@ -58,6 +59,10 @@ public class UuidToUrlModule extends AbstractInputModule implements Serviceable 
             
         } catch (final Exception e) {
             throw new ConfigurationException("Resolving link " + name + " failed: ", e);
+        } finally {
+            if (linkResolver != null) {
+                this.manager.release(linkResolver);
+            }
         }
     }
 
