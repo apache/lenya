@@ -1,0 +1,54 @@
+#############################################################################
+# File: ldap.properties.sample
+# $Id: ldap.properties.sample 124751 2005-01-10 02:25:42Z gregor $
+#############################################################################
+
+#############################################################################
+# General settings 
+#############################################################################
+provider-url=ldaps://ldap.example.com:636/dc=example,dc=com
+base-dn=dc=example,dc=com
+
+#############################################################################
+# User parameters for authentication:
+# usr-branch: 
+#      if users are to be taken from a specific branch, set this.
+#      If you set this to empty, users will be searched in the whole 
+#      subtree, i.e.:
+#         usr-branch=
+# usr-authentication:
+#      authentication method when the user authenticates
+# domain-name:
+#      AFAIK, this is only relevant for MS Active Directory
+#############################################################################
+#usr-branch=ou=People
+usr-branch=
+usr-attr=uid
+usr-name-attr=sn
+usr-authentication=simple
+domain-name=
+
+############################################################################
+# Security settings
+# -----------------
+# security-authentication:
+#       you can set this to none if there is no manager authentication, i.e.:
+#         security-authentication=none
+# mgr-dn and mgr-pw:
+#       Manager/user which is allowed to retrieve a list of "all" users
+#       (fullname) from LDAP server. Leave it empty for anonymous bindings.
+# key-store:
+#       - If you do not use ssl, you can comment out this property.
+#       - keystore is taken relatively to the publication config/ac/passwd
+#       directory. You should put the Directory-Server certificate in this 
+#       file, if using ssl. 
+#       The keystore file can be generated as follows:
+#          keytool -import -keystore .keystore -file <ca_cert_file> 
+#                    -alias <yourdomain.com>
+#       
+############################################################################
+security-authentication=simple
+mgr-dn=
+mgr-pw=
+key-store=.keystore
+security-protocol=ssl

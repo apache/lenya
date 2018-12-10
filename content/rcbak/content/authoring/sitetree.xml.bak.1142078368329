@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site xmlns="http://apache.org/cocoon/lenya/sitetree/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd">
+<node id="index" visibleinnav="true">
+<label xml:lang="en">test</label>
+</node>
+</site>

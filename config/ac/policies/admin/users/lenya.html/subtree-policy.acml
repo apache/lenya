@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+
+  <user id="lenya">
+    <role id="edit"/>
+  </user>
+
+</policy> 
