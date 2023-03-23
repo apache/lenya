@@ -900,6 +900,6 @@
   <properties>
     <cocoon.version>2.2.1-SNAPSHOT</cocoon.version>
     <avalon.version>4.3.1</avalon.version>
-    <spring.version>2.5.5</spring.version>
+    <spring.version>5.2.23.RELEASE</spring.version>
   </properties>
 </project>
